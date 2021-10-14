@@ -3,53 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.10.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.9...@spectrum-web-components/checkbox@0.10.11) (2021-10-14)
+## [0.10.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.10.9...@future-ui/checkbox@0.10.11) (2021-10-14)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.10.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.9...@spectrum-web-components/checkbox@0.10.10) (2021-10-14)
+## [0.10.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.10.9...@future-ui/checkbox@0.10.10) (2021-10-14)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.10.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.8...@spectrum-web-components/checkbox@0.10.9) (2021-10-12)
+## [0.10.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.10.8...@future-ui/checkbox@0.10.9) (2021-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.10.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.7...@spectrum-web-components/checkbox@0.10.8) (2021-09-20)
+## [0.10.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.10.7...@future-ui/checkbox@0.10.8) (2021-09-20)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.6...@spectrum-web-components/checkbox@0.10.7) (2021-09-13)
+## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.10.6...@future-ui/checkbox@0.10.7) (2021-09-13)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.5...@spectrum-web-components/checkbox@0.10.6) (2021-08-24)
+## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.10.5...@future-ui/checkbox@0.10.6) (2021-08-24)
 
 ### Bug Fixes
 
 -   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
-## [0.10.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.4...@spectrum-web-components/checkbox@0.10.5) (2021-08-03)
+## [0.10.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.10.4...@future-ui/checkbox@0.10.5) (2021-08-03)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.10.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.3...@spectrum-web-components/checkbox@0.10.4) (2021-07-22)
+## [0.10.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.10.3...@future-ui/checkbox@0.10.4) (2021-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.2...@spectrum-web-components/checkbox@0.10.3) (2021-07-01)
+## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.10.2...@future-ui/checkbox@0.10.3) (2021-07-01)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.1...@spectrum-web-components/checkbox@0.10.2) (2021-06-16)
+## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.10.1...@future-ui/checkbox@0.10.2) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.0...@spectrum-web-components/checkbox@0.10.1) (2021-06-07)
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.10.0...@future-ui/checkbox@0.10.1) (2021-06-07)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.9.6...@spectrum-web-components/checkbox@0.10.0) (2021-05-24)
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.9.6...@future-ui/checkbox@0.10.0) (2021-05-24)
 
 ### Bug Fixes
 
@@ -59,34 +59,34 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
 
-## [0.9.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.9.5...@spectrum-web-components/checkbox@0.9.6) (2021-05-12)
+## [0.9.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.9.5...@future-ui/checkbox@0.9.6) (2021-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.9.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.9.4...@spectrum-web-components/checkbox@0.9.5) (2021-04-09)
+## [0.9.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.9.4...@future-ui/checkbox@0.9.5) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.9.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.9.3...@spectrum-web-components/checkbox@0.9.4) (2021-03-29)
+## [0.9.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.9.3...@future-ui/checkbox@0.9.4) (2021-03-29)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.9.2...@spectrum-web-components/checkbox@0.9.3) (2021-03-22)
+## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.9.2...@future-ui/checkbox@0.9.3) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.9.1...@spectrum-web-components/checkbox@0.9.2) (2021-03-22)
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.9.1...@future-ui/checkbox@0.9.2) (2021-03-22)
 
 ### Bug Fixes
 
 -   add support for "readonly" attribute ([4bce3b7](https://github.com/adobe/spectrum-web-components/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
 -   reduce cycles ([66a4efb](https://github.com/adobe/spectrum-web-components/commit/66a4efbc55c108e886699ce9dd0eb1c7e57e5a7d))
 
-## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.9.0...@spectrum-web-components/checkbox@0.9.1) (2021-03-05)
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.9.0...@future-ui/checkbox@0.9.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.8.0...@spectrum-web-components/checkbox@0.9.0) (2021-03-04)
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.8.0...@future-ui/checkbox@0.9.0) (2021-03-04)
 
 ### Bug Fixes
 
@@ -96,7 +96,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.7.2...@spectrum-web-components/checkbox@0.8.0) (2021-02-11)
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.7.2...@future-ui/checkbox@0.8.0) (2021-02-11)
 
 ### Bug Fixes
 
@@ -106,15 +106,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   add t-shirt sizing with visual regressions to checkbox and picker elements ([ce47ec8](https://github.com/adobe/spectrum-web-components/commit/ce47ec88bd2c6c8d236c05826d28b2d0dadf12b8))
 
-## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.7.1...@spectrum-web-components/checkbox@0.7.2) (2021-02-02)
+## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.7.1...@future-ui/checkbox@0.7.2) (2021-02-02)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.7.0...@spectrum-web-components/checkbox@0.7.1) (2021-01-28)
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.7.0...@future-ui/checkbox@0.7.1) (2021-01-28)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.5.4...@spectrum-web-components/checkbox@0.7.0) (2021-01-21)
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.5.4...@future-ui/checkbox@0.7.0) (2021-01-21)
 
 ### Bug Fixes
 
@@ -134,7 +134,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **checkbox:** update spectrum css input ([e894cb4](https://github.com/adobe/spectrum-web-components/commit/e894cb4bc2b36882a9124d1bcbe94d5ad7dbb38e))
 -   **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
 
-# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.5.4...@spectrum-web-components/checkbox@0.6.0) (2021-01-13)
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.5.4...@future-ui/checkbox@0.6.0) (2021-01-13)
 
 ### Bug Fixes
 
@@ -151,28 +151,28 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **checkbox:** update spectrum css input ([e894cb4](https://github.com/adobe/spectrum-web-components/commit/e894cb4bc2b36882a9124d1bcbe94d5ad7dbb38e))
 -   **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
 
-## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.5.3...@spectrum-web-components/checkbox@0.5.4) (2020-10-12)
+## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.5.3...@future-ui/checkbox@0.5.4) (2020-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.5.2...@spectrum-web-components/checkbox@0.5.3) (2020-10-12)
+## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.5.2...@future-ui/checkbox@0.5.3) (2020-10-12)
 
 ### Bug Fixes
 
 -   **checkbox:** work around specificity changes when processing Spectrum CSS and cover with tests ([d53a871](https://github.com/adobe/spectrum-web-components/commit/d53a871f1ef5117c69ac5c4fc3b31aa9f151515c))
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.5.1...@spectrum-web-components/checkbox@0.5.2) (2020-09-25)
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.5.1...@future-ui/checkbox@0.5.2) (2020-09-25)
 
 ### Bug Fixes
 
 -   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
 
-## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.5.0...@spectrum-web-components/checkbox@0.5.1) (2020-09-14)
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.5.0...@future-ui/checkbox@0.5.1) (2020-09-14)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.4.4...@spectrum-web-components/checkbox@0.5.0) (2020-08-31)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.4.4...@future-ui/checkbox@0.5.0) (2020-08-31)
 
 ### Features
 
@@ -180,44 +180,44 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **card:** upgrade to Spectrum CSS v3.0.0 ([84cf1a9](https://github.com/adobe/spectrum-web-components/commit/84cf1a9758b1e357f18efac5763d17d6a4db0578))
 -   use 3.0.0-beta.\* release for styles ([877b485](https://github.com/adobe/spectrum-web-components/commit/877b485f20c76ec8f77975747322f572eea88e97))
 
-## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.4.3...@spectrum-web-components/checkbox@0.4.4) (2020-08-19)
+## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.4.3...@future-ui/checkbox@0.4.4) (2020-08-19)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.4.2...@spectrum-web-components/checkbox@0.4.3) (2020-07-27)
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.4.2...@future-ui/checkbox@0.4.3) (2020-07-27)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.4.1...@spectrum-web-components/checkbox@0.4.2) (2020-07-24)
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.4.1...@future-ui/checkbox@0.4.2) (2020-07-24)
 
 ### Bug Fixes
 
 -   ensure browser understandable extensions ([f4e59f7](https://github.com/adobe/spectrum-web-components/commit/f4e59f76f86369593810463c6406565e28ad97e9))
 
-## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.4.0...@spectrum-web-components/checkbox@0.4.1) (2020-07-22)
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.4.0...@future-ui/checkbox@0.4.1) (2020-07-22)
 
 ### Bug Fixes
 
 -   **shared:** prevent focusable returning focus to host ([745f7b0](https://github.com/adobe/spectrum-web-components/commit/745f7b0d23c14efd937e4a0be4d488c5d0865f34))
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.3.2...@spectrum-web-components/checkbox@0.4.0) (2020-07-17)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.3.2...@future-ui/checkbox@0.4.0) (2020-07-17)
 
 ### Features
 
 -   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.3.1...@spectrum-web-components/checkbox@0.3.2) (2020-06-08)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.3.1...@future-ui/checkbox@0.3.2) (2020-06-08)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.3.0...@spectrum-web-components/checkbox@0.3.1) (2020-05-08)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.3.0...@future-ui/checkbox@0.3.1) (2020-05-08)
 
 ### Bug Fixes
 
 -   ensure aria attributes based on state ([6369ff3](https://github.com/adobe/spectrum-web-components/commit/6369ff3f35b2ed26777bdbd16bae3b3acd816bf6))
 -   ensure aria attributes based on state ([6ee43de](https://github.com/adobe/spectrum-web-components/commit/6ee43de23254f612759cc258705dfe6eed30c418))
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.12...@spectrum-web-components/checkbox@0.3.0) (2020-04-16)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.12...@future-ui/checkbox@0.3.0) (2020-04-16)
 
 ### Bug Fixes
 
@@ -231,72 +231,72 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
 
-## [0.2.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.11...@spectrum-web-components/checkbox@0.2.12) (2020-04-10)
+## [0.2.12](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.11...@future-ui/checkbox@0.2.12) (2020-04-10)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.2.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.10...@spectrum-web-components/checkbox@0.2.11) (2020-04-07)
+## [0.2.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.10...@future-ui/checkbox@0.2.11) (2020-04-07)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.2.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.9...@spectrum-web-components/checkbox@0.2.10) (2020-03-11)
+## [0.2.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.9...@future-ui/checkbox@0.2.10) (2020-03-11)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.2.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.8...@spectrum-web-components/checkbox@0.2.9) (2020-02-05)
+## [0.2.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.8...@future-ui/checkbox@0.2.9) (2020-02-05)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.7...@spectrum-web-components/checkbox@0.2.8) (2020-02-01)
+## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.7...@future-ui/checkbox@0.2.8) (2020-02-01)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.6...@spectrum-web-components/checkbox@0.2.7) (2020-01-30)
+## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.6...@future-ui/checkbox@0.2.7) (2020-01-30)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.5...@spectrum-web-components/checkbox@0.2.6) (2020-01-06)
+## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.5...@future-ui/checkbox@0.2.6) (2020-01-06)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.4...@spectrum-web-components/checkbox@0.2.5) (2019-12-12)
+## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.4...@future-ui/checkbox@0.2.5) (2019-12-12)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.3...@spectrum-web-components/checkbox@0.2.4) (2019-12-09)
+## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.3...@future-ui/checkbox@0.2.4) (2019-12-09)
 
 ### Bug Fixes
 
 -   [#353](https://github.com/adobe/spectrum-web-components/issues/353) with a temporary override ([e6b4e37](https://github.com/adobe/spectrum-web-components/commit/e6b4e37))
 
-## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.2...@spectrum-web-components/checkbox@0.2.3) (2019-12-03)
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.2...@future-ui/checkbox@0.2.3) (2019-12-03)
 
 ### Bug Fixes
 
 -   focusable style ([48ea3e7](https://github.com/adobe/spectrum-web-components/commit/48ea3e7))
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.1...@spectrum-web-components/checkbox@0.2.2) (2019-12-02)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.1...@future-ui/checkbox@0.2.2) (2019-12-02)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.2.0...@spectrum-web-components/checkbox@0.2.1) (2019-11-27)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.2.0...@future-ui/checkbox@0.2.1) (2019-11-27)
 
 ### Bug Fixes
 
 -   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716))
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.1.5...@spectrum-web-components/checkbox@0.2.0) (2019-11-19)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.1.5...@future-ui/checkbox@0.2.0) (2019-11-19)
 
 ### Features
 
 -   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc7))
 -   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/3918888))
 
-## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.1.4...@spectrum-web-components/checkbox@0.1.5) (2019-11-01)
+## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.1.4...@future-ui/checkbox@0.1.5) (2019-11-01)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox
 
-## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.1.3...@spectrum-web-components/checkbox@0.1.4) (2019-10-14)
+## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/checkbox@0.1.3...@future-ui/checkbox@0.1.4) (2019-10-14)
 
 ### Performance Improvements
 
@@ -304,4 +304,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.1.3 (2019-10-03)
 
-**Note:** Version bump only for package @spectrum-web-components/checkbox
+**Note:** Version bump only for package @future-ui/checkbox

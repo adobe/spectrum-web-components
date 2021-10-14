@@ -18,10 +18,10 @@ import {
     property,
     PropertyValues,
     SizedMixin,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
+import { ObserveSlotText } from '@future-ui/shared/src/observe-slot-text.js';
+import '@future-ui/field-label/sp-field-label.js';
 import styles from './meter.css.js';
 
 /**

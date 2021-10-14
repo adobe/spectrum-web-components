@@ -20,16 +20,16 @@ import {
     ifDefined,
     SizedMixin,
     ElementSize,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/button/sp-button.js';
-import { ButtonVariants } from '@spectrum-web-components/button';
-import { PickerBase } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import '@future-ui/popover/sp-popover.js';
+import '@future-ui/menu/sp-menu.js';
+import '@future-ui/button/sp-button.js';
+import { ButtonVariants } from '@future-ui/button';
+import { PickerBase } from '@future-ui/picker';
+import '@future-ui/icons-ui/icons/sp-icon-chevron100.js';
+import '@future-ui/icons-workflow/icons/sp-icon-more.js';
+import chevronStyles from '@future-ui/icon/src/spectrum-icon-chevron.css.js';
 import styles from './split-button.css.js';
 
 const chevronClass = {

@@ -18,12 +18,12 @@ import {
     CSSResultGroup,
     property,
     customElement,
-} from '@spectrum-web-components/base';
-import { Search } from '@spectrum-web-components/search';
-import '@spectrum-web-components/search/sp-search.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import bodyStyles from '@spectrum-web-components/styles/body.js';
-import '@spectrum-web-components/icon/sp-icon.js';
+} from '@future-ui/base';
+import { Search } from '@future-ui/search';
+import '@future-ui/search/sp-search.js';
+import '@future-ui/field-label/sp-field-label.js';
+import bodyStyles from '@future-ui/styles/body.js';
+import '@future-ui/icon/sp-icon.js';
 
 @customElement('delayed-ready')
 export class DelayedReady extends SpectrumElement {

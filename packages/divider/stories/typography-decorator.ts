@@ -16,9 +16,9 @@ import {
     TemplateResult,
     property,
     customElement,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
-import styles from '@spectrum-web-components/theme/src/typography.css.js';
+import styles from '@future-ui/theme/src/typography.css.js';
 
 /**
  * @element typography-decorator

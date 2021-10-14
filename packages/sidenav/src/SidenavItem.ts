@@ -17,9 +17,9 @@ import {
     property,
     PropertyValues,
     ifDefined,
-} from '@spectrum-web-components/base';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+} from '@future-ui/base';
+import { LikeAnchor } from '@future-ui/shared/src/like-anchor.js';
+import { Focusable } from '@future-ui/shared/src/focusable.js';
 
 import { SidenavSelectDetail, SideNav } from './Sidenav.js';
 

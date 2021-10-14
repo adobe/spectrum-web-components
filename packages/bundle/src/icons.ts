@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import * as UIIcons from '@spectrum-web-components/icons-ui';
+import * as UIIcons from '@future-ui/icons-ui';
 export { UIIcons };
-import * as WorkflowIcons from '@spectrum-web-components/icons-workflow';
+import * as WorkflowIcons from '@future-ui/icons-workflow';
 export { WorkflowIcons };

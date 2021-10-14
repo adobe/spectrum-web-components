@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import '../sp-tooltip.js';
 import { Tooltip } from '../';
-import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';
+import { OverlayDisplayQueryDetail } from '@future-ui/overlay';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Tooltip', () => {
@@ -97,14 +97,13 @@ describe('Tooltip', () => {
         await elementUpdated(el);
 
         const overlayDetailQuery: OverlayDisplayQueryDetail = {};
-        const queryOverlayDetailEvent = new CustomEvent<
-            OverlayDisplayQueryDetail
-        >('sp-overlay-query', {
-            bubbles: true,
-            composed: true,
-            detail: overlayDetailQuery,
-            cancelable: true,
-        });
+        const queryOverlayDetailEvent =
+            new CustomEvent<OverlayDisplayQueryDetail>('sp-overlay-query', {
+                bubbles: true,
+                composed: true,
+                detail: overlayDetailQuery,
+                cancelable: true,
+            });
         el.dispatchEvent(queryOverlayDetailEvent);
 
         expect(overlayDetailQuery.overlayContentTipElement).to.exist;

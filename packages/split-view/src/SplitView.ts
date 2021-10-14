@@ -22,8 +22,8 @@ import {
     nothing,
     LitElement,
     classMap,
-} from '@spectrum-web-components/base';
-import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+} from '@future-ui/base';
+import { streamingListener } from '@future-ui/base/src/streaming-listener.js';
 
 import { WithSWCResizeObserver } from './types';
 
@@ -120,8 +120,7 @@ export class SplitView extends SpectrumElement {
 
     public constructor() {
         super();
-        const RO = ((window as unknown) as WithSWCResizeObserver)
-            .ResizeObserver;
+        const RO = (window as unknown as WithSWCResizeObserver).ResizeObserver;
         if (RO) {
             this.observer = new RO(() => {
                 this.rect = undefined;

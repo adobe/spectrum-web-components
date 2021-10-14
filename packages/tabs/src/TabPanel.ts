@@ -16,7 +16,7 @@ import {
     SpectrumElement,
     property,
     PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import panelStyles from './tab-panel.css.js';
 

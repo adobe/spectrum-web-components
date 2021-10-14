@@ -14,7 +14,7 @@ import {
     ReactiveElement,
     queryAssignedNodes,
     property,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 const slotElementObserver = Symbol('slotElementObserver');
 // Fix needed for: https://github.com/lit/lit/issues/1789
@@ -38,7 +38,8 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
 ): T & Constructor<SlotTextObservingInterface> {
     class SlotTextObservingElement
         extends constructor
-        implements SlotTextObservingInterface {
+        implements SlotTextObservingInterface
+    {
         private [slotElementObserver]: MutationObserver;
 
         @property({ type: Boolean, attribute: false })

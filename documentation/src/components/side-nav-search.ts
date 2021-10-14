@@ -17,20 +17,20 @@ import {
     TemplateResult,
     property,
     query,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 import sideNavSearchMenuStyles from './side-nav-search.css';
-import { Search } from '@spectrum-web-components/search';
-import { Overlay } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/search/sp-search.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-group.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
+import { Search } from '@future-ui/search';
+import { Overlay } from '@future-ui/overlay';
+import '@future-ui/search/sp-search.js';
+import '@future-ui/popover/sp-popover.js';
+import '@future-ui/menu/sp-menu.js';
+import '@future-ui/menu/sp-menu-group.js';
+import '@future-ui/menu/sp-menu-item.js';
+import '@future-ui/illustrated-message/sp-illustrated-message.js';
 import { AppRouter } from '../router.js';
 import { search, ResultGroup } from './search-index.js';
-import { Menu } from '@spectrum-web-components/menu';
-import { Popover } from '@spectrum-web-components/popover';
+import { Menu } from '@future-ui/menu';
+import { Popover } from '@future-ui/popover';
 
 declare global {
     interface Window {

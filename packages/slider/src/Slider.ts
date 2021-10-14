@@ -20,13 +20,13 @@ import {
     ifDefined,
     repeat,
     classMap,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import sliderStyles from './slider.css.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+import { ObserveSlotText } from '@future-ui/shared/src/observe-slot-text.js';
 import { StyleInfo } from 'lit-html/directives/style-map';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import type { NumberField } from '@spectrum-web-components/number-field';
+import '@future-ui/field-label/sp-field-label.js';
+import type { NumberField } from '@future-ui/number-field';
 import { HandleController, HandleValueDictionary } from './HandleController.js';
 import { SliderHandle } from './SliderHandle.js';
 
@@ -58,7 +58,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         this._editable = this.handleController.size < 2 ? editable : false;
         if (this.editable) {
             this._numberFieldInput = import(
-                '@spectrum-web-components/number-field/sp-number-field.js'
+                '@future-ui/number-field/sp-number-field.js'
             );
         }
         if (oldValue !== this.editable) {

@@ -3,105 +3,105 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.20...@spectrum-web-components/story-decorator@0.5.0) (2021-10-14)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.20...@future-ui/story-decorator@0.5.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.20...@spectrum-web-components/story-decorator@0.4.0) (2021-10-14)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.20...@future-ui/story-decorator@0.4.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-## [0.3.20](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.19...@spectrum-web-components/story-decorator@0.3.20) (2021-10-12)
+## [0.3.20](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.19...@future-ui/story-decorator@0.3.20) (2021-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.19](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.18...@spectrum-web-components/story-decorator@0.3.19) (2021-10-05)
+## [0.3.19](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.18...@future-ui/story-decorator@0.3.19) (2021-10-05)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.18](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.17...@spectrum-web-components/story-decorator@0.3.18) (2021-09-20)
+## [0.3.18](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.17...@future-ui/story-decorator@0.3.18) (2021-09-20)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.16...@spectrum-web-components/story-decorator@0.3.17) (2021-09-13)
+## [0.3.17](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.16...@future-ui/story-decorator@0.3.17) (2021-09-13)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.15...@spectrum-web-components/story-decorator@0.3.16) (2021-08-24)
+## [0.3.16](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.15...@future-ui/story-decorator@0.3.16) (2021-08-24)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.14...@spectrum-web-components/story-decorator@0.3.15) (2021-08-17)
+## [0.3.15](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.14...@future-ui/story-decorator@0.3.15) (2021-08-17)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.13...@spectrum-web-components/story-decorator@0.3.14) (2021-08-03)
+## [0.3.14](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.13...@future-ui/story-decorator@0.3.14) (2021-08-03)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.12...@spectrum-web-components/story-decorator@0.3.13) (2021-07-22)
+## [0.3.13](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.12...@future-ui/story-decorator@0.3.13) (2021-07-22)
 
 ### Bug Fixes
 
 -   **overlay:** allow external style access to "sp-theme" elements in overlays as a CSS part ([a107f66](https://github.com/adobe/spectrum-web-components/commit/a107f66ae171e857e5f84cfff9f7a27cc5bd320d))
 
-## [0.3.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.11...@spectrum-web-components/story-decorator@0.3.12) (2021-07-01)
+## [0.3.12](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.11...@future-ui/story-decorator@0.3.12) (2021-07-01)
 
 ### Bug Fixes
 
 -   manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/adobe/spectrum-web-components/commit/b1e3457ae447427c54f8645c478866340329750c))
 
-## [0.3.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.10...@spectrum-web-components/story-decorator@0.3.11) (2021-06-16)
+## [0.3.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.10...@future-ui/story-decorator@0.3.11) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.9...@spectrum-web-components/story-decorator@0.3.10) (2021-06-11)
+## [0.3.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.9...@future-ui/story-decorator@0.3.10) (2021-06-11)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.8...@spectrum-web-components/story-decorator@0.3.9) (2021-06-07)
+## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.8...@future-ui/story-decorator@0.3.9) (2021-06-07)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.7...@spectrum-web-components/story-decorator@0.3.8) (2021-05-24)
+## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.7...@future-ui/story-decorator@0.3.8) (2021-05-24)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.6...@spectrum-web-components/story-decorator@0.3.7) (2021-05-12)
+## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.6...@future-ui/story-decorator@0.3.7) (2021-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.5...@spectrum-web-components/story-decorator@0.3.6) (2021-04-15)
+## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.5...@future-ui/story-decorator@0.3.6) (2021-04-15)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.4...@spectrum-web-components/story-decorator@0.3.5) (2021-04-09)
+## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.4...@future-ui/story-decorator@0.3.5) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.3...@spectrum-web-components/story-decorator@0.3.4) (2021-03-29)
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.3...@future-ui/story-decorator@0.3.4) (2021-03-29)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.2...@spectrum-web-components/story-decorator@0.3.3) (2021-03-22)
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.2...@future-ui/story-decorator@0.3.3) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.1...@spectrum-web-components/story-decorator@0.3.2) (2021-03-22)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.1...@future-ui/story-decorator@0.3.2) (2021-03-22)
 
 ### Bug Fixes
 
 -   remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.0...@spectrum-web-components/story-decorator@0.3.1) (2021-03-05)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.3.0...@future-ui/story-decorator@0.3.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.2.3...@spectrum-web-components/story-decorator@0.3.0) (2021-03-04)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.2.3...@future-ui/story-decorator@0.3.0) (2021-03-04)
 
 ### Bug Fixes
 
@@ -111,15 +111,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.2.2...@spectrum-web-components/story-decorator@0.2.3) (2021-02-11)
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.2.2...@future-ui/story-decorator@0.2.3) (2021-02-11)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.2.1...@spectrum-web-components/story-decorator@0.2.2) (2021-02-02)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.2.1...@future-ui/story-decorator@0.2.2) (2021-02-02)
 
-**Note:** Version bump only for package @spectrum-web-components/story-decorator
+**Note:** Version bump only for package @future-ui/story-decorator
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.2.0...@spectrum-web-components/story-decorator@0.2.1) (2021-01-28)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/story-decorator@0.2.0...@future-ui/story-decorator@0.2.1) (2021-01-28)
 
 ### Bug Fixes
 

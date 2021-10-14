@@ -17,8 +17,8 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from '@spectrum-web-components/base';
-import type { ActionButton } from '@spectrum-web-components/action-button';
+} from '@future-ui/base';
+import type { ActionButton } from '@future-ui/action-button';
 
 import styles from './action-group.css.js';
 

@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/picker",
+    "name": "@future-ui/picker",
     "version": "0.9.0",
     "publishConfig": {
         "access": "public"
@@ -48,15 +48,15 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.6.0",
-        "@spectrum-web-components/button": "^0.16.0",
-        "@spectrum-web-components/icon": "^0.11.0",
-        "@spectrum-web-components/icons-ui": "^0.8.0",
-        "@spectrum-web-components/icons-workflow": "^0.8.0",
-        "@spectrum-web-components/menu": "^0.11.0",
-        "@spectrum-web-components/overlay": "^0.13.0",
-        "@spectrum-web-components/popover": "^0.9.20",
-        "@spectrum-web-components/shared": "^0.14.0",
+        "@future-ui/base": "^0.6.0",
+        "@future-ui/button": "^0.16.0",
+        "@future-ui/icon": "^0.11.0",
+        "@future-ui/icons-ui": "^0.8.0",
+        "@future-ui/icons-workflow": "^0.8.0",
+        "@future-ui/menu": "^0.11.0",
+        "@future-ui/overlay": "^0.13.0",
+        "@future-ui/popover": "^0.9.20",
+        "@future-ui/shared": "^0.14.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -64,6 +64,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js",
         "./sync/index.js",

@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/base",
+    "name": "@future-ui/base",
     "version": "0.6.0",
     "publishConfig": {
         "access": "public"
@@ -49,5 +49,6 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": false
 }

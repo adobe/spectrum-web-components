@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/action-button",
+    "name": "@future-ui/action-button",
     "version": "0.7.0",
     "publishConfig": {
         "access": "public"
@@ -44,10 +44,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.6.0",
-        "@spectrum-web-components/button": "^0.16.0",
-        "@spectrum-web-components/icon": "^0.11.0",
-        "@spectrum-web-components/icons-ui": "^0.8.0",
+        "@future-ui/base": "^0.6.0",
+        "@future-ui/button": "^0.16.0",
+        "@future-ui/icon": "^0.11.0",
+        "@future-ui/icons-ui": "^0.8.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -55,6 +55,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js"
     ]

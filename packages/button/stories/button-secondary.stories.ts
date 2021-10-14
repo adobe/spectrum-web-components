@@ -9,9 +9,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 import { renderButtonSet, bellIcon } from './index.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import '@future-ui/icons-workflow/icons/sp-icon-help.js';
 
 export default {
     component: 'sp-button',

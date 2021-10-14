@@ -10,16 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '../sp-action-group.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-properties.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-view-all-tags.js';
+import '@future-ui/action-button/sp-action-button.js';
+import '@future-ui/overlay/overlay-trigger.js';
+import '@future-ui/tooltip/sp-tooltip.js';
+import '@future-ui/icons-workflow/icons/sp-icon-properties.js';
+import '@future-ui/icons-workflow/icons/sp-icon-info.js';
+import '@future-ui/icons-workflow/icons/sp-icon-view-all-tags.js';
 import { ActionGroup } from '../src/ActionGroup.js';
 
 export default {

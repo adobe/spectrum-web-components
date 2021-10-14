@@ -3,65 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.4.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.4.9...@spectrum-web-components/asset@0.4.11) (2021-10-14)
+## [0.4.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.4.9...@future-ui/asset@0.4.11) (2021-10-14)
 
-**Note:** Version bump only for package @spectrum-web-components/asset
+**Note:** Version bump only for package @future-ui/asset
 
-## [0.4.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.4.9...@spectrum-web-components/asset@0.4.10) (2021-10-14)
+## [0.4.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.4.9...@future-ui/asset@0.4.10) (2021-10-14)
 
-**Note:** Version bump only for package @spectrum-web-components/asset
+**Note:** Version bump only for package @future-ui/asset
 
-## [0.4.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.4.8...@spectrum-web-components/asset@0.4.9) (2021-09-20)
+## [0.4.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.4.8...@future-ui/asset@0.4.9) (2021-09-20)
 
-**Note:** Version bump only for package @spectrum-web-components/asset
+**Note:** Version bump only for package @future-ui/asset
 
-## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.4.7...@spectrum-web-components/asset@0.4.8) (2021-08-24)
+## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.4.7...@future-ui/asset@0.4.8) (2021-08-24)
 
-**Note:** Version bump only for package @spectrum-web-components/asset
+**Note:** Version bump only for package @future-ui/asset
 
-## [0.4.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.4.6...@spectrum-web-components/asset@0.4.7) (2021-07-22)
+## [0.4.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.4.6...@future-ui/asset@0.4.7) (2021-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/asset
+**Note:** Version bump only for package @future-ui/asset
 
-## [0.4.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.4.5...@spectrum-web-components/asset@0.4.6) (2021-06-16)
+## [0.4.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.4.5...@future-ui/asset@0.4.6) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/asset
+**Note:** Version bump only for package @future-ui/asset
 
-## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.4.4...@spectrum-web-components/asset@0.4.5) (2021-05-12)
+## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.4.4...@future-ui/asset@0.4.5) (2021-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/asset
+**Note:** Version bump only for package @future-ui/asset
 
-## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.4.3...@spectrum-web-components/asset@0.4.4) (2021-04-09)
+## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.4.3...@future-ui/asset@0.4.4) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/asset
+**Note:** Version bump only for package @future-ui/asset
 
-## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.4.2...@spectrum-web-components/asset@0.4.3) (2021-03-29)
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.4.2...@future-ui/asset@0.4.3) (2021-03-29)
 
 ### Bug Fixes
 
 -   **asset:** surface label attribute for folder/file "assets" ([861696b](https://github.com/adobe/spectrum-web-components/commit/861696b354639841753418cf1c27fc319e970b04))
 
-## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.4.1...@spectrum-web-components/asset@0.4.2) (2021-03-22)
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.4.1...@future-ui/asset@0.4.2) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/asset
+**Note:** Version bump only for package @future-ui/asset
 
-## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.4.0...@spectrum-web-components/asset@0.4.1) (2021-03-05)
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.4.0...@future-ui/asset@0.4.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/asset
+**Note:** Version bump only for package @future-ui/asset
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.3.1...@spectrum-web-components/asset@0.4.0) (2021-03-04)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.3.1...@future-ui/asset@0.4.0) (2021-03-04)
 
 ### Features
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.3.0...@spectrum-web-components/asset@0.3.1) (2021-02-11)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.3.0...@future-ui/asset@0.3.1) (2021-02-11)
 
 ### Bug Fixes
 
 -   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.1.5...@spectrum-web-components/asset@0.3.0) (2021-01-21)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.1.5...@future-ui/asset@0.3.0) (2021-01-21)
 
 ### Bug Fixes
 
@@ -75,7 +75,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **asset:** update spectrum css input ([b3f0d70](https://github.com/adobe/spectrum-web-components/commit/b3f0d7045d1436ad0f8386faba09d185a7757df5))
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.1.5...@spectrum-web-components/asset@0.2.0) (2021-01-13)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.1.5...@future-ui/asset@0.2.0) (2021-01-13)
 
 ### Bug Fixes
 
@@ -89,27 +89,27 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **asset:** update spectrum css input ([b3f0d70](https://github.com/adobe/spectrum-web-components/commit/b3f0d7045d1436ad0f8386faba09d185a7757df5))
 
-## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.1.4...@spectrum-web-components/asset@0.1.5) (2020-10-12)
+## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.1.4...@future-ui/asset@0.1.5) (2020-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/asset
+**Note:** Version bump only for package @future-ui/asset
 
-## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.1.3...@spectrum-web-components/asset@0.1.4) (2020-10-12)
+## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.1.3...@future-ui/asset@0.1.4) (2020-10-12)
 
 ### Bug Fixes
 
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.1.2...@spectrum-web-components/asset@0.1.3) (2020-09-25)
+## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.1.2...@future-ui/asset@0.1.3) (2020-09-25)
 
 ### Bug Fixes
 
 -   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
 
-## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.1.1...@spectrum-web-components/asset@0.1.2) (2020-08-31)
+## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.1.1...@future-ui/asset@0.1.2) (2020-08-31)
 
-**Note:** Version bump only for package @spectrum-web-components/asset
+**Note:** Version bump only for package @future-ui/asset
 
-## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/asset@0.1.0...@spectrum-web-components/asset@0.1.1) (2020-08-19)
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/asset@0.1.0...@future-ui/asset@0.1.1) (2020-08-19)
 
 ### Bug Fixes
 

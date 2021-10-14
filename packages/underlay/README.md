@@ -4,23 +4,23 @@ An `<sp-underlay>` is used primarily in concert with elements similar to `<sp-di
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/underlay?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/underlay)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/underlay?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/underlay)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/underlay?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/underlay)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/underlay?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/underlay)
 
 ```
-yarn add @spectrum-web-components/underlay
+yarn add @future-ui/underlay
 ```
 
 Import the side effectful registration of `<sp-underlay>` via:
 
 ```
-import '@spectrum-web-components/underlay/sp-underlay.js';
+import '@future-ui/underlay/sp-underlay.js';
 ```
 
 When looking to leverage the `Underlay` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Underlay } from '@spectrum-web-components/underlay';
+import { Underlay } from '@future-ui/underlay';
 ```
 
 ## Example

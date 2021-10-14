@@ -16,14 +16,11 @@ import {
     property,
     PropertyValues,
     TemplateResult,
-} from '@spectrum-web-components/base';
-import '@spectrum-web-components/underlay/sp-underlay.js';
-import '@spectrum-web-components/sidenav/sp-sidenav.js';
-import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
-import {
-    SidenavSelectDetail,
-    SideNavItem,
-} from '@spectrum-web-components/sidenav';
+} from '@future-ui/base';
+import '@future-ui/underlay/sp-underlay.js';
+import '@future-ui/sidenav/sp-sidenav.js';
+import '@future-ui/sidenav/sp-sidenav-item.js';
+import { SidenavSelectDetail, SideNavItem } from '@future-ui/sidenav';
 import { AppRouter } from '../router.js';
 import './side-nav-search.js';
 import { search, Result } from './search-index.js';

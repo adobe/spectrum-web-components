@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
 import '../sp-field-group.js';
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
+import '@future-ui/checkbox/sp-checkbox.js';
 import { FieldGroup } from '..';
 
 describe('FieldGroup', () => {

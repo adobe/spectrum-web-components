@@ -18,18 +18,18 @@ import {
     query,
     PropertyValues,
     ifDefined,
-} from '@spectrum-web-components/base';
-import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+} from '@future-ui/base';
+import { streamingListener } from '@future-ui/base/src/streaming-listener.js';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
+import { Focusable } from '@future-ui/shared/src/focusable.js';
+import '@future-ui/color-handle/sp-color-handle.js';
 import styles from './color-wheel.css.js';
 import {
     ColorHandle,
     ColorValue,
     extractHueAndSaturationRegExp,
     replaceHueAndSaturationRegExp,
-} from '@spectrum-web-components/color-handle';
+} from '@future-ui/color-handle';
 import { TinyColor } from '@ctrl/tinycolor';
 
 /**
@@ -439,16 +439,16 @@ export class ColorWheel extends Focusable {
         super.connectedCallback();
         if (
             !this.observer &&
-            ((window as unknown) as WithSWCResizeObserver).ResizeObserver
+            (window as unknown as WithSWCResizeObserver).ResizeObserver
         ) {
-            this.observer = new ((window as unknown) as WithSWCResizeObserver).ResizeObserver(
-                (entries: SWCResizeObserverEntry[]) => {
-                    for (const entry of entries) {
-                        this.boundingClientRect = entry.contentRect;
-                    }
-                    this.requestUpdate();
+            this.observer = new (
+                window as unknown as WithSWCResizeObserver
+            ).ResizeObserver((entries: SWCResizeObserverEntry[]) => {
+                for (const entry of entries) {
+                    this.boundingClientRect = entry.contentRect;
                 }
-            );
+                this.requestUpdate();
+            });
         }
         this.observer?.observe(this);
     }

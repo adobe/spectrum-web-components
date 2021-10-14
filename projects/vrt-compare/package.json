@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/vrt-compare",
+    "name": "@future-ui/vrt-compare",
     "version": "0.2.0",
     "publishConfig": {
         "access": "public"
@@ -44,18 +44,19 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-bar": "^0.2.20",
-        "@spectrum-web-components/action-button": "^0.7.0",
-        "@spectrum-web-components/action-group": "^0.6.0",
-        "@spectrum-web-components/base": "^0.6.0",
-        "@spectrum-web-components/icons-workflow": "^0.8.0",
-        "@spectrum-web-components/shared": "^0.14.0",
-        "@spectrum-web-components/split-view": "^0.4.0",
-        "@spectrum-web-components/styles": "^0.9.13",
+        "@future-ui/action-bar": "^0.2.20",
+        "@future-ui/action-button": "^0.7.0",
+        "@future-ui/action-group": "^0.6.0",
+        "@future-ui/base": "^0.6.0",
+        "@future-ui/icons-workflow": "^0.8.0",
+        "@future-ui/shared": "^0.14.0",
+        "@future-ui/split-view": "^0.4.0",
+        "@future-ui/styles": "^0.9.13",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./onion-skinner.js",
         "./onion-skinner.ts",

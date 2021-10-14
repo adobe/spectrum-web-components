@@ -16,8 +16,8 @@ import {
     html,
     PropertyValues,
     property,
-} from '@spectrum-web-components/base';
-import { CheckboxBase } from '@spectrum-web-components/checkbox/src/CheckboxBase.js';
+} from '@future-ui/base';
+import { CheckboxBase } from '@future-ui/checkbox/src/CheckboxBase.js';
 import switchStyles from './switch.css.js';
 import legacyStyles from './switch-legacy.css.js';
 

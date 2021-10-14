@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@spectrum-web-components/base';
+import { TemplateResult } from '@future-ui/base';
 
-import { IconsetSVG } from '@spectrum-web-components/iconset/src/iconset-svg.js';
+import { IconsetSVG } from '@future-ui/iconset/src/iconset-svg.js';
 
 import iconsSVG from './icons-medium.svg.js';
 

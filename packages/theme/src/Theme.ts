@@ -14,7 +14,7 @@ import {
     CSSResultGroup,
     CSSResult,
     supportsAdoptingStyleSheets,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import coreStyles from './theme.css.js';
 

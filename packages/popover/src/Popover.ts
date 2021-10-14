@@ -17,11 +17,8 @@ import {
     property,
     SpectrumElement,
     TemplateResult,
-} from '@spectrum-web-components/base';
-import {
-    OverlayDisplayQueryDetail,
-    Placement,
-} from '@spectrum-web-components/overlay';
+} from '@future-ui/base';
+import { OverlayDisplayQueryDetail, Placement } from '@future-ui/overlay';
 import popoverStyles from './popover.css.js';
 
 /**

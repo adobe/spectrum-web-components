@@ -17,14 +17,14 @@ import {
     html,
     oneEvent,
 } from '@open-wc/testing';
-import { ActionButton } from '@spectrum-web-components/action-button';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import { Popover } from '@spectrum-web-components/popover';
-import '@spectrum-web-components/popover/sp-popover.js';
+import { ActionButton } from '@future-ui/action-button';
+import '@future-ui/action-button/sp-action-button.js';
+import '@future-ui/action-group/sp-action-group.js';
+import '@future-ui/icons-workflow/icons/sp-icon-magnify.js';
+import { Popover } from '@future-ui/popover';
+import '@future-ui/popover/sp-popover.js';
 import { OverlayTrigger } from '..';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@future-ui/overlay/overlay-trigger.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 

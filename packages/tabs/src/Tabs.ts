@@ -17,9 +17,9 @@ import {
     TemplateResult,
     PropertyValues,
     ifDefined,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 import { Tab } from './Tab.js';
-import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
+import { Focusable, getActiveElement } from '@future-ui/shared';
 
 import tabStyles from './tabs.css.js';
 import { TabPanel } from './TabPanel.js';
@@ -262,9 +262,10 @@ export class Tabs extends Focusable {
         const currentFocusedTab = getActiveElement(this) as Tab;
         let currentFocusedTabIndex = this.tabs.indexOf(currentFocusedTab);
         currentFocusedTabIndex += code === availableArrows[0] ? -1 : 1;
-        const nextTab = this.tabs[
-            (currentFocusedTabIndex + this.tabs.length) % this.tabs.length
-        ];
+        const nextTab =
+            this.tabs[
+                (currentFocusedTabIndex + this.tabs.length) % this.tabs.length
+            ];
         nextTab.focus();
         if (this.auto) {
             this.selected = nextTab.value;
@@ -405,14 +406,16 @@ export class Tabs extends Focusable {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    addEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.addEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        addEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.addEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );
@@ -422,14 +425,16 @@ export class Tabs extends Focusable {
     public disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    removeEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.removeEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        removeEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.removeEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );

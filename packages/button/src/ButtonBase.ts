@@ -16,13 +16,10 @@ import {
     TemplateResult,
     query,
     PropertyValues,
-} from '@spectrum-web-components/base';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import {
-    ObserveSlotText,
-    ObserveSlotPresence,
-} from '@spectrum-web-components/shared';
+} from '@future-ui/base';
+import { LikeAnchor } from '@future-ui/shared/src/like-anchor.js';
+import { Focusable } from '@future-ui/shared/src/focusable.js';
+import { ObserveSlotText, ObserveSlotPresence } from '@future-ui/shared';
 
 /**
  * @slot - text content to be displayed in the Button element

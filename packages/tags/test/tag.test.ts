@@ -17,7 +17,7 @@ import { spy } from 'sinon';
 import '../sp-tag.js';
 import '../sp-tags.js';
 import { Tag } from '..';
-import { ClearButton } from '@spectrum-web-components/button';
+import { ClearButton } from '@future-ui/button';
 import {
     deleteEvent,
     spaceEvent,

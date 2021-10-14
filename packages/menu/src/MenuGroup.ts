@@ -15,7 +15,7 @@ import {
     CSSResultArray,
     TemplateResult,
     queryAssignedNodes,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import { Menu } from './Menu.js';
 import '../sp-menu.js';

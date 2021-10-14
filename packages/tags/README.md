@@ -4,19 +4,19 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tags?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tags)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tags?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tags)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/tags?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/tags)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/tags?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/tags)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/416WQzw187aA7udkjT8a/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/tags
+yarn add @future-ui/tags
 ```
 
 Import the side effectful registration of `<sp-tags>` or `<sp-tag>` via:
 
 ```
-import '@spectrum-web-components/tags/sp-tags.js';
-import '@spectrum-web-components/tags/sp-tag.js';
+import '@future-ui/tags/sp-tags.js';
+import '@future-ui/tags/sp-tag.js';
 ```
 
 When looking to leverage the `Tags` or `Tag` base classes as a type and/or for extension purposes, do so via:
@@ -25,7 +25,7 @@ When looking to leverage the `Tags` or `Tag` base classes as a type and/or for e
 import {
     Tags,
     Tag
-} from '@spectrum-web-components/tags';
+} from '@future-ui/tags';
 ```
 
 ## Example

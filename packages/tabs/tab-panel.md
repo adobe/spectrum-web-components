@@ -4,18 +4,18 @@ An `<sp-tab-panel>` contains the content that will be displayed when an `<sp-tab
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tabs?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tabs)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tabs?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tabs)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/tabs?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/tabs)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/tabs?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/tabs)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/2JFFTBPXfCZpePD0wk58/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/tabs
+yarn add @future-ui/tabs
 ```
 
 Import the side effectful registration of `<sp-tab-panel>` via:
 
 ```
-import '@spectrum-web-components/tabs/sp-tab-panel.js';
+import '@future-ui/tabs/sp-tab-panel.js';
 ```
 
 When looking to leverage the `TabPanel` base class as a type and/or for extension purposes, do so via:
@@ -23,7 +23,7 @@ When looking to leverage the `TabPanel` base class as a type and/or for extensio
 ```
 import {
     TabPanel,
-} from '@spectrum-web-components/tabs';
+} from '@future-ui/tabs';
 ```
 
 ## Examples

@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { fixture, html, expect, oneEvent } from '@open-wc/testing';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import '@spectrum-web-components/popover/sp-popover.js';
+import '@future-ui/popover/sp-popover.js';
+import '@future-ui/action-button/sp-action-button.js';
+import '@future-ui/icons-workflow/icons/sp-icon-magnify.js';
+import '@future-ui/popover/sp-popover.js';
 import { OverlayTrigger } from '../src/OverlayTrigger';
 import { TriggerInteractions } from '../src/overlay-types';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { ActionButton } from '@spectrum-web-components/action-button';
+import '@future-ui/overlay/overlay-trigger.js';
+import { ActionButton } from '@future-ui/action-button';
 import { executeServerCommand } from '@web/test-runner-commands';
 
 describe('Overlay Trigger - Hover and Click', () => {

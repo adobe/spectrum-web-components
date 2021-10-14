@@ -9,13 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult, html } from '@spectrum-web-components/base';
+import { TemplateResult, html } from '@future-ui/base';
 
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@future-ui/menu/sp-menu.js';
+import '@future-ui/menu/sp-menu-item.js';
 import { ActionMenuMarkup } from './';
 
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
+import '@future-ui/icons-workflow/icons/sp-icon-settings.js';
 
 export default {
     component: 'sp-action-menu',

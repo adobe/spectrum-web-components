@@ -15,12 +15,12 @@ import {
     css,
     property,
     queryAssignedNodes,
-} from '@spectrum-web-components/base';
-import { Slider } from '@spectrum-web-components/slider';
-import '@spectrum-web-components/slider/sp-slider.js';
-import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
-import '@spectrum-web-components/overlay/sync/overlay-trigger.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+} from '@future-ui/base';
+import { Slider } from '@future-ui/slider';
+import '@future-ui/slider/sp-slider.js';
+import '@future-ui/thumbnail/sp-thumbnail.js';
+import '@future-ui/overlay/sync/overlay-trigger.js';
+import '@future-ui/tooltip/sp-tooltip.js';
 
 export class OnionSkinner extends SpectrumElement {
     @property({ type: Number }) public onionLevel = 0.5;

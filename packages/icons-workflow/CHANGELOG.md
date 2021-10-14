@@ -3,65 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.11...@spectrum-web-components/icons-workflow@0.8.0) (2021-10-14)
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.11...@future-ui/icons-workflow@0.8.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.11...@spectrum-web-components/icons-workflow@0.7.0) (2021-10-14)
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.11...@future-ui/icons-workflow@0.7.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-## [0.6.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.10...@spectrum-web-components/icons-workflow@0.6.11) (2021-09-20)
+## [0.6.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.10...@future-ui/icons-workflow@0.6.11) (2021-09-20)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.9...@spectrum-web-components/icons-workflow@0.6.10) (2021-08-24)
+## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.9...@future-ui/icons-workflow@0.6.10) (2021-08-24)
 
 ### Bug Fixes
 
 -   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
-## [0.6.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.8...@spectrum-web-components/icons-workflow@0.6.9) (2021-08-03)
+## [0.6.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.8...@future-ui/icons-workflow@0.6.9) (2021-08-03)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.6.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.7...@spectrum-web-components/icons-workflow@0.6.8) (2021-07-22)
+## [0.6.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.7...@future-ui/icons-workflow@0.6.8) (2021-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.6.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.6...@spectrum-web-components/icons-workflow@0.6.7) (2021-06-16)
+## [0.6.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.6...@future-ui/icons-workflow@0.6.7) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.6.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.5...@spectrum-web-components/icons-workflow@0.6.6) (2021-05-12)
+## [0.6.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.5...@future-ui/icons-workflow@0.6.6) (2021-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.6.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.4...@spectrum-web-components/icons-workflow@0.6.5) (2021-04-09)
+## [0.6.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.4...@future-ui/icons-workflow@0.6.5) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.6.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.3...@spectrum-web-components/icons-workflow@0.6.4) (2021-03-29)
+## [0.6.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.3...@future-ui/icons-workflow@0.6.4) (2021-03-29)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.2...@spectrum-web-components/icons-workflow@0.6.3) (2021-03-22)
+## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.2...@future-ui/icons-workflow@0.6.3) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.1...@spectrum-web-components/icons-workflow@0.6.2) (2021-03-22)
+## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.1...@future-ui/icons-workflow@0.6.2) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.0...@spectrum-web-components/icons-workflow@0.6.1) (2021-03-05)
+## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.6.0...@future-ui/icons-workflow@0.6.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.5.3...@spectrum-web-components/icons-workflow@0.6.0) (2021-03-04)
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.5.3...@future-ui/icons-workflow@0.6.0) (2021-03-04)
 
 ### Bug Fixes
 
@@ -71,19 +71,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.5.2...@spectrum-web-components/icons-workflow@0.5.3) (2021-02-11)
+## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.5.2...@future-ui/icons-workflow@0.5.3) (2021-02-11)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.5.1...@spectrum-web-components/icons-workflow@0.5.2) (2021-02-02)
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.5.1...@future-ui/icons-workflow@0.5.2) (2021-02-02)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.5.0...@spectrum-web-components/icons-workflow@0.5.1) (2021-01-28)
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.5.0...@future-ui/icons-workflow@0.5.1) (2021-01-28)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.3.6...@spectrum-web-components/icons-workflow@0.5.0) (2021-01-21)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.3.6...@future-ui/icons-workflow@0.5.0) (2021-01-21)
 
 ### Bug Fixes
 
@@ -95,7 +95,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **icons-workflow:** update spectrum css input ([549b4b6](https://github.com/adobe/spectrum-web-components/commit/549b4b6b3743ac6ca3b8fe1048188ab96ba85eee))
 -   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.3.6...@spectrum-web-components/icons-workflow@0.4.0) (2021-01-13)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.3.6...@future-ui/icons-workflow@0.4.0) (2021-01-13)
 
 ### Bug Fixes
 
@@ -106,49 +106,49 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **icons-workflow:** update spectrum css input ([549b4b6](https://github.com/adobe/spectrum-web-components/commit/549b4b6b3743ac6ca3b8fe1048188ab96ba85eee))
 -   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
 
-## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.3.5...@spectrum-web-components/icons-workflow@0.3.6) (2020-10-12)
+## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.3.5...@future-ui/icons-workflow@0.3.6) (2020-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.3.4...@spectrum-web-components/icons-workflow@0.3.5) (2020-10-12)
+## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.3.4...@future-ui/icons-workflow@0.3.5) (2020-10-12)
 
 ### Bug Fixes
 
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.3.3...@spectrum-web-components/icons-workflow@0.3.4) (2020-09-25)
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.3.3...@future-ui/icons-workflow@0.3.4) (2020-09-25)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.3.2...@spectrum-web-components/icons-workflow@0.3.3) (2020-08-31)
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.3.2...@future-ui/icons-workflow@0.3.3) (2020-08-31)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.3.1...@spectrum-web-components/icons-workflow@0.3.2) (2020-08-19)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.3.1...@future-ui/icons-workflow@0.3.2) (2020-08-19)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.3.0...@spectrum-web-components/icons-workflow@0.3.1) (2020-07-24)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.3.0...@future-ui/icons-workflow@0.3.1) (2020-07-24)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.2.2...@spectrum-web-components/icons-workflow@0.3.0) (2020-07-17)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.2.2...@future-ui/icons-workflow@0.3.0) (2020-07-17)
 
 ### Features
 
 -   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.2.1...@spectrum-web-components/icons-workflow@0.2.2) (2020-06-08)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.2.1...@future-ui/icons-workflow@0.2.2) (2020-06-08)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-workflow
+**Note:** Version bump only for package @future-ui/icons-workflow
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.2.0...@spectrum-web-components/icons-workflow@0.2.1) (2020-05-08)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.2.0...@future-ui/icons-workflow@0.2.1) (2020-05-08)
 
 ### Bug Fixes
 
 -   remove "type: "module"" in package.json for node 12 ([c9f76e2](https://github.com/adobe/spectrum-web-components/commit/c9f76e21e24bb844466158fe96512ab19c37c5a9))
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.1.0...@spectrum-web-components/icons-workflow@0.2.0) (2020-04-16)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/icons-workflow@0.1.0...@future-ui/icons-workflow@0.2.0) (2020-04-16)
 
 ### Features
 

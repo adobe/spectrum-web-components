@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/styles",
+    "name": "@future-ui/styles",
     "version": "0.9.13",
     "publishConfig": {
         "access": "public"
@@ -69,7 +69,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.6.0"
+        "@future-ui/base": "^0.6.0"
     },
     "devDependencies": {
         "@spectrum-css/commons": "^3.0.2",
@@ -77,6 +77,7 @@
         "@spectrum-css/vars": "^3.0.2"
     },
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./*.css"
     ],

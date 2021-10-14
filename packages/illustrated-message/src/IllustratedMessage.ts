@@ -16,11 +16,11 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import messageStyles from './illustrated-message.css.js';
-import headingStyles from '@spectrum-web-components/styles/heading.js';
-import bodyStyles from '@spectrum-web-components/styles/body.js';
+import headingStyles from '@future-ui/styles/heading.js';
+import bodyStyles from '@future-ui/styles/body.js';
 
 /**
  * @element sp-illustrated-message

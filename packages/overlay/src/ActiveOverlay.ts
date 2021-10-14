@@ -18,9 +18,9 @@ import {
     PropertyValues,
     SpectrumElement,
     TemplateResult,
-} from '@spectrum-web-components/base';
-import { reparentChildren } from '@spectrum-web-components/shared';
-import { Color, Scale } from '@spectrum-web-components/theme';
+} from '@future-ui/base';
+import { reparentChildren } from '@future-ui/shared';
+import { Color, Scale } from '@future-ui/theme';
 import styles from './active-overlay.css.js';
 import {
     OverlayOpenDetail,

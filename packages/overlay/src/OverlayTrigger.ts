@@ -17,8 +17,8 @@ import {
     CSSResultArray,
     TemplateResult,
     PropertyValues,
-} from '@spectrum-web-components/base';
-import type { LongpressEvent } from '@spectrum-web-components/action-button';
+} from '@future-ui/base';
+import type { LongpressEvent } from '@future-ui/action-button';
 
 import {
     Placement,

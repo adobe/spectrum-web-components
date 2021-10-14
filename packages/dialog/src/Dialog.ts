@@ -19,18 +19,18 @@ import {
     query,
     ifDefined,
     PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
-import '@spectrum-web-components/divider/sp-divider.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/button-group/sp-button-group.js';
-import crossStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@future-ui/divider/sp-divider.js';
+import '@future-ui/action-button/sp-action-button.js';
+import '@future-ui/button-group/sp-button-group.js';
+import crossStyles from '@future-ui/icon/src/spectrum-icon-cross.css.js';
+import '@future-ui/icons-ui/icons/sp-icon-cross500.js';
+import '@future-ui/icons-workflow/icons/sp-icon-alert.js';
 import {
     ObserveSlotPresence,
     FocusVisiblePolyfillMixin,
-} from '@spectrum-web-components/shared';
+} from '@future-ui/shared';
 
 import styles from './dialog.css.js';
 

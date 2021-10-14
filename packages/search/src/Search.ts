@@ -18,11 +18,11 @@ import {
     property,
     query,
     ifDefined,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
-import { Textfield } from '@spectrum-web-components/textfield';
-import '@spectrum-web-components/button/sp-clear-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import { Textfield } from '@future-ui/textfield';
+import '@future-ui/button/sp-clear-button.js';
+import '@future-ui/icons-workflow/icons/sp-icon-magnify.js';
 
 import searchStyles from './search.css.js';
 

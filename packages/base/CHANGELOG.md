@@ -3,43 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.5...@spectrum-web-components/base@0.6.0) (2021-10-14)
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.4.5...@future-ui/base@0.6.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.5...@spectrum-web-components/base@0.5.0) (2021-10-14)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.4.5...@future-ui/base@0.5.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.4...@spectrum-web-components/base@0.4.5) (2021-07-22)
+## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.4.4...@future-ui/base@0.4.5) (2021-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/base
+**Note:** Version bump only for package @future-ui/base
 
-## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.3...@spectrum-web-components/base@0.4.4) (2021-06-16)
+## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.4.3...@future-ui/base@0.4.4) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/base
+**Note:** Version bump only for package @future-ui/base
 
-## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.2...@spectrum-web-components/base@0.4.3) (2021-04-09)
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.4.2...@future-ui/base@0.4.3) (2021-04-09)
 
 ### Bug Fixes
 
 -   allow for late loading theme scopes ([4c7a124](https://github.com/adobe/spectrum-web-components/commit/4c7a1248c4b3917de97b0f34d3cebdf1505cc2dc))
 
-## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.1...@spectrum-web-components/base@0.4.2) (2021-03-22)
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.4.1...@future-ui/base@0.4.2) (2021-03-22)
 
 ### Bug Fixes
 
 -   remove right click value setting ([a44968d](https://github.com/adobe/spectrum-web-components/commit/a44968d09120ad9b54915438fb5a134f306fdab2))
 
-## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.0...@spectrum-web-components/base@0.4.1) (2021-03-05)
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.4.0...@future-ui/base@0.4.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/base
+**Note:** Version bump only for package @future-ui/base
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.3.3...@spectrum-web-components/base@0.4.0) (2021-03-04)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.3.3...@future-ui/base@0.4.0) (2021-03-04)
 
 ### Bug Fixes
 
@@ -49,22 +49,22 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.3.2...@spectrum-web-components/base@0.3.3) (2021-02-11)
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.3.2...@future-ui/base@0.3.3) (2021-02-11)
 
 ### Bug Fixes
 
 -   expand sized functionality to support no default and returning to default values ([acf3cfb](https://github.com/adobe/spectrum-web-components/commit/acf3cfb000033d1ef1e22ca571cb8dbbeaadae77))
 -   reduce cycles ([8917a5e](https://github.com/adobe/spectrum-web-components/commit/8917a5efb28d2e3fcc68c9e25ae98c3b824d7fe4))
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.3.1...@spectrum-web-components/base@0.3.2) (2021-02-02)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.3.1...@future-ui/base@0.3.2) (2021-02-02)
 
-**Note:** Version bump only for package @spectrum-web-components/base
+**Note:** Version bump only for package @future-ui/base
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.3.0...@spectrum-web-components/base@0.3.1) (2021-01-28)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.3.0...@future-ui/base@0.3.1) (2021-01-28)
 
-**Note:** Version bump only for package @spectrum-web-components/base
+**Note:** Version bump only for package @future-ui/base
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.1.3...@spectrum-web-components/base@0.3.0) (2021-01-21)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.1.3...@future-ui/base@0.3.0) (2021-01-21)
 
 ### Bug Fixes
 
@@ -77,7 +77,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   use SixedMixin to manage "size" property ([8819821](https://github.com/adobe/spectrum-web-components/commit/88198212cb495833ed2e7644f95b43dca915318d))
 -   **story-decorator:** add story decorator to replace knobs for theme application ([7c0c6be](https://github.com/adobe/spectrum-web-components/commit/7c0c6be37d58ad3e6d8973e8d4f5ccc587bf55af))
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.1.3...@spectrum-web-components/base@0.2.0) (2021-01-13)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.1.3...@future-ui/base@0.2.0) (2021-01-13)
 
 ### Bug Fixes
 
@@ -89,19 +89,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   use SixedMixin to manage "size" property ([8819821](https://github.com/adobe/spectrum-web-components/commit/88198212cb495833ed2e7644f95b43dca915318d))
 -   **story-decorator:** add story decorator to replace knobs for theme application ([7c0c6be](https://github.com/adobe/spectrum-web-components/commit/7c0c6be37d58ad3e6d8973e8d4f5ccc587bf55af))
 
-## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.1.2...@spectrum-web-components/base@0.1.3) (2020-10-12)
+## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.1.2...@future-ui/base@0.1.3) (2020-10-12)
 
 ### Bug Fixes
 
 -   **base:** use full file extension ([6ea4d9d](https://github.com/adobe/spectrum-web-components/commit/6ea4d9d299dc805a0b1743c43e5b67d07b0a47b9))
 
-## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.1.1...@spectrum-web-components/base@0.1.2) (2020-10-12)
+## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.1.1...@future-ui/base@0.1.2) (2020-10-12)
 
 ### Bug Fixes
 
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.1.0...@spectrum-web-components/base@0.1.1) (2020-09-25)
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/base@0.1.0...@future-ui/base@0.1.1) (2020-09-25)
 
 ### Bug Fixes
 

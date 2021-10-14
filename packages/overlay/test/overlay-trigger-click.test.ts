@@ -16,14 +16,14 @@ import {
     html,
     expect,
 } from '@open-wc/testing';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import '@spectrum-web-components/popover/sp-popover.js';
+import '@future-ui/popover/sp-popover.js';
+import '@future-ui/action-button/sp-action-button.js';
+import '@future-ui/icons-workflow/icons/sp-icon-magnify.js';
+import '@future-ui/popover/sp-popover.js';
 import { OverlayTrigger } from '..';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@future-ui/overlay/overlay-trigger.js';
 import { spy } from 'sinon';
-import { ActionButton } from '@spectrum-web-components/action-button';
+import { ActionButton } from '@future-ui/action-button';
 
 describe('Overlay Trigger - Click', () => {
     it('displays `click` declaratively', async () => {

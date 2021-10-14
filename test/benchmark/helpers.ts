@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult, render } from 'lit-html';
 import { customElement, LitElement, property } from 'lit-element';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/scale-medium.js';
-import '@spectrum-web-components/theme/theme-lightest.js';
+import '@future-ui/theme/sp-theme.js';
+import '@future-ui/theme/scale-medium.js';
+import '@future-ui/theme/theme-lightest.js';
 
 declare global {
     interface Window {

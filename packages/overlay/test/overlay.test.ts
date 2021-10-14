@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
-import { Dialog } from '@spectrum-web-components/dialog';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { Popover } from '@spectrum-web-components/popover';
+import '@future-ui/button/sp-button.js';
+import '@future-ui/dialog/sp-dialog.js';
+import { Dialog } from '@future-ui/dialog';
+import '@future-ui/popover/sp-popover.js';
+import { Popover } from '@future-ui/popover';
 import { ActiveOverlay, Overlay, OverlayTrigger, Placement } from '../';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers.js';

@@ -16,10 +16,10 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import sidenavStyles from './sidenav.css.js';
-import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
+import { Focusable, getActiveElement } from '@future-ui/shared';
 import { SideNavItem } from './SidenavItem.js';
 import { SideNavHeading } from './SidenavHeading.js';
 

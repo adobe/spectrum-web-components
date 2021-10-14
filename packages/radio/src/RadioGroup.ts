@@ -16,9 +16,9 @@ import {
     TemplateResult,
     queryAssignedNodes,
     PropertyValues,
-} from '@spectrum-web-components/base';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
-import { FieldGroup } from '@spectrum-web-components/field-group';
+} from '@future-ui/base';
+import { FocusVisiblePolyfillMixin } from '@future-ui/shared/src/focus-visible.js';
+import { FieldGroup } from '@future-ui/field-group';
 
 import { Radio } from './Radio.js';
 
@@ -123,9 +123,9 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
             case 'PageUp':
             case 'PageDown':
                 const tagsSiblings = [
-                    ...(this.getRootNode() as Document).querySelectorAll<RadioGroup>(
-                        'sp-radio-group'
-                    ),
+                    ...(
+                        this.getRootNode() as Document
+                    ).querySelectorAll<RadioGroup>('sp-radio-group'),
                 ];
                 if (tagsSiblings.length < 2) {
                     return;

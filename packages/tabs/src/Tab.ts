@@ -17,12 +17,12 @@ import {
     TemplateResult,
     SpectrumElement,
     PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 import {
     FocusVisiblePolyfillMixin,
     ObserveSlotPresence,
     ObserveSlotText,
-} from '@spectrum-web-components/shared';
+} from '@future-ui/shared';
 
 import tabItemStyles from './tab.css.js';
 

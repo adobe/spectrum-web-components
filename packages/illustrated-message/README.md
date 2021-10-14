@@ -4,24 +4,24 @@ An `<sp-illustrated-message>` displays an illustration icon and a message, usual
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/illustrated-message?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/illustrated-message)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/illustrated-message?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/illustrated-message)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/illustrated-message?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/illustrated-message)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/illustrated-message?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/illustrated-message)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/pUGMQGhJjaNs0KxKxTpU/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/illustrated-message
+yarn add @future-ui/illustrated-message
 ```
 
 Import the side effectful registration of `<sp-illustrated-message>` via:
 
 ```
-import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
+import '@future-ui/illustrated-message/sp-illustrated-message.js';
 ```
 
 When looking to leverage the `IllustratedMessage` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { IllustratedMessage } from '@spectrum-web-components/illustrated-message';
+import { IllustratedMessage } from '@future-ui/illustrated-message';
 ```
 
 ## Example

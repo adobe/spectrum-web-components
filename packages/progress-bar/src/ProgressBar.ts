@@ -18,9 +18,9 @@ import {
     PropertyValues,
     property,
     SizedMixin,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
-import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@future-ui/field-label/sp-field-label.js';
 import styles from './progress-bar.css.js';
 
 /**

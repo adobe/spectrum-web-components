@@ -3,19 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.16...@spectrum-web-components/overlay@0.13.0) (2021-10-14)
+# [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.16...@future-ui/overlay@0.13.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.16...@spectrum-web-components/overlay@0.12.0) (2021-10-14)
+# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.16...@future-ui/overlay@0.12.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-## [0.11.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.15...@spectrum-web-components/overlay@0.11.16) (2021-10-12)
+## [0.11.16](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.15...@future-ui/overlay@0.11.16) (2021-10-12)
 
 ### Bug Fixes
 
@@ -23,71 +23,71 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **overlay:** resolve async races with closeOverlays and manageOpen ([ff3738e](https://github.com/adobe/spectrum-web-components/commit/ff3738ea7afc12f258a7745777034ee70d6bf601))
 -   **overlay:** traverse up through shadow roots when determining parent overlay ([27f232c](https://github.com/adobe/spectrum-web-components/commit/27f232c28d30288b75187b80744b2581d6017b77))
 
-## [0.11.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.14...@spectrum-web-components/overlay@0.11.15) (2021-09-20)
+## [0.11.15](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.14...@future-ui/overlay@0.11.15) (2021-09-20)
 
 ### Bug Fixes
 
 -   allow contextmenu event passing to pierce shadow roots ([05b69e9](https://github.com/adobe/spectrum-web-components/commit/05b69e90a56676c44e4757a6c2e19e6fe333b145))
 -   correct add/remove timing of overlay events ([474ec6e](https://github.com/adobe/spectrum-web-components/commit/474ec6e85840dc1efee8b134cc6e6163f228920f))
 
-## [0.11.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.13...@spectrum-web-components/overlay@0.11.14) (2021-09-13)
+## [0.11.14](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.13...@future-ui/overlay@0.11.14) (2021-09-13)
 
 ### Bug Fixes
 
 -   close modal overlays with contextmenu events and pass those to the underlying page ([9e83f3c](https://github.com/adobe/spectrum-web-components/commit/9e83f3c0d2398323ebe941ba253d7a0dc0f40ba6))
 
-## [0.11.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.12...@spectrum-web-components/overlay@0.11.13) (2021-08-24)
+## [0.11.13](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.12...@future-ui/overlay@0.11.13) (2021-08-24)
 
 ### Bug Fixes
 
 -   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
-## [0.11.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.11...@spectrum-web-components/overlay@0.11.12) (2021-08-17)
+## [0.11.12](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.11...@future-ui/overlay@0.11.12) (2021-08-17)
 
 ### Bug Fixes
 
 -   update when events are added to manage overlays ([60cddac](https://github.com/adobe/spectrum-web-components/commit/60cddac69554d00095aee492608d85d6513c8928))
 
-## [0.11.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.10...@spectrum-web-components/overlay@0.11.11) (2021-08-03)
+## [0.11.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.10...@future-ui/overlay@0.11.11) (2021-08-03)
 
 ### Bug Fixes
 
 -   allow "updateComplete" to resolve to a boolean like the LitElement default ([6127946](https://github.com/adobe/spectrum-web-components/commit/6127946fd3ffd048a30b7eb4bf6aadf9e7c8752a))
 -   expand sync offering for elements with overlay content ([0195843](https://github.com/adobe/spectrum-web-components/commit/0195843e9efac5760a78fa302d91139c84ea5747))
 
-## [0.11.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.9...@spectrum-web-components/overlay@0.11.10) (2021-07-22)
+## [0.11.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.9...@future-ui/overlay@0.11.10) (2021-07-22)
 
 ### Bug Fixes
 
 -   **overlay:** allow external style access to "sp-theme" elements in overlays as a CSS part ([a107f66](https://github.com/adobe/spectrum-web-components/commit/a107f66ae171e857e5f84cfff9f7a27cc5bd320d))
 -   delete the used cleanup method ([942ef0f](https://github.com/adobe/spectrum-web-components/commit/942ef0fdc6e7c89e4f554e032c7b9fb760ca47a0))
 
-## [0.11.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.8...@spectrum-web-components/overlay@0.11.9) (2021-07-01)
+## [0.11.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.8...@future-ui/overlay@0.11.9) (2021-07-01)
 
 ### Bug Fixes
 
 -   allow detached elements to be used as content for an overlay ([3ad8383](https://github.com/adobe/spectrum-web-components/commit/3ad83837b6c9a693a4fc24501e3fc7fb2383a12b))
 -   manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/adobe/spectrum-web-components/commit/b1e3457ae447427c54f8645c478866340329750c))
 
-## [0.11.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.7...@spectrum-web-components/overlay@0.11.8) (2021-06-16)
+## [0.11.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.7...@future-ui/overlay@0.11.8) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/overlay
+**Note:** Version bump only for package @future-ui/overlay
 
-## [0.11.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.6...@spectrum-web-components/overlay@0.11.7) (2021-06-07)
+## [0.11.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.6...@future-ui/overlay@0.11.7) (2021-06-07)
 
 ### Bug Fixes
 
 -   ensure focus is managed when tabbing out of a menu ([9bfa81d](https://github.com/adobe/spectrum-web-components/commit/9bfa81d8a677d6c0ab5ac5cd618498496761c69b))
 -   **overlay:** vend a VirtualTrigger for overlays with no element trigger ([a359c60](https://github.com/adobe/spectrum-web-components/commit/a359c6078aa4fac3c9a7bd140609acd4d9aed81d))
 
-## [0.11.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.5...@spectrum-web-components/overlay@0.11.6) (2021-05-24)
+## [0.11.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.5...@future-ui/overlay@0.11.6) (2021-05-24)
 
 ### Bug Fixes
 
 -   **overlay:** add overlay lifecycle methods to stack management ([9361527](https://github.com/adobe/spectrum-web-components/commit/9361527bc63896bcee2933d96b5021aa74386057))
 -   **overlay:** use tabindex=-1 but always remove it on open ([6047003](https://github.com/adobe/spectrum-web-components/commit/6047003eca58232f90a0c6b2ab0e5bd9fb678eb7))
 
-## [0.11.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.4...@spectrum-web-components/overlay@0.11.5) (2021-05-12)
+## [0.11.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.4...@future-ui/overlay@0.11.5) (2021-05-12)
 
 ### Bug Fixes
 
@@ -95,25 +95,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   update "reparentChildren" types for flexibility ([2d358be](https://github.com/adobe/spectrum-web-components/commit/2d358be094cf73785d0858545ccd0f9ca2aa8db0))
 -   update presence confirmation so popper is available on update ([24f8380](https://github.com/adobe/spectrum-web-components/commit/24f83800a2011f9181947795d9249b87be99f8ab))
 
-## [0.11.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.3...@spectrum-web-components/overlay@0.11.4) (2021-04-15)
+## [0.11.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.3...@future-ui/overlay@0.11.4) (2021-04-15)
 
-**Note:** Version bump only for package @spectrum-web-components/overlay
+**Note:** Version bump only for package @future-ui/overlay
 
-## [0.11.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.2...@spectrum-web-components/overlay@0.11.3) (2021-04-09)
+## [0.11.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.2...@future-ui/overlay@0.11.3) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/overlay
+**Note:** Version bump only for package @future-ui/overlay
 
-## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.1...@spectrum-web-components/overlay@0.11.2) (2021-03-29)
+## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.1...@future-ui/overlay@0.11.2) (2021-03-29)
 
-**Note:** Version bump only for package @spectrum-web-components/overlay
+**Note:** Version bump only for package @future-ui/overlay
 
-## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.0...@spectrum-web-components/overlay@0.11.1) (2021-03-22)
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.11.0...@future-ui/overlay@0.11.1) (2021-03-22)
 
 ### Bug Fixes
 
 -   **overlay:** handle hover/longpress more directly via the "open" attribute ([7b2b64b](https://github.com/adobe/spectrum-web-components/commit/7b2b64b6be931381a1ca1c83f941677fa06750ff))
 
-# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.10.1...@spectrum-web-components/overlay@0.11.0) (2021-03-22)
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.10.1...@future-ui/overlay@0.11.0) (2021-03-22)
 
 ### Bug Fixes
 
@@ -124,11 +124,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **picker:** process field-label content for more accurate a11y tree ([dc9df54](https://github.com/adobe/spectrum-web-components/commit/dc9df54d052edc46c2399f0f7b12d3b5d4aff740))
 
-## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.10.0...@spectrum-web-components/overlay@0.10.1) (2021-03-05)
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.10.0...@future-ui/overlay@0.10.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/overlay
+**Note:** Version bump only for package @future-ui/overlay
 
-# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.9.0...@spectrum-web-components/overlay@0.10.0) (2021-03-04)
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.9.0...@future-ui/overlay@0.10.0) (2021-03-04)
 
 ### Bug Fixes
 
@@ -140,7 +140,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.8.2...@spectrum-web-components/overlay@0.9.0) (2021-02-11)
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.8.2...@future-ui/overlay@0.9.0) (2021-02-11)
 
 ### Bug Fixes
 
@@ -150,18 +150,18 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   allow activation of longpress content ([55e71fd](https://github.com/adobe/spectrum-web-components/commit/55e71fdf9fd5dde489871c3d9798ef8957f4e5b6))
 
-## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.8.1...@spectrum-web-components/overlay@0.8.2) (2021-02-02)
+## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.8.1...@future-ui/overlay@0.8.2) (2021-02-02)
 
-**Note:** Version bump only for package @spectrum-web-components/overlay
+**Note:** Version bump only for package @future-ui/overlay
 
-## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.8.0...@spectrum-web-components/overlay@0.8.1) (2021-01-28)
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.8.0...@future-ui/overlay@0.8.1) (2021-01-28)
 
 ### Bug Fixes
 
 -   **overlay:** remove trapped content from a11y tree, manage focus, open projected content ([6c496c0](https://github.com/adobe/spectrum-web-components/commit/6c496c0a930737b7fd74a565766ab41339691551))
 -   **tooltip:** correct arrow orientation, remove popper-arrow-rotate ([fcd6ea2](https://github.com/adobe/spectrum-web-components/commit/fcd6ea28ef5e4f06a07994ebd8f8b9be1a934eb2))
 
-# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.6.4...@spectrum-web-components/overlay@0.8.0) (2021-01-21)
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.6.4...@future-ui/overlay@0.8.0) (2021-01-21)
 
 ### Bug Fixes
 
@@ -177,7 +177,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
 -   **story-decorator:** add story decorator to replace knobs for theme application ([7c0c6be](https://github.com/adobe/spectrum-web-components/commit/7c0c6be37d58ad3e6d8973e8d4f5ccc587bf55af))
 
-# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.6.4...@spectrum-web-components/overlay@0.7.0) (2021-01-13)
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.6.4...@future-ui/overlay@0.7.0) (2021-01-13)
 
 ### Bug Fixes
 
@@ -193,28 +193,28 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **field-group:** add field-group pattern ([f8d265c](https://github.com/adobe/spectrum-web-components/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
 -   **story-decorator:** add story decorator to replace knobs for theme application ([7c0c6be](https://github.com/adobe/spectrum-web-components/commit/7c0c6be37d58ad3e6d8973e8d4f5ccc587bf55af))
 
-## [0.6.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.6.3...@spectrum-web-components/overlay@0.6.4) (2020-10-12)
+## [0.6.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.6.3...@future-ui/overlay@0.6.4) (2020-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/overlay
+**Note:** Version bump only for package @future-ui/overlay
 
-## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.6.2...@spectrum-web-components/overlay@0.6.3) (2020-10-12)
+## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.6.2...@future-ui/overlay@0.6.3) (2020-10-12)
 
 ### Bug Fixes
 
 -   **overlay:** close when overlay-trigger becomes [disabled](<[6f27e25](https://github.com/adobe/spectrum-web-components/commit/6f27e25658dd23949ef07c6df72c43768651482b)>)
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.6.1...@spectrum-web-components/overlay@0.6.2) (2020-09-25)
+## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.6.1...@future-ui/overlay@0.6.2) (2020-09-25)
 
-**Note:** Version bump only for package @spectrum-web-components/overlay
+**Note:** Version bump only for package @future-ui/overlay
 
-## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.6.0...@spectrum-web-components/overlay@0.6.1) (2020-09-15)
+## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.6.0...@future-ui/overlay@0.6.1) (2020-09-15)
 
 ### Bug Fixes
 
 -   **overlay:** only "tab trap" when you mean to ([74e1bd2](https://github.com/adobe/spectrum-web-components/commit/74e1bd2182785ec14f944bef8806ecc3e8d15c10))
 
-# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.5.2...@spectrum-web-components/overlay@0.6.0) (2020-08-31)
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.5.2...@future-ui/overlay@0.6.0) (2020-08-31)
 
 ### Bug Fixes
 
@@ -224,17 +224,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **split-button:** add split-button pattern ([4833a59](https://github.com/adobe/spectrum-web-components/commit/4833a598bb3da3552d194586350a3888dba79543))
 
-## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.5.1...@spectrum-web-components/overlay@0.5.2) (2020-08-19)
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.5.1...@future-ui/overlay@0.5.2) (2020-08-19)
 
-**Note:** Version bump only for package @spectrum-web-components/overlay
+**Note:** Version bump only for package @future-ui/overlay
 
-## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.5.0...@spectrum-web-components/overlay@0.5.1) (2020-08-13)
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.5.0...@future-ui/overlay@0.5.1) (2020-08-13)
 
 ### Bug Fixes
 
 -   include sync builds in publication configuration ([e731673](https://github.com/adobe/spectrum-web-components/commit/e731673e7d171af667fc87c5b6e521450143e8fe))
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.4.3...@spectrum-web-components/overlay@0.5.0) (2020-08-13)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.4.3...@future-ui/overlay@0.5.0) (2020-08-13)
 
 ### Bug Fixes
 
@@ -245,88 +245,88 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **overlay:** move entire package behind dynamic import by default ([9b0a74d](https://github.com/adobe/spectrum-web-components/commit/9b0a74de1f32ccd8cde6cabe4c06f990064f11ae))
 
-## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.4.2...@spectrum-web-components/overlay@0.4.3) (2020-08-05)
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.4.2...@future-ui/overlay@0.4.3) (2020-08-05)
 
 ### Bug Fixes
 
 -   use height: 100% to avoid layout breaks ([1498129](https://github.com/adobe/spectrum-web-components/commit/14981291e6d860a8fde7e1746a4a03af4df1e572))
 
-## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.4.1...@spectrum-web-components/overlay@0.4.2) (2020-07-24)
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.4.1...@future-ui/overlay@0.4.2) (2020-07-24)
 
 ### Bug Fixes
 
 -   ensure browser understandable extensions ([f4e59f7](https://github.com/adobe/spectrum-web-components/commit/f4e59f76f86369593810463c6406565e28ad97e9))
 
-## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.4.0...@spectrum-web-components/overlay@0.4.1) (2020-07-22)
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.4.0...@future-ui/overlay@0.4.1) (2020-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/overlay
+**Note:** Version bump only for package @future-ui/overlay
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.8...@spectrum-web-components/overlay@0.4.0) (2020-07-17)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.3.8...@future-ui/overlay@0.4.0) (2020-07-17)
 
 ### Features
 
 -   **overlay:** manage focus throwing and tab trapping ([27a0b53](https://github.com/adobe/spectrum-web-components/commit/27a0b53ea94d19bb18b7d3f89763b06dc1b42b59))
 -   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 
-## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.7...@spectrum-web-components/overlay@0.3.8) (2020-06-08)
+## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.3.7...@future-ui/overlay@0.3.8) (2020-06-08)
 
 ### Bug Fixes
 
 -   **overlay:** ensure undefined data is not passed into theme ([3e2e1ca](https://github.com/adobe/spectrum-web-components/commit/3e2e1caa4c37eedf6e569b5124c9e59f207bb92f))
 
-## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.6...@spectrum-web-components/overlay@0.3.7) (2020-05-08)
+## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.3.6...@future-ui/overlay@0.3.7) (2020-05-08)
 
 ### Bug Fixes
 
 -   **dropdown:** correct conditional check ([a3a790f](https://github.com/adobe/spectrum-web-components/commit/a3a790f6c3f5f8f0837d619ca57c1090ab14e638))
 
-## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.5...@spectrum-web-components/overlay@0.3.6) (2020-05-08)
+## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.3.5...@future-ui/overlay@0.3.6) (2020-05-08)
 
 ### Bug Fixes
 
 -   constrain overlay to available window size ([9729b55](https://github.com/adobe/spectrum-web-components/commit/9729b55ef5246662aa50cbc8037bcaeb2f4ac74a))
 
-## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.4...@spectrum-web-components/overlay@0.3.5) (2020-04-16)
+## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.3.4...@future-ui/overlay@0.3.5) (2020-04-16)
 
 ### Performance Improvements
 
 -   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
 
-## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.3...@spectrum-web-components/overlay@0.3.4) (2020-04-10)
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.3.3...@future-ui/overlay@0.3.4) (2020-04-10)
 
 ### Bug Fixes
 
 -   **overlay:** new popper version tracks scroll through assigned slots ([ea2bac4](https://github.com/adobe/spectrum-web-components/commit/ea2bac4f7d9c4df98a6a65c19229ef1c18a74791))
 
-## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.2...@spectrum-web-components/overlay@0.3.3) (2020-04-07)
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.3.2...@future-ui/overlay@0.3.3) (2020-04-07)
 
-**Note:** Version bump only for package @spectrum-web-components/overlay
+**Note:** Version bump only for package @future-ui/overlay
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.1...@spectrum-web-components/overlay@0.3.2) (2020-03-16)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.3.1...@future-ui/overlay@0.3.2) (2020-03-16)
 
 ### Bug Fixes
 
 -   **theme:** track default theme values dynamically ([a0c306c](https://github.com/adobe/spectrum-web-components/commit/a0c306c))
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.3.0...@spectrum-web-components/overlay@0.3.1) (2020-03-11)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.3.0...@future-ui/overlay@0.3.1) (2020-03-11)
 
 ### Bug Fixes
 
 -   **overlay:** extend state machine to manage disposal process ([f0f26af](https://github.com/adobe/spectrum-web-components/commit/f0f26af))
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.2.1...@spectrum-web-components/overlay@0.3.0) (2020-02-24)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.2.1...@future-ui/overlay@0.3.0) (2020-02-24)
 
 ### Features
 
 -   **dropdown:** open menu UI with overlay system ([9811eeb](https://github.com/adobe/spectrum-web-components/commit/9811eeb))
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.2.0...@spectrum-web-components/overlay@0.2.1) (2020-02-05)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.2.0...@future-ui/overlay@0.2.1) (2020-02-05)
 
 ### Bug Fixes
 
 -   **overlay:** override SpectrumCSS tip rules and process usage in popper ([aad3dec](https://github.com/adobe/spectrum-web-components/commit/aad3dec))
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.1.0...@spectrum-web-components/overlay@0.2.0) (2020-01-30)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.1.0...@future-ui/overlay@0.2.0) (2020-01-30)
 
 ### Features
 

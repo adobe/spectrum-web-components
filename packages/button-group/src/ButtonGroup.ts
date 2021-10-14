@@ -16,7 +16,7 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import styles from './button-group.css.js';
 

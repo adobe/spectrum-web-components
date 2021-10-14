@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/button-group/sp-button-group.js';
-import '@spectrum-web-components/button/sp-button.js';
-import { html } from '@spectrum-web-components/base';
+import '@future-ui/button-group/sp-button-group.js';
+import '@future-ui/button/sp-button.js';
+import { html } from '@future-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

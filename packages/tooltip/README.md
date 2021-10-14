@@ -4,24 +4,24 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tooltip?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tooltip)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tooltip?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tooltip)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/tooltip?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/tooltip)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/tooltip?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/tooltip)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/VmbuRedDUMmN4amLK7ie/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/tooltip
+yarn add @future-ui/tooltip
 ```
 
 Import the side effectful registration of `<sp-tooltip>` via:
 
 ```
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@future-ui/tooltip/sp-tooltip.js';
 ```
 
 When looking to leverage the `Tooltip` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Tooltip } from '@spectrum-web-components/tooltip';
+import { Tooltip } from '@future-ui/tooltip';
 ```
 
 ### Example

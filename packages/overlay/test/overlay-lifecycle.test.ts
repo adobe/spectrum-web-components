@@ -17,10 +17,10 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@future-ui/tooltip/sp-tooltip.js';
+import '@future-ui/action-button/sp-action-button.js';
 import { OverlayTrigger } from '..';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@future-ui/overlay/overlay-trigger.js';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 
 describe('Overlay Trigger - Lifecycle Methods', () => {
@@ -45,9 +45,9 @@ describe('Overlay Trigger - Lifecycle Methods', () => {
             name: string;
             description: string;
         };
-        let snapshot = ((await a11ySnapshot(
-            {}
-        )) as unknown) as DescribedNode & { children: DescribedNode[] };
+        let snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
+            children: DescribedNode[];
+        };
         expect(
             findAccessibilityNode<DescribedNode>(
                 snapshot,
@@ -64,7 +64,7 @@ describe('Overlay Trigger - Lifecycle Methods', () => {
         await opened;
 
         expect(el.open).to.equal('hover');
-        snapshot = ((await a11ySnapshot({})) as unknown) as DescribedNode & {
+        snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
             children: DescribedNode[];
         };
 

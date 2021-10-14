@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/action-bar",
+    "name": "@future-ui/action-bar",
     "version": "0.2.20",
     "publishConfig": {
         "access": "public"
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.6.0",
-        "@spectrum-web-components/popover": "^0.9.20",
+        "@future-ui/base": "^0.6.0",
+        "@future-ui/popover": "^0.9.20",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -53,6 +53,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js"
     ]

@@ -18,7 +18,7 @@ import {
     property,
     PropertyValues,
     query,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import {
     MenuItem,

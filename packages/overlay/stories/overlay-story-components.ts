@@ -17,17 +17,17 @@ import {
     TemplateResult,
     CSSResultGroup,
     query,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import { Overlay, Placement } from '../';
-import { RadioGroup } from '@spectrum-web-components/radio';
-import '@spectrum-web-components/button/sp-button.js';
-import { Button } from '@spectrum-web-components/button';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/radio/sp-radio.js';
-import '@spectrum-web-components/radio/sp-radio-group.js';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { Picker } from '@spectrum-web-components/picker';
+import { RadioGroup } from '@future-ui/radio';
+import '@future-ui/button/sp-button.js';
+import { Button } from '@future-ui/button';
+import '@future-ui/popover/sp-popover.js';
+import '@future-ui/radio/sp-radio.js';
+import '@future-ui/radio/sp-radio-group.js';
+import '@future-ui/overlay/overlay-trigger.js';
+import { Picker } from '@future-ui/picker';
 
 // Prevent infinite recursion in browser
 const MAX_DEPTH = 7;

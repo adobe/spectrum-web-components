@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import { ActionMenu } from '@spectrum-web-components/action-menu';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@future-ui/action-menu/sp-action-menu.js';
+import { ActionMenu } from '@future-ui/action-menu';
+import '@future-ui/icons-workflow/icons/sp-icon-settings.js';
+import '@future-ui/menu/sp-menu.js';
+import '@future-ui/menu/sp-menu-item.js';
+import '@future-ui/menu/sp-menu-divider.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 const deprecatedActionMenuFixture = async (): Promise<ActionMenu> =>

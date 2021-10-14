@@ -18,7 +18,7 @@ import {
     property,
     SizedMixin,
     PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import styles from './divider.css.js';
 

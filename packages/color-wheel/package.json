@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/color-wheel",
+    "name": "@future-ui/color-wheel",
     "version": "0.3.0",
     "publishConfig": {
         "access": "public"
@@ -45,9 +45,9 @@
     ],
     "dependencies": {
         "@ctrl/tinycolor": "^3.3.3",
-        "@spectrum-web-components/base": "^0.6.0",
-        "@spectrum-web-components/color-handle": "^0.1.12",
-        "@spectrum-web-components/shared": "^0.14.0",
+        "@future-ui/base": "^0.6.0",
+        "@future-ui/color-handle": "^0.1.12",
+        "@future-ui/shared": "^0.14.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -55,6 +55,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js"
     ]

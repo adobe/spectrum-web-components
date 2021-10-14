@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/overlay",
+    "name": "@future-ui/overlay",
     "version": "0.13.0",
     "publishConfig": {
         "access": "public"
@@ -48,16 +48,17 @@
         "lit-html"
     ],
     "dependencies": {
+        "@future-ui/action-button": "^0.7.0",
+        "@future-ui/base": "^0.6.0",
+        "@future-ui/shared": "^0.14.0",
+        "@future-ui/theme": "^0.10.0",
         "@popperjs/core": "^2.2.2",
-        "@spectrum-web-components/action-button": "^0.7.0",
-        "@spectrum-web-components/base": "^0.6.0",
-        "@spectrum-web-components/shared": "^0.14.0",
-        "@spectrum-web-components/theme": "^0.10.0",
         "popper-max-size-modifier": "^0.2.0",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./active-overlay.js",
         "./overlay-trigger.js",

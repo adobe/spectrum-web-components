@@ -16,7 +16,7 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import dropzoneStyles from './dropzone.css.js';
 

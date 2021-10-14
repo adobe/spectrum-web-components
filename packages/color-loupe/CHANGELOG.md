@@ -3,41 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.1.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.1.7...@spectrum-web-components/color-loupe@0.1.9) (2021-10-14)
+## [0.1.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-loupe@0.1.7...@future-ui/color-loupe@0.1.9) (2021-10-14)
 
-**Note:** Version bump only for package @spectrum-web-components/color-loupe
+**Note:** Version bump only for package @future-ui/color-loupe
 
-## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.1.7...@spectrum-web-components/color-loupe@0.1.8) (2021-10-14)
+## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-loupe@0.1.7...@future-ui/color-loupe@0.1.8) (2021-10-14)
 
-**Note:** Version bump only for package @spectrum-web-components/color-loupe
+**Note:** Version bump only for package @future-ui/color-loupe
 
-## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.1.6...@spectrum-web-components/color-loupe@0.1.7) (2021-09-20)
+## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-loupe@0.1.6...@future-ui/color-loupe@0.1.7) (2021-09-20)
 
-**Note:** Version bump only for package @spectrum-web-components/color-loupe
+**Note:** Version bump only for package @future-ui/color-loupe
 
-## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.1.5...@spectrum-web-components/color-loupe@0.1.6) (2021-07-22)
+## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-loupe@0.1.5...@future-ui/color-loupe@0.1.6) (2021-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/color-loupe
+**Note:** Version bump only for package @future-ui/color-loupe
 
-## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.1.4...@spectrum-web-components/color-loupe@0.1.5) (2021-06-16)
+## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-loupe@0.1.4...@future-ui/color-loupe@0.1.5) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/color-loupe
+**Note:** Version bump only for package @future-ui/color-loupe
 
-## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.1.3...@spectrum-web-components/color-loupe@0.1.4) (2021-05-12)
+## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-loupe@0.1.3...@future-ui/color-loupe@0.1.4) (2021-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/color-loupe
+**Note:** Version bump only for package @future-ui/color-loupe
 
-## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.1.2...@spectrum-web-components/color-loupe@0.1.3) (2021-04-09)
+## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-loupe@0.1.2...@future-ui/color-loupe@0.1.3) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/color-loupe
+**Note:** Version bump only for package @future-ui/color-loupe
 
-## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.1.1...@spectrum-web-components/color-loupe@0.1.2) (2021-03-29)
+## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-loupe@0.1.1...@future-ui/color-loupe@0.1.2) (2021-03-29)
 
-**Note:** Version bump only for package @spectrum-web-components/color-loupe
+**Note:** Version bump only for package @future-ui/color-loupe
 
-## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.1.0...@spectrum-web-components/color-loupe@0.1.1) (2021-03-22)
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-loupe@0.1.0...@future-ui/color-loupe@0.1.1) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/color-loupe
+**Note:** Version bump only for package @future-ui/color-loupe
 
 # 0.1.0 (2021-03-05)
 

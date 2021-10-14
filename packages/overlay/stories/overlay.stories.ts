@@ -8,7 +8,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult, ifDefined } from '@spectrum-web-components/base';
+import { html, TemplateResult, ifDefined } from '@future-ui/base';
 import {
     openOverlay,
     Overlay,
@@ -17,32 +17,32 @@ import {
     Placement,
     VirtualTrigger,
 } from '../';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
-import { DialogWrapper } from '@spectrum-web-components/dialog';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { Picker } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/slider/sp-slider.js';
-import '@spectrum-web-components/radio/sp-radio.js';
-import '@spectrum-web-components/radio/sp-radio-group.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
+import '@future-ui/action-button/sp-action-button.js';
+import '@future-ui/action-group/sp-action-group.js';
+import '@future-ui/button/sp-button.js';
+import '@future-ui/dialog/sp-dialog-wrapper.js';
+import { DialogWrapper } from '@future-ui/dialog';
+import '@future-ui/field-label/sp-field-label.js';
+import '@future-ui/icons-workflow/icons/sp-icon-magnify.js';
+import '@future-ui/icons-workflow/icons/sp-icon-open-in.js';
+import '@future-ui/overlay/overlay-trigger.js';
+import { Picker } from '@future-ui/picker';
+import '@future-ui/picker/sp-picker.js';
+import '@future-ui/menu/sp-menu.js';
+import '@future-ui/menu/sp-menu-item.js';
+import '@future-ui/menu/sp-menu-divider.js';
+import '@future-ui/popover/sp-popover.js';
+import '@future-ui/slider/sp-slider.js';
+import '@future-ui/radio/sp-radio.js';
+import '@future-ui/radio/sp-radio-group.js';
+import '@future-ui/tooltip/sp-tooltip.js';
+import '@future-ui/theme/sp-theme.js';
+import '@future-ui/theme/src/themes.js';
 import '../../../projects/story-decorator/src/types.js';
 
 import './overlay-story-components.js';
 import { render } from 'lit-html';
-import { Popover } from '@spectrum-web-components/popover';
+import { Popover } from '@future-ui/popover';
 
 const storyStyles = html`
     <style>

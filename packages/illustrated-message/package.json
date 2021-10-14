@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/illustrated-message",
+    "name": "@future-ui/illustrated-message",
     "version": "0.6.14",
     "publishConfig": {
         "access": "public"
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.6.0",
-        "@spectrum-web-components/styles": "^0.9.13",
+        "@future-ui/base": "^0.6.0",
+        "@future-ui/styles": "^0.9.13",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -53,6 +53,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js"
     ]

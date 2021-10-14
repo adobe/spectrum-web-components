@@ -20,7 +20,7 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
-import { ClearButton } from '@spectrum-web-components/button';
+import { ClearButton } from '@future-ui/button';
 import { waitForPredicate } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 

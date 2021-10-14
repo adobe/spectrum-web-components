@@ -18,7 +18,7 @@ import {
     property,
     PropertyValues,
     ifDefined,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import progressCircleStyles from './progress-circle.css.js';
 

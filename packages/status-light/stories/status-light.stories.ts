@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 
 import '../sp-status-light.js';
 
@@ -83,9 +83,7 @@ export const XL = (): TemplateResult => html`
 `;
 
 export const disabledTrue = (): TemplateResult => html`
-    <sp-status-light variant="positive" disabled>
-        positive
-    </sp-status-light>
+    <sp-status-light variant="positive" disabled>positive</sp-status-light>
 `;
 
 disabledTrue.story = {

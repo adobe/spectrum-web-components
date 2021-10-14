@@ -3,63 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.10.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.10...@spectrum-web-components/sidenav@0.10.12) (2021-10-14)
+## [0.10.12](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.10.10...@future-ui/sidenav@0.10.12) (2021-10-14)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.10.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.10...@spectrum-web-components/sidenav@0.10.11) (2021-10-14)
+## [0.10.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.10.10...@future-ui/sidenav@0.10.11) (2021-10-14)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.10.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.9...@spectrum-web-components/sidenav@0.10.10) (2021-10-12)
+## [0.10.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.10.9...@future-ui/sidenav@0.10.10) (2021-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.10.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.8...@spectrum-web-components/sidenav@0.10.9) (2021-09-20)
+## [0.10.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.10.8...@future-ui/sidenav@0.10.9) (2021-09-20)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.10.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.7...@spectrum-web-components/sidenav@0.10.8) (2021-09-13)
+## [0.10.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.10.7...@future-ui/sidenav@0.10.8) (2021-09-13)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.6...@spectrum-web-components/sidenav@0.10.7) (2021-08-24)
+## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.10.6...@future-ui/sidenav@0.10.7) (2021-08-24)
 
 ### Bug Fixes
 
 -   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
-## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.5...@spectrum-web-components/sidenav@0.10.6) (2021-08-17)
+## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.10.5...@future-ui/sidenav@0.10.6) (2021-08-17)
 
 ### Bug Fixes
 
 -   update slotting in "sp-sidenav-item" to allow for labelling in HTML ([928c476](https://github.com/adobe/spectrum-web-components/commit/928c476294c482f1d3acf1b787ef995f960edcbb))
 
-## [0.10.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.4...@spectrum-web-components/sidenav@0.10.5) (2021-07-22)
+## [0.10.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.10.4...@future-ui/sidenav@0.10.5) (2021-07-22)
 
 ### Bug Fixes
 
 -   style clean up ([49e1537](https://github.com/adobe/spectrum-web-components/commit/49e15377f3a839d0ed5dc2504dd71396aa156eb5))
 
-## [0.10.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.3...@spectrum-web-components/sidenav@0.10.4) (2021-07-01)
+## [0.10.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.10.3...@future-ui/sidenav@0.10.4) (2021-07-01)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.2...@spectrum-web-components/sidenav@0.10.3) (2021-06-16)
+## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.10.2...@future-ui/sidenav@0.10.3) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.1...@spectrum-web-components/sidenav@0.10.2) (2021-06-07)
+## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.10.1...@future-ui/sidenav@0.10.2) (2021-06-07)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.0...@spectrum-web-components/sidenav@0.10.1) (2021-05-24)
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.10.0...@future-ui/sidenav@0.10.1) (2021-05-24)
 
 ### Bug Fixes
 
 -   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/adobe/spectrum-web-components/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
 
-# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.9.5...@spectrum-web-components/sidenav@0.10.0) (2021-05-12)
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.9.5...@future-ui/sidenav@0.10.0) (2021-05-12)
 
 ### Bug Fixes
 
@@ -69,39 +69,39 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **sidenav:** add a "change" event to track the "value" property ([8d3a0bd](https://github.com/adobe/spectrum-web-components/commit/8d3a0bd93bdd9dbad66df0b895ff8101128776fa))
 
-## [0.9.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.9.4...@spectrum-web-components/sidenav@0.9.5) (2021-04-15)
+## [0.9.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.9.4...@future-ui/sidenav@0.9.5) (2021-04-15)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.9.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.9.3...@spectrum-web-components/sidenav@0.9.4) (2021-04-09)
+## [0.9.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.9.3...@future-ui/sidenav@0.9.4) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.9.2...@spectrum-web-components/sidenav@0.9.3) (2021-03-29)
+## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.9.2...@future-ui/sidenav@0.9.3) (2021-03-29)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.9.1...@spectrum-web-components/sidenav@0.9.2) (2021-03-22)
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.9.1...@future-ui/sidenav@0.9.2) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.9.0...@spectrum-web-components/sidenav@0.9.1) (2021-03-05)
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.9.0...@future-ui/sidenav@0.9.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.8.1...@spectrum-web-components/sidenav@0.9.0) (2021-03-04)
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.8.1...@future-ui/sidenav@0.9.0) (2021-03-04)
 
 ### Features
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.8.0...@spectrum-web-components/sidenav@0.8.1) (2021-02-11)
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.8.0...@future-ui/sidenav@0.8.1) (2021-02-11)
 
 ### Bug Fixes
 
 -   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
-# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.6.0...@spectrum-web-components/sidenav@0.8.0) (2021-01-21)
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.6.0...@future-ui/sidenav@0.8.0) (2021-01-21)
 
 ### Bug Fixes
 
@@ -117,7 +117,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
 -   **sidenav:** update spectrum css input ([bd43201](https://github.com/adobe/spectrum-web-components/commit/bd43201749948479216400af6c320c1c6dd269cd))
 
-# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.6.0...@spectrum-web-components/sidenav@0.7.0) (2021-01-13)
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.6.0...@future-ui/sidenav@0.7.0) (2021-01-13)
 
 ### Bug Fixes
 
@@ -133,53 +133,53 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
 -   **sidenav:** update spectrum css input ([bd43201](https://github.com/adobe/spectrum-web-components/commit/bd43201749948479216400af6c320c1c6dd269cd))
 
-# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.5.4...@spectrum-web-components/sidenav@0.6.0) (2020-11-20)
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.5.4...@future-ui/sidenav@0.6.0) (2020-11-20)
 
 ### Features
 
 -   support rel attribute for sidenav item ([90522e7](https://github.com/adobe/spectrum-web-components/commit/90522e79f57df974b3610877143d32d6885c4c41))
 
-## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.5.3...@spectrum-web-components/sidenav@0.5.4) (2020-10-12)
+## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.5.3...@future-ui/sidenav@0.5.4) (2020-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.5.2...@spectrum-web-components/sidenav@0.5.3) (2020-10-12)
+## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.5.2...@future-ui/sidenav@0.5.3) (2020-10-12)
 
 ### Bug Fixes
 
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.5.1...@spectrum-web-components/sidenav@0.5.2) (2020-09-25)
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.5.1...@future-ui/sidenav@0.5.2) (2020-09-25)
 
 ### Bug Fixes
 
 -   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
 
-## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.5.0...@spectrum-web-components/sidenav@0.5.1) (2020-09-14)
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.5.0...@future-ui/sidenav@0.5.1) (2020-09-14)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.4.3...@spectrum-web-components/sidenav@0.5.0) (2020-08-31)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.4.3...@future-ui/sidenav@0.5.0) (2020-08-31)
 
 ### Features
 
 -   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
 
-## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.4.2...@spectrum-web-components/sidenav@0.4.3) (2020-08-19)
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.4.2...@future-ui/sidenav@0.4.3) (2020-08-19)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.4.1...@spectrum-web-components/sidenav@0.4.2) (2020-07-27)
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.4.1...@future-ui/sidenav@0.4.2) (2020-07-27)
 
 ### Bug Fixes
 
 -   ensure browser understandable extensions ([f4e59f7](https://github.com/adobe/spectrum-web-components/commit/f4e59f76f86369593810463c6406565e28ad97e9))
 
-## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.4.0...@spectrum-web-components/sidenav@0.4.1) (2020-07-22)
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.4.0...@future-ui/sidenav@0.4.1) (2020-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.8...@spectrum-web-components/sidenav@0.4.0) (2020-07-17)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.3.8...@future-ui/sidenav@0.4.0) (2020-07-17)
 
 ### Bug Fixes
 
@@ -190,75 +190,75 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 
-## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.7...@spectrum-web-components/sidenav@0.3.8) (2020-06-08)
+## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.3.7...@future-ui/sidenav@0.3.8) (2020-06-08)
 
 ### Bug Fixes
 
 -   **sidenav:** add support for icons and document icons/headlines ([9ddb363](https://github.com/adobe/spectrum-web-components/commit/9ddb3630020b2ea669411b73fc4ecc9cee917014))
 -   **sidenav:** tighten Spectrum adherence and sharpen docs delivery ([d4c70cd](https://github.com/adobe/spectrum-web-components/commit/d4c70cd73b506cec103ef47bd2ec6f6bacebf9c7))
 
-## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.6...@spectrum-web-components/sidenav@0.3.7) (2020-04-16)
+## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.3.6...@future-ui/sidenav@0.3.7) (2020-04-16)
 
 ### Performance Improvements
 
 -   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
 
-## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.5...@spectrum-web-components/sidenav@0.3.6) (2020-04-10)
+## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.3.5...@future-ui/sidenav@0.3.6) (2020-04-10)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.4...@spectrum-web-components/sidenav@0.3.5) (2020-04-07)
+## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.3.4...@future-ui/sidenav@0.3.5) (2020-04-07)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.3...@spectrum-web-components/sidenav@0.3.4) (2020-03-11)
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.3.3...@future-ui/sidenav@0.3.4) (2020-03-11)
 
 ### Bug Fixes
 
 -   correct a11y tree ([f7e54e5](https://github.com/adobe/spectrum-web-components/commit/f7e54e5))
 
-## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.2...@spectrum-web-components/sidenav@0.3.3) (2020-02-05)
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.3.2...@future-ui/sidenav@0.3.3) (2020-02-05)
 
 ### Bug Fixes
 
 -   correctly track "activeElement" across shadow boundaries ([8b9f93a](https://github.com/adobe/spectrum-web-components/commit/8b9f93a))
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.1...@spectrum-web-components/sidenav@0.3.2) (2020-02-01)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.3.1...@future-ui/sidenav@0.3.2) (2020-02-01)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.3.0...@spectrum-web-components/sidenav@0.3.1) (2020-01-30)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.3.0...@future-ui/sidenav@0.3.1) (2020-01-30)
 
 ### Bug Fixes
 
 -   fix expanding sidenav item that has no value ([b28cdac](https://github.com/adobe/spectrum-web-components/commit/b28cdac))
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.2.2...@spectrum-web-components/sidenav@0.3.0) (2020-01-06)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.2.2...@future-ui/sidenav@0.3.0) (2020-01-06)
 
 ### Features
 
 -   **sidenav:** add keyboard accessibility ([6ff622b](https://github.com/adobe/spectrum-web-components/commit/6ff622b))
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.2.1...@spectrum-web-components/sidenav@0.2.2) (2019-12-02)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.2.1...@future-ui/sidenav@0.2.2) (2019-12-02)
 
 ### Bug Fixes
 
 -   normalize "event" and "error" argument names ([8d382cd](https://github.com/adobe/spectrum-web-components/commit/8d382cd))
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.2.0...@spectrum-web-components/sidenav@0.2.1) (2019-11-27)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.2.0...@future-ui/sidenav@0.2.1) (2019-11-27)
 
 ### Bug Fixes
 
 -   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716))
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.1.4...@spectrum-web-components/sidenav@0.2.0) (2019-11-19)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.1.4...@future-ui/sidenav@0.2.0) (2019-11-19)
 
 ### Features
 
 -   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc7))
 -   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/3918888))
 
-## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.1.3...@spectrum-web-components/sidenav@0.1.4) (2019-10-14)
+## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/sidenav@0.1.3...@future-ui/sidenav@0.1.4) (2019-10-14)
 
 ### Performance Improvements
 
@@ -266,4 +266,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.1.3 (2019-10-03)
 
-**Note:** Version bump only for package @spectrum-web-components/sidenav
+**Note:** Version bump only for package @future-ui/sidenav

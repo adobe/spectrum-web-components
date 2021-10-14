@@ -9,11 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import {
-    SpectrumElement,
-    property,
-    PropertyValues,
-} from '@spectrum-web-components/base';
+import { SpectrumElement, property, PropertyValues } from '@future-ui/base';
 
 import { FocusVisiblePolyfillMixin } from './focus-visible.js';
 

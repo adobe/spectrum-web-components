@@ -4,23 +4,23 @@ An `<sp-field-group>` element is used to layout a group of fields, usually `<sp-
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/field-group?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/field-group)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/field-group?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/field-group)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/field-group?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/field-group)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/field-group?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/field-group)
 
 ```
-yarn add @spectrum-web-components/field-group
+yarn add @future-ui/field-group
 ```
 
 Import the side effectful registration of `<sp-field-group>` via:
 
 ```
-import '@spectrum-web-components/field-group/sp-field-group.js';
+import '@future-ui/field-group/sp-field-group.js';
 ```
 
 When looking to leverage the `FieldGroup` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { FieldGroup } from '@spectrum-web-components/field-group';
+import { FieldGroup } from '@future-ui/field-group';
 ```
 
 ## Example

@@ -3,109 +3,109 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.17...@spectrum-web-components/toast@0.10.0) (2021-10-14)
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.17...@future-ui/toast@0.10.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.17...@spectrum-web-components/toast@0.9.0) (2021-10-14)
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.17...@future-ui/toast@0.9.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-## [0.8.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.16...@spectrum-web-components/toast@0.8.17) (2021-10-12)
+## [0.8.17](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.16...@future-ui/toast@0.8.17) (2021-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.15...@spectrum-web-components/toast@0.8.16) (2021-09-20)
+## [0.8.16](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.15...@future-ui/toast@0.8.16) (2021-09-20)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.14...@spectrum-web-components/toast@0.8.15) (2021-09-13)
+## [0.8.15](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.14...@future-ui/toast@0.8.15) (2021-09-13)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.13...@spectrum-web-components/toast@0.8.14) (2021-08-24)
+## [0.8.14](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.13...@future-ui/toast@0.8.14) (2021-08-24)
 
 ### Bug Fixes
 
 -   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
-## [0.8.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.12...@spectrum-web-components/toast@0.8.13) (2021-08-03)
+## [0.8.13](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.12...@future-ui/toast@0.8.13) (2021-08-03)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.11...@spectrum-web-components/toast@0.8.12) (2021-07-22)
+## [0.8.12](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.11...@future-ui/toast@0.8.12) (2021-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.10...@spectrum-web-components/toast@0.8.11) (2021-07-01)
+## [0.8.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.10...@future-ui/toast@0.8.11) (2021-07-01)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.9...@spectrum-web-components/toast@0.8.10) (2021-06-16)
+## [0.8.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.9...@future-ui/toast@0.8.10) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.8...@spectrum-web-components/toast@0.8.9) (2021-06-07)
+## [0.8.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.8...@future-ui/toast@0.8.9) (2021-06-07)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.7...@spectrum-web-components/toast@0.8.8) (2021-05-24)
+## [0.8.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.7...@future-ui/toast@0.8.8) (2021-05-24)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.6...@spectrum-web-components/toast@0.8.7) (2021-05-12)
+## [0.8.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.6...@future-ui/toast@0.8.7) (2021-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.5...@spectrum-web-components/toast@0.8.6) (2021-04-15)
+## [0.8.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.5...@future-ui/toast@0.8.6) (2021-04-15)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.4...@spectrum-web-components/toast@0.8.5) (2021-04-09)
+## [0.8.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.4...@future-ui/toast@0.8.5) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.3...@spectrum-web-components/toast@0.8.4) (2021-03-29)
+## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.3...@future-ui/toast@0.8.4) (2021-03-29)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.2...@spectrum-web-components/toast@0.8.3) (2021-03-22)
+## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.2...@future-ui/toast@0.8.3) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.1...@spectrum-web-components/toast@0.8.2) (2021-03-22)
+## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.1...@future-ui/toast@0.8.2) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.8.0...@spectrum-web-components/toast@0.8.1) (2021-03-05)
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.8.0...@future-ui/toast@0.8.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.7.3...@spectrum-web-components/toast@0.8.0) (2021-03-04)
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.7.3...@future-ui/toast@0.8.0) (2021-03-04)
 
 ### Features
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-## [0.7.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.7.2...@spectrum-web-components/toast@0.7.3) (2021-02-11)
+## [0.7.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.7.2...@future-ui/toast@0.7.3) (2021-02-11)
 
 ### Bug Fixes
 
 -   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
-## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.7.1...@spectrum-web-components/toast@0.7.2) (2021-02-02)
+## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.7.1...@future-ui/toast@0.7.2) (2021-02-02)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.7.0...@spectrum-web-components/toast@0.7.1) (2021-01-28)
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.7.0...@future-ui/toast@0.7.1) (2021-01-28)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.5.4...@spectrum-web-components/toast@0.7.0) (2021-01-21)
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.5.4...@future-ui/toast@0.7.0) (2021-01-21)
 
 ### Bug Fixes
 
@@ -122,7 +122,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **toast:** default to "open === false", always dispatch "close" event ([fcb3729](https://github.com/adobe/spectrum-web-components/commit/fcb37292178bac2cb2327eebd4f3a01908e27f38))
 -   **toast:** update spectrum css input ([183ee95](https://github.com/adobe/spectrum-web-components/commit/183ee95c8f9e0ba2c9f2f8d0bc922728e36fdb0a))
 
-# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.5.4...@spectrum-web-components/toast@0.6.0) (2021-01-13)
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.5.4...@future-ui/toast@0.6.0) (2021-01-13)
 
 ### Bug Fixes
 
@@ -138,73 +138,73 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **toast:** default to "open === false", always dispatch "close" event ([fcb3729](https://github.com/adobe/spectrum-web-components/commit/fcb37292178bac2cb2327eebd4f3a01908e27f38))
 -   **toast:** update spectrum css input ([183ee95](https://github.com/adobe/spectrum-web-components/commit/183ee95c8f9e0ba2c9f2f8d0bc922728e36fdb0a))
 
-## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.5.3...@spectrum-web-components/toast@0.5.4) (2020-10-12)
+## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.5.3...@future-ui/toast@0.5.4) (2020-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.5.2...@spectrum-web-components/toast@0.5.3) (2020-10-12)
+## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.5.2...@future-ui/toast@0.5.3) (2020-10-12)
 
 ### Bug Fixes
 
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.5.1...@spectrum-web-components/toast@0.5.2) (2020-09-25)
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.5.1...@future-ui/toast@0.5.2) (2020-09-25)
 
 ### Bug Fixes
 
 -   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
 
-## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.5.0...@spectrum-web-components/toast@0.5.1) (2020-09-14)
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.5.0...@future-ui/toast@0.5.1) (2020-09-14)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.4.4...@spectrum-web-components/toast@0.5.0) (2020-08-31)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.4.4...@future-ui/toast@0.5.0) (2020-08-31)
 
 ### Features
 
 -   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
 
-## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.4.3...@spectrum-web-components/toast@0.4.4) (2020-08-19)
+## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.4.3...@future-ui/toast@0.4.4) (2020-08-19)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.4.2...@spectrum-web-components/toast@0.4.3) (2020-07-27)
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.4.2...@future-ui/toast@0.4.3) (2020-07-27)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.4.1...@spectrum-web-components/toast@0.4.2) (2020-07-24)
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.4.1...@future-ui/toast@0.4.2) (2020-07-24)
 
 ### Bug Fixes
 
 -   ensure browser understandable extensions ([f4e59f7](https://github.com/adobe/spectrum-web-components/commit/f4e59f76f86369593810463c6406565e28ad97e9))
 
-## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.4.0...@spectrum-web-components/toast@0.4.1) (2020-07-22)
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.4.0...@future-ui/toast@0.4.1) (2020-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.3.4...@spectrum-web-components/toast@0.4.0) (2020-07-17)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.3.4...@future-ui/toast@0.4.0) (2020-07-17)
 
 ### Features
 
 -   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 
-## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.3.3...@spectrum-web-components/toast@0.3.4) (2020-06-08)
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.3.3...@future-ui/toast@0.3.4) (2020-06-08)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.3.2...@spectrum-web-components/toast@0.3.3) (2020-05-12)
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.3.2...@future-ui/toast@0.3.3) (2020-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.3.1...@spectrum-web-components/toast@0.3.2) (2020-05-08)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.3.1...@future-ui/toast@0.3.2) (2020-05-08)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.3.0...@spectrum-web-components/toast@0.3.1) (2020-04-21)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.3.0...@future-ui/toast@0.3.1) (2020-04-21)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.2.5...@spectrum-web-components/toast@0.3.0) (2020-04-16)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.2.5...@future-ui/toast@0.3.0) (2020-04-16)
 
 ### Features
 
@@ -214,37 +214,37 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
 
-## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.2.4...@spectrum-web-components/toast@0.2.5) (2020-04-10)
+## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.2.4...@future-ui/toast@0.2.5) (2020-04-10)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.2.3...@spectrum-web-components/toast@0.2.4) (2020-04-07)
+## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.2.3...@future-ui/toast@0.2.4) (2020-04-07)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.2.2...@spectrum-web-components/toast@0.2.3) (2020-03-11)
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.2.2...@future-ui/toast@0.2.3) (2020-03-11)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.2.1...@spectrum-web-components/toast@0.2.2) (2020-02-05)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.2.1...@future-ui/toast@0.2.2) (2020-02-05)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.2.0...@spectrum-web-components/toast@0.2.1) (2020-02-01)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.2.0...@future-ui/toast@0.2.1) (2020-02-01)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.1.2...@spectrum-web-components/toast@0.2.0) (2020-01-30)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.1.2...@future-ui/toast@0.2.0) (2020-01-30)
 
 ### Features
 
 -   pass through autocomplete attribute to inputs ([5416510](https://github.com/adobe/spectrum-web-components/commit/5416510))
 
-## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.1.1...@spectrum-web-components/toast@0.1.2) (2020-01-06)
+## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.1.1...@future-ui/toast@0.1.2) (2020-01-06)
 
-**Note:** Version bump only for package @spectrum-web-components/toast
+**Note:** Version bump only for package @future-ui/toast
 
-## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/toast@0.1.0...@spectrum-web-components/toast@0.1.1) (2019-12-12)
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/toast@0.1.0...@future-ui/toast@0.1.1) (2019-12-12)
 
 ### Bug Fixes
 

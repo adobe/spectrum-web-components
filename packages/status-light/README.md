@@ -4,24 +4,24 @@ An `<sp-status-light>` is a great way to convey semantic meaning, such as status
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/status-light?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/status-light)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/status-light?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/status-light)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/status-light?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/status-light)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/status-light?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/status-light)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/9rvftzUUo2pNorfAypRl/src/index.stories.js)
 
 ```
-yarn add @spectrum-web-components/status-light
+yarn add @future-ui/status-light
 ```
 
 Import the side effectful registration of `<sp-status-light>` via:
 
 ```
-import '@spectrum-web-components/status-light/sp-status-light.js';
+import '@future-ui/status-light/sp-status-light.js';
 ```
 
 When looking to leverage the `StatusLight` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { StatusLight } from '@spectrum-web-components/status-light';
+import { StatusLight } from '@future-ui/status-light';
 ```
 
 ## Sizes

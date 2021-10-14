@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
-import { html } from '@spectrum-web-components/base';
+import '@future-ui/action-menu/sp-action-menu.js';
+import '@future-ui/menu/sp-menu.js';
+import '@future-ui/menu/sp-menu-item.js';
+import '@future-ui/menu/sp-menu-divider.js';
+import { html } from '@future-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

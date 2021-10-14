@@ -18,11 +18,11 @@ import {
     TemplateResult,
     SizedMixin,
     ElementSize,
-} from '@spectrum-web-components/base';
-import { ButtonBase } from '@spectrum-web-components/button';
+} from '@future-ui/base';
+import { ButtonBase } from '@future-ui/button';
 import buttonStyles from './action-button.css.js';
-import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
+import cornerTriangleStyles from '@future-ui/icon/src/spectrum-icon-corner-triangle.css.js';
+import '@future-ui/icons-ui/icons/sp-icon-corner-triangle300.js';
 
 const holdAffordanceClass = {
     s: 'spectrum-UIIcon-CornerTriangle75',

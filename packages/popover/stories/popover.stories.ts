@@ -9,8 +9,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '../sp-popover.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { Placement } from '@spectrum-web-components/overlay';
+import { html, TemplateResult } from '@future-ui/base';
+import { Placement } from '@future-ui/overlay';
 
 export default {
     component: 'sp-popover',

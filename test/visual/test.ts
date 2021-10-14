@@ -17,10 +17,10 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { visualDiff } from '@web/test-runner-visual-regression';
-import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
-import { Color, Scale } from '@spectrum-web-components/theme';
-import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/StoryDecorator';
-import { TemplateResult, html } from '@spectrum-web-components/base';
+import '@future-ui/story-decorator/sp-story-decorator.js';
+import { Color, Scale } from '@future-ui/theme';
+import { StoryDecorator } from '@future-ui/story-decorator/src/StoryDecorator';
+import { TemplateResult, html } from '@future-ui/base';
 import { render } from 'lit';
 import { sendKeys } from '@web/test-runner-commands';
 
@@ -62,20 +62,20 @@ export const test = (
                     ...(testsDefault.args || {}),
                     ...(tests[story].args || {}),
                 };
-                let decoratedStory:
-                    | (() => TemplateResult)
-                    | TemplateResult = () =>
-                    html`
-                        ${tests[story](args)}
-                    `;
+                let decoratedStory: (() => TemplateResult) | TemplateResult =
+                    () =>
+                        html`
+                            ${tests[story](args)}
+                        `;
                 let storyResult = decoratedStory();
                 if (tests[story].decorators && tests[story].decorators.length) {
                     let decoratorCount = tests[story].decorators.length;
                     while (decoratorCount) {
                         decoratorCount -= 1;
-                        decoratedStory = tests[story].decorators[
-                            decoratorCount
-                        ](decoratedStory);
+                        decoratedStory =
+                            tests[story].decorators[decoratorCount](
+                                decoratedStory
+                            );
                     }
                     storyResult = decoratedStory as TemplateResult;
                 }
@@ -83,9 +83,10 @@ export const test = (
                     let decoratorCount = testsDefault.decorators.length;
                     while (decoratorCount) {
                         decoratorCount -= 1;
-                        decoratedStory = testsDefault.decorators[
-                            decoratorCount
-                        ](decoratedStory);
+                        decoratedStory =
+                            testsDefault.decorators[decoratorCount](
+                                decoratedStory
+                            );
                     }
                     storyResult = decoratedStory as TemplateResult;
                 }

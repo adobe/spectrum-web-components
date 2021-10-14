@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html } from '@spectrum-web-components/base';
+import { html } from '@future-ui/base';
 import { elementUpdated, expect } from '@open-wc/testing';
 import { getElFrom, createLanguageContext } from './helpers.js';
 import polyfillCheck from '@formatjs/intl-numberformat/should-polyfill.js';

@@ -9,14 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 
 import '../sp-divider.js';
 import './typography-decorator.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-align-left.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-align-right.js';
+import '@future-ui/action-button/sp-action-button.js';
+import '@future-ui/icon/sp-icon.js';
+import '@future-ui/icons-workflow/icons/sp-icon-align-left.js';
+import '@future-ui/icons-workflow/icons/sp-icon-align-right.js';
 
 export default {
     title: 'Divider',

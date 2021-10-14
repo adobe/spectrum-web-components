@@ -4,30 +4,30 @@ An `<sp-picker>` is an alternative to HTML's `<select>` element. Use `<sp-menu-i
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/picker?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/picker)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/picker?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/picker)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/picker?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/picker)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/picker?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/picker)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/guTpKeAjgecibF150Qbg/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/picker
+yarn add @future-ui/picker
 ```
 
 Import the side effectful registration of `<sp-picker>` via:
 
 ```
-import '@spectrum-web-components/picker/sp-picker.js';
+import '@future-ui/picker/sp-picker.js';
 ```
 
-The default of `<sp-picker>` will load dependencies in `@spectrum-web-components/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-picker>` as follows:
+The default of `<sp-picker>` will load dependencies in `@future-ui/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-picker>` as follows:
 
 ```
-import '@spectrum-web-components/picker/sync/sp-picker.js';
+import '@future-ui/picker/sync/sp-picker.js';
 ```
 
 When looking to leverage the `Picker` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Picker } from '@spectrum-web-components/picker';
+import { Picker } from '@future-ui/picker';
 ```
 
 ## Sizes

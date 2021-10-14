@@ -1,4 +1,4 @@
-import { TemplateResult } from '@spectrum-web-components/base';
+import { TemplateResult } from '@future-ui/base';
 
 export interface Story<T> {
     (args?: T): TemplateResult;

@@ -9,16 +9,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 
 import { MenuGroup } from '..';
 import '../sp-menu.js';
 import '../sp-menu-divider.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
-import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@future-ui/popover/sp-popover.js';
+import '@future-ui/menu/sp-menu.js';
+import '@future-ui/menu/sp-menu-item.js';
+import '@future-ui/menu/sp-menu-divider.js';
+import '@future-ui/menu/sp-menu-group.js';
 
 export default {
     component: 'sp-menu',
@@ -65,14 +65,13 @@ export const mixed = (): TemplateResult => {
                 decoration = value;
                 break;
         }
-        (document.querySelector(
-            '#output'
-        ) as HTMLElement).textContent = styleRules({
-            style,
-            weight,
-            color,
-            decoration,
-        });
+        (document.querySelector('#output') as HTMLElement).textContent =
+            styleRules({
+                style,
+                weight,
+                color,
+                decoration,
+            });
     };
     return html`
         <style>

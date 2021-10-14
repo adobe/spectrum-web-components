@@ -10,21 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 
 import '../sp-top-nav.js';
 import '../sp-top-nav-item.js';
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/avatar/sp-avatar.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-download.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-link.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-search.js';
+import '@future-ui/action-menu/sp-action-menu.js';
+import '@future-ui/menu/sp-menu.js';
+import '@future-ui/menu/sp-menu-item.js';
+import '@future-ui/menu/sp-menu-divider.js';
+import '@future-ui/action-group/sp-action-group.js';
+import '@future-ui/action-button/sp-action-button.js';
+import '@future-ui/avatar/sp-avatar.js';
+import '@future-ui/icons-workflow/icons/sp-icon-settings.js';
+import '@future-ui/icons-workflow/icons/sp-icon-download.js';
+import '@future-ui/icons-workflow/icons/sp-icon-link.js';
+import '@future-ui/icons-workflow/icons/sp-icon-search.js';
 import { logo, avatar } from './images';
 
 export default {

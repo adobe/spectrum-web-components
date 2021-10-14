@@ -17,14 +17,14 @@ import {
     TemplateResult,
     PropertyValues,
     query,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import '@future-ui/icons-ui/icons/sp-icon-checkmark100.js';
+import { LikeAnchor } from '@future-ui/shared/src/like-anchor.js';
+import { Focusable } from '@future-ui/shared/src/focusable.js';
 
 import menuItemStyles from './menu-item.css.js';
-import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import checkmarkStyles from '@future-ui/icon/src/spectrum-icon-checkmark.css.js';
 import { Menu } from './Menu.js';
 
 export class MenuItemRemovedEvent extends Event {

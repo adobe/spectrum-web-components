@@ -10,12 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/toast/sp-toast.js';
-import { html } from '@spectrum-web-components/base';
+import '@future-ui/toast/sp-toast.js';
+import { html } from '@future-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-toast>
-        Tip me!
-    </sp-toast>
+    <sp-toast>Tip me!</sp-toast>
 `);

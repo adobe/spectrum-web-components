@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '../sp-tooltip.js';
-import { html, ifDefined, TemplateResult } from '@spectrum-web-components/base';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
-import '@spectrum-web-components/button/sp-button.js';
-import { Placement } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import { html, ifDefined, TemplateResult } from '@future-ui/base';
+import '@future-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@future-ui/icons-workflow/icons/sp-icon-checkmark.js';
+import '@future-ui/icons-workflow/icons/sp-icon-info.js';
+import '@future-ui/button/sp-button.js';
+import { Placement } from '@future-ui/overlay';
+import '@future-ui/overlay/overlay-trigger.js';
 
 const iconOptions: {
     [key: string]: ({
@@ -261,12 +261,14 @@ const overlayStyles = html`
 const overlaid = (openPlacement: Placement): TemplateResult => {
     return html`
         ${overlayStyles}
-        ${([
-            ['bottom', ''],
-            ['left', 'negative'],
-            ['right', 'positive'],
-            ['top', 'info'],
-        ] as [Placement, string][]).map(([placement, variant]) => {
+        ${(
+            [
+                ['bottom', ''],
+                ['left', 'negative'],
+                ['right', 'positive'],
+                ['top', 'info'],
+            ] as [Placement, string][]
+        ).map(([placement, variant]) => {
             return html`
                 <overlay-trigger
                     placement=${placement}

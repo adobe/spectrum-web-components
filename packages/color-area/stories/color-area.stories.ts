@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 
-import '@spectrum-web-components/color-slider/sp-color-slider.js';
-import { ColorSlider } from '@spectrum-web-components/color-slider/src/ColorSlider';
+import '@future-ui/color-slider/sp-color-slider.js';
+import { ColorSlider } from '@future-ui/color-slider/src/ColorSlider';
 import '../sp-color-area.js';
 import { ColorArea } from '../src/ColorArea.js';
 

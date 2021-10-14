@@ -10,15 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/popover/sp-popover.js';
-import { html } from '@spectrum-web-components/base';
+import '@future-ui/popover/sp-popover.js';
+import { html } from '@future-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
     <sp-popover variant="dialog" direction="top" open>
-        <div id="title">
-            Popover Title
-        </div>
+        <div id="title">Popover Title</div>
         <div id="content">
             Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
             Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake

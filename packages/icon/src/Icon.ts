@@ -16,9 +16,9 @@ import {
     query,
     TemplateResult,
     ifDefined,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
-import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
+import { IconsetRegistry } from '@future-ui/iconset/src/iconset-registry.js';
 
 import { IconBase } from './IconBase.js';
 

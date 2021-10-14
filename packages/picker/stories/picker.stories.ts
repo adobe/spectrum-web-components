@@ -10,17 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 
 import '../sp-picker.js';
 import { Picker } from '../';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
+import '@future-ui/menu/sp-menu-item.js';
+import '@future-ui/menu/sp-menu-divider.js';
+import '@future-ui/icons-workflow/icons/sp-icon-edit.js';
+import '@future-ui/icons-workflow/icons/sp-icon-copy.js';
+import '@future-ui/icons-workflow/icons/sp-icon-delete.js';
 import { states } from './states.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@future-ui/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {

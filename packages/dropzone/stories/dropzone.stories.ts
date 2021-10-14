@@ -9,12 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 
 import '../sp-dropzone.js';
 import { illustration } from '../test/test-svg';
-import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
-import '@spectrum-web-components/link/sp-link.js';
+import '@future-ui/illustrated-message/sp-illustrated-message.js';
+import '@future-ui/link/sp-link.js';
 
 export default {
     component: 'sp-dropzone',

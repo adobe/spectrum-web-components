@@ -4,24 +4,24 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/action-group?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/action-group)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/action-group?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/action-group)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/action-group?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/action-group)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/action-group?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/action-group)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/ty5ezK85zgVE5vuZfMem/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/action-group
+yarn add @future-ui/action-group
 ```
 
 Import the side effectful registration of `<sp-action-group>` via:
 
 ```
-import '@spectrum-web-components/action-group/sp-action-group.js';
+import '@future-ui/action-group/sp-action-group.js';
 ```
 
 When looking to leverage the `ActionGroup` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ActionGroup } from '@spectrum-web-components/action-group';
+import { ActionGroup } from '@future-ui/action-group';
 ```
 
 ## Example

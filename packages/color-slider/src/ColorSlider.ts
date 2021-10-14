@@ -18,17 +18,17 @@ import {
     query,
     PropertyValues,
     ifDefined,
-} from '@spectrum-web-components/base';
-import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
+} from '@future-ui/base';
+import { streamingListener } from '@future-ui/base/src/streaming-listener.js';
+import { Focusable } from '@future-ui/shared/src/focusable.js';
+import '@future-ui/color-handle/sp-color-handle.js';
 import styles from './color-slider.css.js';
 import {
     ColorHandle,
     ColorValue,
     extractHueAndSaturationRegExp,
     replaceHueAndSaturationRegExp,
-} from '@spectrum-web-components/color-handle';
+} from '@future-ui/color-handle';
 import { TinyColor } from '@ctrl/tinycolor';
 
 /**

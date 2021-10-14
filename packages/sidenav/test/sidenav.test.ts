@@ -27,7 +27,7 @@ import {
     expect,
     waitUntil,
 } from '@open-wc/testing';
-import { TemplateResult, LitElement } from '@spectrum-web-components/base';
+import { TemplateResult, LitElement } from '@future-ui/base';
 import { spy } from 'sinon';
 import { executeServerCommand } from '@web/test-runner-commands';
 

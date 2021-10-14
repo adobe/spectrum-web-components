@@ -67,7 +67,7 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
     let manifestImports = `import {
         html,
         TemplateResult
-    } from '@spectrum-web-components/base';\r\n`;
+    } from '@future-ui/base';\r\n`;
     let manifestListings = `\r\nexport const iconManifest = [\r\n`;
 
     icons.forEach((i) => {
@@ -177,10 +177,10 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
         import {
             html,
             TemplateResult
-        } from '@spectrum-web-components/base';
+        } from '@future-ui/base';
         import {
             IconBase
-        } from '@spectrum-web-components/icon';
+        } from '@future-ui/icon';
 
         import {
             ${ComponentName}Icon

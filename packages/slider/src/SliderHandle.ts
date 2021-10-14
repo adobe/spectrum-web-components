@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { property, PropertyValues } from '@spectrum-web-components/base';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import { ProvideLang } from '@spectrum-web-components/theme';
+import { property, PropertyValues } from '@future-ui/base';
+import { Focusable } from '@future-ui/shared/src/focusable.js';
+import { ProvideLang } from '@future-ui/theme';
 import {
     NumberFormatter,
     NumberFormatOptions,

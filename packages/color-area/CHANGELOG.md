@@ -3,90 +3,90 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.2.1...@spectrum-web-components/color-area@0.4.0) (2021-10-14)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.2.1...@future-ui/color-area@0.4.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.2.1...@spectrum-web-components/color-area@0.3.0) (2021-10-14)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.2.1...@future-ui/color-area@0.3.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.2.0...@spectrum-web-components/color-area@0.2.1) (2021-10-12)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.2.0...@future-ui/color-area@0.2.1) (2021-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/color-area
+**Note:** Version bump only for package @future-ui/color-area
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.12...@spectrum-web-components/color-area@0.2.0) (2021-09-20)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.12...@future-ui/color-area@0.2.0) (2021-09-20)
 
 ### Features
 
 -   **color-area:** separate X and Y aria labels to improve accessibility ([e8d9768](https://github.com/adobe/spectrum-web-components/commit/e8d9768f702991f76b0b3c109edb1eef17fe3cae))
 
-## [0.1.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.11...@spectrum-web-components/color-area@0.1.12) (2021-09-13)
+## [0.1.12](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.11...@future-ui/color-area@0.1.12) (2021-09-13)
 
 ### Bug Fixes
 
 -   flappy Slider/Color Area tests ([c769c87](https://github.com/adobe/spectrum-web-components/commit/c769c8750a66139588191a8289abf13df7012c46))
 -   manage "focused" across more contexts ([9273c15](https://github.com/adobe/spectrum-web-components/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
 
-## [0.1.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.10...@spectrum-web-components/color-area@0.1.11) (2021-08-24)
+## [0.1.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.10...@future-ui/color-area@0.1.11) (2021-08-24)
 
-**Note:** Version bump only for package @spectrum-web-components/color-area
+**Note:** Version bump only for package @future-ui/color-area
 
-## [0.1.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.9...@spectrum-web-components/color-area@0.1.10) (2021-08-17)
+## [0.1.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.9...@future-ui/color-area@0.1.10) (2021-08-17)
 
 ### Bug Fixes
 
 -   key interaction handling no longer prevents "tab" presses ([b542ce8](https://github.com/adobe/spectrum-web-components/commit/b542ce8f98a8a26badfa856f2e09ebda16dbcbb1))
 
-## [0.1.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.8...@spectrum-web-components/color-area@0.1.9) (2021-08-03)
+## [0.1.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.8...@future-ui/color-area@0.1.9) (2021-08-03)
 
-**Note:** Version bump only for package @spectrum-web-components/color-area
+**Note:** Version bump only for package @future-ui/color-area
 
-## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.7...@spectrum-web-components/color-area@0.1.8) (2021-07-22)
+## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.7...@future-ui/color-area@0.1.8) (2021-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/color-area
+**Note:** Version bump only for package @future-ui/color-area
 
-## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.6...@spectrum-web-components/color-area@0.1.7) (2021-07-01)
+## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.6...@future-ui/color-area@0.1.7) (2021-07-01)
 
 ### Bug Fixes
 
 -   expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/adobe/spectrum-web-components/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
 -   normalize focus passing during and after pointer events ([357931b](https://github.com/adobe/spectrum-web-components/commit/357931b6eb803759925b10b629d21878e8249678))
 
-## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.5...@spectrum-web-components/color-area@0.1.6) (2021-06-16)
+## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.5...@future-ui/color-area@0.1.6) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/color-area
+**Note:** Version bump only for package @future-ui/color-area
 
-## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.4...@spectrum-web-components/color-area@0.1.5) (2021-06-07)
+## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.4...@future-ui/color-area@0.1.5) (2021-06-07)
 
 ### Bug Fixes
 
 -   lint away debugger statements ([34a498e](https://github.com/adobe/spectrum-web-components/commit/34a498e784221f98dbf26e9366114c82fabc9c5b))
 -   **color-area:** fix hue value for hsv and hsl ([a66e111](https://github.com/adobe/spectrum-web-components/commit/a66e111c05571e3abac8f2940f11442e6f9e67b2))
 
-## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.3...@spectrum-web-components/color-area@0.1.4) (2021-05-12)
+## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.3...@future-ui/color-area@0.1.4) (2021-05-12)
 
 ### Bug Fixes
 
 -   include touch-action rule for draggable content ([3f507e6](https://github.com/adobe/spectrum-web-components/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
 
-## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.2...@spectrum-web-components/color-area@0.1.3) (2021-04-09)
+## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.2...@future-ui/color-area@0.1.3) (2021-04-09)
 
 ### Bug Fixes
 
 -   use hue normalized color in handle and allow focus ([f9e1fa2](https://github.com/adobe/spectrum-web-components/commit/f9e1fa24afd091334341610a49331fc0ec5f8573))
 
-## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.1...@spectrum-web-components/color-area@0.1.2) (2021-03-29)
+## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.1...@future-ui/color-area@0.1.2) (2021-03-29)
 
 ### Bug Fixes
 
 -   **color-area:** up and down arrows now work properly ([44b9f74](https://github.com/adobe/spectrum-web-components/commit/44b9f741a3bc4d746505a8ad3ca2e0f3ef6bfc05))
 
-## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.1.0...@spectrum-web-components/color-area@0.1.1) (2021-03-22)
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.1.0...@future-ui/color-area@0.1.1) (2021-03-22)
 
 ### Bug Fixes
 

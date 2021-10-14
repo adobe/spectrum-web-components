@@ -4,24 +4,24 @@ The `<sp-search>` element delivers a single input field with a "reset" button as
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/search?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/search)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/search?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/search)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/search?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/search)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/search?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/search)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/RF8kOBhUdLovmzyZMpTk/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/search
+yarn add @future-ui/search
 ```
 
 Import the side effectful registration of `<sp-search>` via:
 
 ```
-import '@spectrum-web-components/search/sp-search.js';
+import '@future-ui/search/sp-search.js';
 ```
 
 When looking to leverage the `Search` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Search } from '@spectrum-web-components/search';
+import { Search } from '@future-ui/search';
 ```
 
 ## Example

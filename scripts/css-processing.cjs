@@ -47,7 +47,7 @@ const postCSSPlugins = (resourcePath, toTS) => {
 
 const wrapCSSResult = (content) => {
     return stripIndent`
-        import { css } from '@spectrum-web-components/base';
+        import { css } from '@future-ui/base';
         const styles = css\`
             ${content}
         \`;

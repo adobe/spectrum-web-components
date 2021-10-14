@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, CSSResultArray } from '@spectrum-web-components/base';
+import { html, CSSResultArray } from '@future-ui/base';
 import { RouteComponent } from './route-component.js';
 import componentStyles from './markdown.css';
 import homeStyles from './home.css';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/button-group/sp-button-group.js';
-import '@spectrum-web-components/link/sp-link.js';
-import '@spectrum-web-components/divider/sp-divider.js';
+import '@future-ui/button/sp-button.js';
+import '@future-ui/button-group/sp-button-group.js';
+import '@future-ui/link/sp-link.js';
+import '@future-ui/divider/sp-divider.js';
 
 class HomeElement extends RouteComponent {
     public static get styles(): CSSResultArray {

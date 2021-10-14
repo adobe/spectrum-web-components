@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 
 import '../sp-action-bar.js';
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
+import '@future-ui/checkbox/sp-checkbox.js';
+import '@future-ui/action-button/sp-action-button.js';
+import '@future-ui/action-group/sp-action-group.js';
+import '@future-ui/icons-workflow/icons/sp-icon-edit.js';
+import '@future-ui/icons-workflow/icons/sp-icon-more.js';
 
 export default {
     title: 'Action Bar',

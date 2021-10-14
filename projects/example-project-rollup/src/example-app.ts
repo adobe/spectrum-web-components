@@ -14,16 +14,16 @@ governing permissions and limitations under the License.
 // import './styles.css';
 
 // import the components we'll use in this page
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '@spectrum-web-components/radio/sp-radio.js';
-import '@spectrum-web-components/radio/sp-radio-group.js';
-import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/link/sp-link.js';
-import '@spectrum-web-components/slider/sp-slider.js';
-import '@spectrum-web-components/textfield/sp-textfield.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@future-ui/theme/sp-theme.js';
+import '@future-ui/theme/src/themes.js';
+import '@future-ui/button/sp-button.js';
+import '@future-ui/checkbox/sp-checkbox.js';
+import '@future-ui/radio/sp-radio.js';
+import '@future-ui/radio/sp-radio-group.js';
+import '@future-ui/picker/sp-picker.js';
+import '@future-ui/menu/sp-menu-item.js';
+import '@future-ui/link/sp-link.js';
+import '@future-ui/slider/sp-slider.js';
+import '@future-ui/textfield/sp-textfield.js';
+import '@future-ui/tooltip/sp-tooltip.js';
+import '@future-ui/dialog/sp-dialog.js';

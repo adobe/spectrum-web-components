@@ -4,17 +4,17 @@ Overlays in Spectrum Web Components are created via the `Overlay` class system, 
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/overlay?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/overlay)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/overlay?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/overlay)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/overlay?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/overlay)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/overlay?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/overlay)
 
 ```
-yarn add @spectrum-web-components/overlay
+yarn add @future-ui/overlay
 ```
 
 Import the `Overlay` class to leverage its capabilities within your application or custom element:
 
 ```js
-import { Overlay } from '@spectrum-web-components/overlay';
+import { Overlay } from '@future-ui/overlay';
 ```
 
 Primarily, this class gives you access to the `open` method that will allow you to open an overlay:

@@ -18,19 +18,19 @@ import {
     TemplateResult,
     PropertyValues,
     nothing,
-} from '@spectrum-web-components/base';
-import { ObserveSlotPresence } from '@spectrum-web-components/shared';
-import { ActionGroup } from '@spectrum-web-components/action-group';
-import bodyStyles from '@spectrum-web-components/styles/body.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/split-view/sp-split-view.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-in.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-out.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-refresh.js';
-import '@spectrum-web-components/action-bar/sp-action-bar.js';
-import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+} from '@future-ui/base';
+import { ObserveSlotPresence } from '@future-ui/shared';
+import { ActionGroup } from '@future-ui/action-group';
+import bodyStyles from '@future-ui/styles/body.js';
+import '@future-ui/action-button/sp-action-button.js';
+import '@future-ui/action-group/sp-action-group.js';
+import '@future-ui/split-view/sp-split-view.js';
+import '@future-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@future-ui/icons-workflow/icons/sp-icon-zoom-in.js';
+import '@future-ui/icons-workflow/icons/sp-icon-zoom-out.js';
+import '@future-ui/icons-workflow/icons/sp-icon-refresh.js';
+import '@future-ui/action-bar/sp-action-bar.js';
+import '@future-ui/progress-circle/sp-progress-circle.js';
 import '../onion-skinner.js';
 
 export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [

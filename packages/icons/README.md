@@ -4,22 +4,22 @@ The `<sp-icons-medium>` and `<sp-icons-large>` elements that are included in thi
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/icons?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/icons)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/icons?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/icons)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/icons?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/icons)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/icons?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/icons)
 
 ```
-yarn add @spectrum-web-components/icons
+yarn add @future-ui/icons
 ```
 
 Import the side effectful registration of `<sp-icons-medium>` or `<sp-icons-large>` via:
 
 ```
-import '@spectrum-web-components/icons/sp-icons-medium.js';
-import '@spectrum-web-components/icons/sp-icons-large.js';
+import '@future-ui/icons/sp-icons-medium.js';
+import '@future-ui/icons/sp-icons-large.js';
 ```
 
 When looking to leverage the `IconsMedium` or `IconsLarge` base classes as a type and/or for extension purposes, do so via:
 
 ```
-import { IconsMedium, IconsLarge } from '@spectrum-web-components/icons';
+import { IconsMedium, IconsLarge } from '@future-ui/icons';
 ```

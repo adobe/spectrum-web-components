@@ -9,9 +9,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/icon/sp-icon.js';
+import '@future-ui/icon/sp-icon.js';
 import '../../iconset/stories/icons-demo.js';
-import { html, TemplateResult, until } from '@spectrum-web-components/base';
+import { html, TemplateResult, until } from '@future-ui/base';
 
 export default {
     title: 'Icons/Workflow',

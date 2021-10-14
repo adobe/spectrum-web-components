@@ -17,7 +17,7 @@ import {
     CSSResultArray,
     TemplateResult,
     PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import sidenavItemStyles from './sidenav-item.css.js';
 import sidenavHeadingStyles from './sidenav-heading.css.js';

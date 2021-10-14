@@ -6,19 +6,19 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/radio?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/radio)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/radio?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/radio)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/radio?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/radio)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/radio?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/radio)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/vUinRWkhayMTAmr9AK9J/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/radio
+yarn add @future-ui/radio
 ```
 
 Import the side effectful registration of `<sp-radio>` or `<sp-radio-group>` via:
 
 ```
-import '@spectrum-web-components/radio/sp-radio.js';
-import '@spectrum-web-components/radio/sp-radio-group.js';
+import '@future-ui/radio/sp-radio.js';
+import '@future-ui/radio/sp-radio-group.js';
 ```
 
 When looking to leverage the `Radio` or `RadioGroup` base classes as a type and/or for extension purposes, do so via:
@@ -27,7 +27,7 @@ When looking to leverage the `Radio` or `RadioGroup` base classes as a type and/
 import {
     Radio,
     RadioGroup
-} from '@spectrum-web-components/radio';
+} from '@future-ui/radio';
 ```
 
 ### Example

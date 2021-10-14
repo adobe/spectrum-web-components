@@ -23,12 +23,12 @@ import {
 
 import '../overlay-trigger.js';
 import { OverlayTrigger, ActiveOverlay, TriggerInteractions } from '../';
-import '@spectrum-web-components/button/sp-button.js';
-import { Button } from '@spectrum-web-components/button';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { Popover } from '@spectrum-web-components/popover';
-import '@spectrum-web-components/theme/sp-theme.js';
-import { Theme } from '@spectrum-web-components/theme';
+import '@future-ui/button/sp-button.js';
+import { Button } from '@future-ui/button';
+import '@future-ui/popover/sp-popover.js';
+import { Popover } from '@future-ui/popover';
+import '@future-ui/theme/sp-theme.js';
+import { Theme } from '@future-ui/theme';
 
 function pressKey(code: string): void {
     const up = new KeyboardEvent('keyup', {
@@ -45,7 +45,6 @@ const pressSpace = (): void => pressKey('Space');
 
 describe('Overlay Trigger', () => {
     describe('open/close', () => {
-
         let testDiv!: HTMLDivElement;
         let innerTrigger!: OverlayTrigger;
         let outerTrigger!: OverlayTrigger;
@@ -56,7 +55,6 @@ describe('Overlay Trigger', () => {
         let hoverContent!: HTMLDivElement;
 
         beforeEach(async () => {
-
             testDiv = await fixture<HTMLDivElement>(
                 html`
                     <div>
@@ -159,7 +157,6 @@ describe('Overlay Trigger', () => {
         });
 
         it('loads', async () => {
-
             if (!(outerClickContent instanceof Popover))
                 throw new Error('popover is not an instance of Popover');
 
@@ -168,7 +165,6 @@ describe('Overlay Trigger', () => {
             expect(outerClickContent.parentElement).to.be.an.instanceOf(
                 OverlayTrigger
             );
-
         });
 
         it('opens a popover', async () => {
@@ -613,9 +609,7 @@ describe('Overlay Trigger', () => {
         });
     });
     describe('System interactions', () => {
-
         afterEach(async () => {
-
             const triggers = document.querySelectorAll('overlay-trigger');
             const closes: Promise<CustomEvent<unknown>>[] = [];
             triggers.forEach((trigger) => {
@@ -628,7 +622,6 @@ describe('Overlay Trigger', () => {
             await Promise.all(closes);
         });
         it('acquires a `color` and `size` from `sp-theme`', async () => {
-
             const el = await fixture<Theme>(html`
                 <sp-theme color="dark">
                     <sp-theme color="light">

@@ -17,11 +17,11 @@ import {
     SpectrumElement,
     property,
     PropertyValues,
-} from '@spectrum-web-components/base';
-import '@spectrum-web-components/button/sp-clear-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
+} from '@future-ui/base';
+import '@future-ui/button/sp-clear-button.js';
+import '@future-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@future-ui/icons-workflow/icons/sp-icon-info.js';
+import '@future-ui/icons-workflow/icons/sp-icon-checkmark-circle.js';
 
 import toastStyles from './toast.css.js';
 

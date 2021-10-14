@@ -13,12 +13,12 @@ governing permissions and limitations under the License.
 import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 import { stub } from 'sinon';
 
-import '@spectrum-web-components/textfield/sp-textfield.js';
-import { Textfield } from '@spectrum-web-components/textfield';
-import '@spectrum-web-components/picker/sp-picker.js';
-import { Picker } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@future-ui/textfield/sp-textfield.js';
+import { Textfield } from '@future-ui/textfield';
+import '@future-ui/picker/sp-picker.js';
+import { Picker } from '@future-ui/picker';
+import '@future-ui/menu/sp-menu.js';
+import '@future-ui/menu/sp-menu-item.js';
 
 import '../sp-field-label.js';
 import { FieldLabel } from '..';

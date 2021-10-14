@@ -17,9 +17,9 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
-import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
+import '@future-ui/color-loupe/sp-color-loupe.js';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 import styles from './color-handle.css.js';
 
@@ -34,8 +34,10 @@ export type ColorValue =
     | HSL
     | HSLA;
 
-export const extractHueAndSaturationRegExp = /^hs[v|l]a?\s?\((\d{1,3}\.?\d*?),?\s?(\d{1,3})/;
-export const replaceHueAndSaturationRegExp = /(^hs[v|l]a?\s?\()\d{1,3}\.?\d*?(,?\s?)\d{1,3}/;
+export const extractHueAndSaturationRegExp =
+    /^hs[v|l]a?\s?\((\d{1,3}\.?\d*?),?\s?(\d{1,3})/;
+export const replaceHueAndSaturationRegExp =
+    /(^hs[v|l]a?\s?\()\d{1,3}\.?\d*?(,?\s?)\d{1,3}/;
 export const replaceHueRegExp = /(^hs[v|l]a?\()\d{1,3}/;
 
 /**

@@ -17,7 +17,7 @@ import {
     CSSResultArray,
     TemplateResult,
     ifDefined,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import avatarStyles from './avatar.css.js';
 

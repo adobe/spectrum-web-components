@@ -17,12 +17,12 @@ import {
     property,
     PropertyValues,
     queryAssignedNodes,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import { AccordionItem } from './AccordionItem.js';
 
 import styles from './accordion.css.js';
-import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
+import { Focusable, getActiveElement } from '@future-ui/shared';
 
 /**
  * @element sp-accordion

@@ -17,13 +17,13 @@ import {
     html,
     ifDefined,
     property,
-} from '@spectrum-web-components/base';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { PickerBase } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
+} from '@future-ui/base';
+import '@future-ui/menu/sp-menu.js';
+import '@future-ui/popover/sp-popover.js';
+import { PickerBase } from '@future-ui/picker';
+import '@future-ui/action-button/sp-action-button.js';
+import { ObserveSlotText } from '@future-ui/shared/src/observe-slot-text.js';
+import '@future-ui/icons-workflow/icons/sp-icon-more.js';
 import actionMenuStyles from './action-menu.css.js';
 
 /**

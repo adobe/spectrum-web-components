@@ -18,7 +18,7 @@ import {
     TemplateResult,
     PropertyValues,
     SizedMixin,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 import statusLightStyles from './status-light.css.js';
 
 /**

@@ -18,10 +18,10 @@ import {
     ifDefined,
     property,
     query,
-} from '@spectrum-web-components/base';
-import { Focusable, LikeAnchor } from '@spectrum-web-components/shared';
+} from '@future-ui/base';
+import { Focusable, LikeAnchor } from '@future-ui/shared';
 
-import itemStyles from '@spectrum-web-components/tabs/src/tab.css.js';
+import itemStyles from '@future-ui/tabs/src/tab.css.js';
 import topNavItemStyles from './top-nav-item.css.js';
 
 /**

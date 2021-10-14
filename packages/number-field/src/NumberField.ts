@@ -17,15 +17,15 @@ import {
     property,
     PropertyValues,
     query,
-} from '@spectrum-web-components/base';
-import { ProvideLang } from '@spectrum-web-components/theme';
-import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+} from '@future-ui/base';
+import { ProvideLang } from '@future-ui/theme';
+import { streamingListener } from '@future-ui/base/src/streaming-listener.js';
 import { NumberFormatter, NumberParser } from '@internationalized/number';
 
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import { TextfieldBase } from '@spectrum-web-components/textfield';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import '@future-ui/icons-ui/icons/sp-icon-chevron75.js';
+import '@future-ui/action-button/sp-action-button.js';
+import { TextfieldBase } from '@future-ui/textfield';
+import chevronStyles from '@future-ui/icon/src/spectrum-icon-chevron.css.js';
 import styles from './number-field.css.js';
 
 function testPlatform(re: RegExp): boolean {

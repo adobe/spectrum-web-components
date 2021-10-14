@@ -4,24 +4,24 @@ A `<sp-action-bar>` delivers a floating action bar that is a convenient way to d
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/action-bar?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/action-bar)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/action-bar?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/action-bar)
+[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/action-bar?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/action-bar)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/action-bar?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/action-bar)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/Tqvpr5Yolj9drzPab26O/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/action-bar
+yarn add @future-ui/action-bar
 ```
 
 Import the side effectful registration of `<sp-action-bar>` via:
 
 ```
-import '@spectrum-web-components/action-bar/sp-action-bar.js';
+import '@future-ui/action-bar/sp-action-bar.js';
 ```
 
 When looking to leverage the `ActionBar` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ActionBar } from '@spectrum-web-components/action-bar';
+import { ActionBar } from '@future-ui/action-bar';
 ```
 
 ## Example

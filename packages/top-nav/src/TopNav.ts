@@ -19,10 +19,10 @@ import {
     PropertyValues,
     SpectrumElement,
     ifDefined,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 import { TopNavItem } from './TopNavItem.js';
 
-import tabStyles from '@spectrum-web-components/tabs/src/tabs.css.js';
+import tabStyles from '@future-ui/tabs/src/tabs.css.js';
 
 declare global {
     interface Document {
@@ -193,14 +193,16 @@ export class TopNav extends SpectrumElement {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    addEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.addEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        addEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.addEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );
@@ -210,14 +212,16 @@ export class TopNav extends SpectrumElement {
     public disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    removeEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.removeEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        removeEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.removeEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );

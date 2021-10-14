@@ -15,11 +15,11 @@ import {
     TemplateResult,
     html,
     property,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 import { StyledButton } from './StyledButton.js';
 import buttonStyles from './clear-button.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross75.js';
-import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
+import '@future-ui/icons-ui/icons/sp-icon-cross75.js';
+import crossMediumStyles from '@future-ui/icon/src/spectrum-icon-cross.css.js';
 
 /**
  * @element sp-clear-button

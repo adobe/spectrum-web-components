@@ -18,11 +18,11 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 
-import { ActionButton } from '@spectrum-web-components/action-button';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import { TemplateResult, LitElement } from '@spectrum-web-components/base';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { ActionButton } from '@future-ui/action-button';
+import '@future-ui/action-button/sp-action-button.js';
+import { TemplateResult, LitElement } from '@future-ui/base';
+import '@future-ui/overlay/overlay-trigger.js';
+import '@future-ui/tooltip/sp-tooltip.js';
 import { ActionGroup } from '..';
 import {
     arrowDownEvent,

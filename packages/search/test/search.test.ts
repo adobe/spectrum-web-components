@@ -17,7 +17,7 @@ import {
     escapeEvent,
     spaceEvent,
 } from '../../../test/testing-helpers.js';
-import '@spectrum-web-components/shared/src/focus-visible.js';
+import '@future-ui/shared/src/focus-visible.js';
 import { spy } from 'sinon';
 
 describe('Search', () => {
@@ -200,9 +200,11 @@ describe('Search', () => {
         );
 
         await elementUpdated(el);
-        const searchForm = (el.shadowRoot
-            ? el.shadowRoot.querySelector('form')
-            : el.querySelector('form')) as HTMLFormElement;
+        const searchForm = (
+            el.shadowRoot
+                ? el.shadowRoot.querySelector('form')
+                : el.querySelector('form')
+        ) as HTMLFormElement;
 
         const submitEvent = new Event('submit', {
             cancelable: true,

@@ -21,7 +21,7 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers.js';
-import '@spectrum-web-components/shared/src/focus-visible.js';
+import '@future-ui/shared/src/focus-visible.js';
 
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');

@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 
 import '../sp-button-group.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/icon/sp-icon.js';
+import '@future-ui/button/sp-button.js';
+import '@future-ui/icon/sp-icon.js';
 
 export default {
     title: 'Button Group',

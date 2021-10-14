@@ -19,18 +19,18 @@ import {
     ifDefined,
     nothing,
     queryAsync,
-} from '@spectrum-web-components/base';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/switch/sp-switch.js';
-import { Picker } from '@spectrum-web-components/picker';
-import { Switch } from '@spectrum-web-components/switch';
-import { Scale, Color, Theme } from '@spectrum-web-components/theme';
-import { ActiveOverlay } from '@spectrum-web-components/overlay';
+} from '@future-ui/base';
+import '@future-ui/theme/sp-theme.js';
+import '@future-ui/theme/src/themes.js';
+import '@future-ui/field-label/sp-field-label.js';
+import '@future-ui/picker/sp-picker.js';
+import '@future-ui/menu/sp-menu.js';
+import '@future-ui/menu/sp-menu-item.js';
+import '@future-ui/switch/sp-switch.js';
+import { Picker } from '@future-ui/picker';
+import { Switch } from '@future-ui/switch';
+import { Scale, Color, Theme } from '@future-ui/theme';
+import { ActiveOverlay } from '@future-ui/overlay';
 import './types.js';
 
 const queryString = window.location.search;
@@ -194,18 +194,28 @@ export class StoryDecorator extends SpectrumElement {
         const { checked } = target as Switch;
         switch (id) {
             case 'color':
-                this.color = color = window.__swc_hack_knobs__.defaultColor = value as Color;
+                this.color =
+                    color =
+                    window.__swc_hack_knobs__.defaultColor =
+                        value as Color;
                 break;
             case 'scale':
-                this.scale = scale = window.__swc_hack_knobs__.defaultScale = value as Scale;
+                this.scale =
+                    scale =
+                    window.__swc_hack_knobs__.defaultScale =
+                        value as Scale;
                 break;
             case 'dir':
-                this.direction = dir = window.__swc_hack_knobs__.defaultDirection = value as
-                    | 'ltr'
-                    | 'rtl';
+                this.direction =
+                    dir =
+                    window.__swc_hack_knobs__.defaultDirection =
+                        value as 'ltr' | 'rtl';
                 break;
             case 'reduceMotion':
-                this.reduceMotion = reduceMotion = window.__swc_hack_knobs__.defaultReduceMotion = checked as boolean;
+                this.reduceMotion =
+                    reduceMotion =
+                    window.__swc_hack_knobs__.defaultReduceMotion =
+                        checked as boolean;
                 break;
         }
     }

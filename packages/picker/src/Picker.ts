@@ -21,25 +21,25 @@ import {
     SizedMixin,
     ElementSize,
     classMap,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import pickerStyles from './picker.css.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronStyles from '@future-ui/icon/src/spectrum-icon-chevron.css.js';
 
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-children.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import { MenuItem, Menu } from '@spectrum-web-components/menu';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { Popover } from '@spectrum-web-components/popover';
+import { Focusable } from '@future-ui/shared/src/focusable.js';
+import { reparentChildren } from '@future-ui/shared/src/reparent-children.js';
+import '@future-ui/icons-ui/icons/sp-icon-chevron100.js';
+import '@future-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@future-ui/menu/sp-menu.js';
+import { MenuItem, Menu } from '@future-ui/menu';
+import '@future-ui/popover/sp-popover.js';
+import { Popover } from '@future-ui/popover';
 import {
     Placement,
     openOverlay,
     TriggerInteractions,
     OverlayOptions,
-} from '@spectrum-web-components/overlay';
+} from '@future-ui/overlay';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',

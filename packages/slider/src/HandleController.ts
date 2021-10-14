@@ -15,8 +15,8 @@ import {
     ifDefined,
     classMap,
     styleMap,
-} from '@spectrum-web-components/base';
-import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+} from '@future-ui/base';
+import { streamingListener } from '@future-ui/base/src/streaming-listener.js';
 import { Slider } from './Slider.js';
 import {
     SliderHandle,
@@ -218,9 +218,8 @@ export class HandleController implements Controller {
         if (!this.handleRefMap) {
             this.handleRefMap = new WeakMap();
 
-            const inputNodes = this.host.shadowRoot.querySelectorAll(
-                '.handle > input'
-            );
+            const inputNodes =
+                this.host.shadowRoot.querySelectorAll('.handle > input');
             for (const inputNode of inputNodes) {
                 const input = inputNode as HTMLInputElement;
                 const handle = input.parentElement as HTMLElement;

@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult, ifDefined } from '@spectrum-web-components/base';
+import { html, TemplateResult, ifDefined } from '@future-ui/base';
 
 import '../sp-button.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import '@future-ui/icon/sp-icon.js';
+import '@future-ui/icons-workflow/icons/sp-icon-help.js';
 
 interface Properties {
     variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';

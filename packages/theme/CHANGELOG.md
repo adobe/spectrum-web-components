@@ -3,160 +3,160 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.14...@spectrum-web-components/theme@0.10.0) (2021-10-14)
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.14...@future-ui/theme@0.10.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.14...@spectrum-web-components/theme@0.9.0) (2021-10-14)
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.14...@future-ui/theme@0.9.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-## [0.8.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.13...@spectrum-web-components/theme@0.8.14) (2021-09-20)
+## [0.8.14](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.13...@future-ui/theme@0.8.14) (2021-09-20)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.8.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.12...@spectrum-web-components/theme@0.8.13) (2021-08-24)
+## [0.8.13](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.12...@future-ui/theme@0.8.13) (2021-08-24)
 
 ### Bug Fixes
 
 -   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
-## [0.8.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.11...@spectrum-web-components/theme@0.8.12) (2021-08-03)
+## [0.8.12](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.11...@future-ui/theme@0.8.12) (2021-08-03)
 
 ### Bug Fixes
 
 -   resolve "updateComplete" with a boolean like LitElement ([2ebcd44](https://github.com/adobe/spectrum-web-components/commit/2ebcd449185a2a26b8ca60441793048a76bb3ed7))
 
-## [0.8.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.10...@spectrum-web-components/theme@0.8.11) (2021-07-22)
+## [0.8.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.10...@future-ui/theme@0.8.11) (2021-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.8.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.9...@spectrum-web-components/theme@0.8.10) (2021-07-01)
+## [0.8.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.9...@future-ui/theme@0.8.10) (2021-07-01)
 
 ### Bug Fixes
 
 -   manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/adobe/spectrum-web-components/commit/b1e3457ae447427c54f8645c478866340329750c))
 
-## [0.8.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.8...@spectrum-web-components/theme@0.8.9) (2021-06-16)
+## [0.8.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.8...@future-ui/theme@0.8.9) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.8.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.7...@spectrum-web-components/theme@0.8.8) (2021-06-07)
+## [0.8.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.7...@future-ui/theme@0.8.8) (2021-06-07)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.8.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.6...@spectrum-web-components/theme@0.8.7) (2021-05-12)
+## [0.8.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.6...@future-ui/theme@0.8.7) (2021-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.8.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.5...@spectrum-web-components/theme@0.8.6) (2021-04-15)
+## [0.8.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.5...@future-ui/theme@0.8.6) (2021-04-15)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.8.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.4...@spectrum-web-components/theme@0.8.5) (2021-04-09)
+## [0.8.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.4...@future-ui/theme@0.8.5) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.3...@spectrum-web-components/theme@0.8.4) (2021-03-29)
+## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.3...@future-ui/theme@0.8.4) (2021-03-29)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.2...@spectrum-web-components/theme@0.8.3) (2021-03-22)
+## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.2...@future-ui/theme@0.8.3) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.1...@spectrum-web-components/theme@0.8.2) (2021-03-22)
+## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.1...@future-ui/theme@0.8.2) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.0...@spectrum-web-components/theme@0.8.1) (2021-03-05)
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.8.0...@future-ui/theme@0.8.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.7.4...@spectrum-web-components/theme@0.8.0) (2021-03-04)
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.7.4...@future-ui/theme@0.8.0) (2021-03-04)
 
 ### Features
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-## [0.7.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.7.3...@spectrum-web-components/theme@0.7.4) (2021-02-11)
+## [0.7.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.7.3...@future-ui/theme@0.7.4) (2021-02-11)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.7.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.7.2...@spectrum-web-components/theme@0.7.3) (2021-02-02)
+## [0.7.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.7.2...@future-ui/theme@0.7.3) (2021-02-02)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.7.1...@spectrum-web-components/theme@0.7.2) (2021-01-28)
+## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.7.1...@future-ui/theme@0.7.2) (2021-01-28)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.6.3...@spectrum-web-components/theme@0.7.1) (2021-01-21)
-
-### Bug Fixes
-
--   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
--   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
-
-# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.6.3...@spectrum-web-components/theme@0.7.0) (2021-01-13)
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.6.3...@future-ui/theme@0.7.1) (2021-01-21)
 
 ### Bug Fixes
 
 -   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
 -   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
 
-## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.6.2...@spectrum-web-components/theme@0.6.3) (2020-10-12)
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.6.3...@future-ui/theme@0.7.0) (2021-01-13)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+### Bug Fixes
 
-## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.6.1...@spectrum-web-components/theme@0.6.2) (2020-10-12)
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.6.2...@future-ui/theme@0.6.3) (2020-10-12)
+
+**Note:** Version bump only for package @future-ui/theme
+
+## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.6.1...@future-ui/theme@0.6.2) (2020-10-12)
 
 ### Bug Fixes
 
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.6.0...@spectrum-web-components/theme@0.6.1) (2020-09-25)
+## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.6.0...@future-ui/theme@0.6.1) (2020-09-25)
 
 ### Bug Fixes
 
 -   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
 
-# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.5.2...@spectrum-web-components/theme@0.6.0) (2020-08-31)
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.5.2...@future-ui/theme@0.6.0) (2020-08-31)
 
 ### Features
 
 -   allow dir management by sp-theme elements ([2d10158](https://github.com/adobe/spectrum-web-components/commit/2d1015883bc0c3a03862c0de8b4d996cd954291f))
 
-## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.5.1...@spectrum-web-components/theme@0.5.2) (2020-07-24)
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.5.1...@future-ui/theme@0.5.2) (2020-07-24)
 
 ### Bug Fixes
 
 -   ensure browser understandable extensions ([f4e59f7](https://github.com/adobe/spectrum-web-components/commit/f4e59f76f86369593810463c6406565e28ad97e9))
 
-## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.5.0...@spectrum-web-components/theme@0.5.1) (2020-07-22)
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.5.0...@future-ui/theme@0.5.1) (2020-07-22)
 
 ### Bug Fixes
 
 -   **theme:** Use correct filename in exports field ([d5da506](https://github.com/adobe/spectrum-web-components/commit/d5da506e5d4125a39492df2b1682d7129b89ca07))
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.4.1...@spectrum-web-components/theme@0.5.0) (2020-07-17)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.4.1...@future-ui/theme@0.5.0) (2020-07-17)
 
 ### Features
 
 -   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 
-## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.4.0...@spectrum-web-components/theme@0.4.1) (2020-06-08)
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.4.0...@future-ui/theme@0.4.1) (2020-06-08)
 
 ### Bug Fixes
 
 -   **theme:** prevent property sets attribute set property stack overflow ([28d8a07](https://github.com/adobe/spectrum-web-components/commit/28d8a07a9f614cfd59787bb248cf99bd45042806))
 -   **theme:** support lazily loading theme fragments ([3c3b634](https://github.com/adobe/spectrum-web-components/commit/3c3b634a21d2cdce43b841c301932a505c140a58))
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.3.2...@spectrum-web-components/theme@0.4.0) (2020-04-16)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.3.2...@future-ui/theme@0.4.0) (2020-04-16)
 
 ### Bug Fixes
 
@@ -170,24 +170,24 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.3.1...@spectrum-web-components/theme@0.3.2) (2020-04-07)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.3.1...@future-ui/theme@0.3.2) (2020-04-07)
 
-**Note:** Version bump only for package @spectrum-web-components/theme
+**Note:** Version bump only for package @future-ui/theme
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.3.0...@spectrum-web-components/theme@0.3.1) (2020-03-16)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.3.0...@future-ui/theme@0.3.1) (2020-03-16)
 
 ### Bug Fixes
 
 -   **theme:** make typescript happy ([a9aa377](https://github.com/adobe/spectrum-web-components/commit/a9aa377))
 -   **theme:** track default theme values dynamically ([a0c306c](https://github.com/adobe/spectrum-web-components/commit/a0c306c))
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.2.0...@spectrum-web-components/theme@0.3.0) (2020-03-11)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.2.0...@future-ui/theme@0.3.0) (2020-03-11)
 
 ### Features
 
 -   add "darkest" theme styles ([fe38025](https://github.com/adobe/spectrum-web-components/commit/fe38025))
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.1.1...@spectrum-web-components/theme@0.2.0) (2020-01-30)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/theme@0.1.1...@future-ui/theme@0.2.0) (2020-01-30)
 
 ### Bug Fixes
 
@@ -204,27 +204,27 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   factor theme to use a single DOM node ([7641228](https://github.com/adobe/spectrum-web-components/commit/7641228)), closes [#154](https://github.com/adobe/spectrum-web-components/issues/154)
 -   get theme element working in storybook ([4c5e478](https://github.com/adobe/spectrum-web-components/commit/4c5e478))
 
-## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/themes@0.2.2...@spectrum-web-components/themes@0.2.3) (2019-12-02)
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/themes@0.2.2...@future-ui/themes@0.2.3) (2019-12-02)
 
-**Note:** Version bump only for package @spectrum-web-components/themes
+**Note:** Version bump only for package @future-ui/themes
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/themes@0.2.1...@spectrum-web-components/themes@0.2.2) (2019-11-27)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/themes@0.2.1...@future-ui/themes@0.2.2) (2019-11-27)
 
 ### Bug Fixes
 
 -   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716))
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/themes@0.2.0...@spectrum-web-components/themes@0.2.1) (2019-11-19)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/themes@0.2.0...@future-ui/themes@0.2.1) (2019-11-19)
 
-**Note:** Version bump only for package @spectrum-web-components/themes
+**Note:** Version bump only for package @future-ui/themes
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/themes@0.1.4...@spectrum-web-components/themes@0.2.0) (2019-11-19)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/themes@0.1.4...@future-ui/themes@0.2.0) (2019-11-19)
 
 ### Features
 
 -   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/3918888))
 
-## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/themes@0.1.3...@spectrum-web-components/themes@0.1.4) (2019-10-14)
+## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/themes@0.1.3...@future-ui/themes@0.1.4) (2019-10-14)
 
 ### Performance Improvements
 
@@ -232,4 +232,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.1.3 (2019-10-03)
 
-**Note:** Version bump only for package @spectrum-web-components/themes
+**Note:** Version bump only for package @future-ui/themes

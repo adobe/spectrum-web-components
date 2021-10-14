@@ -20,14 +20,14 @@ import {
     nothing,
     ifDefined,
     live,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import { Focusable } from '@future-ui/shared/src/focusable.js';
+import '@future-ui/icons-ui/icons/sp-icon-checkmark100.js';
+import '@future-ui/icons-workflow/icons/sp-icon-alert.js';
 
 import textfieldStyles from './textfield.css.js';
-import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import checkmarkStyles from '@future-ui/icon/src/spectrum-icon-checkmark.css.js';
 
 export class TextfieldBase extends Focusable {
     public static get styles(): CSSResultArray {

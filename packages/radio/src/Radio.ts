@@ -18,8 +18,8 @@ import {
     TemplateResult,
     PropertyValues,
     SpectrumElement,
-} from '@spectrum-web-components/base';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+} from '@future-ui/base';
+import { FocusVisiblePolyfillMixin } from '@future-ui/shared/src/focus-visible.js';
 
 import radioStyles from './radio.css.js';
 

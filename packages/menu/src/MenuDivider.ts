@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, SpectrumElement } from '@spectrum-web-components/base';
+import { CSSResultArray, SpectrumElement } from '@future-ui/base';
 
 import menuDividerStyles from './menu-divider.css.js';
 

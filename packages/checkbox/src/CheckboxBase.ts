@@ -10,13 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    property,
-    html,
-    TemplateResult,
-    query,
-} from '@spectrum-web-components/base';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import { property, html, TemplateResult, query } from '@future-ui/base';
+import { Focusable } from '@future-ui/shared/src/focusable.js';
 
 export class CheckboxBase extends Focusable {
     @property({ type: Boolean, reflect: true })

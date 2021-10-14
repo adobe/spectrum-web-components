@@ -19,15 +19,15 @@ import {
     query,
     ifDefined,
     PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
-import '@spectrum-web-components/underlay/sp-underlay.js';
-import '@spectrum-web-components/button/sp-button.js';
+import '@future-ui/underlay/sp-underlay.js';
+import '@future-ui/button/sp-button.js';
 
 import '../sp-dialog.js';
-import styles from '@spectrum-web-components/modal/src/modal.css.js';
+import styles from '@future-ui/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
+import { FocusVisiblePolyfillMixin } from '@future-ui/shared';
 
 /**
  * @element sp-dialog-wrapper

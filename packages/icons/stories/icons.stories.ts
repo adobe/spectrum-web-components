@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import '../sp-icons-large.js';
 import '../sp-icons-medium.js';
 import '../../iconset/stories/icons-demo.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 
 export default {
     title: 'Icons',

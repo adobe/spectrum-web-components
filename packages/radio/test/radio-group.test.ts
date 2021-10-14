@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import '../sp-radio-group.js';
 import { RadioGroup } from '../';
-import '@spectrum-web-components/radio/sp-radio.js';
-import { Radio } from '@spectrum-web-components/radio';
+import '@future-ui/radio/sp-radio.js';
+import { Radio } from '@future-ui/radio';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import {
     arrowUpEvent,
@@ -315,9 +315,9 @@ describe('Group Accessibility', () => {
             role: string;
             checked: boolean;
         };
-        const snapshot = ((await a11ySnapshot(
+        const snapshot = (await a11ySnapshot(
             {}
-        )) as unknown) as NamedRoledAndCheckedNode & {
+        )) as unknown as NamedRoledAndCheckedNode & {
             children: NamedRoledAndCheckedNode[];
         };
 

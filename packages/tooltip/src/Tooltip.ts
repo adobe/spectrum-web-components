@@ -17,11 +17,8 @@ import {
     SpectrumElement,
     property,
     query,
-} from '@spectrum-web-components/base';
-import {
-    OverlayDisplayQueryDetail,
-    Placement,
-} from '@spectrum-web-components/overlay';
+} from '@future-ui/base';
+import { OverlayDisplayQueryDetail, Placement } from '@future-ui/overlay';
 
 import tooltipStyles from './tooltip.css.js';
 

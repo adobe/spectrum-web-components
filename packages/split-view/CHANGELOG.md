@@ -3,67 +3,67 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.11...@spectrum-web-components/split-view@0.4.0) (2021-10-14)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.11...@future-ui/split-view@0.4.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.11...@spectrum-web-components/split-view@0.3.0) (2021-10-14)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.11...@future-ui/split-view@0.3.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-## [0.2.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.10...@spectrum-web-components/split-view@0.2.11) (2021-10-12)
+## [0.2.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.10...@future-ui/split-view@0.2.11) (2021-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/split-view
+**Note:** Version bump only for package @future-ui/split-view
 
-## [0.2.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.9...@spectrum-web-components/split-view@0.2.10) (2021-09-20)
+## [0.2.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.9...@future-ui/split-view@0.2.10) (2021-09-20)
 
-**Note:** Version bump only for package @spectrum-web-components/split-view
+**Note:** Version bump only for package @future-ui/split-view
 
-## [0.2.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.8...@spectrum-web-components/split-view@0.2.9) (2021-08-24)
+## [0.2.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.8...@future-ui/split-view@0.2.9) (2021-08-24)
 
 ### Bug Fixes
 
 -   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
-## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.7...@spectrum-web-components/split-view@0.2.8) (2021-07-22)
+## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.7...@future-ui/split-view@0.2.8) (2021-07-22)
 
 ### Bug Fixes
 
 -   **split-view:** redraw when primary-size change ([665d238](https://github.com/adobe/spectrum-web-components/commit/665d2384ca7f43d89fd7e2b7b3fb7536a5e24df8))
 
-## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.6...@spectrum-web-components/split-view@0.2.7) (2021-06-16)
+## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.6...@future-ui/split-view@0.2.7) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/split-view
+**Note:** Version bump only for package @future-ui/split-view
 
-## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.5...@spectrum-web-components/split-view@0.2.6) (2021-06-07)
+## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.5...@future-ui/split-view@0.2.6) (2021-06-07)
 
-**Note:** Version bump only for package @spectrum-web-components/split-view
+**Note:** Version bump only for package @future-ui/split-view
 
-## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.4...@spectrum-web-components/split-view@0.2.5) (2021-05-12)
+## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.4...@future-ui/split-view@0.2.5) (2021-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/split-view
+**Note:** Version bump only for package @future-ui/split-view
 
-## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.3...@spectrum-web-components/split-view@0.2.4) (2021-04-09)
+## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.3...@future-ui/split-view@0.2.4) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/split-view
+**Note:** Version bump only for package @future-ui/split-view
 
-## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.2...@spectrum-web-components/split-view@0.2.3) (2021-03-29)
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.2...@future-ui/split-view@0.2.3) (2021-03-29)
 
-**Note:** Version bump only for package @spectrum-web-components/split-view
+**Note:** Version bump only for package @future-ui/split-view
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.1...@spectrum-web-components/split-view@0.2.2) (2021-03-22)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.1...@future-ui/split-view@0.2.2) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/split-view
+**Note:** Version bump only for package @future-ui/split-view
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.0...@spectrum-web-components/split-view@0.2.1) (2021-03-05)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.2.0...@future-ui/split-view@0.2.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/split-view
+**Note:** Version bump only for package @future-ui/split-view
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.1.0...@spectrum-web-components/split-view@0.2.0) (2021-03-04)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/split-view@0.1.0...@future-ui/split-view@0.2.0) (2021-03-04)
 
 ### Bug Fixes
 

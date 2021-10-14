@@ -13,8 +13,8 @@ governing permissions and limitations under the License.
 import '../sp-menu.js';
 import '../sp-menu-item.js';
 import { MenuItem } from '../';
-import '@spectrum-web-components/menu';
-import { Menu } from '@spectrum-web-components/menu';
+import '@future-ui/menu';
+import { Menu } from '@future-ui/menu';
 import {
     fixture,
     elementUpdated,
@@ -117,7 +117,7 @@ describe('Menu item', () => {
         await elementUpdated(el);
 
         const item = el.querySelector('sp-menu-item') as MenuItem;
-        const { anchorElement } = (item as unknown) as {
+        const { anchorElement } = item as unknown as {
             anchorElement: HTMLAnchorElement;
         };
         item.click();

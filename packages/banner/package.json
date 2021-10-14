@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/banner",
+    "name": "@future-ui/banner",
     "version": "0.8.0",
     "publishConfig": {
         "access": "public"
@@ -44,7 +44,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.6.0",
+        "@future-ui/base": "^0.6.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -52,6 +52,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js"
     ]

@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@future-ui/base';
 
 import '../sp-number-field.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@future-ui/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {

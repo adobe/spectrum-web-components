@@ -19,16 +19,16 @@ import {
     PropertyValues,
     query,
     ifDefined,
-} from '@spectrum-web-components/base';
-import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+} from '@future-ui/base';
+import { streamingListener } from '@future-ui/base/src/streaming-listener.js';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import {
     ColorHandle,
     ColorValue,
     extractHueAndSaturationRegExp,
     replaceHueRegExp,
-} from '@spectrum-web-components/color-handle';
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
+} from '@future-ui/color-handle';
+import '@future-ui/color-handle/sp-color-handle.js';
 import { TinyColor } from '@ctrl/tinycolor';
 
 import styles from './color-area.css.js';

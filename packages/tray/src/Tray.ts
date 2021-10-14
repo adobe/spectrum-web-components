@@ -17,10 +17,10 @@ import {
     TemplateResult,
     property,
     query,
-} from '@spectrum-web-components/base';
-import '@spectrum-web-components/underlay/sp-underlay.js';
+} from '@future-ui/base';
+import '@future-ui/underlay/sp-underlay.js';
 
-import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
+import modalStyles from '@future-ui/modal/src/modal.css.js';
 import styles from './tray.css.js';
 
 /**

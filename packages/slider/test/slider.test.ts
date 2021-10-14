@@ -23,7 +23,7 @@ import {
     nextFrame,
 } from '@open-wc/testing';
 import { sendKeys, executeServerCommand } from '@web/test-runner-commands';
-import { ProvideLang } from '@spectrum-web-components/theme';
+import { ProvideLang } from '@future-ui/theme';
 
 describe('Slider', () => {
     // At least one browser (Webkit) maintains shared global state for the mouse,
@@ -471,11 +471,7 @@ describe('Slider', () => {
     it('accepts pointermove events - [step=0]', async () => {
         const el = await fixture<Slider>(
             html`
-                <sp-slider
-                    step="0"
-                    max="20"
-                    style="width: 500px; float: left;"
-                >
+                <sp-slider step="0" max="20" style="width: 500px; float: left;">
                     Step = 0
                 </sp-slider>
             `
@@ -512,7 +508,10 @@ describe('Slider', () => {
             steps: [
                 {
                     type: 'move',
-                    position: [200, handleBoundingRect.y + handleBoundingRect.height + 100],
+                    position: [
+                        200,
+                        handleBoundingRect.y + handleBoundingRect.height + 100,
+                    ],
                 },
             ],
         });

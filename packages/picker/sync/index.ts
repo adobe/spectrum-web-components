@@ -15,7 +15,7 @@ import {
     Overlay,
     OverlayOptions,
     TriggerInteractions,
-} from '@spectrum-web-components/overlay';
+} from '@future-ui/overlay';
 
 Picker.openOverlay = async (
     target: HTMLElement,

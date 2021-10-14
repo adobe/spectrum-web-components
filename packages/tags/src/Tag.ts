@@ -17,9 +17,9 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
-import '@spectrum-web-components/button/sp-clear-button.js';
+import '@future-ui/button/sp-clear-button.js';
 
 import styles from './tag.css.js';
 

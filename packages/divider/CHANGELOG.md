@@ -3,55 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.2.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.8...@spectrum-web-components/divider@0.2.10) (2021-10-14)
+## [0.2.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/divider@0.2.8...@future-ui/divider@0.2.10) (2021-10-14)
 
-**Note:** Version bump only for package @spectrum-web-components/divider
+**Note:** Version bump only for package @future-ui/divider
 
-## [0.2.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.8...@spectrum-web-components/divider@0.2.9) (2021-10-14)
+## [0.2.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/divider@0.2.8...@future-ui/divider@0.2.9) (2021-10-14)
 
-**Note:** Version bump only for package @spectrum-web-components/divider
+**Note:** Version bump only for package @future-ui/divider
 
-## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.7...@spectrum-web-components/divider@0.2.8) (2021-09-20)
+## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/divider@0.2.7...@future-ui/divider@0.2.8) (2021-09-20)
 
-**Note:** Version bump only for package @spectrum-web-components/divider
+**Note:** Version bump only for package @future-ui/divider
 
-## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.6...@spectrum-web-components/divider@0.2.7) (2021-07-22)
+## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/divider@0.2.6...@future-ui/divider@0.2.7) (2021-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/divider
+**Note:** Version bump only for package @future-ui/divider
 
-## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.5...@spectrum-web-components/divider@0.2.6) (2021-06-16)
+## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/divider@0.2.5...@future-ui/divider@0.2.6) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/divider
+**Note:** Version bump only for package @future-ui/divider
 
-## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.4...@spectrum-web-components/divider@0.2.5) (2021-05-12)
+## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/divider@0.2.4...@future-ui/divider@0.2.5) (2021-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/divider
+**Note:** Version bump only for package @future-ui/divider
 
-## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.3...@spectrum-web-components/divider@0.2.4) (2021-04-09)
+## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/divider@0.2.3...@future-ui/divider@0.2.4) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/divider
+**Note:** Version bump only for package @future-ui/divider
 
-## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.2...@spectrum-web-components/divider@0.2.3) (2021-03-29)
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/divider@0.2.2...@future-ui/divider@0.2.3) (2021-03-29)
 
 ### Bug Fixes
 
 -   **divider:** update a11y semantics ([46e6a12](https://github.com/adobe/spectrum-web-components/commit/46e6a1257135389e72a09f376f6b9149573873e6))
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.1...@spectrum-web-components/divider@0.2.2) (2021-03-22)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/divider@0.2.1...@future-ui/divider@0.2.2) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/divider
+**Note:** Version bump only for package @future-ui/divider
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.2.0...@spectrum-web-components/divider@0.2.1) (2021-03-05)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/divider@0.2.0...@future-ui/divider@0.2.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/divider
+**Note:** Version bump only for package @future-ui/divider
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.1.1...@spectrum-web-components/divider@0.2.0) (2021-03-04)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/divider@0.1.1...@future-ui/divider@0.2.0) (2021-03-04)
 
 ### Features
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/divider@0.1.0...@spectrum-web-components/divider@0.1.1) (2021-02-11)
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/divider@0.1.0...@future-ui/divider@0.1.1) (2021-02-11)
 
 ### Bug Fixes
 

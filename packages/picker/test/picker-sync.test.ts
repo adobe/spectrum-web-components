@@ -13,13 +13,13 @@ governing permissions and limitations under the License.
 import '../sync/sp-picker.js';
 import { Picker } from '..';
 
-import '@spectrum-web-components/overlay/active-overlay.js';
-import { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import { Menu, MenuItem } from '@spectrum-web-components/menu';
+import '@future-ui/overlay/active-overlay.js';
+import { OverlayOpenCloseDetail } from '@future-ui/overlay';
+import '@future-ui/menu/sp-menu.js';
+import '@future-ui/menu/sp-menu-item.js';
+import '@future-ui/menu/sp-menu-divider.js';
+import '@future-ui/field-label/sp-field-label.js';
+import { Menu, MenuItem } from '@future-ui/menu';
 import {
     fixture,
     elementUpdated,
@@ -29,7 +29,7 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import '@spectrum-web-components/shared/src/focus-visible.js';
+import '@future-ui/shared/src/focus-visible.js';
 import { spy } from 'sinon';
 import {
     arrowDownEvent,

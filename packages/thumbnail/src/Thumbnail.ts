@@ -17,7 +17,7 @@ import {
     TemplateResult,
     property,
     SizedMixin,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 import styles from './thumbnail.css.js';
 

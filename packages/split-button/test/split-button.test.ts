@@ -25,9 +25,9 @@ import splitButtonDefault, {
     field,
     more,
 } from '../stories/split-button-cta.stories.js';
-import { MenuItem } from '@spectrum-web-components/menu';
+import { MenuItem } from '@future-ui/menu';
 import { arrowDownEvent } from '../../../test/testing-helpers.js';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { TemplateResult } from '@future-ui/base';
 
 // wrap in div method
 

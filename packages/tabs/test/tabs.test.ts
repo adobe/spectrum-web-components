@@ -13,10 +13,10 @@ import '../sp-tabs.js';
 import '../sp-tab.js';
 import '../sp-tab-panel.js';
 import { Tabs, Tab, TabPanel } from '../';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
+import '@future-ui/icons-workflow/icons/sp-icon-checkmark.js';
 import { fixture, elementUpdated, expect, waitUntil } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
-import { LitElement, TemplateResult } from '@spectrum-web-components/base';
+import { LitElement, TemplateResult } from '@future-ui/base';
 import { waitForPredicate, tabEvent } from '../../../test/testing-helpers.js';
 import {
     enterEvent,

@@ -15,7 +15,7 @@ import {
     TemplateResult,
     html,
     ifDefined,
-} from '@spectrum-web-components/base';
+} from '@future-ui/base';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

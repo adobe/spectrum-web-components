@@ -19,10 +19,10 @@ import {
     PropertyValues,
     SizedMixin,
     query,
-} from '@spectrum-web-components/base';
-import type { Focusable } from '@spectrum-web-components/shared';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
-import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
+} from '@future-ui/base';
+import type { Focusable } from '@future-ui/shared';
+import '@future-ui/icons-ui/icons/sp-icon-asterisk100.js';
+import asteriskIconStyles from '@future-ui/icon/src/spectrum-icon-asterisk.css.js';
 
 import styles from './field-label.css.js';
 

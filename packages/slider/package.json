@@ -1,5 +1,5 @@
 {
-    "name": "@spectrum-web-components/slider",
+    "name": "@future-ui/slider",
     "version": "0.12.0",
     "publishConfig": {
         "access": "public"
@@ -48,12 +48,12 @@
         "lit-html"
     ],
     "dependencies": {
+        "@future-ui/base": "^0.6.0",
+        "@future-ui/field-label": "^0.5.11",
+        "@future-ui/number-field": "^0.3.0",
+        "@future-ui/shared": "^0.14.0",
+        "@future-ui/theme": "^0.10.0",
         "@internationalized/number": "^3.0.0",
-        "@spectrum-web-components/base": "^0.6.0",
-        "@spectrum-web-components/field-label": "^0.5.11",
-        "@spectrum-web-components/number-field": "^0.3.0",
-        "@spectrum-web-components/shared": "^0.14.0",
-        "@spectrum-web-components/theme": "^0.10.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -61,6 +61,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js",
         "./sync/sp-*.js"

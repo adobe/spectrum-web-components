@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
-import '@spectrum-web-components/sidenav/sp-sidenav.js';
-import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
-import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
-import '@spectrum-web-components/vrt-compare/vrt-compare.js';
+import '@future-ui/story-decorator/sp-story-decorator.js';
+import '@future-ui/sidenav/sp-sidenav.js';
+import '@future-ui/sidenav/sp-sidenav-item.js';
+import '@future-ui/sidenav/sp-sidenav-heading.js';
+import '@future-ui/vrt-compare/vrt-compare.js';
 import { html, render, nothing } from 'lit-html';
 
 const review = document.querySelector('vrt-compare');

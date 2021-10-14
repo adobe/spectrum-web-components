@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/icon/sp-icon.js';
-import { CheckmarkIcon } from '@spectrum-web-components/icons-workflow/src/icons/Checkmark.js';
-import { setCustomTemplateLiteralTag } from '@spectrum-web-components/icons-workflow/src/custom-tag.js';
-import { html } from '@spectrum-web-components/base';
+import '@future-ui/icon/sp-icon.js';
+import { CheckmarkIcon } from '@future-ui/icons-workflow/src/icons/Checkmark.js';
+import { setCustomTemplateLiteralTag } from '@future-ui/icons-workflow/src/custom-tag.js';
+import { html } from '@future-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 setCustomTemplateLiteralTag(html);

@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 import '../sp-theme.js';
 import '../src/themes.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/button-group/sp-button-group.js';
-import '@spectrum-web-components/switch/sp-switch.js';
-import '@spectrum-web-components/slider/sp-slider.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import '@future-ui/button/sp-button.js';
+import '@future-ui/button-group/sp-button-group.js';
+import '@future-ui/switch/sp-switch.js';
+import '@future-ui/slider/sp-slider.js';
+import { html, TemplateResult } from '@future-ui/base';
 import { Color } from '../src/index.js';
 
 export default {

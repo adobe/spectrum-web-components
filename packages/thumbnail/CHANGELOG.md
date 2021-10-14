@@ -3,59 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.5...@spectrum-web-components/thumbnail@0.2.7) (2021-10-14)
+## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.2.5...@future-ui/thumbnail@0.2.7) (2021-10-14)
 
-**Note:** Version bump only for package @spectrum-web-components/thumbnail
+**Note:** Version bump only for package @future-ui/thumbnail
 
-## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.5...@spectrum-web-components/thumbnail@0.2.6) (2021-10-14)
+## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.2.5...@future-ui/thumbnail@0.2.6) (2021-10-14)
 
-**Note:** Version bump only for package @spectrum-web-components/thumbnail
+**Note:** Version bump only for package @future-ui/thumbnail
 
-## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.4...@spectrum-web-components/thumbnail@0.2.5) (2021-10-12)
+## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.2.4...@future-ui/thumbnail@0.2.5) (2021-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/thumbnail
+**Note:** Version bump only for package @future-ui/thumbnail
 
-## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.3...@spectrum-web-components/thumbnail@0.2.4) (2021-09-20)
+## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.2.3...@future-ui/thumbnail@0.2.4) (2021-09-20)
 
-**Note:** Version bump only for package @spectrum-web-components/thumbnail
+**Note:** Version bump only for package @future-ui/thumbnail
 
-## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.2...@spectrum-web-components/thumbnail@0.2.3) (2021-08-24)
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.2.2...@future-ui/thumbnail@0.2.3) (2021-08-24)
 
-**Note:** Version bump only for package @spectrum-web-components/thumbnail
+**Note:** Version bump only for package @future-ui/thumbnail
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.1...@spectrum-web-components/thumbnail@0.2.2) (2021-07-22)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.2.1...@future-ui/thumbnail@0.2.2) (2021-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/thumbnail
+**Note:** Version bump only for package @future-ui/thumbnail
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.0...@spectrum-web-components/thumbnail@0.2.1) (2021-06-16)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.2.0...@future-ui/thumbnail@0.2.1) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/thumbnail
+**Note:** Version bump only for package @future-ui/thumbnail
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.1.5...@spectrum-web-components/thumbnail@0.2.0) (2021-06-07)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.1.5...@future-ui/thumbnail@0.2.0) (2021-06-07)
 
 ### Features
 
 -   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
 
-## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.1.4...@spectrum-web-components/thumbnail@0.1.5) (2021-05-12)
+## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.1.4...@future-ui/thumbnail@0.1.5) (2021-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/thumbnail
+**Note:** Version bump only for package @future-ui/thumbnail
 
-## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.1.3...@spectrum-web-components/thumbnail@0.1.4) (2021-04-09)
+## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.1.3...@future-ui/thumbnail@0.1.4) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/thumbnail
+**Note:** Version bump only for package @future-ui/thumbnail
 
-## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.1.2...@spectrum-web-components/thumbnail@0.1.3) (2021-03-29)
+## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.1.2...@future-ui/thumbnail@0.1.3) (2021-03-29)
 
-**Note:** Version bump only for package @spectrum-web-components/thumbnail
+**Note:** Version bump only for package @future-ui/thumbnail
 
-## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.1.1...@spectrum-web-components/thumbnail@0.1.2) (2021-03-22)
+## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.1.1...@future-ui/thumbnail@0.1.2) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/thumbnail
+**Note:** Version bump only for package @future-ui/thumbnail
 
-## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.1.0...@spectrum-web-components/thumbnail@0.1.1) (2021-03-05)
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.1.0...@future-ui/thumbnail@0.1.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/thumbnail
+**Note:** Version bump only for package @future-ui/thumbnail
 
 # 0.1.0 (2021-03-04)
 
