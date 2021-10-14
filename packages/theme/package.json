@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/theme",
-    "version": "0.10.0",
+    "version": "0.11.0",
     "publishConfig": {
         "access": "public"
     },
@@ -56,8 +56,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.6.0",
-        "@future-ui/styles": "^0.9.13",
+        "@future-ui/base": "^0.7.0",
+        "@future-ui/styles": "^0.10.0",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

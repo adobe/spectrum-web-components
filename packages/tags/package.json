@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/tags",
-    "version": "0.8.0",
+    "version": "0.9.0",
     "publishConfig": {
         "access": "public"
     },
@@ -46,9 +46,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.6.0",
-        "@future-ui/button": "^0.16.0",
-        "@future-ui/shared": "^0.14.0",
+        "@future-ui/base": "^0.7.0",
+        "@future-ui/button": "^0.17.0",
+        "@future-ui/shared": "^0.15.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

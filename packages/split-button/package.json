@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/split-button",
-    "version": "0.5.13",
+    "version": "0.6.0",
     "publishConfig": {
         "access": "public"
     },
@@ -46,13 +46,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.6.0",
-        "@future-ui/button": "^0.16.0",
-        "@future-ui/icon": "^0.11.0",
-        "@future-ui/icons-ui": "^0.8.0",
-        "@future-ui/icons-workflow": "^0.8.0",
-        "@future-ui/overlay": "^0.13.0",
-        "@future-ui/picker": "^0.9.0",
+        "@future-ui/base": "^0.7.0",
+        "@future-ui/button": "^0.17.0",
+        "@future-ui/icon": "^0.12.0",
+        "@future-ui/icons-ui": "^0.9.0",
+        "@future-ui/icons-workflow": "^0.9.0",
+        "@future-ui/overlay": "^0.14.0",
+        "@future-ui/picker": "^0.10.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

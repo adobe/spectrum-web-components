@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/color-handle",
-    "version": "0.1.12",
+    "version": "0.2.0",
     "publishConfig": {
         "access": "public"
     },
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.6.0",
-        "@future-ui/color-loupe": "^0.1.9",
+        "@future-ui/base": "^0.7.0",
+        "@future-ui/color-loupe": "^0.2.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

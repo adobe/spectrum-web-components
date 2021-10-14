@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/slider",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "publishConfig": {
         "access": "public"
     },
@@ -48,11 +48,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.6.0",
-        "@future-ui/field-label": "^0.5.11",
-        "@future-ui/number-field": "^0.3.0",
-        "@future-ui/shared": "^0.14.0",
-        "@future-ui/theme": "^0.10.0",
+        "@future-ui/base": "^0.7.0",
+        "@future-ui/field-label": "^0.6.0",
+        "@future-ui/number-field": "^0.4.0",
+        "@future-ui/shared": "^0.15.0",
+        "@future-ui/theme": "^0.11.0",
         "@internationalized/number": "^3.0.0",
         "tslib": "^2.0.0"
     },

@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.5.0 (2021-10-14)
+
+
+### Bug Fixes
+
+* address westbrooks comments ([634af60](https://github.com/adobe/spectrum-web-components/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
+* expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/adobe/spectrum-web-components/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
+* flappy Slider/Color Area tests ([c769c87](https://github.com/adobe/spectrum-web-components/commit/c769c8750a66139588191a8289abf13df7012c46))
+* include touch-action rule for draggable content ([3f507e6](https://github.com/adobe/spectrum-web-components/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
+* key interaction handling no longer prevents "tab" presses ([b542ce8](https://github.com/adobe/spectrum-web-components/commit/b542ce8f98a8a26badfa856f2e09ebda16dbcbb1))
+* lint away debugger statements ([34a498e](https://github.com/adobe/spectrum-web-components/commit/34a498e784221f98dbf26e9366114c82fabc9c5b))
+* manage "focused" across more contexts ([9273c15](https://github.com/adobe/spectrum-web-components/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
+* normalize focus passing during and after pointer events ([357931b](https://github.com/adobe/spectrum-web-components/commit/357931b6eb803759925b10b629d21878e8249678))
+* **color-area:** fix hue value for hsv and hsl ([a66e111](https://github.com/adobe/spectrum-web-components/commit/a66e111c05571e3abac8f2940f11442e6f9e67b2))
+* remove right click value setting ([a44968d](https://github.com/adobe/spectrum-web-components/commit/a44968d09120ad9b54915438fb5a134f306fdab2))
+* update package.json ([455b626](https://github.com/adobe/spectrum-web-components/commit/455b62649aebfd0d325768563a094c45f96a2569))
+* use hue normalized color in handle and allow focus ([f9e1fa2](https://github.com/adobe/spectrum-web-components/commit/f9e1fa24afd091334341610a49331fc0ec5f8573))
+* **color-area:** up and down arrows now work properly ([44b9f74](https://github.com/adobe/spectrum-web-components/commit/44b9f741a3bc4d746505a8ad3ca2e0f3ef6bfc05))
+* **overlay:** allow overlay-trigger to declaratively open overlay content ([194a44e](https://github.com/adobe/spectrum-web-components/commit/194a44e78df73ca4a5520e24b308667c23331880))
+
+
+### Features
+
+* update lit-* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+* **color-area:** separate X and Y aria labels to improve accessibility ([e8d9768](https://github.com/adobe/spectrum-web-components/commit/e8d9768f702991f76b0b3c109edb1eef17fe3cae))
+* debug colour elements for a11y ([7008f7c](https://github.com/adobe/spectrum-web-components/commit/7008f7c0c0b719f6978a8f158bfea4434d1580af))
+* **color-area:** add color-area pattern ([dc15e1c](https://github.com/adobe/spectrum-web-components/commit/dc15e1ccf1cae1b08e07fe72a7eae0e93f49ba17))
+
+
+
+
+
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/color-area@0.2.1...@future-ui/color-area@0.4.0) (2021-10-14)
 
 ### Features

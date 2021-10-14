@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/progress-bar",
-    "version": "0.3.11",
+    "version": "0.4.0",
     "publishConfig": {
         "access": "public"
     },
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.6.0",
-        "@future-ui/field-label": "^0.5.11",
+        "@future-ui/base": "^0.7.0",
+        "@future-ui/field-label": "^0.6.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

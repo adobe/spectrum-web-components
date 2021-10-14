@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/card",
-    "version": "0.10.0",
+    "version": "0.11.0",
     "publishConfig": {
         "access": "public"
     },
@@ -44,13 +44,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/asset": "^0.4.11",
-        "@future-ui/base": "^0.6.0",
-        "@future-ui/checkbox": "^0.10.11",
-        "@future-ui/icons-workflow": "^0.8.0",
-        "@future-ui/quick-actions": "^0.4.11",
-        "@future-ui/shared": "^0.14.0",
-        "@future-ui/styles": "^0.9.13",
+        "@future-ui/asset": "^0.5.0",
+        "@future-ui/base": "^0.7.0",
+        "@future-ui/checkbox": "^0.11.0",
+        "@future-ui/icons-workflow": "^0.9.0",
+        "@future-ui/quick-actions": "^0.5.0",
+        "@future-ui/shared": "^0.15.0",
+        "@future-ui/styles": "^0.10.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

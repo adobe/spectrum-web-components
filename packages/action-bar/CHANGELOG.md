@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.3.0 (2021-10-14)
+
+
+### Bug Fixes
+
+* correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+* propogate open to child sp-popover ([ae97677](https://github.com/adobe/spectrum-web-components/commit/ae97677d0db26f4ae68fa47fc561e58490adaf9b))
+* update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+
+
+### Features
+
+* use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+* **action-bar:** create sp-action-bar component to replace sp-actionbar ([38004b4](https://github.com/adobe/spectrum-web-components/commit/38004b472a69302e3592add04b746ca01e44557d))
+
+
+
+
+
 ## [0.2.20](https://github.com/adobe/spectrum-web-components/compare/@future-ui/action-bar@0.2.18...@future-ui/action-bar@0.2.20) (2021-10-14)
 
 **Note:** Version bump only for package @future-ui/action-bar

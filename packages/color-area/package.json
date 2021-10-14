@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/color-area",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "publishConfig": {
         "access": "public"
     },
@@ -45,8 +45,8 @@
     ],
     "dependencies": {
         "@ctrl/tinycolor": "^3.3.3",
-        "@future-ui/base": "^0.6.0",
-        "@future-ui/color-handle": "^0.1.12",
+        "@future-ui/base": "^0.7.0",
+        "@future-ui/color-handle": "^0.2.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

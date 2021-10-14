@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/number-field",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "publishConfig": {
         "access": "public"
     },
@@ -44,11 +44,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/action-button": "^0.7.0",
-        "@future-ui/base": "^0.6.0",
-        "@future-ui/icon": "^0.11.0",
-        "@future-ui/icons-ui": "^0.8.0",
-        "@future-ui/textfield": "^0.10.0",
+        "@future-ui/action-button": "^0.8.0",
+        "@future-ui/base": "^0.7.0",
+        "@future-ui/icon": "^0.12.0",
+        "@future-ui/icons-ui": "^0.9.0",
+        "@future-ui/textfield": "^0.11.0",
         "@internationalized/number": "^3.0.2",
         "tslib": "^2.0.0"
     },

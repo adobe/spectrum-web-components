@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/icons-ui",
-    "version": "0.8.0",
+    "version": "0.9.0",
     "publishConfig": {
         "access": "public"
     },
@@ -44,9 +44,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.6.0",
-        "@future-ui/icon": "^0.11.0",
-        "@future-ui/iconset": "^0.7.0",
+        "@future-ui/base": "^0.7.0",
+        "@future-ui/icon": "^0.12.0",
+        "@future-ui/iconset": "^0.8.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

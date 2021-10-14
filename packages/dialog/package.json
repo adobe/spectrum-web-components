@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/dialog",
-    "version": "0.6.20",
+    "version": "0.7.0",
     "publishConfig": {
         "access": "public"
     },
@@ -46,17 +46,17 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/action-button": "^0.7.0",
-        "@future-ui/base": "^0.6.0",
-        "@future-ui/button": "^0.16.0",
-        "@future-ui/button-group": "^0.6.12",
-        "@future-ui/divider": "^0.2.10",
-        "@future-ui/icon": "^0.11.0",
-        "@future-ui/icons-ui": "^0.8.0",
-        "@future-ui/icons-workflow": "^0.8.0",
-        "@future-ui/modal": "^0.3.10",
-        "@future-ui/shared": "^0.14.0",
-        "@future-ui/underlay": "^0.6.11",
+        "@future-ui/action-button": "^0.8.0",
+        "@future-ui/base": "^0.7.0",
+        "@future-ui/button": "^0.17.0",
+        "@future-ui/button-group": "^0.7.0",
+        "@future-ui/divider": "^0.3.0",
+        "@future-ui/icon": "^0.12.0",
+        "@future-ui/icons-ui": "^0.9.0",
+        "@future-ui/icons-workflow": "^0.9.0",
+        "@future-ui/modal": "^0.4.0",
+        "@future-ui/shared": "^0.15.0",
+        "@future-ui/underlay": "^0.7.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

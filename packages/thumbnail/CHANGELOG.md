@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.3.0 (2021-10-14)
+
+
+### Features
+
+* **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+* **thumbnail:** add the thumbnail package ([56935d5](https://github.com/adobe/spectrum-web-components/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
+
+
+
+
+
 ## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/thumbnail@0.2.5...@future-ui/thumbnail@0.2.7) (2021-10-14)
 
 **Note:** Version bump only for package @future-ui/thumbnail

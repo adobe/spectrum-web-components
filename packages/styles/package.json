@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/styles",
-    "version": "0.9.13",
+    "version": "0.10.0",
     "publishConfig": {
         "access": "public"
     },
@@ -69,7 +69,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.6.0"
+        "@future-ui/base": "^0.7.0"
     },
     "devDependencies": {
         "@spectrum-css/commons": "^3.0.2",
