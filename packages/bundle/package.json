@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/bundle",
-    "version": "0.23.1",
+    "version": "0.23.2",
     "publishConfig": {
         "access": "public"
     },
@@ -46,7 +46,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/accordion": "^0.5.1",
+        "@future-ui/accordion": "^0.5.3",
         "@future-ui/action-bar": "^0.3.1",
         "@future-ui/action-button": "^0.8.1",
         "@future-ui/action-group": "^0.7.1",
