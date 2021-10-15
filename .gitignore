@@ -9,6 +9,7 @@ yarn-error.log
 .rush
 .devcontainer
 tach-results.*
+.gitconfig
 
 # documentation
 documentation/components/searchIndex.json
