@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/action-button",
-    "version": "0.8.0",
+    "version": "0.8.1",
     "publishConfig": {
         "access": "public"
     },
@@ -44,10 +44,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.0",
-        "@future-ui/button": "^0.17.0",
-        "@future-ui/icon": "^0.12.0",
-        "@future-ui/icons-ui": "^0.9.0",
+        "@future-ui/base": "^0.7.2",
+        "@future-ui/button": "^0.17.1",
+        "@future-ui/icon": "^0.12.1",
+        "@future-ui/icons-ui": "^0.9.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

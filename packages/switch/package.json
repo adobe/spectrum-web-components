@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/switch",
-    "version": "0.8.0",
+    "version": "0.8.1",
     "publishConfig": {
         "access": "public"
     },
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.0",
-        "@future-ui/checkbox": "^0.11.0",
+        "@future-ui/base": "^0.7.2",
+        "@future-ui/checkbox": "^0.11.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

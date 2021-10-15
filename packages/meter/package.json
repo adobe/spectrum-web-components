@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/meter",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "publishConfig": {
         "access": "public"
     },
@@ -44,9 +44,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.0",
-        "@future-ui/field-label": "^0.6.0",
-        "@future-ui/shared": "^0.15.0",
+        "@future-ui/base": "^0.7.2",
+        "@future-ui/field-label": "^0.6.1",
+        "@future-ui/shared": "^0.15.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/top-nav",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "publishConfig": {
         "access": "public"
     },
@@ -46,9 +46,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.0",
-        "@future-ui/shared": "^0.15.0",
-        "@future-ui/tabs": "^0.9.0",
+        "@future-ui/base": "^0.7.2",
+        "@future-ui/shared": "^0.15.1",
+        "@future-ui/tabs": "^0.9.1",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

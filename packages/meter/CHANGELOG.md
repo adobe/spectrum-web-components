@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/meter@0.5.0...@future-ui/meter@0.5.1) (2021-10-15)
+
+**Note:** Version bump only for package @future-ui/meter
+
+
+
+
+
 # 0.5.0 (2021-10-14)
 
 

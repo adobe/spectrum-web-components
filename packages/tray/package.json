@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/tray",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "publishConfig": {
         "access": "public"
     },
@@ -44,9 +44,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.0",
-        "@future-ui/modal": "^0.4.0",
-        "@future-ui/underlay": "^0.7.0",
+        "@future-ui/base": "^0.7.2",
+        "@future-ui/modal": "^0.4.1",
+        "@future-ui/underlay": "^0.7.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

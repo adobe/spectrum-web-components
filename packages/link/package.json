@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/link",
-    "version": "0.10.0",
+    "version": "0.10.1",
     "publishConfig": {
         "access": "public"
     },
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.0",
-        "@future-ui/shared": "^0.15.0",
+        "@future-ui/base": "^0.7.2",
+        "@future-ui/shared": "^0.15.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

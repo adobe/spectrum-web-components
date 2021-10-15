@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/overlay@0.14.0...@future-ui/overlay@0.14.1) (2021-10-15)
+
+**Note:** Version bump only for package @future-ui/overlay
+
+
+
+
+
 # 0.14.0 (2021-10-14)
 
 

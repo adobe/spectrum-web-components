@@ -1,6 +1,6 @@
 {
     "name": "@future-ui/picker",
-    "version": "0.10.0",
+    "version": "0.10.1",
     "publishConfig": {
         "access": "public"
     },
@@ -48,15 +48,15 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.0",
-        "@future-ui/button": "^0.17.0",
-        "@future-ui/icon": "^0.12.0",
-        "@future-ui/icons-ui": "^0.9.0",
-        "@future-ui/icons-workflow": "^0.9.0",
-        "@future-ui/menu": "^0.12.0",
-        "@future-ui/overlay": "^0.14.0",
-        "@future-ui/popover": "^0.10.0",
-        "@future-ui/shared": "^0.15.0",
+        "@future-ui/base": "^0.7.2",
+        "@future-ui/button": "^0.17.1",
+        "@future-ui/icon": "^0.12.1",
+        "@future-ui/icons-ui": "^0.9.1",
+        "@future-ui/icons-workflow": "^0.9.1",
+        "@future-ui/menu": "^0.12.1",
+        "@future-ui/overlay": "^0.14.1",
+        "@future-ui/popover": "^0.10.1",
+        "@future-ui/shared": "^0.15.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
