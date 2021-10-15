@@ -40,10 +40,10 @@ module.exports = function (plop) {
     });
     plop.setActionType('install deps', function (answers) {
         execSync(
-            `cd ../../ && yarn lerna add @spectrum-web-components/base --scope=@spectrum-web-components/${answers.name} --no-bootstrap`
+            `cd ../../ && yarn lerna add @future-ui/base --scope=@future-ui/${answers.name} --no-bootstrap`
         );
         execSync(
-            `cd ../../ && yarn lerna add @spectrum-css/${answers.spectrum} --scope=@spectrum-web-components/${answers.name} --dev --no-bootstrap`
+            `cd ../../ && yarn lerna add @spectrum-css/${answers.spectrum} --scope=@future-ui/${answers.name} --dev --no-bootstrap`
         );
     });
     plop.setGenerator('component', {
