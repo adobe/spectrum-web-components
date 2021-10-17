@@ -20,6 +20,7 @@ import {
     nothing,
     ifDefined,
     live,
+    internalProperty,
 } from '@spectrum-web-components/base';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -28,6 +29,9 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 
 import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+
+const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
+export type TextfieldType = typeof textfieldTypes[number];
 
 export class TextfieldBase extends Focusable {
     public static get styles(): CSSResultArray {
@@ -51,6 +55,20 @@ export class TextfieldBase extends Focusable {
 
     @property()
     public placeholder = '';
+
+    @property({ attribute: 'type', reflect: true })
+    private _type: TextfieldType = 'text';
+
+    @internalProperty()
+    get type(): TextfieldType {
+        return textfieldTypes.find((t) => t === this._type) ?? 'text';
+    }
+
+    set type(val: TextfieldType) {
+        const prev = this._type;
+        this._type = val;
+        this.requestUpdate('type', prev);
+    }
 
     @property()
     public pattern?: string;
@@ -204,7 +222,7 @@ export class TextfieldBase extends Focusable {
         return html`
             <!-- @ts-ignore -->
             <input
-                type="text"
+                type=${this.type}
                 aria-label=${this.label || this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"

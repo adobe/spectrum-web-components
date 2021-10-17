@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '../sp-textfield.js';
-import { Textfield } from '../';
+import { Textfield, TextfieldType } from '../';
 import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
 import { sendKeys, executeServerCommand } from '@web/test-runner-commands';
 
@@ -119,20 +119,14 @@ describe('Textfield', () => {
             steps: [
                 {
                     type: 'move',
-                    position: [
-                        startBounds.right - 2,
-                        startBounds.bottom - 2,
-                    ],
+                    position: [startBounds.right - 2, startBounds.bottom - 2],
                 },
                 {
                     type: 'down',
                 },
                 {
                     type: 'move',
-                    position: [
-                        startBounds.right + 50,
-                        startBounds.bottom + 50,
-                    ],
+                    position: [startBounds.right + 50, startBounds.bottom + 50],
                 },
                 {
                     type: 'up',
@@ -161,20 +155,14 @@ describe('Textfield', () => {
             steps: [
                 {
                     type: 'move',
-                    position: [
-                        startBounds.right - 2,
-                        startBounds.bottom - 2,
-                    ],
+                    position: [startBounds.right - 2, startBounds.bottom - 2],
                 },
                 {
                     type: 'down',
                 },
                 {
                     type: 'move',
-                    position: [
-                        startBounds.right + 50,
-                        startBounds.bottom + 50,
-                    ],
+                    position: [startBounds.right + 50, startBounds.bottom + 50],
                 },
                 {
                     type: 'up',
@@ -740,5 +728,78 @@ describe('Textfield', () => {
         await elementUpdated(el);
         expect(el.value).to.equal('asdff');
         expect(inputElement.selectionStart).to.equal(3);
+    });
+    describe('type attribute', () => {
+        // references:
+        // https://developer.mozilla.org/en-US/docs/Glossary/IDL#content_versus_idl_attributes
+        // https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes
+        // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#keywords-and-enumerated-attributes
+
+        it('assigns valid attributes to the property', async () => {
+            const types: TextfieldType[] = [
+                'text',
+                'url',
+                'tel',
+                'email',
+                'password',
+            ];
+            for await (const t of types) {
+                const el = await litFixture<Textfield>(
+                    html`
+                        <sp-textfield type=${t}></sp-textfield>
+                    `
+                );
+                expect(el.type).equals(t);
+
+                el.setAttribute('type', 'url');
+                expect(el.type).equals('url');
+            }
+        });
+        it('represents invalid and missing attributes as "text"', async () => {
+            const el1 = await litFixture<Textfield>(
+                html`
+                    <sp-textfield></sp-textfield>
+                `
+            );
+
+            const el2 = await litFixture<Textfield>(
+                html`
+                    <sp-textfield type="time"></sp-textfield>
+                `
+            );
+            expect(el1.type).equals('text');
+            expect(el2.type).equals('text');
+
+            el1.setAttribute('type', 'submit');
+            expect(el1.type).equals('text');
+        });
+        it('reflects valid property assignments', async () => {
+            const el = await litFixture<Textfield>(
+                html`
+                    <sp-textfield type="url"></sp-textfield>
+                `
+            );
+
+            el.type = 'email';
+            await elementUpdated(el);
+
+            expect(el.getAttribute('type')).equals('email');
+            expect(el.type).equals('email');
+        });
+        it('reflects invalid assignments but sets state to "text"', async () => {
+            const el = await litFixture<Textfield>(
+                html`
+                    <sp-textfield type="url"></sp-textfield>
+                `
+            );
+
+            // eslint-disable-next-line
+            // @ts-ignore
+            el.type = 'range';
+            await elementUpdated(el);
+
+            expect(el.getAttribute('type')).equals('range');
+            expect(el.type).equals('text');
+        });
     });
 });

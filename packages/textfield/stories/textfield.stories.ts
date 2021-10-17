@@ -77,3 +77,20 @@ export const readonly = (): TemplateResult => html`
         placeholder="Enter your life story"
     ></sp-textfield>
 `;
+
+export const types = (): TemplateResult => html`
+    <sp-textfield label="Default" placeholder="default (text)"></sp-textfield>
+    <sp-textfield label="Text" type="text" placeholder="text"></sp-textfield>
+    <sp-textfield label="URL" type="url" placeholder="url"></sp-textfield>
+    <sp-textfield label="Tel" type="tel" placeholder="tel"></sp-textfield>
+    <sp-textfield
+        label="E-Mail"
+        type="email"
+        placeholder="email"
+    ></sp-textfield>
+    <sp-textfield
+        label="Password"
+        type="password"
+        placeholder="password"
+    ></sp-textfield>
+`;

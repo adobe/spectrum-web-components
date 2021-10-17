@@ -64,3 +64,27 @@ The quiet style works best when a clear layout (vertical stack, table, grid) ass
 <sp-field-label for="name-3">Name (quietly)</sp-field-label>
 <sp-textfield id="name-3" placeholder="Enter your name" quiet></sp-textfield>
 ```
+
+### Types
+
+When inputting URLs, telephone numbers, email addresses, or passwords, specify a `type` to provide
+user affordances like mobile keyboards and obscured characters:
+
+-   `url`
+-   `tel`
+-   `email`
+-   `password`
+-   `text` (default)
+
+```html
+<sp-field-label for="tel-1">Telephone</sp-field-label>
+<sp-textfield
+    id="tel-1"
+    type="tel"
+    placeholder="Enter your phone number"
+></sp-textfield>
+<sp-field-label for="password-1">Password</sp-field-label>
+<sp-textfield id="password-1" type="password"></sp-textfield>
+```
+
+If the `type` attribute is not specified, or if it does not match any of these values, the default type adopted is "text."

@@ -367,7 +367,7 @@ export class ActionGroup extends SpectrumElement {
         const slot = this.shadowRoot.querySelector('slot');
         if (!slot) return;
         const assignedElements = slot.assignedElements({ flatten: true });
-        const buttons = assignedElements.reduce((acc: any[], el) => {
+        const buttons = assignedElements.reduce((acc: unknown[], el) => {
             if (el.matches(this._buttonSelector)) {
                 acc.push(el);
             } else {
@@ -378,7 +378,7 @@ export class ActionGroup extends SpectrumElement {
             }
             return acc;
         }, []);
-        this.buttons = buttons;
+        this.buttons = buttons as ActionButton[];
         this.manageChildren();
         this.manageSelects();
     };
