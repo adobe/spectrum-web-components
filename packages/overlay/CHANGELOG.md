@@ -3,6 +3,96 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.16.0 (2021-10-18)
+
+
+### Bug Fixes
+
+* **overlay:** allow [type="modal"] hover overlays to be closed ([5a6802b](https://github.com/gaoding-inc/Iliad-ui/commit/5a6802bc06869cd255bdbfcc460f836c247f01fb))
+* **overlay:** resolve async races with closeOverlays and manageOpen ([ff3738e](https://github.com/gaoding-inc/Iliad-ui/commit/ff3738ea7afc12f258a7745777034ee70d6bf601))
+* **overlay:** traverse up through shadow roots when determining parent overlay ([27f232c](https://github.com/gaoding-inc/Iliad-ui/commit/27f232c28d30288b75187b80744b2581d6017b77))
+* allow "updateComplete" to resolve to a boolean like the LitElement default ([6127946](https://github.com/gaoding-inc/Iliad-ui/commit/6127946fd3ffd048a30b7eb4bf6aadf9e7c8752a))
+* allow contextmenu event passing to pierce shadow roots ([05b69e9](https://github.com/gaoding-inc/Iliad-ui/commit/05b69e90a56676c44e4757a6c2e19e6fe333b145))
+* allow detached elements to be used as content for an overlay ([3ad8383](https://github.com/gaoding-inc/Iliad-ui/commit/3ad83837b6c9a693a4fc24501e3fc7fb2383a12b))
+* close modal overlays with contextmenu events and pass those to the underlying page ([9e83f3c](https://github.com/gaoding-inc/Iliad-ui/commit/9e83f3c0d2398323ebe941ba253d7a0dc0f40ba6))
+* correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/Iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+* correct add/remove timing of overlay events ([474ec6e](https://github.com/gaoding-inc/Iliad-ui/commit/474ec6e85840dc1efee8b134cc6e6163f228920f))
+* delete the used cleanup method ([942ef0f](https://github.com/gaoding-inc/Iliad-ui/commit/942ef0fdc6e7c89e4f554e032c7b9fb760ca47a0))
+* ensure focus is managed when tabbing out of a menu ([9bfa81d](https://github.com/gaoding-inc/Iliad-ui/commit/9bfa81d8a677d6c0ab5ac5cd618498496761c69b))
+* expand sync offering for elements with overlay content ([0195843](https://github.com/gaoding-inc/Iliad-ui/commit/0195843e9efac5760a78fa302d91139c84ea5747))
+* update when events are added to manage overlays ([60cddac](https://github.com/gaoding-inc/Iliad-ui/commit/60cddac69554d00095aee492608d85d6513c8928))
+* **dropdown:** correct conditional check ([a3a790f](https://github.com/gaoding-inc/Iliad-ui/commit/a3a790f6c3f5f8f0837d619ca57c1090ab14e638))
+* **overlay:** add overlay lifecycle methods to stack management ([9361527](https://github.com/gaoding-inc/Iliad-ui/commit/9361527bc63896bcee2933d96b5021aa74386057))
+* **overlay:** allow external style access to "sp-theme" elements in overlays as a CSS part ([a107f66](https://github.com/gaoding-inc/Iliad-ui/commit/a107f66ae171e857e5f84cfff9f7a27cc5bd320d))
+* include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+* manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/gaoding-inc/Iliad-ui/commit/b1e3457ae447427c54f8645c478866340329750c))
+* **overlay:** allow overlay-trigger to declaratively open overlay content ([194a44e](https://github.com/gaoding-inc/Iliad-ui/commit/194a44e78df73ca4a5520e24b308667c23331880))
+* **overlay:** close when overlay-trigger becomes [disabled] ([6f27e25](https://github.com/gaoding-inc/Iliad-ui/commit/6f27e25658dd23949ef07c6df72c43768651482b))
+* **overlay:** correct overlay content sizing ([d9bcd6f](https://github.com/gaoding-inc/Iliad-ui/commit/d9bcd6fd6b4eecae297c6e5cc5330e79a9e198ff))
+* **overlay:** do not focus the trigger when closing an overlay, unless expected ([21d7dfe](https://github.com/gaoding-inc/Iliad-ui/commit/21d7dfeaa94919586bede27a9c7ae077a2d214a5))
+* **overlay:** ensure undefined data is not passed into theme ([3e2e1ca](https://github.com/gaoding-inc/Iliad-ui/commit/3e2e1caa4c37eedf6e569b5124c9e59f207bb92f))
+* **overlay:** extend state machine to manage disposal process ([f0f26af](https://github.com/gaoding-inc/Iliad-ui/commit/f0f26afef2870cf545afa120c8ece076ed241f21))
+* **overlay:** handle hover/longpress more directly via the "open" attribute ([7b2b64b](https://github.com/gaoding-inc/Iliad-ui/commit/7b2b64b6be931381a1ca1c83f941677fa06750ff))
+* **overlay:** only "tab trap" when you mean to ([74e1bd2](https://github.com/gaoding-inc/Iliad-ui/commit/74e1bd2182785ec14f944bef8806ecc3e8d15c10))
+* **overlay:** persist hover overlay when there is not click content ([27111a9](https://github.com/gaoding-inc/Iliad-ui/commit/27111a95831dc0dc846af8f889a9479294ab8515))
+* **overlay:** place return focus element on demand ([d262237](https://github.com/gaoding-inc/Iliad-ui/commit/d2622374346c0a0f55419f87dd4399918c3aaa15))
+* **overlay:** reduce the control active-overlay places on its content ([9d12571](https://github.com/gaoding-inc/Iliad-ui/commit/9d12571e59dfc7afa52ce14b70f2fdad1b607de1))
+* **overlay:** remove trapped content from a11y tree, manage focus, open projected content ([6c496c0](https://github.com/gaoding-inc/Iliad-ui/commit/6c496c0a930737b7fd74a565766ab41339691551))
+* **overlay:** track "modalRoots" for expanded overlay management ([dceccb1](https://github.com/gaoding-inc/Iliad-ui/commit/dceccb1617d54da4c0db8035954a4eb4e0367c30))
+* **overlay:** use tabindex=-1 but always remove it on open ([6047003](https://github.com/gaoding-inc/Iliad-ui/commit/6047003eca58232f90a0c6b2ab0e5bd9fb678eb7))
+* **overlay:** vend a VirtualTrigger for overlays with no element trigger ([a359c60](https://github.com/gaoding-inc/Iliad-ui/commit/a359c6078aa4fac3c9a7bd140609acd4d9aed81d))
+* constrain overlay to available window size ([9729b55](https://github.com/gaoding-inc/Iliad-ui/commit/9729b55ef5246662aa50cbc8037bcaeb2f4ac74a))
+* correct overlay closure order or operations for manual override ([0b7a8c4](https://github.com/gaoding-inc/Iliad-ui/commit/0b7a8c42866ae4f2d38d90fa7b6dc34ed2c21759))
+* ensure browser understandable extensions ([f4e59f7](https://github.com/gaoding-inc/Iliad-ui/commit/f4e59f76f86369593810463c6406565e28ad97e9))
+* include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+* include sync builds in publication configuration ([e731673](https://github.com/gaoding-inc/Iliad-ui/commit/e731673e7d171af667fc87c5b6e521450143e8fe))
+* update "reparentChildren" types for flexibility ([2d358be](https://github.com/gaoding-inc/Iliad-ui/commit/2d358be094cf73785d0858545ccd0f9ca2aa8db0))
+* update presence confirmation so popper is available on update ([24f8380](https://github.com/gaoding-inc/Iliad-ui/commit/24f83800a2011f9181947795d9249b87be99f8ab))
+* use latest @spectrum-css/* versions ([c35eb86](https://github.com/gaoding-inc/Iliad-ui/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+* wait for fonts ready before positioning overlays ([cb8026a](https://github.com/gaoding-inc/Iliad-ui/commit/cb8026a1999a4458b442673291214269fc1e1cef))
+* **overlay:** enforce the full frame ([63628e9](https://github.com/gaoding-inc/Iliad-ui/commit/63628e93de2daec632025f2659a86ff18e487a8e))
+* **overlay:** ensure overlay addition occurs after closing previous ([7d2b102](https://github.com/gaoding-inc/Iliad-ui/commit/7d2b102f30731513639582fed8ed0e1b46d569cf))
+* **overlay:** new popper version tracks scroll through assigned slots ([ea2bac4](https://github.com/gaoding-inc/Iliad-ui/commit/ea2bac4f7d9c4df98a6a65c19229ef1c18a74791))
+* **overlay:** override SpectrumCSS tip rules and process usage in popper ([aad3dec](https://github.com/gaoding-inc/Iliad-ui/commit/aad3dece0f6452c9eef1e0d9b828ca8694c3a9a9))
+* **overlay:** use esm build from popper and point through to types ([078ca0f](https://github.com/gaoding-inc/Iliad-ui/commit/078ca0fb9bc43d1ee5288e641ff1ec49f40e8df5))
+* **overlay:** use isolatedModules in tsconfig ([48d6069](https://github.com/gaoding-inc/Iliad-ui/commit/48d60694ad5d6014b8664f515e698651f55c9e5f))
+* **tooltip:** correct arrow orientation, remove popper-arrow-rotate ([fcd6ea2](https://github.com/gaoding-inc/Iliad-ui/commit/fcd6ea28ef5e4f06a07994ebd8f8b9be1a934eb2))
+* use height: 100% to avoid layout breaks ([1498129](https://github.com/gaoding-inc/Iliad-ui/commit/14981291e6d860a8fde7e1746a4a03af4df1e572))
+* **theme:** track default theme values dynamically ([a0c306c](https://github.com/gaoding-inc/Iliad-ui/commit/a0c306c9682d97cefa1258e01ce6eee179f0e071))
+
+
+### Features
+
+* update lit-* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/Iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+* **picker:** process field-label content for more accurate a11y tree ([dc9df54](https://github.com/gaoding-inc/Iliad-ui/commit/dc9df54d052edc46c2399f0f7b12d3b5d4aff740))
+* add open/close events for some menus and overlays ([17f0a58](https://github.com/gaoding-inc/Iliad-ui/commit/17f0a58722fdfee39653c2abde048391f7f24564))
+* allow activation of longpress content ([55e71fd](https://github.com/gaoding-inc/Iliad-ui/commit/55e71fdf9fd5dde489871c3d9798ef8957f4e5b6))
+* leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/Iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+* **dropdown:** open menu UI with overlay system ([9811eeb](https://github.com/gaoding-inc/Iliad-ui/commit/9811eebc33d892da46752981f5bfa49c42ab1192))
+* **field-group:** add field-group pattern ([f8d265c](https://github.com/gaoding-inc/Iliad-ui/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
+* **overlay:** manage focus throwing and tab trapping ([27a0b53](https://github.com/gaoding-inc/Iliad-ui/commit/27a0b53ea94d19bb18b7d3f89763b06dc1b42b59))
+* **overlay:** move entire package behind dynamic import by default ([9b0a74d](https://github.com/gaoding-inc/Iliad-ui/commit/9b0a74de1f32ccd8cde6cabe4c06f990064f11ae))
+* **sidenav:** add keyboard accessibility ([6ff622b](https://github.com/gaoding-inc/Iliad-ui/commit/6ff622bf89ad319a7d464fbdd2477c7b55b65cdd))
+* **split-button:** add split-button pattern ([4833a59](https://github.com/gaoding-inc/Iliad-ui/commit/4833a598bb3da3552d194586350a3888dba79543))
+* **story-decorator:** add story decorator to replace knobs for theme application ([7c0c6be](https://github.com/gaoding-inc/Iliad-ui/commit/7c0c6be37d58ad3e6d8973e8d4f5ccc587bf55af))
+* join overlay-root and overlay-trigger as overlay ([dcde42c](https://github.com/gaoding-inc/Iliad-ui/commit/dcde42c118b76bf8466c7475611e95783a1dcb3d))
+* rework overlays to use popper ([e17d1bb](https://github.com/gaoding-inc/Iliad-ui/commit/e17d1bb23082b788ea921ec15315ea955e2596eb))
+
+
+### Performance Improvements
+
+* use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/Iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+
+
+### Reverts
+
+* Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/Iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+
+
+
+
+
 # 0.15.0 (2021-10-18)
 
 

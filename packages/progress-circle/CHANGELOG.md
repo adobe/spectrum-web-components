@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.5.0 (2021-10-18)
+
+
+### Bug Fixes
+
+* update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+
+
+### Features
+
+* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+* **progress-circle:** replace circle-loader with progress-circle ([a852140](https://github.com/gaoding-inc/Iliad-ui/commit/a852140797f978078d71aceac58f61f744e5a651))
+
+
+
+
+
 # 0.4.0 (2021-10-18)
 
 

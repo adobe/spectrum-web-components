@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/theme",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "publishConfig": {
         "access": "public"
     },
@@ -56,8 +56,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.8.0",
-        "@lliad-ui/styles": "^0.11.0",
+        "@lliad-ui/base": "^0.9.0",
+        "@lliad-ui/styles": "^0.12.0",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

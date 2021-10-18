@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/color-area",
-    "version": "0.6.0",
+    "version": "0.7.0",
     "publishConfig": {
         "access": "public"
     },
@@ -45,8 +45,8 @@
     ],
     "dependencies": {
         "@ctrl/tinycolor": "^3.3.3",
-        "@lliad-ui/base": "^0.8.0",
-        "@lliad-ui/color-handle": "^0.3.0",
+        "@lliad-ui/base": "^0.9.0",
+        "@lliad-ui/color-handle": "^0.4.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

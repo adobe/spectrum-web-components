@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.4.0 (2021-10-18)
+
+
+### Bug Fixes
+
+* address westbrooks comments ([634af60](https://github.com/gaoding-inc/Iliad-ui/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
+* expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/gaoding-inc/Iliad-ui/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
+* include touch-action rule for draggable content ([3f507e6](https://github.com/gaoding-inc/Iliad-ui/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
+* manage "focused" across more contexts ([9273c15](https://github.com/gaoding-inc/Iliad-ui/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
+* prevent focus outline ([af2b077](https://github.com/gaoding-inc/Iliad-ui/commit/af2b07704ae01409649be3ee1b45c15463cd9baf))
+
+
+### Features
+
+* **color-handle:** add color-handle pattern ([e3856d8](https://github.com/gaoding-inc/Iliad-ui/commit/e3856d8894d91336d073c639b8fbc6f35d3d1276))
+
+
+
+
+
 # 0.3.0 (2021-10-18)
 
 

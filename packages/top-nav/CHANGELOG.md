@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.6.0 (2021-10-18)
+
+
+### Bug Fixes
+
+* correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/Iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+* include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+* include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+* lint away debugger statements ([34a498e](https://github.com/gaoding-inc/Iliad-ui/commit/34a498e784221f98dbf26e9366114c82fabc9c5b))
+* remove <sp-menu> usage where deprecated ([387db3b](https://github.com/gaoding-inc/Iliad-ui/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+* update indicator animation for loading and content direction ([f607f8b](https://github.com/gaoding-inc/Iliad-ui/commit/f607f8b4fca280b7aa5eae835554ea62845abd1c))
+* **top-nav:** initialize nav with an undefined selection ([3473f63](https://github.com/gaoding-inc/Iliad-ui/commit/3473f635facb6f22e92d329f7bf018f4eb1a9852))
+* **top-nav:** minor edits to description, typos ([bc2ee48](https://github.com/gaoding-inc/Iliad-ui/commit/bc2ee48ba172aa37f23cae335599cffcb7637673))
+* use icons without "size" values ([3fc7c91](https://github.com/gaoding-inc/Iliad-ui/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+* **top-nav:** prototype top-nav pattern ([9708f6f](https://github.com/gaoding-inc/Iliad-ui/commit/9708f6f63e080c0ec91c11763d3121a407349d1a))
+
+
+### Features
+
+* **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/Iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
+
+
+
+
 # 0.5.0 (2021-10-18)
 
 

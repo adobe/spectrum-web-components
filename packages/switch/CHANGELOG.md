@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.10.0 (2021-10-18)
+
+
+### Bug Fixes
+
+* add support for "readonly" attribute ([4bce3b7](https://github.com/gaoding-inc/Iliad-ui/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
+* correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/Iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+* ensure [disabled] styling ([4c067eb](https://github.com/gaoding-inc/Iliad-ui/commit/4c067eb82dcfc5f1aaf3ecedfbfc83f4ffb90a22))
+* ensure aria attributes based on state ([6ee43de](https://github.com/gaoding-inc/Iliad-ui/commit/6ee43de23254f612759cc258705dfe6eed30c418))
+* focusable style ([48ea3e7](https://github.com/gaoding-inc/Iliad-ui/commit/48ea3e79828b737ad3df9e0fcac5e48c50124085))
+* implement "emphasized" styles ([750bbe7](https://github.com/gaoding-inc/Iliad-ui/commit/750bbe7c6a70ed590c4ea179179bf201c50526ea))
+* include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/Iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+* include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+* include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+* stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/Iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
+* update configuration for Spectrum CSS processing for specificity ([5c2e21e](https://github.com/gaoding-inc/Iliad-ui/commit/5c2e21ed68d94a75cac0cc248925cc5bca35cc25))
+* update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/Iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+* update side effect listings ([8160d3a](https://github.com/gaoding-inc/Iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+* update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+* **switch:** process CSS correction ([292fff1](https://github.com/gaoding-inc/Iliad-ui/commit/292fff19a14225f579e5e8b4717b7db3a33895c4))
+* **switch:** track aria-checked ([1980046](https://github.com/gaoding-inc/Iliad-ui/commit/1980046ab0f791bfe1e147c855f43ddf2d2a424e))
+* workaround bug in Edge with switches ([7014a2c](https://github.com/gaoding-inc/Iliad-ui/commit/7014a2cced96a704589a85f4c23f5b3d5519fb3b))
+
+
+### Features
+
+* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+* **action-button:** add action button pattern ([03ac00a](https://github.com/gaoding-inc/Iliad-ui/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+* **action-group:** add action-group pattern ([d2de766](https://github.com/gaoding-inc/Iliad-ui/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
+* **switch:** update spectrum css input ([1d2ce17](https://github.com/gaoding-inc/Iliad-ui/commit/1d2ce179650fd2206fb0b4a839361b2b0b2d9917))
+* leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/Iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+* update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/Iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+* use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/gaoding-inc/Iliad-ui/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
+* use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/Iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
+
+
+### Performance Improvements
+
+* use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/Iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+* use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/Iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
+
+
+### Reverts
+
+* Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/Iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+
+
+
+
+
 # 0.9.0 (2021-10-18)
 
 
