@@ -67,7 +67,7 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
     let manifestImports = `import {
         html,
         TemplateResult
-    } from '@future-ui/base';\r\n`;
+    } from '@lliad-ui/base';\r\n`;
     let manifestListings = `\r\nexport const iconManifest = [\r\n`;
 
     icons.forEach((i) => {
@@ -177,10 +177,10 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
         import {
             html,
             TemplateResult
-        } from '@future-ui/base';
+        } from '@lliad-ui/base';
         import {
             IconBase
-        } from '@future-ui/icon';
+        } from '@lliad-ui/icon';
 
         import {
             ${ComponentName}Icon
