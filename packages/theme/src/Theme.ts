@@ -14,7 +14,7 @@ import {
     CSSResultGroup,
     CSSResult,
     supportsAdoptingStyleSheets,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 import coreStyles from './theme.css.js';
 

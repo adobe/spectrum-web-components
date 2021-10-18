@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/react",
+    "name": "@lliad-ui/react",
     "version": "0.0.1",
     "publishConfig": {
         "access": "public"
@@ -45,7 +45,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.2",
+        "@lliad-ui/base": "^0.7.2",
         "@lit-labs/react": "^1.0.1",
         "react": "^17.0.2",
         "tslib": "^2.0.0"

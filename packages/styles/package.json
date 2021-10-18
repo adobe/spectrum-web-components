@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/styles",
+    "name": "@lliad-ui/styles",
     "version": "0.10.1",
     "publishConfig": {
         "access": "public"
@@ -69,7 +69,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.2"
+        "@lliad-ui/base": "^0.7.2"
     },
     "devDependencies": {
         "@spectrum-css/commons": "^3.0.2",

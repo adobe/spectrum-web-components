@@ -18,19 +18,19 @@ import {
     CSSResultArray,
     property,
     query,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 import * as Prism from 'prismjs';
 import { toHtmlTemplateString } from '../utils/templates.js';
 import Styles from './code-example.css';
 import StylesLight from './code-example-light.css';
 import StylesDark from './code-example-dark.css';
 import { stripIndent } from 'common-tags';
-import { FocusVisiblePolyfillMixin } from '@future-ui/shared';
-import '@future-ui/action-button/sp-action-button.js';
-import '@future-ui/icons-workflow/icons/sp-icon-copy.js';
+import { FocusVisiblePolyfillMixin } from '@lliad-ui/shared';
+import '@lliad-ui/action-button/sp-action-button.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-copy.js';
 import { copyNode } from './copy-to-clipboard.js';
 import { TrackTheme } from './layout.js';
-import { Color } from '@future-ui/theme';
+import { Color } from '@lliad-ui/theme';
 
 @customElement('code-example')
 export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {

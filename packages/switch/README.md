@@ -4,24 +4,24 @@ An `<sp-switch>` is used to turn an option on or off. Switches allow users to se
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/switch?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/switch)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/switch?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/switch)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/switch?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/switch)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/switch?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/switch)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/uXsqJULoUuOtbDgGB4sC/src/index.ts)
 
 ```
-yarn add @future-ui/switch
+yarn add @lliad-ui/switch
 ```
 
 Import the side effectful registration of `<sp-switch>` via:
 
 ```
-import '@future-ui/switch/sp-switch.js';
+import '@lliad-ui/switch/sp-switch.js';
 ```
 
 When looking to leverage the `Switch` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Switch } from '@future-ui/switch';
+import { Switch } from '@lliad-ui/switch';
 ```
 
 ## Example

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createComponent } from '@lit-labs/react';
 
-import * as ButtonPackage from '@future-ui/button';
+import * as ButtonPackage from '@lliad-ui/button';
 const { Button, ButtonBase, StyledButton, ClearButton } = ButtonPackage;
 
 export const SpButton = generateReactComponent(Button);

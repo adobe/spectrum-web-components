@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/base",
+    "name": "@lliad-ui/base",
     "version": "0.7.2",
     "publishConfig": {
         "access": "public"

@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/story-decorator",
+    "name": "@lliad-ui/story-decorator",
     "version": "0.6.1",
     "publishConfig": {
         "access": "public"
@@ -45,13 +45,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/field-label": "^0.6.1",
-        "@future-ui/menu": "^0.12.1",
-        "@future-ui/overlay": "^0.14.1",
-        "@future-ui/picker": "^0.10.1",
-        "@future-ui/switch": "^0.8.1",
-        "@future-ui/theme": "^0.11.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/field-label": "^0.6.1",
+        "@lliad-ui/menu": "^0.12.1",
+        "@lliad-ui/overlay": "^0.14.1",
+        "@lliad-ui/picker": "^0.10.1",
+        "@lliad-ui/switch": "^0.8.1",
+        "@lliad-ui/theme": "^0.11.1",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

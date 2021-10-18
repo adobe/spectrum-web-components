@@ -13,13 +13,13 @@ governing permissions and limitations under the License.
 import '../sync/sp-picker.js';
 import { Picker } from '..';
 
-import '@future-ui/overlay/active-overlay.js';
-import { OverlayOpenCloseDetail } from '@future-ui/overlay';
-import '@future-ui/menu/sp-menu.js';
-import '@future-ui/menu/sp-menu-item.js';
-import '@future-ui/menu/sp-menu-divider.js';
-import '@future-ui/field-label/sp-field-label.js';
-import { Menu, MenuItem } from '@future-ui/menu';
+import '@lliad-ui/overlay/active-overlay.js';
+import { OverlayOpenCloseDetail } from '@lliad-ui/overlay';
+import '@lliad-ui/menu/sp-menu.js';
+import '@lliad-ui/menu/sp-menu-item.js';
+import '@lliad-ui/menu/sp-menu-divider.js';
+import '@lliad-ui/field-label/sp-field-label.js';
+import { Menu, MenuItem } from '@lliad-ui/menu';
 import {
     fixture,
     elementUpdated,
@@ -29,7 +29,7 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import '@future-ui/shared/src/focus-visible.js';
+import '@lliad-ui/shared/src/focus-visible.js';
 import { spy } from 'sinon';
 import {
     arrowDownEvent,

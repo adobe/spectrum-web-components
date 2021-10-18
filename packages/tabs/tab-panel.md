@@ -4,18 +4,18 @@ An `<sp-tab-panel>` contains the content that will be displayed when an `<sp-tab
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/tabs?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/tabs)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/tabs?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/tabs)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/tabs?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/tabs)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/tabs?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/tabs)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/2JFFTBPXfCZpePD0wk58/src/index.ts)
 
 ```
-yarn add @future-ui/tabs
+yarn add @lliad-ui/tabs
 ```
 
 Import the side effectful registration of `<sp-tab-panel>` via:
 
 ```
-import '@future-ui/tabs/sp-tab-panel.js';
+import '@lliad-ui/tabs/sp-tab-panel.js';
 ```
 
 When looking to leverage the `TabPanel` base class as a type and/or for extension purposes, do so via:
@@ -23,7 +23,7 @@ When looking to leverage the `TabPanel` base class as a type and/or for extensio
 ```
 import {
     TabPanel,
-} from '@future-ui/tabs';
+} from '@lliad-ui/tabs';
 ```
 
 ## Examples

@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import '../sp-popover.js';
 import { Popover } from '../';
 import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
-import { OverlayDisplayQueryDetail } from '@future-ui/overlay';
+import { OverlayDisplayQueryDetail } from '@lliad-ui/overlay';
 
 describe('popover', () => {
     let popover!: Popover;

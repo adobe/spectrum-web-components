@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@future-ui/base';
+import { TemplateResult } from '@lliad-ui/base';
 import { splitbutton } from './index.js';
 
 import '../sp-split-button.js';
-import '@future-ui/menu/sp-menu-item.js';
+import '@lliad-ui/menu/sp-menu-item.js';
 
 export default {
     title: 'Split Button/Primary/Field',

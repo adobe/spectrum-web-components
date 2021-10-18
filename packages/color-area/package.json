@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/color-area",
+    "name": "@lliad-ui/color-area",
     "version": "0.5.1",
     "publishConfig": {
         "access": "public"
@@ -45,8 +45,8 @@
     ],
     "dependencies": {
         "@ctrl/tinycolor": "^3.3.3",
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/color-handle": "^0.2.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/color-handle": "^0.2.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

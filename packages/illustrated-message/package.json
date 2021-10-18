@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/illustrated-message",
+    "name": "@lliad-ui/illustrated-message",
     "version": "0.7.1",
     "publishConfig": {
         "access": "public"
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/styles": "^0.10.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/styles": "^0.10.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

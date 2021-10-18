@@ -4,19 +4,19 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/tags?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/tags)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/tags?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/tags)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/tags?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/tags)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/tags?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/tags)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/416WQzw187aA7udkjT8a/src/index.ts)
 
 ```
-yarn add @future-ui/tags
+yarn add @lliad-ui/tags
 ```
 
 Import the side effectful registration of `<sp-tags>` or `<sp-tag>` via:
 
 ```
-import '@future-ui/tags/sp-tags.js';
-import '@future-ui/tags/sp-tag.js';
+import '@lliad-ui/tags/sp-tags.js';
+import '@lliad-ui/tags/sp-tag.js';
 ```
 
 When looking to leverage the `Tags` or `Tag` base classes as a type and/or for extension purposes, do so via:
@@ -25,7 +25,7 @@ When looking to leverage the `Tags` or `Tag` base classes as a type and/or for e
 import {
     Tags,
     Tag
-} from '@future-ui/tags';
+} from '@lliad-ui/tags';
 ```
 
 ## Example

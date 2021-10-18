@@ -4,22 +4,22 @@ The `<sp-icons-medium>` and `<sp-icons-large>` elements that are included in thi
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/icons?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/icons)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/icons?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/icons)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/icons?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/icons)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/icons?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/icons)
 
 ```
-yarn add @future-ui/icons
+yarn add @lliad-ui/icons
 ```
 
 Import the side effectful registration of `<sp-icons-medium>` or `<sp-icons-large>` via:
 
 ```
-import '@future-ui/icons/sp-icons-medium.js';
-import '@future-ui/icons/sp-icons-large.js';
+import '@lliad-ui/icons/sp-icons-medium.js';
+import '@lliad-ui/icons/sp-icons-large.js';
 ```
 
 When looking to leverage the `IconsMedium` or `IconsLarge` base classes as a type and/or for extension purposes, do so via:
 
 ```
-import { IconsMedium, IconsLarge } from '@future-ui/icons';
+import { IconsMedium, IconsLarge } from '@lliad-ui/icons';
 ```

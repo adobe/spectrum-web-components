@@ -17,12 +17,12 @@ import {
     TemplateResult,
     SpectrumElement,
     PropertyValues,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 import {
     FocusVisiblePolyfillMixin,
     ObserveSlotPresence,
     ObserveSlotText,
-} from '@future-ui/shared';
+} from '@lliad-ui/shared';
 
 import tabItemStyles from './tab.css.js';
 

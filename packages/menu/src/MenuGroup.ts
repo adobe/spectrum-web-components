@@ -15,7 +15,7 @@ import {
     CSSResultArray,
     TemplateResult,
     queryAssignedNodes,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 import { Menu } from './Menu.js';
 import '../sp-menu.js';

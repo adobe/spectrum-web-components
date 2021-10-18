@@ -21,25 +21,25 @@ import {
     SizedMixin,
     ElementSize,
     classMap,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 import pickerStyles from './picker.css.js';
-import chevronStyles from '@future-ui/icon/src/spectrum-icon-chevron.css.js';
+import chevronStyles from '@lliad-ui/icon/src/spectrum-icon-chevron.css.js';
 
-import { Focusable } from '@future-ui/shared/src/focusable.js';
-import { reparentChildren } from '@future-ui/shared/src/reparent-children.js';
-import '@future-ui/icons-ui/icons/sp-icon-chevron100.js';
-import '@future-ui/icons-workflow/icons/sp-icon-alert.js';
-import '@future-ui/menu/sp-menu.js';
-import { MenuItem, Menu } from '@future-ui/menu';
-import '@future-ui/popover/sp-popover.js';
-import { Popover } from '@future-ui/popover';
+import { Focusable } from '@lliad-ui/shared/src/focusable.js';
+import { reparentChildren } from '@lliad-ui/shared/src/reparent-children.js';
+import '@lliad-ui/icons-ui/icons/sp-icon-chevron100.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@lliad-ui/menu/sp-menu.js';
+import { MenuItem, Menu } from '@lliad-ui/menu';
+import '@lliad-ui/popover/sp-popover.js';
+import { Popover } from '@lliad-ui/popover';
 import {
     Placement,
     openOverlay,
     TriggerInteractions,
     OverlayOptions,
-} from '@future-ui/overlay';
+} from '@lliad-ui/overlay';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',

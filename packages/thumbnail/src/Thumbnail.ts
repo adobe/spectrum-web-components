@@ -17,7 +17,7 @@ import {
     TemplateResult,
     property,
     SizedMixin,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 import styles from './thumbnail.css.js';
 

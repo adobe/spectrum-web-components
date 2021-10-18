@@ -8,24 +8,24 @@ instead of selecting.
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/checkbox?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/checkbox)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/checkbox?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/checkbox)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/checkbox?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/checkbox)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/checkbox?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/checkbox)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/jeIGAXHMUrTp6hGMquoD/src/index.ts)
 
 ```
-yarn add @future-ui/checkbox
+yarn add @lliad-ui/checkbox
 ```
 
 Import the side effectful registration of `<sp-checkbox>` via:
 
 ```
-import '@future-ui/checkbox/sp-checkbox.js';
+import '@lliad-ui/checkbox/sp-checkbox.js';
 ```
 
 When looking to leverage the `Checkbox` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Checkbox } from '@future-ui/checkbox';
+import { Checkbox } from '@lliad-ui/checkbox';
 ```
 
 ## Sizes

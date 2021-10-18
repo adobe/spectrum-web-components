@@ -16,7 +16,7 @@ import {
     SpectrumElement,
     property,
     PropertyValues,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 import panelStyles from './tab-panel.css.js';
 

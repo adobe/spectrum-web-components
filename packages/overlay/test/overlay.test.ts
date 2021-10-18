@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@future-ui/button/sp-button.js';
-import '@future-ui/dialog/sp-dialog.js';
-import { Dialog } from '@future-ui/dialog';
-import '@future-ui/popover/sp-popover.js';
-import { Popover } from '@future-ui/popover';
+import '@lliad-ui/button/sp-button.js';
+import '@lliad-ui/dialog/sp-dialog.js';
+import { Dialog } from '@lliad-ui/dialog';
+import '@lliad-ui/popover/sp-popover.js';
+import { Popover } from '@lliad-ui/popover';
 import { ActiveOverlay, Overlay, OverlayTrigger, Placement } from '../';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers.js';

@@ -4,24 +4,24 @@ An `<sp-color-area>` allows users to visually select two properties of a color s
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/color-area?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/color-area)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/color-area?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/color-area)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/color-area?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/color-area)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/color-area?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/color-area)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/crxLSSCXLFPpmUsM6GJQ/src/index.ts)
 
 ```
-yarn add @future-ui/color-area
+yarn add @lliad-ui/color-area
 ```
 
 Import the side effectful registration of `<sp-color-area>` via:
 
 ```
-import '@future-ui/color-area/sp-color-area.js';
+import '@lliad-ui/color-area/sp-color-area.js';
 ```
 
 When looking to leverage the `ColorArea` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ColorArea } from '@future-ui/color-area';
+import { ColorArea } from '@lliad-ui/color-area';
 ```
 
 ## Color Formatting

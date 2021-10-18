@@ -4,24 +4,24 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/action-group?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/action-group)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/action-group?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/action-group)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/action-group?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/action-group)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/action-group?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/action-group)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/ty5ezK85zgVE5vuZfMem/src/index.ts)
 
 ```
-yarn add @future-ui/action-group
+yarn add @lliad-ui/action-group
 ```
 
 Import the side effectful registration of `<sp-action-group>` via:
 
 ```
-import '@future-ui/action-group/sp-action-group.js';
+import '@lliad-ui/action-group/sp-action-group.js';
 ```
 
 When looking to leverage the `ActionGroup` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ActionGroup } from '@future-ui/action-group';
+import { ActionGroup } from '@lliad-ui/action-group';
 ```
 
 ## Example

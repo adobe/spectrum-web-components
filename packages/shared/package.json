@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/shared",
+    "name": "@lliad-ui/shared",
     "version": "0.15.1",
     "publishConfig": {
         "access": "public"
@@ -42,7 +42,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.2",
+        "@lliad-ui/base": "^0.7.2",
         "focus-visible": "^5.1.0",
         "tslib": "^2.0.0"
     },

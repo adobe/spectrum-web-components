@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@future-ui/sidenav/sp-sidenav.js';
-import '@future-ui/sidenav/sp-sidenav-item.js';
-import '@future-ui/sidenav/sp-sidenav-heading.js';
-import { html } from '@future-ui/base';
+import '@lliad-ui/sidenav/sp-sidenav.js';
+import '@lliad-ui/sidenav/sp-sidenav-item.js';
+import '@lliad-ui/sidenav/sp-sidenav-heading.js';
+import { html } from '@lliad-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

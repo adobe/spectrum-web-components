@@ -11,10 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import { waitForPredicate } from '../../../test/testing-helpers.js';
-import '@future-ui/icons/sp-icons-medium.js';
-import '@future-ui/icon/sp-icon.js';
-import { IconsMedium } from '@future-ui/icons';
-import { Icon } from '@future-ui/icon';
+import '@lliad-ui/icons/sp-icons-medium.js';
+import '@lliad-ui/icon/sp-icon.js';
+import { IconsMedium } from '@lliad-ui/icons';
+import { Icon } from '@lliad-ui/icon';
 import { IconsetRegistry } from '../src/iconset-registry.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 

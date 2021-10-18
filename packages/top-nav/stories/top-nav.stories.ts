@@ -10,21 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@future-ui/base';
+import { html, TemplateResult } from '@lliad-ui/base';
 
 import '../sp-top-nav.js';
 import '../sp-top-nav-item.js';
-import '@future-ui/action-menu/sp-action-menu.js';
-import '@future-ui/menu/sp-menu.js';
-import '@future-ui/menu/sp-menu-item.js';
-import '@future-ui/menu/sp-menu-divider.js';
-import '@future-ui/action-group/sp-action-group.js';
-import '@future-ui/action-button/sp-action-button.js';
-import '@future-ui/avatar/sp-avatar.js';
-import '@future-ui/icons-workflow/icons/sp-icon-settings.js';
-import '@future-ui/icons-workflow/icons/sp-icon-download.js';
-import '@future-ui/icons-workflow/icons/sp-icon-link.js';
-import '@future-ui/icons-workflow/icons/sp-icon-search.js';
+import '@lliad-ui/action-menu/sp-action-menu.js';
+import '@lliad-ui/menu/sp-menu.js';
+import '@lliad-ui/menu/sp-menu-item.js';
+import '@lliad-ui/menu/sp-menu-divider.js';
+import '@lliad-ui/action-group/sp-action-group.js';
+import '@lliad-ui/action-button/sp-action-button.js';
+import '@lliad-ui/avatar/sp-avatar.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-settings.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-download.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-link.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-search.js';
 import { logo, avatar } from './images';
 
 export default {

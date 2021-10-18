@@ -4,24 +4,24 @@ An `<sp-progress-circle>` shows the progression of a system operation such as do
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/progress-circle?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/progress-circle)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/progress-circle?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/progress-circle)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/progress-circle?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/progress-circle)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/progress-circle?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/progress-circle)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/LfliuY0UocICDCBr21uy/src/index.ts)
 
 ```
-yarn add @future-ui/progress-circle
+yarn add @lliad-ui/progress-circle
 ```
 
 Import the side effectful registration of `<sp-progress-circle>` via:
 
 ```
-import '@future-ui/progress-circle/sp-progress-circle.js';
+import '@lliad-ui/progress-circle/sp-progress-circle.js';
 ```
 
 When looking to leverage the `ProgressCircle` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ProgressCircle } from '@future-ui/progress-circle';
+import { ProgressCircle } from '@lliad-ui/progress-circle';
 ```
 
 ## Variants

@@ -4,17 +4,17 @@ The `SpectrumElement` base class as created by mixing `SpectrumMixin` onto `LitE
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/base?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/base)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/base?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/base)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/base?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/base)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/base?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/base)
 
 ```
-yarn add @future-ui/base
+yarn add @lliad-ui/base
 ```
 
 When looking to leverage the `SpectrumElement` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { SpectrumElement } from '@future-ui/base';
+import { SpectrumElement } from '@lliad-ui/base';
 
 export MyElement extends SpectrumElement {}
 
@@ -23,7 +23,7 @@ export MyElement extends SpectrumElement {}
 Similarly the `SpectrumMixin` class factory mixin is available via:
 
 ```
-import { SpectrumMixin } from '@future-ui/base';
+import { SpectrumMixin } from '@lliad-ui/base';
 
 export MyElement extends SpectrumMixin(HTMLElement) {}
 ```

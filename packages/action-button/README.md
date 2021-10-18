@@ -4,24 +4,24 @@ An `<sp-action-button>` represents an action a user can take.
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/action-button?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/action-button)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/action-button?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/action-button)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/action-button?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/action-button)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/action-button?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/action-button)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/mOF1zUEjLJzODGXFYaIU/src/index.ts)
 
 ```
-yarn add @future-ui/action-button
+yarn add @lliad-ui/action-button
 ```
 
 Import the side effectful registration of `<sp-action-button>` via:
 
 ```
-import '@future-ui/action-button/sp-action-button.js';
+import '@lliad-ui/action-button/sp-action-button.js';
 ```
 
 When looking to leverage the `ActionButton` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ActionButton } from '@future-ui/action-button';
+import { ActionButton } from '@lliad-ui/action-button';
 ```
 
 ## Sizes

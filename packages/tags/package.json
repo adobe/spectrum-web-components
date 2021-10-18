@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/tags",
+    "name": "@lliad-ui/tags",
     "version": "0.9.1",
     "publishConfig": {
         "access": "public"
@@ -46,9 +46,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/button": "^0.17.1",
-        "@future-ui/shared": "^0.15.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/button": "^0.17.1",
+        "@lliad-ui/shared": "^0.15.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

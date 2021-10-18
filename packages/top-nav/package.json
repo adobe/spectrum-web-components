@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/top-nav",
+    "name": "@lliad-ui/top-nav",
     "version": "0.4.1",
     "publishConfig": {
         "access": "public"
@@ -46,9 +46,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/shared": "^0.15.1",
-        "@future-ui/tabs": "^0.9.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/shared": "^0.15.1",
+        "@lliad-ui/tabs": "^0.9.1",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

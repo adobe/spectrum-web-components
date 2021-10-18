@@ -2,23 +2,23 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/vrt-compare?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/vrt-compare)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/vrt-compare?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/vrt-compare)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/vrt-compare?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/vrt-compare)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/vrt-compare?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/vrt-compare)
 
 ```
-yarn add @future-ui/vrt-compare
+yarn add @lliad-ui/vrt-compare
 ```
 
 Import the side effectful registration of `<sp-vrt-compare>` via:
 
 ```
-import '@future-ui/vrt-compare/sp-vrt-compare.js';
+import '@lliad-ui/vrt-compare/sp-vrt-compare.js';
 ```
 
 When looking to leverage the `VrtCompare` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { VrtCompare } from '@future-ui/vrt-compare';
+import { VrtCompare } from '@lliad-ui/vrt-compare';
 ```
 
 ## Example

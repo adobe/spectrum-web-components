@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@future-ui/base';
+import { html, TemplateResult } from '@lliad-ui/base';
 
 import '../sp-react.js';
 
@@ -20,5 +20,7 @@ export default {
 };
 
 export const Default = (): TemplateResult => {
-    return html`<sp-react></sp-react>`;
+    return html`
+        <sp-react></sp-react>
+    `;
 };

@@ -18,11 +18,11 @@ import {
     TemplateResult,
     SizedMixin,
     ElementSize,
-} from '@future-ui/base';
-import { ButtonBase } from '@future-ui/button';
+} from '@lliad-ui/base';
+import { ButtonBase } from '@lliad-ui/button';
 import buttonStyles from './action-button.css.js';
-import cornerTriangleStyles from '@future-ui/icon/src/spectrum-icon-corner-triangle.css.js';
-import '@future-ui/icons-ui/icons/sp-icon-corner-triangle300.js';
+import cornerTriangleStyles from '@lliad-ui/icon/src/spectrum-icon-corner-triangle.css.js';
+import '@lliad-ui/icons-ui/icons/sp-icon-corner-triangle300.js';
 
 const holdAffordanceClass = {
     s: 'spectrum-UIIcon-CornerTriangle75',

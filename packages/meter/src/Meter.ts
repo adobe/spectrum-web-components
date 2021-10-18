@@ -18,10 +18,10 @@ import {
     property,
     PropertyValues,
     SizedMixin,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
-import { ObserveSlotText } from '@future-ui/shared/src/observe-slot-text.js';
-import '@future-ui/field-label/sp-field-label.js';
+import { ObserveSlotText } from '@lliad-ui/shared/src/observe-slot-text.js';
+import '@lliad-ui/field-label/sp-field-label.js';
 import styles from './meter.css.js';
 
 /**

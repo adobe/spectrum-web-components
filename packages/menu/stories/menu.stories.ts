@@ -9,16 +9,16 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@future-ui/base';
+import { html, TemplateResult } from '@lliad-ui/base';
 
 import '../sp-menu.js';
-import '@future-ui/popover/sp-popover.js';
-import '@future-ui/menu/sp-menu.js';
-import '@future-ui/menu/sp-menu-item.js';
-import '@future-ui/menu/sp-menu-divider.js';
-import '@future-ui/menu/sp-menu-group.js';
-import '@future-ui/icon/sp-icon.js';
-import '@future-ui/icons-workflow/icons/sp-icon-checkmark-circle.js';
+import '@lliad-ui/popover/sp-popover.js';
+import '@lliad-ui/menu/sp-menu.js';
+import '@lliad-ui/menu/sp-menu-item.js';
+import '@lliad-ui/menu/sp-menu-divider.js';
+import '@lliad-ui/menu/sp-menu-group.js';
+import '@lliad-ui/icon/sp-icon.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-checkmark-circle.js';
 
 export default {
     component: 'sp-menu',

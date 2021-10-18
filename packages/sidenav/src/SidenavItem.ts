@@ -17,9 +17,9 @@ import {
     property,
     PropertyValues,
     ifDefined,
-} from '@future-ui/base';
-import { LikeAnchor } from '@future-ui/shared/src/like-anchor.js';
-import { Focusable } from '@future-ui/shared/src/focusable.js';
+} from '@lliad-ui/base';
+import { LikeAnchor } from '@lliad-ui/shared/src/like-anchor.js';
+import { Focusable } from '@lliad-ui/shared/src/focusable.js';
 
 import { SidenavSelectDetail, SideNav } from './Sidenav.js';
 

@@ -17,8 +17,8 @@ import {
     SpectrumElement,
     property,
     query,
-} from '@future-ui/base';
-import { OverlayDisplayQueryDetail, Placement } from '@future-ui/overlay';
+} from '@lliad-ui/base';
+import { OverlayDisplayQueryDetail, Placement } from '@lliad-ui/overlay';
 
 import tooltipStyles from './tooltip.css.js';
 

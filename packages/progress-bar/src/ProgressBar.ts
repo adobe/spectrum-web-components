@@ -18,9 +18,9 @@ import {
     PropertyValues,
     property,
     SizedMixin,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
-import '@future-ui/field-label/sp-field-label.js';
+import '@lliad-ui/field-label/sp-field-label.js';
 import styles from './progress-bar.css.js';
 
 /**

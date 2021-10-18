@@ -17,8 +17,8 @@ import {
     CSSResultArray,
     TemplateResult,
     PropertyValues,
-} from '@future-ui/base';
-import type { LongpressEvent } from '@future-ui/action-button';
+} from '@lliad-ui/base';
+import type { LongpressEvent } from '@lliad-ui/action-button';
 
 import {
     Placement,

@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 import '../sp-theme.js';
 import '../src/themes.js';
-import '@future-ui/button/sp-button.js';
-import '@future-ui/button-group/sp-button-group.js';
-import '@future-ui/switch/sp-switch.js';
-import '@future-ui/slider/sp-slider.js';
-import { html, TemplateResult } from '@future-ui/base';
+import '@lliad-ui/button/sp-button.js';
+import '@lliad-ui/button-group/sp-button-group.js';
+import '@lliad-ui/switch/sp-switch.js';
+import '@lliad-ui/slider/sp-slider.js';
+import { html, TemplateResult } from '@lliad-ui/base';
 import { Color } from '../src/index.js';
 
 export default {

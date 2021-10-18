@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/avatar",
+    "name": "@lliad-ui/avatar",
     "version": "0.10.1",
     "publishConfig": {
         "access": "public"
@@ -44,7 +44,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.2",
+        "@lliad-ui/base": "^0.7.2",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

@@ -22,8 +22,8 @@ import {
     nothing,
     LitElement,
     classMap,
-} from '@future-ui/base';
-import { streamingListener } from '@future-ui/base/src/streaming-listener.js';
+} from '@lliad-ui/base';
+import { streamingListener } from '@lliad-ui/base/src/streaming-listener.js';
 
 import { WithSWCResizeObserver } from './types';
 

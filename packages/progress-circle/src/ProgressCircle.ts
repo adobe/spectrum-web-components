@@ -18,7 +18,7 @@ import {
     property,
     PropertyValues,
     ifDefined,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 import progressCircleStyles from './progress-circle.css.js';
 

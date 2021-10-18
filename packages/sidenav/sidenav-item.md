@@ -4,24 +4,24 @@ An `<sp-sidenav-item>` stands as both a child item of an `<sp-sidenav>` element,
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/sidenav?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/sidenav)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/sidenav?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/sidenav)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/sidenav?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/sidenav)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/sidenav?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/sidenav)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/WQ6UEUP8wfm9bKUKpWgi/src/index.ts)
 
 ```
-yarn add @future-ui/sidenav
+yarn add @lliad-ui/sidenav
 ```
 
 Import the side effectful registration of `<sp-sidenav-item>` via:
 
 ```
-import '@future-ui/sidenav/sp-sidenav-item.js';
+import '@lliad-ui/sidenav/sp-sidenav-item.js';
 ```
 
 When looking to leverage the `SidenavItem` base classes as a type and/or for extension purposes, do so via:
 
 ```
-import { SidenavItem } from '@future-ui/sidenav';
+import { SidenavItem } from '@lliad-ui/sidenav';
 ```
 
 ## Example

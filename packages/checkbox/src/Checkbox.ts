@@ -18,19 +18,19 @@ import {
     PropertyValues,
     SizedMixin,
     ElementSize,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 import { CheckboxBase } from './CheckboxBase.js';
-import '@future-ui/icons-ui/icons/sp-icon-checkmark75.js';
-import '@future-ui/icons-ui/icons/sp-icon-checkmark100.js';
-import '@future-ui/icons-ui/icons/sp-icon-checkmark200.js';
-import '@future-ui/icons-ui/icons/sp-icon-checkmark300.js';
-import '@future-ui/icons-ui/icons/sp-icon-dash75.js';
-import '@future-ui/icons-ui/icons/sp-icon-dash100.js';
-import '@future-ui/icons-ui/icons/sp-icon-dash200.js';
-import '@future-ui/icons-ui/icons/sp-icon-dash300.js';
+import '@lliad-ui/icons-ui/icons/sp-icon-checkmark75.js';
+import '@lliad-ui/icons-ui/icons/sp-icon-checkmark100.js';
+import '@lliad-ui/icons-ui/icons/sp-icon-checkmark200.js';
+import '@lliad-ui/icons-ui/icons/sp-icon-checkmark300.js';
+import '@lliad-ui/icons-ui/icons/sp-icon-dash75.js';
+import '@lliad-ui/icons-ui/icons/sp-icon-dash100.js';
+import '@lliad-ui/icons-ui/icons/sp-icon-dash200.js';
+import '@lliad-ui/icons-ui/icons/sp-icon-dash300.js';
 import checkboxStyles from './checkbox.css.js';
-import checkmarkSmallStyles from '@future-ui/icon/src/spectrum-icon-checkmark.css.js';
-import dashSmallStyles from '@future-ui/icon/src/spectrum-icon-dash.css.js';
+import checkmarkSmallStyles from '@lliad-ui/icon/src/spectrum-icon-checkmark.css.js';
+import dashSmallStyles from '@lliad-ui/icon/src/spectrum-icon-dash.css.js';
 
 const checkmarkIcon = {
     s: html`

@@ -4,30 +4,30 @@ An `<sp-action-menu>` is an action button that triggers an overlay with `<sp-men
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/action-menu?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/action-menu)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/action-menu?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/action-menu)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/action-menu?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/action-menu)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/action-menu?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/action-menu)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/EYQn9T6wOnieZbv4xnPj/src/index.ts)
 
 ```
-yarn add @future-ui/action-menu
+yarn add @lliad-ui/action-menu
 ```
 
 Import the side effectful registration of `<sp-action-menu>` via:
 
 ```
-import '@future-ui/action-menu/sp-action-menu.js';
+import '@lliad-ui/action-menu/sp-action-menu.js';
 ```
 
-The default of `<sp-action-menu>` will load dependencies in `@future-ui/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-action-menu>` as follows:
+The default of `<sp-action-menu>` will load dependencies in `@lliad-ui/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-action-menu>` as follows:
 
 ```
-import '@future-ui/action-menu/sync/sp-action-menu.js';
+import '@lliad-ui/action-menu/sync/sp-action-menu.js';
 ```
 
 When looking to leverage the `ActionMenu` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ActionMenu } from '@future-ui/action-menu';
+import { ActionMenu } from '@lliad-ui/action-menu';
 ```
 
 ## Sizes

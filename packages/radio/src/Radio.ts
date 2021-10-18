@@ -18,8 +18,8 @@ import {
     TemplateResult,
     PropertyValues,
     SpectrumElement,
-} from '@future-ui/base';
-import { FocusVisiblePolyfillMixin } from '@future-ui/shared/src/focus-visible.js';
+} from '@lliad-ui/base';
+import { FocusVisiblePolyfillMixin } from '@lliad-ui/shared/src/focus-visible.js';
 
 import radioStyles from './radio.css.js';
 

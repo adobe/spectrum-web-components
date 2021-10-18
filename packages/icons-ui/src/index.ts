@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html } from '@future-ui/base';
+import { html } from '@lliad-ui/base';
 import { setCustomTemplateLiteralTag } from './custom-tag.js';
 
 setCustomTemplateLiteralTag(html);

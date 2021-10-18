@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/number-field",
+    "name": "@lliad-ui/number-field",
     "version": "0.4.1",
     "publishConfig": {
         "access": "public"
@@ -44,11 +44,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/action-button": "^0.8.1",
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/icon": "^0.12.1",
-        "@future-ui/icons-ui": "^0.9.1",
-        "@future-ui/textfield": "^0.11.1",
+        "@lliad-ui/action-button": "^0.8.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/icon": "^0.12.1",
+        "@lliad-ui/icons-ui": "^0.9.1",
+        "@lliad-ui/textfield": "^0.11.1",
         "@internationalized/number": "^3.0.2",
         "tslib": "^2.0.0"
     },

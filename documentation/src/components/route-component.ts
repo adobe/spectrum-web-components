@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement } from '@future-ui/base';
+import { LitElement } from '@lliad-ui/base';
 
 export class RouteComponent extends LitElement {
     location?: {

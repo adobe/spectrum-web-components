@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/card",
+    "name": "@lliad-ui/card",
     "version": "0.11.1",
     "publishConfig": {
         "access": "public"
@@ -44,13 +44,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/asset": "^0.5.1",
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/checkbox": "^0.11.1",
-        "@future-ui/icons-workflow": "^0.9.1",
-        "@future-ui/quick-actions": "^0.5.1",
-        "@future-ui/shared": "^0.15.1",
-        "@future-ui/styles": "^0.10.1",
+        "@lliad-ui/asset": "^0.5.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/checkbox": "^0.11.1",
+        "@lliad-ui/icons-workflow": "^0.9.1",
+        "@lliad-ui/quick-actions": "^0.5.1",
+        "@lliad-ui/shared": "^0.15.1",
+        "@lliad-ui/styles": "^0.10.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

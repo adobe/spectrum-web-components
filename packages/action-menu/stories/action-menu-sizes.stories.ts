@@ -9,10 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { TemplateResult } from '@future-ui/base';
+import { TemplateResult } from '@lliad-ui/base';
 
-import '@future-ui/menu/sp-menu.js';
-import '@future-ui/menu/sp-menu-item.js';
+import '@lliad-ui/menu/sp-menu.js';
+import '@lliad-ui/menu/sp-menu-item.js';
 import { ActionMenuMarkup } from './';
 
 export default {

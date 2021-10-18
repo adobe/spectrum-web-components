@@ -16,7 +16,7 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 import bannerStyles from './banner.css.js';
 

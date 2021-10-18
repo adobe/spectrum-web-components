@@ -4,24 +4,24 @@ For use within an `<sp-menu>` element, an `<sp-menu-item>` represents a single i
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/menu?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/menu)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/menu?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/menu)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/menu?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/menu)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/menu?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/menu)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/FikFeTXNsYhxAVmCz2f4/src/index.ts)
 
 ```
-yarn add @future-ui/menu
+yarn add @lliad-ui/menu
 ```
 
 Import the side effectful registration of `<sp-menu-item>` as follows:
 
 ```
-import '@future-ui/menu/sp-menu-item.js';
+import '@lliad-ui/menu/sp-menu-item.js';
 ```
 
 When looking to leverage the `MenuItem` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { MenuItem } from '@future-ui/menu';
+import { MenuItem } from '@lliad-ui/menu';
 ```
 
 ## Example

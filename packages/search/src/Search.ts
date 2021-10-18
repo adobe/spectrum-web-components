@@ -18,11 +18,11 @@ import {
     property,
     query,
     ifDefined,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
-import { Textfield } from '@future-ui/textfield';
-import '@future-ui/button/sp-clear-button.js';
-import '@future-ui/icons-workflow/icons/sp-icon-magnify.js';
+import { Textfield } from '@lliad-ui/textfield';
+import '@lliad-ui/button/sp-clear-button.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-magnify.js';
 
 import searchStyles from './search.css.js';
 

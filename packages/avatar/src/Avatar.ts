@@ -17,7 +17,7 @@ import {
     CSSResultArray,
     TemplateResult,
     ifDefined,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 import avatarStyles from './avatar.css.js';
 

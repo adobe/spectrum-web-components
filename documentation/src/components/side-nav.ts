@@ -16,11 +16,11 @@ import {
     property,
     PropertyValues,
     TemplateResult,
-} from '@future-ui/base';
-import '@future-ui/underlay/sp-underlay.js';
-import '@future-ui/sidenav/sp-sidenav.js';
-import '@future-ui/sidenav/sp-sidenav-item.js';
-import { SidenavSelectDetail, SideNavItem } from '@future-ui/sidenav';
+} from '@lliad-ui/base';
+import '@lliad-ui/underlay/sp-underlay.js';
+import '@lliad-ui/sidenav/sp-sidenav.js';
+import '@lliad-ui/sidenav/sp-sidenav-item.js';
+import { SidenavSelectDetail, SideNavItem } from '@lliad-ui/sidenav';
 import { AppRouter } from '../router.js';
 import './side-nav-search.js';
 import { search, Result } from './search-index.js';

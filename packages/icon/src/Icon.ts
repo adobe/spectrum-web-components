@@ -16,9 +16,9 @@ import {
     query,
     TemplateResult,
     ifDefined,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
-import { IconsetRegistry } from '@future-ui/iconset/src/iconset-registry.js';
+import { IconsetRegistry } from '@lliad-ui/iconset/src/iconset-registry.js';
 
 import { IconBase } from './IconBase.js';
 

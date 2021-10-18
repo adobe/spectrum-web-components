@@ -4,23 +4,23 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/tray?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/tray)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/tray?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/tray)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/tray?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/tray)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/tray?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/tray)
 
 ```
-yarn add @future-ui/tray
+yarn add @lliad-ui/tray
 ```
 
 Import the side effectful registration of `<sp-tray>` via:
 
 ```
-import '@future-ui/tray/sp-tray.js';
+import '@lliad-ui/tray/sp-tray.js';
 ```
 
 When looking to leverage the `Tray` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Tray } from '@future-ui/tray';
+import { Tray } from '@lliad-ui/tray';
 ```
 
 ## Dialog

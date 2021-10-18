@@ -19,18 +19,18 @@ import {
     ifDefined,
     nothing,
     queryAsync,
-} from '@future-ui/base';
-import '@future-ui/theme/sp-theme.js';
-import '@future-ui/theme/src/themes.js';
-import '@future-ui/field-label/sp-field-label.js';
-import '@future-ui/picker/sp-picker.js';
-import '@future-ui/menu/sp-menu.js';
-import '@future-ui/menu/sp-menu-item.js';
-import '@future-ui/switch/sp-switch.js';
-import { Picker } from '@future-ui/picker';
-import { Switch } from '@future-ui/switch';
-import { Scale, Color, Theme } from '@future-ui/theme';
-import { ActiveOverlay } from '@future-ui/overlay';
+} from '@lliad-ui/base';
+import '@lliad-ui/theme/sp-theme.js';
+import '@lliad-ui/theme/src/themes.js';
+import '@lliad-ui/field-label/sp-field-label.js';
+import '@lliad-ui/picker/sp-picker.js';
+import '@lliad-ui/menu/sp-menu.js';
+import '@lliad-ui/menu/sp-menu-item.js';
+import '@lliad-ui/switch/sp-switch.js';
+import { Picker } from '@lliad-ui/picker';
+import { Switch } from '@lliad-ui/switch';
+import { Scale, Color, Theme } from '@lliad-ui/theme';
+import { ActiveOverlay } from '@lliad-ui/overlay';
 import './types.js';
 
 const queryString = window.location.search;

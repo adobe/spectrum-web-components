@@ -14,16 +14,16 @@ governing permissions and limitations under the License.
 // import './styles.css';
 
 // import the components we'll use in this page
-import '@future-ui/theme/sp-theme.js';
-import '@future-ui/theme/src/themes.js';
-import '@future-ui/button/sp-button.js';
-import '@future-ui/checkbox/sp-checkbox.js';
-import '@future-ui/radio/sp-radio.js';
-import '@future-ui/radio/sp-radio-group.js';
-import '@future-ui/picker/sp-picker.js';
-import '@future-ui/menu/sp-menu-item.js';
-import '@future-ui/link/sp-link.js';
-import '@future-ui/slider/sp-slider.js';
-import '@future-ui/textfield/sp-textfield.js';
-import '@future-ui/tooltip/sp-tooltip.js';
-import '@future-ui/dialog/sp-dialog.js';
+import '@lliad-ui/theme/sp-theme.js';
+import '@lliad-ui/theme/src/themes.js';
+import '@lliad-ui/button/sp-button.js';
+import '@lliad-ui/checkbox/sp-checkbox.js';
+import '@lliad-ui/radio/sp-radio.js';
+import '@lliad-ui/radio/sp-radio-group.js';
+import '@lliad-ui/picker/sp-picker.js';
+import '@lliad-ui/menu/sp-menu-item.js';
+import '@lliad-ui/link/sp-link.js';
+import '@lliad-ui/slider/sp-slider.js';
+import '@lliad-ui/textfield/sp-textfield.js';
+import '@lliad-ui/tooltip/sp-tooltip.js';
+import '@lliad-ui/dialog/sp-dialog.js';

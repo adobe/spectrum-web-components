@@ -4,24 +4,24 @@ An `<sp-coachmark>` element can be used to bring added attention to specific par
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/coachmark?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/coachmark)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/coachmark?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/coachmark)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/coachmark?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/coachmark)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/coachmark?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/coachmark)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/Z611FV1zeF0CLBLVHNFY/src/index.ts)
 
 ```
-yarn add @future-ui/coachmark
+yarn add @lliad-ui/coachmark
 ```
 
 Import the side effectful registration of `<sp-coachmark>` via:
 
 ```
-import '@future-ui/coachmark/sp-coachmark.js';
+import '@lliad-ui/coachmark/sp-coachmark.js';
 ```
 
 When looking to leverage the `Coachmark` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Coachmark } from '@future-ui/coachmark';
+import { Coachmark } from '@lliad-ui/coachmark';
 ```
 
 ## Standard

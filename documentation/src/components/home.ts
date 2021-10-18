@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, CSSResultArray } from '@future-ui/base';
+import { html, CSSResultArray } from '@lliad-ui/base';
 import { RouteComponent } from './route-component.js';
 import componentStyles from './markdown.css';
 import homeStyles from './home.css';
-import '@future-ui/button/sp-button.js';
-import '@future-ui/button-group/sp-button-group.js';
-import '@future-ui/link/sp-link.js';
-import '@future-ui/divider/sp-divider.js';
+import '@lliad-ui/button/sp-button.js';
+import '@lliad-ui/button-group/sp-button-group.js';
+import '@lliad-ui/link/sp-link.js';
+import '@lliad-ui/divider/sp-divider.js';
 
 class HomeElement extends RouteComponent {
     public static get styles(): CSSResultArray {

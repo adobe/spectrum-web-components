@@ -17,10 +17,10 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { visualDiff } from '@web/test-runner-visual-regression';
-import '@future-ui/story-decorator/sp-story-decorator.js';
-import { Color, Scale } from '@future-ui/theme';
-import { StoryDecorator } from '@future-ui/story-decorator/src/StoryDecorator';
-import { TemplateResult, html } from '@future-ui/base';
+import '@lliad-ui/story-decorator/sp-story-decorator.js';
+import { Color, Scale } from '@lliad-ui/theme';
+import { StoryDecorator } from '@lliad-ui/story-decorator/src/StoryDecorator';
+import { TemplateResult, html } from '@lliad-ui/base';
 import { render } from 'lit';
 import { sendKeys } from '@web/test-runner-commands';
 

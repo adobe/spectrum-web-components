@@ -3,198 +3,186 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.17.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.17.0...@future-ui/button@0.17.1) (2021-10-15)
+## [0.17.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.17.0...@lliad-ui/button@0.17.1) (2021-10-15)
 
-**Note:** Version bump only for package @future-ui/button
-
-
-
-
+**Note:** Version bump only for package @lliad-ui/button
 
 # 0.17.0 (2021-10-14)
 
-
 ### Bug Fixes
 
-* allow rendered anchors to be aria-hidden ([2e9aa23](https://github.com/adobe/spectrum-web-components/commit/2e9aa2324013e1d2311a8d4307dafe17912328ee))
-* allow sp-dropdown to accept focus visibly from sp-field-label ([134bafc](https://github.com/adobe/spectrum-web-components/commit/134bafc9c2e4d06e48107182f82dd7487066b7f1))
-* correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
-* correctly delivery visuals and mouse interactions for litAnchor and extensions ([0ae889a](https://github.com/adobe/spectrum-web-components/commit/0ae889a8aab9b3417a021b917dfc817a8310f50f))
-* ensure "click" on "NumpadEnter" key press ([450fa01](https://github.com/adobe/spectrum-web-components/commit/450fa019d44f447a349707d77635f95bbc9f1049))
-* ensure browser understandable extensions ([f4e59f7](https://github.com/adobe/spectrum-web-components/commit/f4e59f76f86369593810463c6406565e28ad97e9))
-* include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
-* update role application logic to not overwrite menu* roles ([94b6aec](https://github.com/adobe/spectrum-web-components/commit/94b6aecffc1e5686feab09361d4e07ec3e854726))
-* **button:** include "pointerleave" in management of the "active" state ([2e702e4](https://github.com/adobe/spectrum-web-components/commit/2e702e45516cb736ea930fdf927e457c10439e8e))
-* **button:** no double link clicks ([02d576c](https://github.com/adobe/spectrum-web-components/commit/02d576c89561ba9459feb1efdba613ea289e808c))
-* **button:** prevent default on "space" based activations ([708d587](https://github.com/adobe/spectrum-web-components/commit/708d587385147b02dcb71932c0472b134f15038f))
-* correct specificity of webkit appearance work around ([f0d06bf](https://github.com/adobe/spectrum-web-components/commit/f0d06bf17bbf1d7d2a41a3008373a4b0f4097cf9))
-* final prerelease review of canary builds ([1fc032f](https://github.com/adobe/spectrum-web-components/commit/1fc032ff436d8be1817a2784787e30b07a2873c6))
-* update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
-* **button:** relate to this.href correctly ([fade3ea](https://github.com/adobe/spectrum-web-components/commit/fade3ea9bd6bda6192f84a0ab9af4b812517e267))
-* **button:** remove old package export listings ([32e8573](https://github.com/adobe/spectrum-web-components/commit/32e85733e2ed96b6d80ce6c2461f1a98c0f1470a))
-* implement "emphasized" styles ([750bbe7](https://github.com/adobe/spectrum-web-components/commit/750bbe7c6a70ed590c4ea179179bf201c50526ea))
-* include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
-* include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
-* remove errant readme content, correct icon selector ([3dd1fb1](https://github.com/adobe/spectrum-web-components/commit/3dd1fb1ebd5ce5171345a6c2d4aac08e2d49a5b8))
-* stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
-* update file path access ([8898bf7](https://github.com/adobe/spectrum-web-components/commit/8898bf707e6e28abb78c92a0a0858d459e65347b))
-* update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
-* use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
-* use the "browsers" listing in postcss-preset-env ([4eaf6a2](https://github.com/adobe/spectrum-web-components/commit/4eaf6a28f7b5eaf60487841d264d6d804ae675ce))
-* **button:** add "toggles" attribute to action button ([3e2d80c](https://github.com/adobe/spectrum-web-components/commit/3e2d80c5d004eb13b6523ee7e71d550d5e468d07))
-* **button:** add excludeSourceSelector to reduce duplication of styles ([683e88e](https://github.com/adobe/spectrum-web-components/commit/683e88e8ac659e789c20d77bf0af602a305b54f9))
-* **button:** allow element content in the default/label slot ([7b0ef58](https://github.com/adobe/spectrum-web-components/commit/7b0ef584cc2b946155eaa234269f3e376381bb9f))
-* **button:** apply icon as slotted content in action-button styles ([3b1487b](https://github.com/adobe/spectrum-web-components/commit/3b1487b76cd0f703cc95e05a9a8cb3f461a6c281))
-* **button:** clean up clear button for reuse across elements ([4c71eb1](https://github.com/adobe/spectrum-web-components/commit/4c71eb12112283ec31a40de38fdb79195ac52fd5))
-* **button:** delivery hold affordance when attribute available ([aecc6fe](https://github.com/adobe/spectrum-web-components/commit/aecc6fe7e632fec4556c4425d56a731605492873))
-* **button:** use slot text observer pattern ([a7288c3](https://github.com/adobe/spectrum-web-components/commit/a7288c3f95587f548952a83c78708eef06870fc0))
-* **dropdown:** correctly support "quiet" variant ([2a51a2b](https://github.com/adobe/spectrum-web-components/commit/2a51a2bf58d12319ebb328ce6c7298aeb8570507))
-* **shared:** make Focusable pass disabled always ([a339d6f](https://github.com/adobe/spectrum-web-components/commit/a339d6fb2aa9645e7bca5472487618edff5f1182))
-
+-   allow rendered anchors to be aria-hidden ([2e9aa23](https://github.com/adobe/spectrum-web-components/commit/2e9aa2324013e1d2311a8d4307dafe17912328ee))
+-   allow sp-dropdown to accept focus visibly from sp-field-label ([134bafc](https://github.com/adobe/spectrum-web-components/commit/134bafc9c2e4d06e48107182f82dd7487066b7f1))
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   correctly delivery visuals and mouse interactions for litAnchor and extensions ([0ae889a](https://github.com/adobe/spectrum-web-components/commit/0ae889a8aab9b3417a021b917dfc817a8310f50f))
+-   ensure "click" on "NumpadEnter" key press ([450fa01](https://github.com/adobe/spectrum-web-components/commit/450fa019d44f447a349707d77635f95bbc9f1049))
+-   ensure browser understandable extensions ([f4e59f7](https://github.com/adobe/spectrum-web-components/commit/f4e59f76f86369593810463c6406565e28ad97e9))
+-   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   update role application logic to not overwrite menu\* roles ([94b6aec](https://github.com/adobe/spectrum-web-components/commit/94b6aecffc1e5686feab09361d4e07ec3e854726))
+-   **button:** include "pointerleave" in management of the "active" state ([2e702e4](https://github.com/adobe/spectrum-web-components/commit/2e702e45516cb736ea930fdf927e457c10439e8e))
+-   **button:** no double link clicks ([02d576c](https://github.com/adobe/spectrum-web-components/commit/02d576c89561ba9459feb1efdba613ea289e808c))
+-   **button:** prevent default on "space" based activations ([708d587](https://github.com/adobe/spectrum-web-components/commit/708d587385147b02dcb71932c0472b134f15038f))
+-   correct specificity of webkit appearance work around ([f0d06bf](https://github.com/adobe/spectrum-web-components/commit/f0d06bf17bbf1d7d2a41a3008373a4b0f4097cf9))
+-   final prerelease review of canary builds ([1fc032f](https://github.com/adobe/spectrum-web-components/commit/1fc032ff436d8be1817a2784787e30b07a2873c6))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   **button:** relate to this.href correctly ([fade3ea](https://github.com/adobe/spectrum-web-components/commit/fade3ea9bd6bda6192f84a0ab9af4b812517e267))
+-   **button:** remove old package export listings ([32e8573](https://github.com/adobe/spectrum-web-components/commit/32e85733e2ed96b6d80ce6c2461f1a98c0f1470a))
+-   implement "emphasized" styles ([750bbe7](https://github.com/adobe/spectrum-web-components/commit/750bbe7c6a70ed590c4ea179179bf201c50526ea))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   remove errant readme content, correct icon selector ([3dd1fb1](https://github.com/adobe/spectrum-web-components/commit/3dd1fb1ebd5ce5171345a6c2d4aac08e2d49a5b8))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update file path access ([8898bf7](https://github.com/adobe/spectrum-web-components/commit/8898bf707e6e28abb78c92a0a0858d459e65347b))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+-   use the "browsers" listing in postcss-preset-env ([4eaf6a2](https://github.com/adobe/spectrum-web-components/commit/4eaf6a28f7b5eaf60487841d264d6d804ae675ce))
+-   **button:** add "toggles" attribute to action button ([3e2d80c](https://github.com/adobe/spectrum-web-components/commit/3e2d80c5d004eb13b6523ee7e71d550d5e468d07))
+-   **button:** add excludeSourceSelector to reduce duplication of styles ([683e88e](https://github.com/adobe/spectrum-web-components/commit/683e88e8ac659e789c20d77bf0af602a305b54f9))
+-   **button:** allow element content in the default/label slot ([7b0ef58](https://github.com/adobe/spectrum-web-components/commit/7b0ef584cc2b946155eaa234269f3e376381bb9f))
+-   **button:** apply icon as slotted content in action-button styles ([3b1487b](https://github.com/adobe/spectrum-web-components/commit/3b1487b76cd0f703cc95e05a9a8cb3f461a6c281))
+-   **button:** clean up clear button for reuse across elements ([4c71eb1](https://github.com/adobe/spectrum-web-components/commit/4c71eb12112283ec31a40de38fdb79195ac52fd5))
+-   **button:** delivery hold affordance when attribute available ([aecc6fe](https://github.com/adobe/spectrum-web-components/commit/aecc6fe7e632fec4556c4425d56a731605492873))
+-   **button:** use slot text observer pattern ([a7288c3](https://github.com/adobe/spectrum-web-components/commit/a7288c3f95587f548952a83c78708eef06870fc0))
+-   **dropdown:** correctly support "quiet" variant ([2a51a2b](https://github.com/adobe/spectrum-web-components/commit/2a51a2bf58d12319ebb328ce6c7298aeb8570507))
+-   **shared:** make Focusable pass disabled always ([a339d6f](https://github.com/adobe/spectrum-web-components/commit/a339d6fb2aa9645e7bca5472487618edff5f1182))
 
 ### Features
 
-* update lit-* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
-* **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
-* allow activation of longpress content ([55e71fd](https://github.com/adobe/spectrum-web-components/commit/55e71fdf9fd5dde489871c3d9798ef8957f4e5b6))
-* apply sizedMixin for t-shirt sizing ([d7b63fb](https://github.com/adobe/spectrum-web-components/commit/d7b63fb0db06b5a8a412fea8370964f4db9d18ae))
-* deprecate "icon-right" in buttons as per Spectrum ([064a775](https://github.com/adobe/spectrum-web-components/commit/064a775f9915523a3c9a744f824b5903f26c382e))
-* use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
-* use SixedMixin to manage "size" property ([8819821](https://github.com/adobe/spectrum-web-components/commit/88198212cb495833ed2e7644f95b43dca915318d))
-* **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
-* **action-group:** add action-group pattern ([d2de766](https://github.com/adobe/spectrum-web-components/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
-* **action-group:** manage "one" and "multiple" selections ([6fad59e](https://github.com/adobe/spectrum-web-components/commit/6fad59e0df1210108fe6b54ab075c0cbd94cae78))
-* **button:** action-buttons with icons AND text ([aa788b1](https://github.com/adobe/spectrum-web-components/commit/aa788b106b6d649841f54a61de61e131293a244a))
-* **button:** add support for "sp-clear-button" ([9028b6d](https://github.com/adobe/spectrum-web-components/commit/9028b6da78b461d6972ea38a5df28dcdb38f20f6))
-* **button:** allow icon only buttons ([25623d6](https://github.com/adobe/spectrum-web-components/commit/25623d686663388ef1fe427e99c9040359516fa7))
-* **button:** pass "label" property to "aria-label" ([78ae59d](https://github.com/adobe/spectrum-web-components/commit/78ae59d260c7e2c0aec16841d96c0c3177061bab))
-* **button:** update spectrum css input ([7b5b200](https://github.com/adobe/spectrum-web-components/commit/7b5b20012621a4a43c8402fb07fe163fe919495d))
-* **button:** use latest @spectrum-css/button beta ([b3b20ed](https://github.com/adobe/spectrum-web-components/commit/b3b20ed85923955deca5ca4d18d95ea8c5ce15ea))
-* **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
-* **button-group:** add ButtonGroup pattern ([c4d85b5](https://github.com/adobe/spectrum-web-components/commit/c4d85b5524f6623dbd3cb22c0d6fa8fc00e98733))
-* **card:** upgrade to Spectrum CSS v3.0.0 ([84cf1a9](https://github.com/adobe/spectrum-web-components/commit/84cf1a9758b1e357f18efac5763d17d6a4db0578))
-* **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
-* **search:** adds sp-search element ([d484fc2](https://github.com/adobe/spectrum-web-components/commit/d484fc2848a08d52ebb1fc2064202a4288b6b4b3))
-* **split-button:** add split-button pattern ([4833a59](https://github.com/adobe/spectrum-web-components/commit/4833a598bb3da3552d194586350a3888dba79543))
-* add and use icons-ui package ([d9c3ab2](https://github.com/adobe/spectrum-web-components/commit/d9c3ab212b4f756334e857fc513ccbf0a4dff9cc))
-* add dialog, dialog-wrapped, and underlay elements ([3df9050](https://github.com/adobe/spectrum-web-components/commit/3df9050f65bd3a95f9b986aa728cfc1a2eaee432))
-* leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
-* use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
-* use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
-
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   allow activation of longpress content ([55e71fd](https://github.com/adobe/spectrum-web-components/commit/55e71fdf9fd5dde489871c3d9798ef8957f4e5b6))
+-   apply sizedMixin for t-shirt sizing ([d7b63fb](https://github.com/adobe/spectrum-web-components/commit/d7b63fb0db06b5a8a412fea8370964f4db9d18ae))
+-   deprecate "icon-right" in buttons as per Spectrum ([064a775](https://github.com/adobe/spectrum-web-components/commit/064a775f9915523a3c9a744f824b5903f26c382e))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   use SixedMixin to manage "size" property ([8819821](https://github.com/adobe/spectrum-web-components/commit/88198212cb495833ed2e7644f95b43dca915318d))
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **action-group:** add action-group pattern ([d2de766](https://github.com/adobe/spectrum-web-components/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
+-   **action-group:** manage "one" and "multiple" selections ([6fad59e](https://github.com/adobe/spectrum-web-components/commit/6fad59e0df1210108fe6b54ab075c0cbd94cae78))
+-   **button:** action-buttons with icons AND text ([aa788b1](https://github.com/adobe/spectrum-web-components/commit/aa788b106b6d649841f54a61de61e131293a244a))
+-   **button:** add support for "sp-clear-button" ([9028b6d](https://github.com/adobe/spectrum-web-components/commit/9028b6da78b461d6972ea38a5df28dcdb38f20f6))
+-   **button:** allow icon only buttons ([25623d6](https://github.com/adobe/spectrum-web-components/commit/25623d686663388ef1fe427e99c9040359516fa7))
+-   **button:** pass "label" property to "aria-label" ([78ae59d](https://github.com/adobe/spectrum-web-components/commit/78ae59d260c7e2c0aec16841d96c0c3177061bab))
+-   **button:** update spectrum css input ([7b5b200](https://github.com/adobe/spectrum-web-components/commit/7b5b20012621a4a43c8402fb07fe163fe919495d))
+-   **button:** use latest @spectrum-css/button beta ([b3b20ed](https://github.com/adobe/spectrum-web-components/commit/b3b20ed85923955deca5ca4d18d95ea8c5ce15ea))
+-   **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
+-   **button-group:** add ButtonGroup pattern ([c4d85b5](https://github.com/adobe/spectrum-web-components/commit/c4d85b5524f6623dbd3cb22c0d6fa8fc00e98733))
+-   **card:** upgrade to Spectrum CSS v3.0.0 ([84cf1a9](https://github.com/adobe/spectrum-web-components/commit/84cf1a9758b1e357f18efac5763d17d6a4db0578))
+-   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+-   **search:** adds sp-search element ([d484fc2](https://github.com/adobe/spectrum-web-components/commit/d484fc2848a08d52ebb1fc2064202a4288b6b4b3))
+-   **split-button:** add split-button pattern ([4833a59](https://github.com/adobe/spectrum-web-components/commit/4833a598bb3da3552d194586350a3888dba79543))
+-   add and use icons-ui package ([d9c3ab2](https://github.com/adobe/spectrum-web-components/commit/d9c3ab212b4f756334e857fc513ccbf0a4dff9cc))
+-   add dialog, dialog-wrapped, and underlay elements ([3df9050](https://github.com/adobe/spectrum-web-components/commit/3df9050f65bd3a95f9b986aa728cfc1a2eaee432))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
 
 ### Performance Improvements
 
-* **button:** recentralize shared styles in base ([85d3d0a](https://github.com/adobe/spectrum-web-components/commit/85d3d0a3c84301dcf5be492e2b42cd00e8986089))
-* use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
-* use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/adobe/spectrum-web-components/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
-
+-   **button:** recentralize shared styles in base ([85d3d0a](https://github.com/adobe/spectrum-web-components/commit/85d3d0a3c84301dcf5be492e2b42cd00e8986089))
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/adobe/spectrum-web-components/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
 
 ### Reverts
 
-* Revert "chore: release new versions" ([a6d655d](https://github.com/adobe/spectrum-web-components/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/adobe/spectrum-web-components/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
 
-
-
-
-
-# [0.16.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.14.9...@future-ui/button@0.16.0) (2021-10-14)
+# [0.16.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.14.9...@lliad-ui/button@0.16.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-# [0.15.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.14.9...@future-ui/button@0.15.0) (2021-10-14)
+# [0.15.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.14.9...@lliad-ui/button@0.15.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-## [0.14.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.14.8...@future-ui/button@0.14.9) (2021-10-12)
+## [0.14.9](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.14.8...@lliad-ui/button@0.14.9) (2021-10-12)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.14.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.14.7...@future-ui/button@0.14.8) (2021-09-20)
+## [0.14.8](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.14.7...@lliad-ui/button@0.14.8) (2021-09-20)
 
 ### Bug Fixes
 
 -   ensure "click" on "NumpadEnter" key press ([450fa01](https://github.com/adobe/spectrum-web-components/commit/450fa019d44f447a349707d77635f95bbc9f1049))
 
-## [0.14.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.14.6...@future-ui/button@0.14.7) (2021-09-13)
+## [0.14.7](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.14.6...@lliad-ui/button@0.14.7) (2021-09-13)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.14.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.14.5...@future-ui/button@0.14.6) (2021-08-24)
+## [0.14.6](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.14.5...@lliad-ui/button@0.14.6) (2021-08-24)
 
 ### Bug Fixes
 
 -   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
-## [0.14.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.14.4...@future-ui/button@0.14.5) (2021-08-03)
+## [0.14.5](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.14.4...@lliad-ui/button@0.14.5) (2021-08-03)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.14.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.14.3...@future-ui/button@0.14.4) (2021-07-22)
+## [0.14.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.14.3...@lliad-ui/button@0.14.4) (2021-07-22)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.14.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.14.2...@future-ui/button@0.14.3) (2021-07-01)
+## [0.14.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.14.2...@lliad-ui/button@0.14.3) (2021-07-01)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.14.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.14.1...@future-ui/button@0.14.2) (2021-06-16)
+## [0.14.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.14.1...@lliad-ui/button@0.14.2) (2021-06-16)
 
 ### Bug Fixes
 
 -   update role application logic to not overwrite menu\* roles ([94b6aec](https://github.com/adobe/spectrum-web-components/commit/94b6aecffc1e5686feab09361d4e07ec3e854726))
 
-## [0.14.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.14.0...@future-ui/button@0.14.1) (2021-06-07)
+## [0.14.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.14.0...@lliad-ui/button@0.14.1) (2021-06-07)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-# [0.14.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.13.7...@future-ui/button@0.14.0) (2021-05-24)
+# [0.14.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.13.7...@lliad-ui/button@0.14.0) (2021-05-24)
 
 ### Features
 
 -   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
 
-## [0.13.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.13.6...@future-ui/button@0.13.7) (2021-05-12)
+## [0.13.7](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.13.6...@lliad-ui/button@0.13.7) (2021-05-12)
 
 ### Bug Fixes
 
 -   allow rendered anchors to be aria-hidden ([2e9aa23](https://github.com/adobe/spectrum-web-components/commit/2e9aa2324013e1d2311a8d4307dafe17912328ee))
 
-## [0.13.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.13.5...@future-ui/button@0.13.6) (2021-04-15)
+## [0.13.6](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.13.5...@lliad-ui/button@0.13.6) (2021-04-15)
 
 ### Bug Fixes
 
 -   **button:** no double link clicks ([02d576c](https://github.com/adobe/spectrum-web-components/commit/02d576c89561ba9459feb1efdba613ea289e808c))
 
-## [0.13.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.13.4...@future-ui/button@0.13.5) (2021-04-09)
+## [0.13.5](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.13.4...@lliad-ui/button@0.13.5) (2021-04-09)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.13.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.13.3...@future-ui/button@0.13.4) (2021-03-29)
+## [0.13.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.13.3...@lliad-ui/button@0.13.4) (2021-03-29)
 
 ### Bug Fixes
 
 -   **button:** prevent default on "space" based activations ([708d587](https://github.com/adobe/spectrum-web-components/commit/708d587385147b02dcb71932c0472b134f15038f))
 
-## [0.13.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.13.2...@future-ui/button@0.13.3) (2021-03-22)
+## [0.13.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.13.2...@lliad-ui/button@0.13.3) (2021-03-22)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.13.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.13.1...@future-ui/button@0.13.2) (2021-03-22)
+## [0.13.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.13.1...@lliad-ui/button@0.13.2) (2021-03-22)
 
 ### Bug Fixes
 
 -   correctly delivery visuals and mouse interactions for litAnchor and extensions ([0ae889a](https://github.com/adobe/spectrum-web-components/commit/0ae889a8aab9b3417a021b917dfc817a8310f50f))
 
-## [0.13.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.13.0...@future-ui/button@0.13.1) (2021-03-05)
+## [0.13.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.13.0...@lliad-ui/button@0.13.1) (2021-03-05)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-# [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.12.0...@future-ui/button@0.13.0) (2021-03-04)
+# [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.12.0...@lliad-ui/button@0.13.0) (2021-03-04)
 
 ### Bug Fixes
 
@@ -204,7 +192,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.11.2...@future-ui/button@0.12.0) (2021-02-11)
+# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.11.2...@lliad-ui/button@0.12.0) (2021-02-11)
 
 ### Bug Fixes
 
@@ -218,17 +206,17 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **button:** recentralize shared styles in base ([85d3d0a](https://github.com/adobe/spectrum-web-components/commit/85d3d0a3c84301dcf5be492e2b42cd00e8986089))
 
-## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.11.1...@future-ui/button@0.11.2) (2021-02-02)
+## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.11.1...@lliad-ui/button@0.11.2) (2021-02-02)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.11.0...@future-ui/button@0.11.1) (2021-01-28)
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.11.0...@lliad-ui/button@0.11.1) (2021-01-28)
 
 ### Bug Fixes
 
 -   **button:** remove old package export listings ([32e8573](https://github.com/adobe/spectrum-web-components/commit/32e85733e2ed96b6d80ce6c2461f1a98c0f1470a))
 
-# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.9.4...@future-ui/button@0.11.0) (2021-01-21)
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.9.4...@lliad-ui/button@0.11.0) (2021-01-21)
 
 ### Bug Fixes
 
@@ -257,7 +245,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
 -   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
 
-# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.9.4...@future-ui/button@0.10.0) (2021-01-13)
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.9.4...@lliad-ui/button@0.10.0) (2021-01-13)
 
 ### Bug Fixes
 
@@ -283,25 +271,25 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **button:** use synthetic button instead of native ([49e94bc](https://github.com/adobe/spectrum-web-components/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
 -   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
 
-## [0.9.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.9.3...@future-ui/button@0.9.4) (2020-10-12)
+## [0.9.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.9.3...@lliad-ui/button@0.9.4) (2020-10-12)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.9.2...@future-ui/button@0.9.3) (2020-10-12)
+## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.9.2...@lliad-ui/button@0.9.3) (2020-10-12)
 
 ### Bug Fixes
 
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.9.1...@future-ui/button@0.9.2) (2020-09-25)
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.9.1...@lliad-ui/button@0.9.2) (2020-09-25)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.9.0...@future-ui/button@0.9.1) (2020-09-14)
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.9.0...@lliad-ui/button@0.9.1) (2020-09-14)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.8.4...@future-ui/button@0.9.0) (2020-08-31)
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.8.4...@lliad-ui/button@0.9.0) (2020-08-31)
 
 ### Features
 
@@ -309,54 +297,54 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **card:** upgrade to Spectrum CSS v3.0.0 ([84cf1a9](https://github.com/adobe/spectrum-web-components/commit/84cf1a9758b1e357f18efac5763d17d6a4db0578))
 -   **split-button:** add split-button pattern ([4833a59](https://github.com/adobe/spectrum-web-components/commit/4833a598bb3da3552d194586350a3888dba79543))
 
-## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.8.3...@future-ui/button@0.8.4) (2020-08-19)
+## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.8.3...@lliad-ui/button@0.8.4) (2020-08-19)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.8.2...@future-ui/button@0.8.3) (2020-07-27)
+## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.8.2...@lliad-ui/button@0.8.3) (2020-07-27)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.8.1...@future-ui/button@0.8.2) (2020-07-24)
+## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.8.1...@lliad-ui/button@0.8.2) (2020-07-24)
 
 ### Bug Fixes
 
 -   ensure browser understandable extensions ([f4e59f7](https://github.com/adobe/spectrum-web-components/commit/f4e59f76f86369593810463c6406565e28ad97e9))
 
-## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.8.0...@future-ui/button@0.8.1) (2020-07-22)
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.8.0...@lliad-ui/button@0.8.1) (2020-07-22)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.7.0...@future-ui/button@0.8.0) (2020-07-17)
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.7.0...@lliad-ui/button@0.8.0) (2020-07-17)
 
 ### Features
 
 -   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 
-# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.6.0...@future-ui/button@0.7.0) (2020-06-08)
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.6.0...@lliad-ui/button@0.7.0) (2020-06-08)
 
 ### Features
 
 -   **button-group:** add ButtonGroup pattern ([c4d85b5](https://github.com/adobe/spectrum-web-components/commit/c4d85b5524f6623dbd3cb22c0d6fa8fc00e98733))
 
-# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.5.2...@future-ui/button@0.6.0) (2020-05-12)
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.5.2...@lliad-ui/button@0.6.0) (2020-05-12)
 
 ### Features
 
 -   add dialog, dialog-wrapped, and underlay elements ([3df9050](https://github.com/adobe/spectrum-web-components/commit/3df9050f65bd3a95f9b986aa728cfc1a2eaee432))
 
-## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.5.1...@future-ui/button@0.5.2) (2020-05-08)
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.5.1...@lliad-ui/button@0.5.2) (2020-05-08)
 
 ### Bug Fixes
 
 -   **button:** clean up clear button for reuse across elements ([4c71eb1](https://github.com/adobe/spectrum-web-components/commit/4c71eb12112283ec31a40de38fdb79195ac52fd5))
 -   remove errant readme content, correct icon selector ([3dd1fb1](https://github.com/adobe/spectrum-web-components/commit/3dd1fb1ebd5ce5171345a6c2d4aac08e2d49a5b8))
 
-## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.5.0...@future-ui/button@0.5.1) (2020-04-21)
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.5.0...@lliad-ui/button@0.5.1) (2020-04-21)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.4.8...@future-ui/button@0.5.0) (2020-04-16)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.4.8...@lliad-ui/button@0.5.0) (2020-04-16)
 
 ### Bug Fixes
 
@@ -370,79 +358,79 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
 
-## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.4.7...@future-ui/button@0.4.8) (2020-04-10)
+## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.4.7...@lliad-ui/button@0.4.8) (2020-04-10)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.4.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.4.6...@future-ui/button@0.4.7) (2020-04-07)
+## [0.4.7](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.4.6...@lliad-ui/button@0.4.7) (2020-04-07)
 
 ### Bug Fixes
 
 -   **button:** add "toggles" attribute to action button ([3e2d80c](https://github.com/adobe/spectrum-web-components/commit/3e2d80c5d004eb13b6523ee7e71d550d5e468d07))
 
-## [0.4.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.4.5...@future-ui/button@0.4.6) (2020-03-11)
+## [0.4.6](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.4.5...@lliad-ui/button@0.4.6) (2020-03-11)
 
 ### Bug Fixes
 
 -   **dropdown:** correctly support "quiet" variant ([2a51a2b](https://github.com/adobe/spectrum-web-components/commit/2a51a2b))
 
-## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.4.4...@future-ui/button@0.4.5) (2020-02-05)
+## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.4.4...@lliad-ui/button@0.4.5) (2020-02-05)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.4.3...@future-ui/button@0.4.4) (2020-02-01)
+## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.4.3...@lliad-ui/button@0.4.4) (2020-02-01)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.4.2...@future-ui/button@0.4.3) (2020-01-30)
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.4.2...@lliad-ui/button@0.4.3) (2020-01-30)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.4.1...@future-ui/button@0.4.2) (2020-01-06)
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.4.1...@lliad-ui/button@0.4.2) (2020-01-06)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.4.0...@future-ui/button@0.4.1) (2019-12-12)
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.4.0...@lliad-ui/button@0.4.1) (2019-12-12)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.3.2...@future-ui/button@0.4.0) (2019-12-09)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.3.2...@lliad-ui/button@0.4.0) (2019-12-09)
 
 ### Features
 
 -   **button:** add support for "sp-clear-button" ([9028b6d](https://github.com/adobe/spectrum-web-components/commit/9028b6d))
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.3.1...@future-ui/button@0.3.2) (2019-12-02)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.3.1...@lliad-ui/button@0.3.2) (2019-12-02)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.3.0...@future-ui/button@0.3.1) (2019-11-27)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.3.0...@lliad-ui/button@0.3.1) (2019-11-27)
 
 ### Bug Fixes
 
 -   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716))
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.2.2...@future-ui/button@0.3.0) (2019-11-19)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.2.2...@lliad-ui/button@0.3.0) (2019-11-19)
 
 ### Features
 
 -   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc7))
 -   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/3918888))
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.2.1...@future-ui/button@0.2.2) (2019-11-01)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.2.1...@lliad-ui/button@0.2.2) (2019-11-01)
 
 ### Bug Fixes
 
 -   **button:** use slot text observer pattern ([a7288c3](https://github.com/adobe/spectrum-web-components/commit/a7288c3))
 -   **shared:** make Focusable pass disabled always ([a339d6f](https://github.com/adobe/spectrum-web-components/commit/a339d6f))
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.2.0...@future-ui/button@0.2.1) (2019-10-16)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.2.0...@lliad-ui/button@0.2.1) (2019-10-16)
 
 ### Bug Fixes
 
 -   **button:** allow element content in the default/label slot ([7b0ef58](https://github.com/adobe/spectrum-web-components/commit/7b0ef58))
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/button@0.1.3...@future-ui/button@0.2.0) (2019-10-14)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/button@0.1.3...@lliad-ui/button@0.2.0) (2019-10-14)
 
 ### Bug Fixes
 
@@ -461,4 +449,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.1.3 (2019-10-03)
 
-**Note:** Version bump only for package @future-ui/button
+**Note:** Version bump only for package @lliad-ui/button

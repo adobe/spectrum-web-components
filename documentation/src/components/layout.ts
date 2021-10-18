@@ -17,19 +17,19 @@ import {
     SpectrumElement,
     PropertyValues,
     TemplateResult,
-} from '@future-ui/base';
-import '@future-ui/theme/sp-theme.js';
-import '@future-ui/theme/src/themes.js';
-import { Color, Scale } from '@future-ui/theme';
+} from '@lliad-ui/base';
+import '@lliad-ui/theme/sp-theme.js';
+import '@lliad-ui/theme/src/themes.js';
+import { Color, Scale } from '@lliad-ui/theme';
 import './side-nav.js';
 import layoutStyles from './layout.css';
-import '@future-ui/field-label/sp-field-label.js';
-import { Picker } from '@future-ui/picker';
-import '@future-ui/picker/sp-picker.js';
-import '@future-ui/menu/sp-menu.js';
-import '@future-ui/menu/sp-menu-item.js';
-import '@future-ui/action-button/sp-action-button.js';
-import '@future-ui/toast/sp-toast.js';
+import '@lliad-ui/field-label/sp-field-label.js';
+import { Picker } from '@lliad-ui/picker';
+import '@lliad-ui/picker/sp-picker.js';
+import '@lliad-ui/menu/sp-menu.js';
+import '@lliad-ui/menu/sp-menu-item.js';
+import '@lliad-ui/action-button/sp-action-button.js';
+import '@lliad-ui/toast/sp-toast.js';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';

@@ -4,24 +4,24 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/number-field?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/number-field)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/number-field?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/number-field)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/number-field?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/number-field)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/number-field?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/number-field)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/TXlwVZIWMyzDa0XPl4tq/src/index.ts)
 
 ```
-yarn add @future-ui/number-field
+yarn add @lliad-ui/number-field
 ```
 
 Import the side effectful registration of `<sp-number-field>` via:
 
 ```
-import '@future-ui/number-field/sp-number-field.js';
+import '@lliad-ui/number-field/sp-number-field.js';
 ```
 
 When looking to leverage the `NumberField` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { NumberField } from '@future-ui/number-field';
+import { NumberField } from '@lliad-ui/number-field';
 ```
 
 ## Example

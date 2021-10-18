@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import '../sp-tooltip.js';
 import { Tooltip } from '../';
-import { OverlayDisplayQueryDetail } from '@future-ui/overlay';
+import { OverlayDisplayQueryDetail } from '@lliad-ui/overlay';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Tooltip', () => {

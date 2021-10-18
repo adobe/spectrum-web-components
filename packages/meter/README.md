@@ -4,24 +4,24 @@ An `<sp-meter>` is a visual representation of a quantity or achievement. The met
 
 ### Installation
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/meter?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/meter)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/meter?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/meter)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/meter?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/meter)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/meter?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/meter)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/NqxNiDV1LXR9zxzocoRh/src/index.ts)
 
 ```
-yarn add @future-ui/meter
+yarn add @lliad-ui/meter
 ```
 
 Import the side-effectful registration of `<sp-meter>` via:
 
 ```
-import '@future-ui/meter/sp-meter.js';
+import '@lliad-ui/meter/sp-meter.js';
 ```
 
 When looking to leverage the `Meter` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Meter } from '@future-ui/meter';
+import { Meter } from '@lliad-ui/meter';
 ```
 
 ## Sizes

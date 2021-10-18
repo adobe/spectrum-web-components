@@ -17,10 +17,10 @@ import {
     TemplateResult,
     property,
     query,
-} from '@future-ui/base';
-import '@future-ui/underlay/sp-underlay.js';
+} from '@lliad-ui/base';
+import '@lliad-ui/underlay/sp-underlay.js';
 
-import modalStyles from '@future-ui/modal/src/modal.css.js';
+import modalStyles from '@lliad-ui/modal/src/modal.css.js';
 import styles from './tray.css.js';
 
 /**

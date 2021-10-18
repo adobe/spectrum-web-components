@@ -14,7 +14,7 @@ import {
     ReactiveElement,
     queryAssignedNodes,
     property,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 const slotElementObserver = Symbol('slotElementObserver');
 // Fix needed for: https://github.com/lit/lit/issues/1789

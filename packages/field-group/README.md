@@ -4,23 +4,23 @@ An `<sp-field-group>` element is used to layout a group of fields, usually `<sp-
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/field-group?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/field-group)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/field-group?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/field-group)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/field-group?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/field-group)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/field-group?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/field-group)
 
 ```
-yarn add @future-ui/field-group
+yarn add @lliad-ui/field-group
 ```
 
 Import the side effectful registration of `<sp-field-group>` via:
 
 ```
-import '@future-ui/field-group/sp-field-group.js';
+import '@lliad-ui/field-group/sp-field-group.js';
 ```
 
 When looking to leverage the `FieldGroup` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { FieldGroup } from '@future-ui/field-group';
+import { FieldGroup } from '@lliad-ui/field-group';
 ```
 
 ## Example

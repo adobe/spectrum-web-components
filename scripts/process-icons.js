@@ -74,7 +74,7 @@ Object.keys(scales).forEach((scaleKey) => {
     fs.writeSync(outputFd, license);
     fs.writeSync(
         outputFd,
-        'import { svg } from \'@future-ui/base\'; export default svg`<svg xmlns="http://www.w3.org/2000/svg">'
+        'import { svg } from \'@lliad-ui/base\'; export default svg`<svg xmlns="http://www.w3.org/2000/svg">'
     );
 
     fs.readdirSync(srcPath).forEach((iconFile) => {

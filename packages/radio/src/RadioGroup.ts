@@ -16,9 +16,9 @@ import {
     TemplateResult,
     queryAssignedNodes,
     PropertyValues,
-} from '@future-ui/base';
-import { FocusVisiblePolyfillMixin } from '@future-ui/shared/src/focus-visible.js';
-import { FieldGroup } from '@future-ui/field-group';
+} from '@lliad-ui/base';
+import { FocusVisiblePolyfillMixin } from '@lliad-ui/shared/src/focus-visible.js';
+import { FieldGroup } from '@lliad-ui/field-group';
 
 import { Radio } from './Radio.js';
 

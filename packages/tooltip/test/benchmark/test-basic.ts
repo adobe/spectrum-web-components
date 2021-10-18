@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@future-ui/tooltip/sp-tooltip.js';
-import { html } from '@future-ui/base';
+import '@lliad-ui/tooltip/sp-tooltip.js';
+import { html } from '@lliad-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

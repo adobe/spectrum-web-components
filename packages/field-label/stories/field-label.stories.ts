@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@future-ui/base';
-import '@future-ui/textfield/sp-textfield.js';
-import '@future-ui/picker/sp-picker.js';
+import { html, TemplateResult } from '@lliad-ui/base';
+import '@lliad-ui/textfield/sp-textfield.js';
+import '@lliad-ui/picker/sp-picker.js';
 
 import '../sp-field-label.js';
 

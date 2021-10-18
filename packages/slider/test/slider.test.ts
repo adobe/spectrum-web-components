@@ -23,7 +23,7 @@ import {
     nextFrame,
 } from '@open-wc/testing';
 import { sendKeys, executeServerCommand } from '@web/test-runner-commands';
-import { ProvideLang } from '@future-ui/theme';
+import { ProvideLang } from '@lliad-ui/theme';
 
 describe('Slider', () => {
     // At least one browser (Webkit) maintains shared global state for the mouse,

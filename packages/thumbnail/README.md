@@ -4,24 +4,24 @@ An `sp-thumbnail` can be used in a variety of locations as a way to display a pr
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/thumbnail?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/thumbnail)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/thumbnail?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/thumbnail)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/thumbnail?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/thumbnail)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/thumbnail?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/thumbnail)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/OmypHtHAzCQKJ4wUD77Y/src/index.ts)
 
 ```
-yarn add @future-ui/thumbnail
+yarn add @lliad-ui/thumbnail
 ```
 
 Import the side effectful registration of `<sp-thumbnail>` via:
 
 ```
-import '@future-ui/thumbnail/sp-thumbnail.js';
+import '@lliad-ui/thumbnail/sp-thumbnail.js';
 ```
 
 When looking to leverage the `Thumbnail` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Thumbnail } from '@future-ui/thumbnail';
+import { Thumbnail } from '@lliad-ui/thumbnail';
 ```
 
 ## Sizes

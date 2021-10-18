@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/progress-bar",
+    "name": "@lliad-ui/progress-bar",
     "version": "0.4.1",
     "publishConfig": {
         "access": "public"
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/field-label": "^0.6.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/field-label": "^0.6.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

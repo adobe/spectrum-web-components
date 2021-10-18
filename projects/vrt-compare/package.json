@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/vrt-compare",
+    "name": "@lliad-ui/vrt-compare",
     "version": "0.3.1",
     "publishConfig": {
         "access": "public"
@@ -44,14 +44,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/action-bar": "^0.3.1",
-        "@future-ui/action-button": "^0.8.1",
-        "@future-ui/action-group": "^0.7.1",
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/icons-workflow": "^0.9.1",
-        "@future-ui/shared": "^0.15.1",
-        "@future-ui/split-view": "^0.5.1",
-        "@future-ui/styles": "^0.10.1",
+        "@lliad-ui/action-bar": "^0.3.1",
+        "@lliad-ui/action-button": "^0.8.1",
+        "@lliad-ui/action-group": "^0.7.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/icons-workflow": "^0.9.1",
+        "@lliad-ui/shared": "^0.15.1",
+        "@lliad-ui/split-view": "^0.5.1",
+        "@lliad-ui/styles": "^0.10.1",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

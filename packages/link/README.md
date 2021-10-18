@@ -4,24 +4,24 @@ An `<sp-link>` allow users to navigate to a different location. They can be pres
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/link?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/link)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/link?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/link)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/link?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/link)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/link?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/link)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/SKjuIJdhxi5YaT3BNgxT/src/index.ts)
 
 ```
-yarn add @future-ui/link
+yarn add @lliad-ui/link
 ```
 
 Import the side effectful registration of `<sp-link>` via:
 
 ```
-import '@future-ui/link/sp-link.js';
+import '@lliad-ui/link/sp-link.js';
 ```
 
 When looking to leverage the `Link` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Link } from '@future-ui/link';
+import { Link } from '@lliad-ui/link';
 ```
 
 ## Sizes

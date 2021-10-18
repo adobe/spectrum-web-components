@@ -18,9 +18,9 @@ import {
     PropertyValues,
     SpectrumElement,
     TemplateResult,
-} from '@future-ui/base';
-import { reparentChildren } from '@future-ui/shared';
-import { Color, Scale } from '@future-ui/theme';
+} from '@lliad-ui/base';
+import { reparentChildren } from '@lliad-ui/shared';
+import { Color, Scale } from '@lliad-ui/theme';
 import styles from './active-overlay.css.js';
 import {
     OverlayOpenDetail,

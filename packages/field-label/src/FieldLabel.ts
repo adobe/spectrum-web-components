@@ -19,10 +19,10 @@ import {
     PropertyValues,
     SizedMixin,
     query,
-} from '@future-ui/base';
-import type { Focusable } from '@future-ui/shared';
-import '@future-ui/icons-ui/icons/sp-icon-asterisk100.js';
-import asteriskIconStyles from '@future-ui/icon/src/spectrum-icon-asterisk.css.js';
+} from '@lliad-ui/base';
+import type { Focusable } from '@lliad-ui/shared';
+import '@lliad-ui/icons-ui/icons/sp-icon-asterisk100.js';
+import asteriskIconStyles from '@lliad-ui/icon/src/spectrum-icon-asterisk.css.js';
 
 import styles from './field-label.css.js';
 

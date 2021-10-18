@@ -23,12 +23,12 @@ import {
 
 import '../overlay-trigger.js';
 import { OverlayTrigger, ActiveOverlay, TriggerInteractions } from '../';
-import '@future-ui/button/sp-button.js';
-import { Button } from '@future-ui/button';
-import '@future-ui/popover/sp-popover.js';
-import { Popover } from '@future-ui/popover';
-import '@future-ui/theme/sp-theme.js';
-import { Theme } from '@future-ui/theme';
+import '@lliad-ui/button/sp-button.js';
+import { Button } from '@lliad-ui/button';
+import '@lliad-ui/popover/sp-popover.js';
+import { Popover } from '@lliad-ui/popover';
+import '@lliad-ui/theme/sp-theme.js';
+import { Theme } from '@lliad-ui/theme';
 
 function pressKey(code: string): void {
     const up = new KeyboardEvent('keyup', {

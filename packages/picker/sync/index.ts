@@ -15,7 +15,7 @@ import {
     Overlay,
     OverlayOptions,
     TriggerInteractions,
-} from '@future-ui/overlay';
+} from '@lliad-ui/overlay';
 
 Picker.openOverlay = async (
     target: HTMLElement,

@@ -16,10 +16,10 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from '@future-ui/base';
-import { Focusable } from '@future-ui/shared/src/focusable.js';
-import '@future-ui/icons-ui/icons/sp-icon-chevron100.js';
-import chevronIconStyles from '@future-ui/icon/src/spectrum-icon-chevron.css.js';
+} from '@lliad-ui/base';
+import { Focusable } from '@lliad-ui/shared/src/focusable.js';
+import '@lliad-ui/icons-ui/icons/sp-icon-chevron100.js';
+import chevronIconStyles from '@lliad-ui/icon/src/spectrum-icon-chevron.css.js';
 
 import styles from './accordion-item.css.js';
 

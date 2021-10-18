@@ -19,18 +19,18 @@ import {
     PropertyValues,
     ifDefined,
     query,
-} from '@future-ui/base';
-import { FocusVisiblePolyfillMixin } from '@future-ui/shared/src/focus-visible.js';
-import { ObserveSlotPresence } from '@future-ui/shared/src/observe-slot-presence.js';
-import { LikeAnchor } from '@future-ui/shared/src/like-anchor.js';
-import '@future-ui/asset/sp-asset.js';
+} from '@lliad-ui/base';
+import { FocusVisiblePolyfillMixin } from '@lliad-ui/shared/src/focus-visible.js';
+import { ObserveSlotPresence } from '@lliad-ui/shared/src/observe-slot-presence.js';
+import { LikeAnchor } from '@lliad-ui/shared/src/like-anchor.js';
+import '@lliad-ui/asset/sp-asset.js';
 
-import { Checkbox } from '@future-ui/checkbox/src/Checkbox';
-import '@future-ui/checkbox/sp-checkbox.js';
-import '@future-ui/quick-actions/sp-quick-actions.js';
+import { Checkbox } from '@lliad-ui/checkbox/src/Checkbox';
+import '@lliad-ui/checkbox/sp-checkbox.js';
+import '@lliad-ui/quick-actions/sp-quick-actions.js';
 import cardStyles from './card.css.js';
-import headingStyles from '@future-ui/styles/heading.js';
-import detailStyles from '@future-ui/styles/detail.js';
+import headingStyles from '@lliad-ui/styles/heading.js';
+import detailStyles from '@lliad-ui/styles/detail.js';
 
 /**
  * @element sp-card

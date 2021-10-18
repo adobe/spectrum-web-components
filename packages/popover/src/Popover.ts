@@ -17,8 +17,8 @@ import {
     property,
     SpectrumElement,
     TemplateResult,
-} from '@future-ui/base';
-import { OverlayDisplayQueryDetail, Placement } from '@future-ui/overlay';
+} from '@lliad-ui/base';
+import { OverlayDisplayQueryDetail, Placement } from '@lliad-ui/overlay';
 import popoverStyles from './popover.css.js';
 
 /**

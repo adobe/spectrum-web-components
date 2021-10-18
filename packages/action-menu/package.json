@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/action-menu",
+    "name": "@lliad-ui/action-menu",
     "version": "0.12.1",
     "publishConfig": {
         "access": "public"
@@ -46,13 +46,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/action-button": "^0.8.1",
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/icon": "^0.12.1",
-        "@future-ui/icons-workflow": "^0.9.1",
-        "@future-ui/menu": "^0.12.1",
-        "@future-ui/picker": "^0.10.1",
-        "@future-ui/shared": "^0.15.1",
+        "@lliad-ui/action-button": "^0.8.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/icon": "^0.12.1",
+        "@lliad-ui/icons-workflow": "^0.9.1",
+        "@lliad-ui/menu": "^0.12.1",
+        "@lliad-ui/picker": "^0.10.1",
+        "@lliad-ui/shared": "^0.15.1",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

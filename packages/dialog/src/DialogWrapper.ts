@@ -19,15 +19,15 @@ import {
     query,
     ifDefined,
     PropertyValues,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
-import '@future-ui/underlay/sp-underlay.js';
-import '@future-ui/button/sp-button.js';
+import '@lliad-ui/underlay/sp-underlay.js';
+import '@lliad-ui/button/sp-button.js';
 
 import '../sp-dialog.js';
-import styles from '@future-ui/modal/src/modal.css.js';
+import styles from '@lliad-ui/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
-import { FocusVisiblePolyfillMixin } from '@future-ui/shared';
+import { FocusVisiblePolyfillMixin } from '@lliad-ui/shared';
 
 /**
  * @element sp-dialog-wrapper

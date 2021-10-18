@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@future-ui/base';
+import { html, TemplateResult } from '@lliad-ui/base';
 
 import '../sp-quick-actions.js';
-import '@future-ui/action-button/sp-action-button.js';
-import '@future-ui/icons-workflow/icons/sp-icon-edit.js';
-import '@future-ui/icons-workflow/icons/sp-icon-copy.js';
-import '@future-ui/icons-workflow/icons/sp-icon-delete.js';
-import '@future-ui/underlay/sp-underlay.js';
+import '@lliad-ui/action-button/sp-action-button.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-edit.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-copy.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-delete.js';
+import '@lliad-ui/underlay/sp-underlay.js';
 
 export default {
     title: 'Quick Actions',

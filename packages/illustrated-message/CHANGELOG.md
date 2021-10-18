@@ -3,125 +3,113 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.7.0...@future-ui/illustrated-message@0.7.1) (2021-10-15)
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.7.0...@lliad-ui/illustrated-message@0.7.1) (2021-10-15)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
-
-
-
-
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
 # 0.7.0 (2021-10-14)
 
-
 ### Bug Fixes
 
-* correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
-* include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
-* include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
-* include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
-* stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
-* update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
-* update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
-* update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
-* use latest @spectrum-css/* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
-* **illustrated-message:** use accessibile tagnames ([e47b469](https://github.com/adobe/spectrum-web-components/commit/e47b469b5e1b9465b7bf0c4574f0ccb57acbb4f7))
-
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+-   **illustrated-message:** use accessibile tagnames ([e47b469](https://github.com/adobe/spectrum-web-components/commit/e47b469b5e1b9465b7bf0c4574f0ccb57acbb4f7))
 
 ### Features
 
-* use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
-* **illustrated-message:** update spectrum css input ([25c0545](https://github.com/adobe/spectrum-web-components/commit/25c054583f944bf2fd0b10c4abdd70f65b4a5f20))
-* **styles:** vend CSS literal versions of the typography system ([6406c96](https://github.com/adobe/spectrum-web-components/commit/6406c96377557a88ad7756147e6e5777f5d1f746))
-* leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
-* update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
-
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   **illustrated-message:** update spectrum css input ([25c0545](https://github.com/adobe/spectrum-web-components/commit/25c054583f944bf2fd0b10c4abdd70f65b4a5f20))
+-   **styles:** vend CSS literal versions of the typography system ([6406c96](https://github.com/adobe/spectrum-web-components/commit/6406c96377557a88ad7756147e6e5777f5d1f746))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
 
 ### Performance Improvements
 
-* use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
-* use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/adobe/spectrum-web-components/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
-
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/adobe/spectrum-web-components/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
 
 ### Reverts
 
-* Revert "chore: release new versions" ([a6d655d](https://github.com/adobe/spectrum-web-components/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/adobe/spectrum-web-components/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
 
+## [0.6.14](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.12...@lliad-ui/illustrated-message@0.6.14) (2021-10-14)
 
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
+## [0.6.13](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.12...@lliad-ui/illustrated-message@0.6.13) (2021-10-14)
 
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.6.14](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.12...@future-ui/illustrated-message@0.6.14) (2021-10-14)
+## [0.6.12](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.11...@lliad-ui/illustrated-message@0.6.12) (2021-09-20)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.6.13](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.12...@future-ui/illustrated-message@0.6.13) (2021-10-14)
-
-**Note:** Version bump only for package @future-ui/illustrated-message
-
-## [0.6.12](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.11...@future-ui/illustrated-message@0.6.12) (2021-09-20)
-
-**Note:** Version bump only for package @future-ui/illustrated-message
-
-## [0.6.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.10...@future-ui/illustrated-message@0.6.11) (2021-08-24)
+## [0.6.11](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.10...@lliad-ui/illustrated-message@0.6.11) (2021-08-24)
 
 ### Bug Fixes
 
 -   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
-## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.9...@future-ui/illustrated-message@0.6.10) (2021-07-22)
+## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.9...@lliad-ui/illustrated-message@0.6.10) (2021-07-22)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.6.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.8...@future-ui/illustrated-message@0.6.9) (2021-07-01)
+## [0.6.9](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.8...@lliad-ui/illustrated-message@0.6.9) (2021-07-01)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.6.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.7...@future-ui/illustrated-message@0.6.8) (2021-06-16)
+## [0.6.8](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.7...@lliad-ui/illustrated-message@0.6.8) (2021-06-16)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.6.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.6...@future-ui/illustrated-message@0.6.7) (2021-06-07)
+## [0.6.7](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.6...@lliad-ui/illustrated-message@0.6.7) (2021-06-07)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.6.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.5...@future-ui/illustrated-message@0.6.6) (2021-05-12)
+## [0.6.6](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.5...@lliad-ui/illustrated-message@0.6.6) (2021-05-12)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.6.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.4...@future-ui/illustrated-message@0.6.5) (2021-04-15)
+## [0.6.5](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.4...@lliad-ui/illustrated-message@0.6.5) (2021-04-15)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.6.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.3...@future-ui/illustrated-message@0.6.4) (2021-04-09)
+## [0.6.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.3...@lliad-ui/illustrated-message@0.6.4) (2021-04-09)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.2...@future-ui/illustrated-message@0.6.3) (2021-03-29)
+## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.2...@lliad-ui/illustrated-message@0.6.3) (2021-03-29)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.1...@future-ui/illustrated-message@0.6.2) (2021-03-22)
+## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.1...@lliad-ui/illustrated-message@0.6.2) (2021-03-22)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.6.0...@future-ui/illustrated-message@0.6.1) (2021-03-05)
+## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.6.0...@lliad-ui/illustrated-message@0.6.1) (2021-03-05)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.5.1...@future-ui/illustrated-message@0.6.0) (2021-03-04)
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.5.1...@lliad-ui/illustrated-message@0.6.0) (2021-03-04)
 
 ### Features
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.5.0...@future-ui/illustrated-message@0.5.1) (2021-02-11)
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.5.0...@lliad-ui/illustrated-message@0.5.1) (2021-02-11)
 
 ### Bug Fixes
 
 -   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.3.3...@future-ui/illustrated-message@0.5.0) (2021-01-21)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.3.3...@lliad-ui/illustrated-message@0.5.0) (2021-01-21)
 
 ### Bug Fixes
 
@@ -135,7 +123,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **illustrated-message:** update spectrum css input ([25c0545](https://github.com/adobe/spectrum-web-components/commit/25c054583f944bf2fd0b10c4abdd70f65b4a5f20))
 -   **styles:** vend CSS literal versions of the typography system ([6406c96](https://github.com/adobe/spectrum-web-components/commit/6406c96377557a88ad7756147e6e5777f5d1f746))
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.3.3...@future-ui/illustrated-message@0.4.0) (2021-01-13)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.3.3...@lliad-ui/illustrated-message@0.4.0) (2021-01-13)
 
 ### Bug Fixes
 
@@ -149,77 +137,77 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **illustrated-message:** update spectrum css input ([25c0545](https://github.com/adobe/spectrum-web-components/commit/25c054583f944bf2fd0b10c4abdd70f65b4a5f20))
 -   **styles:** vend CSS literal versions of the typography system ([6406c96](https://github.com/adobe/spectrum-web-components/commit/6406c96377557a88ad7756147e6e5777f5d1f746))
 
-## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.3.2...@future-ui/illustrated-message@0.3.3) (2020-10-12)
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.3.2...@lliad-ui/illustrated-message@0.3.3) (2020-10-12)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.3.1...@future-ui/illustrated-message@0.3.2) (2020-10-12)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.3.1...@lliad-ui/illustrated-message@0.3.2) (2020-10-12)
 
 ### Bug Fixes
 
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.3.0...@future-ui/illustrated-message@0.3.1) (2020-09-25)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.3.0...@lliad-ui/illustrated-message@0.3.1) (2020-09-25)
 
 ### Bug Fixes
 
 -   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.2.2...@future-ui/illustrated-message@0.3.0) (2020-08-31)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.2.2...@lliad-ui/illustrated-message@0.3.0) (2020-08-31)
 
 ### Features
 
 -   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.2.1...@future-ui/illustrated-message@0.2.2) (2020-08-19)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.2.1...@lliad-ui/illustrated-message@0.2.2) (2020-08-19)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.2.0...@future-ui/illustrated-message@0.2.1) (2020-07-22)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.2.0...@lliad-ui/illustrated-message@0.2.1) (2020-07-22)
 
 ### Bug Fixes
 
 -   **illustrated-message:** use accessibile tagnames ([e47b469](https://github.com/adobe/spectrum-web-components/commit/e47b469b5e1b9465b7bf0c4574f0ccb57acbb4f7))
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.1.11...@future-ui/illustrated-message@0.2.0) (2020-07-17)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.1.11...@lliad-ui/illustrated-message@0.2.0) (2020-07-17)
 
 ### Features
 
 -   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 
-## [0.1.11](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.1.10...@future-ui/illustrated-message@0.1.11) (2020-06-08)
+## [0.1.11](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.1.10...@lliad-ui/illustrated-message@0.1.11) (2020-06-08)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.1.10](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.1.9...@future-ui/illustrated-message@0.1.10) (2020-04-16)
+## [0.1.10](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.1.9...@lliad-ui/illustrated-message@0.1.10) (2020-04-16)
 
 ### Performance Improvements
 
 -   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
 
-## [0.1.9](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.1.8...@future-ui/illustrated-message@0.1.9) (2020-04-07)
+## [0.1.9](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.1.8...@lliad-ui/illustrated-message@0.1.9) (2020-04-07)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.1.7...@future-ui/illustrated-message@0.1.8) (2020-03-11)
+## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.1.7...@lliad-ui/illustrated-message@0.1.8) (2020-03-11)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.1.6...@future-ui/illustrated-message@0.1.7) (2020-01-06)
+## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.1.6...@lliad-ui/illustrated-message@0.1.7) (2020-01-06)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.1.5...@future-ui/illustrated-message@0.1.6) (2019-11-27)
+## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.1.5...@lliad-ui/illustrated-message@0.1.6) (2019-11-27)
 
 ### Bug Fixes
 
 -   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716))
 
-## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.1.4...@future-ui/illustrated-message@0.1.5) (2019-11-19)
+## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.1.4...@lliad-ui/illustrated-message@0.1.5) (2019-11-19)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message
 
-## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@future-ui/illustrated-message@0.1.3...@future-ui/illustrated-message@0.1.4) (2019-10-14)
+## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/illustrated-message@0.1.3...@lliad-ui/illustrated-message@0.1.4) (2019-10-14)
 
 ### Performance Improvements
 
@@ -227,4 +215,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.1.3 (2019-10-03)
 
-**Note:** Version bump only for package @future-ui/illustrated-message
+**Note:** Version bump only for package @lliad-ui/illustrated-message

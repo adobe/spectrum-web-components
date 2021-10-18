@@ -4,24 +4,24 @@ An `<sp-color-wheel>` lets users visually change an individual channel of a colo
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/color-wheel?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/color-wheel)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/color-wheel?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/color-wheel)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/color-wheel?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/color-wheel)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/color-wheel?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/color-wheel)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/m5lUgBAAejgIkESwRvEs/src/index.ts)
 
 ```
-yarn add @future-ui/color-wheel
+yarn add @lliad-ui/color-wheel
 ```
 
 Import the side effectful registration of `<sp-color-wheel>` via:
 
 ```
-import '@future-ui/color-wheel/sp-color-wheel.js';
+import '@lliad-ui/color-wheel/sp-color-wheel.js';
 ```
 
 When looking to leverage the `ColorWheel` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ColorWheel } from '@future-ui/color-wheel';
+import { ColorWheel } from '@lliad-ui/color-wheel';
 ```
 
 ## Color Formatting

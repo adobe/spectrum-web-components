@@ -16,9 +16,9 @@ import {
     TemplateResult,
     property,
     customElement,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
-import styles from '@future-ui/theme/src/typography.css.js';
+import styles from '@lliad-ui/theme/src/typography.css.js';
 
 /**
  * @element typography-decorator

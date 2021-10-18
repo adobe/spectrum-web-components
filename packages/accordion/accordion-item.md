@@ -4,24 +4,24 @@ The `<sp-accordion-item>` element represents a single item in an `<sp-accordion>
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/accordion?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/accordion)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/accordion?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/accordion)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/accordion?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/accordion)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/accordion?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/accordion)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/Muvuvbd79YCP9tcdtnsW/src/index.ts)
 
 ```
-yarn add @future-ui/accordion
+yarn add @lliad-ui/accordion
 ```
 
 Import the side effectful registration of `<sp-accordion-item>` via:
 
 ```
-import '@future-ui/accordion/sp-accordion-item.js';
+import '@lliad-ui/accordion/sp-accordion-item.js';
 ```
 
 When looking to leverage the `AccordionItem` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { AccordionItem } from '@future-ui/accordion';
+import { AccordionItem } from '@lliad-ui/accordion';
 ```
 
 ## Example

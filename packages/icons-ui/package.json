@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/icons-ui",
+    "name": "@lliad-ui/icons-ui",
     "version": "0.9.1",
     "publishConfig": {
         "access": "public"
@@ -44,9 +44,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/icon": "^0.12.1",
-        "@future-ui/iconset": "^0.8.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/icon": "^0.12.1",
+        "@lliad-ui/iconset": "^0.8.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

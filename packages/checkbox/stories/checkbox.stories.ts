@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '../sp-checkbox.js';
-import '@future-ui/field-group/sp-field-group.js';
-import { html, TemplateResult } from '@future-ui/base';
+import '@lliad-ui/field-group/sp-field-group.js';
+import { html, TemplateResult } from '@lliad-ui/base';
 
 export default {
     component: 'sp-checkbox',

@@ -70,7 +70,7 @@ const optionDefinitions: commandLineUsage.OptionDefinition[] = [
     {
         name: 'compare',
         description:
-            'Which version of @future-ui/bundle to compare your performance against.' +
+            'Which version of @lliad-ui/bundle to compare your performance against.' +
             '\n(default latest)',
         alias: 'c',
         type: String,
@@ -209,8 +209,8 @@ $ node test/benchmark/cli -n 20
                     packageVersions: {
                         label: 'remote',
                         dependencies: {
-                            '@future-ui/bundle': opts.compare,
-                            '@future-ui/top-nav': 'latest',
+                            '@lliad-ui/bundle': opts.compare,
+                            '@lliad-ui/top-nav': 'latest',
                         },
                     },
                     measurement: 'global',

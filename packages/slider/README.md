@@ -4,30 +4,30 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/slider?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/slider)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/slider?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/slider)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/slider?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/slider)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/slider?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/slider)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/U7LQv7LsAVBwJayJXG3B/src/index.ts)
 
 ```
-yarn add @future-ui/slider
+yarn add @lliad-ui/slider
 ```
 
 Import the side effectful registration of `<sp-slider>` via:
 
 ```
-import '@future-ui/slider/sp-slider.js';
+import '@lliad-ui/slider/sp-slider.js';
 ```
 
-When leveraging the `editable` attribute, the `@future-ui/number-field/sp-number-field.js` dependency will be asynchronously loaded via a dynamic import to reduce JS payload for applications not leveraging this feature. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-slider>` as follows:
+When leveraging the `editable` attribute, the `@lliad-ui/number-field/sp-number-field.js` dependency will be asynchronously loaded via a dynamic import to reduce JS payload for applications not leveraging this feature. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-slider>` as follows:
 
 ```
-import '@future-ui/slider/sync/sp-slider.js';
+import '@lliad-ui/slider/sync/sp-slider.js';
 ```
 
 When looking to leverage the `Slider` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Slider } from '@future-ui/slider';
+import { Slider } from '@lliad-ui/slider';
 ```
 
 ## Variants

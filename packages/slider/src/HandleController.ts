@@ -15,8 +15,8 @@ import {
     ifDefined,
     classMap,
     styleMap,
-} from '@future-ui/base';
-import { streamingListener } from '@future-ui/base/src/streaming-listener.js';
+} from '@lliad-ui/base';
+import { streamingListener } from '@lliad-ui/base/src/streaming-listener.js';
 import { Slider } from './Slider.js';
 import {
     SliderHandle,

@@ -18,10 +18,10 @@ import {
     ifDefined,
     property,
     query,
-} from '@future-ui/base';
-import { Focusable, LikeAnchor } from '@future-ui/shared';
+} from '@lliad-ui/base';
+import { Focusable, LikeAnchor } from '@lliad-ui/shared';
 
-import itemStyles from '@future-ui/tabs/src/tab.css.js';
+import itemStyles from '@lliad-ui/tabs/src/tab.css.js';
 import topNavItemStyles from './top-nav-item.css.js';
 
 /**

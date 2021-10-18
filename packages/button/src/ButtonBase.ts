@@ -16,10 +16,10 @@ import {
     TemplateResult,
     query,
     PropertyValues,
-} from '@future-ui/base';
-import { LikeAnchor } from '@future-ui/shared/src/like-anchor.js';
-import { Focusable } from '@future-ui/shared/src/focusable.js';
-import { ObserveSlotText, ObserveSlotPresence } from '@future-ui/shared';
+} from '@lliad-ui/base';
+import { LikeAnchor } from '@lliad-ui/shared/src/like-anchor.js';
+import { Focusable } from '@lliad-ui/shared/src/focusable.js';
+import { ObserveSlotText, ObserveSlotPresence } from '@lliad-ui/shared';
 
 /**
  * @slot - text content to be displayed in the Button element

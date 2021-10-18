@@ -17,7 +17,7 @@ import {
     escapeEvent,
     spaceEvent,
 } from '../../../test/testing-helpers.js';
-import '@future-ui/shared/src/focus-visible.js';
+import '@lliad-ui/shared/src/focus-visible.js';
 import { spy } from 'sinon';
 
 describe('Search', () => {

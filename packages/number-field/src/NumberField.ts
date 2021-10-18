@@ -17,15 +17,15 @@ import {
     property,
     PropertyValues,
     query,
-} from '@future-ui/base';
-import { ProvideLang } from '@future-ui/theme';
-import { streamingListener } from '@future-ui/base/src/streaming-listener.js';
+} from '@lliad-ui/base';
+import { ProvideLang } from '@lliad-ui/theme';
+import { streamingListener } from '@lliad-ui/base/src/streaming-listener.js';
 import { NumberFormatter, NumberParser } from '@internationalized/number';
 
-import '@future-ui/icons-ui/icons/sp-icon-chevron75.js';
-import '@future-ui/action-button/sp-action-button.js';
-import { TextfieldBase } from '@future-ui/textfield';
-import chevronStyles from '@future-ui/icon/src/spectrum-icon-chevron.css.js';
+import '@lliad-ui/icons-ui/icons/sp-icon-chevron75.js';
+import '@lliad-ui/action-button/sp-action-button.js';
+import { TextfieldBase } from '@lliad-ui/textfield';
+import chevronStyles from '@lliad-ui/icon/src/spectrum-icon-chevron.css.js';
 import styles from './number-field.css.js';
 
 function testPlatform(re: RegExp): boolean {

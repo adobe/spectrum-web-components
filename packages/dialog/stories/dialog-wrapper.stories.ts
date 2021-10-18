@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@future-ui/base';
+import { html, TemplateResult } from '@lliad-ui/base';
 
-import '@future-ui/button/sp-button.js';
-import '@future-ui/overlay/overlay-trigger.js';
+import '@lliad-ui/button/sp-button.js';
+import '@lliad-ui/overlay/overlay-trigger.js';
 
 import '../sp-dialog-wrapper.js';
 import { landscape } from './images.js';

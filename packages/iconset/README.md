@@ -4,16 +4,16 @@ Extend either the `Iconset` or `IconsetSVG` exports of this package to supply yo
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/iconset?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/iconset)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/iconset?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/iconset)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/iconset?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/iconset)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/iconset?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/iconset)
 
 ```
-yarn add @future-ui/iconset
+yarn add @lliad-ui/iconset
 ```
 
 ```ts
 import { TemplateResult } from 'lit-element';
-import { IconsetSVG } from '@future-ui/iconset/src/iconset-svg.js';
+import { IconsetSVG } from '@lliad-ui/iconset/src/iconset-svg.js';
 
 import { CustomIconSet } from 'your-icon-set.js';
 

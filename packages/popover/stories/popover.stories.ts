@@ -9,8 +9,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '../sp-popover.js';
-import { html, TemplateResult } from '@future-ui/base';
-import { Placement } from '@future-ui/overlay';
+import { html, TemplateResult } from '@lliad-ui/base';
+import { Placement } from '@lliad-ui/overlay';
 
 export default {
     component: 'sp-popover',

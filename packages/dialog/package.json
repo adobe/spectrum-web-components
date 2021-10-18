@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/dialog",
+    "name": "@lliad-ui/dialog",
     "version": "0.7.1",
     "publishConfig": {
         "access": "public"
@@ -46,17 +46,17 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/action-button": "^0.8.1",
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/button": "^0.17.1",
-        "@future-ui/button-group": "^0.7.1",
-        "@future-ui/divider": "^0.3.1",
-        "@future-ui/icon": "^0.12.1",
-        "@future-ui/icons-ui": "^0.9.1",
-        "@future-ui/icons-workflow": "^0.9.1",
-        "@future-ui/modal": "^0.4.1",
-        "@future-ui/shared": "^0.15.1",
-        "@future-ui/underlay": "^0.7.1",
+        "@lliad-ui/action-button": "^0.8.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/button": "^0.17.1",
+        "@lliad-ui/button-group": "^0.7.1",
+        "@lliad-ui/divider": "^0.3.1",
+        "@lliad-ui/icon": "^0.12.1",
+        "@lliad-ui/icons-ui": "^0.9.1",
+        "@lliad-ui/icons-workflow": "^0.9.1",
+        "@lliad-ui/modal": "^0.4.1",
+        "@lliad-ui/shared": "^0.15.1",
+        "@lliad-ui/underlay": "^0.7.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@future-ui/icon/sp-icon.js';
-import '@future-ui/icons/sp-icons-medium.js';
-import { html } from '@future-ui/base';
+import '@lliad-ui/icon/sp-icon.js';
+import '@lliad-ui/icons/sp-icons-medium.js';
+import { html } from '@lliad-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 const iconset = document.createElement('sp-icons-medium');

@@ -16,7 +16,7 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 import styles from './coachmark.css.js';
 

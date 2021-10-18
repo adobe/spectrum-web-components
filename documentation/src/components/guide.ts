@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, CSSResultArray } from '@future-ui/base';
-import '@future-ui/link/sp-link.js';
-import '@future-ui/button/sp-button.js';
-import '@future-ui/theme/theme-lightest.js';
-import '@future-ui/theme/scale-medium.js';
+import { html, CSSResultArray } from '@lliad-ui/base';
+import '@lliad-ui/link/sp-link.js';
+import '@lliad-ui/button/sp-button.js';
+import '@lliad-ui/theme/theme-lightest.js';
+import '@lliad-ui/theme/scale-medium.js';
 import './layout.js';
 import { GuideDocs } from '../../guides/index.js';
 import { RouteComponent } from './route-component.js';

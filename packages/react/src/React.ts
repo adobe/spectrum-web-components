@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, SpectrumElement, TemplateResult } from '@future-ui/base';
+import { html, SpectrumElement, TemplateResult } from '@lliad-ui/base';
 
 /**
  * @element sp-react

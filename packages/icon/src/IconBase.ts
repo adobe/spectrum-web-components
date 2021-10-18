@@ -16,7 +16,7 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 import iconStyles from './icon.css.js';
 

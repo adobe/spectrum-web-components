@@ -19,16 +19,16 @@ import {
     PropertyValues,
     query,
     ifDefined,
-} from '@future-ui/base';
-import { streamingListener } from '@future-ui/base/src/streaming-listener.js';
+} from '@lliad-ui/base';
+import { streamingListener } from '@lliad-ui/base/src/streaming-listener.js';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import {
     ColorHandle,
     ColorValue,
     extractHueAndSaturationRegExp,
     replaceHueRegExp,
-} from '@future-ui/color-handle';
-import '@future-ui/color-handle/sp-color-handle.js';
+} from '@lliad-ui/color-handle';
+import '@lliad-ui/color-handle/sp-color-handle.js';
 import { TinyColor } from '@ctrl/tinycolor';
 
 import styles from './color-area.css.js';

@@ -4,19 +4,19 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/icons-ui?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/icons-ui)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/icons-ui?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/icons-ui)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/icons-ui?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/icons-ui)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/icons-ui?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/icons-ui)
 
 ```
-yarn add @future-ui/icons-ui
+yarn add @lliad-ui/icons-ui
 ```
 
 With the default exports of the packages prepared with the `html` template tag from `lit-html`, the default value of an icon export will be as follows:
 
 ```js
 import { LitElement, html } from 'lit-element';
-import '@future-ui/icon';
-import { AsteriskIcon } from '@future-ui/icons-ui';
+import '@lliad-ui/icon';
+import { AsteriskIcon } from '@lliad-ui/icons-ui';
 
 class ElementWithIcon extends LitElement {
     protected render(): TemplateResult {
@@ -47,7 +47,7 @@ Every icons can be customized via the following options:
 The default exports of this package are pre-wrapped via `setCustomTemplateLiteralTag` in the `html` template tag from `lit-html`, and work liek the following::
 
 ```js
-import { AsteriskIcon } from '@future-ui/icons-ui';
+import { AsteriskIcon } from '@lliad-ui/icons-ui';
 
 console.log(AsteriskIcon());
 
@@ -59,7 +59,7 @@ TemplateResult {strings: Array[1], values: Array[0], type: "html", processor: De
 When working in the context of other frameworks, it is possible to import the icons with a generic template tag as follows:
 
 ```js
-import { AsteriskIcon } from '@future-ui/icons-ui/src/icons.js';
+import { AsteriskIcon } from '@lliad-ui/icons-ui/src/icons.js';
 
 console.log(AsteriskIcon());
 
@@ -85,7 +85,7 @@ What's more, if you're already working with a specific parser in your project, y
 import {
     AsteriskIcon,
     setCustomTemplateLiteralTag,
-} from '@future-ui/icons-ui/src/icons.js';
+} from '@lliad-ui/icons-ui/src/icons.js';
 import htm from 'htm';
 import { h } from 'preact';
 
@@ -100,4 +100,4 @@ VNode {nodeName: "svg", children: Array[1], attributes: Object, key: undefined, 
 ***/
 ```
 
-In this way the icons exported by `@future-ui/icons-ui` can be leveraged in projects powered by the the likes of hyperHTML, lighterhtml, lit-html, Preact, React, Vanilla JS, Vue.js, and more!
+In this way the icons exported by `@lliad-ui/icons-ui` can be leveraged in projects powered by the the likes of hyperHTML, lighterhtml, lit-html, Preact, React, Vanilla JS, Vue.js, and more!

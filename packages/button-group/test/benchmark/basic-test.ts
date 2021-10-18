@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@future-ui/button-group/sp-button-group.js';
-import '@future-ui/button/sp-button.js';
-import { html } from '@future-ui/base';
+import '@lliad-ui/button-group/sp-button-group.js';
+import '@lliad-ui/button/sp-button.js';
+import { html } from '@lliad-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

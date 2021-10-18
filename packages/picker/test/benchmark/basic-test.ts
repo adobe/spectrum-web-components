@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@future-ui/picker/sp-picker.js';
-import '@future-ui/menu/sp-menu-item.js';
-import { html } from '@future-ui/base';
+import '@lliad-ui/picker/sp-picker.js';
+import '@lliad-ui/menu/sp-menu-item.js';
+import { html } from '@lliad-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 const countryList = [

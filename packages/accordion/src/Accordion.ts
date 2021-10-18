@@ -17,12 +17,12 @@ import {
     property,
     PropertyValues,
     queryAssignedNodes,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 import { AccordionItem } from './AccordionItem.js';
 
 import styles from './accordion.css.js';
-import { Focusable, getActiveElement } from '@future-ui/shared';
+import { Focusable, getActiveElement } from '@lliad-ui/shared';
 
 /**
  * @element sp-accordion

@@ -10,5 +10,5 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@future-ui/number-field/sp-number-field.js';
+import '@lliad-ui/number-field/sp-number-field.js';
 import '../sp-slider.js';

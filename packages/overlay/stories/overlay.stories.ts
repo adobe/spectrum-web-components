@@ -8,7 +8,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult, ifDefined } from '@future-ui/base';
+import { html, TemplateResult, ifDefined } from '@lliad-ui/base';
 import {
     openOverlay,
     Overlay,
@@ -17,32 +17,32 @@ import {
     Placement,
     VirtualTrigger,
 } from '../';
-import '@future-ui/action-button/sp-action-button.js';
-import '@future-ui/action-group/sp-action-group.js';
-import '@future-ui/button/sp-button.js';
-import '@future-ui/dialog/sp-dialog-wrapper.js';
-import { DialogWrapper } from '@future-ui/dialog';
-import '@future-ui/field-label/sp-field-label.js';
-import '@future-ui/icons-workflow/icons/sp-icon-magnify.js';
-import '@future-ui/icons-workflow/icons/sp-icon-open-in.js';
-import '@future-ui/overlay/overlay-trigger.js';
-import { Picker } from '@future-ui/picker';
-import '@future-ui/picker/sp-picker.js';
-import '@future-ui/menu/sp-menu.js';
-import '@future-ui/menu/sp-menu-item.js';
-import '@future-ui/menu/sp-menu-divider.js';
-import '@future-ui/popover/sp-popover.js';
-import '@future-ui/slider/sp-slider.js';
-import '@future-ui/radio/sp-radio.js';
-import '@future-ui/radio/sp-radio-group.js';
-import '@future-ui/tooltip/sp-tooltip.js';
-import '@future-ui/theme/sp-theme.js';
-import '@future-ui/theme/src/themes.js';
+import '@lliad-ui/action-button/sp-action-button.js';
+import '@lliad-ui/action-group/sp-action-group.js';
+import '@lliad-ui/button/sp-button.js';
+import '@lliad-ui/dialog/sp-dialog-wrapper.js';
+import { DialogWrapper } from '@lliad-ui/dialog';
+import '@lliad-ui/field-label/sp-field-label.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-magnify.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-open-in.js';
+import '@lliad-ui/overlay/overlay-trigger.js';
+import { Picker } from '@lliad-ui/picker';
+import '@lliad-ui/picker/sp-picker.js';
+import '@lliad-ui/menu/sp-menu.js';
+import '@lliad-ui/menu/sp-menu-item.js';
+import '@lliad-ui/menu/sp-menu-divider.js';
+import '@lliad-ui/popover/sp-popover.js';
+import '@lliad-ui/slider/sp-slider.js';
+import '@lliad-ui/radio/sp-radio.js';
+import '@lliad-ui/radio/sp-radio-group.js';
+import '@lliad-ui/tooltip/sp-tooltip.js';
+import '@lliad-ui/theme/sp-theme.js';
+import '@lliad-ui/theme/src/themes.js';
 import '../../../projects/story-decorator/src/types.js';
 
 import './overlay-story-components.js';
 import { render } from 'lit-html';
-import { Popover } from '@future-ui/popover';
+import { Popover } from '@lliad-ui/popover';
 
 const storyStyles = html`
     <style>

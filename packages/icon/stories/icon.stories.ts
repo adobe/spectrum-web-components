@@ -9,12 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@future-ui/base';
+import { html, TemplateResult } from '@lliad-ui/base';
 
 import '../sp-icon.js';
 import { back } from './images';
-import '@future-ui/icons/sp-icons-medium.js';
-import '@future-ui/icons/sp-icons-large.js';
+import '@lliad-ui/icons/sp-icons-medium.js';
+import '@lliad-ui/icons/sp-icons-large.js';
 
 const sizes = ['s', 'm', 'l', 'xl', 'xxl'];
 

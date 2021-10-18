@@ -4,11 +4,11 @@ Shared mixins, tools, etc. that support developing Spectrum Web Components.
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/shared?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/shared)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/shared?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/shared)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/shared?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/shared)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/shared?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/shared)
 
 ```bash
-npm install @future-ui/shared
+npm install @lliad-ui/shared
 ```
 
 Individual base classes and mixins can be imported as follows:
@@ -20,7 +20,7 @@ import {
     getActiveElement,
     LikeAnchor,
     ObserveSlotText,
-} from '@future-ui/shared';
+} from '@lliad-ui/shared';
 ```
 
 ### Focusable
@@ -28,7 +28,7 @@ import {
 The `Focusable` subclass of `LitElement` adds some helpers method and lifecycle coverage in order to support passing focus to a container element inside of a custom element. The Focusable base class handles tabindex setting into shadowed elements automatically and is based heavily on the aybolit delegate-focus-mixin at https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js
 
 ```javascript
-import { Focusable } from '@future-ui/shared';
+import { Focusable } from '@lliad-ui/shared';
 import { html } from 'lit-element';
 
 class FocusableButton extends Focusable {
@@ -68,7 +68,7 @@ Mix `download`, `label`, `href`, and `target` properties into your element to al
 When working with styles that are driven by the conditional presence of `<slot>`s in a component's shadow DOM, you will need to track whether light DOM that is meant for that slot exists. Use the `ObserveSlotPresence` mixin to target specific light DOM to observe the presence of and trigger `this.requestUpdate()` calls when content fulfilling that selector comes in and out of availability.
 
 ```javascript
-import { ObserveSlotPresence } from '@future-ui/shared';
+import { ObserveSlotPresence } from '@lliad-ui/shared';
 import { LitElement, html } from 'lit-element';
 class ObserveSlotPresenceElement extends ObserveSlotPresence(LitElement, '[slot="conditional-slot"]') {
     // translate the mixin properties into locally understandable language
@@ -103,7 +103,7 @@ customElements.define('observing-slot-presence-element', ObserveSlotPresenceElem
 When working with `<slot>`s and their `slotchange` event, you will have the opportunity to capture when the nodes and/or elements in your element are added or removed. However, if the `textContent` of a text node changes, you will not receive the `slotchange` event because the slot hasn't actually received new nodes and/or elements in the exchange. When working with a lit-html binding `<your-element>${text}</your-element>` that means you will not receive a `slotchange` event when the value of `text` goes from `text = ''` to `text = 'something'` or the other way. In these cases the `ObserveSlotText` can be leverages to apply a mutation observe onto your element that tracks `characterData` mutations so that you can resspond as desired.
 
 ```javascript
-import { ObserveSlotText } from '@future-ui/shared';
+import { ObserveSlotText } from '@lliad-ui/shared';
 import { LitElement, html } from 'lit-element';
 
 class ObserveSlotTextElement extends ObserveSlotText(LitElement, '#observing-slot') {

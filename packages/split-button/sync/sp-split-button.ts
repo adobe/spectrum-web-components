@@ -10,5 +10,5 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@future-ui/picker/sync/index.js';
+import '@lliad-ui/picker/sync/index.js';
 import '../sp-split-button.js';

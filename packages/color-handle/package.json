@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/color-handle",
+    "name": "@lliad-ui/color-handle",
     "version": "0.2.1",
     "publishConfig": {
         "access": "public"
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/color-loupe": "^0.2.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/color-loupe": "^0.2.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

@@ -4,30 +4,30 @@ An `sp-split-button` surfaces an immediately envokable action via it's main butt
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/split-button?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/split-button)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/split-button?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/splitbutton)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/split-button?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/split-button)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/split-button?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/splitbutton)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/wyDxsnwOiGaxibKODm3o/src/index.ts)
 
 ```
-yarn add @future-ui/split-button
+yarn add @lliad-ui/split-button
 ```
 
 Import the side effectful registration of `<sp-split-button>` via:
 
 ```
-import '@future-ui/split-button/sp-split-button.js';
+import '@lliad-ui/split-button/sp-split-button.js';
 ```
 
-The default of `<sp-split-button>` will load dependencies in `@future-ui/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-split-button>` as follows:
+The default of `<sp-split-button>` will load dependencies in `@lliad-ui/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-split-button>` as follows:
 
 ```
-import '@future-ui/split-button/sync/sp-split-button.js';
+import '@lliad-ui/split-button/sync/sp-split-button.js';
 ```
 
 When looking to leverage the `SplitButton` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { SplitButton } from '@future-ui/split-button';
+import { SplitButton } from '@lliad-ui/split-button';
 ```
 
 ## Sizes

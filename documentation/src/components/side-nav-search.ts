@@ -17,20 +17,20 @@ import {
     TemplateResult,
     property,
     query,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 import sideNavSearchMenuStyles from './side-nav-search.css';
-import { Search } from '@future-ui/search';
-import { Overlay } from '@future-ui/overlay';
-import '@future-ui/search/sp-search.js';
-import '@future-ui/popover/sp-popover.js';
-import '@future-ui/menu/sp-menu.js';
-import '@future-ui/menu/sp-menu-group.js';
-import '@future-ui/menu/sp-menu-item.js';
-import '@future-ui/illustrated-message/sp-illustrated-message.js';
+import { Search } from '@lliad-ui/search';
+import { Overlay } from '@lliad-ui/overlay';
+import '@lliad-ui/search/sp-search.js';
+import '@lliad-ui/popover/sp-popover.js';
+import '@lliad-ui/menu/sp-menu.js';
+import '@lliad-ui/menu/sp-menu-group.js';
+import '@lliad-ui/menu/sp-menu-item.js';
+import '@lliad-ui/illustrated-message/sp-illustrated-message.js';
 import { AppRouter } from '../router.js';
 import { search, ResultGroup } from './search-index.js';
-import { Menu } from '@future-ui/menu';
-import { Popover } from '@future-ui/popover';
+import { Menu } from '@lliad-ui/menu';
+import { Popover } from '@lliad-ui/popover';
 
 declare global {
     interface Window {

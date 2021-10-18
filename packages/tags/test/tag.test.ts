@@ -17,7 +17,7 @@ import { spy } from 'sinon';
 import '../sp-tag.js';
 import '../sp-tags.js';
 import { Tag } from '..';
-import { ClearButton } from '@future-ui/button';
+import { ClearButton } from '@lliad-ui/button';
 import {
     deleteEvent,
     spaceEvent,

@@ -17,9 +17,9 @@ import {
     TemplateResult,
     PropertyValues,
     ifDefined,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 import { Tab } from './Tab.js';
-import { Focusable, getActiveElement } from '@future-ui/shared';
+import { Focusable, getActiveElement } from '@lliad-ui/shared';
 
 import tabStyles from './tabs.css.js';
 import { TabPanel } from './TabPanel.js';

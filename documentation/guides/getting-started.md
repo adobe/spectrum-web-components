@@ -1,14 +1,14 @@
 # Getting started
 
-For the fastest possible start, check out the `@future-ui/bundle` package, which includes all of the elements defined by Spectrum Web Components in one easy-to-import entry point.
+For the fastest possible start, check out the `@lliad-ui/bundle` package, which includes all of the elements defined by Spectrum Web Components in one easy-to-import entry point.
 
 ## What you're getting
 
-The `@future-ui/bundle` package is literally _everything_ that Spectrum Web Components has to offer. This is why when bundled, <sp-link target="_blank" href="https://bundlephobia.com/result?p=@future-ui/bundle">it weighs as large as it does</sp-link>, and is why we DO NOT suggest leveraging this technique in a production application. That being said, it is the shortest path to getting right into developing with Spectrum Web Components, so dive right in. Copy and paste the following HTML sample, and you’ll be up and running. Good luck, and have fun!
+The `@lliad-ui/bundle` package is literally _everything_ that Spectrum Web Components has to offer. This is why when bundled, <sp-link target="_blank" href="https://bundlephobia.com/result?p=@lliad-ui/bundle">it weighs as large as it does</sp-link>, and is why we DO NOT suggest leveraging this technique in a production application. That being said, it is the shortest path to getting right into developing with Spectrum Web Components, so dive right in. Copy and paste the following HTML sample, and you’ll be up and running. Good luck, and have fun!
 
 ```
 <script
-    src="https://jspm.dev/@future-ui/bundle/elements.js"
+    src="https://jspm.dev/@lliad-ui/bundle/elements.js"
     type="module"
 ></script>
 
@@ -30,7 +30,7 @@ The code above renders to the browser as follows (be patient while the JS is loa
 ## What it's doing
 
 Visually, all Spectrum Web Components are an expression of the design tokens that are specified by Spectrum, Adobe's design system. On the web, these tokens are applied as CSS Custom Properties. Not only do these properties ensure that each element is delivered according to your application’s specifications, but for all color/scale/content direction specifications across Spectrum.
-When you're ready to look into more advanced usage of the components and themes in your application, there are vanilla CSS implementations of these tokens available in the `@future-ui/styles` package. However, to get started immediately, the `<sp-theme>` element delivers these tokens to a scoped HTML context and is what is used in the code above. You'll notice the usage of `scale="large"` and `color="dark"` to outline the scale and color applied to this theme context, respectively. To make a theme context with `scale="medium"` and `color="lightest"`, you can use the following code sample:
+When you're ready to look into more advanced usage of the components and themes in your application, there are vanilla CSS implementations of these tokens available in the `@lliad-ui/styles` package. However, to get started immediately, the `<sp-theme>` element delivers these tokens to a scoped HTML context and is what is used in the code above. You'll notice the usage of `scale="large"` and `color="dark"` to outline the scale and color applied to this theme context, respectively. To make a theme context with `scale="medium"` and `color="lightest"`, you can use the following code sample:
 
 ```html
 <sp-theme
@@ -44,7 +44,7 @@ When you're ready to look into more advanced usage of the components and themes 
 </sp-theme>
 ```
 
-<sp-link href="components/theme">Read about the full range of style customization provided by `@future-ui/theme`.</sp-link>
+<sp-link href="components/theme">Read about the full range of style customization provided by `@lliad-ui/theme`.</sp-link>
 
 ## What you can do
 

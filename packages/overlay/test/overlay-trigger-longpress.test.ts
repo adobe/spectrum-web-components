@@ -17,14 +17,14 @@ import {
     html,
     oneEvent,
 } from '@open-wc/testing';
-import { ActionButton } from '@future-ui/action-button';
-import '@future-ui/action-button/sp-action-button.js';
-import '@future-ui/action-group/sp-action-group.js';
-import '@future-ui/icons-workflow/icons/sp-icon-magnify.js';
-import { Popover } from '@future-ui/popover';
-import '@future-ui/popover/sp-popover.js';
+import { ActionButton } from '@lliad-ui/action-button';
+import '@lliad-ui/action-button/sp-action-button.js';
+import '@lliad-ui/action-group/sp-action-group.js';
+import '@lliad-ui/icons-workflow/icons/sp-icon-magnify.js';
+import { Popover } from '@lliad-ui/popover';
+import '@lliad-ui/popover/sp-popover.js';
 import { OverlayTrigger } from '..';
-import '@future-ui/overlay/overlay-trigger.js';
+import '@lliad-ui/overlay/overlay-trigger.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 

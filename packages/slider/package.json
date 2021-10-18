@@ -1,5 +1,5 @@
 {
-    "name": "@future-ui/slider",
+    "name": "@lliad-ui/slider",
     "version": "0.13.1",
     "publishConfig": {
         "access": "public"
@@ -48,11 +48,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@future-ui/base": "^0.7.2",
-        "@future-ui/field-label": "^0.6.1",
-        "@future-ui/number-field": "^0.4.1",
-        "@future-ui/shared": "^0.15.1",
-        "@future-ui/theme": "^0.11.1",
+        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/field-label": "^0.6.1",
+        "@lliad-ui/number-field": "^0.4.1",
+        "@lliad-ui/shared": "^0.15.1",
+        "@lliad-ui/theme": "^0.11.1",
         "@internationalized/number": "^3.0.0",
         "tslib": "^2.0.0"
     },

@@ -4,24 +4,24 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/textfield?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/textfield)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/textfield?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/textfield)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/textfield?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/textfield)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/textfield?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/textfield)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/0zJJ7Z37pcM8wO6lYt8y/src/index.ts)
 
 ```
-yarn add @future-ui/textfield
+yarn add @lliad-ui/textfield
 ```
 
 Import the side effectful registration of `<sp-textfield>` via:
 
 ```
-import '@future-ui/textfield/sp-textfield.js';
+import '@lliad-ui/textfield/sp-textfield.js';
 ```
 
 When looking to leverage the `Textfield` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Textfield } from '@future-ui/textfield';
+import { Textfield } from '@lliad-ui/textfield';
 ```
 
 ## Example

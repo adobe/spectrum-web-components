@@ -16,7 +16,7 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 import actionBarStyles from './action-bar.css.js';
 export const actionBarVariants = ['sticky', 'fixed'];
 

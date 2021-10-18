@@ -6,59 +6,59 @@ The easiest way to consume these values is via the `<sp-theme>` element, however
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@future-ui/styles?style=for-the-badge)](https://www.npmjs.com/package/@future-ui/styles)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@future-ui/styles?style=for-the-badge)](https://bundlephobia.com/result?p=@future-ui/styles)
+[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/styles?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/styles)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/styles?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/styles)
 
 ```
-npm install @future-ui/styles
+npm install @lliad-ui/styles
 ```
 
 ## Theme packages
 
 ```
-@import '@future-ui/styles/all-medium-darkest.css';
+@import '@lliad-ui/styles/all-medium-darkest.css';
 ```
 
 This file brings together the globals variables and font settings with the "Darkest" color set and "Medium" scale system specification.
 
 ```
-@import '@future-ui/styles/all-medium-dark.css';
+@import '@lliad-ui/styles/all-medium-dark.css';
 ```
 
 This file brings together the globals variables and font settings with the "Dark" color set and "Medium" scale system specification.
 
 ```
-@import '@future-ui/styles/all-medium-light.css';
+@import '@lliad-ui/styles/all-medium-light.css';
 ```
 
 This file brings together the globals variables and font settings with the "Light" color set and "Medium" scale system specification.
 
 ```
-@import '@future-ui/styles/all-medium-lightest.css';
+@import '@lliad-ui/styles/all-medium-lightest.css';
 ```
 
 This file brings together the globals variables and font settings with the "Lightest" color set and "Medium" scale system specification.
 
 ```
-@import '@future-ui/styles/all-large-darkest.css';
+@import '@lliad-ui/styles/all-large-darkest.css';
 ```
 
 This file brings together the globals variables and font settings with the "Darkest" color set and "Large" scale system specification.
 
 ```
-@import '@future-ui/styles/all-large-dark.css';
+@import '@lliad-ui/styles/all-large-dark.css';
 ```
 
 This file brings together the globals variables and font settings with the "Dark" color set and "Large" scale system specification.
 
 ```
-@import '@future-ui/styles/all-large-light.css';
+@import '@lliad-ui/styles/all-large-light.css';
 ```
 
 This file brings together the globals variables and font settings with the "Light" color set and "Large" scale system specification.
 
 ```
-@import '@future-ui/styles/all-large-lightest.css';
+@import '@lliad-ui/styles/all-large-lightest.css';
 ```
 
 This file brings together the globals variables and font settings with the "Lightest" color set and "Large" scale system specification.
@@ -68,7 +68,7 @@ This file brings together the globals variables and font settings with the "Ligh
 ### Darkest
 
 ```
-@import '@future-ui/styles/theme-darkest.css';
+@import '@lliad-ui/styles/theme-darkest.css';
 ```
 
 This file provides only the variables needed to power a color pallet featuring colors found in the "Darkest" theme.
@@ -76,7 +76,7 @@ This file provides only the variables needed to power a color pallet featuring c
 ### Dark
 
 ```
-@import '@future-ui/styles/theme-dark.css';
+@import '@lliad-ui/styles/theme-dark.css';
 ```
 
 This file provides only the variables needed to power a color pallet featuring colors found in the "Dark" theme.
@@ -84,7 +84,7 @@ This file provides only the variables needed to power a color pallet featuring c
 ### Light
 
 ```
-@import '@future-ui/styles/theme-light.css';
+@import '@lliad-ui/styles/theme-light.css';
 ```
 
 This file provides only the variables needed to power a color pallet featuring colors found in the "Light" theme.
@@ -92,7 +92,7 @@ This file provides only the variables needed to power a color pallet featuring c
 ### Lightest
 
 ```
-@import '@future-ui/styles/theme-lightest.css';
+@import '@lliad-ui/styles/theme-lightest.css';
 ```
 
 This file provides only the variables needed to power a color pallet featuring colors found in the "Lightest" theme.
@@ -102,7 +102,7 @@ This file provides only the variables needed to power a color pallet featuring c
 ### Medium
 
 ```
-@import '@future-ui/styles/scale-medium.css';
+@import '@lliad-ui/styles/scale-medium.css';
 ```
 
 This file provides only the variables needed to power the "Medium" scale system specification.
@@ -110,7 +110,7 @@ This file provides only the variables needed to power the "Medium" scale system 
 ### Large
 
 ```
-@import '@future-ui/styles/scale-large.css';
+@import '@lliad-ui/styles/scale-large.css';
 ```
 
 This file provides only the variables needed to power the "Large" scale system specification.
@@ -118,7 +118,7 @@ This file provides only the variables needed to power the "Large" scale system s
 ## Typography
 
 ```
-@import '@future-ui/styles/typography.css';
+@import '@lliad-ui/styles/typography.css';
 ```
 
 This file provides a `lit-html` compliant version of the [Spectrum Typography classes](https://opensource.adobe.com/spectrum-css/components/typography/).

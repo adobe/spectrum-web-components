@@ -18,7 +18,7 @@ import {
     property,
     PropertyValues,
     query,
-} from '@future-ui/base';
+} from '@lliad-ui/base';
 
 import {
     MenuItem,
