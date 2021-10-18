@@ -4,6 +4,10 @@
     "publishConfig": {
         "access": "public"
     },
+    "maintainers": [{
+        "name": "saiye",
+        "email": "saiye@gaoding.com"
+    }],
     "description": "Web component implementation of a Spectrum design Tray",
     "license": "Apache-2.0",
     "repository": {
