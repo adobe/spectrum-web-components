@@ -1,14 +1,4 @@
-import * as React from 'react';
-import { createComponent } from '@lit-labs/react';
+import { generatePackageReactComs } from '../generate.js';
+import * as PackageComs from '@lliad-ui/button'
 
-import * as ButtonPackage from '@lliad-ui/button';
-const { Button, ButtonBase, StyledButton, ClearButton } = ButtonPackage;
-
-export const SpButton = generateReactComponent(Button);
-export const SpButtonBase = generateReactComponent(ButtonBase);
-export const SpStyledButton = generateReactComponent(StyledButton);
-export const SpClearButton = generateReactComponent(ClearButton);
-
-function generateReactComponent(SpClass: Constructor<I>) {
-    return createComponent(React, 'sp-button', SpClass);
-}
+export generatePackageReactComs(PackageComs)
