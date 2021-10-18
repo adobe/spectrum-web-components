@@ -1,62 +1,122 @@
 {
-  "name": "@lliad-ui/react",
-  "version": "0.2.0",
-  "publishConfig": {
-    "access": "public"
-  },
-  "maintainers": [{
-    "name": "saiye",
-    "email": "saiye@gaoding.com"
-}],
-  "description": "Web component implementation of a Spectrum design React",
-  "license": "Apache-2.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gaoding-inc/Iliad-ui.git",
-    "directory": "packages/react"
-  },
-  "author": "",
-  "homepage": "https://adobe.github.io/spectrum-web-components/components/react",
-  "bugs": {
-    "url": "https://github.com/adobe/spectrum-web-components/issues"
-  },
-  "main": "src/index.js",
-  "module": "src/index.js",
-  "type": "module",
-  "exports": {
-    ".": "./src/index.js",
-    "./src/*": "./src/*.js",
-    "./package.json": "./package.json",
-    "./sp-react": "./sp-react.js",
-    "./sp-react.js": "./sp-react.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
-  },
-  "customElementsManifest": "custom-elements.json",
-  "files": [
-    "**/*.d.ts",
-    "**/*.js",
-    "**/*.js.map",
-    "!test/",
-    "!stories/",
-    "custom-elements.json"
-  ],
-  "keywords": [
-    "spectrum css",
-    "web components",
-    "lit-element",
-    "lit-html"
-  ],
-  "dependencies": {
-    "@lit-labs/react": "^1.0.1",
-    "@lliad-ui/base": "^0.9.0",
-    "react": "^17.0.2",
-    "tslib": "^2.0.0"
-  },
-  "types": "./src/index.d.ts",
-  "sideEffects": [
-    "./sp-*.js"
-  ],
-  "customElements": "custom-elements.json"
+    "name": "@lliad-ui/react",
+    "version": "0.2.2",
+    "publishConfig": {
+        "access": "public"
+    },
+    "maintainers": [{
+        "name": "saiye",
+        "email": "saiye@gaoding.com"
+    }],
+    "description": "",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gaoding-inc/Iliad-ui.git",
+        "directory": "packages/react"
+    },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/react",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "./src/index.js",
+    "module": "./src/index.js",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.js",
+        "./src/*": "./src/*",
+        "./package.json": "./package.json",
+        "./elements": "./elements.js",
+        "./elements.js": "./elements.js",
+        "./react-elements": "./elements.js",
+        "./react-elements.js": "./elements.js",
+        "./icons": "./src/icons.js",
+        "./icons.js": "./src/icons.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@lit-labs/react": "^1.0.1",
+        "react": "^17.0.2",
+        "@lliad-ui/accordion": "^0.7.0",
+        "@lliad-ui/action-bar": "^0.5.0",
+        "@lliad-ui/action-button": "^0.10.0",
+        "@lliad-ui/action-group": "^0.9.0",
+        "@lliad-ui/action-menu": "^0.14.0",
+        "@lliad-ui/asset": "^0.7.0",
+        "@lliad-ui/avatar": "^0.12.0",
+        "@lliad-ui/banner": "^0.11.0",
+        "@lliad-ui/button": "^0.19.0",
+        "@lliad-ui/button-group": "^0.9.0",
+        "@lliad-ui/card": "^0.13.0",
+        "@lliad-ui/checkbox": "^0.13.0",
+        "@lliad-ui/coachmark": "^0.9.0",
+        "@lliad-ui/color-area": "^0.7.0",
+        "@lliad-ui/color-handle": "^0.4.0",
+        "@lliad-ui/color-loupe": "^0.4.0",
+        "@lliad-ui/color-slider": "^0.6.0",
+        "@lliad-ui/color-wheel": "^0.6.0",
+        "@lliad-ui/dialog": "^0.9.0",
+        "@lliad-ui/divider": "^0.5.0",
+        "@lliad-ui/dropzone": "^0.10.0",
+        "@lliad-ui/field-group": "^0.6.0",
+        "@lliad-ui/field-label": "^0.8.0",
+        "@lliad-ui/icon": "^0.14.0",
+        "@lliad-ui/icons": "^0.10.0",
+        "@lliad-ui/icons-ui": "^0.11.0",
+        "@lliad-ui/icons-workflow": "^0.11.0",
+        "@lliad-ui/iconset": "^0.10.0",
+        "@lliad-ui/illustrated-message": "^0.9.0",
+        "@lliad-ui/link": "^0.12.0",
+        "@lliad-ui/menu": "^0.14.0",
+        "@lliad-ui/meter": "^0.7.0",
+        "@lliad-ui/number-field": "^0.6.0",
+        "@lliad-ui/overlay": "^0.16.0",
+        "@lliad-ui/picker": "^0.12.0",
+        "@lliad-ui/popover": "^0.12.0",
+        "@lliad-ui/progress-bar": "^0.6.0",
+        "@lliad-ui/progress-circle": "^0.5.0",
+        "@lliad-ui/quick-actions": "^0.7.0",
+        "@lliad-ui/radio": "^0.12.0",
+        "@lliad-ui/search": "^0.11.0",
+        "@lliad-ui/sidenav": "^0.13.0",
+        "@lliad-ui/slider": "^0.15.0",
+        "@lliad-ui/split-button": "^0.8.0",
+        "@lliad-ui/split-view": "^0.7.0",
+        "@lliad-ui/status-light": "^0.11.0",
+        "@lliad-ui/switch": "^0.10.0",
+        "@lliad-ui/tabs": "^0.11.0",
+        "@lliad-ui/tags": "^0.11.0",
+        "@lliad-ui/textfield": "^0.13.0",
+        "@lliad-ui/theme": "^0.13.0",
+        "@lliad-ui/thumbnail": "^0.5.0",
+        "@lliad-ui/toast": "^0.13.0",
+        "@lliad-ui/tooltip": "^0.11.0",
+        "@lliad-ui/top-nav": "^0.6.0",
+        "@lliad-ui/tray": "^0.5.0",
+        "@lliad-ui/underlay": "^0.9.0",
+        "tslib": "^2.0.0"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
+    "sideEffects": [
+        "./react-elements.js"
+    ]
 }

@@ -10,10 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@lliad-ui/react/sp-react.js';
-import { html } from '@lliad-ui/base';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
-
-measureFixtureCreation(html`
-    <sp-react></sp-react>
-`);
+import * as UIIcons from '@lliad-ui/icons-ui';
+export { UIIcons };
+import * as WorkflowIcons from '@lliad-ui/icons-workflow';
+export { WorkflowIcons };
