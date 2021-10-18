@@ -5,6 +5,10 @@
     "publishConfig": {
         "registry": "https://registry-npm.gaoding.com"
     },
+    "maintainers": [{
+        "name": "saiye",
+        "email": "saiye@gaoding.com"
+    }],
     "description": "",
     "type": "module",
     "engines": {
