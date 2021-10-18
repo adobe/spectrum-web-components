@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/overlay",
-    "version": "0.14.1",
+    "version": "0.15.0",
     "publishConfig": {
         "access": "public"
     },
@@ -48,10 +48,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/action-button": "^0.8.1",
-        "@lliad-ui/base": "^0.7.2",
-        "@lliad-ui/shared": "^0.15.1",
-        "@lliad-ui/theme": "^0.11.1",
+        "@lliad-ui/action-button": "^0.9.0",
+        "@lliad-ui/base": "^0.8.0",
+        "@lliad-ui/shared": "^0.16.0",
+        "@lliad-ui/theme": "^0.12.0",
         "@popperjs/core": "^2.2.2",
         "popper-max-size-modifier": "^0.2.0",
         "tslib": "^2.0.0"

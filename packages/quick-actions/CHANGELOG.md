@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.6.0 (2021-10-18)
+
+
+### Bug Fixes
+
+* include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+* include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+* stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/Iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
+* update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/Iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+* update side effect listings ([8160d3a](https://github.com/gaoding-inc/Iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+* update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+* use icons without "size" values ([3fc7c91](https://github.com/gaoding-inc/Iliad-ui/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+* use latest @spectrum-css/* versions ([c35eb86](https://github.com/gaoding-inc/Iliad-ui/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+
+### Features
+
+* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+* **action-button:** add action button pattern ([03ac00a](https://github.com/gaoding-inc/Iliad-ui/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+* **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/gaoding-inc/Iliad-ui/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+* **quick-actions:** add quick-actions pattern ([3664b51](https://github.com/gaoding-inc/Iliad-ui/commit/3664b51c53ddc200a57f7db1a16036dc7fc81ed5))
+* **quick-actions:** update spectrum css input ([efec525](https://github.com/gaoding-inc/Iliad-ui/commit/efec525c43c86347476aeede7605504a52a5a6e1))
+
+
+
+
+
 ## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/quick-actions@0.5.0...@lliad-ui/quick-actions@0.5.1) (2021-10-15)
 
 **Note:** Version bump only for package @lliad-ui/quick-actions

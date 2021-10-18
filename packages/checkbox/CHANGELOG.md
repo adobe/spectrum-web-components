@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.12.0 (2021-10-18)
+
+
+### Bug Fixes
+
+* [#353](https://github.com/gaoding-inc/Iliad-ui/issues/353) with a temporary override ([e6b4e37](https://github.com/gaoding-inc/Iliad-ui/commit/e6b4e37dbdefe03f1a0f023a26149c5cea7531be))
+* add support for "readonly" attribute ([4bce3b7](https://github.com/gaoding-inc/Iliad-ui/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
+* complete deprecation of "quiet" attribute in checkbox and radio ([29d8452](https://github.com/gaoding-inc/Iliad-ui/commit/29d84526cd63fe3217937119e85d8a1a87aa0d27))
+* correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/Iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+* ensure [disabled] styling ([4c067eb](https://github.com/gaoding-inc/Iliad-ui/commit/4c067eb82dcfc5f1aaf3ecedfbfc83f4ffb90a22))
+* ensure aria attributes based on state ([6369ff3](https://github.com/gaoding-inc/Iliad-ui/commit/6369ff3f35b2ed26777bdbd16bae3b3acd816bf6))
+* ensure aria attributes based on state ([6ee43de](https://github.com/gaoding-inc/Iliad-ui/commit/6ee43de23254f612759cc258705dfe6eed30c418))
+* ensure browser understandable extensions ([f4e59f7](https://github.com/gaoding-inc/Iliad-ui/commit/f4e59f76f86369593810463c6406565e28ad97e9))
+* focusable style ([48ea3e7](https://github.com/gaoding-inc/Iliad-ui/commit/48ea3e79828b737ad3df9e0fcac5e48c50124085))
+* implement "emphasized" styles ([750bbe7](https://github.com/gaoding-inc/Iliad-ui/commit/750bbe7c6a70ed590c4ea179179bf201c50526ea))
+* include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/Iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+* include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+* include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+* prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/gaoding-inc/Iliad-ui/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
+* reduce cycles ([66a4efb](https://github.com/gaoding-inc/Iliad-ui/commit/66a4efbc55c108e886699ce9dd0eb1c7e57e5a7d))
+* stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/Iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
+* support a wider number of sizes ([ee44978](https://github.com/gaoding-inc/Iliad-ui/commit/ee4497830da0d3bc63d4414ad5548291a39588c7))
+* update configuration for Spectrum CSS processing for specificity ([5c2e21e](https://github.com/gaoding-inc/Iliad-ui/commit/5c2e21ed68d94a75cac0cc248925cc5bca35cc25))
+* update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/Iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+* update side effect listings ([8160d3a](https://github.com/gaoding-inc/Iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+* update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+* use icons without "size" values ([3fc7c91](https://github.com/gaoding-inc/Iliad-ui/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+* use latest @spectrum-css/* versions ([c35eb86](https://github.com/gaoding-inc/Iliad-ui/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+* **checkbox:** work around specificity changes when processing Spectrum CSS and cover with tests ([d53a871](https://github.com/gaoding-inc/Iliad-ui/commit/d53a871f1ef5117c69ac5c4fc3b31aa9f151515c))
+* **shared:** prevent focusable returning focus to host ([745f7b0](https://github.com/gaoding-inc/Iliad-ui/commit/745f7b0d23c14efd937e4a0be4d488c5d0865f34))
+* **textfield:** remove use of sp-icons-* ([9a5c213](https://github.com/gaoding-inc/Iliad-ui/commit/9a5c213a886146709601a2878484529c315d9f51))
+
+
+### Features
+
+* **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/Iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+* add t-shirt sizing with visual regressions to checkbox and picker elements ([ce47ec8](https://github.com/gaoding-inc/Iliad-ui/commit/ce47ec88bd2c6c8d236c05826d28b2d0dadf12b8))
+* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+* **action-button:** add action button pattern ([03ac00a](https://github.com/gaoding-inc/Iliad-ui/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+* **action-group:** add action-group pattern ([d2de766](https://github.com/gaoding-inc/Iliad-ui/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
+* **card:** upgrade to Spectrum CSS v3.0.0 ([84cf1a9](https://github.com/gaoding-inc/Iliad-ui/commit/84cf1a9758b1e357f18efac5763d17d6a4db0578))
+* **checkbox:** update spectrum css input ([e894cb4](https://github.com/gaoding-inc/Iliad-ui/commit/e894cb4bc2b36882a9124d1bcbe94d5ad7dbb38e))
+* **field-group:** add field-group pattern ([f8d265c](https://github.com/gaoding-inc/Iliad-ui/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
+* add and use icons-ui package ([d9c3ab2](https://github.com/gaoding-inc/Iliad-ui/commit/d9c3ab212b4f756334e857fc513ccbf0a4dff9cc))
+* leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/Iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+* use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/gaoding-inc/Iliad-ui/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
+* use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/Iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
+* use 3.0.0-beta.* release for styles ([877b485](https://github.com/gaoding-inc/Iliad-ui/commit/877b485f20c76ec8f77975747322f572eea88e97))
+
+
+### Performance Improvements
+
+* use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/Iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+* use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/Iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
+
+
+### Reverts
+
+* Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/Iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+
+
+
+
+
 ## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/checkbox@0.11.0...@lliad-ui/checkbox@0.11.1) (2021-10-15)
 
 **Note:** Version bump only for package @lliad-ui/checkbox

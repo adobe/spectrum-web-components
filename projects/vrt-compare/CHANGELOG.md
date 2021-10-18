@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.4.0 (2021-10-18)
+
+
+### Features
+
+* update lit-* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/Iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+
+
+
+
+
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/vrt-compare@0.3.0...@lliad-ui/vrt-compare@0.3.1) (2021-10-15)
 
 **Note:** Version bump only for package @lliad-ui/vrt-compare

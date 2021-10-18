@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/action-group",
-    "version": "0.7.1",
+    "version": "0.8.0",
     "publishConfig": {
         "access": "public"
     },
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/action-button": "^0.8.1",
-        "@lliad-ui/base": "^0.7.2",
+        "@lliad-ui/action-button": "^0.9.0",
+        "@lliad-ui/base": "^0.8.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

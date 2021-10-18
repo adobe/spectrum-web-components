@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/radio",
-    "version": "0.10.1",
+    "version": "0.11.0",
     "publishConfig": {
         "access": "public"
     },
@@ -46,9 +46,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.7.2",
-        "@lliad-ui/field-group": "^0.4.1",
-        "@lliad-ui/shared": "^0.15.1",
+        "@lliad-ui/base": "^0.8.0",
+        "@lliad-ui/field-group": "^0.5.0",
+        "@lliad-ui/shared": "^0.16.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

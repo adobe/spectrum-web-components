@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/tabs",
-    "version": "0.9.1",
+    "version": "0.10.0",
     "publishConfig": {
         "access": "public"
     },
@@ -48,8 +48,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.7.2",
-        "@lliad-ui/shared": "^0.15.1",
+        "@lliad-ui/base": "^0.8.0",
+        "@lliad-ui/shared": "^0.16.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/dialog",
-    "version": "0.7.1",
+    "version": "0.8.0",
     "publishConfig": {
         "access": "public"
     },
@@ -46,17 +46,17 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/action-button": "^0.8.1",
-        "@lliad-ui/base": "^0.7.2",
-        "@lliad-ui/button": "^0.17.1",
-        "@lliad-ui/button-group": "^0.7.1",
-        "@lliad-ui/divider": "^0.3.1",
-        "@lliad-ui/icon": "^0.12.1",
-        "@lliad-ui/icons-ui": "^0.9.1",
-        "@lliad-ui/icons-workflow": "^0.9.1",
-        "@lliad-ui/modal": "^0.4.1",
-        "@lliad-ui/shared": "^0.15.1",
-        "@lliad-ui/underlay": "^0.7.1",
+        "@lliad-ui/action-button": "^0.9.0",
+        "@lliad-ui/base": "^0.8.0",
+        "@lliad-ui/button": "^0.18.0",
+        "@lliad-ui/button-group": "^0.8.0",
+        "@lliad-ui/divider": "^0.4.0",
+        "@lliad-ui/icon": "^0.13.0",
+        "@lliad-ui/icons-ui": "^0.10.0",
+        "@lliad-ui/icons-workflow": "^0.10.0",
+        "@lliad-ui/modal": "^0.5.0",
+        "@lliad-ui/shared": "^0.16.0",
+        "@lliad-ui/underlay": "^0.8.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

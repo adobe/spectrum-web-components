@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/base",
-    "version": "0.7.2",
+    "version": "0.8.0",
     "publishConfig": {
         "access": "public"
     },

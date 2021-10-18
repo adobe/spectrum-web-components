@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.7.0 (2021-10-18)
+
+
+### Bug Fixes
+
+* **overlay:** allow external style access to "sp-theme" elements in overlays as a CSS part ([a107f66](https://github.com/gaoding-inc/Iliad-ui/commit/a107f66ae171e857e5f84cfff9f7a27cc5bd320d))
+* manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/gaoding-inc/Iliad-ui/commit/b1e3457ae447427c54f8645c478866340329750c))
+* remove <sp-menu> usage where deprecated ([387db3b](https://github.com/gaoding-inc/Iliad-ui/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+* **story-decorator:** ensure reduce motion application in overlays ([3f1bc23](https://github.com/gaoding-inc/Iliad-ui/commit/3f1bc23bb2e87dedd285915c034ea497a0271d07))
+* **story-decorator:** use sp-field-label ([5992c98](https://github.com/gaoding-inc/Iliad-ui/commit/5992c98024bbb9476a18c4a69a024968c05cac17))
+
+
+### Features
+
+* update lit-* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/Iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+* **story-decorator:** add story decorator to replace knobs for theme application ([7c0c6be](https://github.com/gaoding-inc/Iliad-ui/commit/7c0c6be37d58ad3e6d8973e8d4f5ccc587bf55af))
+* **story-decorator:** ensure version ([dd39772](https://github.com/gaoding-inc/Iliad-ui/commit/dd39772af363051c35126c369bb5a33a0c7853d9))
+
+
+
+
+
 ## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/story-decorator@0.6.0...@lliad-ui/story-decorator@0.6.1) (2021-10-15)
 
 **Note:** Version bump only for package @lliad-ui/story-decorator

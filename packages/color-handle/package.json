@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/color-handle",
-    "version": "0.2.1",
+    "version": "0.3.0",
     "publishConfig": {
         "access": "public"
     },
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.7.2",
-        "@lliad-ui/color-loupe": "^0.2.1",
+        "@lliad-ui/base": "^0.8.0",
+        "@lliad-ui/color-loupe": "^0.3.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
