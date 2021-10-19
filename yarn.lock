@@ -3410,9 +3410,9 @@
   integrity sha512-+oKLUI2a0QmQP9EzySeq/G4FpUkkdaDNbuEbqCj2IkPMc/2v/nwzsPhh1fj2UIghGAiiUwXfPpzax1e8fyhQUg==
 
 "@spectrum-css/checkbox@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-3.0.3.tgz#8577067fc8b97e4609f92bd242364937a533a7bb"
-  integrity sha512-QVG9uMHq+lh70Dh6mDNnY+vEvNz2p7VC6xgLfDYfijp2qeiqYPq72fQK6p/SiyqPk96ZACzNRwgeROU6Xf6Wgg==
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-3.0.4.tgz#9611b426fde12c9d8a22f2dd4debf71abd424f65"
+  integrity sha512-504pqynFTCzxwwSJAXOppPIcOzX3Oc6lG/3kRP1gBizqre6+Z1vJYWnbIHdNdw/NlmdssTfzCprn6SjdRESQiw==
 
 "@spectrum-css/coachmark@^3.0.3":
   version "3.0.3"
