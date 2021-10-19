@@ -1,13 +1,15 @@
 {
     "name": "@lliad-ui/card",
-    "version": "0.13.0",
+    "version": "0.13.1",
     "publishConfig": {
         "access": "public"
     },
-    "maintainers": [{
-        "name": "saiye",
-        "email": "saiye@gaoding.com"
-    }],
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "",
     "license": "Apache-2.0",
     "repository": {
@@ -48,13 +50,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/asset": "^0.7.0",
-        "@lliad-ui/base": "^0.9.0",
-        "@lliad-ui/checkbox": "^0.13.0",
-        "@lliad-ui/icons-workflow": "^0.11.0",
-        "@lliad-ui/quick-actions": "^0.7.0",
-        "@lliad-ui/shared": "^0.17.0",
-        "@lliad-ui/styles": "^0.12.0",
+        "@lliad-ui/asset": "^0.7.1",
+        "@lliad-ui/base": "^0.9.1",
+        "@lliad-ui/checkbox": "^0.13.1",
+        "@lliad-ui/icons-workflow": "^0.11.1",
+        "@lliad-ui/quick-actions": "^0.7.1",
+        "@lliad-ui/shared": "^0.17.1",
+        "@lliad-ui/styles": "^0.12.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

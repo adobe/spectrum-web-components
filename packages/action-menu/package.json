@@ -1,13 +1,15 @@
 {
     "name": "@lliad-ui/action-menu",
-    "version": "0.14.0",
+    "version": "0.14.1",
     "publishConfig": {
         "access": "public"
     },
-    "maintainers": [{
-        "name": "saiye",
-        "email": "saiye@gaoding.com"
-    }],
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "",
     "license": "Apache-2.0",
     "repository": {
@@ -50,13 +52,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/action-button": "^0.10.0",
-        "@lliad-ui/base": "^0.9.0",
-        "@lliad-ui/icon": "^0.14.0",
-        "@lliad-ui/icons-workflow": "^0.11.0",
-        "@lliad-ui/menu": "^0.14.0",
-        "@lliad-ui/picker": "^0.12.0",
-        "@lliad-ui/shared": "^0.17.0",
+        "@lliad-ui/action-button": "^0.10.1",
+        "@lliad-ui/base": "^0.9.1",
+        "@lliad-ui/icon": "^0.14.1",
+        "@lliad-ui/icons-workflow": "^0.11.1",
+        "@lliad-ui/menu": "^0.14.1",
+        "@lliad-ui/picker": "^0.12.1",
+        "@lliad-ui/shared": "^0.17.1",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

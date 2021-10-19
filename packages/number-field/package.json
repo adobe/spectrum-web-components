@@ -1,13 +1,15 @@
 {
     "name": "@lliad-ui/number-field",
-    "version": "0.6.0",
+    "version": "0.6.1",
     "publishConfig": {
         "access": "public"
     },
-    "maintainers": [{
-        "name": "saiye",
-        "email": "saiye@gaoding.com"
-    }],
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "Web component implementation of a Spectrum design NumberField",
     "license": "Apache-2.0",
     "repository": {
@@ -49,11 +51,11 @@
     ],
     "dependencies": {
         "@internationalized/number": "^3.0.2",
-        "@lliad-ui/action-button": "^0.10.0",
-        "@lliad-ui/base": "^0.9.0",
-        "@lliad-ui/icon": "^0.14.0",
-        "@lliad-ui/icons-ui": "^0.11.0",
-        "@lliad-ui/textfield": "^0.13.0",
+        "@lliad-ui/action-button": "^0.10.1",
+        "@lliad-ui/base": "^0.9.1",
+        "@lliad-ui/icon": "^0.14.1",
+        "@lliad-ui/icons-ui": "^0.11.1",
+        "@lliad-ui/textfield": "^0.13.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

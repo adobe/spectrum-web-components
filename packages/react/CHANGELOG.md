@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/react@0.2.0...@lliad-ui/react@0.3.0) (2021-10-19)
+
+
+### Features
+
+* 增加模块包转换成react组件的方法 ([ce9a660](https://github.com/gaoding-inc/Iliad-ui/commit/ce9a660521bc96362ea57bb0fef58198e0467fb8))
+
+
+
+
+
 ## [0.25.1](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/bundle@0.25.0...@lliad-ui/bundle@0.25.1) (2021-10-18)
 
 **Note:** Version bump only for package @lliad-ui/bundle

@@ -1,13 +1,15 @@
 {
     "name": "@lliad-ui/split-view",
-    "version": "0.7.0",
+    "version": "0.7.1",
     "publishConfig": {
         "access": "public"
     },
-    "maintainers": [{
-        "name": "saiye",
-        "email": "saiye@gaoding.com"
-    }],
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "",
     "license": "Apache-2.0",
     "repository": {
@@ -48,7 +50,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.9.0",
+        "@lliad-ui/base": "^0.9.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

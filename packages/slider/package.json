@@ -1,13 +1,15 @@
 {
     "name": "@lliad-ui/slider",
-    "version": "0.15.0",
+    "version": "0.15.1",
     "publishConfig": {
         "access": "public"
     },
-    "maintainers": [{
-        "name": "saiye",
-        "email": "saiye@gaoding.com"
-    }],
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "",
     "license": "Apache-2.0",
     "repository": {
@@ -53,11 +55,11 @@
     ],
     "dependencies": {
         "@internationalized/number": "^3.0.0",
-        "@lliad-ui/base": "^0.9.0",
-        "@lliad-ui/field-label": "^0.8.0",
-        "@lliad-ui/number-field": "^0.6.0",
-        "@lliad-ui/shared": "^0.17.0",
-        "@lliad-ui/theme": "^0.13.0",
+        "@lliad-ui/base": "^0.9.1",
+        "@lliad-ui/field-label": "^0.8.1",
+        "@lliad-ui/number-field": "^0.6.1",
+        "@lliad-ui/shared": "^0.17.1",
+        "@lliad-ui/theme": "^0.13.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
