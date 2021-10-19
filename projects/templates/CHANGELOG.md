@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.9](https://github.com/zzuzsj/spectrum-web-components/compare/swc-templates@0.5.8...swc-templates@0.5.9) (2021-10-19)
+
+**Note:** Version bump only for package swc-templates
+
+
+
+
+
 ## [0.5.8](https://github.com/zzuzsj/spectrum-web-components/compare/swc-templates@0.5.6...swc-templates@0.5.8) (2021-10-19)
 
 **Note:** Version bump only for package swc-templates

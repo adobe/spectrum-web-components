@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.2](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/link@0.12.1...@lliad-ui/link@0.12.2) (2021-10-19)
+
+**Note:** Version bump only for package @lliad-ui/link
+
+
+
+
+
 ## [0.12.1](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/link@0.12.0...@lliad-ui/link@0.12.1) (2021-10-19)
 
 **Note:** Version bump only for package @lliad-ui/link
