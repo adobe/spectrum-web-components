@@ -20,11 +20,11 @@
     "tsc:watch": "tsc --watch"
   },
   "dependencies": {
-    "@lliad-ui/button": "^0.19.2",
-    "@lliad-ui/field-label": "^0.8.2",
-    "@lliad-ui/menu": "^0.14.2",
-    "@lliad-ui/picker": "^0.12.2",
-    "@lliad-ui/styles": "^0.12.2"
+    "@lliad-ui/button": "^0.19.1",
+    "@lliad-ui/field-label": "^0.8.1",
+    "@lliad-ui/menu": "^0.14.1",
+    "@lliad-ui/picker": "^0.12.1",
+    "@lliad-ui/styles": "^0.12.1"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^1.6.3",

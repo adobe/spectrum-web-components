@@ -11,16 +11,16 @@ governing permissions and limitations under the License.
 */
 'use strict';
 
-import { resolve, join } from 'path';
+const { resolve, join } = require('path');
 
-import CopyWebpackPlugin from 'copy-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import path from 'path';
-import { fileURLToPath } from 'url';
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const path = require('path');
+const { fileURLToPath } = require('url');
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const rootDirName = path.dirname(fileURLToPath(`file://${__filename}`));
 
 const ENV = process.argv.find((arg) => arg.includes('NODE_ENV=production'))
     ? 'production'
@@ -55,7 +55,7 @@ const plugins = [
 ];
 
 function srcPath(subdir) {
-    return join(__dirname, 'src', subdir);
+    return join(rootDirName, 'src', subdir);
 }
 
 const shared = (env) => {
@@ -105,17 +105,17 @@ const shared = (env) => {
             path: OUTPUT_PATH,
             filename: '[name].bundle.js',
         },
-        module: {
-            rules: [
-                {
-                    test: /\.css$/,
-                    use: ExtractTextPlugin.extract({
-                        fallback: 'style-loader',
-                        use: cssLoaders,
-                    }),
-                },
-            ],
-        },
+        // module: {
+        //     rules: [
+        //         {
+        //             test: /\.css$/,
+        //             use: ExtractTextPlugin.extract({
+        //                 fallback: 'style-loader',
+        //                 use: cssLoaders,
+        //             }),
+        //         },
+        //     ],
+        // },
         resolve: {
             extensions: ['.js', '.json'],
         },
@@ -126,13 +126,13 @@ const shared = (env) => {
             overlay: {
                 errors: true,
             },
-            port: 3000,
+            port: 4001,
             host: '0.0.0.0',
             disableHostCheck: true,
         },
     };
 };
 
-export default (env = {}) => {
+module.exports = (env = {}) => {
     return [shared(env)];
 };

@@ -12,11 +12,12 @@
         "serve": "webpack-dev-server"
     },
     "dependencies": {
-        "@lliad-ui/button": "^0.19.2",
-        "@lliad-ui/field-label": "^0.8.2",
-        "@lliad-ui/menu": "^0.14.2",
-        "@lliad-ui/picker": "^0.12.2",
-        "@lliad-ui/styles": "^0.12.2",
+        "@lliad-ui/button": "^0.19.1",
+        "@lliad-ui/field-label": "^0.8.1",
+        "@lliad-ui/menu": "^0.14.1",
+        "@lliad-ui/picker": "^0.12.1",
+        "@lliad-ui/styles": "^0.12.1",
+        "@lliad-ui/react": "^0.3.3",
         "lit": "^2.0.0"
     },
     "devDependencies": {
@@ -32,7 +33,7 @@
         "style-loader": "^1.0.0",
         "webpack": "^4.27.0",
         "webpack-bundle-analyzer": "^4.3.0",
-        "webpack-cli": "^4.3.1"
+        "webpack-cli": "^3.3.12"
     },
     "customElements": "custom-elements.json"
 }

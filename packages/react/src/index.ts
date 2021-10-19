@@ -47,7 +47,7 @@ export * from '@lliad-ui/progress-circle';
 export * from '@lliad-ui/quick-actions';
 export * from '@lliad-ui/radio';
 export * from '@lliad-ui/search';
-// export * from '@lliad-ui/sidenav';
+export * from '@lliad-ui/sidenav';
 export * from '@lliad-ui/slider';
 export * from '@lliad-ui/split-button';
 export * from '@lliad-ui/split-view';

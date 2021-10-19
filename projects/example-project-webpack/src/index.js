@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 // import our stylesheets
+
 import './styles.css';
 
 // import the components we'll use in this page
@@ -19,3 +20,10 @@ import '@lliad-ui/field-label/sp-field-label';
 import '@lliad-ui/picker/sp-picker';
 import '@lliad-ui/menu/sp-menu';
 import '@lliad-ui/menu/sp-menu-item';
+
+import {
+    SpComponents,
+    ReactComponents,
+} from '@lliad-ui/react/react-elements.js';
+
+console.log(SpComponents, ReactComponents);
