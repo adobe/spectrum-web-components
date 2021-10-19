@@ -3400,9 +3400,9 @@
   integrity sha512-6CnLPqqtaU/PcSSIGeGRi0iFIIxIUByYLKFO6zn5NEUc12KQ28dJ4PLwB6WBa0L8vRoAGlnWWH2ZZweTijbXgg==
 
 "@spectrum-css/buttongroup@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-3.0.3.tgz#719d868845ac9d2c4f939c1b9f6044507902d5aa"
-  integrity sha512-eXl8U4QWMWXqyTu654FdQdEGnmczgOYlpIFSHyCMVjhtPqZp2xwnLFiGh6LKw+bLio6eeOZ0L+vpk1GcoYqgkw==
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-3.0.4.tgz#bce3611135ec257386fdea6da06b8b825031ef4c"
+  integrity sha512-II5irZHspzKfZPT/yClpYrDqLTRyggWQtrKmWk4ZSZAX3s1/z2iHjSEvEhnQmIF7Gh1p3yolEBDAeYN/rKAwfA==
 
 "@spectrum-css/card@^3.0.3":
   version "3.0.3"
