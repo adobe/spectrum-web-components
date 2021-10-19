@@ -1,5 +1,5 @@
-import * as PackageComs from './src';
-import {generatePackageReactComs} from './generate.js';
-const ReactPackageComs = generatePackageReactComs(PackageComs)
+import * as SpComponents from './src';
+import { generatePackageReactComs } from './generate.js';
+const ReactComponents = generatePackageReactComs(SpComponents);
 
-export ReactPackageComs
+export { SpComponents, ReactComponents };

@@ -1,19 +1,19 @@
 import * as React from 'react';
-import _ from 'lodash';
+import * as _ from 'lodash';
 import { createComponent } from '@lit-labs/react';
 
-export const generateReactCom = (
-    SwcClass: ConstructorParameters
-): ConstructorParameters => {
-    const SwcClassName = SwcClass.name;
-    const SwcTagName = _.kebabCase(SwcClassName);
+export const generateReactCom = (SwcClass: any) => {
+    console.log(SwcClass);
+    const SwcClassName: string = SwcClass.name;
+    const SwcTagName: string = _.kebabCase(SwcClassName);
     return createComponent(React, SwcTagName, SwcClass);
 };
 
 export const generatePackageReactComs = (PackageComs: any) => {
-    let packageMap = {};
-    for (const PackageCom in PackageComs) {
-        packageMap[PackageCom.name] = generateReactCom(PackageCom);
+    let packageMap: any = {};
+    for (const PackageComName in PackageComs) {
+        const PackageComClass = PackageComs[PackageComName];
+        packageMap[PackageComClass.name] = generateReactCom(PackageComClass);
     }
     return packageMap;
 };

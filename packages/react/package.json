@@ -4,10 +4,12 @@
     "publishConfig": {
         "access": "public"
     },
-    "maintainers": [{
-        "name": "saiye",
-        "email": "saiye@gaoding.com"
-    }],
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "",
     "license": "Apache-2.0",
     "repository": {
@@ -29,8 +31,8 @@
         "./package.json": "./package.json",
         "./elements": "./elements.js",
         "./elements.js": "./elements.js",
-        "./react-elements": "./elements.js",
-        "./react-elements.js": "./elements.js",
+        "./react-elements": "./react-elements.js",
+        "./react-elements.js": "./react-elements.js",
         "./icons": "./src/icons.js",
         "./icons.js": "./src/icons.js"
     },
@@ -53,7 +55,6 @@
     ],
     "dependencies": {
         "@lit-labs/react": "^1.0.1",
-        "react": "^17.0.2",
         "@lliad-ui/accordion": "^0.7.0",
         "@lliad-ui/action-bar": "^0.5.0",
         "@lliad-ui/action-button": "^0.10.0",
@@ -111,6 +112,9 @@
         "@lliad-ui/top-nav": "^0.6.0",
         "@lliad-ui/tray": "^0.5.0",
         "@lliad-ui/underlay": "^0.9.0",
+        "@types/lodash": "^4.14.175",
+        "@types/react": "^17.0.30",
+        "react": "^17.0.2",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
