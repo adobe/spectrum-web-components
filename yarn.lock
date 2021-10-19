@@ -3532,9 +3532,9 @@
   integrity sha512-LaLGfz/eGNR2iyqouXYILIA+pKRqF769iPdwM0REm5RpWvMQDD7rPZ/kWlg18owjaFsyllEp25gEjmhRJIIVOw==
 
 "@spectrum-css/search@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/search/-/search-3.0.3.tgz#3415dc106aca0d5dd996e87084a1b47c2b95a882"
-  integrity sha512-kdLpKTt0obljuhS1q1tukujRlvSs8sBwij76D4Qp8KpMzwePfZyvv1kYzuWPNZfTeISxWsmyZ6Wxd1uvzjn+UA==
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/search/-/search-3.0.4.tgz#1bb745834ab11c71292f960f3c8f6d75d4d969f3"
+  integrity sha512-BP/TO0bPSSMuFuRdcBcdlT4OxtxvFFAdlSwBU0Dlb2Fm0q4SgIFyR5kwns4XmsVjvxKUJn2Jv2pq5/tWZFzP+w==
 
 "@spectrum-css/sidenav@^3.0.3":
   version "3.0.3"
