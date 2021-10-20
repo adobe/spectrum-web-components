@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Radio } from './src/Radio.js';
 
-customElements.define('sp-radio', Radio);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-radio', Radio);
 
 declare global {
     interface HTMLElementTagNameMap {

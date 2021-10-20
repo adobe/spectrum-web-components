@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { ColorWheel } from './src/ColorWheel.js';
 
-customElements.define('sp-color-wheel', ColorWheel);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-color-wheel', ColorWheel);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -28,7 +28,8 @@ class ElementWithIcon extends LitElement {
     }
 }
 
-customElements.define('element-with-icon', ElementWithIcon);
+import {lliadCustomElementsDefine} from '@lliad-ui/base';
+lliadCustomElementsDefine('element-with-icon', ElementWithIcon);
 ```
 
 Every icons can be customized via the following options:

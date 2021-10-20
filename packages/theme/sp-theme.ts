@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Theme } from './src/Theme.js';
 
-customElements.define('sp-theme', Theme);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-theme', Theme);
 
 declare global {
     interface HTMLElementTagNameMap {

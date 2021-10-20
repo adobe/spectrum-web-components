@@ -206,9 +206,10 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
         const iconRegistration = `
         ${disclaimer}
 
+        import { lliadCustomElementsDefine } from '@lliad-ui/base';
         import { Icon${ComponentName} } from '../src/elements/Icon${id}.js';
 
-        customElements.define('${iconElementName}', Icon${ComponentName});
+        lliadCustomElementsDefine('${iconElementName}', Icon${ComponentName});
 
         declare global {
             interface HTMLElementTagNameMap {

@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { IllustratedMessage } from './src/IllustratedMessage.js';
 
-customElements.define('sp-illustrated-message', IllustratedMessage);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-illustrated-message', IllustratedMessage);
 
 declare global {
     interface HTMLElementTagNameMap {

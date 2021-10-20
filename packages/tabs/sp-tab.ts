@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { Tab } from './src/Tab.js';
 
-customElements.define('sp-tab', Tab);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-tab', Tab);
 
 declare global {
     interface HTMLElementTagNameMap {

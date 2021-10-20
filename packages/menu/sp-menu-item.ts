@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { MenuItem } from './src/MenuItem.js';
 
-customElements.define('sp-menu-item', MenuItem);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-menu-item', MenuItem);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Coachmark } from './src/Coachmark.js';
 
-customElements.define('sp-coachmark', Coachmark);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-coachmark', Coachmark);
 
 declare global {
     interface HTMLElementTagNameMap {

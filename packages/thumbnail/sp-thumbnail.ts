@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { Thumbnail } from './src/Thumbnail.js';
 
-customElements.define('sp-thumbnail', Thumbnail);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-thumbnail', Thumbnail);
 
 declare global {
     interface HTMLElementTagNameMap {

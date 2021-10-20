@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { ColorArea } from './src/ColorArea.js';
 
-customElements.define('sp-color-area', ColorArea);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-color-area', ColorArea);
 
 declare global {
     interface HTMLElementTagNameMap {

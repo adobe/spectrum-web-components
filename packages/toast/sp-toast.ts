@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Toast } from './src/Toast.js';
 
-customElements.define('sp-toast', Toast);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-toast', Toast);
 
 declare global {
     interface HTMLElementTagNameMap {

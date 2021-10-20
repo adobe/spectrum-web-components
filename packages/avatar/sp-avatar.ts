@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Avatar } from './src/Avatar.js';
 
-customElements.define('sp-avatar', Avatar);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-avatar', Avatar);
 
 declare global {
     interface HTMLElementTagNameMap {

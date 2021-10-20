@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Popover } from './src/Popover.js';
 
-customElements.define('sp-popover', Popover);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-popover', Popover);
 
 declare global {
     interface HTMLElementTagNameMap {

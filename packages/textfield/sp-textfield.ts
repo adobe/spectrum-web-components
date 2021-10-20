@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Textfield } from './src/Textfield.js';
 
-customElements.define('sp-textfield', Textfield);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-textfield', Textfield);
 
 declare global {
     interface HTMLElementTagNameMap {

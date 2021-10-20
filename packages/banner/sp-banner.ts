@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Banner } from './src/Banner.js';
 
-customElements.define('sp-banner', Banner);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-banner', Banner);
 
 declare global {
     interface HTMLElementTagNameMap {

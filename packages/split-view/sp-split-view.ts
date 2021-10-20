@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { SplitView } from './src/SplitView.js';
 
-customElements.define('sp-split-view', SplitView);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-split-view', SplitView);
 
 declare global {
     interface HTMLElementTagNameMap {

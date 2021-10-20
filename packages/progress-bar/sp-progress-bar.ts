@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { ProgressBar } from './src/ProgressBar.js';
 
-customElements.define('sp-progress-bar', ProgressBar);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-progress-bar', ProgressBar);
 
 declare global {
     interface HTMLElementTagNameMap {

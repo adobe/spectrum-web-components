@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Link } from './src/Link.js';
 
-customElements.define('sp-link', Link);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-link', Link);
 
 declare global {
     interface HTMLElementTagNameMap {

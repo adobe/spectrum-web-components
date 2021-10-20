@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Switch } from './src/Switch.js';
 
-customElements.define('sp-switch', Switch);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-switch', Switch);
 
 declare global {
     interface HTMLElementTagNameMap {

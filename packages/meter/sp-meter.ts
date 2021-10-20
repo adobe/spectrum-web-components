@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { Meter } from './src/Meter.js';
 
-customElements.define('sp-meter', Meter);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-meter', Meter);
 
 declare global {
     interface HTMLElementTagNameMap {

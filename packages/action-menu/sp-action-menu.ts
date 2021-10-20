@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { ActionMenu } from './src/ActionMenu.js';
 
-customElements.define('sp-action-menu', ActionMenu);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-action-menu', ActionMenu);
 
 declare global {
     interface HTMLElementTagNameMap {

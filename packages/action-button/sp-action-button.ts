@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { ActionButton } from './src/ActionButton.js';
 
-customElements.define('sp-action-button', ActionButton);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-action-button', ActionButton);
 
 declare global {
     interface HTMLElementTagNameMap {

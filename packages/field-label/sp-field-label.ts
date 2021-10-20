@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { FieldLabel } from './src/FieldLabel.js';
 
-customElements.define('sp-field-label', FieldLabel);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-field-label', FieldLabel);
 
 declare global {
     interface HTMLElementTagNameMap {

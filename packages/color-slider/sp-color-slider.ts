@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { ColorSlider } from './src/ColorSlider.js';
 
-customElements.define('sp-color-slider', ColorSlider);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-color-slider', ColorSlider);
 
 declare global {
     interface HTMLElementTagNameMap {

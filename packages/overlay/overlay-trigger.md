@@ -198,7 +198,8 @@ Content that is thrown into an overlay (e.g. `[slot="*-content"]`) will be moved
             `;
         }
     }
-    customElements.define('styled-element', StyledElement);
+    import { lliadCustomElementsDefine } from '@lliad-ui/base';
+    lliadCustomElementsDefine('styled-element', StyledElement);
 </script>
 ```
 

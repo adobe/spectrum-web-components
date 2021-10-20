@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { SplitButton } from './src/SplitButton.js';
 
-customElements.define('sp-split-button', SplitButton);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-split-button', SplitButton);
 
 declare global {
     interface HTMLElementTagNameMap {

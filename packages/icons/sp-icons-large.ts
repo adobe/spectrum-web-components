@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { IconsLarge } from './src/IconsLarge.js';
 
-customElements.define('sp-icons-large', IconsLarge);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-icons-large', IconsLarge);
 
 declare global {
     interface HTMLElementTagNameMap {

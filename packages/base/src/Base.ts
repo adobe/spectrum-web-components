@@ -91,7 +91,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                 ) {
                     dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
                         dirParent.parentNode || // DOM Element detected
-                        ((dirParent as unknown) as ShadowRoot)
+                        (dirParent as unknown as ShadowRoot)
                             .host) as HTMLElement;
                 }
                 this.dir =
@@ -105,9 +105,9 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                         !customElements.get(localName)
                     ) {
                         customElements.whenDefined(localName).then(() => {
-                            (dirParent as ThemeRoot).startManagingContentDirection(
-                                this
-                            );
+                            (
+                                dirParent as ThemeRoot
+                            ).startManagingContentDirection(this);
                         });
                     } else {
                         (dirParent as ThemeRoot).startManagingContentDirection(
@@ -138,3 +138,21 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 }
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {}
+
+// 自定义 web components注册方法 如果组件已经定义过了 进行warning警告
+export function lliadCustomElementsDefine(
+    tagName: string,
+    tagClass: any,
+    options?: any
+): void {
+    console.log(tagName, new Date().getTime());
+    if (!customElements) {
+        console.warn('Lliad-UI warning: CustomElements Api is required.');
+        return;
+    }
+    if (customElements.get(tagName)) {
+        console.warn(`Lliad-UI warning: ${tagName} is already defined.`);
+    } else {
+        customElements.define(tagName, tagClass, options);
+    }
+}

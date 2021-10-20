@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { Picker } from './src/Picker.js';
 
-customElements.define('sp-picker', Picker);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-picker', Picker);
 
 declare global {
     interface HTMLElementTagNameMap {

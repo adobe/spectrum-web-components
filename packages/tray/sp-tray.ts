@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { Tray } from './src/Tray.js';
 
-customElements.define('sp-tray', Tray);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-tray', Tray);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Tags } from './src/Tags.js';
 
-customElements.define('sp-tags', Tags);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-tags', Tags);
 
 declare global {
     interface HTMLElementTagNameMap {

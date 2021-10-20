@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Checkbox } from './src/Checkbox.js';
 
-customElements.define('sp-checkbox', Checkbox);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-checkbox', Checkbox);
 
 declare global {
     interface HTMLElementTagNameMap {

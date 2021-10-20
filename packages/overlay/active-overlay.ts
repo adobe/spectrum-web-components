@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { ActiveOverlay } from './src/ActiveOverlay.js';
 
-customElements.define('active-overlay', ActiveOverlay);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('active-overlay', ActiveOverlay);
 
 declare global {
     interface HTMLElementTagNameMap {

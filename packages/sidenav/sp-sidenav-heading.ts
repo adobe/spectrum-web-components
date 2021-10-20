@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { SideNavHeading } from './src/SidenavHeading.js';
 
-customElements.define('sp-sidenav-heading', SideNavHeading);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-sidenav-heading', SideNavHeading);
 
 declare global {
     interface HTMLElementTagNameMap {

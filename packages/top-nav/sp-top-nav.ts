@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { TopNav } from './src/TopNav.js';
 
-customElements.define('sp-top-nav', TopNav);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-top-nav', TopNav);
 
 declare global {
     interface HTMLElementTagNameMap {

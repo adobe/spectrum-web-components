@@ -11,7 +11,8 @@ governing permissions and limitations under the License.
 */
 import { SliderHandle } from './src/SliderHandle.js';
 
-customElements.define('sp-slider-handle', SliderHandle);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-slider-handle', SliderHandle);
 
 declare global {
     interface HTMLElementTagNameMap {

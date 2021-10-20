@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { Asset } from './src/Asset.js';
 
-customElements.define('sp-asset', Asset);
+import { lliadCustomElementsDefine } from '@lliad-ui/base';
+lliadCustomElementsDefine('sp-asset', Asset);
 
 declare global {
     interface HTMLElementTagNameMap {
