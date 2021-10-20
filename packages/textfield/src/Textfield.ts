@@ -20,7 +20,6 @@ import {
     nothing,
     ifDefined,
     live,
-    internalProperty,
 } from '@spectrum-web-components/base';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
@@ -56,18 +55,11 @@ export class TextfieldBase extends Focusable {
     @property()
     public placeholder = '';
 
-    @property({ attribute: 'type', reflect: true })
-    private _type: TextfieldType = 'text';
+    @property({ reflect: true })
+    public type: TextfieldType = textfieldTypes[0];
 
-    @internalProperty()
-    get type(): TextfieldType {
-        return textfieldTypes.find((t) => t === this._type) ?? 'text';
-    }
-
-    set type(val: TextfieldType) {
-        const prev = this._type;
-        this._type = val;
-        this.requestUpdate('type', prev);
+    protected get validType(): TextfieldType {
+        return textfieldTypes.find((t) => t === this.type) ?? textfieldTypes[0];
     }
 
     @property()
@@ -222,7 +214,7 @@ export class TextfieldBase extends Focusable {
         return html`
             <!-- @ts-ignore -->
             <input
-                type=${this.type}
+                type=${this.validType}
                 aria-label=${this.label || this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"

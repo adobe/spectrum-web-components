@@ -768,10 +768,19 @@ describe('Textfield', () => {
                 `
             );
             expect(el1.type).equals('text');
-            expect(el2.type).equals('text');
+            expect(el2.focusElement.type).equals('text');
 
             el1.setAttribute('type', 'submit');
-            expect(el1.type).equals('text');
+            await elementUpdated(el1);
+
+            expect(el1.focusElement.type).equals('text');
+
+            // eslint-disable-next-line
+            // @ts-ignore
+            el2.type = 'submit';
+            await elementUpdated(el2);
+
+            expect(el2.focusElement.type).equals('text');
         });
         it('reflects valid property assignments', async () => {
             const el = await litFixture<Textfield>(
@@ -799,7 +808,7 @@ describe('Textfield', () => {
             await elementUpdated(el);
 
             expect(el.getAttribute('type')).equals('range');
-            expect(el.type).equals('text');
+            expect(el.focusElement.type).equals('text');
         });
     });
 });
