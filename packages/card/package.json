@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/card",
-    "version": "0.13.2",
+    "version": "0.13.3",
     "publishConfig": {
         "access": "public"
     },
@@ -50,13 +50,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/asset": "^0.7.2",
-        "@lliad-ui/base": "^0.9.2",
-        "@lliad-ui/checkbox": "^0.13.2",
-        "@lliad-ui/icons-workflow": "^0.11.2",
-        "@lliad-ui/quick-actions": "^0.7.2",
-        "@lliad-ui/shared": "^0.17.2",
-        "@lliad-ui/styles": "^0.12.2",
+        "@lliad-ui/asset": "^0.7.3",
+        "@lliad-ui/base": "^0.9.3",
+        "@lliad-ui/checkbox": "^0.13.3",
+        "@lliad-ui/icons-workflow": "^0.11.3",
+        "@lliad-ui/quick-actions": "^0.7.3",
+        "@lliad-ui/shared": "^0.17.3",
+        "@lliad-ui/styles": "^0.12.3",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

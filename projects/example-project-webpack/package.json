@@ -1,6 +1,6 @@
 {
     "name": "example-project-webpack",
-    "version": "1.5.9-alpha.0",
+    "version": "1.5.9-alpha.1",
     "private": true,
     "description": "An example project that uses the web components and gives an example of how to bundle them minimally with webpack.",
     "license": "Apache-2.0",

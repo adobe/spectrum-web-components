@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/icon",
-    "version": "0.14.2",
+    "version": "0.14.3",
     "publishConfig": {
         "access": "public"
     },
@@ -50,8 +50,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.9.2",
-        "@lliad-ui/iconset": "^0.10.2",
+        "@lliad-ui/base": "^0.9.3",
+        "@lliad-ui/iconset": "^0.10.3",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

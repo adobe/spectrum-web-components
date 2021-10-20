@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/action-menu",
-    "version": "0.14.2",
+    "version": "0.14.3",
     "publishConfig": {
         "access": "public"
     },
@@ -52,13 +52,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/action-button": "^0.10.2",
-        "@lliad-ui/base": "^0.9.2",
-        "@lliad-ui/icon": "^0.14.2",
-        "@lliad-ui/icons-workflow": "^0.11.2",
-        "@lliad-ui/menu": "^0.14.2",
-        "@lliad-ui/picker": "^0.12.2",
-        "@lliad-ui/shared": "^0.17.2",
+        "@lliad-ui/action-button": "^0.10.3",
+        "@lliad-ui/base": "^0.9.3",
+        "@lliad-ui/icon": "^0.14.3",
+        "@lliad-ui/icons-workflow": "^0.11.3",
+        "@lliad-ui/menu": "^0.14.3",
+        "@lliad-ui/picker": "^0.12.3",
+        "@lliad-ui/shared": "^0.17.3",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

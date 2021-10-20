@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.3](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/avatar@0.12.2...@lliad-ui/avatar@0.12.3) (2021-10-20)
+
+**Note:** Version bump only for package @lliad-ui/avatar
+
+
+
+
+
 ## [0.12.3-alpha.0](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/avatar@0.12.2...@lliad-ui/avatar@0.12.3-alpha.0) (2021-10-20)
 
 **Note:** Version bump only for package @lliad-ui/avatar

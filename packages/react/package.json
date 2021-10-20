@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/react",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "publishConfig": {
         "access": "public"
     },
@@ -53,7 +53,7 @@
     ],
     "dependencies": {
         "@lit-labs/react": "^1.0.1",
-        "@lliad-ui/bundle": "^0.25.2",
+        "@lliad-ui/bundle": "^0.25.3",
         "@types/lodash": "^4.14.175",
         "@types/react": "^17.0.30",
         "react": "^17.0.2",
