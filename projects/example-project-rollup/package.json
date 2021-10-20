@@ -1,6 +1,6 @@
 {
   "name": "example-project-rollup",
-  "version": "0.3.27",
+  "version": "0.3.28-alpha.0",
   "private": true,
   "description": "An example project that uses the web components and gives an example of how to bundle them minimally with rollup.",
   "license": "Apache-2.0",
@@ -20,11 +20,11 @@
     "tsc:watch": "tsc --watch"
   },
   "dependencies": {
-    "@lliad-ui/button": "^0.19.2",
-    "@lliad-ui/field-label": "^0.8.2",
-    "@lliad-ui/menu": "^0.14.2",
-    "@lliad-ui/picker": "^0.12.2",
-    "@lliad-ui/styles": "^0.12.2"
+    "@lliad-ui/button": "^0.19.3-alpha.0",
+    "@lliad-ui/field-label": "^0.8.3-alpha.0",
+    "@lliad-ui/menu": "^0.14.3-alpha.0",
+    "@lliad-ui/picker": "^0.12.3-alpha.0",
+    "@lliad-ui/styles": "^0.12.3-alpha.0"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^1.6.3",
