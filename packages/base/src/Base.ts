@@ -140,17 +140,21 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 export class SpectrumElement extends SpectrumMixin(LitElement) {}
 
 // 自定义 web components注册方法 如果组件已经定义过了 进行warning警告
+export function lliadCustomElementsHas(tagName: string): boolean {
+    return !!customElements.get(tagName);
+}
+
+// 自定义 web components注册方法 如果组件已经定义过了 进行warning警告
 export function lliadCustomElementsDefine(
     tagName: string,
     tagClass: any,
     options?: any
 ): void {
-    console.log(tagName, new Date().getTime());
     if (!customElements) {
         console.warn('Lliad-UI warning: CustomElements Api is required.');
         return;
     }
-    if (customElements.get(tagName)) {
+    if (lliadCustomElementsHas(tagName)) {
         console.warn(`Lliad-UI warning: ${tagName} is already defined.`);
     } else {
         customElements.define(tagName, tagClass, options);
