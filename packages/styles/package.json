@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/styles",
-    "version": "0.12.1",
+    "version": "0.12.2",
     "publishConfig": {
         "access": "public"
     },
@@ -75,7 +75,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.9.1"
+        "@lliad-ui/base": "^0.9.2"
     },
     "devDependencies": {
         "@spectrum-css/commons": "^3.0.2",

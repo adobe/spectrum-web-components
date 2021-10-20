@@ -1,6 +1,6 @@
 {
     "name": "@lliad-ui/avatar",
-    "version": "0.12.1",
+    "version": "0.12.2",
     "publishConfig": {
         "access": "public"
     },
@@ -50,7 +50,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.9.1",
+        "@lliad-ui/base": "^0.9.2",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
