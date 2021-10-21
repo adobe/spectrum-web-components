@@ -186,15 +186,18 @@ describe('card', () => {
         const el = await fixture<Card>(href({}));
         el.setAttribute(
             'style',
-            'width: 200px; --spectrum-actionbutton-height: 32px'
+            'width: 200px; display: inline-flex; --spectrum-card-coverphoto-height: 136px; --spectrum-actionbutton-height: 32px; --spectrum-icon-tshirt-size-height: 32px; --spectrum-icon-tshirt-size-width: 32px;'
         );
 
         await elementUpdated(el);
 
         el.addEventListener('click', (event: Event) => {
-            const composedTarget = event.composedPath()[0] as HTMLElement;
             event.preventDefault();
-            if (composedTarget.id !== 'like-anchor') return;
+            const path = event.composedPath();
+            const hasLikeAnchor = path.some(
+                (el) => (el as HTMLElement).id === 'like-anchor'
+            );
+            if (!hasLikeAnchor) return;
             clickSpy();
         });
 
@@ -221,16 +224,16 @@ describe('card', () => {
 
         expect(clickSpy.callCount).to.equal(2);
 
-        const link = el.querySelector('sp-link') as HTMLElement;
+        const link = el.querySelector(
+            'sp-link[href="https://google.com"]'
+        ) as HTMLElement;
+        link.setAttribute('style', 'display: block');
         boundingRect = link.getBoundingClientRect();
         await executeServerCommand('send-mouse', {
             steps: [
                 {
                     type: 'move',
-                    position: [
-                        boundingRect.x + boundingRect.width / 2,
-                        boundingRect.y + boundingRect.height / 2,
-                    ],
+                    position: [boundingRect.x + 1, boundingRect.y + 1],
                 },
                 {
                     type: 'down',
