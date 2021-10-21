@@ -12,7 +12,8 @@ yarn add @iliad-ui/react
 Import the side effectful registration of `<sp-react>` via:
 
 ```
-import {SpButton,SpButtonGroup} '@iliad-ui/react';
+import {ReactComponents} from '@iliad-ui/react';
+const {SpButtonGroup,SpButton} = ReactComponents;
 
 ```
 

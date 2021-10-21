@@ -1,13 +1,24 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import { createComponent } from '@lit-labs/react';
+import SpModuleInfo from './modules.json';
+const { modules: SpModules } = SpModuleInfo;
+console.log(SpModuleInfo);
 
 export const generateReactCom = (
     swcTagName: string,
     swcClass: any,
     swcDisplayName?: string
 ): any => {
-    return createComponent(React, swcTagName, swcClass, {}, swcDisplayName);
+    // 生成事件代理
+    let events: any = {};
+    const swModule: any = findPackageModule(swcTagName);
+    const moduleEvents: any[] = swModule?.events || [];
+    moduleEvents.forEach((moduleEvent: any) => {
+        const { name: eventName }: { name: string } = moduleEvent;
+        events[eventName] = eventName;
+    });
+    return createComponent(React, swcTagName, swcClass, events, swcDisplayName);
 };
 
 export const generatePackageReactComs = (packageComs: any): any => {
@@ -27,6 +38,16 @@ export const generatePackageReactComs = (packageComs: any): any => {
     return packageMap;
 };
 
+function findPackageModule(tagName: string): any {
+    let prefixedEl: any;
+    SpModules.find((jsModule: any) => {
+        prefixedEl = jsModule.declarations.find((jsDeclarations: any) => {
+            return jsDeclarations.tagName === tagName;
+        });
+        return prefixedEl || false;
+    });
+    return prefixedEl || undefined;
+}
 // 判断是否是es6的构造类
 function isClassFunction(obj: any): boolean {
     if (typeof obj !== 'function') return false;
