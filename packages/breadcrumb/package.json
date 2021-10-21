@@ -4,6 +4,12 @@
   "publishConfig": {
     "access": "public"
   },
+  "maintainers": [
+    {
+        "name": "saiye",
+        "email": "saiye@gaoding.com"
+    }
+  ],
   "description": "Web component implementation of a Spectrum design Breadcrumb",
   "license": "Apache-2.0",
   "repository": {
@@ -55,5 +61,6 @@
   "devDependencies": {
     "@spectrum-css/breadcrumb": "^4.0.0"
   },
-  "customElements": "custom-elements.json"
+  "customElements": "custom-elements.json",
+  "gitHead": "ae5201c6168fbe2ee26029561748acd91edeb7f0"
 }
