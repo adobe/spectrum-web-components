@@ -4,23 +4,23 @@ An `<sp-underlay>` is used primarily in concert with elements similar to `<sp-di
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/underlay?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/underlay)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/underlay?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/underlay)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/underlay?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/underlay)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/underlay?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/underlay)
 
 ```
-yarn add @lliad-ui/underlay
+yarn add @iliad-ui/underlay
 ```
 
 Import the side effectful registration of `<sp-underlay>` via:
 
 ```
-import '@lliad-ui/underlay/sp-underlay.js';
+import '@iliad-ui/underlay/sp-underlay.js';
 ```
 
 When looking to leverage the `Underlay` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Underlay } from '@lliad-ui/underlay';
+import { Underlay } from '@iliad-ui/underlay';
 ```
 
 ## Example

@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { TopNavItem } from './src/TopNavItem.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-top-nav-item', TopNavItem);
 
 declare global {

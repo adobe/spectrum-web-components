@@ -18,7 +18,7 @@ import {
     property,
     SizedMixin,
     PropertyValues,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import styles from './divider.css.js';
 

@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 import '../sp-action-bar.js';
-import '@lliad-ui/checkbox/sp-checkbox.js';
-import '@lliad-ui/action-button/sp-action-button.js';
-import '@lliad-ui/action-group/sp-action-group.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-edit.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-more.js';
+import '@iliad-ui/checkbox/sp-checkbox.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/action-group/sp-action-group.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-edit.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-more.js';
 
 export default {
     title: 'Action Bar',

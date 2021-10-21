@@ -15,7 +15,7 @@ import {
     CSSResultArray,
     TemplateResult,
     queryAssignedNodes,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import { Menu } from './Menu.js';
 import '../sp-menu.js';

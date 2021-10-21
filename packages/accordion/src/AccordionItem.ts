@@ -16,10 +16,10 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from '@lliad-ui/base';
-import { Focusable } from '@lliad-ui/shared/src/focusable.js';
-import '@lliad-ui/icons-ui/icons/sp-icon-chevron100.js';
-import chevronIconStyles from '@lliad-ui/icon/src/spectrum-icon-chevron.css.js';
+} from '@iliad-ui/base';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron100.js';
+import chevronIconStyles from '@iliad-ui/icon/src/spectrum-icon-chevron.css.js';
 
 import styles from './accordion-item.css.js';
 

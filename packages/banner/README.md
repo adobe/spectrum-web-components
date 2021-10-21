@@ -4,24 +4,24 @@ An `<sp-banner>` is an additional label an existing component may have. Banners 
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/banner?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/banner)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/banner?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/banner)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/banner?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/banner)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/banner?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/banner)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/qsv9Ztje6fUhANFmk8EA/src/index.ts)
 
 ```
-yarn add @lliad-ui/banner
+yarn add @iliad-ui/banner
 ```
 
 Import the side effectful registration of `<sp-banner>` via:
 
 ```
-import '@lliad-ui/banner/sp-banner.js';
+import '@iliad-ui/banner/sp-banner.js';
 ```
 
 When looking to leverage the `Banner` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Banner } from '@lliad-ui/banner';
+import { Banner } from '@iliad-ui/banner';
 ```
 
 ## Example

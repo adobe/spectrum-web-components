@@ -1,5 +1,5 @@
 {
-    "name": "@lliad-ui/breadcrumb",
+    "name": "@iliad-ui/breadcrumb",
     "version": "0.0.1",
     "publishConfig": {
         "access": "public"
@@ -45,7 +45,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.9.3",
+        "@iliad-ui/base": "^0.9.3",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

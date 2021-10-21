@@ -18,10 +18,10 @@ import {
     ifDefined,
     property,
     query,
-} from '@lliad-ui/base';
-import { Focusable, LikeAnchor } from '@lliad-ui/shared';
+} from '@iliad-ui/base';
+import { Focusable, LikeAnchor } from '@iliad-ui/shared';
 
-import itemStyles from '@lliad-ui/tabs/src/tab.css.js';
+import itemStyles from '@iliad-ui/tabs/src/tab.css.js';
 import topNavItemStyles from './top-nav-item.css.js';
 
 /**

@@ -151,11 +151,11 @@ export function lliadCustomElementsDefine(
     options?: any
 ): void {
     if (!customElements) {
-        console.warn('Lliad-UI warning: CustomElements Api is required.');
+        console.warn('iliad-ui warning: CustomElements Api is required.');
         return;
     }
     if (lliadCustomElementsHas(tagName)) {
-        console.warn(`Lliad-UI warning: ${tagName} is already defined.`);
+        console.warn(`iliad-ui warning: ${tagName} is already defined.`);
     } else {
         customElements.define(tagName, tagClass, options);
     }

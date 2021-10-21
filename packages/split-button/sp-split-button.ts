@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { SplitButton } from './src/SplitButton.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-split-button', SplitButton);
 
 declare global {

@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@lliad-ui/icon/sp-icon.js';
-import { Arrow75Icon } from '@lliad-ui/icons-ui/src/icons/Arrow75.js';
-import { setCustomTemplateLiteralTag } from '@lliad-ui/icons-ui/src/custom-tag.js';
-import { html } from '@lliad-ui/base';
+import '@iliad-ui/icon/sp-icon.js';
+import { Arrow75Icon } from '@iliad-ui/icons-ui/src/icons/Arrow75.js';
+import { setCustomTemplateLiteralTag } from '@iliad-ui/icons-ui/src/custom-tag.js';
+import { html } from '@iliad-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 setCustomTemplateLiteralTag(html);

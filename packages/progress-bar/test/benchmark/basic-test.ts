@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@lliad-ui/progress-bar/sp-progress-bar.js';
-import { html } from '@lliad-ui/base';
+import '@iliad-ui/progress-bar/sp-progress-bar.js';
+import { html } from '@iliad-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

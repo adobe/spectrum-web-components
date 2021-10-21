@@ -47,7 +47,7 @@ const postCSSPlugins = (resourcePath, toTS) => {
 
 const wrapCSSResult = (content) => {
     return stripIndent`
-        import { css } from '@lliad-ui/base';
+        import { css } from '@iliad-ui/base';
         const styles = css\`
             ${content}
         \`;

@@ -4,23 +4,23 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/icon?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/icon)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/icon?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/icon)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/icon?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/icon)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/icon?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/icon)
 
 ```
-yarn add @lliad-ui/icon
+yarn add @iliad-ui/icon
 ```
 
 Import the side effectful registration of `<sp-icon>` via:
 
 ```
-import '@lliad-ui/icon/sp-icon.js';
+import '@iliad-ui/icon/sp-icon.js';
 ```
 
 When looking to leverage the `Icon` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Icon } from '@lliad-ui/icon';
+import { Icon } from '@iliad-ui/icon';
 ```
 
 ## Example

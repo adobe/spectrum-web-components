@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult, ifDefined } from '@lliad-ui/base';
+import { html, TemplateResult, ifDefined } from '@iliad-ui/base';
 
 import '../sp-button.js';
-import '@lliad-ui/icon/sp-icon.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-help.js';
+import '@iliad-ui/icon/sp-icon.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-help.js';
 
 interface Properties {
     variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';

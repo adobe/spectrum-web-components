@@ -1,5 +1,5 @@
 {
-    "name": "@lliad-ui/base",
+    "name": "@iliad-ui/base",
     "version": "0.9.3",
     "publishConfig": {
         "access": "public"

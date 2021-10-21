@@ -3,157 +3,117 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.10.3](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/switch@0.10.2...@lliad-ui/switch@0.10.3) (2021-10-20)
+## [0.10.3](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/switch@0.10.2...@iliad-ui/switch@0.10.3) (2021-10-20)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
+## [0.10.3-alpha.0](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/switch@0.10.2...@iliad-ui/switch@0.10.3-alpha.0) (2021-10-20)
 
+**Note:** Version bump only for package @iliad-ui/switch
 
+## [0.10.2](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/switch@0.10.1...@iliad-ui/switch@0.10.2) (2021-10-20)
 
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.10.3-alpha.0](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/switch@0.10.2...@lliad-ui/switch@0.10.3-alpha.0) (2021-10-20)
+## [0.10.2](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/switch@0.10.1...@iliad-ui/switch@0.10.2) (2021-10-19)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
+## [0.10.1](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/switch@0.10.0...@iliad-ui/switch@0.10.1) (2021-10-19)
 
+**Note:** Version bump only for package @iliad-ui/switch
 
+## [0.10.1](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/switch@0.10.0...@iliad-ui/switch@0.10.1) (2021-10-18)
 
-
-## [0.10.2](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/switch@0.10.1...@lliad-ui/switch@0.10.2) (2021-10-20)
-
-**Note:** Version bump only for package @lliad-ui/switch
-
-
-
-
-
-## [0.10.2](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/switch@0.10.1...@lliad-ui/switch@0.10.2) (2021-10-19)
-
-**Note:** Version bump only for package @lliad-ui/switch
-
-
-
-
-
-## [0.10.1](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/switch@0.10.0...@lliad-ui/switch@0.10.1) (2021-10-19)
-
-**Note:** Version bump only for package @lliad-ui/switch
-
-
-
-
-
-## [0.10.1](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/switch@0.10.0...@lliad-ui/switch@0.10.1) (2021-10-18)
-
-**Note:** Version bump only for package @lliad-ui/switch
-
-
-
-
+**Note:** Version bump only for package @iliad-ui/switch
 
 # 0.10.0 (2021-10-18)
 
-
 ### Bug Fixes
 
-* add support for "readonly" attribute ([4bce3b7](https://github.com/gaoding-inc/Iliad-ui/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
-* correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/Iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
-* ensure [disabled] styling ([4c067eb](https://github.com/gaoding-inc/Iliad-ui/commit/4c067eb82dcfc5f1aaf3ecedfbfc83f4ffb90a22))
-* ensure aria attributes based on state ([6ee43de](https://github.com/gaoding-inc/Iliad-ui/commit/6ee43de23254f612759cc258705dfe6eed30c418))
-* focusable style ([48ea3e7](https://github.com/gaoding-inc/Iliad-ui/commit/48ea3e79828b737ad3df9e0fcac5e48c50124085))
-* implement "emphasized" styles ([750bbe7](https://github.com/gaoding-inc/Iliad-ui/commit/750bbe7c6a70ed590c4ea179179bf201c50526ea))
-* include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/Iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
-* include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
-* include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
-* stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/Iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
-* update configuration for Spectrum CSS processing for specificity ([5c2e21e](https://github.com/gaoding-inc/Iliad-ui/commit/5c2e21ed68d94a75cac0cc248925cc5bca35cc25))
-* update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/Iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
-* update side effect listings ([8160d3a](https://github.com/gaoding-inc/Iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
-* update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
-* **switch:** process CSS correction ([292fff1](https://github.com/gaoding-inc/Iliad-ui/commit/292fff19a14225f579e5e8b4717b7db3a33895c4))
-* **switch:** track aria-checked ([1980046](https://github.com/gaoding-inc/Iliad-ui/commit/1980046ab0f791bfe1e147c855f43ddf2d2a424e))
-* workaround bug in Edge with switches ([7014a2c](https://github.com/gaoding-inc/Iliad-ui/commit/7014a2cced96a704589a85f4c23f5b3d5519fb3b))
-
+-   add support for "readonly" attribute ([4bce3b7](https://github.com/gaoding-inc/Iliad-ui/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/Iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   ensure [disabled] styling ([4c067eb](https://github.com/gaoding-inc/Iliad-ui/commit/4c067eb82dcfc5f1aaf3ecedfbfc83f4ffb90a22))
+-   ensure aria attributes based on state ([6ee43de](https://github.com/gaoding-inc/Iliad-ui/commit/6ee43de23254f612759cc258705dfe6eed30c418))
+-   focusable style ([48ea3e7](https://github.com/gaoding-inc/Iliad-ui/commit/48ea3e79828b737ad3df9e0fcac5e48c50124085))
+-   implement "emphasized" styles ([750bbe7](https://github.com/gaoding-inc/Iliad-ui/commit/750bbe7c6a70ed590c4ea179179bf201c50526ea))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/Iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/Iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update configuration for Spectrum CSS processing for specificity ([5c2e21e](https://github.com/gaoding-inc/Iliad-ui/commit/5c2e21ed68d94a75cac0cc248925cc5bca35cc25))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/Iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   update side effect listings ([8160d3a](https://github.com/gaoding-inc/Iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   **switch:** process CSS correction ([292fff1](https://github.com/gaoding-inc/Iliad-ui/commit/292fff19a14225f579e5e8b4717b7db3a33895c4))
+-   **switch:** track aria-checked ([1980046](https://github.com/gaoding-inc/Iliad-ui/commit/1980046ab0f791bfe1e147c855f43ddf2d2a424e))
+-   workaround bug in Edge with switches ([7014a2c](https://github.com/gaoding-inc/Iliad-ui/commit/7014a2cced96a704589a85f4c23f5b3d5519fb3b))
 
 ### Features
 
-* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
-* **action-button:** add action button pattern ([03ac00a](https://github.com/gaoding-inc/Iliad-ui/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
-* **action-group:** add action-group pattern ([d2de766](https://github.com/gaoding-inc/Iliad-ui/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
-* **switch:** update spectrum css input ([1d2ce17](https://github.com/gaoding-inc/Iliad-ui/commit/1d2ce179650fd2206fb0b4a839361b2b0b2d9917))
-* leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/Iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
-* update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/Iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
-* use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/gaoding-inc/Iliad-ui/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
-* use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/Iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
-
+-   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/gaoding-inc/Iliad-ui/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **action-group:** add action-group pattern ([d2de766](https://github.com/gaoding-inc/Iliad-ui/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
+-   **switch:** update spectrum css input ([1d2ce17](https://github.com/gaoding-inc/Iliad-ui/commit/1d2ce179650fd2206fb0b4a839361b2b0b2d9917))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/Iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/Iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+-   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/gaoding-inc/Iliad-ui/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/Iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
 
 ### Performance Improvements
 
-* use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/Iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
-* use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/Iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
-
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/Iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/Iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
 
 ### Reverts
 
-* Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/Iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
-
-
-
-
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/Iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
 
 # 0.9.0 (2021-10-18)
 
-
 ### Bug Fixes
 
-* add support for "readonly" attribute ([4bce3b7](https://github.com/gaoding-inc/Iliad-ui/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
-* correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/Iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
-* ensure [disabled] styling ([4c067eb](https://github.com/gaoding-inc/Iliad-ui/commit/4c067eb82dcfc5f1aaf3ecedfbfc83f4ffb90a22))
-* ensure aria attributes based on state ([6ee43de](https://github.com/gaoding-inc/Iliad-ui/commit/6ee43de23254f612759cc258705dfe6eed30c418))
-* focusable style ([48ea3e7](https://github.com/gaoding-inc/Iliad-ui/commit/48ea3e79828b737ad3df9e0fcac5e48c50124085))
-* implement "emphasized" styles ([750bbe7](https://github.com/gaoding-inc/Iliad-ui/commit/750bbe7c6a70ed590c4ea179179bf201c50526ea))
-* include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/Iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
-* include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
-* include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
-* stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/Iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
-* update configuration for Spectrum CSS processing for specificity ([5c2e21e](https://github.com/gaoding-inc/Iliad-ui/commit/5c2e21ed68d94a75cac0cc248925cc5bca35cc25))
-* update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/Iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
-* update side effect listings ([8160d3a](https://github.com/gaoding-inc/Iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
-* update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
-* **switch:** process CSS correction ([292fff1](https://github.com/gaoding-inc/Iliad-ui/commit/292fff19a14225f579e5e8b4717b7db3a33895c4))
-* **switch:** track aria-checked ([1980046](https://github.com/gaoding-inc/Iliad-ui/commit/1980046ab0f791bfe1e147c855f43ddf2d2a424e))
-* workaround bug in Edge with switches ([7014a2c](https://github.com/gaoding-inc/Iliad-ui/commit/7014a2cced96a704589a85f4c23f5b3d5519fb3b))
-
+-   add support for "readonly" attribute ([4bce3b7](https://github.com/gaoding-inc/Iliad-ui/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/Iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   ensure [disabled] styling ([4c067eb](https://github.com/gaoding-inc/Iliad-ui/commit/4c067eb82dcfc5f1aaf3ecedfbfc83f4ffb90a22))
+-   ensure aria attributes based on state ([6ee43de](https://github.com/gaoding-inc/Iliad-ui/commit/6ee43de23254f612759cc258705dfe6eed30c418))
+-   focusable style ([48ea3e7](https://github.com/gaoding-inc/Iliad-ui/commit/48ea3e79828b737ad3df9e0fcac5e48c50124085))
+-   implement "emphasized" styles ([750bbe7](https://github.com/gaoding-inc/Iliad-ui/commit/750bbe7c6a70ed590c4ea179179bf201c50526ea))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/Iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/Iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update configuration for Spectrum CSS processing for specificity ([5c2e21e](https://github.com/gaoding-inc/Iliad-ui/commit/5c2e21ed68d94a75cac0cc248925cc5bca35cc25))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/Iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   update side effect listings ([8160d3a](https://github.com/gaoding-inc/Iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   **switch:** process CSS correction ([292fff1](https://github.com/gaoding-inc/Iliad-ui/commit/292fff19a14225f579e5e8b4717b7db3a33895c4))
+-   **switch:** track aria-checked ([1980046](https://github.com/gaoding-inc/Iliad-ui/commit/1980046ab0f791bfe1e147c855f43ddf2d2a424e))
+-   workaround bug in Edge with switches ([7014a2c](https://github.com/gaoding-inc/Iliad-ui/commit/7014a2cced96a704589a85f4c23f5b3d5519fb3b))
 
 ### Features
 
-* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
-* **action-button:** add action button pattern ([03ac00a](https://github.com/gaoding-inc/Iliad-ui/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
-* **action-group:** add action-group pattern ([d2de766](https://github.com/gaoding-inc/Iliad-ui/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
-* **switch:** update spectrum css input ([1d2ce17](https://github.com/gaoding-inc/Iliad-ui/commit/1d2ce179650fd2206fb0b4a839361b2b0b2d9917))
-* leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/Iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
-* update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/Iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
-* use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/gaoding-inc/Iliad-ui/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
-* use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/Iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
-
+-   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/gaoding-inc/Iliad-ui/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **action-group:** add action-group pattern ([d2de766](https://github.com/gaoding-inc/Iliad-ui/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
+-   **switch:** update spectrum css input ([1d2ce17](https://github.com/gaoding-inc/Iliad-ui/commit/1d2ce179650fd2206fb0b4a839361b2b0b2d9917))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/Iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/Iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+-   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/gaoding-inc/Iliad-ui/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/Iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
 
 ### Performance Improvements
 
-* use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/Iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
-* use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/Iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
-
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/Iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/Iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
 
 ### Reverts
 
-* Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/Iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/Iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
 
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.8.0...@iliad-ui/switch@0.8.1) (2021-10-15)
 
-
-
-
-## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.8.0...@lliad-ui/switch@0.8.1) (2021-10-15)
-
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
 # 0.8.0 (2021-10-14)
 
@@ -197,103 +157,103 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   Revert "chore: release new versions" ([a6d655d](https://github.com/adobe/spectrum-web-components/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
 
-## [0.7.18](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.16...@lliad-ui/switch@0.7.18) (2021-10-14)
+## [0.7.18](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.16...@iliad-ui/switch@0.7.18) (2021-10-14)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.17](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.16...@lliad-ui/switch@0.7.17) (2021-10-14)
+## [0.7.17](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.16...@iliad-ui/switch@0.7.17) (2021-10-14)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.16](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.15...@lliad-ui/switch@0.7.16) (2021-10-12)
+## [0.7.16](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.15...@iliad-ui/switch@0.7.16) (2021-10-12)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.15](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.14...@lliad-ui/switch@0.7.15) (2021-09-20)
+## [0.7.15](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.14...@iliad-ui/switch@0.7.15) (2021-09-20)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.14](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.13...@lliad-ui/switch@0.7.14) (2021-09-13)
+## [0.7.14](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.13...@iliad-ui/switch@0.7.14) (2021-09-13)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.13](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.12...@lliad-ui/switch@0.7.13) (2021-08-24)
+## [0.7.13](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.12...@iliad-ui/switch@0.7.13) (2021-08-24)
 
 ### Bug Fixes
 
 -   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
-## [0.7.12](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.11...@lliad-ui/switch@0.7.12) (2021-08-03)
+## [0.7.12](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.11...@iliad-ui/switch@0.7.12) (2021-08-03)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.11](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.10...@lliad-ui/switch@0.7.11) (2021-07-22)
+## [0.7.11](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.10...@iliad-ui/switch@0.7.11) (2021-07-22)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.10](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.9...@lliad-ui/switch@0.7.10) (2021-07-01)
+## [0.7.10](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.9...@iliad-ui/switch@0.7.10) (2021-07-01)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.9](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.8...@lliad-ui/switch@0.7.9) (2021-06-16)
+## [0.7.9](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.8...@iliad-ui/switch@0.7.9) (2021-06-16)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.8](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.7...@lliad-ui/switch@0.7.8) (2021-06-07)
+## [0.7.8](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.7...@iliad-ui/switch@0.7.8) (2021-06-07)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.7](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.6...@lliad-ui/switch@0.7.7) (2021-05-24)
+## [0.7.7](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.6...@iliad-ui/switch@0.7.7) (2021-05-24)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.6](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.5...@lliad-ui/switch@0.7.6) (2021-05-12)
+## [0.7.6](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.5...@iliad-ui/switch@0.7.6) (2021-05-12)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.5](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.4...@lliad-ui/switch@0.7.5) (2021-04-09)
+## [0.7.5](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.4...@iliad-ui/switch@0.7.5) (2021-04-09)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.3...@lliad-ui/switch@0.7.4) (2021-03-29)
+## [0.7.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.3...@iliad-ui/switch@0.7.4) (2021-03-29)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.2...@lliad-ui/switch@0.7.3) (2021-03-22)
+## [0.7.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.2...@iliad-ui/switch@0.7.3) (2021-03-22)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.1...@lliad-ui/switch@0.7.2) (2021-03-22)
+## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.1...@iliad-ui/switch@0.7.2) (2021-03-22)
 
 ### Bug Fixes
 
 -   add support for "readonly" attribute ([4bce3b7](https://github.com/adobe/spectrum-web-components/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
 
-## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.7.0...@lliad-ui/switch@0.7.1) (2021-03-05)
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.7.0...@iliad-ui/switch@0.7.1) (2021-03-05)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.6.3...@lliad-ui/switch@0.7.0) (2021-03-04)
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.6.3...@iliad-ui/switch@0.7.0) (2021-03-04)
 
 ### Features
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.6.2...@lliad-ui/switch@0.6.3) (2021-02-11)
+## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.6.2...@iliad-ui/switch@0.6.3) (2021-02-11)
 
 ### Bug Fixes
 
 -   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
-## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.6.1...@lliad-ui/switch@0.6.2) (2021-02-02)
+## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.6.1...@iliad-ui/switch@0.6.2) (2021-02-02)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.6.0...@lliad-ui/switch@0.6.1) (2021-01-28)
+## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.6.0...@iliad-ui/switch@0.6.1) (2021-01-28)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.4.4...@lliad-ui/switch@0.6.0) (2021-01-21)
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.4.4...@iliad-ui/switch@0.6.0) (2021-01-21)
 
 ### Bug Fixes
 
@@ -309,7 +269,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
 -   **switch:** update spectrum css input ([1d2ce17](https://github.com/adobe/spectrum-web-components/commit/1d2ce179650fd2206fb0b4a839361b2b0b2d9917))
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.4.4...@lliad-ui/switch@0.5.0) (2021-01-13)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.4.4...@iliad-ui/switch@0.5.0) (2021-01-13)
 
 ### Bug Fixes
 
@@ -323,50 +283,50 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
 -   **switch:** update spectrum css input ([1d2ce17](https://github.com/adobe/spectrum-web-components/commit/1d2ce179650fd2206fb0b4a839361b2b0b2d9917))
 
-## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.4.3...@lliad-ui/switch@0.4.4) (2020-10-12)
+## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.4.3...@iliad-ui/switch@0.4.4) (2020-10-12)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.4.2...@lliad-ui/switch@0.4.3) (2020-10-12)
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.4.2...@iliad-ui/switch@0.4.3) (2020-10-12)
 
 ### Bug Fixes
 
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.4.1...@lliad-ui/switch@0.4.2) (2020-09-25)
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.4.1...@iliad-ui/switch@0.4.2) (2020-09-25)
 
 ### Bug Fixes
 
 -   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
 
-## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.4.0...@lliad-ui/switch@0.4.1) (2020-09-14)
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.4.0...@iliad-ui/switch@0.4.1) (2020-09-14)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.3.4...@lliad-ui/switch@0.4.0) (2020-08-31)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.3.4...@iliad-ui/switch@0.4.0) (2020-08-31)
 
 ### Features
 
 -   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
 -   **action-group:** add action-group pattern ([d2de766](https://github.com/adobe/spectrum-web-components/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
 
-## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.3.3...@lliad-ui/switch@0.3.4) (2020-08-19)
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.3.3...@iliad-ui/switch@0.3.4) (2020-08-19)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.3.2...@lliad-ui/switch@0.3.3) (2020-07-27)
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.3.2...@iliad-ui/switch@0.3.3) (2020-07-27)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.3.1...@lliad-ui/switch@0.3.2) (2020-07-24)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.3.1...@iliad-ui/switch@0.3.2) (2020-07-24)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.3.0...@lliad-ui/switch@0.3.1) (2020-07-22)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.3.0...@iliad-ui/switch@0.3.1) (2020-07-22)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.16...@lliad-ui/switch@0.3.0) (2020-07-17)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.16...@iliad-ui/switch@0.3.0) (2020-07-17)
 
 ### Bug Fixes
 
@@ -376,93 +336,93 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 
-## [0.2.16](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.15...@lliad-ui/switch@0.2.16) (2020-06-08)
+## [0.2.16](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.15...@iliad-ui/switch@0.2.16) (2020-06-08)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.2.15](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.14...@lliad-ui/switch@0.2.15) (2020-05-08)
+## [0.2.15](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.14...@iliad-ui/switch@0.2.15) (2020-05-08)
 
 ### Bug Fixes
 
 -   **switch:** process CSS correction ([292fff1](https://github.com/adobe/spectrum-web-components/commit/292fff19a14225f579e5e8b4717b7db3a33895c4))
 -   ensure aria attributes based on state ([6ee43de](https://github.com/adobe/spectrum-web-components/commit/6ee43de23254f612759cc258705dfe6eed30c418))
 
-## [0.2.14](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.13...@lliad-ui/switch@0.2.14) (2020-04-21)
+## [0.2.14](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.13...@iliad-ui/switch@0.2.14) (2020-04-21)
 
 ### Bug Fixes
 
 -   workaround bug in Edge with switches ([7014a2c](https://github.com/adobe/spectrum-web-components/commit/7014a2cced96a704589a85f4c23f5b3d5519fb3b))
 
-## [0.2.13](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.12...@lliad-ui/switch@0.2.13) (2020-04-16)
+## [0.2.13](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.12...@iliad-ui/switch@0.2.13) (2020-04-16)
 
 ### Performance Improvements
 
 -   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
 
-## [0.2.12](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.11...@lliad-ui/switch@0.2.12) (2020-04-10)
+## [0.2.12](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.11...@iliad-ui/switch@0.2.12) (2020-04-10)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.2.11](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.10...@lliad-ui/switch@0.2.11) (2020-04-07)
+## [0.2.11](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.10...@iliad-ui/switch@0.2.11) (2020-04-07)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.2.10](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.9...@lliad-ui/switch@0.2.10) (2020-03-11)
+## [0.2.10](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.9...@iliad-ui/switch@0.2.10) (2020-03-11)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.2.9](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.8...@lliad-ui/switch@0.2.9) (2020-02-05)
+## [0.2.9](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.8...@iliad-ui/switch@0.2.9) (2020-02-05)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.7...@lliad-ui/switch@0.2.8) (2020-02-01)
+## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.7...@iliad-ui/switch@0.2.8) (2020-02-01)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.6...@lliad-ui/switch@0.2.7) (2020-01-30)
+## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.6...@iliad-ui/switch@0.2.7) (2020-01-30)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.5...@lliad-ui/switch@0.2.6) (2020-01-06)
+## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.5...@iliad-ui/switch@0.2.6) (2020-01-06)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.4...@lliad-ui/switch@0.2.5) (2019-12-12)
+## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.4...@iliad-ui/switch@0.2.5) (2019-12-12)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.3...@lliad-ui/switch@0.2.4) (2019-12-09)
+## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.3...@iliad-ui/switch@0.2.4) (2019-12-09)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.2...@lliad-ui/switch@0.2.3) (2019-12-03)
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.2...@iliad-ui/switch@0.2.3) (2019-12-03)
 
 ### Bug Fixes
 
 -   focusable style ([48ea3e7](https://github.com/adobe/spectrum-web-components/commit/48ea3e7))
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.1...@lliad-ui/switch@0.2.2) (2019-12-02)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.1...@iliad-ui/switch@0.2.2) (2019-12-02)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.2.0...@lliad-ui/switch@0.2.1) (2019-11-27)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.2.0...@iliad-ui/switch@0.2.1) (2019-11-27)
 
 ### Bug Fixes
 
 -   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716))
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.1.5...@lliad-ui/switch@0.2.0) (2019-11-19)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.1.5...@iliad-ui/switch@0.2.0) (2019-11-19)
 
 ### Features
 
 -   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc7))
 -   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/3918888))
 
-## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.1.4...@lliad-ui/switch@0.1.5) (2019-11-01)
+## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.1.4...@iliad-ui/switch@0.1.5) (2019-11-01)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch
 
-## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/switch@0.1.3...@lliad-ui/switch@0.1.4) (2019-10-14)
+## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/switch@0.1.3...@iliad-ui/switch@0.1.4) (2019-10-14)
 
 ### Performance Improvements
 
@@ -470,4 +430,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.1.3 (2019-10-03)
 
-**Note:** Version bump only for package @lliad-ui/switch
+**Note:** Version bump only for package @iliad-ui/switch

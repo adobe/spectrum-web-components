@@ -4,24 +4,24 @@ An `<sp-color-slider>` lets users visually change an individual channel of a col
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/color-slider?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/color-slider)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/color-slider?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/color-slider)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/color-slider?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/color-slider)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/color-slider?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/color-slider)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/kxW1VIhXBXVSOnyXhF9M/src/index.ts)
 
 ```
-yarn add @lliad-ui/color-slider
+yarn add @iliad-ui/color-slider
 ```
 
 Import the side effectful registration of `<sp-color-slider>` via:
 
 ```
-import '@lliad-ui/color-slider/sp-color-slider.js';
+import '@iliad-ui/color-slider/sp-color-slider.js';
 ```
 
 When looking to leverage the `ColorSlider` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ColorSlider } from '@lliad-ui/color-slider';
+import { ColorSlider } from '@iliad-ui/color-slider';
 ```
 
 ## Color Formatting

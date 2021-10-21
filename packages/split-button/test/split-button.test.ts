@@ -25,9 +25,9 @@ import splitButtonDefault, {
     field,
     more,
 } from '../stories/split-button-cta.stories.js';
-import { MenuItem } from '@lliad-ui/menu';
+import { MenuItem } from '@iliad-ui/menu';
 import { arrowDownEvent } from '../../../test/testing-helpers.js';
-import { TemplateResult } from '@lliad-ui/base';
+import { TemplateResult } from '@iliad-ui/base';
 
 // wrap in div method
 

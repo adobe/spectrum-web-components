@@ -17,10 +17,10 @@ import {
     TemplateResult,
     property,
     query,
-} from '@lliad-ui/base';
-import '@lliad-ui/underlay/sp-underlay.js';
+} from '@iliad-ui/base';
+import '@iliad-ui/underlay/sp-underlay.js';
 
-import modalStyles from '@lliad-ui/modal/src/modal.css.js';
+import modalStyles from '@iliad-ui/modal/src/modal.css.js';
 import styles from './tray.css.js';
 
 /**

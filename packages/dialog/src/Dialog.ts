@@ -19,18 +19,18 @@ import {
     query,
     ifDefined,
     PropertyValues,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
-import '@lliad-ui/divider/sp-divider.js';
-import '@lliad-ui/action-button/sp-action-button.js';
-import '@lliad-ui/button-group/sp-button-group.js';
-import crossStyles from '@lliad-ui/icon/src/spectrum-icon-cross.css.js';
-import '@lliad-ui/icons-ui/icons/sp-icon-cross500.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@iliad-ui/divider/sp-divider.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/button-group/sp-button-group.js';
+import crossStyles from '@iliad-ui/icon/src/spectrum-icon-cross.css.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-cross500.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-alert.js';
 import {
     ObserveSlotPresence,
     FocusVisiblePolyfillMixin,
-} from '@lliad-ui/shared';
+} from '@iliad-ui/shared';
 
 import styles from './dialog.css.js';
 

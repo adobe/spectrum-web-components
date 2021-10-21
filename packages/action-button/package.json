@@ -1,5 +1,5 @@
 {
-    "name": "@lliad-ui/action-button",
+    "name": "@iliad-ui/action-button",
     "version": "0.10.3",
     "publishConfig": {
         "access": "public"
@@ -50,10 +50,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.9.3",
-        "@lliad-ui/button": "^0.19.3",
-        "@lliad-ui/icon": "^0.14.3",
-        "@lliad-ui/icons-ui": "^0.11.3",
+        "@iliad-ui/base": "^0.9.3",
+        "@iliad-ui/button": "^0.19.3",
+        "@iliad-ui/icon": "^0.14.3",
+        "@iliad-ui/icons-ui": "^0.11.3",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

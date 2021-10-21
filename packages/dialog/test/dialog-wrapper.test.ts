@@ -15,9 +15,9 @@ import { spy } from 'sinon';
 
 import '../sp-dialog-wrapper.js';
 import { Dialog, DialogWrapper } from '../';
-import { ActionButton } from '@lliad-ui/action-button';
-import { Button } from '@lliad-ui/button';
-import { Underlay } from '@lliad-ui/underlay';
+import { ActionButton } from '@iliad-ui/action-button';
+import { Button } from '@iliad-ui/button';
+import { Underlay } from '@iliad-ui/underlay';
 import {
     wrapperLabeledHero,
     wrapperDismissable,

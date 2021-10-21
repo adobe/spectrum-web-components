@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult, render } from '@lliad-ui/base';
+import { html, TemplateResult, render } from '@iliad-ui/base';
 import './sp-story-decorator.js';
 
 export const themeStyles = html`

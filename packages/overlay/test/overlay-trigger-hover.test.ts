@@ -16,13 +16,13 @@ import {
     html,
     expect,
 } from '@open-wc/testing';
-import '@lliad-ui/popover/sp-popover.js';
-import '@lliad-ui/action-button/sp-action-button.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-magnify.js';
+import '@iliad-ui/popover/sp-popover.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-magnify.js';
 import { OverlayTrigger } from '..';
-import '@lliad-ui/overlay/overlay-trigger.js';
+import '@iliad-ui/overlay/overlay-trigger.js';
 import { spy } from 'sinon';
-import { ActionButton } from '@lliad-ui/action-button';
+import { ActionButton } from '@iliad-ui/action-button';
 
 describe('Overlay Trigger - Hover', () => {
     it('displays `hover` declaratively', async () => {

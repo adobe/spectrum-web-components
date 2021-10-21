@@ -1,5 +1,5 @@
 {
-    "name": "@lliad-ui/color-slider",
+    "name": "@iliad-ui/color-slider",
     "version": "0.6.3",
     "publishConfig": {
         "access": "public"
@@ -51,9 +51,9 @@
     ],
     "dependencies": {
         "@ctrl/tinycolor": "^3.3.3",
-        "@lliad-ui/base": "^0.9.3",
-        "@lliad-ui/color-handle": "^0.4.3",
-        "@lliad-ui/shared": "^0.17.3",
+        "@iliad-ui/base": "^0.9.3",
+        "@iliad-ui/color-handle": "^0.4.3",
+        "@iliad-ui/shared": "^0.17.3",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

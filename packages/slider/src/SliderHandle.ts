@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { property, PropertyValues } from '@lliad-ui/base';
-import { Focusable } from '@lliad-ui/shared/src/focusable.js';
-import { ProvideLang } from '@lliad-ui/theme';
+import { property, PropertyValues } from '@iliad-ui/base';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
+import { ProvideLang } from '@iliad-ui/theme';
 import {
     NumberFormatter,
     NumberFormatOptions,

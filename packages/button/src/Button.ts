@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, property, SizedMixin } from '@lliad-ui/base';
+import { CSSResultArray, property, SizedMixin } from '@iliad-ui/base';
 import { StyledButton } from './StyledButton.js';
 import buttonStyles from './button.css.js';
 

@@ -14,7 +14,7 @@ import '../sp-theme.js';
 import '../src/themes.js';
 import { Theme, ThemeFragmentMap } from '../';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
-import { css } from '@lliad-ui/base';
+import { css } from '@iliad-ui/base';
 
 type TestableThemeConstructor = {
     instances: Set<Theme>;

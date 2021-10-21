@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { StatusLight } from './src/StatusLight.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-status-light', StatusLight);
 
 declare global {

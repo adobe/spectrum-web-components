@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ThemeData } from '@lliad-ui/theme';
+import { ThemeData } from '@iliad-ui/theme';
 import { Placement as PopperPlacement } from './popper';
 import { VirtualTrigger } from './VirtualTrigger.js';
 

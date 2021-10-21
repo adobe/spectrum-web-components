@@ -4,25 +4,25 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/top-nav?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/top-nav)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/top-nav?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/top-nav)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/top-nav?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/top-nav)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/top-nav?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/top-nav)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/LtIrARhL1Qgevqxs3hZE/src/index.ts)
 
 ```
-yarn add @lliad-ui/top-nav
+yarn add @iliad-ui/top-nav
 ```
 
 Import the side effectful registration of `<sp-top-nav>` and `<sp-top-nav-item>` as follows:
 
 ```
-import '@lliad-ui/top-nav/sp-top-nav.js';
-import '@lliad-ui/top-nav/sp-top-nav-item.js';
+import '@iliad-ui/top-nav/sp-top-nav.js';
+import '@iliad-ui/top-nav/sp-top-nav-item.js';
 ```
 
 When looking to leverage the `TopNav` or `TopNavItem` base classes as a type and/or for extension purposes, do so via:
 
 ```
-import { TopNav, TopNavItem } from '@lliad-ui/top-nav';
+import { TopNav, TopNavItem } from '@iliad-ui/top-nav';
 ```
 
 ### Example

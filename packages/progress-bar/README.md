@@ -4,24 +4,24 @@ An `<sp-progress-bar>` shows the progression of a system operation such as downl
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/progress-bar?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/progress-bar)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/progress-bar?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/progress-bar)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/progress-bar?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/progress-bar)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/progress-bar?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/progress-bar)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/WjcwSATAB2ZGd0FopIyP/src/index.ts)
 
 ```
-yarn add @lliad-ui/progress-bar
+yarn add @iliad-ui/progress-bar
 ```
 
 Import the side effectful registration of `<sp-progress-bar>` via:
 
 ```
-import '@lliad-ui/progress-bar/sp-progress-bar.js';
+import '@iliad-ui/progress-bar/sp-progress-bar.js';
 ```
 
 When looking to leverage the `ProgressBar` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ProgressBar } from '@lliad-ui/progress-bar';
+import { ProgressBar } from '@iliad-ui/progress-bar';
 ```
 
 ## Sizes

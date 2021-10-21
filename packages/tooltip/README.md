@@ -4,24 +4,24 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/tooltip?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/tooltip)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/tooltip?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/tooltip)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/tooltip?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/tooltip)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/tooltip?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/tooltip)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/VmbuRedDUMmN4amLK7ie/src/index.ts)
 
 ```
-yarn add @lliad-ui/tooltip
+yarn add @iliad-ui/tooltip
 ```
 
 Import the side effectful registration of `<sp-tooltip>` via:
 
 ```
-import '@lliad-ui/tooltip/sp-tooltip.js';
+import '@iliad-ui/tooltip/sp-tooltip.js';
 ```
 
 When looking to leverage the `Tooltip` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Tooltip } from '@lliad-ui/tooltip';
+import { Tooltip } from '@iliad-ui/tooltip';
 ```
 
 ### Example

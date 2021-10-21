@@ -18,11 +18,11 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 
-import { ActionButton } from '@lliad-ui/action-button';
-import '@lliad-ui/action-button/sp-action-button.js';
-import { TemplateResult, LitElement } from '@lliad-ui/base';
-import '@lliad-ui/overlay/overlay-trigger.js';
-import '@lliad-ui/tooltip/sp-tooltip.js';
+import { ActionButton } from '@iliad-ui/action-button';
+import '@iliad-ui/action-button/sp-action-button.js';
+import { TemplateResult, LitElement } from '@iliad-ui/base';
+import '@iliad-ui/overlay/overlay-trigger.js';
+import '@iliad-ui/tooltip/sp-tooltip.js';
 import { ActionGroup } from '..';
 import {
     arrowDownEvent,

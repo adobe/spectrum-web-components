@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@lliad-ui/icon/sp-icon.js';
+import '@iliad-ui/icon/sp-icon.js';
 import '../../iconset/stories/icons-demo.js';
-import { html, TemplateResult, until } from '@lliad-ui/base';
+import { html, TemplateResult, until } from '@iliad-ui/base';
 
 export default {
     title: 'Icons/UI',

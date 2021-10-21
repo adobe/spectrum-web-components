@@ -10,17 +10,17 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 import '../sp-picker.js';
 import { Picker } from '../';
-import '@lliad-ui/menu/sp-menu-item.js';
-import '@lliad-ui/menu/sp-menu-divider.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-edit.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-copy.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-delete.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/menu/sp-menu-divider.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-edit.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-copy.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-delete.js';
 import { states } from './states.js';
-import '@lliad-ui/field-label/sp-field-label.js';
+import '@iliad-ui/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {

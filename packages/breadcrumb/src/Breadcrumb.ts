@@ -15,7 +15,7 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import styles from './breadcrumb.css.js';
 

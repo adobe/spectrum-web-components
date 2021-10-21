@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { Dialog } from './src/Dialog.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-dialog', Dialog);
 
 declare global {

@@ -16,9 +16,9 @@ import {
     TemplateResult,
     property,
     customElement,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
-import styles from '@lliad-ui/theme/src/typography.css.js';
+import styles from '@iliad-ui/theme/src/typography.css.js';
 
 /**
  * @element typography-decorator

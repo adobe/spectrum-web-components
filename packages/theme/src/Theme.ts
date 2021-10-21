@@ -14,7 +14,7 @@ import {
     CSSResultGroup,
     CSSResult,
     supportsAdoptingStyleSheets,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import coreStyles from './theme.css.js';
 

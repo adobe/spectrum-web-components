@@ -14,7 +14,7 @@ import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
 import '../sp-accordion.js';
 import { Default } from '../stories/accordion.stories.js';
-import { Accordion, AccordionItem } from '@lliad-ui/accordion';
+import { Accordion, AccordionItem } from '@iliad-ui/accordion';
 import {
     arrowUpEvent,
     arrowDownEvent,

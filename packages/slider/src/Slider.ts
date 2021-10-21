@@ -20,13 +20,13 @@ import {
     ifDefined,
     repeat,
     classMap,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import sliderStyles from './slider.css.js';
-import { ObserveSlotText } from '@lliad-ui/shared/src/observe-slot-text.js';
+import { ObserveSlotText } from '@iliad-ui/shared/src/observe-slot-text.js';
 import { StyleInfo } from 'lit-html/directives/style-map';
-import '@lliad-ui/field-label/sp-field-label.js';
-import type { NumberField } from '@lliad-ui/number-field';
+import '@iliad-ui/field-label/sp-field-label.js';
+import type { NumberField } from '@iliad-ui/number-field';
 import { HandleController, HandleValueDictionary } from './HandleController.js';
 import { SliderHandle } from './SliderHandle.js';
 
@@ -58,7 +58,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         this._editable = this.handleController.size < 2 ? editable : false;
         if (this.editable) {
             this._numberFieldInput = import(
-                '@lliad-ui/number-field/sp-number-field.js'
+                '@iliad-ui/number-field/sp-number-field.js'
             );
         }
         if (oldValue !== this.editable) {

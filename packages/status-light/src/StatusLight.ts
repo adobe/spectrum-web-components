@@ -18,7 +18,7 @@ import {
     TemplateResult,
     PropertyValues,
     SizedMixin,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 import statusLightStyles from './status-light.css.js';
 
 /**

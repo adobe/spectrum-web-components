@@ -4,24 +4,24 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/toast?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/toast)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/toast?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/toast)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/toast?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/toast)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/toast?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/toast)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/74g0Hq6Hwy0ehvo7tssT/src/index.ts)
 
 ```
-yarn add @lliad-ui/toast
+yarn add @iliad-ui/toast
 ```
 
 Import the side effectful registration of `<sp-toast>` via:
 
 ```
-import '@lliad-ui/toast/sp-toast.js';
+import '@iliad-ui/toast/sp-toast.js';
 ```
 
 When looking to leverage the `Toast` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Toast } from '@lliad-ui/toast';
+import { Toast } from '@iliad-ui/toast';
 ```
 
 ## Example

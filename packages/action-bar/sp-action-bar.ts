@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { ActionBar } from './src/ActionBar.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-action-bar', ActionBar);
 
 declare global {

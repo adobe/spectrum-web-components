@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { Checkbox } from './src/Checkbox.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-checkbox', Checkbox);
 
 declare global {

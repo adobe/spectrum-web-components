@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement, html, CSSResultArray, property } from '@lliad-ui/base';
+import { LitElement, html, CSSResultArray, property } from '@iliad-ui/base';
 import logoStyles from './adobe-logo.css';
 
 class SpectrumLogo extends LitElement {

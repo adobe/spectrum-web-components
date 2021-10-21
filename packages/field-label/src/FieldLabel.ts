@@ -19,10 +19,10 @@ import {
     PropertyValues,
     SizedMixin,
     query,
-} from '@lliad-ui/base';
-import type { Focusable } from '@lliad-ui/shared';
-import '@lliad-ui/icons-ui/icons/sp-icon-asterisk100.js';
-import asteriskIconStyles from '@lliad-ui/icon/src/spectrum-icon-asterisk.css.js';
+} from '@iliad-ui/base';
+import type { Focusable } from '@iliad-ui/shared';
+import '@iliad-ui/icons-ui/icons/sp-icon-asterisk100.js';
+import asteriskIconStyles from '@iliad-ui/icon/src/spectrum-icon-asterisk.css.js';
 
 import styles from './field-label.css.js';
 

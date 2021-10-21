@@ -18,11 +18,11 @@ import {
     property,
     query,
     ifDefined,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
-import { Textfield } from '@lliad-ui/textfield';
-import '@lliad-ui/button/sp-clear-button.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-magnify.js';
+import { Textfield } from '@iliad-ui/textfield';
+import '@iliad-ui/button/sp-clear-button.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-magnify.js';
 
 import searchStyles from './search.css.js';
 

@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { SideNavItem } from './src/SidenavItem.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-sidenav-item', SideNavItem);
 
 declare global {

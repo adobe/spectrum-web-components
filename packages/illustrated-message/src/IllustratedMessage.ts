@@ -16,11 +16,11 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import messageStyles from './illustrated-message.css.js';
-import headingStyles from '@lliad-ui/styles/heading.js';
-import bodyStyles from '@lliad-ui/styles/body.js';
+import headingStyles from '@iliad-ui/styles/heading.js';
+import bodyStyles from '@iliad-ui/styles/body.js';
 
 /**
  * @element sp-illustrated-message

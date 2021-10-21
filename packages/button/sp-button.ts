@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { Button } from './src/Button.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-button', Button);
 
 declare global {

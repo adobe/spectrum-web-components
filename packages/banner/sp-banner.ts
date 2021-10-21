@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { Banner } from './src/Banner.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-banner', Banner);
 
 declare global {

@@ -17,7 +17,7 @@ import {
     CSSResultArray,
     TemplateResult,
     ifDefined,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import avatarStyles from './avatar.css.js';
 

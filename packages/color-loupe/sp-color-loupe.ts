@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { ColorLoupe } from './src/ColorLoupe.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-color-loupe', ColorLoupe);
 
 declare global {

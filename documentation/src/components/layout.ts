@@ -17,19 +17,19 @@ import {
     SpectrumElement,
     PropertyValues,
     TemplateResult,
-} from '@lliad-ui/base';
-import '@lliad-ui/theme/sp-theme.js';
-import '@lliad-ui/theme/src/themes.js';
-import { Color, Scale } from '@lliad-ui/theme';
+} from '@iliad-ui/base';
+import '@iliad-ui/theme/sp-theme.js';
+import '@iliad-ui/theme/src/themes.js';
+import { Color, Scale } from '@iliad-ui/theme';
 import './side-nav.js';
 import layoutStyles from './layout.css';
-import '@lliad-ui/field-label/sp-field-label.js';
-import { Picker } from '@lliad-ui/picker';
-import '@lliad-ui/picker/sp-picker.js';
-import '@lliad-ui/menu/sp-menu.js';
-import '@lliad-ui/menu/sp-menu-item.js';
-import '@lliad-ui/action-button/sp-action-button.js';
-import '@lliad-ui/toast/sp-toast.js';
+import '@iliad-ui/field-label/sp-field-label.js';
+import { Picker } from '@iliad-ui/picker';
+import '@iliad-ui/picker/sp-picker.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/toast/sp-toast.js';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';

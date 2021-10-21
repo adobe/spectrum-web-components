@@ -6,19 +6,19 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/radio?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/radio)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/radio?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/radio)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/radio?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/radio)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/radio?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/radio)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/vUinRWkhayMTAmr9AK9J/src/index.ts)
 
 ```
-yarn add @lliad-ui/radio
+yarn add @iliad-ui/radio
 ```
 
 Import the side effectful registration of `<sp-radio>` or `<sp-radio-group>` via:
 
 ```
-import '@lliad-ui/radio/sp-radio.js';
-import '@lliad-ui/radio/sp-radio-group.js';
+import '@iliad-ui/radio/sp-radio.js';
+import '@iliad-ui/radio/sp-radio-group.js';
 ```
 
 When looking to leverage the `Radio` or `RadioGroup` base classes as a type and/or for extension purposes, do so via:
@@ -27,7 +27,7 @@ When looking to leverage the `Radio` or `RadioGroup` base classes as a type and/
 import {
     Radio,
     RadioGroup
-} from '@lliad-ui/radio';
+} from '@iliad-ui/radio';
 ```
 
 ### Example

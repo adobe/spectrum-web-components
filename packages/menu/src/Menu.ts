@@ -18,7 +18,7 @@ import {
     property,
     PropertyValues,
     query,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import {
     MenuItem,

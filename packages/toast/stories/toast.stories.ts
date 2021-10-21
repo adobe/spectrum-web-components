@@ -9,10 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 import '../sp-toast.js';
-import '@lliad-ui/button/sp-button.js';
+import '@iliad-ui/button/sp-button.js';
 
 const toast = ({
     variant = '',

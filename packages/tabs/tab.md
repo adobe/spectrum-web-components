@@ -4,18 +4,18 @@ An `<sp-tab>` element surfaces a `label` attribute to serve as its default text 
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/tabs?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/tabs)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/tabs?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/tabs)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/tabs?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/tabs)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/tabs?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/tabs)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/2JFFTBPXfCZpePD0wk58/src/index.ts)
 
 ```
-yarn add @lliad-ui/tabs
+yarn add @iliad-ui/tabs
 ```
 
 Import the side effectful registration of `<sp-tab>` via:
 
 ```
-import '@lliad-ui/tabs/sp-tab.js';
+import '@iliad-ui/tabs/sp-tab.js';
 ```
 
 When looking to leverage the `Tab` base class as a type and/or for extension purposes, do so via:
@@ -23,7 +23,7 @@ When looking to leverage the `Tab` base class as a type and/or for extension pur
 ```
 import {
     Tab,
-} from '@lliad-ui/tabs';
+} from '@iliad-ui/tabs';
 ```
 
 ## Examples

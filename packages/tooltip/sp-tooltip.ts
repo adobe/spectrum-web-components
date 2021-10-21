@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { Tooltip } from './src/Tooltip.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-tooltip', Tooltip);
 
 declare global {

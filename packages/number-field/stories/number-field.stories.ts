@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 import '../sp-number-field.js';
-import '@lliad-ui/field-label/sp-field-label.js';
+import '@iliad-ui/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {

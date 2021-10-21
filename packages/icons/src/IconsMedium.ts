@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@lliad-ui/base';
+import { TemplateResult } from '@iliad-ui/base';
 
-import { IconsetSVG } from '@lliad-ui/iconset/src/iconset-svg.js';
+import { IconsetSVG } from '@iliad-ui/iconset/src/iconset-svg.js';
 
 import iconsSVG from './icons-medium.svg.js';
 

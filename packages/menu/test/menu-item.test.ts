@@ -13,8 +13,8 @@ governing permissions and limitations under the License.
 import '../sp-menu.js';
 import '../sp-menu-item.js';
 import { MenuItem } from '../';
-import '@lliad-ui/menu';
-import { Menu } from '@lliad-ui/menu';
+import '@iliad-ui/menu';
+import { Menu } from '@iliad-ui/menu';
 import {
     fixture,
     elementUpdated,

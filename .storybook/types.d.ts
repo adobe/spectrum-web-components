@@ -1,4 +1,4 @@
-import { TemplateResult } from '@lliad-ui/base';
+import { TemplateResult } from '@iliad-ui/base';
 
 export interface Story<T> {
     (args?: T): TemplateResult;

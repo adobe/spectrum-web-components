@@ -8,7 +8,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult, ifDefined } from '@lliad-ui/base';
+import { html, TemplateResult, ifDefined } from '@iliad-ui/base';
 import {
     openOverlay,
     Overlay,
@@ -17,32 +17,32 @@ import {
     Placement,
     VirtualTrigger,
 } from '../';
-import '@lliad-ui/action-button/sp-action-button.js';
-import '@lliad-ui/action-group/sp-action-group.js';
-import '@lliad-ui/button/sp-button.js';
-import '@lliad-ui/dialog/sp-dialog-wrapper.js';
-import { DialogWrapper } from '@lliad-ui/dialog';
-import '@lliad-ui/field-label/sp-field-label.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-magnify.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-open-in.js';
-import '@lliad-ui/overlay/overlay-trigger.js';
-import { Picker } from '@lliad-ui/picker';
-import '@lliad-ui/picker/sp-picker.js';
-import '@lliad-ui/menu/sp-menu.js';
-import '@lliad-ui/menu/sp-menu-item.js';
-import '@lliad-ui/menu/sp-menu-divider.js';
-import '@lliad-ui/popover/sp-popover.js';
-import '@lliad-ui/slider/sp-slider.js';
-import '@lliad-ui/radio/sp-radio.js';
-import '@lliad-ui/radio/sp-radio-group.js';
-import '@lliad-ui/tooltip/sp-tooltip.js';
-import '@lliad-ui/theme/sp-theme.js';
-import '@lliad-ui/theme/src/themes.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/action-group/sp-action-group.js';
+import '@iliad-ui/button/sp-button.js';
+import '@iliad-ui/dialog/sp-dialog-wrapper.js';
+import { DialogWrapper } from '@iliad-ui/dialog';
+import '@iliad-ui/field-label/sp-field-label.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-magnify.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-open-in.js';
+import '@iliad-ui/overlay/overlay-trigger.js';
+import { Picker } from '@iliad-ui/picker';
+import '@iliad-ui/picker/sp-picker.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/menu/sp-menu-divider.js';
+import '@iliad-ui/popover/sp-popover.js';
+import '@iliad-ui/slider/sp-slider.js';
+import '@iliad-ui/radio/sp-radio.js';
+import '@iliad-ui/radio/sp-radio-group.js';
+import '@iliad-ui/tooltip/sp-tooltip.js';
+import '@iliad-ui/theme/sp-theme.js';
+import '@iliad-ui/theme/src/themes.js';
 import '../../../projects/story-decorator/src/types.js';
 
 import './overlay-story-components.js';
 import { render } from 'lit-html';
-import { Popover } from '@lliad-ui/popover';
+import { Popover } from '@iliad-ui/popover';
 
 const storyStyles = html`
     <style>

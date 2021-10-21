@@ -19,18 +19,18 @@ import {
     ifDefined,
     nothing,
     queryAsync,
-} from '@lliad-ui/base';
-import '@lliad-ui/theme/sp-theme.js';
-import '@lliad-ui/theme/src/themes.js';
-import '@lliad-ui/field-label/sp-field-label.js';
-import '@lliad-ui/picker/sp-picker.js';
-import '@lliad-ui/menu/sp-menu.js';
-import '@lliad-ui/menu/sp-menu-item.js';
-import '@lliad-ui/switch/sp-switch.js';
-import { Picker } from '@lliad-ui/picker';
-import { Switch } from '@lliad-ui/switch';
-import { Scale, Color, Theme } from '@lliad-ui/theme';
-import { ActiveOverlay } from '@lliad-ui/overlay';
+} from '@iliad-ui/base';
+import '@iliad-ui/theme/sp-theme.js';
+import '@iliad-ui/theme/src/themes.js';
+import '@iliad-ui/field-label/sp-field-label.js';
+import '@iliad-ui/picker/sp-picker.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/switch/sp-switch.js';
+import { Picker } from '@iliad-ui/picker';
+import { Switch } from '@iliad-ui/switch';
+import { Scale, Color, Theme } from '@iliad-ui/theme';
+import { ActiveOverlay } from '@iliad-ui/overlay';
 import './types.js';
 
 const queryString = window.location.search;

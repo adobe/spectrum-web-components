@@ -7,24 +7,24 @@ image/caption pairs.
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/card?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/card)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/card?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/card)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/card?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/card)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/card?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/card)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/gohijqRl7uBMp6qJZsp2/src/index.stories.js)
 
 ```
-yarn add @lliad-ui/card
+yarn add @iliad-ui/card
 ```
 
 Import the side effectful registration of `<sp-card>` via:
 
 ```
-import '@lliad-ui/card/sp-card.js';
+import '@iliad-ui/card/sp-card.js';
 ```
 
 When looking to leverage the `Card` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Card } from '@lliad-ui/card';
+import { Card } from '@iliad-ui/card';
 ```
 
 ## Example

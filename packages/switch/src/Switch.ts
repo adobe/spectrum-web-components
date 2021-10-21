@@ -16,8 +16,8 @@ import {
     html,
     PropertyValues,
     property,
-} from '@lliad-ui/base';
-import { CheckboxBase } from '@lliad-ui/checkbox/src/CheckboxBase.js';
+} from '@iliad-ui/base';
+import { CheckboxBase } from '@iliad-ui/checkbox/src/CheckboxBase.js';
 import switchStyles from './switch.css.js';
 import legacyStyles from './switch-legacy.css.js';
 

@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '../sp-tooltip.js';
-import { html, ifDefined, TemplateResult } from '@lliad-ui/base';
-import '@lliad-ui/icons-workflow/icons/sp-icon-alert.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-checkmark.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-info.js';
-import '@lliad-ui/button/sp-button.js';
-import { Placement } from '@lliad-ui/overlay';
-import '@lliad-ui/overlay/overlay-trigger.js';
+import { html, ifDefined, TemplateResult } from '@iliad-ui/base';
+import '@iliad-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-checkmark.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-info.js';
+import '@iliad-ui/button/sp-button.js';
+import { Placement } from '@iliad-ui/overlay';
+import '@iliad-ui/overlay/overlay-trigger.js';
 
 const iconOptions: {
     [key: string]: ({

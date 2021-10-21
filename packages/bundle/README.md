@@ -1,26 +1,26 @@
 ## Description
 
-`@lliad-ui/bundle` is a master dependancy that allows a project to import any and all of the the Spectrum Web Components. While it is a great approach to prototyping, the fact that is versions all of the Spectrum Web Components packages collectively means that depending on it can leave you with a lot of package udpates to manage at any one version change. For a more predicatable upgrade process we suggest that you depend upon individual packages directly, but hope you find this bundle productive when initially trying to get into the act of developing with Spectrum Web Components!
+`@iliad-ui/bundle` is a master dependancy that allows a project to import any and all of the the Spectrum Web Components. While it is a great approach to prototyping, the fact that is versions all of the Spectrum Web Components packages collectively means that depending on it can leave you with a lot of package udpates to manage at any one version change. For a more predicatable upgrade process we suggest that you depend upon individual packages directly, but hope you find this bundle productive when initially trying to get into the act of developing with Spectrum Web Components!
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/bundle?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/bundle)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/bundle?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/bundle)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/bundle?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/bundle)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/bundle?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/bundle)
 
 ```
-yarn add @lliad-ui/bundle
+yarn add @iliad-ui/bundle
 ```
 
 Import the side effectful registrations of the bundled components:
 
 ```
-import '@lliad-ui/bundle/elements.js';
+import '@iliad-ui/bundle/elements.js';
 ```
 
 When looking to leverage their base classes as a type and/or for extension purposes, do so via something like the following for the `ActionButton` base class:
 
 ```
-import { ActionButton } from '@lliad-ui/bundle';
+import { ActionButton } from '@iliad-ui/bundle';
 ```
 
 ### Icons
@@ -29,10 +29,10 @@ While this bundle directly re-exports the majority of functionality as they woul
 
 #### UI
 
-`@lliad-ui/icons-ui` is renamed to `UIIcons` when leveraging the bundle. This means that you can use workflow icons in your demonstration code by importing them from `@lliad-ui/bundle/icons.js` like the following:
+`@iliad-ui/icons-ui` is renamed to `UIIcons` when leveraging the bundle. This means that you can use workflow icons in your demonstration code by importing them from `@iliad-ui/bundle/icons.js` like the following:
 
 ```
-import { UIIcons } from '@lliad-ui/bundle/icons.js';
+import { UIIcons } from '@iliad-ui/bundle/icons.js';
 
 console.log(UIIcons.AsteriskIcon());
 
@@ -43,10 +43,10 @@ TemplateResult {strings: Array[1], values: Array[0], type: "html", processor: De
 
 #### Workflow
 
-`@lliad-ui/icons-workflow` is namespaced to `WorkflowIcons` when leveraging the bundle. This means that you can use workflow icons in your demonstration code by importing them from `@lliad-ui/bundle/icons.js` like the following:
+`@iliad-ui/icons-workflow` is namespaced to `WorkflowIcons` when leveraging the bundle. This means that you can use workflow icons in your demonstration code by importing them from `@iliad-ui/bundle/icons.js` like the following:
 
 ```
-import { IconsWorkflow } from '@lliad-ui/bundle/icons.js';
+import { IconsWorkflow } from '@iliad-ui/bundle/icons.js';
 
 console.log(IconsWorkflow.CircleIcon());
 

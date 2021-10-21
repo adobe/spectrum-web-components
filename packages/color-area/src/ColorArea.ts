@@ -19,16 +19,16 @@ import {
     PropertyValues,
     query,
     ifDefined,
-} from '@lliad-ui/base';
-import { streamingListener } from '@lliad-ui/base/src/streaming-listener.js';
+} from '@iliad-ui/base';
+import { streamingListener } from '@iliad-ui/base/src/streaming-listener.js';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import {
     ColorHandle,
     ColorValue,
     extractHueAndSaturationRegExp,
     replaceHueRegExp,
-} from '@lliad-ui/color-handle';
-import '@lliad-ui/color-handle/sp-color-handle.js';
+} from '@iliad-ui/color-handle';
+import '@iliad-ui/color-handle/sp-color-handle.js';
 import { TinyColor } from '@ctrl/tinycolor';
 
 import styles from './color-area.css.js';

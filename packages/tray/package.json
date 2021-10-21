@@ -1,5 +1,5 @@
 {
-    "name": "@lliad-ui/tray",
+    "name": "@iliad-ui/tray",
     "version": "0.5.3",
     "publishConfig": {
         "access": "public"
@@ -50,9 +50,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.9.3",
-        "@lliad-ui/modal": "^0.6.3",
-        "@lliad-ui/underlay": "^0.9.3",
+        "@iliad-ui/base": "^0.9.3",
+        "@iliad-ui/modal": "^0.6.3",
+        "@iliad-ui/underlay": "^0.9.3",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

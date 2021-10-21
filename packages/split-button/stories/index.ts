@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 import '../sp-split-button.js';
-import '@lliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/menu/sp-menu-item.js';
 
 const menu = ({
     firstItemHandler = function () {

@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { Theme } from './src/Theme.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-theme', Theme);
 
 declare global {

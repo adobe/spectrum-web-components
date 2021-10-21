@@ -19,10 +19,10 @@ import {
     PropertyValues,
     SpectrumElement,
     ifDefined,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 import { TopNavItem } from './TopNavItem.js';
 
-import tabStyles from '@lliad-ui/tabs/src/tabs.css.js';
+import tabStyles from '@iliad-ui/tabs/src/tabs.css.js';
 
 declare global {
     interface Document {

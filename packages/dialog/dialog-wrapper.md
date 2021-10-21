@@ -4,24 +4,24 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/dialog?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/dialog)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/dialog?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/dialog)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/dialog?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/dialog)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/dialog?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/dialog)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/MLYDVWpWhNxJZDW3Ywqq/src/index.ts)
 
 ```
-yarn add @lliad-ui/dialog
+yarn add @iliad-ui/dialog
 ```
 
 Import the side effectful registration of `<sp-dialog-wrapper>` via:
 
 ```
-import '@lliad-ui/dialog/sp-dialog-wrapper.js';
+import '@iliad-ui/dialog/sp-dialog-wrapper.js';
 ```
 
 When looking to leverage the `DialogWrapper` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { DialogWrapper } from '@lliad-ui/dialog';
+import { DialogWrapper } from '@iliad-ui/dialog';
 ```
 
 ## Example

@@ -1,5 +1,5 @@
 {
-    "name": "@lliad-ui/shared",
+    "name": "@iliad-ui/shared",
     "version": "0.17.3",
     "publishConfig": {
         "access": "public"
@@ -48,7 +48,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.9.3",
+        "@iliad-ui/base": "^0.9.3",
         "focus-visible": "^5.1.0",
         "tslib": "^2.0.0"
     },

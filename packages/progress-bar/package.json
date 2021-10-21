@@ -1,5 +1,5 @@
 {
-    "name": "@lliad-ui/progress-bar",
+    "name": "@iliad-ui/progress-bar",
     "version": "0.6.3",
     "publishConfig": {
         "access": "public"
@@ -50,8 +50,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.9.3",
-        "@lliad-ui/field-label": "^0.8.3",
+        "@iliad-ui/base": "^0.9.3",
+        "@iliad-ui/field-label": "^0.8.3",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

@@ -14,7 +14,7 @@ import {
     ReactiveElement,
     queryAssignedNodes,
     property,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 const slotElementObserver = Symbol('slotElementObserver');
 // Fix needed for: https://github.com/lit/lit/issues/1789

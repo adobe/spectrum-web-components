@@ -17,9 +17,9 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
-import '@lliad-ui/color-loupe/sp-color-loupe.js';
+import '@iliad-ui/color-loupe/sp-color-loupe.js';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 import styles from './color-handle.css.js';
 

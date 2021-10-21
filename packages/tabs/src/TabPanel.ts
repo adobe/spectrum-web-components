@@ -16,7 +16,7 @@ import {
     SpectrumElement,
     property,
     PropertyValues,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import panelStyles from './tab-panel.css.js';
 

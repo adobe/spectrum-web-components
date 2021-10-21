@@ -17,12 +17,12 @@ import {
     property,
     PropertyValues,
     queryAssignedNodes,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import { AccordionItem } from './AccordionItem.js';
 
 import styles from './accordion.css.js';
-import { Focusable, getActiveElement } from '@lliad-ui/shared';
+import { Focusable, getActiveElement } from '@iliad-ui/shared';
 
 /**
  * @element sp-accordion

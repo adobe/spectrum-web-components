@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { Underlay } from './src/Underlay.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-underlay', Underlay);
 
 declare global {

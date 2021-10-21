@@ -9,35 +9,35 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, CSSResultArray, TemplateResult } from '@lliad-ui/base';
-import '@lliad-ui/bundle/elements.js';
+import { html, CSSResultArray, TemplateResult } from '@iliad-ui/base';
+import '@iliad-ui/bundle/elements.js';
 // work around while `top-nav` isn't "officially" in the bundle
-import '@lliad-ui/top-nav/sp-top-nav.js';
-import '@lliad-ui/top-nav/sp-top-nav-item.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-magnify.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-help.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-info.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-star.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-chevron-down.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-close.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-info.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-checkmark.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-checkmark-circle.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-alert.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-edit.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-more.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-settings.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-save-floppy.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-stopwatch.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-user-activity.js';
+import '@iliad-ui/top-nav/sp-top-nav.js';
+import '@iliad-ui/top-nav/sp-top-nav-item.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-magnify.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-help.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-info.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-star.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-chevron-down.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-close.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-info.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-checkmark.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-checkmark-circle.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-edit.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-more.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-settings.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-save-floppy.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-stopwatch.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-user-activity.js';
 import { RouteComponent } from './route-component.js';
 import markdownStyles from './markdown.css';
 import componentStyles from './component.css';
 import { AppRouter } from '../router.js';
-import '@lliad-ui/tabs/sp-tab.js';
-import '@lliad-ui/tabs/sp-tabs.js';
-import '@lliad-ui/tabs/sp-tab-panel.js';
-import { Tabs } from '@lliad-ui/tabs';
+import '@iliad-ui/tabs/sp-tab.js';
+import '@iliad-ui/tabs/sp-tabs.js';
+import '@iliad-ui/tabs/sp-tab-panel.js';
+import { Tabs } from '@iliad-ui/tabs';
 import docs from '../../custom-elements.json';
 import type {
     CustomElement,

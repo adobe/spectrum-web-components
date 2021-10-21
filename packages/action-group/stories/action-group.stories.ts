@@ -10,16 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '../sp-action-group.js';
-import '@lliad-ui/action-button/sp-action-button.js';
-import '@lliad-ui/overlay/overlay-trigger.js';
-import '@lliad-ui/tooltip/sp-tooltip.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-properties.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-info.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-view-all-tags.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/overlay/overlay-trigger.js';
+import '@iliad-ui/tooltip/sp-tooltip.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-properties.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-info.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-view-all-tags.js';
 import { ActionGroup } from '../src/ActionGroup.js';
 
 export default {

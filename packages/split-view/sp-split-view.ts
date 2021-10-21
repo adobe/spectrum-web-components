@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { SplitView } from './src/SplitView.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-split-view', SplitView);
 
 declare global {

@@ -17,12 +17,12 @@ import {
     TemplateResult,
     SpectrumElement,
     PropertyValues,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 import {
     FocusVisiblePolyfillMixin,
     ObserveSlotPresence,
     ObserveSlotText,
-} from '@lliad-ui/shared';
+} from '@iliad-ui/shared';
 
 import tabItemStyles from './tab.css.js';
 

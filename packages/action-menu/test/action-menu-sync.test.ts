@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@lliad-ui/action-menu/sync/sp-action-menu.js';
-import { ActionMenu } from '@lliad-ui/action-menu';
-import '@lliad-ui/icons-workflow/icons/sp-icon-settings.js';
-import '@lliad-ui/menu/sp-menu.js';
-import '@lliad-ui/menu/sp-menu-item.js';
-import '@lliad-ui/menu/sp-menu-divider.js';
+import '@iliad-ui/action-menu/sync/sp-action-menu.js';
+import { ActionMenu } from '@iliad-ui/action-menu';
+import '@iliad-ui/icons-workflow/icons/sp-icon-settings.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/menu/sp-menu-divider.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 const deprecatedActionMenuFixture = async (): Promise<ActionMenu> =>

@@ -1,5 +1,5 @@
 {
-    "name": "@lliad-ui/sidenav",
+    "name": "@iliad-ui/sidenav",
     "version": "0.13.3",
     "publishConfig": {
         "access": "public"
@@ -54,8 +54,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.9.3",
-        "@lliad-ui/shared": "^0.17.3",
+        "@iliad-ui/base": "^0.9.3",
+        "@iliad-ui/shared": "^0.17.3",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

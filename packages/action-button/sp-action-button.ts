@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { ActionButton } from './src/ActionButton.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-action-button', ActionButton);
 
 declare global {

@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { ColorArea } from './src/ColorArea.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-color-area', ColorArea);
 
 declare global {

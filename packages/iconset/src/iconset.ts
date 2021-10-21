@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { IconsetRegistry } from './iconset-registry.js';
 
-import { LitElement, property } from '@lliad-ui/base';
+import { LitElement, property } from '@iliad-ui/base';
 
 export abstract class Iconset extends LitElement {
     protected registered = false;

@@ -13,12 +13,12 @@ governing permissions and limitations under the License.
 import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 import { stub } from 'sinon';
 
-import '@lliad-ui/textfield/sp-textfield.js';
-import { Textfield } from '@lliad-ui/textfield';
-import '@lliad-ui/picker/sp-picker.js';
-import { Picker } from '@lliad-ui/picker';
-import '@lliad-ui/menu/sp-menu.js';
-import '@lliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/textfield/sp-textfield.js';
+import { Textfield } from '@iliad-ui/textfield';
+import '@iliad-ui/picker/sp-picker.js';
+import { Picker } from '@iliad-ui/picker';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
 
 import '../sp-field-label.js';
 import { FieldLabel } from '..';

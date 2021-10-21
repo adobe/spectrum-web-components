@@ -14,7 +14,7 @@ import '../sync/sp-slider.js';
 import { Slider } from '../';
 import { editable, hideStepper } from '../stories/slider.stories.js';
 import { fixture, elementUpdated, expect } from '@open-wc/testing';
-import { TemplateResult } from '@lliad-ui/base';
+import { TemplateResult } from '@iliad-ui/base';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 

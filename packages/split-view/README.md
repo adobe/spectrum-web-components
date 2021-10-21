@@ -4,24 +4,24 @@ An `sp-split-view` element delivers its first two direct child elements in a hor
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/split-view?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/split-view)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/split-view?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/split-view)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/split-view?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/split-view)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/split-view?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/split-view)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/WzGXekJkbnJjUiBjwUEb/src/index.ts)
 
 ```
-yarn add @lliad-ui/split-view
+yarn add @iliad-ui/split-view
 ```
 
 Import the side effectful registration of `<sp-split-view>` via:
 
 ```
-import '@lliad-ui/split-view/sp-split-view.js';
+import '@iliad-ui/split-view/sp-split-view.js';
 ```
 
 When looking to leverage the `SplitView` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { SplitView } from '@lliad-ui/split-view';
+import { SplitView } from '@iliad-ui/split-view';
 ```
 
 ### Variants

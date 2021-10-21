@@ -17,14 +17,14 @@ import {
     TemplateResult,
     PropertyValues,
     query,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
-import '@lliad-ui/icons-ui/icons/sp-icon-checkmark100.js';
-import { LikeAnchor } from '@lliad-ui/shared/src/like-anchor.js';
-import { Focusable } from '@lliad-ui/shared/src/focusable.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark100.js';
+import { LikeAnchor } from '@iliad-ui/shared/src/like-anchor.js';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
 
 import menuItemStyles from './menu-item.css.js';
-import checkmarkStyles from '@lliad-ui/icon/src/spectrum-icon-checkmark.css.js';
+import checkmarkStyles from '@iliad-ui/icon/src/spectrum-icon-checkmark.css.js';
 import { Menu } from './Menu.js';
 
 export class MenuItemRemovedEvent extends Event {

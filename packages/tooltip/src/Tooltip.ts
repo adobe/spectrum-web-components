@@ -17,8 +17,8 @@ import {
     SpectrumElement,
     property,
     query,
-} from '@lliad-ui/base';
-import { OverlayDisplayQueryDetail, Placement } from '@lliad-ui/overlay';
+} from '@iliad-ui/base';
+import { OverlayDisplayQueryDetail, Placement } from '@iliad-ui/overlay';
 
 import tooltipStyles from './tooltip.css.js';
 

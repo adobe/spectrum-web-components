@@ -9,11 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@lliad-ui/action-menu/sp-action-menu.js';
-import '@lliad-ui/menu/sp-menu.js';
-import '@lliad-ui/menu/sp-menu-item.js';
-import '@lliad-ui/menu/sp-menu-divider.js';
-import { html } from '@lliad-ui/base';
+import '@iliad-ui/action-menu/sp-action-menu.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/menu/sp-menu-divider.js';
+import { html } from '@iliad-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

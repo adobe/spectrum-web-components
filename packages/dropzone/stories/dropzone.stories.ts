@@ -9,12 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 import '../sp-dropzone.js';
 import { illustration } from '../test/test-svg';
-import '@lliad-ui/illustrated-message/sp-illustrated-message.js';
-import '@lliad-ui/link/sp-link.js';
+import '@iliad-ui/illustrated-message/sp-illustrated-message.js';
+import '@iliad-ui/link/sp-link.js';
 
 export default {
     component: 'sp-dropzone',

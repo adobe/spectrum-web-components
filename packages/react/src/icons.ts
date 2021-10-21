@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import * as UIIcons from '@lliad-ui/icons-ui';
+import * as UIIcons from '@iliad-ui/icons-ui';
 export { UIIcons };
-import * as WorkflowIcons from '@lliad-ui/icons-workflow';
+import * as WorkflowIcons from '@iliad-ui/icons-workflow';
 export { WorkflowIcons };

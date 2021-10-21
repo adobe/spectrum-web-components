@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import '../sp-radio-group.js';
 import { RadioGroup } from '../';
-import '@lliad-ui/radio/sp-radio.js';
-import { Radio } from '@lliad-ui/radio';
+import '@iliad-ui/radio/sp-radio.js';
+import { Radio } from '@iliad-ui/radio';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import {
     arrowUpEvent,

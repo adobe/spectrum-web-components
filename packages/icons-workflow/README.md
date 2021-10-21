@@ -4,19 +4,19 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/icons-workflow?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/icons-workflow)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/icons-workflow?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/icons-workflow)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/icons-workflow?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/icons-workflow)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/icons-workflow?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/icons-workflow)
 
 ```
-yarn add @lliad-ui/icons-workflow
+yarn add @iliad-ui/icons-workflow
 ```
 
 With the default exports of the packages prepared with the `html` template tag from `lit-html`, the default value of an icon export will be as follows:
 
 ```js
 import { LitElement, html } from 'lit-element';
-import '@lliad-ui/icon';
-import { CircleIcon } from '@lliad-ui/icons-workflow';
+import '@iliad-ui/icon';
+import { CircleIcon } from '@iliad-ui/icons-workflow';
 
 class ElementWithIcon extends LitElement {
     protected render(): TemplateResult {
@@ -28,7 +28,7 @@ class ElementWithIcon extends LitElement {
     }
 }
 
-import {lliadCustomElementsDefine} from '@lliad-ui/base';
+import {lliadCustomElementsDefine} from '@iliad-ui/base';
 lliadCustomElementsDefine('element-with-icon', ElementWithIcon);
 ```
 
@@ -48,7 +48,7 @@ Every icons can be customized via the following options:
 The default exports of this package are pre-wrapped via `setCustomTemplateLiteralTag` in the `html` template tag from `lit-html`, and work liek the following::
 
 ```js
-import { CircleIcon } from '@lliad-ui/icons-workflow';
+import { CircleIcon } from '@iliad-ui/icons-workflow';
 
 console.log(CircleIcon());
 
@@ -60,7 +60,7 @@ TemplateResult {strings: Array[1], values: Array[0], type: "html", processor: De
 When working in the context of other frameworks, it is possible to import the icons with a generic template tag as follows:
 
 ```js
-import { CircleIcon } from '@lliad-ui/icons-workflow/src/icons.js';
+import { CircleIcon } from '@iliad-ui/icons-workflow/src/icons.js';
 
 console.log(CircleIcon());
 
@@ -86,7 +86,7 @@ What's more, if you're already working with a specific parser in your project, y
 import {
     CircleIcon,
     setCustomTemplateLiteralTag,
-} from '@lliad-ui/icons-workflow/src/icons.js';
+} from '@iliad-ui/icons-workflow/src/icons.js';
 import htm from 'htm';
 import { h } from 'preact';
 
@@ -101,4 +101,4 @@ VNode {nodeName: "svg", children: Array[1], attributes: Object, key: undefined, 
 ***/
 ```
 
-In this way the icons exported by `@lliad-ui/icons-workflow` can be leveraged in projects powered by the the likes of hyperHTML, lighterhtml, lit-html, Preact, React, Vanilla JS, Vue.js, and more!
+In this way the icons exported by `@iliad-ui/icons-workflow` can be leveraged in projects powered by the the likes of hyperHTML, lighterhtml, lit-html, Preact, React, Vanilla JS, Vue.js, and more!

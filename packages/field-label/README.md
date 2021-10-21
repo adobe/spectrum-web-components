@@ -4,24 +4,24 @@ An `<sp-field-label>` provides accessible labelling for form elements. Use the `
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/field-label?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/field-label)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/field-label?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/field-label)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/field-label?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/field-label)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/field-label?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/field-label)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/fDq5bpzNQJzUUyEq6ENR/src/index.ts)
 
 ```
-yarn add @lliad-ui/field-label
+yarn add @iliad-ui/field-label
 ```
 
 Import the side effectful registration of `<sp-field-label>` via:
 
 ```
-import '@lliad-ui/field-label/sp-field-label.js';
+import '@iliad-ui/field-label/sp-field-label.js';
 ```
 
 When looking to leverage the `FieldLabel` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { FieldLabel } from '@lliad-ui/field-label';
+import { FieldLabel } from '@iliad-ui/field-label';
 ```
 
 ## Sizes

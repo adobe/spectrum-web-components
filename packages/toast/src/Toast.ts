@@ -17,11 +17,11 @@ import {
     SpectrumElement,
     property,
     PropertyValues,
-} from '@lliad-ui/base';
-import '@lliad-ui/button/sp-clear-button.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-alert.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-info.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-checkmark-circle.js';
+} from '@iliad-ui/base';
+import '@iliad-ui/button/sp-clear-button.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-info.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-checkmark-circle.js';
 
 import toastStyles from './toast.css.js';
 

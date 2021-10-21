@@ -18,12 +18,12 @@ import {
     CSSResultGroup,
     property,
     customElement,
-} from '@lliad-ui/base';
-import { Search } from '@lliad-ui/search';
-import '@lliad-ui/search/sp-search.js';
-import '@lliad-ui/field-label/sp-field-label.js';
-import bodyStyles from '@lliad-ui/styles/body.js';
-import '@lliad-ui/icon/sp-icon.js';
+} from '@iliad-ui/base';
+import { Search } from '@iliad-ui/search';
+import '@iliad-ui/search/sp-search.js';
+import '@iliad-ui/field-label/sp-field-label.js';
+import bodyStyles from '@iliad-ui/styles/body.js';
+import '@iliad-ui/icon/sp-icon.js';
 
 @customElement('delayed-ready')
 export class DelayedReady extends SpectrumElement {

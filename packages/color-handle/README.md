@@ -4,24 +4,24 @@ The `<sp-color-handle>` is used to select a colour on an `<sp-color-area>`, `<sp
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/color-handle?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/color-handle)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/color-handle?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/color-handle)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/color-handle?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/color-handle)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/color-handle?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/color-handle)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/crxLSSCXLFPpmUsM6GJQ/src/index.ts)
 
 ```
-yarn add @lliad-ui/color-handle
+yarn add @iliad-ui/color-handle
 ```
 
 Import the side effectful registration of `<sp-color-handle>` via:
 
 ```
-import '@lliad-ui/color-handle/sp-color-handle.js';
+import '@iliad-ui/color-handle/sp-color-handle.js';
 ```
 
 When looking to leverage the `ColorHandle` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ColorHandle } from '@lliad-ui/color-handle';
+import { ColorHandle } from '@iliad-ui/color-handle';
 ```
 
 ## Standard

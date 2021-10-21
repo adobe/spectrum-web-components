@@ -19,15 +19,15 @@ import {
     query,
     ifDefined,
     PropertyValues,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
-import '@lliad-ui/underlay/sp-underlay.js';
-import '@lliad-ui/button/sp-button.js';
+import '@iliad-ui/underlay/sp-underlay.js';
+import '@iliad-ui/button/sp-button.js';
 
 import '../sp-dialog.js';
-import styles from '@lliad-ui/modal/src/modal.css.js';
+import styles from '@iliad-ui/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
-import { FocusVisiblePolyfillMixin } from '@lliad-ui/shared';
+import { FocusVisiblePolyfillMixin } from '@iliad-ui/shared';
 
 /**
  * @element sp-dialog-wrapper

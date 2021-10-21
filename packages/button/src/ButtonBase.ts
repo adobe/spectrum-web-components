@@ -16,10 +16,10 @@ import {
     TemplateResult,
     query,
     PropertyValues,
-} from '@lliad-ui/base';
-import { LikeAnchor } from '@lliad-ui/shared/src/like-anchor.js';
-import { Focusable } from '@lliad-ui/shared/src/focusable.js';
-import { ObserveSlotText, ObserveSlotPresence } from '@lliad-ui/shared';
+} from '@iliad-ui/base';
+import { LikeAnchor } from '@iliad-ui/shared/src/like-anchor.js';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
+import { ObserveSlotText, ObserveSlotPresence } from '@iliad-ui/shared';
 
 /**
  * @slot - text content to be displayed in the Button element

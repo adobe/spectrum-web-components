@@ -20,14 +20,14 @@ import {
     nothing,
     ifDefined,
     live,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
-import { Focusable } from '@lliad-ui/shared/src/focusable.js';
-import '@lliad-ui/icons-ui/icons/sp-icon-checkmark100.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-alert.js';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark100.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-alert.js';
 
 import textfieldStyles from './textfield.css.js';
-import checkmarkStyles from '@lliad-ui/icon/src/spectrum-icon-checkmark.css.js';
+import checkmarkStyles from '@iliad-ui/icon/src/spectrum-icon-checkmark.css.js';
 
 export class TextfieldBase extends Focusable {
     public static get styles(): CSSResultArray {

@@ -15,12 +15,12 @@ import {
     css,
     property,
     queryAssignedNodes,
-} from '@lliad-ui/base';
-import { Slider } from '@lliad-ui/slider';
-import '@lliad-ui/slider/sp-slider.js';
-import '@lliad-ui/thumbnail/sp-thumbnail.js';
-import '@lliad-ui/overlay/sync/overlay-trigger.js';
-import '@lliad-ui/tooltip/sp-tooltip.js';
+} from '@iliad-ui/base';
+import { Slider } from '@iliad-ui/slider';
+import '@iliad-ui/slider/sp-slider.js';
+import '@iliad-ui/thumbnail/sp-thumbnail.js';
+import '@iliad-ui/overlay/sync/overlay-trigger.js';
+import '@iliad-ui/tooltip/sp-tooltip.js';
 
 export class OnionSkinner extends SpectrumElement {
     @property({ type: Number }) public onionLevel = 0.5;

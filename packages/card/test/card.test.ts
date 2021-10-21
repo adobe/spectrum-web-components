@@ -12,10 +12,10 @@ governing permissions and limitations under the License.
 
 import '../sp-card.js';
 import { Card } from '../';
-import '@lliad-ui/action-menu/sp-action-menu.js';
-import '@lliad-ui/menu/sp-menu.js';
-import '@lliad-ui/menu/sp-menu-item.js';
-import '@lliad-ui/menu/sp-menu-divider.js';
+import '@iliad-ui/action-menu/sp-action-menu.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/menu/sp-menu-divider.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 import {
@@ -24,7 +24,7 @@ import {
     smallHorizontal,
     StoryArgs,
 } from '../stories/card.stories.js';
-import { Checkbox } from '@lliad-ui/checkbox/src/Checkbox';
+import { Checkbox } from '@iliad-ui/checkbox/src/Checkbox';
 import { spy } from 'sinon';
 import { spaceEvent } from '../../../test/testing-helpers.js';
 import { executeServerCommand } from '@web/test-runner-commands';

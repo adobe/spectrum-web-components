@@ -10,19 +10,19 @@ To customize the properties of a single-handle slider (`normalization`, `value`,
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/slider?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/slider)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/slider?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/slider)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/slider?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/slider)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/slider?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/slider)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/U7LQv7LsAVBwJayJXG3B/src/index.ts)
 
 ```
-yarn add @lliad-ui/slider
+yarn add @iliad-ui/slider
 ```
 
 Import the side effectful registration of `<sp-slider>` and `<sp-slider-handle>` via:
 
 ```
-import '@lliad-ui/slider/sp-slider.js';
-import '@lliad-ui/slider/sp-slider-handle.js';
+import '@iliad-ui/slider/sp-slider.js';
+import '@iliad-ui/slider/sp-slider-handle.js';
 ```
 
 ## Examples

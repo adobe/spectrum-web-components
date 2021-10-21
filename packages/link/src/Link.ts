@@ -16,9 +16,9 @@ import {
     query,
     property,
     SizedMixin,
-} from '@lliad-ui/base';
-import { LikeAnchor } from '@lliad-ui/shared/src/like-anchor.js';
-import { Focusable } from '@lliad-ui/shared/src/focusable.js';
+} from '@iliad-ui/base';
+import { LikeAnchor } from '@iliad-ui/shared/src/like-anchor.js';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
 
 import linkStyles from './link.css.js';
 

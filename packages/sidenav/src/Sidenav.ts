@@ -16,10 +16,10 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import sidenavStyles from './sidenav.css.js';
-import { Focusable, getActiveElement } from '@lliad-ui/shared';
+import { Focusable, getActiveElement } from '@iliad-ui/shared';
 import { SideNavItem } from './SidenavItem.js';
 import { SideNavHeading } from './SidenavHeading.js';
 

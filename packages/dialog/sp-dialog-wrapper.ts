@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { DialogWrapper } from './src/DialogWrapper.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-dialog-wrapper', DialogWrapper);
 
 declare global {

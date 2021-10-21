@@ -4,25 +4,25 @@ The `<sp-accordion>` element contains a list of items that can be expanded or co
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/accordion?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/accordion)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/accordion?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/accordion)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/accordion?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/accordion)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/accordion?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/accordion)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/Muvuvbd79YCP9tcdtnsW/src/index.ts)
 
 ```
-yarn add @lliad-ui/accordion
+yarn add @iliad-ui/accordion
 ```
 
 Import the side effectful registration of `<sp-accordion>` and `<sp-accordion-item>` via:
 
 ```
-import '@lliad-ui/accordion/sp-accordion.js';
-import '@lliad-ui/accordion/sp-accordion-item.js';
+import '@iliad-ui/accordion/sp-accordion.js';
+import '@iliad-ui/accordion/sp-accordion-item.js';
 ```
 
 When looking to leverage the `Accordion` and `AccordionItem` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Accordion, AccordionItem } from '@lliad-ui/accordion';
+import { Accordion, AccordionItem } from '@iliad-ui/accordion';
 ```
 
 ## Example

@@ -16,7 +16,7 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import dropzoneStyles from './dropzone.css.js';
 

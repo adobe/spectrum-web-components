@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { ColorSlider } from './src/ColorSlider.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-color-slider', ColorSlider);
 
 declare global {

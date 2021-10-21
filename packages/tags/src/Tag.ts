@@ -17,9 +17,9 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
-import '@lliad-ui/button/sp-clear-button.js';
+import '@iliad-ui/button/sp-clear-button.js';
 
 import styles from './tag.css.js';
 

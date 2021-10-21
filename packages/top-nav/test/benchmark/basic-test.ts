@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@lliad-ui/top-nav/sp-top-nav.js';
-import '@lliad-ui/top-nav/sp-top-nav-item.js';
-import { html } from '@lliad-ui/base';
+import '@iliad-ui/top-nav/sp-top-nav.js';
+import '@iliad-ui/top-nav/sp-top-nav-item.js';
+import { html } from '@iliad-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

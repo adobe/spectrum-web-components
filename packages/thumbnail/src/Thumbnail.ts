@@ -17,7 +17,7 @@ import {
     TemplateResult,
     property,
     SizedMixin,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import styles from './thumbnail.css.js';
 

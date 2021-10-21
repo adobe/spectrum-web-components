@@ -4,24 +4,24 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/button-group?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/button-group)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/button-group?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/button-group)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/button-group?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/button-group)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/button-group?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/button-group)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/Zjc3o94DWuBkT4ve3dny/src/index.ts)
 
 ```
-yarn add @lliad-ui/button-group
+yarn add @iliad-ui/button-group
 ```
 
 Import the side effectful registration of `<sp-button-group>` via:
 
 ```
-import '@lliad-ui/button-group/sp-button-group.js';
+import '@iliad-ui/button-group/sp-button-group.js';
 ```
 
 When looking to leverage the `ButtonGroup` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ButtonGroup } from '@lliad-ui/button-group';
+import { ButtonGroup } from '@iliad-ui/button-group';
 ```
 
 ## Horizontal

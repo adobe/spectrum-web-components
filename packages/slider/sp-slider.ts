@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import './sp-slider-handle.js'; // codify sp-slider's implicit dependency on sp-slider-handle
 import { Slider } from './src/Slider.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-slider', Slider);
 
 declare global {

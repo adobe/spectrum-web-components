@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { QuickActions } from './src/QuickActions.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-quick-actions', QuickActions);
 
 declare global {

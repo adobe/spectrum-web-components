@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { Divider } from './src/Divider.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-divider', Divider);
 
 declare global {

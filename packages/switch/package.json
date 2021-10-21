@@ -1,5 +1,5 @@
 {
-    "name": "@lliad-ui/switch",
+    "name": "@iliad-ui/switch",
     "version": "0.10.3",
     "publishConfig": {
         "access": "public"
@@ -50,8 +50,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lliad-ui/base": "^0.9.3",
-        "@lliad-ui/checkbox": "^0.13.3",
+        "@iliad-ui/base": "^0.9.3",
+        "@iliad-ui/checkbox": "^0.13.3",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

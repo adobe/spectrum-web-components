@@ -4,24 +4,24 @@ An `<sp-status-light>` is a great way to convey semantic meaning, such as status
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/status-light?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/status-light)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/status-light?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/status-light)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/status-light?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/status-light)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/status-light?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/status-light)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/9rvftzUUo2pNorfAypRl/src/index.stories.js)
 
 ```
-yarn add @lliad-ui/status-light
+yarn add @iliad-ui/status-light
 ```
 
 Import the side effectful registration of `<sp-status-light>` via:
 
 ```
-import '@lliad-ui/status-light/sp-status-light.js';
+import '@iliad-ui/status-light/sp-status-light.js';
 ```
 
 When looking to leverage the `StatusLight` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { StatusLight } from '@lliad-ui/status-light';
+import { StatusLight } from '@iliad-ui/status-light';
 ```
 
 ## Sizes

@@ -18,19 +18,19 @@ import {
     TemplateResult,
     PropertyValues,
     nothing,
-} from '@lliad-ui/base';
-import { ObserveSlotPresence } from '@lliad-ui/shared';
-import { ActionGroup } from '@lliad-ui/action-group';
-import bodyStyles from '@lliad-ui/styles/body.js';
-import '@lliad-ui/action-button/sp-action-button.js';
-import '@lliad-ui/action-group/sp-action-group.js';
-import '@lliad-ui/split-view/sp-split-view.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-alert.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-zoom-in.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-zoom-out.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-refresh.js';
-import '@lliad-ui/action-bar/sp-action-bar.js';
-import '@lliad-ui/progress-circle/sp-progress-circle.js';
+} from '@iliad-ui/base';
+import { ObserveSlotPresence } from '@iliad-ui/shared';
+import { ActionGroup } from '@iliad-ui/action-group';
+import bodyStyles from '@iliad-ui/styles/body.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/action-group/sp-action-group.js';
+import '@iliad-ui/split-view/sp-split-view.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-zoom-in.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-zoom-out.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-refresh.js';
+import '@iliad-ui/action-bar/sp-action-bar.js';
+import '@iliad-ui/progress-circle/sp-progress-circle.js';
 import '../onion-skinner.js';
 
 export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [

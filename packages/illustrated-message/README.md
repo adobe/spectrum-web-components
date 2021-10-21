@@ -4,24 +4,24 @@ An `<sp-illustrated-message>` displays an illustration icon and a message, usual
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/illustrated-message?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/illustrated-message)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/illustrated-message?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/illustrated-message)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/illustrated-message?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/illustrated-message)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/illustrated-message?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/illustrated-message)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/pUGMQGhJjaNs0KxKxTpU/src/index.ts)
 
 ```
-yarn add @lliad-ui/illustrated-message
+yarn add @iliad-ui/illustrated-message
 ```
 
 Import the side effectful registration of `<sp-illustrated-message>` via:
 
 ```
-import '@lliad-ui/illustrated-message/sp-illustrated-message.js';
+import '@iliad-ui/illustrated-message/sp-illustrated-message.js';
 ```
 
 When looking to leverage the `IllustratedMessage` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { IllustratedMessage } from '@lliad-ui/illustrated-message';
+import { IllustratedMessage } from '@iliad-ui/illustrated-message';
 ```
 
 ## Example

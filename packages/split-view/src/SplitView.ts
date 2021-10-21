@@ -22,8 +22,8 @@ import {
     nothing,
     LitElement,
     classMap,
-} from '@lliad-ui/base';
-import { streamingListener } from '@lliad-ui/base/src/streaming-listener.js';
+} from '@iliad-ui/base';
+import { streamingListener } from '@iliad-ui/base/src/streaming-listener.js';
 
 import { WithSWCResizeObserver } from './types';
 

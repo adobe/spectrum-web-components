@@ -9,14 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 import '../sp-divider.js';
 import './typography-decorator.js';
-import '@lliad-ui/action-button/sp-action-button.js';
-import '@lliad-ui/icon/sp-icon.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-align-left.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-align-right.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/icon/sp-icon.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-align-left.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-align-right.js';
 
 export default {
     title: 'Divider',

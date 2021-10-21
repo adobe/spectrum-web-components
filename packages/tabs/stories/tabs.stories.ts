@@ -9,15 +9,15 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@lliad-ui/icon/sp-icon.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-checkmark.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-close.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-chevron-down.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-help.js';
+import '@iliad-ui/icon/sp-icon.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-checkmark.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-close.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-chevron-down.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-help.js';
 import '../sp-tabs.js';
 import '../sp-tab.js';
 import '../sp-tab-panel.js';
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 export default {
     component: 'sp-tabs',

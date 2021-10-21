@@ -18,18 +18,18 @@ import {
     query,
     PropertyValues,
     ifDefined,
-} from '@lliad-ui/base';
-import { streamingListener } from '@lliad-ui/base/src/streaming-listener.js';
+} from '@iliad-ui/base';
+import { streamingListener } from '@iliad-ui/base/src/streaming-listener.js';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
-import { Focusable } from '@lliad-ui/shared/src/focusable.js';
-import '@lliad-ui/color-handle/sp-color-handle.js';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
+import '@iliad-ui/color-handle/sp-color-handle.js';
 import styles from './color-wheel.css.js';
 import {
     ColorHandle,
     ColorValue,
     extractHueAndSaturationRegExp,
     replaceHueAndSaturationRegExp,
-} from '@lliad-ui/color-handle';
+} from '@iliad-ui/color-handle';
 import { TinyColor } from '@ctrl/tinycolor';
 
 /**

@@ -17,17 +17,17 @@ import {
     TemplateResult,
     CSSResultGroup,
     query,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import { Overlay, Placement } from '../';
-import { RadioGroup } from '@lliad-ui/radio';
-import '@lliad-ui/button/sp-button.js';
-import { Button } from '@lliad-ui/button';
-import '@lliad-ui/popover/sp-popover.js';
-import '@lliad-ui/radio/sp-radio.js';
-import '@lliad-ui/radio/sp-radio-group.js';
-import '@lliad-ui/overlay/overlay-trigger.js';
-import { Picker } from '@lliad-ui/picker';
+import { RadioGroup } from '@iliad-ui/radio';
+import '@iliad-ui/button/sp-button.js';
+import { Button } from '@iliad-ui/button';
+import '@iliad-ui/popover/sp-popover.js';
+import '@iliad-ui/radio/sp-radio.js';
+import '@iliad-ui/radio/sp-radio-group.js';
+import '@iliad-ui/overlay/overlay-trigger.js';
+import { Picker } from '@iliad-ui/picker';
 
 // Prevent infinite recursion in browser
 const MAX_DEPTH = 7;

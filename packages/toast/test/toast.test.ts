@@ -20,7 +20,7 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
-import { ClearButton } from '@lliad-ui/button';
+import { ClearButton } from '@iliad-ui/button';
 import { waitForPredicate } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 

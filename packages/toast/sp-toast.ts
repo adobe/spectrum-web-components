@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { Toast } from './src/Toast.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-toast', Toast);
 
 declare global {

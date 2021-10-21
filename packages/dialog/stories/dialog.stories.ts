@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 import '../sp-dialog.js';
 import { landscape } from './images.js';
-import '@lliad-ui/button/sp-button.js';
+import '@iliad-ui/button/sp-button.js';
 
 export default {
     title: 'Dialog',

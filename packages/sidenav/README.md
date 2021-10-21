@@ -11,20 +11,20 @@ of larger elements and mechanisms within the app frame.
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/sidenav?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/sidenav)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/sidenav?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/sidenav)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/sidenav?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/sidenav)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/sidenav?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/sidenav)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/WQ6UEUP8wfm9bKUKpWgi/src/index.ts)
 
 ```
-yarn add @lliad-ui/sidenav
+yarn add @iliad-ui/sidenav
 ```
 
 Import the side effectful registration of `<sp-sidenav>`, `<sp-sidenav-heading>`, or `<sp-sidenav-item>` via:
 
 ```
-import '@lliad-ui/sidenav/sp-sidenav.js';
-import '@lliad-ui/sidenav/sp-sidenav-heading.js';
-import '@lliad-ui/sidenav/sp-sidenav-item.js';
+import '@iliad-ui/sidenav/sp-sidenav.js';
+import '@iliad-ui/sidenav/sp-sidenav-heading.js';
+import '@iliad-ui/sidenav/sp-sidenav-item.js';
 ```
 
 When looking to leverage the `Sidenav`, `SidenavHeading`, or `SidenavItem` base classes as a type and/or for extension purposes, do so via:
@@ -34,7 +34,7 @@ import {
     Sidenav,
     SidenavHeading,
     SidenavItem
-} from '@lliad-ui/sidenav';
+} from '@iliad-ui/sidenav';
 ```
 
 ## Example

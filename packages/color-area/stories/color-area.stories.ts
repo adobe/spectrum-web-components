@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
-import '@lliad-ui/color-slider/sp-color-slider.js';
-import { ColorSlider } from '@lliad-ui/color-slider/src/ColorSlider';
+import '@iliad-ui/color-slider/sp-color-slider.js';
+import { ColorSlider } from '@iliad-ui/color-slider/src/ColorSlider';
 import '../sp-color-area.js';
 import { ColorArea } from '../src/ColorArea.js';
 

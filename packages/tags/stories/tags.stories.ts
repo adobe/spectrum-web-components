@@ -9,14 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 import '../sp-tag.js';
 import '../sp-tags.js';
-import '@lliad-ui/avatar/sp-avatar.js';
+import '@iliad-ui/avatar/sp-avatar.js';
 import { avatar } from '../../avatar/stories/images';
-import '@lliad-ui/icon/sp-icon.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-magnify.js';
+import '@iliad-ui/icon/sp-icon.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-magnify.js';
 
 export default {
     title: 'Tags',

@@ -16,7 +16,7 @@ import {
     CSSResultArray,
     TemplateResult,
     property,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
 import styles from './button-group.css.js';
 

@@ -20,16 +20,16 @@ import {
     ifDefined,
     SizedMixin,
     ElementSize,
-} from '@lliad-ui/base';
+} from '@iliad-ui/base';
 
-import '@lliad-ui/popover/sp-popover.js';
-import '@lliad-ui/menu/sp-menu.js';
-import '@lliad-ui/button/sp-button.js';
-import { ButtonVariants } from '@lliad-ui/button';
-import { PickerBase } from '@lliad-ui/picker';
-import '@lliad-ui/icons-ui/icons/sp-icon-chevron100.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-more.js';
-import chevronStyles from '@lliad-ui/icon/src/spectrum-icon-chevron.css.js';
+import '@iliad-ui/popover/sp-popover.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/button/sp-button.js';
+import { ButtonVariants } from '@iliad-ui/button';
+import { PickerBase } from '@iliad-ui/picker';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron100.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-more.js';
+import chevronStyles from '@iliad-ui/icon/src/spectrum-icon-chevron.css.js';
 import styles from './split-button.css.js';
 
 const chevronClass = {

@@ -9,17 +9,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@lliad-ui/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 import '../sp-card.js';
 import { landscape, portrait } from './images';
-import '@lliad-ui/icons-workflow/icons/sp-icon-file-txt.js';
-import '@lliad-ui/textfield/sp-textfield.js';
-import '@lliad-ui/action-menu/sp-action-menu.js';
-import '@lliad-ui/menu/sp-menu.js';
-import '@lliad-ui/menu/sp-menu-item.js';
-import '@lliad-ui/menu/sp-menu-divider.js';
-import '@lliad-ui/link/sp-link.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-file-txt.js';
+import '@iliad-ui/textfield/sp-textfield.js';
+import '@iliad-ui/action-menu/sp-action-menu.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/menu/sp-menu-divider.js';
+import '@iliad-ui/link/sp-link.js';
 
 export default {
     component: 'sp-card',

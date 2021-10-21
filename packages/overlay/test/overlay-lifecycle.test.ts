@@ -17,10 +17,10 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import '@lliad-ui/tooltip/sp-tooltip.js';
-import '@lliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/tooltip/sp-tooltip.js';
+import '@iliad-ui/action-button/sp-action-button.js';
 import { OverlayTrigger } from '..';
-import '@lliad-ui/overlay/overlay-trigger.js';
+import '@iliad-ui/overlay/overlay-trigger.js';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 
 describe('Overlay Trigger - Lifecycle Methods', () => {

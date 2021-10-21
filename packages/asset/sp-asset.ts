@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { Asset } from './src/Asset.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-asset', Asset);
 
 declare global {

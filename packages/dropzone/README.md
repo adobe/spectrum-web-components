@@ -6,24 +6,24 @@ DropZones should be used with an IllustratedMessage component as a child if the 
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/dropzone?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/dropzone)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/dropzone?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/dropzone)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/dropzone?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/dropzone)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/dropzone?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/dropzone)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/yoQJtdPFBCH1UG3Qsicc/src/index.ts)
 
 ```
-yarn add @lliad-ui/dropzone
+yarn add @iliad-ui/dropzone
 ```
 
 Import the side effectful registration of `<sp-dropzone>` via:
 
 ```
-import '@lliad-ui/dropzone/sp-dropzone.js';
+import '@iliad-ui/dropzone/sp-dropzone.js';
 ```
 
 When looking to leverage the `Dropzone` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Dropzone } from '@lliad-ui/dropzone';
+import { Dropzone } from '@iliad-ui/dropzone';
 ```
 
 ## Example

@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult, render } from 'lit-html';
 import { customElement, LitElement, property } from 'lit-element';
-import '@lliad-ui/theme/sp-theme.js';
-import '@lliad-ui/theme/scale-medium.js';
-import '@lliad-ui/theme/theme-lightest.js';
+import '@iliad-ui/theme/sp-theme.js';
+import '@iliad-ui/theme/scale-medium.js';
+import '@iliad-ui/theme/theme-lightest.js';
 
 declare global {
     interface Window {

@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { Dropzone } from './src/Dropzone.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-dropzone', Dropzone);
 
 declare global {

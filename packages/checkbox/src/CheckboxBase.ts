@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { property, html, TemplateResult, query } from '@lliad-ui/base';
-import { Focusable } from '@lliad-ui/shared/src/focusable.js';
+import { property, html, TemplateResult, query } from '@iliad-ui/base';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
 
 export class CheckboxBase extends Focusable {
     @property({ type: Boolean, reflect: true })

@@ -17,8 +17,8 @@ import {
     property,
     SpectrumElement,
     TemplateResult,
-} from '@lliad-ui/base';
-import { OverlayDisplayQueryDetail, Placement } from '@lliad-ui/overlay';
+} from '@iliad-ui/base';
+import { OverlayDisplayQueryDetail, Placement } from '@iliad-ui/overlay';
 import popoverStyles from './popover.css.js';
 
 /**

@@ -4,30 +4,30 @@ An `<sp-picker>` is an alternative to HTML's `<select>` element. Use `<sp-menu-i
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@lliad-ui/picker?style=for-the-badge)](https://www.npmjs.com/package/@lliad-ui/picker)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@lliad-ui/picker?style=for-the-badge)](https://bundlephobia.com/result?p=@lliad-ui/picker)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/picker?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/picker)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/picker?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/picker)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/guTpKeAjgecibF150Qbg/src/index.ts)
 
 ```
-yarn add @lliad-ui/picker
+yarn add @iliad-ui/picker
 ```
 
 Import the side effectful registration of `<sp-picker>` via:
 
 ```
-import '@lliad-ui/picker/sp-picker.js';
+import '@iliad-ui/picker/sp-picker.js';
 ```
 
-The default of `<sp-picker>` will load dependencies in `@lliad-ui/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-picker>` as follows:
+The default of `<sp-picker>` will load dependencies in `@iliad-ui/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-picker>` as follows:
 
 ```
-import '@lliad-ui/picker/sync/sp-picker.js';
+import '@iliad-ui/picker/sync/sp-picker.js';
 ```
 
 When looking to leverage the `Picker` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Picker } from '@lliad-ui/picker';
+import { Picker } from '@iliad-ui/picker';
 ```
 
 ## Sizes

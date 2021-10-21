@@ -17,13 +17,13 @@ import {
     html,
     ifDefined,
     property,
-} from '@lliad-ui/base';
-import '@lliad-ui/menu/sp-menu.js';
-import '@lliad-ui/popover/sp-popover.js';
-import { PickerBase } from '@lliad-ui/picker';
-import '@lliad-ui/action-button/sp-action-button.js';
-import { ObserveSlotText } from '@lliad-ui/shared/src/observe-slot-text.js';
-import '@lliad-ui/icons-workflow/icons/sp-icon-more.js';
+} from '@iliad-ui/base';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/popover/sp-popover.js';
+import { PickerBase } from '@iliad-ui/picker';
+import '@iliad-ui/action-button/sp-action-button.js';
+import { ObserveSlotText } from '@iliad-ui/shared/src/observe-slot-text.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-more.js';
 import actionMenuStyles from './action-menu.css.js';
 
 /**

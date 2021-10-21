@@ -3,117 +3,81 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.6.3](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/color-slider@0.6.2...@lliad-ui/color-slider@0.6.3) (2021-10-20)
+## [0.6.3](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/color-slider@0.6.2...@iliad-ui/color-slider@0.6.3) (2021-10-20)
 
-**Note:** Version bump only for package @lliad-ui/color-slider
+**Note:** Version bump only for package @iliad-ui/color-slider
 
+## [0.6.3-alpha.0](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/color-slider@0.6.2...@iliad-ui/color-slider@0.6.3-alpha.0) (2021-10-20)
 
+**Note:** Version bump only for package @iliad-ui/color-slider
 
+## [0.6.2](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/color-slider@0.6.1...@iliad-ui/color-slider@0.6.2) (2021-10-20)
 
+**Note:** Version bump only for package @iliad-ui/color-slider
 
-## [0.6.3-alpha.0](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/color-slider@0.6.2...@lliad-ui/color-slider@0.6.3-alpha.0) (2021-10-20)
+## [0.6.2](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/color-slider@0.6.1...@iliad-ui/color-slider@0.6.2) (2021-10-19)
 
-**Note:** Version bump only for package @lliad-ui/color-slider
+**Note:** Version bump only for package @iliad-ui/color-slider
 
+## [0.6.1](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/color-slider@0.6.0...@iliad-ui/color-slider@0.6.1) (2021-10-19)
 
+**Note:** Version bump only for package @iliad-ui/color-slider
 
+## [0.6.1](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/color-slider@0.6.0...@iliad-ui/color-slider@0.6.1) (2021-10-18)
 
-
-## [0.6.2](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/color-slider@0.6.1...@lliad-ui/color-slider@0.6.2) (2021-10-20)
-
-**Note:** Version bump only for package @lliad-ui/color-slider
-
-
-
-
-
-## [0.6.2](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/color-slider@0.6.1...@lliad-ui/color-slider@0.6.2) (2021-10-19)
-
-**Note:** Version bump only for package @lliad-ui/color-slider
-
-
-
-
-
-## [0.6.1](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/color-slider@0.6.0...@lliad-ui/color-slider@0.6.1) (2021-10-19)
-
-**Note:** Version bump only for package @lliad-ui/color-slider
-
-
-
-
-
-## [0.6.1](https://github.com/gaoding-inc/Iliad-ui/compare/@lliad-ui/color-slider@0.6.0...@lliad-ui/color-slider@0.6.1) (2021-10-18)
-
-**Note:** Version bump only for package @lliad-ui/color-slider
-
-
-
-
+**Note:** Version bump only for package @iliad-ui/color-slider
 
 # 0.6.0 (2021-10-18)
 
-
 ### Bug Fixes
 
-* **color-slider:** use correct focus events in test ([b974c12](https://github.com/gaoding-inc/Iliad-ui/commit/b974c129c1860eafe920028b20401616f77eca4c))
-* address westbrooks comments ([634af60](https://github.com/gaoding-inc/Iliad-ui/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
-* ensure color wheel in not opinionated about saturation and lightness ([8e0fd9c](https://github.com/gaoding-inc/Iliad-ui/commit/8e0fd9ca4b341d497b1fd6092ba88e321ee7044a))
-* expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/gaoding-inc/Iliad-ui/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
-* include touch-action rule for draggable content ([53221da](https://github.com/gaoding-inc/Iliad-ui/commit/53221dabc8911749372994cc0fabe55f36858680))
-* include touch-action rule for draggable content ([3f507e6](https://github.com/gaoding-inc/Iliad-ui/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
-* key interaction handling no longer prevents "tab" presses ([b542ce8](https://github.com/gaoding-inc/Iliad-ui/commit/b542ce8f98a8a26badfa856f2e09ebda16dbcbb1))
-* manage "focused" across more contexts ([9273c15](https://github.com/gaoding-inc/Iliad-ui/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
-* normalize focus passing during and after pointer events ([357931b](https://github.com/gaoding-inc/Iliad-ui/commit/357931b6eb803759925b10b629d21878e8249678))
-* prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/gaoding-inc/Iliad-ui/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
-* remove right click value setting ([a44968d](https://github.com/gaoding-inc/Iliad-ui/commit/a44968d09120ad9b54915438fb5a134f306fdab2))
-* update colour slider ([9acda67](https://github.com/gaoding-inc/Iliad-ui/commit/9acda673d98e39a9928166806926689020dc0577))
-* use hue normalized color in handle and allow focus ([f9e1fa2](https://github.com/gaoding-inc/Iliad-ui/commit/f9e1fa24afd091334341610a49331fc0ec5f8573))
-
+-   **color-slider:** use correct focus events in test ([b974c12](https://github.com/gaoding-inc/Iliad-ui/commit/b974c129c1860eafe920028b20401616f77eca4c))
+-   address westbrooks comments ([634af60](https://github.com/gaoding-inc/Iliad-ui/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
+-   ensure color wheel in not opinionated about saturation and lightness ([8e0fd9c](https://github.com/gaoding-inc/Iliad-ui/commit/8e0fd9ca4b341d497b1fd6092ba88e321ee7044a))
+-   expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/gaoding-inc/Iliad-ui/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
+-   include touch-action rule for draggable content ([53221da](https://github.com/gaoding-inc/Iliad-ui/commit/53221dabc8911749372994cc0fabe55f36858680))
+-   include touch-action rule for draggable content ([3f507e6](https://github.com/gaoding-inc/Iliad-ui/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
+-   key interaction handling no longer prevents "tab" presses ([b542ce8](https://github.com/gaoding-inc/Iliad-ui/commit/b542ce8f98a8a26badfa856f2e09ebda16dbcbb1))
+-   manage "focused" across more contexts ([9273c15](https://github.com/gaoding-inc/Iliad-ui/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
+-   normalize focus passing during and after pointer events ([357931b](https://github.com/gaoding-inc/Iliad-ui/commit/357931b6eb803759925b10b629d21878e8249678))
+-   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/gaoding-inc/Iliad-ui/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
+-   remove right click value setting ([a44968d](https://github.com/gaoding-inc/Iliad-ui/commit/a44968d09120ad9b54915438fb5a134f306fdab2))
+-   update colour slider ([9acda67](https://github.com/gaoding-inc/Iliad-ui/commit/9acda673d98e39a9928166806926689020dc0577))
+-   use hue normalized color in handle and allow focus ([f9e1fa2](https://github.com/gaoding-inc/Iliad-ui/commit/f9e1fa24afd091334341610a49331fc0ec5f8573))
 
 ### Features
 
-* debug colour elements for a11y ([7008f7c](https://github.com/gaoding-inc/Iliad-ui/commit/7008f7c0c0b719f6978a8f158bfea4434d1580af))
-* update lit-* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/Iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
-* **color-slider:** add color-slider pattern ([625f6fe](https://github.com/gaoding-inc/Iliad-ui/commit/625f6fe28713dabf7806dd94d51157f7e91f95ad))
-
-
-
-
+-   debug colour elements for a11y ([7008f7c](https://github.com/gaoding-inc/Iliad-ui/commit/7008f7c0c0b719f6978a8f158bfea4434d1580af))
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/Iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+-   **color-slider:** add color-slider pattern ([625f6fe](https://github.com/gaoding-inc/Iliad-ui/commit/625f6fe28713dabf7806dd94d51157f7e91f95ad))
 
 # 0.5.0 (2021-10-18)
 
-
 ### Bug Fixes
 
-* **color-slider:** use correct focus events in test ([b974c12](https://github.com/gaoding-inc/Iliad-ui/commit/b974c129c1860eafe920028b20401616f77eca4c))
-* address westbrooks comments ([634af60](https://github.com/gaoding-inc/Iliad-ui/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
-* ensure color wheel in not opinionated about saturation and lightness ([8e0fd9c](https://github.com/gaoding-inc/Iliad-ui/commit/8e0fd9ca4b341d497b1fd6092ba88e321ee7044a))
-* expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/gaoding-inc/Iliad-ui/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
-* include touch-action rule for draggable content ([53221da](https://github.com/gaoding-inc/Iliad-ui/commit/53221dabc8911749372994cc0fabe55f36858680))
-* include touch-action rule for draggable content ([3f507e6](https://github.com/gaoding-inc/Iliad-ui/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
-* key interaction handling no longer prevents "tab" presses ([b542ce8](https://github.com/gaoding-inc/Iliad-ui/commit/b542ce8f98a8a26badfa856f2e09ebda16dbcbb1))
-* manage "focused" across more contexts ([9273c15](https://github.com/gaoding-inc/Iliad-ui/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
-* normalize focus passing during and after pointer events ([357931b](https://github.com/gaoding-inc/Iliad-ui/commit/357931b6eb803759925b10b629d21878e8249678))
-* prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/gaoding-inc/Iliad-ui/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
-* remove right click value setting ([a44968d](https://github.com/gaoding-inc/Iliad-ui/commit/a44968d09120ad9b54915438fb5a134f306fdab2))
-* update colour slider ([9acda67](https://github.com/gaoding-inc/Iliad-ui/commit/9acda673d98e39a9928166806926689020dc0577))
-* use hue normalized color in handle and allow focus ([f9e1fa2](https://github.com/gaoding-inc/Iliad-ui/commit/f9e1fa24afd091334341610a49331fc0ec5f8573))
-
+-   **color-slider:** use correct focus events in test ([b974c12](https://github.com/gaoding-inc/Iliad-ui/commit/b974c129c1860eafe920028b20401616f77eca4c))
+-   address westbrooks comments ([634af60](https://github.com/gaoding-inc/Iliad-ui/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
+-   ensure color wheel in not opinionated about saturation and lightness ([8e0fd9c](https://github.com/gaoding-inc/Iliad-ui/commit/8e0fd9ca4b341d497b1fd6092ba88e321ee7044a))
+-   expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/gaoding-inc/Iliad-ui/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
+-   include touch-action rule for draggable content ([53221da](https://github.com/gaoding-inc/Iliad-ui/commit/53221dabc8911749372994cc0fabe55f36858680))
+-   include touch-action rule for draggable content ([3f507e6](https://github.com/gaoding-inc/Iliad-ui/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
+-   key interaction handling no longer prevents "tab" presses ([b542ce8](https://github.com/gaoding-inc/Iliad-ui/commit/b542ce8f98a8a26badfa856f2e09ebda16dbcbb1))
+-   manage "focused" across more contexts ([9273c15](https://github.com/gaoding-inc/Iliad-ui/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
+-   normalize focus passing during and after pointer events ([357931b](https://github.com/gaoding-inc/Iliad-ui/commit/357931b6eb803759925b10b629d21878e8249678))
+-   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/gaoding-inc/Iliad-ui/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
+-   remove right click value setting ([a44968d](https://github.com/gaoding-inc/Iliad-ui/commit/a44968d09120ad9b54915438fb5a134f306fdab2))
+-   update colour slider ([9acda67](https://github.com/gaoding-inc/Iliad-ui/commit/9acda673d98e39a9928166806926689020dc0577))
+-   use hue normalized color in handle and allow focus ([f9e1fa2](https://github.com/gaoding-inc/Iliad-ui/commit/f9e1fa24afd091334341610a49331fc0ec5f8573))
 
 ### Features
 
-* debug colour elements for a11y ([7008f7c](https://github.com/gaoding-inc/Iliad-ui/commit/7008f7c0c0b719f6978a8f158bfea4434d1580af))
-* update lit-* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/Iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
-* **color-slider:** add color-slider pattern ([625f6fe](https://github.com/gaoding-inc/Iliad-ui/commit/625f6fe28713dabf7806dd94d51157f7e91f95ad))
+-   debug colour elements for a11y ([7008f7c](https://github.com/gaoding-inc/Iliad-ui/commit/7008f7c0c0b719f6978a8f158bfea4434d1580af))
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/Iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+-   **color-slider:** add color-slider pattern ([625f6fe](https://github.com/gaoding-inc/Iliad-ui/commit/625f6fe28713dabf7806dd94d51157f7e91f95ad))
 
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.4.0...@iliad-ui/color-slider@0.4.1) (2021-10-15)
 
-
-
-
-## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.4.0...@lliad-ui/color-slider@0.4.1) (2021-10-15)
-
-**Note:** Version bump only for package @lliad-ui/color-slider
+**Note:** Version bump only for package @iliad-ui/color-slider
 
 # 0.4.0 (2021-10-14)
 
@@ -139,84 +103,84 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 -   **color-slider:** add color-slider pattern ([625f6fe](https://github.com/adobe/spectrum-web-components/commit/625f6fe28713dabf7806dd94d51157f7e91f95ad))
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.13...@lliad-ui/color-slider@0.3.0) (2021-10-14)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.13...@iliad-ui/color-slider@0.3.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.13...@lliad-ui/color-slider@0.2.0) (2021-10-14)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.13...@iliad-ui/color-slider@0.2.0) (2021-10-14)
 
 ### Features
 
 -   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
 
-## [0.1.13](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.12...@lliad-ui/color-slider@0.1.13) (2021-10-12)
+## [0.1.13](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.12...@iliad-ui/color-slider@0.1.13) (2021-10-12)
 
 ### Bug Fixes
 
 -   **color-slider:** use correct focus events in test ([b974c12](https://github.com/adobe/spectrum-web-components/commit/b974c129c1860eafe920028b20401616f77eca4c))
 
-## [0.1.12](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.11...@lliad-ui/color-slider@0.1.12) (2021-09-20)
+## [0.1.12](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.11...@iliad-ui/color-slider@0.1.12) (2021-09-20)
 
-**Note:** Version bump only for package @lliad-ui/color-slider
+**Note:** Version bump only for package @iliad-ui/color-slider
 
-## [0.1.11](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.10...@lliad-ui/color-slider@0.1.11) (2021-09-13)
+## [0.1.11](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.10...@iliad-ui/color-slider@0.1.11) (2021-09-13)
 
 ### Bug Fixes
 
 -   manage "focused" across more contexts ([9273c15](https://github.com/adobe/spectrum-web-components/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
 
-## [0.1.10](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.9...@lliad-ui/color-slider@0.1.10) (2021-08-24)
+## [0.1.10](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.9...@iliad-ui/color-slider@0.1.10) (2021-08-24)
 
-**Note:** Version bump only for package @lliad-ui/color-slider
+**Note:** Version bump only for package @iliad-ui/color-slider
 
-## [0.1.9](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.8...@lliad-ui/color-slider@0.1.9) (2021-08-17)
+## [0.1.9](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.8...@iliad-ui/color-slider@0.1.9) (2021-08-17)
 
 ### Bug Fixes
 
 -   key interaction handling no longer prevents "tab" presses ([b542ce8](https://github.com/adobe/spectrum-web-components/commit/b542ce8f98a8a26badfa856f2e09ebda16dbcbb1))
 
-## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.7...@lliad-ui/color-slider@0.1.8) (2021-07-22)
+## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.7...@iliad-ui/color-slider@0.1.8) (2021-07-22)
 
-**Note:** Version bump only for package @lliad-ui/color-slider
+**Note:** Version bump only for package @iliad-ui/color-slider
 
-## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.6...@lliad-ui/color-slider@0.1.7) (2021-07-01)
+## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.6...@iliad-ui/color-slider@0.1.7) (2021-07-01)
 
 ### Bug Fixes
 
 -   expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/adobe/spectrum-web-components/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
 -   normalize focus passing during and after pointer events ([357931b](https://github.com/adobe/spectrum-web-components/commit/357931b6eb803759925b10b629d21878e8249678))
 
-## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.5...@lliad-ui/color-slider@0.1.6) (2021-06-16)
+## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.5...@iliad-ui/color-slider@0.1.6) (2021-06-16)
 
-**Note:** Version bump only for package @lliad-ui/color-slider
+**Note:** Version bump only for package @iliad-ui/color-slider
 
-## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.4...@lliad-ui/color-slider@0.1.5) (2021-05-24)
+## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.4...@iliad-ui/color-slider@0.1.5) (2021-05-24)
 
 ### Bug Fixes
 
 -   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/adobe/spectrum-web-components/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
 
-## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.3...@lliad-ui/color-slider@0.1.4) (2021-05-12)
+## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.3...@iliad-ui/color-slider@0.1.4) (2021-05-12)
 
 ### Bug Fixes
 
 -   include touch-action rule for draggable content ([53221da](https://github.com/adobe/spectrum-web-components/commit/53221dabc8911749372994cc0fabe55f36858680))
 -   include touch-action rule for draggable content ([3f507e6](https://github.com/adobe/spectrum-web-components/commit/3f507e6dba718ae2b7415454eba859a9790e43e7))
 
-## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.2...@lliad-ui/color-slider@0.1.3) (2021-04-09)
+## [0.1.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.2...@iliad-ui/color-slider@0.1.3) (2021-04-09)
 
 ### Bug Fixes
 
 -   ensure color wheel in not opinionated about saturation and lightness ([8e0fd9c](https://github.com/adobe/spectrum-web-components/commit/8e0fd9ca4b341d497b1fd6092ba88e321ee7044a))
 -   use hue normalized color in handle and allow focus ([f9e1fa2](https://github.com/adobe/spectrum-web-components/commit/f9e1fa24afd091334341610a49331fc0ec5f8573))
 
-## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.1...@lliad-ui/color-slider@0.1.2) (2021-03-29)
+## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.1...@iliad-ui/color-slider@0.1.2) (2021-03-29)
 
-**Note:** Version bump only for package @lliad-ui/color-slider
+**Note:** Version bump only for package @iliad-ui/color-slider
 
-## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@lliad-ui/color-slider@0.1.0...@lliad-ui/color-slider@0.1.1) (2021-03-22)
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/color-slider@0.1.0...@iliad-ui/color-slider@0.1.1) (2021-03-22)
 
 ### Bug Fixes
 

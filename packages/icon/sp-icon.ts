@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { Icon } from './src/Icon.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-icon', Icon);
 
 declare global {

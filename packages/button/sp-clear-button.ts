@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { ClearButton } from './src/ClearButton.js';
 
-import { lliadCustomElementsDefine } from '@lliad-ui/base';
+import { lliadCustomElementsDefine } from '@iliad-ui/base';
 lliadCustomElementsDefine('sp-clear-button', ClearButton);
 
 declare global {

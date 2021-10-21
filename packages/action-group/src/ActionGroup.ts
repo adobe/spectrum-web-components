@@ -17,8 +17,8 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from '@lliad-ui/base';
-import type { ActionButton } from '@lliad-ui/action-button';
+} from '@iliad-ui/base';
+import type { ActionButton } from '@iliad-ui/action-button';
 
 import styles from './action-group.css.js';
 
