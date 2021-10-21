@@ -430,13 +430,13 @@ sp-divider[size='s']:not(:defined) {
 }
 
 #title-header h1,
-#hero h1 {
+.hero h1 {
     margin: var(--spectrum-global-dimension-size-100) 0;
 }
 
 @media screen and (max-width: 768px) {
     #title-header h1,
-    #hero h1 {
+    .hero h1 {
         font-size: 44px;
         letter-spacing: normal;
     }
