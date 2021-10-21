@@ -1,0 +1,65 @@
+{% set value = slug %}
+{% if componentName %}
+  {% set value = componentName %}
+{% endif %}
+<sp-sidenav manage-tab-index slot="side-nav" value="{{ value }}">
+    <sp-sidenav-item
+        label="Getting started"
+        href="/getting-started"
+        value="getting-started"
+    >
+        <a href="/getting-started" slot="no-js">Getting started</a>
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Components"
+        expanded
+        multiLevel
+    >
+        <span slot="no-js">Components</span>
+        {% for component in collections['component-examples'] %}
+            <sp-sidenav-item
+                label="{{ component.data.displayName }}"
+                href="{{ component.url }}"
+                value="{{ component.data.componentName }}"
+            >
+                <a href="{{ component.url }}" slot="no-js">{{ component.data.displayName }}</a>
+            </sp-sidenav-item>
+        {% endfor %}
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Contributing"
+        expanded
+        multiLevel
+    >
+        <span slot="no-js">Contributing</span>
+        {% for guide in collections.guides %}
+            <sp-sidenav-item
+                label="{{ guide.data.displayName }}"
+                href="{{ guide.url }}"
+                value="{{ guide.data.slug }}"
+            >
+                <a href="{{ guide.url }}" slot="no-js">{{ guide.data.displayName }}</a>
+            </sp-sidenav-item>
+        {% endfor %}
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Playground"
+        href="storybook/index.html"
+        multilevel
+    >
+        <a href="storybook/index.html" slot="no-js">Playground</a>
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        class="spectrum-web"
+        label="Spectrum"
+        href="https://spectrum.adobe.com/"
+    >
+        <a href="https://spectrum.adobe.com/" slot="no-js">Spectrum</a>
+    </sp-sidenav-item>
+    <sp-sidenav-item
+        label="Spectrum CSS"
+        href="https://opensource.adobe.com/spectrum-css/"
+    >
+        <a href="https://opensource.adobe.com/spectrum-css/" slot="no-js">Spectrum CSS</a>
+    </sp-sidenav-item>
+</sp-sidenav>

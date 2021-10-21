@@ -10,6 +10,7 @@ yarn-error.log
 .devcontainer
 tach-results.*
 .gitconfig
+.netlify/plugins
 
 # documentation
 documentation/components/searchIndex.json

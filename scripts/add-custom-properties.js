@@ -57,7 +57,7 @@ async function main() {
                 }
             });
         });
-        customElementJsonString = JSON.stringify(customElementJson.modules);
+        customElementJsonString = JSON.stringify(customElementJson);
         fs.writeFileSync(inputCEJPath, customElementJsonString, {
             encoding: 'utf8',
         });
