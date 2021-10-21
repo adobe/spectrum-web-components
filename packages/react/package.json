@@ -29,6 +29,7 @@
         ".": "./src/index.js",
         "./src/*": "./src/*",
         "./package.json": "./package.json",
+        "./modules.json": "./modules.json",
         "./react-elements": "./react-elements.js",
         "./react-elements.js": "./react-elements.js",
         "./icons": "./src/icons.js",
