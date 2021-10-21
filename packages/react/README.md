@@ -13,14 +13,16 @@ Import the side effectful registration of `<sp-react>` via:
 
 ```
 import {ReactComponents} from '@iliad-ui/react';
-const {SpButtonGroup,SpButton} = ReactComponents;
+const {ButtonGroup,Button} = ReactComponents;
 
 ```
 
 ## Example
 
 ```html
-<sp-button-group>
-    <sp-button><sp-button>
-</sp-button-group>
+<ButtonGroup>
+    <Button>
+        click me!
+    <Button>
+</ButtonGroup>
 ```
