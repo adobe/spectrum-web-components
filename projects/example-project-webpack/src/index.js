@@ -15,17 +15,17 @@ governing permissions and limitations under the License.
 import './styles.css';
 
 // import the components we'll use in this page
-// import '@lliad-ui/button/sp-button';
-// import '@lliad-ui/field-label/sp-field-label';
-// import '@lliad-ui/picker/sp-picker';
-// import '@lliad-ui/menu/sp-menu';
-// import '@lliad-ui/menu/sp-menu-item';
-// import * as AllPacks from '@lliad-ui/bundle';
+// import '@iliad-ui/button/sp-button';
+// import '@iliad-ui/field-label/sp-field-label';
+// import '@iliad-ui/picker/sp-picker';
+// import '@iliad-ui/menu/sp-menu';
+// import '@iliad-ui/menu/sp-menu-item';
+// import * as AllPacks from '@iliad-ui/bundle';
 // console.log(AllPacks);
 
 import {
     SpComponents,
     ReactComponents,
-} from '@lliad-ui/react/react-elements.js';
+} from '@iliad-ui/react/react-elements.js';
 
 console.log(SpComponents, ReactComponents);

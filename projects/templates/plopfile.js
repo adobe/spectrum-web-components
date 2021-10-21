@@ -40,10 +40,10 @@ module.exports = function (plop) {
     });
     plop.setActionType('install deps', function (answers) {
         execSync(
-            `cd ../../ && yarn lerna add @lliad-ui/base --scope=@lliad-ui/${answers.name} --no-bootstrap`
+            `cd ../../ && yarn lerna add @iliad-ui/base --scope=@iliad-ui/${answers.name} --no-bootstrap`
         );
         execSync(
-            `cd ../../ && yarn lerna add @spectrum-css/${answers.spectrum} --scope=@lliad-ui/${answers.name} --dev --no-bootstrap`
+            `cd ../../ && yarn lerna add @spectrum-css/${answers.spectrum} --scope=@iliad-ui/${answers.name} --dev --no-bootstrap`
         );
     });
     plop.setGenerator('component', {

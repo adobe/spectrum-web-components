@@ -67,7 +67,7 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
     let manifestImports = `import {
         html,
         TemplateResult
-    } from '@lliad-ui/base';\r\n`;
+    } from '@iliad-ui/base';\r\n`;
     let manifestListings = `\r\nexport const iconManifest = [\r\n`;
 
     icons.forEach((i) => {
@@ -155,10 +155,10 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
         import {
             html,
             TemplateResult
-        } from '@lliad-ui/base';
+        } from '@iliad-ui/base';
         import {
             IconBase
-        } from '@lliad-ui/icon';
+        } from '@iliad-ui/icon';
 
         import {
             ${ComponentName}Icon
@@ -206,7 +206,7 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
         const iconRegistration = `
         ${disclaimer}
 
-        import { lliadCustomElementsDefine } from '@lliad-ui/base';
+        import { lliadCustomElementsDefine } from '@iliad-ui/base';
         import { Icon${ComponentName} } from '../src/elements/Icon${id}.js';
 
         lliadCustomElementsDefine('${iconElementName}', Icon${ComponentName});
