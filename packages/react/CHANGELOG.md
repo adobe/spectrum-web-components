@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/react@0.4.1...@iliad-ui/react@0.4.2) (2021-10-21)
+
+
+### Features
+
+* react组件层增加modules.json,获取自定义组件事件和属性 ([1a010ba](https://github.com/gaoding-inc/Iliad-ui/commit/1a010baba44ec6835d698cb8793fe67fcfdf5923))
+
+
+
+
+
 ## [0.4.1](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/react@0.4.0...@iliad-ui/react@0.4.1) (2021-10-21)
 
 **Note:** Version bump only for package @iliad-ui/react

@@ -1,6 +1,6 @@
 {
     "name": "@iliad-ui/action-group",
-    "version": "0.10.0",
+    "version": "0.10.1",
     "publishConfig": {
         "access": "public"
     },
@@ -50,8 +50,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@iliad-ui/action-button": "^0.11.0",
-        "@iliad-ui/base": "^0.10.0",
+        "@iliad-ui/action-button": "^0.11.1",
+        "@iliad-ui/base": "^0.10.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

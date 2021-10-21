@@ -1,6 +1,6 @@
 {
     "name": "@iliad-ui/react",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "publishConfig": {
         "access": "public"
     },
@@ -52,7 +52,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@iliad-ui/bundle": "^0.26.1",
+        "@iliad-ui/bundle": "^0.26.2",
         "@lit-labs/react": "^1.0.1",
         "@types/lodash": "^4.14.175",
         "@types/react": "^17.0.30",

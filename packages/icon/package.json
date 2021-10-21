@@ -1,6 +1,6 @@
 {
     "name": "@iliad-ui/icon",
-    "version": "0.15.0",
+    "version": "0.15.1",
     "publishConfig": {
         "access": "public"
     },
@@ -50,8 +50,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@iliad-ui/base": "^0.10.0",
-        "@iliad-ui/iconset": "^0.11.0",
+        "@iliad-ui/base": "^0.10.1",
+        "@iliad-ui/iconset": "^0.11.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
