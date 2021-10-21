@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.12.0 (2021-10-21)
+
+
+### Bug Fixes
+
+* add tslib as dependency where needed ([78885d9](https://github.com/gaoding-inc/Iliad-ui/commit/78885d9ca7192a053d3b380c338ad5570da474f9))
+* correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/Iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+* ensure browser understandable extensions ([f4e59f7](https://github.com/gaoding-inc/Iliad-ui/commit/f4e59f76f86369593810463c6406565e28ad97e9))
+* include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/Iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+* include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+* include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+* normalize "event" and "error" argument names ([8d382cd](https://github.com/gaoding-inc/Iliad-ui/commit/8d382cdac98282c886f23c4a8d6cf4910c4a606c))
+* update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/Iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+* update side effect listings ([8160d3a](https://github.com/gaoding-inc/Iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+* update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+* use icons without "size" values ([3fc7c91](https://github.com/gaoding-inc/Iliad-ui/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+* use latest @spectrum-css/* versions ([c35eb86](https://github.com/gaoding-inc/Iliad-ui/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+* use type="search" for nicer virtual keyboards ([c439eb3](https://github.com/gaoding-inc/Iliad-ui/commit/c439eb3b5d0b9dbc628691a5215d65c936c3939e))
+* **search:** ensure "reset" surfaces "input" and "change" events ([d8204a9](https://github.com/gaoding-inc/Iliad-ui/commit/d8204a9cf05605696cab02c1e47edb4fad36e9ed))
+
+
+### Features
+
+* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+* **action-button:** add action button pattern ([03ac00a](https://github.com/gaoding-inc/Iliad-ui/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+* **button:** use synthetic button instead of native ([49e94bc](https://github.com/gaoding-inc/Iliad-ui/commit/49e94bcf79da6ec1ef05f4197042f992922b91ca))
+* **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/gaoding-inc/Iliad-ui/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+* **search:** adds sp-search element ([d484fc2](https://github.com/gaoding-inc/Iliad-ui/commit/d484fc2848a08d52ebb1fc2064202a4288b6b4b3))
+* **search:** introduce API to control form interactions ([42fac00](https://github.com/gaoding-inc/Iliad-ui/commit/42fac00ac071e87f9f80ae45212ea469d4d05fb0))
+* **search:** submit will bubble ([8014345](https://github.com/gaoding-inc/Iliad-ui/commit/801434548576daf4c31dc99eb6972ea140c68943))
+* **search:** support "quiet" variant ([d0f85f1](https://github.com/gaoding-inc/Iliad-ui/commit/d0f85f18887731f80d26eaec84ae601f4e433196))
+* **search:** update spectrum css input ([05d8131](https://github.com/gaoding-inc/Iliad-ui/commit/05d813121075a96652b122c7bb9aafa375dc97ad))
+* **search:** use Spectrum CSS ^3.0.0 ([7830ac0](https://github.com/gaoding-inc/Iliad-ui/commit/7830ac0868e855145cee0922529a0f6d4d3e7f50))
+* add and use icons-ui package ([d9c3ab2](https://github.com/gaoding-inc/Iliad-ui/commit/d9c3ab212b4f756334e857fc513ccbf0a4dff9cc))
+* leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/Iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+* use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/Iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
+
+
+### Performance Improvements
+
+* use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/Iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+
+
+### Reverts
+
+* Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/Iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+
+
+
+
+
 ## [0.11.3](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/search@0.11.2...@iliad-ui/search@0.11.3) (2021-10-20)
 
 **Note:** Version bump only for package @iliad-ui/search

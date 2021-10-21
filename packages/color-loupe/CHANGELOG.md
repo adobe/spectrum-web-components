@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.5.0 (2021-10-21)
+
+
+### Bug Fixes
+
+* address westbrooks comments ([634af60](https://github.com/gaoding-inc/Iliad-ui/commit/634af60f88b0c998b30697dfbd13c9c466ed539d))
+
+
+### Features
+
+* **color-loupe:** add color-loupe pattern ([e2f0d15](https://github.com/gaoding-inc/Iliad-ui/commit/e2f0d159714cc7998f15d9913b38128486f8b7fb))
+
+
+
+
+
 ## [0.4.3](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/color-loupe@0.4.2...@iliad-ui/color-loupe@0.4.3) (2021-10-20)
 
 **Note:** Version bump only for package @iliad-ui/color-loupe

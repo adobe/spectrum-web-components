@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.4.0 (2021-10-21)
+
+
+### Features
+
+* 更新react package.json ,增加customElement定义 ([8e2fb4b](https://github.com/gaoding-inc/Iliad-ui/commit/8e2fb4b80bd1430597fc9fedcadd5acd98b21c8e))
+* 增加模块包转换成react组件的方法 ([ce9a660](https://github.com/gaoding-inc/Iliad-ui/commit/ce9a660521bc96362ea57bb0fef58198e0467fb8))
+* 增加react适配层package ([71bb68b](https://github.com/gaoding-inc/Iliad-ui/commit/71bb68b90bdec4e88e70936ecde06c4883e05a5d))
+
+
+
+
+
 ## [0.3.4](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/react@0.3.3...@iliad-ui/react@0.3.4) (2021-10-20)
 
 **Note:** Version bump only for package @iliad-ui/react

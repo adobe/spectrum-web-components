@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.9.0 (2021-10-21)
+
+
+### Bug Fixes
+
+* add "editable" option to "sp-slider" ([e86d7fa](https://github.com/gaoding-inc/Iliad-ui/commit/e86d7fa84491b41a39dbab9c8d85eec42df320cd))
+* allow sp-dropdown to accept focus visibly from sp-field-label ([134bafc](https://github.com/gaoding-inc/Iliad-ui/commit/134bafc9c2e4d06e48107182f82dd7487066b7f1))
+* remove <sp-menu> usage where deprecated ([387db3b](https://github.com/gaoding-inc/Iliad-ui/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+* update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+* **field-label:** do not assume a target is available and surface t-shirt sizing ([c5daead](https://github.com/gaoding-inc/Iliad-ui/commit/c5daead76698733ce52878fc50e01cdb640396cc))
+* update export patterns ([b2da444](https://github.com/gaoding-inc/Iliad-ui/commit/b2da444359b4022ed3f61dedf563b5bacba42103))
+
+
+### Features
+
+* **action-button:** add action button pattern ([03ac00a](https://github.com/gaoding-inc/Iliad-ui/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+* **field-label:** add field label pattern ([2fa7c7e](https://github.com/gaoding-inc/Iliad-ui/commit/2fa7c7e0201a6161d6cc769dc171ae37c70ab136))
+* **field-label:** update spectrum css input ([80a993d](https://github.com/gaoding-inc/Iliad-ui/commit/80a993d787af98f41a613f053e4c2497d07f07ee))
+* **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/gaoding-inc/Iliad-ui/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+* **picker:** process field-label content for more accurate a11y tree ([dc9df54](https://github.com/gaoding-inc/Iliad-ui/commit/dc9df54d052edc46c2399f0f7b12d3b5d4aff740))
+* **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/Iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
+
+
+
+
 ## [0.8.3](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/field-label@0.8.2...@iliad-ui/field-label@0.8.3) (2021-10-20)
 
 **Note:** Version bump only for package @iliad-ui/field-label

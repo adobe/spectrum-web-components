@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.6.0 (2021-10-21)
+
+
+### Bug Fixes
+
+* **dialog:** normalize sizing technique to align with future t-shirt size usage ([da33797](https://github.com/gaoding-inc/Iliad-ui/commit/da33797e724d0943a6abf059c96641a220182e5f))
+* **tray:** add tray pattern ([0915fa5](https://github.com/gaoding-inc/Iliad-ui/commit/0915fa5e3c7eecc1608ce3b706fbae01b3ee3608))
+
+
+### Features
+
+* update lit-* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/Iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+
+
+
+
+
 ## [0.5.3](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/tray@0.5.2...@iliad-ui/tray@0.5.3) (2021-10-20)
 
 **Note:** Version bump only for package @iliad-ui/tray

@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.26.0 (2021-10-21)
+
+
+### Bug Fixes
+
+* allow "updateComplete" to resolve to a boolean like the LitElement default ([6127946](https://github.com/gaoding-inc/Iliad-ui/commit/6127946fd3ffd048a30b7eb4bf6aadf9e7c8752a))
+* breadcrumb和tree组件之后增加引用路径，保证打包正确 ([264fb7a](https://github.com/gaoding-inc/Iliad-ui/commit/264fb7a1c4fd186451973326b4e88a26b3189ffa))
+* **bundle:** bundle does not export its own custom-elements.json ([a362886](https://github.com/gaoding-inc/Iliad-ui/commit/a362886b19ae6878d4969d48bac07686f66e40bf))
+* **tray:** add tray pattern ([0915fa5](https://github.com/gaoding-inc/Iliad-ui/commit/0915fa5e3c7eecc1608ce3b706fbae01b3ee3608))
+* correct dependency graph ([69165eb](https://github.com/gaoding-inc/Iliad-ui/commit/69165eb7444aea66fd1041996c44ed43e39c3ebc))
+* factor theme to use a single DOM node ([7641228](https://github.com/gaoding-inc/Iliad-ui/commit/7641228705bc5f1ba51dbec8a3d3943db540ad90)), closes [#154](https://github.com/gaoding-inc/Iliad-ui/issues/154)
+* include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/Iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+* include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+* include element is bundle side effects ([ce320f8](https://github.com/gaoding-inc/Iliad-ui/commit/ce320f859d43c08954b6d5c3f628db9319c11307))
+* include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+* **status-light:** review comments for status-light ([80caa08](https://github.com/gaoding-inc/Iliad-ui/commit/80caa083eb3958c0260c1d1dc92578d1710abd89))
+* **status-light:** update version in bundle pjson ([a8eabdb](https://github.com/gaoding-inc/Iliad-ui/commit/a8eabdb95b70cb21cf58423385df295ec013c1fc))
+
+
+### Features
+
+* multi-handle slider implementation ([8d5a743](https://github.com/gaoding-inc/Iliad-ui/commit/8d5a74309ec171107a9504695216cb90abe39023)), closes [#1385](https://github.com/gaoding-inc/Iliad-ui/issues/1385)
+* **number-field:** add number field pattern ([384ab34](https://github.com/gaoding-inc/Iliad-ui/commit/384ab34d5aafe54e3206ff6802eb642c4df556c6))
+* **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/Iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+* setup SplitView component from rebase main ([32f3272](https://github.com/gaoding-inc/Iliad-ui/commit/32f3272dcbaba5b09cf02f66f25b54ab923f4510))
+* split icons into their own export ([98dac4c](https://github.com/gaoding-inc/Iliad-ui/commit/98dac4ce935082a54074c8b57276dce2cf2b20e1))
+* **accordion:** add accordion pattern ([97529d8](https://github.com/gaoding-inc/Iliad-ui/commit/97529d848eaa1ea4c0d0a7770f7c73927687256b))
+* **action-button:** add action button pattern ([03ac00a](https://github.com/gaoding-inc/Iliad-ui/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+* **action-group:** add action-group pattern ([d2de766](https://github.com/gaoding-inc/Iliad-ui/commit/d2de766efde6dfbaa1cd604f99ae3128b4fc81b5))
+* **asset:** add the asset pattern ([a7c00bb](https://github.com/gaoding-inc/Iliad-ui/commit/a7c00bbd591587a13b8d941885a19047e3d1cae7))
+* **avatar:** add avatar component ([a6882b4](https://github.com/gaoding-inc/Iliad-ui/commit/a6882b40a01596305c10990d96bed53168a0f5e3))
+* **bar-loader:** add bar-loader pattern ([eff18e7](https://github.com/gaoding-inc/Iliad-ui/commit/eff18e7c506feefa28e85df4b82b322ffb675de1))
+* **bundle:** add search ([0e00123](https://github.com/gaoding-inc/Iliad-ui/commit/0e00123197010c70295b00ca2bded6c0ca5aac7a))
+* **bundle:** include sp-actionbar ([af4b09f](https://github.com/gaoding-inc/Iliad-ui/commit/af4b09f947af953e92f96017aea012f8ac912155))
+* **button-group:** add ButtonGroup pattern ([c4d85b5](https://github.com/gaoding-inc/Iliad-ui/commit/c4d85b5524f6623dbd3cb22c0d6fa8fc00e98733))
+* **circleloader:** add circleloader component ([ebab180](https://github.com/gaoding-inc/Iliad-ui/commit/ebab1807e200005ff90f463b7718659976f958f4))
+* **coachmark:** add coachmark pattern ([f53ae70](https://github.com/gaoding-inc/Iliad-ui/commit/f53ae70e6f49f73c71480809021e21d2ff9bcd85))
+* **field-group:** add field-group pattern ([f8d265c](https://github.com/gaoding-inc/Iliad-ui/commit/f8d265c3352f4a97fc103a09ce8eb56511dcedbb))
+* **field-label:** add field label pattern ([2fa7c7e](https://github.com/gaoding-inc/Iliad-ui/commit/2fa7c7e0201a6161d6cc769dc171ae37c70ab136))
+* **icons-workflow:** add workflow icons package ([6b09287](https://github.com/gaoding-inc/Iliad-ui/commit/6b09287d5c169205f0cc332b2158d57e7ef4a4b7))
+* **meter:** add meter pattern ([fa092ba](https://github.com/gaoding-inc/Iliad-ui/commit/fa092ba915a2fe6320cd9bdbe33055a9e41eee87))
+* **rule:** add Spectrum rule pattern and apply to docs ([f4c52ae](https://github.com/gaoding-inc/Iliad-ui/commit/f4c52ae34eeae80f8edb57828ad93f32f33f713e))
+* **split-button:** add split-button pattern ([4833a59](https://github.com/gaoding-inc/Iliad-ui/commit/4833a598bb3da3552d194586350a3888dba79543))
+* **status-light:** add status-light component ([e3a5b3d](https://github.com/gaoding-inc/Iliad-ui/commit/e3a5b3dd853ebb8ad05ec438f4855fd3c500f7ce))
+* **tags:** add tags pattern ([ae91865](https://github.com/gaoding-inc/Iliad-ui/commit/ae91865642bab3f330174ec5dd27977f73ed7b9c))
+* **thumbnail:** add the thumbnail package ([56935d5](https://github.com/gaoding-inc/Iliad-ui/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
+* add dialog, dialog-wrapped, and underlay elements ([3df9050](https://github.com/gaoding-inc/Iliad-ui/commit/3df9050f65bd3a95f9b986aa728cfc1a2eaee432))
+* join overlay-root and overlay-trigger as overlay ([dcde42c](https://github.com/gaoding-inc/Iliad-ui/commit/dcde42c118b76bf8466c7475611e95783a1dcb3d))
+* leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/Iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+* **quick-actions:** add quick-actions pattern ([3664b51](https://github.com/gaoding-inc/Iliad-ui/commit/3664b51c53ddc200a57f7db1a16036dc7fc81ed5))
+* **toast:** add "sp-toast" pattern ([d0a5f00](https://github.com/gaoding-inc/Iliad-ui/commit/d0a5f009a656b55cdcbd7df471646380aa478ef4))
+
+
+### Performance Improvements
+
+* use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/Iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+* use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/Iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
+
+
+### Reverts
+
+* Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/Iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+
+
+
+
+
 ## [0.25.3](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/bundle@0.25.2...@iliad-ui/bundle@0.25.3) (2021-10-20)
 
 **Note:** Version bump only for package @iliad-ui/bundle
