@@ -24,9 +24,9 @@ When looking to leverage the `SplitView` base class as a type and/or for extensi
 import { SplitView } from '@spectrum-web-components/split-view';
 ```
 
-### Variants
+## Variants
 
-#### Horizontal
+### Horizontal
 
 ```html
 <sp-split-view>
@@ -35,7 +35,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
 </sp-split-view>
 ```
 
-#### Horizontal Resizable
+### Horizontal Resizable
 
 ```html
 <sp-split-view resizable primary-min="50" secondary-min="50" primary-size="100">
@@ -56,7 +56,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
 </sp-split-view>
 ```
 
-#### Horizontal Resizable & Collapsible
+### Horizontal Resizable & Collapsible
 
 ```html
 <sp-split-view resizable>
@@ -77,7 +77,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
 </sp-split-view>
 ```
 
-#### Vertical
+### Vertical
 
 ```html
 <sp-split-view vertical>
@@ -86,7 +86,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
 </sp-split-view>
 ```
 
-#### Vertical Resizable
+### Vertical Resizable
 
 ```html
 <sp-split-view
@@ -113,7 +113,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
 </sp-split-view>
 ```
 
-#### Vertical Resizable & Collapsible
+### Vertical Resizable & Collapsible
 
 ```html
 <sp-split-view vertical resizable style="height: 300px;">
@@ -134,7 +134,7 @@ import { SplitView } from '@spectrum-web-components/split-view';
 </sp-split-view>
 ```
 
-#### Multiple Levels
+### Multiple Levels
 
 ```html
 <sp-split-view
