@@ -20,6 +20,7 @@ export const generateReactCom = (
     return createComponent(React, swcTagName, swcClass, events, swcDisplayName);
 };
 
+// 将所有模块包装成经过lit-react适配后的react组件对象
 export const generatePackageReactComs = (packageComs: any): any => {
     let packageMap: any = {};
     for (const packageComName in packageComs) {
@@ -28,15 +29,16 @@ export const generatePackageReactComs = (packageComs: any): any => {
         if (!isPackageClass) continue;
         const packageDisplayName = `Sp${packageComName}`;
         const packageTagName = _.kebabCase(packageDisplayName);
-        packageMap[packageDisplayName] = generateReactCom(
+        packageMap[packageComName] = generateReactCom(
             packageTagName,
             packageComClass,
-            packageDisplayName
+            packageComName
         );
     }
     return packageMap;
 };
 
+// 从custom-elements里面获取json数据
 function findPackageModule(tagName: string): any {
     let prefixedEl: any;
     SpModules.find((jsModule: any) => {
