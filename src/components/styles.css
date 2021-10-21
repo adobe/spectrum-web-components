@@ -1,0 +1,681 @@
+/*
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+@import '@spectrum-web-components/styles/core-global.css';
+@import '@spectrum-web-components/styles/scale-medium.css';
+@import '@spectrum-web-components/styles/fonts.css';
+@import '@spectrum-web-components/styles/typography.css';
+@import '@spectrum-css/table/dist/index-vars.css';
+
+@import '@spectrum-web-components/styles/theme-dark.css' screen and
+    (prefers-color-scheme: dark);
+@import 'prismjs/themes/prism-okaidia.css' screen and
+    (prefers-color-scheme: dark);
+@import '@spectrum-web-components/styles/theme-light.css' screen and
+    (prefers-color-scheme: light);
+@import 'prismjs/themes/prism.css' screen and (prefers-color-scheme: light);
+
+@import './fonts.css';
+
+body {
+    margin: 0;
+    background-color: var(--spectrum-global-color-gray-50);
+    -webkit-font-smoothing: antialiased;
+}
+
+@media screen and (min-width: 961px) {
+    docs-page:not(:defined) {
+        position: absolute;
+        left: 0;
+        right: 0;
+        min-height: 100vh;
+        box-sizing: border-box;
+        padding: 96px 0 24px
+            calc(var(--spectrum-global-dimension-size-2400) + 48px);
+        background: linear-gradient(
+            to right,
+            var(--spectrum-global-color-gray-75) 0,
+            var(--spectrum-global-color-gray-75)
+                calc(var(--spectrum-global-dimension-size-2400) + 48px),
+            transparent calc(var(--spectrum-global-dimension-size-2400) + 48px),
+            transparent
+        );
+        overflow: hidden;
+    }
+
+    docs-page:not(:defined) > * {
+        display: block;
+        max-width: 1080px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 var(--spectrum-global-dimension-size-700) 0;
+    }
+
+    docs-page:not(:defined) > main {
+        box-sizing: border-box;
+    }
+
+    docs-page:not(:defined) #logo {
+        position: absolute;
+        right: calc(100% - var(--spectrum-global-dimension-size-2400) - 48px);
+        top: 0;
+    }
+
+    docs-page:not(:defined) sp-sidenav {
+        position: absolute;
+        width: var(--spectrum-global-dimension-size-2400);
+        top: 144px;
+        right: calc(100% - var(--spectrum-global-dimension-size-2400) - 48px);
+        padding: 0 24px 24px;
+        height: calc(100vh - 143px);
+        overflow: auto;
+    }
+
+    docs-page:not(:defined) sp-tabs {
+        padding: 0;
+    }
+
+    sp-sidenav:not(:defined) {
+        width: var(--spectrum-global-dimension-size-2400);
+    }
+}
+
+@media screen and (max-width: 960px) {
+    docs-page:not(:defined) {
+        display: block;
+        padding: 113px var(--spectrum-global-dimension-size-300) 24px;
+        overflow: hidden;
+    }
+
+    docs-page:not(:defined):before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        top: 48px;
+        border-bottom: 1px solid var(--spectrum-global-color-gray-200);
+        left: 0;
+    }
+
+    docs-page:not(:defined) #logo {
+        position: absolute;
+        right: 100%;
+        top: 0;
+    }
+
+    sp-sidenav:not(:defined) {
+        position: absolute;
+        top: auto;
+        left: 0;
+        width: 100%;
+        box-sizing: border-box;
+        column-count: 4;
+        padding: 0 24px 24px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    sp-sidenav:not(:defined) {
+        column-count: 3;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    sp-sidenav:not(:defined) {
+        column-count: 2;
+    }
+}
+
+@media screen and (max-width: 458px) {
+    docs-page:not(:defined) {
+        padding: 113px var(--spectrum-global-dimension-size-300) 24px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    sp-sidenav:not(:defined) {
+        column-count: 1;
+    }
+}
+
+#logo {
+    outline: none;
+    margin-bottom: -11px;
+    padding: var(--spectrum-global-dimension-size-350)
+        var(--spectrum-global-dimension-size-300);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+    color: var(--spectrum-global-color-gray-800);
+    text-decoration: none;
+    width: var(--spectrum-global-dimension-size-2400);
+}
+
+#logo svg {
+    width: 36px;
+    height: 31px;
+    display: block;
+    margin-right: var(--spectrum-global-dimension-size-200);
+    margin-bottom: 12px;
+    flex-shrink: 0;
+}
+
+#logo .title {
+    font-size: 18px;
+    align-items: center;
+    font-weight: 700;
+    line-height: 1.3;
+    font-style: normal;
+    letter-spacing: 0px;
+    margin: -3px 0 0;
+    font-family: var(
+        --spectrum-alias-body-text-font-family,
+        var(--spectrum-global-font-family-base)
+    );
+}
+
+docs-page:not(:defined) #title-header {
+    overflow: visible;
+}
+
+docs-page:not(:defined) sp-tabs,
+sp-tabs:not(:defined) {
+    display: block;
+    margin-bottom: 2px;
+}
+
+sp-tab:not(:defined) {
+    margin-top: var(
+        --spectrum-heading-s-margin-top,
+        var(--spectrum-alias-heading-s-margin-top)
+    );
+    margin-bottom: var(
+        --spectrum-heading-s-margin-bottom,
+        var(--spectrum-global-dimension-size-65)
+    );
+    color: var(
+        --spectrum-heading-s-text-color,
+        var(--spectrum-alias-heading-text-color)
+    );
+    font-family: var(
+        --spectrum-heading-m-text-font-family,
+        var(--spectrum-alias-body-text-font-family)
+    );
+    font-weight: var(
+        --spectrum-heading-m-text-font-weight,
+        var(--spectrum-alias-heading-text-font-weight-regular)
+    );
+    font-size: var(
+        --spectrum-heading-s-text-size,
+        var(--spectrum-alias-heading-s-text-size)
+    );
+    line-height: var(
+        --spectrum-heading-s-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    font-style: var(
+        --spectrum-heading-s-text-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    letter-spacing: var(
+        --spectrum-heading-s-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-none)
+    );
+    text-transform: var(--spectrum-heading-s-text-transform, none);
+}
+
+docs-page sp-button:not(:defined) {
+    visibility: hidden;
+    line-height: 23px;
+    padding: 10px 0 12px;
+    border: 2px solid;
+}
+
+docs-page:not(:defined) code-example {
+    color: var(--spectrum-body-3-text-color, var(--spectrum-alias-text-color));
+}
+
+sp-sidenav:not(:defined) {
+    display: block;
+    list-style: none;
+}
+
+sp-sidenav-item:not([tabindex]) {
+    display: list-item;
+    list-style-type: none;
+    margin: var(
+            --spectrum-sidenav-item-gap,
+            var(--spectrum-global-dimension-size-50)
+        )
+        0;
+}
+
+sp-sidenav-item {
+    content-visibility: auto;
+    contain-intrinsic-size: 40px;
+}
+
+sp-sidenav > sp-sidenav-item.spectrum-web {
+    margin-top: 80px;
+    display: block;
+}
+
+sp-sidenav-item:not(:defined) a,
+sp-sidenav-item:not(:defined) span {
+    min-height: var(
+        --spectrum-sidenav-item-height,
+        var(--spectrum-alias-single-line-height)
+    );
+    color: var(--spectrum-body-3-text-color, var(--spectrum-alias-text-color));
+    padding: var(--spectrum-global-dimension-size-65)
+        var(
+            --spectrum-sidenav-item-padding-x,
+            var(--spectrum-global-dimension-size-150)
+        );
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: left;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: var(
+        --spectrum-sidenav-item-height,
+        var(--spectrum-alias-single-line-height)
+    );
+    font-size: var(
+        --spectrum-sidenav-item-text-size,
+        var(--spectrum-alias-font-size-default)
+    );
+    font-style: normal;
+    font-weight: var(
+        --spectrum-sidenav-item-font-weight,
+        var(--spectrum-global-font-weight-regular)
+    );
+    word-break: break-word;
+    hyphens: auto;
+    cursor: pointer;
+    background-color: var(
+        --spectrum-sidenav-item-background-color,
+        var(--spectrum-alias-background-color-transparent)
+    );
+    color: var(
+        --spectrum-sidenav-item-text-color,
+        var(--spectrum-alias-text-color)
+    );
+    text-decoration: none;
+}
+
+sp-sidenav-item:not(:defined) span,
+sp-sidenav > sp-sidenav-item[multilevel]:not(:defined) > a {
+    font-weight: var(--spectrum-global-font-weight-bold);
+}
+
+sp-sidenav-item:not(:defined) span,
+sp-sidenav > sp-sidenav-item:not(:defined) > a {
+    padding-left: var(
+        --spectrum-sidenav-item-padding-x,
+        var(--spectrum-global-dimension-size-150)
+    );
+}
+
+sp-sidenav-item:not(:defined) a {
+    padding-left: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-indentation-level1,
+                var(--spectrum-global-dimension-size-150)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    );
+}
+
+docs-page:not(:defined) .header-anchor {
+    display: none;
+}
+
+sp-divider[size='l']:not(:defined) {
+    display: block;
+    height: 4px;
+}
+
+sp-divider[size='m']:not(:defined) {
+    display: block;
+    height: 2px;
+}
+
+sp-divider[size='s']:not(:defined) {
+    display: block;
+    height: 2px;
+}
+
+.hero {
+    margin-bottom: 4em;
+}
+
+.hero .spectrum-Heading {
+    margin: var(--spectrum-global-dimension-size-100) 0
+        var(--spectrum-global-dimension-size-200) 0;
+}
+
+#hero-buttons {
+    margin-top: 2em;
+}
+
+#features {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.feature {
+    flex: 0 1 calc(33.33% - 30px);
+    padding: 0 0 20px;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 1100px) {
+    .feature {
+        flex: 0 1 calc(50% - 30px);
+    }
+    .feature:first-of-type {
+        flex-basis: 100%;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    .feature {
+        flex: 0 1 calc(33.33% - 30px);
+    }
+    .feature:first-of-type {
+        flex: 0 1 calc(33.33% - 30px);
+    }
+}
+
+@media screen and (max-width: 725px) {
+    .feature {
+        flex: 0 1 calc(50% - 30px);
+    }
+    .feature:first-of-type {
+        flex-basis: 100%;
+    }
+}
+
+@media screen and (max-width: 525px) {
+    .feature {
+        flex: 0 1 100%;
+    }
+}
+
+.example {
+    margin-top: 2em;
+}
+
+.spectrum-Heading--sizeS {
+    margin-bottom: 16px;
+}
+
+#title-header {
+    margin-bottom: 2rem;
+}
+
+#title-header h1,
+#hero h1 {
+    margin: var(--spectrum-global-dimension-size-100) 0;
+}
+
+@media screen and (max-width: 768px) {
+    #title-header h1,
+    #hero h1 {
+        font-size: 44px;
+        letter-spacing: normal;
+    }
+}
+
+.spectrum-Body code {
+    color: var(--spectrum-global-color-blue-700);
+}
+
+.spectrum-Article .spectrum-Heading1--display {
+    margin-bottom: 28px;
+}
+
+sp-divider {
+    margin-bottom: 33px;
+}
+
+article {
+    margin-bottom: 3em;
+}
+
+.spectrum-Table {
+    width: 100%;
+}
+
+.spectrum-Table-body {
+    --spectrum-table-row-background-color: var(--spectrum-global-color-gray-75);
+}
+
+.table-container {
+    overflow: auto;
+    margin: 0 calc(-1 * var(--spectrum-global-dimension-size-700));
+}
+
+.table-container > table {
+    padding: 0 var(--spectrum-global-dimension-size-700);
+    max-width: 1080px;
+}
+
+.spectrum-Table {
+    min-width: 100%;
+}
+
+@media screen and (max-width: 960px) {
+    .table-container {
+        overflow: auto;
+        margin: 0 -16px;
+    }
+
+    .table-container > table {
+        padding: 0 16px;
+    }
+}
+
+.headerContainer > sp-divider[size='l'] {
+    margin-bottom: var(--spectrum-global-dimension-size-300);
+}
+
+.headerContainer:first-child > sp-divider[size='l'] {
+    margin-bottom: var(--spectrum-global-dimension-size-300);
+}
+
+.headerContainer > sp-divider[size='m'] {
+    margin-bottom: var(--spectrum-global-dimension-size-200);
+}
+
+.headerContainer > sp-divider[size='s'] {
+    margin-bottom: var(--spectrum-global-dimension-size-150);
+}
+
+[id] > .header-anchor {
+    opacity: 0;
+    transition: all 125ms ease-in-out;
+}
+
+h1[id],
+h2[id],
+h3[id],
+h4[id] {
+    scroll-margin-top: var(--spectrum-global-dimension-static-size-1200);
+    scroll-snap-margin-top: var(--spectrum-global-dimension-static-size-1200);
+}
+
+/*! purgecss start ignore */
+[id]:hover > .header-anchor,
+[id] > .header-anchor.focus-visible {
+    opacity: 1;
+}
+
+sp-link img {
+    box-shadow: 0 2px 0 0 transparent;
+    transition: box-shadow var(--spectrum-global-animation-duration-300)
+        ease-in-out;
+}
+
+sp-link.focus-visible img {
+    box-shadow: 0 2px 0 0
+        var(
+            --spectrum-fieldbutton-border-color-key-focus,
+            var(--spectrum-alias-border-color-focus)
+        );
+}
+
+sp-link:hover img {
+    box-shadow: 0 2px 0 0
+        var(
+            --spectrum-fieldbutton-text-color-hover,
+            var(--spectrum-alias-text-color-hover)
+        );
+}
+
+img[src^="https://img.shields.io"]
+{
+    height: 28px;
+    min-width: 100px;
+}
+/*! purgecss end ignore */
+
+.markup,
+code-example:not(:defined) {
+    position: relative;
+    max-width: 100%;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0 0 6px 6px;
+    border-top: 1px solid var(--spectrum-global-color-gray-100);
+    background: var(--spectrum-global-color-gray-75);
+    overflow: hidden;
+    line-height: 1.3em;
+    overflow-x: auto;
+}
+
+code-example:not(:defined) {
+    border-radius: 6px;
+    display: block;
+    margin: 1rem 0 2rem 0;
+    min-height: 86px;
+}
+
+code-example[class^='language']:not(:defined) {
+    min-height: 164px;
+}
+
+code-example:not(:defined) pre {
+    background: inherit;
+}
+
+code-example {
+    --spectrum-dialog-confirm-min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+docs-page:not(:defined) [aria-labelledby='component-name'] {
+    display: flex;
+    flex-direction: column;
+}
+
+docs-page:defined [aria-labelledby='component-name'] {
+    display: grid;
+    grid-template-columns: 100%;
+}
+
+docs-page:defined .section {
+    grid-area: 2/1/2/1;
+    overflow: hidden;
+    opacity: 1;
+    height: 100%;
+    transition: opacity var(--spectrum-global-animation-duration-300)
+            ease-in-out,
+        transform var(--spectrum-global-animation-duration-300) ease-in-out;
+}
+
+docs-page:defined .section:not([selected]) {
+    opacity: 0;
+    height: 0;
+    display: flex;
+    pointer-events: none;
+    transform: translateY(
+        var(
+            --spectrum-dropdown-flyout-menu-offset-y,
+            var(--spectrum-global-dimension-size-75)
+        )
+    );
+    transition: opacity var(--spectrum-global-animation-duration-300)
+            ease-in-out,
+        transform var(--spectrum-global-animation-duration-300) ease-in-out,
+        height 0s ease var(--spectrum-global-animation-duration-300);
+}
+
+docs-page:not(:defined) .section,
+sp-tabs[selected='examples'] sp-tab[value='api'],
+sp-tabs[selected='api'] sp-tab[value='examples'],
+sp-tabs[selected='examples'] sp-tab-panel[value='api'],
+sp-tabs[selected='api'] sp-tab-panel[value='examples'] {
+    order: 2;
+}
+
+docs-page:not(:defined) .section[selected],
+sp-tabs[selected='examples'] sp-tab[value='examples'],
+sp-tabs[selected='api'] sp-tab[value='api'],
+sp-tabs[selected='examples'] sp-tab-panel[value='examples'],
+sp-tabs[selected='api'] sp-tab-panel[value='api'] {
+    order: 1;
+}
+
+.docExample {
+    margin: 1.2em 0 1.5em 0;
+}
+
+main > sp-tabs > sp-tab:only-of-type {
+    visibility: hidden;
+    width: 0;
+}
+
+sp-tab-panel {
+    flex-direction: column;
+}
+
+sp-tab-panel[selected] {
+    display: flex;
+}
+
+sp-tab-panel:focus {
+    outline: none;
+}
+
+sp-tab-panel:not(.section):focus code-example {
+    position: relative;
+    overflow: hidden;
+}
+
+sp-tab-panel:not(.section):focus code-example:after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: var(--spectrum-global-dimension-static-size-25) solid
+        var(--spectrum-global-color-static-blue-600);
+}
