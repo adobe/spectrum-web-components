@@ -1,6 +1,6 @@
 {
     "name": "@iliad-ui/bundle",
-    "version": "0.26.0",
+    "version": "0.26.1",
     "publishConfig": {
         "access": "public"
     },
@@ -60,7 +60,7 @@
         "@iliad-ui/asset": "^0.8.0",
         "@iliad-ui/avatar": "^0.13.0",
         "@iliad-ui/banner": "^0.12.0",
-        "@iliad-ui/breadcrumb": "^0.1.0",
+        "@iliad-ui/breadcrumb": "^0.1.1",
         "@iliad-ui/button": "^0.20.0",
         "@iliad-ui/button-group": "^0.10.0",
         "@iliad-ui/card": "^0.14.0",
@@ -109,7 +109,7 @@
         "@iliad-ui/tooltip": "^0.12.0",
         "@iliad-ui/top-nav": "^0.7.0",
         "@iliad-ui/tray": "^0.6.0",
-        "@iliad-ui/tree": "^0.1.0",
+        "@iliad-ui/tree": "^0.1.1",
         "@iliad-ui/underlay": "^0.10.0",
         "tslib": "^2.0.0"
     },
