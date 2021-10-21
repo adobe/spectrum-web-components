@@ -237,6 +237,7 @@ docs-page sp-button:not(:defined) {
     line-height: 23px;
     padding: 10px 0 12px;
     border: 2px solid;
+    display: inline-block;
 }
 
 docs-page:not(:defined) code-example {
