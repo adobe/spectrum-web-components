@@ -142,8 +142,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     width: 100%;
     z-index: 1;
 }
-.fill,
-.track {
+.track,
+.fill {
     height: var(--spectrum-progressbar-height);
 }
 .fill {

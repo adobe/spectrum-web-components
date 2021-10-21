@@ -92,15 +92,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * [dir=rtl] 
   .spectrum-Tags-item>.spectrum-Avatar */
 }
-:host([dir='ltr']) > slot[name='avatar'] ~ .label,
-:host([dir='ltr']) > slot[name='icon'] ~ .label {
+:host([dir='ltr']) > slot[name='icon'] ~ .label,
+:host([dir='ltr']) > slot[name='avatar'] ~ .label {
     margin-right: calc(
         var(--spectrum-tag-avatar-padding-x) - var(--spectrum-tag-padding-right)
     ); /* [dir=ltr] .spectrum-Tags-item>.spectrum-Icon~.spectrum-Tags-itemLabel,
    * [dir=ltr]  .spectrum-Tags-item>.spectrum-Avatar~.spectrum-Tags-itemLabel */
 }
-:host([dir='rtl']) > slot[name='avatar'] ~ .label,
-:host([dir='rtl']) > slot[name='icon'] ~ .label {
+:host([dir='rtl']) > slot[name='icon'] ~ .label,
+:host([dir='rtl']) > slot[name='avatar'] ~ .label {
     margin-left: calc(
         var(--spectrum-tag-avatar-padding-x) - var(--spectrum-tag-padding-right)
     ); /* [dir=rtl] .spectrum-Tags-item>.spectrum-Icon~.spectrum-Tags-itemLabel,
