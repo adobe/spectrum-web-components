@@ -83,8 +83,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
     text-transform: var(--spectrum-body-xl-text-transform, none);
 }
-.spectrum-Body--sizeL,
-.spectrum-Body--sizeXL {
+.spectrum-Body--sizeXL,
+.spectrum-Body--sizeL {
     margin-bottom: 0;
     margin-top: 0;
 }

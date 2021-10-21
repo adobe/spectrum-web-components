@@ -294,10 +294,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         ease-in-out;
 }
 #box {
-    box-sizing: border-box;
     flex-grow: 0;
     flex-shrink: 0;
-    height: var(--spectrum-checkbox-box-size);
     margin: calc(
             (
                     var(--spectrum-checkbox-height) -
@@ -306,23 +304,28 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         )
         0;
     position: relative; /* .spectrum-Checkbox-box */
+}
+#box,
+#box:before {
+    box-sizing: border-box;
+    height: var(--spectrum-checkbox-box-size);
     width: var(--spectrum-checkbox-box-size);
 }
 #box:before {
     border-radius: var(--spectrum-checkbox-box-border-radius);
     border-style: solid;
     border-width: var(--spectrum-checkbox-box-border-size);
-    box-sizing: border-box;
-    content: '';
-    display: block; /* .spectrum-Checkbox-box:before */
-    height: var(--spectrum-checkbox-box-size);
-    position: absolute;
     transition: border var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
         box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out;
-    width: var(--spectrum-checkbox-box-size);
-    z-index: 0;
+    z-index: 0; /* .spectrum-Checkbox-box:before */
+}
+#box:before,
+#box:after {
+    content: '';
+    display: block;
+    position: absolute;
 }
 #box:after {
     border-radius: calc(
@@ -333,14 +336,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     ); /* .spectrum-Checkbox-box:after */
     bottom: 0;
-    content: '';
-    display: block;
     left: 0;
     margin: var(
         --spectrum-alias-focus-ring-gap,
         var(--spectrum-global-dimension-static-size-25)
     );
-    position: absolute;
     right: 0;
     top: 0;
     transform: translate(0);

@@ -134,10 +134,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         ease-in-out;
 }
 #button {
-    box-sizing: border-box;
     flex-grow: 0;
     flex-shrink: 0;
-    height: var(--spectrum-radio-circle-diameter);
     margin: calc(
             (
                     var(--spectrum-radio-height) -
@@ -146,35 +144,37 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         )
         0;
     position: relative; /* .spectrum-Radio-button */
+}
+#button,
+#button:before {
+    box-sizing: border-box;
+    height: var(--spectrum-radio-circle-diameter);
     width: var(--spectrum-radio-circle-diameter);
 }
 #button:before {
     border-radius: var(--spectrum-radio-radius);
     border-style: solid;
     border-width: var(--spectrum-radio-circle-border-size);
-    box-sizing: border-box;
-    content: '';
-    display: block; /* .spectrum-Radio-button:before */
-    height: var(--spectrum-radio-circle-diameter);
-    position: absolute;
     transition: border var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
         box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out;
-    width: var(--spectrum-radio-circle-diameter);
-    z-index: 0;
+    z-index: 0; /* .spectrum-Radio-button:before */
+}
+#button:before,
+#button:after {
+    content: '';
+    display: block;
+    position: absolute;
 }
 #button:after {
     border-radius: 100%; /* .spectrum-Radio-button:after */
     bottom: 0;
-    content: '';
-    display: block;
     left: 0;
     margin: var(
         --spectrum-alias-focus-ring-gap,
         var(--spectrum-global-dimension-static-size-25)
     );
-    position: absolute;
     right: 0;
     top: 0;
     transition: opacity var(--spectrum-global-animation-duration-100, 0.13s)

@@ -165,6 +165,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color)
     ); /* .spectrum-StatusLight */
 }
+:host([disabled]),
 :host([disabled]) {
     color: var(
         --spectrum-statuslight-info-m-text-color-disabled,
@@ -172,6 +173,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-StatusLight[disabled],
    * .spectrum-StatusLight.is-disabled */
 }
+:host([disabled]):before,
 :host([disabled]):before {
     background-color: var(
         --spectrum-statuslight-info-m-dot-color-disabled,

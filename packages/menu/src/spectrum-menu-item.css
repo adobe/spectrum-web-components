@@ -137,8 +137,8 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-text-color)
     );
 }
-:host([dir='ltr'].focus-visible),
-:host([dir='ltr'][focused]) {
+:host([dir='ltr'][focused]),
+:host([dir='ltr'].focus-visible) {
     border-left-color: var(
         --spectrum-listitem-m-focus-indicator-color,
         var(--spectrum-alias-border-color-focus)
@@ -146,8 +146,8 @@ slot[name='icon'] + #label {
    * [dir=ltr] 
   .spectrum-Menu-item.is-focused */
 }
-:host([dir='ltr']:focus-visible),
-:host([dir='ltr'][focused]) {
+:host([dir='ltr'][focused]),
+:host([dir='ltr']:focus-visible) {
     border-left-color: var(
         --spectrum-listitem-m-focus-indicator-color,
         var(--spectrum-alias-border-color-focus)
@@ -155,8 +155,8 @@ slot[name='icon'] + #label {
    * [dir=ltr] 
   .spectrum-Menu-item.is-focused */
 }
-:host([dir='rtl'].focus-visible),
-:host([dir='rtl'][focused]) {
+:host([dir='rtl'][focused]),
+:host([dir='rtl'].focus-visible) {
     border-right-color: var(
         --spectrum-listitem-m-focus-indicator-color,
         var(--spectrum-alias-border-color-focus)
@@ -164,8 +164,8 @@ slot[name='icon'] + #label {
    * [dir=rtl] 
   .spectrum-Menu-item.is-focused */
 }
-:host([dir='rtl']:focus-visible),
-:host([dir='rtl'][focused]) {
+:host([dir='rtl'][focused]),
+:host([dir='rtl']:focus-visible) {
     border-right-color: var(
         --spectrum-listitem-m-focus-indicator-color,
         var(--spectrum-alias-border-color-focus)
