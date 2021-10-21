@@ -1,9 +1,8 @@
 import * as React from 'react';
 import * as _ from 'lodash';
 import { createComponent } from '@lit-labs/react';
-import SpModuleInfo from './modules.json';
+import SpModuleInfo from './custom-elements.json';
 const { modules: SpModules } = SpModuleInfo;
-console.log(SpModuleInfo);
 
 export const generateReactCom = (
     swcTagName: string,

@@ -33,7 +33,7 @@
     "custom-element-json": "yarn custom-element-json:elements && yarn custom-element-json:icons",
     "custom-element-json:elements": "lerna exec --ignore \"{@iliad-ui/{base,bundle,react,icons-ui,icons-workflow,modal,iconset,shared,styles},example-project-rollup,example-project-webpack,swc-templates}\" -- cem analyze --config ../../custom-elements-manifest.config.js",
     "custom-element-json:icons": "lerna exec --scope \"@iliad-ui/{icons-ui,icons-workflow}\" -- cem analyze --config ../../custom-elements-manifest.config.js",
-    "docs:analyze": "cem analyze --globs \"packages/**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --exclude \"**/icons/**\" --exclude \"**/elements/**\" --outdir documentation --litelement  && cp documentation/custom-elements.json packages/react/modules.json",
+    "docs:analyze": "cem analyze --globs \"packages/**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --exclude \"**/icons/**\" --exclude \"**/elements/**\" --outdir documentation --litelement  && cp documentation/custom-elements.json packages/react/custom-elements.json",
     "docs:build": "run-p build docs:analyze && yarn docs:ts && run-p docs:build:staging storybook:build",
     "docs:build:production": "node ./tasks/build-documentation-production.js",
     "docs:build:staging": "node ./tasks/build-documentation-staging.js",
