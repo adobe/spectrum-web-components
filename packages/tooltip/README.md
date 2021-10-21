@@ -24,7 +24,7 @@ When looking to leverage the `Tooltip` base class as a type and/or for extension
 import { Tooltip } from '@spectrum-web-components/tooltip';
 ```
 
-### Example
+## Example
 
 Tooltips can be top, bottom, left, or right.
 
@@ -41,9 +41,9 @@ Tooltips can be top, bottom, left, or right.
 <sp-tooltip open placement="right">Label</sp-tooltip>
 ```
 
-### Variants
+## Variants
 
-#### Informative
+### Informative
 
 This is the informative or info variant of Tooltip
 
@@ -62,7 +62,7 @@ This is the informative or info variant of Tooltip
 </sp-tooltip>
 ```
 
-#### Positive
+### Positive
 
 This is the postive (a.k.a.) success variant of Tooltip
 
@@ -81,7 +81,7 @@ This is the postive (a.k.a.) success variant of Tooltip
 </sp-tooltip>
 ```
 
-#### Negative
+### Negative
 
 This is the negative a.k.a. error variant of Tooltip
 

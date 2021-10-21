@@ -61,7 +61,7 @@ import { StatusLight } from '@spectrum-web-components/status-light';
 </sp-tab-panel>
 </sp-tabs>
 
-### Variants
+## Variants
 
 There are many variants to choose from in Spectrum. The `variant`
 attribute controls the main variant of the status light, and `neutral` being the default. Following are the supported variants:
@@ -80,7 +80,7 @@ attribute controls the main variant of the status light, and `neutral` being the
 -   celery
 -   purple
 
-### Disabled
+## Disabled
 
 ```html
 <sp-status-light variant="positive" disabled>disabled</sp-status-light>

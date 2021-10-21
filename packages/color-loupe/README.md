@@ -27,5 +27,9 @@ import { ColorLoupe } from '@spectrum-web-components/color-loupe';
 ## Example
 
 ```html
-<sp-color-loupe open style="position: relative"></sp-color-loupe>
+<div style="padding: 100px 0 0;">
+    <div style="position:relative">
+        <sp-color-loupe open="" dir="ltr"></sp-color-loupe>
+    </div>
+</div>
 ```
