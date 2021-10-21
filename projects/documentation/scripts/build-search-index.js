@@ -51,7 +51,9 @@ async function main() {
         documents.push({
             title: nameToTitle(componentName),
             body,
-            url: `/components/${componentName}`,
+            url: `/${
+                process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''
+            }components/${componentName}`,
         });
     }
 
@@ -65,7 +67,9 @@ async function main() {
         documents.push({
             title: nameToTitle(guideName),
             body,
-            url: `/guides/${guideName}`,
+            url: `/${
+                process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''
+            }guides/${guideName}`,
         });
     }
 

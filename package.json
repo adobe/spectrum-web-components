@@ -28,7 +28,7 @@
         "docs:build": "yarn eleventy",
         "docs:build:production": "node ./tasks/build-documentation-production.js",
         "docs:build:staging": "node ./tasks/build-documentation-staging.js",
-        "docs:ci": "yarn docs:analyze && run-p eleventy storybook:build && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
+        "docs:ci": "yarn docs:analyze && run-p eleventy:production storybook:build && cp projects/documentation/custom-elements.json projects/documentation/dist/storybook",
         "docs:review": "alex packages/**/*.md",
         "docs:start": "yarn docs:analyze && run-p watch:css build:watch eleventy:watch",
         "docs:watch": "run-p build:watch watch:css eleventy:watch",
@@ -200,7 +200,7 @@
         "rollup": "2.56.2",
         "rollup-plugin-workbox": "6.1.1"
     },
-    "customElements": "projects/documentation/custom-elements.json",
+    "customElements": ".storybook/custom-elements.json",
     "workspaces": [
         "packages/*",
         "projects/*"

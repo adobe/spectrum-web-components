@@ -58,7 +58,7 @@ commands:
                   when: on_fail
                   name: Publish review site
                   command: |
-                      cp documentation/favicon.ico test/visual
+                      cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
                       branch=$(npx slugify-cli $branch)
                       yarn netlify deploy --alias=$branch-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> --dir=test/visual

@@ -57,10 +57,11 @@ export async function search(value: string): Promise<ResultGroup[]> {
 
     const search = index.search(value);
     for (const item of search) {
-        const match = /^\/([^/]+)\/([^/]+)/.exec(item.ref);
-        if (!match) continue;
+        const parts = item.ref.split('/');
+        if (parts.length < 3) continue;
 
-        const [, category, name] = match;
+        const name = parts.pop() as string;
+        const category = parts.pop() as string;
         if (!collatedResults.has(category)) {
             collatedResults.set(category, {
                 maxScore: 0,
@@ -71,7 +72,7 @@ export async function search(value: string): Promise<ResultGroup[]> {
         if (catagoryData) {
             catagoryData.maxScore = Math.max(catagoryData.maxScore, item.score);
             catagoryData.results.push({
-                name: name,
+                name,
                 label: label(name),
                 url: item.ref,
             });
