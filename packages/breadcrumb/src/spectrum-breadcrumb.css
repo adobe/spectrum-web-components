@@ -10,5 +10,710 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
+.spectrum-Breadcrumbs--sizeS {
+    --spectrum-breadcrumb-multiline-title-margin-top: var(
+        --spectrum-breadcrumb-s-multiline-title-margin-top,
+        var(--spectrum-global-dimension-static-size-0)
+    ); /* .spectrum-Breadcrumbs--sizeS */
+    --spectrum-breadcrumb-multiline-title-text-line-height: var(
+        --spectrum-breadcrumb-s-multiline-title-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    --spectrum-breadcrumb-multiline-title-text-font-weight: var(
+        --spectrum-breadcrumb-s-multiline-title-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight-strong)
+    );
+    --spectrum-breadcrumb-multiline-title-text-size: var(
+        --spectrum-breadcrumb-s-multiline-title-text-size,
+        var(--spectrum-global-dimension-font-size-300)
+    );
+    --spectrum-breadcrumb-multiline-item-text-font-weight: var(
+        --spectrum-breadcrumb-s-multiline-item-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-breadcrumb-multiline-item-text-line-height: var(
+        --spectrum-breadcrumb-s-multiline-item-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-breadcrumb-multiline-item-text-size: var(
+        --spectrum-breadcrumb-s-multiline-item-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    --spectrum-breadcrumb-item-border-size-key-focus: var(
+        --spectrum-breadcrumb-s-item-border-size-key-focus,
+        var(--spectrum-alias-border-size-thick)
+    );
+    --spectrum-breadcrumb-list-height: var(
+        --spectrum-breadcrumb-s-list-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-breadcrumb-title-text-font-weight: var(
+        --spectrum-breadcrumb-s-title-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight-strong)
+    );
+    --spectrum-breadcrumb-button-gap: var(
+        --spectrum-breadcrumb-s-button-gap,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-breadcrumb-item-text-font-weight: var(
+        --spectrum-breadcrumb-s-item-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-breadcrumb-item-text-line-height: var(
+        --spectrum-breadcrumb-s-item-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-breadcrumb-item-padding-x: var(
+        --spectrum-breadcrumb-s-item-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-breadcrumb-item-text-size: var(
+        --spectrum-breadcrumb-s-item-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    --spectrum-breadcrumb-item-margin-right: var(
+        --spectrum-breadcrumb-s-item-margin-right,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-breadcrumb-item-border-radius: var(
+        --spectrum-breadcrumb-s-item-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+}
+.spectrum-Breadcrumbs--sizeM {
+    --spectrum-breadcrumb-multiline-title-margin-top: var(
+        --spectrum-breadcrumb-m-multiline-title-margin-top,
+        var(--spectrum-global-dimension-static-size-0)
+    ); /* .spectrum-Breadcrumbs--sizeM */
+    --spectrum-breadcrumb-multiline-title-text-line-height: var(
+        --spectrum-breadcrumb-m-multiline-title-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    --spectrum-breadcrumb-multiline-title-text-font-weight: var(
+        --spectrum-breadcrumb-m-multiline-title-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight-strong)
+    );
+    --spectrum-breadcrumb-multiline-title-text-size: var(
+        --spectrum-breadcrumb-m-multiline-title-text-size,
+        var(--spectrum-global-dimension-font-size-300)
+    );
+    --spectrum-breadcrumb-multiline-item-text-font-weight: var(
+        --spectrum-breadcrumb-m-multiline-item-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-breadcrumb-multiline-item-text-line-height: var(
+        --spectrum-breadcrumb-m-multiline-item-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-breadcrumb-multiline-item-text-size: var(
+        --spectrum-breadcrumb-m-multiline-item-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-breadcrumb-item-border-size-key-focus: var(
+        --spectrum-breadcrumb-m-item-border-size-key-focus,
+        var(--spectrum-alias-border-size-thick)
+    );
+    --spectrum-breadcrumb-list-height: var(
+        --spectrum-breadcrumb-m-list-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-breadcrumb-title-text-font-weight: var(
+        --spectrum-breadcrumb-m-title-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight-strong)
+    );
+    --spectrum-breadcrumb-button-gap: var(
+        --spectrum-breadcrumb-m-button-gap,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-breadcrumb-item-text-font-weight: var(
+        --spectrum-breadcrumb-m-item-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-breadcrumb-item-text-line-height: var(
+        --spectrum-breadcrumb-m-item-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-breadcrumb-item-padding-x: var(
+        --spectrum-breadcrumb-m-item-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-breadcrumb-item-text-size: var(
+        --spectrum-breadcrumb-m-item-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-breadcrumb-item-margin-right: var(
+        --spectrum-breadcrumb-m-item-margin-right,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-breadcrumb-item-border-radius: var(
+        --spectrum-breadcrumb-m-item-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+}
+.spectrum-Breadcrumbs--sizeL {
+    --spectrum-breadcrumb-multiline-title-margin-top: var(
+        --spectrum-breadcrumb-l-multiline-title-margin-top,
+        var(--spectrum-global-dimension-static-size-0)
+    ); /* .spectrum-Breadcrumbs--sizeL */
+    --spectrum-breadcrumb-multiline-title-text-line-height: var(
+        --spectrum-breadcrumb-l-multiline-title-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    --spectrum-breadcrumb-multiline-title-text-font-weight: var(
+        --spectrum-breadcrumb-l-multiline-title-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight-strong)
+    );
+    --spectrum-breadcrumb-multiline-title-text-size: var(
+        --spectrum-breadcrumb-l-multiline-title-text-size,
+        var(--spectrum-global-dimension-font-size-300)
+    );
+    --spectrum-breadcrumb-multiline-item-text-font-weight: var(
+        --spectrum-breadcrumb-l-multiline-item-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-breadcrumb-multiline-item-text-line-height: var(
+        --spectrum-breadcrumb-l-multiline-item-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-breadcrumb-multiline-item-text-size: var(
+        --spectrum-breadcrumb-l-multiline-item-text-size,
+        var(--spectrum-global-dimension-font-size-200)
+    );
+    --spectrum-breadcrumb-item-border-size-key-focus: var(
+        --spectrum-breadcrumb-l-item-border-size-key-focus,
+        var(--spectrum-alias-border-size-thick)
+    );
+    --spectrum-breadcrumb-list-height: var(
+        --spectrum-breadcrumb-l-list-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-breadcrumb-title-text-font-weight: var(
+        --spectrum-breadcrumb-l-title-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight-strong)
+    );
+    --spectrum-breadcrumb-button-gap: var(
+        --spectrum-breadcrumb-l-button-gap,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-breadcrumb-item-text-font-weight: var(
+        --spectrum-breadcrumb-l-item-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-breadcrumb-item-text-line-height: var(
+        --spectrum-breadcrumb-l-item-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-breadcrumb-item-padding-x: var(
+        --spectrum-breadcrumb-l-item-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-breadcrumb-item-text-size: var(
+        --spectrum-breadcrumb-l-item-text-size,
+        var(--spectrum-global-dimension-font-size-200)
+    );
+    --spectrum-breadcrumb-item-margin-right: var(
+        --spectrum-breadcrumb-l-item-margin-right,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-breadcrumb-item-border-radius: var(
+        --spectrum-breadcrumb-l-item-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+}
+.spectrum-Breadcrumbs {
+    display: flex; /* .spectrum-Breadcrumbs */
+    flex-basis: 0%;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    justify-content: start;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+:host([dir='rtl']) .spectrum-Breadcrumbs-itemSeparator {
+    transform: matrix(-1, 0, 0, 1, 0, 0) scale(1); /* [dir=rtl] .spectrum-Breadcrumbs-itemSeparator */
+}
+.spectrum-Breadcrumbs-itemSeparator {
+    opacity: 1;
+    position: relative; /* .spectrum-Breadcrumbs-itemSeparator */
+    top: var(--spectrum-global-dimension-size-10);
+}
+.spectrum-Breadcrumbs-item--sizeS {
+    --spectrum-breadcrumb-multiline-title-margin-top: var(
+        --spectrum-breadcrumb-s-multiline-title-margin-top,
+        var(--spectrum-global-dimension-static-size-0)
+    ); /* .spectrum-Breadcrumbs-item--sizeS */
+    --spectrum-breadcrumb-multiline-title-text-line-height: var(
+        --spectrum-breadcrumb-s-multiline-title-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    --spectrum-breadcrumb-multiline-title-text-font-weight: var(
+        --spectrum-breadcrumb-s-multiline-title-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight-strong)
+    );
+    --spectrum-breadcrumb-multiline-title-text-size: var(
+        --spectrum-breadcrumb-s-multiline-title-text-size,
+        var(--spectrum-global-dimension-font-size-300)
+    );
+    --spectrum-breadcrumb-multiline-item-text-font-weight: var(
+        --spectrum-breadcrumb-s-multiline-item-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-breadcrumb-multiline-item-text-line-height: var(
+        --spectrum-breadcrumb-s-multiline-item-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-breadcrumb-multiline-item-text-size: var(
+        --spectrum-breadcrumb-s-multiline-item-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    --spectrum-breadcrumb-item-border-size-key-focus: var(
+        --spectrum-breadcrumb-s-item-border-size-key-focus,
+        var(--spectrum-alias-border-size-thick)
+    );
+    --spectrum-breadcrumb-list-height: var(
+        --spectrum-breadcrumb-s-list-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-breadcrumb-title-text-font-weight: var(
+        --spectrum-breadcrumb-s-title-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight-strong)
+    );
+    --spectrum-breadcrumb-button-gap: var(
+        --spectrum-breadcrumb-s-button-gap,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-breadcrumb-item-text-font-weight: var(
+        --spectrum-breadcrumb-s-item-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-breadcrumb-item-text-line-height: var(
+        --spectrum-breadcrumb-s-item-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-breadcrumb-item-padding-x: var(
+        --spectrum-breadcrumb-s-item-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-breadcrumb-item-text-size: var(
+        --spectrum-breadcrumb-s-item-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    --spectrum-breadcrumb-item-margin-right: var(
+        --spectrum-breadcrumb-s-item-margin-right,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-breadcrumb-item-border-radius: var(
+        --spectrum-breadcrumb-s-item-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+}
+.spectrum-Breadcrumbs-item--sizeM {
+    --spectrum-breadcrumb-multiline-title-margin-top: var(
+        --spectrum-breadcrumb-m-multiline-title-margin-top,
+        var(--spectrum-global-dimension-static-size-0)
+    ); /* .spectrum-Breadcrumbs-item--sizeM */
+    --spectrum-breadcrumb-multiline-title-text-line-height: var(
+        --spectrum-breadcrumb-m-multiline-title-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    --spectrum-breadcrumb-multiline-title-text-font-weight: var(
+        --spectrum-breadcrumb-m-multiline-title-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight-strong)
+    );
+    --spectrum-breadcrumb-multiline-title-text-size: var(
+        --spectrum-breadcrumb-m-multiline-title-text-size,
+        var(--spectrum-global-dimension-font-size-300)
+    );
+    --spectrum-breadcrumb-multiline-item-text-font-weight: var(
+        --spectrum-breadcrumb-m-multiline-item-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-breadcrumb-multiline-item-text-line-height: var(
+        --spectrum-breadcrumb-m-multiline-item-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-breadcrumb-multiline-item-text-size: var(
+        --spectrum-breadcrumb-m-multiline-item-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-breadcrumb-item-border-size-key-focus: var(
+        --spectrum-breadcrumb-m-item-border-size-key-focus,
+        var(--spectrum-alias-border-size-thick)
+    );
+    --spectrum-breadcrumb-list-height: var(
+        --spectrum-breadcrumb-m-list-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-breadcrumb-title-text-font-weight: var(
+        --spectrum-breadcrumb-m-title-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight-strong)
+    );
+    --spectrum-breadcrumb-button-gap: var(
+        --spectrum-breadcrumb-m-button-gap,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-breadcrumb-item-text-font-weight: var(
+        --spectrum-breadcrumb-m-item-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-breadcrumb-item-text-line-height: var(
+        --spectrum-breadcrumb-m-item-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-breadcrumb-item-padding-x: var(
+        --spectrum-breadcrumb-m-item-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-breadcrumb-item-text-size: var(
+        --spectrum-breadcrumb-m-item-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-breadcrumb-item-margin-right: var(
+        --spectrum-breadcrumb-m-item-margin-right,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-breadcrumb-item-border-radius: var(
+        --spectrum-breadcrumb-m-item-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+}
+.spectrum-Breadcrumbs-item--sizeL {
+    --spectrum-breadcrumb-multiline-title-margin-top: var(
+        --spectrum-breadcrumb-l-multiline-title-margin-top,
+        var(--spectrum-global-dimension-static-size-0)
+    ); /* .spectrum-Breadcrumbs-item--sizeL */
+    --spectrum-breadcrumb-multiline-title-text-line-height: var(
+        --spectrum-breadcrumb-l-multiline-title-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    --spectrum-breadcrumb-multiline-title-text-font-weight: var(
+        --spectrum-breadcrumb-l-multiline-title-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight-strong)
+    );
+    --spectrum-breadcrumb-multiline-title-text-size: var(
+        --spectrum-breadcrumb-l-multiline-title-text-size,
+        var(--spectrum-global-dimension-font-size-300)
+    );
+    --spectrum-breadcrumb-multiline-item-text-font-weight: var(
+        --spectrum-breadcrumb-l-multiline-item-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-breadcrumb-multiline-item-text-line-height: var(
+        --spectrum-breadcrumb-l-multiline-item-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-breadcrumb-multiline-item-text-size: var(
+        --spectrum-breadcrumb-l-multiline-item-text-size,
+        var(--spectrum-global-dimension-font-size-200)
+    );
+    --spectrum-breadcrumb-item-border-size-key-focus: var(
+        --spectrum-breadcrumb-l-item-border-size-key-focus,
+        var(--spectrum-alias-border-size-thick)
+    );
+    --spectrum-breadcrumb-list-height: var(
+        --spectrum-breadcrumb-l-list-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-breadcrumb-title-text-font-weight: var(
+        --spectrum-breadcrumb-l-title-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight-strong)
+    );
+    --spectrum-breadcrumb-button-gap: var(
+        --spectrum-breadcrumb-l-button-gap,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-breadcrumb-item-text-font-weight: var(
+        --spectrum-breadcrumb-l-item-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-breadcrumb-item-text-line-height: var(
+        --spectrum-breadcrumb-l-item-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-breadcrumb-item-padding-x: var(
+        --spectrum-breadcrumb-l-item-padding-x,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-breadcrumb-item-text-size: var(
+        --spectrum-breadcrumb-l-item-text-size,
+        var(--spectrum-global-dimension-font-size-200)
+    );
+    --spectrum-breadcrumb-item-margin-right: var(
+        --spectrum-breadcrumb-l-item-margin-right,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-breadcrumb-item-border-radius: var(
+        --spectrum-breadcrumb-l-item-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+}
+.spectrum-Breadcrumbs-item {
+    align-items: center;
+    box-sizing: border-box;
+    display: inline-flex; /* .spectrum-Breadcrumbs-item */
+    font-size: var(--spectrum-breadcrumb-item-text-size);
+    font-weight: var(--spectrum-breadcrumb-item-text-font-weight);
+    height: var(--spectrum-breadcrumb-list-height);
+    justify-content: start;
+    line-height: var(--spectrum-breadcrumb-item-text-line-height);
+    position: relative;
+    white-space: nowrap;
+}
+.spectrum-Breadcrumbs-item:last-of-type {
+    font-weight: var(
+        --spectrum-breadcrumb-title-text-font-weight
+    ); /* .spectrum-Breadcrumbs-item:last-of-type */
+}
+.spectrum-Breadcrumbs-item:last-of-type .spectrum-Breadcrumbs-itemSeparator {
+    display: none; /* .spectrum-Breadcrumbs-item:last-of-type .spectrum-Breadcrumbs-itemSeparator */
+}
+:host([dir='ltr']) .spectrum-Breadcrumbs-item > .spectrum-ActionButton {
+    margin-right: var(
+        --spectrum-breadcrumb-button-gap
+    ); /* [dir=ltr] .spectrum-Breadcrumbs-item>.spectrum-ActionButton */
+}
+:host([dir='rtl']) .spectrum-Breadcrumbs-item > .spectrum-ActionButton {
+    margin-left: var(
+        --spectrum-breadcrumb-button-gap
+    ); /* [dir=rtl] .spectrum-Breadcrumbs-item>.spectrum-ActionButton */
+}
+:host([dir='ltr']) .spectrum-Breadcrumbs-itemLink {
+    margin-right: var(
+        --spectrum-breadcrumb-item-margin-right
+    ); /* [dir=ltr] .spectrum-Breadcrumbs-itemLink */
+}
+:host([dir='rtl']) .spectrum-Breadcrumbs-itemLink {
+    margin-left: var(
+        --spectrum-breadcrumb-item-margin-right
+    ); /* [dir=rtl] .spectrum-Breadcrumbs-itemLink */
+}
+.spectrum-Breadcrumbs-itemLink {
+    align-items: center;
+    border-radius: var(--spectrum-breadcrumb-item-border-radius);
+    cursor: default; /* .spectrum-Breadcrumbs-itemLink */
+    display: inline-flex;
+    height: var(--spectrum-breadcrumb-list-height);
+    justify-content: start;
+    outline: none;
+    padding-bottom: 0;
+    padding-left: var(--spectrum-breadcrumb-item-padding-x);
+    padding-right: var(--spectrum-breadcrumb-item-padding-x);
+    padding-top: 0;
+    position: relative;
+    text-decoration: none;
+}
+.spectrum-Breadcrumbs-itemLink[href],
+.spectrum-Breadcrumbs-itemLink[tabindex='0'] {
+    cursor: pointer; /* .spectrum-Breadcrumbs-itemLink[href],
+   * .spectrum-Breadcrumbs-itemLink[tabindex="0"] */
+}
+.spectrum-Breadcrumbs-itemLink[href].focus-visible,
+.spectrum-Breadcrumbs-itemLink[href]:hover,
+.spectrum-Breadcrumbs-itemLink[tabindex='0'].focus-visible,
+.spectrum-Breadcrumbs-itemLink[tabindex='0']:hover {
+    text-decoration: underline; /* .spectrum-Breadcrumbs-itemLink[href]:hover,
+   * .spectrum-Breadcrumbs-itemLink[href].focus-ring,
+   * .spectrum-Breadcrumbs-itemLink[tabindex="0"]:hover,
+   * .spectrum-Breadcrumbs-itemLink[tabindex="0"].focus-ring */
+}
+.spectrum-Breadcrumbs-itemLink[href]:focus-visible,
+.spectrum-Breadcrumbs-itemLink[href]:hover,
+.spectrum-Breadcrumbs-itemLink[tabindex='0']:focus-visible,
+.spectrum-Breadcrumbs-itemLink[tabindex='0']:hover {
+    text-decoration: underline; /* .spectrum-Breadcrumbs-itemLink[href]:hover,
+   * .spectrum-Breadcrumbs-itemLink[href].focus-ring,
+   * .spectrum-Breadcrumbs-itemLink[tabindex="0"]:hover,
+   * .spectrum-Breadcrumbs-itemLink[tabindex="0"].focus-ring */
+}
+:host([dir='ltr'])
+    .spectrum-Breadcrumbs-item.is-dragged
+    .spectrum-Breadcrumbs-itemLink:before,
+:host([dir='ltr']) .spectrum-Breadcrumbs-itemLink.focus-visible:before {
+    left: 0; /* [dir=ltr] .spectrum-Breadcrumbs-item.is-dragged .spectrum-Breadcrumbs-itemLink:before,
+   * [dir=ltr] 
+.spectrum-Breadcrumbs-itemLink.focus-ring:before */
+}
+:host([dir='ltr'])
+    .spectrum-Breadcrumbs-item.is-dragged
+    .spectrum-Breadcrumbs-itemLink:before,
+:host([dir='ltr']) .spectrum-Breadcrumbs-itemLink:focus-visible:before {
+    left: 0; /* [dir=ltr] .spectrum-Breadcrumbs-item.is-dragged .spectrum-Breadcrumbs-itemLink:before,
+   * [dir=ltr] 
+.spectrum-Breadcrumbs-itemLink.focus-ring:before */
+}
+:host([dir='rtl'])
+    .spectrum-Breadcrumbs-item.is-dragged
+    .spectrum-Breadcrumbs-itemLink:before,
+:host([dir='rtl']) .spectrum-Breadcrumbs-itemLink.focus-visible:before {
+    right: 0; /* [dir=rtl] .spectrum-Breadcrumbs-item.is-dragged .spectrum-Breadcrumbs-itemLink:before,
+   * [dir=rtl] 
+.spectrum-Breadcrumbs-itemLink.focus-ring:before */
+}
+:host([dir='rtl'])
+    .spectrum-Breadcrumbs-item.is-dragged
+    .spectrum-Breadcrumbs-itemLink:before,
+:host([dir='rtl']) .spectrum-Breadcrumbs-itemLink:focus-visible:before {
+    right: 0; /* [dir=rtl] .spectrum-Breadcrumbs-item.is-dragged .spectrum-Breadcrumbs-itemLink:before,
+   * [dir=rtl] 
+.spectrum-Breadcrumbs-itemLink.focus-ring:before */
+}
+.spectrum-Breadcrumbs-item.is-dragged .spectrum-Breadcrumbs-itemLink:before,
+.spectrum-Breadcrumbs-itemLink.focus-visible:before {
+    border-radius: var(--spectrum-breadcrumb-item-border-radius);
+    border-style: solid;
+    border-width: var(--spectrum-breadcrumb-item-border-size-key-focus);
+    box-sizing: border-box;
+    content: '';
+    display: block;
+    height: 100%;
+    pointer-events: none;
+    position: absolute; /* .spectrum-Breadcrumbs-item.is-dragged .spectrum-Breadcrumbs-itemLink:before,
+   * .spectrum-Breadcrumbs-itemLink.focus-ring:before */
+    top: 0;
+    width: 100%;
+}
+.spectrum-Breadcrumbs-item.is-dragged .spectrum-Breadcrumbs-itemLink:before,
+.spectrum-Breadcrumbs-itemLink:focus-visible:before {
+    border-radius: var(--spectrum-breadcrumb-item-border-radius);
+    border-style: solid;
+    border-width: var(--spectrum-breadcrumb-item-border-size-key-focus);
+    box-sizing: border-box;
+    content: '';
+    display: block;
+    height: 100%;
+    pointer-events: none;
+    position: absolute; /* .spectrum-Breadcrumbs-item.is-dragged .spectrum-Breadcrumbs-itemLink:before,
+   * .spectrum-Breadcrumbs-itemLink.focus-ring:before */
+    top: 0;
+    width: 100%;
+}
+.spectrum-Breadcrumbs--multiline {
+    flex-wrap: wrap; /* .spectrum-Breadcrumbs--multiline */
+}
+.spectrum-Breadcrumbs--multiline .spectrum-Breadcrumbs-item {
+    font-size: var(
+        --spectrum-breadcrumb-multiline-item-text-size
+    ); /* .spectrum-Breadcrumbs--multiline .spectrum-Breadcrumbs-item */
+    font-weight: var(--spectrum-breadcrumb-multiline-item-text-font-weight);
+    line-height: var(--spectrum-breadcrumb-multiline-item-text-line-height);
+}
+.spectrum-Breadcrumbs--multiline .spectrum-Breadcrumbs-item:last-of-type {
+    font-size: var(--spectrum-breadcrumb-multiline-title-text-size);
+    font-weight: var(--spectrum-breadcrumb-multiline-title-text-font-weight);
+    height: auto; /* .spectrum-Breadcrumbs--multiline .spectrum-Breadcrumbs-item:last-of-type */
+    line-height: var(--spectrum-breadcrumb-multiline-title-text-line-height);
+    margin-top: var(--spectrum-breadcrumb-multiline-title-margin-top);
+    width: 100%;
+}
+.spectrum-Breadcrumbs--multiline
+    .spectrum-Breadcrumbs-item:last-of-type
+    .spectrum-Breadcrumbs-itemLink {
+    height: auto; /* .spectrum-Breadcrumbs--multiline .spectrum-Breadcrumbs-item:last-of-type .spectrum-Breadcrumbs-itemLink */
+    text-decoration: none;
+}
+.spectrum-Breadcrumbs-item {
+    color: var(
+        --spectrum-breadcrumb-m-item-text-color,
+        var(--spectrum-alias-label-text-color)
+    ); /* .spectrum-Breadcrumbs-item */
+}
+.spectrum-Breadcrumbs-item.is-dragged .spectrum-Breadcrumbs-itemLink {
+    background-color: var(
+        --spectrum-breadcrumb-m-item-background-color-drop,
+        var(--spectrum-alias-highlight-selected)
+    );
+    color: var(
+        --spectrum-breadcrumb-m-item-text-color-drop,
+        var(--spectrum-alias-text-color-hover)
+    ); /* .spectrum-Breadcrumbs-item.is-dragged .spectrum-Breadcrumbs-itemLink */
+}
+.spectrum-Breadcrumbs-item.is-dragged .spectrum-Breadcrumbs-itemLink:before {
+    border-color: var(
+        --spectrum-breadcrumb-m-item-border-color-drop,
+        var(--spectrum-global-color-blue-500)
+    ); /* .spectrum-Breadcrumbs-item.is-dragged .spectrum-Breadcrumbs-itemLink:before */
+}
+.spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemSeparator {
+    color: var(
+        --spectrum-breadcrumb-m-separator-icon-color,
+        var(--spectrum-alias-icon-color)
+    ); /* .spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemSeparator */
+}
+.spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink {
+    color: inherit; /* .spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink */
+}
+.spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink:hover {
+    color: var(
+        --spectrum-breadcrumb-m-item-text-color-hover,
+        var(--spectrum-alias-text-color-hover)
+    ); /* .spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink:hover */
+}
+.spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink.focus-visible {
+    color: var(
+        --spectrum-breadcrumb-m-item-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    ); /* .spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink.focus-ring */
+}
+.spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink:focus-visible {
+    color: var(
+        --spectrum-breadcrumb-m-item-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    ); /* .spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink.focus-ring */
+}
+.spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink.focus-visible:before {
+    border-color: var(
+        --spectrum-breadcrumb-m-item-border-color-key-focus,
+        var(--spectrum-alias-border-color-key-focus)
+    ); /* .spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink.focus-ring:before */
+}
+.spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink:focus-visible:before {
+    border-color: var(
+        --spectrum-breadcrumb-m-item-border-color-key-focus,
+        var(--spectrum-alias-border-color-key-focus)
+    ); /* .spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink.focus-ring:before */
+}
+.spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink:active {
+    border-bottom: 0;
+    color: var(
+        --spectrum-breadcrumb-m-item-text-color-down,
+        var(--spectrum-alias-text-color-down)
+    ); /* .spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink:active */
+}
+.spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink.is-disabled {
+    color: var(
+        --spectrum-breadcrumb-m-item-text-color-disabled,
+        var(--spectrum-alias-text-color-disabled)
+    ); /* .spectrum-Breadcrumbs-item .spectrum-Breadcrumbs-itemLink.is-disabled */
+}
+.spectrum-Breadcrumbs-item.is-selected,
+.spectrum-Breadcrumbs-item:last-of-type {
+    color: var(
+        --spectrum-breadcrumb-m-item-text-color-down,
+        var(--spectrum-alias-text-color-down)
+    ); /* .spectrum-Breadcrumbs-item.is-selected,
+   * .spectrum-Breadcrumbs-item:last-of-type */
+}
+.spectrum-Breadcrumbs-item.is-selected ~ .spectrum-Breadcrumb:last-of-type {
+    color: var(
+        --spectrum-breadcrumb-m-item-text-color,
+        var(--spectrum-alias-label-text-color)
+    ); /* .spectrum-Breadcrumbs-item.is-selected~.spectrum-Breadcrumb:last-of-type */
+}
+.spectrum-Breadcrumbs-item.is-selected
+    .spectrum-Breadcrumbs-itemLink.focus-visible {
+    border-bottom: 0;
+    color: var(
+        --spectrum-breadcrumb-m-item-text-color-down,
+        var(--spectrum-alias-text-color-down)
+    ); /* .spectrum-Breadcrumbs-item.is-selected .spectrum-Breadcrumbs-itemLink.focus-ring */
+}
+.spectrum-Breadcrumbs-item.is-selected
+    .spectrum-Breadcrumbs-itemLink:focus-visible {
+    border-bottom: 0;
+    color: var(
+        --spectrum-breadcrumb-m-item-text-color-down,
+        var(--spectrum-alias-text-color-down)
+    ); /* .spectrum-Breadcrumbs-item.is-selected .spectrum-Breadcrumbs-itemLink.focus-ring */
 }

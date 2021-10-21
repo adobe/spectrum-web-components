@@ -109,6 +109,8 @@
         "@lliad-ui/top-nav": "^0.6.3",
         "@lliad-ui/tray": "^0.5.3",
         "@lliad-ui/underlay": "^0.9.3",
+        "@lliad-ui/breadcrumb": "^0.0.1",
+        "@lliad-ui/tree": "^0.0.1",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

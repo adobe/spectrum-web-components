@@ -40,7 +40,9 @@ async function processComponent(componentPath) {
                 `!!! '${spectrumConfig.spectrum}' does not have a local Spectrum CSS dependency !!!`
             )
         );
-        process.exit(1);
+        // process.exit(1);
+        // 如果未检测到本地spectrum-css代码 直接结束
+        return Promise.resolve('');
     }
     const inputCss = await fs.readFile(inputCssPath);
     let inputCustomProperties = await fs.readFile(

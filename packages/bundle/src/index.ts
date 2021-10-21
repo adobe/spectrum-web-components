@@ -63,3 +63,5 @@ export * from '@lliad-ui/tooltip';
 export * from '@lliad-ui/top-nav';
 export * from '@lliad-ui/tray';
 export * from '@lliad-ui/underlay';
+export * from '@lliad-ui/breadcrumb';
+export * from '@lliad-ui/tree';

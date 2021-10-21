@@ -80,3 +80,5 @@ import '@lliad-ui/top-nav/sp-top-nav.js';
 import '@lliad-ui/top-nav/sp-top-nav-item.js';
 import '@lliad-ui/tray/sp-tray.js';
 import '@lliad-ui/underlay/sp-underlay.js';
+import '@lliad-ui/breadcrumb/sp-breadcrumb.js';
+import '@lliad-ui/tree/sp-tree.js';
