@@ -145,7 +145,7 @@ jobs:
             - run:
                   name: Generate Docs
                   command: yarn docs:build
-            - run: echo '/*    /index.html   200' > documentation/dist/_redirects
+            - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
@@ -319,10 +319,9 @@ jobs:
             - run:
                   name: Generate Docs
                   command: yarn docs:ci
-            - run: cp documentation/404.html documentation/dist/
-            - run: touch documentation/dist/.nojekyll
+            - run: touch projects/documentation/dist/.nojekyll
             - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
-            - run: yarn gh-pages -d documentation/dist -m "[skip ci] update demonstration site" -t
+            - run: yarn gh-pages -d projects/documentation/dist -m "[skip ci] update demonstration site" -t
 
 workflows:
     version: 2

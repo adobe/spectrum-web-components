@@ -1,4 +1,11 @@
-  
 [build]
   command = "yarn docs:build"
-  publish = "documentation/dist"
+  publish = "projects/documentation/dist"
+
+[[plugins]]
+package = "netlify-plugin-checklinks"
+
+    [plugins.inputs]
+    pretty = true
+
+    skipPatterns = ['spectrum-web-components.netlify.app', 'https://use.typekit.net', 'storybook/index.html']

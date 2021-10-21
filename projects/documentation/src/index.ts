@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
 Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -12,16 +10,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import chokidar from 'chokidar';
-import debounce from 'debounce';
-import { processCSS } from './build-css.js';
+import './components/layout.js';
 
-const debounceProcessCSS = debounce.debounce(processCSS, 200);
+declare global {
+    interface Window {
+        spAlert(el: HTMLElement, message: string): void;
+    }
+}
 
-// One-liner for current directory
-chokidar
-    .watch('./packages/*/src/*.css')
-    .on('change', debounceProcessCSS)
-    .on('add', debounceProcessCSS);
-
-console.log('Listening to CSS...');
+window.spAlert = (el: HTMLElement, message: string): void => {
+    el.dispatchEvent(
+        new CustomEvent('alert', {
+            composed: true,
+            bubbles: true,
+            detail: {
+                message,
+            },
+        })
+    );
+};

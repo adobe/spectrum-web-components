@@ -1,0 +1,15 @@
+.markup {
+    position: relative;
+    max-width: 100%;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    border-top: 1px solid var(--spectrum-global-color-gray-100);
+    background: var(--spectrum-global-color-gray-75);
+    overflow: hidden;
+    line-height: 1.3em;
+    overflow-x: auto;
+}
+
+div + .markup {
+    border-radius: 0 0 6px 6px;
+}

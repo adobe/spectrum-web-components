@@ -1,0 +1,32 @@
+---
+permalink: 'shell-start.html'
+---
+<!doctype html>
+<html lang="en">
+
+<head>
+    {% include "partials/meta-info.njk" %}
+    <link rel="preconnect" href="https://use.typekit.net">
+    <link rel="dns-prefetch" href="https://use.typekit.net">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preload" href="/fonts.css" as="style" onload="this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet" href="/fonts.css">
+    </noscript>
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+    <docs-page class="spectrum-Typography">
+        {% include "partials/logo.njk" %}
+        <main role="main">
+            <div id="title-header" class="spectrum-Article">
+                <h1 id="page-title" class="spectrum-Heading1--display spectrum-Heading1--quiet"></h1>
+            </div>
+            <sp-tabs selected="examples" direction="horizontal">
+                <sp-tab value="examples" label="Examples"></sp-tab>
+                <sp-tab value="api" label="API"></sp-tab>
+            </sp-tabs>
+            <div class="parts">
+                <helper class="shell-remove-after"></helper>
