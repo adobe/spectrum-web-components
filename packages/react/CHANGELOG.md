@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/react@0.4.2...@iliad-ui/react@0.4.3) (2021-10-21)
+
+
+### Bug Fixes
+
+* react组件包增加modules.json导出 ([68996a2](https://github.com/gaoding-inc/Iliad-ui/commit/68996a28019c48165eff52ff72bdbb30d49e112d))
+
+
+
+
+
 ## [0.4.2](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/react@0.4.1...@iliad-ui/react@0.4.2) (2021-10-21)
 
 
