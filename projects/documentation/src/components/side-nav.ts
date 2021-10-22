@@ -10,26 +10,27 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    LitElement,
+    SpectrumElement,
     html,
     CSSResultArray,
     property,
     PropertyValues,
     TemplateResult,
-    customElement,
-} from 'lit-element';
-import './side-nav-search.js';
+} from '@spectrum-web-components/base';
 import sideNavStyles from './side-nav.css';
-import '@spectrum-web-components/sidenav/sp-sidenav.js';
-import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
-import '@spectrum-web-components/underlay/sp-underlay.js';
+import { SideNavSearch } from './side-nav-search.js';
+import { Underlay } from '@spectrum-web-components/underlay';
 import { ifDefined } from '@spectrum-web-components/base';
 
-@customElement('docs-side-nav')
-export class SideNav extends LitElement {
+export class DocsSideNav extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [sideNavStyles];
     }
+
+    public static elementDefinitions = {
+        'sp-underlay': Underlay,
+        'docs-search': SideNavSearch,
+    };
 
     @property({ type: Boolean, reflect: true })
     public open = false;

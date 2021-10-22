@@ -14,27 +14,20 @@ import {
     html,
     CSSResultArray,
     property,
-    LitElement,
+    SpectrumElement,
     PropertyValues,
     TemplateResult,
-} from 'lit-element';
-import '@spectrum-web-components/theme/sp-theme.js';
+} from '@spectrum-web-components/base';
 import type { Color, Scale } from '@spectrum-web-components/theme';
-import '@spectrum-web-components/picker/sp-picker.js';
-import type { Picker } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/link/sp-link.js';
-import '@spectrum-web-components/divider/sp-divider.js';
-import '@spectrum-web-components/toast/sp-toast.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
-
-import type { SideNav } from './side-nav.js';
-import './adobe-logo.js';
+import { Theme } from '@spectrum-web-components/theme';
+import { Picker } from '@spectrum-web-components/picker';
+import { ActionButton } from '@spectrum-web-components/action-button';
+import { FieldLabel } from '@spectrum-web-components/field-label';
+import { MenuItem } from '@spectrum-web-components/menu';
+import { Toast } from '@spectrum-web-components/toast';
+import { IconShowMenu } from '@spectrum-web-components/icons-workflow/src/elements/IconShowMenu.js';
+import type { DocsSideNav } from './side-nav.js';
 import type { CodeExample } from './code-example.js';
-import './code-example.js';
 import { copyText } from './copy-to-clipboard.js';
 
 import layoutStyles from './layout.css';
@@ -100,11 +93,20 @@ export interface TrackTheme {
     callback: (color: Color) => void;
 }
 
-// @customElement('docs-page')
-export class LayoutElement extends LitElement {
+export class LayoutElement extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [layoutStyles];
     }
+
+    public static elementDefinitions = {
+        'sp-field-label': FieldLabel,
+        'sp-picker': Picker,
+        'sp-menu-item': MenuItem,
+        'sp-action-button': ActionButton,
+        'sp-toast': Toast,
+        'sp-theme': Theme,
+        'sp-icon-show-menu': IconShowMenu,
+    };
 
     @property({ attribute: false })
     private alerts: Map<
@@ -215,10 +217,13 @@ export class LayoutElement extends LitElement {
     }
 
     public focus() {
-        (this.shadowRoot!.querySelector('docs-side-nav')! as SideNav).focus();
+        (
+            this.shadowRoot.querySelector('docs-side-nav')! as DocsSideNav
+        ).focus();
     }
 
     private _sidenavRendered = false;
+    private _sidenavLoaded = false;
 
     private get sideNav(): TemplateResult {
         const displaysNavContent = !this.isNarrow || this.open;
@@ -236,8 +241,20 @@ export class LayoutElement extends LitElement {
             <slot name="side-nav"></slot>
         `;
         this._sidenavRendered = this._sidenavRendered || displaysNavContent;
-        if (this._sidenavRendered) {
-            import('./side-nav.js');
+        if (this._sidenavRendered && !this._sidenavLoaded) {
+            this._sidenavLoaded = true;
+            import('./extras.js').then(({ DocsSideNav }) => {
+                (
+                    LayoutElement as unknown as {
+                        registry: {
+                            define: (
+                                name: string,
+                                klazz: typeof HTMLElement
+                            ) => void;
+                        };
+                    }
+                ).registry.define('docs-side-nav', DocsSideNav);
+            });
         }
         return html`
             <docs-side-nav

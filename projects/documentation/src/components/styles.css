@@ -10,9 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+@import './fonts.css';
+@import '@spectrum-web-components/styles/fonts.css';
 @import '@spectrum-web-components/styles/core-global.css';
 @import '@spectrum-web-components/styles/scale-medium.css';
-@import '@spectrum-web-components/styles/fonts.css';
 @import '@spectrum-web-components/styles/typography.css';
 @import '@spectrum-css/table/dist/index-vars.css';
 
@@ -24,12 +25,14 @@ governing permissions and limitations under the License.
     (prefers-color-scheme: light);
 @import 'prismjs/themes/prism.css' screen and (prefers-color-scheme: light);
 
-@import './fonts.css';
-
 body {
     margin: 0;
     background-color: var(--spectrum-global-color-gray-50);
     -webkit-font-smoothing: antialiased;
+}
+
+docs-page:not(:defined) {
+    font-family: 'adobe-clean';
 }
 
 @media screen and (min-width: 961px) {

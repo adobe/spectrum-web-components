@@ -11,6 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import './components/layout.js';
+import '@spectrum-web-components/button/sp-button.js';
+// import '@spectrum-web-components/sidenav/sp-sidenav.js';
+// import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
+import './components/code-example.js';
 
 declare global {
     interface Window {

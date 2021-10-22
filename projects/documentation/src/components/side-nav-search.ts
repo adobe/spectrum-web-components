@@ -11,27 +11,38 @@ governing permissions and limitations under the License.
 */
 
 import {
-    LitElement,
+    SpectrumElement,
     html,
     CSSResultArray,
     TemplateResult,
     property,
     query,
-    customElement,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
 import sideNavSearchMenuStyles from './side-nav-search.css';
+import { openOverlay } from '@spectrum-web-components/overlay';
 import { Search } from '@spectrum-web-components/search';
 import { Popover } from '@spectrum-web-components/popover';
 import type { ResultGroup } from './search-index.js';
-import { Menu } from '@spectrum-web-components/menu';
-import { openOverlay } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/search/sp-search.js';
+import { Menu, MenuItem, MenuGroup } from '@spectrum-web-components/menu';
+import { IllustratedMessage } from '@spectrum-web-components/illustrated-message';
 
 const stopPropagation = (event: Event): void => event.stopPropagation();
 
-@customElement('docs-search')
-export class SearchComponent extends LitElement {
-    private closeOverlay?: () => void;
+export class SideNavSearch extends SpectrumElement {
+    public static get styles(): CSSResultArray {
+        return [sideNavSearchMenuStyles];
+    }
+
+    public static elementDefinitions = {
+        'sp-search': Search,
+        'sp-popover': Popover,
+        'sp-menu': Menu,
+        'sp-menu-item': MenuItem,
+        'sp-menu-group': MenuGroup,
+        'sp-illustrated-message': IllustratedMessage,
+    };
+
+    private closeOverlay?: Promise<() => void>;
 
     private searchResultsPopover: Popover | null = null;
 
@@ -43,10 +54,6 @@ export class SearchComponent extends LitElement {
 
     @query('#focus-return')
     private focusReturn!: HTMLSpanElement;
-
-    public static get styles(): CSSResultArray {
-        return [sideNavSearchMenuStyles];
-    }
 
     @property({ type: Array })
     public results: ResultGroup[] = [];
@@ -119,22 +126,16 @@ export class SearchComponent extends LitElement {
         this.searchResultsPopover = this.popover;
 
         const { popover } = this;
-        this.closeOverlay = await openOverlay(
-            this.searchField,
-            'click',
-            popover,
-            {
-                placement: 'bottom',
-            }
-        );
+        this.closeOverlay = openOverlay(this.searchField, 'click', popover, {
+            placement: 'bottom',
+        });
 
         await this.searchResultsPopover.updateComplete;
     }
 
-    private closePopover() {
-        if (this.closeOverlay) {
-            this.closeOverlay();
-        }
+    private async closePopover() {
+        if (!this.closeOverlay) return;
+        (await this.closeOverlay)();
     }
 
     private handleClosed(): void {
@@ -192,7 +193,10 @@ export class SearchComponent extends LitElement {
                             <sp-menu-group>
                                 <span slot="header">${category.name}</span>
                                 ${category.results.map(
-                                    (result) => html`
+                                    (result: {
+                                        url: string;
+                                        label: string;
+                                    }) => html`
                                         <sp-menu-item href="${result.url}">
                                             ${result.label}
                                         </sp-menu-item>

@@ -12,4 +12,5 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
-import '@spectrum-web-components/underlay/sp-underlay.js';
+import './side-nav.js';
+export { DocsSideNav } from './side-nav.js';

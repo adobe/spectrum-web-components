@@ -15,12 +15,10 @@ import {
     html,
     CSSResultArray,
     property,
-    customElement,
 } from '@spectrum-web-components/base';
 import logoStyles from './adobe-logo.css';
 
-@customElement('docs-spectrum-logo')
-export class SpectrumLogo extends LitElement {
+export class Logo extends LitElement {
     @property({ type: String })
     public size: string = '36px';
 
