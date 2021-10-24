@@ -45,12 +45,9 @@ docs-side-nav:not(:defined) {
 
     docs-side-nav:not(:defined) ::slotted([slot='side-nav']) {
         margin-top: 56px;
-        padding-right: 24px;
+        width: 216px;
         flex: 1;
         flex-grow: 1;
-        overflow: auto;
-        overflow-x: hidden;
-        overflow-y: auto;
     }
 }
 
