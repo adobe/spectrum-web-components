@@ -166,7 +166,6 @@ describe('Picker, sync', () => {
 
         await expect(el).to.be.accessible();
     });
-
     it('accepts a new item and value at the same time', async () => {
         const el = await pickerFixture();
 
@@ -182,10 +181,49 @@ describe('Picker, sync', () => {
         item.textContent = 'New Option';
 
         el.append(item);
+        await elementUpdated(el);
+
         el.value = 'option-new';
 
         await elementUpdated(el);
         expect(el.value).to.equal('option-new');
+    });
+    it('accepts a new item that can be selected', async () => {
+        const el = await pickerFixture();
+
+        await elementUpdated(el);
+
+        el.value = 'option-2';
+
+        await elementUpdated(el);
+        expect(el.value).to.equal('option-2');
+        const item = document.createElement('sp-menu-item');
+        item.value = 'option-new';
+        item.textContent = 'New Option';
+
+        el.append(item);
+
+        await elementUpdated(item);
+        await elementUpdated(el);
+
+        let opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+        // Overlaid content is outside of the context of the Picker element
+        // and cannot be managed via its updateComplete cycle.
+        await nextFrame();
+
+        const close = oneEvent(el, 'sp-closed');
+        item.click();
+        await close;
+
+        expect(el.value, 'first time').to.equal('option-new');
+
+        opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+
+        expect(el.value, 'second time').to.equal('option-new');
     });
     it('manages its "name" value in the accessibility tree', async () => {
         const el = await pickerFixture();

@@ -207,15 +207,19 @@ export class PickerBase extends SizedMixin(Focusable) {
             if (menuChangeEvent) {
                 menuChangeEvent.preventDefault();
             }
+            this.selectedItem.selected = false;
+            if (oldSelectedItem) {
+                oldSelectedItem.selected = true;
+            }
             this.selectedItem = oldSelectedItem;
             this.value = oldValue;
             this.open = true;
             return;
         }
         if (oldSelectedItem) {
-            oldSelectedItem.selected = !!this.selects ? false : false;
+            oldSelectedItem.selected = false;
         }
-        item.selected = !!this.selects ? true : false;
+        item.selected = !!this.selects;
     }
 
     public toggle(target?: boolean): void {
@@ -276,11 +280,13 @@ export class PickerBase extends SizedMixin(Focusable) {
         const { popover } = this;
         this.addEventListener(
             'sp-opened',
-            () => {
-                this.manageSelection();
-                this.optionsMenu.updateComplete.then(() => {
-                    this.menuStateResolver();
-                });
+            async () => {
+                this.updateMenuItems();
+                await Promise.all([
+                    this.itemsUpdated,
+                    this.optionsMenu.updateComplete,
+                ]);
+                this.menuStateResolver();
             },
             { once: true }
         );
@@ -411,10 +417,37 @@ export class PickerBase extends SizedMixin(Focusable) {
         `;
     }
 
+    private _willUpdateItems = false;
+    protected itemsUpdated: Promise<void> = Promise.resolve();
+
+    /**
+     * Acquire the available MenuItems in the Picker by
+     * direct element query or by assuming the list managed
+     * by the Menu within the open options overlay.
+     */
     protected updateMenuItems(): void {
-        this.menuItems = [
-            ...this.querySelectorAll('sp-menu-item'),
-        ] as MenuItem[];
+        if (this._willUpdateItems) return;
+        this._willUpdateItems = true;
+
+        let resolve = (): void => {
+            return;
+        };
+        this.itemsUpdated = new Promise((res) => (resolve = res));
+        // Debounce the update so we only update once
+        // if multiple items have changed
+        window.requestAnimationFrame(async () => {
+            if (this.open) {
+                await this.optionsMenu.updateComplete;
+                this.menuItems = this.optionsMenu.childItems;
+            } else {
+                this.menuItems = [
+                    ...this.querySelectorAll('sp-menu-item'),
+                ] as MenuItem[];
+            }
+            this.manageSelection();
+            resolve();
+            this._willUpdateItems = false;
+        });
     }
 
     protected firstUpdated(changedProperties: PropertyValues): void {
@@ -422,8 +455,6 @@ export class PickerBase extends SizedMixin(Focusable) {
 
         // Since the sp-menu gets reparented by the popover, initialize it here
         this.optionsMenu = this.shadowRoot.querySelector('sp-menu') as Menu;
-
-        this.updateMenuItems();
 
         const deprecatedMenu = this.querySelector('sp-menu');
         if (deprecatedMenu) {
@@ -439,7 +470,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             changedProperties.has('value') &&
             !changedProperties.has('selectedItem')
         ) {
-            this.manageSelection();
+            this.updateMenuItems();
         }
         if (changedProperties.has('disabled') && this.disabled) {
             this.open = false;
@@ -460,32 +491,25 @@ export class PickerBase extends SizedMixin(Focusable) {
     }
 
     protected manageSelection(): void {
-        if (!this.open) {
-            this.updateMenuItems();
-        }
-        /* c8 ignore next 3 */
-        if (this.menuItems.length > 0) {
-            let selectedItem: MenuItem | undefined;
-            this.menuItems.forEach((item) => {
-                if (this.value === item.value && !item.disabled) {
-                    selectedItem = item;
-                } else {
-                    item.selected = !!this.selects ? false : false;
-                }
-            });
-            if (selectedItem) {
-                selectedItem.selected = !!this.selects ? true : false;
-                this.selectedItem = selectedItem;
+        let selectedItem: MenuItem | undefined;
+        this.menuItems.forEach((item) => {
+            if (this.value === item.value && !item.disabled) {
+                selectedItem = item;
             } else {
-                this.value = '';
-                this.selectedItem = undefined;
+                item.selected = false;
             }
-            if (this.open) {
-                this.optionsMenu.updateComplete.then(() => {
-                    this.optionsMenu.updateSelectedItemIndex();
-                });
-            }
-            return;
+        });
+        if (selectedItem) {
+            selectedItem.selected = !!this.selects;
+            this.selectedItem = selectedItem;
+        } else {
+            this.value = '';
+            this.selectedItem = undefined;
+        }
+        if (this.open) {
+            this.optionsMenu.updateComplete.then(() => {
+                this.optionsMenu.updateSelectedItemIndex();
+            });
         }
     }
 
@@ -495,13 +519,16 @@ export class PickerBase extends SizedMixin(Focusable) {
     protected async _getUpdateComplete(): Promise<boolean> {
         const complete = (await super._getUpdateComplete()) as boolean;
         await this.menuStatePromise;
+        await this.itemsUpdated;
         return complete;
     }
 
     public connectedCallback(): void {
-        if (!this.open) {
-            this.updateMenuItems();
-        }
+        this.updateMenuItems();
+        this.addEventListener(
+            'sp-menu-item-added-or-updated',
+            this.updateMenuItems
+        );
         super.connectedCallback();
     }
 
