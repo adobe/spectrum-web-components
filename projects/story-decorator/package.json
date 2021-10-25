@@ -14,7 +14,7 @@
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/gaoding-inc/Iliad-ui.git",
+        "url": "https://github.com/gaoding-inc/iliad-ui.git",
         "directory": "packages/story-decorator"
     },
     "author": "",

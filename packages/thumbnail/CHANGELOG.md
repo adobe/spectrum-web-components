@@ -3,47 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.6.1](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/thumbnail@0.6.0...@iliad-ui/thumbnail@0.6.1) (2021-10-21)
+## [0.6.1](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/thumbnail@0.6.0...@iliad-ui/thumbnail@0.6.1) (2021-10-21)
 
 **Note:** Version bump only for package @iliad-ui/thumbnail
-
-
-
-
 
 # 0.6.0 (2021-10-21)
 
-
 ### Features
 
-* **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/Iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
-* **thumbnail:** add the thumbnail package ([56935d5](https://github.com/gaoding-inc/Iliad-ui/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   **thumbnail:** add the thumbnail package ([56935d5](https://github.com/gaoding-inc/iliad-ui/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
 
-
-
-
-
-## [0.5.3](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/thumbnail@0.5.2...@iliad-ui/thumbnail@0.5.3) (2021-10-20)
+## [0.5.3](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/thumbnail@0.5.2...@iliad-ui/thumbnail@0.5.3) (2021-10-20)
 
 **Note:** Version bump only for package @iliad-ui/thumbnail
 
-## [0.5.3-alpha.0](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/thumbnail@0.5.2...@iliad-ui/thumbnail@0.5.3-alpha.0) (2021-10-20)
+## [0.5.3-alpha.0](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/thumbnail@0.5.2...@iliad-ui/thumbnail@0.5.3-alpha.0) (2021-10-20)
 
 **Note:** Version bump only for package @iliad-ui/thumbnail
 
-## [0.5.2](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/thumbnail@0.5.1...@iliad-ui/thumbnail@0.5.2) (2021-10-20)
+## [0.5.2](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/thumbnail@0.5.1...@iliad-ui/thumbnail@0.5.2) (2021-10-20)
 
 **Note:** Version bump only for package @iliad-ui/thumbnail
 
-## [0.5.2](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/thumbnail@0.5.1...@iliad-ui/thumbnail@0.5.2) (2021-10-19)
+## [0.5.2](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/thumbnail@0.5.1...@iliad-ui/thumbnail@0.5.2) (2021-10-19)
 
 **Note:** Version bump only for package @iliad-ui/thumbnail
 
-## [0.5.1](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/thumbnail@0.5.0...@iliad-ui/thumbnail@0.5.1) (2021-10-19)
+## [0.5.1](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/thumbnail@0.5.0...@iliad-ui/thumbnail@0.5.1) (2021-10-19)
 
 **Note:** Version bump only for package @iliad-ui/thumbnail
 
-## [0.5.1](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/thumbnail@0.5.0...@iliad-ui/thumbnail@0.5.1) (2021-10-18)
+## [0.5.1](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/thumbnail@0.5.0...@iliad-ui/thumbnail@0.5.1) (2021-10-18)
 
 **Note:** Version bump only for package @iliad-ui/thumbnail
 
@@ -51,15 +42,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Features
 
--   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/Iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
--   **thumbnail:** add the thumbnail package ([56935d5](https://github.com/gaoding-inc/Iliad-ui/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   **thumbnail:** add the thumbnail package ([56935d5](https://github.com/gaoding-inc/iliad-ui/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
 
 # 0.4.0 (2021-10-18)
 
 ### Features
 
--   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/Iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
--   **thumbnail:** add the thumbnail package ([56935d5](https://github.com/gaoding-inc/Iliad-ui/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   **thumbnail:** add the thumbnail package ([56935d5](https://github.com/gaoding-inc/iliad-ui/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
 
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/thumbnail@0.3.0...@iliad-ui/thumbnail@0.3.1) (2021-10-15)
 

@@ -3,72 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.12.1](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/banner@0.12.0...@iliad-ui/banner@0.12.1) (2021-10-21)
+## [0.12.1](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/banner@0.12.0...@iliad-ui/banner@0.12.1) (2021-10-21)
 
 **Note:** Version bump only for package @iliad-ui/banner
-
-
-
-
 
 # 0.12.0 (2021-10-21)
 
-
 ### Bug Fixes
 
-* correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/Iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
-* include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/Iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
-* include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
-* include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
-* stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/Iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
-* update side effect listings ([8160d3a](https://github.com/gaoding-inc/Iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
-* update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
-
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update side effect listings ([8160d3a](https://github.com/gaoding-inc/iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
 ### Features
 
-* leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/Iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
-* update lit-* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/Iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
-* update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/Iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
-* use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/Iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
-* use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
-
+-   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
+-   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ### Performance Improvements
 
-* use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/Iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
-* use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/Iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
-
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
 
 ### Reverts
 
-* Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/Iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
 
-
-
-
-
-## [0.11.3](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/banner@0.11.2...@iliad-ui/banner@0.11.3) (2021-10-20)
+## [0.11.3](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/banner@0.11.2...@iliad-ui/banner@0.11.3) (2021-10-20)
 
 **Note:** Version bump only for package @iliad-ui/banner
 
-## [0.11.3-alpha.0](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/banner@0.11.2...@iliad-ui/banner@0.11.3-alpha.0) (2021-10-20)
+## [0.11.3-alpha.0](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/banner@0.11.2...@iliad-ui/banner@0.11.3-alpha.0) (2021-10-20)
 
 **Note:** Version bump only for package @iliad-ui/banner
 
-## [0.11.2](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/banner@0.11.1...@iliad-ui/banner@0.11.2) (2021-10-20)
+## [0.11.2](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/banner@0.11.1...@iliad-ui/banner@0.11.2) (2021-10-20)
 
 **Note:** Version bump only for package @iliad-ui/banner
 
-## [0.11.2](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/banner@0.11.1...@iliad-ui/banner@0.11.2) (2021-10-19)
+## [0.11.2](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/banner@0.11.1...@iliad-ui/banner@0.11.2) (2021-10-19)
 
 **Note:** Version bump only for package @iliad-ui/banner
 
-## [0.11.1](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/banner@0.11.0...@iliad-ui/banner@0.11.1) (2021-10-19)
+## [0.11.1](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/banner@0.11.0...@iliad-ui/banner@0.11.1) (2021-10-19)
 
 **Note:** Version bump only for package @iliad-ui/banner
 
-## [0.11.1](https://github.com/gaoding-inc/Iliad-ui/compare/@iliad-ui/banner@0.11.0...@iliad-ui/banner@0.11.1) (2021-10-18)
+## [0.11.1](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/banner@0.11.0...@iliad-ui/banner@0.11.1) (2021-10-18)
 
 **Note:** Version bump only for package @iliad-ui/banner
 
@@ -76,59 +64,59 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
--   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/Iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
--   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/Iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
--   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
--   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
--   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/Iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
--   update side effect listings ([8160d3a](https://github.com/gaoding-inc/Iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update side effect listings ([8160d3a](https://github.com/gaoding-inc/iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
 ### Features
 
--   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/Iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
--   update lit-\* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/Iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
--   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/Iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
--   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/Iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
--   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
+-   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ### Performance Improvements
 
--   use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/Iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
--   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/Iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
 
 ### Reverts
 
--   Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/Iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
 
 # 0.10.0 (2021-10-18)
 
 ### Bug Fixes
 
--   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/Iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
--   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/Iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
--   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/Iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
--   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/Iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
--   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/Iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
--   update side effect listings ([8160d3a](https://github.com/gaoding-inc/Iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
--   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/Iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update side effect listings ([8160d3a](https://github.com/gaoding-inc/iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
 ### Features
 
--   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/Iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
--   update lit-\* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/Iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
--   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/Iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
--   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/Iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
--   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/Iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
+-   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
 ### Performance Improvements
 
--   use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/Iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
--   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/Iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
 
 ### Reverts
 
--   Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/Iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
 
 ## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/banner@0.9.0...@iliad-ui/banner@0.9.1) (2021-10-15)
 
