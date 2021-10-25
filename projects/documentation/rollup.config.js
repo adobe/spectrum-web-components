@@ -72,7 +72,7 @@ const stringReplaceHtml = (source) => {
         .replace(
             "('/sw.js')",
             process.env.SWC_DIR
-                ? `('/${process.env.SWC_DIR}/sw.js')`
+                ? `('/${process.env.SWC_DIR}/sw.js', {scope: '/${process.env.SWC_DIR}/'})`
                 : "('/sw.js')"
         )
         .replace('type="module"', 'type="module" async')
