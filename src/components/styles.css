@@ -77,7 +77,6 @@ body {
         right: calc(100% - var(--spectrum-global-dimension-size-2400) - 48px);
         padding: 0 24px 24px;
         height: calc(100vh - 143px);
-        overflow: auto;
     }
 
     docs-page:not(:defined) sp-tabs {
@@ -111,7 +110,7 @@ body {
         top: 0;
     }
 
-    sp-sidenav:not(:defined) {
+    docs-page:not(:defined) > sp-sidenav {
         position: absolute;
         top: auto;
         left: 0;
@@ -259,7 +258,11 @@ sp-sidenav-item:not([tabindex]) {
         0;
 }
 
-sp-sidenav-item {
+docs-page > sp-sidenav {
+    content-visibility: auto;
+}
+
+docs-page > sp-sidenav-item {
     content-visibility: auto;
     contain-intrinsic-size: 40px;
 }
@@ -628,16 +631,16 @@ docs-page:defined .section:not([selected]) {
 }
 
 docs-page:not(:defined) .section,
-sp-tabs[selected='examples'] sp-tab[value='api'],
-sp-tabs[selected='api'] sp-tab[value='examples'],
+sp-tabs[selected='examples'] sp-tab[value='api']:not(:defined),
+sp-tabs[selected='api'] sp-tab[value='examples']:not(:defined),
 sp-tabs[selected='examples'] sp-tab-panel[value='api'],
 sp-tabs[selected='api'] sp-tab-panel[value='examples'] {
     order: 2;
 }
 
 docs-page:not(:defined) .section[selected],
-sp-tabs[selected='examples'] sp-tab[value='examples'],
-sp-tabs[selected='api'] sp-tab[value='api'],
+sp-tabs[selected='examples'] sp-tab[value='examples']:not(:defined),
+sp-tabs[selected='api'] sp-tab[value='api']:not(:defined),
 sp-tabs[selected='examples'] sp-tab-panel[value='examples'],
 sp-tabs[selected='api'] sp-tab-panel[value='api'] {
     order: 1;
