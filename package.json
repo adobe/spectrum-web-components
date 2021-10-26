@@ -142,6 +142,7 @@
     "@web/test-runner-visual-regression": "^0.6.2",
     "@webcomponents/webcomponentsjs": "^2.5.0",
     "alex": "^9.0.1",
+    "axios": "^0.24.0",
     "babel-loader": "^8.0.5",
     "babel-plugin-bundled-import-meta": "^0.3.2",
     "babel-plugin-transform-node-env-inline": "^0.4.3",
