@@ -69,4 +69,4 @@ npm-debug.log
 package-lock.json
 
 # person assets
-person.config.json
+person.config.js

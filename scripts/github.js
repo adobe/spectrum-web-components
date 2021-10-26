@@ -11,9 +11,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 // const axios = require('axios');
-const axios = require('axios');
+import axios from 'axios';
 // personal.config.json 存放个人数据,用来对接github api example {name:'saiye',token:''}
-const personConfig = require('../person.config.json');
+import personConfig from '../person.config.js';
 const client = axios.create({
     baseURL: `https://api.github.com/repos/gaoding-inc/iliad-ui`,
     headers: {
@@ -33,4 +33,4 @@ async function getPullRequestFiles(number, query = {}) {
     );
     return resp.data;
 }
-module.exports = { getPullRequestDetail, getPullRequestFiles };
+export { getPullRequestDetail, getPullRequestFiles };
