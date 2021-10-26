@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { ColorLoupe } from './src/ColorLoupe.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-color-loupe', ColorLoupe);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-color-loupe', ColorLoupe);
 
 declare global {
     interface HTMLElementTagNameMap {

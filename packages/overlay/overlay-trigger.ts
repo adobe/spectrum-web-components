@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { OverlayTrigger } from './src/OverlayTrigger.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('overlay-trigger', OverlayTrigger);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('overlay-trigger', OverlayTrigger);
 
 declare global {
     interface HTMLElementTagNameMap {

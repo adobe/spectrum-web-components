@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { SideNav } from './src/Sidenav.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-sidenav', SideNav);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-sidenav', SideNav);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { AccordionItem } from './src/AccordionItem.js';
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-accordion-item', AccordionItem);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-accordion-item', AccordionItem);
 
 declare global {
     interface HTMLElementTagNameMap {

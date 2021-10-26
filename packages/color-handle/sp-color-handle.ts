@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { ColorHandle } from './src/ColorHandle.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-color-handle', ColorHandle);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-color-handle', ColorHandle);
 
 declare global {
     interface HTMLElementTagNameMap {

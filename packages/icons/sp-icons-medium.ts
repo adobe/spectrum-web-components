@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { IconsMedium } from './src/IconsMedium.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-icons-medium', IconsMedium);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-icons-medium', IconsMedium);
 
 declare global {
     interface HTMLElementTagNameMap {

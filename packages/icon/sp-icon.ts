@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Icon } from './src/Icon.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-icon', Icon);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-icon', Icon);
 
 declare global {
     interface HTMLElementTagNameMap {

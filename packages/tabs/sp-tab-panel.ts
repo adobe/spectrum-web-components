@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { TabPanel } from './src/TabPanel.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-tab-panel', TabPanel);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-tab-panel', TabPanel);
 
 declare global {
     interface HTMLElementTagNameMap {

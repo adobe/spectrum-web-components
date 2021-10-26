@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { ProgressCircle } from './src/ProgressCircle.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-progress-circle', ProgressCircle);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-progress-circle', ProgressCircle);
 
 declare global {
     interface HTMLElementTagNameMap {

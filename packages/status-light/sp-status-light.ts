@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { StatusLight } from './src/StatusLight.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-status-light', StatusLight);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-status-light', StatusLight);
 
 declare global {
     interface HTMLElementTagNameMap {

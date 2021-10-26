@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Dialog } from './src/Dialog.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-dialog', Dialog);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-dialog', Dialog);
 
 declare global {
     interface HTMLElementTagNameMap {

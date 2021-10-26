@@ -145,7 +145,7 @@ export function lliadCustomElementsHas(tagName: string): boolean {
 }
 
 // 自定义 web components注册方法 如果组件已经定义过了 进行warning警告
-export function lliadCustomElementsDefine(
+export function iliadCustomElementsDefine(
     tagName: string,
     tagClass: any,
     options?: any

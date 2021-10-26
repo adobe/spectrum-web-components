@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Button } from './src/Button.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-button', Button);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-button', Button);
 
 declare global {
     interface HTMLElementTagNameMap {

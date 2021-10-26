@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 import './sp-slider-handle.js'; // codify sp-slider's implicit dependency on sp-slider-handle
 import { Slider } from './src/Slider.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-slider', Slider);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-slider', Slider);
 
 declare global {
     interface HTMLElementTagNameMap {

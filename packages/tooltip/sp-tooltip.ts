@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Tooltip } from './src/Tooltip.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-tooltip', Tooltip);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-tooltip', Tooltip);
 
 declare global {
     interface HTMLElementTagNameMap {

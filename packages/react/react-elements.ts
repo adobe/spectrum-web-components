@@ -14,7 +14,7 @@ governing permissions and limitations under the License.
 import '@iliad-ui/bundle/elements';
 import * as SpComponents from './src';
 import {
-    lliadCustomElementsDefine,
+    iliadCustomElementsDefine,
     lliadCustomElementsHas,
 } from '@iliad-ui/base';
 
@@ -23,4 +23,4 @@ import { generatePackageReactComs } from './generate.js';
 const ReactComponents = generatePackageReactComs(SpComponents);
 
 export { SpComponents, ReactComponents };
-export { lliadCustomElementsDefine, lliadCustomElementsHas };
+export { iliadCustomElementsDefine, lliadCustomElementsHas };

@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { Tabs } from './src/Tabs.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-tabs', Tabs);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-tabs', Tabs);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { ActionGroup } from './src/ActionGroup.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-action-group', ActionGroup);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-action-group', ActionGroup);
 
 declare global {
     interface HTMLElementTagNameMap {

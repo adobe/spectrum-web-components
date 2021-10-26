@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { DialogWrapper } from './src/DialogWrapper.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-dialog-wrapper', DialogWrapper);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-dialog-wrapper', DialogWrapper);
 
 declare global {
     interface HTMLElementTagNameMap {

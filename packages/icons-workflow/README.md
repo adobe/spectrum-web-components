@@ -28,8 +28,8 @@ class ElementWithIcon extends LitElement {
     }
 }
 
-import {lliadCustomElementsDefine} from '@iliad-ui/base';
-lliadCustomElementsDefine('element-with-icon', ElementWithIcon);
+import {iliadCustomElementsDefine} from '@iliad-ui/base';
+iliadCustomElementsDefine('element-with-icon', ElementWithIcon);
 ```
 
 Every icons can be customized via the following options:

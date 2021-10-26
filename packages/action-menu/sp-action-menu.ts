@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { ActionMenu } from './src/ActionMenu.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-action-menu', ActionMenu);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-action-menu', ActionMenu);
 
 declare global {
     interface HTMLElementTagNameMap {

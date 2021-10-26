@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Accordion } from './src/Accordion.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-accordion', Accordion);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-accordion', Accordion);
 
 declare global {
     interface HTMLElementTagNameMap {

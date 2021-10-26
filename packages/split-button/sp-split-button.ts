@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { SplitButton } from './src/SplitButton.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-split-button', SplitButton);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-split-button', SplitButton);
 
 declare global {
     interface HTMLElementTagNameMap {

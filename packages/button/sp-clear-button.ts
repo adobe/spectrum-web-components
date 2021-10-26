@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { ClearButton } from './src/ClearButton.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-clear-button', ClearButton);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-clear-button', ClearButton);
 
 declare global {
     interface HTMLElementTagNameMap {

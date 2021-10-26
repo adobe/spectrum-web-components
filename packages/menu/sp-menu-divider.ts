@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { MenuDivider } from './src/MenuDivider.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-menu-divider', MenuDivider);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-menu-divider', MenuDivider);
 
 declare global {
     interface HTMLElementTagNameMap {

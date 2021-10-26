@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { FieldGroup } from './src/FieldGroup.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-field-group', FieldGroup);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-field-group', FieldGroup);
 
 declare global {
     interface HTMLElementTagNameMap {

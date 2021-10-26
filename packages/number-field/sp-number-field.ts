@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { NumberField } from './src/NumberField.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-number-field', NumberField);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-number-field', NumberField);
 
 declare global {
     interface HTMLElementTagNameMap {

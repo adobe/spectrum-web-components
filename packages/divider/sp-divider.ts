@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { Divider } from './src/Divider.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-divider', Divider);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-divider', Divider);
 
 declare global {
     interface HTMLElementTagNameMap {

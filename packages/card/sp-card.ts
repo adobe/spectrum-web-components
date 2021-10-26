@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Card } from './src/Card.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-card', Card);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-card', Card);
 
 declare global {
     interface HTMLElementTagNameMap {

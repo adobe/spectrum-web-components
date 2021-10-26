@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { ButtonGroup } from './src/ButtonGroup.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-button-group', ButtonGroup);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-button-group', ButtonGroup);
 
 declare global {
     interface HTMLElementTagNameMap {

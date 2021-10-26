@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Tags } from './src/Tags.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-tags', Tags);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-tags', Tags);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { ActionBar } from './src/ActionBar.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-action-bar', ActionBar);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-action-bar', ActionBar);
 
 declare global {
     interface HTMLElementTagNameMap {

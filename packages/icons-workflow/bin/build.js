@@ -28,6 +28,7 @@ const keepColors = process.argv.slice(2)[1];
 const disclaimer = `
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -227,10 +228,10 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
 
         const iconRegistration = `
         ${disclaimer}
-        import { lliadCustomElementsDefine } from '@iliad-ui/base';
+        import { iliadCustomElementsDefine } from '@iliad-ui/base';
         import { Icon${ComponentName} } from '../src/elements/Icon${id}.js';
 
-        lliadCustomElementsDefine('${iconElementName}', Icon${ComponentName});
+        iliadCustomElementsDefine('${iconElementName}', Icon${ComponentName});
 
         declare global {
             interface HTMLElementTagNameMap {

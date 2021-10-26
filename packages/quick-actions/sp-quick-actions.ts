@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { QuickActions } from './src/QuickActions.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-quick-actions', QuickActions);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-quick-actions', QuickActions);
 
 declare global {
     interface HTMLElementTagNameMap {

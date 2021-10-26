@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { Tray } from './src/Tray.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-tray', Tray);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-tray', Tray);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -95,8 +95,8 @@ class ObserveSlotPresenceElement extends ObserveSlotPresence(LitElement, '[slot=
         console.log(this.slotContentIsPresent); // => true when <observing-slot-presence-element><div slot="conditional-slot"></div></observing-slot-presence-element>
     }
 }
-import {lliadCustomElementsDefine} from '@iliad-ui/base';
-lliadCustomElementsDefine('observing-slot-presence-element', ObserveSlotPresenceElement);
+import {iliadCustomElementsDefine} from '@iliad-ui/base';
+iliadCustomElementsDefine('observing-slot-presence-element', ObserveSlotPresenceElement);
 ```
 
 ### ObserveSlotText
@@ -125,6 +125,6 @@ class ObserveSlotTextElement extends ObserveSlotText(LitElement, '#observing-slo
     }
 }
 
-import {lliadCustomElementsDefine} from '@iliad-ui/base';
-lliadCustomElementsDefine('observing-slot-text-element', ObserveSlotTextElement);
+import {iliadCustomElementsDefine} from '@iliad-ui/base';
+iliadCustomElementsDefine('observing-slot-text-element', ObserveSlotTextElement);
 ```

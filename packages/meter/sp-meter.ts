@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { Meter } from './src/Meter.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-meter', Meter);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-meter', Meter);
 
 declare global {
     interface HTMLElementTagNameMap {

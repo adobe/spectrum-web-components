@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Search } from './src/Search.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-search', Search);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-search', Search);
 
 declare global {
     interface HTMLElementTagNameMap {

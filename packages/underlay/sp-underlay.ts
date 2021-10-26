@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { Underlay } from './src/Underlay.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-underlay', Underlay);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-underlay', Underlay);
 
 declare global {
     interface HTMLElementTagNameMap {

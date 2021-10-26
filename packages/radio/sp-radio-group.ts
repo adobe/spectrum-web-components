@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { RadioGroup } from './src/RadioGroup.js';
 
-import { lliadCustomElementsDefine } from '@iliad-ui/base';
-lliadCustomElementsDefine('sp-radio-group', RadioGroup);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-radio-group', RadioGroup);
 
 declare global {
     interface HTMLElementTagNameMap {
