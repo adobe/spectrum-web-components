@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -18,18 +19,18 @@ import {
     query,
     PropertyValues,
     ifDefined,
-} from '@spectrum-web-components/base';
-import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+} from '@iliad-ui/base';
+import { streamingListener } from '@iliad-ui/base/src/streaming-listener.js';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
+import '@iliad-ui/color-handle/sp-color-handle.js';
 import styles from './color-wheel.css.js';
 import {
     ColorHandle,
     ColorValue,
     extractHueAndSaturationRegExp,
     replaceHueAndSaturationRegExp,
-} from '@spectrum-web-components/color-handle';
+} from '@iliad-ui/color-handle';
 import { TinyColor } from '@ctrl/tinycolor';
 
 /**
@@ -404,14 +405,11 @@ export class ColorWheel extends Focusable {
                 color="hsl(${this.value}, 100%, 50%)"
                 ?disabled=${this.disabled}
                 style=${handleLocationStyles}
-                @manage=${streamingListener(
-                    { type: 'pointerdown', fn: this.handlePointerdown },
-                    { type: 'pointermove', fn: this.handlePointermove },
-                    {
-                        type: ['pointerup', 'pointercancel'],
-                        fn: this.handlePointerup,
-                    }
-                )}
+                ${streamingListener({
+                    start: ['pointerdown', this.handlePointerdown],
+                    streamInside: ['pointermove', this.handlePointermove],
+                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                })}
             ></sp-color-handle>
 
             <input
@@ -442,16 +440,16 @@ export class ColorWheel extends Focusable {
         super.connectedCallback();
         if (
             !this.observer &&
-            ((window as unknown) as WithSWCResizeObserver).ResizeObserver
+            (window as unknown as WithSWCResizeObserver).ResizeObserver
         ) {
-            this.observer = new ((window as unknown) as WithSWCResizeObserver).ResizeObserver(
-                (entries: SWCResizeObserverEntry[]) => {
-                    for (const entry of entries) {
-                        this.boundingClientRect = entry.contentRect;
-                    }
-                    this.requestUpdate();
+            this.observer = new (
+                window as unknown as WithSWCResizeObserver
+            ).ResizeObserver((entries: SWCResizeObserverEntry[]) => {
+                for (const entry of entries) {
+                    this.boundingClientRect = entry.contentRect;
                 }
-            );
+                this.requestUpdate();
+            });
         }
         this.observer?.observe(this);
     }

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,14 +17,11 @@ import {
     property,
     PropertyValues,
     TemplateResult,
-} from '@spectrum-web-components/base';
-import '@spectrum-web-components/underlay/sp-underlay.js';
-import '@spectrum-web-components/sidenav/sp-sidenav.js';
-import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
-import {
-    SidenavSelectDetail,
-    SideNavItem,
-} from '@spectrum-web-components/sidenav';
+} from '@iliad-ui/base';
+import '@iliad-ui/underlay/sp-underlay.js';
+import '@iliad-ui/sidenav/sp-sidenav.js';
+import '@iliad-ui/sidenav/sp-sidenav-item.js';
+import { SidenavSelectDetail, SideNavItem } from '@iliad-ui/sidenav';
 import { AppRouter } from '../router.js';
 import './side-nav-search.js';
 import { search, Result } from './search-index.js';

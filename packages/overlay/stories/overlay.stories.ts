@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -8,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult, ifDefined } from '@spectrum-web-components/base';
+import { html, TemplateResult, ifDefined } from '@iliad-ui/base';
 import {
     openOverlay,
     Overlay,
@@ -17,32 +18,32 @@ import {
     Placement,
     VirtualTrigger,
 } from '../';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
-import { DialogWrapper } from '@spectrum-web-components/dialog';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { Picker } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/slider/sp-slider.js';
-import '@spectrum-web-components/radio/sp-radio.js';
-import '@spectrum-web-components/radio/sp-radio-group.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/action-group/sp-action-group.js';
+import '@iliad-ui/button/sp-button.js';
+import '@iliad-ui/dialog/sp-dialog-wrapper.js';
+import { DialogWrapper } from '@iliad-ui/dialog';
+import '@iliad-ui/field-label/sp-field-label.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-magnify.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-open-in.js';
+import '@iliad-ui/overlay/overlay-trigger.js';
+import { Picker } from '@iliad-ui/picker';
+import '@iliad-ui/picker/sp-picker.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/menu/sp-menu-divider.js';
+import '@iliad-ui/popover/sp-popover.js';
+import '@iliad-ui/slider/sp-slider.js';
+import '@iliad-ui/radio/sp-radio.js';
+import '@iliad-ui/radio/sp-radio-group.js';
+import '@iliad-ui/tooltip/sp-tooltip.js';
+import '@iliad-ui/theme/sp-theme.js';
+import '@iliad-ui/theme/src/themes.js';
 import '../../../projects/story-decorator/src/types.js';
 
 import './overlay-story-components.js';
 import { render } from 'lit-html';
-import { Popover } from '@spectrum-web-components/popover';
+import { Popover } from '@iliad-ui/popover';
 
 const storyStyles = html`
     <style>

@@ -1,14 +1,20 @@
 {
-    "name": "@spectrum-web-components/tray",
-    "version": "0.0.7",
+    "name": "@iliad-ui/tray",
+    "version": "0.6.1",
     "publishConfig": {
         "access": "public"
     },
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "Web component implementation of a Spectrum design Tray",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "url": "https://github.com/gaoding-inc/iliad-ui.git",
         "directory": "packages/tray"
     },
     "author": "",
@@ -44,9 +50,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.5",
-        "@spectrum-web-components/modal": "^0.3.8",
-        "@spectrum-web-components/underlay": "^0.6.9",
+        "@iliad-ui/base": "^0.10.1",
+        "@iliad-ui/modal": "^0.7.1",
+        "@iliad-ui/underlay": "^0.10.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -54,6 +60,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js"
     ]

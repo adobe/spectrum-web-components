@@ -3,43 +3,279 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.9.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.7...@spectrum-web-components/link@0.9.8) (2021-10-12)
+## [0.13.1](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/link@0.13.0...@iliad-ui/link@0.13.1) (2021-10-21)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.9.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.6...@spectrum-web-components/link@0.9.7) (2021-09-20)
+# 0.13.0 (2021-10-21)
+
+### Bug Fixes
+
+-   **link:** support "secondary" variant ([3808b96](https://github.com/gaoding-inc/iliad-ui/commit/3808b968f483748e98b6e4d3ea6640c63e29cc5f))
+-   apply Focuable styles in class extensions ([38f7afd](https://github.com/gaoding-inc/iliad-ui/commit/38f7afd7cdb317d5c8b6e69f1301decd21364b1d))
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   expand sized functionality to support no default and returning to default values ([acf3cfb](https://github.com/gaoding-inc/iliad-ui/commit/acf3cfb000033d1ef1e22ca571cb8dbbeaadae77))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/gaoding-inc/iliad-ui/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
+-   review deque accessibility testing of docs site ([31f43aa](https://github.com/gaoding-inc/iliad-ui/commit/31f43aaf0c4092a2aca209538e48417a159dbd0b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   update side effect listings ([8160d3a](https://github.com/gaoding-inc/iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/gaoding-inc/iliad-ui/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+-   **link:** correct custom CSS processing configuration ([2a24d5a](https://github.com/gaoding-inc/iliad-ui/commit/2a24d5a034ea185c385fe09feafa3b3f094c848e))
+-   **link:** correct white space in template/docs site ([a48bd06](https://github.com/gaoding-inc/iliad-ui/commit/a48bd06a177ed5f6ec52d44676f61f313bc90022))
+-   **link:** correct white space management ([a7a63dc](https://github.com/gaoding-inc/iliad-ui/commit/a7a63dcbb5f048a9f7178861e4f5d9dbde63ad04))
+-   **link:** process Spectrum CSS without overwriting specificity ([9eb3d5c](https://github.com/gaoding-inc/iliad-ui/commit/9eb3d5c1ef535d61133ce745059bfc7193e32dd4))
+-   **link:** test inner anchor attribute by accessing via focusElement ([f4e97a1](https://github.com/gaoding-inc/iliad-ui/commit/f4e97a1a4958a979a391d5bb330bc67289e354c0))
+
+### Features
+
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   apply sizedMixin for t-shirt sizing ([d7b63fb](https://github.com/gaoding-inc/iliad-ui/commit/d7b63fb0db06b5a8a412fea8370964f4db9d18ae))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   use SixedMixin to manage "size" property ([8819821](https://github.com/gaoding-inc/iliad-ui/commit/88198212cb495833ed2e7644f95b43dca915318d))
+-   **link:** add download attribute to <sp-link> ([fb02104](https://github.com/gaoding-inc/iliad-ui/commit/fb02104104c856d2601a70d9de59fbbe3a79e5d7))
+-   **link:** add download attribute to <sp-link> ([fefb28e](https://github.com/gaoding-inc/iliad-ui/commit/fefb28ef29f382401d2d8160c15012af59d0053c))
+-   **link:** add download attribute to <sp-link> ([16894ba](https://github.com/gaoding-inc/iliad-ui/commit/16894ba672882178b09a33c4834e42144e6b081d))
+-   **link:** add download attribute to <sp-link> ([0763504](https://github.com/gaoding-inc/iliad-ui/commit/07635046b2943e8461a82f564c168d7a9f27ddc2))
+-   **link:** support rel attribute ([df4b5a8](https://github.com/gaoding-inc/iliad-ui/commit/df4b5a831aa35f5992b183cbba3cad18eb3dbb53))
+-   **link:** update spectrum css input ([e8cd359](https://github.com/gaoding-inc/iliad-ui/commit/e8cd3592e780608afeda5bbfb5830a64a0b2caa1))
+-   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/gaoding-inc/iliad-ui/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
+
+### Reverts
+
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+
+## [0.12.3](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/link@0.12.2...@iliad-ui/link@0.12.3) (2021-10-20)
+
+**Note:** Version bump only for package @iliad-ui/link
+
+## [0.12.3-alpha.0](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/link@0.12.2...@iliad-ui/link@0.12.3-alpha.0) (2021-10-20)
+
+**Note:** Version bump only for package @iliad-ui/link
+
+## [0.12.2](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/link@0.12.1...@iliad-ui/link@0.12.2) (2021-10-20)
+
+**Note:** Version bump only for package @iliad-ui/link
+
+## [0.12.2](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/link@0.12.1...@iliad-ui/link@0.12.2) (2021-10-19)
+
+**Note:** Version bump only for package @iliad-ui/link
+
+## [0.12.1](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/link@0.12.0...@iliad-ui/link@0.12.1) (2021-10-19)
+
+**Note:** Version bump only for package @iliad-ui/link
+
+## [0.12.1](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/link@0.12.0...@iliad-ui/link@0.12.1) (2021-10-18)
+
+**Note:** Version bump only for package @iliad-ui/link
+
+# 0.12.0 (2021-10-18)
+
+### Bug Fixes
+
+-   **link:** support "secondary" variant ([3808b96](https://github.com/gaoding-inc/iliad-ui/commit/3808b968f483748e98b6e4d3ea6640c63e29cc5f))
+-   apply Focuable styles in class extensions ([38f7afd](https://github.com/gaoding-inc/iliad-ui/commit/38f7afd7cdb317d5c8b6e69f1301decd21364b1d))
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   expand sized functionality to support no default and returning to default values ([acf3cfb](https://github.com/gaoding-inc/iliad-ui/commit/acf3cfb000033d1ef1e22ca571cb8dbbeaadae77))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/gaoding-inc/iliad-ui/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
+-   review deque accessibility testing of docs site ([31f43aa](https://github.com/gaoding-inc/iliad-ui/commit/31f43aaf0c4092a2aca209538e48417a159dbd0b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   update side effect listings ([8160d3a](https://github.com/gaoding-inc/iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/gaoding-inc/iliad-ui/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+-   **link:** correct custom CSS processing configuration ([2a24d5a](https://github.com/gaoding-inc/iliad-ui/commit/2a24d5a034ea185c385fe09feafa3b3f094c848e))
+-   **link:** correct white space in template/docs site ([a48bd06](https://github.com/gaoding-inc/iliad-ui/commit/a48bd06a177ed5f6ec52d44676f61f313bc90022))
+-   **link:** correct white space management ([a7a63dc](https://github.com/gaoding-inc/iliad-ui/commit/a7a63dcbb5f048a9f7178861e4f5d9dbde63ad04))
+-   **link:** process Spectrum CSS without overwriting specificity ([9eb3d5c](https://github.com/gaoding-inc/iliad-ui/commit/9eb3d5c1ef535d61133ce745059bfc7193e32dd4))
+-   **link:** test inner anchor attribute by accessing via focusElement ([f4e97a1](https://github.com/gaoding-inc/iliad-ui/commit/f4e97a1a4958a979a391d5bb330bc67289e354c0))
+
+### Features
+
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   apply sizedMixin for t-shirt sizing ([d7b63fb](https://github.com/gaoding-inc/iliad-ui/commit/d7b63fb0db06b5a8a412fea8370964f4db9d18ae))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   use SixedMixin to manage "size" property ([8819821](https://github.com/gaoding-inc/iliad-ui/commit/88198212cb495833ed2e7644f95b43dca915318d))
+-   **link:** add download attribute to <sp-link> ([fb02104](https://github.com/gaoding-inc/iliad-ui/commit/fb02104104c856d2601a70d9de59fbbe3a79e5d7))
+-   **link:** add download attribute to <sp-link> ([fefb28e](https://github.com/gaoding-inc/iliad-ui/commit/fefb28ef29f382401d2d8160c15012af59d0053c))
+-   **link:** add download attribute to <sp-link> ([16894ba](https://github.com/gaoding-inc/iliad-ui/commit/16894ba672882178b09a33c4834e42144e6b081d))
+-   **link:** add download attribute to <sp-link> ([0763504](https://github.com/gaoding-inc/iliad-ui/commit/07635046b2943e8461a82f564c168d7a9f27ddc2))
+-   **link:** support rel attribute ([df4b5a8](https://github.com/gaoding-inc/iliad-ui/commit/df4b5a831aa35f5992b183cbba3cad18eb3dbb53))
+-   **link:** update spectrum css input ([e8cd359](https://github.com/gaoding-inc/iliad-ui/commit/e8cd3592e780608afeda5bbfb5830a64a0b2caa1))
+-   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/gaoding-inc/iliad-ui/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
+
+### Reverts
+
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+
+# 0.11.0 (2021-10-18)
+
+### Bug Fixes
+
+-   **link:** support "secondary" variant ([3808b96](https://github.com/gaoding-inc/iliad-ui/commit/3808b968f483748e98b6e4d3ea6640c63e29cc5f))
+-   apply Focuable styles in class extensions ([38f7afd](https://github.com/gaoding-inc/iliad-ui/commit/38f7afd7cdb317d5c8b6e69f1301decd21364b1d))
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   expand sized functionality to support no default and returning to default values ([acf3cfb](https://github.com/gaoding-inc/iliad-ui/commit/acf3cfb000033d1ef1e22ca571cb8dbbeaadae77))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/gaoding-inc/iliad-ui/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/gaoding-inc/iliad-ui/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
+-   review deque accessibility testing of docs site ([31f43aa](https://github.com/gaoding-inc/iliad-ui/commit/31f43aaf0c4092a2aca209538e48417a159dbd0b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/gaoding-inc/iliad-ui/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   update side effect listings ([8160d3a](https://github.com/gaoding-inc/iliad-ui/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/gaoding-inc/iliad-ui/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+-   **link:** correct custom CSS processing configuration ([2a24d5a](https://github.com/gaoding-inc/iliad-ui/commit/2a24d5a034ea185c385fe09feafa3b3f094c848e))
+-   **link:** correct white space in template/docs site ([a48bd06](https://github.com/gaoding-inc/iliad-ui/commit/a48bd06a177ed5f6ec52d44676f61f313bc90022))
+-   **link:** correct white space management ([a7a63dc](https://github.com/gaoding-inc/iliad-ui/commit/a7a63dcbb5f048a9f7178861e4f5d9dbde63ad04))
+-   **link:** process Spectrum CSS without overwriting specificity ([9eb3d5c](https://github.com/gaoding-inc/iliad-ui/commit/9eb3d5c1ef535d61133ce745059bfc7193e32dd4))
+-   **link:** test inner anchor attribute by accessing via focusElement ([f4e97a1](https://github.com/gaoding-inc/iliad-ui/commit/f4e97a1a4958a979a391d5bb330bc67289e354c0))
+
+### Features
+
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/gaoding-inc/iliad-ui/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   apply sizedMixin for t-shirt sizing ([d7b63fb](https://github.com/gaoding-inc/iliad-ui/commit/d7b63fb0db06b5a8a412fea8370964f4db9d18ae))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   use SixedMixin to manage "size" property ([8819821](https://github.com/gaoding-inc/iliad-ui/commit/88198212cb495833ed2e7644f95b43dca915318d))
+-   **link:** add download attribute to <sp-link> ([fb02104](https://github.com/gaoding-inc/iliad-ui/commit/fb02104104c856d2601a70d9de59fbbe3a79e5d7))
+-   **link:** add download attribute to <sp-link> ([fefb28e](https://github.com/gaoding-inc/iliad-ui/commit/fefb28ef29f382401d2d8160c15012af59d0053c))
+-   **link:** add download attribute to <sp-link> ([16894ba](https://github.com/gaoding-inc/iliad-ui/commit/16894ba672882178b09a33c4834e42144e6b081d))
+-   **link:** add download attribute to <sp-link> ([0763504](https://github.com/gaoding-inc/iliad-ui/commit/07635046b2943e8461a82f564c168d7a9f27ddc2))
+-   **link:** support rel attribute ([df4b5a8](https://github.com/gaoding-inc/iliad-ui/commit/df4b5a831aa35f5992b183cbba3cad18eb3dbb53))
+-   **link:** update spectrum css input ([e8cd359](https://github.com/gaoding-inc/iliad-ui/commit/e8cd3592e780608afeda5bbfb5830a64a0b2caa1))
+-   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/gaoding-inc/iliad-ui/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/gaoding-inc/iliad-ui/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/gaoding-inc/iliad-ui/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/gaoding-inc/iliad-ui/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
+
+### Reverts
+
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/gaoding-inc/iliad-ui/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.10.0...@iliad-ui/link@0.10.1) (2021-10-15)
+
+**Note:** Version bump only for package @iliad-ui/link
+
+# 0.10.0 (2021-10-14)
+
+### Bug Fixes
+
+-   **link:** support "secondary" variant ([3808b96](https://github.com/adobe/spectrum-web-components/commit/3808b968f483748e98b6e4d3ea6640c63e29cc5f))
+-   apply Focuable styles in class extensions ([38f7afd](https://github.com/adobe/spectrum-web-components/commit/38f7afd7cdb317d5c8b6e69f1301decd21364b1d))
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   expand sized functionality to support no default and returning to default values ([acf3cfb](https://github.com/adobe/spectrum-web-components/commit/acf3cfb000033d1ef1e22ca571cb8dbbeaadae77))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/adobe/spectrum-web-components/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
+-   review deque accessibility testing of docs site ([31f43aa](https://github.com/adobe/spectrum-web-components/commit/31f43aaf0c4092a2aca209538e48417a159dbd0b))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+-   **link:** correct custom CSS processing configuration ([2a24d5a](https://github.com/adobe/spectrum-web-components/commit/2a24d5a034ea185c385fe09feafa3b3f094c848e))
+-   **link:** correct white space in template/docs site ([a48bd06](https://github.com/adobe/spectrum-web-components/commit/a48bd06a177ed5f6ec52d44676f61f313bc90022))
+-   **link:** correct white space management ([a7a63dc](https://github.com/adobe/spectrum-web-components/commit/a7a63dcbb5f048a9f7178861e4f5d9dbde63ad04))
+-   **link:** process Spectrum CSS without overwriting specificity ([9eb3d5c](https://github.com/adobe/spectrum-web-components/commit/9eb3d5c1ef535d61133ce745059bfc7193e32dd4))
+-   **link:** test inner anchor attribute by accessing via focusElement ([f4e97a1](https://github.com/adobe/spectrum-web-components/commit/f4e97a1a4958a979a391d5bb330bc67289e354c0))
+
+### Features
+
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   apply sizedMixin for t-shirt sizing ([d7b63fb](https://github.com/adobe/spectrum-web-components/commit/d7b63fb0db06b5a8a412fea8370964f4db9d18ae))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   use SixedMixin to manage "size" property ([8819821](https://github.com/adobe/spectrum-web-components/commit/88198212cb495833ed2e7644f95b43dca915318d))
+-   **link:** add download attribute to <sp-link> ([fb02104](https://github.com/adobe/spectrum-web-components/commit/fb02104104c856d2601a70d9de59fbbe3a79e5d7))
+-   **link:** add download attribute to <sp-link> ([fefb28e](https://github.com/adobe/spectrum-web-components/commit/fefb28ef29f382401d2d8160c15012af59d0053c))
+-   **link:** add download attribute to <sp-link> ([16894ba](https://github.com/adobe/spectrum-web-components/commit/16894ba672882178b09a33c4834e42144e6b081d))
+-   **link:** add download attribute to <sp-link> ([0763504](https://github.com/adobe/spectrum-web-components/commit/07635046b2943e8461a82f564c168d7a9f27ddc2))
+-   **link:** support rel attribute ([df4b5a8](https://github.com/adobe/spectrum-web-components/commit/df4b5a831aa35f5992b183cbba3cad18eb3dbb53))
+-   **link:** update spectrum css input ([e8cd359](https://github.com/adobe/spectrum-web-components/commit/e8cd3592e780608afeda5bbfb5830a64a0b2caa1))
+-   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/adobe/spectrum-web-components/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
+
+### Reverts
+
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/adobe/spectrum-web-components/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+
+## [0.9.10](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.9.8...@iliad-ui/link@0.9.10) (2021-10-14)
+
+**Note:** Version bump only for package @iliad-ui/link
+
+## [0.9.9](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.9.8...@iliad-ui/link@0.9.9) (2021-10-14)
+
+**Note:** Version bump only for package @iliad-ui/link
+
+## [0.9.8](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.9.7...@iliad-ui/link@0.9.8) (2021-10-12)
+
+**Note:** Version bump only for package @iliad-ui/link
+
+## [0.9.7](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.9.6...@iliad-ui/link@0.9.7) (2021-09-20)
 
 ### Bug Fixes
 
 -   **link:** support "secondary" variant ([3808b96](https://github.com/adobe/spectrum-web-components/commit/3808b968f483748e98b6e4d3ea6640c63e29cc5f))
 
-## [0.9.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.5...@spectrum-web-components/link@0.9.6) (2021-09-13)
+## [0.9.6](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.9.5...@iliad-ui/link@0.9.6) (2021-09-13)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.9.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.4...@spectrum-web-components/link@0.9.5) (2021-08-24)
+## [0.9.5](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.9.4...@iliad-ui/link@0.9.5) (2021-08-24)
 
 ### Bug Fixes
 
 -   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
-## [0.9.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.3...@spectrum-web-components/link@0.9.4) (2021-07-22)
+## [0.9.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.9.3...@iliad-ui/link@0.9.4) (2021-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.2...@spectrum-web-components/link@0.9.3) (2021-07-01)
+## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.9.2...@iliad-ui/link@0.9.3) (2021-07-01)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.1...@spectrum-web-components/link@0.9.2) (2021-06-16)
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.9.1...@iliad-ui/link@0.9.2) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.0...@spectrum-web-components/link@0.9.1) (2021-06-07)
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.9.0...@iliad-ui/link@0.9.1) (2021-06-07)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.8.5...@spectrum-web-components/link@0.9.0) (2021-05-24)
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.8.5...@iliad-ui/link@0.9.0) (2021-05-24)
 
 ### Bug Fixes
 
@@ -49,40 +285,40 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
 
-## [0.8.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.8.4...@spectrum-web-components/link@0.8.5) (2021-05-12)
+## [0.8.5](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.8.4...@iliad-ui/link@0.8.5) (2021-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.8.3...@spectrum-web-components/link@0.8.4) (2021-04-09)
+## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.8.3...@iliad-ui/link@0.8.4) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.8.2...@spectrum-web-components/link@0.8.3) (2021-03-29)
+## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.8.2...@iliad-ui/link@0.8.3) (2021-03-29)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.8.1...@spectrum-web-components/link@0.8.2) (2021-03-22)
+## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.8.1...@iliad-ui/link@0.8.2) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.8.0...@spectrum-web-components/link@0.8.1) (2021-03-05)
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.8.0...@iliad-ui/link@0.8.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.7.1...@spectrum-web-components/link@0.8.0) (2021-03-04)
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.7.1...@iliad-ui/link@0.8.0) (2021-03-04)
 
 ### Features
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.7.0...@spectrum-web-components/link@0.7.1) (2021-02-11)
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.7.0...@iliad-ui/link@0.7.1) (2021-02-11)
 
 ### Bug Fixes
 
 -   expand sized functionality to support no default and returning to default values ([acf3cfb](https://github.com/adobe/spectrum-web-components/commit/acf3cfb000033d1ef1e22ca571cb8dbbeaadae77))
 -   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
-# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.5.6...@spectrum-web-components/link@0.7.0) (2021-01-21)
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.5.6...@iliad-ui/link@0.7.0) (2021-01-21)
 
 ### Bug Fixes
 
@@ -97,7 +333,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   use SixedMixin to manage "size" property ([8819821](https://github.com/adobe/spectrum-web-components/commit/88198212cb495833ed2e7644f95b43dca915318d))
 -   **link:** update spectrum css input ([e8cd359](https://github.com/adobe/spectrum-web-components/commit/e8cd3592e780608afeda5bbfb5830a64a0b2caa1))
 
-# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.5.6...@spectrum-web-components/link@0.6.0) (2021-01-13)
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.5.6...@iliad-ui/link@0.6.0) (2021-01-13)
 
 ### Bug Fixes
 
@@ -112,35 +348,35 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   use SixedMixin to manage "size" property ([8819821](https://github.com/adobe/spectrum-web-components/commit/88198212cb495833ed2e7644f95b43dca915318d))
 -   **link:** update spectrum css input ([e8cd359](https://github.com/adobe/spectrum-web-components/commit/e8cd3592e780608afeda5bbfb5830a64a0b2caa1))
 
-## [0.5.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.5.5...@spectrum-web-components/link@0.5.6) (2020-10-12)
+## [0.5.6](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.5.5...@iliad-ui/link@0.5.6) (2020-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.5.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.5.4...@spectrum-web-components/link@0.5.5) (2020-10-12)
+## [0.5.5](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.5.4...@iliad-ui/link@0.5.5) (2020-10-12)
 
 ### Bug Fixes
 
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.5.3...@spectrum-web-components/link@0.5.4) (2020-09-25)
+## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.5.3...@iliad-ui/link@0.5.4) (2020-09-25)
 
 ### Bug Fixes
 
 -   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
 
-## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.5.2...@spectrum-web-components/link@0.5.3) (2020-09-14)
+## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.5.2...@iliad-ui/link@0.5.3) (2020-09-14)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.5.1...@spectrum-web-components/link@0.5.2) (2020-08-31)
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.5.1...@iliad-ui/link@0.5.2) (2020-08-31)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.5.0...@spectrum-web-components/link@0.5.1) (2020-08-19)
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.5.0...@iliad-ui/link@0.5.1) (2020-08-19)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.4.1...@spectrum-web-components/link@0.5.0) (2020-07-27)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.4.1...@iliad-ui/link@0.5.0) (2020-07-27)
 
 ### Bug Fixes
 
@@ -150,11 +386,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **link:** support rel attribute ([df4b5a8](https://github.com/adobe/spectrum-web-components/commit/df4b5a831aa35f5992b183cbba3cad18eb3dbb53))
 
-## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.4.0...@spectrum-web-components/link@0.4.1) (2020-07-22)
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.4.0...@iliad-ui/link@0.4.1) (2020-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.3.4...@spectrum-web-components/link@0.4.0) (2020-07-17)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.3.4...@iliad-ui/link@0.4.0) (2020-07-17)
 
 ### Bug Fixes
 
@@ -164,27 +400,27 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 
-## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.3.3...@spectrum-web-components/link@0.3.4) (2020-06-08)
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.3.3...@iliad-ui/link@0.3.4) (2020-06-08)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.3.2...@spectrum-web-components/link@0.3.3) (2020-04-16)
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.3.2...@iliad-ui/link@0.3.3) (2020-04-16)
 
 ### Performance Improvements
 
 -   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.3.1...@spectrum-web-components/link@0.3.2) (2020-04-10)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.3.1...@iliad-ui/link@0.3.2) (2020-04-10)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.3.0...@spectrum-web-components/link@0.3.1) (2020-04-07)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.3.0...@iliad-ui/link@0.3.1) (2020-04-07)
 
 ### Bug Fixes
 
 -   **link:** correct white space in template/docs site ([a48bd06](https://github.com/adobe/spectrum-web-components/commit/a48bd06a177ed5f6ec52d44676f61f313bc90022))
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.8...@spectrum-web-components/link@0.3.0) (2020-03-11)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.2.8...@iliad-ui/link@0.3.0) (2020-03-11)
 
 ### Features
 
@@ -193,55 +429,55 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **link:** add download attribute to <sp-link> ([16894ba](https://github.com/adobe/spectrum-web-components/commit/16894ba))
 -   **link:** add download attribute to <sp-link> ([0763504](https://github.com/adobe/spectrum-web-components/commit/0763504))
 
-## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.7...@spectrum-web-components/link@0.2.8) (2020-02-24)
+## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.2.7...@iliad-ui/link@0.2.8) (2020-02-24)
 
 ### Bug Fixes
 
 -   **link:** correct custom CSS processing configuration ([2a24d5a](https://github.com/adobe/spectrum-web-components/commit/2a24d5a))
 -   **link:** process Spectrum CSS without overwriting specificity ([9eb3d5c](https://github.com/adobe/spectrum-web-components/commit/9eb3d5c))
 
-## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.6...@spectrum-web-components/link@0.2.7) (2020-02-05)
+## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.2.6...@iliad-ui/link@0.2.7) (2020-02-05)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.5...@spectrum-web-components/link@0.2.6) (2020-02-01)
+## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.2.5...@iliad-ui/link@0.2.6) (2020-02-01)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.4...@spectrum-web-components/link@0.2.5) (2020-01-30)
+## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.2.4...@iliad-ui/link@0.2.5) (2020-01-30)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.3...@spectrum-web-components/link@0.2.4) (2020-01-06)
+## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.2.3...@iliad-ui/link@0.2.4) (2020-01-06)
 
 ### Bug Fixes
 
 -   **link:** correct white space management ([a7a63dc](https://github.com/adobe/spectrum-web-components/commit/a7a63dc))
 
-## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.2...@spectrum-web-components/link@0.2.3) (2019-12-12)
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.2.2...@iliad-ui/link@0.2.3) (2019-12-12)
 
 ### Bug Fixes
 
 -   apply Focuable styles in class extensions ([38f7afd](https://github.com/adobe/spectrum-web-components/commit/38f7afd))
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.1...@spectrum-web-components/link@0.2.2) (2019-12-02)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.2.1...@iliad-ui/link@0.2.2) (2019-12-02)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.2.0...@spectrum-web-components/link@0.2.1) (2019-11-27)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.2.0...@iliad-ui/link@0.2.1) (2019-11-27)
 
 ### Bug Fixes
 
 -   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716))
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.1.4...@spectrum-web-components/link@0.2.0) (2019-11-19)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.1.4...@iliad-ui/link@0.2.0) (2019-11-19)
 
 ### Features
 
 -   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc7))
 -   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/3918888))
 
-## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.1.3...@spectrum-web-components/link@0.1.4) (2019-10-14)
+## [0.1.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/link@0.1.3...@iliad-ui/link@0.1.4) (2019-10-14)
 
 ### Performance Improvements
 
@@ -249,4 +485,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 0.1.3 (2019-10-03)
 
-**Note:** Version bump only for package @spectrum-web-components/link
+**Note:** Version bump only for package @iliad-ui/link

@@ -14,7 +14,7 @@ To this end, Spectrum Web Components only targets _modern_, evergreen browsers t
 # Getting started
 
 ```bash
-git clone https://github.com/adobe/spectrum-web-components.git
+git clone https://github.com/gaoding-inc/iliad-ui.git
 cd spectrum-web-components
 yarn
 ```

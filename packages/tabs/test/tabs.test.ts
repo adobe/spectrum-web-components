@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -13,16 +14,10 @@ import '../sp-tabs.js';
 import '../sp-tab.js';
 import '../sp-tab-panel.js';
 import { Tabs, Tab, TabPanel } from '../';
-import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
-import {
-    fixture,
-    elementUpdated,
-    html,
-    expect,
-    waitUntil,
-} from '@open-wc/testing';
-import { LitElement, TemplateResult } from '@spectrum-web-components/base';
+import '@iliad-ui/icons-workflow/icons/sp-icon-checkmark.js';
+import { fixture, elementUpdated, expect, waitUntil } from '@open-wc/testing';
+import { html } from 'lit/static-html.js';
+import { LitElement, TemplateResult } from '@iliad-ui/base';
 import { waitForPredicate, tabEvent } from '../../../test/testing-helpers.js';
 import {
     enterEvent,
@@ -506,7 +501,7 @@ describe('Tabs', () => {
             }
         }
         customElements.define('tab-test-el', TabTestEl);
-        const el = await fixture<Tabs>(
+        const el = await fixture<TabTestEl>(
             html`
                 <tab-test-el></tab-test-el>
             `

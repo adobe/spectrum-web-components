@@ -7,25 +7,25 @@ loudness for various attention-getting needs.
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/button?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/button)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/button?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/button)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/button?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/button)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/button?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/button)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/Zjc3o94DWuBkT4ve3dny/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/button
+yarn add @iliad-ui/button
 ```
 
 Import the side effectful registration of `<sp-button>` or `<sp-clear-button>` as follows:
 
 ```
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/button/sp-clear-button.js';
+import '@iliad-ui/button/sp-button.js';
+import '@iliad-ui/button/sp-clear-button.js';
 ```
 
 When looking to leverage the `Button` or `ClearButton` base classes as a type and/or for extension purposes, do so via:
 
 ```
-import { Button, ClearButton } from '@spectrum-web-components/button';
+import { Button, ClearButton } from '@iliad-ui/button';
 ```
 
 ## Sizes

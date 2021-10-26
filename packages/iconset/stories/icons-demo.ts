@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -15,15 +16,15 @@ import {
     css,
     html,
     TemplateResult,
-    CSSResult,
+    CSSResultGroup,
     property,
     customElement,
-} from '@spectrum-web-components/base';
-import { Search } from '@spectrum-web-components/search';
-import '@spectrum-web-components/search/sp-search.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import bodyStyles from '@spectrum-web-components/styles/body.js';
-import '@spectrum-web-components/icon/sp-icon.js';
+} from '@iliad-ui/base';
+import { Search } from '@iliad-ui/search';
+import '@iliad-ui/search/sp-search.js';
+import '@iliad-ui/field-label/sp-field-label.js';
+import bodyStyles from '@iliad-ui/styles/body.js';
+import '@iliad-ui/icon/sp-icon.js';
 
 @customElement('delayed-ready')
 export class DelayedReady extends SpectrumElement {
@@ -42,8 +43,8 @@ export class DelayedReady extends SpectrumElement {
         );
     }
 
-    protected async _getUpdateComplete(): Promise<boolean> {
-        const complete = (await super._getUpdateComplete()) as boolean;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this._delayedReady;
         return complete;
     }
@@ -96,7 +97,7 @@ export class IconsDemo extends SpectrumElement {
         this.iconset = iconset.getIconList();
         this.requestUpdate();
     }
-    public static get styles(): CSSResult[] {
+    public static get styles(): CSSResultGroup {
         return [
             ...bodyStyles,
             css`

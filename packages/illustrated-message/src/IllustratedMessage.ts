@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,11 +17,11 @@ import {
     property,
     CSSResultArray,
     TemplateResult,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
 
 import messageStyles from './illustrated-message.css.js';
-import headingStyles from '@spectrum-web-components/styles/heading.js';
-import bodyStyles from '@spectrum-web-components/styles/body.js';
+import headingStyles from '@iliad-ui/styles/heading.js';
+import bodyStyles from '@iliad-ui/styles/body.js';
 
 /**
  * @element sp-illustrated-message

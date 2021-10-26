@@ -63,6 +63,8 @@
         { "path": "../tooltip" },
         { "path": "../top-nav" },
         { "path": "../tray" },
-        { "path": "../underlay" }
+        { "path": "../underlay" },
+        { "path": "../breadcrumb" },
+        { "path": "../tree" },
     ]
 }

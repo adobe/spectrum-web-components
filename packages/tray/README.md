@@ -4,23 +4,23 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/tray?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/tray)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/tray?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/tray)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/tray?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/tray)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/tray?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/tray)
 
 ```
-yarn add @spectrum-web-components/tray
+yarn add @iliad-ui/tray
 ```
 
 Import the side effectful registration of `<sp-tray>` via:
 
 ```
-import '@spectrum-web-components/tray/sp-tray.js';
+import '@iliad-ui/tray/sp-tray.js';
 ```
 
 When looking to leverage the `Tray` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Tray } from '@spectrum-web-components/tray';
+import { Tray } from '@iliad-ui/tray';
 ```
 
 ## Dialog

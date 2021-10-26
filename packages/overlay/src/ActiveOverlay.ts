@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -18,9 +19,9 @@ import {
     PropertyValues,
     SpectrumElement,
     TemplateResult,
-} from '@spectrum-web-components/base';
-import { reparentChildren } from '@spectrum-web-components/shared';
-import { Color, Scale } from '@spectrum-web-components/theme';
+} from '@iliad-ui/base';
+import { reparentChildren } from '@iliad-ui/shared';
+import { Color, Scale } from '@iliad-ui/theme';
 import styles from './active-overlay.css.js';
 import {
     OverlayOpenDetail,
@@ -529,8 +530,8 @@ export class ActiveOverlay extends SpectrumElement {
     private stealOverlayContentPromise = Promise.resolve();
     private stealOverlayContentResolver!: () => void;
 
-    protected async _getUpdateComplete(): Promise<boolean> {
-        const complete = (await super._getUpdateComplete()) as boolean;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.stealOverlayContentPromise;
         return complete;
     }

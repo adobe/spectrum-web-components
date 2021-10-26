@@ -1,5 +1,5 @@
 import { setCustomElementsManifest } from '@web/storybook-prebuilt/web-components.js';
-import { swcThemeDecorator } from '@spectrum-web-components/story-decorator/decorator.js';
+import { swcThemeDecorator } from '@iliad-ui/story-decorator/decorator.js';
 import cem from './custom-elements.json';
 
 setCustomElementsManifest(cem);

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,9 +18,9 @@ import {
     TemplateResult,
     PropertyValues,
     ifDefined,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
 import { Tab } from './Tab.js';
-import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
+import { Focusable, getActiveElement } from '@iliad-ui/shared';
 
 import tabStyles from './tabs.css.js';
 import { TabPanel } from './TabPanel.js';
@@ -119,7 +120,7 @@ export class Tabs extends Focusable {
             if (typeof tab.updateComplete !== 'undefined') {
                 return tab.updateComplete;
             }
-            return Promise.resolve();
+            return Promise.resolve(true);
         });
         Promise.all(tabUpdateCompletes).then(() => super.manageAutoFocus());
     }
@@ -262,9 +263,10 @@ export class Tabs extends Focusable {
         const currentFocusedTab = getActiveElement(this) as Tab;
         let currentFocusedTabIndex = this.tabs.indexOf(currentFocusedTab);
         currentFocusedTabIndex += code === availableArrows[0] ? -1 : 1;
-        const nextTab = this.tabs[
-            (currentFocusedTabIndex + this.tabs.length) % this.tabs.length
-        ];
+        const nextTab =
+            this.tabs[
+                (currentFocusedTabIndex + this.tabs.length) % this.tabs.length
+            ];
         nextTab.focus();
         if (this.auto) {
             this.selected = nextTab.value;
@@ -395,8 +397,8 @@ export class Tabs extends Focusable {
         return;
     };
 
-    protected async _getUpdateComplete(): Promise<boolean> {
-        const complete = (await super._getUpdateComplete()) as boolean;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.tabChangePromise;
         return complete;
     }
@@ -405,14 +407,16 @@ export class Tabs extends Focusable {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    addEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.addEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        addEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.addEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );
@@ -422,14 +426,16 @@ export class Tabs extends Focusable {
     public disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    removeEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.removeEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        removeEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.removeEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );

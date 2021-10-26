@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,7 +11,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement, property, UpdatingElement } from 'lit-element';
+import { LitElement, ReactiveElement } from 'lit';
+import { property } from 'lit/decorators.js';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;
@@ -55,7 +57,7 @@ const canManageContentDirection = (el: ContentDirectionManager): boolean =>
     typeof el.startManagingContentDirection !== 'undefined' ||
     el.tagName === 'SP-THEME';
 
-export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
+export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<SpectrumInterface> {
     class SlotTextObservingElement extends constructor {
@@ -90,7 +92,7 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
                 ) {
                     dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
                         dirParent.parentNode || // DOM Element detected
-                        ((dirParent as unknown) as ShadowRoot)
+                        (dirParent as unknown as ShadowRoot)
                             .host) as HTMLElement;
                 }
                 this.dir =
@@ -104,9 +106,9 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
                         !customElements.get(localName)
                     ) {
                         customElements.whenDefined(localName).then(() => {
-                            (dirParent as ThemeRoot).startManagingContentDirection(
-                                this
-                            );
+                            (
+                                dirParent as ThemeRoot
+                            ).startManagingContentDirection(this);
                         });
                     } else {
                         (dirParent as ThemeRoot).startManagingContentDirection(
@@ -137,3 +139,25 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
 }
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {}
+
+// 自定义 web components注册方法 如果组件已经定义过了 进行warning警告
+export function lliadCustomElementsHas(tagName: string): boolean {
+    return !!customElements.get(tagName);
+}
+
+// 自定义 web components注册方法 如果组件已经定义过了 进行warning警告
+export function iliadCustomElementsDefine(
+    tagName: string,
+    tagClass: any,
+    options?: any
+): void {
+    if (!customElements) {
+        console.warn('iliad-ui warning: CustomElements Api is required.');
+        return;
+    }
+    if (lliadCustomElementsHas(tagName)) {
+        console.warn(`iliad-ui warning: ${tagName} is already defined.`);
+    } else {
+        customElements.define(tagName, tagClass, options);
+    }
+}

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,7 +10,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { UpdatingElement, property, PropertyValues } from 'lit-element';
+import { ReactiveElement, PropertyValues } from 'lit';
+import { property } from 'lit/decorators.js';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,7 +25,7 @@ export interface SizedElementInterface {
     size: ElementSize;
 }
 
-export function SizedMixin<T extends Constructor<UpdatingElement>>(
+export function SizedMixin<T extends Constructor<ReactiveElement>>(
     constructor: T,
     {
         validSizes = ['s', 'm', 'l', 'xl'],

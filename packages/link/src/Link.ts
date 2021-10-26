@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,9 +17,9 @@ import {
     query,
     property,
     SizedMixin,
-} from '@spectrum-web-components/base';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+} from '@iliad-ui/base';
+import { LikeAnchor } from '@iliad-ui/shared/src/like-anchor.js';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
 
 import linkStyles from './link.css.js';
 

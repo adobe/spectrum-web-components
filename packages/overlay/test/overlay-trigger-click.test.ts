@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,14 +17,14 @@ import {
     html,
     expect,
 } from '@open-wc/testing';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import '@spectrum-web-components/popover/sp-popover.js';
+import '@iliad-ui/popover/sp-popover.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-magnify.js';
+import '@iliad-ui/popover/sp-popover.js';
 import { OverlayTrigger } from '..';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@iliad-ui/overlay/overlay-trigger.js';
 import { spy } from 'sinon';
-import { ActionButton } from '@spectrum-web-components/action-button';
+import { ActionButton } from '@iliad-ui/action-button';
 
 describe('Overlay Trigger - Click', () => {
     it('displays `click` declaratively', async () => {

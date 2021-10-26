@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -23,7 +24,7 @@ import {
 } from '../../../test/testing-helpers.js';
 
 import '../sp-color-slider.js';
-import { ColorSlider } from '..';
+import { ColorSlider } from '../';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
@@ -515,6 +516,7 @@ describe('ColorSlider', () => {
         expect(el.sliderHandlePosition).to.equal(53.125);
     });
     it('accepts pointer events in dir="rtl"', async () => {
+        document.documentElement.dir = 'rtl';
         const el = await fixture<ColorSlider>(
             html`
                 <sp-color-slider
@@ -523,7 +525,6 @@ describe('ColorSlider', () => {
                 ></sp-color-slider>
             `
         );
-        document.documentElement.dir = 'rtl';
         await elementUpdated(el);
 
         const { handle } = el as unknown as { handle: HTMLElement };
@@ -538,13 +539,13 @@ describe('ColorSlider', () => {
 
         expect(el.sliderHandlePosition).to.equal(0);
 
-        const root = el.shadowRoot ? el.shadowRoot : el;
-        const gradient = root.querySelector('.gradient') as HTMLElement;
-
+        const gradient = el.shadowRoot.querySelector(
+            '.gradient'
+        ) as HTMLElement;
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
                 pointerId: 1,
-                clientX: clientWidth - 100,
+                clientX: 700,
                 clientY: 15,
                 bubbles: true,
                 composed: true,

@@ -1,14 +1,20 @@
 {
-    "name": "@spectrum-web-components/dialog",
-    "version": "0.6.18",
+    "name": "@iliad-ui/dialog",
+    "version": "0.10.1",
     "publishConfig": {
         "access": "public"
     },
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "url": "https://github.com/gaoding-inc/iliad-ui.git",
         "directory": "packages/dialog"
     },
     "author": "",
@@ -46,17 +52,17 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.5.9",
-        "@spectrum-web-components/base": "^0.4.5",
-        "@spectrum-web-components/button": "^0.14.9",
-        "@spectrum-web-components/button-group": "^0.6.10",
-        "@spectrum-web-components/divider": "^0.2.8",
-        "@spectrum-web-components/icon": "^0.9.11",
-        "@spectrum-web-components/icons-ui": "^0.6.11",
-        "@spectrum-web-components/icons-workflow": "^0.6.11",
-        "@spectrum-web-components/modal": "^0.3.8",
-        "@spectrum-web-components/shared": "^0.12.9",
-        "@spectrum-web-components/underlay": "^0.6.9",
+        "@iliad-ui/action-button": "^0.11.1",
+        "@iliad-ui/base": "^0.10.1",
+        "@iliad-ui/button": "^0.20.1",
+        "@iliad-ui/button-group": "^0.10.1",
+        "@iliad-ui/divider": "^0.6.1",
+        "@iliad-ui/icon": "^0.15.1",
+        "@iliad-ui/icons-ui": "^0.12.1",
+        "@iliad-ui/icons-workflow": "^0.12.1",
+        "@iliad-ui/modal": "^0.7.1",
+        "@iliad-ui/shared": "^0.18.1",
+        "@iliad-ui/underlay": "^0.10.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -64,6 +70,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js"
     ]

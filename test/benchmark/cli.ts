@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -70,7 +71,7 @@ const optionDefinitions: commandLineUsage.OptionDefinition[] = [
     {
         name: 'compare',
         description:
-            'Which version of @spectrum-web-components/bundle to compare your performance against.' +
+            'Which version of @iliad-ui/bundle to compare your performance against.' +
             '\n(default latest)',
         alias: 'c',
         type: String,
@@ -209,8 +210,8 @@ $ node test/benchmark/cli -n 20
                     packageVersions: {
                         label: 'remote',
                         dependencies: {
-                            '@spectrum-web-components/bundle': opts.compare,
-                            '@spectrum-web-components/top-nav': 'latest',
+                            '@iliad-ui/bundle': opts.compare,
+                            '@iliad-ui/top-nav': 'latest',
                         },
                     },
                     measurement: 'global',

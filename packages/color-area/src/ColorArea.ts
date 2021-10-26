@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,16 +20,16 @@ import {
     PropertyValues,
     query,
     ifDefined,
-} from '@spectrum-web-components/base';
-import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+} from '@iliad-ui/base';
+import { streamingListener } from '@iliad-ui/base/src/streaming-listener.js';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import {
     ColorHandle,
     ColorValue,
     extractHueAndSaturationRegExp,
     replaceHueRegExp,
-} from '@spectrum-web-components/color-handle';
-import '@spectrum-web-components/color-handle/sp-color-handle.js';
+} from '@iliad-ui/color-handle';
+import '@iliad-ui/color-handle/sp-color-handle.js';
 import { TinyColor } from '@ctrl/tinycolor';
 
 import styles from './color-area.css.js';
@@ -489,14 +490,11 @@ export class ColorArea extends SpectrumElement {
                 ?disabled=${this.disabled}
                 style="transform: translate(${this.x * width}px, ${this.y *
                 height}px);"
-                @manage=${streamingListener(
-                    { type: 'pointerdown', fn: this.handlePointerdown },
-                    { type: 'pointermove', fn: this.handlePointermove },
-                    {
-                        type: ['pointerup', 'pointercancel'],
-                        fn: this.handlePointerup,
-                    }
-                )}
+                ${streamingListener({
+                    start: ['pointerdown', this.handlePointerdown],
+                    streamInside: ['pointermove', this.handlePointermove],
+                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                })}
             ></sp-color-handle>
 
             <div>

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,8 +13,8 @@ governing permissions and limitations under the License.
 
 import '../sp-radio-group.js';
 import { RadioGroup } from '../';
-import '@spectrum-web-components/radio/sp-radio.js';
-import { Radio } from '@spectrum-web-components/radio';
+import '@iliad-ui/radio/sp-radio.js';
+import { Radio } from '@iliad-ui/radio';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 import {
     arrowUpEvent,
@@ -315,9 +316,9 @@ describe('Group Accessibility', () => {
             role: string;
             checked: boolean;
         };
-        const snapshot = ((await a11ySnapshot(
+        const snapshot = (await a11ySnapshot(
             {}
-        )) as unknown) as NamedRoledAndCheckedNode & {
+        )) as unknown as NamedRoledAndCheckedNode & {
             children: NamedRoledAndCheckedNode[];
         };
 

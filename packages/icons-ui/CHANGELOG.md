@@ -3,73 +3,209 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.6.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.6.10...@spectrum-web-components/icons-ui@0.6.11) (2021-09-20)
+## [0.12.1](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/icons-ui@0.12.0...@iliad-ui/icons-ui@0.12.1) (2021-10-21)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.6.9...@spectrum-web-components/icons-ui@0.6.10) (2021-08-24)
+# 0.12.0 (2021-10-21)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   **icon:** clean up docs and types for available size values ([c38850d](https://github.com/gaoding-inc/iliad-ui/commit/c38850d1120a8599d8c623302bbc2c21485c99bc))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   remove "type: "module"" in package.json for node 12 ([c9f76e2](https://github.com/gaoding-inc/iliad-ui/commit/c9f76e21e24bb844466158fe96512ab19c37c5a9))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/gaoding-inc/iliad-ui/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+-   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   **icons-ui:** update spectrum css input ([4cb87ff](https://github.com/gaoding-inc/iliad-ui/commit/4cb87ff45cec625f273dd6e8ce7785b38cee448a))
+-   **icons-ui:** vend fully registered icon components ([915a7b5](https://github.com/gaoding-inc/iliad-ui/commit/915a7b58294403943a331e40098b7947ffc87dc6))
+-   add and use icons-ui package ([d9c3ab2](https://github.com/gaoding-inc/iliad-ui/commit/d9c3ab212b4f756334e857fc513ccbf0a4dff9cc))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+
+## [0.11.3](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/icons-ui@0.11.2...@iliad-ui/icons-ui@0.11.3) (2021-10-20)
+
+**Note:** Version bump only for package @iliad-ui/icons-ui
+
+## [0.11.3-alpha.0](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/icons-ui@0.11.2...@iliad-ui/icons-ui@0.11.3-alpha.0) (2021-10-20)
+
+**Note:** Version bump only for package @iliad-ui/icons-ui
+
+## [0.11.2](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/icons-ui@0.11.1...@iliad-ui/icons-ui@0.11.2) (2021-10-20)
+
+**Note:** Version bump only for package @iliad-ui/icons-ui
+
+## [0.11.2](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/icons-ui@0.11.1...@iliad-ui/icons-ui@0.11.2) (2021-10-19)
+
+**Note:** Version bump only for package @iliad-ui/icons-ui
+
+## [0.11.1](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/icons-ui@0.11.0...@iliad-ui/icons-ui@0.11.1) (2021-10-19)
+
+**Note:** Version bump only for package @iliad-ui/icons-ui
+
+## [0.11.1](https://github.com/gaoding-inc/iliad-ui/compare/@iliad-ui/icons-ui@0.11.0...@iliad-ui/icons-ui@0.11.1) (2021-10-18)
+
+**Note:** Version bump only for package @iliad-ui/icons-ui
+
+# 0.11.0 (2021-10-18)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   **icon:** clean up docs and types for available size values ([c38850d](https://github.com/gaoding-inc/iliad-ui/commit/c38850d1120a8599d8c623302bbc2c21485c99bc))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   remove "type: "module"" in package.json for node 12 ([c9f76e2](https://github.com/gaoding-inc/iliad-ui/commit/c9f76e21e24bb844466158fe96512ab19c37c5a9))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/gaoding-inc/iliad-ui/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+-   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   **icons-ui:** update spectrum css input ([4cb87ff](https://github.com/gaoding-inc/iliad-ui/commit/4cb87ff45cec625f273dd6e8ce7785b38cee448a))
+-   **icons-ui:** vend fully registered icon components ([915a7b5](https://github.com/gaoding-inc/iliad-ui/commit/915a7b58294403943a331e40098b7947ffc87dc6))
+-   add and use icons-ui package ([d9c3ab2](https://github.com/gaoding-inc/iliad-ui/commit/d9c3ab212b4f756334e857fc513ccbf0a4dff9cc))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+
+# 0.10.0 (2021-10-18)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/gaoding-inc/iliad-ui/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   include default export in the "exports" fields ([f32407d](https://github.com/gaoding-inc/iliad-ui/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/gaoding-inc/iliad-ui/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   **icon:** clean up docs and types for available size values ([c38850d](https://github.com/gaoding-inc/iliad-ui/commit/c38850d1120a8599d8c623302bbc2c21485c99bc))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/gaoding-inc/iliad-ui/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   remove "type: "module"" in package.json for node 12 ([c9f76e2](https://github.com/gaoding-inc/iliad-ui/commit/c9f76e21e24bb844466158fe96512ab19c37c5a9))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/gaoding-inc/iliad-ui/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/gaoding-inc/iliad-ui/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/gaoding-inc/iliad-ui/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+-   use latest exports specification ([a7ecf4b](https://github.com/gaoding-inc/iliad-ui/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   **icons-ui:** update spectrum css input ([4cb87ff](https://github.com/gaoding-inc/iliad-ui/commit/4cb87ff45cec625f273dd6e8ce7785b38cee448a))
+-   **icons-ui:** vend fully registered icon components ([915a7b5](https://github.com/gaoding-inc/iliad-ui/commit/915a7b58294403943a331e40098b7947ffc87dc6))
+-   add and use icons-ui package ([d9c3ab2](https://github.com/gaoding-inc/iliad-ui/commit/d9c3ab212b4f756334e857fc513ccbf0a4dff9cc))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/gaoding-inc/iliad-ui/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/gaoding-inc/iliad-ui/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.9.0...@iliad-ui/icons-ui@0.9.1) (2021-10-15)
+
+**Note:** Version bump only for package @iliad-ui/icons-ui
+
+# 0.9.0 (2021-10-14)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   **icon:** clean up docs and types for available size values ([c38850d](https://github.com/adobe/spectrum-web-components/commit/c38850d1120a8599d8c623302bbc2c21485c99bc))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   remove "type: "module"" in package.json for node 12 ([c9f76e2](https://github.com/adobe/spectrum-web-components/commit/c9f76e21e24bb844466158fe96512ab19c37c5a9))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   **icons-ui:** update spectrum css input ([4cb87ff](https://github.com/adobe/spectrum-web-components/commit/4cb87ff45cec625f273dd6e8ce7785b38cee448a))
+-   **icons-ui:** vend fully registered icon components ([915a7b5](https://github.com/adobe/spectrum-web-components/commit/915a7b58294403943a331e40098b7947ffc87dc6))
+-   add and use icons-ui package ([d9c3ab2](https://github.com/adobe/spectrum-web-components/commit/d9c3ab212b4f756334e857fc513ccbf0a4dff9cc))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
+
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.11...@iliad-ui/icons-ui@0.8.0) (2021-10-14)
+
+### Features
+
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.11...@iliad-ui/icons-ui@0.7.0) (2021-10-14)
+
+### Features
+
+-   update lit-\* dependencies, wip ([aad74d6](https://github.com/adobe/spectrum-web-components/commit/aad74d6ac41d8450aee82d73aaf58ab949b72a00))
+
+## [0.6.11](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.10...@iliad-ui/icons-ui@0.6.11) (2021-09-20)
+
+**Note:** Version bump only for package @iliad-ui/icons-ui
+
+## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.9...@iliad-ui/icons-ui@0.6.10) (2021-08-24)
 
 ### Bug Fixes
 
 -   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
 
-## [0.6.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.6.8...@spectrum-web-components/icons-ui@0.6.9) (2021-08-03)
+## [0.6.9](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.8...@iliad-ui/icons-ui@0.6.9) (2021-08-03)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.6.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.6.7...@spectrum-web-components/icons-ui@0.6.8) (2021-07-22)
+## [0.6.8](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.7...@iliad-ui/icons-ui@0.6.8) (2021-07-22)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.6.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.6.6...@spectrum-web-components/icons-ui@0.6.7) (2021-06-16)
+## [0.6.7](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.6...@iliad-ui/icons-ui@0.6.7) (2021-06-16)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.6.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.6.5...@spectrum-web-components/icons-ui@0.6.6) (2021-05-12)
+## [0.6.6](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.5...@iliad-ui/icons-ui@0.6.6) (2021-05-12)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.6.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.6.4...@spectrum-web-components/icons-ui@0.6.5) (2021-04-09)
+## [0.6.5](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.4...@iliad-ui/icons-ui@0.6.5) (2021-04-09)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.6.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.6.3...@spectrum-web-components/icons-ui@0.6.4) (2021-03-29)
+## [0.6.4](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.3...@iliad-ui/icons-ui@0.6.4) (2021-03-29)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.6.2...@spectrum-web-components/icons-ui@0.6.3) (2021-03-22)
+## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.2...@iliad-ui/icons-ui@0.6.3) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.6.1...@spectrum-web-components/icons-ui@0.6.2) (2021-03-22)
+## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.1...@iliad-ui/icons-ui@0.6.2) (2021-03-22)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.6.0...@spectrum-web-components/icons-ui@0.6.1) (2021-03-05)
+## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.6.0...@iliad-ui/icons-ui@0.6.1) (2021-03-05)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.5.3...@spectrum-web-components/icons-ui@0.6.0) (2021-03-04)
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.5.3...@iliad-ui/icons-ui@0.6.0) (2021-03-04)
 
 ### Features
 
 -   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
 
-## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.5.2...@spectrum-web-components/icons-ui@0.5.3) (2021-02-11)
+## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.5.2...@iliad-ui/icons-ui@0.5.3) (2021-02-11)
 
 ### Bug Fixes
 
 -   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
 
-## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.5.1...@spectrum-web-components/icons-ui@0.5.2) (2021-02-02)
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.5.1...@iliad-ui/icons-ui@0.5.2) (2021-02-02)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.5.0...@spectrum-web-components/icons-ui@0.5.1) (2021-01-28)
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.5.0...@iliad-ui/icons-ui@0.5.1) (2021-01-28)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.3.3...@spectrum-web-components/icons-ui@0.5.0) (2021-01-21)
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.3.3...@iliad-ui/icons-ui@0.5.0) (2021-01-21)
 
 ### Bug Fixes
 
@@ -83,7 +219,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **icons-ui:** update spectrum css input ([4cb87ff](https://github.com/adobe/spectrum-web-components/commit/4cb87ff45cec625f273dd6e8ce7785b38cee448a))
 -   **icons-ui:** vend fully registered icon components ([915a7b5](https://github.com/adobe/spectrum-web-components/commit/915a7b58294403943a331e40098b7947ffc87dc6))
 
-# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.3.3...@spectrum-web-components/icons-ui@0.4.0) (2021-01-13)
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.3.3...@iliad-ui/icons-ui@0.4.0) (2021-01-13)
 
 ### Bug Fixes
 
@@ -96,45 +232,45 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **icons-ui:** update spectrum css input ([4cb87ff](https://github.com/adobe/spectrum-web-components/commit/4cb87ff45cec625f273dd6e8ce7785b38cee448a))
 -   **icons-ui:** vend fully registered icon components ([915a7b5](https://github.com/adobe/spectrum-web-components/commit/915a7b58294403943a331e40098b7947ffc87dc6))
 
-## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.3.2...@spectrum-web-components/icons-ui@0.3.3) (2020-10-12)
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.3.2...@iliad-ui/icons-ui@0.3.3) (2020-10-12)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.3.1...@spectrum-web-components/icons-ui@0.3.2) (2020-10-12)
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.3.1...@iliad-ui/icons-ui@0.3.2) (2020-10-12)
 
 ### Bug Fixes
 
 -   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
 
-## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.3.0...@spectrum-web-components/icons-ui@0.3.1) (2020-09-25)
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.3.0...@iliad-ui/icons-ui@0.3.1) (2020-09-25)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.2.2...@spectrum-web-components/icons-ui@0.3.0) (2020-08-31)
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.2.2...@iliad-ui/icons-ui@0.3.0) (2020-08-31)
 
 ### Features
 
 -   update to Spectrum CSS v3.0.0 ([e8b3d8f](https://github.com/adobe/spectrum-web-components/commit/e8b3d8f75c77c04b4d7af126b91b0f6ad2a40742))
 
-## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.2.1...@spectrum-web-components/icons-ui@0.2.2) (2020-08-19)
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.2.1...@iliad-ui/icons-ui@0.2.2) (2020-08-19)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.2.0...@spectrum-web-components/icons-ui@0.2.1) (2020-07-24)
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.2.0...@iliad-ui/icons-ui@0.2.1) (2020-07-24)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.1.2...@spectrum-web-components/icons-ui@0.2.0) (2020-07-17)
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.1.2...@iliad-ui/icons-ui@0.2.0) (2020-07-17)
 
 ### Features
 
 -   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
 
-## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.1.1...@spectrum-web-components/icons-ui@0.1.2) (2020-06-08)
+## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.1.1...@iliad-ui/icons-ui@0.1.2) (2020-06-08)
 
-**Note:** Version bump only for package @spectrum-web-components/icons-ui
+**Note:** Version bump only for package @iliad-ui/icons-ui
 
-## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-ui@0.1.0...@spectrum-web-components/icons-ui@0.1.1) (2020-05-08)
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@iliad-ui/icons-ui@0.1.0...@iliad-ui/icons-ui@0.1.1) (2020-05-08)
 
 ### Bug Fixes
 

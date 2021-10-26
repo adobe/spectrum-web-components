@@ -4,23 +4,23 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/icon?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/icon)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/icon?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/icon)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/icon?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/icon)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/icon?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/icon)
 
 ```
-yarn add @spectrum-web-components/icon
+yarn add @iliad-ui/icon
 ```
 
 Import the side effectful registration of `<sp-icon>` via:
 
 ```
-import '@spectrum-web-components/icon/sp-icon.js';
+import '@iliad-ui/icon/sp-icon.js';
 ```
 
 When looking to leverage the `Icon` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Icon } from '@spectrum-web-components/icon';
+import { Icon } from '@iliad-ui/icon';
 ```
 
 ## Example

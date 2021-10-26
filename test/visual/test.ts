@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -13,16 +14,15 @@ governing permissions and limitations under the License.
 import {
     elementUpdated,
     fixture,
-    html,
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
 import { visualDiff } from '@web/test-runner-visual-regression';
-import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
-import { Color, Scale } from '@spectrum-web-components/theme';
-import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/StoryDecorator';
-import { TemplateResult } from '@spectrum-web-components/base';
-import { render } from 'lit-html';
+import '@iliad-ui/story-decorator/sp-story-decorator.js';
+import { Color, Scale } from '@iliad-ui/theme';
+import { StoryDecorator } from '@iliad-ui/story-decorator/src/StoryDecorator';
+import { TemplateResult, html } from '@iliad-ui/base';
+import { render } from 'lit';
 import { sendKeys } from '@web/test-runner-commands';
 
 const wrap = () => html`
@@ -63,20 +63,20 @@ export const test = (
                     ...(testsDefault.args || {}),
                     ...(tests[story].args || {}),
                 };
-                let decoratedStory:
-                    | (() => TemplateResult)
-                    | TemplateResult = () =>
-                    html`
-                        ${tests[story](args)}
-                    `;
+                let decoratedStory: (() => TemplateResult) | TemplateResult =
+                    () =>
+                        html`
+                            ${tests[story](args)}
+                        `;
                 let storyResult = decoratedStory();
                 if (tests[story].decorators && tests[story].decorators.length) {
                     let decoratorCount = tests[story].decorators.length;
                     while (decoratorCount) {
                         decoratorCount -= 1;
-                        decoratedStory = tests[story].decorators[
-                            decoratorCount
-                        ](decoratedStory);
+                        decoratedStory =
+                            tests[story].decorators[decoratorCount](
+                                decoratedStory
+                            );
                     }
                     storyResult = decoratedStory as TemplateResult;
                 }
@@ -84,9 +84,10 @@ export const test = (
                     let decoratorCount = testsDefault.decorators.length;
                     while (decoratorCount) {
                         decoratorCount -= 1;
-                        decoratedStory = testsDefault.decorators[
-                            decoratorCount
-                        ](decoratedStory);
+                        decoratedStory =
+                            testsDefault.decorators[decoratorCount](
+                                decoratedStory
+                            );
                     }
                     storyResult = decoratedStory as TemplateResult;
                 }

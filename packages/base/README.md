@@ -4,17 +4,17 @@ The `SpectrumElement` base class as created by mixing `SpectrumMixin` onto `LitE
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/base?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/base)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/base?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/base)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/base?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/base)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/base?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/base)
 
 ```
-yarn add @spectrum-web-components/base
+yarn add @iliad-ui/base
 ```
 
 When looking to leverage the `SpectrumElement` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { SpectrumElement } from '@spectrum-web-components/base';
+import { SpectrumElement } from '@iliad-ui/base';
 
 export MyElement extends SpectrumElement {}
 
@@ -23,7 +23,7 @@ export MyElement extends SpectrumElement {}
 Similarly the `SpectrumMixin` class factory mixin is available via:
 
 ```
-import { SpectrumMixin } from '@spectrum-web-components/base';
+import { SpectrumMixin } from '@iliad-ui/base';
 
 export MyElement extends SpectrumMixin(HTMLElement) {}
 ```

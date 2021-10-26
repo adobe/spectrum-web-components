@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,45 +11,45 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/icon/sp-icon.js';
-import { AbcIcon } from '@spectrum-web-components/icons-workflow/src/icons/ABC.js';
-import { ActionsIcon } from '@spectrum-web-components/icons-workflow/src/icons/Actions.js';
-import { DisplayAdvertIcon } from '@spectrum-web-components/icons-workflow/src/icons/DisplayAdvert.js';
-import { PrintAdvertIcon } from '@spectrum-web-components/icons-workflow/src/icons/PrintAdvert.js';
-import { AddIcon } from '@spectrum-web-components/icons-workflow/src/icons/Add.js';
-import { AddCircleIcon } from '@spectrum-web-components/icons-workflow/src/icons/AddCircle.js';
-import { AddToIcon } from '@spectrum-web-components/icons-workflow/src/icons/AddTo.js';
-import { AddToSelectionIcon } from '@spectrum-web-components/icons-workflow/src/icons/AddToSelection.js';
-import { AEMScreensIcon } from '@spectrum-web-components/icons-workflow/src/icons/AEMScreens.js';
-import { AirplaneIcon } from '@spectrum-web-components/icons-workflow/src/icons/Airplane.js';
-import { AlertIcon } from '@spectrum-web-components/icons-workflow/src/icons/Alert.js';
-import { AlertAddIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlertAdd.js';
-import { AlertCheckIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlertCheck.js';
-import { AlertCircleIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlertCircle.js';
-import { AlertCircleFilledIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlertCircleFilled.js';
-import { AlgorithmIcon } from '@spectrum-web-components/icons-workflow/src/icons/Algorithm.js';
-import { AliasIcon } from '@spectrum-web-components/icons-workflow/src/icons/Alias.js';
-import { ArrowLeftIcon } from '@spectrum-web-components/icons-workflow/src/icons/ArrowLeft.js';
-import { AlignCenterIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignCenter.js';
-import { AlignTopIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignTop.js';
-import { AlignBottomIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignBottom.js';
-import { AlignLeftIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignLeft.js';
-import { AlignRightIcon } from '@spectrum-web-components/icons-workflow/src/icons/AlignRight.js';
-import { AnnotateIcon } from '@spectrum-web-components/icons-workflow/src/icons/Annotate.js';
-import { AnnotatePenIcon } from '@spectrum-web-components/icons-workflow/src/icons/AnnotatePen.js';
-import { AssetIcon } from '@spectrum-web-components/icons-workflow/src/icons/Asset.js';
-import { AssetsAddedIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsAdded.js';
-import { AssetsDownloadedIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsDownloaded.js';
-import { AssetsExpiredIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsExpired.js';
-import { AssetsLinkedPublishedIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsLinkedPublished.js';
-import { AssetsModifiedIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsModified.js';
-import { AssetsPublishedIcon } from '@spectrum-web-components/icons-workflow/src/icons/AssetsPublished.js';
-import { BookIcon } from '@spectrum-web-components/icons-workflow/src/icons/Book.js';
-import { BookmarkIcon } from '@spectrum-web-components/icons-workflow/src/icons/Bookmark.js';
-import { BookmarkSingleIcon } from '@spectrum-web-components/icons-workflow/src/icons/BookmarkSingle.js';
-import { BookmarkSingleOutlineIcon } from '@spectrum-web-components/icons-workflow/src/icons/BookmarkSingleOutline.js';
-import { setCustomTemplateLiteralTag } from '@spectrum-web-components/icons-workflow/src/custom-tag.js';
-import { html } from '@spectrum-web-components/base';
+import '@iliad-ui/icon/sp-icon.js';
+import { AbcIcon } from '@iliad-ui/icons-workflow/src/icons/ABC.js';
+import { ActionsIcon } from '@iliad-ui/icons-workflow/src/icons/Actions.js';
+import { DisplayAdvertIcon } from '@iliad-ui/icons-workflow/src/icons/DisplayAdvert.js';
+import { PrintAdvertIcon } from '@iliad-ui/icons-workflow/src/icons/PrintAdvert.js';
+import { AddIcon } from '@iliad-ui/icons-workflow/src/icons/Add.js';
+import { AddCircleIcon } from '@iliad-ui/icons-workflow/src/icons/AddCircle.js';
+import { AddToIcon } from '@iliad-ui/icons-workflow/src/icons/AddTo.js';
+import { AddToSelectionIcon } from '@iliad-ui/icons-workflow/src/icons/AddToSelection.js';
+import { AEMScreensIcon } from '@iliad-ui/icons-workflow/src/icons/AEMScreens.js';
+import { AirplaneIcon } from '@iliad-ui/icons-workflow/src/icons/Airplane.js';
+import { AlertIcon } from '@iliad-ui/icons-workflow/src/icons/Alert.js';
+import { AlertAddIcon } from '@iliad-ui/icons-workflow/src/icons/AlertAdd.js';
+import { AlertCheckIcon } from '@iliad-ui/icons-workflow/src/icons/AlertCheck.js';
+import { AlertCircleIcon } from '@iliad-ui/icons-workflow/src/icons/AlertCircle.js';
+import { AlertCircleFilledIcon } from '@iliad-ui/icons-workflow/src/icons/AlertCircleFilled.js';
+import { AlgorithmIcon } from '@iliad-ui/icons-workflow/src/icons/Algorithm.js';
+import { AliasIcon } from '@iliad-ui/icons-workflow/src/icons/Alias.js';
+import { ArrowLeftIcon } from '@iliad-ui/icons-workflow/src/icons/ArrowLeft.js';
+import { AlignCenterIcon } from '@iliad-ui/icons-workflow/src/icons/AlignCenter.js';
+import { AlignTopIcon } from '@iliad-ui/icons-workflow/src/icons/AlignTop.js';
+import { AlignBottomIcon } from '@iliad-ui/icons-workflow/src/icons/AlignBottom.js';
+import { AlignLeftIcon } from '@iliad-ui/icons-workflow/src/icons/AlignLeft.js';
+import { AlignRightIcon } from '@iliad-ui/icons-workflow/src/icons/AlignRight.js';
+import { AnnotateIcon } from '@iliad-ui/icons-workflow/src/icons/Annotate.js';
+import { AnnotatePenIcon } from '@iliad-ui/icons-workflow/src/icons/AnnotatePen.js';
+import { AssetIcon } from '@iliad-ui/icons-workflow/src/icons/Asset.js';
+import { AssetsAddedIcon } from '@iliad-ui/icons-workflow/src/icons/AssetsAdded.js';
+import { AssetsDownloadedIcon } from '@iliad-ui/icons-workflow/src/icons/AssetsDownloaded.js';
+import { AssetsExpiredIcon } from '@iliad-ui/icons-workflow/src/icons/AssetsExpired.js';
+import { AssetsLinkedPublishedIcon } from '@iliad-ui/icons-workflow/src/icons/AssetsLinkedPublished.js';
+import { AssetsModifiedIcon } from '@iliad-ui/icons-workflow/src/icons/AssetsModified.js';
+import { AssetsPublishedIcon } from '@iliad-ui/icons-workflow/src/icons/AssetsPublished.js';
+import { BookIcon } from '@iliad-ui/icons-workflow/src/icons/Book.js';
+import { BookmarkIcon } from '@iliad-ui/icons-workflow/src/icons/Bookmark.js';
+import { BookmarkSingleIcon } from '@iliad-ui/icons-workflow/src/icons/BookmarkSingle.js';
+import { BookmarkSingleOutlineIcon } from '@iliad-ui/icons-workflow/src/icons/BookmarkSingleOutline.js';
+import { setCustomTemplateLiteralTag } from '@iliad-ui/icons-workflow/src/custom-tag.js';
+import { html } from '@iliad-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 setCustomTemplateLiteralTag(html);

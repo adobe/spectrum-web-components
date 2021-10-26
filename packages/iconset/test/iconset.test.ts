@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,10 +12,10 @@ governing permissions and limitations under the License.
 */
 
 import { waitForPredicate } from '../../../test/testing-helpers.js';
-import '@spectrum-web-components/icons/sp-icons-medium.js';
-import '@spectrum-web-components/icon/sp-icon.js';
-import { IconsMedium } from '@spectrum-web-components/icons';
-import { Icon } from '@spectrum-web-components/icon';
+import '@iliad-ui/icons/sp-icons-medium.js';
+import '@iliad-ui/icon/sp-icon.js';
+import { IconsMedium } from '@iliad-ui/icons';
+import { Icon } from '@iliad-ui/icon';
 import { IconsetRegistry } from '../src/iconset-registry.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 

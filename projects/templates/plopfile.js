@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -40,10 +41,10 @@ module.exports = function (plop) {
     });
     plop.setActionType('install deps', function (answers) {
         execSync(
-            `cd ../../ && yarn lerna add @spectrum-web-components/base --scope=@spectrum-web-components/${answers.name} --no-bootstrap`
+            `cd ../../ && yarn lerna add @iliad-ui/base --scope=@iliad-ui/${answers.name} --no-bootstrap`
         );
         execSync(
-            `cd ../../ && yarn lerna add @spectrum-css/${answers.spectrum} --scope=@spectrum-web-components/${answers.name} --dev --no-bootstrap`
+            `cd ../../ && yarn lerna add @spectrum-css/${answers.spectrum} --scope=@iliad-ui/${answers.name} --dev --no-bootstrap`
         );
     });
     plop.setGenerator('component', {

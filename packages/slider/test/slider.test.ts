@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -23,7 +24,7 @@ import {
     nextFrame,
 } from '@open-wc/testing';
 import { sendKeys, executeServerCommand } from '@web/test-runner-commands';
-import { ProvideLang } from '@spectrum-web-components/theme';
+import { ProvideLang } from '@iliad-ui/theme';
 
 describe('Slider', () => {
     // At least one browser (Webkit) maintains shared global state for the mouse,
@@ -471,11 +472,7 @@ describe('Slider', () => {
     it('accepts pointermove events - [step=0]', async () => {
         const el = await fixture<Slider>(
             html`
-                <sp-slider
-                    step="0"
-                    max="20"
-                    style="width: 500px; float: left;"
-                >
+                <sp-slider step="0" max="20" style="width: 500px; float: left;">
                     Step = 0
                 </sp-slider>
             `
@@ -512,7 +509,10 @@ describe('Slider', () => {
             steps: [
                 {
                     type: 'move',
-                    position: [200, handleBoundingRect.y + handleBoundingRect.height + 100],
+                    position: [
+                        200,
+                        handleBoundingRect.y + handleBoundingRect.height + 100,
+                    ],
                 },
             ],
         });

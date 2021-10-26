@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -20,7 +21,7 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
-import { ClearButton } from '@spectrum-web-components/button';
+import { ClearButton } from '@iliad-ui/button';
 import { waitForPredicate } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 
@@ -221,15 +222,14 @@ describe('Toast', () => {
 
         await elementUpdated(el);
         expect(el.variant).to.equal('positive');
+        const parent = el.parentElement as HTMLElement;
 
         el.remove();
 
-        await elementUpdated(el);
         expect(el.variant).to.equal('positive');
 
-        document.body.append(el);
+        parent.append(el);
 
-        await elementUpdated(el);
         expect(el.variant).to.equal('positive');
     });
     it('reopens', async () => {

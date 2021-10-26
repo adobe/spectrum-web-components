@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -21,25 +22,25 @@ import {
     SizedMixin,
     ElementSize,
     classMap,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
 
 import pickerStyles from './picker.css.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import chevronStyles from '@iliad-ui/icon/src/spectrum-icon-chevron.css.js';
 
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-children.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import { MenuItem, Menu } from '@spectrum-web-components/menu';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { Popover } from '@spectrum-web-components/popover';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
+import { reparentChildren } from '@iliad-ui/shared/src/reparent-children.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron100.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@iliad-ui/menu/sp-menu.js';
+import { MenuItem, Menu } from '@iliad-ui/menu';
+import '@iliad-ui/popover/sp-popover.js';
+import { Popover } from '@iliad-ui/popover';
 import {
     Placement,
     openOverlay,
     TriggerInteractions,
     OverlayOptions,
-} from '@spectrum-web-components/overlay';
+} from '@iliad-ui/overlay';
 
 const chevronClass = {
     s: 'spectrum-UIIcon-ChevronDown75',
@@ -492,8 +493,8 @@ export class PickerBase extends SizedMixin(Focusable) {
     private menuStatePromise = Promise.resolve();
     private menuStateResolver!: () => void;
 
-    protected async _getUpdateComplete(): Promise<boolean> {
-        const complete = (await super._getUpdateComplete()) as boolean;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.menuStatePromise;
         return complete;
     }

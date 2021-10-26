@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -14,16 +15,16 @@ governing permissions and limitations under the License.
 // import './styles.css';
 
 // import the components we'll use in this page
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '@spectrum-web-components/radio/sp-radio.js';
-import '@spectrum-web-components/radio/sp-radio-group.js';
-import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/link/sp-link.js';
-import '@spectrum-web-components/slider/sp-slider.js';
-import '@spectrum-web-components/textfield/sp-textfield.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@iliad-ui/theme/sp-theme.js';
+import '@iliad-ui/theme/src/themes.js';
+import '@iliad-ui/button/sp-button.js';
+import '@iliad-ui/checkbox/sp-checkbox.js';
+import '@iliad-ui/radio/sp-radio.js';
+import '@iliad-ui/radio/sp-radio-group.js';
+import '@iliad-ui/picker/sp-picker.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/link/sp-link.js';
+import '@iliad-ui/slider/sp-slider.js';
+import '@iliad-ui/textfield/sp-textfield.js';
+import '@iliad-ui/tooltip/sp-tooltip.js';
+import '@iliad-ui/dialog/sp-dialog.js';

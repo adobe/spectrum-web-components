@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,9 +17,9 @@ import {
     query,
     TemplateResult,
     ifDefined,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
 
-import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
+import { IconsetRegistry } from '@iliad-ui/iconset/src/iconset-registry.js';
 
 import { IconBase } from './IconBase.js';
 
@@ -122,8 +123,8 @@ export class Icon extends IconBase {
         return { iconset: iconsetName, icon: iconName };
     }
 
-    protected async _getUpdateComplete(): Promise<boolean> {
-        const complete = (await super._getUpdateComplete()) as boolean;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.updateIconPromise;
         return complete;
     }

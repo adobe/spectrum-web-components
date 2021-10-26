@@ -4,30 +4,30 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/slider?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/slider)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/slider?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/slider)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/slider?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/slider)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/slider?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/slider)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/U7LQv7LsAVBwJayJXG3B/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/slider
+yarn add @iliad-ui/slider
 ```
 
 Import the side effectful registration of `<sp-slider>` via:
 
 ```
-import '@spectrum-web-components/slider/sp-slider.js';
+import '@iliad-ui/slider/sp-slider.js';
 ```
 
-When leveraging the `editable` attribute, the `@spectrum-web-components/number-field/sp-number-field.js` dependency will be asynchronously loaded via a dynamic import to reduce JS payload for applications not leveraging this feature. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-slider>` as follows:
+When leveraging the `editable` attribute, the `@iliad-ui/number-field/sp-number-field.js` dependency will be asynchronously loaded via a dynamic import to reduce JS payload for applications not leveraging this feature. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-slider>` as follows:
 
 ```
-import '@spectrum-web-components/slider/sync/sp-slider.js';
+import '@iliad-ui/slider/sync/sp-slider.js';
 ```
 
 When looking to leverage the `Slider` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Slider } from '@spectrum-web-components/slider';
+import { Slider } from '@iliad-ui/slider';
 ```
 
 ## Variants

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -13,8 +14,8 @@ governing permissions and limitations under the License.
 import '../sp-menu.js';
 import '../sp-menu-item.js';
 import { MenuItem } from '../';
-import '@spectrum-web-components/menu';
-import { Menu } from '@spectrum-web-components/menu';
+import '@iliad-ui/menu';
+import { Menu } from '@iliad-ui/menu';
 import {
     fixture,
     elementUpdated,
@@ -117,7 +118,7 @@ describe('Menu item', () => {
         await elementUpdated(el);
 
         const item = el.querySelector('sp-menu-item') as MenuItem;
-        const { anchorElement } = (item as unknown) as {
+        const { anchorElement } = item as unknown as {
             anchorElement: HTMLAnchorElement;
         };
         item.click();

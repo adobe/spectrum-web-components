@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,10 +11,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
-import '@spectrum-web-components/color-slider/sp-color-slider.js';
-import { ColorSlider } from '@spectrum-web-components/color-slider/src/ColorSlider';
+import '@iliad-ui/color-slider/sp-color-slider.js';
+import { ColorSlider } from '@iliad-ui/color-slider/src/ColorSlider';
 import '../sp-color-area.js';
 import { ColorArea } from '../src/ColorArea.js';
 

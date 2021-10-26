@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -22,7 +23,8 @@ import {
     nothing,
     LitElement,
     classMap,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
+import { streamingListener } from '@iliad-ui/base/src/streaming-listener.js';
 
 import { WithSWCResizeObserver } from './types';
 
@@ -119,8 +121,7 @@ export class SplitView extends SpectrumElement {
 
     public constructor() {
         super();
-        const RO = ((window as unknown) as WithSWCResizeObserver)
-            .ResizeObserver;
+        const RO = (window as unknown as WithSWCResizeObserver).ResizeObserver;
         if (RO) {
             this.observer = new RO(() => {
                 this.rect = undefined;
@@ -191,8 +192,14 @@ export class SplitView extends SpectrumElement {
                               this.resizable ? '0' : undefined
                           )}
                           @keydown=${this.onKeydown}
-                          @pointerdown=${this.onPointerdown}
-                          @pointerup=${this.onPointerup}
+                          ${streamingListener({
+                              start: ['pointerdown', this.onPointerdown],
+                              streamInside: ['pointermove', this.onPointermove],
+                              end: [
+                                  ['pointerup', 'pointercancel'],
+                                  this.onPointerup,
+                              ],
+                          })}
                       >
                           ${this.resizable
                               ? html`
@@ -212,10 +219,10 @@ export class SplitView extends SpectrumElement {
 
     private onPointerdown(event: PointerEvent): void {
         if (!this.resizable || (event.button && event.button !== 0)) {
+            event.preventDefault();
             return;
         }
         this.splitter.setPointerCapture(event.pointerId);
-        this.onpointermove = this.onPointermove;
         this.offset = this.getOffset();
     }
 
@@ -236,7 +243,6 @@ export class SplitView extends SpectrumElement {
 
     private onPointerup(event: PointerEvent): void {
         this.splitter.releasePointerCapture(event.pointerId);
-        this.onpointermove = null;
     }
 
     private getOffset(): number {

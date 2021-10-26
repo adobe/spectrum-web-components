@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -15,12 +16,12 @@ import {
     css,
     property,
     queryAssignedNodes,
-} from '@spectrum-web-components/base';
-import { Slider } from '@spectrum-web-components/slider';
-import '@spectrum-web-components/slider/sp-slider.js';
-import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
-import '@spectrum-web-components/overlay/sync/overlay-trigger.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+} from '@iliad-ui/base';
+import { Slider } from '@iliad-ui/slider';
+import '@iliad-ui/slider/sp-slider.js';
+import '@iliad-ui/thumbnail/sp-thumbnail.js';
+import '@iliad-ui/overlay/sync/overlay-trigger.js';
+import '@iliad-ui/tooltip/sp-tooltip.js';
 
 export class OnionSkinner extends SpectrumElement {
     @property({ type: Number }) public onionLevel = 0.5;

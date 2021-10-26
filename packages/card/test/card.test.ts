@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,10 +13,10 @@ governing permissions and limitations under the License.
 
 import '../sp-card.js';
 import { Card } from '../';
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@iliad-ui/action-menu/sp-action-menu.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/menu/sp-menu-divider.js';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 import {
@@ -24,7 +25,7 @@ import {
     smallHorizontal,
     StoryArgs,
 } from '../stories/card.stories.js';
-import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
+import { Checkbox } from '@iliad-ui/checkbox/src/Checkbox';
 import { spy } from 'sinon';
 import { spaceEvent } from '../../../test/testing-helpers.js';
 import { executeServerCommand } from '@web/test-runner-commands';

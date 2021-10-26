@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,8 +17,8 @@ import {
     html,
     PropertyValues,
     property,
-} from '@spectrum-web-components/base';
-import { CheckboxBase } from '@spectrum-web-components/checkbox/src/CheckboxBase.js';
+} from '@iliad-ui/base';
+import { CheckboxBase } from '@iliad-ui/checkbox/src/CheckboxBase.js';
 import switchStyles from './switch.css.js';
 import legacyStyles from './switch-legacy.css.js';
 

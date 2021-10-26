@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,7 +13,7 @@ governing permissions and limitations under the License.
 
 import '../sp-tooltip.js';
 import { Tooltip } from '../';
-import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';
+import { OverlayDisplayQueryDetail } from '@iliad-ui/overlay';
 import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
 
 describe('Tooltip', () => {
@@ -97,14 +98,13 @@ describe('Tooltip', () => {
         await elementUpdated(el);
 
         const overlayDetailQuery: OverlayDisplayQueryDetail = {};
-        const queryOverlayDetailEvent = new CustomEvent<
-            OverlayDisplayQueryDetail
-        >('sp-overlay-query', {
-            bubbles: true,
-            composed: true,
-            detail: overlayDetailQuery,
-            cancelable: true,
-        });
+        const queryOverlayDetailEvent =
+            new CustomEvent<OverlayDisplayQueryDetail>('sp-overlay-query', {
+                bubbles: true,
+                composed: true,
+                detail: overlayDetailQuery,
+                cancelable: true,
+            });
         el.dispatchEvent(queryOverlayDetailEvent);
 
         expect(overlayDetailQuery.overlayContentTipElement).to.exist;

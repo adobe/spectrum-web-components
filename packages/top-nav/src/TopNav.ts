@@ -1,6 +1,7 @@
 /* eslint-disable lit-a11y/click-events-have-key-events */
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,10 +20,10 @@ import {
     PropertyValues,
     SpectrumElement,
     ifDefined,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
 import { TopNavItem } from './TopNavItem.js';
 
-import tabStyles from '@spectrum-web-components/tabs/src/tabs.css.js';
+import tabStyles from '@iliad-ui/tabs/src/tabs.css.js';
 
 declare global {
     interface Document {
@@ -193,14 +194,16 @@ export class TopNav extends SpectrumElement {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    addEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.addEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        addEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.addEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );
@@ -210,14 +213,16 @@ export class TopNav extends SpectrumElement {
     public disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    removeEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.removeEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        removeEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.removeEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,19 +18,19 @@ import {
     SpectrumElement,
     PropertyValues,
     TemplateResult,
-} from '@spectrum-web-components/base';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
-import { Color, Scale } from '@spectrum-web-components/theme';
+} from '@iliad-ui/base';
+import '@iliad-ui/theme/sp-theme.js';
+import '@iliad-ui/theme/src/themes.js';
+import { Color, Scale } from '@iliad-ui/theme';
 import './side-nav.js';
 import layoutStyles from './layout.css';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import { Picker } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/toast/sp-toast.js';
+import '@iliad-ui/field-label/sp-field-label.js';
+import { Picker } from '@iliad-ui/picker';
+import '@iliad-ui/picker/sp-picker.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/toast/sp-toast.js';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
@@ -170,7 +171,7 @@ export class LayoutElement extends SpectrumElement {
         this.requestUpdate();
     }
 
-    renderContent() {
+    public renderContent(): TemplateResult {
         return html`
             <div></div>
         `;

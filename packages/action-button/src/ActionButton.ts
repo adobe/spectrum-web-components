@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -18,11 +19,11 @@ import {
     TemplateResult,
     SizedMixin,
     ElementSize,
-} from '@spectrum-web-components/base';
-import { ButtonBase } from '@spectrum-web-components/button';
+} from '@iliad-ui/base';
+import { ButtonBase } from '@iliad-ui/button';
 import buttonStyles from './action-button.css.js';
-import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
+import cornerTriangleStyles from '@iliad-ui/icon/src/spectrum-icon-corner-triangle.css.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-corner-triangle300.js';
 
 const holdAffordanceClass = {
     s: 'spectrum-UIIcon-CornerTriangle75',

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,18 +20,18 @@ import {
     query,
     ifDefined,
     PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
 
-import '@spectrum-web-components/divider/sp-divider.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/button-group/sp-button-group.js';
-import crossStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@iliad-ui/divider/sp-divider.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/button-group/sp-button-group.js';
+import crossStyles from '@iliad-ui/icon/src/spectrum-icon-cross.css.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-cross500.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-alert.js';
 import {
     ObserveSlotPresence,
     FocusVisiblePolyfillMixin,
-} from '@spectrum-web-components/shared';
+} from '@iliad-ui/shared';
 
 import styles from './dialog.css.js';
 

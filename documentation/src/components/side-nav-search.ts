@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,20 +18,20 @@ import {
     TemplateResult,
     property,
     query,
-} from 'lit-element';
+} from '@iliad-ui/base';
 import sideNavSearchMenuStyles from './side-nav-search.css';
-import { Search } from '@spectrum-web-components/search';
-import { Overlay } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/search/sp-search.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-group.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
+import { Search } from '@iliad-ui/search';
+import { Overlay } from '@iliad-ui/overlay';
+import '@iliad-ui/search/sp-search.js';
+import '@iliad-ui/popover/sp-popover.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-group.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/illustrated-message/sp-illustrated-message.js';
 import { AppRouter } from '../router.js';
 import { search, ResultGroup } from './search-index.js';
-import { Menu } from '@spectrum-web-components/menu';
-import { Popover } from '@spectrum-web-components/popover';
+import { Menu } from '@iliad-ui/menu';
+import { Popover } from '@iliad-ui/popover';
 
 declare global {
     interface Window {

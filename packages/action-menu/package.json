@@ -1,14 +1,20 @@
 {
-    "name": "@spectrum-web-components/action-menu",
-    "version": "0.11.6",
+    "name": "@iliad-ui/action-menu",
+    "version": "0.15.1",
     "publishConfig": {
         "access": "public"
     },
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "url": "https://github.com/gaoding-inc/iliad-ui.git",
         "directory": "packages/action-menu"
     },
     "author": "",
@@ -46,17 +52,18 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.5.9",
-        "@spectrum-web-components/base": "^0.4.5",
-        "@spectrum-web-components/icon": "^0.9.11",
-        "@spectrum-web-components/icons-workflow": "^0.6.11",
-        "@spectrum-web-components/menu": "^0.9.6",
-        "@spectrum-web-components/picker": "^0.7.5",
-        "@spectrum-web-components/shared": "^0.12.9",
+        "@iliad-ui/action-button": "^0.11.1",
+        "@iliad-ui/base": "^0.10.1",
+        "@iliad-ui/icon": "^0.15.1",
+        "@iliad-ui/icons-workflow": "^0.12.1",
+        "@iliad-ui/menu": "^0.15.1",
+        "@iliad-ui/picker": "^0.13.1",
+        "@iliad-ui/shared": "^0.18.1",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js",
         "./sync/sp-*.js"

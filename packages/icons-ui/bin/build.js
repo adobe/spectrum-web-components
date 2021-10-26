@@ -28,6 +28,7 @@ const keepColors = process.argv.slice(2)[1];
 const disclaimer = `
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -67,7 +68,7 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
     let manifestImports = `import {
         html,
         TemplateResult
-    } from '@spectrum-web-components/base';\r\n`;
+    } from '@iliad-ui/base';\r\n`;
     let manifestListings = `\r\nexport const iconManifest = [\r\n`;
 
     icons.forEach((i) => {
@@ -155,10 +156,10 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
         import {
             html,
             TemplateResult
-        } from '@spectrum-web-components/base';
+        } from '@iliad-ui/base';
         import {
             IconBase
-        } from '@spectrum-web-components/icon';
+        } from '@iliad-ui/icon';
 
         import {
             ${ComponentName}Icon
@@ -206,9 +207,10 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
         const iconRegistration = `
         ${disclaimer}
 
+        import { iliadCustomElementsDefine } from '@iliad-ui/base';
         import { Icon${ComponentName} } from '../src/elements/Icon${id}.js';
 
-        customElements.define('${iconElementName}', Icon${ComponentName});
+        iliadCustomElementsDefine('${iconElementName}', Icon${ComponentName});
 
         declare global {
             interface HTMLElementTagNameMap {

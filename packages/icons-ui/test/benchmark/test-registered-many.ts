@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,55 +11,55 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow300.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow400.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow500.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-arrow600.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk300.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark50.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark300.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark400.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark500.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark600.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron300.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron400.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron500.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron600.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross300.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross400.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross600.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash50.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash400.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash500.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash600.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-double-gripper.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-single-gripper.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-triple-gripper.js';
-import { html } from '@spectrum-web-components/base';
+import '@iliad-ui/icons-ui/icons/sp-icon-arrow75.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-arrow100.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-arrow200.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-arrow300.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-arrow400.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-arrow500.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-arrow600.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-asterisk75.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-asterisk100.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-asterisk200.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-asterisk300.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark50.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark75.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark100.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark200.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark300.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark400.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark500.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark600.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron75.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron100.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron200.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron300.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron400.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron500.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron600.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-corner-triangle75.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-corner-triangle100.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-corner-triangle200.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-corner-triangle300.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-cross75.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-cross100.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-cross200.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-cross300.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-cross400.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-cross500.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-cross600.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-dash50.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-dash75.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-dash100.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-dash200.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-dash300.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-dash400.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-dash500.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-dash600.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-double-gripper.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-single-gripper.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-triple-gripper.js';
+import { html } from '@iliad-ui/base';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

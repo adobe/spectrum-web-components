@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '../sp-search.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 export default {
     component: 'sp-search',

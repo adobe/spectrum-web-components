@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,11 +10,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 import '../sp-radio.js';
 import '../sp-radio-group.js';
-import { spreadProps } from '@open-wc/lit-helpers';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     component: 'sp-radio',
@@ -80,11 +81,12 @@ interface StoryArgs {
     emphasized?: boolean;
     invalid?: boolean;
     readonly?: boolean;
+    [prop: string]: any;
 }
 
 function renderRadio(args: StoryArgs): TemplateResult {
     return html`
-        <sp-radio ...=${spreadProps(args)}>Radio</sp-radio>
+        <sp-radio ${spreadProps(args)}>Radio</sp-radio>
     `;
 }
 export const Default = (args: StoryArgs): TemplateResult => renderRadio(args);
@@ -107,7 +109,7 @@ Emphasized.args = {
 
 export const Autofocus = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-radio autofocus ...=${spreadProps(args)}>Radio</sp-radio>
+        <sp-radio autofocus ${spreadProps(args)}>Radio</sp-radio>
     `;
 };
 
@@ -123,7 +125,7 @@ Disabled.args = {
 
 export const labelBelow = (args: StoryArgs): TemplateResult => {
     return html`
-        <sp-radio label-below ...=${spreadProps(args)}>Radio</sp-radio>
+        <sp-radio label-below ${spreadProps(args)}>Radio</sp-radio>
     `;
 };
 labelBelow.story = {

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -18,19 +19,19 @@ import {
     CSSResultArray,
     property,
     query,
-} from 'lit-element';
+} from '@iliad-ui/base';
 import * as Prism from 'prismjs';
 import { toHtmlTemplateString } from '../utils/templates.js';
 import Styles from './code-example.css';
 import StylesLight from './code-example-light.css';
 import StylesDark from './code-example-dark.css';
 import { stripIndent } from 'common-tags';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
+import { FocusVisiblePolyfillMixin } from '@iliad-ui/shared';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-copy.js';
 import { copyNode } from './copy-to-clipboard.js';
 import { TrackTheme } from './layout.js';
-import { Color } from '@spectrum-web-components/theme';
+import { Color } from '@iliad-ui/theme';
 
 @customElement('code-example')
 export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {

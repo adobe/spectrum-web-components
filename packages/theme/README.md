@@ -6,47 +6,47 @@ When leveraging an `sp-theme` element, it will assume the role of managing the c
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/theme?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/theme)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/theme?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/theme)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/theme?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/theme)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/theme?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/theme)
 
 ```
-yarn add @spectrum-web-components/theme
+yarn add @iliad-ui/theme
 ```
 
 Import the side effectful registration of `<sp-theme>` via:
 
 ```
-import '@spectrum-web-components/theme/sp-theme.js';
+import '@iliad-ui/theme/sp-theme.js';
 ```
 
 When looking to leverage the `Theme` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Theme } from '@spectrum-web-components/theme';
+import { Theme } from '@iliad-ui/theme';
 ```
 
 The various themes can be imported en masse:
 
 ```
-import '@spectrum-web-components/theme/src/themes.js';
+import '@iliad-ui/theme/src/themes.js';
 ```
 
 Or, individually:
 
 ```
-import '@spectrum-web-components/theme/theme-darkest.js';
-import '@spectrum-web-components/theme/theme-dark.js';
-import '@spectrum-web-components/theme/theme-light.js';
-import '@spectrum-web-components/theme/theme-lightest.js';
-import '@spectrum-web-components/theme/scale-medium.js';
-import '@spectrum-web-components/theme/scale-large.js';
+import '@iliad-ui/theme/theme-darkest.js';
+import '@iliad-ui/theme/theme-dark.js';
+import '@iliad-ui/theme/theme-light.js';
+import '@iliad-ui/theme/theme-lightest.js';
+import '@iliad-ui/theme/scale-medium.js';
+import '@iliad-ui/theme/scale-large.js';
 ```
 
 ## Quick start
 
 ```
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
+import '@iliad-ui/theme/sp-theme.js';
+import '@iliad-ui/theme/src/themes.js';
 ```
 
 The above import will get you started using the `<sp-theme>` wrapper element, and includes all four (4) color options (`lightest`, `light`, `dark`, and `darkest`) and both (2) scale options (`medium` and `large`). Having all of these options available together is the easiest way to get a handle on the theming possibilities offered by the package and empower you to prototype and test various deliveries of your application. However, reserving the download and parse time for all of the variants may not be required for all applications. See "Advanced usage" below for instructions on tuning the performance of an application that leverages this package.
@@ -57,10 +57,10 @@ Once you've moved beyond the prototype phases of an application, it is likely th
 
 ```js
 // Power a site using <sp-theme color="darkest" scale="large">
-import '@spectrum-web-components/theme/theme-darkest.js';
-import '@spectrum-web-components/theme/scale-large.js';
+import '@iliad-ui/theme/theme-darkest.js';
+import '@iliad-ui/theme/scale-large.js';
 
-import '@spectrum-web-components/theme/sp-theme.js';
+import '@iliad-ui/theme/sp-theme.js';
 ```
 
 When subsequent theme variants are needed you can ensure those are lazily loaded by leveraging dynamic imports via something like the following:
@@ -70,8 +70,8 @@ const themeElement = document.querySelector('sp-theme');
 
 const updateTheme = async (color, scale) => {
     Promise.all([
-        import(`@spectrum-web-components/theme/theme-${color}.js`),
-        import(`@spectrum-web-components/theme/scale-${scale}.js`),
+        import(`@iliad-ui/theme/theme-${color}.js`),
+        import(`@iliad-ui/theme/scale-${scale}.js`),
     ]).then(() => {
         themeElement.color = color;
         themeElement.scale = scale;

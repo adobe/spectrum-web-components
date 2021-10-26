@@ -1,14 +1,20 @@
 {
-    "name": "@spectrum-web-components/number-field",
-    "version": "0.1.10",
+    "name": "@iliad-ui/number-field",
+    "version": "0.7.1",
     "publishConfig": {
         "access": "public"
     },
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "Web component implementation of a Spectrum design NumberField",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "url": "https://github.com/gaoding-inc/iliad-ui.git",
         "directory": "packages/number-field"
     },
     "author": "",
@@ -44,12 +50,12 @@
         "lit-html"
     ],
     "dependencies": {
+        "@iliad-ui/action-button": "^0.11.1",
+        "@iliad-ui/base": "^0.10.1",
+        "@iliad-ui/icon": "^0.15.1",
+        "@iliad-ui/icons-ui": "^0.12.1",
+        "@iliad-ui/textfield": "^0.14.1",
         "@internationalized/number": "^3.0.2",
-        "@spectrum-web-components/action-button": "^0.5.9",
-        "@spectrum-web-components/base": "^0.4.5",
-        "@spectrum-web-components/icon": "^0.9.11",
-        "@spectrum-web-components/icons-ui": "^0.6.11",
-        "@spectrum-web-components/textfield": "^0.8.16",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -58,6 +64,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js"
     ]

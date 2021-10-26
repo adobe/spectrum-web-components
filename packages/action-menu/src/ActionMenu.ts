@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,13 +18,13 @@ import {
     html,
     ifDefined,
     property,
-} from '@spectrum-web-components/base';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { PickerBase } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
+} from '@iliad-ui/base';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/popover/sp-popover.js';
+import { PickerBase } from '@iliad-ui/picker';
+import '@iliad-ui/action-button/sp-action-button.js';
+import { ObserveSlotText } from '@iliad-ui/shared/src/observe-slot-text.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-more.js';
 import actionMenuStyles from './action-menu.css.js';
 
 /**

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,11 +12,11 @@ governing permissions and limitations under the License.
 */
 import '../sp-theme.js';
 import '../src/themes.js';
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/button-group/sp-button-group.js';
-import '@spectrum-web-components/switch/sp-switch.js';
-import '@spectrum-web-components/slider/sp-slider.js';
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import '@iliad-ui/button/sp-button.js';
+import '@iliad-ui/button-group/sp-button-group.js';
+import '@iliad-ui/switch/sp-switch.js';
+import '@iliad-ui/slider/sp-slider.js';
+import { html, TemplateResult } from '@iliad-ui/base';
 import { Color } from '../src/index.js';
 
 export default {

@@ -4,11 +4,11 @@ Shared mixins, tools, etc. that support developing Spectrum Web Components.
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/shared?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/shared)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/shared?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/shared)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/shared?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/shared)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/shared?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/shared)
 
 ```bash
-npm install @spectrum-web-components/shared
+npm install @iliad-ui/shared
 ```
 
 Individual base classes and mixins can be imported as follows:
@@ -20,7 +20,7 @@ import {
     getActiveElement,
     LikeAnchor,
     ObserveSlotText,
-} from '@spectrum-web-components/shared';
+} from '@iliad-ui/shared';
 ```
 
 ### Focusable
@@ -28,7 +28,7 @@ import {
 The `Focusable` subclass of `LitElement` adds some helpers method and lifecycle coverage in order to support passing focus to a container element inside of a custom element. The Focusable base class handles tabindex setting into shadowed elements automatically and is based heavily on the aybolit delegate-focus-mixin at https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js
 
 ```javascript
-import { Focusable } from '@spectrum-web-components/shared';
+import { Focusable } from '@iliad-ui/shared';
 import { html } from 'lit-element';
 
 class FocusableButton extends Focusable {
@@ -68,7 +68,7 @@ Mix `download`, `label`, `href`, and `target` properties into your element to al
 When working with styles that are driven by the conditional presence of `<slot>`s in a component's shadow DOM, you will need to track whether light DOM that is meant for that slot exists. Use the `ObserveSlotPresence` mixin to target specific light DOM to observe the presence of and trigger `this.requestUpdate()` calls when content fulfilling that selector comes in and out of availability.
 
 ```javascript
-import { ObserveSlotPresence } from '@spectrum-web-components/shared';
+import { ObserveSlotPresence } from '@iliad-ui/shared';
 import { LitElement, html } from 'lit-element';
 class ObserveSlotPresenceElement extends ObserveSlotPresence(LitElement, '[slot="conditional-slot"]') {
     // translate the mixin properties into locally understandable language
@@ -95,7 +95,8 @@ class ObserveSlotPresenceElement extends ObserveSlotPresence(LitElement, '[slot=
         console.log(this.slotContentIsPresent); // => true when <observing-slot-presence-element><div slot="conditional-slot"></div></observing-slot-presence-element>
     }
 }
-customElements.define('observing-slot-presence-element', ObserveSlotPresenceElement);
+import {iliadCustomElementsDefine} from '@iliad-ui/base';
+iliadCustomElementsDefine('observing-slot-presence-element', ObserveSlotPresenceElement);
 ```
 
 ### ObserveSlotText
@@ -103,7 +104,7 @@ customElements.define('observing-slot-presence-element', ObserveSlotPresenceElem
 When working with `<slot>`s and their `slotchange` event, you will have the opportunity to capture when the nodes and/or elements in your element are added or removed. However, if the `textContent` of a text node changes, you will not receive the `slotchange` event because the slot hasn't actually received new nodes and/or elements in the exchange. When working with a lit-html binding `<your-element>${text}</your-element>` that means you will not receive a `slotchange` event when the value of `text` goes from `text = ''` to `text = 'something'` or the other way. In these cases the `ObserveSlotText` can be leverages to apply a mutation observe onto your element that tracks `characterData` mutations so that you can resspond as desired.
 
 ```javascript
-import { ObserveSlotText } from '@spectrum-web-components/shared';
+import { ObserveSlotText } from '@iliad-ui/shared';
 import { LitElement, html } from 'lit-element';
 
 class ObserveSlotTextElement extends ObserveSlotText(LitElement, '#observing-slot') {
@@ -124,5 +125,6 @@ class ObserveSlotTextElement extends ObserveSlotText(LitElement, '#observing-slo
     }
 }
 
-customElements.define('observing-slot-text-element', ObserveSlotTextElement);
+import {iliadCustomElementsDefine} from '@iliad-ui/base';
+iliadCustomElementsDefine('observing-slot-text-element', ObserveSlotTextElement);
 ```

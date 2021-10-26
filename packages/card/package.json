@@ -1,14 +1,20 @@
 {
-    "name": "@spectrum-web-components/card",
-    "version": "0.8.18",
+    "name": "@iliad-ui/card",
+    "version": "0.14.1",
     "publishConfig": {
         "access": "public"
     },
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "url": "https://github.com/gaoding-inc/iliad-ui.git",
         "directory": "packages/card"
     },
     "author": "",
@@ -44,13 +50,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/asset": "^0.4.9",
-        "@spectrum-web-components/base": "^0.4.5",
-        "@spectrum-web-components/checkbox": "^0.10.9",
-        "@spectrum-web-components/icons-workflow": "^0.6.11",
-        "@spectrum-web-components/quick-actions": "^0.4.9",
-        "@spectrum-web-components/shared": "^0.12.9",
-        "@spectrum-web-components/styles": "^0.9.11",
+        "@iliad-ui/asset": "^0.8.1",
+        "@iliad-ui/base": "^0.10.1",
+        "@iliad-ui/checkbox": "^0.14.1",
+        "@iliad-ui/icons-workflow": "^0.12.1",
+        "@iliad-ui/quick-actions": "^0.8.1",
+        "@iliad-ui/shared": "^0.18.1",
+        "@iliad-ui/styles": "^0.13.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -58,6 +64,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js"
     ]

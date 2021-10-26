@@ -4,19 +4,19 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/icons-ui?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/icons-ui)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/icons-ui?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/icons-ui)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/icons-ui?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/icons-ui)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/icons-ui?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/icons-ui)
 
 ```
-yarn add @spectrum-web-components/icons-ui
+yarn add @iliad-ui/icons-ui
 ```
 
 With the default exports of the packages prepared with the `html` template tag from `lit-html`, the default value of an icon export will be as follows:
 
 ```js
 import { LitElement, html } from 'lit-element';
-import '@spectrum-web-components/icon';
-import { AsteriskIcon } from '@spectrum-web-components/icons-ui';
+import '@iliad-ui/icon';
+import { AsteriskIcon } from '@iliad-ui/icons-ui';
 
 class ElementWithIcon extends LitElement {
     protected render(): TemplateResult {
@@ -28,7 +28,8 @@ class ElementWithIcon extends LitElement {
     }
 }
 
-customElements.define('element-with-icon', ElementWithIcon);
+import {iliadCustomElementsDefine} from '@iliad-ui/base';
+iliadCustomElementsDefine('element-with-icon', ElementWithIcon);
 ```
 
 Every icons can be customized via the following options:
@@ -47,7 +48,7 @@ Every icons can be customized via the following options:
 The default exports of this package are pre-wrapped via `setCustomTemplateLiteralTag` in the `html` template tag from `lit-html`, and work liek the following::
 
 ```js
-import { AsteriskIcon } from '@spectrum-web-components/icons-ui';
+import { AsteriskIcon } from '@iliad-ui/icons-ui';
 
 console.log(AsteriskIcon());
 
@@ -59,7 +60,7 @@ TemplateResult {strings: Array[1], values: Array[0], type: "html", processor: De
 When working in the context of other frameworks, it is possible to import the icons with a generic template tag as follows:
 
 ```js
-import { AsteriskIcon } from '@spectrum-web-components/icons-ui/src/icons.js';
+import { AsteriskIcon } from '@iliad-ui/icons-ui/src/icons.js';
 
 console.log(AsteriskIcon());
 
@@ -85,7 +86,7 @@ What's more, if you're already working with a specific parser in your project, y
 import {
     AsteriskIcon,
     setCustomTemplateLiteralTag,
-} from '@spectrum-web-components/icons-ui/src/icons.js';
+} from '@iliad-ui/icons-ui/src/icons.js';
 import htm from 'htm';
 import { h } from 'preact';
 
@@ -100,4 +101,4 @@ VNode {nodeName: "svg", children: Array[1], attributes: Object, key: undefined, 
 ***/
 ```
 
-In this way the icons exported by `@spectrum-web-components/icons-ui` can be leveraged in projects powered by the the likes of hyperHTML, lighterhtml, lit-html, Preact, React, Vanilla JS, Vue.js, and more!
+In this way the icons exported by `@iliad-ui/icons-ui` can be leveraged in projects powered by the the likes of hyperHTML, lighterhtml, lit-html, Preact, React, Vanilla JS, Vue.js, and more!

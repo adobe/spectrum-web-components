@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,20 +18,20 @@ import {
     property,
     TemplateResult,
     PropertyValues,
-} from '@spectrum-web-components/base';
-import { nothing } from 'lit-html';
-import { ObserveSlotPresence } from '@spectrum-web-components/shared';
-import { ActionGroup } from '@spectrum-web-components/action-group';
-import bodyStyles from '@spectrum-web-components/styles/body.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/split-view/sp-split-view.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-in.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-zoom-out.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-refresh.js';
-import '@spectrum-web-components/action-bar/sp-action-bar.js';
-import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+    nothing,
+} from '@iliad-ui/base';
+import { ObserveSlotPresence } from '@iliad-ui/shared';
+import { ActionGroup } from '@iliad-ui/action-group';
+import bodyStyles from '@iliad-ui/styles/body.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/action-group/sp-action-group.js';
+import '@iliad-ui/split-view/sp-split-view.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-zoom-in.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-zoom-out.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-refresh.js';
+import '@iliad-ui/action-bar/sp-action-bar.js';
+import '@iliad-ui/progress-circle/sp-progress-circle.js';
 import '../onion-skinner.js';
 
 export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [

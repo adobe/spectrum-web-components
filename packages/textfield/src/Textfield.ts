@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -20,14 +21,14 @@ import {
     nothing,
     ifDefined,
     live,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
 
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark100.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-alert.js';
 
 import textfieldStyles from './textfield.css.js';
-import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
+import checkmarkStyles from '@iliad-ui/icon/src/spectrum-icon-checkmark.css.js';
 
 export class TextfieldBase extends Focusable {
     public static get styles(): CSSResultArray {

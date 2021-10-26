@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -20,13 +21,13 @@ import {
     ifDefined,
     repeat,
     classMap,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
 
 import sliderStyles from './slider.css.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+import { ObserveSlotText } from '@iliad-ui/shared/src/observe-slot-text.js';
 import { StyleInfo } from 'lit-html/directives/style-map';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import type { NumberField } from '@spectrum-web-components/number-field';
+import '@iliad-ui/field-label/sp-field-label.js';
+import type { NumberField } from '@iliad-ui/number-field';
 import { HandleController, HandleValueDictionary } from './HandleController.js';
 import { SliderHandle } from './SliderHandle.js';
 
@@ -58,7 +59,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         this._editable = this.handleController.size < 2 ? editable : false;
         if (this.editable) {
             this._numberFieldInput = import(
-                '@spectrum-web-components/number-field/sp-number-field.js'
+                '@iliad-ui/number-field/sp-number-field.js'
             );
         }
         if (oldValue !== this.editable) {
@@ -388,8 +389,8 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
 
     private _numberFieldInput: Promise<unknown> = Promise.resolve();
 
-    protected async _getUpdateComplete(): Promise<boolean> {
-        const complete = (await super._getUpdateComplete()) as boolean;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         if (this.editable) {
             await this._numberFieldInput;
             await this.numberField.updateComplete;

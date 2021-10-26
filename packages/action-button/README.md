@@ -4,24 +4,24 @@ An `<sp-action-button>` represents an action a user can take.
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/action-button?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/action-button)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/action-button?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/action-button)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/action-button?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/action-button)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/action-button?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/action-button)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/mOF1zUEjLJzODGXFYaIU/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/action-button
+yarn add @iliad-ui/action-button
 ```
 
 Import the side effectful registration of `<sp-action-button>` via:
 
 ```
-import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@iliad-ui/action-button/sp-action-button.js';
 ```
 
 When looking to leverage the `ActionButton` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ActionButton } from '@spectrum-web-components/action-button';
+import { ActionButton } from '@iliad-ui/action-button';
 ```
 
 ## Sizes

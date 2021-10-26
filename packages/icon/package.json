@@ -1,14 +1,20 @@
 {
-    "name": "@spectrum-web-components/icon",
-    "version": "0.9.11",
+    "name": "@iliad-ui/icon",
+    "version": "0.15.1",
     "publishConfig": {
         "access": "public"
     },
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "url": "https://github.com/gaoding-inc/iliad-ui.git",
         "directory": "packages/icon"
     },
     "author": "",
@@ -44,8 +50,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.5",
-        "@spectrum-web-components/iconset": "^0.5.7",
+        "@iliad-ui/base": "^0.10.1",
+        "@iliad-ui/iconset": "^0.11.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -53,6 +59,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js"
     ]

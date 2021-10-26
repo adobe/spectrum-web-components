@@ -67,3 +67,6 @@ test/visual/test.js
 node_modules
 npm-debug.log
 package-lock.json
+
+# person assets
+person.config.js

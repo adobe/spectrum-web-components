@@ -4,24 +4,24 @@ An `<sp-coachmark>` element can be used to bring added attention to specific par
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/coachmark?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/coachmark)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/coachmark?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/coachmark)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/coachmark?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/coachmark)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/coachmark?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/coachmark)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/Z611FV1zeF0CLBLVHNFY/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/coachmark
+yarn add @iliad-ui/coachmark
 ```
 
 Import the side effectful registration of `<sp-coachmark>` via:
 
 ```
-import '@spectrum-web-components/coachmark/sp-coachmark.js';
+import '@iliad-ui/coachmark/sp-coachmark.js';
 ```
 
 When looking to leverage the `Coachmark` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Coachmark } from '@spectrum-web-components/coachmark';
+import { Coachmark } from '@iliad-ui/coachmark';
 ```
 
 ## Standard

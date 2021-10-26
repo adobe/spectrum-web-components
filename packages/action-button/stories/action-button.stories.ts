@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,13 +10,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { spreadProps } from '@open-wc/lit-helpers';
-import '@spectrum-web-components/action-group';
-import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
+import { html, TemplateResult } from '@iliad-ui/base';
+import { spreadProps } from '../../../test/lit-helpers.js';
+import '@iliad-ui/action-group';
+import '@iliad-ui/icon/sp-icon.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-edit.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-more.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-settings.js';
 
 import '../src';
 import '../sp-action-button.js';
@@ -31,6 +32,7 @@ interface Properties {
     holdAffordance?: boolean;
     icon?: TemplateResult;
     label?: string;
+    [prop: string]: any;
 }
 
 function renderButton(args: Properties): TemplateResult {
@@ -91,7 +93,7 @@ toggles.args = {
 
 export const wIconButton = (args: Properties): TemplateResult => {
     return html`
-        <sp-action-button ...=${spreadProps(args)}>
+        <sp-action-button ${spreadProps(args)}>
             <sp-icon-edit slot="icon"></sp-icon-edit>
             This is an action button
         </sp-action-button>
@@ -104,7 +106,7 @@ wIconButton.story = {
 
 export const iconOnlyButton = (args: Properties): TemplateResult => {
     return html`
-        <sp-action-button label="Edit" ...=${spreadProps(args)}>
+        <sp-action-button label="Edit" ${spreadProps(args)}>
             <sp-icon-edit slot="icon"></sp-icon-edit>
         </sp-action-button>
     `;

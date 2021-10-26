@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,18 +20,18 @@ import {
     ifDefined,
     nothing,
     queryAsync,
-} from '@spectrum-web-components/base';
-import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import '@spectrum-web-components/picker/sp-picker.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/switch/sp-switch.js';
-import { Picker } from '@spectrum-web-components/picker';
-import { Switch } from '@spectrum-web-components/switch';
-import { Scale, Color, Theme } from '@spectrum-web-components/theme';
-import { ActiveOverlay } from '@spectrum-web-components/overlay';
+} from '@iliad-ui/base';
+import '@iliad-ui/theme/sp-theme.js';
+import '@iliad-ui/theme/src/themes.js';
+import '@iliad-ui/field-label/sp-field-label.js';
+import '@iliad-ui/picker/sp-picker.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/switch/sp-switch.js';
+import { Picker } from '@iliad-ui/picker';
+import { Switch } from '@iliad-ui/switch';
+import { Scale, Color, Theme } from '@iliad-ui/theme';
+import { ActiveOverlay } from '@iliad-ui/overlay';
 import './types.js';
 
 const queryString = window.location.search;
@@ -194,18 +195,28 @@ export class StoryDecorator extends SpectrumElement {
         const { checked } = target as Switch;
         switch (id) {
             case 'color':
-                this.color = color = window.__swc_hack_knobs__.defaultColor = value as Color;
+                this.color =
+                    color =
+                    window.__swc_hack_knobs__.defaultColor =
+                        value as Color;
                 break;
             case 'scale':
-                this.scale = scale = window.__swc_hack_knobs__.defaultScale = value as Scale;
+                this.scale =
+                    scale =
+                    window.__swc_hack_knobs__.defaultScale =
+                        value as Scale;
                 break;
             case 'dir':
-                this.direction = dir = window.__swc_hack_knobs__.defaultDirection = value as
-                    | 'ltr'
-                    | 'rtl';
+                this.direction =
+                    dir =
+                    window.__swc_hack_knobs__.defaultDirection =
+                        value as 'ltr' | 'rtl';
                 break;
             case 'reduceMotion':
-                this.reduceMotion = reduceMotion = window.__swc_hack_knobs__.defaultReduceMotion = checked as boolean;
+                this.reduceMotion =
+                    reduceMotion =
+                    window.__swc_hack_knobs__.defaultReduceMotion =
+                        checked as boolean;
                 break;
         }
     }

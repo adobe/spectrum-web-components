@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -18,11 +19,11 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 
-import { ActionButton } from '@spectrum-web-components/action-button';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import { TemplateResult, LitElement } from '@spectrum-web-components/base';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { ActionButton } from '@iliad-ui/action-button';
+import '@iliad-ui/action-button/sp-action-button.js';
+import { TemplateResult, LitElement } from '@iliad-ui/base';
+import '@iliad-ui/overlay/overlay-trigger.js';
+import '@iliad-ui/tooltip/sp-tooltip.js';
 import { ActionGroup } from '..';
 import {
     arrowDownEvent,

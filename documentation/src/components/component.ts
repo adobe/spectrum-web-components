@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,35 +10,35 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, CSSResultArray, TemplateResult } from 'lit-element';
-import '@spectrum-web-components/bundle/elements.js';
+import { html, CSSResultArray, TemplateResult } from '@iliad-ui/base';
+import '@iliad-ui/bundle/elements.js';
 // work around while `top-nav` isn't "officially" in the bundle
-import '@spectrum-web-components/top-nav/sp-top-nav.js';
-import '@spectrum-web-components/top-nav/sp-top-nav-item.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-star.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-down.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-save-floppy.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-stopwatch.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-user-activity.js';
+import '@iliad-ui/top-nav/sp-top-nav.js';
+import '@iliad-ui/top-nav/sp-top-nav-item.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-magnify.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-help.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-info.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-star.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-chevron-down.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-close.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-info.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-checkmark.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-checkmark-circle.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-alert.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-edit.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-more.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-settings.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-save-floppy.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-stopwatch.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-user-activity.js';
 import { RouteComponent } from './route-component.js';
 import markdownStyles from './markdown.css';
 import componentStyles from './component.css';
 import { AppRouter } from '../router.js';
-import '@spectrum-web-components/tabs/sp-tab.js';
-import '@spectrum-web-components/tabs/sp-tabs.js';
-import '@spectrum-web-components/tabs/sp-tab-panel.js';
-import { Tabs } from '@spectrum-web-components/tabs';
+import '@iliad-ui/tabs/sp-tab.js';
+import '@iliad-ui/tabs/sp-tabs.js';
+import '@iliad-ui/tabs/sp-tab-panel.js';
+import { Tabs } from '@iliad-ui/tabs';
 import docs from '../../custom-elements.json';
 import type {
     CustomElement,

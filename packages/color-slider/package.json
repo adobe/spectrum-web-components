@@ -1,14 +1,20 @@
 {
-    "name": "@spectrum-web-components/color-slider",
-    "version": "0.1.13",
+    "name": "@iliad-ui/color-slider",
+    "version": "0.7.1",
     "publishConfig": {
         "access": "public"
     },
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "url": "https://github.com/gaoding-inc/iliad-ui.git",
         "directory": "packages/color-slider"
     },
     "author": "",
@@ -45,9 +51,9 @@
     ],
     "dependencies": {
         "@ctrl/tinycolor": "^3.3.3",
-        "@spectrum-web-components/base": "^0.4.5",
-        "@spectrum-web-components/color-handle": "^0.1.10",
-        "@spectrum-web-components/shared": "^0.12.9",
+        "@iliad-ui/base": "^0.10.1",
+        "@iliad-ui/color-handle": "^0.5.1",
+        "@iliad-ui/shared": "^0.18.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -55,6 +61,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js"
     ]

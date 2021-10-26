@@ -4,24 +4,24 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/number-field?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/number-field)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/number-field?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/number-field)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/number-field?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/number-field)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/number-field?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/number-field)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/TXlwVZIWMyzDa0XPl4tq/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/number-field
+yarn add @iliad-ui/number-field
 ```
 
 Import the side effectful registration of `<sp-number-field>` via:
 
 ```
-import '@spectrum-web-components/number-field/sp-number-field.js';
+import '@iliad-ui/number-field/sp-number-field.js';
 ```
 
 When looking to leverage the `NumberField` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { NumberField } from '@spectrum-web-components/number-field';
+import { NumberField } from '@iliad-ui/number-field';
 ```
 
 ## Example

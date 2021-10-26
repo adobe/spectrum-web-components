@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,9 +18,9 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
 
-import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
+import '@iliad-ui/color-loupe/sp-color-loupe.js';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 import styles from './color-handle.css.js';
 
@@ -34,8 +35,10 @@ export type ColorValue =
     | HSL
     | HSLA;
 
-export const extractHueAndSaturationRegExp = /^hs[v|l]a?\s?\((\d{1,3}\.?\d*?),?\s?(\d{1,3})/;
-export const replaceHueAndSaturationRegExp = /(^hs[v|l]a?\s?\()\d{1,3}\.?\d*?(,?\s?)\d{1,3}/;
+export const extractHueAndSaturationRegExp =
+    /^hs[v|l]a?\s?\((\d{1,3}\.?\d*?),?\s?(\d{1,3})/;
+export const replaceHueAndSaturationRegExp =
+    /(^hs[v|l]a?\s?\()\d{1,3}\.?\d*?(,?\s?)\d{1,3}/;
 export const replaceHueRegExp = /(^hs[v|l]a?\()\d{1,3}/;
 
 /**

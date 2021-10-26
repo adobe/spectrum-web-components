@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,8 +18,8 @@ import {
     CSSResultArray,
     TemplateResult,
     PropertyValues,
-} from '@spectrum-web-components/base';
-import type { LongpressEvent } from '@spectrum-web-components/action-button';
+} from '@iliad-ui/base';
+import type { LongpressEvent } from '@iliad-ui/action-button';
 
 import {
     Placement,
@@ -361,8 +362,8 @@ export class OverlayTrigger extends LitElement {
     private openStatePromise = Promise.resolve();
     private openStateResolver!: () => void;
 
-    protected async _getUpdateComplete(): Promise<boolean> {
-        const complete = (await super._getUpdateComplete()) as boolean;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.openStatePromise;
         return complete;
     }

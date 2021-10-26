@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -16,10 +17,10 @@ import {
     TemplateResult,
     property,
     PropertyValues,
-} from '@spectrum-web-components/base';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+} from '@iliad-ui/base';
+import { Focusable } from '@iliad-ui/shared/src/focusable.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron100.js';
+import chevronIconStyles from '@iliad-ui/icon/src/spectrum-icon-chevron.css.js';
 
 import styles from './accordion-item.css.js';
 

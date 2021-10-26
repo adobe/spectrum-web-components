@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -13,12 +14,12 @@ governing permissions and limitations under the License.
 import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 import { stub } from 'sinon';
 
-import '@spectrum-web-components/textfield/sp-textfield.js';
-import { Textfield } from '@spectrum-web-components/textfield';
-import '@spectrum-web-components/picker/sp-picker.js';
-import { Picker } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@iliad-ui/textfield/sp-textfield.js';
+import { Textfield } from '@iliad-ui/textfield';
+import '@iliad-ui/picker/sp-picker.js';
+import { Picker } from '@iliad-ui/picker';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/menu/sp-menu-item.js';
 
 import '../sp-field-label.js';
 import { FieldLabel } from '..';

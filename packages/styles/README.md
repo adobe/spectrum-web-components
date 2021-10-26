@@ -6,59 +6,59 @@ The easiest way to consume these values is via the `<sp-theme>` element, however
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/styles?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/styles)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/styles?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/styles)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/styles?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/styles)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/styles?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/styles)
 
 ```
-npm install @spectrum-web-components/styles
+npm install @iliad-ui/styles
 ```
 
 ## Theme packages
 
 ```
-@import '@spectrum-web-components/styles/all-medium-darkest.css';
+@import '@iliad-ui/styles/all-medium-darkest.css';
 ```
 
 This file brings together the globals variables and font settings with the "Darkest" color set and "Medium" scale system specification.
 
 ```
-@import '@spectrum-web-components/styles/all-medium-dark.css';
+@import '@iliad-ui/styles/all-medium-dark.css';
 ```
 
 This file brings together the globals variables and font settings with the "Dark" color set and "Medium" scale system specification.
 
 ```
-@import '@spectrum-web-components/styles/all-medium-light.css';
+@import '@iliad-ui/styles/all-medium-light.css';
 ```
 
 This file brings together the globals variables and font settings with the "Light" color set and "Medium" scale system specification.
 
 ```
-@import '@spectrum-web-components/styles/all-medium-lightest.css';
+@import '@iliad-ui/styles/all-medium-lightest.css';
 ```
 
 This file brings together the globals variables and font settings with the "Lightest" color set and "Medium" scale system specification.
 
 ```
-@import '@spectrum-web-components/styles/all-large-darkest.css';
+@import '@iliad-ui/styles/all-large-darkest.css';
 ```
 
 This file brings together the globals variables and font settings with the "Darkest" color set and "Large" scale system specification.
 
 ```
-@import '@spectrum-web-components/styles/all-large-dark.css';
+@import '@iliad-ui/styles/all-large-dark.css';
 ```
 
 This file brings together the globals variables and font settings with the "Dark" color set and "Large" scale system specification.
 
 ```
-@import '@spectrum-web-components/styles/all-large-light.css';
+@import '@iliad-ui/styles/all-large-light.css';
 ```
 
 This file brings together the globals variables and font settings with the "Light" color set and "Large" scale system specification.
 
 ```
-@import '@spectrum-web-components/styles/all-large-lightest.css';
+@import '@iliad-ui/styles/all-large-lightest.css';
 ```
 
 This file brings together the globals variables and font settings with the "Lightest" color set and "Large" scale system specification.
@@ -68,7 +68,7 @@ This file brings together the globals variables and font settings with the "Ligh
 ### Darkest
 
 ```
-@import '@spectrum-web-components/styles/theme-darkest.css';
+@import '@iliad-ui/styles/theme-darkest.css';
 ```
 
 This file provides only the variables needed to power a color pallet featuring colors found in the "Darkest" theme.
@@ -76,7 +76,7 @@ This file provides only the variables needed to power a color pallet featuring c
 ### Dark
 
 ```
-@import '@spectrum-web-components/styles/theme-dark.css';
+@import '@iliad-ui/styles/theme-dark.css';
 ```
 
 This file provides only the variables needed to power a color pallet featuring colors found in the "Dark" theme.
@@ -84,7 +84,7 @@ This file provides only the variables needed to power a color pallet featuring c
 ### Light
 
 ```
-@import '@spectrum-web-components/styles/theme-light.css';
+@import '@iliad-ui/styles/theme-light.css';
 ```
 
 This file provides only the variables needed to power a color pallet featuring colors found in the "Light" theme.
@@ -92,7 +92,7 @@ This file provides only the variables needed to power a color pallet featuring c
 ### Lightest
 
 ```
-@import '@spectrum-web-components/styles/theme-lightest.css';
+@import '@iliad-ui/styles/theme-lightest.css';
 ```
 
 This file provides only the variables needed to power a color pallet featuring colors found in the "Lightest" theme.
@@ -102,7 +102,7 @@ This file provides only the variables needed to power a color pallet featuring c
 ### Medium
 
 ```
-@import '@spectrum-web-components/styles/scale-medium.css';
+@import '@iliad-ui/styles/scale-medium.css';
 ```
 
 This file provides only the variables needed to power the "Medium" scale system specification.
@@ -110,7 +110,7 @@ This file provides only the variables needed to power the "Medium" scale system 
 ### Large
 
 ```
-@import '@spectrum-web-components/styles/scale-large.css';
+@import '@iliad-ui/styles/scale-large.css';
 ```
 
 This file provides only the variables needed to power the "Large" scale system specification.
@@ -118,7 +118,7 @@ This file provides only the variables needed to power the "Large" scale system s
 ## Typography
 
 ```
-@import '@spectrum-web-components/styles/typography.css';
+@import '@iliad-ui/styles/typography.css';
 ```
 
 This file provides a `lit-html` compliant version of the [Spectrum Typography classes](https://opensource.adobe.com/spectrum-css/components/typography/).

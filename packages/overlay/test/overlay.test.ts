@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,11 +10,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/dialog/sp-dialog.js';
-import { Dialog } from '@spectrum-web-components/dialog';
-import '@spectrum-web-components/popover/sp-popover.js';
-import { Popover } from '@spectrum-web-components/popover';
+import '@iliad-ui/button/sp-button.js';
+import '@iliad-ui/dialog/sp-dialog.js';
+import { Dialog } from '@iliad-ui/dialog';
+import '@iliad-ui/popover/sp-popover.js';
+import { Popover } from '@iliad-ui/popover';
 import { ActiveOverlay, Overlay, OverlayTrigger, Placement } from '../';
 
 import { waitForPredicate, isVisible } from '../../../test/testing-helpers.js';

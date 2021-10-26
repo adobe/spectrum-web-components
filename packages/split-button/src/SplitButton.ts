@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -20,16 +21,16 @@ import {
     ifDefined,
     SizedMixin,
     ElementSize,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
 
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/button/sp-button.js';
-import { ButtonVariants } from '@spectrum-web-components/button';
-import { PickerBase } from '@spectrum-web-components/picker';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import '@iliad-ui/popover/sp-popover.js';
+import '@iliad-ui/menu/sp-menu.js';
+import '@iliad-ui/button/sp-button.js';
+import { ButtonVariants } from '@iliad-ui/button';
+import { PickerBase } from '@iliad-ui/picker';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron100.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-more.js';
+import chevronStyles from '@iliad-ui/icon/src/spectrum-icon-chevron.css.js';
 import styles from './split-button.css.js';
 
 const chevronClass = {

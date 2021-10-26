@@ -4,24 +4,24 @@ An `<sp-progress-circle>` shows the progression of a system operation such as do
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/progress-circle?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/progress-circle)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/progress-circle?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/progress-circle)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/progress-circle?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/progress-circle)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/progress-circle?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/progress-circle)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/LfliuY0UocICDCBr21uy/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/progress-circle
+yarn add @iliad-ui/progress-circle
 ```
 
 Import the side effectful registration of `<sp-progress-circle>` via:
 
 ```
-import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+import '@iliad-ui/progress-circle/sp-progress-circle.js';
 ```
 
 When looking to leverage the `ProgressCircle` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ProgressCircle } from '@spectrum-web-components/progress-circle';
+import { ProgressCircle } from '@iliad-ui/progress-circle';
 ```
 
 ## Variants

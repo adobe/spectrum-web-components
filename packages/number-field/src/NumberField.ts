@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,15 +18,15 @@ import {
     property,
     PropertyValues,
     query,
-} from '@spectrum-web-components/base';
-import { ProvideLang } from '@spectrum-web-components/theme';
-import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+} from '@iliad-ui/base';
+import { ProvideLang } from '@iliad-ui/theme';
+import { streamingListener } from '@iliad-ui/base/src/streaming-listener.js';
 import { NumberFormatter, NumberParser } from '@internationalized/number';
 
-import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import { TextfieldBase } from '@spectrum-web-components/textfield';
-import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-chevron75.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import { TextfieldBase } from '@iliad-ui/textfield';
+import chevronStyles from '@iliad-ui/icon/src/spectrum-icon-chevron.css.js';
 import styles from './number-field.css.js';
 
 function testPlatform(re: RegExp): boolean {
@@ -495,26 +496,23 @@ export class NumberField extends TextfieldBase {
                           class="buttons"
                           @focusin=${this.handleFocusin}
                           @focusout=${this.handleFocusout}
-                          @manage=${streamingListener(
-                              {
-                                  type: 'pointerdown',
-                                  fn: this.handlePointerdown,
-                              },
-                              {
-                                  type: [
+                          ${streamingListener({
+                              start: ['pointerdown', this.handlePointerdown],
+                              streamInside: [
+                                  [
                                       'pointermove',
                                       'pointerenter',
                                       'pointerleave',
                                       'pointerover',
                                       'pointerout',
                                   ],
-                                  fn: this.handlePointermove,
-                              },
-                              {
-                                  type: ['pointerup', 'pointercancel'],
-                                  fn: this.handlePointerup,
-                              }
-                          )}
+                                  this.handlePointermove,
+                              ],
+                              end: [
+                                  ['pointerup', 'pointercancel'],
+                                  this.handlePointerup,
+                              ],
+                          })}
                       >
                           <sp-action-button
                               class="stepUp"

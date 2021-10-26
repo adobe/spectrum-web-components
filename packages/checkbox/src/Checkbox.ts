@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -18,19 +19,19 @@ import {
     PropertyValues,
     SizedMixin,
     ElementSize,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
 import { CheckboxBase } from './CheckboxBase.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark300.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash75.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash100.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash200.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-dash300.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark75.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark100.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark200.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-checkmark300.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-dash75.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-dash100.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-dash200.js';
+import '@iliad-ui/icons-ui/icons/sp-icon-dash300.js';
 import checkboxStyles from './checkbox.css.js';
-import checkmarkSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
-import dashSmallStyles from '@spectrum-web-components/icon/src/spectrum-icon-dash.css.js';
+import checkmarkSmallStyles from '@iliad-ui/icon/src/spectrum-icon-checkmark.css.js';
+import dashSmallStyles from '@iliad-ui/icon/src/spectrum-icon-dash.css.js';
 
 const checkmarkIcon = {
     s: html`

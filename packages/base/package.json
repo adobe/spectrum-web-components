@@ -1,14 +1,20 @@
 {
-    "name": "@spectrum-web-components/base",
-    "version": "0.4.5",
+    "name": "@iliad-ui/base",
+    "version": "0.10.1",
     "publishConfig": {
         "access": "public"
     },
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "url": "https://github.com/gaoding-inc/iliad-ui.git",
         "directory": "packages/base"
     },
     "author": "",
@@ -44,11 +50,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "lit-element": "^2.4.0",
-        "lit-html": "^1.0.0",
+        "lit": "^2.0.0",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": false
 }

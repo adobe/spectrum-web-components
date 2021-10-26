@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,11 +18,8 @@ import {
     SpectrumElement,
     property,
     query,
-} from '@spectrum-web-components/base';
-import {
-    OverlayDisplayQueryDetail,
-    Placement,
-} from '@spectrum-web-components/overlay';
+} from '@iliad-ui/base';
+import { OverlayDisplayQueryDetail, Placement } from '@iliad-ui/overlay';
 
 import tooltipStyles from './tooltip.css.js';
 

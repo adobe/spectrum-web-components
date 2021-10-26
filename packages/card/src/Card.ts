@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,18 +20,18 @@ import {
     PropertyValues,
     ifDefined,
     query,
-} from '@spectrum-web-components/base';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
-import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
-import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import '@spectrum-web-components/asset/sp-asset.js';
+} from '@iliad-ui/base';
+import { FocusVisiblePolyfillMixin } from '@iliad-ui/shared/src/focus-visible.js';
+import { ObserveSlotPresence } from '@iliad-ui/shared/src/observe-slot-presence.js';
+import { LikeAnchor } from '@iliad-ui/shared/src/like-anchor.js';
+import '@iliad-ui/asset/sp-asset.js';
 
-import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
-import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
+import { Checkbox } from '@iliad-ui/checkbox/src/Checkbox';
+import '@iliad-ui/checkbox/sp-checkbox.js';
+import '@iliad-ui/quick-actions/sp-quick-actions.js';
 import cardStyles from './card.css.js';
-import headingStyles from '@spectrum-web-components/styles/heading.js';
-import detailStyles from '@spectrum-web-components/styles/detail.js';
+import headingStyles from '@iliad-ui/styles/heading.js';
+import detailStyles from '@iliad-ui/styles/detail.js';
 
 /**
  * @element sp-card
@@ -90,13 +91,6 @@ export class Card extends LikeAnchor(
 
     protected get hasPreview(): boolean {
         return this.getSlotContentPresence('[slot="preview"]');
-    }
-
-    public constructor() {
-        super();
-        this.addEventListener('focusin', this.handleFocusin);
-        this.shadowRoot.addEventListener('focusin', this.handleFocusin);
-        this.addEventListener('focusout', this.handleFocusout);
     }
 
     public click(): void {
@@ -312,5 +306,8 @@ export class Card extends LikeAnchor(
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('pointerdown', this.handlePointerdown);
+        this.addEventListener('focusin', this.handleFocusin);
+        this.shadowRoot.addEventListener('focusin', this.handleFocusin);
+        this.addEventListener('focusout', this.handleFocusout);
     }
 }

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,16 +11,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
-import { spreadProps } from '@open-wc/lit-helpers';
+import { html, TemplateResult } from '@iliad-ui/base';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 import '../sp-action-group.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-properties.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-view-all-tags.js';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/overlay/overlay-trigger.js';
+import '@iliad-ui/tooltip/sp-tooltip.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-properties.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-info.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-view-all-tags.js';
 import { ActionGroup } from '../src/ActionGroup.js';
 
 export default {
@@ -102,11 +103,12 @@ interface Properties {
     justified?: boolean;
     quiet?: boolean;
     vertical?: boolean;
+    [prop: string]: any;
 }
 
 function renderIconButtons(args: Properties): TemplateResult {
     return html`
-        <sp-action-group ...=${spreadProps(args)}>
+        <sp-action-group ${spreadProps(args)}>
             <sp-action-button label="Properties">
                 <sp-icon-properties slot="icon"></sp-icon-properties>
             </sp-action-button>
@@ -122,7 +124,7 @@ function renderIconButtons(args: Properties): TemplateResult {
 
 function renderButtons(args: Properties): TemplateResult {
     return html`
-        <sp-action-group ...=${spreadProps(args)}>
+        <sp-action-group ${spreadProps(args)}>
             <sp-action-button>Button 1</sp-action-button>
             <sp-action-button>Longer Button 2</sp-action-button>
             <sp-action-button>Short 3</sp-action-button>
@@ -162,7 +164,7 @@ export const selectsSingle = (args: Properties): TemplateResult => {
 export const selectsMultiple = (args: Properties): TemplateResult => {
     return html`
         <sp-action-group
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             label="Favorite Colors"
             selects="multiple"
             @change=${({ target }: Event & { target: ActionGroup }) => {
@@ -186,7 +188,7 @@ export const selectsMultipleWithTooltips = (
 ): TemplateResult => {
     return html`
         <sp-action-group
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             label="Favorite Color"
             selects="multiple"
             @change=${({ target }: Event & { target: ActionGroup }) => {

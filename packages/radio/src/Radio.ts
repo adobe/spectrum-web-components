@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -18,8 +19,8 @@ import {
     TemplateResult,
     PropertyValues,
     SpectrumElement,
-} from '@spectrum-web-components/base';
-import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+} from '@iliad-ui/base';
+import { FocusVisiblePolyfillMixin } from '@iliad-ui/shared/src/focus-visible.js';
 
 import radioStyles from './radio.css.js';
 

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,7 +13,8 @@ governing permissions and limitations under the License.
 import './sp-slider-handle.js'; // codify sp-slider's implicit dependency on sp-slider-handle
 import { Slider } from './src/Slider.js';
 
-customElements.define('sp-slider', Slider);
+import { iliadCustomElementsDefine } from '@iliad-ui/base';
+iliadCustomElementsDefine('sp-slider', Slider);
 
 declare global {
     interface HTMLElementTagNameMap {

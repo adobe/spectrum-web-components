@@ -1,14 +1,20 @@
 {
-    "name": "@spectrum-web-components/split-button",
-    "version": "0.5.11",
+    "name": "@iliad-ui/split-button",
+    "version": "0.9.1",
     "publishConfig": {
         "access": "public"
     },
+    "maintainers": [
+        {
+            "name": "saiye",
+            "email": "saiye@gaoding.com"
+        }
+    ],
     "description": "",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "url": "https://github.com/gaoding-inc/iliad-ui.git",
         "directory": "packages/split-button"
     },
     "author": "",
@@ -46,13 +52,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.5",
-        "@spectrum-web-components/button": "^0.14.9",
-        "@spectrum-web-components/icon": "^0.9.11",
-        "@spectrum-web-components/icons-ui": "^0.6.11",
-        "@spectrum-web-components/icons-workflow": "^0.6.11",
-        "@spectrum-web-components/overlay": "^0.11.16",
-        "@spectrum-web-components/picker": "^0.7.5",
+        "@iliad-ui/base": "^0.10.1",
+        "@iliad-ui/button": "^0.20.1",
+        "@iliad-ui/icon": "^0.15.1",
+        "@iliad-ui/icons-ui": "^0.12.1",
+        "@iliad-ui/icons-workflow": "^0.12.1",
+        "@iliad-ui/overlay": "^0.17.1",
+        "@iliad-ui/picker": "^0.13.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
@@ -60,6 +66,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
+    "gitHead": "9bbd945c65ea91178a699382b30c499e57e3f450",
     "sideEffects": [
         "./sp-*.js",
         "./sync/sp-*.js"

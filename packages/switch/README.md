@@ -4,24 +4,24 @@ An `<sp-switch>` is used to turn an option on or off. Switches allow users to se
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/switch?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/switch)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/switch?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/switch)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/switch?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/switch)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/switch?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/switch)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/uXsqJULoUuOtbDgGB4sC/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/switch
+yarn add @iliad-ui/switch
 ```
 
 Import the side effectful registration of `<sp-switch>` via:
 
 ```
-import '@spectrum-web-components/switch/sp-switch.js';
+import '@iliad-ui/switch/sp-switch.js';
 ```
 
 When looking to leverage the `Switch` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Switch } from '@spectrum-web-components/switch';
+import { Switch } from '@iliad-ui/switch';
 ```
 
 ## Example

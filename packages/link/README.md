@@ -4,24 +4,24 @@ An `<sp-link>` allow users to navigate to a different location. They can be pres
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/link?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/link)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/link?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/link)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/link?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/link)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/link?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/link)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/SKjuIJdhxi5YaT3BNgxT/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/link
+yarn add @iliad-ui/link
 ```
 
 Import the side effectful registration of `<sp-link>` via:
 
 ```
-import '@spectrum-web-components/link/sp-link.js';
+import '@iliad-ui/link/sp-link.js';
 ```
 
 When looking to leverage the `Link` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Link } from '@spectrum-web-components/link';
+import { Link } from '@iliad-ui/link';
 ```
 
 ## Sizes

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,14 +18,14 @@ import {
     html,
     oneEvent,
 } from '@open-wc/testing';
-import { ActionButton } from '@spectrum-web-components/action-button';
-import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/action-group/sp-action-group.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import { Popover } from '@spectrum-web-components/popover';
-import '@spectrum-web-components/popover/sp-popover.js';
+import { ActionButton } from '@iliad-ui/action-button';
+import '@iliad-ui/action-button/sp-action-button.js';
+import '@iliad-ui/action-group/sp-action-group.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-magnify.js';
+import { Popover } from '@iliad-ui/popover';
+import '@iliad-ui/popover/sp-popover.js';
 import { OverlayTrigger } from '..';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@iliad-ui/overlay/overlay-trigger.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 

@@ -4,24 +4,24 @@ An `<sp-popover>` is used to display transient content (menus, options, addition
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/popover?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/popover)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/popover?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/popover)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/popover?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/popover)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/popover?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/popover)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/omhKPPsfFwPuzf4Lz1Bt/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/popover
+yarn add @iliad-ui/popover
 ```
 
 Import the side effectful registration of `<sp-popover>` via:
 
 ```
-import '@spectrum-web-components/popover/sp-popover.js';
+import '@iliad-ui/popover/sp-popover.js';
 ```
 
 When looking to leverage the `Popover` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { Popover } from '@spectrum-web-components/popover';
+import { Popover } from '@iliad-ui/popover';
 ```
 
 ## Example

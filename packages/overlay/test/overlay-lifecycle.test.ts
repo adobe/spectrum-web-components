@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -17,10 +18,10 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@iliad-ui/tooltip/sp-tooltip.js';
+import '@iliad-ui/action-button/sp-action-button.js';
 import { OverlayTrigger } from '..';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@iliad-ui/overlay/overlay-trigger.js';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 
 describe('Overlay Trigger - Lifecycle Methods', () => {
@@ -45,9 +46,9 @@ describe('Overlay Trigger - Lifecycle Methods', () => {
             name: string;
             description: string;
         };
-        let snapshot = ((await a11ySnapshot(
-            {}
-        )) as unknown) as DescribedNode & { children: DescribedNode[] };
+        let snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
+            children: DescribedNode[];
+        };
         expect(
             findAccessibilityNode<DescribedNode>(
                 snapshot,
@@ -64,7 +65,7 @@ describe('Overlay Trigger - Lifecycle Methods', () => {
         await opened;
 
         expect(el.open).to.equal('hover');
-        snapshot = ((await a11ySnapshot({})) as unknown) as DescribedNode & {
+        snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
             children: DescribedNode[];
         };
 

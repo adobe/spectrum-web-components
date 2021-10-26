@@ -4,24 +4,24 @@ An `<sp-color-wheel>` lets users visually change an individual channel of a colo
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/color-wheel?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/color-wheel)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/color-wheel?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/color-wheel)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/color-wheel?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/color-wheel)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/color-wheel?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/color-wheel)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/m5lUgBAAejgIkESwRvEs/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/color-wheel
+yarn add @iliad-ui/color-wheel
 ```
 
 Import the side effectful registration of `<sp-color-wheel>` via:
 
 ```
-import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
+import '@iliad-ui/color-wheel/sp-color-wheel.js';
 ```
 
 When looking to leverage the `ColorWheel` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { ColorWheel } from '@spectrum-web-components/color-wheel';
+import { ColorWheel } from '@iliad-ui/color-wheel';
 ```
 
 ## Color Formatting

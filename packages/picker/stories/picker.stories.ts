@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,18 +11,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@iliad-ui/base';
 
 import '../sp-picker.js';
 import { Picker } from '../';
-import '@spectrum-web-components/menu/sp-menu-item.js';
-import '@spectrum-web-components/menu/sp-menu-divider.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
+import '@iliad-ui/menu/sp-menu-item.js';
+import '@iliad-ui/menu/sp-menu-divider.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-edit.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-copy.js';
+import '@iliad-ui/icons-workflow/icons/sp-icon-delete.js';
 import { states } from './states.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
-import { spreadProps } from '@open-wc/lit-helpers';
+import '@iliad-ui/field-label/sp-field-label.js';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     title: 'Picker',
@@ -89,6 +90,7 @@ interface StoryArgs {
     quiet?: boolean;
     showText?: boolean;
     onChange?: (val: string) => void;
+    [prop: string]: any;
 }
 
 const handleChange =
@@ -105,7 +107,7 @@ export const Default = (args: StoryArgs): TemplateResult => {
             id="picker-1"
             @change=${handleChange(args)}
             label="Select a Country with a very long label, too long, in fact"
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
         >
             <sp-menu-item>Deselect</sp-menu-item>
             <sp-menu-item>Select Inverse</sp-menu-item>
@@ -129,7 +131,7 @@ export const quiet = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="picker-quiet">Where do you live?</sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
             @change=${handleChange(args)}
             label="Pick an item"
@@ -287,7 +289,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
             <sp-picker
                 id="picker-open"
                 label="Open picker"
-                ...=${spreadProps(args)}
+                ${spreadProps(args)}
                 @change=${handleChange(args)}
             >
                 <span slot="label">
@@ -330,7 +332,7 @@ export const initialValue = (args: StoryArgs): TemplateResult => {
             id="picker-initial"
             @change=${handleChange(args)}
             value="item-2"
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
         >
             <span slot="label">
                 Select a Country with a very long label, too long in fact
@@ -352,7 +354,7 @@ export const readonly = (args: StoryArgs): TemplateResult => {
             @change=${handleChange(args)}
             readonly
             value="item-2"
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
         >
             <span slot="label">
                 Select a Country with a very long label, too long in fact
@@ -379,7 +381,7 @@ export const custom = (args: StoryArgs): TemplateResult => {
             @change=${handleChange(args)}
             id="picker-state"
             label="Pick a state"
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             value=${initialState}
         >
             ${states.map(

@@ -4,30 +4,30 @@ An `sp-split-button` surfaces an immediately envokable action via it's main butt
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/split-button?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/split-button)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/split-button?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/splitbutton)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/split-button?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/split-button)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/split-button?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/splitbutton)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/wyDxsnwOiGaxibKODm3o/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/split-button
+yarn add @iliad-ui/split-button
 ```
 
 Import the side effectful registration of `<sp-split-button>` via:
 
 ```
-import '@spectrum-web-components/split-button/sp-split-button.js';
+import '@iliad-ui/split-button/sp-split-button.js';
 ```
 
-The default of `<sp-split-button>` will load dependencies in `@spectrum-web-components/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-split-button>` as follows:
+The default of `<sp-split-button>` will load dependencies in `@iliad-ui/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-split-button>` as follows:
 
 ```
-import '@spectrum-web-components/split-button/sync/sp-split-button.js';
+import '@iliad-ui/split-button/sync/sp-split-button.js';
 ```
 
 When looking to leverage the `SplitButton` base class as a type and/or for extension purposes, do so via:
 
 ```
-import { SplitButton } from '@spectrum-web-components/split-button';
+import { SplitButton } from '@iliad-ui/split-button';
 ```
 
 ## Sizes

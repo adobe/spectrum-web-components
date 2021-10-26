@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -19,10 +20,10 @@ import {
     PropertyValues,
     SizedMixin,
     query,
-} from '@spectrum-web-components/base';
-import type { Focusable } from '@spectrum-web-components/shared';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
-import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
+} from '@iliad-ui/base';
+import type { Focusable } from '@iliad-ui/shared';
+import '@iliad-ui/icons-ui/icons/sp-icon-asterisk100.js';
+import asteriskIconStyles from '@iliad-ui/icon/src/spectrum-icon-asterisk.css.js';
 
 import styles from './field-label.css.js';
 

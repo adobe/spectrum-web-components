@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -15,26 +16,25 @@ import {
     css,
     property,
     TemplateResult,
-    CSSResult,
-    CSSResultArray,
+    CSSResultGroup,
     query,
-} from '@spectrum-web-components/base';
+} from '@iliad-ui/base';
 
 import { Overlay, Placement } from '../';
-import { RadioGroup } from '@spectrum-web-components/radio';
-import '@spectrum-web-components/button/sp-button.js';
-import { Button } from '@spectrum-web-components/button';
-import '@spectrum-web-components/popover/sp-popover.js';
-import '@spectrum-web-components/radio/sp-radio.js';
-import '@spectrum-web-components/radio/sp-radio-group.js';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { Picker } from '@spectrum-web-components/picker';
+import { RadioGroup } from '@iliad-ui/radio';
+import '@iliad-ui/button/sp-button.js';
+import { Button } from '@iliad-ui/button';
+import '@iliad-ui/popover/sp-popover.js';
+import '@iliad-ui/radio/sp-radio.js';
+import '@iliad-ui/radio/sp-radio-group.js';
+import '@iliad-ui/overlay/overlay-trigger.js';
+import { Picker } from '@iliad-ui/picker';
 
 // Prevent infinite recursion in browser
 const MAX_DEPTH = 7;
 
 class OverlayTargetIcon extends LitElement {
-    static get styles(): CSSResult {
+    static get styles(): CSSResultGroup {
         return css`
             :host {
                 position: absolute;
@@ -77,7 +77,7 @@ class OverlayDrag extends LitElement {
 
     private targetElement: HTMLElement | undefined | null;
 
-    static get styles(): CSSResult {
+    static get styles(): CSSResultGroup {
         return css`
             :host {
                 display: block;
@@ -195,7 +195,7 @@ class RecursivePopover extends LitElement {
 
     public shadowRoot!: ShadowRoot;
 
-    public static get styles(): CSSResultArray {
+    public static get styles(): CSSResultGroup {
         return [
             css`
                 :host {

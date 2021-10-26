@@ -4,25 +4,25 @@
 
 ### Usage
 
-[![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/top-nav?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/top-nav)
-[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/top-nav?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/top-nav)
+[![See it on NPM!](https://img.shields.io/npm/v/@iliad-ui/top-nav?style=for-the-badge)](https://www.npmjs.com/package/@iliad-ui/top-nav)
+[![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@iliad-ui/top-nav?style=for-the-badge)](https://bundlephobia.com/result?p=@iliad-ui/top-nav)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/LtIrARhL1Qgevqxs3hZE/src/index.ts)
 
 ```
-yarn add @spectrum-web-components/top-nav
+yarn add @iliad-ui/top-nav
 ```
 
 Import the side effectful registration of `<sp-top-nav>` and `<sp-top-nav-item>` as follows:
 
 ```
-import '@spectrum-web-components/top-nav/sp-top-nav.js';
-import '@spectrum-web-components/top-nav/sp-top-nav-item.js';
+import '@iliad-ui/top-nav/sp-top-nav.js';
+import '@iliad-ui/top-nav/sp-top-nav-item.js';
 ```
 
 When looking to leverage the `TopNav` or `TopNavItem` base classes as a type and/or for extension purposes, do so via:
 
 ```
-import { TopNav, TopNavItem } from '@spectrum-web-components/top-nav';
+import { TopNav, TopNavItem } from '@iliad-ui/top-nav';
 ```
 
 ### Example

@@ -1,5 +1,6 @@
 /*
 Copyright 2020 Adobe. All rights reserved.
+Copyright 2021 Gaoding. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -11,11 +12,21 @@ governing permissions and limitations under the License.
 */
 
 // import our stylesheets
+
 import './styles.css';
 
 // import the components we'll use in this page
-import '@spectrum-web-components/button/sp-button';
-import '@spectrum-web-components/field-label/sp-field-label';
-import '@spectrum-web-components/picker/sp-picker';
-import '@spectrum-web-components/menu/sp-menu';
-import '@spectrum-web-components/menu/sp-menu-item';
+// import '@iliad-ui/button/sp-button';
+// import '@iliad-ui/field-label/sp-field-label';
+// import '@iliad-ui/picker/sp-picker';
+// import '@iliad-ui/menu/sp-menu';
+// import '@iliad-ui/menu/sp-menu-item';
+// import * as AllPacks from '@iliad-ui/bundle';
+// console.log(AllPacks);
+
+import {
+    SpComponents,
+    ReactComponents,
+} from '@iliad-ui/react/react-elements.js';
+
+console.log(SpComponents, ReactComponents);
