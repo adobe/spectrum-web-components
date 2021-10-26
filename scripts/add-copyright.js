@@ -15,6 +15,9 @@ import path from 'path';
 import * as github from './github.js';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const {
     promises: { readFile, writeFile },
@@ -37,6 +40,7 @@ async function main() {
     console.log(__dirname);
     const fileList = await getPullRequestAllChangedFiles(1);
     await checkAllPrChangedFiles(fileList);
+    addCopyrightToFile('scripts/process-spectrum-css.js');
 }
 
 main();
@@ -91,6 +95,7 @@ async function addCopyrightToFile(filename) {
     if (isNeedAdd) {
         const changedFileContent = getNewCopyrightFile(fileContent);
         await writeFile(filepath, changedFileContent);
+
         return TASK_STATUS.success;
     }
     return TASK_STATUS.success;
