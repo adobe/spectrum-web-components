@@ -3,9 +3,10 @@
     "compilerOptions": {
         "composite": true,
         "rootDir": "./",
+        "baseUrl": "./",
         "resolveJsonModule": true,
     },
-    "include": ["*.ts", "src/*.ts","*.json"],
+    "include": ["src/*.ts","*.json"],
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
         { "path": "../accordion" },
