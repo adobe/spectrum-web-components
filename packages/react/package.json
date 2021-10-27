@@ -22,19 +22,9 @@
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
-    "main": "./src/index.js",
-    "module": "./src/index.js",
+    "main": "./index.js",
+    "module": "./index.js",
     "type": "module",
-    "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
-        "./package.json": "./package.json",
-        "./custom-elements.json": "./custom-elements.json",
-        "./react-elements": "./react-elements.js",
-        "./react-elements.js": "./react-elements.js",
-        "./icons": "./src/icons.js",
-        "./icons.js": "./src/icons.js"
-    },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
