@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 
 const slugify = require('@sindresorhus/slugify');
 const execSync = require('child_process').execSync;
+const crypto = require('crypto');
 
 // Duplicated from `tasks/test-changes.js` because GitHub Actions and CJS. 🤦
 const getChangedPackages = () => {
@@ -46,6 +47,28 @@ const buildPreviewURLComment = (ref) => {
     const packages = getChangedPackages();
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
+    const previewLinks = [];
+    // const themes = ['Classic', 'Express']; // prepping for Spectrum Express
+    const scales = ['Medium', 'Large'];
+    const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
+    const directions = ['LTR', 'RTL'];
+    // themes.map((theme) =>
+    colors.map((color) =>
+        scales.map((scale) =>
+            directions.map((direction) => {
+                // const context = `-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+                const context = `${branch}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+                const md5 = crypto.createHash('md5');
+                md5.update(context);
+                const hash = md5.digest('hex');
+                previewLinks.push(`
+- [${color} | ${scale} | ${direction}](https://${hash}--spectrum-web-components.netlify.app/review/)`);
+                //              previewLinks.push(`
+                // - [${theme} | ${color} | ${scale} | ${direction}](https://${hash}--spectrum-web-components.netlify.app/review/)`);
+            })
+        )
+    );
+    // );
     let comment = `# Branch Preview
 
 - [Documentation Site](https://${branchSlug}--spectrum-web-components.netlify.app/)
@@ -54,23 +77,7 @@ const buildPreviewURLComment = (ref) => {
         comment += `
 
 When a visual regression test fails (or has previously failed while working on this branch), its results can be found in the following URLs:
-
-- [Lightest | Medium | LTR](https://${branchSlug}-lightest-medium-ltr--spectrum-web-components.netlify.app/review/)
-- [Lightest | Medium | RTL](https://${branchSlug}-lightest-medium-rtl--spectrum-web-components.netlify.app/review/)
-- [Lightest | Large | LTR](https://${branchSlug}-lightest-large-ltr--spectrum-web-components.netlify.app/review/)
-- [Lightest | Large | RTL](https://${branchSlug}-lightest-large-rtl--spectrum-web-components.netlify.app/review/)
-- [Light | Medium | LTR](https://${branchSlug}-light-medium-ltr--spectrum-web-components.netlify.app/review/)
-- [Light | Medium | RTL](https://${branchSlug}-light-medium-rtl--spectrum-web-components.netlify.app/review/)
-- [Light | Large | LTR](https://${branchSlug}-light-large-ltr--spectrum-web-components.netlify.app/review/)
-- [Light | Large | RTL](https://${branchSlug}-light-large-rtl--spectrum-web-components.netlify.app/review/)
-- [Darkest | Medium | LTR](https://${branchSlug}-darkest-medium-ltr--spectrum-web-components.netlify.app/review/)
-- [Darkest | Medium | RTL](https://${branchSlug}-darkest-medium-rtl--spectrum-web-components.netlify.app/review/)
-- [Darkest | Large | LTR](https://${branchSlug}-darkest-large-ltr--spectrum-web-components.netlify.app/review/)
-- [Darkest | Large | RTL](https://${branchSlug}-darkest-large-rtl--spectrum-web-components.netlify.app/review/)
-- [Dark | Medium | LTR](https://${branchSlug}-dark-medium-ltr--spectrum-web-components.netlify.app/review/)
-- [Dark | Medium | RTL](https://${branchSlug}-dark-medium-rtl--spectrum-web-components.netlify.app/review/)
-- [Dark | Large | LTR](https://${branchSlug}-dark-large-ltr--spectrum-web-components.netlify.app/review/)
-- [Dark | Large | RTL](https://${branchSlug}-dark-large-rtl--spectrum-web-components.netlify.app/review/)`;
+${previewLinks.join('')}`;
     }
 
     return comment;

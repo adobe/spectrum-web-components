@@ -52,7 +52,8 @@ commands:
                   when: on_fail
                   name: Create review site
                   command: |
-                      node test/visual/review.js --commit=<< pipeline.git.revision >> --theme="<< parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
+                      branch=$(git symbolic-ref --short HEAD)
+                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --theme="<< parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
                   when: on_fail
@@ -60,8 +61,9 @@ commands:
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
-                      branch=$(npx slugify-cli $branch)
-                      yarn netlify deploy --alias=$branch-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> --dir=test/visual
+                      hash=$(echo -n $branch-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
+                      echo hash
+                      yarn netlify deploy --alias=$hash --dir=test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
