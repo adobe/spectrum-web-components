@@ -6,11 +6,11 @@ import commandLineArgs from 'command-line-args';
 import prettier from 'prettier';
 
 const { publish } = commandLineArgs([
-  { name: 'publish', type: Boolean },
+    { name: 'publish', type: Boolean },
 ]);
 
 if (publish) {
-  console.log(chalk.yellow('The --publish flag was used so the package will be published to npm after building!\n'));
+    console.log(chalk.yellow('The --publish flag was used so the package will be published to npm after building!\n'));
 }
 
 // Clear build directory
@@ -18,48 +18,55 @@ process.chdir('./packages/react/');
 
 // Fetch component metadata
 const metadata = JSON.parse(
-  fs.readFileSync('./custom-elements.json', 'utf8')
+    fs.readFileSync('./custom-elements.json', 'utf8')
 );
 
 // Wrap components
 console.log('Wrapping components...');
 
 function getAllComponents() {
-  const allComponents = [];
+    const allComponents = [];
 
-  metadata.modules.map(module => {
-    if (module.path.startsWith('packages')) {
-        module.declarations?.map(declaration => {
-          if (declaration.customElement && declaration.tagName) {
-            const component = declaration;
-            const modulePath = module.path;
-    
-            if (component) {
-              allComponents.push(Object.assign(component, { modulePath }));
-            }
-          }
-        });
-    }
-  });
+    metadata.modules.map(module => {
+        if (module.path.startsWith('packages')) {
+            module.declarations?.map(declaration => {
+                if (declaration.customElement && declaration.tagName) {
+                    const component = declaration;
+                    const modulePath = module.path;
 
-  return allComponents;
+                    if (component) {
+                        allComponents.push(Object.assign(component, { modulePath }));
+                    }
+                }
+            });
+        }
+    });
+
+    return allComponents;
 }
 
 const components = getAllComponents();
 
-components.map(component => {
-  const { name, tagName } = component;
-  console.log(component);
-  const componentFile = path.join('./src', `${name}.ts`)
+const mainExports = []
 
-  const events = (component.events || [])
-    .map(event => {
-      return `'${event.name}': '${event.name}'`;
+function formatCode(string) {
+    return prettier.format(string, {
+        parser: 'babel-ts'
     })
-    .join(',\n');
+}
 
-  const source = prettier.format(
-    `
+components.map(component => {
+    const { name } = component;
+    const componentFile = path.join('./src', `${name}.ts`)
+
+    const events = (component.events || [])
+        .map(event => {
+            return `'${event.name}': '${event.name}'`;
+        })
+        .join(',\n');
+
+    const source = formatCode(
+        `
       import * as React from 'react';
       import { createComponent } from '@lit-labs/react';
       import { ${name} as Component } from '@iliad-ui/bundle';
@@ -70,17 +77,17 @@ components.map(component => {
         Component,
         {
           ${events}
-        }
+        },
+        '${name}'
       );
-    `,
-    Object.assign({
-      parser: 'babel-ts'
-    })
-  );
+    `);
 
-  fs.writeFileSync(componentFile, source, 'utf8');
-  console.log(`✓ <${component.tagName}>`);
+    fs.writeFileSync(componentFile, source, 'utf8');
+    mainExports.push(`export * from './src/${name}'`)
+    console.log(`✓ <${component.tagName}>`);
 });
+
+fs.writeFileSync('./index.ts', formatCode(mainExports.join('\n')), 'utf8');
 
 // Run TypeScript on the generated src directory
 console.log('Source files have been generated. Running the TypeScript compiler...');
@@ -88,8 +95,8 @@ execSync('npx tsc', { stdio: 'inherit' });
 
 // Publish to npm
 if (publish) {
-  console.log('Publishing to npm...');
-  execSync('npm publish', { stdio: 'inherit' });
+    console.log('Publishing to npm...');
+    execSync('npm publish', { stdio: 'inherit' });
 }
 
 console.log(chalk.cyan(`\nAll components have been wrapped for React! 📦\n`));
