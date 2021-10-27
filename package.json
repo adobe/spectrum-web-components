@@ -228,7 +228,8 @@
     "webpack-dev-server": "^3.10.3",
     "webpack-merge": "^4.2.2",
     "webpackbar": "^4.0.0",
-    "yargs": "^17.0.1"
+    "yargs": "^17.0.1",
+    "command-line-args": "^5.1.1"
   },
   "resolutions": {
     "@web/storybook-prebuilt": "0.1.27-alpha.0",
