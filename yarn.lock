@@ -14473,10 +14473,10 @@ jsonparse@^1.2.0, jsonparse@^1.3.1:
   resolved "https://registry.yarnpkg.com/jsonparse/-/jsonparse-1.3.1.tgz#3f4dae4a91fac315f71062f8521cc239f1366280"
   integrity sha1-P02uSpH6wxX3EGL4UhzCOfE2YoA=
 
-jsonschema@~1.2.11:
-  version "1.2.11"
-  resolved "https://registry.yarnpkg.com/jsonschema/-/jsonschema-1.2.11.tgz#7a799cc2aa5a285d893203e8dc81f5becbfb0e91"
-  integrity sha512-XNZHs3N1IOa3lPKm//npxMhOdaoPw+MvEV0NIgxcER83GTJcG13rehtWmpBCfEt8DrtYwIkMTs8bdXoYs4fvnQ==
+jsonschema@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/jsonschema/-/jsonschema-1.4.0.tgz#1afa34c4bc22190d8e42271ec17ac8b3404f87b2"
+  integrity sha512-/YgW6pRMr6M7C+4o8kS+B/2myEpHCrxO4PEWnqJNBFMjn7EWXqlQ4tGwL6xTHeRplwuZmcAncdvfOad1nT2yMw==
 
 jsonwebtoken@^8.5.1:
   version "8.5.1"
@@ -23001,10 +23001,10 @@ table@^6.6.0:
     string-width "^4.2.0"
     strip-ansi "^6.0.0"
 
-tachometer@^0.5.9:
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/tachometer/-/tachometer-0.5.9.tgz#1d01159c6cb82f148015951bd19fd794f354f679"
-  integrity sha512-kceNdzMHsYoYUSqv8YUqEq1CwzXgurj/tUMhOkhojK+yhwuPnAq0YvBbLaX5SDVwXhVBE4n/RPNcF4Xl6i/cmw==
+tachometer@^0.5.10:
+  version "0.5.10"
+  resolved "https://registry.yarnpkg.com/tachometer/-/tachometer-0.5.10.tgz#1c158fa0e1a54aeeee69c603f866c649a11ddf77"
+  integrity sha512-2FbP+uA4Pcx0IbcfKP15IXhqueq73E5U1NWOsD9m3j5mtHqMSMtNXDJ1CpegZcDuYd2Dg+L2Nu3+e40Q+X8t7w==
   dependencies:
     "@types/command-line-usage" "^5.0.1"
     "@types/selenium-webdriver" "^4.0.11"
@@ -23013,10 +23013,10 @@ tachometer@^0.5.9:
     command-line-args "^5.0.2"
     command-line-usage "^6.1.0"
     csv-stringify "^5.3.0"
-    fs-extra "^9.0.1"
+    fs-extra "^10.0.0"
     get-stream "^6.0.0"
     got "^11.5.0"
-    jsonschema "~1.2.11"
+    jsonschema "^1.4.0"
     jsonwebtoken "^8.5.1"
     jstat "^1.9.2"
     koa "^2.11.0"

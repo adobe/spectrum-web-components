@@ -13,6 +13,10 @@ governing permissions and limitations under the License.
 */
 
 import { execSync } from 'child_process';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+
+const { browser = 'chrome' } = yargs(hideBin(process.argv)).argv;
 
 // Duplicated from `tasks/build-preview-urls-comments.cjs` because GitHub Actions and CJS. 🤦
 const getChangedPackages = () => {
@@ -55,9 +59,12 @@ const testChangedPackages = () => {
             )}`
         );
         execSync('yarn build:tests');
-        execSync(`yarn test:bench -j -p ${packages.join(' ')}`, {
-            stdio: 'inherit',
-        });
+        execSync(
+            `yarn test:bench --browser ${browser} -j -p ${packages.join(' ')}`,
+            {
+                stdio: 'inherit',
+            }
+        );
     } else {
         console.log('There are no packages with changes to test against.');
     }

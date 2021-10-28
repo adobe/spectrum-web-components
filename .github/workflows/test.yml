@@ -1,10 +1,12 @@
 name: Performance check
 
-on: pull_request
+on:
+    pull_request:
+        types: [opened, synchronize, reopened]
 
 jobs:
-    compare:
-        name: Compare performance to latest release
+    comment-previews:
+        name: Comments preview URLs
 
         # We can't currently run benchmarks on PRs from forked repos, because the
         # tachometer action reports results by posting a comment, and we can't post
@@ -56,9 +58,114 @@ jobs:
                           });
                         }
                       });
+    compare-firefox:
+        name: Compare performance to latest release on Firefox
+
+        # We can't currently run benchmarks on PRs from forked repos, because the
+        # tachometer action reports results by posting a comment, and we can't post
+        # comments without a github token.
+        if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: main
+
+            - uses: actions/checkout@v2
+
+            - name: Setup Node 14
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '14'
+                  cache: 'yarn'
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Install dependencies
+              run: yarn --frozen-lockfile
+
+            - name: Tachometer the changed packages
+              run: yarn test:changed --browser=firefox
+
+            - name: Make at least one results file
+              run: touch tachometer.ran.txt
+
+            - name: Archive Firefox tachometer results
+              uses: actions/upload-artifact@v2
+              with:
+                  name: tachometer-results
+                  path: |
+                      tach-results.firefox.*.json
+                      tachometer.ran.txt
+
+    compare-chrome:
+        name: Compare performance to latest release on Chrome
+
+        # We can't currently run benchmarks on PRs from forked repos, because the
+        # tachometer action reports results by posting a comment, and we can't post
+        # comments without a github token.
+        if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: main
+
+            - uses: actions/checkout@v2
+
+            - name: Setup Node 14
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '14'
+                  cache: 'yarn'
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Install dependencies
+              run: yarn --frozen-lockfile
 
             - name: Tachometer the changed packages
               run: yarn test:changed
+
+            - name: Make at least one results file
+              run: touch tachometer.ran.txt
+
+            - name: Archive Chrome tachometer results
+              uses: actions/upload-artifact@v2
+              with:
+                  name: tachometer-results
+                  path: |
+                      tach-results.*.json
+                      tachometer.ran.txt
+
+    comment-performance:
+        name: Comment performance results
+        needs: [compare-chrome, compare-firefox]
+
+        # We can't currently run benchmarks on PRs from forked repos, because the
+        # tachometer action reports results by posting a comment, and we can't post
+        # comments without a github token.
+        if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: main
+
+            - uses: actions/checkout@v2
+
+            - name: Setup Node 14
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '14'
+                  cache: 'yarn'
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Install dependencies
+              run: yarn --frozen-lockfile
+
+            - name: Retrieve tachometer results archives
+              uses: actions/download-artifact@v2
+              with:
+                  name: tachometer-results
 
             - name: Post Performance
               uses: actions/github-script@v4

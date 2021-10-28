@@ -16,11 +16,18 @@ const fs = require('fs');
 const prettyBytes = require('pretty-bytes');
 
 const getTachometerResults = () => {
-    const results = [];
+    const results = {
+        chrome: [],
+        firefox: [],
+    };
     for (const result of globby.sync(`./tach-results.*.json`)) {
         const file = fs.readFileSync(result, 'utf8');
+        // Grab the ${bowserName}.${package} part of the results file name as an array of [browserName, package].
+        const [bowserName] = /tach-results\.(.*)\.json/
+            .exec(result)[1]
+            .split('.');
         const json = JSON.parse(file);
-        results.push(json.benchmarks);
+        results[bowserName].push(json.benchmarks);
     }
     return results;
 };
@@ -121,14 +128,38 @@ const buildTable = (result) => {
 
 const buildTachometerComment = () => {
     const results = getTachometerResults();
-    const tables = results.map(buildTable);
-    const body = tables.length
-        ? tables.join(`
+    const chromeTables = results.chrome.map(buildTable);
+    const firefoxTables = results.firefox.map(buildTable);
+    const chromeBody = chromeTables.length
+        ? chromeTables.join(`
     
 `)
         : 'Currently, no packages are changed by this PR...';
-    const comment = `# Tachometer results
-${body}`;
+    const firefoxBody = firefoxTables.length
+        ? firefoxTables.join(`
+
+`)
+        : '';
+    let comment = `# Tachometer results
+`;
+    if (firefoxBody) {
+        [
+            ['Chrome', chromeBody],
+            ['Firefox', firefoxBody],
+        ].map((body) => {
+            comment += `
+
+<details>
+    <summary><strong>${body[0]}</strong></summary>
+
+${body[1]}
+
+</details>
+`;
+        });
+    } else {
+        comment += chromeBody;
+    }
     return comment;
 };
 
