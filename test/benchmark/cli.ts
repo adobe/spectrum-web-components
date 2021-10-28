@@ -100,7 +100,7 @@ interface Options {
     remote: string;
     'sample-size': string;
     timeout: string;
-    browser: string;
+    browser: 'chrome' | 'firefox';
     compare: string;
     start: string;
     json: boolean;
@@ -215,7 +215,7 @@ $ node test/benchmark/cli -n 20
                     },
                     measurement: 'global',
                     browser: {
-                        name: 'chrome',
+                        name: opts.browser,
                         headless: true,
                         windowSize: {
                             width: 800,
@@ -229,7 +229,7 @@ $ node test/benchmark/cli -n 20
                 url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}`,
                 measurement: 'global',
                 browser: {
-                    name: 'chrome',
+                    name: opts.browser,
                     headless: true,
                     windowSize: {
                         width: 800,
@@ -248,7 +248,9 @@ $ node test/benchmark/cli -n 20
         );
 
         if (opts.json) {
-            runCommands.push(`--json-file=tach-results.${packageName}.json`);
+            runCommands.push(
+                `--json-file=tach-results.${opts.browser}.${packageName}.json`
+            );
         }
         runCommands.push(`--config=./test/benchmark/config.json`);
         runCommands.push(`--force-clean-npm-install`);

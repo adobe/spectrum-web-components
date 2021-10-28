@@ -76,8 +76,14 @@ const buildPreviewURLComment = (ref) => {
     if (packages.length > 0) {
         comment += `
 
+<details>
+    <summary><strong>Visual regression test results</strong></summary>
+
 When a visual regression test fails (or has previously failed while working on this branch), its results can be found in the following URLs:
-${previewLinks.join('')}`;
+
+${previewLinks.join('')}
+
+</details>`;
     }
 
     return comment;
