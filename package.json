@@ -81,6 +81,7 @@
         "test:visual:clean:current": "rimraf test/visual/screenshots-current",
         "test:watch": "yarn test:watch:focus unit",
         "test:watch:focus": "yarn test:build && run-p watch:css \"test:build -w\" \"test:start --watch --group {1}\" --",
+        "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link",
         "watch:css": "node ./tasks/watch-css.js"
     },
     "peerDependencies": {
