@@ -1,3 +1,6 @@
+/** 注册 web components sideEffect */
+import '@iliad-ui/bundle/elements'
+
 /** 脚本自动生成 */
 export * from "./src/Accordion";
 export * from "./src/AccordionItem";
