@@ -66,7 +66,7 @@ async function getCommitChangedFiles() {
         .map((cv) => {
             const fileName = cv.slice(3);
             const fileType = getChangeType(cv.slice(0, 2));
-            const [fileExt] = fileName.split('.').reverse();
+            const fileExt = path.extname(fileName);
             return {
                 name: fileName,
                 type: fileType,
@@ -106,7 +106,7 @@ async function addCopyrightToFile({ name: filename, type, ext }) {
     // 新增文件中没有声明则手动增加
     if (type === 'added') {
         const isAdded = fileContent.includes(COPY_HEAD_STR);
-        const needCopyRightExts = ['ts', 'js', 'css', 'cjs', 'hbs'];
+        const needCopyRightExts = ['.ts', '.js', '.css', '.cjs', '.hbs'];
         if (!isAdded && needCopyRightExts.includes(ext)) {
             const changedFileContent = getNewFullCopyrightFile(fileContent);
             await writeFile(filepath, changedFileContent);
