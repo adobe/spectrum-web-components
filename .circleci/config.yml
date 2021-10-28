@@ -117,7 +117,7 @@ jobs:
                       source $BASH_ENV
             - run:
                   name: Lint commit message
-                  command: echo "$COMMIT_MESSAGE" | npx commitlint
+                  command: echo "$COMMIT_MESSAGE" | npx commitlint --config commitlint.config.cjs
 
     test:
         executor: node
