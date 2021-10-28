@@ -1,3 +1,4 @@
+/** 脚本自动生成 */
 export * from "./src/Accordion";
 export * from "./src/AccordionItem";
 export * from "./src/ActionButton";
@@ -67,3 +68,6 @@ export * from "./src/TopNavItem";
 export * from "./src/Tray";
 export * from "./src/Tree";
 export * from "./src/Underlay";
+
+/** 手动添加 */
+export * from "./src/Picker";
