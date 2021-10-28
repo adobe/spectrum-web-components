@@ -3,6 +3,7 @@
 
 STAGED_FILES_TO_LINT=$(git diff --name-only --cached --diff-filter=d -- "*.ts" "*.js")
 # yarn eslint -f pretty $STAGED_FILES_TO_LINT
+yarn copyright:commit
 yarn analyze:quick
 # yarn lint:css
 # yarn pretty-quick --staged

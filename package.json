@@ -92,7 +92,8 @@
     "test:watch": "yarn test:watch:focus unit",
     "test:watch:focus": "yarn test:build && run-p watch:css \"test:build -w\" \"test:start --watch --group {1}\" --",
     "watch:css": "node ./tasks/watch-css.js",
-    "copyright": "node ./scripts/add-copyright.js"
+    "copyright:pr": "node ./scripts/add-copyright.js",
+    "copyright:commit": "node ./tasks/build-add-copyright.js"
   },
   "peerDependencies": {
     "common-tags": "^1.8.0",
