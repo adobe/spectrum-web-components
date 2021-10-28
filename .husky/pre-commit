@@ -2,7 +2,8 @@
 . "$(dirname "$0")/_/husky.sh"
 
 STAGED_FILES_TO_LINT=$(git diff --name-only --cached --diff-filter=d -- "*.ts" "*.js")
-# yarn eslint -f pretty $STAGED_FILES_TO_LINT
+yarn copyright:commit
+yarn eslint -f pretty $STAGED_FILES_TO_LINT
 yarn analyze:quick
 # yarn lint:css
-# yarn pretty-quick --staged
+yarn pretty-quick --staged
