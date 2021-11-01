@@ -35,6 +35,7 @@ import type { SideNav } from './side-nav.js';
 import './adobe-logo.js';
 import type { CodeExample } from './code-example.js';
 import './code-example.js';
+import { copyText } from './copy-to-clipboard.js';
 
 import layoutStyles from './layout.css';
 import { nothing } from 'lit-html';
@@ -185,6 +186,14 @@ export class LayoutElement extends LitElement {
                 callback(this.color);
             }
         }
+    }
+
+    private copyText(
+        event: CustomEvent<{ text: string; message: string }>
+    ): void {
+        copyText(event.detail.text);
+        event.detail.message = 'Import statement copied to clipboard!';
+        this.addAlert(event);
     }
 
     private addAlert(event: CustomEvent<{ message: string }>): void {
@@ -346,6 +355,7 @@ export class LayoutElement extends LitElement {
                         id="page"
                         ?inert=${this.isNarrow && this.open}
                         @alert=${this.addAlert}
+                        @copy-text=${this.copyText}
                     >
                         ${this.manageTheme}
                         <slot></slot>

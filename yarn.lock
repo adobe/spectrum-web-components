@@ -4047,10 +4047,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/switch/-/switch-1.0.4.tgz#8b37d6f6746eefb78dfe5753c05ccdb930777a29"
   integrity sha512-sHNNrmjjFRGlkzuhW7LW/FU6Nbxy2q08thfACWOvCBHpMs88hg8Aa9T/FXwDEfqluXVO3eRCROh16ThTv05hqg==
 
-"@spectrum-css/table@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-4.0.0.tgz#14ce551c1a858c40932f3a36a287fe7aaa7cedcf"
-  integrity sha512-Uuz0f1dqhKMhfMoHTtBpuADpUfevXqotFrBbbcjqraBxbNweyKsLMtX8fCzF3S4U4vnP8CDC5AfOqK9PPh9A4w==
+"@spectrum-css/table@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-4.0.1.tgz#53509f1e9587fb14667bc28930dad3bf563ccd93"
+  integrity sha512-vRWR64c4QChogn0XHVwpH47DgheT5jgSFiSGOW/bJ1Lo1S0KogEncBRRDMcE1mQO6KBKFW7b6S9igJOri79EGw==
 
 "@spectrum-css/tabs@^3.1.1":
   version "3.1.1"

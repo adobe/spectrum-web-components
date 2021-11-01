@@ -33,12 +33,22 @@ function sortByName(a, b) {
     return a.name > b.name ? 1 : -1;
 }
 
+const codeWrappedRegex = /<code>(.*)<\/code>/;
+
+function encodeCodeWrappedHTML(source) {
+    const parts = codeWrappedRegex.exec(source);
+    if (!parts) return source;
+    let html = parts[1];
+    html = html.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return source.replace(codeWrappedRegex, `<code>${html}</code>`);
+}
+
 function buildTable(title, rowData, headings, cells) {
     return `
 ### ${title}
 
 <div class="table-container">
-<table class="spectrum-Table">
+<table class="spectrum-Table spectrum-Table--sizeM">
 <thead class="spectrum-Table-head">
 <tr>
 ${headings
@@ -62,7 +72,7 @@ ${cells
     .map(
         (cell) => `
 <td class="spectrum-Table-cell">
-${cell(property)}
+${encodeCodeWrappedHTML(cell(property))}
 </td>
 `
     )
