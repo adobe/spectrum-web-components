@@ -18,6 +18,7 @@ import {
     CSSResult,
     property,
     customElement,
+    ifDefined,
 } from '@spectrum-web-components/base';
 import { Search } from '@spectrum-web-components/search';
 import '@spectrum-web-components/search/sp-search.js';
@@ -65,6 +66,9 @@ export class IconsDemo extends SpectrumElement {
     public name = 'ui';
 
     @property()
+    public package = '';
+
+    @property()
     public size = 'm';
 
     @property()
@@ -104,12 +108,20 @@ export class IconsDemo extends SpectrumElement {
                     display: grid;
                     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
                     gap: 20px;
+                    align-items: flex-start;
                 }
                 .icon {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     text-align: center;
+                    border-radius: var(
+                        --spectrum-alias-focus-ring-gap,
+                        var(--spectrum-global-dimension-static-size-25)
+                    );
+                }
+                :host([package]) .icon {
+                    cursor: pointer;
                 }
                 sp-icon {
                     margin-bottom: 10px;
@@ -118,8 +130,44 @@ export class IconsDemo extends SpectrumElement {
                     grid-column-start: 1;
                     grid-column-end: -1;
                 }
+                .icon[tabindex]:focus {
+                    outline: none;
+                }
+                .icon[tabindex]:focus-visible {
+                    outline: var(--spectrum-alias-focus-ring-size) solid
+                        var(--spectrum-alias-focus-ring-color);
+                    outline-offset: calc(
+                        var(
+                                --spectrum-alias-focus-ring-gap,
+                                var(--spectrum-global-dimension-static-size-25)
+                            ) * 2
+                    );
+                }
             `,
         ];
+    }
+    private handleKeydown(event: KeyboardEvent, tag: string): void {
+        const { code } = event;
+        if (code !== 'Enter' && code !== 'NumpadEnter' && code !== 'Space') {
+            return;
+        }
+        event.preventDefault();
+        this.shouldCopy(tag);
+    }
+
+    private shouldCopy(tag: string): void {
+        if (!this.package) return;
+        const conditionedTag = tag.slice(1, tag.length - 1);
+        const importURL = `import '@spectrum-web-components/${this.package}/icons/${conditionedTag}.js';`;
+        this.dispatchEvent(
+            new CustomEvent('copy-text', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    text: importURL,
+                },
+            })
+        );
     }
     private updateSearch(event: Event & { target: Search }): void {
         event.stopPropagation();
@@ -136,7 +184,7 @@ export class IconsDemo extends SpectrumElement {
               )
             : this.icons;
         return html`
-            <div class="search">
+            <div class="search" part="search">
                 <sp-field-label for="search">Spectrum icons:</sp-field-label>
                 <sp-search
                     id="search"
@@ -154,7 +202,16 @@ export class IconsDemo extends SpectrumElement {
             </div>
             ${matchingIcons.map((icon) => {
                 return html`
-                    <bdo class="icon" dir="ltr" class="icon">
+                    <bdo
+                        class="icon"
+                        part="icon"
+                        dir="ltr"
+                        class="icon"
+                        @click=${() => this.shouldCopy(icon.tag)}
+                        @keydown=${(event: KeyboardEvent) =>
+                            this.handleKeydown(event, icon.tag)}
+                        tabindex=${ifDefined(this.package ? '0' : undefined)}
+                    >
                         ${icon.story(this.size)} ${icon.tag}
                     </bdo>
                 `;

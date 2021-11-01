@@ -30,6 +30,18 @@ const partialPath = path.resolve(
     '../content/_includes/partials/components'
 );
 
+const findDeclaration = (customElements, test) => {
+    let declaration;
+    // Capture a specific declaration, inside of a module, not a specific module
+    // with a specific declaration in it.
+    customElements.modules.find((jsModule) => {
+        declaration = jsModule.declarations.find(test);
+        return declaration;
+    });
+
+    return declaration;
+};
+
 async function main() {
     fs.mkdirSync(destinationPath, { recursive: true });
     fs.mkdirSync(partialPath, { recursive: true });
@@ -41,29 +53,39 @@ async function main() {
     let rawCustomElementsJSON = fs.readFileSync(customElementJSONPath);
     let customElements = JSON.parse(rawCustomElementsJSON);
 
+    const extractFileNameRegExp = /([a-zA-Z-]+)\.md$/;
+    const extractPackageNameRegExp = /([^/]+)\/([a-zA-Z-]+)\.md$/;
+
     for await (const mdPath of globby.stream(
         `${projectDir}/packages/**/*.md`
     )) {
-        let componentName = /([^/]+)\/([a-zA-Z-]+)\.md$/.exec(mdPath)[1];
-        let elementByDirectory;
-        // Capture a specific declaration, inside of a module, not a specific module
-        // with a specific declaration in it.
-        customElements.modules.find((jsModule) => {
-            elementByDirectory = jsModule.declarations.find(
-                (jsDeclarations) => {
-                    return jsDeclarations.tagName === componentName;
-                }
-            );
-            return elementByDirectory;
-        });
-        const fileName = /([a-zA-Z-]+)\.md$/.exec(mdPath)[0];
+        const fileName = extractFileNameRegExp.exec(mdPath)[0];
         if (fileName === 'CHANGELOG.md' || /node_modules/.test(mdPath)) {
             continue;
         }
-        if (fileName !== 'README.md') {
-            componentName = fileName.replace('.md', '');
-        }
+        let componentName =
+            fileName !== 'README.md'
+                ? fileName.replace('.md', '')
+                : extractPackageNameRegExp.exec(mdPath)[1];
         let componentHeading = componentName;
+        let tag = findDeclaration(
+            customElements,
+            (declaration) => declaration.tagName === 'sp-' + componentName
+        );
+        if (!tag) {
+            tag = findDeclaration(
+                customElements,
+                (declaration) => declaration.tagName === componentName
+            );
+        } else {
+            componentHeading = 'sp-' + componentHeading;
+        }
+        if (!tag && componentName.startsWith('icons-')) {
+            tag = findDeclaration(
+                customElements,
+                (declaration) => declaration.name === 'IconBase'
+            );
+        }
         const componentPath = path.resolve(destinationPath, componentName);
         fs.mkdirSync(componentPath, { recursive: true });
         // Support the full page delivery of "Examples" and "API"
@@ -89,21 +111,6 @@ async function main() {
             componentName,
             'api-content.md'
         );
-        let elementByComponentName;
-        // Capture a specific declaration, inside of a module, not a specific module
-        // with a specific declaration in it.
-        customElements.modules.find((jsModule) => {
-            elementByComponentName = jsModule.declarations.find(
-                (jsDeclarations) => {
-                    return jsDeclarations.tagName === 'sp-' + componentName;
-                }
-            );
-            return elementByComponentName;
-        });
-        if (elementByComponentName) {
-            componentHeading = 'sp-' + componentHeading;
-        }
-        const tag = elementByComponentName || elementByDirectory;
         if (tag) {
             // Read the source markdown file.
             fs.writeFileSync(

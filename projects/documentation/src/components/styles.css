@@ -683,3 +683,37 @@ sp-tab-panel:not(.section):focus code-example:after {
     border-left: var(--spectrum-global-dimension-static-size-25) solid
         var(--spectrum-global-color-static-blue-600);
 }
+
+.for-github {
+    display: none;
+}
+
+icons-demo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+    box-sizing: border-box;
+    width: 100%;
+    border: 2px solid;
+    border-radius: 6px;
+    padding: 0 1.5rem 0.75rem 1.5rem;
+    height: 400px;
+    overflow: hidden auto;
+    position: relative;
+    gap: var(--spectrum-global-dimension-static-size-200);
+}
+
+icons-demo::part(search) {
+    position: sticky;
+    top: 0;
+    left: 0;
+    margin: 0 -1.5em;
+    background: inherit;
+    background: var(--spectrum-global-color-gray-50);
+    padding: 0.75rem 1.5em;
+    z-index: 2;
+}
+
+icons-demo::part(icon) {
+    padding: calc(0.5 * var(--spectrum-global-dimension-static-size-200)) 0;
+    gap: var(--spectrum-global-dimension-static-size-200);
+}

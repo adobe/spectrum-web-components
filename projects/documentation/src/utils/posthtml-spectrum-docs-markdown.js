@@ -92,6 +92,14 @@ export default () =>
                 },
             },
             {
+                selector: '.for-github',
+                fn: (node) => {
+                    node.tag = false;
+                    node.content = [];
+                    return node;
+                },
+            },
+            {
                 // ensure `<p>`, `<ul>`, and `<ol>` tags have the `spectrum-Body3` class
                 selector: 'p,ul,ol',
                 fn: (node) => {
