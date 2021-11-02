@@ -3629,10 +3629,10 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.9.2.tgz#adea7b6953cbb34651766b0548468e743c6a2353"
   integrity sha512-VZMYa7+fXHdwIq1TDhSXoVmSPEGM/aa+6Aiq3nVVJ9bXr24zScr+NlKFKC3iPljA7ho/GAZr+d2jOf5GIRC30Q==
 
-"@pwrs/lit-css@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@pwrs/lit-css/-/lit-css-1.0.1.tgz#6aa5168e41bd528cdaa6b62c9eb8a7bad6788976"
-  integrity sha512-xSCPI0Uc0vrgBxBIMhglnjjEftQ61ecCR6xVKnN5OlculOaToP8ggCY6iO3PtFyZDPq33hRL5pWH5Y7w1wv+VA==
+"@pwrs/lit-css@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@pwrs/lit-css/-/lit-css-1.2.1.tgz#457d08c0f9b4235af1cf94e8b1c56c3fd8358bac"
+  integrity sha512-SGROR42VoGvG6ryVMEcAL8BVsosLu8zxln169Rnb32aml4IUxoHxHtEviLeyPIxpBomgCXqCNV6JML8ie6dT7A==
   dependencies:
     string-to-template-literal "^2.0.0"
     uglifycss "^0.0.29"
@@ -21168,11 +21168,11 @@ rollup-plugin-inject@^3.0.0:
     rollup-pluginutils "^2.8.1"
 
 rollup-plugin-lit-css@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-lit-css/-/rollup-plugin-lit-css-3.0.2.tgz#cb399cf8e824742bd7d88f4858b9850b9cdf8f3c"
-  integrity sha512-UrqsmaLFxpSU/57cneqV7nXisMRDVRnrHOGvT17fDpNcjHw/R8S3whGaK2A3gCdutr/7pAu04COkID9UnPj60w==
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-lit-css/-/rollup-plugin-lit-css-3.2.1.tgz#3cf101f0d85122c8e966194cb8c9661766220aa9"
+  integrity sha512-VCVJeTCsPoynt1GvVOMWo+J3zCvqqNSoPwJdrdMRRN5cvvcXUdbLbAut2k30FDrs+Mby0c6vqqqNLZEcwEr2Kw==
   dependencies:
-    "@pwrs/lit-css" "^1.0.1"
+    "@pwrs/lit-css" "^1.2.1"
     rollup-pluginutils "^2.8.2"
 
 rollup-plugin-minify-html-literals@^1.2.6:
