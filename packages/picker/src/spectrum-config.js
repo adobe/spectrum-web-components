@@ -83,7 +83,7 @@ const config = {
                 },
                 {
                     selector: '.spectrum-Picker-validationIcon',
-                    name: 'validationIcon',
+                    name: 'validation-icon',
                 },
                 {
                     selector: '.spectrum-Picker-icon',

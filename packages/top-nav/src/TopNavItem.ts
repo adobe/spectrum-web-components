@@ -54,7 +54,7 @@ export class TopNavItem extends LikeAnchor(Focusable) {
     protected render(): TemplateResult {
         return html`
             <a
-                id="itemLabel"
+                id="item-label"
                 href=${ifDefined(this.href)}
                 download=${ifDefined(this.download)}
                 target=${ifDefined(this.target)}

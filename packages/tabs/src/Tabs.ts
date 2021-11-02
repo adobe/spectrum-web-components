@@ -153,7 +153,7 @@ export class Tabs extends SizedMixin(Focusable) {
             >
                 <slot @slotchange=${this.onSlotChange}></slot>
                 <div
-                    id="selectionIndicator"
+                    id="selection-indicator"
                     class=${ifDefined(
                         this.shouldAnimate ? undefined : 'first-position'
                     )}
@@ -263,9 +263,10 @@ export class Tabs extends SizedMixin(Focusable) {
         const currentFocusedTab = getActiveElement(this) as Tab;
         let currentFocusedTabIndex = this.tabs.indexOf(currentFocusedTab);
         currentFocusedTabIndex += code === availableArrows[0] ? -1 : 1;
-        const nextTab = this.tabs[
-            (currentFocusedTabIndex + this.tabs.length) % this.tabs.length
-        ];
+        const nextTab =
+            this.tabs[
+                (currentFocusedTabIndex + this.tabs.length) % this.tabs.length
+            ];
         nextTab.focus();
         if (this.auto) {
             this.selected = nextTab.value;
@@ -406,14 +407,16 @@ export class Tabs extends SizedMixin(Focusable) {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    addEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.addEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        addEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.addEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );
@@ -423,14 +426,16 @@ export class Tabs extends SizedMixin(Focusable) {
     public disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    removeEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.removeEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        removeEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.removeEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );

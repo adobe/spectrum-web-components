@@ -377,7 +377,9 @@ export class PickerBase extends SizedMixin(Focusable) {
                 </span>
                 ${this.invalid
                     ? html`
-                          <sp-icon-alert class="validationIcon"></sp-icon-alert>
+                          <sp-icon-alert
+                              class="validation-icon"
+                          ></sp-icon-alert>
                       `
                     : nothing}
                 <sp-icon-chevron100

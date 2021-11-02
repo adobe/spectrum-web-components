@@ -62,7 +62,7 @@ governing permissions and limitations under the License.
     height: 100%;
 }
 
-:host([dir][vertical]) slot[name='icon'] + #itemLabel {
+:host([dir][vertical]) slot[name='icon'] + #item-label {
     font-size: var(
         --spectrum-tabs-text-size,
         var(--spectrum-alias-font-size-default)
@@ -75,6 +75,6 @@ governing permissions and limitations under the License.
     margin: var(--sp-tab-vertial-margin-y) 0;
 }
 
-#itemLabel[hidden] {
+#item-label[hidden] {
     display: none;
 }

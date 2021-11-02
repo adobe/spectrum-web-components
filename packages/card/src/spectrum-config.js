@@ -39,7 +39,7 @@ const config = {
                 },
                 {
                     selector: '.spectrum-Card-quickActions',
-                    name: 'quickActions',
+                    name: 'quick-actions',
                 },
                 {
                     selector: '.spectrum-Card-actions',
@@ -47,7 +47,7 @@ const config = {
                 },
                 {
                     selector: '.spectrum-Card-actionButton',
-                    name: 'actionButton',
+                    name: 'action-button',
                 },
                 {
                     selector: '.spectrum-Checkbox',

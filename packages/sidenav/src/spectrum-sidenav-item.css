@@ -31,7 +31,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-50)
     );
 }
-#itemLink {
+#item-link {
     align-items: center;
     border-radius: var(
         --spectrum-sidenav-item-border-radius,
@@ -69,34 +69,34 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     width: 100%;
     word-break: break-word;
 }
-#itemLink:focus {
+#item-link:focus {
     outline: none; /* .spectrum-SideNav-itemLink:focus */
 }
-:host([dir='ltr']) #itemLink.focus-visible:before {
+:host([dir='ltr']) #item-link.focus-visible:before {
     left: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
 }
-:host([dir='ltr']) #itemLink:focus-visible:before {
+:host([dir='ltr']) #item-link:focus-visible:before {
     left: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
 }
-:host([dir='rtl']) #itemLink.focus-visible:before {
+:host([dir='rtl']) #item-link.focus-visible:before {
     right: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
 }
-:host([dir='rtl']) #itemLink:focus-visible:before {
+:host([dir='rtl']) #item-link:focus-visible:before {
     right: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
 }
-:host([dir='ltr']) #itemLink.focus-visible:before {
+:host([dir='ltr']) #item-link.focus-visible:before {
     right: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
 }
-:host([dir='ltr']) #itemLink:focus-visible:before {
+:host([dir='ltr']) #item-link:focus-visible:before {
     right: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
 }
-:host([dir='rtl']) #itemLink.focus-visible:before {
+:host([dir='rtl']) #item-link.focus-visible:before {
     left: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
 }
-:host([dir='rtl']) #itemLink:focus-visible:before {
+:host([dir='rtl']) #item-link:focus-visible:before {
     left: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
 }
-#itemLink.focus-visible:before {
+#item-link.focus-visible:before {
     border-bottom: var(
             --spectrum-tabs-m-focus-ring-size,
             var(--spectrum-alias-border-size-thick)
@@ -116,7 +116,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     position: absolute;
     top: 0;
 }
-#itemLink:focus-visible:before {
+#item-link:focus-visible:before {
     border-bottom: var(
             --spectrum-tabs-m-focus-ring-size,
             var(--spectrum-alias-border-size-thick)
@@ -136,19 +136,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     position: absolute;
     top: 0;
 }
-:host([dir='ltr']) #itemLink ::slotted([slot='icon']) {
+:host([dir='ltr']) #item-link ::slotted([slot='icon']) {
     margin-right: var(
         --spectrum-sidenav-icon-gap,
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=ltr] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
 }
-:host([dir='rtl']) #itemLink ::slotted([slot='icon']) {
+:host([dir='rtl']) #item-link ::slotted([slot='icon']) {
     margin-left: var(
         --spectrum-sidenav-icon-gap,
         var(--spectrum-global-dimension-size-100)
     ); /* [dir=rtl] .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
 }
-#itemLink ::slotted([slot='icon']) {
+#item-link ::slotted([slot='icon']) {
     flex-shrink: 0; /* .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon */
 }
 :host([dir='ltr']) .spectrum-SideNav-heading {
@@ -163,7 +163,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='rtl']) .spectrum-SideNav-heading {
     margin-right: 0; /* [dir=rtl] .spectrum-SideNav-heading */
 }
-:host([dir='ltr']) .spectrum-SideNav--multiLevel #list #itemLink {
+:host([dir='ltr']) .spectrum-SideNav--multiLevel #list #item-link {
     padding-left: calc(
         var(
                 --spectrum-sidenav-multilevel-item-margin-left,
@@ -175,7 +175,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     ); /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
-:host([dir='rtl']) .spectrum-SideNav--multiLevel #list #itemLink {
+:host([dir='rtl']) .spectrum-SideNav--multiLevel #list #item-link {
     padding-right: calc(
         var(
                 --spectrum-sidenav-multilevel-item-margin-left,
@@ -187,7 +187,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     ); /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
-:host([dir='ltr']) .spectrum-SideNav--multiLevel #list #list #itemLink {
+:host([dir='ltr']) .spectrum-SideNav--multiLevel #list #list #item-link {
     padding-left: calc(
         var(
                 --spectrum-sidenav-multilevel-item-margin-left,
@@ -199,7 +199,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     ); /* [dir=ltr] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
-:host([dir='rtl']) .spectrum-SideNav--multiLevel #list #list #itemLink {
+:host([dir='rtl']) .spectrum-SideNav--multiLevel #list #list #item-link {
     padding-right: calc(
         var(
                 --spectrum-sidenav-multilevel-item-margin-left,
@@ -211,7 +211,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     ); /* [dir=rtl] .spectrum-SideNav--multiLevel .spectrum-SideNav .spectrum-SideNav .spectrum-SideNav-itemLink */
 }
-:host([selected]) > #itemLink {
+:host([selected]) > #item-link {
     background-color: var(
         --spectrum-sidenav-item-background-color-selected,
         var(--spectrum-alias-highlight-hover)
@@ -221,13 +221,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-hover)
     ); /* .spectrum-SideNav-item.is-selected>.spectrum-SideNav-itemLink */
 }
-.is-active > #itemLink {
+.is-active > #item-link {
     background-color: var(
         --spectrum-sidenav-item-background-color-down,
         var(--spectrum-alias-highlight-hover)
     ); /* .spectrum-SideNav-item .is-active>.spectrum-SideNav-itemLink */
 }
-:host([disabled]) #itemLink {
+:host([disabled]) #item-link {
     background-color: var(
         --spectrum-sidenav-item-background-color-disabled,
         var(--spectrum-alias-background-color-transparent)
@@ -239,7 +239,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     cursor: default;
     pointer-events: none;
 }
-#itemLink {
+#item-link {
     background-color: var(
         --spectrum-sidenav-item-background-color,
         var(--spectrum-alias-background-color-transparent)
@@ -249,7 +249,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color)
     );
 }
-#itemLink:hover {
+#item-link:hover {
     background-color: var(
         --spectrum-sidenav-item-background-color-hover,
         var(--spectrum-alias-highlight-hover)
@@ -259,13 +259,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-hover)
     );
 }
-#itemLink:active {
+#item-link:active {
     background-color: var(
         --spectrum-sidenav-item-background-color-down,
         var(--spectrum-alias-highlight-hover)
     ); /* .spectrum-SideNav-itemLink:active */
 }
-#itemLink.focus-visible {
+#item-link.focus-visible {
     background-color: var(
         --spectrum-sidenav-item-background-color-key-focus,
         var(--spectrum-alias-highlight-hover)
@@ -275,7 +275,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-hover)
     );
 }
-#itemLink:focus-visible {
+#item-link:focus-visible {
     background-color: var(
         --spectrum-sidenav-item-background-color-key-focus,
         var(--spectrum-alias-highlight-hover)
@@ -285,13 +285,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-text-color-hover)
     );
 }
-#itemLink.focus-visible:before {
+#item-link.focus-visible:before {
     border-color: var(
         --spectrum-sidenav-item-border-color-key-focus,
         var(--spectrum-alias-border-color-key-focus)
     ); /* .spectrum-SideNav-itemLink.focus-ring:before */
 }
-#itemLink:focus-visible:before {
+#item-link:focus-visible:before {
     border-color: var(
         --spectrum-sidenav-item-border-color-key-focus,
         var(--spectrum-alias-border-color-key-focus)

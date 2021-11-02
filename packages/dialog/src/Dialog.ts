@@ -145,9 +145,9 @@ export class Dialog extends FocusVisiblePolyfillMixin(
                 ${this.hasButtons
                     ? html`
                           <sp-button-group
-                              class="buttonGroup ${this.hasFooter
+                              class="button-group ${this.hasFooter
                                   ? ''
-                                  : 'buttonGroup--noFooter'}"
+                                  : 'button-group--noFooter'}"
                           >
                               <slot name="button"></slot>
                           </sp-button-group>

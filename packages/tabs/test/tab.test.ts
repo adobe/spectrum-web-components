@@ -41,7 +41,7 @@ describe('Tab', () => {
         const firstTab = el.querySelector('sp-tab') as Tab;
         const label = firstTab.shadowRoot
             ? (firstTab.shadowRoot.querySelector(
-                  '#itemLabel'
+                  '#item-label'
               ) as HTMLLabelElement)
             : (firstTab.querySelector('#itemLabel') as HTMLLabelElement);
         expect(label.textContent).to.include('Tab 1');

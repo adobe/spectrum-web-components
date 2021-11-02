@@ -22,7 +22,7 @@ governing permissions and limitations under the License.
      * iOS and Safari issue. However, it results in incorrect styling
      * when applied in :host
      */
-    -webkit-appearance: none;
+    -webkit-appearance: none; /* stylelint-disable-line */
 }
 
 :host([disabled]) {

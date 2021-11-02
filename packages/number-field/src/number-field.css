@@ -78,6 +78,7 @@ sp-field-button {
     /* [dir=ltr] .spectrum-Textfield--quiet.spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
     right: var(--spectrum-stepper-button-width);
 }
+
 :host([dir='rtl'][quiet][valid]:not([hide-stepper])) .icon {
     /* [dir=rtl] .spectrum-Textfield--quiet.spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
     left: var(--spectrum-stepper-button-width);

@@ -213,7 +213,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         const valueLabelVisible =
             this.labelVisibility === 'none' || this.labelVisibility === 'text';
         return html`
-            <div id="labelContainer">
+            <div id="label-container">
                 <sp-field-label
                     class=${classMap({
                         'visually-hidden': textLabelVisible,

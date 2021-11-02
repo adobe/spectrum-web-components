@@ -584,7 +584,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .input:focus {
     outline: none; /* .spectrum-Slider-input:focus */
 }
-#labelContainer {
+#label-container {
     display: flex; /* .spectrum-Slider-labelContainer */
     font-size: var(--spectrum-slide-label-text-size);
     line-height: var(--spectrum-slide-label-text-line-height);
@@ -767,7 +767,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-400)
     ); /* .spectrum-Slider-track:before */
 }
-#labelContainer {
+#label-container {
     color: var(
         --spectrum-slider-m-label-text-color
     ); /* .spectrum-Slider-labelContainer */
@@ -860,7 +860,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-gray-700)
     ); /* .spectrum-Slider--range .spectrum-Slider-track:not(:first-of-type):not(:last-of-type):before */
 }
-:host([disabled]) #labelContainer {
+:host([disabled]) #label-container {
     color: var(
         --spectrum-slider-m-label-text-color-disabled
     ); /* .spectrum-Slider.is-disabled .spectrum-Slider-labelContainer */

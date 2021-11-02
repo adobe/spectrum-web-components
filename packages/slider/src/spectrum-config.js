@@ -53,7 +53,7 @@ const config = {
                 },
                 {
                     selector: '.spectrum-Slider-labelContainer',
-                    name: 'labelContainer',
+                    name: 'label-container',
                 },
                 {
                     selector: '.spectrum-Slider-value',

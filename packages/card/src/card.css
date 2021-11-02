@@ -22,15 +22,15 @@ governing permissions and limitations under the License.
     pointer-events: none;
 }
 
-.actionButton {
+.action-button {
     flex-grow: 0;
 }
 
-:host([dir='ltr']) .actionButton {
+:host([dir='ltr']) .action-button {
     margin-left: auto;
 }
 
-:host([dir='rtl']) .actionButton {
+:host([dir='rtl']) .action-button {
     margin-right: auto;
 }
 

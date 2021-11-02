@@ -48,7 +48,7 @@ const config = {
             ids: [
                 {
                     selector: '.spectrum-SideNav-itemLink',
-                    name: 'itemLink',
+                    name: 'item-link',
                 },
                 {
                     // Sub-lists also inherit from .spectrum-SideNav

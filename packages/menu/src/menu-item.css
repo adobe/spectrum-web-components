@@ -49,16 +49,19 @@ governing permissions and limitations under the License.
    * [dir=ltr] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
     margin-right: var(--spectrum-listitem-texticon-icon-gap);
 }
+
 :host([dir='rtl']) ::slotted([slot='icon']) {
     /* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=rtl] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
     margin-left: var(--spectrum-listitem-texticon-icon-gap);
 }
+
 :host([dir='rtl']) slot[name='icon'] + #label {
     /* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=rtl] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
     margin-right: 0;
 }
+
 :host([dir='ltr']) slot[name='icon'] + #label {
     /* [dir=ltr] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=ltr] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */

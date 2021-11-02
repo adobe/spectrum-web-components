@@ -55,7 +55,7 @@ export class Card extends LikeAnchor(
             validSizes: ['s', 'm'],
         }
     )
- ) {
+) {
     public static get styles(): CSSResultArray {
         return [headingStyles, detailStyles, cardStyles];
     }
@@ -257,7 +257,7 @@ export class Card extends LikeAnchor(
                     ${this.variant !== 'quiet' || this.size !== 's'
                         ? html`
                               <div
-                                  class="actionButton"
+                                  class="action-button"
                                   @pointerdown=${this.stopPropagationOnHref}
                               >
                                   <slot name="actions"></slot>
@@ -288,7 +288,7 @@ export class Card extends LikeAnchor(
             ${this.toggles
                 ? html`
                       <sp-quick-actions
-                          class="quickActions"
+                          class="quick-actions"
                           @pointerdown=${this.stopPropagationOnHref}
                       >
                           <sp-checkbox

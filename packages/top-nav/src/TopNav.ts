@@ -98,7 +98,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
             <div @click=${this.onClick} id="list">
                 <slot @slotchange=${this.onSlotChange}></slot>
                 <div
-                    id="selectionIndicator"
+                    id="selection-indicator"
                     class=${ifDefined(
                         this.shouldAnimate ? undefined : 'first-position'
                     )}
