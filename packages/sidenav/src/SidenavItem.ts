@@ -108,7 +108,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     }
 
     public get focusElement(): HTMLElement {
-        return this.shadowRoot.querySelector('#itemLink') as HTMLElement;
+        return this.shadowRoot.querySelector('#item-link') as HTMLElement;
     }
 
     protected update(changes: PropertyValues): void {
@@ -127,7 +127,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                 rel=${ifDefined(this.rel)}
                 data-level="${this.depth}"
                 @click="${this.handleClick}"
-                id="itemLink"
+                id="item-link"
                 aria-current=${ifDefined(
                     this.selected && this.href ? 'page' : undefined
                 )}

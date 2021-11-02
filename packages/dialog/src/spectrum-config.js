@@ -115,11 +115,11 @@ const config = {
                 },
                 {
                     selector: '.spectrum-Dialog-buttonGroup',
-                    name: 'buttonGroup',
+                    name: 'button-group',
                 },
                 {
                     selector: '.spectrum-Dialog-buttonGroup--noFooter',
-                    name: 'buttonGroup--noFooter',
+                    name: 'button-group--noFooter',
                 },
             ],
             complexSelectors: [

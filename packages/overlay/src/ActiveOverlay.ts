@@ -56,7 +56,7 @@ type OverlayStateType =
     | 'hiding'
     | 'dispose'
     | 'disposed';
-type ContentAnimation = 'spOverlayFadeIn' | 'spOverlayFadeOut';
+type ContentAnimation = 'sp-overlay-fade-in' | 'sp-overlay-fade-out';
 
 const stateMachine: {
     initial: OverlayStateType;
@@ -305,7 +305,7 @@ export class ActiveOverlay extends SpectrumElement {
 
         this.feature();
         this.updateOverlayPosition()
-            .then(() => this.applyContentAnimation('spOverlayFadeIn'))
+            .then(() => this.applyContentAnimation('sp-overlay-fade-in'))
             .then(() => {
                 if (this.receivesFocus) {
                     this.focus();
@@ -435,7 +435,7 @@ export class ActiveOverlay extends SpectrumElement {
     public async hide(animated = true): Promise<void> {
         this.state = 'hiding';
         if (animated) {
-            await this.applyContentAnimation('spOverlayFadeOut');
+            await this.applyContentAnimation('sp-overlay-fade-out');
         }
         this.state = 'dispose';
     }

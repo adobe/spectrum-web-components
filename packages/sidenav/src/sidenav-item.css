@@ -34,12 +34,12 @@ governing permissions and limitations under the License.
     );
 }
 
-#itemLink {
+#item-link {
     font-weight: var(--spectrum-web-component-sidenav-font-weight);
     justify-content: start;
 }
 
-:host([dir='ltr']) #itemLink[data-level='1'] {
+:host([dir='ltr']) #item-link[data-level='1'] {
     padding-left: calc(
         var(
                 --spectrum-sidenav-multilevel-item-indentation-level1,
@@ -52,7 +52,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([dir='ltr']) #itemLink[data-level='2'] {
+:host([dir='ltr']) #item-link[data-level='2'] {
     padding-left: calc(
         var(
                 --spectrum-sidenav-multilevel-item-indentation-level2,
@@ -65,7 +65,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([dir='rtl']) #itemLink[data-level='1'] {
+:host([dir='rtl']) #item-link[data-level='1'] {
     padding-right: calc(
         var(
                 --spectrum-sidenav-multilevel-item-indentation-level1,
@@ -78,7 +78,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([dir='rtl']) #itemLink[data-level='2'] {
+:host([dir='rtl']) #item-link[data-level='2'] {
     padding-right: calc(
         var(
                 --spectrum-sidenav-multilevel-item-indentation-level2,

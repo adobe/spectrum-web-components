@@ -47,11 +47,11 @@ sp-field-label {
         'slider number';
 }
 
-:host([editable]) #labelContainer {
+:host([editable]) #label-container {
     grid-area: label;
 }
 
-:host([editable]) #labelContainer + div {
+:host([editable]) #label-container + div {
     grid-area: slider;
 }
 
@@ -80,7 +80,7 @@ sp-field-label {
 }
 
 :host([editable]) output {
-    opacity: 0;
+    opacity: 0%;
 }
 
 :host([disabled]) {
@@ -201,7 +201,7 @@ sp-field-label {
     margin-right: auto;
 }
 
-:host([label-visibility='none']) #labelContainer {
+:host([label-visibility='none']) #label-container {
     padding: 0;
     margin: 0;
 }

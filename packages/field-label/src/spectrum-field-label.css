@@ -130,19 +130,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-top: var(--spectrum-fieldlabel-padding-top);
     vertical-align: top;
 }
-:host([dir='ltr']) .requiredIcon {
+:host([dir='ltr']) .required-icon {
     margin-left: var(
         --spectrum-fieldlabel-asterisk-gap
     ); /* [dir=ltr] .spectrum-FieldLabel-requiredIcon */
     margin-right: 0;
 }
-:host([dir='rtl']) .requiredIcon {
+:host([dir='rtl']) .required-icon {
     margin-left: 0;
     margin-right: var(
         --spectrum-fieldlabel-asterisk-gap
     ); /* [dir=rtl] .spectrum-FieldLabel-requiredIcon */
 }
-.requiredIcon {
+.required-icon {
     margin-bottom: 0;
     margin-top: 0; /* .spectrum-FieldLabel-requiredIcon */
 }
@@ -168,19 +168,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-100)
     );
 }
-:host([dir='ltr'][side-aligned='start']) .requiredIcon {
+:host([dir='ltr'][side-aligned='start']) .required-icon {
     margin-left: var(
         --spectrum-fieldlabel-asterisk-gap
     ); /* [dir=ltr] .spectrum-FieldLabel--left .spectrum-FieldLabel-requiredIcon */
     margin-right: 0;
 }
-:host([dir='rtl'][side-aligned='start']) .requiredIcon {
+:host([dir='rtl'][side-aligned='start']) .required-icon {
     margin-left: 0;
     margin-right: var(
         --spectrum-fieldlabel-asterisk-gap
     ); /* [dir=rtl] .spectrum-FieldLabel--left .spectrum-FieldLabel-requiredIcon */
 }
-:host([side-aligned='start']) .requiredIcon {
+:host([side-aligned='start']) .required-icon {
     margin-bottom: 0;
     margin-top: var(
         --spectrum-fieldlabel-m-side-asterisk-margin-y,
@@ -229,14 +229,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-FieldLabel.is-disabled,
    * .spectrum-Form-itemLabel.is-disabled */
 }
-:host([disabled]) .requiredIcon {
+:host([disabled]) .required-icon {
     color: var(
         --spectrum-fieldlabel-m-asterisk-color-disabled,
         var(--spectrum-alias-text-color-disabled)
     ); /* .spectrum-FieldLabel.is-disabled .spectrum-FieldLabel-requiredIcon,
    * .spectrum-Form-itemLabel.is-disabled .spectrum-FieldLabel-requiredIcon */
 }
-.requiredIcon {
+.required-icon {
     color: var(
         --spectrum-fieldlabel-m-asterisk-color,
         var(--spectrum-global-color-gray-600)

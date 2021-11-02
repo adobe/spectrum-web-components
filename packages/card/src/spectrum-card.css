@@ -236,13 +236,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     outline: none; /* .spectrum-Card:focus */
 }
 :host(:focus) .actions,
-:host(:focus) .quickActions,
+:host(:focus) .quick-actions,
 :host(:hover) .actions,
-:host(:hover) .quickActions,
+:host(:hover) .quick-actions,
 :host([focused]) .actions,
-:host([focused]) .quickActions,
+:host([focused]) .quick-actions,
 :host([selected]) .actions,
-:host([selected]) .quickActions {
+:host([selected]) .quick-actions {
     opacity: 1;
     pointer-events: all;
     visibility: visible; /* .spectrum-Card.is-focused .spectrum-Card-quickActions,
@@ -273,17 +273,17 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     top: var(--spectrum-card-actions-margin);
     visibility: hidden;
 }
-:host([dir='ltr']) .quickActions {
+:host([dir='ltr']) .quick-actions {
     left: var(
         --spectrum-card-checkbox-margin
     ); /* [dir=ltr] .spectrum-Card-quickActions */
 }
-:host([dir='rtl']) .quickActions {
+:host([dir='rtl']) .quick-actions {
     right: var(
         --spectrum-card-checkbox-margin
     ); /* [dir=rtl] .spectrum-Card-quickActions */
 }
-.quickActions {
+.quick-actions {
     height: var(
         --spectrum-quickactions-height,
         var(--spectrum-global-dimension-size-500)
@@ -296,8 +296,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-500)
     );
 }
-:host([dir='ltr']) .quickActions .checkbox,
-:host([dir='rtl']) .quickActions .checkbox {
+:host([dir='ltr']) .quick-actions .checkbox,
+:host([dir='rtl']) .quick-actions .checkbox {
     margin: 0; /* [dir=ltr] .spectrum-Card-quickActions .spectrum-Checkbox,
    * [dir=rtl] 
   .spectrum-Card-quickActions .spectrum-Checkbox */
@@ -440,7 +440,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     align-items: baseline;
     display: flex; /* .spectrum-Card-header */
 }
-.actionButton {
+.action-button {
     align-self: center;
     display: flex;
     flex: 1; /* .spectrum-Card-actionButton */

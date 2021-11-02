@@ -369,13 +369,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         -1 * var(--spectrum-tabs-focus-ring-padding-x)
     ); /* [dir=rtl] .spectrum-Tabs-item:before */
 }
-:host([dir='ltr']) #selectionIndicator {
+:host([dir='ltr']) #selection-indicator {
     left: 0; /* [dir=ltr] .spectrum-Tabs-selectionIndicator */
 }
-:host([dir='rtl']) #selectionIndicator {
+:host([dir='rtl']) #selection-indicator {
     right: 0; /* [dir=rtl] .spectrum-Tabs-selectionIndicator */
 }
-#selectionIndicator {
+#selection-indicator {
     border-radius: var(--spectrum-tabs-divider-border-radius);
     position: absolute; /* .spectrum-Tabs-selectionIndicator */
     transform-origin: top left;
@@ -408,7 +408,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-tabs-item-gap
     ); /* [dir=rtl] .spectrum-Tabs--horizontal .spectrum-Tabs-item+*:not(.spectrum-Tabs-selectionIndicator) */
 }
-:host([direction^='horizontal']) #selectionIndicator {
+:host([direction^='horizontal']) #selection-indicator {
     bottom: 0;
     bottom: calc(-1 * var(--spectrum-tabs-divider-size));
     height: var(--spectrum-tabs-divider-size);
@@ -494,23 +494,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     line-height: var(--spectrum-tabs-compact-vertical-item-height);
     margin-bottom: var(--spectrum-tabs-compact-vertical-item-gap);
 }
-:host([dir='ltr'][direction^='vertical']) #selectionIndicator {
+:host([dir='ltr'][direction^='vertical']) #selection-indicator {
     left: 0; /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
 }
-:host([dir='rtl'][direction^='vertical']) #selectionIndicator {
+:host([dir='rtl'][direction^='vertical']) #selection-indicator {
     right: 0; /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
 }
-:host([dir='ltr'][direction^='vertical']) #selectionIndicator {
+:host([dir='ltr'][direction^='vertical']) #selection-indicator {
     left: calc(
         -1 * var(--spectrum-tabs-vertical-divider-size)
     ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
 }
-:host([dir='rtl'][direction^='vertical']) #selectionIndicator {
+:host([dir='rtl'][direction^='vertical']) #selection-indicator {
     right: calc(
         -1 * var(--spectrum-tabs-vertical-divider-size)
     ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
 }
-:host([direction^='vertical']) #selectionIndicator {
+:host([direction^='vertical']) #selection-indicator {
     position: absolute; /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
     width: var(--spectrum-tabs-vertical-divider-size);
 }
@@ -532,7 +532,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-color-light)
     ); /* [dir=rtl] .spectrum-Tabs--vertical */
 }
-#selectionIndicator {
+#selection-indicator {
     background-color: var(
         --spectrum-tabs-m-selection-indicator-color,
         var(--spectrum-global-color-gray-900)
@@ -544,7 +544,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-border-color-transparent)
     ); /* .spectrum-Tabs--quiet */
 }
-:host([quiet]) #selectionIndicator {
+:host([quiet]) #selection-indicator {
     background-color: var(
         --spectrum-tabs-m-quiet-selection-indicator-color,
         var(--spectrum-global-color-gray-900)
@@ -568,8 +568,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * [dir=rtl] 
   .spectrum-Tabs--vertical.spectrum-Tabs--compact */
 }
-:host([direction^='vertical'][compact]) #list #selectionIndicator,
-:host([direction^='vertical'][quiet]) #list #selectionIndicator {
+:host([direction^='vertical'][compact]) #list #selection-indicator,
+:host([direction^='vertical'][quiet]) #list #selection-indicator {
     background-color: var(
         --spectrum-tabs-m-quiet-selection-indicator-color,
         var(--spectrum-global-color-gray-900)

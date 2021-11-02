@@ -26,6 +26,7 @@ textarea {
     left: 0;
     height: 100%;
     resize: none;
+    overflow: hidden;
 }
 
 :host([grows]) #sizer {
@@ -51,16 +52,13 @@ textarea {
         box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out;
     outline: none;
-    -webkit-appearance: none;
-    -moz-appearance: textfield;
+    -webkit-appearance: none; /* stylelint-disable-line */
+    -moz-appearance: textfield; /* stylelint-disable-line */
 }
 
 :host([grows][quiet]) #sizer {
     border-radius: var(--spectrum-textfield-quiet-texticon-border-radius);
-    border-top-width: 0;
-    border-bottom-width: var(--spectrum-textfield-quiet-texticon-border-size);
-    border-left-width: 0;
-    border-right-width: 0;
+    border-width: 0 0 var(--spectrum-textfield-quiet-texticon-border-size) 0;
     resize: none;
     overflow-y: hidden;
 }

@@ -416,12 +416,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         ease-out;
     vertical-align: top;
 }
-:host([dir='ltr']) .validationIcon {
+:host([dir='ltr']) .validation-icon {
     margin-left: var(
         --spectrum-picker-texticon-error-icon-margin-left
     ); /* [dir=ltr] .spectrum-Picker-validationIcon */
 }
-:host([dir='rtl']) .validationIcon {
+:host([dir='rtl']) .validation-icon {
     margin-right: var(
         --spectrum-picker-texticon-error-icon-margin-left
     ); /* [dir=rtl] .spectrum-Picker-validationIcon */
@@ -583,7 +583,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-semantic-negative-color-default)
     ); /* .spectrum-Picker.is-invalid */
 }
-:host([invalid]) #button .validationIcon {
+:host([invalid]) #button .validation-icon {
     color: var(
         --spectrum-picker-m-texticon-validation-icon-color-error,
         var(--spectrum-semantic-negative-icon-color)
@@ -643,10 +643,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #button:disabled .icon,
 #button:disabled .picker,
-#button:disabled .validationIcon,
+#button:disabled .validation-icon,
 :host([disabled]) #button .icon,
 :host([disabled]) #button .picker,
-:host([disabled]) #button .validationIcon {
+:host([disabled]) #button .validation-icon {
     color: var(
         --spectrum-picker-m-texticon-icon-color-disabled,
         var(--spectrum-alias-component-icon-color-disabled)

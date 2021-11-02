@@ -26,7 +26,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([disabled]) {
     cursor: default; /* .spectrum-Tabs-item.is-disabled */
 }
-:host([disabled]) #itemLabel {
+:host([disabled]) #item-label {
     cursor: default; /* .spectrum-Tabs-item.is-disabled .spectrum-Tabs-itemLabel */
 }
 :host(:not([vertical])) ::slotted([slot='icon']) {
@@ -34,12 +34,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-tabs-item-height
     ); /* .spectrum-Tabs-item .spectrum-Icon */
 }
-:host([dir='ltr']) slot[name='icon'] + #itemLabel {
+:host([dir='ltr']) slot[name='icon'] + #item-label {
     margin-left: calc(
         var(--spectrum-tabs-icon-gap) - var(--spectrum-global-dimension-size-40)
     ); /* [dir=ltr] .spectrum-Tabs-item .spectrum-Icon+.spectrum-Tabs-itemLabel */
 }
-:host([dir='rtl']) slot[name='icon'] + #itemLabel {
+:host([dir='rtl']) slot[name='icon'] + #item-label {
     margin-right: calc(
         var(--spectrum-tabs-icon-gap) - var(--spectrum-global-dimension-size-40)
     ); /* [dir=rtl] .spectrum-Tabs-item .spectrum-Icon+.spectrum-Tabs-itemLabel */
@@ -78,7 +78,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     position: absolute;
     top: 50%;
 }
-#itemLabel {
+#item-label {
     cursor: pointer; /* .spectrum-Tabs-itemLabel */
     display: inline-block;
     font-size: var(--spectrum-tabs-text-size);
@@ -86,7 +86,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     text-decoration: none;
     vertical-align: top;
 }
-#itemLabel:empty {
+#item-label:empty {
     display: none; /* .spectrum-Tabs-itemLabel:empty */
 }
 :host {

@@ -63,7 +63,7 @@ const config = {
             ids: [
                 {
                     selector: '.spectrum-Tabs-selectionIndicator',
-                    name: 'selectionIndicator',
+                    name: 'selection-indicator',
                 },
             ],
             slots: [
@@ -106,7 +106,7 @@ const config = {
             ids: [
                 {
                     selector: '.spectrum-Tabs-itemLabel',
-                    name: 'itemLabel',
+                    name: 'item-label',
                 },
             ],
             slots: [
