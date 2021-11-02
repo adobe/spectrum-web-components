@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/quick-actions",
-    "version": "0.4.9",
+    "version": "0.5.0",
     "publishConfig": {
         "access": "public"
     },

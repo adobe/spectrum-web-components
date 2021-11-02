@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.11...@spectrum-web-components/icons-workflow@0.7.0) (2021-11-02)
+
+### Features
+
+-   track the associated Spectrum CSS package ([86b1be5](https://github.com/adobe/spectrum-web-components/commit/86b1be5d1d2b6e870049a8642dabc3520c359716))
+
 ## [0.6.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons-workflow@0.6.10...@spectrum-web-components/icons-workflow@0.6.11) (2021-09-20)
 
 **Note:** Version bump only for package @spectrum-web-components/icons-workflow

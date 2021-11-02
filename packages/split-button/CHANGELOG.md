@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.5.11...@spectrum-web-components/split-button@0.6.0) (2021-11-02)
+
+### Bug Fixes
+
+-   **picker:** use "modal" as the menu overlay interaction ([c8fbbe2](https://github.com/adobe/spectrum-web-components/commit/c8fbbe27b19702909855575b1afd38fb064e8378))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
 ## [0.5.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.5.10...@spectrum-web-components/split-button@0.5.11) (2021-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/split-button

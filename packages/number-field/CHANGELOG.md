@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.1.10...@spectrum-web-components/number-field@0.2.0) (2021-11-02)
+
+### Bug Fixes
+
+-   **number-field:** prevent changes by user when readonly ([64a7e93](https://github.com/adobe/spectrum-web-components/commit/64a7e93ea81177a545983fdf88a9162ab3bf1ee6))
+-   **number-field:** readonly - no pointer events for stepper buttons ([05364fb](https://github.com/adobe/spectrum-web-components/commit/05364fb491b381d5ed1be60dc63b9c4158bfbe87))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
 ## [0.1.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.1.9...@spectrum-web-components/number-field@0.1.10) (2021-10-12)
 
 ### Bug Fixes

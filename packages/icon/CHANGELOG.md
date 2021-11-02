@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.9.11...@spectrum-web-components/icon@0.10.0) (2021-11-02)
+
+### Bug Fixes
+
+-   **icon:** prevent async race resulting in multiple inner SVG elements ([b05e2d5](https://github.com/adobe/spectrum-web-components/commit/b05e2d5c7891026fa5b9585b03444b6728a30d0a))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
 ## [0.9.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.9.10...@spectrum-web-components/icon@0.9.11) (2021-09-20)
 
 **Note:** Version bump only for package @spectrum-web-components/icon

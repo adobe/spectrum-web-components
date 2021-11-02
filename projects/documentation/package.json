@@ -1,6 +1,6 @@
 {
     "name": "documentation",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "private": true,
     "description": "The documentation site for Spectrum Web Components",
     "license": "Apache-2.0",
@@ -24,7 +24,7 @@
         "watch:serve": "wds --root-dir=dist --watch"
     },
     "dependencies": {
-        "@spectrum-web-components/bundle": "^0.22.4"
+        "@spectrum-web-components/bundle": "^0.22.11"
     },
     "devDependencies": {
         "@11ty/eleventy": "beta",

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.9...@spectrum-web-components/shared@0.12.10) (2021-11-02)
+
+### Bug Fixes
+
+-   centralize updated first focusable selector ([300e84c](https://github.com/adobe/spectrum-web-components/commit/300e84c404d031ddad92b4952e48ad3332c4aafd))
+
 ## [0.12.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.8...@spectrum-web-components/shared@0.12.9) (2021-10-12)
 
 ### Bug Fixes

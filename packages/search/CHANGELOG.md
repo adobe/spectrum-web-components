@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/search@0.8.18...@spectrum-web-components/search@0.9.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
 ## [0.8.18](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/search@0.8.17...@spectrum-web-components/search@0.8.18) (2021-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/search

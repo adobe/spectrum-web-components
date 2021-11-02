@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.18...@spectrum-web-components/popover@0.10.0) (2021-11-02)
+
+### Bug Fixes
+
+-   update screen reader interface with menu items list ([16756b5](https://github.com/adobe/spectrum-web-components/commit/16756b56c0f7f9561426acc202997fb098e8f19a))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
 ## [0.9.18](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.17...@spectrum-web-components/popover@0.9.18) (2021-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/popover

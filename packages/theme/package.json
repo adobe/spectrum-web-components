@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/theme",
-    "version": "0.8.14",
+    "version": "0.8.15",
     "publishConfig": {
         "access": "public"
     },
@@ -57,7 +57,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.4.5",
-        "@spectrum-web-components/styles": "^0.9.11",
+        "@spectrum-web-components/styles": "^0.10.0",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

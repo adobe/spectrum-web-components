@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.7.5...@spectrum-web-components/picker@0.8.0) (2021-11-02)
+
+### Bug Fixes
+
+-   update screen reader interface with menu items list ([16756b5](https://github.com/adobe/spectrum-web-components/commit/16756b56c0f7f9561426acc202997fb098e8f19a))
+-   **picker:** use "modal" as the menu overlay interaction ([c8fbbe2](https://github.com/adobe/spectrum-web-components/commit/c8fbbe27b19702909855575b1afd38fb064e8378))
+-   include late added items in the item list for the Picker ([9232eb1](https://github.com/adobe/spectrum-web-components/commit/9232eb1009ccbcdf6166e48928bd8416c23d50b2))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
 ## [0.7.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.7.4...@spectrum-web-components/picker@0.7.5) (2021-10-12)
 
 **Note:** Version bump only for package @spectrum-web-components/picker
