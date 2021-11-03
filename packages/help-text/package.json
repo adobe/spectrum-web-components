@@ -1,0 +1,63 @@
+{
+    "name": "@spectrum-web-components/help-text",
+    "version": "0.0.1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "Web component implementation of a Spectrum design HelpText",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/help-text"
+    },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/help-text",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.js",
+        "./src/*": "./src/*",
+        "./help-text-manager": "./src/help-text-manager.js",
+        "./help-text-manager.js": "./src/help-text-manager.js",
+        "./HelpTextManager": "./src/HelpTextManager.js",
+        "./HelpTextManager.js": "./src/HelpTextManager.js",
+        "./package.json": "./package.json",
+        "./sp-help-text": "./sp-help-text.js",
+        "./sp-help-text.js": "./sp-help-text.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "^0.5.0",
+        "@spectrum-web-components/icons-workflow": "^0.8.0",
+        "tslib": "^2.0.0"
+    },
+    "devDependencies": {
+        "@spectrum-css/helptext": "^1.0.2"
+    },
+    "types": "./src/index.d.ts",
+    "customElementsManifest": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js"
+    ]
+}

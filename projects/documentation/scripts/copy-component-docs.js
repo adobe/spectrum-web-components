@@ -86,6 +86,19 @@ async function main() {
                 (declaration) => declaration.name === 'IconBase'
             );
         }
+        if (!tag && componentName.startsWith('textarea')) {
+            tag = findDeclaration(
+                customElements,
+                (declaration) => declaration.name === 'sp-textfield'
+            );
+        }
+        if (!tag && componentName.startsWith('help-text-mixin')) {
+            componentHeading = 'Help Text Mixin';
+            tag = findDeclaration(
+                customElements,
+                (declaration) => declaration.name === 'HelpTextManagedElement'
+            );
+        }
         const componentPath = path.resolve(destinationPath, componentName);
         fs.mkdirSync(componentPath, { recursive: true });
         // Support the full page delivery of "Examples" and "API"

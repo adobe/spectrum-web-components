@@ -32,6 +32,7 @@ export * from '@spectrum-web-components/divider';
 export * from '@spectrum-web-components/dropzone';
 export * from '@spectrum-web-components/field-group';
 export * from '@spectrum-web-components/field-label';
+export * from '@spectrum-web-components/help-text';
 export * from '@spectrum-web-components/icon';
 export * from '@spectrum-web-components/icons';
 export * from '@spectrum-web-components/illustrated-message';

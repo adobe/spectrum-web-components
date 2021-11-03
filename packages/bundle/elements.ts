@@ -35,6 +35,7 @@ import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/dropzone/sp-dropzone.js';
 import '@spectrum-web-components/field-group/sp-field-group.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons/sp-icons-large.js';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
