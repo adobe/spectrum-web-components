@@ -153,165 +153,21 @@ jobs:
                   branch=$(npx slugify-cli $branch)
                   yarn netlify deploy --alias=$branch
 
-    visual-lightest-medium-ltr:
+    visual:
         executor: node
-
+        parameters:
+            color:
+                type: string
+            scale:
+                type: string
+            dir:
+                type: string
         steps:
             - downstream
             - run-regressions:
-                  regression_color: lightest
-                  regression_scale: medium
-                  regression_dir: ltr
-
-    visual-lightest-medium-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: lightest
-                  regression_scale: medium
-                  regression_dir: rtl
-
-    visual-lightest-large-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: lightest
-                  regression_scale: large
-                  regression_dir: ltr
-
-    visual-lightest-large-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: lightest
-                  regression_scale: large
-                  regression_dir: rtl
-
-    visual-light-medium-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: light
-                  regression_scale: medium
-                  regression_dir: ltr
-
-    visual-light-medium-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: light
-                  regression_scale: medium
-                  regression_dir: rtl
-
-    visual-light-large-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: light
-                  regression_scale: large
-                  regression_dir: ltr
-
-    visual-light-large-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: light
-                  regression_scale: large
-                  regression_dir: rtl
-
-    visual-dark-medium-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: dark
-                  regression_scale: medium
-                  regression_dir: ltr
-
-    visual-dark-medium-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: dark
-                  regression_scale: medium
-                  regression_dir: rtl
-
-    visual-dark-large-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: dark
-                  regression_scale: large
-                  regression_dir: ltr
-
-    visual-dark-large-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: dark
-                  regression_scale: large
-                  regression_dir: rtl
-
-    visual-darkest-medium-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: darkest
-                  regression_scale: medium
-                  regression_dir: ltr
-
-    visual-darkest-medium-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: darkest
-                  regression_scale: medium
-                  regression_dir: rtl
-
-    visual-darkest-large-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: darkest
-                  regression_scale: large
-                  regression_dir: ltr
-
-    visual-darkest-large-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: darkest
-                  regression_scale: large
-                  regression_dir: rtl
+                  regression_color: << parameters.color >>
+                  regression_scale: << parameters.scale >>
+                  regression_dir: << parameters.dir >>
 
     docs-publish:
         executor: node
@@ -334,82 +190,13 @@ workflows:
         jobs:
             - test
             - docs-preview
-            - visual-lightest-medium-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-lightest-large-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-light-medium-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-light-large-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-dark-medium-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-dark-large-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-darkest-medium-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-darkest-large-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-lightest-medium-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-lightest-large-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-light-medium-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-light-large-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-dark-medium-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-dark-large-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-darkest-medium-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-darkest-large-rtl:
+            - visual:
+                  name: visual-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
+                  matrix:
+                      parameters:
+                          color: [lightest, light, dark, darkest]
+                          scale: [medium, large]
+                          dir: [ltr, rtl]
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
