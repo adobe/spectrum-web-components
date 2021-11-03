@@ -30,6 +30,7 @@
         { "path": "../dropzone" },
         { "path": "../field-group" },
         { "path": "../field-label" },
+        { "path": "../help-text" },
         { "path": "../icon" },
         { "path": "../icons" },
         { "path": "../icons-ui" },
