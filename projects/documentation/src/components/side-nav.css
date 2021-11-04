@@ -48,6 +48,7 @@ aside {
 
     .scrim {
         z-index: 10;
+        touch-action: none;
     }
 }
 
