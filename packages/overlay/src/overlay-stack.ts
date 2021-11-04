@@ -84,6 +84,9 @@ export class OverlayStack {
             #holder[hidden] {
                 display: none !important;
             }
+            #actual[aria-hidden] {
+                touch-action: none;
+            }
             #actual[tabindex="-1"] ::slotted(*) {
                 pointer-events: none;  /* just in case? */
             }
