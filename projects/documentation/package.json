@@ -10,7 +10,7 @@
     "scripts": {
         "build": "yarn build:tsc && yarn build-search-index && yarn build:move-css && yarn build:eleventy && yarn build:postcss && yarn build:rollup",
         "build-search-index": "node scripts/build-search-index.js",
-        "build:eleventy": "eleventy --config=.eleventy.cjs",
+        "build:eleventy": "eleventy --config=.eleventy.cjs --incremental",
         "build:move-css": "cp src/components/*.css _site/src/components/",
         "build:postcss": "postcss src/components/{styles,fonts}.css -d dist/ --config src/postcss.config.cjs",
         "build:production": "SWC_DIR=spectrum-web-components yarn build",
