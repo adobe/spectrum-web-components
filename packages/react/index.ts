@@ -86,3 +86,4 @@ export * from './src/Underlay';
 
 /** 手动添加 */
 export * from './src/Picker';
+export { Overlay } from '@iliad-ui/bundle';
