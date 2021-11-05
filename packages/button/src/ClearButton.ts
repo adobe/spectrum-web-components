@@ -14,8 +14,8 @@ import {
     CSSResultArray,
     TemplateResult,
     html,
-    property,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { StyledButton } from './StyledButton.js';
 import buttonStyles from './clear-button.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross75.js';

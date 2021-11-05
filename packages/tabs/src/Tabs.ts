@@ -12,13 +12,13 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    property,
     CSSResultArray,
     TemplateResult,
     PropertyValues,
-    ifDefined,
     SizedMixin,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Tab } from './Tab.js';
 import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
 

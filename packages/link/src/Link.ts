@@ -13,10 +13,12 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     TemplateResult,
-    query,
-    property,
     SizedMixin,
 } from '@spectrum-web-components/base';
+import {
+    query,
+    property,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 

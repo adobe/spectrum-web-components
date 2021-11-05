@@ -15,8 +15,8 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
-    property,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import styles from './button-group.css.js';
 

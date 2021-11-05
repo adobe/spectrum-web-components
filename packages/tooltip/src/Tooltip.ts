@@ -15,10 +15,12 @@ import {
     CSSResultArray,
     TemplateResult,
     SpectrumElement,
-    property,
-    query,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 import type {
     OverlayDisplayQueryDetail,
     Placement,

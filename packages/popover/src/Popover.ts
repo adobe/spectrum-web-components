@@ -14,10 +14,10 @@ import {
     CSSResultArray,
     html,
     nothing,
-    property,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import {
     OverlayDisplayQueryDetail,
     Placement,

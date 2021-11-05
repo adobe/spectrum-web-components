@@ -14,11 +14,11 @@ import {
     CSSResultArray,
     TemplateResult,
     html,
-    property,
     PropertyValues,
     SizedMixin,
     ElementSize,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { CheckboxBase } from './CheckboxBase.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';

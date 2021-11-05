@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 import {
     ReactiveElement,
-    property,
     TemplateResult,
     html,
-    ifDefined,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

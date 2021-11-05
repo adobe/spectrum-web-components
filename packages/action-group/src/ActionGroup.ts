@@ -15,9 +15,9 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
-    property,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { ActionButton } from '@spectrum-web-components/action-button';
 
 import styles from './action-group.css.js';

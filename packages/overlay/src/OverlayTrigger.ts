@@ -13,11 +13,11 @@ governing permissions and limitations under the License.
 import {
     html,
     LitElement,
-    property,
     CSSResultArray,
     TemplateResult,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { LongpressEvent } from '@spectrum-web-components/action-button';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 

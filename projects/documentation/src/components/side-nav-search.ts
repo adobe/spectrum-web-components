@@ -15,10 +15,12 @@ import {
     html,
     CSSResultArray,
     TemplateResult,
+} from '@spectrum-web-components/base';
+import {
     property,
     query,
     customElement,
-} from 'lit-element';
+} from '@spectrum-web-components/base/src/decorators.js';
 import sideNavSearchMenuStyles from './side-nav-search.css';
 import { Search } from '@spectrum-web-components/search';
 import { Popover } from '@spectrum-web-components/popover';

@@ -12,11 +12,13 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    property,
     TemplateResult,
-    queryAssignedNodes,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    queryAssignedNodes,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { FieldGroup } from '@spectrum-web-components/field-group';
 
@@ -123,9 +125,9 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
             case 'PageUp':
             case 'PageDown':
                 const tagsSiblings = [
-                    ...(this.getRootNode() as Document).querySelectorAll<RadioGroup>(
-                        'sp-radio-group'
-                    ),
+                    ...(
+                        this.getRootNode() as Document
+                    ).querySelectorAll<RadioGroup>('sp-radio-group'),
                 ];
                 if (tagsSiblings.length < 2) {
                     return;

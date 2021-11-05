@@ -13,14 +13,16 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     TemplateResult,
-    property,
     PropertyValues,
     html,
-    query,
-    ifDefined,
     SizedMixin,
     ElementSize,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/menu/sp-menu.js';

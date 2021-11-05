@@ -12,10 +12,10 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    query,
     TemplateResult,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import { query } from '@spectrum-web-components/base/src/decorators.js';
 
 import { Iconset } from './iconset.js';
 

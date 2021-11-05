@@ -22,6 +22,12 @@
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*",
+        "./decorators": "./src/decorators.js",
+        "./decorators.js": "./src/decorators.js",
+        "./directives": "./src/directives.js",
+        "./directives.js": "./src/directives.js",
+        "./html": "./src/html.js",
+        "./html.js": "./src/html.js",
         "./streaming-listener": "./src/streaming-listener.js",
         "./streaming-listener.js": "./src/streaming-listener.js",
         "./package.json": "./package.json"

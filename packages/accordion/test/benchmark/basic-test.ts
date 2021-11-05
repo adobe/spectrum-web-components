@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
-import { html } from '@spectrum-web-components/base';
+import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`

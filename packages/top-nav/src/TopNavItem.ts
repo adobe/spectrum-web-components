@@ -15,10 +15,12 @@ import {
     CSSResultArray,
     TemplateResult,
     PropertyValues,
-    ifDefined,
+} from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
     property,
     query,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable, LikeAnchor } from '@spectrum-web-components/shared';
 
 import itemStyles from '@spectrum-web-components/tabs/src/tab.css.js';

@@ -15,9 +15,9 @@ import {
     CSSResultArray,
     TemplateResult,
     SpectrumElement,
-    property,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';

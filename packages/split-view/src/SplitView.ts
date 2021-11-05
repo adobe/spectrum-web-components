@@ -15,14 +15,18 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
-    property,
     PropertyValues,
-    ifDefined,
-    query,
     nothing,
     LitElement,
-    classMap,
 } from '@spectrum-web-components/base';
+import {
+    classMap,
+    ifDefined,
+} from '@spectrum-web-components/base/src/directives.js';
+import {
+    query,
+    property,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 
 import { WithSWCResizeObserver } from './types';
@@ -120,8 +124,7 @@ export class SplitView extends SpectrumElement {
 
     public constructor() {
         super();
-        const RO = ((window as unknown) as WithSWCResizeObserver)
-            .ResizeObserver;
+        const RO = (window as unknown as WithSWCResizeObserver).ResizeObserver;
         if (RO) {
             this.observer = new RO(() => {
                 this.rect = undefined;

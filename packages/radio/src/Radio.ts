@@ -12,13 +12,15 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    property,
-    query,
     CSSResultArray,
     TemplateResult,
     PropertyValues,
     SpectrumElement,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
 import radioStyles from './radio.css.js';
