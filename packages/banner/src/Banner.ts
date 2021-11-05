@@ -13,10 +13,10 @@ governing permissions and limitations under the License.
 import {
     html,
     SpectrumElement,
-    property,
     CSSResultArray,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import bannerStyles from './banner.css.js';
 

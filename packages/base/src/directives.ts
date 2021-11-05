@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '@spectrum-web-components/meter/sp-meter.js';
-import { html } from 'lit';
-import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
-
-measureFixtureCreation(html`
-    <sp-meter open></sp-meter>
-`);
+export { ifDefined } from 'lit/directives/if-defined.js';
+export { repeat } from 'lit/directives/repeat.js';
+export { classMap } from 'lit/directives/class-map.js';
+export { styleMap } from 'lit/directives/style-map.js';
+export type { StyleInfo } from 'lit/directives/style-map.js';
+export { until } from 'lit/directives/until.js';
+export { live } from 'lit/directives/live.js';

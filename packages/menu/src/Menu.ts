@@ -15,10 +15,12 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
-    property,
     PropertyValues,
-    query,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 
 import {
     MenuItem,

@@ -15,8 +15,8 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
-    queryAssignedNodes,
 } from '@spectrum-web-components/base';
+import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
 import { Tag } from './Tag.js';

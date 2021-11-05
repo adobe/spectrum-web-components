@@ -14,10 +14,12 @@ import {
     html,
     CSSResultArray,
     TemplateResult,
-    property,
     PropertyValues,
-    query,
 } from '@spectrum-web-components/base';
+import {
+    query,
+    property,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { ProvideLang } from '@spectrum-web-components/theme';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { NumberFormatter, NumberParser } from '@internationalized/number';

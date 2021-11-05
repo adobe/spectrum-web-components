@@ -14,14 +14,16 @@ import {
     html,
     CSSResultArray,
     TemplateResult,
-    property,
     PropertyValues,
-    query,
     nothing,
     SizedMixin,
     ElementSize,
-    classMap,
 } from '@spectrum-web-components/base';
+import { classMap } from '@spectrum-web-components/base/src/directives.js';
+import {
+    query,
+    property,
+} from '@spectrum-web-components/base/src/decorators.js';
 
 import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';

@@ -16,9 +16,9 @@ import {
     CSSResultArray,
     TemplateResult,
     PropertyValues,
-    property,
     SizedMixin,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import styles from './progress-bar.css.js';

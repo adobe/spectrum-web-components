@@ -13,11 +13,11 @@ governing permissions and limitations under the License.
 import {
     html,
     CSSResultArray,
-    property,
     LitElement,
     PropertyValues,
     TemplateResult,
-} from 'lit-element';
+} from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import type { Color, Scale } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/picker/sp-picker.js';

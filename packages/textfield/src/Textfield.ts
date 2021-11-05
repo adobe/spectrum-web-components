@@ -12,16 +12,20 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    property,
     CSSResultArray,
-    query,
     TemplateResult,
     PropertyValues,
     nothing,
+} from '@spectrum-web-components/base';
+import {
     ifDefined,
     live,
+} from '@spectrum-web-components/base/src/directives.js';
+import {
     state,
-} from '@spectrum-web-components/base';
+    query,
+    property,
+} from '@spectrum-web-components/base/src/decorators.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';

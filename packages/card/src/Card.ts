@@ -13,14 +13,16 @@ governing permissions and limitations under the License.
 import {
     html,
     SpectrumElement,
-    property,
     CSSResultArray,
     TemplateResult,
     PropertyValues,
-    ifDefined,
-    query,
     SizedMixin,
 } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
+    query,
+    property,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';

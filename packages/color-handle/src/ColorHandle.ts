@@ -15,9 +15,9 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
-    property,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
@@ -34,8 +34,10 @@ export type ColorValue =
     | HSL
     | HSLA;
 
-export const extractHueAndSaturationRegExp = /^hs[v|l]a?\s?\((\d{1,3}\.?\d*?),?\s?(\d{1,3})/;
-export const replaceHueAndSaturationRegExp = /(^hs[v|l]a?\s?\()\d{1,3}\.?\d*?(,?\s?)\d{1,3}/;
+export const extractHueAndSaturationRegExp =
+    /^hs[v|l]a?\s?\((\d{1,3}\.?\d*?),?\s?(\d{1,3})/;
+export const replaceHueAndSaturationRegExp =
+    /(^hs[v|l]a?\s?\()\d{1,3}\.?\d*?(,?\s?)\d{1,3}/;
 export const replaceHueRegExp = /(^hs[v|l]a?\()\d{1,3}/;
 
 /**

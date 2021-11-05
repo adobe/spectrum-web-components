@@ -9,13 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import {
-    html,
-    TemplateResult,
     ifDefined,
     classMap,
     styleMap,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/directives.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { Slider } from './Slider.js';
 import {
@@ -218,9 +217,8 @@ export class HandleController implements Controller {
         if (!this.handleRefMap) {
             this.handleRefMap = new WeakMap();
 
-            const inputNodes = this.host.shadowRoot.querySelectorAll(
-                '.handle > input'
-            );
+            const inputNodes =
+                this.host.shadowRoot.querySelectorAll('.handle > input');
             for (const inputNode of inputNodes) {
                 const input = inputNode as HTMLInputElement;
                 const handle = input.parentElement as HTMLElement;

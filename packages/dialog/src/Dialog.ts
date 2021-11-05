@@ -15,11 +15,13 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
-    property,
-    query,
-    ifDefined,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';

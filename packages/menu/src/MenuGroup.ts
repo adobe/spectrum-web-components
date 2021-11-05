@@ -14,8 +14,8 @@ import {
     html,
     CSSResultArray,
     TemplateResult,
-    queryAssignedNodes,
 } from '@spectrum-web-components/base';
+import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';
 
 import { Menu } from './Menu.js';
 import '../sp-menu.js';

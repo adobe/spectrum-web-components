@@ -14,9 +14,9 @@ import {
     html,
     TemplateResult,
     SpectrumElement,
-    property,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import panelStyles from './tab-panel.css.js';
 

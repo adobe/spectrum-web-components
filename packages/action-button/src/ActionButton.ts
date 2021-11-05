@@ -13,12 +13,12 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
-    property,
     PropertyValues,
     TemplateResult,
     SizedMixin,
     ElementSize,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from '@spectrum-web-components/button';
 import buttonStyles from './action-button.css.js';
 import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';

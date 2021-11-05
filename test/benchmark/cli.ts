@@ -110,6 +110,7 @@ interface Options {
     const opts = commandLineArgs(optionDefinitions) as Options;
 
     if (opts.help) {
+        // eslint-disable-next-line no-console
         console.log(
             commandLineUsage([
                 {
@@ -196,6 +197,7 @@ $ node test/benchmark/cli -n 20
                 pathjoin(process.cwd(), 'packages', packageName, 'package.json')
             );
             if (pjson.version === '0.0.1' && opts.compare !== 'none') {
+                // eslint-disable-next-line no-console
                 console.log(
                     `⚠️  It looks like '${packageName}' has yet to be published to NPM. Skipping comparison!`
                 );
@@ -210,7 +212,7 @@ $ node test/benchmark/cli -n 20
                         label: 'remote',
                         dependencies: {
                             '@spectrum-web-components/bundle': opts.compare,
-                            '@spectrum-web-components/top-nav': 'latest',
+                            lit: '^2.0.0',
                         },
                     },
                     measurement: 'global',
@@ -270,6 +272,7 @@ $ node test/benchmark/cli -n 20
     }
 
     for (const printResult of printResults) {
+        // eslint-disable-next-line no-console
         console.log(printResult);
     }
 })();

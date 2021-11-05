@@ -16,10 +16,12 @@ import {
     html,
     TemplateResult,
     CSSResultGroup,
+} from '@spectrum-web-components/base';
+import {
     property,
     customElement,
-    ifDefined,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Search } from '@spectrum-web-components/search';
 import '@spectrum-web-components/search/sp-search.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';

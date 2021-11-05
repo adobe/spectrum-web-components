@@ -14,11 +14,11 @@ import {
     SpectrumElement,
     html,
     css,
-    property,
     TemplateResult,
     PropertyValues,
     nothing,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 import { ActionGroup } from '@spectrum-web-components/action-group';
 import bodyStyles from '@spectrum-web-components/styles/body.js';

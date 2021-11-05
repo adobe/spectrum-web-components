@@ -13,12 +13,14 @@ governing permissions and limitations under the License.
 import {
     LitElement,
     html,
-    customElement,
     TemplateResult,
     CSSResultArray,
+} from '@spectrum-web-components/base';
+import {
+    customElement,
     property,
     query,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
 import { toHtmlTemplateString } from '../utils/templates.js';
 import Styles from './code-example.css';
 import StylesLight from './code-example-light.css';

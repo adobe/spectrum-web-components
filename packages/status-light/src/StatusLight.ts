@@ -13,12 +13,12 @@ governing permissions and limitations under the License.
 import {
     html,
     SpectrumElement,
-    property,
     CSSResultArray,
     TemplateResult,
     PropertyValues,
     SizedMixin,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import statusLightStyles from './status-light.css.js';
 
 /**
