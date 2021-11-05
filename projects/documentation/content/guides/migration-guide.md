@@ -7,7 +7,16 @@ slug: migration-guide
 
 ## Migration: 8/11/2021
 
-As of 8/11/2021, Spectrum Web Components will cease to leverage `lit-element` and `lit-html` dependencies directly in favor of [`lit2.0`](https://lit.dev/blog/2021-09-21-announcing-lit-2/). For most of you this will be a 100% transparent change as the usage of these libraries is encapsulated within our elements and consuming these new versions within your HTML of Javascript application should do little more than pass the bundle size and performance benefits of this change on to your applications. If you are currently using any of the following package version you should be seeing these benefits in your applications today. In the case that you are using those packages in concert with versions before those listed below we highly suggest that you align your version consumption to the most recent versions as soon as is comfortable for your project.
+As of Nov 8, 2021, Spectrum Web Components will upgrade to [Lit 2.0](https://lit.dev/blog/2021-09-21-announcing-lit-2/) and will cease depending on separate `lit-element` and `lit-html` modules internally. This will only require action from you if:
+
+1. You embed icons as template literals (`<sp-icon>${RedoIcon()}</sp-icon>`) in a project that uses `lit-html@1.x` or `lit-element@2.x`.
+2. You wish to combine Spectrum component versions from pre-Lit 2.0 with those from post-Lit 2.0.
+
+Otherwise, you can safely upgrade to the latest versions of Spectrum Web Components, shrinking your bundle size and improving your project's performance.
+
+If you embed icons as template literals, please reference the icon migration guide below while upgrading.
+
+Combining components based on Lit 2.0 with older versions of components may increase your bundle size, since both versions of the underlying LitElement libraries will be required, while the practice of elements registering sub-elements increasing the possibility of JS errors from attempting to register the same tab name more than once. Because of this, we recommend simultaneously upgrading all components in your project to at least the versions listed here:
 
 <details>
 	<summary><strong>Package Versions</strong></summary>
@@ -35,7 +44,9 @@ As of 8/11/2021, Spectrum Web Components will cease to leverage `lit-element` an
 
 ### Using `lit@2.0` inside of `lit-html` and/or `LitElement`
 
-If you are currently using `lit-html@1.x` and/or `lit-element@2.x` within your project and are looking to consume these new package versions without updating to `lit` as well, you should generally have no issue. Manual migration may be required in the case that your application is consuming template literal versions of the icons available in `@spectrum-web-components/icons-ui` or `@spectrum-web-components/icons-workflow` directly from their default exports as follows:
+If you use `lit-html@1.x` or `lit-element@2.x`, embed icons as template literals, _and_ plan to use the latest Spectrum Web Components without updating your project to Lit 2.0, you'll need to adjust icon usage to avoid templating errors.
+
+Here's an example illustrating that combination of factors:
 
 ```js
 import { LitElement } from 'lit-element';
@@ -54,19 +65,9 @@ export class ElementWithicon extends LitElement {
 }
 ```
 
-In this case the `RedoIcon()` literal will be wrapped in the `html` template literal tag as supplied by `@spectrum-web-components/icons-workflow`. After this update, the version of this tag will no longer be compatible with the `html` template literal tag applied in the `render()` method of your custom element. You can correct this by applying your local value for `html` to the icon literals:
+Here, `RedoIcon()` returns a value built with the `html` dependency of `@spectrum-web-components/icons-workflow`. After this update, that value will no longer be compatible with the `html` tag in the `render()` function here, which is still built with the `lit-html` module.
 
-```js
-import { html } from 'lit-html';
-import {
-    RedoIcon,
-    setCustomTemplateLiteralTag,
-} from '@spectrum-web-components/icons-workflow';
-
-setCustomTemplateLiteralTag(html);
-```
-
-Or, you can avoid running into issues like this in the future, while leveraging more performant icon delivery, by leveraging fully registered icon elements instead:
+There are two ways to correct this. We recommend replacing template-literal icons with icon elements, resulting in better performance and decoupled dependencies:
 
 ```js
 import { LitElement } from 'lit-element';
@@ -82,6 +83,18 @@ export class ElementWithicon extends LitElement {
         `;
     }
 }
+```
+
+Alternatively, provide your local value for `html` to the icon templates via `setCustomTemplateLiteralTag`:
+
+```js
+import { html } from 'lit-html';
+import {
+    RedoIcon,
+    setCustomTemplateLiteralTag,
+} from '@spectrum-web-components/icons-workflow';
+
+setCustomTemplateLiteralTag(html);
 ```
 
 ### Javascript re-exports
@@ -129,4 +142,6 @@ export { until } from 'lit/directives/until.js';
 export { live } from 'lit/directives/live.js';
 ```
 
-Additional `lit` exports can be acquired directly from that package and with the reduction of `instanceof`-centric checking within the `lit-html` library it is possible that overtime we lean towards that being the preferred path towards acquiring this values.
+Additional `lit` exports can be acquired directly from the `lit` package.
+
+With Lit 2.0 bringing same-document library-version flexibility, re-exporting from shared base libraries is less critical. We may eventually recommend direct imports from `lit` as the preferred path towards acquiring these values.
