@@ -13,17 +13,19 @@ import {
     LitElement,
     html,
     CSSResultArray,
-    property,
     PropertyValues,
     TemplateResult,
+} from '@spectrum-web-components/base';
+import {
     customElement,
-} from 'lit-element';
+    property,
+} from '@spectrum-web-components/base/src/decorators.js';
 import './side-nav-search.js';
 import sideNavStyles from './side-nav.css';
 import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
-import { ifDefined } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 @customElement('docs-side-nav')
 export class SideNav extends LitElement {

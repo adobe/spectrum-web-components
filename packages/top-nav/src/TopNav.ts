@@ -13,14 +13,14 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    property,
     CSSResultArray,
     TemplateResult,
     PropertyValues,
     SpectrumElement,
-    ifDefined,
     SizedMixin,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { TopNavItem } from './TopNavItem.js';
 
 import tabStyles from '@spectrum-web-components/tabs/src/tabs.css.js';

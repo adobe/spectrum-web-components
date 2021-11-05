@@ -14,9 +14,9 @@ import {
     html,
     CSSResultArray,
     TemplateResult,
-    property,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import sidenavStyles from './sidenav.css.js';
 import { Focusable, getActiveElement } from '@spectrum-web-components/shared';

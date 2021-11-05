@@ -14,11 +14,13 @@ import {
     html,
     CSSResultArray,
     TemplateResult,
+    PropertyValues,
+} from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
     property,
     query,
-    PropertyValues,
-    ifDefined,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';

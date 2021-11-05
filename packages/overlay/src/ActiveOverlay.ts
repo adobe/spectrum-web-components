@@ -13,12 +13,12 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
-    ifDefined,
-    property,
     PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { reparentChildren } from '@spectrum-web-components/shared';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import { Color, Scale } from '@spectrum-web-components/theme';

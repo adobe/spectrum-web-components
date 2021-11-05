@@ -13,11 +13,13 @@ import {
     LitElement,
     html,
     css,
-    property,
     TemplateResult,
     CSSResultGroup,
-    query,
 } from '@spectrum-web-components/base';
+import {
+    query,
+    property,
+} from '@spectrum-web-components/base/src/decorators.js';
 
 import { Overlay, OverlayTrigger, Placement } from '../';
 import { RadioGroup } from '@spectrum-web-components/radio';

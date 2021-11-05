@@ -15,9 +15,11 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
+} from '@spectrum-web-components/base';
+import {
     property,
     query,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 

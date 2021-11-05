@@ -15,9 +15,9 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
-    property,
     SizedMixin,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import styles from './thumbnail.css.js';
 

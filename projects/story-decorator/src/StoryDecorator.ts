@@ -14,12 +14,14 @@ import {
     html,
     SpectrumElement,
     css,
-    property,
-    TemplateResult,
-    ifDefined,
     nothing,
-    queryAsync,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    queryAsync,
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -194,18 +196,28 @@ export class StoryDecorator extends SpectrumElement {
         const { checked } = target as Switch;
         switch (id) {
             case 'color':
-                this.color = color = window.__swc_hack_knobs__.defaultColor = value as Color;
+                this.color =
+                    color =
+                    window.__swc_hack_knobs__.defaultColor =
+                        value as Color;
                 break;
             case 'scale':
-                this.scale = scale = window.__swc_hack_knobs__.defaultScale = value as Scale;
+                this.scale =
+                    scale =
+                    window.__swc_hack_knobs__.defaultScale =
+                        value as Scale;
                 break;
             case 'dir':
-                this.direction = dir = window.__swc_hack_knobs__.defaultDirection = value as
-                    | 'ltr'
-                    | 'rtl';
+                this.direction =
+                    dir =
+                    window.__swc_hack_knobs__.defaultDirection =
+                        value as 'ltr' | 'rtl';
                 break;
             case 'reduceMotion':
-                this.reduceMotion = reduceMotion = window.__swc_hack_knobs__.defaultReduceMotion = checked as boolean;
+                this.reduceMotion =
+                    reduceMotion =
+                    window.__swc_hack_knobs__.defaultReduceMotion =
+                        checked as boolean;
                 break;
         }
     }

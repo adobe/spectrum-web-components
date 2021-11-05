@@ -11,11 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { html } from '@spectrum-web-components/base';
+import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-tooltip>
-        Tip me!
-    </sp-tooltip>
+    <sp-tooltip>Tip me!</sp-tooltip>
 `);

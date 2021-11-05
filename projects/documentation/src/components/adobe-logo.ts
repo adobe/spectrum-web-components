@@ -14,9 +14,11 @@ import {
     LitElement,
     html,
     CSSResultArray,
+} from '@spectrum-web-components/base';
+import {
     property,
     customElement,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
 import logoStyles from './adobe-logo.css';
 
 @customElement('docs-spectrum-logo')

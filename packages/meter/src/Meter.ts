@@ -15,10 +15,10 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
-    property,
     PropertyValues,
     SizedMixin,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';

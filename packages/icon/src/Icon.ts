@@ -10,13 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import {
-    html,
     property,
     query,
-    TemplateResult,
-    ifDefined,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
 

@@ -13,11 +13,11 @@ governing permissions and limitations under the License.
 import {
     html,
     SpectrumElement,
-    property,
     CSSResultArray,
     TemplateResult,
     PropertyValues,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import sidenavItemStyles from './sidenav-item.css.js';
 import sidenavHeadingStyles from './sidenav-heading.css.js';

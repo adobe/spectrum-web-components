@@ -15,10 +15,12 @@ import {
     CSSResultArray,
     PropertyValues,
     TemplateResult,
+} from '@spectrum-web-components/base';
+import {
     property,
     query,
-    ifDefined,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import { Textfield } from '@spectrum-web-components/textfield';
 import '@spectrum-web-components/button/sp-clear-button.js';

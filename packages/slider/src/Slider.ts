@@ -12,15 +12,19 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    property,
     CSSResultArray,
     TemplateResult,
+} from '@spectrum-web-components/base';
+import {
+    property,
     query,
-    styleMap,
+} from '@spectrum-web-components/base/src/decorators.js';
+import {
     ifDefined,
     repeat,
+    styleMap,
     classMap,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/directives.js';
 
 import sliderStyles from './slider.css.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';

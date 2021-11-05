@@ -13,12 +13,3 @@ governing permissions and limitations under the License.
 export * from './Base.js';
 export * from './sizedMixin.js';
 export * from 'lit';
-export * from 'lit/decorators.js';
-export { nothing, render } from 'lit/html.js';
-export { ifDefined } from 'lit/directives/if-defined.js';
-export { repeat } from 'lit/directives/repeat.js';
-export { classMap } from 'lit/directives/class-map.js';
-export { styleMap } from 'lit/directives/style-map.js';
-export type { StyleInfo } from 'lit/directives/style-map.js';
-export { until } from 'lit/directives/until.js';
-export { live } from 'lit/directives/live.js';

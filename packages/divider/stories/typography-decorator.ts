@@ -14,9 +14,11 @@ import {
     LitElement,
     CSSResultArray,
     TemplateResult,
+} from '@spectrum-web-components/base';
+import {
     property,
     customElement,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
 
 import styles from '@spectrum-web-components/theme/src/typography.css.js';
 

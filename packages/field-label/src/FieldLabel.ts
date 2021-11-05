@@ -15,11 +15,13 @@ import {
     SpectrumElement,
     CSSResultArray,
     TemplateResult,
-    property,
     PropertyValues,
     SizedMixin,
-    query,
 } from '@spectrum-web-components/base';
+import {
+    query,
+    property,
+} from '@spectrum-web-components/base/src/decorators.js';
 import type { Focusable } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
 import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';

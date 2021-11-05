@@ -15,9 +15,9 @@ import {
     TemplateResult,
     PropertyValues,
     html,
-    ifDefined,
-    property,
 } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { PickerBase } from '@spectrum-web-components/picker';

@@ -14,10 +14,12 @@ import {
     html,
     CSSResultArray,
     TemplateResult,
-    property,
     PropertyValues,
-    queryAssignedNodes,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    queryAssignedNodes,
+} from '@spectrum-web-components/base/src/decorators.js';
 
 import { AccordionItem } from './AccordionItem.js';
 

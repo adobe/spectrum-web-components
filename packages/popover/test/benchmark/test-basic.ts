@@ -11,14 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import '@spectrum-web-components/popover/sp-popover.js';
-import { html } from '@spectrum-web-components/base';
+import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
     <sp-popover variant="dialog" direction="top" open>
-        <div id="title">
-            Popover Title
-        </div>
+        <div id="title">Popover Title</div>
         <div id="content">
             Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly caramels.
             Icing soufflé chupa chups donut cheesecake. Jelly-o chocolate cake
