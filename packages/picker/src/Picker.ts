@@ -164,21 +164,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         super.focus(options);
 
         if (!this.disabled && this.focusElement) {
-            const activeElement = (this.getRootNode() as Document)
-                .activeElement as HTMLElement;
-            let shouldFocus = false;
-            try {
-                // Browsers without support for the `:focus-visible`
-                // selector will throw on the following test (Safari, older things).
-                // Some won't throw, but will be focusing item rather than the menu and
-                // will rely on the polyfill to know whether focus is "visible" or not.
-                shouldFocus =
-                    activeElement.matches(':focus-visible') ||
-                    activeElement.matches('.focus-visible');
-            } catch (error) {
-                shouldFocus = activeElement.matches('.focus-visible');
-            }
-            this.focused = shouldFocus;
+            this.focused = this.hasVisibleFocusInTree();
         }
     }
 
@@ -457,8 +443,8 @@ export class PickerBase extends SizedMixin(Focusable) {
                 <sp-menu
                     id="menu"
                     role="${this.listRole}"
-                    selects="single"
                     @change=${this.handleChange}
+                    .selects=${this.selects}
                 ></sp-menu>
                 ${this.dismissHelper}
             </sp-popover>

@@ -25,6 +25,7 @@ type Constructor<T = Record<string, unknown>> = {
 export interface SpectrumInterface {
     shadowRoot: ShadowRoot;
     isLTR: boolean;
+    hasVisibleFocusInTree(): boolean;
     dir: 'ltr' | 'rtl';
 }
 
@@ -78,6 +79,26 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
             return this.dir === 'ltr';
         }
 
+        public hasVisibleFocusInTree(): boolean {
+            const activeElement = (this.getRootNode() as Document)
+                .activeElement as HTMLElement;
+            if (!activeElement) {
+                return false;
+            }
+            // Browsers without support for the `:focus-visible`
+            // selector will throw on the following test (Safari, older things).
+            // Some won't throw, but will be focusing item rather than the menu and
+            // will rely on the polyfill to know whether focus is "visible" or not.
+            try {
+                return (
+                    activeElement.matches(':focus-visible') ||
+                    activeElement.matches('.focus-visible')
+                );
+            } catch (error) {
+                return activeElement.matches('.focus-visible');
+            }
+        }
+
         public connectedCallback(): void {
             if (!this.hasAttribute('dir')) {
                 let dirParent = ((this as HTMLElement).assignedSlot ||
@@ -90,7 +111,7 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
                 ) {
                     dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
                         dirParent.parentNode || // DOM Element detected
-                        ((dirParent as unknown) as ShadowRoot)
+                        (dirParent as unknown as ShadowRoot)
                             .host) as HTMLElement;
                 }
                 this.dir =
@@ -104,9 +125,9 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
                         !customElements.get(localName)
                     ) {
                         customElements.whenDefined(localName).then(() => {
-                            (dirParent as ThemeRoot).startManagingContentDirection(
-                                this
-                            );
+                            (
+                                dirParent as ThemeRoot
+                            ).startManagingContentDirection(this);
                         });
                     } else {
                         (dirParent as ThemeRoot).startManagingContentDirection(

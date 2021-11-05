@@ -72,16 +72,14 @@ export class SplitButton extends SizedMixin(PickerBase) {
     protected listRole: 'listbox' | 'menu' = 'menu';
     protected itemRole = 'menuitem';
 
-    public focus(): void {
-        if (this.disabled) {
-            return;
+    public get focusElement(): HTMLElement {
+        if (this.open) {
+            return this.optionsMenu;
         }
         if (this.left) {
-            this.trigger.focus();
-            return;
+            return this.trigger;
         }
-
-        super.focus();
+        return this.button;
     }
 
     protected sizePopover(popover: HTMLElement): void {
@@ -110,19 +108,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 </div>
             `,
         ];
-    }
-
-    protected get renderPopover(): TemplateResult {
-        return html`
-            <sp-popover id="popover" @sp-overlay-closed=${this.onOverlayClosed}>
-                <sp-menu
-                    id="menu"
-                    role="${this.listRole}"
-                    @change=${this.handleChange}
-                    .selects=${this.selects}
-                ></sp-menu>
-            </sp-popover>
-        `;
     }
 
     protected update(changes: PropertyValues<this>): void {

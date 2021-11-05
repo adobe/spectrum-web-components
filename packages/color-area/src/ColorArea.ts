@@ -243,23 +243,7 @@ export class ColorArea extends SpectrumElement {
     }
 
     private forwardFocus(): void {
-        const activeElement = (this.getRootNode() as Document)
-            .activeElement as HTMLElement;
-        if (activeElement) {
-            let shouldFocus = false;
-            try {
-                // Browsers without support for the `:focus-visible`
-                // selector will throw on the following test (Safari, older things).
-                // Some won't throw, but will be focusing item rather than the menu and
-                // will rely on the polyfill to know whether focus is "visible" or not.
-                shouldFocus =
-                    activeElement.matches(':focus-visible') ||
-                    activeElement.matches('.focus-visible');
-            } catch (error) {
-                shouldFocus = activeElement.matches('.focus-visible');
-            }
-            this.focused = shouldFocus;
-        }
+        this.focused = this.hasVisibleFocusInTree();
         if (this.activeAxis === 'x') {
             this.inputX.focus();
         } else {

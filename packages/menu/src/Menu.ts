@@ -568,22 +568,7 @@ export class Menu extends SpectrumElement {
         if (item.menuData.focusRoot !== this) {
             return;
         }
-        const activeElement = (this.getRootNode() as Document).activeElement as
-            | MenuItem
-            | Menu;
-        let shouldFocus = false;
-        try {
-            // Browsers without support for the `:focus-visible`
-            // selector will throw on the following test (Safari, older things).
-            // Some won't throw, but will be focusing item rather than the menu and
-            // will rely on the polyfill to know whether focus is "visible" or not.
-            shouldFocus =
-                activeElement.matches(':focus-visible') ||
-                activeElement.matches('.focus-visible');
-        } catch (error) {
-            shouldFocus = activeElement.matches('.focus-visible');
-        }
-        item.focused = shouldFocus;
+        item.focused = this.hasVisibleFocusInTree();
         this.setAttribute('aria-activedescendant', item.id);
         if (
             item.menuData.selectionRoot &&
