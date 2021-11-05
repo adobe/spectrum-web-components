@@ -109,17 +109,96 @@ describe('Splitbutton', () => {
         await expect(el1).to.be.accessible();
         await expect(el2).to.be.accessible();
     });
+    it('[type="field"] toggles open/close multiple time', async () => {
+        const test = await fixture<HTMLDivElement>(
+            wrapInDiv(field(splitButtonDefault.args))
+        );
+        const el = test.querySelector('sp-split-button') as SplitButton;
 
+        await elementUpdated(el);
+        let items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(3);
+
+        let opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+
+        expect(el.open).to.be.true;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(0);
+
+        let closed = oneEvent(el, 'sp-closed');
+        el.open = false;
+        await closed;
+
+        expect(el.open).to.be.false;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(3);
+
+        opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+
+        expect(el.open).to.be.true;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(0);
+
+        closed = oneEvent(el, 'sp-closed');
+        el.open = false;
+        await closed;
+
+        expect(el.open).to.be.false;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(3);
+    });
+    it('[type="more"] toggles open/close multiple time', async () => {
+        const test = await fixture<HTMLDivElement>(
+            wrapInDiv(more({ ...splitButtonDefault.args, ...more.args }))
+        );
+        const el = test.querySelector('sp-split-button') as SplitButton;
+
+        await elementUpdated(el);
+        let items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(3);
+
+        let opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+
+        expect(el.open).to.be.true;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(0);
+
+        let closed = oneEvent(el, 'sp-closed');
+        el.open = false;
+        await closed;
+
+        expect(el.open).to.be.false;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(3);
+
+        opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+
+        expect(el.open).to.be.true;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(0);
+
+        closed = oneEvent(el, 'sp-closed');
+        el.open = false;
+        await closed;
+
+        expect(el.open).to.be.false;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(3);
+    });
     it('receives "focus()"', async () => {
         const test = await fixture<HTMLDivElement>(
             wrapInDiv(field(splitButtonDefault.args))
         );
         const el1 = test.querySelector('sp-split-button') as SplitButton;
         const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
-        const el1FocusElement = el1.focusElement;
-        const el2FocusElement = el2.shadowRoot.querySelector(
-            '.trigger'
-        ) as HTMLElement;
 
         await elementUpdated(el1);
         await elementUpdated(el2);
@@ -128,13 +207,13 @@ describe('Splitbutton', () => {
         await elementUpdated(el1);
 
         expect(document.activeElement).to.equal(el1);
-        expect(el1.shadowRoot.activeElement).to.equal(el1FocusElement);
+        expect(el1.shadowRoot.activeElement).to.equal(el1.focusElement);
 
         el2.focus();
         await elementUpdated(el2);
 
         expect(document.activeElement).to.equal(el2);
-        expect(el2.shadowRoot.activeElement).to.equal(el2FocusElement);
+        expect(el2.shadowRoot.activeElement).to.equal(el2.focusElement);
     });
     it('[type="field"] manages `selectedItem`', async () => {
         const test = await fixture<HTMLDivElement>(
@@ -168,6 +247,8 @@ describe('Splitbutton', () => {
 
         expect(el.selectedItem?.itemText).to.equal('Short');
         expect(el.open).to.be.false;
+        expect(document.activeElement).to.equal(el);
+        expect(el.shadowRoot.activeElement).to.equal(el.focusElement);
     });
     it('[type="more"] manages `selectedItem.itemText`', async () => {
         const test = await fixture<HTMLDivElement>(

@@ -83,19 +83,6 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         `;
     }
 
-    protected get renderPopover(): TemplateResult {
-        return html`
-            <sp-popover id="popover" @sp-overlay-closed=${this.onOverlayClosed}>
-                <sp-menu
-                    id="menu"
-                    role="${this.listRole}"
-                    @change=${this.handleChange}
-                    .selects=${this.selects}
-                ></sp-menu>
-            </sp-popover>
-        `;
-    }
-
     protected updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
         if (changedProperties.has('invalid')) {

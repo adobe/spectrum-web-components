@@ -260,23 +260,7 @@ export class ColorWheel extends Focusable {
     }
 
     private forwardFocus(): void {
-        const activeElement = (this.getRootNode() as Document)
-            .activeElement as HTMLElement;
-        if (activeElement) {
-            let shouldFocus = false;
-            try {
-                // Browsers without support for the `:focus-visible`
-                // selector will throw on the following test (Safari, older things).
-                // Some won't throw, but will be focusing item rather than the menu and
-                // will rely on the polyfill to know whether focus is "visible" or not.
-                shouldFocus =
-                    activeElement.matches(':focus-visible') ||
-                    activeElement.matches('.focus-visible');
-            } catch (error) {
-                shouldFocus = activeElement.matches('.focus-visible');
-            }
-            this.focused = shouldFocus;
-        }
+        this.focused = this.hasVisibleFocusInTree();
         this.input.focus();
     }
 
@@ -442,16 +426,16 @@ export class ColorWheel extends Focusable {
         super.connectedCallback();
         if (
             !this.observer &&
-            ((window as unknown) as WithSWCResizeObserver).ResizeObserver
+            (window as unknown as WithSWCResizeObserver).ResizeObserver
         ) {
-            this.observer = new ((window as unknown) as WithSWCResizeObserver).ResizeObserver(
-                (entries: SWCResizeObserverEntry[]) => {
-                    for (const entry of entries) {
-                        this.boundingClientRect = entry.contentRect;
-                    }
-                    this.requestUpdate();
+            this.observer = new (
+                window as unknown as WithSWCResizeObserver
+            ).ResizeObserver((entries: SWCResizeObserverEntry[]) => {
+                for (const entry of entries) {
+                    this.boundingClientRect = entry.contentRect;
                 }
-            );
+                this.requestUpdate();
+            });
         }
         this.observer?.observe(this);
     }

@@ -16,7 +16,13 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import {
+    fixture,
+    elementUpdated,
+    html,
+    expect,
+    oneEvent,
+} from '@open-wc/testing';
 
 const deprecatedActionMenuFixture = async (): Promise<ActionMenu> =>
     await fixture<ActionMenu>(
@@ -122,6 +128,29 @@ describe('Action menu', () => {
 
         expect(el.invalid).to.be.false;
     });
+    it('focus()', async () => {
+        const el = await actionMenuFixture();
+
+        await elementUpdated(el);
+
+        el.focus();
+
+        expect(document.activeElement).to.equal(el);
+        expect(el.shadowRoot.activeElement).to.equal(el.focusElement);
+
+        const opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+
+        expect(document.activeElement).to.not.equal(el);
+
+        const closed = oneEvent(el, 'sp-closed');
+        el.open = false;
+        await closed;
+
+        expect(document.activeElement).to.equal(el);
+        expect(el.shadowRoot.activeElement).to.equal(el.focusElement);
+    });
     it('opens unmeasured', async () => {
         const el = await actionMenuFixture();
 
@@ -141,5 +170,45 @@ describe('Action menu', () => {
         button.click();
         await elementUpdated(el);
         expect(el.open).to.be.true;
+    });
+    it('toggles open/close multiple time', async () => {
+        const el = await actionMenuFixture();
+
+        await elementUpdated(el);
+        let items = el.querySelectorAll('sp-menu-item');
+        const count = items.length;
+        expect(items.length).to.equal(count);
+
+        let opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+
+        expect(el.open).to.be.true;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(0);
+
+        let closed = oneEvent(el, 'sp-closed');
+        el.open = false;
+        await closed;
+
+        expect(el.open).to.be.false;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(count);
+
+        opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+
+        expect(el.open).to.be.true;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(0);
+
+        closed = oneEvent(el, 'sp-closed');
+        el.open = false;
+        await closed;
+
+        expect(el.open).to.be.false;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(count);
     });
 });
