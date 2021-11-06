@@ -11,6 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { TriggerInteractions, OverlayOptions } from './overlay-types';
+import type { Overlay as OverlayType } from './overlay.js';
+
+let Overlay: typeof OverlayType | undefined;
 
 export const openOverlay = async (
     target: HTMLElement,
@@ -18,6 +21,8 @@ export const openOverlay = async (
     content: HTMLElement,
     options: OverlayOptions
 ): Promise<() => void> => {
-    const { Overlay } = await import('./overlay.js');
+    if (!Overlay) {
+        ({ Overlay } = await import('./overlay.js'));
+    }
     return Overlay.open(target, interaction, content, options);
 };

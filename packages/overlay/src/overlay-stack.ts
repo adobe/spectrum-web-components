@@ -120,13 +120,12 @@ export class OverlayStack {
         this.overlayHolder.hidden = false;
         requestAnimationFrame(() => {
             const bodyStyles = getComputedStyle(document.body);
-            this.tabTrapper.style.setProperty(
-                '--swc-body-margins-inline',
-                `calc(${bodyStyles.marginLeft} + ${bodyStyles.marginRight})`
-            );
-            this.tabTrapper.style.setProperty(
-                '--swc-body-margins-block',
-                `calc(${bodyStyles.marginTop} + ${bodyStyles.marginBottom})`
+            this.tabTrapper.setAttribute(
+                'style',
+                `
+                    --swc-body-margins-inline: calc(${bodyStyles.marginLeft} + ${bodyStyles.marginRight});
+                    --swc-body-margins-block: calc(${bodyStyles.marginTop} + ${bodyStyles.marginBottom});
+                `
             );
         });
     }
@@ -255,6 +254,21 @@ export class OverlayStack {
         }
 
         const activeOverlay = ActiveOverlay.create(details);
+        activeOverlay.parentOverlay = (
+            current: ActiveOverlay
+        ): ActiveOverlay | undefined => {
+            let overlayCount = this.overlays.length;
+            let parentOverlay: ActiveOverlay | undefined;
+            while (overlayCount && !parentOverlay) {
+                overlayCount -= 1;
+                if (this.overlays[overlayCount + 1] === current) {
+                    parentOverlay = this.overlays[overlayCount];
+                }
+            }
+            return this.overlays.length
+                ? this.overlays[this.overlays.length - 1]
+                : parentOverlay;
+        };
 
         if (this.overlays.length) {
             const topOverlay = this.overlays[this.overlays.length - 1];

@@ -44,7 +44,7 @@ export class Popover extends SpectrumElement {
      * @attr
      */
     @property({ reflect: true })
-    public placement: Placement = 'none';
+    public placement!: Placement;
 
     @property({ type: Boolean, reflect: true })
     public tip = false;

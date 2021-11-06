@@ -179,6 +179,7 @@ const template = ({ placement, offset, open }: Properties): TemplateResult => {
                 slot="hover-content"
                 ?delayed=${open !== 'hover'}
                 tip="bottom"
+                placement="${placement}"
             >
                 Click to open a popover.
             </sp-tooltip>

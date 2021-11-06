@@ -450,6 +450,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             <sp-popover
                 id="popover"
                 role="dialog"
+                placement=${this.placement}
                 @sp-overlay-closed=${this.onOverlayClosed}
                 .overlayCloseCallback=${this.overlayCloseCallback}
             >

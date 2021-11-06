@@ -20,12 +20,14 @@ import {
     customElement,
 } from 'lit-element';
 import sideNavSearchMenuStyles from './side-nav-search.css';
-import { Search } from '@spectrum-web-components/search';
+import type { Search } from '@spectrum-web-components/search';
 import { Popover } from '@spectrum-web-components/popover';
-import type { ResultGroup } from './search-index.js';
+import type { ResultGroup, search as SearchType } from './search-index.js';
 import { Menu } from '@spectrum-web-components/menu';
 import { openOverlay } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/search/sp-search.js';
+
+let search: typeof SearchType | undefined;
 
 const stopPropagation = (event: Event): void => event.stopPropagation();
 
@@ -160,9 +162,9 @@ export class SearchComponent extends LitElement {
         }
 
         const searchParam = `${value.trim()}*`;
-        const search = await import('./search-index.js').then(
-            ({ search }) => search
-        );
+        if (!search) {
+            ({ search } = await import('./search-index.js'));
+        }
         this.results = await search(searchParam);
 
         await this.openPopover();

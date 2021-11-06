@@ -114,7 +114,11 @@ export class SplitButton extends SizedMixin(PickerBase) {
 
     protected get renderPopover(): TemplateResult {
         return html`
-            <sp-popover id="popover" @sp-overlay-closed=${this.onOverlayClosed}>
+            <sp-popover
+                placement=${this.placement}
+                id="popover"
+                @sp-overlay-closed=${this.onOverlayClosed}
+            >
                 <sp-menu
                     id="menu"
                     role="${this.listRole}"
