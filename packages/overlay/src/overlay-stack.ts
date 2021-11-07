@@ -255,6 +255,21 @@ export class OverlayStack {
         }
 
         const activeOverlay = ActiveOverlay.create(details);
+        activeOverlay.parentOverlay = (
+            current: ActiveOverlay
+        ): ActiveOverlay | undefined => {
+            let overlayCount = this.overlays.length;
+            let parentOverlay: ActiveOverlay | undefined;
+            while (overlayCount && !parentOverlay) {
+                overlayCount -= 1;
+                if (this.overlays[overlayCount + 1] === current) {
+                    parentOverlay = this.overlays[overlayCount];
+                }
+            }
+            return this.overlays.length
+                ? this.overlays[this.overlays.length - 1]
+                : parentOverlay;
+        };
 
         if (this.overlays.length) {
             const topOverlay = this.overlays[this.overlays.length - 1];
