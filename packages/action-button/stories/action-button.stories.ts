@@ -31,7 +31,7 @@ interface Properties {
     holdAffordance?: boolean;
     icon?: TemplateResult;
     label?: string;
-    [prop: string]: any;
+    [prop: string]: unknown;
 }
 
 function renderButton(args: Properties): TemplateResult {

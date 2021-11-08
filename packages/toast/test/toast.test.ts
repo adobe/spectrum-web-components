@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import '../sp-toast.js';
-import { toastVariants, Toast } from '../';
+import { Toast, toastVariants } from '../';
 import {
-    fixture,
     elementUpdated,
-    html,
     expect,
+    fixture,
+    html,
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';

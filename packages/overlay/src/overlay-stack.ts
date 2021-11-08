@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { ActiveOverlay } from './ActiveOverlay.js';
-import { OverlayOpenDetail, OverlayOpenCloseDetail } from './overlay-types';
+import { OverlayOpenCloseDetail, OverlayOpenDetail } from './overlay-types';
 import { OverlayTimer } from './overlay-timer.js';
 import '../active-overlay.js';
 

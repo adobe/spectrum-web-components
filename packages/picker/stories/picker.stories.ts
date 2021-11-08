@@ -89,7 +89,7 @@ interface StoryArgs {
     quiet?: boolean;
     showText?: boolean;
     onChange?: (val: string) => void;
-    [prop: string]: any;
+    [prop: string]: unknown;
 }
 
 const handleChange =

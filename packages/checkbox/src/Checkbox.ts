@@ -12,11 +12,11 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
-    TemplateResult,
+    ElementSize,
     html,
     PropertyValues,
     SizedMixin,
-    ElementSize,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { CheckboxBase } from './CheckboxBase.js';

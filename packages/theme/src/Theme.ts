@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import {
-    CSSResultGroup,
     CSSResult,
+    CSSResultGroup,
     supportsAdoptingStyleSheets,
 } from '@spectrum-web-components/base';
 

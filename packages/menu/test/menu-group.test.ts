@@ -13,14 +13,14 @@ import '../sp-menu-group.js';
 import '../sp-menu.js';
 import '../sp-menu-item.js';
 import '../sp-menu-divider.js';
-import { Menu, MenuItem, MenuGroup } from '../';
+import { Menu, MenuGroup, MenuItem } from '../';
 import {
-    fixture,
     elementUpdated,
-    html,
     expect,
-    waitUntil,
+    fixture,
+    html,
     oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 
 const managedItems = (menu: Menu | MenuGroup): MenuItem[] => {
@@ -75,7 +75,7 @@ describe('Menu group', () => {
         el.append(header);
         await slotchanged;
         expect(header.id).to.equal(
-            ((el as unknown) as { headerId: string }).headerId
+            (el as unknown as { headerId: string }).headerId
         );
 
         slotchanged = oneEvent(slot, 'slotchange');

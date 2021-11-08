@@ -11,21 +11,21 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     LitElement,
-    CSSResultArray,
-    TemplateResult,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { LongpressEvent } from '@spectrum-web-components/action-button';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 
 import {
+    OverlayOpenCloseDetail,
+    OverlayOptions,
     Placement,
     TriggerInteractions,
-    OverlayOptions,
-    OverlayOpenCloseDetail,
 } from './overlay-types';
 import { openOverlay } from './loader.js';
 import overlayTriggerStyles from './overlay-trigger.css.js';

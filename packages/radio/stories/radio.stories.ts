@@ -80,7 +80,7 @@ interface StoryArgs {
     emphasized?: boolean;
     invalid?: boolean;
     readonly?: boolean;
-    [prop: string]: any;
+    [prop: string]: unknown;
 }
 
 function renderRadio(args: StoryArgs): TemplateResult {

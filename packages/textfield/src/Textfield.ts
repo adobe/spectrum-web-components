@@ -11,20 +11,20 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
-    PropertyValues,
+    html,
     nothing,
+    PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import {
     ifDefined,
     live,
 } from '@spectrum-web-components/base/src/directives.js';
 import {
-    state,
-    query,
     property,
+    query,
+    state,
 } from '@spectrum-web-components/base/src/decorators.js';
 
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';

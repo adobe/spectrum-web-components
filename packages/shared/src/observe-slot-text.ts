@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { PropertyValues, ReactiveElement } from '@spectrum-web-components/base';
 import {
-    queryAssignedNodes,
     property,
+    queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
 
 const slotElementObserver = Symbol('slotElementObserver');

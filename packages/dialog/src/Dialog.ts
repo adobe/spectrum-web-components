@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import {
     property,
@@ -30,8 +30,8 @@ import crossStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.c
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import {
-    ObserveSlotPresence,
     FocusVisiblePolyfillMixin,
+    ObserveSlotPresence,
 } from '@spectrum-web-components/shared';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 

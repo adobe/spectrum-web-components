@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import '../sp-theme.js';
 import '../src/themes.js';
 import { Theme, ThemeFragmentMap } from '../';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { css } from '@spectrum-web-components/base';
 
 type TestableThemeConstructor = {
@@ -66,7 +66,7 @@ describe('Themes', () => {
         );
 
         await elementUpdated(el);
-        const testableTheme = (Theme as unknown) as TestableThemeConstructor;
+        const testableTheme = Theme as unknown as TestableThemeConstructor;
         expect(testableTheme.instances.has(el), 'first').to.be.true;
         expect(testableTheme.instances.size).to.equal(1);
 
@@ -145,9 +145,9 @@ describe('App styles', () => {
         const postStylesDiv = getComputedStyle(div);
         expect(postStylesDiv.paddingBlockStart).to.equal('10px');
 
-        ((Theme as unknown) as TestableThemeConstructor).themeFragmentsByKind.delete(
-            'app'
-        );
+        (
+            Theme as unknown as TestableThemeConstructor
+        ).themeFragmentsByKind.delete('app');
     });
 });
 

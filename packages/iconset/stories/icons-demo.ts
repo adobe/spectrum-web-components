@@ -11,15 +11,15 @@ governing permissions and limitations under the License.
 */
 import { IconsetAddedDetail } from '../';
 import {
-    SpectrumElement,
     css,
-    html,
-    TemplateResult,
     CSSResultGroup,
+    html,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    property,
     customElement,
+    property,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Search } from '@spectrum-web-components/search';

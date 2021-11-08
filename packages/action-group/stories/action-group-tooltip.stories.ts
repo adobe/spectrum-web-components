@@ -116,7 +116,7 @@ interface Properties {
     quiet?: boolean;
     vertical?: boolean;
     selects?: 'none' | 'single' | 'multiple';
-    [prop: string]: any;
+    [prop: string]: unknown;
 }
 
 const template = (args: Properties): TemplateResult => {

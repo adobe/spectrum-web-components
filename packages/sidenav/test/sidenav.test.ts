@@ -21,13 +21,13 @@ import {
     shiftTabEvent,
 } from '../../../test/testing-helpers.js';
 import {
-    fixture,
     elementUpdated,
-    html,
     expect,
+    fixture,
+    html,
     waitUntil,
 } from '@open-wc/testing';
-import { TemplateResult, LitElement } from '@spectrum-web-components/base';
+import { LitElement, TemplateResult } from '@spectrum-web-components/base';
 import { spy } from 'sinon';
 import { executeServerCommand } from '@web/test-runner-commands';
 

@@ -11,18 +11,18 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
-    PropertyValues,
-    nothing,
-    SizedMixin,
     ElementSize,
+    html,
+    nothing,
+    PropertyValues,
+    SizedMixin,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { classMap } from '@spectrum-web-components/base/src/directives.js';
 import {
-    query,
     property,
+    query,
 } from '@spectrum-web-components/base/src/decorators.js';
 
 import pickerStyles from './picker.css.js';
@@ -33,14 +33,14 @@ import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-c
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/menu/sp-menu.js';
-import { MenuItem, Menu } from '@spectrum-web-components/menu';
+import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import {
-    Placement,
     openOverlay,
-    TriggerInteractions,
     OverlayOptions,
+    Placement,
+    TriggerInteractions,
 } from '@spectrum-web-components/overlay';
 
 const chevronClass = {

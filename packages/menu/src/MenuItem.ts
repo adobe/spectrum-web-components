@@ -11,14 +11,14 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    query,
     property,
+    query,
 } from '@spectrum-web-components/base/src/decorators.js';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';

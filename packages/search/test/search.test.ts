@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 import '../sp-search.js';
 import { Search } from '../';
-import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
+import { elementUpdated, expect, html, litFixture } from '@open-wc/testing';
 import {
-    waitForPredicate,
     escapeEvent,
     spaceEvent,
+    waitForPredicate,
 } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import { spy } from 'sinon';
@@ -200,9 +200,11 @@ describe('Search', () => {
         );
 
         await elementUpdated(el);
-        const searchForm = (el.shadowRoot
-            ? el.shadowRoot.querySelector('form')
-            : el.querySelector('form')) as HTMLFormElement;
+        const searchForm = (
+            el.shadowRoot
+                ? el.shadowRoot.querySelector('form')
+                : el.querySelector('form')
+        ) as HTMLFormElement;
 
         const submitEvent = new Event('submit', {
             cancelable: true,

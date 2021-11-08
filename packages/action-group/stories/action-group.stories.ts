@@ -102,7 +102,7 @@ interface Properties {
     justified?: boolean;
     quiet?: boolean;
     vertical?: boolean;
-    [prop: string]: any;
+    [prop: string]: unknown;
 }
 
 function renderIconButtons(args: Properties): TemplateResult {

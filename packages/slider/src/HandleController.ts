@@ -11,16 +11,16 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import {
-    ifDefined,
     classMap,
+    ifDefined,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { Slider } from './Slider.js';
 import {
+    Controller,
     SliderHandle,
     SliderNormalization,
-    Controller,
 } from './SliderHandle.js';
 
 interface HandleReference {

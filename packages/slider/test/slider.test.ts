@@ -15,14 +15,14 @@ import '../sp-slider-handle.js';
 import { Slider, SliderHandle } from '../';
 import { tick } from '../stories/slider.stories.js';
 import {
-    fixture,
     elementUpdated,
-    html,
     expect,
-    oneEvent,
+    fixture,
+    html,
     nextFrame,
+    oneEvent,
 } from '@open-wc/testing';
-import { sendKeys, executeServerCommand } from '@web/test-runner-commands';
+import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
 import { ProvideLang } from '@spectrum-web-components/theme';
 
 describe('Slider', () => {
@@ -471,11 +471,7 @@ describe('Slider', () => {
     it('accepts pointermove events - [step=0]', async () => {
         const el = await fixture<Slider>(
             html`
-                <sp-slider
-                    step="0"
-                    max="20"
-                    style="width: 500px; float: left;"
-                >
+                <sp-slider step="0" max="20" style="width: 500px; float: left;">
                     Step = 0
                 </sp-slider>
             `
@@ -512,7 +508,10 @@ describe('Slider', () => {
             steps: [
                 {
                     type: 'move',
-                    position: [200, handleBoundingRect.y + handleBoundingRect.height + 100],
+                    position: [
+                        200,
+                        handleBoundingRect.y + handleBoundingRect.height + 100,
+                    ],
                 },
             ],
         });

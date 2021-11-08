@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, css, CSSResultGroup, TemplateResult } from 'lit';
+import { css, CSSResultGroup, html, TemplateResult } from 'lit';
 
 export function toHtmlTemplateString(code: string): TemplateResult {
     const stringArray = [`${code}`] as any;
