@@ -11,10 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     css,
+    html,
     nothing,
+    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -31,7 +31,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/switch/sp-switch.js';
 import { Picker } from '@spectrum-web-components/picker';
 import { Switch } from '@spectrum-web-components/switch';
-import { Scale, Color, Theme } from '@spectrum-web-components/theme';
+import { Color, Scale, Theme } from '@spectrum-web-components/theme';
 import { ActiveOverlay } from '@spectrum-web-components/overlay';
 import './types.js';
 

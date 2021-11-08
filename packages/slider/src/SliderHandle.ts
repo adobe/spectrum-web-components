@@ -15,8 +15,8 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { ProvideLang } from '@spectrum-web-components/theme';
 import {
-    NumberFormatter,
     NumberFormatOptions,
+    NumberFormatter,
 } from '@internationalized/number';
 
 export type HandleMin = number | 'previous';

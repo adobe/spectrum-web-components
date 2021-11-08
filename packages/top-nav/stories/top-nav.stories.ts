@@ -26,7 +26,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-download.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-link.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-search.js';
-import { logo, avatar } from './images';
+import { avatar, logo } from './images';
 
 export default {
     title: 'Top Nav',

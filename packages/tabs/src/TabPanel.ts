@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    TemplateResult,
-    SpectrumElement,
     PropertyValues,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 

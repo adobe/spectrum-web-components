@@ -11,16 +11,16 @@ governing permissions and limitations under the License.
 */
 
 import {
-    fixture,
     elementUpdated,
     expect,
+    fixture,
     html,
     waitUntil,
 } from '@open-wc/testing';
 
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import { TemplateResult, LitElement } from '@spectrum-web-components/base';
+import { LitElement, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { ActionGroup } from '..';

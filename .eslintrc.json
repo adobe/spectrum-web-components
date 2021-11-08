@@ -27,6 +27,15 @@
                 "templateFile": "config/license.js"
             }
         ],
+        "sort-imports": [
+            "error",
+            {
+                "ignoreCase": true,
+                "ignoreDeclarationSort": true,
+                "ignoreMemberSort": false,
+                "allowSeparatedGroups": false
+            }
+        ],
         "lit-a11y/click-events-have-key-events": [
             "error",
             {

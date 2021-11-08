@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 
 import { ObserveSlotPresence } from '../src/observe-slot-presence.js';
 import { LitElement, TemplateResult } from '@spectrum-web-components/base';
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 class ObserverTest extends ObserveSlotPresence(
     LitElement,

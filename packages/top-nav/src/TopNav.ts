@@ -12,12 +12,12 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
-    SpectrumElement,
     SizedMixin,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';

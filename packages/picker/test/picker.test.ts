@@ -21,21 +21,21 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
-    fixture,
     elementUpdated,
-    html,
     expect,
-    waitUntil,
+    fixture,
+    html,
     nextFrame,
     oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import { spy } from 'sinon';
 import {
     arrowDownEvent,
-    arrowUpEvent,
     arrowLeftEvent,
     arrowRightEvent,
+    arrowUpEvent,
     tEvent,
 } from '../../../test/testing-helpers.js';
 import {
@@ -125,29 +125,29 @@ describe('Picker, sync', () => {
             const item = document.createElement('sp-menu-item');
             item.value = 'option-new';
             item.textContent = 'New Option';
-    
+
             el.append(item);
-    
+
             await elementUpdated(item);
             await elementUpdated(el);
-    
+
             let opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
             // Overlaid content is outside of the context of the Picker element
             // and cannot be managed via its updateComplete cycle.
             await nextFrame();
-    
+
             const close = oneEvent(el, 'sp-closed');
             item.click();
             await close;
-    
+
             expect(el.value, 'first time').to.equal('option-new');
-    
+
             opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
-    
+
             expect(el.value, 'second time').to.equal('option-new');
         });
         it('manages its "name" value in the accessibility tree', async () => {

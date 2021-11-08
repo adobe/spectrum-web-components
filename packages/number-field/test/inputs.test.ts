@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html } from '@spectrum-web-components/base';
 import { elementUpdated, expect } from '@open-wc/testing';
-import { getElFrom, createLanguageContext } from './helpers.js';
+import { createLanguageContext, getElFrom } from './helpers.js';
 import polyfillCheck from '@formatjs/intl-numberformat/should-polyfill.js';
 
 import '../sp-number-field.js';

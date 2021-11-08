@@ -13,7 +13,7 @@ import '../sp-dropzone.js';
 import { Dropzone } from '../';
 import { illustration } from './test-svg.js';
 import { waitForPredicate } from '../../../test/testing-helpers.js';
-import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('Dropzone', () => {
     it('loads', async () => {

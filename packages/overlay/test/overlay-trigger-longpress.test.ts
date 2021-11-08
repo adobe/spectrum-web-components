@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    fixture,
-    expect,
     elementUpdated,
-    waitUntil,
+    expect,
+    fixture,
     html,
     oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-button/sp-action-button.js';

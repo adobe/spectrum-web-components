@@ -78,7 +78,7 @@ interface StoryArgs {
     content?: string;
     type?: 'info' | 'warning' | 'error';
     inCorner?: boolean;
-    [prop: string]: any;
+    [prop: string]: unknown;
 }
 
 const Template = ({

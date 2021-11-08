@@ -11,17 +11,17 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
     SizedMixin,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
-    query,
     property,
+    query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';

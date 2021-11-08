@@ -181,7 +181,7 @@ interface StoryArgs {
     hideStepper?: boolean;
     readonly?: boolean;
     step?: number;
-    [prop: string]: any;
+    [prop: string]: unknown;
 }
 
 export const Default = (args: StoryArgs = {}): TemplateResult => {

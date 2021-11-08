@@ -11,10 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect } from '@open-wc/testing';
+import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
 import { spy } from 'sinon';
 
@@ -19,10 +19,10 @@ import '../sp-tags.js';
 import { Tag } from '..';
 import { ClearButton } from '@spectrum-web-components/button';
 import {
-    deleteEvent,
-    spaceEvent,
     backspaceEvent,
+    deleteEvent,
     enterEvent,
+    spaceEvent,
 } from '../../../test/testing-helpers.js';
 
 describe('Tag', () => {

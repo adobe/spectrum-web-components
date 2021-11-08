@@ -32,9 +32,9 @@ import {
 } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import {
-    getElFrom,
-    createLanguageContext,
     clickBySelector,
+    createLanguageContext,
+    getElFrom,
 } from './helpers.js';
 
 describe('NumberField', () => {

@@ -11,13 +11,13 @@ governing permissions and limitations under the License.
 */
 
 import {
-    LitElement,
-    html,
     CSSResultArray,
+    html,
+    LitElement,
 } from '@spectrum-web-components/base';
 import {
-    property,
     customElement,
+    property,
 } from '@spectrum-web-components/base/src/decorators.js';
 import logoStyles from './adobe-logo.css';
 

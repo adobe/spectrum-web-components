@@ -11,15 +11,15 @@ governing permissions and limitations under the License.
 */
 
 import {
-    LitElement,
-    html,
     CSSResultArray,
+    html,
+    LitElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
+    customElement,
     property,
     query,
-    customElement,
 } from '@spectrum-web-components/base/src/decorators.js';
 import sideNavSearchMenuStyles from './side-nav-search.css';
 import { Search } from '@spectrum-web-components/search';

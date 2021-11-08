@@ -16,20 +16,20 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { ActiveOverlay, Overlay, OverlayTrigger, Placement } from '../';
 
-import { waitForPredicate, isVisible } from '../../../test/testing-helpers.js';
+import { isVisible, waitForPredicate } from '../../../test/testing-helpers.js';
 import {
+    elementUpdated,
+    expect,
     fixture,
     html,
-    expect,
-    elementUpdated,
-    waitUntil,
-    oneEvent,
     nextFrame,
+    oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
 import {
-    virtualElement,
     definedOverlayElement,
+    virtualElement,
 } from '../stories/overlay.stories';
 import { PopoverContent } from '../stories/overlay-story-components.js';
 

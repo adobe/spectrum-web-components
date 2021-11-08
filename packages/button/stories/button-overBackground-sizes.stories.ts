@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { TemplateResult } from '@spectrum-web-components/base';
-import { renderButtonSet, makeOverBackground } from './index.js';
+import { makeOverBackground, renderButtonSet } from './index.js';
 
 export default {
     component: 'sp-button',

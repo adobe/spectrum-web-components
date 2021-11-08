@@ -12,11 +12,11 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
-    TemplateResult,
-    PropertyValues,
-    html,
-    SizedMixin,
     ElementSize,
+    html,
+    PropertyValues,
+    SizedMixin,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import {
     property,

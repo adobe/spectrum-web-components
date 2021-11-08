@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { ReactiveElement, PropertyValues } from 'lit';
+import { PropertyValues, ReactiveElement } from 'lit';
 import { property } from 'lit/decorators.js';
 
 type Constructor<T = Record<string, unknown>> = {
@@ -42,12 +42,12 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
 
         public set size(value: ElementSize) {
             const defaultSize = noDefaultSize ? null : 'm';
-            const size = (value
-                ? value.toLocaleLowerCase()
-                : value) as ElementSize;
-            const validSize = (validSizes.includes(size)
-                ? size
-                : defaultSize) as ElementSize;
+            const size = (
+                value ? value.toLocaleLowerCase() : value
+            ) as ElementSize;
+            const validSize = (
+                validSizes.includes(size) ? size : defaultSize
+            ) as ElementSize;
             if (validSize) {
                 this.setAttribute('size', validSize);
             }

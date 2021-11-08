@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult, render } from '@spectrum-web-components/base';
+import { html, render, TemplateResult } from '@spectrum-web-components/base';
 import './sp-story-decorator.js';
 
 export const themeStyles = html`
@@ -28,21 +28,23 @@ export const themeStyles = html`
     </style>
 `;
 
-export const swcThemeDecoratorWithConfig = (
-    { bundled } = { bundled: true }
-) => (story: () => TemplateResult) => {
-    if (!bundled) {
-        requestAnimationFrame(() => {
-            const decorator = document.querySelector(
-                'sp-story-decorator'
-            ) as HTMLElement;
-            render(story(), decorator);
-        });
-    }
-    return html`
-        ${themeStyles}
-        <sp-story-decorator>${bundled ? story() : html``}</sp-story-decorator>
-    `;
-};
+export const swcThemeDecoratorWithConfig =
+    ({ bundled } = { bundled: true }) =>
+    (story: () => TemplateResult) => {
+        if (!bundled) {
+            requestAnimationFrame(() => {
+                const decorator = document.querySelector(
+                    'sp-story-decorator'
+                ) as HTMLElement;
+                render(story(), decorator);
+            });
+        }
+        return html`
+            ${themeStyles}
+            <sp-story-decorator>
+                ${bundled ? story() : html``}
+            </sp-story-decorator>
+        `;
+    };
 
 export const swcThemeDecorator = swcThemeDecoratorWithConfig();

@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
+    html,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -20,10 +20,10 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import {
+    classMap,
     ifDefined,
     repeat,
     styleMap,
-    classMap,
 } from '@spectrum-web-components/base/src/directives.js';
 
 import sliderStyles from './slider.css.js';

@@ -11,21 +11,21 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
-    PropertyValues,
-    nothing,
+    html,
     LitElement,
+    nothing,
+    PropertyValues,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import {
     classMap,
     ifDefined,
 } from '@spectrum-web-components/base/src/directives.js';
 import {
-    query,
     property,
+    query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 

@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     SpectrumElement,
-    CSSResultArray,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';

@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult, html } from '@spectrum-web-components/base';
-import { elementUpdated, nextFrame, fixture } from '@open-wc/testing';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { elementUpdated, fixture, nextFrame } from '@open-wc/testing';
 import { executeServerCommand } from '@web/test-runner-commands';
 import { ProvideLang } from '@spectrum-web-components/theme';
 import { NumberField } from '../';

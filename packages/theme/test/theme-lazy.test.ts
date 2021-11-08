@@ -19,7 +19,7 @@ import darkStyles from '../src/theme-dark.css.js';
 import darkestStyles from '../src/theme-darkest.css.js';
 import largeStyles from '../src/scale-large.css.js';
 import mediumStyles from '../src/scale-medium.css.js';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 type TestableThemeConstructor = {
     instances: Set<Theme>;
@@ -28,7 +28,9 @@ type TestableThemeConstructor = {
 
 describe('Themes - lazy', () => {
     beforeEach(() => {
-        ((Theme as unknown) as TestableThemeConstructor).themeFragmentsByKind.clear();
+        (
+            Theme as unknown as TestableThemeConstructor
+        ).themeFragmentsByKind.clear();
         // Core is registered by default in `theme.ts`
         Theme.registerThemeFragment('core', 'core', coreStyles);
     });

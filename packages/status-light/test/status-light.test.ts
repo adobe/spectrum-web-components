@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 import '../sp-status-light.js';
 import { StatusLight } from '../';
-import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('Status Light', () => {
     it('loads correctly', async () => {

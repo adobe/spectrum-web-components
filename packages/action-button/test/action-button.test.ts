@@ -13,9 +13,9 @@ governing permissions and limitations under the License.
 import '../sp-action-button.js';
 import { ActionButton } from '../';
 import {
-    fixture,
     elementUpdated,
     expect,
+    fixture,
     html,
     waitUntil,
 } from '@open-wc/testing';
