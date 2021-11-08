@@ -30,6 +30,13 @@ const defaultListener: ListenerConfig = [
     },
 ];
 
+/**
+ * Performantly manage listening to event in a series, like:
+ *   - `input[type="range"]`: input, input, etc. => change
+ *   - `sp-color-area`: pointerdown => pointermove, pointermove, etc. => pointerup
+ * Lazily bind events to the specific part of the series while
+ * throttling streamed events to 1/frame.
+ */
 class StreamingListenerDirective extends AsyncDirective {
     host!: EventTarget | Record<string, unknown> | Element;
     element!: Element;

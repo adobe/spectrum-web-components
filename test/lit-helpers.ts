@@ -9,9 +9,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Part, ElementPart } from 'lit';
+import { ElementPart, Part } from 'lit';
 import { nothing } from 'lit/html.js';
-import { directive, AsyncDirective } from 'lit/async-directive.js';
+import { AsyncDirective, directive } from 'lit/async-directive.js';
 
 type EventListenerWithOptions = EventListenerOrEventListenerObject &
     Partial<AddEventListenerOptions>;
@@ -34,6 +34,8 @@ type EventListenerWithOptions = EventListenerOrEventListenerObject &
  *      `,
  *      document.body,
  *    );
+ *
+ * @TODO: replace this with a lit-native directive once one is released: https://github.com/lit/lit/pull/1960
  */
 class SpreadDirective extends AsyncDirective {
     host!: EventTarget | object | Element;
