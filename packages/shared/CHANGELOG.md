@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.11...@spectrum-web-components/shared@0.13.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
 ## [0.12.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.10...@spectrum-web-components/shared@0.12.11) (2021-11-08)
 
 **Note:** Version bump only for package @spectrum-web-components/shared
