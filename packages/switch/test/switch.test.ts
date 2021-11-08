@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import '../sp-switch.js';
 import { Switch } from '../';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('Switch', () => {
     it('loads default switch accessibly', async () => {

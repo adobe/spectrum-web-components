@@ -10,9 +10,9 @@ governing permissions and limitations under the License.
 */
 import '../sp-icons-large.js';
 import '../sp-icons-medium.js';
-import { IconsMedium, IconsLarge } from '../';
+import { IconsLarge, IconsMedium } from '../';
 import IconsetSVG from '../src/icons-large.svg.js';
-import { elementUpdated, fixture, html, expect } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('icons', () => {
     it('large', async () => {

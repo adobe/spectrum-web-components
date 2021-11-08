@@ -10,14 +10,14 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     LitElement,
-    CSSResultArray,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    property,
     customElement,
+    property,
 } from '@spectrum-web-components/base/src/decorators.js';
 
 import styles from '@spectrum-web-components/theme/src/typography.css.js';

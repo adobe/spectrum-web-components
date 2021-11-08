@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    TemplateResult,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import {
     property,
@@ -22,8 +22,8 @@ import {
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import {
-    ObserveSlotText,
     ObserveSlotPresence,
+    ObserveSlotText,
 } from '@spectrum-web-components/shared';
 
 /**

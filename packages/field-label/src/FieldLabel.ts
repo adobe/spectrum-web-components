@@ -11,16 +11,16 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
     SizedMixin,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    query,
     property,
+    query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import type { Focusable } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';

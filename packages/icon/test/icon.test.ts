@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import '../sp-icon.js';
 import { Icon } from '../';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('Icon', () => {
     before(async () => {

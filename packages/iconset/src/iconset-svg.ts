@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    TemplateResult,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { query } from '@spectrum-web-components/base/src/decorators.js';
 

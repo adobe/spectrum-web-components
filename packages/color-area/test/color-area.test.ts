@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
-    fixture,
     elementUpdated,
     expect,
+    fixture,
     html,
-    oneEvent,
     nextFrame,
+    oneEvent,
 } from '@open-wc/testing';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 

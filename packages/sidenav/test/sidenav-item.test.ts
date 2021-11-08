@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import '../sp-sidenav.js';
 import '../sp-sidenav-item.js';
 import { SideNavItem } from '../';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('Sidenav Item', () => {
     it('can exist disabled and with no parent', async () => {

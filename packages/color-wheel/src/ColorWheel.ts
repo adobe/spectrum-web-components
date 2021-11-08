@@ -11,10 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
@@ -22,7 +22,7 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
-import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
+import { SWCResizeObserverEntry, WithSWCResizeObserver } from './types';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import styles from './color-wheel.css.js';

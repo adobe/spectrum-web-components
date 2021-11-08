@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
+    html,
     LitElement,
     PropertyValues,
     TemplateResult,

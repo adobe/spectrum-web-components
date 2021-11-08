@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { useFakeTimers, SinonFakeTimers } from 'sinon';
+import { SinonFakeTimers, useFakeTimers } from 'sinon';
 import { OverlayTimer } from '../src/overlay-timer.js';
 import { expect } from '@open-wc/testing';
 

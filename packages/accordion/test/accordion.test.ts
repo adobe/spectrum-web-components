@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-accordion.js';
 import { Default } from '../stories/accordion.stories.js';
 import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
 import {
-    arrowUpEvent,
     arrowDownEvent,
+    arrowUpEvent,
     shiftTabEvent,
 } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';

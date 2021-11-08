@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ModifierArguments, Modifier } from '@popperjs/core/lib/types';
+import { Modifier, ModifierArguments } from '@popperjs/core/lib/types';
 
 const appliedSizeDefaults = new WeakMap();
 

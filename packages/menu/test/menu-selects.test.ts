@@ -14,10 +14,10 @@ import '../sp-menu-group.js';
 import '../sp-menu-item.js';
 import { Menu, MenuGroup, MenuItem } from '../';
 import {
+    elementUpdated,
+    expect,
     fixture,
     html,
-    expect,
-    elementUpdated,
     oneEvent,
 } from '@open-wc/testing';
 import { executeServerCommand, sendKeys } from '@web/test-runner-commands';

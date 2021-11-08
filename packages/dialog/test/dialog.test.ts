@@ -10,15 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-dialog.js';
 import { Dialog } from '..';
 import {
-    small,
-    dismissable,
     alertError,
+    dismissable,
     fullscreen,
+    small,
 } from '../stories/dialog.stories.js';
 import { spy } from 'sinon';
 
@@ -69,9 +69,11 @@ describe('Dialog', () => {
         el.addEventListener('close', () => closeSpy());
         await elementUpdated(el);
 
-        const closeButton = (el.shadowRoot
-            ? el.shadowRoot.querySelector('.close-button')
-            : el.querySelector('.close-button ')) as HTMLElement;
+        const closeButton = (
+            el.shadowRoot
+                ? el.shadowRoot.querySelector('.close-button')
+                : el.querySelector('.close-button ')
+        ) as HTMLElement;
 
         closeButton.click();
 

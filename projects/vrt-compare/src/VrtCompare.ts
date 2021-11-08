@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
-    SpectrumElement,
-    html,
     css,
-    TemplateResult,
-    PropertyValues,
+    html,
     nothing,
+    PropertyValues,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared';

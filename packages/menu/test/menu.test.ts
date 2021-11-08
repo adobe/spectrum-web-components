@@ -14,16 +14,16 @@ import '../sp-menu-item.js';
 import '../sp-menu-group.js';
 import { Menu, MenuItem } from '../';
 import {
-    fixture,
     elementUpdated,
-    nextFrame,
-    html,
     expect,
+    fixture,
+    html,
+    nextFrame,
     waitUntil,
 } from '@open-wc/testing';
 import {
-    arrowUpEvent,
     arrowDownEvent,
+    arrowUpEvent,
     tabEvent,
     tEvent,
 } from '../../../test/testing-helpers.js';

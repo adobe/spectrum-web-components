@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, html, expect } from '@open-wc/testing';
+import { expect, fixture, html } from '@open-wc/testing';
 import { reparentChildren } from '../src/reparent-children.js';
 
 describe('Reparent Children', () => {

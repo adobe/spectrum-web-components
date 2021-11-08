@@ -24,10 +24,10 @@ import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focu
 import { Color, Scale } from '@spectrum-web-components/theme';
 import styles from './active-overlay.css.js';
 import {
+    OverlayOpenCloseDetail,
     OverlayOpenDetail,
     Placement,
     TriggerInteractions,
-    OverlayOpenCloseDetail,
 } from './overlay-types.js';
 import { applyMaxSize, createPopper, Instance, maxSize } from './popper.js';
 import { VirtualTrigger } from './VirtualTrigger.js';

@@ -16,10 +16,10 @@ import { MenuItem } from '../';
 import '@spectrum-web-components/menu';
 import { Menu } from '@spectrum-web-components/menu';
 import {
-    fixture,
     elementUpdated,
-    html,
     expect,
+    fixture,
+    html,
     waitUntil,
 } from '@open-wc/testing';
 import { executeServerCommand } from '@web/test-runner-commands';
@@ -117,7 +117,7 @@ describe('Menu item', () => {
         await elementUpdated(el);
 
         const item = el.querySelector('sp-menu-item') as MenuItem;
-        const { anchorElement } = (item as unknown) as {
+        const { anchorElement } = item as unknown as {
             anchorElement: HTMLAnchorElement;
         };
         item.click();

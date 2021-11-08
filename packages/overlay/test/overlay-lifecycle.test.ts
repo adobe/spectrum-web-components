@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    fixture,
     elementUpdated,
-    html,
     expect,
+    fixture,
+    html,
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
@@ -45,9 +45,9 @@ describe('Overlay Trigger - Lifecycle Methods', () => {
             name: string;
             description: string;
         };
-        let snapshot = ((await a11ySnapshot(
-            {}
-        )) as unknown) as DescribedNode & { children: DescribedNode[] };
+        let snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
+            children: DescribedNode[];
+        };
         expect(
             findAccessibilityNode<DescribedNode>(
                 snapshot,
@@ -64,7 +64,7 @@ describe('Overlay Trigger - Lifecycle Methods', () => {
         await opened;
 
         expect(el.open).to.equal('hover');
-        snapshot = ((await a11ySnapshot({})) as unknown) as DescribedNode & {
+        snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
             children: DescribedNode[];
         };
 

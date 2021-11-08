@@ -13,11 +13,11 @@ governing permissions and limitations under the License.
 import '../sp-radio.js';
 import { Radio } from '../';
 import {
-    fixture,
     elementUpdated,
-    triggerBlurFor,
-    html,
     expect,
+    fixture,
+    html,
+    triggerBlurFor,
     waitUntil,
 } from '@open-wc/testing';
 import { executeServerCommand } from '@web/test-runner-commands';

@@ -14,10 +14,10 @@ import '../sp-tooltip.js';
 import { Tooltip } from '../';
 import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';
 import {
-    fixture,
     elementUpdated,
-    html,
     expect,
+    fixture,
+    html,
     oneEvent,
 } from '@open-wc/testing';
 import { Button } from '@spectrum-web-components/button';

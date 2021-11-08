@@ -11,17 +11,17 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
-import { SidenavSelectDetail, SideNav } from './Sidenav.js';
+import { SideNav, SidenavSelectDetail } from './Sidenav.js';
 
 import sidenavItemStyles from './sidenav-item.css.js';
 

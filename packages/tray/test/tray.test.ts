@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import {
-    fixture,
     elementUpdated,
     expect,
+    fixture,
     html,
     oneEvent,
 } from '@open-wc/testing';

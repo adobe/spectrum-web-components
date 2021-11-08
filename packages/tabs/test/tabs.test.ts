@@ -12,19 +12,19 @@ governing permissions and limitations under the License.
 import '../sp-tabs.js';
 import '../sp-tab.js';
 import '../sp-tab-panel.js';
-import { Tabs, Tab, TabPanel } from '../';
+import { Tab, TabPanel, Tabs } from '../';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
-import { fixture, elementUpdated, expect, waitUntil } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, waitUntil } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
 import { LitElement, TemplateResult } from '@spectrum-web-components/base';
-import { waitForPredicate, tabEvent } from '../../../test/testing-helpers.js';
+import { tabEvent, waitForPredicate } from '../../../test/testing-helpers.js';
 import {
+    arrowDownEvent,
+    arrowLeftEvent,
+    arrowRightEvent,
+    arrowUpEvent,
     enterEvent,
     spaceEvent,
-    arrowRightEvent,
-    arrowLeftEvent,
-    arrowUpEvent,
-    arrowDownEvent,
 } from '../../../test/testing-helpers.js';
 
 const createTabs = async (): Promise<Tabs> => {

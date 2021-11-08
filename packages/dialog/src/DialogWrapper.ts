@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
-    CSSResultArray,
-    PropertyValues,
 } from '@spectrum-web-components/base';
 import {
     property,

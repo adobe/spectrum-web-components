@@ -14,9 +14,9 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-thumbnail.js';
 import {
-    thumbnail,
     landscape as landscapeImage,
     portrait as portraitImage,
+    thumbnail,
 } from './images.js';
 
 export default {

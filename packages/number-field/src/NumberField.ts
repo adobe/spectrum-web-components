@@ -11,14 +11,14 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    query,
     property,
+    query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ProvideLang } from '@spectrum-web-components/theme';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';

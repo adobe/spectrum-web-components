@@ -14,17 +14,17 @@ import '../sp-radio-group.js';
 import { RadioGroup } from '../';
 import '@spectrum-web-components/radio/sp-radio.js';
 import { Radio } from '@spectrum-web-components/radio';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import {
-    arrowUpEvent,
     arrowDownEvent,
     arrowLeftEvent,
     arrowRightEvent,
+    arrowUpEvent,
     endEvent,
-    homeEvent,
-    pageUpEvent,
-    pageDownEvent,
     enterEvent,
+    homeEvent,
+    pageDownEvent,
+    pageUpEvent,
 } from '../../../test/testing-helpers.js';
 import {
     a11ySnapshot,
@@ -315,9 +315,9 @@ describe('Group Accessibility', () => {
             role: string;
             checked: boolean;
         };
-        const snapshot = ((await a11ySnapshot(
+        const snapshot = (await a11ySnapshot(
             {}
-        )) as unknown) as NamedRoledAndCheckedNode & {
+        )) as unknown as NamedRoledAndCheckedNode & {
             children: NamedRoledAndCheckedNode[];
         };
 

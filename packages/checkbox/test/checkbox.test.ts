@@ -13,11 +13,11 @@ governing permissions and limitations under the License.
 import '../sp-checkbox.js';
 import { Checkbox } from '../';
 import {
-    fixture,
     elementUpdated,
-    triggerBlurFor,
-    html,
     expect,
+    fixture,
+    html,
+    triggerBlurFor,
     waitUntil,
 } from '@open-wc/testing';
 import { waitForPredicate } from '../../../test/testing-helpers.js';

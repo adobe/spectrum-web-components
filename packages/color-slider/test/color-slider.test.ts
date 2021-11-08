@@ -10,16 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import {
-    arrowUpEvent,
     arrowDownEvent,
-    arrowLeftEvent,
-    arrowRightEvent,
-    arrowUpKeyupEvent,
     arrowDownKeyupEvent,
+    arrowLeftEvent,
     arrowLeftKeyupEvent,
+    arrowRightEvent,
     arrowRightKeyupEvent,
+    arrowUpEvent,
+    arrowUpKeyupEvent,
 } from '../../../test/testing-helpers.js';
 
 import '../sp-color-slider.js';

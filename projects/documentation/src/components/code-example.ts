@@ -11,10 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import {
-    LitElement,
-    html,
-    TemplateResult,
     CSSResultArray,
+    html,
+    LitElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import {
     customElement,

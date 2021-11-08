@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import '../sp-textfield.js';
 import { Textfield, TextfieldType } from '../';
-import { litFixture, html, elementUpdated, expect } from '@open-wc/testing';
-import { sendKeys, executeServerCommand } from '@web/test-runner-commands';
+import { elementUpdated, expect, html, litFixture } from '@open-wc/testing';
+import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
 
 describe('Textfield', () => {
     it('loads default textfield accessibly', async () => {
