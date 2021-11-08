@@ -43,6 +43,21 @@
         {% endfor %}
     </sp-sidenav-item>
     <sp-sidenav-item
+        label="Migration Guides"
+        multiLevel
+    >
+        <span slot="no-js">Migration Guides</span>
+        {% for migration in collections.migrations %}
+            <sp-sidenav-item
+                label="{{ migration.data.displayName }}"
+                href="{{ migration.url }}"
+                value="{{ migration.data.slug }}"
+            >
+                <a href="{{ migration.url }}" slot="no-js">{{ migration.data.displayName }}</a>
+            </sp-sidenav-item>
+        {% endfor %}
+    </sp-sidenav-item>
+    <sp-sidenav-item
         label="Playground"
         href="/storybook/index.html"
         multilevel

@@ -73,6 +73,10 @@ module.exports = function (eleventyConfig) {
         return [...collection.getFilteredByGlob('./content/guides/*.md')];
     });
 
+    eleventyConfig.addCollection('migrations', (collection) => {
+        return [...collection.getFilteredByGlob('./content/migrations/*.md')];
+    });
+
     eleventyConfig.addCollection('component-examples', function (collection) {
         return collection
             .getFilteredByTag('component-examples')
