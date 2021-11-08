@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.8.0...@spectrum-web-components/picker@0.8.1) (2021-11-08)
+
+### Bug Fixes
+
+-   abstract "hasVisibleFocusInTree" functionality and return trigger focus after close ([4f39f2c](https://github.com/adobe/spectrum-web-components/commit/4f39f2c506066b789834584d2c9c24185ea57118))
+
 # [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.7.5...@spectrum-web-components/picker@0.8.0) (2021-11-02)
 
 ### Bug Fixes

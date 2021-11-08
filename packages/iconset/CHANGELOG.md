@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/iconset@0.5.7...@spectrum-web-components/iconset@0.5.8) (2021-11-08)
+
+### Bug Fixes
+
+-   allow "updateComplete" to resolve to a boolean like the LitElement default ([6127946](https://github.com/adobe/spectrum-web-components/commit/6127946fd3ffd048a30b7eb4bf6aadf9e7c8752a))
+
 ## [0.5.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/iconset@0.5.6...@spectrum-web-components/iconset@0.5.7) (2021-07-22)
 
 **Note:** Version bump only for package @spectrum-web-components/iconset
