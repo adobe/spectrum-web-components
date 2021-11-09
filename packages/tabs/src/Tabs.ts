@@ -148,6 +148,7 @@ export class Tabs extends SizedMixin(Focusable) {
                 @keydown=${this.onKeyDown}
                 @mousedown=${this.manageFocusinType}
                 @focusin=${this.startListeningToKeyboard}
+                @sp-tab-contentchange=${this.updateSelectionIndicator}
                 id="list"
                 role="tablist"
             >

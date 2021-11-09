@@ -14,7 +14,13 @@ import '../sp-tab.js';
 import '../sp-tab-panel.js';
 import { Tab, TabPanel, Tabs } from '../';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
-import { elementUpdated, expect, fixture, waitUntil } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    oneEvent,
+    waitUntil,
+} from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
 import { LitElement, TemplateResult } from '@spectrum-web-components/base';
 import { tabEvent, waitForPredicate } from '../../../test/testing-helpers.js';
@@ -592,7 +598,6 @@ describe('Tabs', () => {
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
     });
-
     it('selects through slotted DOM', async () => {
         const el = await fixture<Tabs>(
             html`
@@ -611,5 +616,44 @@ describe('Tabs', () => {
         await elementUpdated(el);
 
         expect(el.selected).to.equal('second');
+    });
+    it('updates selection indicator in response to tab updates', async () => {
+        const el = await fixture<Tabs>(
+            html`
+                <sp-tabs selected="first">
+                    <sp-tab value="first">Tab 1</sp-tab>
+                    <sp-tab value="second">Tab 2</sp-tab>
+                </sp-tabs>
+            `
+        );
+        const selected = el.querySelector('[value="first"]') as Tab;
+        await elementUpdated(el);
+
+        const extractScaleX = /scaleX\((.+)\)/;
+        const initialExec = extractScaleX.exec(
+            el.selectionIndicatorStyle
+        ) as unknown as [string, string];
+        const initialWidth = parseFloat(initialExec[1]);
+        let contentchanged = oneEvent(el, 'sp-tab-contentchange');
+        selected.textContent = 'WWWWWWWWWWWWWWWWWWWWWWWWW';
+        await contentchanged;
+        await elementUpdated(el);
+
+        const longerExec = extractScaleX.exec(
+            el.selectionIndicatorStyle
+        ) as unknown as [string, string];
+        const longerWidth = parseFloat(longerExec[1]);
+        expect(initialWidth).to.be.lessThan(longerWidth);
+        contentchanged = oneEvent(el, 'sp-tab-contentchange');
+        selected.textContent = 'W';
+        await contentchanged;
+        await elementUpdated(el);
+
+        const shorterExec = extractScaleX.exec(
+            el.selectionIndicatorStyle
+        ) as unknown as [string, string];
+        const shorterWidth = parseFloat(shorterExec[1]);
+        expect(initialWidth).to.be.greaterThan(shorterWidth);
+        expect(longerWidth).to.be.greaterThan(shorterWidth);
     });
 });
