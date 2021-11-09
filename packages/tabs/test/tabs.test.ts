@@ -592,4 +592,24 @@ describe('Tabs', () => {
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
     });
+
+    it('selects through slotted DOM', async () => {
+        const el = await fixture<Tabs>(
+            html`
+                <sp-tabs selected="first">
+                    <sp-tab value="first">Tab 1</sp-tab>
+                    <sp-tab value="second"><span>Tab 2</span></sp-tab>
+                </sp-tabs>
+            `
+        );
+        const span = el.querySelector('span') as HTMLSpanElement;
+        await elementUpdated(el);
+
+        expect(el.selected).to.equal('first');
+
+        span.click();
+        await elementUpdated(el);
+
+        expect(el.selected).to.equal('second');
+    });
 });
