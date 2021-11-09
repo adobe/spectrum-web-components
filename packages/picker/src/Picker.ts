@@ -33,7 +33,13 @@ import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-c
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/menu/sp-menu.js';
-import { Menu, MenuItem } from '@spectrum-web-components/menu';
+import type {
+    Menu,
+    MenuItem,
+    MenuItemAddedOrUpdatedEvent,
+    MenuItemChildren,
+    MenuItemRemovedEvent,
+} from '@spectrum-web-components/menu';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import {
@@ -326,20 +332,12 @@ export class PickerBase extends SizedMixin(Focusable) {
         }
     }
 
-    protected get selectedItemContent(): {
-        icon: Element[];
-        content: Node[];
-    } {
-        if (!this._selectedItemContent && this.selectedItem) {
-            this._selectedItemContent = this.selectedItem.itemChildren;
+    protected get selectedItemContent(): MenuItemChildren {
+        if (this.selectedItem) {
+            return this.selectedItem.itemChildren;
         }
-        return this._selectedItemContent || { icon: [], content: [] };
+        return { icon: [], content: [] };
     }
-
-    private _selectedItemContent?: {
-        icon: Element[];
-        content: Node[];
-    };
 
     protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
         if (this.value && this.selectedItem) {
@@ -404,9 +402,6 @@ export class PickerBase extends SizedMixin(Focusable) {
     }
 
     protected update(changes: PropertyValues<this>): void {
-        if (changes.has('selectedItem')) {
-            this._selectedItemContent = undefined;
-        }
         if (this.selects) {
             // Always force `selects` to "single" when set.
             // TODO: Add support functionally and visually for "multiple"
@@ -438,6 +433,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             <sp-popover
                 id="popover"
                 role="dialog"
+                @sp-menu-item-added-or-updated=${this.updateMenuItems}
                 @sp-overlay-closed=${this.onOverlayClosed}
                 .overlayCloseCallback=${this.overlayCloseCallback}
             >
@@ -461,9 +457,14 @@ export class PickerBase extends SizedMixin(Focusable) {
      * direct element query or by assuming the list managed
      * by the Menu within the open options overlay.
      */
-    protected updateMenuItems(): void {
+    protected updateMenuItems(
+        event?: MenuItemAddedOrUpdatedEvent | MenuItemRemovedEvent
+    ): void {
         if (this._willUpdateItems) return;
         this._willUpdateItems = true;
+        if (event?.item === this.selectedItem) {
+            this.requestUpdate();
+        }
 
         let resolve = (): void => {
             return;
@@ -565,6 +566,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             'sp-menu-item-added-or-updated',
             this.updateMenuItems
         );
+        this.addEventListener('sp-menu-item-removed', this.updateMenuItems);
         super.connectedCallback();
     }
 

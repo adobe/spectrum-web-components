@@ -99,6 +99,67 @@ describe('Picker, sync', () => {
         it('loads accessibly', async () => {
             await expect(el).to.be.accessible();
         });
+        it('accepts new selected item content', async () => {
+            const option2 = el.querySelector('[value="option-2"') as MenuItem;
+            el.value = 'option-2';
+            await elementUpdated(el);
+            expect(el.value).to.equal('option-2');
+            expect((el.button.textContent || '').trim()).to.equal(
+                'Select Inverse'
+            );
+            const itemUpdated = oneEvent(el, 'sp-menu-item-added-or-updated');
+            option2.innerHTML = 'Invert Selection';
+            await itemUpdated;
+            await elementUpdated(el);
+            expect(el.value).to.equal('option-2');
+            expect((el.button.textContent || '').trim()).to.equal(
+                'Invert Selection'
+            );
+        });
+        it('accepts new selected item content when open', async () => {
+            const option2 = el.querySelector('[value="option-2"') as MenuItem;
+            el.value = 'option-2';
+            await elementUpdated(el);
+            expect(el.value).to.equal('option-2');
+            expect((el.button.textContent || '').trim()).to.equal(
+                'Select Inverse'
+            );
+            const opened = oneEvent(el, 'sp-opened');
+            el.open = true;
+            await opened;
+            const itemUpdated = oneEvent(
+                option2,
+                'sp-menu-item-added-or-updated'
+            );
+            option2.innerHTML = 'Invert Selection';
+            await itemUpdated;
+            await elementUpdated(el);
+            expect(el.value).to.equal('option-2');
+            expect((el.button.textContent || '').trim()).to.equal(
+                'Invert Selection'
+            );
+        });
+        it('unsets value when children removed', async () => {
+            el.value = 'option-2';
+
+            await elementUpdated(el);
+            expect(el.value).to.equal('option-2');
+            expect((el.button.textContent || '').trim()).to.equal(
+                'Select Inverse'
+            );
+
+            const items = el.querySelectorAll('sp-menu-item');
+            const removals: Promise<unknown>[] = [];
+            items.forEach((item) => {
+                const removal = oneEvent(el, 'sp-menu-item-removed');
+                item.remove();
+                removals.push(removal);
+            });
+            await Promise.all(removals);
+            await elementUpdated(el);
+            expect(el.value).to.equal('');
+            expect((el.button.textContent || '').trim()).to.equal('');
+        });
         it('accepts a new item and value at the same time', async () => {
             el.value = 'option-2';
 

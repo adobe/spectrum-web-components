@@ -81,6 +81,8 @@ export class MenuItemAddedOrUpdatedEvent extends Event {
     }
 }
 
+export type MenuItemChildren = { icon: Element[]; content: Node[] };
+
 const addOrUpdateEvent = new MenuItemAddedOrUpdatedEvent();
 const removeEvent = new MenuItemRemovedEvent();
 
@@ -152,7 +154,11 @@ export class MenuItem extends LikeAnchor(Focusable) {
         return this;
     }
 
-    public get itemChildren(): { icon: Element[]; content: Node[] } {
+    public get itemChildren(): MenuItemChildren {
+        if (this._itemChildren) {
+            return this._itemChildren;
+        }
+
         const iconSlot = this.shadowRoot.querySelector(
             'slot[name="icon"]'
         ) as HTMLSlotElement;
@@ -170,8 +176,12 @@ export class MenuItem extends LikeAnchor(Focusable) {
         const content = !contentSlot
             ? []
             : contentSlot.assignedNodes().map((node) => node.cloneNode(true));
-        return { icon, content };
+        this._itemChildren = { icon, content };
+
+        return this._itemChildren;
     }
+
+    private _itemChildren?: MenuItemChildren;
 
     constructor() {
         super();
@@ -216,11 +226,19 @@ export class MenuItem extends LikeAnchor(Focusable) {
         return handled;
     }
 
+    protected breakItemChildrenCache(): void {
+        this._itemChildren = undefined;
+        this.triggerUpdate();
+    }
+
     protected render(): TemplateResult {
         return html`
-            <slot name="icon"></slot>
+            <slot name="icon" @slotchange=${this.breakItemChildrenCache}></slot>
             <div id="label">
-                <slot id="slot"></slot>
+                <slot
+                    id="slot"
+                    @slotchange=${this.breakItemChildrenCache}
+                ></slot>
             </div>
             <slot name="value"></slot>
             ${this.selected
