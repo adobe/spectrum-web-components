@@ -11,14 +11,14 @@ governing permissions and limitations under the License.
 */
 import { playwrightLauncher } from '@web/test-runner-playwright';
 import {
-    sendKeysPlugin,
     a11ySnapshotPlugin,
+    sendKeysPlugin,
 } from '@web/test-runner-commands/plugins';
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
+    configuredVisualRegressionPlugin,
     packages,
     vrtGroups,
-    configuredVisualRegressionPlugin,
 } from './web-test-runner.utils.js';
 import { fromRollup } from '@web/dev-server-rollup';
 import rollupJson from '@rollup/plugin-json';
@@ -44,7 +44,7 @@ export default {
     nodeResolve: true,
     concurrency: 4,
     concurrentBrowsers: 1,
-    testsFinishTimeout: 20000,
+    testsFinishTimeout: 30000,
     coverageConfig: {
         report: true,
         reportDir: 'coverage',
@@ -67,7 +67,7 @@ export default {
     },
     testFramework: {
         config: {
-            timeout: 10000,
+            timeout: 5000,
         },
     },
     groups: [
