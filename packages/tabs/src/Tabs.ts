@@ -274,7 +274,9 @@ export class Tabs extends SizedMixin(Focusable) {
     }
 
     private onClick = (event: Event): void => {
-        const target = event.target as Tab;
+        const target = event
+            .composedPath()
+            .find((el) => (el as Tab).parentElement === this) as Tab;
         if (this.disabled || target.disabled) {
             return;
         }
