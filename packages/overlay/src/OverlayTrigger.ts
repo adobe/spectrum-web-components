@@ -76,10 +76,16 @@ export class OverlayTrigger extends LitElement {
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
+    @property({ type: Boolean, attribute: false })
+    public hasLongpressContent = false;
+
+    private longpressDescriptor?: HTMLElement;
     private clickContent?: HTMLElement;
     private longpressContent?: HTMLElement;
     private hoverContent?: HTMLElement;
     private targetContent?: HTMLElement;
+
+    public _longpressId = `longpress-describedby-descriptor`;
 
     private handleClose(event?: CustomEvent<OverlayOpenCloseDetail>): void {
         if (
@@ -121,12 +127,13 @@ export class OverlayTrigger extends LitElement {
                     @slotchange=${this.onHoverSlotChange}
                     name="hover-content"
                 ></slot>
+                <slot name=${this._longpressId}></slot>
             </div>
         `;
         /* eslint-enable lit-a11y/click-events-have-key-events */
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (this.disabled && changes.has('disabled')) {
             this.closeAllOverlays();
@@ -134,6 +141,47 @@ export class OverlayTrigger extends LitElement {
         }
         if (changes.has('open')) {
             this.manageOpen();
+        }
+        if (changes.has('hasLongpressContent')) {
+            this.manageLongpressDescriptor();
+        }
+    }
+
+    protected manageLongpressDescriptor(): void {
+        // get overlay trigger
+        const trigger = this.querySelector('[slot="trigger"]') as HTMLElement;
+
+        // get our current describedby attributes, if any
+        const ariaDescribedby = trigger.getAttribute('aria-describedby');
+        let descriptors = ariaDescribedby ? ariaDescribedby.split(/\s+/) : [];
+
+        if (this.hasLongpressContent) {
+            // make an element that acts as `aria-describedby` description if it doesn't exist yet
+            if (!this.longpressDescriptor) {
+                this.longpressDescriptor = document.createElement(
+                    'div'
+                ) as HTMLElement;
+
+                this.longpressDescriptor.id = this._longpressId;
+                this.longpressDescriptor.slot = this._longpressId;
+                this.longpressDescriptor.innerHTML =
+                    'Long press for additional options';
+            }
+            this.appendChild(this.longpressDescriptor); // add descriptor to light DOM
+
+            descriptors.push(this._longpressId);
+        } else {
+            // dispose longpressDescriptor if it exists already
+            if (this.longpressDescriptor) this.longpressDescriptor.remove();
+            // remove longpressid from the descriptors
+            descriptors = descriptors.filter(
+                (descriptor) => descriptor !== this._longpressId
+            );
+        }
+        if (descriptors.length) {
+            trigger.setAttribute('aria-describedby', descriptors.join(' '));
+        } else {
+            trigger.removeAttribute('aria-describedby');
         }
     }
 
@@ -332,6 +380,8 @@ export class OverlayTrigger extends LitElement {
         event: Event & { target: HTMLSlotElement }
     ): void {
         this.longpressContent = this.extractSlotContentFromEvent(event);
+        this.hasLongpressContent =
+            !!this.longpressContent || !!this.closeLongpressOverlay;
         this.manageOpen();
     }
 
