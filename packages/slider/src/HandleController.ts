@@ -149,16 +149,42 @@ export class HandleController implements Controller {
         return input;
     }
 
+    protected handleOrientation = (): void => {
+        this.updateBoundingRect();
+    };
+
     public hostConnected(): void {
         if (!this.observer) {
             this.observer = new MutationObserver(this.extractModelFromLightDom);
         }
         this.observer.observe(this.host, { subtree: true, childList: true });
         this.extractModelFromLightDom();
+        if ('orientation' in screen) {
+            screen.orientation.addEventListener(
+                'change',
+                this.handleOrientation
+            );
+        } else {
+            window.addEventListener(
+                'orientationchange',
+                this.handleOrientation
+            );
+        }
     }
 
     public hostDisconnected(): void {
         this.observer.disconnect();
+        if ('orientation' in screen) {
+            screen.orientation.removeEventListener(
+                'change',
+                this.handleOrientation
+            );
+        } else {
+            window.removeEventListener(
+                'orientationchange',
+                this.handleOrientation
+            );
+        }
     }
 
     public hostUpdate(): void {
@@ -241,6 +267,8 @@ export class HandleController implements Controller {
         delete this.handleRefMap;
     }
 
+    private _boundingClientRect?: DOMRect;
+
     private get boundingClientRect(): DOMRect {
         if (!this._boundingClientRect) {
             this._boundingClientRect = this.host.track.getBoundingClientRect();
@@ -251,8 +279,6 @@ export class HandleController implements Controller {
     private updateBoundingRect(): void {
         delete this._boundingClientRect;
     }
-
-    private _boundingClientRect?: DOMRect;
 
     /**
      * Receives an event from a track click and turns it into a drag
