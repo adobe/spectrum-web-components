@@ -124,13 +124,15 @@ describe('Slider - editable, sync', () => {
         expect(pointerId).to.equal(-1);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
-        handle.setPointerCapture = (id: number) => (pointerId = id);
-        handle.releasePointerCapture = (id: number) => (pointerId = id);
+        el.track.setPointerCapture = (id: number) => (pointerId = id);
+        el.track.releasePointerCapture = (id: number) => (pointerId = id);
         handle.dispatchEvent(
             new PointerEvent('pointerdown', {
                 button: 1,
                 pointerId: 1,
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         await elementUpdated(el);
@@ -143,6 +145,8 @@ describe('Slider - editable, sync', () => {
                 button: 0,
                 pointerId: 1,
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         await elementUpdated(el);
@@ -154,6 +158,8 @@ describe('Slider - editable, sync', () => {
             new PointerEvent('pointerup', {
                 pointerId: 2,
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         await elementUpdated(el);
@@ -167,6 +173,8 @@ describe('Slider - editable, sync', () => {
                 button: 0,
                 pointerId: 1,
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         await elementUpdated(el);
@@ -178,6 +186,8 @@ describe('Slider - editable, sync', () => {
             new PointerEvent('pointercancel', {
                 pointerId: 3,
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         await elementUpdated(el);

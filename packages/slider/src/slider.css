@@ -87,8 +87,14 @@ sp-field-label {
     pointer-events: none;
 }
 
-.track {
-    touch-action: none;
+:host([dragging]),
+#track {
+    touch-action: pan-x;
+    user-select: none;
+}
+
+.handle {
+    pointer-events: none;
 }
 
 .not-exact.ticks {

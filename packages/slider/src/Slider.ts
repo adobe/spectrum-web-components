@@ -33,6 +33,7 @@ import '@spectrum-web-components/field-label/sp-field-label.js';
 import type { NumberField } from '@spectrum-web-components/number-field';
 import { HandleController, HandleValueDictionary } from './HandleController.js';
 import { SliderHandle } from './SliderHandle.js';
+import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 
 export const variants = ['filled', 'ramp', 'range', 'tick'];
 
@@ -330,7 +331,14 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         ];
 
         return html`
-            <div id="track" @pointerdown=${this.handleTrackPointerdown}>
+            <div
+                id="track"
+                ${streamingListener({
+                    start: ['pointerdown', this.handlePointerdown],
+                    streamInside: ['pointermove', this.handlePointermove],
+                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                })}
+            >
                 <div id="controls">
                     ${repeat(
                         trackItems,
@@ -342,16 +350,16 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
         `;
     }
 
-    /**
-     * Move the handle under the cursor and begin start a pointer capture when the track
-     * is moused down
-     */
-    private handleTrackPointerdown(event: PointerEvent): void {
-        const target = event.target as HTMLElement;
-        if (target.classList.contains('handle')) {
-            return;
-        }
-        this.handleController.beginTrackDrag(event);
+    protected handlePointerdown(event: PointerEvent): void {
+        this.handleController.handlePointerdown(event);
+    }
+
+    protected handlePointermove(event: PointerEvent): void {
+        this.handleController.handlePointermove(event);
+    }
+
+    protected handlePointerup(event: PointerEvent): void {
+        this.handleController.handlePointerup(event);
     }
 
     private handleNumberInput(event: Event & { target: NumberField }): void {
