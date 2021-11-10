@@ -61,6 +61,7 @@ export class Tooltip extends SpectrumElement {
 
     @property({ type: Number, reflect: true })
     public offset = 6;
+    private hadTooltipId = false;
 
     @property({ type: Boolean, reflect: true })
     public open = false;
@@ -131,10 +132,28 @@ export class Tooltip extends SpectrumElement {
         trigger: HTMLElement;
     }): void {
         this.setAttribute('aria-hidden', 'true');
-        this.generateProxy();
-        this._proxy.textContent = this.textContent;
-        trigger.setAttribute('aria-describedby', this._tooltipId);
-        this.insertAdjacentElement('beforebegin', this._proxy);
+        if (!this._proxy) {
+            this._proxy = document.createElement('span');
+            this._proxy.textContent = this.textContent;
+            this._proxy.id = this._tooltipId;
+            this._proxy.hidden = true;
+            this._proxy.setAttribute('role', 'tooltip');
+        }
+        const ariaDescribedby = trigger.getAttribute('aria-describedby') || '';
+        this.hadTooltipId = ariaDescribedby.search(this._tooltipId) > -1;
+
+        trigger.insertAdjacentElement('beforebegin', this._proxy);
+
+        if (this.hadTooltipId) return;
+
+        if (ariaDescribedby) {
+            trigger.setAttribute(
+                'aria-describedby',
+                `${ariaDescribedby} ${this._tooltipId}`
+            );
+        } else {
+            trigger.setAttribute('aria-describedby', `${this._tooltipId}`);
+        }
     }
 
     public overlayOpenCancelledCallback({
@@ -146,7 +165,20 @@ export class Tooltip extends SpectrumElement {
     }
 
     public overlayCloseCallback({ trigger }: { trigger: HTMLElement }): void {
-        trigger.removeAttribute('aria-describedby');
+        const ariaDescribedby = trigger.getAttribute('aria-describedby') || '';
+        let descriptors = ariaDescribedby.split(/\s+/);
+
+        if (!this.hadTooltipId) {
+            descriptors = descriptors.filter(
+                (descriptor) => descriptor !== this._tooltipId
+            );
+        }
+        if (descriptors.length) {
+            trigger.setAttribute('aria-describedby', descriptors.join(' '));
+        } else {
+            trigger.removeAttribute('aria-describedby');
+        }
+
         this.removeAttribute('aria-hidden');
         this.removeProxy();
     }
