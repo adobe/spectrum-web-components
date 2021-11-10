@@ -143,13 +143,15 @@ describe('Slider', () => {
         expect(pointerId).to.equal(-1);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
-        handle.setPointerCapture = (id: number) => (pointerId = id);
-        handle.releasePointerCapture = (id: number) => (pointerId = id);
+        el.track.setPointerCapture = (id: number) => (pointerId = id);
+        el.track.releasePointerCapture = (id: number) => (pointerId = id);
         handle.dispatchEvent(
             new PointerEvent('pointerdown', {
                 button: 1,
                 pointerId: 1,
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         await elementUpdated(el);
@@ -162,6 +164,8 @@ describe('Slider', () => {
                 button: 0,
                 pointerId: 1,
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         await elementUpdated(el);
@@ -173,6 +177,8 @@ describe('Slider', () => {
             new PointerEvent('pointerup', {
                 pointerId: 2,
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         await elementUpdated(el);
@@ -186,6 +192,8 @@ describe('Slider', () => {
                 button: 0,
                 pointerId: 1,
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         await elementUpdated(el);
@@ -197,6 +205,8 @@ describe('Slider', () => {
             new PointerEvent('pointercancel', {
                 pointerId: 3,
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         await elementUpdated(el);
@@ -220,8 +230,8 @@ describe('Slider', () => {
             '#controls'
         ) as HTMLDivElement;
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
-        handle.setPointerCapture = (id: number) => (pointerId = id);
-        handle.releasePointerCapture = (id: number) => (pointerId = id);
+        el.track.setPointerCapture = (id: number) => (pointerId = id);
+        el.track.releasePointerCapture = (id: number) => (pointerId = id);
 
         controls.dispatchEvent(
             new PointerEvent('pointerdown', {
@@ -363,6 +373,8 @@ describe('Slider', () => {
             new PointerEvent('pointermove', {
                 clientX: 0,
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         await elementUpdated(el);
@@ -381,14 +393,16 @@ describe('Slider', () => {
         expect(el.value, 'initial').to.equal(10);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
-        handle.setPointerCapture = (id: number) => (pointerId = id);
-        handle.releasePointerCapture = (id: number) => (pointerId = id);
+        el.track.setPointerCapture = (id: number) => (pointerId = id);
+        el.track.releasePointerCapture = (id: number) => (pointerId = id);
         handle.dispatchEvent(
             new PointerEvent('pointerdown', {
                 clientX: 58,
                 cancelable: true,
                 button: 0,
                 pointerId: 100,
+                composed: true,
+                bubbles: true,
             })
         );
         await elementUpdated(el);
@@ -396,6 +410,8 @@ describe('Slider', () => {
             new PointerEvent('pointermove', {
                 clientX: 58,
                 cancelable: true,
+                composed: true,
+                bubbles: true,
             })
         );
         await elementUpdated(el);
@@ -410,6 +426,8 @@ describe('Slider', () => {
             new PointerEvent('pointermove', {
                 clientX: 0,
                 cancelable: true,
+                composed: true,
+                bubbles: true,
             })
         );
         await elementUpdated(el);
@@ -420,6 +438,8 @@ describe('Slider', () => {
             new PointerEvent('pointerup', {
                 clientX: 0,
                 cancelable: true,
+                composed: true,
+                bubbles: true,
             })
         );
         await elementUpdated(el);
@@ -431,6 +451,8 @@ describe('Slider', () => {
                 clientX: 58,
                 cancelable: true,
                 button: 0,
+                composed: true,
+                bubbles: true,
             })
         );
         await elementUpdated(el);
@@ -438,6 +460,8 @@ describe('Slider', () => {
             new PointerEvent('pointermove', {
                 clientX: 58,
                 cancelable: true,
+                composed: true,
+                bubbles: true,
             })
         );
         await elementUpdated(el);
@@ -451,6 +475,8 @@ describe('Slider', () => {
             new PointerEvent('pointermove', {
                 clientX: 0,
                 cancelable: true,
+                composed: true,
+                bubbles: true,
             })
         );
         await elementUpdated(el);
@@ -461,6 +487,8 @@ describe('Slider', () => {
             new PointerEvent('pointerup', {
                 clientX: 0,
                 cancelable: true,
+                composed: true,
+                bubbles: true,
             })
         );
         await elementUpdated(el);

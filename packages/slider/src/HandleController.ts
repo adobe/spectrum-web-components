@@ -15,7 +15,6 @@ import {
     ifDefined,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
-import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { Slider } from './Slider.js';
 import {
     Controller,
@@ -49,6 +48,12 @@ interface ModelValue extends RangeAndClamp {
 
 interface InputWithModel extends HTMLInputElement {
     model: ModelValue;
+}
+
+interface DataFromPointerEvent {
+    resolvedInput: boolean;
+    input: InputWithModel;
+    model?: ModelValue;
 }
 
 export interface HandleValueDictionary {
@@ -281,68 +286,75 @@ export class HandleController implements Controller {
     }
 
     /**
-     * Receives an event from a track click and turns it into a drag
-     * of the active handle
-     * @param event Track click event
+     * Return the `input` and `model` associated with the event and
+     * whether the `input` is a `resolvedInput` meaning it was acquired
+     * from the `model` rather than the event.
      */
-    public beginTrackDrag(event: PointerEvent): void {
-        const { handle } = this.getActiveHandleElements();
-        const model = this.model.find(
-            (item) => item.name === this.activeHandle
-        );
-        /* c8 ignore next */
-        if (!model) return;
-
-        event.stopPropagation();
-        event.preventDefault();
-        const applyDefault = handle.dispatchEvent(
-            new PointerEvent('pointerdown', event)
-        );
-        if (applyDefault) {
-            const model = this.model.find(
-                (model) => model.name === this.activeHandle
-            );
-            if (model) {
-                this.handlePointermove(event, model);
+    protected extractDataFromEvent(event: PointerEvent): DataFromPointerEvent {
+        if (!this._activePointerEventData) {
+            let input = (event.target as Element).querySelector(
+                ':scope > .input'
+            ) as InputWithModel;
+            const resolvedInput = !input;
+            const model = input
+                ? input.model
+                : this.model.find((item) => item.name === this.activeHandle);
+            if (!input && !!model) {
+                input = model.handle.focusElement as InputWithModel;
             }
+            this._activePointerEventData = {
+                input,
+                model,
+                resolvedInput,
+            };
         }
+        return this._activePointerEventData;
     }
 
-    private handlePointerdown(event: PointerEvent, model: ModelValue): void {
-        const handle = event.target as HTMLDivElement;
-        if (this.host.disabled || event.button !== 0) {
+    private _activePointerEventData!: DataFromPointerEvent | undefined;
+
+    public handlePointerdown(event: PointerEvent): void {
+        const { resolvedInput, model } = this.extractDataFromEvent(event);
+        if (!model || this.host.disabled || event.button !== 0) {
             event.preventDefault();
             return;
         }
+        this.host.track.setPointerCapture(event.pointerId);
         this.updateBoundingRect();
         this.host.labelEl.click();
         this.draggingHandle = model.handle;
         model.handle.dragging = true;
         this.activateHandle(model.name);
-        handle.setPointerCapture(event.pointerId);
-        this.host.requestUpdate();
+        if (resolvedInput) {
+            // When the input is resolved forward the pointer event to
+            // `handlePointermove` in order to update the value/UI becuase
+            // the pointer event was on the track not a handle
+            this.handlePointermove(event);
+        }
+        this.requestUpdate();
     }
 
-    private handlePointerup(event: PointerEvent, model: ModelValue): void {
-        // Retain focus on input element after mouse up to enable keyboard interactions
-        const handle = event.target as HTMLDivElement;
-        const input = handle.querySelector('input') as HTMLInputElement;
+    public handlePointerup(event: PointerEvent): void {
+        const { input, model } = this.extractDataFromEvent(event);
+        delete this._activePointerEventData;
+        if (!model) return;
         this.host.labelEl.click();
         model.handle.highlight = false;
         delete this.draggingHandle;
         model.handle.dragging = false;
         this.requestUpdate();
-        handle.releasePointerCapture(event.pointerId);
+        this.host.track.releasePointerCapture(event.pointerId);
         this.dispatchChangeEvent(input, model.handle);
     }
 
-    private handlePointermove(event: PointerEvent, model: ModelValue): void {
+    public handlePointermove(event: PointerEvent): void {
+        const { input, model } = this.extractDataFromEvent(event);
+        if (!model) return;
         /* c8 ignore next 3 */
         if (!this.draggingHandle) {
             return;
         }
         event.stopPropagation();
-        const { input } = this.getHandleElements(model.handle);
         input.value = this.calculateHandlePosition(event, model).toString();
         model.handle.value = parseFloat(input.value);
         this.requestUpdate();
@@ -451,23 +463,6 @@ export class HandleController implements Controller {
                 class=${classMap(classes)}
                 name=${model.name}
                 style=${styleMap(style)}
-                ${streamingListener({
-                    start: [
-                        'pointerdown',
-                        (event: PointerEvent) =>
-                            this.handlePointerdown(event, model),
-                    ],
-                    streamInside: [
-                        'pointermove',
-                        (event: PointerEvent) =>
-                            this.handlePointermove(event, model),
-                    ],
-                    end: [
-                        ['pointerup', 'pointercancel'],
-                        (event: PointerEvent) =>
-                            this.handlePointerup(event, model),
-                    ],
-                })}
                 role="presentation"
             >
                 <input
