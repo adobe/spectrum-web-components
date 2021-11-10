@@ -25,8 +25,49 @@ import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { OverlayTrigger } from '..';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import { sendKeys } from '@web/test-runner-commands';
+import {
+    a11ySnapshot,
+    findAccessibilityNode,
+    sendKeys,
+} from '@web/test-runner-commands';
 import { spy } from 'sinon';
+
+type DescribedNode = {
+    name: string;
+    description: string;
+};
+
+const findWebkitAccessibilityNode = async (
+    name: string,
+    description: string
+): Promise<void> => {
+    const isWebkit =
+        /AppleWebKit/.test(window.navigator.userAgent) &&
+        !/Chrome/.test(window.navigator.userAgent);
+
+    const snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
+        children: DescribedNode[];
+    };
+    //console.log(JSON.stringify(snapshot, null, '  '));
+    const node = findAccessibilityNode<DescribedNode>(
+        snapshot,
+        (node) =>
+            node.name === name &&
+            (node.description === description ||
+                // if we're in Safari and there's no description, we still want to have it exist
+                (isWebkit && typeof node.description === 'undefined'))
+    );
+
+    expect(node, '`name`ed with `description`').to.not.be.null;
+
+    if (isWebkit) {
+        const webkitNode = findAccessibilityNode<DescribedNode>(
+            snapshot,
+            (node) => node.name === name && node.description === description
+        );
+        expect(webkitNode).to.be.null;
+    }
+};
 
 describe('Overlay Trigger - Longpress', () => {
     it('displays `longpress` content', async () => {
@@ -139,5 +180,164 @@ describe('Overlay Trigger - Longpress', () => {
         await closed;
 
         expect(closedSpy.calledOnce, 'longpress content returned').to.be.true;
+    });
+    it('describes longpress interaction accessibly', async () => {
+        const el = await fixture<OverlayTrigger>(
+            html`
+                <overlay-trigger placement="right-start">
+                    <sp-action-button slot="trigger" hold-affordance>
+                        Trigger with hold affordance
+                    </sp-action-button>
+                    <sp-popover slot="longpress-content" tip>
+                        <sp-action-group
+                            selects="single"
+                            vertical
+                            style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                        >
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                        </sp-action-group>
+                    </sp-popover>
+                </overlay-trigger>
+            `
+        );
+        const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+
+        await elementUpdated(el);
+
+        expect(trigger.hasAttribute('aria-describedby')).to.be.true;
+        expect(el.open).to.be.undefined;
+        /* This test passes because OverlayTrigger adds a new node to describe
+           the longpress interaction now available on the trigger element
+        */
+        expect(el.childNodes.length, 'always').to.equal(6);
+
+        await findWebkitAccessibilityNode(
+            'Trigger with hold affordance',
+            'Long press for additional options'
+        );
+        // Open the overlay and ensure that the a11y tree is the same
+        const opened = oneEvent(el, 'sp-opened');
+        trigger.dispatchEvent(
+            new Event('longpress', { bubbles: true, composed: true })
+        );
+        await opened;
+
+        expect(el.open).to.equal('longpress');
+        expect(el.childNodes.length, 'always').to.equal(6);
+
+        let snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
+            children: DescribedNode[];
+        };
+        expect(
+            findAccessibilityNode<DescribedNode>(
+                snapshot,
+                (node) =>
+                    node.name === 'Trigger with hold affordance' &&
+                    node.description === 'Long press for additional options'
+            ),
+            '`name`ed with `description`'
+        ).to.not.be.null;
+
+        // Close the overlay and make sure the a11y is still the same
+        const closed = oneEvent(el, 'sp-closed');
+        //el.removeAttribute('open');
+        await sendKeys({
+            press: 'Escape',
+        });
+        await closed;
+
+        expect(el.open).to.be.null;
+        expect(trigger.hasAttribute('aria-describedby')).to.be.true;
+        expect(el.childNodes.length, 'always').to.equal(6);
+        snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
+            children: DescribedNode[];
+        };
+        expect(
+            findAccessibilityNode<DescribedNode>(
+                snapshot,
+                (node) =>
+                    node.name === 'Trigger with hold affordance' &&
+                    node.description === 'Long press for additional options'
+            ),
+            '`name`ed with `description`'
+        ).to.not.be.null;
+    });
+    it('removes longpress `aria-describedby` description element when longpress content is removed', async () => {
+        const el = await fixture<OverlayTrigger>(
+            html`
+                <overlay-trigger placement="right-start">
+                    <sp-action-button slot="trigger" hold-affordance>
+                        Trigger with hold affordance
+                    </sp-action-button>
+                    <sp-popover slot="longpress-content" tip>
+                        <sp-action-group
+                            selects="single"
+                            vertical
+                            style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                        >
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                        </sp-action-group>
+                    </sp-popover>
+                </overlay-trigger>
+            `
+        );
+        const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+        const content = el.querySelector(
+            '[slot="longpress-content"]'
+        ) as Popover;
+        await elementUpdated(el);
+
+        expect(el.hasLongpressContent).to.be.true;
+        expect(el.childNodes.length, 'always').to.equal(6);
+
+        // childNodes = [text, actionbutton, text, popover, text, div]
+        // Delete the longpress content and make sure the a11y is different because longpress no longer exists
+        el.removeAttribute('hold-affordance');
+        el.removeChild(content);
+
+        await elementUpdated(el);
+
+        expect(trigger.hasAttribute('aria-describedby')).to.be.false;
+        expect(el.hasLongpressContent).to.be.false;
+
+        // // Westbrook wants this to = 4
+        // // childNodes = [text, actionbutton, text, text]
+        // console.log(el.childNodes);
+        expect(el.childNodes.length, 'always').to.equal(4);
+
+        // let snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
+        //     children: DescribedNode[];
+        // };
+        // expect(
+        //     findAccessibilityNode<DescribedNode>(
+        //         snapshot,
+        //         (node) =>
+        //             node.name === 'Trigger with hold affordance' &&
+        //             node.description === 'Long press for additional options'
+        //     ),
+        //     '`name`ed with `description`'
+        // ).to.be.null;
+        // el.append(content);
+        // await elementUpdated(el);
+
+        // // childNodes = [text, actionbutton, text, popover, text, div]
+        // expect(el.hasLongpressContent).to.be.true;
+        // expect(el.childNodes.length, 'always').to.equal(6);
     });
 });
