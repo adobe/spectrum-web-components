@@ -37,7 +37,7 @@ type DescribedNode = {
     description: string;
 };
 
-const findWebkitAccessibilityNode = async (
+const findDescribedNode = async (
     name: string,
     description: string
 ): Promise<void> => {
@@ -48,7 +48,6 @@ const findWebkitAccessibilityNode = async (
     const snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
         children: DescribedNode[];
     };
-    //console.log(JSON.stringify(snapshot, null, '  '));
     const node = findAccessibilityNode<DescribedNode>(
         snapshot,
         (node) =>
@@ -57,7 +56,7 @@ const findWebkitAccessibilityNode = async (
                 // if we're in Safari and there's no description, we still want to have it exist
                 (isWebkit && typeof node.description === 'undefined'))
     );
-
+    //console.log(JSON.stringify(snapshot, null, '  '));
     expect(node, '`name`ed with `description`').to.not.be.null;
 
     if (isWebkit) {
@@ -219,11 +218,11 @@ describe('Overlay Trigger - Longpress', () => {
         */
         expect(el.childNodes.length, 'always').to.equal(6);
 
-        await findWebkitAccessibilityNode(
+        await findDescribedNode(
             'Trigger with hold affordance',
             'Long press for additional options'
         );
-        // Open the overlay and ensure that the a11y tree is the same
+
         const opened = oneEvent(el, 'sp-opened');
         trigger.dispatchEvent(
             new Event('longpress', { bubbles: true, composed: true })
@@ -233,22 +232,13 @@ describe('Overlay Trigger - Longpress', () => {
         expect(el.open).to.equal('longpress');
         expect(el.childNodes.length, 'always').to.equal(6);
 
-        let snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
-            children: DescribedNode[];
-        };
-        expect(
-            findAccessibilityNode<DescribedNode>(
-                snapshot,
-                (node) =>
-                    node.name === 'Trigger with hold affordance' &&
-                    node.description === 'Long press for additional options'
-            ),
-            '`name`ed with `description`'
-        ).to.not.be.null;
+        await findDescribedNode(
+            'Trigger with hold affordance',
+            'Long press for additional options'
+        );
 
-        // Close the overlay and make sure the a11y is still the same
         const closed = oneEvent(el, 'sp-closed');
-        //el.removeAttribute('open');
+
         await sendKeys({
             press: 'Escape',
         });
@@ -257,18 +247,11 @@ describe('Overlay Trigger - Longpress', () => {
         expect(el.open).to.be.null;
         expect(trigger.hasAttribute('aria-describedby')).to.be.true;
         expect(el.childNodes.length, 'always').to.equal(6);
-        snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
-            children: DescribedNode[];
-        };
-        expect(
-            findAccessibilityNode<DescribedNode>(
-                snapshot,
-                (node) =>
-                    node.name === 'Trigger with hold affordance' &&
-                    node.description === 'Long press for additional options'
-            ),
-            '`name`ed with `description`'
-        ).to.not.be.null;
+
+        await findDescribedNode(
+            'Trigger with hold affordance',
+            'Long press for additional options'
+        );
     });
     it('removes longpress `aria-describedby` description element when longpress content is removed', async () => {
         const el = await fixture<OverlayTrigger>(
@@ -306,8 +289,6 @@ describe('Overlay Trigger - Longpress', () => {
         expect(el.hasLongpressContent).to.be.true;
         expect(el.childNodes.length, 'always').to.equal(6);
 
-        // childNodes = [text, actionbutton, text, popover, text, div]
-        // Delete the longpress content and make sure the a11y is different because longpress no longer exists
         el.removeAttribute('hold-affordance');
         el.removeChild(content);
 
@@ -315,29 +296,134 @@ describe('Overlay Trigger - Longpress', () => {
 
         expect(trigger.hasAttribute('aria-describedby')).to.be.false;
         expect(el.hasLongpressContent).to.be.false;
-
-        // // Westbrook wants this to = 4
-        // // childNodes = [text, actionbutton, text, text]
-        // console.log(el.childNodes);
         expect(el.childNodes.length, 'always').to.equal(4);
 
-        // let snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
-        //     children: DescribedNode[];
-        // };
-        // expect(
-        //     findAccessibilityNode<DescribedNode>(
-        //         snapshot,
-        //         (node) =>
-        //             node.name === 'Trigger with hold affordance' &&
-        //             node.description === 'Long press for additional options'
-        //     ),
-        //     '`name`ed with `description`'
-        // ).to.be.null;
-        // el.append(content);
-        // await elementUpdated(el);
+        el.removeAttribute('hold-affordance');
+        el.append(content);
 
-        // // childNodes = [text, actionbutton, text, popover, text, div]
-        // expect(el.hasLongpressContent).to.be.true;
-        // expect(el.childNodes.length, 'always').to.equal(6);
+        await elementUpdated(el);
+        await findDescribedNode(
+            'Trigger with hold affordance',
+            'Long press for additional options'
+        );
+
+        expect(el.hasLongpressContent).to.be.true;
+        expect(el.childNodes.length, 'always').to.equal(6);
+    });
+    it('recognises multiple overlay triggers in a11y tree', async () => {
+        const el = await fixture<OverlayTrigger>(
+            html`
+                <div id="container">
+                    <overlay-trigger id="first-trigger" placement="right-start">
+                        <sp-action-button slot="trigger" hold-affordance>
+                            First button
+                        </sp-action-button>
+                        <sp-popover slot="longpress-content" tip>
+                            <sp-action-group
+                                selects="single"
+                                vertical
+                                style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                            >
+                                <sp-action-button>
+                                    <sp-icon-magnify
+                                        slot="icon"
+                                    ></sp-icon-magnify>
+                                </sp-action-button>
+                            </sp-action-group>
+                        </sp-popover>
+                    </overlay-trigger>
+                    <overlay-trigger id="second-trigger" placement="left-start">
+                        <sp-action-button slot="trigger" hold-affordance>
+                            Second button
+                        </sp-action-button>
+                        <sp-popover slot="longpress-content" tip>
+                            <sp-action-group
+                                selects="single"
+                                vertical
+                                style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                            >
+                                <sp-action-button>
+                                    <sp-icon-magnify
+                                        slot="icon"
+                                    ></sp-icon-magnify>
+                                </sp-action-button>
+                            </sp-action-group>
+                        </sp-popover>
+                    </overlay-trigger>
+                </div>
+            `
+        );
+        await elementUpdated(el);
+
+        const div = document.getElementById('container') as HTMLElement;
+        const firstTrigger = document.getElementById(
+            'first-trigger'
+        ) as OverlayTrigger;
+        const secondTrigger = document.getElementById(
+            'second-trigger'
+        ) as OverlayTrigger;
+
+        expect(firstTrigger.hasLongpressContent).to.be.true;
+        expect(secondTrigger.hasLongpressContent).to.be.true;
+        expect(div.childNodes.length, 'always').to.equal(5);
+
+        await findDescribedNode(
+            'First button',
+            'Long press for additional options'
+        );
+        await findDescribedNode(
+            'Second button',
+            'Long press for additional options'
+        );
+    });
+    // TO-DO: figure out a way to make the message different depending on the type of interaction
+    it('describes interactions differently to the user', async () => {
+        const el = await fixture<OverlayTrigger>(
+            html`
+                <overlay-trigger placement="right-start">
+                    <sp-action-button slot="trigger" hold-affordance>
+                        Trigger with hold affordance
+                    </sp-action-button>
+                    <sp-popover slot="longpress-content" tip>
+                        <sp-action-group
+                            selects="single"
+                            vertical
+                            style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                        >
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                            <sp-action-button>
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                        </sp-action-group>
+                    </sp-popover>
+                </overlay-trigger>
+            `
+        );
+        const trigger = el.querySelector('sp-action-button') as ActionButton;
+        const content = el.querySelector(
+            '[slot="longpress-content"]'
+        ) as Popover;
+
+        await elementUpdated(el);
+
+        expect(trigger).to.not.be.null;
+        expect(content).to.not.be.null;
+        expect(content.open).to.be.false;
+
+        trigger.focus();
+        const open = oneEvent(el, 'sp-opened');
+        await sendKeys({
+            press: 'Space',
+        });
+        await open;
+        // the user... uses (keyboard, pointer, mouse, whatever)
+        // if focus:visible --> person is using a keyboard --> tell user to activate longpress via (space/alt+down) for add. opts
+        // if focus is INVISIBLE!! --> touch --> "double tap and longpress for additional options"
+        // there's a change in SpectrumElement base class that might support this test
     });
 });
