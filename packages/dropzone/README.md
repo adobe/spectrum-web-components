@@ -29,7 +29,7 @@ import { Dropzone } from '@spectrum-web-components/dropzone';
 ## Example
 
 ```html
-<sp-dropzone id="dropzone-1" tabindex="0" style="width: 400px; height: 200px">
+<sp-dropzone id="dropzone-1" style="width: 400px; height: 200px">
     <sp-illustrated-message heading="Drag and Drop Your File">
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -44,32 +44,27 @@ import { Dropzone } from '@spectrum-web-components/dropzone';
     </sp-illustrated-message>
 
     <div>
-        <div>
-            <label for="file-input" onclick="this.nextElementSibling.click()">
-                <sp-link href="javascript:;">Select a File</sp-link>
-                from your computer
-            </label>
-            <input type="file" id="file-input" style="display: none" />
-        </div>
-        <div>
-            or
-            <sp-link href="http://stock.adobe.com" target="blank">
-                Search Adobe Stock
-            </sp-link>
-        </div>
+        <label for="file-input" onclick="this.nextElementSibling.click()">
+            <sp-link href="javascript:;">Select a File</sp-link>
+            from your computer
+        </label>
+        <input type="file" id="file-input" style="display: none" />
+    </div>
+    <div>
+        or
+        <sp-link href="http://stock.adobe.com" target="blank">
+            Search Adobe Stock
+        </sp-link>
     </div>
 </sp-dropzone>
 ```
 
 ### Dragged
 
+When a file is dragged over the `<sp-dropzone>` element, it will display with the `dragged` attribute, as follows:
+
 ```html
-<sp-dropzone
-    id="dropzone"
-    tabindex="0"
-    dragged
-    style="width: 400px; height: 200px"
->
+<sp-dropzone id="dropzone" dragged style="width: 400px; height: 200px">
     <sp-illustrated-message heading="Drag and Drop Your File">
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -84,19 +79,21 @@ import { Dropzone } from '@spectrum-web-components/dropzone';
     </sp-illustrated-message>
 
     <div>
-        <div>
-            <label for="file-input" onclick="this.nextElementSibling.click()">
-                <sp-link href="javascript:;">Select a File</sp-link>
-                from your computer
-            </label>
-            <input type="file" id="file-input" style="display: none" />
-        </div>
-        <div>
-            or
-            <sp-link href="http://stock.adobe.com" target="blank">
-                Search Adobe Stock
-            </sp-link>
-        </div>
+        <label for="file-input" onclick="this.nextElementSibling.click()">
+            <sp-link href="javascript:;">Select a File</sp-link>
+            from your computer
+        </label>
+        <input type="file" id="file-input" style="display: none" />
+    </div>
+    <div>
+        or
+        <sp-link href="http://stock.adobe.com" target="blank">
+            Search Adobe Stock
+        </sp-link>
     </div>
 </sp-dropzone>
 ```
+
+## Accessibility
+
+When actions, e.g. copy/paste, can be enacted directly on the `<sp-dropzone>` element itself, be sure to supply a `tabindex` so that keyboard users can find this interaction in the tab order. For screen readers, supply appropriate `role` and `aria-label` attributes to clarify what these actions are and how to complete them.
