@@ -249,7 +249,7 @@ export class NumberField extends TextfieldBase {
     }
 
     private stepBy(count: number): void {
-        if (this.readonly) {
+        if (this.disabled || this.readonly) {
             return;
         }
         const min = typeof this.min !== 'undefined' ? this.min : 0;
