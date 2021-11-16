@@ -28,14 +28,22 @@ import popoverStyles from './popover.css.js';
  * @element sp-popover
  *
  * @slot - content to display within the Popover
- * @attr {Boolean} open - The open state of the popover
- * @attr {Boolean} dialog - Adds some padding to the popover
  */
 export class Popover extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [popoverStyles];
     }
 
+    /**
+     * Whether the popover should manage the application
+     * of padding to its content or not.
+     */
+    @property({ type: Boolean, reflect: true })
+    public dialog = false;
+
+    /**
+     * Whether the popover is visible or not.
+     */
     @property({ type: Boolean, reflect: true })
     public open = false;
 
