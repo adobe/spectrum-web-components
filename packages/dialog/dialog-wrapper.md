@@ -67,11 +67,6 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
             function handleEvent({type}) {
                 spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
-                dialogWrapper.dispatchEvent(
-                    new Event('close', {
-                        bubbles: true,
-                    })
-                );
                 dialogWrapper.removeEventListener('confirm', handleEvent);
                 dialogWrapper.removeEventListener('secondary', handleEvent);
                 dialogWrapper.removeEventListener('cancel', handleEvent);
@@ -107,15 +102,9 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
         onClick="
             const overlayTrigger = this.parentElement;
             const dialogWrapper = overlayTrigger.clickContent;
-            dialogWrapper.open = true;
             function handleEvent({type}) {
                 spAlert(this, `<sp-dialog-wrapper> '${type}' event handled.`);
                 dialogWrapper.open = false;
-                dialogWrapper.dispatchEvent(
-                    new Event('close', {
-                        bubbles: true,
-                    })
-                );
                 dialogWrapper.removeEventListener('confirm', handleEvent);
                 dialogWrapper.removeEventListener('secondary', handleEvent);
                 dialogWrapper.removeEventListener('cancel', handleEvent);

@@ -200,7 +200,6 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        this.manageAutoFocus();
         if (
             !this.hasAttribute('tabindex') ||
             this.getAttribute('tabindex') !== '-1'
@@ -258,5 +257,14 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 this.removeAttribute('aria-disabled');
             }
         }
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        this.updateComplete.then(() => {
+            requestAnimationFrame(() => {
+                this.manageAutoFocus();
+            });
+        });
     }
 }

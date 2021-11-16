@@ -207,6 +207,9 @@ export class ActiveOverlay extends SpectrumElement {
         // to act like one to get treated correctly in regards to tab trapping.
         if (this.interaction === 'modal' || parentIsModal || this._modalRoot) {
             this.slot = 'open';
+            if (this.interaction === 'modal') {
+                this.setAttribute('aria-modal', 'true');
+            }
             // If this isn't a modal root, walk up the overlays to the next modal root
             // and "feature" each on of the intervening overlays.
             if (this._modalRoot) {
@@ -220,6 +223,7 @@ export class ActiveOverlay extends SpectrumElement {
     ): ActiveOverlay | undefined {
         if (this.slot && nextOverlayInteraction === 'modal') {
             this.removeAttribute('slot');
+            this.removeAttribute('aria-modal');
             // Obscure upto and including the next modal root.
             if (this.interaction !== 'modal') {
                 const parentOverlay = parentOverlayOf(this.trigger);
@@ -487,6 +491,9 @@ export class ActiveOverlay extends SpectrumElement {
     public applyContentAnimation(
         animation: ContentAnimation
     ): Promise<boolean> {
+        if (this.placement === 'none') {
+            return Promise.resolve(true);
+        }
         return new Promise((resolve): void => {
             const contents = this.shadowRoot.querySelector(
                 '#contents'

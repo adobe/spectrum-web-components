@@ -101,7 +101,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     public focus(): void {
         if (this.shadowRoot) {
-            const firstFocusable = firstFocusableIn(this.shadowRoot);
+            const firstFocusable = firstFocusableIn(this.dialog);
             if (firstFocusable) {
                 if (firstFocusable.updateComplete) {
                     firstFocusable.updateComplete.then(() =>
@@ -119,6 +119,12 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
         } else {
             super.focus();
         }
+    }
+
+    public overlayWillCloseCallback(): boolean {
+        if (!this.open) return false;
+        this.close();
+        return true;
     }
 
     private dismiss(): void {
@@ -152,8 +158,16 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
         );
     }
 
+    protected handleClose(event: Event): void {
+        event.stopPropagation();
+        this.close();
+    }
+
     public close(): void {
         this.open = false;
+    }
+
+    private dispatchClosed(): void {
         this.dispatchEvent(
             new Event('close', {
                 bubbles: true,
@@ -163,6 +177,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     protected handleUnderlayTransitionend(): void {
         if (!this.open) {
+            this.dispatchClosed();
             this.resolveTransitionPromise();
         }
     }
@@ -170,6 +185,9 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
     protected handleModalTransitionend(): void {
         if (this.open || !this.underlay) {
             this.resolveTransitionPromise();
+            if (!this.open) {
+                this.dispatchClosed();
+            }
         }
     }
 
@@ -203,7 +221,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
                     ?error=${this.error}
                     mode=${ifDefined(this.mode ? this.mode : undefined)}
                     size=${ifDefined(this.size ? this.size : undefined)}
-                    @close=${this.close}
+                    @close=${this.handleClose}
                 >
                     ${this.hero
                         ? html`
@@ -271,10 +289,14 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     protected updated(changes: PropertyValues<this>): void {
-        if (changes.has('open') && this.open) {
-            this.dialog.updateComplete.then(() => {
-                this.dialog.shouldManageTabOrderForScrolling();
-            });
+        if (changes.has('open')) {
+            if (this.open) {
+                this.dialog.updateComplete.then(() => {
+                    this.dialog.shouldManageTabOrderForScrolling();
+                });
+            } else {
+                this.tabIndex = 0;
+            }
         }
     }
 

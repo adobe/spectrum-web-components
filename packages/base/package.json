@@ -22,6 +22,8 @@
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*",
+        "./condition-attribute-with-id": "./src/condition-attribute-with-id.js",
+        "./condition-attribute-with-id.js": "./src/condition-attribute-with-id.js",
         "./decorators": "./src/decorators.js",
         "./decorators.js": "./src/decorators.js",
         "./directives": "./src/directives.js",

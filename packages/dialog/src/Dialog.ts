@@ -22,6 +22,7 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -33,9 +34,27 @@ import {
     FocusVisiblePolyfillMixin,
     ObserveSlotPresence,
 } from '@spectrum-web-components/shared';
-import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 
 import styles from './dialog.css.js';
+import type { ActionButton } from '@spectrum-web-components/action-button';
+
+function gatherAppliedIdsFromSlottedChildren(
+    slot: HTMLSlotElement,
+    idBase: string
+): string[] {
+    const assignedElements = slot.assignedElements();
+    const ids: string[] = [];
+    assignedElements.forEach((el, i) => {
+        if (el.id) {
+            ids.push(el.id);
+        } else {
+            const id = idBase + `-${i}`;
+            el.id = id;
+            ids.push(id);
+        }
+    });
+    return ids;
+}
 
 /**
  * @element sp-dialog
@@ -57,6 +76,9 @@ export class Dialog extends FocusVisiblePolyfillMixin(
     public static get styles(): CSSResultArray {
         return [styles, crossStyles];
     }
+
+    @query('.close-button')
+    closeButton?: ActionButton;
 
     @query('.content')
     private contentElement!: HTMLDivElement;
@@ -88,30 +110,12 @@ export class Dialog extends FocusVisiblePolyfillMixin(
     @property({ type: String, reflect: true })
     public size?: 's' | 'm' | 'l';
 
-    public focus(): void {
-        if (this.shadowRoot) {
-            const firstFocusable = firstFocusableIn(this.shadowRoot);
-            if (firstFocusable) {
-                if (firstFocusable.updateComplete) {
-                    firstFocusable.updateComplete.then(() =>
-                        firstFocusable.focus()
-                    );
-                    /* c8 ignore next 3 */
-                } else {
-                    firstFocusable.focus();
-                }
-                this.removeAttribute('tabindex');
-            }
-            /* c8 ignore next 3 */
-        } else {
-            super.focus();
-        }
-    }
-
     public close(): void {
         this.dispatchEvent(
             new Event('close', {
                 bubbles: true,
+                composed: true,
+                cancelable: true,
             })
         );
     }
@@ -123,6 +127,7 @@ export class Dialog extends FocusVisiblePolyfillMixin(
                 <slot
                     name="heading"
                     class=${ifDefined(this.hasHero ? this.hasHero : undefined)}
+                    @slotchange=${this.onHeadingSlotchange}
                 ></slot>
                 ${this.error
                     ? html`
@@ -194,12 +199,75 @@ export class Dialog extends FocusVisiblePolyfillMixin(
         return super.shouldUpdate(changes);
     }
 
-    protected onContentSlotChange(): void {
-        this.shouldManageTabOrderForScrolling();
+    protected firstUpdated(changes: PropertyValues): void {
+        super.firstUpdated(changes);
+        this.setAttribute('role', 'dialog');
+    }
+
+    static instanceCount = 0;
+    private labelledbyId = `sp-dialog-label-${Dialog.instanceCount++}`;
+    private conditionLabelledby?: () => void;
+    private conditionDescribedby?: () => void;
+
+    private onHeadingSlotchange({
+        target,
+    }: Event & { target: HTMLSlotElement }): void {
+        if (this.conditionLabelledby) {
+            this.conditionLabelledby();
+            delete this.conditionLabelledby;
+        }
+        const ids = gatherAppliedIdsFromSlottedChildren(
+            target,
+            this.labelledbyId
+        );
+        if (ids.length) {
+            this.conditionLabelledby = conditionAttributeWithId(
+                this,
+                'aria-labelledby',
+                ids
+            );
+        }
+    }
+
+    private describedbyId = `sp-dialog-description-${Dialog.instanceCount++}`;
+
+    protected onContentSlotChange({
+        target,
+    }: Event & { target: HTMLSlotElement }): void {
+        if (this.conditionDescribedby) {
+            this.conditionDescribedby();
+            delete this.conditionDescribedby;
+        }
+        const ids = gatherAppliedIdsFromSlottedChildren(
+            target,
+            this.describedbyId
+        );
+        if (ids.length && ids.length < 4) {
+            this.conditionDescribedby = conditionAttributeWithId(
+                this,
+                'aria-describedby',
+                ids
+            );
+        } else if (!ids.length) {
+            const idProvided = !!this.id;
+            if (!idProvided) this.id = this.describedbyId;
+            const conditionDescribedby = conditionAttributeWithId(
+                this,
+                'aria-describedby',
+                this.id
+            );
+            this.conditionDescribedby = () => {
+                conditionDescribedby();
+                if (!idProvided) {
+                    this.removeAttribute('id');
+                }
+            };
+        }
     }
 
     public connectedCallback(): void {
         super.connectedCallback();
+        this.tabIndex = 0;
         window.addEventListener(
             'resize',
             this.shouldManageTabOrderForScrolling

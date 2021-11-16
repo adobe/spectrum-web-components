@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
 import '../sp-dialog.js';
 import { Dialog } from '..';
@@ -52,12 +52,7 @@ describe('Dialog', () => {
         await expect(el).to.be.accessible();
     });
     it('loads dialog without footer accessibly', async () => {
-        const el = await fixture<Dialog>(html`
-            <sp-dialog open mode="fullscreen">
-                <h2 slot="title">Enable Smart Filters?</h2>
-                This is a dialog without a footer.
-            </sp-dialog>
-        `);
+        const el = await fixture<Dialog>(small());
 
         await elementUpdated(el);
 
