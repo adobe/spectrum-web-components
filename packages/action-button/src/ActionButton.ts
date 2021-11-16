@@ -64,9 +64,21 @@ export class ActionButton extends SizedMixin(ButtonBase) {
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
+    @property({ reflect: true })
+    public role = 'button';
+
+    /**
+     * Whether an Action Button with `role='button'`
+     * should also be `aria-pressed='true'`
+     */
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
+    /**
+     * Whether to automatically manage the `selected`
+     * attribute on interaction and whether `aria-pressed="false"`
+     * should be used when `selected === false`
+     */
     @property({ type: Boolean, reflect: true })
     public toggles = false;
 
@@ -193,11 +205,22 @@ export class ActionButton extends SizedMixin(ButtonBase) {
 
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (this.toggles && changes.has('selected')) {
-            this.focusElement.setAttribute(
-                'aria-pressed',
-                this.selected ? 'true' : 'false'
-            );
+        const isButton = this.role === 'button';
+        const canBePressed = isButton && (this.selected || this.toggles);
+        if (changes.has('selected') || changes.has('role')) {
+            // When role !== 'button' then the Action Button is within
+            // an Action Group that manages selects which means the
+            // Action Button is a "checkbox" or "radio" and cannot
+            // accept the `aria-pressed` attribute.
+            if (canBePressed) {
+                this.setAttribute(
+                    'aria-pressed',
+                    this.selected ? 'true' : 'false'
+                );
+            } else {
+                // When !this.toggles the lack of "aria-pressed" is inconsequential.
+                this.removeAttribute('aria-pressed');
+            }
         }
     }
 }

@@ -114,6 +114,34 @@ describe('ActionButton', () => {
         expect(el.selected).to.be.false;
         expect(button.hasAttribute('aria-pressed')).to.be.false;
     });
+    it('responds to [selected]', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button>Button</sp-action-button>
+            `
+        );
+
+        await elementUpdated(el);
+        const button = el.focusElement;
+
+        expect(el.toggles).to.be.false;
+        expect(el.selected).to.be.false;
+        expect(button.hasAttribute('aria-pressed')).to.be.false;
+
+        el.selected = true;
+        await elementUpdated(el);
+
+        expect(el.toggles).to.be.false;
+        expect(el.selected).to.be.true;
+        expect(button.getAttribute('aria-pressed')).to.equal('true');
+
+        el.selected = false;
+        await elementUpdated(el);
+
+        expect(el.toggles).to.be.false;
+        expect(el.selected).to.be.false;
+        expect(button.hasAttribute('aria-pressed')).to.be.false;
+    });
     it('toggles', async () => {
         const el = await fixture<ActionButton>(
             html`
