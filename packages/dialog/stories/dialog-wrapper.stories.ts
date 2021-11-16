@@ -11,8 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 
 import '../sp-dialog-wrapper.js';
@@ -78,7 +82,12 @@ export const wrapperLabeledHero = (
             Content of the dialog
         </sp-dialog-wrapper>
         <sp-button
-            onClick="this.previousElementSibling.open = !this.previousElementSibling.open"
+            onClick="
+                this.previousElementSibling.open = !this.previousElementSibling.open;
+                if (this.previousElementSibling.open) {
+                    this.previousElementSibling.focus();
+                }
+            "
             variant="primary"
         >
             Toggle Dialog
@@ -103,7 +112,12 @@ export const wrapperDismissable = (
             Content of the dialog
         </sp-dialog-wrapper>
         <sp-button
-            onClick="this.previousElementSibling.open = !this.previousElementSibling.open"
+            onClick="
+                this.previousElementSibling.open = !this.previousElementSibling.open;
+                if (this.previousElementSibling.open) {
+                    this.previousElementSibling.focus();
+                }
+            "
             variant="primary"
         >
             Toggle Dialog
@@ -117,12 +131,6 @@ export const wrapperDismissableUnderlay = (
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
     return html`
-        <sp-button
-            onClick="this.nextElementSibling.open = !this.nextElementSibling.open"
-            variant="primary"
-        >
-            Toggle Dialog
-        </sp-button>
         <sp-dialog-wrapper
             ?open=${open}
             hero=${landscape}
@@ -134,6 +142,102 @@ export const wrapperDismissableUnderlay = (
         >
             Content of the dialog
         </sp-dialog-wrapper>
+        <sp-button
+            onClick="
+                this.previousElementSibling.open = !this.previousElementSibling.open;
+                if (this.previousElementSibling.open) {
+                    this.previousElementSibling.focus();
+                }
+            "
+            variant="primary"
+        >
+            Toggle Dialog
+        </sp-button>
+    `;
+};
+
+export const form = (
+    args: StoryArgs = {},
+    context: { viewMode?: string } = {}
+): TemplateResult => {
+    const open = context.viewMode === 'docs' ? undefined : 'click';
+    return html`
+        <overlay-trigger
+            type="modal"
+            placement="none"
+            @close=${handleClose(args)}
+            open=${ifDefined(open)}
+        >
+            <sp-button slot="trigger" variant="primary">
+                Toggle Dialog
+            </sp-button>
+            <sp-dialog-wrapper
+                id="form-fields"
+                slot="click-content"
+                headline="Add Delivery Address"
+                underlay
+                size="m"
+                confirm-label="Verify Address"
+                secondary-label="Add"
+                cancel-label="Cancel"
+                @close=${handleClose(args)}
+                @confirm=${({ target }: Event & { target: HTMLElement }) => {
+                    target.dispatchEvent(
+                        new Event('close', { bubbles: true, composed: true })
+                    );
+                    handleConfirm(args);
+                }}
+                @secondary=${({ target }: Event & { target: HTMLElement }) => {
+                    target.dispatchEvent(
+                        new Event('close', { bubbles: true, composed: true })
+                    );
+                    handleSecondary(args);
+                }}
+                @cancel=${({ target }: Event & { target: HTMLElement }) => {
+                    target.dispatchEvent(
+                        new Event('close', { bubbles: true, composed: true })
+                    );
+                    handleCancel(args);
+                }}
+            >
+                <style>
+                    #form-fields div {
+                        display: grid;
+                        gap: var(--spectrum-global-dimension-size-150);
+                        grid-template-columns: auto auto;
+
+                        --spectrum-fieldlabel-m-side-padding-right: 0;
+                    }
+                </style>
+                <div>
+                    <sp-field-label side-aligned="end" for="street">
+                        Street:
+                    </sp-field-label>
+                    <sp-textfield id="street" autofocus></sp-textfield>
+                    <sp-field-label side-aligned="end" for="city">
+                        City:
+                    </sp-field-label>
+                    <sp-textfield id="city"></sp-textfield>
+                    <sp-field-label side-aligned="end" for="state">
+                        State:
+                    </sp-field-label>
+                    <sp-textfield id="state"></sp-textfield>
+                    <sp-field-label side-aligned="end" for="zip">
+                        Zip:
+                    </sp-field-label>
+                    <sp-textfield id="zip"></sp-textfield>
+                    <sp-field-label side-aligned="end" for="instructions">
+                        Special instructions:
+                    </sp-field-label>
+                    <sp-textfield id="instructions" multiline>
+                        <sp-help-text slot="help-text">
+                            For example, gate code or other information to help
+                            the driver find you
+                        </sp-help-text>
+                    </sp-textfield>
+                </div>
+            </sp-dialog-wrapper>
+        </overlay-trigger>
     `;
 };
 
@@ -147,8 +251,11 @@ export const longContent = (
             type="modal"
             placement="none"
             @close=${handleClose(args)}
-            .open=${open}
+            open=${ifDefined(open)}
         >
+            <sp-button slot="trigger" variant="primary">
+                Toggle Dialog
+            </sp-button>
             <sp-dialog-wrapper
                 slot="click-content"
                 headline="Dialog title"
@@ -250,9 +357,6 @@ export const longContent = (
                     tincidunt. In enim a arcu imperdiet malesuada.
                 </p>
             </sp-dialog-wrapper>
-            <sp-button slot="trigger" variant="primary">
-                Toggle Dialog
-            </sp-button>
         </overlay-trigger>
     `;
 };
@@ -265,7 +369,12 @@ export const wrapperDismissableUnderlayError = (
     return html`
         <div>
             <sp-button
-                onClick="this.nextElementSibling.open = !this.nextElementSibling.open"
+                onClick="
+                    this.previousElementSibling.open = !this.previousElementSibling.open;
+                    if (this.previousElementSibling.open) {
+                        this.previousElementSibling.focus();
+                    }
+                "
                 variant="primary"
             >
                 Toggle Dialog

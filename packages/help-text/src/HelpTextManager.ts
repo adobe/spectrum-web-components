@@ -12,10 +12,11 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 import type { HelpText } from './HelpText';
 
 export class HelpTextManager {
-    private hadId = false;
+    private conditionId?: () => void;
     private host!: HTMLElement;
     public id!: string;
     private mode: 'internal' | 'external' = 'internal';
@@ -57,12 +58,11 @@ export class HelpTextManager {
 
     private addId(): void {
         const id = this.helpTextElement ? this.helpTextElement.id : this.id;
-        const ariaDescribedby = this.host.getAttribute('aria-describedby');
-        const descriptors = ariaDescribedby ? ariaDescribedby.split(/\s+/) : [];
-        this.hadId = descriptors.indexOf(id) > -1;
-        if (this.hadId) return;
-        descriptors.push(id);
-        this.host.setAttribute('aria-describedby', descriptors.join(' '));
+        this.conditionId = conditionAttributeWithId(
+            this.host,
+            'aria-describedby',
+            id
+        );
         if (this.host.hasAttribute('tabindex')) {
             this.previousTabindex = parseFloat(
                 this.host.getAttribute('tabindex') as string
@@ -72,16 +72,9 @@ export class HelpTextManager {
     }
 
     private removeId(): void {
-        const ariaDescribedby = this.host.getAttribute('aria-describedby');
-        let descriptors = ariaDescribedby ? ariaDescribedby.split(/\s+/) : [];
-        if (!this.hadId) {
-            const id = this.helpTextElement ? this.helpTextElement.id : this.id;
-            descriptors = descriptors.filter((descriptor) => descriptor !== id);
-        }
-        if (descriptors.length) {
-            this.host.setAttribute('aria-describedby', descriptors.join(' '));
-        } else {
-            this.host.removeAttribute('aria-describedby');
+        if (this.conditionId) {
+            this.conditionId();
+            delete this.conditionId;
         }
         if (this.helpTextElement) return;
         if (this.previousTabindex) {

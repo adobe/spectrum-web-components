@@ -140,14 +140,6 @@ export class OverlayStack {
             '--swc-body-margins-block',
             `calc(${marginTop} + ${marginBottom})`
         );
-        this.overlayHolder.style.setProperty(
-            '--swc-body-margins-inline',
-            `calc(${marginLeft} + ${marginRight})`
-        );
-        this.overlayHolder.style.setProperty(
-            '--swc-body-margins-block',
-            `calc(${marginTop} + ${marginBottom})`
-        );
         this._bodyMarginsApplied = !allZero;
     }
 
