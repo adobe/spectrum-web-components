@@ -3835,9 +3835,9 @@
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
 "@spectrum-css/accordion@^3.0.5":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/accordion/-/accordion-3.0.5.tgz#e78fba2b633bac8e648401377ed688f8251395db"
-  integrity sha512-YVHK0+rwFQjNNO/utdhyJGUUfz+LjNzXXWJwz3c4USBAcAh92i3kHMSe+hqtpIG+ai47qWaZ4ULEkipNnZYwNQ==
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/accordion/-/accordion-3.0.8.tgz#2b825e5b95407b274d3d0fd2213e9b0c24efaa76"
+  integrity sha512-A3d6tgzIsMamhAL+fpGrhP7vo8NoxCsm4t5I+uauo3wBP9NzCHj8dp9EZvFm+1u5XG4nqoZeaaE3fFuMHHnCMA==
 
 "@spectrum-css/actionbar@^3.0.5":
   version "3.0.5"
@@ -6314,7 +6314,7 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-axe-core@4.3.5, axe-core@^4.0.2, axe-core@^4.3.3:
+axe-core@^4.0.2, axe-core@^4.3.3:
   version "4.3.5"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.5.tgz#78d6911ba317a8262bfee292aeafcc1e04b49cc5"
   integrity sha512-WKTW1+xAzhMS5dJsxWkliixlO/PqC4VhmO9T4juNYcaTg9jzWiJsou6m5pxWYGfigWbwzJWeFY6z47a+4neRXA==
