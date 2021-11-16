@@ -6314,15 +6314,10 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-axe-core@^4.0.2:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.1.tgz#0c6a076e4a1c3e0544ba6a9479158f9be7a7928e"
-  integrity sha512-3WVgVPs/7OnKU3s+lqMtkv3wQlg3WxK1YifmpJSDO0E1aPBrZWlrrTO6cxRqCXLuX2aYgCljqXIQd0VnRidV0g==
-
-axe-core@^4.3.3:
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.3.tgz#b55cd8e8ddf659fe89b064680e1c6a4dceab0325"
-  integrity sha512-/lqqLAmuIPi79WYfRpy2i8z+x+vxU3zX2uAm0gs1q52qTuKwolOj1P8XbufpXcsydrpKx2yGn2wzAnxCMV86QA==
+axe-core@4.3.5, axe-core@^4.0.2, axe-core@^4.3.3:
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.3.5.tgz#78d6911ba317a8262bfee292aeafcc1e04b49cc5"
+  integrity sha512-WKTW1+xAzhMS5dJsxWkliixlO/PqC4VhmO9T4juNYcaTg9jzWiJsou6m5pxWYGfigWbwzJWeFY6z47a+4neRXA==
 
 axios@0.21.1:
   version "0.21.1"
