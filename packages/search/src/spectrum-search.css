@@ -34,6 +34,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #input {
     -webkit-appearance: none; /* .spectrum-Search-input */
+    border-radius: var(
+        --spectrum-alias-search-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    );
     outline-offset: -2px;
 }
 #input::-webkit-search-cancel-button,
@@ -41,10 +45,72 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     -webkit-appearance: none; /* .spectrum-Search-input::-webkit-search-cancel-button,
    * .spectrum-Search-input::-webkit-search-decoration */
 }
-.spectrum-Search--quiet #button {
+.spectrum-Search-textfield:after {
+    border-radius: var(
+        --spectrum-alias-search-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    ); /* .spectrum-Search-textfield:after */
+}
+:host([dir='ltr']:not([quiet])) .icon {
+    left: var(
+        --spectrum-alias-search-padding-left-m
+    ); /* [dir=ltr] .spectrum-Search:not(.spectrum-Search--quiet) .spectrum-Search-icon */
+}
+:host([dir='rtl']:not([quiet])) .icon {
+    right: var(
+        --spectrum-alias-search-padding-left-m
+    ); /* [dir=rtl] .spectrum-Search:not(.spectrum-Search--quiet) .spectrum-Search-icon */
+}
+:host([dir='ltr']:not([quiet])) #input {
+    padding-left: calc(
+        var(--spectrum-alias-search-padding-left-m) +
+            var(
+                --spectrum-alias-workflow-icon-size-m,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-textfield-m-texticon-icon-gap,
+                var(--spectrum-global-dimension-size-100)
+            ) -
+            var(
+                --spectrum-textfield-m-texticon-border-size,
+                var(--spectrum-alias-input-border-size)
+            )
+    ); /* [dir=ltr] .spectrum-Search:not(.spectrum-Search--quiet) .spectrum-Search-input */
+}
+:host([dir='rtl']:not([quiet])) #input {
+    padding-right: calc(
+        var(--spectrum-alias-search-padding-left-m) +
+            var(
+                --spectrum-alias-workflow-icon-size-m,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-textfield-m-texticon-icon-gap,
+                var(--spectrum-global-dimension-size-100)
+            ) -
+            var(
+                --spectrum-textfield-m-texticon-border-size,
+                var(--spectrum-alias-input-border-size)
+            )
+    ); /* [dir=rtl] .spectrum-Search:not(.spectrum-Search--quiet) .spectrum-Search-input */
+}
+:host([quiet]) #button {
     transform: translateX(
         var(--spectrum-search-quiet-button-offset)
     ); /* .spectrum-Search--quiet .spectrum-Search-clearButton */
+}
+:host([quiet]) #input {
+    border-radius: var(
+        --spectrum-alias-search-border-radius-quiet,
+        0
+    ); /* .spectrum-Search--quiet .spectrum-Search-input */
+}
+:host([quiet]) .spectrum-Search-textfield:after {
+    border-radius: var(
+        --spectrum-alias-search-border-radius-quiet,
+        0
+    ); /* .spectrum-Search--quiet .spectrum-Search-textfield:after */
 }
 .icon {
     color: var(

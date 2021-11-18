@@ -22,7 +22,7 @@ const config = {
             attributes: [
                 {
                     type: 'boolean',
-                    selector: '.spectrum-Textfield--quiet',
+                    selector: '.spectrum-Search--quiet',
                     name: 'quiet',
                 },
             ],

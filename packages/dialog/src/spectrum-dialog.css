@@ -323,7 +323,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     grid-area: buttonGroup; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-buttonGroup,
    * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-buttonGroup */
 }
-@media screen and (max-inline-size: 700px) {
+@media screen and (max-width: 700px) {
     .grid {
         grid-template-areas: 'hero hero    hero    hero        hero        hero' '.    .       .       .           .           .' '.    heading heading heading     typeIcon    .' '.    header  header  header      header      .' '.    divider divider divider     divider     .' '.    content content content     content     .' '.    footer  footer  buttonGroup buttonGroup .' '.    .       .       .           .           .';
         grid-template-columns:

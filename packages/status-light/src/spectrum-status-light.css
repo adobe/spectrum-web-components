@@ -15,13 +15,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-statuslight-s-info-dot-size,
         var(--spectrum-global-dimension-static-size-100)
     ); /* .spectrum-StatusLight--sizeS */
-    --spectrum-statuslight-info-text-size: var(
-        --spectrum-statuslight-s-info-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
     --spectrum-statuslight-info-text-gap: var(
         --spectrum-statuslight-s-info-text-gap,
         var(--spectrum-global-dimension-size-115)
+    );
+    --spectrum-statuslight-info-text-size: var(
+        --spectrum-statuslight-s-info-text-size,
+        var(--spectrum-global-dimension-font-size-75)
     );
     --spectrum-statuslight-info-text-font-weight: var(
         --spectrum-statuslight-s-info-text-font-weight,
@@ -41,13 +41,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-statuslight-m-info-dot-size,
         var(--spectrum-global-dimension-size-100)
     ); /* .spectrum-StatusLight--sizeM */
-    --spectrum-statuslight-info-text-size: var(
-        --spectrum-statuslight-m-info-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    );
     --spectrum-statuslight-info-text-gap: var(
         --spectrum-statuslight-m-info-text-gap,
         var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-statuslight-info-text-size: var(
+        --spectrum-statuslight-m-info-text-size,
+        var(--spectrum-global-dimension-font-size-100)
     );
     --spectrum-statuslight-info-text-font-weight: var(
         --spectrum-statuslight-m-info-text-font-weight,
@@ -66,13 +66,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-statuslight-info-dot-size: var(
         --spectrum-statuslight-l-info-dot-size
     ); /* .spectrum-StatusLight--sizeL */
-    --spectrum-statuslight-info-text-size: var(
-        --spectrum-statuslight-l-info-text-size,
-        var(--spectrum-global-dimension-font-size-200)
-    );
     --spectrum-statuslight-info-text-gap: var(
         --spectrum-statuslight-l-info-text-gap,
         var(--spectrum-global-dimension-size-130)
+    );
+    --spectrum-statuslight-info-text-size: var(
+        --spectrum-statuslight-l-info-text-size,
+        var(--spectrum-global-dimension-font-size-200)
     );
     --spectrum-statuslight-info-text-font-weight: var(
         --spectrum-statuslight-l-info-text-font-weight,
@@ -91,13 +91,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-statuslight-info-dot-size: var(
         --spectrum-statuslight-xl-info-dot-size
     ); /* .spectrum-StatusLight--sizeXL */
-    --spectrum-statuslight-info-text-size: var(
-        --spectrum-statuslight-xl-info-text-size,
-        var(--spectrum-global-dimension-font-size-300)
-    );
     --spectrum-statuslight-info-text-gap: var(
         --spectrum-statuslight-xl-info-text-gap,
         var(--spectrum-global-dimension-size-160)
+    );
+    --spectrum-statuslight-info-text-size: var(
+        --spectrum-statuslight-xl-info-text-size,
+        var(--spectrum-global-dimension-font-size-300)
     );
     --spectrum-statuslight-info-text-font-weight: var(
         --spectrum-statuslight-xl-info-text-font-weight,
