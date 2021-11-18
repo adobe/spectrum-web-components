@@ -37,7 +37,7 @@ An `<sp-progress-circle>` is used to visually show the progression of a system o
     <sp-progress-circle
         label="A small representation of a somewhat completed action"
         progress="71"
-        size="small"
+        size="s"
     ></sp-progress-circle>
     <sp-progress-circle
         label="A medium representation of a recently started action"
@@ -46,7 +46,7 @@ An `<sp-progress-circle>` is used to visually show the progression of a system o
     <sp-progress-circle
         label="A large representation of an almost completed action"
         progress="86"
-        size="large"
+        size="l"
     ></sp-progress-circle>
 </div>
 ```
@@ -63,7 +63,7 @@ When a loader needs to be placed on top of a colored background, use the over ba
         label="A small representation of a partially completed action"
         progress="42"
         over-background
-        size="small"
+        size="s"
     ></sp-progress-circle>
     <sp-progress-circle
         label="A medium representation of a barely started action"
@@ -74,7 +74,7 @@ When a loader needs to be placed on top of a colored background, use the over ba
         label="A large representation of a somewhat completed action"
         progress="68"
         over-background
-        size="large"
+        size="l"
     ></sp-progress-circle>
 </div>
 ```
@@ -90,7 +90,7 @@ A progress circle can be either determinate or indeterminate as signified by `[i
     <sp-progress-circle
         label="A small representation of an unclear amount of work"
         indeterminate
-        size="small"
+        size="s"
     ></sp-progress-circle>
     <sp-progress-circle
         label="A medium representation of an unclear amount of work"
@@ -99,14 +99,14 @@ A progress circle can be either determinate or indeterminate as signified by `[i
     <sp-progress-circle
         label="A large representation of an unclear amount of work"
         indeterminate
-        size="large"
+        size="l"
     ></sp-progress-circle>
 </div>
 ```
 
 ### Size
 
-Progress Circles come in 3 sizes: small (`[size="small"]`), medium (default), or large (`[size="large"]`). These are available to fit various contexts. For example, the small loader can be used in place of an icon or in tight spaces, while the large one can be used for full-page loading.
+Progress Circles come in 3 sizes: small (`[size="s"]`), medium (`[size="m"]`, default), or large (`[size="l"]`). These are available to fit various contexts. For example, the small loader can be used in place of an icon or in tight spaces, while the large one can be used for full-page loading.
 
 ## Accessibility
 
