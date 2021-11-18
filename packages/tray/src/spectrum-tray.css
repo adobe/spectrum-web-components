@@ -116,7 +116,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-global-animation-duration-200)
             ); /* .spectrum-Tray.is-open */
 }
-@media (max-inline-size: 375px) {
+@media (max-width: 375px) {
     .tray {
         border-radius: var(--spectrum-tray-border-radius, 0);
     }

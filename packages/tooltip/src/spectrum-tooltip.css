@@ -62,7 +62,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     align-items: center;
     border-radius: var(
         --spectrum-tooltip-neutral-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-component-border-radius)
     );
     box-sizing: border-box;
     display: inline-flex;
@@ -88,13 +88,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-tooltip-neutral-min-height,
         var(--spectrum-global-dimension-size-300)
     );
-    padding: var(
-            --spectrum-tooltip-neutral-padding-top,
-            var(--spectrum-global-dimension-size-50)
-        )
+    padding: 0
         var(
             --spectrum-tooltip-neutral-padding-x,
-            var(--spectrum-global-dimension-size-125)
+            var(--spectrum-global-dimension-size-85)
         );
     position: relative; /* .spectrum-Tooltip */
     top: 0;
@@ -190,11 +187,11 @@ p {
     margin-left: calc(
         var(
                 --spectrum-tooltip-neutral-icon-margin-x,
-                var(--spectrum-global-dimension-size-100)
+                var(--spectrum-global-dimension-size-85)
             ) -
             var(
                 --spectrum-tooltip-neutral-padding-x,
-                var(--spectrum-global-dimension-size-125)
+                var(--spectrum-global-dimension-size-85)
             )
     ); /* [dir=ltr] .spectrum-Tooltip-typeIcon */
 }
@@ -202,24 +199,24 @@ p {
     margin-right: calc(
         var(
                 --spectrum-tooltip-neutral-icon-margin-x,
-                var(--spectrum-global-dimension-size-100)
+                var(--spectrum-global-dimension-size-85)
             ) -
             var(
                 --spectrum-tooltip-neutral-padding-x,
-                var(--spectrum-global-dimension-size-125)
+                var(--spectrum-global-dimension-size-85)
             )
     ); /* [dir=rtl] .spectrum-Tooltip-typeIcon */
 }
 :host([dir='ltr']) ::slotted([slot='icon']) {
     margin-right: var(
         --spectrum-tooltip-neutral-icon-margin-x,
-        var(--spectrum-global-dimension-size-100)
+        var(--spectrum-global-dimension-size-85)
     ); /* [dir=ltr] .spectrum-Tooltip-typeIcon */
 }
 :host([dir='rtl']) ::slotted([slot='icon']) {
     margin-left: var(
         --spectrum-tooltip-neutral-icon-margin-x,
-        var(--spectrum-global-dimension-size-100)
+        var(--spectrum-global-dimension-size-85)
     ); /* [dir=rtl] .spectrum-Tooltip-typeIcon */
 }
 ::slotted([slot='icon']) {
@@ -227,19 +224,31 @@ p {
     flex-shrink: 0;
     height: var(
         --spectrum-tooltip-neutral-icon-size,
-        var(--spectrum-global-dimension-size-175)
+        var(--spectrum-global-dimension-size-200)
     );
-    margin-top: 1px;
+    margin-bottom: var(
+        --spectrum-tooltip-neutral-icon-margin-y,
+        var(--spectrum-global-dimension-size-50)
+    );
+    margin-top: var(
+        --spectrum-tooltip-neutral-icon-margin-y,
+        var(--spectrum-global-dimension-size-50)
+    ); /* .spectrum-Tooltip-typeIcon */
     width: var(
         --spectrum-tooltip-neutral-icon-size,
-        var(--spectrum-global-dimension-size-175)
-    ); /* .spectrum-Tooltip-typeIcon */
+        var(--spectrum-global-dimension-size-200)
+    );
 }
 #label {
     line-height: var(
         --spectrum-tooltip-neutral-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     ); /* .spectrum-Tooltip-label */
+    margin-bottom: var(--spectrum-tooltip-neutral-text-margin-bottom);
+    margin-top: var(
+        --spectrum-tooltip-neutral-text-margin-top,
+        var(--spectrum-global-dimension-static-size-50)
+    );
 }
 :host {
     background-color: var(

@@ -136,6 +136,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-control-three-width-l: 29px;
     --spectrum-alias-control-three-width-xl: 33px;
+    --spectrum-alias-search-padding-left-m: var(
+        --spectrum-global-dimension-size-125
+    );
     --spectrum-alias-focus-ring-radius-default: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -289,6 +292,24 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-s-quiet-emphasized-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-s-quiet-emphasized-black-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-white-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-s-quiet-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
@@ -296,6 +317,24 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-s-quiet-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-black-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-quiet-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-white-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-quiet-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-s-emphasized-texticon-text-padding-bottom: var(
@@ -307,6 +346,24 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-s-emphasized-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-s-emphasized-black-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-emphasized-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-emphasized-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-emphasized-white-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-emphasized-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-emphasized-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-s-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
@@ -314,6 +371,24 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-s-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-black-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-white-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-s-quiet-emphasized-textonly-text-padding-bottom: var(
@@ -325,6 +400,24 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-s-quiet-emphasized-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-s-quiet-emphasized-black-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-white-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-s-quiet-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
@@ -332,6 +425,24 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-s-quiet-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-black-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-quiet-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-white-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-quiet-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-s-emphasized-textonly-text-padding-bottom: var(
@@ -343,6 +454,24 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-s-emphasized-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-s-emphasized-black-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-emphasized-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-emphasized-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-emphasized-white-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-emphasized-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-emphasized-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-s-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
@@ -350,6 +479,24 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-s-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-black-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-white-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-s-quiet-emphasized-icononly-text-padding-bottom: var(
@@ -361,6 +508,24 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-s-quiet-emphasized-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-s-quiet-emphasized-black-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-white-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-emphasized-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-s-quiet-icononly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
@@ -368,6 +533,24 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-s-quiet-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-black-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-quiet-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-white-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-quiet-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-quiet-white-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-s-emphasized-icononly-text-padding-bottom: var(
@@ -379,6 +562,24 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-s-emphasized-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-s-emphasized-black-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-emphasized-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-emphasized-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-emphasized-white-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-emphasized-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-emphasized-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-s-icononly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
@@ -386,6 +587,24 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-s-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-black-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-white-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-actionbutton-s-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-s-white-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-m-quiet-emphasized-texticon-touch-hit-x: var(
@@ -397,6 +616,24 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-m-quiet-emphasized-texticon-padding-left: var(
         --spectrum-global-dimension-size-125
     );
+    --spectrum-actionbutton-m-quiet-emphasized-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-black-texticon-padding-left: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-white-texticon-padding-left: var(
+        --spectrum-global-dimension-size-125
+    );
     --spectrum-actionbutton-m-quiet-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -404,6 +641,24 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-m-quiet-texticon-padding-left: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-actionbutton-m-quiet-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-black-texticon-padding-left: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-actionbutton-m-quiet-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-white-texticon-padding-left: var(
         --spectrum-global-dimension-size-125
     );
     --spectrum-actionbutton-m-emphasized-texticon-touch-hit-x: var(
@@ -415,6 +670,24 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-m-emphasized-texticon-padding-left: var(
         --spectrum-global-dimension-size-125
     );
+    --spectrum-actionbutton-m-emphasized-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-emphasized-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-emphasized-black-texticon-padding-left: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-actionbutton-m-emphasized-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-emphasized-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-emphasized-white-texticon-padding-left: var(
+        --spectrum-global-dimension-size-125
+    );
     --spectrum-actionbutton-m-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -424,10 +697,40 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-m-texticon-padding-left: var(
         --spectrum-global-dimension-size-125
     );
+    --spectrum-actionbutton-m-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-black-texticon-padding-left: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-actionbutton-m-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-white-texticon-padding-left: var(
+        --spectrum-global-dimension-size-125
+    );
     --spectrum-actionbutton-m-quiet-emphasized-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-m-quiet-emphasized-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-m-quiet-textonly-touch-hit-x: var(
@@ -436,10 +739,34 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-m-quiet-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-m-quiet-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-m-emphasized-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-m-emphasized-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-emphasized-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-emphasized-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-emphasized-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-emphasized-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-m-textonly-touch-hit-x: var(
@@ -448,10 +775,34 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-m-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-m-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-m-quiet-emphasized-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-m-quiet-emphasized-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-emphasized-white-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-m-quiet-icononly-touch-hit-x: var(
@@ -460,16 +811,52 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-m-quiet-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-m-quiet-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-quiet-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-m-emphasized-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-m-emphasized-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-m-emphasized-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-emphasized-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-emphasized-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-emphasized-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-m-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-m-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-m-white-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-l-quiet-emphasized-texticon-text-padding-top: var(
@@ -484,6 +871,30 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-l-quiet-emphasized-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-l-quiet-emphasized-black-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-black-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-white-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-white-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-l-quiet-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
@@ -494,6 +905,30 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-l-quiet-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-black-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-quiet-black-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-quiet-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-white-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-quiet-white-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-quiet-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-l-emphasized-texticon-text-padding-top: var(
@@ -508,6 +943,30 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-l-emphasized-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-l-emphasized-black-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-emphasized-black-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-emphasized-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-emphasized-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-emphasized-white-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-emphasized-white-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-emphasized-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-emphasized-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-l-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
@@ -518,6 +977,30 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-l-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-black-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-black-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-white-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-white-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-l-quiet-emphasized-textonly-text-padding-top: var(
@@ -532,6 +1015,30 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-l-quiet-emphasized-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-l-quiet-emphasized-black-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-black-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-white-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-white-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-l-quiet-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
@@ -542,6 +1049,30 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-l-quiet-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-black-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-quiet-black-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-quiet-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-white-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-quiet-white-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-quiet-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-l-emphasized-textonly-text-padding-top: var(
@@ -556,6 +1087,30 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-l-emphasized-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-l-emphasized-black-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-emphasized-black-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-emphasized-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-emphasized-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-emphasized-white-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-emphasized-white-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-emphasized-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-emphasized-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-l-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
@@ -566,6 +1121,30 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-l-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-black-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-black-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-white-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-white-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-l-quiet-emphasized-icononly-text-padding-top: var(
@@ -580,6 +1159,30 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-l-quiet-emphasized-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-l-quiet-emphasized-black-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-black-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-white-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-white-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-emphasized-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-l-quiet-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
@@ -590,6 +1193,30 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-l-quiet-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-black-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-quiet-black-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-quiet-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-white-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-quiet-white-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-quiet-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-quiet-white-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-l-emphasized-icononly-text-padding-top: var(
@@ -604,6 +1231,30 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-l-emphasized-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-l-emphasized-black-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-emphasized-black-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-emphasized-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-emphasized-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-emphasized-white-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-emphasized-white-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-emphasized-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-emphasized-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-l-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
@@ -616,10 +1267,46 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-l-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-l-black-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-black-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-white-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-actionbutton-l-white-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-actionbutton-l-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-l-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-xl-quiet-emphasized-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-xl-quiet-emphasized-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-emphasized-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-emphasized-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-emphasized-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-emphasized-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-xl-quiet-texticon-touch-hit-x: var(
@@ -628,10 +1315,34 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-xl-quiet-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-xl-quiet-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-xl-emphasized-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-xl-emphasized-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-emphasized-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-emphasized-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-emphasized-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-emphasized-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-xl-texticon-touch-hit-x: var(
@@ -640,10 +1351,34 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-xl-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-xl-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-xl-quiet-emphasized-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-xl-quiet-emphasized-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-emphasized-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-emphasized-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-emphasized-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-emphasized-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-xl-quiet-textonly-touch-hit-x: var(
@@ -652,10 +1387,34 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-xl-quiet-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-xl-quiet-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-xl-emphasized-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-xl-emphasized-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-emphasized-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-emphasized-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-emphasized-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-emphasized-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-xl-textonly-touch-hit-x: var(
@@ -664,10 +1423,34 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-xl-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-xl-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-xl-quiet-emphasized-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-xl-quiet-emphasized-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-emphasized-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-emphasized-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-emphasized-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-emphasized-white-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-xl-quiet-icononly-touch-hit-x: var(
@@ -676,16 +1459,52 @@ governing permissions and limitations under the License.
     --spectrum-actionbutton-xl-quiet-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-xl-quiet-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-quiet-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-xl-emphasized-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-xl-emphasized-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-actionbutton-xl-emphasized-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-emphasized-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-emphasized-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-emphasized-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
     --spectrum-actionbutton-xl-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-actionbutton-xl-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-actionbutton-xl-white-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-badge-s-fuchsia-texticon-text-padding-bottom: var(
@@ -2192,30 +3011,6 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-xl-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-clearbutton-s-overbackground-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-clearbutton-s-overbackground-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-clearbutton-s-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-clearbutton-s-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-clearbutton-m-overbackground-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-clearbutton-m-overbackground-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-clearbutton-m-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-clearbutton-m-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
     --spectrum-colorloupe-colorhandle-gap: var(
         --spectrum-global-dimension-static-size-125
     );
@@ -2239,20 +3034,29 @@ governing permissions and limitations under the License.
     --spectrum-colorwheel-min-height: var(
         --spectrum-global-dimension-size-2400
     );
-    --spectrum-combobox-quiet-fieldbutton-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
+    --spectrum-combobox-s-quiet-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
     );
-    --spectrum-combobox-quiet-fieldbutton-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
+    --spectrum-combobox-s-quiet-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
     );
-    --spectrum-combobox-fieldbutton-padding-left: var(
-        --spectrum-global-dimension-size-125
+    --spectrum-combobox-s-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
     );
-    --spectrum-combobox-fieldbutton-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
+    --spectrum-combobox-s-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
     );
-    --spectrum-combobox-fieldbutton-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
+    --spectrum-combobox-l-quiet-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-combobox-l-quiet-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-combobox-l-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-combobox-l-text-padding-top: var(
+        --spectrum-global-dimension-size-115
     );
     --spectrum-cyclebutton-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
@@ -2397,6 +3201,15 @@ governing permissions and limitations under the License.
     );
     --spectrum-helptext-xl-negative-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
+    );
+    --spectrum-infieldbutton-l-left-fill-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-infieldbutton-l-right-fill-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-infieldbutton-l-none-fill-icon-size: var(
+        --spectrum-global-dimension-static-size-250
     );
     --spectrum-listitem-s-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
@@ -2557,6 +3370,9 @@ governing permissions and limitations under the License.
     --spectrum-picker-s-quiet-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
+    --spectrum-picker-s-quiet-texticon-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
     --spectrum-picker-s-quiet-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -2564,6 +3380,9 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-picker-s-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-picker-s-texticon-placeholder-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
     --spectrum-picker-s-texticon-touch-hit-x: var(
@@ -2575,6 +3394,9 @@ governing permissions and limitations under the License.
     --spectrum-picker-s-quiet-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
+    --spectrum-picker-s-quiet-textonly-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
     --spectrum-picker-s-quiet-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -2582,6 +3404,9 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-picker-s-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-picker-s-textonly-placeholder-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
     --spectrum-picker-s-textonly-touch-hit-x: var(
@@ -2593,6 +3418,9 @@ governing permissions and limitations under the License.
     --spectrum-picker-s-quiet-textthumbnail-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
+    --spectrum-picker-s-quiet-textthumbnail-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
     --spectrum-picker-s-quiet-textthumbnail-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -2600,6 +3428,9 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-picker-s-textthumbnail-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-picker-s-textthumbnail-placeholder-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
     --spectrum-picker-s-textthumbnail-touch-hit-x: var(
@@ -2662,6 +3493,9 @@ governing permissions and limitations under the License.
     --spectrum-picker-l-quiet-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
+    --spectrum-picker-l-quiet-texticon-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
     --spectrum-picker-l-quiet-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -2673,6 +3507,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-picker-l-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-picker-l-texticon-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
     );
     --spectrum-picker-l-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
@@ -2686,6 +3523,9 @@ governing permissions and limitations under the License.
     --spectrum-picker-l-quiet-textonly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
+    --spectrum-picker-l-quiet-textonly-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
     --spectrum-picker-l-quiet-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -2697,6 +3537,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-picker-l-textonly-icon-size: var(
         --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-picker-l-textonly-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
     );
     --spectrum-picker-l-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
@@ -2710,6 +3553,9 @@ governing permissions and limitations under the License.
     --spectrum-picker-l-quiet-textthumbnail-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
+    --spectrum-picker-l-quiet-textthumbnail-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
     --spectrum-picker-l-quiet-textthumbnail-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -2721,6 +3567,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-picker-l-textthumbnail-icon-size: var(
         --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-picker-l-textthumbnail-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
     );
     --spectrum-picker-l-textthumbnail-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
@@ -2882,6 +3731,9 @@ governing permissions and limitations under the License.
     --spectrum-rating-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
+    --spectrum-search-s-quiet-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
     --spectrum-search-s-quiet-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
@@ -2890,6 +3742,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-search-s-quiet-touch-hit-y: var(
         --spectrum-global-dimension-size-100
+    );
+    --spectrum-search-s-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
     );
     --spectrum-search-s-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
@@ -2904,12 +3759,14 @@ governing permissions and limitations under the License.
     );
     --spectrum-search-m-touch-hit-x: var(--spectrum-global-dimension-size-100);
     --spectrum-search-m-touch-hit-y: var(--spectrum-global-dimension-size-100);
-    --spectrum-search-m-padding-left: var(--spectrum-global-dimension-size-125);
-    --spectrum-search-l-quiet-text-padding-top: var(
-        --spectrum-global-dimension-size-115
-    );
     --spectrum-search-l-quiet-icon-size: var(
         --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-search-l-quiet-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-search-l-quiet-text-padding-top: var(
+        --spectrum-global-dimension-size-115
     );
     --spectrum-search-l-quiet-touch-hit-x: var(
         --spectrum-global-dimension-size-100
@@ -2917,11 +3774,14 @@ governing permissions and limitations under the License.
     --spectrum-search-l-quiet-touch-hit-y: var(
         --spectrum-global-dimension-size-100
     );
-    --spectrum-search-l-text-padding-top: var(
-        --spectrum-global-dimension-size-115
-    );
     --spectrum-search-l-icon-size: var(
         --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-search-l-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-search-l-text-padding-top: var(
+        --spectrum-global-dimension-size-115
     );
     --spectrum-search-l-touch-hit-x: var(--spectrum-global-dimension-size-100);
     --spectrum-search-l-touch-hit-y: var(--spectrum-global-dimension-size-100);
@@ -2933,6 +3793,36 @@ governing permissions and limitations under the License.
     );
     --spectrum-search-xl-touch-hit-x: var(--spectrum-global-dimension-size-100);
     --spectrum-search-xl-touch-hit-y: var(--spectrum-global-dimension-size-100);
+    --spectrum-searchwithin-s-quiet-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-searchwithin-s-quiet-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-searchwithin-s-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-searchwithin-s-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-searchwithin-l-quiet-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-searchwithin-l-quiet-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-searchwithin-l-quiet-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-searchwithin-l-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-searchwithin-l-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-searchwithin-l-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
     --spectrum-sidenav-multilevel-item-touch-hit-bottom: var(
         --spectrum-global-dimension-static-size-25
     );
@@ -3838,104 +4728,32 @@ governing permissions and limitations under the License.
     --spectrum-tag-s-removable-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-tag-s-removable-texticon-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-s-removable-texticon-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
     --spectrum-tag-s-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-tag-s-texticon-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-s-texticon-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
     );
     --spectrum-tag-s-removable-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-tag-s-removable-textonly-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-s-removable-textonly-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
     --spectrum-tag-s-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-tag-s-textonly-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-s-textonly-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
     );
     --spectrum-tag-s-removable-avatartext-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-tag-s-removable-avatartext-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-s-removable-avatartext-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
     --spectrum-tag-s-avatartext-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-tag-s-avatartext-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-s-avatartext-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
     );
     --spectrum-tag-m-removable-texticon-padding-left: var(
         --spectrum-global-dimension-size-125
     );
-    --spectrum-tag-m-removable-texticon-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-m-removable-texticon-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
     --spectrum-tag-m-texticon-padding-left: var(
         --spectrum-global-dimension-size-125
-    );
-    --spectrum-tag-m-texticon-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-m-texticon-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-m-removable-textonly-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-m-removable-textonly-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-m-textonly-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-m-textonly-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
     );
     --spectrum-tag-m-removable-avatartext-padding-left: var(
         --spectrum-global-dimension-size-125
     );
-    --spectrum-tag-m-removable-avatartext-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-m-removable-avatartext-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
     --spectrum-tag-m-avatartext-padding-left: var(
         --spectrum-global-dimension-size-125
-    );
-    --spectrum-tag-m-avatartext-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-m-avatartext-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
     );
     --spectrum-tag-l-removable-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
@@ -3943,29 +4761,11 @@ governing permissions and limitations under the License.
     --spectrum-tag-l-removable-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-tag-l-removable-texticon-button-icon-size: var(
-        --spectrum-global-dimension-static-size-250
-    );
-    --spectrum-tag-l-removable-texticon-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-l-removable-texticon-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
     --spectrum-tag-l-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
     --spectrum-tag-l-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
-    );
-    --spectrum-tag-l-texticon-button-icon-size: var(
-        --spectrum-global-dimension-static-size-250
-    );
-    --spectrum-tag-l-texticon-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-l-texticon-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
     );
     --spectrum-tag-l-removable-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
@@ -3973,29 +4773,11 @@ governing permissions and limitations under the License.
     --spectrum-tag-l-removable-textonly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-tag-l-removable-textonly-button-icon-size: var(
-        --spectrum-global-dimension-static-size-250
-    );
-    --spectrum-tag-l-removable-textonly-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-l-removable-textonly-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
     --spectrum-tag-l-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
     --spectrum-tag-l-textonly-icon-size: var(
         --spectrum-global-dimension-static-size-250
-    );
-    --spectrum-tag-l-textonly-button-icon-size: var(
-        --spectrum-global-dimension-static-size-250
-    );
-    --spectrum-tag-l-textonly-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-l-textonly-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
     );
     --spectrum-tag-l-removable-avatartext-text-padding-top: var(
         --spectrum-global-dimension-size-115
@@ -4003,31 +4785,16 @@ governing permissions and limitations under the License.
     --spectrum-tag-l-removable-avatartext-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-tag-l-removable-avatartext-button-icon-size: var(
-        --spectrum-global-dimension-static-size-250
-    );
-    --spectrum-tag-l-removable-avatartext-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-l-removable-avatartext-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
     --spectrum-tag-l-avatartext-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
     --spectrum-tag-l-avatartext-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-tag-l-avatartext-button-icon-size: var(
-        --spectrum-global-dimension-static-size-250
-    );
-    --spectrum-tag-l-avatartext-button-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-tag-l-avatartext-button-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
     --spectrum-textarea-s-multiline-quiet-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-textarea-s-multiline-quiet-placeholder-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
     --spectrum-textarea-s-multiline-quiet-touch-hit-x: var(
@@ -4039,6 +4806,9 @@ governing permissions and limitations under the License.
     --spectrum-textarea-s-quiet-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
+    --spectrum-textarea-s-quiet-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
     --spectrum-textarea-s-quiet-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -4048,6 +4818,9 @@ governing permissions and limitations under the License.
     --spectrum-textarea-s-multiline-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
+    --spectrum-textarea-s-multiline-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
     --spectrum-textarea-s-multiline-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -4055,6 +4828,9 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-textarea-s-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-textarea-s-placeholder-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
     --spectrum-textarea-s-touch-hit-x: var(
@@ -4090,6 +4866,9 @@ governing permissions and limitations under the License.
     --spectrum-textarea-l-multiline-quiet-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
+    --spectrum-textarea-l-multiline-quiet-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
     --spectrum-textarea-l-multiline-quiet-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -4097,6 +4876,9 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-textarea-l-quiet-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-textarea-l-quiet-placeholder-padding-top: var(
         --spectrum-global-dimension-size-115
     );
     --spectrum-textarea-l-quiet-touch-hit-x: var(
@@ -4108,6 +4890,9 @@ governing permissions and limitations under the License.
     --spectrum-textarea-l-multiline-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
+    --spectrum-textarea-l-multiline-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
     --spectrum-textarea-l-multiline-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -4115,6 +4900,9 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-textarea-l-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-textarea-l-placeholder-padding-top: var(
         --spectrum-global-dimension-size-115
     );
     --spectrum-textarea-l-touch-hit-x: var(
@@ -4156,6 +4944,9 @@ governing permissions and limitations under the License.
     --spectrum-textfield-s-quiet-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
+    --spectrum-textfield-s-quiet-texticon-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
     --spectrum-textfield-s-quiet-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -4163,6 +4954,9 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-textfield-s-quiet-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-textfield-s-quiet-textonly-placeholder-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
     --spectrum-textfield-s-texticon-touch-hit-x: var(
@@ -4174,6 +4968,9 @@ governing permissions and limitations under the License.
     --spectrum-textfield-s-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
+    --spectrum-textfield-s-texticon-placeholder-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
     --spectrum-textfield-s-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
@@ -4181,6 +4978,9 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-textfield-s-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-textfield-s-textonly-placeholder-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
     --spectrum-textfield-m-quiet-texticon-touch-hit-x: var(
@@ -4219,6 +5019,9 @@ governing permissions and limitations under the License.
     --spectrum-textfield-l-quiet-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
+    --spectrum-textfield-l-quiet-texticon-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
     --spectrum-textfield-l-quiet-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
@@ -4229,6 +5032,9 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-textfield-l-quiet-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-textfield-l-quiet-textonly-placeholder-padding-top: var(
         --spectrum-global-dimension-size-115
     );
     --spectrum-textfield-l-quiet-textonly-icon-size: var(
@@ -4243,6 +5049,9 @@ governing permissions and limitations under the License.
     --spectrum-textfield-l-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
+    --spectrum-textfield-l-texticon-placeholder-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
     --spectrum-textfield-l-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
@@ -4253,6 +5062,9 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-textfield-l-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-textfield-l-textonly-placeholder-padding-top: var(
         --spectrum-global-dimension-size-115
     );
     --spectrum-textfield-l-textonly-icon-size: var(
@@ -4282,10 +5094,18 @@ governing permissions and limitations under the License.
     --spectrum-textfield-xl-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-tooltip-neutral-padding-bottom: 5px;
-    --spectrum-tooltip-info-padding-bottom: 5px;
-    --spectrum-tooltip-positive-padding-bottom: 5px;
-    --spectrum-tooltip-negative-padding-bottom: 5px;
+    --spectrum-tooltip-neutral-text-margin-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-tooltip-info-text-margin-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-tooltip-positive-text-margin-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-tooltip-negative-text-margin-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
     --spectrum-treeview-s-item-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );

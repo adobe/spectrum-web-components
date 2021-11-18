@@ -18,30 +18,6 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin: 0;
     padding: 0;
 }
-:host([dir='ltr']) .spectrum-SideNav-itemLink.focus-visible:before {
-    left: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='ltr']) .spectrum-SideNav-itemLink:focus-visible:before {
-    left: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='rtl']) .spectrum-SideNav-itemLink.focus-visible:before {
-    right: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='rtl']) .spectrum-SideNav-itemLink:focus-visible:before {
-    right: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='ltr']) .spectrum-SideNav-itemLink.focus-visible:before {
-    right: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='ltr']) .spectrum-SideNav-itemLink:focus-visible:before {
-    right: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='rtl']) .spectrum-SideNav-itemLink.focus-visible:before {
-    left: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='rtl']) .spectrum-SideNav-itemLink:focus-visible:before {
-    left: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
-}
 :host([dir='ltr']) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon {
     margin-right: var(
         --spectrum-sidenav-icon-gap,

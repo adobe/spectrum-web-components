@@ -237,7 +237,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     ); /* .spectrum-Switch-switch:before */
     border-color: var(
         --spectrum-switch-m-handle-border-color,
-        var(--spectrum-global-color-gray-600)
+        var(--spectrum-alias-toggle-border-color-default)
     );
 }
 #input ~ #label {
@@ -261,7 +261,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host(:hover) #input + #switch:before {
     border-color: var(
         --spectrum-switch-m-handle-border-color-hover,
-        var(--spectrum-global-color-gray-700)
+        var(--spectrum-alias-toggle-border-color-hover)
     ); /* .spectrum-Switch:hover .spectrum-Switch-input+.spectrum-Switch-switch:before */
     box-shadow: none;
 }
@@ -286,7 +286,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host(:active) #input + #switch:before {
     border-color: var(
         --spectrum-switch-m-handle-border-color-down,
-        var(--spectrum-global-color-gray-800)
+        var(--spectrum-alias-toggle-border-color-down)
     ); /* .spectrum-Switch:active .spectrum-Switch-input+.spectrum-Switch-switch:before */
 }
 :host(:active) #input ~ #label {
@@ -413,7 +413,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host(:hover) #input.focus-visible + #switch:before {
     border-color: var(
         --spectrum-switch-m-handle-border-color-key-focus,
-        var(--spectrum-global-color-gray-700)
+        var(--spectrum-alias-toggle-border-color-key-focus)
     ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before */
 }
@@ -421,7 +421,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host(:hover) #input:focus-visible + #switch:before {
     border-color: var(
         --spectrum-switch-m-handle-border-color-key-focus,
-        var(--spectrum-global-color-gray-700)
+        var(--spectrum-alias-toggle-border-color-key-focus)
     ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before */
 }

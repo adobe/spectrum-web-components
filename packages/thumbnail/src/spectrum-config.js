@@ -34,24 +34,24 @@ const config = {
                     name: 'size',
                     values: [
                         {
+                            name: 'xxs',
+                            selector: '.spectrum-Thumbnail--sizeXXS',
+                        },
+                        {
+                            name: 'xs',
+                            selector: '.spectrum-Thumbnail--sizeXS',
+                        },
+                        {
                             name: 's',
-                            selector: '.spectrum-Thumbnail--S',
+                            selector: '.spectrum-Thumbnail--sizeS',
                         },
                         {
                             name: 'm',
-                            selector: '.spectrum-Thumbnail--M',
+                            selector: '.spectrum-Thumbnail--sizeM',
                         },
                         {
                             name: 'l',
-                            selector: '.spectrum-Thumbnail--L',
-                        },
-                        {
-                            name: 'xl',
-                            selector: '.spectrum-Thumbnail--XL',
-                        },
-                        {
-                            name: 'xxl',
-                            selector: '.spectrum-Thumbnail--XXL',
+                            selector: '.spectrum-Thumbnail--sizeL',
                         },
                     ],
                 },

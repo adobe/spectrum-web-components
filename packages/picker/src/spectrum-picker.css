@@ -127,12 +127,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-s-texticon-icon-gap,
         var(--spectrum-global-dimension-size-85)
     );
-    --spectrum-picker-texticon-placeholder-text-font-style: var(
-        --spectrum-picker-s-texticon-placeholder-text-font-style,
+    --spectrum-picker-texticon-placeholder-font-style: var(
+        --spectrum-picker-s-texticon-placeholder-font-style,
         var(--spectrum-global-font-style-italic)
     );
-    --spectrum-picker-texticon-placeholder-text-font-weight: var(
-        --spectrum-picker-s-texticon-placeholder-text-font-weight,
+    --spectrum-picker-texticon-placeholder-font-weight: var(
+        --spectrum-picker-s-texticon-placeholder-font-weight,
         var(--spectrum-global-font-weight-regular)
     );
     --spectrum-picker-texticon-error-icon-margin-left: var(
@@ -185,12 +185,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-m-texticon-icon-gap,
         var(--spectrum-global-dimension-size-100)
     );
-    --spectrum-picker-texticon-placeholder-text-font-style: var(
-        --spectrum-picker-m-texticon-placeholder-text-font-style,
+    --spectrum-picker-texticon-placeholder-font-style: var(
+        --spectrum-picker-m-texticon-placeholder-font-style,
         var(--spectrum-global-font-style-italic)
     );
-    --spectrum-picker-texticon-placeholder-text-font-weight: var(
-        --spectrum-picker-m-texticon-placeholder-text-font-weight,
+    --spectrum-picker-texticon-placeholder-font-weight: var(
+        --spectrum-picker-m-texticon-placeholder-font-weight,
         var(--spectrum-global-font-weight-regular)
     );
     --spectrum-picker-texticon-error-icon-margin-left: var(
@@ -243,12 +243,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-l-texticon-icon-gap,
         var(--spectrum-global-dimension-size-115)
     );
-    --spectrum-picker-texticon-placeholder-text-font-style: var(
-        --spectrum-picker-l-texticon-placeholder-text-font-style,
+    --spectrum-picker-texticon-placeholder-font-style: var(
+        --spectrum-picker-l-texticon-placeholder-font-style,
         var(--spectrum-global-font-style-italic)
     );
-    --spectrum-picker-texticon-placeholder-text-font-weight: var(
-        --spectrum-picker-l-texticon-placeholder-text-font-weight,
+    --spectrum-picker-texticon-placeholder-font-weight: var(
+        --spectrum-picker-l-texticon-placeholder-font-weight,
         var(--spectrum-global-font-weight-regular)
     );
     --spectrum-picker-texticon-error-icon-margin-left: var(
@@ -301,12 +301,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-xl-texticon-icon-gap,
         var(--spectrum-global-dimension-size-125)
     );
-    --spectrum-picker-texticon-placeholder-text-font-style: var(
-        --spectrum-picker-xl-texticon-placeholder-text-font-style,
+    --spectrum-picker-texticon-placeholder-font-style: var(
+        --spectrum-picker-xl-texticon-placeholder-font-style,
         var(--spectrum-global-font-style-italic)
     );
-    --spectrum-picker-texticon-placeholder-text-font-weight: var(
-        --spectrum-picker-xl-texticon-placeholder-text-font-weight,
+    --spectrum-picker-texticon-placeholder-font-weight: var(
+        --spectrum-picker-xl-texticon-placeholder-font-weight,
         var(--spectrum-global-font-weight-regular)
     );
     --spectrum-picker-texticon-error-icon-margin-left: var(
@@ -401,9 +401,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     white-space: nowrap;
 }
 #label.placeholder {
-    font-style: var(--spectrum-picker-texticon-placeholder-text-font-style);
+    font-style: var(--spectrum-picker-texticon-placeholder-font-style);
     font-weight: var(
-        --spectrum-picker-texticon-placeholder-text-font-weight
+        --spectrum-picker-texticon-placeholder-font-weight
     ); /* .spectrum-Picker-label.is-placeholder */
     transition: color var(--spectrum-global-animation-duration-100, 0.13s)
         ease-in-out;
@@ -508,7 +508,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Picker.is-open */
     border-color: var(
         --spectrum-picker-m-texticon-border-color-down,
-        var(--spectrum-alias-border-color-mouse-focus)
+        var(--spectrum-alias-component-border-color-down)
     );
 }
 #button:active.placeholder #label,

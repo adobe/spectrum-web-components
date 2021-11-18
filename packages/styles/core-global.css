@@ -1084,7 +1084,28 @@ governing permissions and limitations under the License.
     --spectrum-alias-component-border-radius-quiet: var(
         --spectrum-global-dimension-static-size-0
     );
+    --spectrum-alias-component-focusring-gap: var(
+        --spectrum-global-dimension-static-size-0
+    );
+    --spectrum-alias-component-focusring-gap-emphasized: var(
+        --spectrum-global-dimension-static-size-25
+    );
+    --spectrum-alias-component-focusring-size: var(
+        --spectrum-global-dimension-static-size-10
+    );
+    --spectrum-alias-component-focusring-size-emphasized: var(
+        --spectrum-global-dimension-static-size-25
+    );
+    --spectrum-alias-component-focusring-border-radius: var(
+        --spectrum-global-dimension-size-75
+    );
     --spectrum-alias-input-border-size: var(
+        --spectrum-global-dimension-static-size-10
+    );
+    --spectrum-alias-input-focusring-gap: var(
+        --spectrum-global-dimension-static-size-0
+    );
+    --spectrum-alias-input-quiet-focusline-gap: var(
         --spectrum-global-dimension-static-size-10
     );
     --spectrum-alias-control-two-size-m: var(
@@ -1122,6 +1143,188 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-control-three-height-xl: var(
         --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-infieldbutton-icon-margin-y-s: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-infieldbutton-icon-margin-y-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-infieldbutton-icon-margin-y-l: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-infieldbutton-icon-margin-y-xl: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-infieldbutton-border-radius: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-infieldbutton-border-radius-sided: 0;
+    --spectrum-alias-infieldbutton-border-size: var(
+        --spectrum-global-dimension-static-size-10
+    );
+    --spectrum-alias-infieldbutton-fill-padding-s: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-infieldbutton-fill-padding-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-infieldbutton-fill-padding-l: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-infieldbutton-fill-padding-xl: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-infieldbutton-padding-s: 0;
+    --spectrum-alias-infieldbutton-padding-m: 0;
+    --spectrum-alias-infieldbutton-padding-l: 0;
+    --spectrum-alias-infieldbutton-padding-xl: 0;
+    --spectrum-alias-infieldbutton-full-height-s: var(
+        --spectrum-global-dimension-size-300
+    );
+    --spectrum-alias-infieldbutton-full-height-m: var(
+        --spectrum-global-dimension-size-400
+    );
+    --spectrum-alias-infieldbutton-full-height-l: var(
+        --spectrum-global-dimension-size-500
+    );
+    --spectrum-alias-infieldbutton-full-height-xl: var(
+        --spectrum-global-dimension-size-600
+    );
+    --spectrum-alias-infieldbutton-half-height-s: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-infieldbutton-half-height-m: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-infieldbutton-half-height-l: var(
+        --spectrum-global-dimension-size-250
+    );
+    --spectrum-alias-infieldbutton-half-height-xl: var(
+        --spectrum-global-dimension-size-300
+    );
+    --spectrum-alias-stepperbutton-gap: 0;
+    --spectrum-alias-stepperbutton-width-s: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-stepperbutton-width-m: var(
+        --spectrum-global-dimension-size-300
+    );
+    --spectrum-alias-stepperbutton-width-l: var(
+        --spectrum-global-dimension-size-400
+    );
+    --spectrum-alias-stepperbutton-width-xl: var(
+        --spectrum-global-dimension-size-450
+    );
+    --spectrum-alias-stepperbutton-icon-x-offset-s: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-stepperbutton-icon-x-offset-m: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-stepperbutton-icon-x-offset-l: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-stepperbutton-icon-x-offset-xl: var(
+        --spectrum-global-dimension-size-130
+    );
+    --spectrum-alias-stepperbutton-icon-y-offset-top-s: var(
+        --spectrum-global-dimension-size-25
+    );
+    --spectrum-alias-stepperbutton-icon-y-offset-top-m: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-stepperbutton-icon-y-offset-top-l: var(
+        --spectrum-global-dimension-size-65
+    );
+    --spectrum-alias-stepperbutton-icon-y-offset-top-xl: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-alias-stepperbutton-icon-y-offset-bottom-s: var(
+        --spectrum-global-dimension-size-10
+    );
+    --spectrum-alias-stepperbutton-icon-y-offset-bottom-m: var(
+        --spectrum-global-dimension-size-25
+    );
+    --spectrum-alias-stepperbutton-icon-y-offset-bottom-l: var(
+        --spectrum-global-dimension-size-40
+    );
+    --spectrum-alias-stepperbutton-icon-y-offset-bottom-xl: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-stepperbutton-radius-touching: 0;
+    --spectrum-alias-clearbutton-icon-margin-s: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-alias-clearbutton-icon-margin-m: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-clearbutton-icon-margin-l: var(
+        --spectrum-global-dimension-size-185
+    );
+    --spectrum-alias-clearbutton-icon-margin-xl: var(
+        --spectrum-global-dimension-size-225
+    );
+    --spectrum-alias-clearbutton-border-radius: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-pickerbutton-icononly-padding-x-s: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-pickerbutton-icononly-padding-x-m: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-pickerbutton-icononly-padding-x-l: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-pickerbutton-icononly-padding-x-xl: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-pickerbutton-icon-margin-y-s: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-pickerbutton-icon-margin-y-m: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-pickerbutton-icon-margin-y-l: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-pickerbutton-icon-margin-y-xl: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-pickerbutton-label-padding-y-s: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-pickerbutton-label-padding-y-m: var(
+        --spectrum-global-dimension-size-75
+    );
+    --spectrum-alias-pickerbutton-label-padding-y-l: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-alias-pickerbutton-label-padding-y-xl: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-pickerbutton-border-radius-rounded: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-search-border-radius: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-search-border-radius-quiet: 0;
+    --spectrum-alias-combobox-quiet-button-offset-x: var(
+        --spectrum-global-dimension-size-100
+    );
+    --spectrum-alias-thumbnail-border-radius-small: var(
+        --spectrum-global-dimension-size-25
+    );
+    --spectrum-alias-search-padding-left-s: var(
+        --spectrum-global-dimension-size-85
+    );
+    --spectrum-alias-search-padding-left-l: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-search-padding-left-xl: var(
+        --spectrum-global-dimension-size-185
     );
     --spectrum-alias-percent-50: 50%;
     --spectrum-alias-percent-70: 70%;
@@ -1251,6 +1454,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-border-radius-large: var(
         --spectrum-global-dimension-size-200
+    );
+    --spectrum-alias-border-radius-xlarge: var(
+        --spectrum-global-dimension-size-300
     );
     --spectrum-alias-single-line-height: var(
         --spectrum-global-dimension-size-400
@@ -1433,6 +1639,9 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-component-background-color-quiet-disabled: var(
         --spectrum-alias-background-color-transparent
+    );
+    --spectrum-alias-component-background-color-quiet-selected-disabled: var(
+        --spectrum-alias-component-background-color-disabled
     );
     --spectrum-alias-component-background-color-default: var(
         --spectrum-global-color-gray-75
@@ -1914,6 +2123,62 @@ governing permissions and limitations under the License.
     --spectrum-alias-background-color-yellow: var(
         --spectrum-alias-background-color-yellow-default
     );
+    --spectrum-alias-infieldbutton-background-color: var(
+        --spectrum-global-color-gray-200
+    );
+    --spectrum-alias-infieldbutton-fill-loudnessLow-border-color-disabled: transparent;
+    --spectrum-alias-infieldbutton-fill-loudnessMedium-border-color-disabled: transparent;
+    --spectrum-alias-infieldbutton-fill-loudnessHigh-border-color-disabled: var(
+        --spectrum-alias-component-background-color-disabled
+    );
+    --spectrum-alias-infieldbutton-fill-border-color-default: var(
+        --spectrum-alias-input-border-color-default
+    );
+    --spectrum-alias-infieldbutton-fill-border-color-hover: var(
+        --spectrum-alias-input-border-color-hover
+    );
+    --spectrum-alias-infieldbutton-fill-border-color-down: var(
+        --spectrum-alias-input-border-color-down
+    );
+    --spectrum-alias-infieldbutton-fill-border-color-mouse-focus: var(
+        --spectrum-alias-input-border-color-mouse-focus
+    );
+    --spectrum-alias-infieldbutton-fill-border-color-key-focus: var(
+        --spectrum-alias-input-border-color-key-focus
+    );
+    --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-default: transparent;
+    --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-hover: transparent;
+    --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-down: transparent;
+    --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-key-focus: transparent;
+    --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-disabled: transparent;
+    --spectrum-alias-infieldbutton-fill-loudnessMedium-background-color-default: var(
+        --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-default
+    );
+    --spectrum-alias-infieldbutton-fill-loudnessMedium-background-color-hover: var(
+        --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-hover
+    );
+    --spectrum-alias-infieldbutton-fill-loudnessMedium-background-color-down: var(
+        --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-down
+    );
+    --spectrum-alias-infieldbutton-fill-loudnessMedium-background-color-key-focus: var(
+        --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-key-focus
+    );
+    --spectrum-alias-infieldbutton-fill-loudnessMedium-background-color-disabled: transparent;
+    --spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-default: var(
+        --spectrum-alias-component-background-color-default
+    );
+    --spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-hover: var(
+        --spectrum-alias-component-background-color-hover
+    );
+    --spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-down: var(
+        --spectrum-alias-component-background-color-down
+    );
+    --spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-key-focus: var(
+        --spectrum-alias-component-background-color-key-focus
+    );
+    --spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-disabled: var(
+        --spectrum-alias-component-background-color-disabled
+    );
     --spectrum-alias-background-color-default: var(
         --spectrum-global-color-gray-100
     );
@@ -2023,6 +2288,12 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-track-color-disabled: var(
         --spectrum-global-color-gray-300
+    );
+    --spectrum-alias-thumbnail-darksquare-background-color: var(
+        --spectrum-global-color-gray-300
+    );
+    --spectrum-alias-thumbnail-lightsquare-background-color: var(
+        --spectrum-global-color-static-white
     );
     --spectrum-alias-track-color-overbackground: hsla(0, 0%, 100%, 0.2);
     --spectrum-alias-icon-color: var(--spectrum-global-color-gray-700);

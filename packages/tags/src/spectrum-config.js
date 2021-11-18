@@ -60,6 +60,10 @@ const config = {
             ],
             classes: [
                 {
+                    selector: '.spectrum-Tag-clearButton',
+                    name: 'clear-button',
+                },
+                {
                     selector: '.spectrum-ClearButton',
                     name: 'clear-button',
                 },

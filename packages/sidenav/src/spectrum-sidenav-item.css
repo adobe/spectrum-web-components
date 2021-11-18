@@ -72,32 +72,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #item-link:focus {
     outline: none; /* .spectrum-SideNav-itemLink:focus */
 }
-:host([dir='ltr']) #item-link.focus-visible:before {
-    left: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='ltr']) #item-link:focus-visible:before {
-    left: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='rtl']) #item-link.focus-visible:before {
-    right: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='rtl']) #item-link:focus-visible:before {
-    right: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='ltr']) #item-link.focus-visible:before {
-    right: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='ltr']) #item-link:focus-visible:before {
-    right: 0; /* [dir=ltr] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='rtl']) #item-link.focus-visible:before {
-    left: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-:host([dir='rtl']) #item-link:focus-visible:before {
-    left: 0; /* [dir=rtl] .spectrum-SideNav-itemLink.focus-ring:before */
-}
-#item-link.focus-visible:before {
-    border-bottom: var(
+#item-link:before {
+    border: var(
             --spectrum-tabs-m-focus-ring-size,
             var(--spectrum-alias-border-size-thick)
         )
@@ -106,35 +82,15 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-sidenav-item-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
-    border-top: var(
-            --spectrum-tabs-m-focus-ring-size,
-            var(--spectrum-alias-border-size-thick)
-        )
-        solid transparent;
     bottom: 0;
-    content: ''; /* .spectrum-SideNav-itemLink.focus-ring:before */
+    content: ''; /* .spectrum-SideNav-itemLink:before */
+    left: 0;
+    pointer-events: none;
     position: absolute;
+    right: 0;
     top: 0;
-}
-#item-link:focus-visible:before {
-    border-bottom: var(
-            --spectrum-tabs-m-focus-ring-size,
-            var(--spectrum-alias-border-size-thick)
-        )
-        solid transparent;
-    border-radius: var(
-        --spectrum-sidenav-item-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    border-top: var(
-            --spectrum-tabs-m-focus-ring-size,
-            var(--spectrum-alias-border-size-thick)
-        )
-        solid transparent;
-    bottom: 0;
-    content: ''; /* .spectrum-SideNav-itemLink.focus-ring:before */
-    position: absolute;
-    top: 0;
+    transition: border var(--spectrum-global-animation-duration-100, 0.13s)
+        ease-out;
 }
 :host([dir='ltr']) #item-link ::slotted([slot='icon']) {
     margin-right: var(
