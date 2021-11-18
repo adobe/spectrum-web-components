@@ -31,6 +31,7 @@ import {
     sendKeys,
 } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+import '@spectrum-web-components/base';
 
 type DescribedNode = {
     name: string;
@@ -220,7 +221,7 @@ describe('Overlay Trigger - Longpress', () => {
 
         await findDescribedNode(
             'Trigger with hold affordance',
-            'Long press for additional options'
+            'Press Alt+Down Arrow for additional options'
         );
 
         const opened = oneEvent(el, 'sp-opened');
@@ -234,7 +235,7 @@ describe('Overlay Trigger - Longpress', () => {
 
         await findDescribedNode(
             'Trigger with hold affordance',
-            'Long press for additional options'
+            'Press Alt+Down Arrow for additional options'
         );
 
         const closed = oneEvent(el, 'sp-closed');
@@ -250,7 +251,7 @@ describe('Overlay Trigger - Longpress', () => {
 
         await findDescribedNode(
             'Trigger with hold affordance',
-            'Long press for additional options'
+            'Press Alt+Down Arrow for additional options'
         );
     });
     it('removes longpress `aria-describedby` description element when longpress content is removed', async () => {
@@ -298,13 +299,13 @@ describe('Overlay Trigger - Longpress', () => {
         expect(el.hasLongpressContent).to.be.false;
         expect(el.childNodes.length, 'always').to.equal(4);
 
-        el.removeAttribute('hold-affordance');
+        el.setAttribute('hold-affordance', 'true');
         el.append(content);
 
         await elementUpdated(el);
         await findDescribedNode(
             'Trigger with hold affordance',
-            'Long press for additional options'
+            'Press Alt+Down Arrow for additional options'
         );
 
         expect(el.hasLongpressContent).to.be.true;
@@ -369,11 +370,11 @@ describe('Overlay Trigger - Longpress', () => {
 
         await findDescribedNode(
             'First button',
-            'Long press for additional options'
+            'Press Alt+Down Arrow for additional options'
         );
         await findDescribedNode(
             'Second button',
-            'Long press for additional options'
+            'Press Alt+Down Arrow for additional options'
         );
     });
     // TO-DO: figure out a way to make the message different depending on the type of interaction
@@ -404,7 +405,9 @@ describe('Overlay Trigger - Longpress', () => {
                 </overlay-trigger>
             `
         );
-        const trigger = el.querySelector('sp-action-button') as ActionButton;
+        const open = oneEvent(el, 'sp-opened');
+        //const closed = oneEvent(el, 'sp-closed');
+        const trigger = el.querySelector('sp-action-button') as HTMLElement;
         const content = el.querySelector(
             '[slot="longpress-content"]'
         ) as Popover;
@@ -413,17 +416,20 @@ describe('Overlay Trigger - Longpress', () => {
 
         expect(trigger).to.not.be.null;
         expect(content).to.not.be.null;
+        expect(trigger.hasAttribute('aria-describedby')).to.be.true;
         expect(content.open).to.be.false;
 
         trigger.focus();
-        const open = oneEvent(el, 'sp-opened');
-        await sendKeys({
-            press: 'Space',
+
+        // the user... uses (keyboard, pointer, mouse, whatever)
+        sendKeys({
+            press: 'Alt+ArrowDown',
         });
         await open;
-        // the user... uses (keyboard, pointer, mouse, whatever)
         // if focus:visible --> person is using a keyboard --> tell user to activate longpress via (space/alt+down) for add. opts
-        // if focus is INVISIBLE!! --> touch --> "double tap and longpress for additional options"
-        // there's a change in SpectrumElement base class that might support this test
+        await findDescribedNode(
+            'Trigger with hold affordance',
+            'Press Alt+Down Arrow for additional options'
+        );
     });
 });
