@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -27,7 +28,7 @@ import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-c
  * @slot - text label of the Clear Button
  * @slot icon - The icon to use for Clear Button
  */
-export class ClearButton extends StyledButton {
+export class ClearButton extends SizedMixin(StyledButton) {
     public static get styles(): CSSResultArray {
         return [...super.styles, buttonStyles, crossMediumStyles];
     }
@@ -47,5 +48,11 @@ export class ClearButton extends StyledButton {
                 ></sp-icon-cross75>
             `,
         ];
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            <div class="fill">${super.render()}</div>
+        `;
     }
 }

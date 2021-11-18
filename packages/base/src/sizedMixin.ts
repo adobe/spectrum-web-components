@@ -18,7 +18,8 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
-export type ElementSize = 's' | 'm' | 'l' | 'xl' | 'xxl';
+export type ElementSize = 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
+export type DefaultElementSize = Exclude<ElementSize, 'xxs' | 'xs' | 'xxl'>;
 
 export interface SizedElementInterface {
     size: ElementSize;
@@ -29,24 +30,26 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
     {
         validSizes = ['s', 'm', 'l', 'xl'],
         noDefaultSize,
+        defaultSize = 'm',
     }: {
         validSizes?: ElementSize[];
         noDefaultSize?: boolean;
+        defaultSize?: ElementSize;
     } = {}
 ): T & Constructor<SizedElementInterface> {
     class SizedElement extends constructor {
         @property({ type: String, reflect: true })
         public get size(): ElementSize {
-            return this._size || 'm';
+            return this._size || defaultSize;
         }
 
         public set size(value: ElementSize) {
-            const defaultSize = noDefaultSize ? null : 'm';
+            const fallbackSize = noDefaultSize ? null : defaultSize;
             const size = (
                 value ? value.toLocaleLowerCase() : value
             ) as ElementSize;
             const validSize = (
-                validSizes.includes(size) ? size : defaultSize
+                validSizes.includes(size) ? size : fallbackSize
             ) as ElementSize;
             if (validSize) {
                 this.setAttribute('size', validSize);
@@ -59,7 +62,7 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
             this.requestUpdate('size', oldSize);
         }
 
-        private _size: ElementSize | null = 'm';
+        private _size: ElementSize | null = defaultSize;
 
         protected firstUpdated(changes: PropertyValues): void {
             super.firstUpdated(changes);

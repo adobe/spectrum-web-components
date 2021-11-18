@@ -27,8 +27,8 @@ import styles from './thumbnail.css.js';
  * @slot - image element to present in the Thumbnail
  */
 export class Thumbnail extends SizedMixin(SpectrumElement, {
-    validSizes: ['s', 'm', 'l', 'xl', 'xxl'],
-    noDefaultSize: true,
+    validSizes: ['xxs', 'xs', 's', 'm', 'l'],
+    defaultSize: 's',
 }) {
     public static get styles(): CSSResultArray {
         return [styles];
