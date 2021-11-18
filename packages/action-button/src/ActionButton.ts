@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
-    ElementSize,
+    DefaultElementSize,
     html,
     PropertyValues,
     SizedMixin,
@@ -37,8 +37,6 @@ let LONGPRESS_TIMEOUT: ReturnType<typeof setTimeout>;
 export type LongpressEvent = {
     source: 'pointer' | 'keyboard';
 };
-
-type ActionButtonSize = Exclude<ElementSize, 'xxl'>;
 
 /**
  * @element sp-action-button
@@ -195,7 +193,7 @@ export class ActionButton extends SizedMixin(ButtonBase) {
                 <sp-icon-corner-triangle300
                     id="hold-affordance"
                     class="${holdAffordanceClass[
-                        this.size as ActionButtonSize
+                        this.size as DefaultElementSize
                     ]}"
                 ></sp-icon-corner-triangle300>
             `);

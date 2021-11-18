@@ -122,7 +122,7 @@ export class Tag extends SizedMixin(SpectrumElement, {
                           class="clear-button"
                           ?disabled=${this.disabled}
                           label="Remove"
-                          small
+                          size="s"
                           tabindex="-1"
                           @click=${this.delete}
                       ></sp-clear-button>

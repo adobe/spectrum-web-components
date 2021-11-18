@@ -27,6 +27,26 @@ import { Thumbnail } from '@spectrum-web-components/thumbnail';
 ## Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="xss">Extra Extra Small</sp-tab>
+<sp-tab-panel value="xxs">
+
+```html
+<sp-thumbnail size="xxs">
+    <img src="https://place.dog/100/100" alt="Demo Image" />
+</sp-thumbnail>
+```
+
+</sp-tab-panel>
+<sp-tab value="xs">Extra Small</sp-tab>
+<sp-tab-panel value="xs">
+
+```html
+<sp-thumbnail size="xs">
+    <img src="https://place.dog/100/100" alt="Demo Image" />
+</sp-thumbnail>
+```
+
+</sp-tab-panel>
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
@@ -52,16 +72,6 @@ import { Thumbnail } from '@spectrum-web-components/thumbnail';
 
 ```html
 <sp-thumbnail size="l">
-    <img src="https://place.dog/100/100" alt="Demo Image" />
-</sp-thumbnail>
-```
-
-</sp-tab-panel>
-<sp-tab value="xl">Extra Large</sp-tab>
-<sp-tab-panel value="xl">
-
-```html
-<sp-thumbnail size="xl">
     <img src="https://place.dog/100/100" alt="Demo Image" />
 </sp-thumbnail>
 ```

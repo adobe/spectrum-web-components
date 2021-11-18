@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
-    ElementSize,
+    DefaultElementSize,
     html,
     PropertyValues,
     SizedMixin,
@@ -46,7 +46,6 @@ const chevronClass = {
  *
  * @slot - menu items to be listed in the Button
  **/
-type SplitButtonSize = Exclude<ElementSize, 'xxl'>;
 export class SplitButton extends SizedMixin(PickerBase) {
     public static get styles(): CSSResultArray {
         return [styles, chevronStyles];
@@ -155,7 +154,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
                         ? html`
                               <sp-icon-chevron100
                                   class="icon ${chevronClass[
-                                      this.size as SplitButtonSize
+                                      this.size as DefaultElementSize
                                   ]}"
                               ></sp-icon-chevron100>
                           `

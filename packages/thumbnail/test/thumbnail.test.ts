@@ -30,10 +30,10 @@ describe('Thumbnail', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('can be size `xxl`', async () => {
+    it('can be size `xxs`', async () => {
         const el = await fixture<Thumbnail>(
             html`
-                <sp-thumbnail size="xxl">
+                <sp-thumbnail size="xxs">
                     <img src=${thumbnail} alt="Woman crouching" />
                 </sp-thumbnail>
             `
@@ -41,6 +41,6 @@ describe('Thumbnail', () => {
 
         await elementUpdated(el);
 
-        expect(el.size).to.equal('xxl');
+        expect(el.size).to.equal('xxs');
     });
 });

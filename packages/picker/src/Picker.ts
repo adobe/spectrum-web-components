@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
-    ElementSize,
+    DefaultElementSize,
     html,
     nothing,
     PropertyValues,
@@ -55,8 +55,6 @@ const chevronClass = {
     l: 'spectrum-UIIcon-ChevronDown200',
     xl: 'spectrum-UIIcon-ChevronDown300',
 };
-
-type PickerSize = Exclude<ElementSize, 'xxl'>;
 
 /**
  * @element sp-picker
@@ -369,7 +367,9 @@ export class PickerBase extends SizedMixin(Focusable) {
                       `
                     : nothing}
                 <sp-icon-chevron100
-                    class="picker ${chevronClass[this.size as PickerSize]}"
+                    class="picker ${chevronClass[
+                        this.size as DefaultElementSize
+                    ]}"
                 ></sp-icon-chevron100>
             `,
         ];
