@@ -1921,28 +1921,28 @@ governing permissions and limitations under the License.
         --spectrum-global-color-gray-200
     );
     --spectrum-alias-background-color-transparent: transparent;
-    --spectrum-alias-background-color-overbackground-down: rgba(
-        255,
-        255,
-        255,
+    --spectrum-alias-background-color-overbackground-down: hsla(
+        0,
+        0%,
+        100%,
         0.2
     );
-    --spectrum-alias-background-color-quiet-overbackground-hover: rgba(
-        255,
-        255,
-        255,
+    --spectrum-alias-background-color-quiet-overbackground-hover: hsla(
+        0,
+        0%,
+        100%,
         0.1
     );
-    --spectrum-alias-background-color-quiet-overbackground-down: rgba(
-        255,
-        255,
-        255,
+    --spectrum-alias-background-color-quiet-overbackground-down: hsla(
+        0,
+        0%,
+        100%,
         0.2
     );
-    --spectrum-alias-background-color-overbackground-disabled: rgba(
-        255,
-        255,
-        255,
+    --spectrum-alias-background-color-overbackground-disabled: hsla(
+        0,
+        0%,
+        100%,
         0.1
     );
     --spectrum-alias-background-color-quickactions-overlay: rgba(0, 0, 0, 0.2);
@@ -1977,16 +1977,11 @@ governing permissions and limitations under the License.
     --spectrum-alias-text-color-overbackground: var(
         --spectrum-global-color-static-white
     );
-    --spectrum-alias-text-color-overbackground-disabled: rgba(
-        255,
-        255,
-        255,
-        0.2
-    );
-    --spectrum-alias-text-color-quiet-overbackground-disabled: rgba(
-        255,
-        255,
-        255,
+    --spectrum-alias-text-color-overbackground-disabled: hsla(0, 0%, 100%, 0.2);
+    --spectrum-alias-text-color-quiet-overbackground-disabled: hsla(
+        0,
+        0%,
+        100%,
         0.2
     );
     --spectrum-alias-heading-text-color: var(--spectrum-global-color-gray-900);
@@ -2029,7 +2024,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-track-color-disabled: var(
         --spectrum-global-color-gray-300
     );
-    --spectrum-alias-track-color-overbackground: rgba(255, 255, 255, 0.2);
+    --spectrum-alias-track-color-overbackground: hsla(0, 0%, 100%, 0.2);
     --spectrum-alias-icon-color: var(--spectrum-global-color-gray-700);
     --spectrum-alias-icon-color-overbackground: var(
         --spectrum-global-color-static-white
@@ -2040,16 +2035,11 @@ governing permissions and limitations under the License.
         --spectrum-global-color-gray-900
     );
     --spectrum-alias-icon-color-disabled: var(--spectrum-global-color-gray-400);
-    --spectrum-alias-icon-color-overbackground-disabled: rgba(
-        255,
-        255,
-        255,
-        0.2
-    );
-    --spectrum-alias-icon-color-quiet-overbackground-disabled: rgba(
-        255,
-        255,
-        255,
+    --spectrum-alias-icon-color-overbackground-disabled: hsla(0, 0%, 100%, 0.2);
+    --spectrum-alias-icon-color-quiet-overbackground-disabled: hsla(
+        0,
+        0%,
+        100%,
         0.15
     );
     --spectrum-alias-icon-color-selected-neutral: var(
