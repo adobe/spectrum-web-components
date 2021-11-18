@@ -12,7 +12,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import Walker from 'walker';
+import globby from 'globby';
 import path from 'path';
 import chalk from 'chalk';
 import fs from 'fs-extra';
@@ -51,6 +51,7 @@ async function processComponent(componentPath) {
         /(.|\n)*\{/,
         ':root {'
     );
+    // eslint-disable-next-line no-console
     console.log(chalk.bold.green(`- ${spectrumConfig.spectrum}`));
     return Promise.all(
         spectrumConfig.components.map(async (component) => {
@@ -78,7 +79,9 @@ async function processComponent(componentPath) {
             ]).process(inputCustomProperties, {
                 from: srcPath,
             });
+            // eslint-disable-next-line no-console
             console.log(chalk.bold.green(`  o ${component.name}`));
+
             // await fs.writeFile(outputJsonPath, outputJson, { encoding: 'utf8' });
             return fs.writeFile(outputCssPath, outputCss.css, {
                 encoding: 'utf8',
@@ -87,29 +90,18 @@ async function processComponent(componentPath) {
     );
 }
 
-function processComponents() {
-    return new Promise((resolve, reject) => {
-        const promises = [];
-
-        console.log(chalk.bold.green('Processing Spectrum Components'));
-
-        Walker(componentRoot)
-            .on('file', function (filePath, stat) {
-                const parsedPath = path.parse(filePath);
-                if (parsedPath.base === 'spectrum-config.js') {
-                    promises.push(processComponent(parsedPath.dir));
-                }
-            })
-            .on('error', function (error, entry, stat) {
-                reject(error);
-            })
-            .on('end', function () {
-                resolve(Promise.all(promises));
-            });
-    }).then((result) => {
-        console.log(chalk.bold.green('Done'));
-        return result;
-    });
+async function processComponents() {
+    const promises = [];
+    // eslint-disable-next-line no-console
+    console.log(chalk.bold.green('Processing Spectrum Components'));
+    for await (const configPath of globby.stream(
+        `${componentRoot}/*/src/spectrum-config.js`
+    )) {
+        promises.push(processComponent(path.join(configPath, '..')));
+    }
+    await Promise.all(promises);
+    // eslint-disable-next-line no-console
+    console.log(chalk.bold.green('Done'));
 }
 
 async function main() {

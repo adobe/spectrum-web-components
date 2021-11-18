@@ -25,11 +25,6 @@ const config = {
                     selector: '.is-disabled',
                 },
                 {
-                    name: 'focus',
-                    type: 'boolean',
-                    selector: '.is-focused',
-                },
-                {
                     name: 'focused',
                     type: 'boolean',
                     selector: '.is-focused',

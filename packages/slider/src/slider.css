@@ -80,7 +80,7 @@ sp-field-label {
 }
 
 :host([editable]) output {
-    opacity: 0%;
+    opacity: 0;
 }
 
 :host([disabled]) {

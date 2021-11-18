@@ -21,7 +21,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     );
 }
 :host(.focus-visible),
-:host([focus]) {
+:host([focused]) {
     height: calc(
         var(
                 --spectrum-colorhandle-size,
@@ -43,7 +43,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-ColorHandle.focus-ring */
 }
 :host(:focus-visible),
-:host([focus]) {
+:host([focused]) {
     height: calc(
         var(
                 --spectrum-colorhandle-size,

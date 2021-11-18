@@ -11,10 +11,10 @@ governing permissions and limitations under the License.
 */
 'use strict';
 
-import { resolve, join } from 'path';
+import { join, resolve } from 'path';
 
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import path from 'path';
@@ -36,7 +36,7 @@ const OUTPUT_PATH = IS_DEV_SERVER ? resolve('dist') : resolve('dist');
  * === Copy static files configuration
  */
 const copyStatics = {
-    copyOthers: [
+    patterns: [
         {
             from: 'index.html',
             context: resolve('./src'),
@@ -50,8 +50,8 @@ const copyStatics = {
  */
 const plugins = [
     new CleanWebpackPlugin(),
-    new CopyWebpackPlugin([].concat(copyStatics.copyOthers)),
-    new ExtractTextPlugin('[name].bundle.css'),
+    new CopyWebpackPlugin(copyStatics),
+    new MiniCssExtractPlugin({ filename: '[name].bundle.css' }),
 ];
 
 function srcPath(subdir) {
@@ -84,13 +84,17 @@ const shared = (env) => {
         {
             loader: 'postcss-loader',
             options: {
-                plugins: (loader) => [
-                    require('postcss-import')({ root: loader.resourcePath }),
-                    require('postcss-preset-env')({
-                        browsers: 'last 2 versions',
-                    }),
-                    ...(IS_DEV ? [] : [require('cssnano')()]),
-                ],
+                postcssOptions: {
+                    plugins: (loader) => [
+                        require('postcss-import')({
+                            root: loader.resourcePath,
+                        }),
+                        require('postcss-preset-env')({
+                            browsers: 'last 2 versions',
+                        }),
+                        ...(IS_DEV ? [] : [require('cssnano')()]),
+                    ],
+                },
             },
         },
     ];
@@ -109,10 +113,7 @@ const shared = (env) => {
             rules: [
                 {
                     test: /\.css$/,
-                    use: ExtractTextPlugin.extract({
-                        fallback: 'style-loader',
-                        use: cssLoaders,
-                    }),
+                    use: [MiniCssExtractPlugin.loader, ...cssLoaders],
                 },
             ],
         },
@@ -121,14 +122,9 @@ const shared = (env) => {
         },
         plugins,
         devServer: {
-            contentBase: OUTPUT_PATH,
             compress: true,
-            overlay: {
-                errors: true,
-            },
             port: 3000,
             host: '0.0.0.0',
-            disableHostCheck: true,
         },
     };
 };

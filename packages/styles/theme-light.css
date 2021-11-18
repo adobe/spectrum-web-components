@@ -109,7 +109,7 @@ governing permissions and limitations under the License.
     --spectrum-alias-highlight-selected: rgba(20, 115, 230, 0.1);
     --spectrum-alias-highlight-selected-hover: rgba(20, 115, 230, 0.2);
     --spectrum-alias-text-highlight-color: rgba(20, 115, 230, 0.2);
-    --spectrum-alias-background-color-quickactions: rgba(245, 245, 245, 0.9);
+    --spectrum-alias-background-color-quickactions: hsla(0, 0%, 96%, 0.9);
     --spectrum-alias-border-color-selected: var(
         --spectrum-global-color-blue-500
     );

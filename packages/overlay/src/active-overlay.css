@@ -12,24 +12,24 @@ governing permissions and limitations under the License.
 
 @keyframes sp-overlay-fade-in {
     from {
-        opacity: 0%;
+        opacity: 0;
         transform: var(--sp-overlay-from);
     }
 
     to {
-        opacity: 100%;
+        opacity: 1;
         transform: translate(0, 0);
     }
 }
 
 @keyframes sp-overlay-fade-out {
     from {
-        opacity: 100%;
+        opacity: 1;
         transform: translate(0, 0);
     }
 
     to {
-        opacity: 0%;
+        opacity: 0;
         transform: var(--sp-overlay-from);
     }
 }
@@ -60,7 +60,7 @@ sp-theme,
         --spectrum-global-animation-ease-out,
         ease-out
     );
-    opacity: 100%;
+    opacity: 1;
     visibility: visible;
 }
 
