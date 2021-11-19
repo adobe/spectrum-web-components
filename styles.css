@@ -559,7 +559,21 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-50
     );--spectrum-alias-component-border-radius-quiet:var(
         --spectrum-global-dimension-static-size-0
+    );--spectrum-alias-component-focusring-gap:var(
+        --spectrum-global-dimension-static-size-0
+    );--spectrum-alias-component-focusring-gap-emphasized:var(
+        --spectrum-global-dimension-static-size-25
+    );--spectrum-alias-component-focusring-size:var(
+        --spectrum-global-dimension-static-size-10
+    );--spectrum-alias-component-focusring-size-emphasized:var(
+        --spectrum-global-dimension-static-size-25
+    );--spectrum-alias-component-focusring-border-radius:var(
+        --spectrum-global-dimension-size-75
     );--spectrum-alias-input-border-size:var(
+        --spectrum-global-dimension-static-size-10
+    );--spectrum-alias-input-focusring-gap:var(
+        --spectrum-global-dimension-static-size-0
+    );--spectrum-alias-input-quiet-focusline-gap:var(
         --spectrum-global-dimension-static-size-10
     );--spectrum-alias-control-two-size-m:var(
         --spectrum-global-dimension-size-175
@@ -585,6 +599,122 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-200
     );--spectrum-alias-control-three-height-xl:var(
         --spectrum-global-dimension-size-225
+    );--spectrum-alias-infieldbutton-icon-margin-y-s:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-infieldbutton-icon-margin-y-m:var(
+        --spectrum-global-dimension-size-85
+    );--spectrum-alias-infieldbutton-icon-margin-y-l:var(
+        --spectrum-global-dimension-size-125
+    );--spectrum-alias-infieldbutton-icon-margin-y-xl:var(
+        --spectrum-global-dimension-size-160
+    );--spectrum-alias-infieldbutton-border-radius:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-infieldbutton-border-radius-sided:0;--spectrum-alias-infieldbutton-border-size:var(
+        --spectrum-global-dimension-static-size-10
+    );--spectrum-alias-infieldbutton-fill-padding-s:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-infieldbutton-fill-padding-m:var(
+        --spectrum-global-dimension-size-85
+    );--spectrum-alias-infieldbutton-fill-padding-l:var(
+        --spectrum-global-dimension-size-125
+    );--spectrum-alias-infieldbutton-fill-padding-xl:var(
+        --spectrum-global-dimension-size-160
+    );--spectrum-alias-infieldbutton-padding-s:0;--spectrum-alias-infieldbutton-padding-m:0;--spectrum-alias-infieldbutton-padding-l:0;--spectrum-alias-infieldbutton-padding-xl:0;--spectrum-alias-infieldbutton-full-height-s:var(
+        --spectrum-global-dimension-size-300
+    );--spectrum-alias-infieldbutton-full-height-m:var(
+        --spectrum-global-dimension-size-400
+    );--spectrum-alias-infieldbutton-full-height-l:var(
+        --spectrum-global-dimension-size-500
+    );--spectrum-alias-infieldbutton-full-height-xl:var(
+        --spectrum-global-dimension-size-600
+    );--spectrum-alias-infieldbutton-half-height-s:var(
+        --spectrum-global-dimension-size-150
+    );--spectrum-alias-infieldbutton-half-height-m:var(
+        --spectrum-global-dimension-size-200
+    );--spectrum-alias-infieldbutton-half-height-l:var(
+        --spectrum-global-dimension-size-250
+    );--spectrum-alias-infieldbutton-half-height-xl:var(
+        --spectrum-global-dimension-size-300
+    );--spectrum-alias-stepperbutton-gap:0;--spectrum-alias-stepperbutton-width-s:var(
+        --spectrum-global-dimension-size-225
+    );--spectrum-alias-stepperbutton-width-m:var(
+        --spectrum-global-dimension-size-300
+    );--spectrum-alias-stepperbutton-width-l:var(
+        --spectrum-global-dimension-size-400
+    );--spectrum-alias-stepperbutton-width-xl:var(
+        --spectrum-global-dimension-size-450
+    );--spectrum-alias-stepperbutton-icon-x-offset-s:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-stepperbutton-icon-x-offset-m:var(
+        --spectrum-global-dimension-size-85
+    );--spectrum-alias-stepperbutton-icon-x-offset-l:var(
+        --spectrum-global-dimension-size-125
+    );--spectrum-alias-stepperbutton-icon-x-offset-xl:var(
+        --spectrum-global-dimension-size-130
+    );--spectrum-alias-stepperbutton-icon-y-offset-top-s:var(
+        --spectrum-global-dimension-size-25
+    );--spectrum-alias-stepperbutton-icon-y-offset-top-m:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-stepperbutton-icon-y-offset-top-l:var(
+        --spectrum-global-dimension-size-65
+    );--spectrum-alias-stepperbutton-icon-y-offset-top-xl:var(
+        --spectrum-global-dimension-size-75
+    );--spectrum-alias-stepperbutton-icon-y-offset-bottom-s:var(
+        --spectrum-global-dimension-size-10
+    );--spectrum-alias-stepperbutton-icon-y-offset-bottom-m:var(
+        --spectrum-global-dimension-size-25
+    );--spectrum-alias-stepperbutton-icon-y-offset-bottom-l:var(
+        --spectrum-global-dimension-size-40
+    );--spectrum-alias-stepperbutton-icon-y-offset-bottom-xl:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-stepperbutton-radius-touching:0;--spectrum-alias-clearbutton-icon-margin-s:var(
+        --spectrum-global-dimension-size-100
+    );--spectrum-alias-clearbutton-icon-margin-m:var(
+        --spectrum-global-dimension-size-150
+    );--spectrum-alias-clearbutton-icon-margin-l:var(
+        --spectrum-global-dimension-size-185
+    );--spectrum-alias-clearbutton-icon-margin-xl:var(
+        --spectrum-global-dimension-size-225
+    );--spectrum-alias-clearbutton-border-radius:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-pickerbutton-icononly-padding-x-s:var(
+        --spectrum-global-dimension-size-85
+    );--spectrum-alias-pickerbutton-icononly-padding-x-m:var(
+        --spectrum-global-dimension-size-125
+    );--spectrum-alias-pickerbutton-icononly-padding-x-l:var(
+        --spectrum-global-dimension-size-160
+    );--spectrum-alias-pickerbutton-icononly-padding-x-xl:var(
+        --spectrum-global-dimension-size-200
+    );--spectrum-alias-pickerbutton-icon-margin-y-s:var(
+        --spectrum-global-dimension-size-85
+    );--spectrum-alias-pickerbutton-icon-margin-y-m:var(
+        --spectrum-global-dimension-size-125
+    );--spectrum-alias-pickerbutton-icon-margin-y-l:var(
+        --spectrum-global-dimension-size-160
+    );--spectrum-alias-pickerbutton-icon-margin-y-xl:var(
+        --spectrum-global-dimension-size-200
+    );--spectrum-alias-pickerbutton-label-padding-y-s:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-pickerbutton-label-padding-y-m:var(
+        --spectrum-global-dimension-size-75
+    );--spectrum-alias-pickerbutton-label-padding-y-l:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-alias-pickerbutton-label-padding-y-xl:var(
+        --spectrum-global-dimension-size-150
+    );--spectrum-alias-pickerbutton-border-radius-rounded:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-search-border-radius:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-search-border-radius-quiet:0;--spectrum-alias-combobox-quiet-button-offset-x:var(
+        --spectrum-global-dimension-size-100
+    );--spectrum-alias-thumbnail-border-radius-small:var(
+        --spectrum-global-dimension-size-25
+    );--spectrum-alias-search-padding-left-s:var(
+        --spectrum-global-dimension-size-85
+    );--spectrum-alias-search-padding-left-l:var(
+        --spectrum-global-dimension-size-160
+    );--spectrum-alias-search-padding-left-xl:var(
+        --spectrum-global-dimension-size-185
     );--spectrum-alias-percent-50:50%;--spectrum-alias-percent-70:70%;--spectrum-alias-percent-100:100%;--spectrum-alias-breakpoint-xsmall:304px;--spectrum-alias-breakpoint-small:768px;--spectrum-alias-breakpoint-medium:1280px;--spectrum-alias-breakpoint-large:1768px;--spectrum-alias-breakpoint-xlarge:2160px;--spectrum-alias-grid-columns:12;--spectrum-alias-grid-fluid-width:100%;--spectrum-alias-grid-fixed-max-width:1280px;--spectrum-alias-border-size-thin:var(
         --spectrum-global-dimension-static-size-10
     );--spectrum-alias-border-size-thick:var(
@@ -663,6 +793,8 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-100
     );--spectrum-alias-border-radius-large:var(
         --spectrum-global-dimension-size-200
+    );--spectrum-alias-border-radius-xlarge:var(
+        --spectrum-global-dimension-size-300
     );--spectrum-alias-single-line-height:var(
         --spectrum-global-dimension-size-400
     );--spectrum-alias-single-line-width:var(
@@ -778,6 +910,8 @@ governing permissions and limitations under the License.
         --spectrum-global-color-gray-200
     );--spectrum-alias-component-background-color-quiet-disabled:var(
         --spectrum-alias-background-color-transparent
+    );--spectrum-alias-component-background-color-quiet-selected-disabled:var(
+        --spectrum-alias-component-background-color-disabled
     );--spectrum-alias-component-background-color-default:var(
         --spectrum-global-color-gray-75
     );--spectrum-alias-component-background-color-hover:var(
@@ -1098,6 +1232,38 @@ governing permissions and limitations under the License.
         --spectrum-global-color-static-yellow-800
     );--spectrum-alias-background-color-yellow:var(
         --spectrum-alias-background-color-yellow-default
+    );--spectrum-alias-infieldbutton-background-color:var(
+        --spectrum-global-color-gray-200
+    );--spectrum-alias-infieldbutton-fill-loudnessLow-border-color-disabled:transparent;--spectrum-alias-infieldbutton-fill-loudnessMedium-border-color-disabled:transparent;--spectrum-alias-infieldbutton-fill-loudnessHigh-border-color-disabled:var(
+        --spectrum-alias-component-background-color-disabled
+    );--spectrum-alias-infieldbutton-fill-border-color-default:var(
+        --spectrum-alias-input-border-color-default
+    );--spectrum-alias-infieldbutton-fill-border-color-hover:var(
+        --spectrum-alias-input-border-color-hover
+    );--spectrum-alias-infieldbutton-fill-border-color-down:var(
+        --spectrum-alias-input-border-color-down
+    );--spectrum-alias-infieldbutton-fill-border-color-mouse-focus:var(
+        --spectrum-alias-input-border-color-mouse-focus
+    );--spectrum-alias-infieldbutton-fill-border-color-key-focus:var(
+        --spectrum-alias-input-border-color-key-focus
+    );--spectrum-alias-infieldbutton-fill-loudnessLow-background-color-default:transparent;--spectrum-alias-infieldbutton-fill-loudnessLow-background-color-hover:transparent;--spectrum-alias-infieldbutton-fill-loudnessLow-background-color-down:transparent;--spectrum-alias-infieldbutton-fill-loudnessLow-background-color-key-focus:transparent;--spectrum-alias-infieldbutton-fill-loudnessLow-background-color-disabled:transparent;--spectrum-alias-infieldbutton-fill-loudnessMedium-background-color-default:var(
+        --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-default
+    );--spectrum-alias-infieldbutton-fill-loudnessMedium-background-color-hover:var(
+        --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-hover
+    );--spectrum-alias-infieldbutton-fill-loudnessMedium-background-color-down:var(
+        --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-down
+    );--spectrum-alias-infieldbutton-fill-loudnessMedium-background-color-key-focus:var(
+        --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-key-focus
+    );--spectrum-alias-infieldbutton-fill-loudnessMedium-background-color-disabled:transparent;--spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-default:var(
+        --spectrum-alias-component-background-color-default
+    );--spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-hover:var(
+        --spectrum-alias-component-background-color-hover
+    );--spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-down:var(
+        --spectrum-alias-component-background-color-down
+    );--spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-key-focus:var(
+        --spectrum-alias-component-background-color-key-focus
+    );--spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-disabled:var(
+        --spectrum-alias-component-background-color-disabled
     );--spectrum-alias-background-color-default:var(
         --spectrum-global-color-gray-100
     );--spectrum-alias-background-color-disabled:var(
@@ -1136,6 +1302,10 @@ governing permissions and limitations under the License.
         --spectrum-global-color-static-white
     );--spectrum-alias-track-color-disabled:var(
         --spectrum-global-color-gray-300
+    );--spectrum-alias-thumbnail-darksquare-background-color:var(
+        --spectrum-global-color-gray-300
+    );--spectrum-alias-thumbnail-lightsquare-background-color:var(
+        --spectrum-global-color-static-white
     );--spectrum-alias-track-color-overbackground:hsla(0,0%,100%,.2);--spectrum-alias-icon-color:var(--spectrum-global-color-gray-700);--spectrum-alias-icon-color-overbackground:var(
         --spectrum-global-color-static-white
     );--spectrum-alias-icon-color-hover:var(--spectrum-global-color-gray-900);--spectrum-alias-icon-color-down:var(--spectrum-global-color-gray-900);--spectrum-alias-icon-color-key-focus:var(
@@ -1242,7 +1412,9 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-150
     );--spectrum-alias-control-three-width-s:23px;--spectrum-alias-control-three-width-m:var(
         --spectrum-global-dimension-static-size-325
-    );--spectrum-alias-control-three-width-l:29px;--spectrum-alias-control-three-width-xl:33px;--spectrum-alias-focus-ring-radius-default:var(
+    );--spectrum-alias-control-three-width-l:29px;--spectrum-alias-control-three-width-xl:33px;--spectrum-alias-search-padding-left-m:var(
+        --spectrum-global-dimension-size-125
+    );--spectrum-alias-focus-ring-radius-default:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-alias-workflow-icon-size-l:var(
         --spectrum-global-dimension-static-size-250
@@ -1342,11 +1514,35 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-quiet-emphasized-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-emphasized-black-texticon-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-quiet-emphasized-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-emphasized-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-emphasized-white-texticon-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-quiet-emphasized-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-emphasized-white-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-quiet-texticon-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-actionbutton-s-quiet-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-quiet-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-black-texticon-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-quiet-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-white-texticon-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-quiet-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-white-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-emphasized-texticon-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
@@ -1354,11 +1550,35 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-emphasized-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-emphasized-black-texticon-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-emphasized-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-emphasized-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-emphasized-white-texticon-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-emphasized-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-emphasized-white-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-texticon-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-actionbutton-s-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-black-texticon-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-white-texticon-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-white-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-quiet-emphasized-textonly-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
@@ -1366,11 +1586,35 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-quiet-emphasized-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-emphasized-black-textonly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-quiet-emphasized-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-emphasized-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-emphasized-white-textonly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-quiet-emphasized-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-emphasized-white-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-quiet-textonly-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-actionbutton-s-quiet-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-quiet-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-black-textonly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-quiet-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-white-textonly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-quiet-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-white-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-emphasized-textonly-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
@@ -1378,11 +1622,35 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-emphasized-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-emphasized-black-textonly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-emphasized-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-emphasized-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-emphasized-white-textonly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-emphasized-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-emphasized-white-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-textonly-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-actionbutton-s-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-black-textonly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-white-textonly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-white-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-quiet-emphasized-icononly-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
@@ -1390,11 +1658,35 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-quiet-emphasized-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-emphasized-black-icononly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-quiet-emphasized-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-emphasized-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-emphasized-white-icononly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-quiet-emphasized-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-emphasized-white-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-quiet-icononly-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-actionbutton-s-quiet-icononly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-quiet-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-black-icononly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-quiet-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-white-icononly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-quiet-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-quiet-white-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-emphasized-icononly-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
@@ -1402,11 +1694,35 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-emphasized-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-emphasized-black-icononly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-emphasized-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-emphasized-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-emphasized-white-icononly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-emphasized-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-emphasized-white-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-icononly-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-actionbutton-s-icononly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-s-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-black-icononly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-white-icononly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-actionbutton-s-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-s-white-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-quiet-emphasized-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
@@ -1414,11 +1730,35 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-quiet-emphasized-texticon-padding-left:var(
         --spectrum-global-dimension-size-125
+    );--spectrum-actionbutton-m-quiet-emphasized-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-emphasized-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-emphasized-black-texticon-padding-left:var(
+        --spectrum-global-dimension-size-125
+    );--spectrum-actionbutton-m-quiet-emphasized-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-emphasized-white-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-emphasized-white-texticon-padding-left:var(
+        --spectrum-global-dimension-size-125
     );--spectrum-actionbutton-m-quiet-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-quiet-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-quiet-texticon-padding-left:var(
+        --spectrum-global-dimension-size-125
+    );--spectrum-actionbutton-m-quiet-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-black-texticon-padding-left:var(
+        --spectrum-global-dimension-size-125
+    );--spectrum-actionbutton-m-quiet-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-white-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-white-texticon-padding-left:var(
         --spectrum-global-dimension-size-125
     );--spectrum-actionbutton-m-emphasized-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
@@ -1426,43 +1766,131 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-emphasized-texticon-padding-left:var(
         --spectrum-global-dimension-size-125
+    );--spectrum-actionbutton-m-emphasized-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-emphasized-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-emphasized-black-texticon-padding-left:var(
+        --spectrum-global-dimension-size-125
+    );--spectrum-actionbutton-m-emphasized-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-emphasized-white-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-emphasized-white-texticon-padding-left:var(
+        --spectrum-global-dimension-size-125
     );--spectrum-actionbutton-m-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-texticon-padding-left:var(
         --spectrum-global-dimension-size-125
+    );--spectrum-actionbutton-m-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-black-texticon-padding-left:var(
+        --spectrum-global-dimension-size-125
+    );--spectrum-actionbutton-m-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-white-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-white-texticon-padding-left:var(
+        --spectrum-global-dimension-size-125
     );--spectrum-actionbutton-m-quiet-emphasized-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-quiet-emphasized-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-emphasized-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-emphasized-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-emphasized-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-emphasized-white-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-quiet-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-quiet-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-white-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-emphasized-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-emphasized-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-emphasized-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-emphasized-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-emphasized-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-emphasized-white-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-white-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-quiet-emphasized-icononly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-quiet-emphasized-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-emphasized-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-emphasized-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-emphasized-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-emphasized-white-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-quiet-icononly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-quiet-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-quiet-white-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-emphasized-icononly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-emphasized-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-emphasized-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-emphasized-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-emphasized-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-emphasized-white-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-icononly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-m-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-m-white-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-quiet-emphasized-texticon-text-padding-top:var(
         --spectrum-global-dimension-size-115
@@ -1472,6 +1900,22 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-quiet-emphasized-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-emphasized-black-texticon-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-quiet-emphasized-black-texticon-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-quiet-emphasized-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-emphasized-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-emphasized-white-texticon-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-quiet-emphasized-white-texticon-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-quiet-emphasized-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-emphasized-white-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-quiet-texticon-text-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-actionbutton-l-quiet-texticon-icon-size:var(
@@ -1479,6 +1923,22 @@ governing permissions and limitations under the License.
     );--spectrum-actionbutton-l-quiet-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-quiet-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-black-texticon-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-quiet-black-texticon-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-quiet-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-white-texticon-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-quiet-white-texticon-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-quiet-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-white-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-emphasized-texticon-text-padding-top:var(
         --spectrum-global-dimension-size-115
@@ -1488,6 +1948,22 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-emphasized-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-emphasized-black-texticon-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-emphasized-black-texticon-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-emphasized-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-emphasized-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-emphasized-white-texticon-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-emphasized-white-texticon-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-emphasized-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-emphasized-white-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-texticon-text-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-actionbutton-l-texticon-icon-size:var(
@@ -1495,6 +1971,22 @@ governing permissions and limitations under the License.
     );--spectrum-actionbutton-l-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-black-texticon-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-black-texticon-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-white-texticon-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-white-texticon-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-white-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-quiet-emphasized-textonly-text-padding-top:var(
         --spectrum-global-dimension-size-115
@@ -1504,6 +1996,22 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-quiet-emphasized-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-emphasized-black-textonly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-quiet-emphasized-black-textonly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-quiet-emphasized-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-emphasized-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-emphasized-white-textonly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-quiet-emphasized-white-textonly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-quiet-emphasized-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-emphasized-white-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-quiet-textonly-text-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-actionbutton-l-quiet-textonly-icon-size:var(
@@ -1511,6 +2019,22 @@ governing permissions and limitations under the License.
     );--spectrum-actionbutton-l-quiet-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-quiet-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-black-textonly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-quiet-black-textonly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-quiet-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-white-textonly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-quiet-white-textonly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-quiet-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-white-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-emphasized-textonly-text-padding-top:var(
         --spectrum-global-dimension-size-115
@@ -1520,6 +2044,22 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-emphasized-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-emphasized-black-textonly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-emphasized-black-textonly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-emphasized-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-emphasized-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-emphasized-white-textonly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-emphasized-white-textonly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-emphasized-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-emphasized-white-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-textonly-text-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-actionbutton-l-textonly-icon-size:var(
@@ -1527,6 +2067,22 @@ governing permissions and limitations under the License.
     );--spectrum-actionbutton-l-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-black-textonly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-black-textonly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-white-textonly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-white-textonly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-white-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-quiet-emphasized-icononly-text-padding-top:var(
         --spectrum-global-dimension-size-115
@@ -1536,6 +2092,22 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-quiet-emphasized-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-emphasized-black-icononly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-quiet-emphasized-black-icononly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-quiet-emphasized-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-emphasized-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-emphasized-white-icononly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-quiet-emphasized-white-icononly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-quiet-emphasized-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-emphasized-white-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-quiet-icononly-text-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-actionbutton-l-quiet-icononly-icon-size:var(
@@ -1543,6 +2115,22 @@ governing permissions and limitations under the License.
     );--spectrum-actionbutton-l-quiet-icononly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-quiet-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-black-icononly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-quiet-black-icononly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-quiet-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-white-icononly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-quiet-white-icononly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-quiet-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-quiet-white-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-emphasized-icononly-text-padding-top:var(
         --spectrum-global-dimension-size-115
@@ -1552,6 +2140,22 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-emphasized-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-emphasized-black-icononly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-emphasized-black-icononly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-emphasized-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-emphasized-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-emphasized-white-icononly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-emphasized-white-icononly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-emphasized-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-emphasized-white-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-icononly-text-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-actionbutton-l-icononly-icon-size:var(
@@ -1560,53 +2164,165 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-l-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-black-icononly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-black-icononly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-white-icononly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-actionbutton-l-white-icononly-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-actionbutton-l-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-l-white-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-quiet-emphasized-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-quiet-emphasized-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-emphasized-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-emphasized-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-emphasized-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-emphasized-white-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-quiet-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-quiet-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-white-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-emphasized-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-emphasized-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-emphasized-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-emphasized-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-emphasized-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-emphasized-white-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-black-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-black-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-white-texticon-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-white-texticon-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-quiet-emphasized-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-quiet-emphasized-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-emphasized-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-emphasized-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-emphasized-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-emphasized-white-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-quiet-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-quiet-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-white-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-emphasized-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-emphasized-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-emphasized-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-emphasized-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-emphasized-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-emphasized-white-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-black-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-black-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-white-textonly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-white-textonly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-quiet-emphasized-icononly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-quiet-emphasized-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-emphasized-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-emphasized-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-emphasized-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-emphasized-white-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-quiet-icononly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-quiet-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-quiet-white-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-emphasized-icononly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-emphasized-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-emphasized-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-emphasized-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-emphasized-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-emphasized-white-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-icononly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-actionbutton-xl-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-black-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-black-icononly-touch-hit-y:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-white-icononly-touch-hit-x:var(
+        --spectrum-global-dimension-static-size-100
+    );--spectrum-actionbutton-xl-white-icononly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-badge-s-fuchsia-texticon-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
@@ -2600,22 +3316,6 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-checkbox-xl-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
-    );--spectrum-clearbutton-s-overbackground-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-clearbutton-s-overbackground-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-clearbutton-s-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-clearbutton-s-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-clearbutton-m-overbackground-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-clearbutton-m-overbackground-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-clearbutton-m-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-clearbutton-m-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-colorloupe-colorhandle-gap:var(
         --spectrum-global-dimension-static-size-125
     );--spectrum-colorloupe-offset-y:var(
@@ -2630,16 +3330,22 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-150
     );--spectrum-colorwheel-min-width:var(--spectrum-global-dimension-size-2400);--spectrum-colorwheel-min-height:var(
         --spectrum-global-dimension-size-2400
-    );--spectrum-combobox-quiet-fieldbutton-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-combobox-quiet-fieldbutton-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-combobox-fieldbutton-padding-left:var(
-        --spectrum-global-dimension-size-125
-    );--spectrum-combobox-fieldbutton-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-combobox-fieldbutton-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
+    );--spectrum-combobox-s-quiet-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-combobox-s-quiet-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-combobox-s-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-combobox-s-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-combobox-l-quiet-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-combobox-l-quiet-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-combobox-l-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-combobox-l-text-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-cyclebutton-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-cyclebutton-touch-hit-y:var(
@@ -2736,6 +3442,12 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-115
     );--spectrum-helptext-xl-negative-textonly-text-padding-top:var(
         --spectrum-global-dimension-size-115
+    );--spectrum-infieldbutton-l-left-fill-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-infieldbutton-l-right-fill-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-infieldbutton-l-none-fill-icon-size:var(
+        --spectrum-global-dimension-static-size-250
     );--spectrum-listitem-s-texticon-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-listitem-s-textonly-text-padding-bottom:var(
@@ -2838,11 +3550,15 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-600
     );--spectrum-picker-s-quiet-texticon-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
+    );--spectrum-picker-s-quiet-texticon-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
     );--spectrum-picker-s-quiet-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-s-quiet-texticon-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-s-texticon-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-picker-s-texticon-placeholder-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-picker-s-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
@@ -2850,11 +3566,15 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-s-quiet-textonly-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
+    );--spectrum-picker-s-quiet-textonly-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
     );--spectrum-picker-s-quiet-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-s-quiet-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-s-textonly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-picker-s-textonly-placeholder-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-picker-s-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
@@ -2862,11 +3582,15 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-s-quiet-textthumbnail-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
+    );--spectrum-picker-s-quiet-textthumbnail-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
     );--spectrum-picker-s-quiet-textthumbnail-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-s-quiet-textthumbnail-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-s-textthumbnail-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-picker-s-textthumbnail-placeholder-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-picker-s-textthumbnail-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
@@ -2908,6 +3632,8 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-115
     );--spectrum-picker-l-quiet-texticon-icon-size:var(
         --spectrum-global-dimension-static-size-250
+    );--spectrum-picker-l-quiet-texticon-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-picker-l-quiet-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-l-quiet-texticon-touch-hit-y:var(
@@ -2916,6 +3642,8 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-115
     );--spectrum-picker-l-texticon-icon-size:var(
         --spectrum-global-dimension-static-size-250
+    );--spectrum-picker-l-texticon-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-picker-l-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-l-texticon-touch-hit-y:var(
@@ -2924,6 +3652,8 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-115
     );--spectrum-picker-l-quiet-textonly-icon-size:var(
         --spectrum-global-dimension-static-size-250
+    );--spectrum-picker-l-quiet-textonly-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-picker-l-quiet-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-l-quiet-textonly-touch-hit-y:var(
@@ -2932,6 +3662,8 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-115
     );--spectrum-picker-l-textonly-icon-size:var(
         --spectrum-global-dimension-static-size-250
+    );--spectrum-picker-l-textonly-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-picker-l-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-l-textonly-touch-hit-y:var(
@@ -2940,6 +3672,8 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-115
     );--spectrum-picker-l-quiet-textthumbnail-icon-size:var(
         --spectrum-global-dimension-static-size-250
+    );--spectrum-picker-l-quiet-textthumbnail-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-picker-l-quiet-textthumbnail-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-l-quiet-textthumbnail-touch-hit-y:var(
@@ -2948,6 +3682,8 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-115
     );--spectrum-picker-l-textthumbnail-icon-size:var(
         --spectrum-global-dimension-static-size-250
+    );--spectrum-picker-l-textthumbnail-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-picker-l-textthumbnail-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-picker-l-textthumbnail-touch-hit-y:var(
@@ -3052,35 +3788,63 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-rating-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
+    );--spectrum-search-s-quiet-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
     );--spectrum-search-s-quiet-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-search-s-quiet-touch-hit-x:var(
         --spectrum-global-dimension-size-100
     );--spectrum-search-s-quiet-touch-hit-y:var(
         --spectrum-global-dimension-size-100
+    );--spectrum-search-s-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
     );--spectrum-search-s-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-search-s-touch-hit-x:var(--spectrum-global-dimension-size-100);--spectrum-search-s-touch-hit-y:var(--spectrum-global-dimension-size-100);--spectrum-search-m-quiet-touch-hit-x:var(
         --spectrum-global-dimension-size-100
     );--spectrum-search-m-quiet-touch-hit-y:var(
         --spectrum-global-dimension-size-100
-    );--spectrum-search-m-touch-hit-x:var(--spectrum-global-dimension-size-100);--spectrum-search-m-touch-hit-y:var(--spectrum-global-dimension-size-100);--spectrum-search-m-padding-left:var(--spectrum-global-dimension-size-125);--spectrum-search-l-quiet-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-search-l-quiet-icon-size:var(
+    );--spectrum-search-m-touch-hit-x:var(--spectrum-global-dimension-size-100);--spectrum-search-m-touch-hit-y:var(--spectrum-global-dimension-size-100);--spectrum-search-l-quiet-icon-size:var(
         --spectrum-global-dimension-static-size-250
+    );--spectrum-search-l-quiet-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-search-l-quiet-text-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-search-l-quiet-touch-hit-x:var(
         --spectrum-global-dimension-size-100
     );--spectrum-search-l-quiet-touch-hit-y:var(
         --spectrum-global-dimension-size-100
-    );--spectrum-search-l-text-padding-top:var(
-        --spectrum-global-dimension-size-115
     );--spectrum-search-l-icon-size:var(
         --spectrum-global-dimension-static-size-250
+    );--spectrum-search-l-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-search-l-text-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-search-l-touch-hit-x:var(--spectrum-global-dimension-size-100);--spectrum-search-l-touch-hit-y:var(--spectrum-global-dimension-size-100);--spectrum-search-xl-quiet-touch-hit-x:var(
         --spectrum-global-dimension-size-100
     );--spectrum-search-xl-quiet-touch-hit-y:var(
         --spectrum-global-dimension-size-100
-    );--spectrum-search-xl-touch-hit-x:var(--spectrum-global-dimension-size-100);--spectrum-search-xl-touch-hit-y:var(--spectrum-global-dimension-size-100);--spectrum-sidenav-multilevel-item-touch-hit-bottom:var(
+    );--spectrum-search-xl-touch-hit-x:var(--spectrum-global-dimension-size-100);--spectrum-search-xl-touch-hit-y:var(--spectrum-global-dimension-size-100);--spectrum-searchwithin-s-quiet-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-searchwithin-s-quiet-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-searchwithin-s-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-searchwithin-s-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-searchwithin-l-quiet-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-searchwithin-l-quiet-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-searchwithin-l-quiet-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-searchwithin-l-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-searchwithin-l-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-searchwithin-l-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-sidenav-multilevel-item-touch-hit-bottom:var(
         --spectrum-global-dimension-static-size-25
     );--spectrum-sidenav-multilevel-main-item-touch-hit-bottom:var(
         --spectrum-global-dimension-static-size-25
@@ -3598,133 +4362,51 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-250
     );--spectrum-tabs-l-compact-vertical-focus-ring-border-radius:5px;--spectrum-tabs-xl-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-quiet-emphasized-margin-left:-10px;--spectrum-tabs-xl-quiet-emphasized-margin-right:-10px;--spectrum-tabs-xl-quiet-focus-ring-border-radius:5px;--spectrum-tabs-xl-quiet-margin-left:-10px;--spectrum-tabs-xl-quiet-margin-right:-10px;--spectrum-tabs-xl-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-emphasized-margin-left:-10px;--spectrum-tabs-xl-emphasized-margin-right:-10px;--spectrum-tabs-xl-focus-ring-border-radius:5px;--spectrum-tabs-xl-margin-left:-10px;--spectrum-tabs-xl-margin-right:-10px;--spectrum-tabs-xl-vertical-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-vertical-quiet-focus-ring-border-radius:5px;--spectrum-tabs-xl-vertical-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-vertical-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-quiet-emphasized-margin-left:-10px;--spectrum-tabs-xl-compact-quiet-emphasized-margin-right:-10px;--spectrum-tabs-xl-compact-quiet-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-quiet-margin-left:-10px;--spectrum-tabs-xl-compact-quiet-margin-right:-10px;--spectrum-tabs-xl-compact-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-emphasized-margin-left:-10px;--spectrum-tabs-xl-compact-emphasized-margin-right:-10px;--spectrum-tabs-xl-compact-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-margin-left:-10px;--spectrum-tabs-xl-compact-margin-right:-10px;--spectrum-tabs-xl-compact-vertical-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-vertical-quiet-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-vertical-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-vertical-focus-ring-border-radius:5px;--spectrum-tag-s-removable-texticon-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
-    );--spectrum-tag-s-removable-texticon-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-s-removable-texticon-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-s-texticon-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
-    );--spectrum-tag-s-texticon-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-s-texticon-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-s-removable-textonly-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
-    );--spectrum-tag-s-removable-textonly-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-s-removable-textonly-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-s-textonly-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
-    );--spectrum-tag-s-textonly-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-s-textonly-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-s-removable-avatartext-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
-    );--spectrum-tag-s-removable-avatartext-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-s-removable-avatartext-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-s-avatartext-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
-    );--spectrum-tag-s-avatartext-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-s-avatartext-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-m-removable-texticon-padding-left:var(
         --spectrum-global-dimension-size-125
-    );--spectrum-tag-m-removable-texticon-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-m-removable-texticon-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-m-texticon-padding-left:var(
         --spectrum-global-dimension-size-125
-    );--spectrum-tag-m-texticon-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-m-texticon-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-m-removable-textonly-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-m-removable-textonly-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-m-textonly-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-m-textonly-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-m-removable-avatartext-padding-left:var(
         --spectrum-global-dimension-size-125
-    );--spectrum-tag-m-removable-avatartext-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-m-removable-avatartext-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-m-avatartext-padding-left:var(
         --spectrum-global-dimension-size-125
-    );--spectrum-tag-m-avatartext-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-m-avatartext-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-l-removable-texticon-text-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-tag-l-removable-texticon-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-removable-texticon-button-icon-size:var(
-        --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-removable-texticon-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-l-removable-texticon-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-l-texticon-text-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-tag-l-texticon-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-texticon-button-icon-size:var(
-        --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-texticon-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-l-texticon-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-l-removable-textonly-text-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-tag-l-removable-textonly-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-removable-textonly-button-icon-size:var(
-        --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-removable-textonly-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-l-removable-textonly-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-l-textonly-text-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-tag-l-textonly-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-textonly-button-icon-size:var(
-        --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-textonly-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-l-textonly-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-l-removable-avatartext-text-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-tag-l-removable-avatartext-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-removable-avatartext-button-icon-size:var(
-        --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-removable-avatartext-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-l-removable-avatartext-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-tag-l-avatartext-text-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-tag-l-avatartext-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-avatartext-button-icon-size:var(
-        --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-avatartext-button-touch-hit-x:var(
-        --spectrum-global-dimension-static-size-100
-    );--spectrum-tag-l-avatartext-button-touch-hit-y:var(
-        --spectrum-global-dimension-static-size-100
     );--spectrum-textarea-s-multiline-quiet-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-textarea-s-multiline-quiet-placeholder-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-textarea-s-multiline-quiet-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
@@ -3732,17 +4414,23 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-textarea-s-quiet-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
+    );--spectrum-textarea-s-quiet-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
     );--spectrum-textarea-s-quiet-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textarea-s-quiet-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textarea-s-multiline-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
+    );--spectrum-textarea-s-multiline-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
     );--spectrum-textarea-s-multiline-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textarea-s-multiline-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textarea-s-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-textarea-s-placeholder-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-textarea-s-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
@@ -3766,11 +4454,15 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-textarea-l-multiline-quiet-text-padding-top:var(
         --spectrum-global-dimension-size-115
+    );--spectrum-textarea-l-multiline-quiet-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-textarea-l-multiline-quiet-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textarea-l-multiline-quiet-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textarea-l-quiet-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-textarea-l-quiet-placeholder-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-textarea-l-quiet-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
@@ -3778,11 +4470,15 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-textarea-l-multiline-text-padding-top:var(
         --spectrum-global-dimension-size-115
+    );--spectrum-textarea-l-multiline-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-textarea-l-multiline-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textarea-l-multiline-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textarea-l-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-textarea-l-placeholder-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-textarea-l-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
@@ -3810,11 +4506,15 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-textfield-s-quiet-texticon-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
+    );--spectrum-textfield-s-quiet-texticon-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
     );--spectrum-textfield-s-quiet-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textfield-s-quiet-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textfield-s-quiet-textonly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-textfield-s-quiet-textonly-placeholder-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-textfield-s-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
@@ -3822,11 +4522,15 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-textfield-s-texticon-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
+    );--spectrum-textfield-s-texticon-placeholder-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
     );--spectrum-textfield-s-textonly-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textfield-s-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textfield-s-textonly-text-padding-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-textfield-s-textonly-placeholder-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-textfield-m-quiet-texticon-touch-hit-x:var(
         --spectrum-global-dimension-static-size-100
@@ -3852,6 +4556,8 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-textfield-l-quiet-texticon-text-padding-top:var(
         --spectrum-global-dimension-size-115
+    );--spectrum-textfield-l-quiet-texticon-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-textfield-l-quiet-texticon-icon-size:var(
         --spectrum-global-dimension-static-size-250
     );--spectrum-textfield-l-quiet-textonly-touch-hit-x:var(
@@ -3859,6 +4565,8 @@ governing permissions and limitations under the License.
     );--spectrum-textfield-l-quiet-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textfield-l-quiet-textonly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-textfield-l-quiet-textonly-placeholder-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-textfield-l-quiet-textonly-icon-size:var(
         --spectrum-global-dimension-static-size-250
@@ -3868,6 +4576,8 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-textfield-l-texticon-text-padding-top:var(
         --spectrum-global-dimension-size-115
+    );--spectrum-textfield-l-texticon-placeholder-padding-top:var(
+        --spectrum-global-dimension-size-115
     );--spectrum-textfield-l-texticon-icon-size:var(
         --spectrum-global-dimension-static-size-250
     );--spectrum-textfield-l-textonly-touch-hit-x:var(
@@ -3875,6 +4585,8 @@ governing permissions and limitations under the License.
     );--spectrum-textfield-l-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
     );--spectrum-textfield-l-textonly-text-padding-top:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-textfield-l-textonly-placeholder-padding-top:var(
         --spectrum-global-dimension-size-115
     );--spectrum-textfield-l-textonly-icon-size:var(
         --spectrum-global-dimension-static-size-250
@@ -3894,7 +4606,15 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-textfield-xl-textonly-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
-    );--spectrum-tooltip-neutral-padding-bottom:5px;--spectrum-tooltip-info-padding-bottom:5px;--spectrum-tooltip-positive-padding-bottom:5px;--spectrum-tooltip-negative-padding-bottom:5px;--spectrum-treeview-s-item-text-padding-bottom:var(
+    );--spectrum-tooltip-neutral-text-margin-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-tooltip-info-text-margin-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-tooltip-positive-text-margin-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-tooltip-negative-text-margin-bottom:var(
+        --spectrum-global-dimension-static-size-65
+    );--spectrum-treeview-s-item-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-treeview-l-item-icon-size:var(
         --spectrum-global-dimension-static-size-250
@@ -4254,7 +4974,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* stylelint-disable */:root{--spectrum-global-color-status:Verified;--spectrum-global-color-version:5.1.0;--spectrum-global-color-opacity-100:1;--spectrum-global-color-opacity-90:0.9;--spectrum-global-color-opacity-80:0.8;--spectrum-global-color-opacity-60:0.6;--spectrum-global-color-opacity-50:0.5;--spectrum-global-color-opacity-42:0.42;--spectrum-global-color-opacity-40:0.4;--spectrum-global-color-opacity-30:0.3;--spectrum-global-color-opacity-25:0.25;--spectrum-global-color-opacity-20:0.2;--spectrum-global-color-opacity-15:0.15;--spectrum-global-color-opacity-10:0.1;--spectrum-global-color-opacity-8:0.08;--spectrum-global-color-opacity-7:0.07;--spectrum-global-color-opacity-6:0.06;--spectrum-global-color-opacity-5:0.05;--spectrum-global-color-opacity-4:0.04;--spectrum-global-color-opacity-0:0;--spectrum-global-color-celery-400:#44b556;--spectrum-global-color-celery-500:#4bc35f;--spectrum-global-color-celery-600:#51d267;--spectrum-global-color-celery-700:#58e06f;--spectrum-global-color-chartreuse-400:#85d044;--spectrum-global-color-chartreuse-500:#8ede49;--spectrum-global-color-chartreuse-600:#9bec54;--spectrum-global-color-chartreuse-700:#a3f858;--spectrum-global-color-yellow-400:#dfbf00;--spectrum-global-color-yellow-500:#edcc00;--spectrum-global-color-yellow-600:#fad900;--spectrum-global-color-yellow-700:#ffe22e;--spectrum-global-color-magenta-400:#d83790;--spectrum-global-color-magenta-500:#e2499d;--spectrum-global-color-magenta-600:#ec5aaa;--spectrum-global-color-magenta-700:#f56bb7;--spectrum-global-color-fuchsia-400:#c038cc;--spectrum-global-color-fuchsia-500:#cf3edc;--spectrum-global-color-fuchsia-600:#d951e5;--spectrum-global-color-fuchsia-700:#e366ef;--spectrum-global-color-purple-400:#9256d9;--spectrum-global-color-purple-500:#9d64e1;--spectrum-global-color-purple-600:#a873e9;--spectrum-global-color-purple-700:#b483f0;--spectrum-global-color-indigo-400:#6767ec;--spectrum-global-color-indigo-500:#7575f1;--spectrum-global-color-indigo-600:#8282f6;--spectrum-global-color-indigo-700:#9090fa;--spectrum-global-color-seafoam-400:#1b959a;--spectrum-global-color-seafoam-500:#20a3a8;--spectrum-global-color-seafoam-600:#23b2b8;--spectrum-global-color-seafoam-700:#26c0c7;--spectrum-global-color-red-400:#e34850;--spectrum-global-color-red-500:#ec5b62;--spectrum-global-color-red-600:#f76d74;--spectrum-global-color-red-700:#ff7b82;--spectrum-global-color-orange-400:#e68619;--spectrum-global-color-orange-500:#f29423;--spectrum-global-color-orange-600:#f9a43f;--spectrum-global-color-orange-700:#ffb55b;--spectrum-global-color-green-400:#2d9d78;--spectrum-global-color-green-500:#33ab84;--spectrum-global-color-green-600:#39b990;--spectrum-global-color-green-700:#3fc89c;--spectrum-global-color-blue-400:#2680eb;--spectrum-global-color-blue-500:#378ef0;--spectrum-global-color-blue-600:#4b9cf5;--spectrum-global-color-blue-700:#5aa9fa;--spectrum-global-color-gray-50:#252525;--spectrum-global-color-gray-75:#2f2f2f;--spectrum-global-color-gray-100:#323232;--spectrum-global-color-gray-200:#3e3e3e;--spectrum-global-color-gray-300:#4a4a4a;--spectrum-global-color-gray-400:#5a5a5a;--spectrum-global-color-gray-500:#6e6e6e;--spectrum-global-color-gray-600:#909090;--spectrum-global-color-gray-700:#b9b9b9;--spectrum-global-color-gray-800:#e3e3e3;--spectrum-global-color-gray-900:#fff;--spectrum-alias-background-color-primary:var(
+/* stylelint-disable */:root{--spectrum-global-color-status:Verified;--spectrum-global-color-version:5.1.0;--spectrum-global-color-opacity-100:1;--spectrum-global-color-opacity-90:0.9;--spectrum-global-color-opacity-80:0.8;--spectrum-global-color-opacity-70:0.7;--spectrum-global-color-opacity-60:0.6;--spectrum-global-color-opacity-55:0.55;--spectrum-global-color-opacity-50:0.5;--spectrum-global-color-opacity-42:0.42;--spectrum-global-color-opacity-40:0.4;--spectrum-global-color-opacity-30:0.3;--spectrum-global-color-opacity-25:0.25;--spectrum-global-color-opacity-20:0.2;--spectrum-global-color-opacity-15:0.15;--spectrum-global-color-opacity-10:0.1;--spectrum-global-color-opacity-8:0.08;--spectrum-global-color-opacity-7:0.07;--spectrum-global-color-opacity-6:0.06;--spectrum-global-color-opacity-5:0.05;--spectrum-global-color-opacity-4:0.04;--spectrum-global-color-opacity-0:0;--spectrum-global-color-celery-400:#44b556;--spectrum-global-color-celery-500:#4bc35f;--spectrum-global-color-celery-600:#51d267;--spectrum-global-color-celery-700:#58e06f;--spectrum-global-color-chartreuse-400:#85d044;--spectrum-global-color-chartreuse-500:#8ede49;--spectrum-global-color-chartreuse-600:#9bec54;--spectrum-global-color-chartreuse-700:#a3f858;--spectrum-global-color-yellow-400:#dfbf00;--spectrum-global-color-yellow-500:#edcc00;--spectrum-global-color-yellow-600:#fad900;--spectrum-global-color-yellow-700:#ffe22e;--spectrum-global-color-magenta-400:#d83790;--spectrum-global-color-magenta-500:#e2499d;--spectrum-global-color-magenta-600:#ec5aaa;--spectrum-global-color-magenta-700:#f56bb7;--spectrum-global-color-fuchsia-400:#c038cc;--spectrum-global-color-fuchsia-500:#cf3edc;--spectrum-global-color-fuchsia-600:#d951e5;--spectrum-global-color-fuchsia-700:#e366ef;--spectrum-global-color-purple-400:#9256d9;--spectrum-global-color-purple-500:#9d64e1;--spectrum-global-color-purple-600:#a873e9;--spectrum-global-color-purple-700:#b483f0;--spectrum-global-color-indigo-400:#6767ec;--spectrum-global-color-indigo-500:#7575f1;--spectrum-global-color-indigo-600:#8282f6;--spectrum-global-color-indigo-700:#9090fa;--spectrum-global-color-seafoam-400:#1b959a;--spectrum-global-color-seafoam-500:#20a3a8;--spectrum-global-color-seafoam-600:#23b2b8;--spectrum-global-color-seafoam-700:#26c0c7;--spectrum-global-color-red-400:#e34850;--spectrum-global-color-red-500:#ec5b62;--spectrum-global-color-red-600:#f76d74;--spectrum-global-color-red-700:#ff7b82;--spectrum-global-color-orange-400:#e68619;--spectrum-global-color-orange-500:#f29423;--spectrum-global-color-orange-600:#f9a43f;--spectrum-global-color-orange-700:#ffb55b;--spectrum-global-color-green-400:#2d9d78;--spectrum-global-color-green-500:#33ab84;--spectrum-global-color-green-600:#39b990;--spectrum-global-color-green-700:#3fc89c;--spectrum-global-color-blue-400:#2680eb;--spectrum-global-color-blue-500:#378ef0;--spectrum-global-color-blue-600:#4b9cf5;--spectrum-global-color-blue-700:#5aa9fa;--spectrum-global-color-gray-50:#252525;--spectrum-global-color-gray-75:#2f2f2f;--spectrum-global-color-gray-100:#323232;--spectrum-global-color-gray-200:#3e3e3e;--spectrum-global-color-gray-300:#4a4a4a;--spectrum-global-color-gray-400:#5a5a5a;--spectrum-global-color-gray-500:#6e6e6e;--spectrum-global-color-gray-600:#909090;--spectrum-global-color-gray-700:#b9b9b9;--spectrum-global-color-gray-800:#e3e3e3;--spectrum-global-color-gray-900:#fff;--spectrum-alias-background-color-primary:var(
         --spectrum-global-color-gray-100
     );--spectrum-alias-background-color-secondary:var(
         --spectrum-global-color-gray-75
@@ -4293,7 +5013,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* stylelint-disable */:root{--spectrum-global-color-status:Verified;--spectrum-global-color-version:5.1.0;--spectrum-global-color-opacity-100:1;--spectrum-global-color-opacity-90:0.9;--spectrum-global-color-opacity-80:0.8;--spectrum-global-color-opacity-60:0.6;--spectrum-global-color-opacity-50:0.5;--spectrum-global-color-opacity-42:0.42;--spectrum-global-color-opacity-40:0.4;--spectrum-global-color-opacity-30:0.3;--spectrum-global-color-opacity-25:0.25;--spectrum-global-color-opacity-20:0.2;--spectrum-global-color-opacity-15:0.15;--spectrum-global-color-opacity-10:0.1;--spectrum-global-color-opacity-8:0.08;--spectrum-global-color-opacity-7:0.07;--spectrum-global-color-opacity-6:0.06;--spectrum-global-color-opacity-5:0.05;--spectrum-global-color-opacity-4:0.04;--spectrum-global-color-opacity-0:0;--spectrum-global-color-celery-400:#44b556;--spectrum-global-color-celery-500:#3da74e;--spectrum-global-color-celery-600:#379947;--spectrum-global-color-celery-700:#318b40;--spectrum-global-color-chartreuse-400:#85d044;--spectrum-global-color-chartreuse-500:#7cc33f;--spectrum-global-color-chartreuse-600:#73b53a;--spectrum-global-color-chartreuse-700:#6aa834;--spectrum-global-color-yellow-400:#dfbf00;--spectrum-global-color-yellow-500:#d2b200;--spectrum-global-color-yellow-600:#c4a600;--spectrum-global-color-yellow-700:#b79900;--spectrum-global-color-magenta-400:#d83790;--spectrum-global-color-magenta-500:#ce2783;--spectrum-global-color-magenta-600:#bc1c74;--spectrum-global-color-magenta-700:#ae0e66;--spectrum-global-color-fuchsia-400:#c038cc;--spectrum-global-color-fuchsia-500:#b130bd;--spectrum-global-color-fuchsia-600:#a228ad;--spectrum-global-color-fuchsia-700:#93219e;--spectrum-global-color-purple-400:#9256d9;--spectrum-global-color-purple-500:#864ccc;--spectrum-global-color-purple-600:#7a42bf;--spectrum-global-color-purple-700:#6f38b1;--spectrum-global-color-indigo-400:#6767ec;--spectrum-global-color-indigo-500:#5c5ce0;--spectrum-global-color-indigo-600:#5151d3;--spectrum-global-color-indigo-700:#4646c6;--spectrum-global-color-seafoam-400:#1b959a;--spectrum-global-color-seafoam-500:#16878c;--spectrum-global-color-seafoam-600:#0f797d;--spectrum-global-color-seafoam-700:#096c6f;--spectrum-global-color-red-400:#e34850;--spectrum-global-color-red-500:#d7373f;--spectrum-global-color-red-600:#c9252d;--spectrum-global-color-red-700:#bb121a;--spectrum-global-color-orange-400:#e68619;--spectrum-global-color-orange-500:#da7b11;--spectrum-global-color-orange-600:#cb6f10;--spectrum-global-color-orange-700:#bd640d;--spectrum-global-color-green-400:#2d9d78;--spectrum-global-color-green-500:#268e6c;--spectrum-global-color-green-600:#12805c;--spectrum-global-color-green-700:#107154;--spectrum-global-color-blue-400:#2680eb;--spectrum-global-color-blue-500:#1473e6;--spectrum-global-color-blue-600:#0d66d0;--spectrum-global-color-blue-700:#095aba;--spectrum-global-color-gray-50:#fff;--spectrum-global-color-gray-75:#fafafa;--spectrum-global-color-gray-100:#f5f5f5;--spectrum-global-color-gray-200:#eaeaea;--spectrum-global-color-gray-300:#e1e1e1;--spectrum-global-color-gray-400:#cacaca;--spectrum-global-color-gray-500:#b3b3b3;--spectrum-global-color-gray-600:#8e8e8e;--spectrum-global-color-gray-700:#6e6e6e;--spectrum-global-color-gray-800:#4b4b4b;--spectrum-global-color-gray-900:#2c2c2c;--spectrum-alias-background-color-primary:var(
+/* stylelint-disable */:root{--spectrum-global-color-status:Verified;--spectrum-global-color-version:5.1.0;--spectrum-global-color-opacity-100:1;--spectrum-global-color-opacity-90:0.9;--spectrum-global-color-opacity-80:0.8;--spectrum-global-color-opacity-70:0.7;--spectrum-global-color-opacity-60:0.6;--spectrum-global-color-opacity-55:0.55;--spectrum-global-color-opacity-50:0.5;--spectrum-global-color-opacity-42:0.42;--spectrum-global-color-opacity-40:0.4;--spectrum-global-color-opacity-30:0.3;--spectrum-global-color-opacity-25:0.25;--spectrum-global-color-opacity-20:0.2;--spectrum-global-color-opacity-15:0.15;--spectrum-global-color-opacity-10:0.1;--spectrum-global-color-opacity-8:0.08;--spectrum-global-color-opacity-7:0.07;--spectrum-global-color-opacity-6:0.06;--spectrum-global-color-opacity-5:0.05;--spectrum-global-color-opacity-4:0.04;--spectrum-global-color-opacity-0:0;--spectrum-global-color-celery-400:#44b556;--spectrum-global-color-celery-500:#3da74e;--spectrum-global-color-celery-600:#379947;--spectrum-global-color-celery-700:#318b40;--spectrum-global-color-chartreuse-400:#85d044;--spectrum-global-color-chartreuse-500:#7cc33f;--spectrum-global-color-chartreuse-600:#73b53a;--spectrum-global-color-chartreuse-700:#6aa834;--spectrum-global-color-yellow-400:#dfbf00;--spectrum-global-color-yellow-500:#d2b200;--spectrum-global-color-yellow-600:#c4a600;--spectrum-global-color-yellow-700:#b79900;--spectrum-global-color-magenta-400:#d83790;--spectrum-global-color-magenta-500:#ce2783;--spectrum-global-color-magenta-600:#bc1c74;--spectrum-global-color-magenta-700:#ae0e66;--spectrum-global-color-fuchsia-400:#c038cc;--spectrum-global-color-fuchsia-500:#b130bd;--spectrum-global-color-fuchsia-600:#a228ad;--spectrum-global-color-fuchsia-700:#93219e;--spectrum-global-color-purple-400:#9256d9;--spectrum-global-color-purple-500:#864ccc;--spectrum-global-color-purple-600:#7a42bf;--spectrum-global-color-purple-700:#6f38b1;--spectrum-global-color-indigo-400:#6767ec;--spectrum-global-color-indigo-500:#5c5ce0;--spectrum-global-color-indigo-600:#5151d3;--spectrum-global-color-indigo-700:#4646c6;--spectrum-global-color-seafoam-400:#1b959a;--spectrum-global-color-seafoam-500:#16878c;--spectrum-global-color-seafoam-600:#0f797d;--spectrum-global-color-seafoam-700:#096c6f;--spectrum-global-color-red-400:#e34850;--spectrum-global-color-red-500:#d7373f;--spectrum-global-color-red-600:#c9252d;--spectrum-global-color-red-700:#bb121a;--spectrum-global-color-orange-400:#e68619;--spectrum-global-color-orange-500:#da7b11;--spectrum-global-color-orange-600:#cb6f10;--spectrum-global-color-orange-700:#bd640d;--spectrum-global-color-green-400:#2d9d78;--spectrum-global-color-green-500:#268e6c;--spectrum-global-color-green-600:#12805c;--spectrum-global-color-green-700:#107154;--spectrum-global-color-blue-400:#2680eb;--spectrum-global-color-blue-500:#1473e6;--spectrum-global-color-blue-600:#0d66d0;--spectrum-global-color-blue-700:#095aba;--spectrum-global-color-gray-50:#fff;--spectrum-global-color-gray-75:#fafafa;--spectrum-global-color-gray-100:#f5f5f5;--spectrum-global-color-gray-200:#eaeaea;--spectrum-global-color-gray-300:#e1e1e1;--spectrum-global-color-gray-400:#cacaca;--spectrum-global-color-gray-500:#b3b3b3;--spectrum-global-color-gray-600:#8e8e8e;--spectrum-global-color-gray-700:#6e6e6e;--spectrum-global-color-gray-800:#4b4b4b;--spectrum-global-color-gray-900:#2c2c2c;--spectrum-alias-background-color-primary:var(
         --spectrum-global-color-gray-50
     );--spectrum-alias-background-color-secondary:var(
         --spectrum-global-color-gray-100
