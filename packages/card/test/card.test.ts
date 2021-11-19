@@ -27,7 +27,7 @@ import {
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import { spy } from 'sinon';
 import { spaceEvent } from '../../../test/testing-helpers.js';
-import { executeServerCommand } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('card', () => {
     it('loads', async () => {
@@ -165,7 +165,7 @@ describe('card', () => {
 
         const img = el.querySelector('img') as HTMLImageElement;
         const boundingRect = img.getBoundingClientRect();
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -217,7 +217,7 @@ describe('card', () => {
 
         const footer = el.querySelector('[slot="footer"]') as HTMLElement;
         let boundingRect = footer.getBoundingClientRect();
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -239,7 +239,7 @@ describe('card', () => {
         ) as HTMLElement;
         link.setAttribute('style', 'display: block');
         boundingRect = link.getBoundingClientRect();
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',

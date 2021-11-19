@@ -26,12 +26,13 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
 import {
     definedOverlayElement,
     virtualElement,
 } from '../stories/overlay.stories';
 import { PopoverContent } from '../stories/overlay-story-components.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Overlays', () => {
     let testDiv!: HTMLDivElement;
@@ -536,7 +537,7 @@ describe('Overlay - type="modal"', () => {
         const height = window.innerHeight;
         let opened = oneEvent(document, 'sp-opened');
         // Right click to over "context menu" overlay.
-        executeServerCommand('send-mouse', {
+        sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -566,7 +567,7 @@ describe('Overlay - type="modal"', () => {
         // Right click to out of the "context menu" overlay to both close
         // the first overlay and have the event passed to the surfacing page
         // in order to open a subsequent "context menu" overlay.
-        executeServerCommand('send-mouse', {
+        sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -595,7 +596,7 @@ describe('Overlay - type="modal"', () => {
         expect(secondOverlay.isConnected).to.be.true;
         expect(secondHeadline.textContent).to.equal('Menu source: start');
         closed = oneEvent(document, 'sp-closed');
-        executeServerCommand('send-mouse', {
+        sendMouse({
             steps: [
                 {
                     type: 'move',

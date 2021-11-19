@@ -22,22 +22,11 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
 import { ProvideLang } from '@spectrum-web-components/theme';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Slider', () => {
-    // At least one browser (Webkit) maintains shared global state for the mouse,
-    // such that `send-mouse` type: 'down' without subsequently sending 'up'
-    // can prevent a subsequent test from sending 'down' correctly.
-    afterEach(async () => {
-        await executeServerCommand('send-mouse', {
-            steps: [
-                {
-                    type: 'up',
-                },
-            ],
-        });
-    });
     it('loads', async () => {
         const el = await fixture<Slider>(
             html`
@@ -353,7 +342,7 @@ describe('Slider', () => {
         expect(el.value).to.equal(10);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -504,17 +493,19 @@ describe('Slider', () => {
                 </sp-slider>
             `
         );
+        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
 
         expect(el.value).to.equal(10);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         const handleBoundingRect = handle.getBoundingClientRect();
-        const position = [
+        const position: [number, number] = [
             handleBoundingRect.x + handleBoundingRect.width / 2,
             handleBoundingRect.y + handleBoundingRect.height / 2,
         ];
-
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -528,11 +519,11 @@ describe('Slider', () => {
 
         await nextFrame();
 
-        expect(el.dragging, 'dragging').to.be.true;
         expect(el.highlight, 'with no highlight').to.be.false;
+        expect(el.dragging, 'dragging').to.be.true;
 
         let inputEvent = oneEvent(el, 'input');
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -548,7 +539,7 @@ describe('Slider', () => {
         expect(el.value).to.equal(8);
 
         inputEvent = oneEvent(el, 'input');
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',

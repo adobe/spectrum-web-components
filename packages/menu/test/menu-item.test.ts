@@ -22,8 +22,8 @@ import {
     html,
     waitUntil,
 } from '@open-wc/testing';
-import { executeServerCommand } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Menu item', () => {
     it('renders', async () => {
@@ -59,7 +59,7 @@ describe('Menu item', () => {
 
         const disabled = el.querySelector('[disabled]') as MenuItem;
         const boundingRect = disabled.getBoundingClientRect();
-        executeServerCommand('send-mouse', {
+        sendMouse({
             steps: [
                 {
                     type: 'move',

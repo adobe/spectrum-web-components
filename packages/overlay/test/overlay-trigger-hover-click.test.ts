@@ -12,13 +12,15 @@ governing permissions and limitations under the License.
 import { expect, fixture, html, oneEvent } from '@open-wc/testing';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import { OverlayTrigger } from '../src/OverlayTrigger';
 import { TriggerInteractions } from '../src/overlay-types';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { ActionButton } from '@spectrum-web-components/action-button';
-import { executeServerCommand } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Overlay Trigger - Hover and Click', () => {
     it('toggles open and closed on click', async () => {
@@ -73,7 +75,7 @@ describe('Overlay Trigger - Hover and Click', () => {
 
         // hover over the button to trigger the tooltip
         const hoveredEvent = oneEvent(el, 'sp-opened');
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',

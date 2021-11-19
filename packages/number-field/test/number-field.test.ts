@@ -25,17 +25,14 @@ import {
 } from '../stories/number-field.stories.js';
 import '../sp-number-field.js';
 import { FRAMES_PER_CHANGE, indeterminatePlaceholder, NumberField } from '..';
-import {
-    executeServerCommand,
-    sendKeys,
-    setUserAgent,
-} from '@web/test-runner-commands';
+import { sendKeys, setUserAgent } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import {
     clickBySelector,
     createLanguageContext,
     getElFrom,
 } from './helpers.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('NumberField', () => {
     before(async () => {
@@ -450,7 +447,7 @@ describe('NumberField', () => {
                 '.stepUp'
             ) as HTMLElement;
             const buttonUpRect = buttonUp.getBoundingClientRect();
-            const buttonUpPosition = [
+            const buttonUpPosition: [number, number] = [
                 buttonUpRect.x + buttonUpRect.width / 2,
                 buttonUpRect.y + buttonUpRect.height / 2,
             ];
@@ -458,11 +455,11 @@ describe('NumberField', () => {
                 '.stepDown'
             ) as HTMLElement;
             const buttonDownRect = buttonDown.getBoundingClientRect();
-            const buttonDownPosition = [
+            const buttonDownPosition: [number, number] = [
                 buttonDownRect.x + buttonDownRect.width / 2,
                 buttonDownRect.y + buttonDownRect.height / 2,
             ];
-            executeServerCommand('send-mouse', {
+            sendMouse({
                 steps: [
                     {
                         type: 'move',
@@ -481,7 +478,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(52);
             expect(inputSpy.callCount).to.equal(2);
             expect(changeSpy.callCount).to.equal(0);
-            executeServerCommand('send-mouse', {
+            sendMouse({
                 steps: [
                     {
                         type: 'move',
@@ -497,7 +494,7 @@ describe('NumberField', () => {
             }
             expect(inputSpy.callCount).to.equal(4);
             expect(changeSpy.callCount).to.equal(0);
-            await executeServerCommand('send-mouse', {
+            await sendMouse({
                 steps: [
                     {
                         type: 'up',
@@ -517,7 +514,7 @@ describe('NumberField', () => {
         expect(el.value).to.equal(50);
         const buttonUp = el.shadowRoot.querySelector('.stepUp') as HTMLElement;
         const buttonUpRect = buttonUp.getBoundingClientRect();
-        const buttonUpPosition = [
+        const buttonUpPosition: [number, number] = [
             buttonUpRect.x + buttonUpRect.width / 2,
             buttonUpRect.y + buttonUpRect.height / 2,
         ];
@@ -525,15 +522,15 @@ describe('NumberField', () => {
             '.stepDown'
         ) as HTMLElement;
         const buttonDownRect = buttonDown.getBoundingClientRect();
-        const buttonDownPosition = [
+        const buttonDownPosition: [number, number] = [
             buttonDownRect.x + buttonDownRect.width / 2,
             buttonDownRect.y + buttonDownRect.height / 2,
         ];
-        const outsidePosition = [
+        const outsidePosition: [number, number] = [
             buttonDownRect.x + buttonDownRect.width + 5,
             buttonDownRect.y + buttonDownRect.height + 5,
         ];
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -550,7 +547,7 @@ describe('NumberField', () => {
         expect(el.valueAsString).to.equal(String(value));
         expect(el.value).to.equal(value);
         inputSpy.resetHistory();
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -563,7 +560,7 @@ describe('NumberField', () => {
         expect(el.valueAsString).to.equal(String(value));
         expect(el.value).to.equal(value);
         inputSpy.resetHistory();
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -582,7 +579,7 @@ describe('NumberField', () => {
         expect(el.valueAsString).to.equal(String(value));
         expect(el.value).to.equal(value);
         inputSpy.resetHistory();
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'up',
