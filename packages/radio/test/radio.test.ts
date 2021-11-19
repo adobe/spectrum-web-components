@@ -20,7 +20,7 @@ import {
     triggerBlurFor,
     waitUntil,
 } from '@open-wc/testing';
-import { executeServerCommand } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 function labelNodeForRadio(radio: Radio): Node {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');
@@ -143,11 +143,11 @@ describe('Radio', () => {
         });
         it('imperatively', async () => {
             const boundingClientRecrt = el.getBoundingClientRect();
-            const radioPosition = [
+            const radioPosition: [number, number] = [
                 boundingClientRecrt.x + boundingClientRecrt.width / 2,
                 boundingClientRecrt.y + boundingClientRecrt.height / 2,
             ];
-            await executeServerCommand('send-mouse', {
+            await sendMouse({
                 steps: [
                     {
                         type: 'move',

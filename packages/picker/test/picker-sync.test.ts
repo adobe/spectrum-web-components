@@ -40,11 +40,11 @@ import {
 } from '../../../test/testing-helpers.js';
 import {
     a11ySnapshot,
-    executeServerCommand,
     findAccessibilityNode,
     sendKeys,
 } from '@web/test-runner-commands';
 import { iconsOnly } from '../stories/picker.stories.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 const isMenuActiveElement = function (): boolean {
     return document.activeElement instanceof Menu;
@@ -310,7 +310,7 @@ describe('Picker, sync', () => {
 
             expect(firstItem.focused, 'not visually focused').to.be.false;
             let opened = oneEvent(el, 'sp-opened');
-            await executeServerCommand('send-mouse', {
+            await sendMouse({
                 steps: [
                     {
                         type: 'move',
@@ -330,7 +330,7 @@ describe('Picker, sync', () => {
             await opened;
             expect(el.open).to.be.true;
             const closed = oneEvent(el, 'sp-closed');
-            await executeServerCommand('send-mouse', {
+            await sendMouse({
                 steps: [
                     {
                         type: 'move',
@@ -351,7 +351,7 @@ describe('Picker, sync', () => {
 
             expect(el.open).to.be.false;
             opened = oneEvent(el, 'sp-opened');
-            await executeServerCommand('send-mouse', {
+            await sendMouse({
                 steps: [
                     {
                         type: 'move',

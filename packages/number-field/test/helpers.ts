@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { elementUpdated, fixture, nextFrame } from '@open-wc/testing';
-import { executeServerCommand } from '@web/test-runner-commands';
 import { ProvideLang } from '@spectrum-web-components/theme';
 import { NumberField } from '../';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 export async function getElFrom(test: TemplateResult): Promise<NumberField> {
     const wrapped = await fixture<HTMLDivElement>(html`
@@ -34,7 +34,7 @@ export async function clickBySelector(
 ): Promise<void> {
     const target = el.shadowRoot.querySelector(selector) as HTMLElement;
     const targetRect = target.getBoundingClientRect();
-    await executeServerCommand('send-mouse', {
+    await sendMouse({
         steps: [
             {
                 type: 'move',
@@ -51,7 +51,7 @@ export async function clickBySelector(
         ],
     });
     await nextFrame();
-    await executeServerCommand('send-mouse', {
+    await sendMouse({
         steps: [
             {
                 type: 'up',

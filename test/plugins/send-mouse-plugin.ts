@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import type { Page } from 'playwright';
 
-type Step = {
+export type Step = {
     type: 'move' | 'down' | 'up' | 'click';
     position?: [number, number];
     options?: { button?: 'left' | 'right' | 'middle' };

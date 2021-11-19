@@ -20,8 +20,9 @@ import {
     html,
     oneEvent,
 } from '@open-wc/testing';
-import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Menu [selects]', () => {
     let el!: Menu;
@@ -43,7 +44,7 @@ describe('Menu [selects]', () => {
             const item1 = options[0];
             const boundingRect = item1.getBoundingClientRect();
             const change = oneEvent(el, 'change');
-            executeServerCommand('send-mouse', {
+            sendMouse({
                 steps: [
                     {
                         type: 'move',
@@ -170,7 +171,7 @@ describe('Menu [selects] w/ group', () => {
             const item1 = options[0];
             const boundingRect = item1.getBoundingClientRect();
             const change = oneEvent(el, 'change');
-            executeServerCommand('send-mouse', {
+            sendMouse({
                 steps: [
                     {
                         type: 'move',
@@ -298,7 +299,7 @@ describe('Menu w/ group [selects]', () => {
             const item1 = options[0];
             const boundingRect = item1.getBoundingClientRect();
             const change = oneEvent(group, 'change');
-            executeServerCommand('send-mouse', {
+            sendMouse({
                 steps: [
                     {
                         type: 'move',
@@ -438,7 +439,7 @@ describe('Menu w/ groups [selects]', () => {
             expect(groupA.value).to.equal('');
             expect(groupB.value).to.equal('');
             let change = oneEvent(el, 'change');
-            executeServerCommand('send-mouse', {
+            sendMouse({
                 steps: [
                     {
                         type: 'move',
@@ -461,7 +462,7 @@ describe('Menu w/ groups [selects]', () => {
             expect(groupB.value).to.equal('');
             change = oneEvent(el, 'change');
             const boundingRectB = item1b.getBoundingClientRect();
-            executeServerCommand('send-mouse', {
+            sendMouse({
                 steps: [
                     {
                         type: 'move',

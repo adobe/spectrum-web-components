@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 import '../sp-textfield.js';
 import { Textfield, TextfieldType } from '../';
 import { elementUpdated, expect, html, litFixture } from '@open-wc/testing';
-import { executeServerCommand, sendKeys } from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Textfield', () => {
     it('loads default textfield accessibly', async () => {
@@ -115,7 +116,7 @@ describe('Textfield', () => {
         );
         const startBounds = el.getBoundingClientRect();
 
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
@@ -151,7 +152,7 @@ describe('Textfield', () => {
         );
         const startBounds = el.getBoundingClientRect();
 
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',

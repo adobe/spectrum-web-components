@@ -26,11 +26,8 @@ import {
     pageDownEvent,
     pageUpEvent,
 } from '../../../test/testing-helpers.js';
-import {
-    a11ySnapshot,
-    executeServerCommand,
-    findAccessibilityNode,
-} from '@web/test-runner-commands';
+import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Radio Group - focus control', () => {
     it('does not accept focus when empty', async () => {
@@ -90,7 +87,7 @@ describe('Radio Group - focus control', () => {
         expect(first.tabIndex).to.equal(-1);
 
         const firstRect = first.getBoundingClientRect();
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',
