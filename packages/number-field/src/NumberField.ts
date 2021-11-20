@@ -57,6 +57,8 @@ export const indeterminatePlaceholder = '-';
 
 /**
  * @element sp-number-field
+ * @slot help-text - default or non-negative help text to associate to your form element
+ * @slot negative-help-text - negative help text to associate to your form element when `invalid`
  */
 export class NumberField extends TextfieldBase {
     public static get styles(): CSSResultArray {
@@ -489,10 +491,10 @@ export class NumberField extends TextfieldBase {
     private _numberParser?: NumberParser;
     private _numberParserFocused?: NumberParser;
 
-    protected render(): TemplateResult {
+    protected renderField(): TemplateResult {
         this.autocomplete = 'off';
         return html`
-            ${super.render()}
+            ${super.renderField()}
             ${this.hideStepper
                 ? html``
                 : html`

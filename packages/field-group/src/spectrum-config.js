@@ -17,6 +17,7 @@ const config = {
             name: 'field-group',
             host: {
                 selector: '.spectrum-FieldGroup',
+                shadowSelector: '.group',
             },
             attributes: [
                 {
@@ -32,9 +33,8 @@ const config = {
             ],
             complexSelectors: [
                 {
-                    replacement: '::slotted(:not(:last-child))',
-                    selector:
-                        '.spectrum-FieldGroup-item + .spectrum-FieldGroup-item',
+                    replacement: 'slot:not([name])::slotted(:not(:last-child))',
+                    selector: '.spectrum-FieldGroup-item:not(:last-child)',
                 },
             ],
         },

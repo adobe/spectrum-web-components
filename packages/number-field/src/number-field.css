@@ -12,6 +12,14 @@ governing permissions and limitations under the License.
 
 @import './spectrum-number-field.css';
 
+:host {
+    width: var(--spectrum-stepper-width);
+}
+
+#textfield {
+    width: 100%;
+}
+
 sp-field-button {
     --spectrum-dropdown-height: 100%;
     --spectrum-dropdown-padding-x: 0;

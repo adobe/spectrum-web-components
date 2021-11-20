@@ -119,3 +119,52 @@ Note: When leveraging the `quiet` attribute, the `grows` attribute does not effe
     </div>
 </div>
 ```
+
+## Help text
+
+Help text can be accessibly associated with an `<sp-textfield multiline>` element by using the `help-text` or `negative-help-text` slots. When using the `negative-help-text` slot, `<sp-textfield multiline>` will self manage the presence of this content based on the value of the `invalid` property on your `<sp-textfield multiline>` element. Content within the `help-text` slot will be show by default. When your `<sp-textfield multiline>` should receive help text based on state outside of the complexity of `invalid` or not, manage the content addressed to the `help-text` from above to ensure that it displays the right messaging and possesses the right `variant`.
+
+<sp-tabs selected="self" auto label="Help text usage in multiline textfields">
+<sp-tab value="self">Self managed</sp-tab>
+<sp-tab-panel value="self">
+
+```html
+<sp-field-label for="self">Stay "Positive"</sp-field-label>
+<sp-textfield
+    multiline
+    id="self"
+    pattern="[P][o][s][i][t][i][v][e]"
+    value="Positive"
+>
+    <sp-help-text slot="help-text">
+        Tell us how you are feeling today.
+    </sp-help-text>
+    <sp-help-text slot="negative-help-text">Please be "Positive".</sp-help-text>
+</sp-textfield>
+```
+
+</sp-tab-panel>
+<sp-tab value="above">Managed from above</sp-tab>
+<sp-tab-panel value="above">
+
+```html
+<sp-field-label for="managed">Stay "Positive"</sp-field-label>
+<sp-textfield
+    multiline
+    id="managed"
+    pattern="[P][o][s][i][t][i][v][e]"
+    value="Positive"
+    oninput='
+        const helpText = this.querySelector(`[slot="help-text"]`);
+        helpText.textContent = this.invalid ? `Please be "Positive".` : `Tell us how you are feeling today.`;
+        helpText.variant = this.invalid ? `negative` : `neutral`;
+    '
+>
+    <sp-help-text slot="help-text">
+        Tell us how you're feeling today.
+    </sp-help-text>
+</sp-textfield>
+```
+
+</sp-tab-panel>
+</sp-tabs>

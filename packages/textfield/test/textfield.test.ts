@@ -9,11 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../sp-textfield.js';
 import { Textfield, TextfieldType } from '../';
 import { elementUpdated, expect, html, litFixture } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
+import { HelpText } from '@spectrum-web-components/help-text';
+import '@spectrum-web-components/help-text/sp-help-text.js';
+import '../sp-textfield.js';
 
 describe('Textfield', () => {
     it('loads default textfield accessibly', async () => {
@@ -801,6 +804,85 @@ describe('Textfield', () => {
 
             expect(el.getAttribute('type')).equals('range');
             expect(el.type).equals('text');
+        });
+    });
+    describe('help text', () => {
+        const name = 'This is a textfield';
+        const description = 'This text helps you fill it out';
+        const descriptionNegative = 'This text helps you when invalid';
+        it('accepts help text in `slot="help-text"`', async () => {
+            const el = await litFixture(html`
+                <sp-textfield label=${name}>
+                    <sp-help-text slot="help-text">${description}</sp-help-text>
+                </sp-textfield>
+            `);
+
+            await elementUpdated(el);
+
+            await findDescribedNode(name, description);
+        });
+        it('accepts help text in `slot="help-text"` w/ own ID', async () => {
+            const el = await litFixture(html`
+                <sp-textfield label=${name}>
+                    <sp-help-text slot="help-text" id="help-text-id-1">
+                        ${description}
+                    </sp-help-text>
+                </sp-textfield>
+            `);
+
+            await elementUpdated(el);
+
+            await findDescribedNode(name, description);
+        });
+        it('manages neutral/negative help text pairs', async () => {
+            const el = await litFixture<Textfield>(html`
+                <sp-textfield label=${name}>
+                    <sp-help-text slot="help-text">${description}</sp-help-text>
+                    <sp-help-text slot="negative-help-text">
+                        ${descriptionNegative}
+                    </sp-help-text>
+                </sp-textfield>
+            `);
+            const negativeHelpText = el.querySelector(
+                '[slot="negative-help-text"]'
+            ) as HelpText;
+
+            await elementUpdated(el);
+
+            expect(negativeHelpText.variant).to.equal('neutral');
+            await findDescribedNode(name, description);
+
+            el.invalid = true;
+            await elementUpdated(el);
+
+            expect(negativeHelpText.variant).to.equal('negative');
+            await findDescribedNode(name, descriptionNegative);
+        });
+        it('manages neutral/negative help text pairs w/ own IDs', async () => {
+            const el = await litFixture<Textfield>(html`
+                <sp-textfield label=${name}>
+                    <sp-help-text slot="help-text" id="help-text-id-2">
+                        ${description}
+                    </sp-help-text>
+                    <sp-help-text slot="negative-help-text" id="help-text-id-3">
+                        ${descriptionNegative}
+                    </sp-help-text>
+                </sp-textfield>
+            `);
+            const negativeHelpText = el.querySelector(
+                '[slot="negative-help-text"]'
+            ) as HelpText;
+
+            await elementUpdated(el);
+
+            expect(negativeHelpText.variant).to.equal('neutral');
+            await findDescribedNode(name, description);
+
+            el.invalid = true;
+            await elementUpdated(el);
+
+            expect(negativeHelpText.variant).to.equal('negative');
+            await findDescribedNode(name, descriptionNegative);
         });
     });
 });

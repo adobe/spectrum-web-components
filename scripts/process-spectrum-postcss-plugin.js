@@ -114,7 +114,7 @@ class SpectrumProcessor {
 
         // If the first part of a selector references the host, then
         // add a :host wrapper
-        // e.g. ".spectrum-Button:hover" -> ":host(hover)"
+        // e.g. ".spectrum-Button:hover" -> ":host(:hover)"
         astTransforms.push((selector, rule) => {
             if (this.component.isRootSpectrumClass(selector.first)) {
                 const result = selector.clone();
@@ -291,7 +291,15 @@ class SpectrumProcessor {
                     node.parent.parent &&
                     node.parent.parent.type === 'pseudo'
                 ) {
-                    node.replaceWith(attribute.shadowNode.clone());
+                    if (!this.component.spectrumClassIsHost) {
+                        // Attributes in pseudo classes need to be on the :host, too.
+                        const treeRoot = node.parent.parent;
+                        treeRoot.remove();
+                        node.replaceWith(attribute.shadowNode.clone());
+                        addNodeToHost(result, treeRoot);
+                    } else {
+                        node.replaceWith(attribute.shadowNode.clone());
+                    }
                     return;
                 }
 

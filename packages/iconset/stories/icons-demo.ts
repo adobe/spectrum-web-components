@@ -27,6 +27,7 @@ import '@spectrum-web-components/search/sp-search.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import bodyStyles from '@spectrum-web-components/styles/body.js';
 import '@spectrum-web-components/icon/sp-icon.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
 
 @customElement('delayed-ready')
 export class DelayedReady extends SpectrumElement {
@@ -196,11 +197,12 @@ export class IconsDemo extends SpectrumElement {
                     .value=${this.search}
                     label="Search for icons"
                     autocomplete="off"
-                ></sp-search>
-                <p class="spectrum-Body spectrum-Body--sizeM">
-                    Showing ${matchingIcons.length} of ${this.icons.length}
-                    available icons.
-                </p>
+                >
+                    <sp-help-text slot="help-text">
+                        Showing ${matchingIcons.length} of ${this.icons.length}
+                        available icons.
+                    </sp-help-text>
+                </sp-search>
             </div>
             ${matchingIcons.map((icon) => {
                 return html`

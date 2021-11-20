@@ -17,6 +17,7 @@ const config = {
             name: 'number-field',
             host: {
                 selector: '.spectrum-Stepper',
+                shadowSelector: '#textfield',
             },
             attributes: [
                 {
