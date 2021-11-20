@@ -27,6 +27,7 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 
+import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
@@ -37,7 +38,7 @@ import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-che
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
 export type TextfieldType = typeof textfieldTypes[number];
 
-export class TextfieldBase extends Focusable {
+export class TextfieldBase extends ManageHelpText(Focusable) {
     public static get styles(): CSSResultArray {
         return [textfieldStyles, checkmarkStyles];
     }
@@ -198,6 +199,7 @@ export class TextfieldBase extends Focusable {
                 : nothing}
             <!-- @ts-ignore -->
             <textarea
+                aria-describedby=${this.helpTextId}
                 aria-label=${this.label || this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
@@ -227,6 +229,7 @@ export class TextfieldBase extends Focusable {
             <!-- @ts-ignore -->
             <input
                 type=${this.type}
+                aria-describedby=${this.helpTextId}
                 aria-label=${this.label || this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
@@ -251,10 +254,17 @@ export class TextfieldBase extends Focusable {
         `;
     }
 
-    protected render(): TemplateResult {
+    protected renderField(): TemplateResult {
         return html`
             ${this.renderStateIcons()}
             ${this.multiline ? this.renderMultiline : this.renderInput}
+        `;
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            <div id="textfield">${this.renderField()}</div>
+            ${this.renderHelpText(this.invalid)}
         `;
     }
 
@@ -287,6 +297,8 @@ export class TextfieldBase extends Focusable {
 
 /**
  * @element sp-textfield
+ * @slot help-text - default or non-negative help text to associate to your form element
+ * @slot negative-help-text - negative help text to associate to your form element when `invalid`
  */
 export class Textfield extends TextfieldBase {
     @property({ type: String })

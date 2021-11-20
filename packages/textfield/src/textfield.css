@@ -12,10 +12,24 @@ governing permissions and limitations under the License.
 
 @import './spectrum-textfield.css';
 
+:host {
+    display: inline-flex;
+    flex-direction: column;
+    width: var(
+        --spectrum-alias-single-line-width,
+        var(--spectrum-global-dimension-size-2400)
+    );
+}
+
 :host([multiline]) {
     resize: both;
 }
 
+#textfield {
+    width: 100%;
+}
+
+#textfield,
 textarea {
     resize: inherit;
 }

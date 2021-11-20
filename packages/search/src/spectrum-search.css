@@ -18,7 +18,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2 - var(--spectrum-alias-ui-icon-cross-size-100) / 2
     ); /* .spectrum-Search */
 }
-:host {
+#textfield {
     display: inline-block; /* .spectrum-Search */
     position: relative;
 }
@@ -45,23 +45,23 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     -webkit-appearance: none; /* .spectrum-Search-input::-webkit-search-cancel-button,
    * .spectrum-Search-input::-webkit-search-decoration */
 }
-.spectrum-Search-textfield:after {
+#textfield:after {
     border-radius: var(
         --spectrum-alias-search-border-radius,
         var(--spectrum-global-dimension-size-50)
     ); /* .spectrum-Search-textfield:after */
 }
-:host([dir='ltr']:not([quiet])) .icon {
+:host([dir='ltr']:not([quiet])) #textfield .icon {
     left: var(
         --spectrum-alias-search-padding-left-m
     ); /* [dir=ltr] .spectrum-Search:not(.spectrum-Search--quiet) .spectrum-Search-icon */
 }
-:host([dir='rtl']:not([quiet])) .icon {
+:host([dir='rtl']:not([quiet])) #textfield .icon {
     right: var(
         --spectrum-alias-search-padding-left-m
     ); /* [dir=rtl] .spectrum-Search:not(.spectrum-Search--quiet) .spectrum-Search-icon */
 }
-:host([dir='ltr']:not([quiet])) #input {
+:host([dir='ltr']:not([quiet])) #textfield #input {
     padding-left: calc(
         var(--spectrum-alias-search-padding-left-m) +
             var(
@@ -78,7 +78,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             )
     ); /* [dir=ltr] .spectrum-Search:not(.spectrum-Search--quiet) .spectrum-Search-input */
 }
-:host([dir='rtl']:not([quiet])) #input {
+:host([dir='rtl']:not([quiet])) #textfield #input {
     padding-right: calc(
         var(--spectrum-alias-search-padding-left-m) +
             var(
@@ -106,7 +106,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         0
     ); /* .spectrum-Search--quiet .spectrum-Search-input */
 }
-:host([quiet]) .spectrum-Search-textfield:after {
+:host([quiet]) #textfield:after {
     border-radius: var(
         --spectrum-alias-search-border-radius-quiet,
         0

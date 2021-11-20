@@ -10,11 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    html,
-    PropertyValues,
-    TemplateResult,
-} from '@spectrum-web-components/base';
+import { PropertyValues } from '@spectrum-web-components/base';
 import {
     property,
     queryAssignedNodes,
@@ -28,6 +24,8 @@ import { Radio } from './Radio.js';
  * @element sp-radio-group
  *
  * @slot - The `sp-radio` elements to display/manage in the group.
+ * @slot help-text - default or non-negative help text to associate to your form element
+ * @slot negative-help-text - negative help text to associate to your form element when `invalid`
  */
 export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     @property({ type: String })
@@ -35,9 +33,6 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
 
     @queryAssignedNodes('')
     public defaultNodes!: Node[];
-
-    @property()
-    public label = '';
 
     public get buttons(): Radio[] {
         return this.defaultNodes.filter(
@@ -204,12 +199,6 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     @property({ reflect: true })
     public selected = '';
 
-    protected render(): TemplateResult {
-        return html`
-            <slot></slot>
-        `;
-    }
-
     protected firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
         this.setAttribute('role', 'radiogroup');
@@ -253,13 +242,6 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
         super.updated(changes);
         if (changes.has('selected')) {
             this.validateRadios();
-        }
-        if (changes.has('label')) {
-            if (this.label) {
-                this.setAttribute('aria-label', this.label);
-            } else {
-                this.removeAttribute('aria-label');
-            }
         }
     }
 

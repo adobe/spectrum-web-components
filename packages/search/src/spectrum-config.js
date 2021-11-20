@@ -17,6 +17,7 @@ const config = {
             name: 'search',
             host: {
                 selector: '.spectrum-Search',
+                shadowSelector: '#textfield',
             },
             focus: '#input',
             attributes: [
@@ -34,6 +35,10 @@ const config = {
                 {
                     selector: '.spectrum-Search-clearButton',
                     name: 'button',
+                },
+                {
+                    selector: '.spectrum-Search-textfield',
+                    name: 'textfield',
                 },
             ],
             classes: [

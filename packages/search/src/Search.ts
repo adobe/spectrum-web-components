@@ -32,6 +32,8 @@ const stopPropagation = (event: Event): void => event.stopPropagation();
 
 /**
  * @element sp-search
+ * @slot help-text - default or non-negative help text to associate to your form element
+ * @slot negative-help-text - negative help text to associate to your form element when `invalid`
  */
 export class Search extends Textfield {
     public static get styles(): CSSResultArray {
@@ -93,7 +95,7 @@ export class Search extends Textfield {
         );
     }
 
-    protected render(): TemplateResult {
+    protected renderField(): TemplateResult {
         return html`
             <form
                 action=${this.action}
@@ -106,7 +108,7 @@ export class Search extends Textfield {
                 <sp-icon-magnify
                     class="icon magnifier icon-workflow"
                 ></sp-icon-magnify>
-                ${super.render()}
+                ${super.renderField()}
                 ${this.value
                     ? html`
                           <sp-clear-button
