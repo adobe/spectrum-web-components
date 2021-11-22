@@ -29,6 +29,14 @@ import { openOverlay } from '@spectrum-web-components/overlay/src/loader.js';
 
 import tooltipStyles from './tooltip.css.js';
 
+export class TooltipProxy extends HTMLElement {
+    disconnectedCallback(): void {
+        this.dispatchEvent(new Event('disconnected'));
+    }
+}
+
+customElements.define('tooltip-proxy', TooltipProxy);
+
 /**
  * @element sp-tooltip
  *
@@ -103,7 +111,18 @@ export class Tooltip extends SpectrumElement {
         event.detail.overlayContentTipElement = this.tipElement;
     }
 
-    private _proxy?: HTMLElement;
+    private _proxy!: HTMLElement;
+
+    private generateProxy(): void {
+        if (!this._proxy) {
+            this._proxy = document.createElement('tooltip-proxy');
+            this._proxy.id = this._tooltipId;
+            this._proxy.hidden = true;
+            this._proxy.slot = 'hidden-tooltip-content';
+            this._proxy.setAttribute('role', 'tooltip');
+            this._proxy.addEventListener('disconnected', this.closeOverlay);
+        }
+    }
 
     public overlayWillOpenCallback({
         trigger,
@@ -111,15 +130,10 @@ export class Tooltip extends SpectrumElement {
         trigger: HTMLElement;
     }): void {
         this.setAttribute('aria-hidden', 'true');
-        if (!this._proxy) {
-            this._proxy = document.createElement('span');
-            this._proxy.textContent = this.textContent;
-            this._proxy.id = this._tooltipId;
-            this._proxy.hidden = true;
-            this._proxy.setAttribute('role', 'tooltip');
-        }
+        this.generateProxy();
+        this._proxy.textContent = this.textContent;
         trigger.setAttribute('aria-describedby', this._tooltipId);
-        trigger.insertAdjacentElement('beforebegin', this._proxy);
+        this.insertAdjacentElement('beforebegin', this._proxy);
     }
 
     public overlayOpenCancelledCallback({
@@ -137,10 +151,7 @@ export class Tooltip extends SpectrumElement {
     }
 
     private removeProxy(): void {
-        if (this._proxy) {
-            this._proxy.remove();
-            this._proxy = undefined;
-        }
+        this._proxy.remove();
     }
 
     private closeOverlayCallback?: Promise<() => void>;
@@ -167,14 +178,25 @@ export class Tooltip extends SpectrumElement {
         delete this.closeOverlayCallback;
     };
 
+    private previousSlot?: string;
+
     private manageTooltip(): void {
         const parentElement = this.parentElement as HTMLElement;
         if (this.selfManaged) {
+            if (this.slot) {
+                this.previousSlot = this.slot;
+            }
+            this.slot = 'self-managed-tooltip';
             parentElement.addEventListener('pointerenter', this.openOverlay);
             parentElement.addEventListener('focusin', this.openOverlay);
             parentElement.addEventListener('pointerleave', this.closeOverlay);
             parentElement.addEventListener('focusout', this.closeOverlay);
         } else {
+            if (this.previousSlot) {
+                this.slot = this.previousSlot;
+            } else if (this.slot === 'self-managed-tooltip') {
+                this.removeAttribute('slot');
+            }
             parentElement.removeEventListener('pointerenter', this.openOverlay);
             parentElement.removeEventListener('focusin', this.openOverlay);
             parentElement.removeEventListener(
@@ -201,6 +223,7 @@ export class Tooltip extends SpectrumElement {
                 this.closeOverlay();
             }
         }
+        this.generateProxy();
         super.update(changed);
     }
 

@@ -183,7 +183,7 @@
         "cssnano/**/postcss-calc": "7.0.0",
         "rollup-plugin-workbox": "6.1.1"
     },
-    "customElements": "projects/documentation/custom-elements.json",
+    "customElements": ".storybook/custom-elements.json",
     "workspaces": [
         "packages/*",
         "projects/*"

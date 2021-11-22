@@ -48,7 +48,7 @@ describe('Tooltip', () => {
         const el = button.querySelector('sp-tooltip') as Tooltip;
 
         await elementUpdated(el);
-        await expect(el).to.be.accessible();
+        await expect(button).to.be.accessible();
 
         const opened = oneEvent(button, 'sp-opened');
         button.focus();
@@ -56,7 +56,7 @@ describe('Tooltip', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
-        await expect(el).to.be.accessible();
+        await expect(button).to.be.accessible();
 
         const closed = oneEvent(button, 'sp-closed');
         button.blur();
@@ -64,6 +64,36 @@ describe('Tooltip', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
+    });
+    it('cleans up when self manages', async () => {
+        const button = await fixture<Button>(
+            html`
+                <sp-button>
+                    This is a button.
+                    <sp-tooltip self-managed>Help text.</sp-tooltip>
+                </sp-button>
+            `
+        );
+
+        const el = button.querySelector('sp-tooltip') as Tooltip;
+
+        await elementUpdated(el);
+
+        const opened = oneEvent(button, 'sp-opened');
+        button.focus();
+        await opened;
+        await elementUpdated(el);
+
+        expect(el.open).to.be.true;
+        let activeOverlay = document.querySelector('active-overlay');
+        expect(activeOverlay).to.not.be.null;
+
+        const closed = oneEvent(button, 'sp-closed');
+        button.remove();
+        await closed;
+
+        activeOverlay = document.querySelector('active-overlay');
+        expect(activeOverlay).to.be.null;
     });
     it('accepts variants', async () => {
         const el = await fixture<Tooltip>(

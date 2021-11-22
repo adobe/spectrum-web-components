@@ -259,6 +259,10 @@ const overlayStyles = html`
             flex: none;
             margin: 24px 0;
         }
+
+        .self-managed:nth-child(3) {
+            margin-left: 50px;
+        }
     </style>
 `;
 
@@ -304,7 +308,7 @@ export const selfManaged = ({
     delayed,
 }: Properties): TemplateResult => html`
     ${overlayStyles}
-    <sp-action-button>
+    <sp-action-button class="self-managed">
         This is a button.
         <sp-tooltip
             self-managed
