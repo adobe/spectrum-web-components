@@ -107,6 +107,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-static-size-200, 16px); /* .spectrum-ColorSlider-checkerboard */
 }
 .checkerboard:before {
+    border-radius: var(
+        --spectrum-colorslider-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
     bottom: 0;
     content: ''; /* .spectrum-ColorSlider-checkerboard:before */
     left: 0;
@@ -115,16 +119,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     top: 0;
     z-index: 1;
 }
-.checkerboard:before,
 .checkerboard,
 .gradient {
     border-radius: var(
         --spectrum-colorslider-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
-}
-.checkerboard,
-.gradient {
     height: 100%;
     width: 100%; /* .spectrum-ColorSlider-gradient,
    * .spectrum-ColorSlider-checkerboard */

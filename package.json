@@ -160,7 +160,7 @@
         "postcss-inherit": "^4.1.0",
         "postcss-mixins": "^8.1.0",
         "postcss-prefixwrap": "^1.25.0",
-        "postcss-preset-env": "^6.7.0",
+        "postcss-preset-env": "^7.0.1",
         "postcss-reporter": "^7.0.4",
         "postcss-selector-parser": "^6.0.6",
         "prettier": "^2.4.1",
