@@ -143,6 +143,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #switch {
     border-radius: calc(var(--spectrum-switch-track-height) / 2);
+    box-sizing: border-box;
     display: inline-block; /* .spectrum-Switch-switch */
     flex-grow: 0;
     flex-shrink: 0;
@@ -164,11 +165,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     vertical-align: middle;
     width: var(--spectrum-switch-track-width);
 }
-#switch,
 #switch:before {
     box-sizing: border-box;
-}
-#switch:before {
     content: '';
     display: block; /* .spectrum-Switch-switch:before */
     position: absolute;

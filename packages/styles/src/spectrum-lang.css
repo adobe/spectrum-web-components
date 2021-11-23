@@ -28,7 +28,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-font-font-family-zhhans)
     ); /* .spectrum:lang(zh-Hans) */
 }
-.spectrum:lang(zh-Hant),
+.spectrum:lang(zh-Hant) {
+    font-family: var(
+        --spectrum-alias-font-family-zh,
+        var(--spectrum-global-font-font-family-zh)
+    ); /* .spectrum:lang(zh-Hant) */
+}
 .spectrum:lang(zh) {
     font-family: var(
         --spectrum-alias-font-family-zh,
