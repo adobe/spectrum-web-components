@@ -60,7 +60,7 @@ export class MyElement extends ManageHelpText(SpectrumElement) {
 
 ## External
 
-To describe the custom element itself, use `mode: 'external'`. This will automatically manage the application of the `aria-describedby` atribute on `DescribedElement`:
+To describe the custom element itself, use `mode: 'external'`. This will automatically manage the application of the `aria-describedby` atribute on `MyElement`:
 
 ```js
 import { SpectrumElement, html } from '@spectrum-web-components/base';
@@ -79,9 +79,9 @@ export class MyElement extends ManageHelpText(SpectrumElement, {
 }
 ```
 
-This functionality is powered by the `HelpTextManager` class which is also exported from this package and can be leveraged directly. It accepts the root element on which within which it will manage help text and a options object that accepts the `mode` by which that help text will be managed at construction time. Leveraged at render time it surfaces an `id` property and a `render(invalid?: boolean)` method for use in your template.
+This functionality is powered by the `HelpTextManager` class which is also exported from this package and can be leveraged directly. It accepts the root element on which it will manage help text and an options object that accepts the `mode` by which that help text will be managed at construction time. Leveraged at render time, it surfaces an `id` property and a `render(invalid?: boolean)` method for use in your template.
 
-## Usage with self managed validity
+## Usage with self-managed validity
 
 Spectrum Web Components that have an `invalid` attribute, like `<sp-fieldgroup>` and `<sp-textfield>`, automatically render either the `help-text` or `negative-help-text` slot based on validity. Provide both, and the appropriate `<sp-help-text>` element will be surfaced:
 
