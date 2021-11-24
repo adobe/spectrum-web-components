@@ -11,10 +11,13 @@ governing permissions and limitations under the License.
 */
 import fs from 'fs';
 import globby from 'globby';
+import path from 'path';
 
 async function main() {
-    for await (const path of globby.stream(`packages/*/stories/*.stories.ts`)) {
-        const pathParts = path.split('/');
+    for await (const storyPath of globby.stream(
+        `packages/*/stories/*.stories.ts`
+    )) {
+        const pathParts = storyPath.split('/');
         const packageName = pathParts[1];
         const stories = pathParts[3].replace('.stories.ts', '');
         const name =
@@ -44,9 +47,12 @@ import { regressVisuals } from '../../../test/visual/test.js';
 
 regressVisuals('${name}', stories);
 `;
+        const directory = path.join('packages', packageName, 'test');
+        fs.mkdirSync(directory, { recursive: true });
         fs.writeFileSync(
-            `packages/${packageName}/test/${stories}.test-vrt.ts`,
-            testString
+            path.join(directory, `${stories}.test-vrt.ts`),
+            testString,
+            { recursive: true }
         );
     }
 }
