@@ -18,8 +18,10 @@ export const packages = fs
     .readdirSync('packages')
     .filter((dir) => fs.statSync(`packages/${dir}`).isDirectory());
 
-const vrtHTML = ({ color, scale, dir, reduceMotion }) => (testFramework) =>
-    `<!doctype html>
+const vrtHTML =
+    ({ color, scale, dir, reduceMotion }) =>
+    (testFramework) =>
+        `<!doctype html>
     <html dir=${dir}>
         <head>
             <link rel="preconnect" href="https://use.typekit.net" />
@@ -75,7 +77,7 @@ colors.forEach((color) => {
 vrtGroups = [
     ...vrtGroups,
     ...packages.reduce((acc, pkg) => {
-        const skipPkgs = ['bundle', 'modal', 'styles'];
+        const skipPkgs = ['bundle', 'modal'];
         if (!skipPkgs.includes(pkg)) {
             acc.push({
                 name: `vrt-${pkg}`,
