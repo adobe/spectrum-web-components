@@ -16,8 +16,10 @@ import { createLanguageContext, getElFrom } from './helpers.js';
 import polyfillCheck from '@formatjs/intl-numberformat/should-polyfill.js';
 
 import '../sp-number-field.js';
+import { remapMultiByteCharacters } from '../';
 import {
     currency,
+    decimals,
     Default,
     minMax,
     percents,
@@ -37,6 +39,32 @@ describe('NumberField - inputs', () => {
         }
     });
     describe('keystroke prevention', () => {
+        it('converts 2 byte characters, default', async () => {
+            const el = await getElFrom(html`
+                ${Default()}
+            `);
+            await elementUpdated(el);
+
+            el.focus();
+            await sendKeys({
+                type: '３、５６７、８９０。１',
+            });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('3,567,890.1');
+        });
+        it('converts 2 byte characters, percents', async () => {
+            const el = await getElFrom(html`
+                ${percents()}
+            `);
+            await elementUpdated(el);
+
+            el.focus();
+            await sendKeys({
+                type: '２４％',
+            });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('24%');
+        });
         it('prevents second "." in EN', async () => {
             const el = await getElFrom(html`
                 ${Default()}
@@ -298,6 +326,117 @@ describe('NumberField - inputs', () => {
             });
             await elementUpdated(el);
             expect(el.formattedValue).to.equal('123.456.789');
+        });
+    });
+    describe('2-byte characters', () => {
+        const numbers = Object.keys(remapMultiByteCharacters);
+        // only `１`-`０` can be accepted as single key inputs.
+        numbers.splice(10);
+        numbers.forEach((input) => {
+            const actual = remapMultiByteCharacters[input];
+            it(`accepts "${input}" as "${actual}"`, async () => {
+                const el = await getElFrom(Default());
+                el.focusElement.value = input;
+                el.focusElement.dispatchEvent(
+                    new Event('input', {
+                        bubbles: true,
+                        cancelable: true,
+                        composed: true,
+                    })
+                );
+                await elementUpdated(el);
+
+                expect(el.formattedValue).to.equal(actual);
+                expect(el.value).to.equal(Number(actual));
+            });
+        });
+        it('accepts "、" as "," and "。" as "."', async () => {
+            const el = await getElFrom(Default(Default.args));
+            el.focusElement.value = '１、２３４。５6';
+            el.focusElement.dispatchEvent(
+                new Event('input', {
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true,
+                })
+            );
+            await elementUpdated(el);
+
+            expect(el.formattedValue).to.equal('1,234.56');
+            expect(el.value).to.equal(Number(1234.56));
+        });
+        it('accepts misplaced "、" and corrects them', async () => {
+            const el = await getElFrom(Default(Default.args));
+            const nextFocusableElement = document.createElement('input');
+            el.insertAdjacentElement('afterend', nextFocusableElement);
+            el.focus();
+            await elementUpdated(el);
+
+            el.focusElement.value = '１２、３４５６、７。８９';
+            el.focusElement.dispatchEvent(
+                new Event('input', {
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true,
+                })
+            );
+            await elementUpdated(el);
+
+            expect(el.focusElement.value, 'visible').to.equal('12,3456,7.89');
+            expect(el.formattedValue, 'tracked').to.equal('1,234,567.89');
+            expect(el.value, 'value').to.equal(Number(1234567.89));
+
+            await sendKeys({
+                press: 'Tab',
+            });
+            await elementUpdated(el);
+            expect(el.focusElement.value, 'visible').to.equal('1,234,567.89');
+            expect(el.formattedValue, 'tracked').to.equal('1,234,567.89');
+            expect(el.value, 'value').to.equal(Number(1234567.89));
+            nextFocusableElement.remove();
+        });
+        it('accepts "＋" as "+" and "ー" as "-"', async () => {
+            const el = await getElFrom(decimals(decimals.args));
+            el.focusElement.value = '＋９。８７';
+            el.focusElement.dispatchEvent(
+                new Event('input', {
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true,
+                })
+            );
+            await elementUpdated(el);
+
+            expect(el.formattedValue).to.equal('+9.87');
+            expect(el.value).to.equal(Number(9.87));
+
+            el.focusElement.value = 'ー９．８７';
+            el.focusElement.dispatchEvent(
+                new Event('input', {
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true,
+                })
+            );
+            await elementUpdated(el);
+
+            expect(el.formattedValue).to.equal('-9.87');
+            expect(el.value).to.equal(Number(-9.87));
+        });
+        it('accepts "％" as "%"', async () => {
+            const el = await getElFrom(percents(percents.args));
+            el.focusElement.value = '１０％';
+            el.focusElement.dispatchEvent(
+                new Event('input', {
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true,
+                })
+            );
+            await elementUpdated(el);
+
+            expect(el.formattedValue).to.equal('10%');
+            expect(el.value).to.equal(Number(0.1));
         });
     });
 });

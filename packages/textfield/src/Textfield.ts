@@ -160,7 +160,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
         this.inputElement.select();
     }
 
-    protected onInput(): void {
+    protected handleInput(): void {
         if (this.allowedKeys && this.inputElement.value) {
             const regExp = new RegExp(`^[${this.allowedKeys}]*$`, 'u');
             if (!regExp.test(this.inputElement.value)) {
@@ -178,7 +178,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
         this.value = this.inputElement.value;
     }
 
-    protected onChange(): void {
+    protected handleChange(): void {
         this.dispatchEvent(
             new Event('change', {
                 bubbles: true,
@@ -237,8 +237,8 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
                 .value=${this.displayValue}
-                @change=${this.onChange}
-                @input=${this.onInput}
+                @change=${this.handleChange}
+                @input=${this.handleInput}
                 @focus=${this.onFocus}
                 @blur=${this.onBlur}
                 ?disabled=${this.disabled}
@@ -267,8 +267,8 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
                 pattern=${ifDefined(this.pattern)}
                 placeholder=${this.placeholder}
                 .value=${live(this.displayValue)}
-                @change=${this.onChange}
-                @input=${this.onInput}
+                @change=${this.handleChange}
+                @input=${this.handleInput}
                 @focus=${this.onFocus}
                 @blur=${this.onBlur}
                 ?disabled=${this.disabled}

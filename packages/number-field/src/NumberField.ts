@@ -36,6 +36,25 @@ import styles from './number-field.css.js';
 
 export const FRAMES_PER_CHANGE = 5;
 export const indeterminatePlaceholder = '-';
+export const remapMultiByteCharacters: Record<string, string> = {
+    '１': '1',
+    '２': '2',
+    '３': '3',
+    '４': '4',
+    '５': '5',
+    '６': '6',
+    '７': '7',
+    '８': '8',
+    '９': '9',
+    '０': '0',
+    '、': ',',
+    '，': ',',
+    '。': '.',
+    '．': '.',
+    '％': '%',
+    '＋': '+',
+    ー: '-',
+};
 
 /**
  * @element sp-number-field
@@ -314,7 +333,7 @@ export class NumberField extends TextfieldBase {
     private wasIndeterminate = false;
     private indeterminateValue?: number;
 
-    protected onChange(): void {
+    protected handleChange(): void {
         const value = this.convertValueToNumber(this.inputValue);
         if (this.wasIndeterminate) {
             this.wasIndeterminate = false;
@@ -325,10 +344,10 @@ export class NumberField extends TextfieldBase {
             }
         }
         this.value = value;
-        super.onChange();
+        super.handleChange();
     }
 
-    protected onInput(): void {
+    protected handleInput(): void {
         if (this.indeterminate) {
             this.wasIndeterminate = true;
             this.indeterminateValue = this.value;
@@ -337,7 +356,11 @@ export class NumberField extends TextfieldBase {
                 ''
             );
         }
-        const { value, selectionStart } = this.inputElement;
+        const { value: originalValue, selectionStart } = this.inputElement;
+        const value = originalValue
+            .split('')
+            .map((char) => remapMultiByteCharacters[char] || char)
+            .join('');
         if (this.numberParser.isValidPartialNumber(value)) {
             const valueAsNumber = this.convertValueToNumber(value);
             if (!value && this.indeterminateValue) {
@@ -348,6 +371,7 @@ export class NumberField extends TextfieldBase {
                 this._value = this.validateInput(valueAsNumber);
             }
             this._trackingValue = value;
+            this.inputElement.value = value;
             return;
         }
         const currentLength = value.length;
