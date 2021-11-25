@@ -190,6 +190,7 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
         <sp-number-field
             id="default"
             ...=${spreadProps(args)}
+            @change=${args.onChange}
             style="width: 150px"
         ></sp-number-field>
     `;
@@ -205,6 +206,7 @@ export const quiet = (args: StoryArgs = {}): TemplateResult => {
         <sp-number-field
             id="default"
             ...=${spreadProps(args)}
+            @change=${args.onChange}
             style="width: 150px"
         ></sp-number-field>
     `;
@@ -221,6 +223,7 @@ export const indeterminate = (args: StoryArgs = {}): TemplateResult => {
         <sp-number-field
             id="default"
             ...=${spreadProps(args)}
+            @change=${args.onChange}
             style="width: 150px"
         ></sp-number-field>
     `;
@@ -240,11 +243,12 @@ export const decimals = (args: StoryArgs): TemplateResult => {
             id="decimals"
             style="width: 200px"
             ...=${spreadProps(args)}
+            @change=${args.onChange}
             .formatOptions=${{
                 signDisplay: 'exceptZero',
                 minimumFractionDigits: 1,
                 maximumFractionDigits: 2,
-            }}
+            } as unknown as Intl.NumberFormatOptions}
         ></sp-number-field>
     `;
 };
@@ -260,10 +264,11 @@ export const percents = (args: StoryArgs = {}): TemplateResult => {
             id="percents"
             style="width: 200px"
             ...=${spreadProps(args)}
+            @change=${args.onChange}
             .formatOptions=${{
                 style: 'percent',
                 unitDisplay: 'narrow',
-            }}
+            } as unknown as Intl.NumberFormatOptions}
         ></sp-number-field>
     `;
 };
@@ -278,12 +283,13 @@ export const currency = (args: StoryArgs = {}): TemplateResult => {
         <sp-number-field
             style="width: 200px"
             ...=${spreadProps(args)}
+            @change=${args.onChange}
             .formatOptions=${{
                 style: 'currency',
                 currency: 'EUR',
                 currencyDisplay: 'code',
                 currencySign: 'accounting',
-            }}
+            } as unknown as Intl.NumberFormatOptions}
         ></sp-number-field>
     `;
 };
@@ -299,11 +305,12 @@ export const units = (args: StoryArgs): TemplateResult => {
             id="units"
             style="width: 200px"
             ...=${spreadProps(args)}
+            @change=${args.onChange}
             .formatOptions=${{
                 style: 'unit',
                 unit: 'inch',
                 unitDisplay: 'long',
-            }}
+            } as unknown as Intl.NumberFormatOptions}
         ></sp-number-field>
     `;
 };
@@ -323,6 +330,7 @@ export const pixels = (args: StoryArgs): TemplateResult => {
                 unit: 'px',
             }}
             ...=${spreadProps(args)}
+            @change=${args.onChange}
         ></sp-number-field>
     `;
 };
@@ -339,6 +347,7 @@ export const minMax = (args: StoryArgs): TemplateResult => html`
         id="min-max"
         style="width: 200px"
         ...=${spreadProps(args)}
+        @change=${args.onChange}
     ></sp-number-field>
 `;
 
@@ -356,6 +365,7 @@ export const hideStepper = (args: StoryArgs): TemplateResult => {
         <sp-number-field
             id="hideStepper"
             ...=${spreadProps(args)}
+            @change=${args.onChange}
         ></sp-number-field>
     `;
 };
@@ -372,6 +382,7 @@ export const hideStepperQuiet = (args: StoryArgs): TemplateResult => {
         <sp-number-field
             id="hideStepper"
             ...=${spreadProps(args)}
+            @change=${args.onChange}
         ></sp-number-field>
     `;
 };
@@ -389,6 +400,7 @@ export const disabled = (args: StoryArgs): TemplateResult => {
         <sp-number-field
             id="disabled"
             ...=${spreadProps(args)}
+            @change=${args.onChange}
         ></sp-number-field>
     `;
 };
@@ -405,6 +417,7 @@ export const readOnly = (args: StoryArgs): TemplateResult => {
         <sp-number-field
             id="readonly"
             ...=${spreadProps(args)}
+            @change=${args.onChange}
         ></sp-number-field>
     `;
 };
