@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
-    LitElement,
     PropertyValues,
     SpectrumElement,
     TemplateResult,
@@ -39,6 +38,11 @@ type closeOverlay =
     | 'closeHoverOverlay'
     | 'closeLongpressOverlay';
 
+export const LONGPRESS_INSTRUCTIONS = {
+    touch: 'Double tap and long press for additional options',
+    keyboard: 'Press Space or Alt+Down Arrow for additional options',
+    mouse: 'Click and hold for additional options',
+};
 /**
  * @element overlay-trigger
  *
@@ -50,7 +54,7 @@ type closeOverlay =
  * @fires sp-opened - Announces that the overlay has been opened
  * @fires sp-closed - Announces that the overlay has been closed
  */
-export class OverlayTrigger extends LitElement {
+export class OverlayTrigger extends SpectrumElement {
     private closeClickOverlay?: Promise<() => void>;
     private closeLongpressOverlay?: Promise<() => void>;
     private closeHoverOverlay?: Promise<() => void>;
@@ -166,9 +170,9 @@ export class OverlayTrigger extends LitElement {
 
                 this.longpressDescriptor.id = this._longpressId;
                 this.longpressDescriptor.slot = this._longpressId;
-                this.longpressDescriptor.innerHTML =
-                    'Press Alt+Down Arrow for additional options';
             }
+            this.longpressDescriptor.innerHTML =
+                LONGPRESS_INSTRUCTIONS.keyboard;
             this.appendChild(this.longpressDescriptor); // add descriptor to light DOM
             descriptors.push(this._longpressId);
         } else {
@@ -260,13 +264,18 @@ export class OverlayTrigger extends LitElement {
         switch (event.type) {
             case 'mouseenter':
             case 'focusin':
-                // if (this.hasLongpressContent && this.longpressDescriptor) {
-                //     console.log("focus!");
-                //         this.longpressDescriptor.innerHTML =
-                //         'Press and hold for additional options';
-                // }
                 if (!this.open && this.hoverContent) {
                     this.open = 'hover';
+                }
+                if (this.hasVisibleFocusInTree() && this.longpressDescriptor) {
+                    this.longpressDescriptor.innerHTML =
+                        LONGPRESS_INSTRUCTIONS.keyboard;
+                } else if (
+                    !this.hasVisibleFocusInTree() &&
+                    this.longpressDescriptor
+                ) {
+                    this.longpressDescriptor.innerHTML =
+                        LONGPRESS_INSTRUCTIONS.touch;
                 }
                 return;
             case 'mouseleave':
@@ -276,7 +285,6 @@ export class OverlayTrigger extends LitElement {
                 }
                 return;
             case 'click':
-                //console.log("clikc");
                 if (this.clickContent) {
                     this.open = event.type;
                 } else if (this.closeHoverOverlay) {
@@ -284,7 +292,6 @@ export class OverlayTrigger extends LitElement {
                 }
                 return;
             case 'longpress':
-                //console.log("lawng");
                 if (this.longpressContent) {
                     this._longpressEvent = event;
                     this.open = event.type;

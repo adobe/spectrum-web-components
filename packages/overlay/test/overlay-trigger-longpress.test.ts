@@ -14,6 +14,7 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
@@ -23,7 +24,7 @@ import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
-import { OverlayTrigger } from '..';
+import { LONGPRESS_INSTRUCTIONS, OverlayTrigger } from '..';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import {
     a11ySnapshot,
@@ -221,7 +222,7 @@ describe('Overlay Trigger - Longpress', () => {
 
         await findDescribedNode(
             'Trigger with hold affordance',
-            'Press Alt+Down Arrow for additional options'
+            LONGPRESS_INSTRUCTIONS.keyboard
         );
 
         const opened = oneEvent(el, 'sp-opened');
@@ -235,7 +236,7 @@ describe('Overlay Trigger - Longpress', () => {
 
         await findDescribedNode(
             'Trigger with hold affordance',
-            'Press Alt+Down Arrow for additional options'
+            LONGPRESS_INSTRUCTIONS.keyboard
         );
 
         const closed = oneEvent(el, 'sp-closed');
@@ -251,7 +252,7 @@ describe('Overlay Trigger - Longpress', () => {
 
         await findDescribedNode(
             'Trigger with hold affordance',
-            'Press Alt+Down Arrow for additional options'
+            LONGPRESS_INSTRUCTIONS.keyboard
         );
     });
     it('removes longpress `aria-describedby` description element when longpress content is removed', async () => {
@@ -305,7 +306,7 @@ describe('Overlay Trigger - Longpress', () => {
         await elementUpdated(el);
         await findDescribedNode(
             'Trigger with hold affordance',
-            'Press Alt+Down Arrow for additional options'
+            LONGPRESS_INSTRUCTIONS.keyboard
         );
 
         expect(el.hasLongpressContent).to.be.true;
@@ -370,43 +371,54 @@ describe('Overlay Trigger - Longpress', () => {
 
         await findDescribedNode(
             'First button',
-            'Press Alt+Down Arrow for additional options'
+            LONGPRESS_INSTRUCTIONS.keyboard
         );
         await findDescribedNode(
             'Second button',
-            'Press Alt+Down Arrow for additional options'
+            LONGPRESS_INSTRUCTIONS.keyboard
         );
     });
     // TO-DO: figure out a way to make the message different depending on the type of interaction
     it('describes interactions differently to the user', async () => {
-        const el = await fixture<OverlayTrigger>(
+        const test = await fixture<OverlayTrigger>(
             html`
-                <overlay-trigger placement="right-start">
-                    <sp-action-button slot="trigger" hold-affordance>
-                        Trigger with hold affordance
-                    </sp-action-button>
-                    <sp-popover slot="longpress-content" tip>
-                        <sp-action-group
-                            selects="single"
-                            vertical
-                            style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
-                        >
-                            <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                            </sp-action-button>
-                            <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                            </sp-action-button>
-                            <sp-action-button>
-                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                            </sp-action-button>
-                        </sp-action-group>
-                    </sp-popover>
-                </overlay-trigger>
+                <div>
+                    <input id="first" />
+                    <overlay-trigger placement="right-start">
+                        <sp-action-button slot="trigger" hold-affordance>
+                            Trigger with hold affordance
+                        </sp-action-button>
+                        <sp-popover slot="longpress-content" tip>
+                            <sp-action-group
+                                selects="single"
+                                vertical
+                                style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                            >
+                                <sp-action-button>
+                                    <sp-icon-magnify
+                                        slot="icon"
+                                    ></sp-icon-magnify>
+                                </sp-action-button>
+                                <sp-action-button>
+                                    <sp-icon-magnify
+                                        slot="icon"
+                                    ></sp-icon-magnify>
+                                </sp-action-button>
+                                <sp-action-button>
+                                    <sp-icon-magnify
+                                        slot="icon"
+                                    ></sp-icon-magnify>
+                                </sp-action-button>
+                            </sp-action-group>
+                        </sp-popover>
+                    </overlay-trigger>
+                    <input id="last" />
+                </div>
             `
         );
-        const open = oneEvent(el, 'sp-opened');
-        //const closed = oneEvent(el, 'sp-closed');
+        const el = test.querySelector('overlay-trigger') as OverlayTrigger;
+        const first = test.querySelector('#first') as HTMLElement;
+        const last = test.querySelector('#last') as HTMLElement;
         const trigger = el.querySelector('sp-action-button') as HTMLElement;
         const content = el.querySelector(
             '[slot="longpress-content"]'
@@ -419,17 +431,46 @@ describe('Overlay Trigger - Longpress', () => {
         expect(trigger.hasAttribute('aria-describedby')).to.be.true;
         expect(content.open).to.be.false;
 
-        trigger.focus();
-
-        // the user... uses (keyboard, pointer, mouse, whatever)
-        sendKeys({
-            press: 'Alt+ArrowDown',
+        // more equivalent to what the screenreader is doing ie no keyboard focus
+        // should be the same as using tab... put a tab stop into the test so that
+        // we can tab into the trigger
+        first.focus();
+        await sendKeys({
+            press: 'Tab',
         });
-        await open;
-        // if focus:visible --> person is using a keyboard --> tell user to activate longpress via (space/alt+down) for add. opts
+
+        expect(document.activeElement).to.equal(trigger);
+
+        // if focus:visible --> person is using a keyboard
+        // tell user to activate longpress via (space/alt+down) for add. opts
         await findDescribedNode(
             'Trigger with hold affordance',
-            'Press Alt+Down Arrow for additional options'
+            LONGPRESS_INSTRUCTIONS.keyboard
+        );
+
+        //tab into next element, then focus on the trigger
+        await sendKeys({
+            press: 'Tab',
+        });
+        await findDescribedNode(
+            'Trigger with hold affordance',
+            LONGPRESS_INSTRUCTIONS.keyboard
+        );
+        // await nextFrame();
+        // await nextFrame();
+        first.click();
+        last.click();
+        first.click();
+        last.click();
+
+        trigger.focus();
+
+        await nextFrame();
+        await nextFrame();
+
+        await findDescribedNode(
+            'Trigger with hold affordance',
+            LONGPRESS_INSTRUCTIONS.touch
         );
     });
 });
