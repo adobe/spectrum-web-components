@@ -26,49 +26,11 @@ import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { LONGPRESS_INSTRUCTIONS, OverlayTrigger } from '..';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
-import {
-    a11ySnapshot,
-    findAccessibilityNode,
-    sendKeys,
-} from '@web/test-runner-commands';
+import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import '@spectrum-web-components/base';
-
-type DescribedNode = {
-    name: string;
-    description: string;
-};
-
-const findDescribedNode = async (
-    name: string,
-    description: string
-): Promise<void> => {
-    const isWebkit =
-        /AppleWebKit/.test(window.navigator.userAgent) &&
-        !/Chrome/.test(window.navigator.userAgent);
-
-    const snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
-        children: DescribedNode[];
-    };
-    const node = findAccessibilityNode<DescribedNode>(
-        snapshot,
-        (node) =>
-            node.name === name &&
-            (node.description === description ||
-                // if we're in Safari and there's no description, we still want to have it exist
-                (isWebkit && typeof node.description === 'undefined'))
-    );
-    //console.log(JSON.stringify(snapshot, null, '  '));
-    expect(node, '`name`ed with `description`').to.not.be.null;
-
-    if (isWebkit) {
-        const webkitNode = findAccessibilityNode<DescribedNode>(
-            snapshot,
-            (node) => node.name === name && node.description === description
-        );
-        expect(webkitNode).to.be.null;
-    }
-};
+import { sendMouse } from '../../../test/plugins/browser.js';
+import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 
 describe('Overlay Trigger - Longpress', () => {
     it('displays `longpress` content', async () => {
@@ -215,9 +177,10 @@ describe('Overlay Trigger - Longpress', () => {
 
         expect(trigger.hasAttribute('aria-describedby')).to.be.true;
         expect(el.open).to.be.undefined;
-        /* This test passes because OverlayTrigger adds a new node to describe
-           the longpress interaction now available on the trigger element
-        */
+        /*
+         * This test passes because OverlayTrigger adds a new node to describe
+         * the longpress interaction now available on the trigger element
+         */
         expect(el.childNodes.length, 'always').to.equal(6);
 
         await findDescribedNode(
@@ -378,7 +341,6 @@ describe('Overlay Trigger - Longpress', () => {
             LONGPRESS_INSTRUCTIONS.keyboard
         );
     });
-    // TO-DO: figure out a way to make the message different depending on the type of interaction
     it('describes interactions differently to the user', async () => {
         const test = await fixture<OverlayTrigger>(
             html`
@@ -418,7 +380,7 @@ describe('Overlay Trigger - Longpress', () => {
         );
         const el = test.querySelector('overlay-trigger') as OverlayTrigger;
         const first = test.querySelector('#first') as HTMLElement;
-        const last = test.querySelector('#last') as HTMLElement;
+        const firstRect = first.getBoundingClientRect();
         const trigger = el.querySelector('sp-action-button') as HTMLElement;
         const content = el.querySelector(
             '[slot="longpress-content"]'
@@ -431,37 +393,41 @@ describe('Overlay Trigger - Longpress', () => {
         expect(trigger.hasAttribute('aria-describedby')).to.be.true;
         expect(content.open).to.be.false;
 
-        // more equivalent to what the screenreader is doing ie no keyboard focus
-        // should be the same as using tab... put a tab stop into the test so that
-        // we can tab into the trigger
         first.focus();
+
         await sendKeys({
             press: 'Tab',
         });
 
         expect(document.activeElement).to.equal(trigger);
 
-        // if focus:visible --> person is using a keyboard
-        // tell user to activate longpress via (space/alt+down) for add. opts
         await findDescribedNode(
             'Trigger with hold affordance',
             LONGPRESS_INSTRUCTIONS.keyboard
         );
 
-        //tab into next element, then focus on the trigger
         await sendKeys({
             press: 'Tab',
         });
+
         await findDescribedNode(
             'Trigger with hold affordance',
             LONGPRESS_INSTRUCTIONS.keyboard
         );
-        // await nextFrame();
-        // await nextFrame();
-        first.click();
-        last.click();
-        first.click();
-        last.click();
+
+        /*
+         * The following re-establishes that focus is not visible
+         * for this portion of the test. That way, the LONGPRESS_INSTRUCTIONS
+         * change appropriately depending on the type of interaction.
+         */
+        await sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [firstRect.x, firstRect.y],
+                },
+            ],
+        });
 
         trigger.focus();
 
