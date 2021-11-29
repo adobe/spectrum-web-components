@@ -52,9 +52,6 @@ export class ColorArea extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
-    @property({ type: String })
-    public label: string | undefined;
-
     @property({ type: String, attribute: 'label-x' })
     public labelX = 'saturation';
 
@@ -489,7 +486,7 @@ export class ColorArea extends SpectrumElement {
                     type="range"
                     class="slider"
                     name="x"
-                    aria-label=${this.label ?? this.labelX}
+                    aria-label=${this.labelX}
                     min="0"
                     max="1"
                     step=${this.step}
@@ -504,7 +501,7 @@ export class ColorArea extends SpectrumElement {
                     type="range"
                     class="slider"
                     name="y"
-                    aria-label=${this.label ?? this.labelY}
+                    aria-label=${this.labelY}
                     min="0"
                     max="1"
                     step=${this.step}
