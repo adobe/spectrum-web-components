@@ -109,20 +109,25 @@ describe('ColorArea', () => {
         expect(inputX?.getAttribute('aria-label')).to.equal('saturation');
         expect(inputY?.getAttribute('aria-label')).to.equal('luminosity');
     });
-    it('overrides both X and Y labels with a provided "label" attribute', async () => {
+    it('overrides both X and Y labels with a provided custom attributes', async () => {
         const el = await fixture<ColorArea>(
             html`
                 <sp-color-area
                     color="hsl(100, 50%, 50%)"
-                    label="something custom"
+                    label-x="something custom, saturation"
+                    label-y="something custom, luminosity"
                 ></sp-color-area>
             `
         );
         const inputX = el.shadowRoot.querySelector('input[name="x"]');
         const inputY = el.shadowRoot.querySelector('input[name="y"]');
 
-        expect(inputX?.getAttribute('aria-label')).to.equal('something custom');
-        expect(inputY?.getAttribute('aria-label')).to.equal('something custom');
+        expect(inputX?.getAttribute('aria-label')).to.equal(
+            'something custom, saturation'
+        );
+        expect(inputY?.getAttribute('aria-label')).to.equal(
+            'something custom, luminosity'
+        );
     });
     it('accepts "color" values as hsl', async () => {
         const el = await fixture<ColorArea>(
