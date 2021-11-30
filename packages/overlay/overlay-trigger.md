@@ -69,7 +69,7 @@ Here a default `<overlay-trigger>` manages content that is triggered by click an
             <sp-button>Press me</sp-button>
         </div>
     </sp-popover>
-    <sp-tooltip slot="hover-content" delayed>Tooltip</sp-tooltip>
+    <sp-tooltip slot="hover-content" delayed managed>Tooltip</sp-tooltip>
     <sp-popover slot="longpress-content" tip>
         <sp-action-group
             selects="single"
@@ -123,7 +123,7 @@ The delivery of hover content can be customized via the `placement` attribute. H
 ```html
 <overlay-trigger placement="right">
     <sp-button slot="trigger">Overlay Trigger</sp-button>
-    <sp-tooltip slot="hover-content" open placement="right">
+    <sp-tooltip slot="hover-content" placement="right" managed>
         Hover Content
     </sp-tooltip>
 </overlay-trigger>

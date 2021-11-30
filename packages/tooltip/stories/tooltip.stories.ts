@@ -69,7 +69,12 @@ export const Default = ({
     text,
 }: Properties): TemplateResult => {
     return html`
-        <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
+        <sp-tooltip
+            ?open=${open}
+            placement=${placement}
+            variant=${variant}
+            managed
+        >
             ${text}
         </sp-tooltip>
     `;
@@ -154,7 +159,12 @@ export const wIcon = ({
     text,
 }: Properties): TemplateResult => {
     return html`
-        <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
+        <sp-tooltip
+            ?open=${open}
+            placement=${placement}
+            variant=${variant}
+            managed
+        >
             ${!!variant ? iconOptions[variant]() : html``} ${text}
         </sp-tooltip>
     `;
@@ -288,7 +298,7 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                         Hover for ${variant ? variant : 'tooltip'} on the
                         ${placement}
                     </sp-button>
-                    <sp-tooltip slot="hover-content" variant=${variant}>
+                    <sp-tooltip slot="hover-content" variant=${variant} managed>
                         ${placement}
                     </sp-tooltip>
                 </overlay-trigger>

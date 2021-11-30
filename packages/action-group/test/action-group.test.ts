@@ -545,7 +545,7 @@ describe('ActionGroup', () => {
                         <sp-action-button slot="trigger">
                             First
                         </sp-action-button>
-                        <sp-tooltip slot="hover-content">
+                        <sp-tooltip slot="hover-content" managed>
                             Definitely the first one.
                         </sp-tooltip>
                     </overlay-trigger>
@@ -553,7 +553,7 @@ describe('ActionGroup', () => {
                         <sp-action-button slot="trigger" selected>
                             Second
                         </sp-action-button>
-                        <sp-tooltip slot="hover-content">
+                        <sp-tooltip slot="hover-content" managed>
                             Not the first, not the last.
                         </sp-tooltip>
                     </overlay-trigger>
@@ -561,7 +561,9 @@ describe('ActionGroup', () => {
                         <sp-action-button slot="trigger" class="third">
                             Third
                         </sp-action-button>
-                        <sp-tooltip slot="hover-content">Select me.</sp-tooltip>
+                        <sp-tooltip slot="hover-content" managed>
+                            Select me.
+                        </sp-tooltip>
                     </overlay-trigger>
                 </sp-action-group>
             `

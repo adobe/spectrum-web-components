@@ -30,7 +30,7 @@ describe('Overlay Trigger - Hover and Click', () => {
                 <sp-popover slot="click-content" dialog tip>
                     Popover content
                 </sp-popover>
-                <sp-tooltip slot="hover-content" delayed>
+                <sp-tooltip slot="hover-content" delayed managed>
                     Tooltip content
                 </sp-tooltip>
             </overlay-trigger>
@@ -62,7 +62,7 @@ describe('Overlay Trigger - Hover and Click', () => {
                 <sp-popover slot="click-content" dialog tip>
                     Popover content
                 </sp-popover>
-                <sp-tooltip slot="hover-content" delayed>
+                <sp-tooltip slot="hover-content" delayed managed>
                     Tooltip content
                 </sp-tooltip>
             </overlay-trigger>
