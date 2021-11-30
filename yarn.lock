@@ -3695,35 +3695,6 @@
   dependencies:
     "@octokit/openapi-types" "^7.3.2"
 
-"@open-wc/building-rollup@^1.10.0":
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/@open-wc/building-rollup/-/building-rollup-1.10.0.tgz#1f1e5ced28507ce3d119446e13dad9eebf0a135f"
-  integrity sha512-kRAMnBtq/30vyR+Y5icU9jBJe5lTB7BRdRUp15DtRv36/fYcR6vZw6TEIdBUlmC02wlCj8VkUwP6jKTelPjH3Q==
-  dependencies:
-    "@babel/core" "^7.11.1"
-    "@babel/helpers" "^7.10.4"
-    "@babel/plugin-proposal-dynamic-import" "^7.10.4"
-    "@babel/plugin-syntax-dynamic-import" "^7.8.3"
-    "@babel/plugin-syntax-import-meta" "^7.10.4"
-    "@babel/plugin-transform-modules-systemjs" "^7.10.5"
-    "@babel/plugin-transform-runtime" "^7.11.0"
-    "@babel/preset-env" "^7.9.0"
-    "@open-wc/building-utils" "^2.18.3"
-    "@open-wc/rollup-plugin-html" "^1.2.5"
-    "@open-wc/rollup-plugin-polyfills-loader" "^1.1.8"
-    "@rollup/plugin-babel" "^5.1.0"
-    "@rollup/plugin-node-resolve" "^7.1.1"
-    babel-plugin-bundled-import-meta "^0.3.2"
-    babel-plugin-template-html-minifier "^4.0.0"
-    browserslist "^4.16.0"
-    deepmerge "^4.2.2"
-    magic-string "^0.25.7"
-    parse5 "^5.1.1"
-    regenerator-runtime "^0.13.7"
-    rollup-plugin-terser "^7.0.2"
-    rollup-plugin-workbox "^5.2.1"
-    terser "^4.6.7"
-
 "@open-wc/building-rollup@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@open-wc/building-rollup/-/building-rollup-2.0.1.tgz#afda07f5fc67d45472fc6775123c51034d8dc701"
@@ -3824,26 +3795,6 @@
     eslint-plugin-lit-a11y "^1.0.1"
     eslint-plugin-no-only-tests "^2.4.0"
     eslint-plugin-wc "^1.2.0"
-
-"@open-wc/rollup-plugin-html@^1.2.5":
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/@open-wc/rollup-plugin-html/-/rollup-plugin-html-1.2.5.tgz#d9dc1c5a5c302700287e7abe26c608ba0c47495d"
-  integrity sha512-iW/sP/zLEjRN8DuHgAkUg3A3eOYoMgY+dJs7kiVhpKTLSKA5ETybrPeM4i/VS3q2D2wc3hwhnzvEmc8hN4mFQQ==
-  dependencies:
-    "@open-wc/building-utils" "^2.18.3"
-    "@types/html-minifier" "^3.5.3"
-    fs-extra "^8.1.0"
-    glob "^7.1.3"
-    html-minifier-terser "^5.1.1"
-    parse5 "^5.1.1"
-
-"@open-wc/rollup-plugin-polyfills-loader@^1.1.8":
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/@open-wc/rollup-plugin-polyfills-loader/-/rollup-plugin-polyfills-loader-1.1.8.tgz#5648b706fa4ce873ada21c291012dd719da5355b"
-  integrity sha512-sXn8v3RJMnkdPwh21RreWIO4uHk7LTZ64WT7cMEZqvUVxYblXFL9iiRTFPZU5k7Uf7nlzR6ed55Fj8XYZildQA==
-  dependencies:
-    "@open-wc/rollup-plugin-html" "^1.2.5"
-    polyfills-loader "^1.7.5"
 
 "@open-wc/scoped-elements@^2.0.0-next.3":
   version "2.0.0-next.4"
@@ -4018,6 +3969,14 @@
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-replace/-/plugin-replace-2.4.2.tgz#a2d539314fbc77c244858faa523012825068510a"
   integrity sha512-IGcu+cydlUMZ5En85jxHH4qj2hta/11BHq95iHEyb2sbgiN0eCdzvUcHw5gt9pBL5lTi4JDYJ1acCoMGpTvEZg==
+  dependencies:
+    "@rollup/pluginutils" "^3.1.0"
+    magic-string "^0.25.7"
+
+"@rollup/plugin-replace@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-replace/-/plugin-replace-3.0.0.tgz#3a4c9665d4e7a4ce2c360cf021232784892f3fac"
+  integrity sha512-3c7JCbMuYXM4PbPWT4+m/4Y6U60SgsnDT/cCyAyUKwFHg7pTSfsSQzIpETha3a3ig6OdOKzZz87D9ZXIK3qsDg==
   dependencies:
     "@rollup/pluginutils" "^3.1.0"
     magic-string "^0.25.7"
@@ -5534,10 +5493,10 @@
   dependencies:
     "@web/polyfills-loader" "^1.1.0"
 
-"@web/storybook-prebuilt@0.1.27-alpha.1", "@web/storybook-prebuilt@^0.1.24-alpha.1":
-  version "0.1.27-alpha.1"
-  resolved "https://registry.yarnpkg.com/@web/storybook-prebuilt/-/storybook-prebuilt-0.1.27-alpha.1.tgz#f779ad8ec8d891e9664314f0ca6c1e0bcc0a1f8d"
-  integrity sha512-oJLeBPBg4RREgrSwi+uXe9qOLtz5pgA1bLeC/YKxT+U61Fr6KmJeyAWBibf440QsWYjHWIZDXV8PEW0LVuUJAA==
+"@web/storybook-prebuilt@^0.1.24-alpha.1":
+  version "0.1.27"
+  resolved "https://registry.yarnpkg.com/@web/storybook-prebuilt/-/storybook-prebuilt-0.1.27.tgz#36287a645f75286c160bcdf93a3727f842c4e251"
+  integrity sha512-cWubW6rsut9Q1qufNlgHAjf+U9JkssScV3IcDRAuVIDz1OYKI2kSeo7CF+RgMaPgn19WYCeTXxz7bkGxEq/pSA==
 
 "@web/test-runner-chrome@^0.10.5":
   version "0.10.5"
@@ -5847,15 +5806,15 @@
   resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.10.2.tgz#40e03cab6dc5e12f199949ba2b79e02f183d1e7b"
   integrity sha512-9Iseu8bRtecb0klvv+WXZOVZatsRkbaH7M97Z+f+Pt909R4lDfgUODAnra23DOZTpeMTAkVpf4m/FZztN7Ox1A==
 
-"@webcomponents/webcomponentsjs@^2.4.0", "@webcomponents/webcomponentsjs@^2.6.0":
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.6.0.tgz#7d1674c40bddf0c6dd974c44ffd34512fe7274ff"
-  integrity sha512-Moog+Smx3ORTbWwuPqoclr+uvfLnciVd6wdCaVscHPrxbmQ/IJKm3wbB7hpzJtXWjAq2l/6QMlO85aZiOdtv5Q==
-
 "@webcomponents/webcomponentsjs@^2.5.0":
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.5.0.tgz#61b27785a6ad5bfd68fa018201fe418b118cb38d"
   integrity sha512-C0l51MWQZ9kLzcxOZtniOMohpIFdCLZum7/TEHv3XWFc1Fvt5HCpbSX84x8ltka/JuNKcuiDnxXFkiB2gaePcg==
+
+"@webcomponents/webcomponentsjs@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@webcomponents/webcomponentsjs/-/webcomponentsjs-2.6.0.tgz#7d1674c40bddf0c6dd974c44ffd34512fe7274ff"
+  integrity sha512-Moog+Smx3ORTbWwuPqoclr+uvfLnciVd6wdCaVscHPrxbmQ/IJKm3wbB7hpzJtXWjAq2l/6QMlO85aZiOdtv5Q==
 
 "@webpack-cli/configtest@^1.1.0":
   version "1.1.0"
@@ -5912,7 +5871,7 @@ abbrev@1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-abortcontroller-polyfill@^1.4.0, abortcontroller-polyfill@^1.5.0:
+abortcontroller-polyfill@^1.5.0:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/abortcontroller-polyfill/-/abortcontroller-polyfill-1.7.3.tgz#1b5b487bd6436b5b764fd52a612509702c3144b5"
   integrity sha512-zetDJxd89y3X99Kvo4qFx8GKlt6GsvN3UcRZHwU6iFA/0KiOmhkTVhe8oRoTBiTVPZu09x3vCra47+w8Yz1+2Q==
@@ -8521,11 +8480,6 @@ copy-webpack-plugin@^9.1.0:
     schema-utils "^3.1.1"
     serialize-javascript "^6.0.0"
 
-core-js-bundle@^3.6.0:
-  version "3.19.0"
-  resolved "https://registry.yarnpkg.com/core-js-bundle/-/core-js-bundle-3.19.0.tgz#4f2eddc8cd274ec994cbd0d6056dce64efc0f54d"
-  integrity sha512-FlSeFeHOKgnzT1WwvPYu/7YX6u0a4GnQNk3OB3E3AMy/ehMP/rL8+QvUE0t+VZiFfy+qMl6gBaUm9d1+Yi6DhA==
-
 core-js-bundle@^3.8.1:
   version "3.15.1"
   resolved "https://registry.yarnpkg.com/core-js-bundle/-/core-js-bundle-3.15.1.tgz#4598cbd9d2a800fae050546e74d43b6a8407f9ee"
@@ -10154,7 +10108,7 @@ es-module-lexer@^0.9.0:
   resolved "https://registry.yarnpkg.com/es-module-lexer/-/es-module-lexer-0.9.0.tgz#fe4c4621977bc668e285c5f1f70ca3b451095fda"
   integrity sha512-qU2eN/XHsrl3E4y7mK1wdWnyy5c8gXtCbfP6Xcsemm7fPUR1PIV1JhZfP7ojcN0Fzp69CfrS3u76h2tusvfKiQ==
 
-es-module-shims@^0.4.6, es-module-shims@^0.4.7:
+es-module-shims@^0.4.7:
   version "0.4.7"
   resolved "https://registry.yarnpkg.com/es-module-shims/-/es-module-shims-0.4.7.tgz#1419b65bbd38dfe91ab8ea5d7b4b454561e44641"
   integrity sha512-0LTiSQoPWwdcaTVIQXhGlaDwTneD0g9/tnH1PNs3zHFFH+xoCeJclDM3rQeqF9nurXPfMKm3l9+kfPRa5VpbKg==
@@ -13228,11 +13182,6 @@ intersection-observer@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.12.0.tgz#6c84628f67ce8698e5f9ccf857d97718745837aa"
   integrity sha512-2Vkz8z46Dv401zTWudDGwO7KiGHNDkMv417T5ItcNYfmvHR/1qCTVBO9vwH8zZmQ0WkA/1ARwpysR9bsnop4NQ==
-
-intersection-observer@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.7.0.tgz#ee16bee978db53516ead2f0a8154b09b400bbdc9"
-  integrity sha512-Id0Fij0HsB/vKWGeBe9PxeY45ttRiBmhFyyt/geBdDHBYNctMRTE3dC1U3ujzz3lap+hVXlEcVaB56kZP/eEUg==
 
 intl-list-format@^1.0.3:
   version "1.0.3"
@@ -18297,27 +18246,6 @@ pngjs@^6.0.0:
   resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-6.0.0.tgz#ca9e5d2aa48db0228a52c419c3308e87720da821"
   integrity sha512-TRzzuFRRmEoSW/p1KVAmiOgPco2Irlah+bGFCeNfJXxxYGwSw7YwAOAcd7X28K/m5bjBWKsC29KyoMfHbypayg==
 
-polyfills-loader@^1.7.5:
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/polyfills-loader/-/polyfills-loader-1.7.6.tgz#5cff98bfc9689cf10e44bdd32f498cfeb4374c51"
-  integrity sha512-AiLIgmGFmzcvsqewyKsqWb7H8CnWNTSQBoM0u+Mauzmp0DsjObXmnZdeqvTn0HNwc1wYHHTOta82WjSjG341eQ==
-  dependencies:
-    "@babel/core" "^7.11.1"
-    "@open-wc/building-utils" "^2.18.3"
-    "@webcomponents/webcomponentsjs" "^2.4.0"
-    abortcontroller-polyfill "^1.4.0"
-    core-js-bundle "^3.6.0"
-    deepmerge "^4.2.2"
-    dynamic-import-polyfill "^0.1.1"
-    es-module-shims "^0.4.6"
-    intersection-observer "^0.7.0"
-    parse5 "^5.1.1"
-    regenerator-runtime "^0.13.3"
-    resize-observer-polyfill "^1.5.1"
-    systemjs "^6.3.1"
-    terser "^4.6.7"
-    whatwg-fetch "^3.0.0"
-
 popper-max-size-modifier@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/popper-max-size-modifier/-/popper-max-size-modifier-0.2.0.tgz#1574744401296a488b4974909d130a85db94256f"
@@ -20209,11 +20137,6 @@ regenerate@^1.4.0:
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.2.tgz#b9346d8827e8f5a32f7ba29637d398b69014848a"
   integrity sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==
 
-regenerator-runtime@^0.13.3:
-  version "0.13.9"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
-  integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
-
 regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.7:
   version "0.13.7"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
@@ -20895,7 +20818,7 @@ rollup-plugin-visualizer@^5.5.2:
     source-map "^0.7.3"
     yargs "^16.2.0"
 
-rollup-plugin-workbox@6.1.1, rollup-plugin-workbox@^5.2.1, rollup-plugin-workbox@^6.0.0, rollup-plugin-workbox@^6.2.0:
+rollup-plugin-workbox@^6.0.0:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/rollup-plugin-workbox/-/rollup-plugin-workbox-6.1.1.tgz#cd8802ef76d42b02c60d916346faa913024ff1e4"
   integrity sha512-K3J3qx8iGikE896s3GDwQhiFToE9ZNkOx2k0jLCOMlFFU1bfY332Z3/qZPdDJV5Zc8U3sOJvD70JjV/aEQD5ew==
@@ -20905,6 +20828,17 @@ rollup-plugin-workbox@6.1.1, rollup-plugin-workbox@^5.2.1, rollup-plugin-workbox
     pretty-bytes "^5.5.0"
     rollup-plugin-terser "^7.0.2"
     workbox-build "^6.0.2"
+
+rollup-plugin-workbox@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-workbox/-/rollup-plugin-workbox-6.2.0.tgz#f3aa8d4cb169332461b14d7acf470afaa71ec4bb"
+  integrity sha512-7v4X2uA88AGR69syAEMTrIW4+TQUid74zuQkFgTyCs8iuzBO6Dd9fB/P6eswmwd3J1F994c6eMHn7/hg3ZOvdw==
+  dependencies:
+    "@rollup/plugin-node-resolve" "^11.0.1"
+    "@rollup/plugin-replace" "^3.0.0"
+    pretty-bytes "^5.5.0"
+    rollup-plugin-terser "^7.0.2"
+    workbox-build "^6.2.4"
 
 rollup-pluginutils@^2.8.1, rollup-pluginutils@^2.8.2:
   version "2.8.2"
@@ -22422,11 +22356,6 @@ systeminformation@^5.3.3:
   version "5.9.13"
   resolved "https://registry.yarnpkg.com/systeminformation/-/systeminformation-5.9.13.tgz#90aef7cc534027870d2d10fec63580a7a916aff9"
   integrity sha512-AGL34jWboB7bjmNYIcJ5hbYEVYXQuLPbIq7bJg3rJJNHYZvZkQC9hH15KpH9CPg9ZxCsTqAfUNyGMv1jmv78Tw==
-
-systemjs@^6.3.1:
-  version "6.11.0"
-  resolved "https://registry.yarnpkg.com/systemjs/-/systemjs-6.11.0.tgz#8df8e74fc05822e6c40170aa409b9ca64833315f"
-  integrity sha512-7YPIY44j+BoY+E6cGBSw0oCU8SNTTIHKZgftcBdwWkDzs/M86Fdlr21FrzAyph7Zo8r3CFGscyFe4rrBtixrBg==
 
 systemjs@^6.8.1:
   version "6.10.1"
@@ -24241,7 +24170,7 @@ whatwg-encoding@^2.0.0:
   dependencies:
     iconv-lite "0.6.3"
 
-whatwg-fetch@^3.0.0, whatwg-fetch@^3.5.0:
+whatwg-fetch@^3.5.0:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.2.tgz#dced24f37f2624ed0281725d51d0e2e3fe677f8c"
   integrity sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==
@@ -24421,7 +24350,7 @@ workbox-broadcast-update@6.4.1:
   dependencies:
     workbox-core "6.4.1"
 
-workbox-build@^6.0.2:
+workbox-build@^6.0.2, workbox-build@^6.2.4:
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/workbox-build/-/workbox-build-6.4.1.tgz#bc9243b814becb0b63f19beaf9827eb218782c17"
   integrity sha512-cvH74tEO8SrziFrCntZ/35B0uaMZFKG+gnk3vZmKLSUTab/6MlhL+UwYXf1sMV5SD/W/v7pnFKZbdAOAg5Ne2w==
