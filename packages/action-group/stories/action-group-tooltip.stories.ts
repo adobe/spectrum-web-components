@@ -142,13 +142,13 @@ const template = (args: Properties): TemplateResult => {
         >
             <overlay-trigger>
                 <sp-action-button slot="trigger">Red</sp-action-button>
-                <sp-tooltip slot="hover-content">
+                <sp-tooltip slot="hover-content" managed>
                     This is a cool color.
                 </sp-tooltip>
             </overlay-trigger>
             <overlay-trigger>
                 <sp-action-button slot="trigger">Green</sp-action-button>
-                <sp-tooltip slot="hover-content">
+                <sp-tooltip slot="hover-content" managed>
                     You wouldn't be wrong.
                 </sp-tooltip>
             </overlay-trigger>
@@ -156,11 +156,15 @@ const template = (args: Properties): TemplateResult => {
                 <sp-action-button slot="trigger" value="blue" selected>
                     Blue
                 </sp-action-button>
-                <sp-tooltip slot="hover-content">The sky in spring.</sp-tooltip>
+                <sp-tooltip slot="hover-content" managed>
+                    The sky in spring.
+                </sp-tooltip>
             </overlay-trigger>
             <overlay-trigger>
                 <sp-action-button slot="trigger">Yellow</sp-action-button>
-                <sp-tooltip slot="hover-content">The sun at noon.</sp-tooltip>
+                <sp-tooltip slot="hover-content" managed>
+                    The sun at noon.
+                </sp-tooltip>
             </overlay-trigger>
         </sp-action-group>
         ${!!args.selects

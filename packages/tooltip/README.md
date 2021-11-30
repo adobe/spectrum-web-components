@@ -1,6 +1,6 @@
 ## Description
 
-`sp-tooltip` allow users to get contextual help or information about specific components when hovering or focusing on them.
+`<sp-tooltip>` elements allow users to get contextual help or information about specific components when hovering or focusing on them. When an `<sp-tooltip>` is delivered without a `managed` attribute the element will bind its presence to the parent element in which it is placed. Non-`managed` `<sp-tooltip>` elements will display when that parent element is hovered or given focus. This requires that that parent be interactive, like an `<sp-button>` or similar. When the `managed` attribute is used, that means that something outside of the `<sp-tooltip>` will be managing its presence, like an `<overlay-trigger>` or similar.
 
 ### Usage
 
@@ -29,16 +29,16 @@ import { Tooltip } from '@spectrum-web-components/tooltip';
 Tooltips can be top, bottom, left, or right.
 
 ```html
-<sp-tooltip open placement="top">Label</sp-tooltip>
+<sp-tooltip open placement="top" managed>Label</sp-tooltip>
 <br />
 <br />
-<sp-tooltip open placement="bottom">Label</sp-tooltip>
+<sp-tooltip open placement="bottom" managed>Label</sp-tooltip>
 <br />
 <br />
-<sp-tooltip open placement="left">Label</sp-tooltip>
+<sp-tooltip open placement="left" managed>Label</sp-tooltip>
 <br />
 <br />
-<sp-tooltip open placement="right">Label</sp-tooltip>
+<sp-tooltip open placement="right" managed>Label</sp-tooltip>
 ```
 
 ## Variants
@@ -48,15 +48,15 @@ Tooltips can be top, bottom, left, or right.
 This is the informative or info variant of Tooltip
 
 ```html
-<sp-tooltip open placement="top" variant="info">Label</sp-tooltip>
-<sp-tooltip open placement="top" variant="info">
+<sp-tooltip open placement="top" variant="info" managed>Label</sp-tooltip>
+<sp-tooltip open placement="top" variant="info" managed>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
-<sp-tooltip open placement="top" variant="info">
+<sp-tooltip open placement="top" variant="info" managed>
     <sp-icon-info slot="icon" size="s"></sp-icon-info>
     Label
 </sp-tooltip>
-<sp-tooltip open placement="top" variant="info">
+<sp-tooltip open placement="top" variant="info" managed>
     <sp-icon-info slot="icon" size="s"></sp-icon-info>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
@@ -67,15 +67,15 @@ This is the informative or info variant of Tooltip
 This is the postive (a.k.a.) success variant of Tooltip
 
 ```html
-<sp-tooltip open placement="top" variant="positive">Label</sp-tooltip>
-<sp-tooltip open placement="top" variant="positive">
+<sp-tooltip open placement="top" variant="positive" managed>Label</sp-tooltip>
+<sp-tooltip open placement="top" variant="positive" managed>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
-<sp-tooltip open placement="top" variant="positive">
+<sp-tooltip open placement="top" variant="positive" managed>
     <sp-icon-checkmark-circle slot="icon" size="s"></sp-icon-checkmark-circle>
     Label
 </sp-tooltip>
-<sp-tooltip open placement="top" variant="positive">
+<sp-tooltip open placement="top" variant="positive" managed>
     <sp-icon-checkmark-circle slot="icon" size="s"></sp-icon-checkmark-circle>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
@@ -86,15 +86,15 @@ This is the postive (a.k.a.) success variant of Tooltip
 This is the negative a.k.a. error variant of Tooltip
 
 ```html
-<sp-tooltip open placement="top" variant="negative">Label</sp-tooltip>
-<sp-tooltip open placement="top" variant="negative">
+<sp-tooltip open placement="top" variant="negative" managed>Label</sp-tooltip>
+<sp-tooltip open placement="top" variant="negative" managed>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>
-<sp-tooltip open placement="top" variant="negative">
+<sp-tooltip open placement="top" variant="negative" managed>
     <sp-icon-alert slot="icon" size="s"></sp-icon-alert>
     Label
 </sp-tooltip>
-<sp-tooltip open placement="top" variant="negative">
+<sp-tooltip open placement="top" variant="negative" managed>
     <sp-icon-alert slot="icon" size="s"></sp-icon-alert>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit
 </sp-tooltip>

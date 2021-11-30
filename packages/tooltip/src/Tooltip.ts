@@ -56,8 +56,8 @@ export class Tooltip extends SpectrumElement {
 
     private _tooltipId = `sp-tooltip-describedby-helper-${Tooltip.instanceCount++}`;
 
-    @property({ type: Boolean, attribute: 'self-managed' })
-    public selfManaged = false;
+    @property({ type: Boolean, attribute: 'managed' })
+    public managed = false;
 
     @property({ type: Number, reflect: true })
     public offset = 6;
@@ -210,7 +210,7 @@ export class Tooltip extends SpectrumElement {
 
     private manageTooltip(): void {
         const parentElement = this.parentElement as HTMLElement;
-        if (this.selfManaged) {
+        if (!this.managed) {
             if (this.slot) {
                 this.previousSlot = this.slot;
             }
@@ -243,10 +243,8 @@ export class Tooltip extends SpectrumElement {
         `;
     }
 
-    protected override async update(
-        changed: PropertyValues<this>
-    ): Promise<void> {
-        if (changed.has('open') && this.selfManaged) {
+    protected override async update(changed: PropertyValues<this>): Promise<void> {
+        if (changed.has('open') && !this.managed) {
             if (this.open) {
                 this.openOverlay();
             } else {
@@ -259,7 +257,7 @@ export class Tooltip extends SpectrumElement {
 
     protected override updated(changed: PropertyValues<this>): void {
         super.updated(changed);
-        if (changed.has('selfManaged')) {
+        if (changed.has('managed')) {
             this.manageTooltip();
         }
     }

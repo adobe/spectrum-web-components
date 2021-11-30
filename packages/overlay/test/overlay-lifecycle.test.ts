@@ -31,7 +31,7 @@ describe('Overlay Trigger - Lifecycle Methods', () => {
                 <sp-action-button slot="trigger">
                     Button with Tooltip
                 </sp-action-button>
-                <sp-tooltip slot="hover-content">
+                <sp-tooltip slot="hover-content" managed>
                     Described by this content on focus/hover. 1
                 </sp-tooltip>
             </overlay-trigger>
@@ -97,7 +97,7 @@ describe('Overlay Trigger - Lifecycle Methods', () => {
                 <sp-action-button slot="trigger">
                     Button with Tooltip
                 </sp-action-button>
-                <sp-tooltip slot="hover-content" delayed>
+                <sp-tooltip slot="hover-content" delayed managed>
                     Described by this content on focus/hover. 2
                 </sp-tooltip>
             </overlay-trigger>

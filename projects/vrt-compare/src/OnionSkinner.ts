@@ -73,7 +73,7 @@ export class OnionSkinner extends SpectrumElement {
                     >
                         ${this.leftThumbnail}
                     </sp-thumbnail>
-                    <sp-tooltip slot="hover-content">
+                    <sp-tooltip slot="hover-content" managed>
                         Baseline screenshot
                     </sp-tooltip>
                 </overlay-trigger>
@@ -93,7 +93,7 @@ export class OnionSkinner extends SpectrumElement {
                     >
                         ${this.rightThumbnail}
                     </sp-thumbnail>
-                    <sp-tooltip slot="hover-content">
+                    <sp-tooltip slot="hover-content" managed>
                         Current screenshot
                     </sp-tooltip>
                 </overlay-trigger>
