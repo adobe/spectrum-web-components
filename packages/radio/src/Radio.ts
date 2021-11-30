@@ -35,7 +35,7 @@ import radioStyles from './radio.css.js';
  * @attr checked - Represents when the input is checked
  * @attr value - Identifies this radio button within its radio group
  *
- * @event sp-radio:change - When the input is interacted with and its state is changed
+ * @fires change - When the input is interacted with and its state is changed
  */
 export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {

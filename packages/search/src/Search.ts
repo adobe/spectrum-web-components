@@ -34,6 +34,8 @@ const stopPropagation = (event: Event): void => event.stopPropagation();
  * @element sp-search
  * @slot help-text - default or non-negative help text to associate to your form element
  * @slot negative-help-text - negative help text to associate to your form element when `invalid`
+ *
+ * @fires submit - The search form has been submitted.
  */
 export class Search extends Textfield {
     public static get styles(): CSSResultArray {

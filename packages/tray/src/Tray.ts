@@ -30,6 +30,8 @@ import styles from './tray.css.js';
  * @element sp-tray
  *
  * @slot - content to display within the Tray
+ *
+ * @fires close - Announces that the Tray has been closed.
  */
 export class Tray extends SpectrumElement {
     public static get styles(): CSSResultArray {

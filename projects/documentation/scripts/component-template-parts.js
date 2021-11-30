@@ -143,13 +143,27 @@ ${
 ${
     tag.events &&
     tag.events.length &&
-    tag.events.filter((tag) => tag.privacy !== 'private').length
+    tag.events.filter(
+        (tag) =>
+            tag.privacy !== 'private' &&
+            tag.type !== 'click' &&
+            tag.description !==
+                'Trick :focus-visible polyfill into thinking keyboard based focus'
+    ).length
         ? buildTable(
               'Events',
-              tag.events.filter((tag) => tag.privacy !== 'private'),
-              ['Name', 'Description'],
+              tag.events.filter(
+                  (tag) =>
+                      tag.privacy !== 'private' &&
+                      tag.type !== 'click' &&
+                      tag.description !==
+                          'Trick :focus-visible polyfill into thinking keyboard based focus'
+              ),
+              ['Name', 'Type', 'Description'],
               [
                   (property) => `<code>${property.name}</code>`,
+                  (property) =>
+                      `<code>${property.type?.text ?? 'Event'}</code>`,
                   (property) => `<code>${property.description || ''}</code>`,
               ]
           )
