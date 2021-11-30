@@ -179,9 +179,7 @@
         "yargs": "^17.2.1"
     },
     "resolutions": {
-        "@web/storybook-prebuilt": "0.1.27-alpha.1",
-        "cssnano/**/postcss-calc": "7.0.0",
-        "rollup-plugin-workbox": "6.1.1"
+        "cssnano/**/postcss-calc": "7.0.0"
     },
     "customElements": ".storybook/custom-elements.json",
     "workspaces": [
