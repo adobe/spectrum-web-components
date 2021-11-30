@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect } from '@open-wc/testing';
+import { expect, nextFrame } from '@open-wc/testing';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 
 export type DescribedNode = {
@@ -22,6 +22,8 @@ export const findDescribedNode = async (
     name: string,
     description: string
 ): Promise<void> => {
+    await nextFrame();
+
     const isWebKit =
         /AppleWebKit/.test(window.navigator.userAgent) &&
         !/Chrome/.test(window.navigator.userAgent);
