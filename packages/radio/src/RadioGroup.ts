@@ -26,6 +26,8 @@ import { Radio } from './Radio.js';
  * @slot - The `sp-radio` elements to display/manage in the group.
  * @slot help-text - default or non-negative help text to associate to your form element
  * @slot negative-help-text - negative help text to associate to your form element when `invalid`
+ *
+ * @fires change - An alteration to the value of the element has been committed by the user.
  */
 export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     @property({ type: String })

@@ -48,6 +48,8 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
  * @slot tab-panel - Tab Panel elements related to the listed Tab elements
  * @attr {Boolean} quiet - The tabs border is a lot smaller
  * @attr {Boolean} compact - The collection of tabs take up less space
+ *
+ * @fires change - The selected Tab child has changed.
  */
 export class Tabs extends SizedMixin(Focusable) {
     public static get styles(): CSSResultArray {

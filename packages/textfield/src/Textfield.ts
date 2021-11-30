@@ -38,6 +38,10 @@ import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-che
 const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
 export type TextfieldType = typeof textfieldTypes[number];
 
+/**
+ * @fires input - The value of the element has changed.
+ * @fires change - An alteration to the value of the element has been committed by the user.
+ */
 export class TextfieldBase extends ManageHelpText(Focusable) {
     public static get styles(): CSSResultArray {
         return [textfieldStyles, checkmarkStyles];

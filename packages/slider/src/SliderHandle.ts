@@ -70,6 +70,9 @@ const MaxConverter = {
 
 /**
  * @element sp-slider-handle
+ *
+ * @fires input - The value of the element has changed.
+ * @fires change - An alteration to the value of the element has been committed by the user.
  */
 export class SliderHandle extends Focusable {
     public handleController?: Controller;

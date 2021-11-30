@@ -68,6 +68,9 @@ export class Tab extends FocusVisiblePolyfillMixin(
     public value = '';
 
     protected handleContentChange(): void {
+        /**
+         * When the content in a tab has changed, JS powered layout related to that content may also need to be changed.
+         */
         this.dispatchEvent(
             new Event('sp-tab-contentchange', {
                 bubbles: true,

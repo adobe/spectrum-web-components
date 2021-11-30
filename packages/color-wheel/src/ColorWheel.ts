@@ -37,6 +37,8 @@ import { TinyColor } from '@ctrl/tinycolor';
 /**
  * @element sp-color-wheel
  * @slot gradient - a custom gradient visually outlining the available color values
+ * @fires input - The value of the Color Wheel has changed.
+ * @fires change - An alteration to the value of the Color Wheel has been committed by the user.
  */
 export class ColorWheel extends Focusable {
     public static get styles(): CSSResultArray {
