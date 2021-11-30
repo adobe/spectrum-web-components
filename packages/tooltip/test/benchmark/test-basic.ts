@@ -15,5 +15,5 @@ import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-tooltip>Tip me!</sp-tooltip>
+    <sp-tooltip open>Tip me!</sp-tooltip>
 `);

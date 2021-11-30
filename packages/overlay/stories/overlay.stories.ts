@@ -170,7 +170,12 @@ const template = ({ placement, offset, open }: Properties): TemplateResult => {
                             </div>
                         </sp-popover>
 
-                        <sp-tooltip slot="hover-content" delayed tip="bottom">
+                        <sp-tooltip
+                            slot="hover-content"
+                            delayed
+                            tip="bottom"
+                            managed
+                        >
                             Click to open another popover.
                         </sp-tooltip>
                     </overlay-trigger>
@@ -180,6 +185,7 @@ const template = ({ placement, offset, open }: Properties): TemplateResult => {
                 slot="hover-content"
                 ?delayed=${open !== 'hover'}
                 tip="bottom"
+                managed
             >
                 Click to open a popover.
             </sp-tooltip>
@@ -393,7 +399,7 @@ export const edges = (): TemplateResult => {
                 <br />
                 Left
             </sp-button>
-            <sp-tooltip slot="hover-content" delayed open tip="bottom">
+            <sp-tooltip slot="hover-content" delayed tip="bottom" managed>
                 Triskaidekaphobia and More
             </sp-tooltip>
         </overlay-trigger>
@@ -403,7 +409,7 @@ export const edges = (): TemplateResult => {
                 <br />
                 Right
             </sp-button>
-            <sp-tooltip slot="hover-content" delayed open tip="bottom">
+            <sp-tooltip slot="hover-content" delayed tip="bottom" managed>
                 Triskaidekaphobia and More
             </sp-tooltip>
         </overlay-trigger>
@@ -413,7 +419,7 @@ export const edges = (): TemplateResult => {
                 <br />
                 Left
             </sp-button>
-            <sp-tooltip slot="hover-content" delayed open tip="top">
+            <sp-tooltip slot="hover-content" delayed tip="top" managed>
                 Triskaidekaphobia and More
             </sp-tooltip>
         </overlay-trigger>
@@ -423,7 +429,7 @@ export const edges = (): TemplateResult => {
                 <br />
                 Right
             </sp-button>
-            <sp-tooltip slot="hover-content" delayed open tip="top">
+            <sp-tooltip slot="hover-content" delayed tip="top" managed>
                 Triskaidekaphobia and More
             </sp-tooltip>
         </overlay-trigger>
@@ -444,7 +450,7 @@ export const updated = (): TemplateResult => {
                     slot="trigger"
                     style="translate(400px, 300px)"
                 ></overlay-target-icon>
-                <sp-tooltip slot="hover-content" delayed tip="bottom">
+                <sp-tooltip slot="hover-content" delayed tip="bottom" managed>
                     Click to open popover
                 </sp-tooltip>
                 <sp-popover
@@ -483,6 +489,7 @@ export const updated = (): TemplateResult => {
                                 slot="hover-content"
                                 delayed
                                 tip="bottom"
+                                managed
                             >
                                 Click to open another popover.
                             </sp-tooltip>
@@ -505,7 +512,7 @@ export const sideHoverDraggable = (): TemplateResult => {
         <overlay-drag>
             <overlay-trigger placement="right">
                 <overlay-target-icon slot="trigger"></overlay-target-icon>
-                <sp-tooltip slot="hover-content" delayed tip="right">
+                <sp-tooltip slot="hover-content" delayed tip="right" managed>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Vivamus egestas sed enim sed condimentum. Nunc facilisis
                     scelerisque massa sed luctus. Orci varius natoque penatibus

@@ -27,7 +27,7 @@ describe('Tooltip', () => {
     it('loads', async () => {
         const el = await fixture<Tooltip>(
             html`
-                <sp-tooltip>Help text.</sp-tooltip>
+                <sp-tooltip open managed>Help text.</sp-tooltip>
             `
         );
 
@@ -40,7 +40,7 @@ describe('Tooltip', () => {
             html`
                 <sp-button>
                     This is a button.
-                    <sp-tooltip self-managed>Help text.</sp-tooltip>
+                    <sp-tooltip>Help text.</sp-tooltip>
                 </sp-button>
             `
         );
@@ -70,7 +70,7 @@ describe('Tooltip', () => {
             html`
                 <sp-button>
                     This is a button.
-                    <sp-tooltip self-managed>Help text.</sp-tooltip>
+                    <sp-tooltip>Help text.</sp-tooltip>
                 </sp-button>
             `
         );
@@ -98,7 +98,7 @@ describe('Tooltip', () => {
     it('accepts variants', async () => {
         const el = await fixture<Tooltip>(
             html`
-                <sp-tooltip variant="negative">Help text.</sp-tooltip>
+                <sp-tooltip variant="negative" managed>Help text.</sp-tooltip>
             `
         );
 
@@ -131,7 +131,7 @@ describe('Tooltip', () => {
     it('validates variants', async () => {
         const el = await fixture<Tooltip>(
             html`
-                <sp-tooltip variant="other">Help text.</sp-tooltip>
+                <sp-tooltip variant="other" managed>Help text.</sp-tooltip>
             `
         );
 
@@ -158,7 +158,7 @@ describe('Tooltip', () => {
     it('answers tip query', async () => {
         const el = await fixture<Tooltip>(
             html`
-                <sp-tooltip placement="top">Help text.</sp-tooltip>
+                <sp-tooltip placement="top" managed>Help text.</sp-tooltip>
             `
         );
 
