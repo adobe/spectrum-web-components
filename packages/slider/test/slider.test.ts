@@ -109,7 +109,7 @@ describe('Slider', () => {
 
         await elementUpdated(el);
 
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(46);
         expect(el.highlight).to.be.false;
 
         el.focus();
@@ -118,14 +118,14 @@ describe('Slider', () => {
         });
         await elementUpdated(el);
 
-        expect(el.value).to.equal(9);
+        expect(el.value).to.equal(45);
         expect(el.highlight).to.be.true;
         await sendKeys({
             press: 'ArrowUp',
         });
         await elementUpdated(el);
 
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(46);
         expect(el.highlight).to.be.true;
     });
     it('accepts pointer events', async () => {
@@ -224,7 +224,7 @@ describe('Slider', () => {
 
         await elementUpdated(el);
 
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(35);
 
         const controls = el.shadowRoot.querySelector(
             '#controls'
@@ -246,7 +246,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(pointerId).to.equal(-1);
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(35);
         expect(el.dragging, 'handle is not yet being dragged').to.be.false;
 
         controls.dispatchEvent(
@@ -308,7 +308,7 @@ describe('Slider', () => {
 
         expect(el.dragging).to.be.false;
         expect(pointerId).to.equal(-1);
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(50);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         handle.setPointerCapture = (id: number) => (pointerId = id);
@@ -340,7 +340,7 @@ describe('Slider', () => {
         await elementUpdated(el);
 
         expect(pointerId).to.equal(-1);
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(50);
     });
     it('accepts pointermove events', async () => {
         const el = await fixture<Slider>(
@@ -350,7 +350,7 @@ describe('Slider', () => {
         );
         await elementUpdated(el);
 
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(50);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         await sendMouse({
@@ -390,7 +390,7 @@ describe('Slider', () => {
         );
         await elementUpdated(el);
 
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(6);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         await sendMouse({
@@ -430,7 +430,7 @@ describe('Slider', () => {
         );
         await elementUpdated(el);
 
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(50);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         const handleBoundingRect = handle.getBoundingClientRect();
@@ -452,7 +452,7 @@ describe('Slider', () => {
 
         expect(el.dragging, 'is dragging').to.be.true;
         expect(el.highlight, 'not highlighted').to.be.false;
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(50);
 
         const inputEvent = oneEvent(el, 'input');
         await sendMouse({
@@ -501,7 +501,7 @@ describe('Slider', () => {
         );
         await elementUpdated(el);
 
-        expect(el.value, 'initial').to.equal(10);
+        expect(el.value, 'initial').to.equal(50);
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
         el.track.setPointerCapture = (id: number) => (pointerId = id);
@@ -682,7 +682,7 @@ describe('Slider', () => {
 
         await elementUpdated(el);
 
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(50);
         expect(el.dragging).to.be.false;
 
         const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
@@ -695,7 +695,7 @@ describe('Slider', () => {
         );
         await nextFrame();
 
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(50);
     });
     it('responds to input events on the <input/> element', async () => {
         const el = await fixture<Slider>(
@@ -706,7 +706,7 @@ describe('Slider', () => {
 
         await elementUpdated(el);
 
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(50);
 
         const input = el.shadowRoot.querySelector('.input') as HTMLInputElement;
 
@@ -925,7 +925,7 @@ describe('Slider', () => {
 
         await elementUpdated(el);
 
-        expect(el.value).to.equal(10);
+        expect(el.value).to.equal(50);
 
         el.min = 0;
         el.max = 200;
