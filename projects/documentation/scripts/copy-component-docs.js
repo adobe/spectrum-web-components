@@ -89,7 +89,7 @@ async function main() {
         if (!tag && componentName.startsWith('textarea')) {
             tag = findDeclaration(
                 customElements,
-                (declaration) => declaration.name === 'sp-textfield'
+                (declaration) => declaration.tagName === 'sp-textfield'
             );
         }
         if (!tag && componentName.startsWith('help-text-mixin')) {

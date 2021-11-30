@@ -38,6 +38,8 @@ import styles from './color-area.css.js';
 /**
  * @element sp-color-area
  * @slot gradient - a custom gradient visually outlining the available color values
+ * @fires input - The value of the Color Area has changed.
+ * @fires change - An alteration to the value of the Color Area has been committed by the user.
  */
 export class ColorArea extends SpectrumElement {
     public static get styles(): CSSResultArray {

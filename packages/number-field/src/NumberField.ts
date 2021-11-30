@@ -74,7 +74,7 @@ export class NumberField extends TextfieldBase {
     _forcedUnit = '';
 
     /**
-     * An `<sp-number-field>` element will process its numeric value with
+     * An `&lt;sp-number-field&gt;` element will process its numeric value with
      * `new Intl.NumberFormat(this.resolvedLanguage, this.formatOptions).format(this.valueAsNumber)`
      * in order to prepare it for visual delivery in the input. In order to customize this
      * processing supply your own `Intl.NumberFormatOptions` object here.
