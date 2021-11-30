@@ -114,14 +114,15 @@ export class Tooltip extends SpectrumElement {
     private _proxy!: HTMLElement;
 
     private generateProxy(): void {
-        if (!this._proxy) {
-            this._proxy = document.createElement('tooltip-proxy');
-            this._proxy.id = this._tooltipId;
-            this._proxy.hidden = true;
-            this._proxy.slot = 'hidden-tooltip-content';
-            this._proxy.setAttribute('role', 'tooltip');
-            this._proxy.addEventListener('disconnected', this.closeOverlay);
+        if (this._proxy) {
+            return;
         }
+        this._proxy = document.createElement('tooltip-proxy');
+        this._proxy.id = this._tooltipId;
+        this._proxy.hidden = true;
+        this._proxy.slot = 'hidden-tooltip-content';
+        this._proxy.setAttribute('role', 'tooltip');
+        this._proxy.addEventListener('disconnected', this.closeOverlay);
     }
 
     public overlayWillOpenCallback({
