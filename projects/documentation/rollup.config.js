@@ -9,21 +9,22 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { minify } from 'html-minifier-terser';
 import { copy } from '@web/rollup-plugin-copy';
 import commonjs from '@rollup/plugin-commonjs';
 import styles from 'rollup-plugin-styles';
 import litcss from 'rollup-plugin-lit-css';
 import visualizer from 'rollup-plugin-visualizer';
 import minifyHTML from 'rollup-plugin-minify-html-literals';
+import { createBasicConfig } from '@open-wc/building-rollup';
 import { injectManifest } from 'rollup-plugin-workbox';
 import path from 'path';
-import { createMpaConfig } from './_building-rollup/createMpaConfig.js';
+import html from '@web/rollup-plugin-html';
 import posthtml from 'posthtml';
 import spectrumMarkdown from './src/utils/posthtml-spectrum-docs-markdown.js';
 import Terser from 'terser';
 const { postCSSPlugins } = require('../../scripts/css-processing.cjs');
 import postCSSPrefixwrap from 'postcss-prefixwrap';
-// import fs from 'fs';
 import postcss from 'postcss';
 import purgecss from '@fullhuman/postcss-purgecss';
 
@@ -70,14 +71,13 @@ const stringReplaceHtml = (source) => {
             process.env.SWC_DIR ? `href="/${process.env.SWC_DIR}/` : 'href="/'
         )
         .replace(
-            "('/sw.js')",
+            '("/sw.js")',
             process.env.SWC_DIR
-                ? `('/${process.env.SWC_DIR}/sw.js', {scope: '/${process.env.SWC_DIR}/'})`
-                : "('/sw.js')"
+                ? `("/${process.env.SWC_DIR}/sw.js", {scope: "/${process.env.SWC_DIR}/"})`
+                : '("/sw.js")'
         )
         .replace('type="module"', 'type="module" async')
-        .replace(/ crossorigin="anonymous"/g, '')
-        .replace(/rel="preload" href="(?!\/s)/g, 'rel="modulepreload" href="');
+        .replace(/ crossorigin="anonymous"/g, '');
 };
 
 const processAndReplaceHTML = (source) => {
@@ -85,51 +85,83 @@ const processAndReplaceHTML = (source) => {
 };
 
 module.exports = async () => {
-    // const inputCss = fs.readFileSync(
-    //     `${process.cwd()}/src/components/styles.css`,
-    //     'utf8'
-    // );
-    // const { css } = await postcss([...postCSSPlugins()]).process(inputCss, {
-    //     from: `${process.cwd()}/src/components/`,
-    // });
-    const optionsHTML = {
-        // transform: injectUsedCss(css),
-        transform: processAndReplaceHTML,
-        minify: {
-            collapseWhitespace: true,
-            conservativeCollapse: true,
-            removeComments: true,
-            caseSensitive: true,
-            removeRedundantAttributes: true,
-            removeScriptTypeAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-            useShortDoctype: true,
-            minifyCSS: true,
-            /** @param {string} code */
-            minifyJS: (code) => Terser.minify(code).code,
-        },
-    };
-
-    const mpaConfig = await createMpaConfig({
-        outputDir: 'dist',
-        legacyBuild: false,
-        inputGlob: '_site/**/*.html',
-        rootPath: path.resolve('_site'),
-
+    const mpaConfig = createBasicConfig({
         // development mode creates a non-minified build for debugging or development
-        developmentMode: false, // process.env.ROLLUP_WATCH === 'true',
+        developmentMode: process.env.ROLLUP_WATCH === 'true',
 
+        // set to true to inject the service worker registration into your index.html
         injectServiceWorker: false,
         workbox: false,
-        html: optionsHTML,
     });
 
+    mpaConfig.output.dir = 'dist';
+    mpaConfig.plugins.push(
+        html({
+            transformHtml: [
+                (html) =>
+                    minify(html, {
+                        collapseWhitespace: true,
+                        conservativeCollapse: true,
+                        removeComments: true,
+                        caseSensitive: true,
+                        removeRedundantAttributes: true,
+                        removeScriptTypeAttributes: true,
+                        removeStyleLinkTypeAttributes: true,
+                        useShortDoctype: true,
+                        minifyCSS: true,
+                        /** @param {string} code */
+                        minifyJS: (code) => Terser.minify(code).code,
+                    }),
+                (html, { bundle: { entrypoints } }) => {
+                    if (html.search('rel="modulepreload"') > -1) {
+                        return html;
+                    }
+                    const modulepreloads = {};
+                    entrypoints.forEach(({ importPath, chunk }) => {
+                        modulepreloads[
+                            importPath
+                        ] = `<link rel="modulepreload" href="${importPath}">`;
+                        for (const importPath of Object.values(chunk.imports)) {
+                            modulepreloads[
+                                importPath
+                            ] = `<link rel="modulepreload" href="/${importPath}">`;
+                        }
+                        // Leverage when/if `importance` lands.
+                        // modulepreloads.push(
+                        //     ...Object.values(chunk.dynamicImports).map(
+                        //         (importPath) =>
+                        //             `<link rel="modulepreload" href="${importPath}" importance="low">`
+                        //     )
+                        // );
+                    });
+                    modulepreloads[
+                        'font1'
+                    ] = `<link rel="preload" href="https://use.typekit.net/af/eaf09c/000000000000000000017703/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3" as="font" type="font/woff2" crossorigin/>`;
+                    modulepreloads[
+                        'font2'
+                    ] = `<link rel="preload" href="https://use.typekit.net/af/cb695f/000000000000000000017701/27/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3" as="font" type="font/woff2" crossorigin/>`;
+                    return html.replace(
+                        '</head>',
+                        `${[...Object.values(modulepreloads)].join('')}</head>`
+                    );
+                },
+                processAndReplaceHTML,
+            ],
+            rootDir: path.resolve('_site'),
+            input: ['**/*.html'],
+            flattenOutput: false,
+            // minify: true,
+            absoluteSocialMediaUrls: false,
+            extractAssets: false,
+        })
+    );
+    mpaConfig.output.assetFileNames = '[hash][extname]';
     mpaConfig.output.sourcemap = true;
 
     mpaConfig.moduleContext = {
         [require.resolve('focus-visible')]: 'window',
     };
-    mpaConfig.plugins.unshift(minifyHTML());
+    mpaConfig.plugins.push(minifyHTML());
     mpaConfig.preserveEntrySignatures = false;
 
     mpaConfig.plugins.push(
@@ -156,24 +188,6 @@ module.exports = async () => {
             ],
         })
     );
-    // mpaConfig.plugins.push({
-    //     // I used an object for the hook. For now, it contains moduleId and chunkId
-    //     // but could receive additional properties in the future
-    //     resolveImportMeta(property, { moduleId }) {
-    //         // if (property === 'url') {
-    //         //     return `import.meta.url`;
-    //         // }
-    //         return `import.meta.url`;
-    //     },
-    // });
-    // mpaConfig.plugins.push(
-    //     replace({
-    //         exclude: '*.css',
-    //         values: {
-    //             'process.env.NODE_ENV': '"production"',
-    //         },
-    //     })
-    // );
     mpaConfig.plugins.push(
         injectManifest({
             swSrc: path.join(process.cwd(), '_site', 'serviceWorker.js'),
@@ -230,14 +244,5 @@ module.exports = async () => {
             gzipSize: true,
         })
     );
-    return [
-        // {
-        //     ...configSW,
-        //     output: {
-        //         file: path.join(process.cwd(), '_site', 'sw.js'),
-        //         format: 'es',
-        //     },
-        // },
-        mpaConfig,
-    ];
+    return [mpaConfig];
 };
