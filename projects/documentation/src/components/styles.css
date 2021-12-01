@@ -91,7 +91,7 @@ body {
 @media screen and (max-width: 960px) {
     docs-page:not(:defined) {
         display: block;
-        padding: 113px var(--spectrum-global-dimension-size-300) 24px;
+        padding: 114px var(--spectrum-global-dimension-size-300) 24px;
         overflow: hidden;
     }
 
@@ -135,7 +135,7 @@ body {
 
 @media screen and (max-width: 458px) {
     docs-page:not(:defined) {
-        padding: 113px var(--spectrum-global-dimension-size-300) 24px;
+        padding: 114px var(--spectrum-global-dimension-size-300) 24px;
     }
 }
 
@@ -189,6 +189,12 @@ docs-page:not(:defined) sp-tabs,
 sp-tabs:not(:defined) {
     display: block;
     margin-bottom: 2px;
+}
+
+sp-tabs:not(:defined) {
+    margin-top: calc(
+        -1 * var(--spectrum-heading-s-margin-top, var(--spectrum-alias-heading-s-margin-top))
+    );
 }
 
 sp-tab:not(:defined) {

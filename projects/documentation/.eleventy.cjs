@@ -13,6 +13,8 @@ const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
 module.exports = function (eleventyConfig) {
     eleventyConfig.setUseGitIgnore(false);
+    eleventyConfig.addPassthroughCopy('content/favicon.ico');
+    eleventyConfig.addPassthroughCopy('content/favicon.svg');
     eleventyConfig.addPassthroughCopy('content/404.html');
     eleventyConfig.addPassthroughCopy('content/serviceWorker.js');
     eleventyConfig.addPassthroughCopy('content/images/**/*');
