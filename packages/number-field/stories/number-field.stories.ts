@@ -199,6 +199,22 @@ Default.args = {
     value: 100,
 };
 
+export const quiet = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <sp-field-label for="default">Enter a number</sp-field-label>
+        <sp-number-field
+            id="default"
+            ...=${spreadProps(args)}
+            style="width: 150px"
+        ></sp-number-field>
+    `;
+};
+
+quiet.args = {
+    quiet: true,
+    value: 100,
+};
+
 export const indeterminate = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-field-label for="default">Enter a number</sp-field-label>
@@ -346,6 +362,23 @@ export const hideStepper = (args: StoryArgs): TemplateResult => {
 hideStepper.args = {
     hideStepper: true,
     value: 67,
+};
+
+export const hideStepperQuiet = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="hideStepper">
+            Enter a number without the stepper UI
+        </sp-field-label>
+        <sp-number-field
+            id="hideStepper"
+            ...=${spreadProps(args)}
+        ></sp-number-field>
+    `;
+};
+hideStepperQuiet.args = {
+    hideStepper: true,
+    value: 67,
+    quiet: true,
 };
 
 export const disabled = (args: StoryArgs): TemplateResult => {

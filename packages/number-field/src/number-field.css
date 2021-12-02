@@ -33,7 +33,7 @@ sp-field-button {
     pointer-events: none;
 }
 
-:host([hide-stepper]) .input {
+:host([hide-stepper]:not([quiet])) .input {
     border-radius: var(
         --spectrum-alias-border-radius-regular,
         var(--spectrum-global-dimension-size-50)

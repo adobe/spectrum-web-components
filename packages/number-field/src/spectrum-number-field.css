@@ -196,8 +196,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Stepper-stepDown */
     width: var(--spectrum-stepper-button-width);
 }
-.stepDown .icon,
-.stepUp .icon {
+.stepDown .stepper-icon,
+.stepUp .stepper-icon {
     margin: 0 !important; /* .spectrum-Stepper-stepUp .spectrum-Icon,
    * .spectrum-Stepper-stepDown .spectrum-Icon */
     opacity: 1;
