@@ -65,7 +65,7 @@ const config = {
                 },
                 {
                     selector: '.spectrum-Icon',
-                    name: 'icon',
+                    name: 'stepper-icon',
                 },
                 {
                     selector: '.spectrum-Stepper-input',
