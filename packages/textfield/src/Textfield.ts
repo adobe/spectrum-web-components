@@ -147,10 +147,6 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
             }
         }
         this.value = this.inputElement.value;
-        const selectionStart = this.inputElement.selectionStart as number;
-        this.updateComplete.then(() => {
-            this.inputElement.setSelectionRange(selectionStart, selectionStart);
-        });
     }
 
     protected onChange(): void {
