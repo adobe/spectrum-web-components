@@ -45,6 +45,7 @@ import {
 } from '@web/test-runner-commands';
 import { iconsOnly } from '../stories/picker.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import type { Popover } from '@spectrum-web-components/popover';
 
 const isMenuActiveElement = function (): boolean {
     return document.activeElement instanceof Menu;
@@ -202,12 +203,18 @@ describe('Picker, sync', () => {
             const close = oneEvent(el, 'sp-closed');
             item.click();
             await close;
+            // Overlaid content is outside of the context of the Picker element
+            // and cannot be managed via its updateComplete cycle.
+            await nextFrame();
 
             expect(el.value, 'first time').to.equal('option-new');
 
             opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
+            // Overlaid content is outside of the context of the Picker element
+            // and cannot be managed via its updateComplete cycle.
+            await nextFrame();
 
             expect(el.value, 'second time').to.equal('option-new');
         });
@@ -436,7 +443,7 @@ describe('Picker, sync', () => {
             const opened = oneEvent(el, 'sp-opened');
             button.click();
             await opened;
-            await elementUpdated(el);
+            await nextFrame();
 
             expect(el.open).to.be.true;
             expect(el.selectedItem?.itemText).to.be.undefined;
@@ -445,6 +452,7 @@ describe('Picker, sync', () => {
             const closed = oneEvent(el, 'sp-closed');
             secondItem.click();
             await closed;
+            await nextFrame();
 
             expect(el.open).to.be.false;
             expect(el.selectedItem?.itemText).to.equal('Select Inverse');
@@ -453,7 +461,7 @@ describe('Picker, sync', () => {
             const opened2 = oneEvent(el, 'sp-opened');
             button.click();
             await opened2;
-            await elementUpdated(el);
+            await nextFrame();
 
             expect(el.open).to.be.true;
             expect(el.selectedItem?.itemText).to.equal('Select Inverse');
@@ -462,6 +470,7 @@ describe('Picker, sync', () => {
             const closed2 = oneEvent(el, 'sp-closed');
             firstItem.click();
             await closed2;
+            await nextFrame();
 
             expect(el.open).to.be.false;
             expect(el.selectedItem?.itemText).to.equal('Deselect');
@@ -894,10 +903,9 @@ describe('Picker, sync', () => {
             expect(el.open).to.be.false;
         });
         it('scrolls selected into view on open', async () => {
-            const popover = el.shadowRoot.querySelector(
-                'sp-popover'
-            ) as HTMLElement;
-            popover.style.height = '40px';
+            (el as unknown as { generatePopover(): void }).generatePopover();
+            (el as unknown as { popover: Popover }).popover.style.height =
+                '40px';
 
             const firstItem = el.querySelector(
                 'sp-menu-item:first-child'

@@ -16,6 +16,7 @@ import {
     html,
     nothing,
     PropertyValues,
+    render,
     SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -132,7 +133,6 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     private closeOverlay?: () => void;
 
-    @query('sp-popover')
     private popover!: Popover;
 
     protected listRole: 'listbox' | 'menu' = 'listbox';
@@ -265,11 +265,29 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.menuStateResolver();
     }
 
+    private popoverFragment!: DocumentFragment;
+
+    private generatePopover(deprecatedMenu: Menu | null): void {
+        if (this.popoverFragment) return;
+
+        this.popoverFragment = document.createDocumentFragment();
+        render(this.renderPopover, this.popoverFragment, { host: this });
+        this.popover = this.popoverFragment.children[0] as Popover;
+        this.optionsMenu = this.popover.children[1] as Menu;
+
+        if (deprecatedMenu) {
+            console.warn(
+                `Deprecation Notice: You no longer need to provide an sp-menu child to ${this.tagName.toLowerCase()}. Any styling or attributes on the sp-menu will be ignored.`
+            );
+        }
+    }
+
     private async openMenu(): Promise<void> {
         /* c8 ignore next 9 */
         let reparentableChildren: Element[] = [];
-
         const deprecatedMenu = this.querySelector('sp-menu');
+
+        this.generatePopover(deprecatedMenu);
         if (deprecatedMenu) {
             reparentableChildren = Array.from(deprecatedMenu.children);
         } else {
@@ -296,7 +314,6 @@ export class PickerBase extends SizedMixin(Focusable) {
         });
 
         this.sizePopover(this.popover);
-        const { popover } = this;
         this.addEventListener(
             'sp-opened',
             async () => {
@@ -309,18 +326,21 @@ export class PickerBase extends SizedMixin(Focusable) {
             },
             { once: true }
         );
-        this.closeOverlay = await Picker.openOverlay(this, 'modal', popover, {
-            placement: this.placement,
-            receivesFocus: 'auto',
-        });
+        this.closeOverlay = await Picker.openOverlay(
+            this,
+            'modal',
+            this.popover,
+            {
+                placement: this.placement,
+                receivesFocus: 'auto',
+            }
+        );
     }
 
     protected sizePopover(popover: HTMLElement): void {
+        if (this.quiet) return;
         // only use `this.offsetWidth` when Standard variant
-        const menuWidth = !this.quiet && `${this.offsetWidth}px`;
-        if (menuWidth) {
-            popover.style.setProperty('min-width', menuWidth);
-        }
+        popover.style.setProperty('min-width', `${this.offsetWidth}px`);
     }
 
     private closeMenu(): void {
@@ -377,7 +397,7 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
-    protected get renderButton(): TemplateResult {
+    protected render(): TemplateResult {
         return html`
             <span
                 id="focus-helper"
@@ -408,12 +428,6 @@ export class PickerBase extends SizedMixin(Focusable) {
             this.selects = 'single';
         }
         super.update(changes);
-    }
-
-    protected render(): TemplateResult {
-        return html`
-            ${this.renderButton} ${this.renderPopover}
-        `;
     }
 
     protected get dismissHelper(): TemplateResult {
@@ -460,6 +474,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     protected updateMenuItems(
         event?: MenuItemAddedOrUpdatedEvent | MenuItemRemovedEvent
     ): void {
+        if (this.open && event?.type === 'sp-menu-item-removed') return;
         if (this._willUpdateItems) return;
         this._willUpdateItems = true;
         if (event?.item === this.selectedItem) {
@@ -485,20 +500,6 @@ export class PickerBase extends SizedMixin(Focusable) {
             resolve();
             this._willUpdateItems = false;
         });
-    }
-
-    protected firstUpdated(changedProperties: PropertyValues): void {
-        super.firstUpdated(changedProperties);
-
-        // Since the sp-menu gets reparented by the popover, initialize it here
-        this.optionsMenu = this.shadowRoot.querySelector('sp-menu') as Menu;
-
-        const deprecatedMenu = this.querySelector('sp-menu');
-        if (deprecatedMenu) {
-            console.warn(
-                `Deprecation Notice: You no longer need to provide an sp-menu child to ${this.tagName.toLowerCase()}. Any styling or attributes on the sp-menu will be ignored.`
-            );
-        }
     }
 
     protected updated(changedProperties: PropertyValues): void {

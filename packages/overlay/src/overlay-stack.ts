@@ -46,6 +46,8 @@ export class OverlayStack {
     private _eventsAreBound = false;
 
     private initTabTrapping(): void {
+        if (this.trappingInited) return;
+        this.trappingInited = true;
         /* c8 ignore next 4 */
         if (this.document.body.shadowRoot) {
             this.canTabTrap = false;
@@ -58,7 +60,6 @@ export class OverlayStack {
         }
         const root = this.document.body.shadowRoot as ShadowRoot;
         root.innerHTML = `
-            <div id="actual"><slot></slot></div>
             <style>
             #actual {
                 position: relative;
@@ -76,22 +77,19 @@ export class OverlayStack {
                 top: 0;
                 left: 0;
                 position: fixed;
-                pointer-events: none;
             }
             [name="open"]::slotted(*) {
                 pointer-events: all;
             }
-            #holder[hidden] {
-                display: none !important;
+            #holder {
+                display: none;
             }
-            #actual[aria-hidden] {
-                touch-action: none;
-            }
-            #actual[tabindex="-1"] ::slotted(*) {
-                pointer-events: none;  /* just in case? */
+            #actual[aria-hidden] + #holder {
+                display: block;
             }
             </style>
-            <div id="holder" hidden><slot name="open"></slot></div>
+            <div id="actual"><slot></slot></div>
+            <div id="holder"><slot name="open"></slot></div>
         `;
         this.tabTrapper = root.querySelector('#actual') as HTMLElement;
         this.overlayHolder = root.querySelector('#holder') as HTMLElement;
@@ -99,36 +97,52 @@ export class OverlayStack {
         if (this.tabTrapper.shadowRoot) {
             this.tabTrapper.shadowRoot.innerHTML = '<slot></slot>';
         }
+        this.overlayHolder.addEventListener(
+            'contextmenu',
+            this.forwardContextmenuEvent,
+            true
+        );
+        requestAnimationFrame(() => {
+            this.applyBodyMargins();
+            const observer = new ResizeObserver(() => {
+                this.applyBodyMargins();
+            });
+            observer.observe(document.body);
+        });
+    }
+
+    private _bodyMarginsApplied = false;
+
+    private applyBodyMargins(): void {
+        const { marginLeft, marginRight, marginTop, marginBottom } =
+            getComputedStyle(document.body);
+        const allZero =
+            parseFloat(marginLeft) === 0 &&
+            parseFloat(marginRight) === 0 &&
+            parseFloat(marginTop) === 0 &&
+            parseFloat(marginBottom) === 0;
+        if (allZero && !this._bodyMarginsApplied) {
+            return;
+        }
+        this.tabTrapper.style.setProperty(
+            '--swc-body-margins-inline',
+            `calc(${marginLeft} + ${marginRight})`
+        );
+        this.tabTrapper.style.setProperty(
+            '--swc-body-margins-block',
+            `calc(${marginTop} + ${marginBottom})`
+        );
+        this._bodyMarginsApplied = !allZero;
     }
 
     private startTabTrapping(): void {
-        if (!this.trappingInited) {
-            this.initTabTrapping();
-            this.trappingInited = true;
-        }
+        this.initTabTrapping();
         /* c8 ignore next 3 */
         if (!this.canTabTrap) {
             return;
         }
         this.tabTrapper.tabIndex = -1;
-        this.tabTrapper.addEventListener(
-            'contextmenu',
-            this.forwardContextmenuEvent,
-            true
-        );
         this.tabTrapper.setAttribute('aria-hidden', 'true');
-        this.overlayHolder.hidden = false;
-        requestAnimationFrame(() => {
-            const bodyStyles = getComputedStyle(document.body);
-            this.tabTrapper.style.setProperty(
-                '--swc-body-margins-inline',
-                `calc(${bodyStyles.marginLeft} + ${bodyStyles.marginRight})`
-            );
-            this.tabTrapper.style.setProperty(
-                '--swc-body-margins-block',
-                `calc(${bodyStyles.marginTop} + ${bodyStyles.marginBottom})`
-            );
-        });
     }
 
     private stopTabTrapping(): void {
@@ -137,20 +151,14 @@ export class OverlayStack {
             return;
         }
         this.tabTrapper.removeAttribute('tabindex');
-        this.tabTrapper.removeEventListener(
-            'contextmenu',
-            this.forwardContextmenuEvent,
-            true
-        );
         this.tabTrapper.removeAttribute('aria-hidden');
-        this.overlayHolder.hidden = true;
     }
 
     private forwardContextmenuEvent = async (
         event: MouseEvent
     ): Promise<void> => {
         const topOverlay = this.overlays[this.overlays.length - 1];
-        if (topOverlay.interaction !== 'modal') {
+        if (!this.trappingInited || topOverlay.interaction !== 'modal') {
             return;
         }
         event.stopPropagation();
