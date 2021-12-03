@@ -16,11 +16,19 @@ import '@spectrum-web-components/button/sp-button.js';
 
 const toast = ({
     variant = '',
-    disappearing = false,
     open = true,
     content = '',
 }): TemplateResult => html`
-    <sp-toast variant=${variant} ?disappearing=${disappearing} ?open=${open}>
+    <sp-toast
+        variant=${variant as
+            | ''
+            | 'negative'
+            | 'positive'
+            | 'info'
+            | 'error'
+            | 'warning'}
+        ?open=${open}
+    >
         ${content}
         <sp-button slot="action" variant="overBackground" quiet>Undo</sp-button>
     </sp-toast>
@@ -59,28 +67,26 @@ export default {
 };
 
 interface Properties {
-    variant: string;
-    disappearing: boolean;
+    variant: '' | 'negative' | 'positive' | 'info' | 'error' | 'warning';
     open: boolean;
     content: string;
+    onClose: (event: Event) => void;
 }
 
 export const Default = ({
     variant,
-    disappearing,
     open,
     content,
 }: Properties): TemplateResult => {
-    return toast({ variant, disappearing, open, content });
+    return toast({ variant, open, content });
 };
 
 const variantDemo = ({
     variant,
-    disappearing,
     open,
     content,
 }: Properties): TemplateResult => {
-    return toast({ variant, disappearing, open, content });
+    return toast({ variant, open, content });
 };
 
 export const Positive = (args: Properties): TemplateResult =>
