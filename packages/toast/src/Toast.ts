@@ -47,7 +47,7 @@ export type ToastVariants =
  * @slot - The toast content
  * @slot action - button element surfacing an action in the Toast
  *
- * @fires close - Announces that the Toast has been closed.
+ * @fires close - Announces that the Toast has been closed from within.
  */
 
 export class Toast extends SpectrumElement {
@@ -142,7 +142,7 @@ export class Toast extends SpectrumElement {
             this.countdownStart = performance.now();
         }
         if (time - this.countdownStart > (this._timeout as number)) {
-            this.open = false;
+            this.shouldClose();
             this.countdownStart = 0;
         } else {
             this.countdown();
@@ -174,6 +174,19 @@ export class Toast extends SpectrumElement {
         this.countdownStart = 0;
     }
 
+    private shouldClose(): void {
+        const applyDefault = this.dispatchEvent(
+            new CustomEvent('close', {
+                composed: true,
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+        if (applyDefault) {
+            this.close();
+        }
+    }
+
     public close(): void {
         this.open = false;
     }
@@ -191,7 +204,7 @@ export class Toast extends SpectrumElement {
                 <sp-clear-button
                     label="Close"
                     variant="overBackground"
-                    @click=${this.close}
+                    @click=${this.shouldClose}
                 ></sp-clear-button>
             </div>
         `;
@@ -207,16 +220,6 @@ export class Toast extends SpectrumElement {
             } else {
                 if (this.timeout) {
                     this.stopCountdown();
-                }
-                const applyDefault = this.dispatchEvent(
-                    new CustomEvent('close', {
-                        composed: true,
-                        bubbles: true,
-                        cancelable: true,
-                    })
-                );
-                if (!applyDefault) {
-                    this.open = true;
                 }
             }
         }
