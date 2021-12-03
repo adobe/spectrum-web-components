@@ -20,7 +20,7 @@ export default {
     component: 'sp-split-button',
     argTypes: {
         onFirstItem: { action: 'click: "Option 1"' },
-        onSecondItem: { action: 'click: "Option Extended"' },
+        onSecondItem: { action: 'click: "Option Really Extended"' },
         onThirdItem: { action: 'click: "Short"' },
     },
 };
@@ -37,7 +37,7 @@ const menu = ({
     onThirdItem,
 }: StoryArgs): TemplateResult => html`
     <sp-menu-item @click=${onFirstItem}>Option 1</sp-menu-item>
-    <sp-menu-item @click=${onSecondItem}>Option Extended</sp-menu-item>
+    <sp-menu-item @click=${onSecondItem}>Option Really Extended</sp-menu-item>
     <sp-menu-item @click=${onThirdItem}>Short</sp-menu-item>
 `;
 

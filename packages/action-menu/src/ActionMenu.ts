@@ -61,7 +61,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         ];
     }
 
-    protected get renderButton(): TemplateResult {
+    protected render(): TemplateResult {
         return html`
             <sp-action-button
                 quiet

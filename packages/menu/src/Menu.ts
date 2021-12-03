@@ -108,7 +108,9 @@ export class Menu extends SpectrumElement {
     private updateCachedMenuItems(): MenuItem[] {
         this.cachedChildItems = [];
 
-        const slotElements = this.menuSlot.assignedElements({ flatten: true });
+        const slotElements = this.menuSlot
+            ? this.menuSlot.assignedElements({ flatten: true })
+            : [];
         for (const slotElement of slotElements) {
             const childMenuItems: MenuItem[] =
                 slotElement instanceof MenuItem
