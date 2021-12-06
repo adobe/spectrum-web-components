@@ -182,7 +182,7 @@
     "resolutions": {
         "cssnano/**/postcss-calc": "7.0.0"
     },
-    "customElements": ".storybook/custom-elements.json",
+    "customElements": "projects/documentation/custom-elements.json",
     "workspaces": [
         "packages/*",
         "projects/*"

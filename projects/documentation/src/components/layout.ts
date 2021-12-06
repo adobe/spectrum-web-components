@@ -172,7 +172,6 @@ export class LayoutElement extends LitElement {
         event: CustomEvent<{ text: string; message: string }>
     ): void {
         copyText(event.detail.text);
-        event.detail.message = 'Import statement copied to clipboard!';
         this.addAlert(event);
     }
 

@@ -43,7 +43,7 @@ function encodeCodeWrappedHTML(source) {
     return source.replace(codeWrappedRegex, `<code>${html}</code>`);
 }
 
-function buildTable(title, rowData, headings, cells) {
+function buildTable(title, rowData, headings, cells, copyData) {
     return `
 ### ${title}
 
@@ -67,7 +67,11 @@ ${rowData
     .sort(sortByName)
     .map(
         (property) => `
-<tr class="spectrum-Table-row">
+<tr class="spectrum-Table-row" id="${title.toLowerCase()}_${
+            property.name
+        }" data-name="${copyData.name}" data-value="${copyData.value(
+            property
+        )}">
 ${cells
     .map(
         (cell) => `
@@ -122,7 +126,11 @@ ${
                   (attribute) => `<code>${attribute.type?.text || ''}</code>`,
                   (attribute) => `<code>${attribute.default || ''}</code>`,
                   (attribute) => `${attribute.description || ''}`,
-              ]
+              ],
+              {
+                  name: 'Property',
+                  value: (attribute) => attribute.fieldName,
+              }
           )
         : ``
 }
@@ -136,7 +144,11 @@ ${
                   (property) =>
                       `<code>${property.name || 'default slot'}</code>`,
                   (property) => `${property.description || ''}`,
-              ]
+              ],
+              {
+                  name: 'Slot name',
+                  value: (attribute) => attribute.name || 'default slot',
+              }
           )
         : ``
 }
@@ -165,7 +177,11 @@ ${
                   (property) =>
                       `<code>${property.type?.text ?? 'Event'}</code>`,
                   (property) => `<code>${property.description || ''}</code>`,
-              ]
+              ],
+              {
+                  name: 'Event name',
+                  value: (attribute) => attribute.name,
+              }
           )
         : ``
 }
@@ -178,7 +194,11 @@ ${
               [
                   (property) => `<code>${property.name}</code>`,
                   (property) => `<code>${property.default || '""'}</code>`,
-              ]
+              ],
+              {
+                  name: 'CSS Custom Property',
+                  value: (attribute) => attribute.name,
+              }
           )
         : ``
 }`;

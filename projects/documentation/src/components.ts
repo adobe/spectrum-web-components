@@ -63,3 +63,25 @@ class StyledElement extends HTMLElement {
 }
 
 customElements.define('styled-element', StyledElement);
+
+document
+    .querySelector('sp-tab-panel[value="api"]')
+    ?.addEventListener('click', (event: Event) => {
+        const path = event.composedPath();
+        const row = path.find(
+            (el) => (el as Element).localName === 'tr' && (el as Element).id
+        ) as HTMLElement;
+        if (row) {
+            location.hash = row.id;
+            (event.target as HTMLElement).dispatchEvent(
+                new CustomEvent('copy-text', {
+                    bubbles: true,
+                    composed: true,
+                    detail: {
+                        text: row.dataset.value,
+                        message: `${row.dataset.name} copied to clipboard!`,
+                    },
+                })
+            );
+        }
+    });
