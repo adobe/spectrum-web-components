@@ -167,6 +167,7 @@ export class IconsDemo extends SpectrumElement {
                 bubbles: true,
                 composed: true,
                 detail: {
+                    message: 'Import statement copied to clipboard!',
                     text: importURL,
                 },
             })
