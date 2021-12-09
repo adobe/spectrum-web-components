@@ -96,7 +96,7 @@ export class OverlayTrigger extends LitElement {
         // Keyboard event availability documented in README.md
         /* eslint-disable lit-a11y/click-events-have-key-events */
         return html`
-            <div
+            <slot
                 id="trigger"
                 @click=${this.onTrigger}
                 @longpress=${this.onTrigger}
@@ -105,12 +105,9 @@ export class OverlayTrigger extends LitElement {
                 @focusin=${this.onTrigger}
                 @focusout=${this.onTrigger}
                 @sp-closed=${this.handleClose}
-            >
-                <slot
-                    @slotchange=${this.onTargetSlotChange}
-                    name="trigger"
-                ></slot>
-            </div>
+                @slotchange=${this.onTargetSlotChange}
+                name="trigger"
+            ></slot>
             <div id="overlay-content">
                 <slot
                     @slotchange=${this.onClickSlotChange}
