@@ -50,7 +50,7 @@
     },
     "devDependencies": {
         "@adobe/spectrum-css-workflow-icons": "^1.2.1",
-        "@spectrum-css/icon": "^3.0.9",
+        "@spectrum-css/icon": "^3.0.10",
         "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",
         "fs": "^0.0.1-security",

@@ -34,7 +34,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .modal {
     border-radius: var(
         --spectrum-dialog-confirm-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-component-border-radius)
     );
     max-height: var(--spectrum-dialog-max-height);
     outline: none;

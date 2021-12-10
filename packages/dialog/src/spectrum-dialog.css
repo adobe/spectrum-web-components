@@ -80,11 +80,11 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     background-size: cover;
     border-top-left-radius: var(
         --spectrum-dialog-confirm-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-component-border-radius)
     );
     border-top-right-radius: var(
         --spectrum-dialog-confirm-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-component-border-radius)
     );
     grid-area: hero; /* .spectrum-Dialog-hero */
     height: var(--spectrum-dialog-confirm-hero-height);
@@ -115,7 +115,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     font-size: var(--spectrum-dialog-confirm-title-text-size);
     font-weight: var(
         --spectrum-dialog-confirm-title-text-font-weight,
-        var(--spectrum-global-font-weight-bold)
+        var(--spectrum-alias-heading-text-font-weight-regular)
     );
     grid-area: heading; /* .spectrum-Dialog-heading */
     line-height: var(
@@ -373,7 +373,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 ::slotted([slot='heading']) {
     color: var(
         --spectrum-dialog-confirm-title-text-color,
-        var(--spectrum-global-color-gray-900)
+        var(--spectrum-alias-heading-text-color)
     ); /* .spectrum-Dialog-heading */
 }
 .content,

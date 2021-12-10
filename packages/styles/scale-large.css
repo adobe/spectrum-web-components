@@ -3033,7 +3033,7 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-50
     );
     --spectrum-dialog-confirm-title-text-size: var(
-        --spectrum-global-dimension-font-size-200
+        --spectrum-alias-heading-xs-text-size
     );
     --spectrum-dialog-confirm-description-text-size: var(
         --spectrum-global-dimension-font-size-75
@@ -3048,7 +3048,7 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-300
     );
     --spectrum-dialog-destructive-title-text-size: var(
-        --spectrum-global-dimension-font-size-200
+        --spectrum-alias-heading-xs-text-size
     );
     --spectrum-dialog-destructive-description-text-size: var(
         --spectrum-global-dimension-font-size-75
@@ -3063,7 +3063,7 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-300
     );
     --spectrum-dialog-error-title-text-size: var(
-        --spectrum-global-dimension-font-size-200
+        --spectrum-alias-heading-xs-text-size
     );
     --spectrum-dialog-error-description-text-size: var(
         --spectrum-global-dimension-font-size-75
@@ -3078,7 +3078,7 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-300
     );
     --spectrum-dialog-info-title-text-size: var(
-        --spectrum-global-dimension-font-size-200
+        --spectrum-alias-heading-xs-text-size
     );
     --spectrum-dialog-info-description-text-size: var(
         --spectrum-global-dimension-font-size-75
@@ -3093,7 +3093,7 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-300
     );
     --spectrum-dialog-fullscreen-title-text-size: var(
-        --spectrum-global-dimension-font-size-200
+        --spectrum-alias-heading-xs-text-size
     );
     --spectrum-dialog-fullscreen-description-text-size: var(
         --spectrum-global-dimension-font-size-75
@@ -3108,7 +3108,7 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-300
     );
     --spectrum-dialog-fullscreentakeover-title-text-size: var(
-        --spectrum-global-dimension-font-size-200
+        --spectrum-alias-heading-xs-text-size
     );
     --spectrum-dialog-fullscreentakeover-description-text-size: var(
         --spectrum-global-dimension-font-size-75
@@ -4305,43 +4305,121 @@ governing permissions and limitations under the License.
     --spectrum-slider-xl-range-handle-touch-hit-y: var(
         --spectrum-global-dimension-size-175
     );
+    --spectrum-statuslight-s-celery-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-statuslight-s-chartreuse-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-statuslight-s-fuchsia-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-statuslight-s-indigo-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-statuslight-s-info-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-statuslight-s-magenta-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-statuslight-s-neutral-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-statuslight-s-negative-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-statuslight-s-notice-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-statuslight-s-positive-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-statuslight-s-purple-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-statuslight-s-seafoam-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
+    --spectrum-statuslight-s-yellow-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-85
+    );
     --spectrum-statuslight-l-celery-dot-size: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-statuslight-l-celery-text-padding-top: var(
         --spectrum-global-dimension-static-size-150
     );
     --spectrum-statuslight-l-chartreuse-dot-size: var(
         --spectrum-global-dimension-static-size-150
     );
+    --spectrum-statuslight-l-chartreuse-text-padding-top: var(
+        --spectrum-global-dimension-static-size-150
+    );
     --spectrum-statuslight-l-fuchsia-dot-size: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-statuslight-l-fuchsia-text-padding-top: var(
         --spectrum-global-dimension-static-size-150
     );
     --spectrum-statuslight-l-indigo-dot-size: var(
         --spectrum-global-dimension-static-size-150
     );
+    --spectrum-statuslight-l-indigo-text-padding-top: var(
+        --spectrum-global-dimension-static-size-150
+    );
     --spectrum-statuslight-l-info-dot-size: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-statuslight-l-info-text-padding-top: var(
         --spectrum-global-dimension-static-size-150
     );
     --spectrum-statuslight-l-magenta-dot-size: var(
         --spectrum-global-dimension-static-size-150
     );
+    --spectrum-statuslight-l-magenta-text-padding-top: var(
+        --spectrum-global-dimension-static-size-150
+    );
     --spectrum-statuslight-l-neutral-dot-size: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-statuslight-l-neutral-text-padding-top: var(
         --spectrum-global-dimension-static-size-150
     );
     --spectrum-statuslight-l-negative-dot-size: var(
         --spectrum-global-dimension-static-size-150
     );
+    --spectrum-statuslight-l-negative-text-padding-top: var(
+        --spectrum-global-dimension-static-size-150
+    );
     --spectrum-statuslight-l-notice-dot-size: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-statuslight-l-notice-text-padding-top: var(
         --spectrum-global-dimension-static-size-150
     );
     --spectrum-statuslight-l-positive-dot-size: var(
         --spectrum-global-dimension-static-size-150
     );
+    --spectrum-statuslight-l-positive-text-padding-top: var(
+        --spectrum-global-dimension-static-size-150
+    );
     --spectrum-statuslight-l-purple-dot-size: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-statuslight-l-purple-text-padding-top: var(
         --spectrum-global-dimension-static-size-150
     );
     --spectrum-statuslight-l-seafoam-dot-size: var(
         --spectrum-global-dimension-static-size-150
     );
+    --spectrum-statuslight-l-seafoam-text-padding-top: var(
+        --spectrum-global-dimension-static-size-150
+    );
     --spectrum-statuslight-l-yellow-dot-size: var(
+        --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-statuslight-l-yellow-text-padding-top: var(
         --spectrum-global-dimension-static-size-150
     );
     --spectrum-statuslight-xl-celery-dot-size: var(
