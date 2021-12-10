@@ -73,8 +73,8 @@
     },
     "devDependencies": {
         "@spectrum-css/commons": "^3.0.3",
-        "@spectrum-css/typography": "^4.0.5",
-        "@spectrum-css/vars": "^4.3.0"
+        "@spectrum-css/typography": "^4.0.7",
+        "@spectrum-css/vars": "^4.3.1"
     },
     "customElements": "custom-elements.json",
     "sideEffects": [

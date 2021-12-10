@@ -24,7 +24,7 @@
         "watch:serve": "wds --root-dir=dist --watch"
     },
     "dependencies": {
-        "@spectrum-css/table": "^4.0.5",
+        "@spectrum-css/table": "^4.0.6",
         "@spectrum-web-components/bundle": "^0.23.0"
     },
     "devDependencies": {
