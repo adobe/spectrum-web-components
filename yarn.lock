@@ -4289,9 +4289,9 @@
   integrity sha512-zMTHs8lk+I7fLdi9waEEbsCmJ1FxeHcjQ0yltWxuRmGk2vl4MQdQIuHIMI63iblqEaiwnJRjXJoKnWlNvndTJQ==
 
 "@spectrum-css/stepper@^3.0.9":
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/stepper/-/stepper-3.0.9.tgz#6b2df8fbfb181224b95246fb4cd12de9ff67802a"
-  integrity sha512-w0Ksfd8BTgMgt1lD+ng6/51Hj6J7oJ1d+KbT+HX9bjVNXJN84VrYU1P63vSG3V0p8bbtVOGNPjRFJb98nP2CWg==
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/stepper/-/stepper-3.0.10.tgz#47e22be367302f6661ebbfa703513fc0bcbde762"
+  integrity sha512-MqOLevaCMn6nLxn38hjD9EYtekq0hUeN9s1Onjdv4JLe/ROzl4aFDJtTJn5GCbyE7OeqpLP7vtXUvTjgXHQ8tw==
 
 "@spectrum-css/switch@^1.0.8":
   version "1.0.8"
