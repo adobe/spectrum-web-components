@@ -4339,9 +4339,9 @@
   integrity sha512-BIOCE1gM74MzVPgSleI/5nGOl1SiNDD15by48FY1fD/PaeeCamzFhRBkOaj48Htc+n+WimhsJnbxEfjPw9+8Sg==
 
 "@spectrum-css/tray@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-1.0.9.tgz#d292de273c7e485da465c4edc70cb8cabb49ffd5"
-  integrity sha512-3w3Q7Zrw9cfMHKJp/5mJQxUU3R8AF6u3jFnP6O4YcpSd+zpgC7m3uXjvhhpEcySIg61GVtkboXqjZhHRVM2jOg==
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-1.0.10.tgz#084b35e472a653a2a4dba12a59997996e3b7c400"
+  integrity sha512-bgC43oUtnwkYPzDgl2vlQZnSwj+IAruBt92Z907cZqsfnh/urfJpMXHybfODQrZoMYrSYoNJApjr5oerCYblQg==
 
 "@spectrum-css/typography@^4.0.5":
   version "4.0.5"
