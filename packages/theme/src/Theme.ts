@@ -36,10 +36,11 @@ declare global {
             };
         };
     }
-    interface ShadowRoot {
-        adoptedStyleSheets?: CSSStyleSheet[];
-    }
 }
+
+type ShadowRootWithAdoptedStyleSheets = HTMLElement['shadowRoot'] & {
+    adoptedStyleSheets?: CSSStyleSheet[];
+};
 
 type FragmentType = 'color' | 'scale' | 'core' | 'app';
 type SettableFragmentTypes = 'color' | 'scale';
@@ -106,7 +107,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
     }
 
-    public shadowRoot!: ShadowRoot;
+    public shadowRoot!: ShadowRootWithAdoptedStyleSheets;
 
     private _color: Color | '' = '';
 
