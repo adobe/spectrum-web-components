@@ -31,13 +31,13 @@ const availableArrowsByDirection = {
     horizontal: ['ArrowLeft', 'ArrowRight'],
 };
 
-declare global {
-    interface Document {
-        fonts?: {
-            ready: Promise<void>;
-        };
-    }
+interface DocumentFonts extends EventTarget {
+    ready: Promise<void>;
 }
+
+type DocumentWithFonts = typeof document & {
+    fonts?: DocumentFonts;
+};
 
 const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
@@ -370,9 +370,10 @@ export class Tabs extends SizedMixin(Focusable) {
             this.selectionIndicatorStyle = noSelectionStyle;
             return;
         }
+        const doc = document as typeof document & DocumentWithFonts;
         await Promise.all([
             selectedElement.updateComplete,
-            document.fonts ? document.fonts.ready : Promise.resolve(),
+            doc.fonts ? doc.fonts.ready : Promise.resolve(),
         ]);
         const tabBoundingClientRect = selectedElement.getBoundingClientRect();
         const parentBoundingClientRect = this.getBoundingClientRect();
@@ -412,16 +413,7 @@ export class Tabs extends SizedMixin(Focusable) {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            (
-                document as unknown as {
-                    fonts: {
-                        addEventListener: (
-                            name: string,
-                            callback: () => void
-                        ) => void;
-                    };
-                }
-            ).fonts.addEventListener(
+            (document as DocumentWithFonts).fonts.addEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );
@@ -431,16 +423,7 @@ export class Tabs extends SizedMixin(Focusable) {
     public disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            (
-                document as unknown as {
-                    fonts: {
-                        removeEventListener: (
-                            name: string,
-                            callback: () => void
-                        ) => void;
-                    };
-                }
-            ).fonts.removeEventListener(
+            (document as DocumentWithFonts).fonts.removeEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );

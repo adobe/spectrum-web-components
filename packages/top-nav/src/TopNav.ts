@@ -25,13 +25,13 @@ import { TopNavItem } from './TopNavItem.js';
 
 import tabStyles from '@spectrum-web-components/tabs/src/tabs.css.js';
 
-declare global {
-    interface Document {
-        fonts?: {
-            ready: Promise<void>;
-        };
-    }
+interface DocumentFonts extends EventTarget {
+    ready: Promise<void>;
 }
+
+type DocumentWithFonts = typeof document & {
+    fonts?: DocumentFonts;
+};
 
 const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
@@ -172,9 +172,10 @@ export class TopNav extends SizedMixin(SpectrumElement) {
             this.selectionIndicatorStyle = noSelectionStyle;
             return;
         }
+        const doc = document as DocumentWithFonts;
         await Promise.all([
             selectedItem.updateComplete,
-            document.fonts ? document.fonts.ready : Promise.resolve(),
+            doc.fonts ? doc.fonts.ready : Promise.resolve(),
         ]);
         const itemBoundingClientRect = selectedItem.getBoundingClientRect();
         const parentBoundingClientRect = this.getBoundingClientRect();
@@ -194,16 +195,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            (
-                document as unknown as {
-                    fonts: {
-                        addEventListener: (
-                            name: string,
-                            callback: () => void
-                        ) => void;
-                    };
-                }
-            ).fonts.addEventListener(
+            (document as DocumentWithFonts).fonts.addEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );
@@ -213,16 +205,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
     public disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            (
-                document as unknown as {
-                    fonts: {
-                        removeEventListener: (
-                            name: string,
-                            callback: () => void
-                        ) => void;
-                    };
-                }
-            ).fonts.removeEventListener(
+            (document as DocumentWithFonts).fonts.removeEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );

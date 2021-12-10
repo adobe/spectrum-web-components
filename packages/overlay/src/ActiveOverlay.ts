@@ -41,13 +41,11 @@ export interface PositionResult {
     positionTop: number;
 }
 
-declare global {
-    interface Document {
-        fonts?: {
-            ready: Promise<void>;
-        };
-    }
-}
+type DocumentWithFonts = typeof document & {
+    fonts?: {
+        ready: Promise<void>;
+    };
+};
 
 type OverlayStateType =
     | 'idle'
@@ -426,7 +424,8 @@ export class ActiveOverlay extends SpectrumElement {
     }
 
     public async updateOverlayPosition(): Promise<void> {
-        await (document.fonts ? document.fonts.ready : Promise.resolve());
+        const doc = document as DocumentWithFonts;
+        await (doc.fonts ? doc.fonts.ready : Promise.resolve());
         if (this.popper) {
             await this.popper.update();
         }
