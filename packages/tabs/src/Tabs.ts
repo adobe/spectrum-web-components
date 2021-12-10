@@ -31,14 +31,6 @@ const availableArrowsByDirection = {
     horizontal: ['ArrowLeft', 'ArrowRight'],
 };
 
-declare global {
-    interface Document {
-        fonts?: {
-            ready: Promise<void>;
-        };
-    }
-}
-
 const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
 /**

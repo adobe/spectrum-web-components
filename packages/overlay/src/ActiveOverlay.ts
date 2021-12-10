@@ -41,14 +41,6 @@ export interface PositionResult {
     positionTop: number;
 }
 
-declare global {
-    interface Document {
-        fonts?: {
-            ready: Promise<void>;
-        };
-    }
-}
-
 type OverlayStateType =
     | 'idle'
     | 'active'

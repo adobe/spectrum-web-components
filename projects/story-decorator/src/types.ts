@@ -20,9 +20,4 @@ declare global {
             defaultReduceMotion: boolean;
         };
     }
-    interface Document {
-        fonts?: {
-            ready: Promise<void>;
-        };
-    }
 }
