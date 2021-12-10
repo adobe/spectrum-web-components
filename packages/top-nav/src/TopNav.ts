@@ -25,14 +25,6 @@ import { TopNavItem } from './TopNavItem.js';
 
 import tabStyles from '@spectrum-web-components/tabs/src/tabs.css.js';
 
-declare global {
-    interface Document {
-        fonts?: {
-            ready: Promise<void>;
-        };
-    }
-}
-
 const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
 /**
@@ -194,16 +186,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            (
-                document as unknown as {
-                    fonts: {
-                        addEventListener: (
-                            name: string,
-                            callback: () => void
-                        ) => void;
-                    };
-                }
-            ).fonts.addEventListener(
+            document.fonts.addEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );
