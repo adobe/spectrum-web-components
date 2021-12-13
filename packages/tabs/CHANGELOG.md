@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.8.0...@spectrum-web-components/tabs@0.8.1) (2021-12-13)
+
+### Bug Fixes
+
+-   allow Tab elements to accept slotted DOM content ([29c9517](https://github.com/adobe/spectrum-web-components/commit/29c951790159d9e02b9850f5739ecaeb486e82b1))
+-   ensure that updates to Tab element content update the Selection Indicator ([94891eb](https://github.com/adobe/spectrum-web-components/commit/94891eb06022f8744558137d9fa237fd541ebca2))
+-   use typescript@^4.5 for "native" document.fonts typings ([a3e4aea](https://github.com/adobe/spectrum-web-components/commit/a3e4aea802c796e9029b2bc32f58639954db831b))
+
 # [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.7.1...@spectrum-web-components/tabs@0.8.0) (2021-11-08)
 
 ### Features

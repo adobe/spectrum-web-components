@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.24.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.23.0...@spectrum-web-components/bundle@0.24.0) (2021-12-13)
+
+### Features
+
+-   add Help Text pattern ([fdbb812](https://github.com/adobe/spectrum-web-components/commit/fdbb812e05a1202e5b5912a5e93cfba59a3dae9e))
+
 # [0.23.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.12...@spectrum-web-components/bundle@0.23.0) (2021-11-08)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle

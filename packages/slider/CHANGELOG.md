@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.0...@spectrum-web-components/slider@0.12.1) (2021-12-13)
+
+### Bug Fixes
+
+-   **slider:** response to orientation changes when measuring the bounding box ([c1412f1](https://github.com/adobe/spectrum-web-components/commit/c1412f19a5e91dd518b51277d3bbed3aff6dafac))
+
 # [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.11.1...@spectrum-web-components/slider@0.12.0) (2021-11-08)
 
 ### Features

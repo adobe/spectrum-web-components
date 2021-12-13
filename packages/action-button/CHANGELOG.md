@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.7.0...@spectrum-web-components/action-button@0.7.1) (2021-12-13)
+
+### Bug Fixes
+
+-   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+-   **action-button:** all "selected" Action Buttons should be "aria-pressed=true" ([d85e235](https://github.com/adobe/spectrum-web-components/commit/d85e23552aa8f15dfdf069b7cba8fa7b8909190a))
+
 # [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.6.1...@spectrum-web-components/action-button@0.7.0) (2021-11-08)
 
 ### Features

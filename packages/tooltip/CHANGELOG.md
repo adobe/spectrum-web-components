@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tooltip@0.10.0...@spectrum-web-components/tooltip@0.10.1) (2021-12-13)
+
+### Bug Fixes
+
+-   **tooltip:** ensure delayed and self-managed tooltips do not disrupt the page layout ([0f43b25](https://github.com/adobe/spectrum-web-components/commit/0f43b250f81ea8208a350792363f56d14cae7716))
+
 # [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tooltip@0.9.1...@spectrum-web-components/tooltip@0.10.0) (2021-11-08)
 
 **Note:** Version bump only for package @spectrum-web-components/tooltip

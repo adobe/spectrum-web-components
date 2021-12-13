@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.5.0...@spectrum-web-components/field-group@0.5.1) (2021-12-13)
+
+### Bug Fixes
+
+-   apply "HelpTextMixin" to form elements ([a952447](https://github.com/adobe/spectrum-web-components/commit/a952447254d091b99fe9270b2857cddc48df7c73))
+
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.4.1...@spectrum-web-components/field-group@0.5.0) (2021-11-08)
 
 **Note:** Version bump only for package @spectrum-web-components/field-group

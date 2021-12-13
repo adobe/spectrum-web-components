@@ -1,6 +1,6 @@
 {
     "name": "documentation",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "private": true,
     "description": "The documentation site for Spectrum Web Components",
     "license": "Apache-2.0",
@@ -25,7 +25,7 @@
     },
     "dependencies": {
         "@spectrum-css/table": "^4.0.6",
-        "@spectrum-web-components/bundle": "^0.23.0"
+        "@spectrum-web-components/bundle": "^0.24.0"
     },
     "devDependencies": {
         "@11ty/eleventy": "1.0.0-beta.7",

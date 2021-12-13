@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.3.0...@spectrum-web-components/number-field@0.3.1) (2021-12-13)
+
+### Bug Fixes
+
+-   apply "HelpTextMixin" to form elements ([a952447](https://github.com/adobe/spectrum-web-components/commit/a952447254d091b99fe9270b2857cddc48df7c73))
+-   **number-field:** prevent interactin with stepper buttons when disabled ([ae20343](https://github.com/adobe/spectrum-web-components/commit/ae2034357fb97314e0f93df1294a6a0273fccd75))
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.2.1...@spectrum-web-components/number-field@0.3.0) (2021-11-08)
 
 ### Features

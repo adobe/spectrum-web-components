@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.13.0...@spectrum-web-components/overlay@0.13.1) (2021-12-13)
+
+### Bug Fixes
+
+-   use typescript@^4.5 for "native" document.fonts typings ([a3e4aea](https://github.com/adobe/spectrum-web-components/commit/a3e4aea802c796e9029b2bc32f58639954db831b))
+
 # [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.12.1...@spectrum-web-components/overlay@0.13.0) (2021-11-08)
 
 ### Features

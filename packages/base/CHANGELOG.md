@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.5.0...@spectrum-web-components/base@0.5.1) (2021-12-13)
+
+### Bug Fixes
+
+-   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.6...@spectrum-web-components/base@0.5.0) (2021-11-08)
 
 ### Features

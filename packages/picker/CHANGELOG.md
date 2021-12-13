@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.9.0...@spectrum-web-components/picker@0.9.1) (2021-12-13)
+
+### Bug Fixes
+
+-   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+-   **picker:** allow menu items to be added, updated, and removed ([73511ba](https://github.com/adobe/spectrum-web-components/commit/73511ba996154c006602dfd1c7f1d94746049782))
+
 # [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.8.1...@spectrum-web-components/picker@0.9.0) (2021-11-08)
 
 ### Features

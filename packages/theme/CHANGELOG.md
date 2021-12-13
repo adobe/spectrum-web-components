@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.9.0...@spectrum-web-components/theme@0.9.1) (2021-12-13)
+
+### Bug Fixes
+
+-   use local declaration of ShadowRoot.adoptedStyleSheets ([43f1c63](https://github.com/adobe/spectrum-web-components/commit/43f1c63fb920d0f750226f2e567e03e4dcba7a79))
+
 # [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.16...@spectrum-web-components/theme@0.9.0) (2021-11-08)
 
 ### Features
