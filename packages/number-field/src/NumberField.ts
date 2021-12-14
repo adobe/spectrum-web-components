@@ -26,31 +26,13 @@ import { NumberFormatter, NumberParser } from '@internationalized/number';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import {
+    isAndroid,
+    isIPhone,
+} from '@spectrum-web-components/shared/src/platform.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import styles from './number-field.css.js';
-
-function testPlatform(re: RegExp): boolean {
-    return typeof window !== 'undefined' && window.navigator != null
-        ? re.test(window.navigator.platform)
-        : /* c8 ignore next */
-          false;
-}
-
-function testUserAgent(re: RegExp): boolean {
-    return typeof window !== 'undefined' && window.navigator != null
-        ? re.test(window.navigator.userAgent)
-        : /* c8 ignore next */
-          false;
-}
-
-function isIPhone(): boolean {
-    return testPlatform(/^iPhone/);
-}
-
-function isAndroid(): boolean {
-    return testUserAgent(/Android/);
-}
 
 export const FRAMES_PER_CHANGE = 5;
 export const indeterminatePlaceholder = '-';
