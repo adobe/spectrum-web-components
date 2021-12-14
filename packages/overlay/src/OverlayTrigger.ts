@@ -171,8 +171,7 @@ export class OverlayTrigger extends SpectrumElement {
                 this.longpressDescriptor.id = this._longpressId;
                 this.longpressDescriptor.slot = this._longpressId;
             }
-            this.longpressDescriptor.innerHTML =
-                LONGPRESS_INSTRUCTIONS.keyboard;
+            this.longpressDescriptor.innerHTML = LONGPRESS_INSTRUCTIONS.touch;
             this.appendChild(this.longpressDescriptor); // add descriptor to light DOM
             descriptors.push(this._longpressId);
         } else {
