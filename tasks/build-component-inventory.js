@@ -17,8 +17,12 @@ import globby from 'globby';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import fs from 'fs';
+import tar from 'tar-stream';
+import gunzip from 'gunzip-maybe';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const NPMSpectrumURI =
+    'https://registry.npmjs.org/@adobe/spectrum-tokens/latest';
 const CSSBaseURI = 'https://opensource.adobe.com/spectrum-css';
 const ConfigPath = path.resolve(
     __dirname,
@@ -29,22 +33,57 @@ const OutPath = path.resolve(__dirname, '../INVENTORY.md');
 build();
 
 async function build() {
-    const [cssComponents, webComponents] = await Promise.all([
+    const [design, css, web] = await Promise.all([
+        getDesignComponents(),
         getCSSComponents(),
         getWebComponents(),
     ]);
-    const components = merged(cssComponents, webComponents);
-    const md = inventory(components, cssComponents.size, webComponents.size);
+    const components = merged(design, css, web);
+    const md = inventory(components, design.size, css.size, web.size);
     await fs.promises.writeFile(OutPath, md);
+}
+
+async function getDesignComponents() {
+    const res = await fetch(NPMSpectrumURI);
+    const metadata = await res.json();
+    const tarballURI = metadata.dist.tarball;
+    const tarball = await fetch(tarballURI);
+    const extract = tar.extract();
+
+    const linked = await new Promise((resolve, reject) => {
+        let contents = '';
+        extract
+            .on('entry', async (header, stream, next) => {
+                stream.on('end', () => next());
+                if (header.name !== 'package/dist/data/json/dna-linked.json') {
+                    stream.resume();
+                    return;
+                }
+                for await (const chunk of stream) {
+                    contents += chunk;
+                }
+                extract.destroy();
+            })
+            .on('close', () => {
+                resolve(contents);
+            })
+            .on('error', reject);
+
+        tarball.body.pipe(gunzip()).pipe(extract);
+    });
+    const json = JSON.parse(linked);
+    return new Set(Object.keys(json.dna.components.light.medium));
 }
 
 async function getCSSComponents() {
     const res = await fetch(`${CSSBaseURI}/store.json`);
     const store = await res.json();
-    return new Map(Object.values(store).map((item) => [
-        item.component,
-        `${CSSBaseURI}/${item.href}`,
-    ]));
+    return new Map(
+        Object.values(store).map((item) => [
+            item.component,
+            `${CSSBaseURI}/${item.href}`,
+        ])
+    );
 }
 
 async function getWebComponents() {
@@ -61,36 +100,38 @@ async function getWebComponents() {
     return new Map(components);
 }
 
-function merged(css, web) {
-    const all = new Set([...css.keys(), ...web.keys()]);
+function merged(design, css, web) {
+    const all = new Set([...design, ...css.keys(), ...web.keys()]);
     const sorted = Array.from(all).sort();
     return sorted.map((name) => {
         return {
             name,
+            design: design.has(name),
             css: css.get(name),
             web: web.get(name),
         };
     });
 }
 
-function inventory(components, cssCount, webCount) {
+function inventory(components, nDesign, nCSS, nWeb) {
     return `
 # Component Inventory
 
-Availability of components in [Spectrum CSS](https://opensource.adobe.com/spectrum-css/)
+Availability of [Spectrum](https://spectrum.adobe.com) components in [Spectrum CSS](https://opensource.adobe.com/spectrum-css/)
 and [Spectrum Web Components](https://opensource.adobe.com/spectrum-web-components/).
 
-${tableOf(components, cssCount, webCount)}
+${tableOf(components, nDesign, nCSS, nWeb)}
     `;
 }
 
-function tableOf(components, cssCount, webCount) {
+function tableOf(components, nDesign, nCSS, nWeb) {
     const rows = components
-        .map(({ name, css, web }) => {
-            const cssDocs = css ? `[📄](${css})` : '';
-            const webDocs = web ? `[📄](${web})` : '❌';
-            return `| ${name} | ${cssDocs} | ${webDocs} |`;
+        .map(({ name, design, css, web }) => {
+            const designMD = design ? '✅' : '';
+            const cssMD = css ? `[📄](${css})` : '';
+            const webMD = web ? `[📄](${web})` : css ? '❌' : '';
+            return `| ${name} | ${designMD} | ${cssMD} | ${webMD} |`;
         })
         .join('\n');
-    return `| Component | Spectrum CSS (${cssCount}) | Spectrum Web Components (${webCount}) |\n|-|-|-|\n${rows}`;
+    return `| Component | Design tokens (${nDesign}) | CSS (${nCSS}) | Web Components (${nWeb}) |\n|-|-|-|-|\n${rows}`;
 }

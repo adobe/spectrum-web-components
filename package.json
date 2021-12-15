@@ -143,6 +143,7 @@
         "fs-extra": "^10.0.0",
         "gh-pages": "^3.2.3",
         "globby": "^11.0.3",
+        "gunzip-maybe": "^1.4.2",
         "husky": "^7.0.4",
         "lerna": "^4.0.0",
         "lit": "^2.0.0",
@@ -176,6 +177,7 @@
         "stylelint-config-prettier": "^9.0.3",
         "stylelint-config-standard": "^24.0.0",
         "tachometer": "^0.5.10",
+        "tar-stream": "^2.2.0",
         "typescript": "^4.5.3",
         "yargs": "^17.2.1"
     },
