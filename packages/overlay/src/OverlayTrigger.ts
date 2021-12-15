@@ -175,7 +175,13 @@ export class OverlayTrigger extends SpectrumElement {
                 this.longpressDescriptor.id = this._longpressId;
                 this.longpressDescriptor.slot = this._longpressId;
             }
-            this.longpressDescriptor.innerHTML = LONGPRESS_INSTRUCTIONS.touch;
+            if (isIOS() || isAndroid()) {
+                this.longpressDescriptor.innerHTML =
+                    LONGPRESS_INSTRUCTIONS.touch;
+            } else {
+                this.longpressDescriptor.innerHTML =
+                    LONGPRESS_INSTRUCTIONS.keyboard;
+            }
             this.appendChild(this.longpressDescriptor); // add descriptor to light DOM
             descriptors.push(this._longpressId);
         } else {
@@ -269,33 +275,6 @@ export class OverlayTrigger extends SpectrumElement {
             case 'focusin':
                 if (!this.open && this.hoverContent) {
                     this.open = 'hover';
-                }
-                // if (this.longpressDescriptor) {
-                //     if (isIOS()) {
-                //         console.log("ios");
-                //         this.longpressDescriptor.innerHTML =
-                //             LONGPRESS_INSTRUCTIONS.touch;
-                //     }
-                //     else if (isAndroid()) {
-                //         console.log("andriod");
-                //         this.longpressDescriptor.innerHTML =
-                //             LONGPRESS_INSTRUCTIONS.touch;
-                //     }
-                //     else if (this.hasVisibleFocusInTree() && (!isIOS() || !isAndroid())){
-                //         console.log("other");
-                //         this.longpressDescriptor.innerHTML =
-                //             LONGPRESS_INSTRUCTIONS.keyboard;
-                //     }
-                // }
-                if (this.hasVisibleFocusInTree() && this.longpressDescriptor) {
-                    this.longpressDescriptor.innerHTML =
-                        LONGPRESS_INSTRUCTIONS.keyboard;
-                } else if (
-                    !this.hasVisibleFocusInTree() &&
-                    this.longpressDescriptor
-                ) {
-                    this.longpressDescriptor.innerHTML =
-                        LONGPRESS_INSTRUCTIONS.touch;
                 }
                 return;
             case 'mouseleave':

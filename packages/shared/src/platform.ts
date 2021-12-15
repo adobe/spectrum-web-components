@@ -27,6 +27,7 @@ export function isMac(): boolean {
     return testPlatform(/^Mac/);
 }
 
+/* c8 ignore next 3 */
 export function isIPhone(): boolean {
     return testPlatform(/^iPhone/);
 }
@@ -40,7 +41,6 @@ export function isIPad(): boolean {
     );
 }
 
-/* c8 ignore next 3 */
 export function isIOS(): boolean {
     return isIPhone() || isIPad();
 }
