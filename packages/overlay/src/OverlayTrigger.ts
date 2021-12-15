@@ -21,6 +21,10 @@ import '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { LongpressEvent } from '@spectrum-web-components/action-button';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
+import {
+    isAndroid,
+    isIOS,
+} from '@spectrum-web-components/shared/src/platform.js';
 
 import {
     OverlayOpenCloseDetail,
@@ -266,6 +270,23 @@ export class OverlayTrigger extends SpectrumElement {
                 if (!this.open && this.hoverContent) {
                     this.open = 'hover';
                 }
+                // if (this.longpressDescriptor) {
+                //     if (isIOS()) {
+                //         console.log("ios");
+                //         this.longpressDescriptor.innerHTML =
+                //             LONGPRESS_INSTRUCTIONS.touch;
+                //     }
+                //     else if (isAndroid()) {
+                //         console.log("andriod");
+                //         this.longpressDescriptor.innerHTML =
+                //             LONGPRESS_INSTRUCTIONS.touch;
+                //     }
+                //     else if (this.hasVisibleFocusInTree() && (!isIOS() || !isAndroid())){
+                //         console.log("other");
+                //         this.longpressDescriptor.innerHTML =
+                //             LONGPRESS_INSTRUCTIONS.keyboard;
+                //     }
+                // }
                 if (this.hasVisibleFocusInTree() && this.longpressDescriptor) {
                     this.longpressDescriptor.innerHTML =
                         LONGPRESS_INSTRUCTIONS.keyboard;
