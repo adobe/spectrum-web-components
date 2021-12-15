@@ -525,7 +525,8 @@ article {
 h1[id],
 h2[id],
 h3[id],
-h4[id] {
+h4[id],
+tr[id] {
     scroll-margin-top: var(--spectrum-global-dimension-static-size-1200);
     scroll-snap-margin-top: var(--spectrum-global-dimension-static-size-1200);
 }
