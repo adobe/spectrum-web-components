@@ -436,7 +436,7 @@ describe('Overlay Trigger - Longpress', () => {
 
         await findDescribedNode(
             'Trigger with hold affordance',
-            LONGPRESS_INSTRUCTIONS.touch
+            LONGPRESS_INSTRUCTIONS.keyboard
         );
     });
 });
