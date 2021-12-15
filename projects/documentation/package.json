@@ -41,7 +41,7 @@
         "@web/rollup-plugin-html": "^1.10.1",
         "alex": "^9.1.0",
         "lunr": "^2.3.9",
-        "markdown-it-anchor": "^7.1.0",
+        "markdown-it-anchor": "^8.4.1",
         "postcss-cli": "^9.0.1",
         "posthtml": "^0.16.5",
         "posthtml-attrs-parser": "^0.1.1",
