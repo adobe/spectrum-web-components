@@ -10,31 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { spreadProps } from '../../../test/lit-helpers.js';
-import '@spectrum-web-components/action-group';
-import '@spectrum-web-components/icon/sp-icon.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import type { Properties } from './index.js';
+import { renderButton } from './index.js';
 
 import '../src';
 import '../sp-action-button.js';
-
-function renderButton(args: Properties): TemplateResult {
-    return html`
-        <sp-action-button
-            ?quiet="${!!args.quiet}"
-            ?emphasized="${!!args.emphasized}"
-            ?disabled=${!!args.disabled}
-            ?selected=${!!args.selected}
-            ?toggles=${!!args.toggles}
-            size=${args.size || 'm'}
-        >
-            Action
-        </sp-action-button>
-    `;
-}
 
 export default {
     component: 'sp-action-button',
@@ -45,64 +27,28 @@ function renderButtonsSelected(args: Properties): TemplateResult {
     const disabled = Object.assign({}, args, { disabled: true });
     const selected = Object.assign({}, args, { selected: true });
     return html`
-        <sp-action-group>
+        <sp-action-group
+            ?emphasized="${!!args.emphasized}"
+            ?quiet="${!!args.quiet}"
+        >
             ${renderButton(args)} ${renderButton(selected)}
             ${renderButton(disabled)}
         </sp-action-group>
     `;
 }
 
-export const emphasized = (args: Properties): TemplateResult =>
-    renderButtonsSelected(args);
-emphasized.args = {
-    emphasized: true,
-};
-
-export const emphasizedAndQuiet = (args: Properties): TemplateResult =>
-    renderButtonsSelected(args);
-emphasizedAndQuiet.args = {
-    emphasized: true,
-    quiet: true,
-};
-
-export const quiet = (args: Properties): TemplateResult =>
-    renderButtonsSelected(args);
-quiet.args = {
-    quiet: true,
-};
-
 export const toggles = (args: Properties): TemplateResult =>
     renderButtonsSelected(args);
 toggles.args = {
     toggles: true,
+    icon: html`
+        <sp-icon-edit hidden slot="icon"></sp-icon-edit>
+    `,
 };
 
-export const wIconButton = (args: Properties): TemplateResult => {
+export const iconSizeOverridden = (args: Properties): TemplateResult => {
     return html`
-        <sp-action-button ${spreadProps(args)}>
-            <sp-icon-edit slot="icon"></sp-icon-edit>
-            This is an action button
-        </sp-action-button>
-    `;
-};
-
-wIconButton.story = {
-    name: 'w/ Icon button',
-};
-
-export const iconOnlyButton = (args: Properties): TemplateResult => {
-    return html`
-        <sp-action-button label="Edit" ${spreadProps(args)}>
-            <sp-icon-edit slot="icon"></sp-icon-edit>
-        </sp-action-button>
-    `;
-};
-
-export const iconSizeOverridden = (): TemplateResult => {
-    return html`
-        <sp-action-button label="Edit" size="xl">
-            <sp-icon-edit slot="icon" size="s"></sp-icon-edit>
-        </sp-action-button>
+        ${renderButton(args)}
         <h1>For testing purposes only</h1>
         <p>
             This is a test to ensure that sizing the icon will still work when
@@ -111,26 +57,10 @@ export const iconSizeOverridden = (): TemplateResult => {
         </p>
     `;
 };
-
-export const holdAffordance = ({
-    holdAffordance,
-}: Properties): TemplateResult => {
-    return html`
-        <sp-action-group>
-            <sp-action-button label="Edit" ?hold-affordance=${holdAffordance}>
-                <sp-icon-edit slot="icon"></sp-icon-edit>
-            </sp-action-button>
-
-            <sp-action-button ?hold-affordance=${holdAffordance} quiet>
-                <sp-icon-settings slot="icon"></sp-icon-settings>
-            </sp-action-button>
-
-            <sp-action-button ?hold-affordance=${holdAffordance} selected>
-                <sp-icon-more slot="icon"></sp-icon-more>
-            </sp-action-button>
-        </sp-action-group>
-    `;
-};
-holdAffordance.args = {
-    holdAffordance: true,
+iconSizeOverridden.args = {
+    label: '',
+    size: 'xl',
+    icon: html`
+        <sp-icon-edit slot="icon" size="s"></sp-icon-edit>
+    `,
 };

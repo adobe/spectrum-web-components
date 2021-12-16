@@ -18,7 +18,7 @@ import { args, argTypes } from './index.js';
 export default {
     component: 'sp-button',
     title: 'Button/Over Background',
-    decorators: [makeOverBackground],
+    decorators: [makeOverBackground()],
     args: {
         ...args,
         variant: 'overBackground',
