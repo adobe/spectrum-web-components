@@ -67,15 +67,21 @@ export interface Properties {
     warning?: boolean;
 }
 
-export const makeOverBackground = (
-    story: () => TemplateResult
-): TemplateResult => html`
-    <div
-        style="background-color: var(--spectrum-global-color-seafoam-600); color: var(--spectrum-global-color-seafoam-600); padding: var(--spectrum-global-dimension-size-175) var(--spectrum-global-dimension-size-250); display: inline-block"
-    >
-        ${story()}
-    </div>
-`;
+export const makeOverBackground =
+    (variant?: 'white' | 'black') =>
+    (story: () => TemplateResult): TemplateResult => {
+        const color =
+            variant === 'black'
+                ? 'rgb(181, 209, 211)'
+                : 'var(--spectrum-global-color-seafoam-600)';
+        return html`
+            <div
+                style="background-color: ${color}; color: ${color}; padding: var(--spectrum-global-dimension-size-175) var(--spectrum-global-dimension-size-250); display: inline-block;"
+            >
+                ${story()}
+            </div>
+        `;
+    };
 
 export function renderButton(properties: Properties): TemplateResult {
     if (properties.variant) {

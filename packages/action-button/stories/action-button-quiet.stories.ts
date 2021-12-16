@@ -10,27 +10,36 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { TemplateResult } from '@spectrum-web-components/base';
-import { makeOverBackground, renderButtonSet } from './index.js';
-import { args, argTypes } from './index.js';
+import type { Properties } from './index.js';
+import { renderButtons } from './index.js';
 
 export default {
-    component: 'sp-button',
-    title: 'Button/Over Background/Sizes',
-    decorators: [makeOverBackground()],
-    args: {
-        ...args,
-        variant: 'overBackground',
-    },
-    argTypes,
+    component: 'sp-action-button',
+    title: 'Action Button/Standard Quiet',
 };
 
-const variant = 'overBackground';
+const quiet = true;
 
-export const s = (): TemplateResult => renderButtonSet({ size: 's', variant });
+export const s = (args: Properties): TemplateResult => renderButtons(args);
+s.args = {
+    size: 's',
+    quiet,
+};
 
-export const m = (): TemplateResult => renderButtonSet({ size: 'm', variant });
+export const m = (args: Properties): TemplateResult => renderButtons(args);
+m.args = {
+    size: 'm',
+    quiet,
+};
 
-export const l = (): TemplateResult => renderButtonSet({ size: 'l', variant });
+export const l = (args: Properties): TemplateResult => renderButtons(args);
+l.args = {
+    size: 'l',
+    quiet,
+};
 
-export const XL = (): TemplateResult =>
-    renderButtonSet({ size: 'xl', variant });
+export const XL = (args: Properties): TemplateResult => renderButtons(args);
+XL.args = {
+    size: 'xl',
+    quiet,
+};
