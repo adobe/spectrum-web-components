@@ -474,6 +474,307 @@ describe('ActionGroup', () => {
         expect(thirdElement.selected, 'third child not selected').to.be.false;
         expect(el.selected.length).to.equal(0);
     });
+
+    it('selects user-passed value while [selects="single"]', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects User-Chosen Buttons"
+                    selects="single"
+                    .selected=${['first']}
+                >
+                    <sp-action-button value="first" class="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button value="second" class="second">
+                        Second
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(1);
+        const firstButton = el.querySelector('.first') as ActionButton;
+        const secondButton = el.querySelector('.second') as ActionButton;
+        expect(firstButton.selected, 'first button selected').to.be.true;
+        expect(secondButton.selected, 'second button not selected').to.be.false;
+    });
+
+    it('selects user-passed values while [selects="single"], but then proceeds with radio-button style functionality', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects User-Chosen Buttons"
+                    selects="single"
+                    .selected=${['first', 'second']}
+                >
+                    <sp-action-button value="first" class="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button value="second" class="second">
+                        Second
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(2);
+        const firstButton = el.querySelector('.first') as ActionButton;
+        const secondButton = el.querySelector('.second') as ActionButton;
+        expect(firstButton.selected, 'first button selected').to.be.true;
+        expect(secondButton.selected, 'second button selected').to.be.true;
+
+        secondButton.click();
+        await elementUpdated(el);
+
+        expect(el.selected.length).to.equal(1);
+        expect(firstButton.selected, 'first button selected').to.be.false;
+        expect(secondButton.selected, 'second button selected').to.be.true;
+    });
+
+    it('selects user-passed values with no .selects value', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects User-Chosen Buttons"
+                    .selected=${['first']}
+                >
+                    <sp-action-button value="first" class="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button value="second" class="second">
+                        Second
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(1);
+        const firstButton = el.querySelector('.first') as ActionButton;
+        const secondButton = el.querySelector('.second') as ActionButton;
+        expect(firstButton.selected, 'first button selected').to.be.true;
+        expect(secondButton.selected, 'second button selected').to.be.false;
+
+        secondButton.click();
+        await elementUpdated(el);
+
+        expect(el.selected.length).to.equal(0);
+        expect(firstButton.selected, 'first button selected').to.be.false;
+        expect(secondButton.selected, 'second button selected').to.be.false;
+    });
+
+    it('selects user-passed buttons if present in action-group while [selects="multiple"]', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects User-Chosen Buttons"
+                    selects="multiple"
+                    .selected=${['second', 'fourth']}
+                >
+                    <sp-action-button class="first" value="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button class="second" value="second">
+                        Second
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(1);
+        const secondButton = el.querySelector('.second') as ActionButton;
+        expect(secondButton.selected, 'second button selected').to.be.true;
+
+        const firstButton = el.querySelector('.first') as ActionButton;
+        expect(firstButton.selected, 'first button selected').to.be.false;
+    });
+
+    it('sets .selects to multiple if .selected is passed in', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects User-Chosen Buttons"
+                    .selected=${['first', 'second']}
+                >
+                    <sp-action-button class="first" value="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button class="second" value="second">
+                        Second
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(2);
+        expect(el.selects).to.equal('multiple');
+
+        const firstButton = el.querySelector('.first') as ActionButton;
+        expect(firstButton.selected, 'first button selected').to.be.true;
+
+        const secondButton = el.querySelector('.second') as ActionButton;
+        expect(secondButton.selected, 'second button selected').to.be.true;
+    });
+
+    it('sets .selects to multiple if .selected is passed in, even if .selects is set by user', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects User-Chosen Buttons"
+                    .selects=${'single'}
+                    .selected=${['first', 'second']}
+                >
+                    <sp-action-button class="first" value="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button class="second" value="second">
+                        Second
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(2);
+        expect(el.selects).to.equal('multiple');
+
+        const firstButton = el.querySelector('.first') as ActionButton;
+        expect(firstButton.selected, 'first button selected').to.be.true;
+
+        const secondButton = el.querySelector('.second') as ActionButton;
+        expect(secondButton.selected, 'second button selected').to.be.true;
+    });
+
+    it('sets .selects to multiple if .selected is passed in, even if .selects is set by user', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects User-Chosen Buttons"
+                    .selects=${'single'}
+                    .selected=${['first']}
+                >
+                    <sp-action-button class="first" value="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button class="second" value="second">
+                        Second
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(1);
+        expect(el.selects).to.equal('multiple');
+
+        const firstButton = el.querySelector('.first') as ActionButton;
+        expect(firstButton.selected, 'first button selected').to.be.true;
+
+        const secondButton = el.querySelector('.second') as ActionButton;
+        expect(secondButton.selected, 'second button selected').to.be.false;
+    });
+
+    it('will not change .selected state if event is prevented while [selects="multiple"]', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects Multiple Group"
+                    selects="multiple"
+                    .selected=${['first', 'second']}
+                    @change=${(event: Event): void => {
+                        event.preventDefault();
+                    }}
+                >
+                    <sp-action-button class="first" value="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button class="second" value="second">
+                        Second
+                    </sp-action-button>
+                    <sp-action-button class="third " value="third">
+                        Third
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+        const firstElement = el.querySelector('.first') as ActionButton;
+        const secondElement = el.querySelector('.second') as ActionButton;
+        const thirdElement = el.querySelector('.third') as ActionButton;
+
+        // checking if the first and second are selected
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(2);
+        expect(firstElement.selected, 'first child selected').to.be.true;
+        expect(secondElement.selected, 'second child selected').to.be.true;
+
+        // making sure third element isn't selected
+        thirdElement.click();
+
+        await elementUpdated(el);
+
+        expect(thirdElement.selected, 'third child not selected').to.be.false;
+        expect(el.selected.length).to.equal(2);
+
+        // making sure already-selected elements are not de-selected
+        secondElement.click();
+        await elementUpdated(el);
+
+        expect(secondElement.selected, 'second element still selected').to.be
+            .true;
+    });
+
+    it('will not change .selected state if event is prevented while [selects="single"]', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects Single Group"
+                    selects="single"
+                    .selected=${['first']}
+                    @change=${(event: Event): void => {
+                        event.preventDefault();
+                    }}
+                >
+                    <sp-action-button class="first" value="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button class="second" value="second">
+                        Second
+                    </sp-action-button>
+                    <sp-action-button class="third " value="third">
+                        Third
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+        const firstElement = el.querySelector('.first') as ActionButton;
+        const thirdElement = el.querySelector('.third') as ActionButton;
+
+        // checking if the first element is selected
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(1);
+        expect(firstElement.selected, 'first child selected').to.be.true;
+
+        // making sure third element isn't selected
+        thirdElement.click();
+
+        await elementUpdated(el);
+
+        expect(thirdElement.selected, 'third child not selected').to.be.false;
+        expect(el.selected.length).to.equal(1);
+
+        // making sure already-selected elements are not de-selected
+        firstElement.click();
+        await elementUpdated(el);
+
+        expect(firstElement.selected, 'first element still selected').to.be
+            .true;
+    });
+
     const acceptKeyboardInput = async (el: ActionGroup): Promise<void> => {
         const thirdElement = el.querySelector('.third') as ActionButton;
 

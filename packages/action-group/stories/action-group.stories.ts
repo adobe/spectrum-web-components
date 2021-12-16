@@ -222,6 +222,28 @@ export const selectsMultipleWithTooltips = (
     `;
 };
 
+export const selectsMultipleControlled = (args: Properties): TemplateResult => {
+    return html`
+        <sp-action-group
+            ${spreadProps(args)}
+            .selected=${['donuts', 'crepecakes']}
+            label="Favorite Dessert"
+            @change=${({ target }: Event & { target: ActionGroup }) => {
+                const next = target.nextElementSibling as HTMLDivElement;
+                next.textContent = `Selected: ${JSON.stringify(
+                    target.selected
+                )}`;
+            }}
+        >
+            <sp-action-button value="lavacakes">Lava Cakes</sp-action-button>
+            <sp-action-button value="donuts">Donuts</sp-action-button>
+            <sp-action-button value="crepecakes">Crepe Cake</sp-action-button>
+            <sp-action-button value="fruittarts">Fruit Tarts</sp-action-button>
+        </sp-action-group>
+        <div>Selected:</div>
+    `;
+};
+
 export const iconsOnly = (args: Properties): TemplateResult =>
     renderIconButtons(args);
 
