@@ -12,22 +12,10 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import type { Properties } from './index.js';
 
 import '../src';
 import '../sp-action-button.js';
-
-interface Properties {
-    active?: boolean;
-    quiet?: boolean;
-    disabled?: boolean;
-    selected?: boolean;
-    toggles?: boolean;
-    emphasized?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    holdAffordance?: boolean;
-    icon?: TemplateResult;
-    label?: string;
-}
 
 function renderButton(properties: Properties): TemplateResult {
     return html`

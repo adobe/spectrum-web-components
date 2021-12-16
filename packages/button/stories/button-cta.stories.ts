@@ -12,55 +12,18 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { bellIcon, renderButtonSet } from './index.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import type { Properties } from './index.js';
+import { args, argTypes } from './index.js';
 
 export default {
     component: 'sp-button',
     title: 'Button/CTA',
     args: {
-        disabled: false,
+        ...args,
         variant: 'cta',
     },
-    argTypes: {
-        disabled: {
-            name: 'disabled',
-            type: { name: 'boolean', required: false },
-            description:
-                'Disable this control. It will not receive focus or events.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        variant: {
-            name: 'variant',
-            type: { name: 'string', required: false },
-            description: 'The visual variant to apply to the button.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'cta' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: [
-                    'cta',
-                    'primary',
-                    'secondary',
-                    'negative',
-                    'overBackground',
-                ],
-            },
-        },
-    },
+    argTypes,
 };
-
-interface Properties {
-    content?: TemplateResult;
-    disabled?: boolean;
-    variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
-}
 
 export const Default = (props: Properties): TemplateResult =>
     renderButtonSet(props);

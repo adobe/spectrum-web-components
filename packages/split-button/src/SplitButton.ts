@@ -41,6 +41,8 @@ const chevronClass = {
     xl: 'spectrum-UIIcon-ChevronDown300',
 };
 
+export type SplitButtonTypes = 'field' | 'more';
+
 /**
  * @element sp-split-button
  *
@@ -65,7 +67,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
     }
 
     @property({ type: String })
-    public type: 'field' | 'more' = 'field';
+    public type: SplitButtonTypes = 'field';
 
     @query('.trigger')
     private trigger!: HTMLButtonElement;

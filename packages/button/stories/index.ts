@@ -16,7 +16,47 @@ import '../sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
 
-interface Properties {
+export const args = {
+    disabled: false,
+    variant: 'cta',
+};
+
+export const argTypes = {
+    disabled: {
+        name: 'disabled',
+        type: { name: 'boolean', required: false },
+        description:
+            'Disable this control. It will not receive focus or events.',
+        table: {
+            type: { summary: 'boolean' },
+            defaultValue: { summary: false },
+        },
+        control: {
+            type: 'boolean',
+        },
+    },
+    variant: {
+        name: 'variant',
+        type: { name: 'string', required: false },
+        description: 'The visual variant to apply to the button.',
+        table: {
+            type: { summary: 'string' },
+            defaultValue: { summary: 'cta' },
+        },
+        control: {
+            type: 'inline-radio',
+            options: [
+                'cta',
+                'primary',
+                'secondary',
+                'negative',
+                'overBackground',
+            ],
+        },
+    },
+};
+
+export interface Properties {
     variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
     quiet?: boolean;
     content?: TemplateResult;
