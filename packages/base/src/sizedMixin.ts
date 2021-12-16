@@ -19,6 +19,15 @@ type Constructor<T = Record<string, unknown>> = {
 };
 
 export type ElementSize = 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
+export const ElementSizes: Record<string, ElementSize> = {
+    xxs: 'xxs',
+    xs: 'xs',
+    s: 's',
+    m: 'm',
+    l: 'l',
+    xl: 'xl',
+    xxl: 'xxl',
+};
 export type DefaultElementSize = Exclude<ElementSize, 'xxs' | 'xs' | 'xxl'>;
 
 export interface SizedElementInterface {
