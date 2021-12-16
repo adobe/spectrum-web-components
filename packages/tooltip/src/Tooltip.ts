@@ -132,17 +132,12 @@ export class Tooltip extends SpectrumElement {
         trigger: HTMLElement;
     }): void {
         this.setAttribute('aria-hidden', 'true');
-        if (!this._proxy) {
-            this._proxy = document.createElement('span');
-            this._proxy.textContent = this.textContent;
-            this._proxy.id = this._tooltipId;
-            this._proxy.hidden = true;
-            this._proxy.setAttribute('role', 'tooltip');
-        }
+        this.generateProxy();
+        this._proxy.textContent = this.textContent;
         const ariaDescribedby = trigger.getAttribute('aria-describedby') || '';
         this.hadTooltipId = ariaDescribedby.search(this._tooltipId) > -1;
 
-        trigger.insertAdjacentElement('beforebegin', this._proxy);
+        this.insertAdjacentElement('beforebegin', this._proxy);
 
         if (this.hadTooltipId) return;
 
