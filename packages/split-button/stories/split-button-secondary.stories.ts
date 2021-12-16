@@ -12,6 +12,8 @@ governing permissions and limitations under the License.
 
 import { TemplateResult } from '@spectrum-web-components/base';
 import { renderSplitButtonSet } from './index.js';
+import type { Properties } from './index.js';
+import { args, argTypes } from './index.js';
 
 import '../sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -21,107 +23,12 @@ export default {
     title: 'Split Button/Secondary',
     component: 'sp-split-button',
     args: {
-        disabled: false,
-        invalid: false,
-        left: false,
-        open: false,
+        ...args,
         type: 'field',
         variant: 'secondary',
     },
-    argTypes: {
-        disabled: {
-            name: 'disabled',
-            type: { name: 'boolean', required: false },
-            description:
-                'Disable this control. It will not receive focus or events.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        invalid: {
-            name: 'invalid',
-            type: { name: 'boolean', required: false },
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        left: {
-            name: 'left',
-            type: { name: 'boolean', required: false },
-            description: 'Whether the split begins on the left.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        open: {
-            name: 'open',
-            type: { name: 'boolean', required: false },
-            description: 'Whether the picker menu is open.',
-            table: {
-                type: { summary: 'boolean' },
-                defaultValue: { summary: false },
-            },
-            control: {
-                type: 'boolean',
-            },
-        },
-        type: {
-            name: 'type',
-            type: { name: 'string', required: false },
-            description:
-                'Whether the split button shows the chosen action from the overlay menu. The `more` type maintains its original value.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'field' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['field', 'more'],
-            },
-        },
-        variant: {
-            name: 'variant',
-            type: { name: 'string', required: false },
-            description: 'The visual variant to apply to the button.',
-            table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'cta' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: [
-                    'cta',
-                    'primary',
-                    'secondary',
-                    'negative',
-                    'overBackground',
-                ],
-            },
-        },
-    },
+    argTypes,
 };
-
-interface Properties {
-    disabled?: boolean;
-    invalid?: boolean;
-    left?: boolean;
-    open?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    type?: 'field' | 'more';
-    variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
-}
 
 export const field = (props: Properties, options = {}): TemplateResult =>
     renderSplitButtonSet(props, options);

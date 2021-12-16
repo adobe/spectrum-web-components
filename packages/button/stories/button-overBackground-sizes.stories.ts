@@ -11,11 +11,17 @@ governing permissions and limitations under the License.
 */
 import { TemplateResult } from '@spectrum-web-components/base';
 import { makeOverBackground, renderButtonSet } from './index.js';
+import { args, argTypes } from './index.js';
 
 export default {
     component: 'sp-button',
     title: 'Button/Over Background/Sizes',
     decorators: [makeOverBackground],
+    args: {
+        ...args,
+        variant: 'overBackground',
+    },
+    argTypes,
 };
 
 const variant = 'overBackground';

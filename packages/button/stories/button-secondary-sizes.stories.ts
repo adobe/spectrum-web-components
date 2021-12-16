@@ -11,10 +11,16 @@ governing permissions and limitations under the License.
 */
 import { TemplateResult } from '@spectrum-web-components/base';
 import { renderButtonSet } from './index.js';
+import { args, argTypes } from './index.js';
 
 export default {
     component: 'sp-button',
     title: 'Button/Secondary/Sizes',
+    args: {
+        ...args,
+        variant: 'secondary',
+    },
+    argTypes,
 };
 
 const variant = 'secondary';
