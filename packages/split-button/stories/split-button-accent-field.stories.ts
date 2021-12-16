@@ -13,17 +13,17 @@ governing permissions and limitations under the License.
 import { ElementSizes, TemplateResult } from '@spectrum-web-components/base';
 import { args, argTypes, renderSplitButtonSet, splitbutton } from './index.js';
 import type { Properties } from './index.js';
-import { openSplitButtonDecorator } from './helpers.js';
-import './helpers.js';
 
 import '../sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import { SplitButtonTypes } from '../src/SplitButton.js';
+import { ButtonVariants } from '@spectrum-web-components/button';
 
-const variant = 'secondary';
-const type = 'field';
+const variant = 'accent' as ButtonVariants;
+const type = 'field' as SplitButtonTypes;
 
 export default {
-    title: 'Split Button/Secondary/Field',
+    title: 'Split Button/Accent/Field',
     component: 'sp-split-button',
     args: {
         ...args,
@@ -47,4 +47,3 @@ export const XL = (args: Properties): TemplateResult =>
 XL.args = { size: ElementSizes.xl };
 export const open = (args: Properties): TemplateResult => splitbutton(args);
 open.args = { open: true };
-open.decorators = [openSplitButtonDecorator];

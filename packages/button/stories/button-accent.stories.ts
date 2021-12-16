@@ -17,19 +17,16 @@ import { args, argTypes } from './index.js';
 
 export default {
     component: 'sp-button',
-    title: 'Button/CTA',
+    title: 'Button/Accent',
     args: {
         ...args,
-        variant: 'cta',
+        variant: 'accent',
     },
     argTypes,
 };
 
 export const Default = (props: Properties): TemplateResult =>
     renderButtonSet(props);
-Default.args = {
-    variant: 'cta',
-};
 
 export const withIcon = (props: Properties): TemplateResult => {
     return html`

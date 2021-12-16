@@ -9,26 +9,27 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-
 import { TemplateResult } from '@spectrum-web-components/base';
-import { renderSplitButtonSet } from './index.js';
-
-import '../sp-split-button.js';
-import '@spectrum-web-components/menu/sp-menu-item.js';
+import { renderButtonSet } from './index.js';
+import { args, argTypes } from './index.js';
 
 export default {
-    title: 'Split Button/CTA/More/Sizes',
-    component: 'sp-split-button',
+    component: 'sp-button',
+    title: 'Button/Accent/Sizes',
+    args: {
+        ...args,
+        variant: 'accent',
+    },
+    argTypes,
 };
 
 const variant = 'cta';
-const type = 'more';
 
-export const s = (): TemplateResult =>
-    renderSplitButtonSet({ size: 's', variant, type });
-export const m = (): TemplateResult =>
-    renderSplitButtonSet({ size: 'm', variant, type });
-export const l = (): TemplateResult =>
-    renderSplitButtonSet({ size: 'l', variant, type });
+export const s = (): TemplateResult => renderButtonSet({ size: 's', variant });
+
+export const m = (): TemplateResult => renderButtonSet({ size: 'm', variant });
+
+export const l = (): TemplateResult => renderButtonSet({ size: 'l', variant });
+
 export const XL = (): TemplateResult =>
-    renderSplitButtonSet({ size: 'xl', variant, type });
+    renderButtonSet({ size: 'xl', variant });

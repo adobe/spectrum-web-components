@@ -11,11 +11,18 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import type { ElementSize } from '@spectrum-web-components/base';
 
 import '../sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import type { ButtonVariants } from '@spectrum-web-components/button';
 import type { SplitButtonTypes } from '../src/SplitButton.js';
+
+export interface SplitButtonMenuOptions {
+    firstItemHandler?: (event?: Event) => void;
+    secondItemHandler?: (event?: Event) => void;
+    thirdItemHandler?: (event?: Event) => void;
+}
 
 const menu = ({
     firstItemHandler = function () {
@@ -27,19 +34,21 @@ const menu = ({
     thirdItemHandler = function () {
         return;
     },
-}): TemplateResult => html`
+}: SplitButtonMenuOptions): TemplateResult => html`
     <sp-menu-item @click=${firstItemHandler}>Option 1</sp-menu-item>
-    <sp-menu-item @click=${secondItemHandler}>Option Extended</sp-menu-item>
+    <sp-menu-item @click=${secondItemHandler}>
+        Option Really Extended
+    </sp-menu-item>
     <sp-menu-item @click=${thirdItemHandler}>Short</sp-menu-item>
 `;
 
-export interface Properties {
+export interface Properties extends SplitButtonMenuOptions {
     disabled?: boolean;
     invalid?: boolean;
     left?: boolean;
     open?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    type?: 'field' | 'more';
+    size?: ElementSize;
+    type?: SplitButtonTypes;
     variant?: ButtonVariants;
 }
 
@@ -49,7 +58,7 @@ export const args = {
     left: false,
     open: false,
     type: 'field' as SplitButtonTypes,
-    variant: 'cta' as ButtonVariants,
+    variant: 'accent' as ButtonVariants,
 };
 
 export const argTypes = {
@@ -126,19 +135,19 @@ export const argTypes = {
         control: {
             type: 'inline-radio',
             options: [
-                'cta',
+                'accent',
                 'primary',
                 'secondary',
                 'negative',
-                'overBackground',
+                'black',
+                'white',
             ],
         },
     },
 };
 
 export const splitbutton = (
-    properties: Properties = {},
-    options = {}
+    properties: Properties = {}
 ): TemplateResult => html`
     <sp-split-button
         ?left=${!!properties.left}
@@ -148,22 +157,18 @@ export const splitbutton = (
         ?open=${!!properties.open}
         ?disabled=${properties.disabled}
     >
-        ${menu(options)}
+        ${menu(properties)}
     </sp-split-button>
 `;
 
 const left = true;
 
 export const renderSplitButtonSet = (
-    properties: Properties = {},
-    options = {}
+    properties: Properties = {}
 ): TemplateResult => html`
-    ${splitbutton(properties, options)}
-    ${splitbutton(
-        {
-            ...properties,
-            left,
-        },
-        options
-    )}
+    ${splitbutton(properties)}
+    ${splitbutton({
+        ...properties,
+        left,
+    })}
 `;

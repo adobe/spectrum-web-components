@@ -10,27 +10,41 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TemplateResult } from '@spectrum-web-components/base';
-import { splitbutton } from './index.js';
+import { ElementSizes, TemplateResult } from '@spectrum-web-components/base';
+import { args, argTypes, renderSplitButtonSet, splitbutton } from './index.js';
+import type { Properties } from './index.js';
 import { openSplitButtonDecorator } from './helpers.js';
 import './helpers.js';
 
 import '../sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
+const variant = 'secondary';
+const type = 'more';
+
 export default {
     title: 'Split Button/Secondary/More',
     component: 'sp-split-button',
-    decorators: [openSplitButtonDecorator],
+    args: {
+        ...args,
+        variant,
+        type,
+    },
+    argTypes,
 };
 
-const variant = 'secondary';
-const type = 'more';
-const open = true;
-const left = true;
-
-export const openMenu = (options = {}): TemplateResult =>
-    splitbutton({ size: 's', variant, type, open }, options);
-
-export const openMenuLeft = (options = {}): TemplateResult =>
-    splitbutton({ size: 's', variant, type, open, left }, options);
+export const s = (args: Properties): TemplateResult =>
+    renderSplitButtonSet(args);
+s.args = { size: ElementSizes.s };
+export const m = (args: Properties): TemplateResult =>
+    renderSplitButtonSet(args);
+m.args = { size: ElementSizes.m };
+export const l = (args: Properties): TemplateResult =>
+    renderSplitButtonSet(args);
+l.args = { size: ElementSizes.l };
+export const XL = (args: Properties): TemplateResult =>
+    renderSplitButtonSet(args);
+XL.args = { size: ElementSizes.xl };
+export const open = (args: Properties): TemplateResult => splitbutton(args);
+open.args = { open: true };
+open.decorators = [openSplitButtonDecorator];

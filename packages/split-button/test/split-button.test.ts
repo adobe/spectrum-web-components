@@ -21,10 +21,12 @@ import { spy } from 'sinon';
 
 import '../sp-split-button.js';
 import { SplitButton } from '..';
-import splitButtonDefault, {
-    field,
-    more,
-} from '../stories/split-button-cta.stories.js';
+import fieldDefaults, {
+    m as field,
+} from '../stories/split-button-accent-field.stories.js';
+import moreDefaults, {
+    m as more,
+} from '../stories/split-button-accent-more.stories.js';
 import { MenuItem } from '@spectrum-web-components/menu';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { sendKeys } from '@web/test-runner-commands';
@@ -49,7 +51,12 @@ const deprecatedMenu = (): TemplateResult => html`
 describe('Splitbutton', () => {
     it('loads [type="field"] splitbutton accessibly', async () => {
         const test = await fixture<HTMLDivElement>(
-            wrapInDiv(field(splitButtonDefault.args))
+            wrapInDiv(
+                field({
+                    ...fieldDefaults.args,
+                    ...field.args,
+                })
+            )
         );
         const el1 = test.querySelector('sp-split-button') as SplitButton;
         const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
@@ -78,7 +85,7 @@ describe('Splitbutton', () => {
     });
     it('loads [type="more"] splitbutton accessibly', async () => {
         const test = await fixture<HTMLDivElement>(
-            wrapInDiv(more({ ...splitButtonDefault.args, ...more.args }))
+            wrapInDiv(more({ ...moreDefaults.args, ...more.args }))
         );
         const el1 = test.querySelector('sp-split-button') as SplitButton;
         const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
@@ -111,7 +118,12 @@ describe('Splitbutton', () => {
     });
     it('[type="field"] toggles open/close multiple time', async () => {
         const test = await fixture<HTMLDivElement>(
-            wrapInDiv(field(splitButtonDefault.args))
+            wrapInDiv(
+                field({
+                    ...fieldDefaults.args,
+                    ...field.args,
+                })
+            )
         );
         const el = test.querySelector('sp-split-button') as SplitButton;
 
@@ -153,7 +165,7 @@ describe('Splitbutton', () => {
     });
     it('[type="more"] toggles open/close multiple time', async () => {
         const test = await fixture<HTMLDivElement>(
-            wrapInDiv(more({ ...splitButtonDefault.args, ...more.args }))
+            wrapInDiv(more({ ...moreDefaults.args, ...more.args }))
         );
         const el = test.querySelector('sp-split-button') as SplitButton;
 
@@ -195,7 +207,12 @@ describe('Splitbutton', () => {
     });
     it('receives "focus()"', async () => {
         const test = await fixture<HTMLDivElement>(
-            wrapInDiv(field(splitButtonDefault.args))
+            wrapInDiv(
+                field({
+                    ...fieldDefaults.args,
+                    ...field.args,
+                })
+            )
         );
         const el1 = test.querySelector('sp-split-button') as SplitButton;
         const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
@@ -217,7 +234,12 @@ describe('Splitbutton', () => {
     });
     it('[type="field"] manages `selectedItem`', async () => {
         const test = await fixture<HTMLDivElement>(
-            wrapInDiv(field(splitButtonDefault.args))
+            wrapInDiv(
+                field({
+                    ...fieldDefaults.args,
+                    ...field.args,
+                })
+            )
         );
         const el = test.querySelector('sp-split-button') as SplitButton;
 
@@ -252,7 +274,7 @@ describe('Splitbutton', () => {
     });
     it('[type="more"] manages `selectedItem.itemText`', async () => {
         const test = await fixture<HTMLDivElement>(
-            wrapInDiv(more({ ...splitButtonDefault.args, ...more.args }))
+            wrapInDiv(more({ ...moreDefaults.args, ...more.args }))
         );
         const el = test.querySelector('sp-split-button') as SplitButton;
 
@@ -283,13 +305,16 @@ describe('Splitbutton', () => {
         expect(el.open).to.be.false;
         expect(el.selectedItem?.itemText).to.equal('Option 1');
     });
+
     it('passes click events as [type="field"]', async () => {
         const firstItemSpy = spy();
         const secondItemSpy = spy();
         const thirdItemSpy = spy();
         const test = await fixture<HTMLDivElement>(
             wrapInDiv(
-                field(splitButtonDefault.args, {
+                field({
+                    ...fieldDefaults.args,
+                    ...field.args,
                     firstItemHandler: (): void => firstItemSpy(),
                     secondItemHandler: (): void => secondItemSpy(),
                     thirdItemHandler: (): void => thirdItemSpy(),
@@ -366,7 +391,7 @@ describe('Splitbutton', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
-        expect(el.selectedItem?.itemText).to.equal('Option Extended');
+        expect(el.selectedItem?.itemText).to.equal('Option Really Extended');
         expect(secondItemSpy.called, 'second called').to.be.true;
         expect(secondItemSpy.calledTwice, 'second twice').to.be.true;
 
@@ -397,14 +422,13 @@ describe('Splitbutton', () => {
         const thirdItemSpy = spy();
         const test = await fixture<HTMLDivElement>(
             wrapInDiv(
-                more(
-                    { ...splitButtonDefault.args, ...more.args },
-                    {
-                        firstItemHandler: (): void => firstItemSpy(),
-                        secondItemHandler: (): void => secondItemSpy(),
-                        thirdItemHandler: (): void => thirdItemSpy(),
-                    }
-                )
+                more({
+                    ...moreDefaults.args,
+                    ...more.args,
+                    firstItemHandler: (): void => firstItemSpy(),
+                    secondItemHandler: (): void => secondItemSpy(),
+                    thirdItemHandler: (): void => thirdItemSpy(),
+                })
             )
         );
         const el = test.querySelector('sp-split-button') as SplitButton;
@@ -447,6 +471,7 @@ describe('Splitbutton', () => {
         opened = oneEvent(el, 'sp-opened');
         trigger.click();
         await opened;
+
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
@@ -454,6 +479,7 @@ describe('Splitbutton', () => {
         closed = oneEvent(el, 'sp-closed');
         item2.click();
         await closed;
+
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
