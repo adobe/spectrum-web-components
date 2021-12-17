@@ -15,6 +15,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '../sp-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
+import { ButtonTreatments, ButtonVariants } from '../src/Button.js';
 
 export const args = {
     disabled: false,
@@ -47,17 +48,34 @@ export const argTypes = {
             type: 'inline-radio',
             options: [
                 'cta',
+                'accent',
                 'primary',
                 'secondary',
                 'negative',
                 'overBackground',
+                'black',
+                'white',
             ],
+        },
+    },
+    treatment: {
+        name: 'treatment',
+        type: { name: 'string', required: false },
+        description: 'The visual treatment to apply to the button.',
+        table: {
+            type: { summary: 'string' },
+            defaultValue: { summary: 'fill' },
+        },
+        control: {
+            type: 'inline-radio',
+            options: ['fill', 'outline'],
         },
     },
 };
 
 export interface Properties {
-    variant?: 'cta' | 'overBackground' | 'primary' | 'secondary' | 'negative';
+    variant?: ButtonVariants;
+    treatment?: ButtonTreatments;
     quiet?: boolean;
     content?: TemplateResult;
     disabled?: boolean;
@@ -88,6 +106,7 @@ export function renderButton(properties: Properties): TemplateResult {
         return html`
             <sp-button
                 variant="${properties.variant}"
+                treatment="${properties.treatment}"
                 ?quiet="${!!properties.quiet}"
                 ?disabled=${!!properties.disabled}
                 size=${properties.size || 'm'}
@@ -132,3 +151,78 @@ export const bellIcon = html`
         ></path>
     </svg>
 `;
+
+export const renderWithIcon = (props: Properties): TemplateResult => {
+    return html`
+        <style>
+            .row {
+                padding: 10px;
+            }
+        </style>
+        <div class="row">
+            ${renderButtonSet({
+                ...props,
+                content: html`
+                    <sp-icon-help slot="icon"></sp-icon-help>
+                    Help
+                `,
+            })}
+        </div>
+        <div class="row">
+            ${renderButtonSet({
+                ...props,
+                content: html`
+                    ${bellIcon} Custom SVG
+                `,
+            })}
+        </div>
+    `;
+};
+
+export const renderIconSizeOverridden = (
+    variant: ButtonVariants,
+    treatment: ButtonTreatments
+): TemplateResult => {
+    return html`
+        <sp-button
+            label="Edit"
+            size="xl"
+            variant=${variant}
+            treatment=${treatment}
+        >
+            <sp-icon-help slot="icon" size="s">Testing</sp-icon-help>
+        </sp-button>
+        <h1>For testing purposes only</h1>
+        <p>
+            This is a test to ensure that sizing the icon will still work when
+            it's in the scope of a parent element. You shouldn't normally do
+            this as it deviates from the Spectrum design specification.
+        </p>
+    `;
+};
+
+export const renderMinWidthButton = (props: Properties): TemplateResult => {
+    return html`
+        <style>
+            sp-button {
+                min-width: 300px;
+            }
+        </style>
+        ${renderButtonSet(props)}
+    `;
+};
+
+const href = 'https://github.com/adobe/spectrum-web-components';
+
+export const renderLink = (props: Properties): TemplateResult =>
+    renderButtonSet({
+        ...props,
+        href,
+    });
+
+export const renderLinkWithTarget = (props: Properties): TemplateResult =>
+    renderButtonSet({
+        ...props,
+        href,
+        target: '_blank',
+    });
