@@ -10,27 +10,39 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { TemplateResult } from '@spectrum-web-components/base';
-import { makeOverBackground, renderButtonSet } from './index.js';
+import { Properties, renderButtonSet } from './index.js';
 import { args, argTypes } from './index.js';
+
+const variant = 'primary';
+const treatment = 'outline';
 
 export default {
     component: 'sp-button',
-    title: 'Button/Over Background/Sizes',
-    decorators: [makeOverBackground()],
+    title: 'Button/Primary/Outline/Sizes',
     args: {
         ...args,
-        variant: 'overBackground',
+        variant,
+        treatment,
     },
     argTypes,
 };
 
-const variant = 'overBackground';
+export const s = (args: Properties): TemplateResult => renderButtonSet(args);
+s.args = {
+    size: 's',
+};
 
-export const s = (): TemplateResult => renderButtonSet({ size: 's', variant });
+export const m = (args: Properties): TemplateResult => renderButtonSet(args);
+m.args = {
+    size: 'm',
+};
 
-export const m = (): TemplateResult => renderButtonSet({ size: 'm', variant });
+export const l = (args: Properties): TemplateResult => renderButtonSet(args);
+l.args = {
+    size: 'l',
+};
 
-export const l = (): TemplateResult => renderButtonSet({ size: 'l', variant });
-
-export const XL = (): TemplateResult =>
-    renderButtonSet({ size: 'xl', variant });
+export const XL = (args: Properties): TemplateResult => renderButtonSet(args);
+XL.args = {
+    size: 'xl',
+};
