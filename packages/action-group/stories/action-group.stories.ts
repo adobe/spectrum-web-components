@@ -226,6 +226,7 @@ export const selectsMultipleControlled = (args: Properties): TemplateResult => {
     return html`
         <sp-action-group
             ${spreadProps(args)}
+            selects="multiple"
             .selected=${['donuts', 'crepecakes']}
             label="Favorite Dessert"
             @change=${({ target }: Event & { target: ActionGroup }) => {

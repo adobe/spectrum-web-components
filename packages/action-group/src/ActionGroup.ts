@@ -100,6 +100,17 @@ export class ActionGroup extends SpectrumElement {
         }
     }
 
+    private deselectSelectedButtons() {
+        const selected = [
+            ...this.querySelectorAll('[selected]'),
+        ] as ActionButton[];
+        selected.forEach((el) => {
+            el.selected = false;
+            el.tabIndex = -1;
+            el.setAttribute('aria-checked', 'false');
+        });
+    }
+
     private handleClick(event: Event): void {
         const target = event.target as ActionButton;
         if (typeof target.value === 'undefined') {
@@ -107,14 +118,7 @@ export class ActionGroup extends SpectrumElement {
         }
         switch (this.selects) {
             case 'single': {
-                const selected = [
-                    ...this.querySelectorAll('[selected]'),
-                ] as ActionButton[];
-                selected.forEach((el) => {
-                    el.selected = false;
-                    el.tabIndex = -1;
-                    el.setAttribute('aria-checked', 'false');
-                });
+                this.deselectSelectedButtons();
                 target.selected = true;
                 target.tabIndex = 0;
                 target.setAttribute('aria-checked', 'true');
@@ -138,15 +142,7 @@ export class ActionGroup extends SpectrumElement {
                 break;
             }
             default:
-                // deselects all previously .selected options
-                const selected = [
-                    ...this.querySelectorAll('[selected]'),
-                ] as ActionButton[];
-                selected.forEach((el) => {
-                    el.selected = false;
-                    el.tabIndex = -1;
-                    el.setAttribute('aria-checked', 'false');
-                });
+                this.deselectSelectedButtons();
                 this.selected = EMPTY_SELECTION;
                 break;
         }
@@ -272,13 +268,13 @@ export class ActionGroup extends SpectrumElement {
         if (!this.buttons.length) {
             return;
         }
+
+        const options = this.buttons;
         switch (this.selects) {
             case 'single': {
                 this.setAttribute('role', 'radiogroup');
-                let selection: ActionButton | undefined;
                 const selections: ActionButton[] = [];
                 let firstEnabled: ActionButton | undefined;
-                const options = this.buttons;
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
                     option.setAttribute('role', 'radio');
@@ -288,7 +284,6 @@ export class ActionGroup extends SpectrumElement {
                     );
                     option.tabIndex = option.selected ? 0 : -1;
                     if (option.selected) {
-                        selection = option;
                         selections.push(option);
                     }
                     if (!firstEnabled && !option.disabled) {
@@ -304,14 +299,14 @@ export class ActionGroup extends SpectrumElement {
                     this.selected = selections.map((button) => {
                         return button.value;
                     });
-                } else {
-                    if (selection || firstEnabled) {
+                } else if (selections.length === 1) {
+                    if (selections[0] || firstEnabled) {
                         (
-                            (selection || firstEnabled) as ActionButton
+                            (selections[0] || firstEnabled) as ActionButton
                         ).tabIndex = 0;
                     }
-                    this.selected = selection
-                        ? [selection.value]
+                    this.selected = selections[0]
+                        ? [selections[0].value]
                         : EMPTY_SELECTION;
                 }
                 break;
@@ -319,7 +314,6 @@ export class ActionGroup extends SpectrumElement {
             case 'multiple': {
                 this.setAttribute('role', 'group');
                 const selection: string[] = [];
-                const options = this.buttons;
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
                     option.setAttribute('role', 'checkbox');
@@ -339,10 +333,9 @@ export class ActionGroup extends SpectrumElement {
                 break;
             }
             default:
-                // if user passes in .selected
+                // if user defines .selected
                 if (this.selected.length > 0) {
                     const selections: ActionButton[] = [];
-                    const options = this.buttons;
                     const updates = options.map(async (option) => {
                         await option.updateComplete;
                         option.setAttribute(
@@ -356,7 +349,7 @@ export class ActionGroup extends SpectrumElement {
                         }
                     });
                     await Promise.all(updates);
-                    // if user passes in multiple values in initial value
+                    // if user passes in multiple values in .selected
                     selections.forEach((button) => {
                         button.tabIndex = 0;
                     });
