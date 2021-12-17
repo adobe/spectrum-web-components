@@ -213,6 +213,8 @@ export class PickerBase extends SizedMixin(Focusable) {
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         if (!applyDefault) {
