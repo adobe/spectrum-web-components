@@ -161,12 +161,10 @@ export class OverlayTrigger extends SpectrumElement {
         const trigger = this.querySelector(
             '[slot="trigger"]'
         ) as SpectrumElement;
-        // get our current describedby attributes, if any
         const ariaDescribedby = trigger.getAttribute('aria-describedby');
         let descriptors = ariaDescribedby ? ariaDescribedby.split(/\s+/) : [];
 
         if (this.hasLongpressContent) {
-            // make an element that acts as `aria-describedby` description if it doesn't exist yet
             if (!this.longpressDescriptor) {
                 this.longpressDescriptor = document.createElement(
                     'div'
@@ -182,12 +180,10 @@ export class OverlayTrigger extends SpectrumElement {
                 this.longpressDescriptor.innerHTML =
                     LONGPRESS_INSTRUCTIONS.keyboard;
             }
-            this.appendChild(this.longpressDescriptor); // add descriptor to light DOM
+            this.appendChild(this.longpressDescriptor);
             descriptors.push(this._longpressId);
         } else {
-            // dispose longpressDescriptor if it exists already
             if (this.longpressDescriptor) this.longpressDescriptor.remove();
-            // remove longpressid from the descriptors
             descriptors = descriptors.filter(
                 (descriptor) => descriptor !== this._longpressId
             );
