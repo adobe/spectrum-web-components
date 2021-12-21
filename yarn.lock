@@ -690,7 +690,7 @@
     "@babel/helper-remap-async-to-generator" "^7.15.4"
     "@babel/plugin-syntax-async-generators" "^7.8.4"
 
-"@babel/plugin-proposal-class-properties@^7.12.1", "@babel/plugin-proposal-class-properties@^7.14.5":
+"@babel/plugin-proposal-class-properties@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.14.5.tgz#40d1ee140c5b1e31a350f4f5eed945096559b42e"
   integrity sha512-q/PLpv5Ko4dVc1LYMpCY7RVAAO4uk55qPwrIuJ5QJ8c6cVuAmhu7I/49JOppXL6gXf7ZHzpRVEUZdYoPLM04Gg==
@@ -953,14 +953,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.14.5"
 
-"@babel/plugin-syntax-top-level-await@^7.12.1":
-  version "7.12.13"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-top-level-await/-/plugin-syntax-top-level-await-7.12.13.tgz#c5f0fa6e249f5b739727f923540cf7a806130178"
-  integrity sha512-A81F9pDwyS7yM//KwbCSDqy3Uj4NMIurtplxphWxoYtNPov7cJsDkAFNNyVlIZ3jwGycVsurZ+LtOA8gZ376iQ==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.12.13"
-
-"@babel/plugin-syntax-top-level-await@^7.14.5":
+"@babel/plugin-syntax-top-level-await@^7.12.1", "@babel/plugin-syntax-top-level-await@^7.14.5":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-top-level-await/-/plugin-syntax-top-level-await-7.14.5.tgz#c1cfdadc35a646240001f06138247b741c34d94c"
   integrity sha512-hx++upLv5U1rgYfwe1xBQUhRmU41NEvpUvrp8jkrSCdvGSnM5/qdRMtylJ6PG5OFkBaHkbTAKTnd3/YyESRHFw==
@@ -3611,15 +3604,15 @@
   integrity sha512-UfdK1MPnR6T7f3svzzYBfu3qBkkZ/KsPhcpc3JYhsUY4hbpwNF9wEQtD4Z+/mRqMTJrKg++YSxIxE0FBhY3RIw==
 
 "@open-wc/dev-server-hmr@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@open-wc/dev-server-hmr/-/dev-server-hmr-0.1.1.tgz#b3e1d22e71861022e52e2614ea8e46a41a444f58"
-  integrity sha512-Uz2iVLRKs940+rwQAwe1MPGOceyQALshsKVG3ooq8xZYA7wND0w/1c/tLgDZUZ6uzRrcZ9DhkfAIwCAJp8K02w==
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@open-wc/dev-server-hmr/-/dev-server-hmr-0.1.2.tgz#b82ea7ba14af63823e1789a25e1ba8cc22d0f36e"
+  integrity sha512-78HuRfBrp01wqdDZAg0/e2hqxiiH2CtQRQyEUhqNVauRvt67+ARDPeU8HU3H++guec9hcm7nYGfam/6ttfU2FA==
   dependencies:
     "@babel/core" "^7.12.3"
-    "@babel/plugin-proposal-class-properties" "^7.12.1"
+    "@babel/plugin-syntax-class-properties" "^7.12.13"
     "@babel/plugin-syntax-import-assertions" "^7.12.1"
     "@babel/plugin-syntax-top-level-await" "^7.12.1"
-    "@web/dev-server-core" "^0.2.18"
+    "@web/dev-server-core" "^0.3.10"
     "@web/dev-server-hmr" "^0.1.6"
     picomatch "^2.2.2"
 
@@ -5052,54 +5045,7 @@
   dependencies:
     semver "^7.3.4"
 
-"@web/dev-server-core@^0.2.18":
-  version "0.2.19"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.2.19.tgz#ad5daa7484ad38fcd061036cfc3c1cb7cf69a475"
-  integrity sha512-TaxwNsvj6pfdKLyqZfYIU1ikh+Q2ZlUwBpXRYWtdG6r2GL232hR+Zm/KooBBdwpOCjuMMlkzz70ImYnD6+mPIg==
-  dependencies:
-    "@types/koa" "^2.11.6"
-    "@types/ws" "^7.4.0"
-    "@web/parse5-utils" "^1.0.0"
-    chokidar "^3.4.3"
-    clone "^2.1.2"
-    es-module-lexer "^0.3.26"
-    get-stream "^6.0.0"
-    is-stream "^2.0.0"
-    isbinaryfile "^4.0.6"
-    koa "^2.13.0"
-    koa-etag "^4.0.0"
-    koa-static "^5.0.0"
-    lru-cache "^6.0.0"
-    mime-types "^2.1.27"
-    parse5 "^6.0.1"
-    picomatch "^2.2.2"
-    ws "^7.4.0"
-
-"@web/dev-server-core@^0.3.0", "@web/dev-server-core@^0.3.12", "@web/dev-server-core@^0.3.13", "@web/dev-server-core@^0.3.16":
-  version "0.3.16"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.16.tgz#7404383d05031f462a29f578dc35948d0af35344"
-  integrity sha512-nj6liCErIGtpuZYPf6QaxGQ9nlaHd8Cf/NBcRhogskvjOVFkF3FS9xpjRw3WidkmOQnk+D0ZGCeXjtTibgy5CA==
-  dependencies:
-    "@types/koa" "^2.11.6"
-    "@types/ws" "^7.4.0"
-    "@web/parse5-utils" "^1.2.0"
-    chokidar "^3.4.3"
-    clone "^2.1.2"
-    es-module-lexer "^0.9.0"
-    get-stream "^6.0.0"
-    is-stream "^2.0.0"
-    isbinaryfile "^4.0.6"
-    koa "^2.13.0"
-    koa-etag "^4.0.0"
-    koa-send "^5.0.1"
-    koa-static "^5.0.0"
-    lru-cache "^6.0.0"
-    mime-types "^2.1.27"
-    parse5 "^6.0.1"
-    picomatch "^2.2.2"
-    ws "^7.4.2"
-
-"@web/dev-server-core@^0.3.17":
+"@web/dev-server-core@^0.3.0", "@web/dev-server-core@^0.3.10", "@web/dev-server-core@^0.3.12", "@web/dev-server-core@^0.3.13", "@web/dev-server-core@^0.3.16", "@web/dev-server-core@^0.3.17":
   version "0.3.17"
   resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.17.tgz#95e87681b63644a955e29e13ffc6b48fd2c51264"
   integrity sha512-vN1dwQ8yDHGiAvCeUo9xFfjo+pFl8TW+pON7k9kfhbegrrB8CKhJDUxmHbZsyQUmjf/iX57/LhuWj1xGhRL8AA==
@@ -5220,7 +5166,7 @@
     open "^8.0.2"
     portfinder "^1.0.28"
 
-"@web/parse5-utils@^1.0.0", "@web/parse5-utils@^1.1.2":
+"@web/parse5-utils@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@web/parse5-utils/-/parse5-utils-1.1.2.tgz#b53e7f62679170371da36023517b23bbb1f7c582"
   integrity sha512-/JQHbK53BmYiFK2igr2B+Psl2Ivp2ju75Nx1InZweTbxLQNGG9yUBaudER85aqebIH6smkPkKwVtpdBXBiwy1A==
@@ -17861,12 +17807,7 @@ picocolors@^1.0.0:
   resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.0.tgz#cb5bdc74ff3f51892236eaf79d68bc44564ab81c"
   integrity sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==
 
-picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
-  integrity sha512-q0M/9eZHzmr0AulXyPwNfZjtwZ/RBZlbN3K3CErVrk50T2ASYI7Bye0EvekFY3IP1Nt2DHu0re+V2ZHIpMkuWg==
-
-picomatch@^2.2.3:
+picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.2, picomatch@^2.2.3:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.3.tgz#465547f359ccc206d3c48e46a1bcb89bf7ee619d"
   integrity sha512-KpELjfwcCDUb9PeigTs2mBJzXUPzAuP2oPcA989He8Rte0+YUAjw1JVedDhuTKPkHjSYzMN3npC9luThGYEKdg==
@@ -24425,7 +24366,7 @@ ws@8.2.3, ws@>=7.4.6, ws@^8.1.0:
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.2.3.tgz#63a56456db1b04367d0b721a0b80cae6d8becbba"
   integrity sha512-wBuoj1BDpC6ZQ1B7DWQBYVLphPWkm8i9Y0/3YdHjHKHiohOJ1ws+3OccDWtH+PoC9DZD5WOTrJvNbWvjS6JWaA==
 
-ws@^7.0.0, ws@^7.3.1, ws@^7.4.0, ws@^7.4.2, ws@~7.4.2:
+ws@^7.0.0, ws@^7.3.1, ws@^7.4.2, ws@~7.4.2:
   version "7.4.2"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.2.tgz#782100048e54eb36fe9843363ab1c68672b261dd"
   integrity sha512-T4tewALS3+qsrpGI/8dqNMLIVdq/g/85U98HPMa6F0m6xTbvhXU6RCQLqPH3+SlomNV/LdY6RXEbBpMH6EOJnA==
