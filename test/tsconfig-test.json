@@ -8,13 +8,16 @@
     "include": [
         "../packages/**/*.ts",
         "../packages/*/stories/*.ts",
+        "../tools/**/*.ts",
+        "../tools/*/stories/*.ts",
         "./testing-helpers.ts",
         "./visual/test.ts",
         "../global.d.ts"
     ],
     "exclude": [
-        "../packages/*/lib/**/*",
         "../packages/**/node_modules/**/*",
-        "../packages/*/test/benchmark/*.ts"
+        "../packages/*/test/benchmark/*.ts",
+        "../tools/**/node_modules/**/*",
+        "../tools/*/test/benchmark/*.ts"
     ]
 }

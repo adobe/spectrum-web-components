@@ -14,9 +14,14 @@ import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugi
 import fs from 'fs';
 import path from 'path';
 
+const tools = fs
+    .readdirSync('tools')
+    .filter((dir) => fs.statSync(`tools/${dir}`).isDirectory());
+
 export const packages = fs
     .readdirSync('packages')
-    .filter((dir) => fs.statSync(`packages/${dir}`).isDirectory());
+    .filter((dir) => fs.statSync(`packages/${dir}`).isDirectory())
+    .concat(tools);
 
 const vrtHTML =
     ({ color, scale, dir, reduceMotion }) =>
