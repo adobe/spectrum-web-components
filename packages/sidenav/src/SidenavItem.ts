@@ -38,9 +38,6 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     @property()
     public value: string | undefined = undefined;
 
-    @property({ type: Boolean, attribute: false })
-    public manageTabIndex = false;
-
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
@@ -145,9 +142,8 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     }
 
     protected updated(changes: PropertyValues): void {
-        if (changes.has('selected') || changes.has('manageTabIndex')) {
-            const tabIndexForSelectedState = this.selected ? 0 : -1;
-            this.tabIndex = this.manageTabIndex ? tabIndexForSelectedState : 0;
+        if (this.hasChildren && this.expanded && !this.selected) {
+            this.focusElement.tabIndex = -1;
         }
         super.updated(changes);
     }
@@ -166,7 +162,6 @@ export class SideNavItem extends LikeAnchor(Focusable) {
         const parentSideNav = this.parentSideNav;
         if (parentSideNav) {
             await parentSideNav.updateComplete;
-            this.manageTabIndex = parentSideNav.manageTabIndex;
             parentSideNav.startTrackingSelectionForItem(this);
             this.selected =
                 this.value != null && this.value === parentSideNav.value;

@@ -18,6 +18,7 @@ import {
 } from '@spectrum-web-components/base';
 import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
+import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 import { Tag } from './Tag.js';
 
@@ -42,130 +43,70 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
         ) as Tag[];
     }
 
+    rovingTabindexController = new RovingTabindexController<Tag>(this, {
+        focusInIndex: (elements: Tag[]) => {
+            return elements.findIndex((el) => {
+                return !el.disabled && el.deletable;
+            });
+        },
+        elements: () => this.tags,
+        isFocusableElement: (el: Tag) => !el.disabled && el.deletable,
+    });
+
     constructor() {
         super();
         this.addEventListener('focusin', this.handleFocusin);
     }
 
     public focus(): void {
-        if (!this.tags.length) {
-            return;
-        }
-        const firstFocusableTag = this.tags.find(
-            (tag) => !tag.disabled && tag.deletable
-        );
-        if (firstFocusableTag) {
-            firstFocusableTag.focus();
-        }
+        this.rovingTabindexController.focus();
     }
 
     private handleFocusin = (): void => {
         this.addEventListener('focusout', this.handleFocusout);
         this.addEventListener('keydown', this.handleKeydown);
-        requestAnimationFrame(() => {
-            const firstTagWithTabIndex = this.tags.find(
-                (tag) => tag.tabIndex === 0
-            );
-            if (firstTagWithTabIndex) {
-                firstTagWithTabIndex.tabIndex = -1;
-            }
-        });
     };
 
     private handleKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
-        const activeElement = (this.getRootNode() as Document)
-            .activeElement as Tag;
-        /* c8 ignore next 3 */
-        if (!activeElement) {
-            return;
-        }
-        let nextIndex = this.tags.indexOf(activeElement);
-        /* c8 ignore next 3 */
-        if (nextIndex === -1) {
-            return;
-        }
+        if (code !== 'PageUp' && code !== 'PageDown') return;
+
         const circularIndexedElement = <T extends HTMLElement>(
             list: T[],
             index: number
         ): T => list[(list.length + index) % list.length];
-        const tagFromDelta = (delta: number): void => {
-            nextIndex += delta;
-            let nextTag = circularIndexedElement(this.tags, nextIndex);
-            while (nextTag.disabled || !nextTag.deletable) {
-                nextIndex += delta;
-                nextTag = circularIndexedElement(this.tags, nextIndex);
-            }
-        };
-        switch (code) {
-            case 'ArrowUp':
-                tagFromDelta(-1);
-                break;
-            case 'ArrowLeft':
-                tagFromDelta(this.isLTR ? -1 : 1);
-                break;
-            case 'ArrowRight':
-                tagFromDelta(this.isLTR ? 1 : -1);
-                break;
-            case 'ArrowDown':
-                tagFromDelta(1);
-                break;
-            case 'End':
-                nextIndex = this.tags.length;
-                tagFromDelta(-1);
-                break;
-            case 'Home':
-                nextIndex = -1;
-                tagFromDelta(1);
-                break;
-            case 'PageUp':
-            case 'PageDown':
-                const tagsSiblings = [
-                    ...(this.getRootNode() as Document).querySelectorAll<Tags>(
-                        'sp-tags'
-                    ),
-                ];
-                if (tagsSiblings.length < 2) {
-                    return;
-                }
-                event.preventDefault();
-                const currentIndex = tagsSiblings.indexOf(this);
-                const offset = code === 'PageUp' ? -1 : 1;
-                let nextTagsIndex = currentIndex + offset;
-                let nextTags = circularIndexedElement(
-                    tagsSiblings,
-                    nextTagsIndex
-                );
-                while (!nextTags.tags.length) {
-                    nextTagsIndex += offset;
-                    nextTags = circularIndexedElement(
-                        tagsSiblings,
-                        nextTagsIndex
-                    );
-                }
-                nextTags.focus();
-                return;
-            default:
-                return;
+        const tagsSiblings = [
+            ...(this.getRootNode() as Document).querySelectorAll<Tags>(
+                'sp-tags'
+            ),
+        ];
+        if (tagsSiblings.length < 2) {
+            return;
         }
         event.preventDefault();
-        circularIndexedElement(this.tags, nextIndex).focus();
+        const currentIndex = tagsSiblings.indexOf(this);
+        const offset = code === 'PageUp' ? -1 : 1;
+        let nextTagsIndex = currentIndex + offset;
+        let nextTags = circularIndexedElement(tagsSiblings, nextTagsIndex);
+        while (!nextTags.tags.length) {
+            nextTagsIndex += offset;
+            nextTags = circularIndexedElement(tagsSiblings, nextTagsIndex);
+        }
+        nextTags.focus();
     };
 
     private handleFocusout = (): void => {
-        const firstFocusableTag = this.tags.find(
-            (tag) => !tag.disabled && tag.deletable
-        );
-        if (firstFocusableTag) {
-            firstFocusableTag.tabIndex = 0;
-        }
         this.removeEventListener('keydown', this.handleKeydown);
         this.removeEventListener('focusout', this.handleFocusout);
     };
 
+    private handleSlotchange(): void {
+        this.rovingTabindexController.clearElementCache();
+    }
+
     protected render(): TemplateResult {
         return html`
-            <slot></slot>
+            <slot @slotchange=${this.handleSlotchange}></slot>
         `;
     }
 

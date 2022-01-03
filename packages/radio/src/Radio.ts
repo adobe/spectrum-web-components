@@ -17,10 +17,7 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import {
-    property,
-    query,
-} from '@spectrum-web-components/base/src/decorators.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
 import radioStyles from './radio.css.js';
@@ -67,9 +64,6 @@ export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
     @property({ type: Boolean, reflect: true })
     public readonly = false;
 
-    @query('#input')
-    private inputElement!: HTMLInputElement;
-
     public click(): void {
         if (this.disabled) {
             return;
@@ -91,21 +85,6 @@ export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
             );
             this.focus();
         }
-    }
-
-    public handleChange(event: Event): void {
-        event.stopPropagation();
-        if (this.readonly) {
-            this.inputElement.checked = this.checked;
-            return;
-        }
-        this.checked = this.inputElement.checked;
-        this.dispatchEvent(
-            new Event('change', {
-                bubbles: true,
-                composed: true,
-            })
-        );
     }
 
     protected activate(): void {

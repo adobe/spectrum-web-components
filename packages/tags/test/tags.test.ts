@@ -266,6 +266,7 @@ describe('Tags', () => {
         const anchor = el.querySelector('a') as HTMLElement;
 
         anchor.focus();
+        expect(document.activeElement === anchor).to.be.true;
 
         const tagset1 = el.querySelector('sp-tags:nth-child(2)') as Tags;
         const tagset2 = el.querySelector('sp-tags:nth-child(3)') as Tags;

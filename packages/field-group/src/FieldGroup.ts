@@ -47,10 +47,15 @@ export class FieldGroup extends ManageHelpText(SpectrumElement, {
     @property({ type: Boolean, reflect: true })
     public vertical = false;
 
+    protected handleSlotchange(): void {
+        // Surface this functionality for easy composition in extensions.
+        return;
+    }
+
     protected render(): TemplateResult {
         return html`
             <div class="group" role="presentation">
-                <slot></slot>
+                <slot @slotchange=${this.handleSlotchange}></slot>
             </div>
             ${this.renderHelpText(this.invalid)}
         `;

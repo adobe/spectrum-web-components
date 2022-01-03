@@ -872,7 +872,6 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('Third');
 
-        await sendKeys({ press: 'PageUp' });
         await sendKeys({ press: 'Enter' });
 
         el.dispatchEvent(homeEvent());
@@ -970,57 +969,5 @@ describe('ActionGroup', () => {
 
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('Third');
-    });
-    it('accepts "PageUp" and "PageDown"', async () => {
-        const el = await fixture<ActionGroup>(
-            html`
-                <div>
-                    <sp-action-group
-                        label="Selects Single Group"
-                        selects="single"
-                    >
-                        <sp-action-button>First A</sp-action-button>
-                        <sp-action-button class="first">
-                            Second A
-                        </sp-action-button>
-                        <sp-action-button>Third</sp-action-button>
-                    </sp-action-group>
-                    <sp-action-group
-                        label="Selects Single Group"
-                        selects="multiple"
-                    >
-                        <sp-action-button>First B</sp-action-button>
-                        <sp-action-button selected class="second">
-                            Second B
-                        </sp-action-button>
-                        <sp-action-button>Third</sp-action-button>
-                    </sp-action-group>
-                    <sp-action-group></sp-action-group>
-                </div>
-            `
-        );
-        const firstElement = el.querySelector('.first') as ActionButton;
-        const secondElement = el.querySelector('.second') as ActionButton;
-
-        await elementUpdated(firstElement);
-        await elementUpdated(secondElement);
-
-        firstElement.click();
-
-        await sendKeys({ press: 'PageDown' });
-        let activeElement = document.activeElement as ActionButton;
-        expect(activeElement).equal(secondElement);
-
-        await sendKeys({ press: 'PageUp' });
-        activeElement = document.activeElement as ActionButton;
-        expect(activeElement).to.equal(firstElement);
-
-        await sendKeys({ press: 'PageUp' });
-        activeElement = document.activeElement as ActionButton;
-        expect(activeElement).to.equal(secondElement);
-
-        await sendKeys({ press: 'PageDown' });
-        activeElement = document.activeElement as ActionButton;
-        expect(activeElement).to.equal(firstElement);
     });
 });

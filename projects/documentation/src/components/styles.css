@@ -165,6 +165,7 @@ body {
     margin-right: var(--spectrum-global-dimension-size-200);
     margin-bottom: 12px;
     flex-shrink: 0;
+    position: relative;
 }
 
 #logo .title {

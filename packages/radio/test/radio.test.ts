@@ -21,6 +21,7 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { sendKeys } from '@web/test-runner-commands';
 
 function labelNodeForRadio(radio: Radio): Node {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');
@@ -137,6 +138,16 @@ describe('Radio', () => {
         });
         it('as events', async () => {
             el.dispatchEvent(new Event('click'));
+            await elementUpdated(el);
+
+            expect(el.checked).to.be.true;
+        });
+        it('from the keyboard', async () => {
+            el.focus();
+            await elementUpdated(el);
+            await sendKeys({
+                press: 'Space',
+            });
             await elementUpdated(el);
 
             expect(el.checked).to.be.true;

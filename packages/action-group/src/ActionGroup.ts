@@ -19,6 +19,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { ActionButton } from '@spectrum-web-components/action-button';
+import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 import styles from './action-group.css.js';
 
@@ -35,8 +36,39 @@ export class ActionGroup extends SpectrumElement {
         return [styles];
     }
 
-    public buttons: ActionButton[] = [];
+    public set buttons(tabs: ActionButton[]) {
+        if (tabs === this.buttons) return;
+        this._buttons = tabs;
+        this.rovingTabindexController.clearElementCache();
+    }
+
+    public get buttons(): ActionButton[] {
+        return this._buttons;
+    }
+
+    public _buttons: ActionButton[] = [];
+
     protected _buttonSelector = 'sp-action-button';
+
+    rovingTabindexController = new RovingTabindexController<ActionButton>(
+        this,
+        {
+            focusInIndex: (elements: ActionButton[]) => {
+                let firstEnabledIndex = -1;
+                const firstSelectedIndex = elements.findIndex((el, index) => {
+                    if (!elements[firstEnabledIndex] && !el.disabled) {
+                        firstEnabledIndex = index;
+                    }
+                    return el.selected && !el.disabled;
+                });
+                return elements[firstSelectedIndex]
+                    ? firstSelectedIndex
+                    : firstEnabledIndex;
+            },
+            elements: () => this.buttons,
+            isFocusableElement: (el: ActionButton) => !el.disabled,
+        }
+    );
 
     @property({ type: Boolean, reflect: true })
     public compact = false;
@@ -62,7 +94,7 @@ export class ActionGroup extends SpectrumElement {
     @property({ type: Array })
     public selected: string[] = EMPTY_SELECTION;
 
-    private dispatchChange(old: string[]) {
+    private dispatchChange(old: string[]): void {
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 bubbles: true,
@@ -79,7 +111,7 @@ export class ActionGroup extends SpectrumElement {
         }
     }
 
-    private setSelected(selected: string[]) {
+    private setSelected(selected: string[]): void {
         if (selected === this.selected) return;
 
         const old = this.selected;
@@ -88,18 +120,7 @@ export class ActionGroup extends SpectrumElement {
     }
 
     public focus(options?: FocusOptions): void {
-        if (!this.buttons.length) {
-            return;
-        }
-        const firstButtonNonDisabled = this.buttons.find((button) => {
-            if (this.selected) {
-                return button.selected;
-            }
-            return !button.disabled;
-        });
-        if (firstButtonNonDisabled) {
-            firstButtonNonDisabled.focus(options);
-        }
+        this.rovingTabindexController.focus(options);
     }
 
     private deselectSelectedButtons(): void {
@@ -155,122 +176,6 @@ export class ActionGroup extends SpectrumElement {
         }
     }
 
-    private handleFocusin = (): void => {
-        this.addEventListener('focusout', this.handleFocusout);
-        this.addEventListener('keydown', this.handleKeydown);
-    };
-
-    private handleKeydown = (event: KeyboardEvent): void => {
-        const { code } = event;
-        if (
-            ![
-                'ArrowUp',
-                'ArrowLeft',
-                'ArrowRight',
-                'ArrowDown',
-                'End',
-                'Home',
-                'PageUp',
-                'PageDown',
-            ].includes(code)
-        ) {
-            return;
-        }
-        const activeElement = (this.getRootNode() as Document)
-            .activeElement as ActionButton;
-        /* c8 ignore next 3 */
-        if (!activeElement) {
-            return;
-        }
-        let nextIndex = this.buttons.indexOf(activeElement);
-        /* c8 ignore next 3 */
-        if (nextIndex === -1) {
-            return;
-        }
-        const circularIndexedElement = <T extends HTMLElement>(
-            list: T[],
-            index: number
-        ): T => list[(list.length + index) % list.length];
-        const buttonFromDelta = (delta: number): void => {
-            nextIndex += delta;
-            while (circularIndexedElement(this.buttons, nextIndex).disabled) {
-                nextIndex += delta;
-            }
-        };
-        switch (code) {
-            case 'ArrowUp':
-                buttonFromDelta(-1);
-                break;
-            case 'ArrowLeft':
-                buttonFromDelta(this.isLTR ? -1 : 1);
-                break;
-            case 'ArrowRight':
-                buttonFromDelta(this.isLTR ? 1 : -1);
-                break;
-            case 'ArrowDown':
-                buttonFromDelta(1);
-                break;
-            case 'End':
-                nextIndex = this.buttons.length;
-                buttonFromDelta(-1);
-                break;
-            case 'Home':
-                nextIndex = -1;
-                buttonFromDelta(1);
-                break;
-            case 'PageUp':
-            case 'PageDown':
-            default:
-                const tagsSiblings = [
-                    ...(
-                        this.getRootNode() as Document
-                    ).querySelectorAll<ActionGroup>('sp-action-group'),
-                ];
-                if (tagsSiblings.length < 2) {
-                    return;
-                }
-                event.preventDefault();
-                const currentIndex = tagsSiblings.indexOf(this);
-                const offset = code === 'PageUp' ? -1 : 1;
-                let nextRadioGroupIndex = currentIndex + offset;
-                let nextRadioGroup = circularIndexedElement(
-                    tagsSiblings,
-                    nextRadioGroupIndex
-                );
-                while (!nextRadioGroup.buttons.length) {
-                    nextRadioGroupIndex += offset;
-                    nextRadioGroup = circularIndexedElement(
-                        tagsSiblings,
-                        nextRadioGroupIndex
-                    );
-                }
-                nextRadioGroup.focus();
-                return;
-        }
-        event.preventDefault();
-        const nextRadio = circularIndexedElement(this.buttons, nextIndex);
-        activeElement.tabIndex = -1;
-        nextRadio.tabIndex = 0;
-        nextRadio.focus();
-    };
-
-    private handleFocusout = (event: FocusEvent): void => {
-        const { relatedTarget } = event;
-        if (!relatedTarget || !this.contains(relatedTarget as HTMLElement)) {
-            const firstButtonNonDisabled = this.buttons.find((button) => {
-                if (this.selected.length) {
-                    return button.selected;
-                }
-                return !button.disabled;
-            });
-            if (firstButtonNonDisabled) {
-                firstButtonNonDisabled.tabIndex = 0;
-            }
-        }
-        this.removeEventListener('keydown', this.handleKeydown);
-        this.removeEventListener('focusout', this.handleFocusout);
-    };
-
     private async manageSelects(): Promise<void> {
         if (!this.buttons.length) {
             return;
@@ -281,7 +186,6 @@ export class ActionGroup extends SpectrumElement {
             case 'single': {
                 this.setAttribute('role', 'radiogroup');
                 const selections: ActionButton[] = [];
-                let firstEnabled: ActionButton | undefined;
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
                     option.setAttribute('role', 'radio');
@@ -289,21 +193,11 @@ export class ActionGroup extends SpectrumElement {
                         'aria-checked',
                         option.selected ? 'true' : 'false'
                     );
-                    option.tabIndex = option.selected ? 0 : -1;
                     if (option.selected) {
                         selections.push(option);
                     }
-                    if (!firstEnabled && !option.disabled) {
-                        firstEnabled = option;
-                    }
                 });
                 await Promise.all(updates);
-                // if user passes in multiple values in .selected
-                if (selections.length) {
-                    selections[0].tabIndex = 0;
-                } else if (firstEnabled) {
-                    firstEnabled.tabIndex = 0;
-                }
 
                 const selected = selections.map((button) => {
                     return button.value;
@@ -323,7 +217,6 @@ export class ActionGroup extends SpectrumElement {
                         'aria-checked',
                         option.selected ? 'true' : 'false'
                     );
-                    option.tabIndex = -1;
                     if (option.selected) {
                         selection.push(option.value);
                         selections.push(option);
@@ -334,11 +227,6 @@ export class ActionGroup extends SpectrumElement {
                     ? selection
                     : EMPTY_SELECTION;
                 this.selected = selected;
-                if (selections.length) {
-                    selections[0].tabIndex = 0;
-                } else {
-                    this.buttons[0].tabIndex = 0;
-                }
                 break;
             }
             default:
@@ -352,14 +240,11 @@ export class ActionGroup extends SpectrumElement {
                             option.selected ? 'true' : 'false'
                         );
                         option.setAttribute('role', 'button');
-                        option.tabIndex = -1;
                         if (option.selected) {
                             selections.push(option);
                         }
                     });
                     await Promise.all(updates);
-
-                    selections[0].tabIndex = 0;
 
                     this.selected = selections.map((button) => {
                         return button.value;
@@ -367,9 +252,7 @@ export class ActionGroup extends SpectrumElement {
                 } else {
                     this.buttons.forEach((option) => {
                         option.setAttribute('role', 'button');
-                        option.tabIndex = -1; // roving tab index means you only want 1 button with 0
                     });
-                    this.buttons[0].tabIndex = 0;
                     this.removeAttribute('role');
                     break;
                 }
@@ -385,7 +268,6 @@ export class ActionGroup extends SpectrumElement {
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('click', this.handleClick);
-        this.addEventListener('focusin', this.handleFocusin);
     }
 
     protected updated(changes: PropertyValues): void {

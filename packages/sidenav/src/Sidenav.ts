@@ -17,9 +17,10 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 import sidenavStyles from './sidenav.css.js';
-import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
+import { Focusable } from '@spectrum-web-components/shared';
 import { SideNavItem } from './SidenavItem.js';
 import { SideNavHeading } from './SidenavHeading.js';
 
@@ -43,11 +44,29 @@ export class SideNav extends Focusable {
 
     public startTrackingSelectionForItem(item: SideNavItem): void {
         this.items.add(item);
+        this.rovingTabindexController.clearElementCache();
     }
 
     public stopTrackingSelectionForItem(item: SideNavItem): void {
         this.items.delete(item);
+        this.rovingTabindexController.clearElementCache();
     }
+
+    rovingTabindexController = new RovingTabindexController<SideNavItem>(this, {
+        focusInIndex: (elements: SideNavItem[]) => {
+            return elements.findIndex((el) => {
+                return this.value
+                    ? !el.disabled &&
+                          !this.isDisabledChild(el) &&
+                          el.value === this.value
+                    : !el.disabled && !this.isDisabledChild(el);
+            });
+        },
+        direction: 'vertical',
+        elements: () => [...this.querySelectorAll('sp-sidenav-item')],
+        isFocusableElement: (el: SideNavItem) =>
+            !el.disabled && !this.isDisabledChild(el),
+    });
 
     @property({ type: Boolean, reflect: true, attribute: 'manage-tab-index' })
     public manageTabIndex = false;
@@ -80,17 +99,8 @@ export class SideNav extends Focusable {
         }
     }
 
-    public constructor() {
-        super();
-        this.addEventListener('focusin', this.startListeningToKeyboard);
-    }
-
     public focus(): void {
-        if (this.focusElement === this) {
-            return;
-        }
-
-        super.focus();
+        this.rovingTabindexController.focus();
     }
 
     public blur(): void {
@@ -110,79 +120,7 @@ export class SideNav extends Focusable {
     }
 
     public get focusElement(): SideNavItem | SideNav {
-        const selected = this.querySelector('[selected]') as SideNavItem;
-        if (selected && !this.isDisabledChild(selected)) {
-            return selected;
-        }
-        const items = [...this.querySelectorAll('sp-sidenav-item')];
-        let index = 0;
-        while (
-            index < items.length &&
-            items[index] &&
-            this.isDisabledChild(items[index])
-        ) {
-            index += 1;
-        }
-        if (items[index]) {
-            return items[index];
-        }
-        /* c8 ignore next */
-        return this;
-    }
-
-    private startListeningToKeyboard(): void {
-        this.addEventListener('keydown', this.handleKeydown);
-        this.addEventListener('focusout', this.stopListeningToKeyboard);
-        if (this.value && this.manageTabIndex) {
-            const selected = this.querySelector(
-                `[value="${this.value}"]`
-            ) as SideNavItem;
-            if (selected) {
-                selected.tabIndex = -1;
-            }
-        }
-    }
-
-    private stopListeningToKeyboard(): void {
-        this.removeEventListener('keydown', this.handleKeydown);
-        this.removeEventListener('focusout', this.stopListeningToKeyboard);
-        if (this.value && this.manageTabIndex) {
-            const selected = this.querySelector(
-                `[value="${this.value}"]`
-            ) as SideNavItem;
-            if (selected) {
-                selected.tabIndex = 0;
-            }
-        }
-    }
-
-    private handleKeydown(event: KeyboardEvent): void {
-        const { code } = event;
-        /* c8 ignore next */
-        if (code !== 'ArrowDown' && code !== 'ArrowUp') {
-            return;
-        }
-        event.preventDefault();
-        const direction = code === 'ArrowDown' ? 1 : -1;
-        this.focusItemByOffset(direction);
-    }
-
-    private focusItemByOffset(direction: number): void {
-        const items = [...this.querySelectorAll('sp-sidenav-item')];
-        const focused = items.indexOf(getActiveElement(this) as SideNavItem);
-        let next = focused;
-        next = (items.length + next + direction) % items.length;
-        let nextItem = items[next];
-        // cycle through the available items in the directions of the offset to find the next non-disabled item
-        while (nextItem && this.isDisabledChild(nextItem)) {
-            next = (items.length + next + direction) % items.length;
-            nextItem = items[next];
-        }
-        // if there are no non-disabled items, skip the work to focus a child
-        if (!nextItem || this.isDisabledChild(nextItem)) {
-            return;
-        }
-        nextItem.focus();
+        return this.rovingTabindexController.focusInElement || this;
     }
 
     private isDisabledChild(child: SideNavItem): boolean {
@@ -208,22 +146,10 @@ export class SideNav extends Focusable {
     }
 
     private handleSlotchange(): void {
-        this.manageTabIndexes();
-    }
-
-    private async manageTabIndexes(): Promise<void> {
-        if (!this.value && this.manageTabIndex) {
-            const managed = this.querySelector(
-                'sp-sidenav-item:not([tabindex])'
-            ) as SideNavItem;
-            if (managed) {
-                managed.tabIndex = -1;
-            }
-            const first = this.querySelector('sp-sidenav-item');
-            if (first) {
-                await first.updateComplete;
-                first.tabIndex = 0;
-            }
+        if (this.manageTabIndex) {
+            this.rovingTabindexController.manage();
+        } else {
+            this.rovingTabindexController.unmanage();
         }
     }
 
@@ -243,16 +169,17 @@ export class SideNav extends Focusable {
         const selectedChild = this.querySelector('[selected]') as SideNavItem;
         if (selectedChild) {
             this.value = selectedChild.value;
-        } else {
-            this.manageTabIndexes();
         }
     }
 
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('manageTabIndex')) {
-            const items = [...this.querySelectorAll('sp-sidenav-item')];
-            items.map((item) => (item.manageTabIndex = this.manageTabIndex));
+            if (this.manageTabIndex) {
+                this.rovingTabindexController.manage();
+            } else {
+                this.rovingTabindexController.unmanage();
+            }
         }
     }
 }
