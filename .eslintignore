@@ -1,3 +1,4 @@
 packages/**/*.d.ts
-packages/*/lib/**/*
 packages/*/node_modules/**/*
+tools/**/*.d.ts
+tools/*/node_modules/**/*

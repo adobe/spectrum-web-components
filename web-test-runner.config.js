@@ -73,7 +73,7 @@ export default {
     groups: [
         {
             name: 'unit',
-            files: 'packages/*/test/*.test.js',
+            files: ['packages/*/test/*.test.js', 'tools/*/test/*.test.js'],
         },
         ...vrtGroups,
         ...packages.reduce((acc, pkg) => {
@@ -87,7 +87,7 @@ export default {
             if (!skipPkgs.includes(pkg)) {
                 acc.push({
                     name: pkg,
-                    files: `packages/${pkg}/test/*.test.js`,
+                    files: `{packages,tools}/${pkg}/test/*.test.js`,
                 });
             }
             return acc;

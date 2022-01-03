@@ -1,0 +1,49 @@
+{
+    "name": "@spectrum-web-components/reactive-controllers",
+    "version": "0.0.1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "ReactiveControllers for powering common UI patterns",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/reactive-controllers"
+    },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/reactive-controllers",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.js",
+        "./src/*": "./src/*",
+        "./package.json": "./package.json"
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html",
+        "reactive controllers"
+    ],
+    "dependencies": {
+        "lit": "^2.0.2",
+        "tslib": "^2.0.0"
+    },
+    "types": "./src/index.d.ts"
+}

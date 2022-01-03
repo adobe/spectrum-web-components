@@ -41,6 +41,11 @@ projects/**/*.js.map
 projects/**/*.d.ts
 !projects/*/global.d.ts
 
+tools/**/*.js
+tools/**/*.js.map
+tools/**/*.d.ts
+!tools/*/global.d.ts
+
 # typescript assets
 !test/global.d.ts
 *.tsbuildinfo
@@ -48,6 +53,7 @@ projects/**/*.d.ts
 # built css assets
 packages/**/*.css.ts
 projects/**/*.css.ts
+tools/**/*.css.ts
 styles/**/*.css.ts
 
 # test assets

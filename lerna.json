@@ -1,5 +1,5 @@
 {
-    "packages": ["packages/*", "projects/*"],
+    "packages": ["packages/*", "projects/*", "tools/*"],
     "version": "independent",
     "npmClient": "yarn",
     "useWorkspaces": true,
@@ -7,10 +7,10 @@
         "publish": {
             "conventionalCommits": true,
             "ignoreChanges": [
-                "packages/*/test/**",
-                "packages/*/stories/**",
                 "**/*.md",
-                "**/tsconfig.json"
+                "**/tsconfig.json",
+                "**/test/**",
+                "**/stories/**"
             ]
         }
     }

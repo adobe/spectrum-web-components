@@ -35,6 +35,9 @@ export const buildPackages = async (options) => {
     for (const config of await fg(`./packages/*/tsconfig.json`)) {
         paths.push(config);
     }
+    for (const config of await fg(`./tools/*/tsconfig.json`)) {
+        paths.push(config);
+    }
     paths.push('.storybook/tsconfig.json');
     buildPackage(paths, options);
 };
