@@ -17,19 +17,17 @@ import {
     SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Tab } from './Tab.js';
-import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
+import { Focusable } from '@spectrum-web-components/shared';
+import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 import tabStyles from './tabs.css.js';
 import { TabPanel } from './TabPanel.js';
-
-const availableArrowsByDirection = {
-    vertical: ['ArrowUp', 'ArrowDown'],
-    ['vertical-right']: ['ArrowUp', 'ArrowDown'],
-    horizontal: ['ArrowLeft', 'ArrowRight'],
-};
 
 const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
@@ -72,6 +70,9 @@ export class Tabs extends SizedMixin(Focusable) {
     @property({ attribute: false })
     public shouldAnimate = false;
 
+    @query('#list')
+    private tabList!: HTMLDivElement;
+
     @property({ reflect: true })
     public get selected(): string {
         return this._selected;
@@ -91,21 +92,42 @@ export class Tabs extends SizedMixin(Focusable) {
 
     private _selected = '';
 
-    private tabs: Tab[] = [];
+    private set tabs(tabs: Tab[]) {
+        if (tabs === this.tabs) return;
+        this._tabs = tabs;
+        this.rovingTabindexController.clearElementCache();
+    }
+
+    private get tabs(): Tab[] {
+        return this._tabs;
+    }
+
+    private _tabs: Tab[] = [];
+
+    rovingTabindexController = new RovingTabindexController<Tab>(this, {
+        focusInIndex: (elements: Tab[]) => {
+            let focusInIndex = 0;
+            const firstFocusableElement = elements.find((el, index) => {
+                const focusInElement = this.selected
+                    ? !el.disabled && el.value === this.selected
+                    : !el.disabled;
+                focusInIndex = index;
+                return focusInElement;
+            });
+            return firstFocusableElement ? focusInIndex : -1;
+        },
+        direction: () =>
+            this.direction === 'horizontal' ? 'horizontal' : 'vertical',
+        elements: () => this.tabs,
+        isFocusableElement: (el: Tab) => !el.disabled,
+        listenerScope: () => this.tabList,
+    });
 
     /**
      * @private
      */
     public get focusElement(): Tab | this {
-        const focusElement = this.tabs.find(
-            (tab) =>
-                !tab.disabled && (tab.selected || tab.value === this.selected)
-        );
-        if (focusElement) {
-            return focusElement;
-        }
-        const fallback = this.tabs.find((tab) => !tab.disabled);
-        return fallback || this;
+        return this.rovingTabindexController.focusInElement || this;
     }
 
     protected manageAutoFocus(): void {
@@ -140,8 +162,6 @@ export class Tabs extends SizedMixin(Focusable) {
                 aria-label=${ifDefined(this.label ? this.label : undefined)}
                 @click=${this.onClick}
                 @keydown=${this.onKeyDown}
-                @mousedown=${this.manageFocusinType}
-                @focusin=${this.startListeningToKeyboard}
                 @sp-tab-contentchange=${this.updateSelectionIndicator}
                 id="list"
                 role="tablist"
@@ -162,7 +182,7 @@ export class Tabs extends SizedMixin(Focusable) {
 
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        const selectedChild = this.querySelector('[selected]') as Tab;
+        const selectedChild = this.querySelector(':scope > [selected]') as Tab;
         if (selectedChild) {
             this.selectTarget(selectedChild);
         }
@@ -207,67 +227,6 @@ export class Tabs extends SizedMixin(Focusable) {
         }
     }
 
-    /**
-     * This will force apply the focus visible styling.
-     * It should always do so when this styling is already applied.
-     */
-    private shouldApplyFocusVisible = false;
-
-    private manageFocusinType = (): void => {
-        if (this.shouldApplyFocusVisible) {
-            return;
-        }
-
-        const handleFocusin = (): void => {
-            this.shouldApplyFocusVisible = false;
-            this.removeEventListener('focusin', handleFocusin);
-        };
-        this.addEventListener('focusin', handleFocusin);
-    };
-
-    public startListeningToKeyboard(): void {
-        this.addEventListener('keydown', this.handleKeydown);
-        this.shouldApplyFocusVisible = true;
-        const selected = this.querySelector('[selected]') as Tab;
-        if (selected) {
-            selected.tabIndex = -1;
-        }
-
-        const stopListeningToKeyboard = (): void => {
-            this.removeEventListener('keydown', this.handleKeydown);
-            this.shouldApplyFocusVisible = false;
-            const selected = this.querySelector('[selected]') as Tab;
-            if (selected) {
-                selected.tabIndex = 0;
-            }
-            this.removeEventListener('focusout', stopListeningToKeyboard);
-        };
-        this.addEventListener('focusout', stopListeningToKeyboard);
-    }
-
-    public handleKeydown(event: KeyboardEvent): void {
-        const { code } = event;
-        const availableArrows = [...availableArrowsByDirection[this.direction]];
-        if (!availableArrows.includes(code)) {
-            return;
-        }
-        if (!this.isLTR && this.direction === 'horizontal') {
-            availableArrows.reverse();
-        }
-        event.preventDefault();
-        const currentFocusedTab = getActiveElement(this) as Tab;
-        let currentFocusedTabIndex = this.tabs.indexOf(currentFocusedTab);
-        currentFocusedTabIndex += code === availableArrows[0] ? -1 : 1;
-        const nextTab =
-            this.tabs[
-                (currentFocusedTabIndex + this.tabs.length) % this.tabs.length
-            ];
-        nextTab.focus();
-        if (this.auto) {
-            this.selected = nextTab.value;
-        }
-    }
-
     private onClick = (event: Event): void => {
         if (this.disabled) {
             return;
@@ -280,15 +239,6 @@ export class Tabs extends SizedMixin(Focusable) {
         }
         this.shouldAnimate = true;
         this.selectTarget(target);
-        if (this.shouldApplyFocusVisible && event.composedPath()[0] !== this) {
-            /* Trick :focus-visible polyfill into thinking keyboard based focus */
-            this.dispatchEvent(
-                new KeyboardEvent('keydown', {
-                    code: 'Tab',
-                })
-            );
-            target.focus();
-        }
     };
 
     private onKeyDown = (event: KeyboardEvent): void => {

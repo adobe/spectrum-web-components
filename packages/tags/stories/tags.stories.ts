@@ -21,6 +21,11 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 export default {
     title: 'Tags',
     component: 'sp-tags',
+    argTypes: { onDelete: { action: 'delete' } },
+};
+
+type Props = {
+    onDelete: () => void;
 };
 
 export const Default = (): TemplateResult => {
@@ -77,16 +82,16 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const deletable = (): TemplateResult => {
+export const deletable = (args: Props): TemplateResult => {
     return html`
-        <sp-tags>
+        <sp-tags @delete=${args.onDelete}>
             <sp-tag deletable>Tag 1</sp-tag>
             <sp-tag invalid deletable>Tag 2</sp-tag>
             <sp-tag disabled deletable>Tag 3</sp-tag>
         </sp-tags>
         <br />
         <br />
-        <sp-tags>
+        <sp-tags @delete=${args.onDelete}>
             <sp-tag deletable>
                 Tag 1
                 <sp-avatar
@@ -114,7 +119,7 @@ export const deletable = (): TemplateResult => {
         </sp-tags>
         <br />
         <br />
-        <sp-tags>
+        <sp-tags @delete=${args.onDelete}>
             <sp-tag deletable>
                 Tag 1
                 <sp-icon-magnify slot="icon" size="s"></sp-icon-magnify>

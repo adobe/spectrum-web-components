@@ -23,10 +23,12 @@ import {
     endEvent,
     enterEvent,
     homeEvent,
-    pageDownEvent,
-    pageUpEvent,
 } from '../../../test/testing-helpers.js';
-import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
+import {
+    a11ySnapshot,
+    findAccessibilityNode,
+    sendKeys,
+} from '@web/test-runner-commands';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Radio Group - focus control', () => {
@@ -166,7 +168,6 @@ describe('Radio Group - focus control', () => {
         radio1.focus();
         await elementUpdated(el);
 
-        el.dispatchEvent(pageUpEvent());
         el.dispatchEvent(arrowRightEvent());
         await elementUpdated(el);
 
@@ -199,15 +200,46 @@ describe('Radio Group - focus control', () => {
 
         radio1.blur();
     });
+    it('accepts keyboard interactions where `checked` and `calculateFocusInIndex` might conflict', async () => {
+        const el = await fixture<RadioGroup>(
+            html`
+                <sp-radio-group>
+                    <sp-radio>Options 1</sp-radio>
+                    <sp-radio>Options 2</sp-radio>
+                    <sp-radio>Options 3</sp-radio>
+                    <sp-radio>Options 4</sp-radio>
+                    <sp-radio>Options 5</sp-radio>
+                </sp-radio-group>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const radio1 = el.querySelector('sp-radio:nth-child(1)') as Radio;
+        const radio5 = el.querySelector('sp-radio:nth-child(5)') as Radio;
+
+        radio5.focus();
+        await elementUpdated(el);
+        expect(document.activeElement === radio5).to.be.true;
+        expect(radio5.checked).to.be.true;
+
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        await elementUpdated(el);
+
+        expect(document.activeElement === radio1).to.be.true;
+        expect(radio1.checked).to.be.true;
+    });
     it('acknowledges `disabled` and accepts keyboard events while focused', async () => {
         const el = await fixture<RadioGroup>(
             html`
                 <sp-radio-group>
-                    <sp-radio disabled>Option 1</sp-radio>
-                    <sp-radio>Option 2</sp-radio>
-                    <sp-radio>Option 3</sp-radio>
-                    <sp-radio>Option 4</sp-radio>
-                    <sp-radio disabled>Option 5</sp-radio>
+                    <sp-radio value="1" disabled>Option 1</sp-radio>
+                    <sp-radio value="2">Option 2</sp-radio>
+                    <sp-radio value="3">Option 3</sp-radio>
+                    <sp-radio value="4">Option 4</sp-radio>
+                    <sp-radio value="5" disabled>Option 5</sp-radio>
                 </sp-radio-group>
             `
         );
@@ -220,12 +252,13 @@ describe('Radio Group - focus control', () => {
         radio2.focus();
         await elementUpdated(el);
         expect(document.activeElement === radio2, 'start 2').to.be.true;
+        expect(el.selected).to.equal('');
 
         el.dispatchEvent(enterEvent());
         el.dispatchEvent(endEvent());
         await elementUpdated(el);
-
         expect(document.activeElement === radio4, 'first 4').to.be.true;
+        expect(el.selected).to.equal('4');
 
         el.dispatchEvent(homeEvent());
         await elementUpdated(el);
@@ -241,59 +274,6 @@ describe('Radio Group - focus control', () => {
         await elementUpdated(el);
 
         expect(document.activeElement === radio2, 'fourth 2').to.be.true;
-    });
-    it('loads accepts "PageUp" and "PageDown" keys', async () => {
-        const el = await fixture<HTMLDivElement>(
-            html`
-                <div>
-                    <sp-radio-group>
-                        <sp-radio>Option 1</sp-radio>
-                    </sp-radio-group>
-                    <sp-radio-group>
-                        <sp-radio>Option 2</sp-radio>
-                    </sp-radio-group>
-                    <sp-radio-group></sp-radio-group>
-                    <sp-radio-group>
-                        <sp-radio disabled>Option 3</sp-radio>
-                        <sp-radio>Option 4</sp-radio>
-                    </sp-radio-group>
-                </div>
-            `
-        );
-
-        const radioGroup1 = el.querySelector(
-            'sp-radio-group:nth-child(1)'
-        ) as RadioGroup;
-        const radioGroup2 = el.querySelector(
-            'sp-radio-group:nth-child(2)'
-        ) as RadioGroup;
-        const radioGroup4 = el.querySelector(
-            'sp-radio-group:nth-child(4)'
-        ) as RadioGroup;
-
-        const radio1 = radioGroup1.querySelector('sp-radio') as Radio;
-        const radio2 = radioGroup2.querySelector('sp-radio') as Radio;
-        const radio4 = radioGroup4.querySelector(
-            'sp-radio:not([disabled])'
-        ) as Radio;
-
-        radio1.focus();
-        radio1.dispatchEvent(pageUpEvent());
-
-        expect(document.activeElement === radio4).to.be.true;
-
-        radio4.dispatchEvent(pageDownEvent());
-
-        expect(document.activeElement === radio1).to.be.true;
-
-        radio1.dispatchEvent(pageDownEvent());
-
-        expect(document.activeElement === radio2).to.be.true;
-
-        radio2.dispatchEvent(pageDownEvent());
-
-        expect(document.activeElement === radio4, 'Focuses `radio4`').to.be
-            .true;
     });
 });
 

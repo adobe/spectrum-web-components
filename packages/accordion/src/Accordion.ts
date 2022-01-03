@@ -13,24 +13,24 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
-    PropertyValues,
+    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
     property,
     queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 import { AccordionItem } from './AccordionItem.js';
 
 import styles from './accordion.css.js';
-import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
 
 /**
  * @element sp-accordion
  * @slot - The sp-accordion-item children to display.
  */
-export class Accordion extends Focusable {
+export class Accordion extends SpectrumElement {
     public static get styles(): CSSResultArray {
         return [styles];
     }
@@ -50,75 +50,26 @@ export class Accordion extends Focusable {
         ) as AccordionItem[];
     }
 
+    rovingTabindexController = new RovingTabindexController<AccordionItem>(
+        this,
+        {
+            focusInIndex: (elements: AccordionItem[]) => {
+                return elements.findIndex((el) => {
+                    return !el.disabled;
+                });
+            },
+            direction: 'vertical',
+            elements: () => this.items,
+            isFocusableElement: (el: AccordionItem) => !el.disabled,
+        }
+    );
+
     public focus(): void {
-        if (this.focusElement === this) {
-            return;
-        }
-
-        super.focus();
-    }
-
-    /**
-     * @private
-     */
-    public get focusElement(): Accordion | AccordionItem {
-        const items = this.items;
-        if (items && !items.length) {
-            return this;
-        }
-        let index = 0;
-        while (index < items.length && items[index] && items[index].disabled) {
-            index += 1;
-        }
-        if (items[index]) {
-            return items[index];
-        }
-        /* c8 ignore next */
-        return this;
-    }
-
-    public startListeningToKeyboard(): void {
-        const items = this.items;
-        /* c8 ignore next 3 */
-        if (items && !items.length) {
-            return;
-        }
-        this.addEventListener('keydown', this.handleKeydown);
-    }
-
-    public stopListeningToKeyboard(): void {
-        this.removeEventListener('keydown', this.handleKeydown);
-    }
-
-    private handleKeydown(event: KeyboardEvent): void {
-        const { code } = event;
-        /* c8 ignore next 3 */
-        if (code !== 'ArrowDown' && code !== 'ArrowUp') {
-            return;
-        }
-        event.preventDefault();
-        const direction = code === 'ArrowDown' ? 1 : -1;
-        this.focusItemByOffset(direction);
-    }
-
-    private focusItemByOffset(direction: number): void {
-        const items = this.items;
-        const focused = items.indexOf(getActiveElement(this) as AccordionItem);
-        let next = focused;
-        let nextItem = items[next];
-        // cycle through the available items in the directions of the offset to find the next non-disabled item
-        while (nextItem && (nextItem.disabled || next === focused)) {
-            next = (items.length + next + direction) % items.length;
-            nextItem = items[next];
-        }
-        // if there are no non-disabled items, skip the work to focus a child
-        if (!nextItem || nextItem.disabled || next === focused) {
-            return;
-        }
-        nextItem.focus();
+        this.rovingTabindexController.focus();
     }
 
     private async onToggle(event: Event): Promise<void> {
+        const target = event.target as AccordionItem;
         // Let the event pass through the DOM so that it can be
         // prevented from the outside if a user so desires.
         await 0;
@@ -126,7 +77,6 @@ export class Accordion extends Focusable {
             // No toggling when `allowMultiple` or the user prevents it.
             return;
         }
-        const target = event.target as AccordionItem;
         const items = [...this.items] as AccordionItem[];
         /* c8 ignore next 3 */
         if (items && !items.length) {
@@ -141,17 +91,16 @@ export class Accordion extends Focusable {
         });
     }
 
-    protected render(): TemplateResult {
-        return html`
-            <slot></slot>
-        `;
+    private handleSlotchange(): void {
+        this.rovingTabindexController.clearElementCache();
     }
 
-    protected firstUpdated(changed: PropertyValues): void {
-        super.firstUpdated(changed);
-
-        this.addEventListener('focusin', this.startListeningToKeyboard);
-        this.addEventListener('focusout', this.stopListeningToKeyboard);
-        this.addEventListener('sp-accordion-item-toggle', this.onToggle);
+    protected render(): TemplateResult {
+        return html`
+            <slot
+                @sp-accordion-item-toggle=${this.onToggle}
+                @slotchange=${this.handleSlotchange}
+            ></slot>
+        `;
     }
 }

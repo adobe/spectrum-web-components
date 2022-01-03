@@ -23,7 +23,6 @@ import {
 } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
 import { LitElement, TemplateResult } from '@spectrum-web-components/base';
-import { tabEvent, waitForPredicate } from '../../../test/testing-helpers.js';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -62,7 +61,7 @@ describe('Tabs', () => {
         await expect(tabs).to.be.accessible();
     });
 
-    it('loads accessibly w/ slotted content', async () => {
+    it('loads accessibly w/o panels', async () => {
         const tabs = await fixture<Tabs>(
             html`
                 <sp-tabs selected="first">
@@ -411,83 +410,6 @@ describe('Tabs', () => {
 
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
-    });
-
-    it('manages the focus ring between `click` and tab `focus`', async () => {
-        const tabs = await createTabs();
-        const otherThing = document.createElement('button');
-        document.body.append(otherThing);
-
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
-        await elementUpdated(tabs);
-        const tab1 = tabs.querySelector('sp-tab:nth-child(1)') as Tab;
-        const tab2 = tabs.querySelector('sp-tab:nth-child(2)') as Tab;
-        const tab3 = tabs.querySelector('sp-tab:nth-child(3)') as Tab;
-        expect(tab1.classList.contains('focus-visible')).to.be.false;
-        expect(tab2.classList.contains('focus-visible')).to.be.false;
-        expect(tab3.classList.contains('focus-visible')).to.be.false;
-
-        tab1.dispatchEvent(tabEvent());
-        tab1.focus();
-        await elementUpdated(tab1);
-        expect(document.activeElement, 'first tab is focused').to.equal(tab1);
-        expect(
-            tab1.classList.contains('focus-visible'),
-            '`focus()` sets the ring'
-        ).to.be.true;
-
-        tab2.dispatchEvent(
-            new MouseEvent('mousedown', {
-                bubbles: true,
-                composed: true,
-            })
-        );
-        tab2.focus();
-        tab2.click();
-        await elementUpdated(tab2);
-        expect(document.activeElement, 'second tab is focused').to.equal(tab2);
-        expect(
-            tab2.classList.contains('focus-visible'),
-            '`click()` should persist'
-        ).to.be.true;
-
-        tab2.dispatchEvent(
-            new FocusEvent('focusout', {
-                bubbles: true,
-                composed: true,
-            })
-        );
-        otherThing.focus();
-        await elementUpdated(tab2);
-        expect(
-            document.activeElement,
-            'second tab is not focused'
-        ).to.not.equal(tab2);
-        expect(
-            tab2.classList.contains('focus-visible'),
-            '`blur()` clears the ring'
-        ).to.be.false;
-
-        tab3.dispatchEvent(
-            new MouseEvent('mousedown', {
-                bubbles: true,
-                composed: true,
-            })
-        );
-        tab3.focus();
-        tab3.dispatchEvent(
-            new FocusEvent('click', {
-                bubbles: true,
-                composed: true,
-            })
-        );
-        await elementUpdated(tab3);
-        expect(document.activeElement, 'third tab is focused').to.equal(tab3);
-        expect(
-            tab3.classList.contains('focus-visible'),
-            '`click()` does not set the ring'
-        ).to.be.false;
-        otherThing.remove();
     });
 
     it('accepts keyboard based selection through shadow DOM', async () => {

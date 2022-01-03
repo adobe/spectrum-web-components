@@ -66,7 +66,12 @@ export class SideNav extends LitElement {
                         <slot name="logo"></slot>
                     </div>
                     <docs-search
-                        tabindex=${ifDefined(!this.open ? -1 : undefined)}
+                        tabindex=${ifDefined(
+                            !this.open &&
+                                matchMedia('(max-width: 960px)').matches
+                                ? -1
+                                : undefined
+                        )}
                     ></docs-search>
                 </div>
                 <div class="navigation">

@@ -99,6 +99,8 @@ describe('Sidenav', () => {
 
         el.dispatchEvent(new FocusEvent('focusin'));
         item.remove();
+
+        await elementUpdated(el);
         el.dispatchEvent(
             new KeyboardEvent('keydown', {
                 code: 'ArrowDown',
@@ -155,7 +157,6 @@ describe('Sidenav', () => {
         expect(el.manageTabIndex).to.be.false;
 
         const item1 = el.querySelector('sp-sidenav-item') as SideNavItem;
-        expect(item1.manageTabIndex).to.be.false;
         expect(item1.tabIndex).to.equal(0);
 
         const newItem = document.createElement('sp-sidenav-item');
@@ -165,7 +166,6 @@ describe('Sidenav', () => {
 
         await elementUpdated(newItem);
 
-        expect(newItem.manageTabIndex).to.be.false;
         expect(newItem.tabIndex).to.equal(0);
 
         el.focus();
@@ -287,6 +287,7 @@ describe('Sidenav', () => {
 
         expect(el.value).to.equal('Section 1');
         expect(selected.tabIndex, 'initially 0').to.equal(0);
+        expect(toBeSelected.tabIndex, 'initially -1').to.equal(-1);
 
         el.focus();
 
@@ -302,13 +303,24 @@ describe('Sidenav', () => {
         expect(el.value).to.equal('Section 1');
         expect(selected.tabIndex, '0 when blur').to.equal(0);
 
-        toBeSelected.focusElement.click();
+        const bindingRect = toBeSelected.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        bindingRect.x + bindingRect.width / 2,
+                        bindingRect.y + bindingRect.height / 2,
+                    ],
+                },
+            ],
+        });
 
         await elementUpdated(el);
 
         expect(el.value).to.equal('Section 0');
         expect(toBeSelected.tabIndex, 'will be new focusable child').to.equal(
-            0
+            -1
         );
         expect(selected.tabIndex, 'no longer selected').to.equal(-1);
     });
@@ -321,7 +333,7 @@ describe('Sidenav', () => {
         el.focus();
         el.dispatchEvent(arrowUpEvent());
         let focused = document.activeElement as SideNavItem;
-        focused.focusElement.click();
+        focused.click();
 
         await elementUpdated(el);
 
@@ -332,7 +344,7 @@ describe('Sidenav', () => {
         el.dispatchEvent(arrowDownEvent());
         focused = document.activeElement as SideNavItem;
         expect(focused.expanded, 'not expanded').to.be.false;
-        focused.focusElement.click();
+        focused.click();
 
         await elementUpdated(el);
 
@@ -341,7 +353,7 @@ describe('Sidenav', () => {
         el.dispatchEvent(arrowDownEvent());
         await elementUpdated(el);
         focused = document.activeElement as SideNavItem;
-        focused.focusElement.click();
+        focused.click();
 
         await elementUpdated(el);
 
@@ -469,7 +481,6 @@ describe('Sidenav', () => {
 
         await elementUpdated(item1);
         await elementUpdated(item2);
-        expect(item1.manageTabIndex).to.be.true;
         expect(item1.tabIndex, 'first item tabindex').to.equal(0);
         expect(item2.tabIndex, 'second item tabindex').to.equal(-1);
 
@@ -482,8 +493,8 @@ describe('Sidenav', () => {
         el.appendChild(item3);
 
         await elementUpdated(item3);
+        await elementUpdated(el);
 
-        expect(item3.manageTabIndex).to.be.true;
         await waitUntil(() => item3.tabIndex === -1, 'after');
     });
 });

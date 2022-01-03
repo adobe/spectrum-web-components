@@ -62,8 +62,9 @@ describe('Accordion', () => {
         const item = el.querySelector('sp-accordion-item') as AccordionItem;
         window.addEventListener('error', () => errorSpy());
 
-        el.dispatchEvent(new FocusEvent('focusin'));
+        el.focus();
         item.remove();
+        await elementUpdated(el);
         el.dispatchEvent(
             new KeyboardEvent('keydown', {
                 code: 'ArrowDown',
@@ -293,10 +294,9 @@ describe('Accordion', () => {
         document.body.focus();
 
         el.focus();
-        const focused = el.focusElement as AccordionItem;
-        expect(document.activeElement === focused).to.be.true;
+        expect(document.activeElement === secondItem).to.be.true;
 
-        focused.dispatchEvent(shiftTabEvent());
+        secondItem.dispatchEvent(shiftTabEvent());
         await elementUpdated(el);
 
         const outsideFocused = document.activeElement as HTMLElement;

@@ -46,6 +46,7 @@
     "dependencies": {
         "@spectrum-web-components/action-button": "^0.7.2",
         "@spectrum-web-components/base": "^0.5.1",
+        "@spectrum-web-components/reactive-controllers": "^0.0.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
