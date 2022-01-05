@@ -47,7 +47,7 @@ export type ToastVariants =
  * @slot - The toast content
  * @slot action - button element surfacing an action in the Toast
  *
- * @fires close - Announces that the Toast has been closed from within.
+ * @fires close - Announces that the Toast has been closed by the user or by its timeout.
  */
 
 export class Toast extends SpectrumElement {
