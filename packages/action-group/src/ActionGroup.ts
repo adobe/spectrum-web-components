@@ -100,7 +100,7 @@ export class ActionGroup extends SpectrumElement {
         }
     }
 
-    private deselectSelectedButtons() {
+    private deselectSelectedButtons(): void {
         const selected = [
             ...this.querySelectorAll('[selected]'),
         ] as ActionButton[];
@@ -429,6 +429,13 @@ export class ActionGroup extends SpectrumElement {
             return acc;
         }, []);
         this.buttons = buttons as ActionButton[];
+        // <selected> element merges selected so following paradigm here
+        const currentlySelectedButtons: string[] = [];
+        this.buttons.forEach((button: ActionButton) => {
+            if (button.selected) {
+                currentlySelectedButtons.push(button.value);
+            }
+        });
         this.manageChildren();
         this.manageSelects();
     };
@@ -440,6 +447,11 @@ export class ActionGroup extends SpectrumElement {
             this.manageButtons();
         }
         this.observer.observe(this, { childList: true, subtree: true });
+
+        if (this.hasAttribute('selected')) {
+            const selected = this.getAttribute('selected')!;
+            this._selected = JSON.parse(selected);
+        }
     }
 
     public disconnectedCallback(): void {
