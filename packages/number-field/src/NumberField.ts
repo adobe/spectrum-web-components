@@ -368,7 +368,8 @@ export class NumberField extends TextfieldBase {
         if (typeof this.max !== 'undefined') {
             value = Math.min(this.max, value);
         }
-        if (typeof this.step !== 'undefined') {
+        // Step shouldn't validate when 0...
+        if (this.step) {
             const min = typeof this.min !== 'undefined' ? this.min : 0;
             const moduloStep = (value - min) % this.step;
             const fallsOnStep = moduloStep === 0;
