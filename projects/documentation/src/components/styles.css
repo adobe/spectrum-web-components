@@ -460,7 +460,7 @@ sp-divider[size='s']:not(:defined) {
     margin-bottom: 28px;
 }
 
-sp-divider {
+.headerContainer sp-divider {
     margin-bottom: 33px;
 }
 

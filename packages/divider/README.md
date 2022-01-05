@@ -26,9 +26,11 @@ import { Divider } from '@spectrum-web-components/divider';
 
 ## Horizontal
 
-### Small
+<sp-tabs selected="m" auto label="Horizontal Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
 
-```html-live
+```html-live demo
 <h2 class="spectrum-Heading spectrum-Heading--sizeXS">Small</h2>
 <sp-divider size="s"></sp-divider>
 <p class="spectrum-Body">
@@ -36,9 +38,11 @@ import { Divider } from '@spectrum-web-components/divider';
 </p>
 ```
 
-### Medium
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
 
-```html-live
+```html-live demo
 <h2 class="spectrum-Heading spectrum-Heading--sizeS">Medium</h2>
 <sp-divider size="m"></sp-divider>
 <p class="spectrum-Body">
@@ -47,56 +51,82 @@ import { Divider } from '@spectrum-web-components/divider';
 </p>
 ```
 
-### Large
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
 
-```html-live
+```html-live demo
 <h2 class="spectrum-Heading spectrum-Heading--sizeM">Large</h2>
 <sp-divider size="l"></sp-divider>
 <p class="spectrum-Body">Page or Section Titles.</p>
 ```
 
+</sp-tab-panel>
+</sp-tabs>
+
 ## Vertical
 
 When a vertical Divider is used inside of a flex container, use `align-self: stretch; height: auto;` on the Divider.
 
-### Small
+<sp-tabs selected="m" auto label="Vertical Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
 
-```html-live
+```html-live demo
 <div style="height: 32px; display: flex;">
     <sp-action-button quiet label="Zoom in">
         <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
-    <sp-divider size="s" vertical></sp-divider>
+    <sp-divider
+        size="s"
+        style="align-self: stretch; height: auto;"
+        vertical
+    ></sp-divider>
     <sp-action-button quiet label="Zoom in">
         <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
 </div>
 ```
 
-### Medium
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
 
-```html-live
+```html-live demo
 <div style="height: 32px; display: flex;">
     <sp-action-button quiet label="Zoom in">
         <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
-    <sp-divider size="m" vertical></sp-divider>
+    <sp-divider
+        size="m"
+        style="align-self: stretch; height: auto;"
+        vertical
+    ></sp-divider>
     <sp-action-button quiet label="Zoom in">
         <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
 </div>
 ```
 
-### Large
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
 
-```html-live
+```html-live demo
 <div style="height: 32px; display: flex;">
     <sp-action-button quiet label="Zoom in">
         <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
-    <sp-divider size="l" vertical></sp-divider>
+    <sp-divider
+        size="l"
+        style="align-self: stretch; height: auto;"
+        vertical
+    ></sp-divider>
     <sp-action-button quiet label="Zoom in">
         <sp-icon-magnify slot="icon"></sp-icon-magnify>
     </sp-action-button>
 </div>
 ```
+
+</sp-tab-panel>
+</sp-tabs>
