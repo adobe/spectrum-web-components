@@ -44,8 +44,13 @@ import { Dropzone } from '@spectrum-web-components/dropzone';
     </sp-illustrated-message>
 
     <div>
-        <label for="file-input" onclick="this.nextElementSibling.click()">
-            <sp-link href="javascript:;">Select a File</sp-link>
+        <label for="file-input">
+            <sp-link
+                href="javascript:;"
+                onclick="this.parentElement.nextElementSibling.click()"
+            >
+                Select a File
+            </sp-link>
             from your computer
         </label>
         <input type="file" id="file-input" style="display: none" />
@@ -79,8 +84,13 @@ When a file is dragged over the `<sp-dropzone>` element, it will display with th
     </sp-illustrated-message>
 
     <div>
-        <label for="file-input" onclick="this.nextElementSibling.click()">
-            <sp-link href="javascript:;">Select a File</sp-link>
+        <label for="file-input">
+            <sp-link
+                href="javascript:;"
+                onclick="this.parentElement.nextElementSibling.click()"
+            >
+                Select a File
+            </sp-link>
             from your computer
         </label>
         <input type="file" id="file-input" style="display: none" />
