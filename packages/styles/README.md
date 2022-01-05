@@ -121,4 +121,4 @@ This file provides only the variables needed to power the "Large" scale system s
 @import '@spectrum-web-components/styles/typography.css';
 ```
 
-This file provides a `lit-html` compliant version of the [Spectrum Typography classes](https://opensource.adobe.com/spectrum-css/components/typography/).
+This file provides a `lit-html` compliant version of the [Spectrum Typography classes](https://opensource.adobe.com/spectrum-css/typography.html).
