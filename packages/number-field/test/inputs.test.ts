@@ -19,6 +19,7 @@ import '../sp-number-field.js';
 import {
     currency,
     Default,
+    minMax,
     percents,
 } from '../stories/number-field.stories.js';
 import { sendKeys } from '@web/test-runner-commands';
@@ -258,6 +259,24 @@ describe('NumberField - inputs', () => {
             });
             await elementUpdated(el);
             expect(el.value).to.equal(21);
+        });
+    });
+    describe('user suplied large numbers', () => {
+        it('do not crash the Number Field', async () => {
+            const el = await getElFrom(minMax(minMax.args));
+            await elementUpdated(el);
+
+            el.focus();
+            await sendKeys({
+                type: '12345678901234567890',
+            });
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('255');
+            await sendKeys({
+                press: 'Enter',
+            });
+            await elementUpdated(el);
+            expect(el.value).to.equal(255);
         });
     });
     describe('locale specific', () => {
