@@ -87,6 +87,21 @@ describe('NumberField', () => {
             expect(el.value).to.equal(13377331);
         });
     });
+    describe('Step', () => {
+        it('can be 0', async () => {
+            const el = await getElFrom(
+                Default({
+                    step: 0,
+                    min: 0,
+                    max: 10,
+                    value: 5,
+                })
+            );
+            expect(el.value).to.equal(5);
+            expect(el.formattedValue).to.equal('5');
+            expect(el.valueAsString).to.equal('5');
+        });
+    });
     describe('Increments', () => {
         let el: NumberField;
         beforeEach(async () => {
