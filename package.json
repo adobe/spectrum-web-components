@@ -105,7 +105,7 @@
         "@types/command-line-args": "^5.0.0",
         "@types/command-line-usage": "^5.0.1",
         "@types/common-tags": "^1.4.0",
-        "@types/node": "^16.3.1",
+        "@types/node": "^17.0.8",
         "@types/sinon": "^10.0.0",
         "@types/webpack": "^4.4.26",
         "@types/webpack-env": "^1.13.9",
