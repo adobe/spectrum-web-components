@@ -365,6 +365,9 @@ export class NumberField extends TextfieldBase {
         if (typeof this.min !== 'undefined') {
             value = Math.max(this.min, value);
         }
+        if (typeof this.max !== 'undefined') {
+            value = Math.min(this.max, value);
+        }
         if (typeof this.step !== 'undefined') {
             const min = typeof this.min !== 'undefined' ? this.min : 0;
             const moduloStep = (value - min) % this.step;
@@ -382,9 +385,6 @@ export class NumberField extends TextfieldBase {
                     value -= this.step;
                 }
             }
-        }
-        if (typeof this.max !== 'undefined') {
-            value = Math.min(this.max, value);
         }
         return value;
     }
