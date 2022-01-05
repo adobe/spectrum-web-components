@@ -124,7 +124,7 @@ While `Intl.NumberFormatOptions` does support a [wide range of units](https://tc
     value="500"
     format-options='{
         "style": "unit",
-        "unit": "px",
+        "unit": "px"
     }'
 ></sp-number-field>
 ```
