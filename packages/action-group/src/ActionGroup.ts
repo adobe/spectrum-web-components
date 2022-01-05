@@ -436,6 +436,7 @@ export class ActionGroup extends SpectrumElement {
                 currentlySelectedButtons.push(button.value);
             }
         });
+        this.selected = this.selected.concat(currentlySelectedButtons);
         this.manageChildren();
         this.manageSelects();
     };
