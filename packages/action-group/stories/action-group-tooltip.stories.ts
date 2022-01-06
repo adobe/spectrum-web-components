@@ -154,7 +154,7 @@ const template = (args: Properties): TemplateResult => {
                 <sp-tooltip slot="hover-content">The sun at noon.</sp-tooltip>
             </overlay-trigger>
         </sp-action-group>
-        ${args.selects == 'none'
+        ${!!args.selects
             ? html``
             : html`
                   <div>Selected:</div>

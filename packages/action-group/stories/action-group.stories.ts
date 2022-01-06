@@ -131,10 +131,18 @@ function renderButtons(args: Properties): TemplateResult {
     `;
 }
 
+function displaySelectionState() {
+    const group = document.querySelector('sp-action-group') as ActionGroup;
+    const selectedDiv = group.nextElementSibling;
+    if (selectedDiv) {
+        selectedDiv.textContent = `Selected: ${JSON.stringify(group.selected)}`;
+    }
+}
 export const Default = (args: Properties): TemplateResult =>
     renderButtons(args);
 
 export const selectsSingle = (args: Properties): TemplateResult => {
+    requestAnimationFrame(displaySelectionState);
     return html`
         <sp-action-group
             ?compact=${args.compact}
@@ -161,6 +169,7 @@ export const selectsSingle = (args: Properties): TemplateResult => {
 };
 
 export const selectsMultiple = (args: Properties): TemplateResult => {
+    requestAnimationFrame(displaySelectionState);
     return html`
         <sp-action-group
             ${spreadProps(args)}
@@ -223,6 +232,7 @@ export const selectsMultipleWithTooltips = (
 };
 
 export const selectsMultipleControlled = (args: Properties): TemplateResult => {
+    requestAnimationFrame(displaySelectionState);
     return html`
         <sp-action-group
             ${spreadProps(args)}

@@ -306,7 +306,7 @@ export class ActionGroup extends SpectrumElement {
                     const selected = selections.map((button) => {
                         return button.value;
                     });
-                    this.setSelected(selected);
+                    this.selected = selected;
                 } else {
                     if (selection || firstEnabled) {
                         (
@@ -317,7 +317,7 @@ export class ActionGroup extends SpectrumElement {
                     const selected = selection
                         ? [selection.value]
                         : EMPTY_SELECTION;
-                    this.setSelected(selected);
+                    this.selected = selected;
                 }
                 break;
             }
@@ -340,7 +340,7 @@ export class ActionGroup extends SpectrumElement {
                 const selected = !!selection.length
                     ? selection
                     : EMPTY_SELECTION;
-                this.setSelected(selected);
+                this.selected = selected;
                 break;
             }
             default:
@@ -368,7 +368,7 @@ export class ActionGroup extends SpectrumElement {
                     const selected = selections.map((button) => {
                         return button.value;
                     });
-                    this.setSelected(selected);
+                    this.selected = selected;
                 } else {
                     this.buttons.forEach((option) => {
                         option.setAttribute('role', 'button');
@@ -448,7 +448,7 @@ export class ActionGroup extends SpectrumElement {
                 currentlySelectedButtons.push(button.value);
             }
         });
-        this.setSelected(this.selected.concat(currentlySelectedButtons));
+        this.selected = this.selected.concat(currentlySelectedButtons);
         this.manageChildren();
         this.manageSelects();
     };
@@ -464,7 +464,7 @@ export class ActionGroup extends SpectrumElement {
         // change event shouldn't be dispatched when initializing
         if (this.hasAttribute('selected')) {
             const selected = this.getAttribute('selected')!;
-            this._selected = JSON.parse(selected);
+            this.selected = JSON.parse(selected);
         }
     }
 
