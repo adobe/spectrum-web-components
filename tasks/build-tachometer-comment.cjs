@@ -11,7 +11,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const globby = require('globby');
+const fg = require('fast-glob');
 const fs = require('fs');
 const prettyBytes = require('pretty-bytes');
 
@@ -20,7 +20,7 @@ const getTachometerResults = () => {
         chrome: [],
         firefox: [],
     };
-    for (const result of globby.sync(`./tach-results.*.json`)) {
+    for (const result of fg.sync(`./tach-results.*.json`)) {
         const file = fs.readFileSync(result, 'utf8');
         // Grab the ${bowserName}.${package} part of the results file name as an array of [browserName, package].
         const [bowserName] = /tach-results\.(.*)\.json/
