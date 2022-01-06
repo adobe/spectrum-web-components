@@ -12,7 +12,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import globby from 'globby';
+import fg from 'fast-glob';
 import path from 'path';
 import chalk from 'chalk';
 import fs from 'fs-extra';
@@ -94,7 +94,7 @@ async function processComponents() {
     const promises = [];
     // eslint-disable-next-line no-console
     console.log(chalk.bold.green('Processing Spectrum Components'));
-    for await (const configPath of globby.stream(
+    for (const configPath of await fg(
         `${componentRoot}/*/src/spectrum-config.js`
     )) {
         promises.push(processComponent(path.join(configPath, '..')));

@@ -15,7 +15,7 @@ governing permissions and limitations under the License.
 import path from 'path';
 import fs from 'fs';
 import yargs from 'yargs';
-import globby from 'globby';
+import fg from 'fast-glob';
 import { hideBin } from 'yargs/helpers';
 import { fileURLToPath } from 'url';
 

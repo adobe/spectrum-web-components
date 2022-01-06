@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 */
 
 import { execSync } from 'child_process';
-import globby from 'globby';
+import fg from 'fast-glob';
 
 const buildPackage = (paths, options) => {
     const args = ['tsc', '--build', ...paths];
@@ -32,7 +32,7 @@ const buildPackage = (paths, options) => {
 
 export const buildPackages = async (options) => {
     const paths = [];
-    for await (const config of globby.stream(`./packages/*/tsconfig.json`)) {
+    for (const config of await fg(`./packages/*/tsconfig.json`)) {
         paths.push(config);
     }
     paths.push('.storybook/tsconfig.json');

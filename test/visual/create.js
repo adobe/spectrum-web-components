@@ -10,13 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import fs from 'fs';
-import globby from 'globby';
+import fg from 'fast-glob';
 import path from 'path';
 
 async function main() {
-    for await (const storyPath of globby.stream(
-        `packages/*/stories/*.stories.ts`
-    )) {
+    for (const storyPath of await fg(`packages/*/stories/*.stories.ts`)) {
         const pathParts = storyPath.split('/');
         const packageName = pathParts[1];
         const stories = pathParts[3].replace('.stories.ts', '');

@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 */
 
 import fetch from 'node-fetch';
-import globby from 'globby';
+import fg from 'fast-glob';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
 import fs from 'fs';
