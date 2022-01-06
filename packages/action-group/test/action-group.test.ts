@@ -388,13 +388,13 @@ describe('ActionGroup', () => {
         const thirdElement = el.querySelector('.third') as ActionButton;
 
         await elementUpdated(el);
-        expect(el.selected.length).to.equal(0);
+        expect(el.selected.length).to.equal(1);
 
         thirdElement.click();
 
         await elementUpdated(el);
 
-        expect(el.selected.length).to.equal(0);
+        expect(el.selected.length).to.equal(1);
     });
     it('selects via `click` while [selects="single"]', async () => {
         const el = await fixture<ActionGroup>(
@@ -639,12 +639,12 @@ describe('ActionGroup', () => {
         secondButton.click();
         await elementUpdated(el);
 
-        expect(el.selected.length).to.equal(0);
-        expect(firstButton.selected, 'first button selected').to.be.false;
+        expect(el.selected.length).to.equal(1);
+        expect(firstButton.selected, 'first button selected').to.be.true;
         expect(secondButton.selected, 'second button selected').to.be.false;
     });
 
-    it('selects multiple buttons if .selected is passed in, but then deselects upon further interaction', async () => {
+    it('selects multiple buttons if .selected is passed in, but does not allow further interaction afterwards', async () => {
         const el = await fixture<ActionGroup>(
             html`
                 <sp-action-group
@@ -673,9 +673,9 @@ describe('ActionGroup', () => {
         firstButton.click();
         await elementUpdated(el);
 
-        expect(el.selected.length).to.equal(0);
-        expect(firstButton.selected, 'first button selected').to.be.false;
-        expect(secondButton.selected, 'second button selected').to.be.false;
+        expect(el.selected.length).to.equal(2);
+        expect(firstButton.selected, 'first button selected').to.be.true;
+        expect(secondButton.selected, 'second button selected').to.be.true;
     });
 
     it('will not change .selected state if event is prevented while [selects="multiple"]', async () => {

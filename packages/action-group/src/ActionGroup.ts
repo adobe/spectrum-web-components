@@ -64,9 +64,10 @@ export class ActionGroup extends SpectrumElement {
 
     public set selected(selected: string[]) {
         if (selected === this.selected) return;
-        const old = this.selected;
         this._selected = selected;
+    }
 
+    private dispatchChange(old: string[]) {
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 bubbles: true,
@@ -81,6 +82,12 @@ export class ActionGroup extends SpectrumElement {
                 button.selected = this.selected.includes(button.value);
             });
         }
+    }
+
+    private setSelected(selected: string[]) {
+        const old = this.selected;
+        this.selected = selected;
+        this.dispatchChange(old);
     }
 
     private _selected: string[] = EMPTY_SELECTION;
@@ -122,7 +129,7 @@ export class ActionGroup extends SpectrumElement {
                 target.selected = true;
                 target.tabIndex = 0;
                 target.setAttribute('aria-checked', 'true');
-                this.selected = [target.value];
+                this.setSelected([target.value]);
                 target.focus();
                 break;
             }
@@ -138,12 +145,10 @@ export class ActionGroup extends SpectrumElement {
                 } else {
                     selected.splice(this.selected.indexOf(target.value), 1);
                 }
-                this.selected = selected;
+                this.setSelected(selected);
                 break;
             }
             default:
-                this.deselectSelectedButtons();
-                this.selected = EMPTY_SELECTION;
                 break;
         }
     }
@@ -274,6 +279,7 @@ export class ActionGroup extends SpectrumElement {
             case 'single': {
                 this.setAttribute('role', 'radiogroup');
                 const selections: ActionButton[] = [];
+                let selection: ActionButton | undefined;
                 let firstEnabled: ActionButton | undefined;
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
@@ -285,6 +291,7 @@ export class ActionGroup extends SpectrumElement {
                     option.tabIndex = option.selected ? 0 : -1;
                     if (option.selected) {
                         selections.push(option);
+                        selection = option;
                     }
                     if (!firstEnabled && !option.disabled) {
                         firstEnabled = option;
@@ -296,18 +303,21 @@ export class ActionGroup extends SpectrumElement {
                     selections.forEach((button) => {
                         button.tabIndex = 0;
                     });
-                    this.selected = selections.map((button) => {
+                    const selected = selections.map((button) => {
                         return button.value;
                     });
-                } else if (selections.length === 1) {
-                    if (selections[0] || firstEnabled) {
+                    this.setSelected(selected);
+                } else {
+                    if (selection || firstEnabled) {
                         (
-                            (selections[0] || firstEnabled) as ActionButton
+                            (selection || firstEnabled) as ActionButton
                         ).tabIndex = 0;
                     }
-                    this.selected = selections[0]
-                        ? [selections[0].value]
+
+                    const selected = selection
+                        ? [selection.value]
                         : EMPTY_SELECTION;
+                    this.setSelected(selected);
                 }
                 break;
             }
@@ -327,9 +337,10 @@ export class ActionGroup extends SpectrumElement {
                     }
                 });
                 await Promise.all(updates);
-                this.selected = !!selection.length
+                const selected = !!selection.length
                     ? selection
                     : EMPTY_SELECTION;
+                this.setSelected(selected);
                 break;
             }
             default:
@@ -353,16 +364,17 @@ export class ActionGroup extends SpectrumElement {
                     selections.forEach((button) => {
                         button.tabIndex = 0;
                     });
-                    this.selected = selections.map((button) => {
+
+                    const selected = selections.map((button) => {
                         return button.value;
                     });
+                    this.setSelected(selected);
                 } else {
                     this.buttons.forEach((option) => {
                         option.setAttribute('role', 'button');
                         option.tabIndex = 0;
                     });
                     this.removeAttribute('role');
-                    this.selected = EMPTY_SELECTION;
                     break;
                 }
         }
@@ -436,7 +448,7 @@ export class ActionGroup extends SpectrumElement {
                 currentlySelectedButtons.push(button.value);
             }
         });
-        this.selected = this.selected.concat(currentlySelectedButtons);
+        this.setSelected(this.selected.concat(currentlySelectedButtons));
         this.manageChildren();
         this.manageSelects();
     };
@@ -449,6 +461,7 @@ export class ActionGroup extends SpectrumElement {
         }
         this.observer.observe(this, { childList: true, subtree: true });
 
+        // change event shouldn't be dispatched when initializing
         if (this.hasAttribute('selected')) {
             const selected = this.getAttribute('selected')!;
             this._selected = JSON.parse(selected);

@@ -183,6 +183,7 @@ justified.args = {
     compact: true,
     emphasized: true,
     justified: true,
+    selects: undefined,
 };
 
 export const vertical = (args: Properties): TemplateResult => template(args);
@@ -190,4 +191,5 @@ vertical.args = {
     compact: true,
     emphasized: true,
     vertical: true,
+    selects: undefined,
 };

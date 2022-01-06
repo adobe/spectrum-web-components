@@ -110,7 +110,7 @@ The `selected` property represents the selection state within a button group. Th
 </sp-action-group>
 ```
 
-By default, an `<sp-action-group>` will select any button passed into `selected`. Afterwards, `.selects` controls how button values are added to the selection state. For example, if `.selects` is not specified when `selected` is set, any further interaction will result in an empty selection.
+By default, an `<sp-action-group>` will select any button passed into `selected`. Afterwards, `.selects` controls how button values are added to the selection state. For example, if `.selects` is not specified when `selected` is set, any further interaction will result in no change to the selection.
 
 ```html
 <sp-action-group selected='["first", "second"]'>
