@@ -30,6 +30,11 @@ const config = {
                     selector: '.is-focused',
                 },
                 {
+                    type: 'boolean',
+                    name: 'cover',
+                    selector: '.spectrum-Thumbnail--cover',
+                },
+                {
                     type: 'enum',
                     name: 'size',
                     values: [
