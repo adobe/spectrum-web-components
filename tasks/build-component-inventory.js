@@ -88,7 +88,7 @@ async function getCSSComponents() {
 
 async function getWebComponents() {
     const directoryRE = /(?:\/)([^\/]+)(?=\/src)\//;
-    const paths = globby.sync(ConfigPath);
+    const paths = fg.sync(ConfigPath);
     const componentPromises = paths.map(async (path) => {
         const config = await import(pathToFileURL(path));
         const component = config.default.spectrum;
