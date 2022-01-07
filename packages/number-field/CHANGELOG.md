@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.3.1...@spectrum-web-components/number-field@0.3.2) (2022-01-07)
+
+### Bug Fixes
+
+-   **number-field:** clean up delivery of quiet variant ([cd93964](https://github.com/adobe/spectrum-web-components/commit/cd9396494b838a584e939a573e8baec6ef7c8a4c))
+-   allow user input of extemely large number when a max is applied ([0644b7f](https://github.com/adobe/spectrum-web-components/commit/0644b7f5e0d5cbbf27e241d730aaec8c991ff97c))
+-   allow value when step=0 ([41de75a](https://github.com/adobe/spectrum-web-components/commit/41de75a6cc2c1dd982b30a8281f4a9166e4cd87a))
+
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.3.0...@spectrum-web-components/number-field@0.3.1) (2021-12-13)
 
 ### Bug Fixes

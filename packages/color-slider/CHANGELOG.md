@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-slider@0.3.1...@spectrum-web-components/color-slider@0.3.2) (2022-01-07)
+
+### Bug Fixes
+
+-   simplify touch-action application ([d23f735](https://github.com/adobe/spectrum-web-components/commit/d23f735db3cea01c2243e0485448d1598c6a8692))
+
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-slider@0.3.0...@spectrum-web-components/color-slider@0.3.1) (2021-12-13)
 
 **Note:** Version bump only for package @spectrum-web-components/color-slider

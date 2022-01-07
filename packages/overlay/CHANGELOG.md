@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.13.1...@spectrum-web-components/overlay@0.13.2) (2022-01-07)
+
+### Bug Fixes
+
+-   **overlay:** reduce DOM and use of "display: contents" for simplicity and accessibility ([2e02075](https://github.com/adobe/spectrum-web-components/commit/2e0207583eb8514a54254b43214f2c9e39d98e81))
+
 ## [0.13.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.13.0...@spectrum-web-components/overlay@0.13.1) (2021-12-13)
 
 ### Bug Fixes

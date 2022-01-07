@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.4.1...@spectrum-web-components/thumbnail@0.4.2) (2022-01-07)
+
+### Bug Fixes
+
+-   use latest @spectrum-css/thumbnail with built in "cover" support ([d152b4e](https://github.com/adobe/spectrum-web-components/commit/d152b4ec2e62201f1675c95fb08083768ab5a6e1))
+
 ## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.4.0...@spectrum-web-components/thumbnail@0.4.1) (2021-12-13)
 
 ### Bug Fixes

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.10.1...@spectrum-web-components/textfield@0.10.2) (2022-01-07)
+
+### Bug Fixes
+
+-   **textfield:** prevent IME selection misalignment in Safari when using hiragana input modality ([f8e1e70](https://github.com/adobe/spectrum-web-components/commit/f8e1e709e99d62e67589d8f54f15d49a9ecf2f32))
+
 ## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.10.0...@spectrum-web-components/textfield@0.10.1) (2021-12-13)
 
 ### Bug Fixes

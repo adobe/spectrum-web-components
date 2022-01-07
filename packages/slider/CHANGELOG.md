@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.1...@spectrum-web-components/slider@0.12.2) (2022-01-07)
+
+### Bug Fixes
+
+-   simplify touch-action application ([d23f735](https://github.com/adobe/spectrum-web-components/commit/d23f735db3cea01c2243e0485448d1598c6a8692))
+
 ## [0.12.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.0...@spectrum-web-components/slider@0.12.1) (2021-12-13)
 
 ### Bug Fixes
