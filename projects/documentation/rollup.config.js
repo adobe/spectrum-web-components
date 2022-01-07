@@ -27,6 +27,7 @@ const { postCSSPlugins } = require('../../scripts/css-processing.cjs');
 import postCSSPrefixwrap from 'postcss-prefixwrap';
 import postcss from 'postcss';
 import purgecss from '@fullhuman/postcss-purgecss';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 const injectUsedCss = (css) => {
     return (html) => {
@@ -92,9 +93,15 @@ module.exports = async () => {
         // set to true to inject the service worker registration into your index.html
         injectServiceWorker: false,
         workbox: false,
+        nodeResolve: false,
     });
 
     mpaConfig.output.dir = 'dist';
+    mpaConfig.plugins.unshift(
+        nodeResolve({
+            exportConditions: ['import', 'production'],
+        })
+    );
     mpaConfig.plugins.push(
         html({
             transformHtml: [

@@ -61,6 +61,9 @@ export class OverlayStack {
         const root = this.document.body.shadowRoot as ShadowRoot;
         root.innerHTML = `
             <style>
+            :host {
+                position: relative;
+            }
             #actual {
                 position: relative;
                 height: calc(100% - var(--swc-body-margins-block, 0px));
@@ -68,24 +71,21 @@ export class OverlayStack {
                 min-height: calc(100vh - var(--swc-body-margins-block, 0px));
             }
             #holder {
-                display: flex;
+                display: none;
                 align-items: center;
                 justify-content: center;
                 flex-flow: column;
-                height: 100%;
                 width: 100%;
+                height: 100%;
+                position: absolute;
                 top: 0;
                 left: 0;
-                position: fixed;
             }
             [name="open"]::slotted(*) {
                 pointer-events: all;
             }
-            #holder {
-                display: none;
-            }
             #actual[aria-hidden] + #holder {
-                display: block;
+                display: flex;
             }
             </style>
             <div id="actual"><slot></slot></div>
@@ -158,7 +158,11 @@ export class OverlayStack {
         event: MouseEvent
     ): Promise<void> => {
         const topOverlay = this.overlays[this.overlays.length - 1];
-        if (!this.trappingInited || topOverlay.interaction !== 'modal') {
+        if (
+            !this.trappingInited ||
+            topOverlay.interaction !== 'modal' ||
+            event.target !== this.overlayHolder
+        ) {
             return;
         }
         event.stopPropagation();

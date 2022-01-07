@@ -41,7 +41,9 @@ export default {
     mimeTypes: {
         '**/*.json': 'js',
     },
-    nodeResolve: true,
+    nodeResolve: {
+        exportConditions: ['browser', 'development'],
+    },
     concurrency: 4,
     concurrentBrowsers: 1,
     testsFinishTimeout: 30000,

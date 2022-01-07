@@ -99,7 +99,7 @@
         "@open-wc/testing": "^3.0.3",
         "@rollup/plugin-commonjs": "^21.0.1",
         "@rollup/plugin-json": "^4.1.0",
-        "@rollup/plugin-node-resolve": "^13.0.6",
+        "@rollup/plugin-node-resolve": "^13.1.3",
         "@sindresorhus/slugify": "^1.1.2",
         "@types/chai": "^4.1.7",
         "@types/command-line-args": "^5.0.0",
@@ -179,7 +179,7 @@
         "typescript": "^4.5.3",
         "yargs": "^17.2.1"
     },
-    "customElements": ".storybook/custom-elements.json",
+    "customElements": "projects/documentation/custom-elements.json",
     "workspaces": [
         "packages/*",
         "projects/*",

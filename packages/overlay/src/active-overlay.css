@@ -64,23 +64,26 @@ sp-theme,
     visibility: visible;
 }
 
-:host([data-popper-placement*='top']) #contents {
+:host([actual-placement*='top']) #contents {
     --sp-overlay-from: translateY(var(--spectrum-global-dimension-size-75));
+
+    display: inline-flex;
+    align-items: flex-end;
 }
 
-:host([data-popper-placement*='right']) #contents {
+:host([actual-placement*='right']) #contents {
     --sp-overlay-from: translateX(
         calc(-1 * var(--spectrum-global-dimension-size-75))
     );
 }
 
-:host([data-popper-placement*='bottom']) #contents {
+:host([actual-placement*='bottom']) #contents {
     --sp-overlay-from: translateY(
         calc(-1 * var(--spectrum-global-dimension-size-75))
     );
 }
 
-:host([data-popper-placement*='left']) #contents {
+:host([actual-placement*='left']) #contents {
     --sp-overlay-from: translateX(var(--spectrum-global-dimension-size-75));
 }
 

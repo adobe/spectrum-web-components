@@ -2665,6 +2665,18 @@
   dependencies:
     "@types/chai" "^4.2.12"
 
+"@floating-ui/core@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-0.4.0.tgz#cf101522ba8087a905e5e8b99c99c5b8520f7656"
+  integrity sha512-99Pnb5T2S7PSE8rKHD5fZWWnXE3a2xG9E8eQm8SIMYWJyJoHDJIt0b9SK3UjetWFcepxVG+ZMDxcfbamyx+HSg==
+
+"@floating-ui/dom@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-0.2.0.tgz#019fe0774bd4a039a988cba086960135bbb321f3"
+  integrity sha512-hNhTbImiJ8SH9rHsP0qcE9IVxn/maMhwWA5d17p7EkEzVdciayB664Qy2Vxa8RxY/8avE8iVKkfE8sIeg34J0g==
+  dependencies:
+    "@floating-ui/core" "^0.4.0"
+
 "@formatjs/ecma402-abstract@1.9.3":
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.9.3.tgz#00892014c805935b5b1345d238246e9bf3a2de50"
@@ -4400,11 +4412,6 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.11.tgz#aeb16f50649a91af79dbe36574b66d0f9e4d9f71"
   integrity sha512-3NsZsJIA/22P3QUyrEDNA2D133H4j224twJrdipXN38dpnIOzAbUDtOwkcJ5pXmn75w7LSQDjA4tO9dm1XlqlA==
 
-"@popperjs/core@^2.11.0":
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.0.tgz#6734f8ebc106a0860dff7f92bf90df193f0935d7"
-  integrity sha512-zrsUxjLOKAzdewIDRWy9nsV1GQsKBCWaGwsZQlCgr6/q+vjyZhFgqedLfFBuI9anTPEUT4APq9Mu0SZBTzIcGQ==
-
 "@pwrs/lit-css@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@pwrs/lit-css/-/lit-css-1.2.1.tgz#457d08c0f9b4235af1cf94e8b1c56c3fd8358bac"
@@ -4475,10 +4482,22 @@
     is-module "^1.0.0"
     resolve "^1.19.0"
 
-"@rollup/plugin-node-resolve@^13.0.4", "@rollup/plugin-node-resolve@^13.0.6":
+"@rollup/plugin-node-resolve@^13.0.4":
   version "13.1.2"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-13.1.2.tgz#f05cbdce79e6d5fe1c4249a33ea961ea21cec258"
   integrity sha512-xyqbuf1vyOPC60jEKhx3DBHunymnCJswzjNTKfX4Jz7zCPar1UqbRZCNY1u5QaXh97beaFTWdoUUWiV4qX8o/g==
+  dependencies:
+    "@rollup/pluginutils" "^3.1.0"
+    "@types/resolve" "1.17.1"
+    builtin-modules "^3.1.0"
+    deepmerge "^4.2.2"
+    is-module "^1.0.0"
+    resolve "^1.19.0"
+
+"@rollup/plugin-node-resolve@^13.1.3":
+  version "13.1.3"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-node-resolve/-/plugin-node-resolve-13.1.3.tgz#2ed277fb3ad98745424c1d2ba152484508a92d79"
+  integrity sha512-BdxNk+LtmElRo5d06MGY4zoepyrXX1tkzX2hrnPEZ53k78GuOMWLqmJDGIIOPwVRIFZrLQOo+Yr6KtCuLIA0AQ==
   dependencies:
     "@rollup/pluginutils" "^3.1.0"
     "@types/resolve" "1.17.1"

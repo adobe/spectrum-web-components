@@ -95,6 +95,9 @@ ActiveOverlay.prototype.renderTheme = function (
 export class StoryDecorator extends SpectrumElement {
     static styles = [
         css`
+            :host(:focus) {
+                outline: none;
+            }
             sp-theme {
                 overflow-x: hidden;
                 display: block;

@@ -17,7 +17,9 @@ import { storybookPlugin } from '@web/dev-server-storybook';
 const json = fromRollup(rollupJson);
 
 export default {
-    nodeResolve: true,
+    nodeResolve: {
+        exportConditions: ['browser', 'development'],
+    },
     watch: true,
     open: true,
     mimeTypes: {
