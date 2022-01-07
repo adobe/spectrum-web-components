@@ -9,10 +9,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { VirtualElement } from './popper.js';
 import { Overlay } from './overlay.js';
 
-export class VirtualTrigger implements VirtualElement {
+export class VirtualTrigger {
     private x = 0;
     private y = 0;
 

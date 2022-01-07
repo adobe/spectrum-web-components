@@ -29,8 +29,15 @@ import {
     Placement,
     TriggerInteractions,
 } from './overlay-types.js';
-import { applyMaxSize, createPopper, Instance, maxSize } from './popper.js';
-import { VirtualTrigger } from './VirtualTrigger.js';
+import type { VirtualTrigger } from './VirtualTrigger.js';
+import {
+    arrow,
+    computePosition,
+    flip,
+    offset,
+    shift,
+    size,
+} from '@floating-ui/dom';
 
 export interface PositionResult {
     arrowOffsetLeft: number;
@@ -41,13 +48,7 @@ export interface PositionResult {
     positionTop: number;
 }
 
-type OverlayStateType =
-    | 'idle'
-    | 'active'
-    | 'visible'
-    | 'hiding'
-    | 'dispose'
-    | 'disposed';
+type OverlayStateType = 'idle' | 'active' | 'hiding' | 'dispose' | 'disposed';
 type ContentAnimation = 'sp-overlay-fade-in' | 'sp-overlay-fade-out';
 
 const stateMachine: {
@@ -68,13 +69,6 @@ const stateMachine: {
             },
         },
         active: {
-            on: {
-                visible: 'visible',
-                hiding: 'hiding',
-                idle: 'idle',
-            },
-        },
-        visible: {
             on: {
                 hiding: 'hiding',
                 idle: 'idle',
@@ -129,8 +123,6 @@ export class ActiveOverlay extends SpectrumElement {
     public trigger!: HTMLElement;
     public virtualTrigger?: VirtualTrigger;
 
-    private popper?: Instance;
-
     @property()
     public _state = stateTransition();
     public get state(): OverlayStateType {
@@ -142,11 +134,7 @@ export class ActiveOverlay extends SpectrumElement {
             return;
         }
         this._state = nextState;
-        if (
-            this.state === 'active' ||
-            this.state === 'visible' ||
-            this.state === 'hiding'
-        ) {
+        if (this.state === 'active' || this.state === 'hiding') {
             this.setAttribute('state', this.state);
         } else {
             this.removeAttribute('state');
@@ -170,14 +158,6 @@ export class ActiveOverlay extends SpectrumElement {
     public tabbingAway = false;
     private originalPlacement?: Placement;
     private restoreContent?: () => Element[];
-
-    /**
-     * @prop Used by the popper library to indicate where the overlay was
-     *       actually rendered. Popper may switch which side an overlay
-     *       is rendered on to fit it on the screen
-     */
-    @property({ attribute: 'data-popper-placement' })
-    public dataPopperPlacement?: Placement;
 
     public focus(): void {
         const firstFocusable = firstFocusableIn(this);
@@ -251,98 +231,42 @@ export class ActiveOverlay extends SpectrumElement {
         return undefined;
     }
 
-    public firstUpdated(changedProperties: PropertyValues): void {
+    public async firstUpdated(
+        changedProperties: PropertyValues
+    ): Promise<void> {
         super.firstUpdated(changedProperties);
-
-        /* c8 ignore next */
-        if (!this.overlayContent) return;
-
-        this.stealOverlayContent(this.overlayContent);
 
         /* c8 ignore next */
         if (!this.overlayContent || !this.trigger) return;
 
-        if (this.placement && this.placement !== 'none') {
-            this.popper = createPopper(
-                this.virtualTrigger || this.trigger,
-                this,
-                {
-                    placement: this.placement,
-                    modifiers: [
-                        maxSize,
-                        applyMaxSize,
-                        {
-                            name: 'arrow',
-                            options: {
-                                element: this.overlayContentTip,
-                            },
-                        },
-                        {
-                            name: 'offset',
-                            options: {
-                                offset: [0, this.offset],
-                            },
-                        },
-                    ],
-                }
-            );
-        }
+        this.stealOverlayContent(
+            this.overlayContent as HTMLElement & { placement: Placement }
+        );
 
         this.state = 'active';
-
-        document.addEventListener('sp-update-overlays', () => {
-            this.updateOverlayPosition();
-            this.state = 'visible';
-        });
-
         this.feature();
-        this.updateOverlayPosition()
-            .then(() => this.applyContentAnimation('sp-overlay-fade-in'))
-            .then(() => {
-                if (this.receivesFocus) {
-                    this.focus();
-                }
-                this.trigger.dispatchEvent(
-                    new CustomEvent<OverlayOpenCloseDetail>('sp-opened', {
-                        bubbles: true,
-                        composed: true,
-                        cancelable: true,
-                        detail: {
-                            interaction: this.interaction,
-                        },
-                    })
-                );
-            });
-    }
-
-    private updateOverlayPopperPlacement(): void {
-        /* c8 ignore next */
-        const activeWithContent =
-            this.state === 'active' && this.overlayContent;
-        if (!activeWithContent) return;
-
-        if (this.dataPopperPlacement) {
-            // Copy this attribute to the actual overlay node so that it can use
-            // the attribute for styling shadow DOM elements based on the side
-            // that popper has chosen for it
-            this.overlayContent.setAttribute(
-                'placement',
-                this.dataPopperPlacement
+        if (this.placement && this.placement !== 'none') {
+            await this.updateOverlayPosition();
+            document.addEventListener(
+                'sp-update-overlays',
+                this.updateOverlayPosition
             );
-        } else if (this.originalPlacement) {
-            this.overlayContent.setAttribute(
-                'placement',
-                this.originalPlacement
-            );
-        } else {
-            this.overlayContent.removeAttribute('placement');
+            window.addEventListener('scroll', this.updateOverlayPosition);
         }
-    }
-
-    public updated(changedProperties: PropertyValues): void {
-        if (changedProperties.has('dataPopperPlacement')) {
-            this.updateOverlayPopperPlacement();
+        await this.applyContentAnimation('sp-overlay-fade-in');
+        if (this.receivesFocus) {
+            this.focus();
         }
+        this.trigger.dispatchEvent(
+            new CustomEvent<OverlayOpenCloseDetail>('sp-opened', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                detail: {
+                    interaction: this.interaction,
+                },
+            })
+        );
     }
 
     private open(openDetail: OverlayOpenDetail): void {
@@ -371,10 +295,6 @@ export class ActiveOverlay extends SpectrumElement {
             delete this.timeout;
         }
 
-        if (this.popper) {
-            this.popper.destroy();
-            this.popper = undefined;
-        }
         this.trigger.removeEventListener(
             'keydown',
             this.handleInlineTriggerKeydown
@@ -389,13 +309,17 @@ export class ActiveOverlay extends SpectrumElement {
         }
     }
 
-    private stealOverlayContent(element: HTMLElement): void {
+    private stealOverlayContent(
+        element: HTMLElement & { placement: Placement }
+    ): void {
         this.originalPlacement = element.getAttribute('placement') as Placement;
         this.restoreContent = reparentChildren([element], this, (el) => {
             const slotName = el.slot;
+            const placement = el.placement;
             el.removeAttribute('slot');
             return (el) => {
                 el.slot = slotName;
+                el.placement = placement;
             };
         });
         this.stealOverlayContentResolver();
@@ -417,12 +341,89 @@ export class ActiveOverlay extends SpectrumElement {
         }
     }
 
-    public async updateOverlayPosition(): Promise<void> {
-        await (document.fonts ? document.fonts.ready : Promise.resolve());
-        if (this.popper) {
-            await this.popper.update();
+    private initialHeight!: number;
+    private isConstrained = false;
+
+    public updateOverlayPosition = async (): Promise<void> => {
+        if (!this.placement || this.placement === 'none') {
+            return;
         }
-    }
+        await (document.fonts ? document.fonts.ready : Promise.resolve());
+
+        function roundByDPR(num: number): number {
+            const dpr = window.devicePixelRatio || 1;
+            return Math.round(num * dpr) / dpr || 0;
+        }
+
+        // See: https://spectrum.adobe.com/page/popover/#Container-padding
+        const REQUIRED_DISTANCE_TO_EDGE = 8;
+        // See: https://github.com/adobe/spectrum-web-components/issues/910
+        const MIN_OVERLAY_HEIGHT = 100;
+
+        const middleware = [
+            offset(this.offset),
+            flip({
+                fallbackStrategy: 'initialPlacement',
+            }),
+            shift({ padding: REQUIRED_DISTANCE_TO_EDGE }),
+            size({
+                padding: REQUIRED_DISTANCE_TO_EDGE,
+                apply: ({ width, height, floating }) => {
+                    const maxHeight = Math.max(
+                        MIN_OVERLAY_HEIGHT,
+                        Math.floor(height)
+                    );
+                    const actualHeight = floating.height;
+                    this.initialHeight = !this.isConstrained
+                        ? actualHeight
+                        : this.initialHeight || actualHeight;
+                    this.isConstrained =
+                        actualHeight < this.initialHeight ||
+                        maxHeight <= actualHeight;
+                    const appliedHeight = this.isConstrained
+                        ? `${maxHeight}px`
+                        : '';
+                    Object.assign(this.style, {
+                        maxWidth: `${Math.floor(width)}px`,
+                        maxHeight: appliedHeight,
+                        height: appliedHeight,
+                    });
+                },
+            }),
+        ];
+        if (this.overlayContentTip) {
+            middleware.push(arrow({ element: this.overlayContentTip }));
+        }
+        const { x, y, placement, middlewareData } = await computePosition(
+            this.virtualTrigger || this.trigger,
+            this,
+            {
+                placement: this.placement,
+                middleware,
+            }
+        );
+
+        Object.assign(this.style, {
+            left: `${roundByDPR(x)}px`,
+            top: `${roundByDPR(y)}px`,
+        });
+
+        if (placement !== this.getAttribute('actual-placement')) {
+            this.setAttribute('actual-placement', placement);
+            this.overlayContent.setAttribute('placement', placement);
+        }
+
+        if (this.overlayContentTip && middlewareData.arrow) {
+            const { x: arrowX, y: arrowY } = middlewareData.arrow;
+
+            Object.assign(this.overlayContentTip.style, {
+                left: arrowX != null ? `${roundByDPR(arrowX)}px` : '',
+                top: arrowY != null ? `${roundByDPR(arrowY)}px` : '',
+                right: '',
+                bottom: '',
+            });
+        }
+    };
 
     public async hide(animated = true): Promise<void> {
         this.state = 'hiding';
@@ -458,11 +459,6 @@ export class ActiveOverlay extends SpectrumElement {
         event.preventDefault();
         this.focus();
     };
-
-    public connectedCallback(): void {
-        super.connectedCallback();
-        this.schedulePositionUpdate();
-    }
 
     public applyContentAnimation(
         animation: ContentAnimation
@@ -526,5 +522,14 @@ export class ActiveOverlay extends SpectrumElement {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.stealOverlayContentPromise;
         return complete;
+    }
+
+    disconnectedCallback(): void {
+        document.removeEventListener(
+            'sp-update-overlays',
+            this.updateOverlayPosition
+        );
+        window.removeEventListener('scroll', this.updateOverlayPosition);
+        super.disconnectedCallback();
     }
 }

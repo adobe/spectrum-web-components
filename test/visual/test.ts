@@ -20,7 +20,7 @@ import { visualDiff } from '@web/test-runner-visual-regression';
 import '@spectrum-web-components/story-decorator/sp-story-decorator.js';
 import { Color, Scale } from '@spectrum-web-components/theme';
 import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/StoryDecorator';
-import { TemplateResult, html } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import { render } from 'lit';
 import { sendKeys } from '@web/test-runner-commands';
 
@@ -28,7 +28,7 @@ const wrap = () => html`
     <sp-story-decorator
         reduce-motion
         screenshot
-        tabindex="-1"
+        tabindex="0"
     ></sp-story-decorator>
 `;
 
@@ -117,6 +117,7 @@ export const test = (
                         'Wait for decorator to become ready...',
                         { timeout: 20000 }
                     );
+                    await nextFrame();
                     await visualDiff(
                         retest,
                         `${color} - ${scale} - ${dir} - ${name} - ${story}`

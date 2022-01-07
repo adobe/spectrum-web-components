@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import { ThemeData } from '@spectrum-web-components/theme';
-import { Placement as PopperPlacement } from './popper';
-import { VirtualTrigger } from './VirtualTrigger.js';
+import type { Placement as FloatingUIPlacement } from '@floating-ui/dom';
+import type { VirtualTrigger } from './VirtualTrigger.js';
 
 export type TriggerInteractions =
     | 'click'
@@ -52,7 +52,7 @@ export interface OverlayDisplayQueryDetail {
     overlayContentTipElement?: HTMLElement;
 }
 
-export type Placement = PopperPlacement | 'none';
+export type Placement = FloatingUIPlacement | 'none';
 
 export type OverlayOptions = {
     delayed?: boolean;

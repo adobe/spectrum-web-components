@@ -784,7 +784,7 @@ export const virtualElement = (args: Properties): TemplateResult => {
 };
 
 virtualElement.args = {
-    placement: 'right-end' as Placement,
+    placement: 'right-start' as Placement,
 };
 
 export const detachedElement = (): TemplateResult => {

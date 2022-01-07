@@ -184,10 +184,12 @@ describe('FieldLabel', () => {
         const picker = test.querySelector('sp-picker') as Picker;
 
         await elementUpdated(el);
+        await elementUpdated(picker);
         expect(picker.focused).to.be.false;
 
         el.click();
         await elementUpdated(el);
+        await elementUpdated(picker);
 
         expect(document.activeElement).to.equal(picker);
         expect(picker.focused).to.be.true;
