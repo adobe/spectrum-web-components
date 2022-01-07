@@ -233,6 +233,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     max-width: 100%;
     z-index: 1;
 }
+:host([cover]) ::slotted(*) {
+    height: 100%; /* .spectrum-Thumbnail--cover .spectrum-Thumbnail-image */
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+}
 .background {
     background-position: 50%;
     background-size: cover;
