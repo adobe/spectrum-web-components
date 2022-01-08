@@ -656,4 +656,20 @@ describe('Tabs', () => {
         expect(initialWidth).to.be.greaterThan(shorterWidth);
         expect(longerWidth).to.be.greaterThan(shorterWidth);
     });
+    it('clicks on #list do not throw', async () => {
+        const tabs = await createTabs();
+        const tabList = (tabs.shadowRoot as ShadowRoot).querySelector(
+            '#list'
+        ) as HTMLDivElement;
+        // exceptions thrown in event listeners do not propagate to caller
+        // we must catch them with window.onerror
+        let hasError = false;
+        const oldOnerror = window.onerror;
+        window.onerror = () => {
+            hasError = true;
+        };
+        tabList.dispatchEvent(new MouseEvent('click'));
+        expect(hasError, 'it should not error').to.be.false;
+        window.onerror = oldOnerror;
+    });
 });
