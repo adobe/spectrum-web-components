@@ -18,7 +18,6 @@ const postCSSPlugins = (resourcePath, toTS) => {
     }
     return [
         require('postcss-import')(postCSSImportConfig),
-        require('postcss-inherit')(),
         require('postcss-preset-env')({
             browsers: [
                 'last 2 Chrome versions',
