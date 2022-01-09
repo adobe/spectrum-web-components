@@ -28,25 +28,32 @@ governing permissions and limitations under the License.
     font-family: var(--spectrum-alias-body-text-font-family);
     font-size: var(--spectrum-alias-font-size-default);
 }
-:is(:root, :host):lang(ar) {
+:host:lang(ar),
+:root:lang(ar) {
     font-family: var(--spectrum-alias-font-family-ar);
 }
-:is(:root, :host):lang(he) {
+:host:lang(he),
+:root:lang(he) {
     font-family: var(--spectrum-alias-font-family-he);
 }
-:is(:root, :host):lang(zh-Hans) {
+:host:lang(zh-Hans),
+:root:lang(zh-Hans) {
     font-family: var(--spectrum-alias-font-family-zhhans);
 }
-:is(:root, :host):lang(zh-Hant) {
+:host:lang(zh-Hant),
+:root:lang(zh-Hant) {
     font-family: var(--spectrum-alias-font-family-zh);
 }
-:is(:root, :host):lang(zh) {
+:host:lang(zh),
+:root:lang(zh) {
     font-family: var(--spectrum-alias-font-family-zh);
 }
-:is(:root, :host):lang(ko) {
+:host:lang(ko),
+:root:lang(ko) {
     font-family: var(--spectrum-alias-font-family-ko);
 }
-:is(:root, :host):lang(ja) {
+:host:lang(ja),
+:root:lang(ja) {
     font-family: var(--spectrum-alias-font-family-ja);
 }
 /* stylelint-enable */
