@@ -17,8 +17,10 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    state,
+} from '@spectrum-web-components/base/src/decorators.js';
 import type { LongpressEvent } from '@spectrum-web-components/action-button';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import {
@@ -86,7 +88,7 @@ export class OverlayTrigger extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
-    @property({ type: Boolean, attribute: false })
+    @state()
     public hasLongpressContent = false;
 
     private longpressDescriptor?: HTMLElement;
@@ -95,7 +97,7 @@ export class OverlayTrigger extends SpectrumElement {
     private hoverContent?: HTMLElement;
     private targetContent?: HTMLElement;
 
-    public _longpressId = `longpress-describedby-descriptor`;
+    private _longpressId = `longpress-describedby-descriptor`;
 
     private handleClose(event?: CustomEvent<OverlayOpenCloseDetail>): void {
         if (
@@ -173,13 +175,9 @@ export class OverlayTrigger extends SpectrumElement {
                 this.longpressDescriptor.id = this._longpressId;
                 this.longpressDescriptor.slot = this._longpressId;
             }
-            if (isIOS() || isAndroid()) {
-                this.longpressDescriptor.innerHTML =
-                    LONGPRESS_INSTRUCTIONS.touch;
-            } else {
-                this.longpressDescriptor.innerHTML =
-                    LONGPRESS_INSTRUCTIONS.keyboard;
-            }
+            const messageType = isIOS() || isAndroid() ? 'touch' : 'keyboard';
+            this.longpressDescriptor.textContent =
+                LONGPRESS_INSTRUCTIONS[messageType];
             this.appendChild(this.longpressDescriptor);
             descriptors.push(this._longpressId);
         } else {
