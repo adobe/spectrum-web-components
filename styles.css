@@ -4702,7 +4702,7 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-115
     )}
 
-/* stylelint-enable */:root{--spectrum-global-dimension-dividers:2px}
+/* stylelint-enable */:root{--spectrum-global-alias-appframe-border-size:2px}
 
 /*
 Copyright 2020 Adobe. All rights reserved.
