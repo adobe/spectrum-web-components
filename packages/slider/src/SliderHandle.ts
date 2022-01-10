@@ -146,6 +146,11 @@ export class SliderHandle extends Focusable {
         super.updated(changedProperties);
     }
 
+    protected firstUpdated(changedProperties: PropertyValues<this>): void {
+        super.firstUpdated(changedProperties);
+        this.dispatchEvent(new CustomEvent('sp-slider-handle-ready'));
+    }
+
     @property({ attribute: false })
     public normalization: SliderNormalization = defaultNormalization;
 

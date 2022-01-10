@@ -21,6 +21,7 @@ import {
     html,
     nextFrame,
     oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { ProvideLang } from '@spectrum-web-components/theme';
@@ -951,6 +952,33 @@ describe('Slider', () => {
         lastHandle.value = 7;
         await elementUpdated(el);
         expect(el.values).to.deep.equal({ a: 10, b: 10, c: 10 });
+    });
+    it('builds both handles from a <template>', async () => {
+        const template = document.createElement('template');
+        template.innerHTML = `
+            <sp-slider variant="range" step="1" id="price" name="price" label="Max Price" min="35425" max="86610">
+                <sp-slider-handle slot="handle" name="min" label="Minimum" max="next" value="35425"></sp-slider-handle>
+                <sp-slider-handle slot="handle" name="max" label="Maximum" min="previous" value="86610"></sp-slider-handle>
+            </sp-slider>
+        `;
+        const el = await fixture<HTMLDivElement>(
+            html`
+                <div></div>
+            `
+        );
+
+        el.appendChild(template.content.cloneNode(true));
+        await waitUntil(() => {
+            return el.querySelector('sp-slider')?.shadowRoot != null;
+        });
+        // Sliders take several frames to fully upgrade
+        await nextFrame();
+
+        const createdHandles =
+            el
+                .querySelector('sp-slider')
+                ?.shadowRoot.querySelectorAll('.handle') || [];
+        expect(createdHandles).to.have.lengthOf(2);
     });
     it('enforces next/previous max/min', async () => {
         let el = await fixture<Slider>(

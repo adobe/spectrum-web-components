@@ -196,12 +196,30 @@ export class HandleController implements Controller {
         this.updateModel();
     }
 
+    // Since extractModelFromLightDom bails on the first un-upgraded handle,
+    // a maximum of one listener will be set up per extraction attempt.
+    private waitForUpgrade(handle: HTMLElement): boolean {
+        if (handle instanceof SliderHandle) {
+            return false;
+        }
+        handle.addEventListener(
+            'sp-slider-handle-ready',
+            () => this.extractModelFromLightDom(),
+            { once: true, passive: true }
+        );
+        return true;
+    }
+
     private extractModelFromLightDom = (): void => {
         let handles = [
             ...this.host.querySelectorAll('[slot="handle"]'),
         ] as SliderHandle[];
         if (handles.length === 0) {
             handles = [this.host as SliderHandle];
+        }
+        // extractModelFromLightDom depends on slotted handles already having been upgraded
+        if (handles.some((h) => this.waitForUpgrade(h))) {
+            return;
         }
         this.handles = new Map();
         this.handleOrder = [];
