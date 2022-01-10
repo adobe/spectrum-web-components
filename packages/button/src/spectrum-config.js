@@ -46,6 +46,11 @@ const config = {
                 },
                 {
                     type: 'boolean',
+                    selector: ':disabled',
+                    name: 'disabled',
+                },
+                {
+                    type: 'boolean',
                     selector: '.is-focused',
                     name: 'focused',
                 },
@@ -58,12 +63,26 @@ const config = {
                     type: 'enum',
                     name: 'variant',
                     values: [
-                        '.spectrum-Button--cta',
+                        '.spectrum-Button--accent',
                         '.spectrum-Button--primary',
                         '.spectrum-Button--secondary',
                         '.spectrum-Button--negative',
-                        '.spectrum-Button--overBackground',
-                        '.spectrum-Button--secondary',
+                        {
+                            name: 'white',
+                            selector: '.spectrum-Button--staticWhite',
+                        },
+                        {
+                            name: 'black',
+                            selector: '.spectrum-Button--staticBlack',
+                        },
+                    ],
+                },
+                {
+                    type: 'enum',
+                    name: 'treatment',
+                    values: [
+                        '.spectrum-Button--fill',
+                        '.spectrum-Button--outline',
                     ],
                 },
                 {
@@ -98,81 +117,6 @@ const config = {
                 },
             ],
             exclude: [/\.spectrum-ClearButton/],
-            excludeSourceSelector: [
-                /^(\.spectrum-Button.*),(\.spectrum-ClearButton.*),(\.spectrum-LogicButton.*)$/,
-            ],
-        },
-        {
-            name: 'clear-button',
-            host: {
-                selector: '.spectrum-ClearButton',
-            },
-            attributes: [
-                {
-                    selector: '.spectrum-ClearButton--small',
-                    type: 'boolean',
-                    name: 'small',
-                },
-                {
-                    type: 'boolean',
-                    selector: ':active',
-                    name: 'active',
-                },
-                {
-                    type: 'boolean',
-                    selector: '.is-disabled',
-                    name: 'disabled',
-                },
-                {
-                    type: 'enum',
-                    name: 'variant',
-                    values: [
-                        '.spectrum-ClearButton--cta',
-                        '.spectrum-ClearButton--primary',
-                        '.spectrum-ClearButton--secondary',
-                        {
-                            name: 'negative',
-                            selector: '.spectrum-ClearButton--warning',
-                        },
-                        '.spectrum-ClearButton--overBackground',
-                        '.spectrum-ClearButton--secondary',
-                    ],
-                },
-                {
-                    type: 'enum',
-                    name: 'size',
-                    forceOntoHost: true,
-                    values: [
-                        {
-                            name: 's',
-                            selector: '.spectrum-ClearButton--sizeS',
-                        },
-                        {
-                            name: 'm',
-                            selector: '.spectrum-ClearButton--sizeM',
-                        },
-                        {
-                            name: 'l',
-                            selector: '.spectrum-ClearButton--sizeL',
-                        },
-                        {
-                            name: 'xl',
-                            selector: '.spectrum-ClearButton--sizeXL',
-                        },
-                    ],
-                },
-            ],
-            classes: [
-                {
-                    name: 'icon',
-                    selector: '.spectrum-Icon',
-                },
-                {
-                    name: 'fill',
-                    selector: '.spectrum-ClearButton-fill',
-                },
-            ],
-            exclude: [/\.spectrum-Button/],
             excludeSourceSelector: [
                 /^(\.spectrum-Button.*),(\.spectrum-ClearButton.*),(\.spectrum-LogicButton.*)$/,
             ],

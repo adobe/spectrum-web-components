@@ -276,7 +276,7 @@ class RecursivePopover extends LitElement {
             <overlay-trigger placement="${this.placement}" type="modal">
                 <sp-button
                     slot="trigger"
-                    variant="cta"
+                    variant="accent"
                     @keydown=${this.captureEnter}
                 >
                     Open Popover

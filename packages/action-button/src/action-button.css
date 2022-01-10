@@ -17,6 +17,16 @@ governing permissions and limitations under the License.
     flex-direction: row;
 }
 
+:host:after {
+    border-radius: var(
+        --spectrum-actionbutton-after-border-radius,
+        calc(
+            var(--spectrum-actionbutton-quiet-textonly-border-radius) +
+                var(--spectrum-actionbutton-focus-ring-gap)
+        )
+    );
+}
+
 :host([disabled]) {
     pointer-events: none;
     cursor: auto;
@@ -42,6 +52,14 @@ governing permissions and limitations under the License.
 #label {
     flex-grow: var(--spectrum-actionbutton-label-flex-grow);
     text-align: var(--spectrum-actionbutton-label-text-align);
+}
+
+:host([emphasized][selected]:not([disabled])) .hold-affordance,
+:host([emphasized][quiet][selected]:not([disabled])) .hold-affordance {
+    color: var(
+        --spectrum-actionbutton-m-emphasized-texticon-icon-color-selected,
+        var(--spectrum-alias-component-icon-color-emphasized-selected-default)
+    );
 }
 
 :host([size='s']) {

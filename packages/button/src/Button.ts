@@ -10,17 +10,34 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, SizedMixin } from '@spectrum-web-components/base';
+import {
+    CSSResultArray,
+    PropertyValues,
+    SizedMixin,
+} from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { StyledButton } from './StyledButton.js';
 import buttonStyles from './button.css.js';
 
+export type DeprecatedButtonVariants = 'cta' | 'overBackground';
+export type ButtonStatics = 'white' | 'black';
 export type ButtonVariants =
-    | 'cta'
-    | 'overBackground'
+    | 'accent'
     | 'primary'
     | 'secondary'
-    | 'negative';
+    | 'negative'
+    | ButtonStatics
+    | DeprecatedButtonVariants;
+export const VALID_VARIANTS = [
+    'accent',
+    'primary',
+    'secondary',
+    'negative',
+    'white',
+    'black',
+];
+
+export type ButtonTreatments = 'fill' | 'outline';
 
 /**
  * @element sp-button
@@ -37,17 +54,51 @@ export class Button extends SizedMixin(StyledButton) {
      * The visual variant to apply to this button.
      */
     @property({ reflect: true })
-    public variant: ButtonVariants = 'cta';
+    public get variant(): ButtonVariants {
+        return this._variant;
+    }
+    public set variant(variant: ButtonVariants) {
+        if (variant === this.variant) return;
+
+        this.requestUpdate('variant', this.variant);
+        switch (variant) {
+            case 'cta':
+                this._variant = 'accent';
+                break;
+            case 'overBackground':
+                this._variant = 'white';
+                this.treatment = 'outline';
+                break;
+            default:
+                if (!VALID_VARIANTS.includes(variant)) {
+                    this._variant = 'accent';
+                } else {
+                    this._variant = variant;
+                }
+                break;
+        }
+        this.setAttribute('variant', this.variant);
+    }
+    private _variant: ButtonVariants = 'accent';
 
     /**
-     * There is a warning in place for this control
+     * The visual variant to apply to this button.
      */
-    @property({ type: Boolean, reflect: true })
-    public warning = false;
+    @property({ reflect: true })
+    public treatment: ButtonTreatments = 'fill';
 
     /**
      * Style this button to be less obvious
      */
-    @property({ type: Boolean, reflect: true })
-    public quiet = false;
+    @property({ type: Boolean })
+    public set quiet(quiet: boolean) {
+        this.treatment = quiet ? 'outline' : 'fill';
+    }
+
+    protected firstUpdated(changes: PropertyValues<this>): void {
+        super.firstUpdated(changes);
+        if (!this.hasAttribute('variant')) {
+            this.setAttribute('variant', this.variant);
+        }
+    }
 }

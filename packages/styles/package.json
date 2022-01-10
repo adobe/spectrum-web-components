@@ -74,7 +74,7 @@
     "devDependencies": {
         "@spectrum-css/commons": "^3.0.5",
         "@spectrum-css/typography": "^4.0.9",
-        "@spectrum-css/vars": "^4.3.1"
+        "@spectrum-css/vars": "^6.0.0"
     },
     "customElements": "custom-elements.json",
     "sideEffects": [

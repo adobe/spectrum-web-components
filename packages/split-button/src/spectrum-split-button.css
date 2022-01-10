@@ -30,27 +30,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-splitbutton-cta-trigger-flat-edge-padding: calc(
         var(--spectrum-splitbutton-trigger-flat-edge-padding) -
             var(
-                --spectrum-button-m-primary-texticon-border-size,
+                --spectrum-button-m-primary-outline-texticon-border-size,
                 var(--spectrum-alias-border-size-thick)
             )
     );
 }
 #button {
     --spectrum-splitbutton-flat-edge-padding: calc(
-        var(--spectrum-button-m-primary-texticon-padding-left) -
+        var(--spectrum-button-m-primary-outline-texticon-padding-left) -
             var(
-                --spectrum-button-m-primary-texticon-border-size,
+                --spectrum-button-m-primary-outline-texticon-border-size,
                 var(--spectrum-alias-border-size-thick)
             ) * 2
     ); /* .spectrum-SplitButton-action */
     --spectrum-splitbutton-round-edge-padding: var(
-        --spectrum-button-m-primary-texticon-padding-right,
+        --spectrum-button-m-primary-outline-texticon-padding-right,
         var(--spectrum-global-dimension-size-200)
     );
     --spectrum-splitbutton-cta-flat-edge-padding: calc(
-        var(--spectrum-button-m-primary-texticon-padding-left) -
+        var(--spectrum-button-m-primary-outline-texticon-padding-left) -
             var(
-                --spectrum-button-m-primary-texticon-border-size,
+                --spectrum-button-m-primary-outline-texticon-border-size,
                 var(--spectrum-alias-border-size-thick)
             ) * 3
     );
@@ -69,13 +69,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) #button {
     border-top-left-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-SplitButton-action */
 }
 :host([dir='rtl']) #button {
     border-top-right-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-SplitButton-action */
 }
@@ -93,13 +93,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) #button {
     border-bottom-left-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-SplitButton-action */
 }
 :host([dir='rtl']) #button {
     border-bottom-right-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-SplitButton-action */
 }
@@ -123,27 +123,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-splitbutton-round-edge-padding
     ); /* [dir=rtl] .spectrum-SplitButton-action */
 }
-:host([dir='ltr'][variant='cta']) #button {
+:host([dir='ltr']) #button[variant='accent'] {
     padding-right: var(
         --spectrum-splitbutton-cta-flat-edge-padding
-    ); /* [dir=ltr] .spectrum-SplitButton-action.spectrum-Button--cta */
+    ); /* [dir=ltr] .spectrum-SplitButton-action.spectrum-Button--accent */
 }
-:host([dir='rtl'][variant='cta']) #button {
+:host([dir='rtl']) #button[variant='accent'] {
     padding-left: var(
         --spectrum-splitbutton-cta-flat-edge-padding
-    ); /* [dir=rtl] .spectrum-SplitButton-action.spectrum-Button--cta */
+    ); /* [dir=rtl] .spectrum-SplitButton-action.spectrum-Button--accent */
 }
-:host([dir='ltr'][variant='cta']) #button {
+:host([dir='ltr']) #button[variant='accent'] {
     margin-right: var(
-        --spectrum-button-m-primary-texticon-border-size,
+        --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
-    ); /* [dir=ltr] .spectrum-SplitButton-action.spectrum-Button--cta */
+    ); /* [dir=ltr] .spectrum-SplitButton-action.spectrum-Button--accent */
 }
-:host([dir='rtl'][variant='cta']) #button {
+:host([dir='rtl']) #button[variant='accent'] {
     margin-left: var(
-        --spectrum-button-m-primary-texticon-border-size,
+        --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
-    ); /* [dir=rtl] .spectrum-SplitButton-action.spectrum-Button--cta */
+    ); /* [dir=rtl] .spectrum-SplitButton-action.spectrum-Button--accent */
 }
 :host([dir='ltr']) #button:after {
     border-top-right-radius: var(
@@ -179,25 +179,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .trigger {
     border-top-right-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-SplitButton-trigger */
 }
 :host([dir='rtl']) .trigger {
     border-top-left-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-SplitButton-trigger */
 }
 :host([dir='ltr']) .trigger {
     border-bottom-right-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-SplitButton-trigger */
 }
 :host([dir='rtl']) .trigger {
     border-bottom-left-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-SplitButton-trigger */
 }
@@ -242,27 +242,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-splitbutton-trigger-min-width
     ); /* .spectrum-SplitButton-trigger */
 }
-:host([dir='ltr'][variant='cta']) .trigger {
+:host([dir='ltr']) .trigger[variant='accent'] {
     padding-left: var(
         --spectrum-splitbutton-cta-trigger-flat-edge-padding
-    ); /* [dir=ltr] .spectrum-SplitButton-trigger.spectrum-Button--cta */
+    ); /* [dir=ltr] .spectrum-SplitButton-trigger.spectrum-Button--accent */
 }
-:host([dir='rtl'][variant='cta']) .trigger {
+:host([dir='rtl']) .trigger[variant='accent'] {
     padding-right: var(
         --spectrum-splitbutton-cta-trigger-flat-edge-padding
-    ); /* [dir=rtl] .spectrum-SplitButton-trigger.spectrum-Button--cta */
+    ); /* [dir=rtl] .spectrum-SplitButton-trigger.spectrum-Button--accent */
 }
-:host([dir='ltr'][variant='cta']) .trigger {
+:host([dir='ltr']) .trigger[variant='accent'] {
     border-left-width: var(
-        --spectrum-button-m-primary-texticon-border-size,
+        --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
-    ); /* [dir=ltr] .spectrum-SplitButton-trigger.spectrum-Button--cta */
+    ); /* [dir=ltr] .spectrum-SplitButton-trigger.spectrum-Button--accent */
 }
-:host([dir='rtl'][variant='cta']) .trigger {
+:host([dir='rtl']) .trigger[variant='accent'] {
     border-right-width: var(
-        --spectrum-button-m-primary-texticon-border-size,
+        --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
-    ); /* [dir=rtl] .spectrum-SplitButton-trigger.spectrum-Button--cta */
+    ); /* [dir=rtl] .spectrum-SplitButton-trigger.spectrum-Button--accent */
 }
 .trigger.focus-visible {
     box-shadow: none; /* .spectrum-SplitButton-trigger.focus-ring */
@@ -322,25 +322,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left]) #button {
     border-top-right-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
 }
 :host([dir='rtl'][left]) #button {
     border-top-left-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
 }
 :host([dir='ltr'][left]) #button {
     border-bottom-right-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action */
 }
 :host([dir='rtl'][left]) #button {
     border-bottom-left-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
 }
@@ -386,27 +386,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-splitbutton-round-edge-padding
     ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action */
 }
-:host([dir='ltr'][left][variant='cta']) #button {
+:host([dir='ltr'][left]) #button[variant='accent'] {
     padding-left: var(
         --spectrum-splitbutton-cta-flat-edge-padding
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--accent */
 }
-:host([dir='rtl'][left][variant='cta']) #button {
+:host([dir='rtl'][left]) #button[variant='accent'] {
     padding-right: var(
         --spectrum-splitbutton-cta-flat-edge-padding
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--accent */
 }
-:host([dir='ltr'][left][variant='cta']) #button {
+:host([dir='ltr'][left]) #button[variant='accent'] {
     margin-left: var(
-        --spectrum-button-m-primary-texticon-border-size,
+        --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--accent */
 }
-:host([dir='rtl'][left][variant='cta']) #button {
+:host([dir='rtl'][left]) #button[variant='accent'] {
     margin-right: var(
-        --spectrum-button-m-primary-texticon-border-size,
+        --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--cta */
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action.spectrum-Button--accent */
 }
 :host([dir='ltr'][left]) #button:after {
     border-top-left-radius: var(
@@ -420,25 +420,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left]) #button:after {
     border-top-right-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
 }
 :host([dir='rtl'][left]) #button:after {
     border-top-left-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
 }
 :host([dir='ltr'][left]) #button:after {
     border-bottom-right-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
 }
 :host([dir='rtl'][left]) #button:after {
     border-bottom-left-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-action:after */
 }
@@ -460,13 +460,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left]) .trigger {
     border-top-left-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
 }
 :host([dir='rtl'][left]) .trigger {
     border-top-right-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
 }
@@ -484,25 +484,25 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left]) .trigger {
     border-bottom-left-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
 }
 :host([dir='rtl'][left]) .trigger {
     border-bottom-right-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
 }
 :host([dir='ltr'][left]) .trigger {
     border-left-width: var(
-        --spectrum-button-m-primary-texticon-border-size,
+        --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
     ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
 }
 :host([dir='rtl'][left]) .trigger {
     border-right-width: var(
-        --spectrum-button-m-primary-texticon-border-size,
+        --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
     ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
 }
@@ -536,37 +536,37 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-splitbutton-trigger-round-edge-padding
     ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger */
 }
-:host([dir='ltr'][left][variant='cta']) .trigger {
+:host([dir='ltr'][left]) .trigger[variant='accent'] {
     padding-right: var(
         --spectrum-splitbutton-cta-trigger-flat-edge-padding
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger.spectrum-Button--cta */
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger.spectrum-Button--accent */
 }
-:host([dir='rtl'][left][variant='cta']) .trigger {
+:host([dir='rtl'][left]) .trigger[variant='accent'] {
     padding-left: var(
         --spectrum-splitbutton-cta-trigger-flat-edge-padding
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger.spectrum-Button--cta */
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger.spectrum-Button--accent */
 }
-:host([dir='ltr'][left][variant='cta']) .trigger {
+:host([dir='ltr'][left]) .trigger[variant='accent'] {
     border-right-width: var(
-        --spectrum-button-m-primary-texticon-border-size,
+        --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
-    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger.spectrum-Button--cta */
+    ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger.spectrum-Button--accent */
 }
-:host([dir='rtl'][left][variant='cta']) .trigger {
+:host([dir='rtl'][left]) .trigger[variant='accent'] {
     border-left-width: var(
-        --spectrum-button-m-primary-texticon-border-size,
+        --spectrum-button-m-primary-outline-texticon-border-size,
         var(--spectrum-alias-border-size-thick)
-    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger.spectrum-Button--cta */
+    ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger.spectrum-Button--accent */
 }
 :host([dir='ltr'][left]) .trigger:after {
     border-top-left-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
 }
 :host([dir='rtl'][left]) .trigger:after {
     border-top-right-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
 }
@@ -592,13 +592,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][left]) .trigger:after {
     border-bottom-left-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=ltr] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
 }
 :host([dir='rtl'][left]) .trigger:after {
     border-bottom-right-radius: var(
-        --spectrum-button-m-primary-texticon-border-radius,
+        --spectrum-button-m-primary-outline-texticon-border-radius,
         var(--spectrum-global-dimension-size-200)
     ); /* [dir=rtl] .spectrum-SplitButton--left .spectrum-SplitButton-trigger:after */
 }

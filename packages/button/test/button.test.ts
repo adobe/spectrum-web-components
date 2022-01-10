@@ -498,4 +498,52 @@ describe('Button', () => {
 
         expect(el.active).to.be.false;
     });
+    describe('deprecated variants and attributes', () => {
+        it('manages [quiet]', async () => {
+            const el = await fixture<Button>(
+                html`
+                    <sp-button quiet>Button</sp-button>
+                `
+            );
+
+            await elementUpdated(el);
+            expect(el.treatment).to.equal('outline');
+
+            el.quiet = false;
+
+            await elementUpdated(el);
+            expect(el.treatment).to.equal('fill');
+        });
+        it('upgrades [variant="cta"]', async () => {
+            const el = await fixture<Button>(
+                html`
+                    <sp-button variant="cta">Button</sp-button>
+                `
+            );
+
+            await elementUpdated(el);
+            expect(el.variant).to.equal('accent');
+        });
+        it('manages [variant="overBackground"]', async () => {
+            const el = await fixture<Button>(
+                html`
+                    <sp-button variant="overBackground">Button</sp-button>
+                `
+            );
+
+            await elementUpdated(el);
+            expect(el.variant).to.equal('white');
+            expect(el.treatment).to.equal('outline');
+        });
+        it('forces [variant="accent"]', async () => {
+            const el = await fixture<Button>(
+                html`
+                    <sp-button variant="not-supported">Button</sp-button>
+                `
+            );
+
+            await elementUpdated(el);
+            expect(el.variant).to.equal('accent');
+        });
+    });
 });

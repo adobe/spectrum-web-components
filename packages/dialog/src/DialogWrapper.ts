@@ -254,6 +254,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
                         ? html`
                               <sp-button
                                   variant="primary"
+                                  treatment="outline"
                                   slot="button"
                                   @click=${this.clickSecondary}
                               >
@@ -265,6 +266,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
                         ? html`
                               <sp-button
                                   variant="secondary"
+                                  treatment="outline"
                                   slot="button"
                                   @click=${this.clickCancel}
                               >
@@ -275,7 +277,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
                     ${this.confirmLabel
                         ? html`
                               <sp-button
-                                  variant="cta"
+                                  variant="accent"
                                   slot="button"
                                   @click=${this.clickConfirm}
                               >

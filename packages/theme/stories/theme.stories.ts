@@ -78,8 +78,10 @@ export const Default = ({
                 </div>
                 <div><sp-switch>Overdrive</sp-switch></div>
                 <sp-button-group id="buttons">
-                    <sp-button variant="primary">Cancel</sp-button>
-                    <sp-button variant="cta">Continue</sp-button>
+                    <sp-button variant="primary" treatment="outline">
+                        Cancel
+                    </sp-button>
+                    <sp-button variant="accent">Continue</sp-button>
                 </sp-button-group>
             </div>
         </sp-theme>
@@ -121,8 +123,8 @@ export const none = (): TemplateResult => html`
         </div>
         <div><sp-switch>Overdrive</sp-switch></div>
         <sp-button-group id="buttons">
-            <sp-button variant="primary">Cancel</sp-button>
-            <sp-button variant="cta">Continue</sp-button>
+            <sp-button variant="primary" treatment="outline">Cancel</sp-button>
+            <sp-button variant="accent">Continue</sp-button>
         </sp-button-group>
     </div>
     <sp-theme></sp-theme>
@@ -150,8 +152,10 @@ export const nestedTheme = ({
                 </div>
                 <div><sp-switch>Overdrive</sp-switch></div>
                 <sp-button-group id="buttons">
-                    <sp-button variant="primary">Cancel</sp-button>
-                    <sp-button variant="cta">Continue</sp-button>
+                    <sp-button variant="primary" treatment="outline">
+                        Cancel
+                    </sp-button>
+                    <sp-button variant="accent">Continue</sp-button>
                 </sp-button-group>
                 <sp-theme color="${inner}" dir="ltr">
                     <div id="inner">
@@ -167,8 +171,10 @@ export const nestedTheme = ({
                         </div>
                         <div><sp-switch>Overdrive</sp-switch></div>
                         <sp-button-group id="buttons-inner">
-                            <sp-button variant="primary">Cancel</sp-button>
-                            <sp-button variant="cta">Continue</sp-button>
+                            <sp-button variant="primary" treatment="outline">
+                                Cancel
+                            </sp-button>
+                            <sp-button variant="accent">Continue</sp-button>
                         </sp-button-group>
                     </div>
                 </sp-theme>
@@ -217,8 +223,10 @@ export const reverseColorNestedTheme = ({
                 </div>
                 <div><sp-switch>Overdrive</sp-switch></div>
                 <sp-button-group id="buttons">
-                    <sp-button variant="primary">Cancel</sp-button>
-                    <sp-button variant="cta">Continue</sp-button>
+                    <sp-button variant="primary" treatment="outline">
+                        Cancel
+                    </sp-button>
+                    <sp-button variant="accent">Continue</sp-button>
                 </sp-button-group>
                 <sp-theme color="${outer}" dir="rtl">
                     <div id="inner">
@@ -234,8 +242,10 @@ export const reverseColorNestedTheme = ({
                         </div>
                         <div><sp-switch>Overdrive</sp-switch></div>
                         <sp-button-group id="buttons-inner">
-                            <sp-button variant="primary">Cancel</sp-button>
-                            <sp-button variant="cta">Continue</sp-button>
+                            <sp-button variant="primary" treatment="outline">
+                                Cancel
+                            </sp-button>
+                            <sp-button variant="accent">Continue</sp-button>
                         </sp-button-group>
                     </div>
                 </sp-theme>

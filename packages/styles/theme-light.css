@@ -281,5 +281,14 @@ governing permissions and limitations under the License.
     --spectrum-slider-xl-range-radial-reaction-color: rgba(75, 75, 75, 0.6);
     --spectrum-well-background-color: rgba(75, 75, 75, 0.02);
     --spectrum-well-border-color: rgba(44, 44, 44, 0.05);
+    --spectrum-scrollbar-mac-s-track-background-color: var(
+        --spectrum-global-color-gray-75
+    );
+    --spectrum-scrollbar-mac-m-track-background-color: var(
+        --spectrum-global-color-gray-75
+    );
+    --spectrum-scrollbar-mac-l-track-background-color: var(
+        --spectrum-global-color-gray-75
+    );
 }
 /* stylelint-enable */

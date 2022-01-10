@@ -80,6 +80,9 @@ export class ActionButton extends SizedMixin(ButtonBase) {
     @property({ type: Boolean, reflect: true })
     public toggles = false;
 
+    @property({ reflect: true })
+    public variant?: 'white' | 'black';
+
     @property({ type: String })
     public get value(): string {
         return this._value || this.itemText;
@@ -191,8 +194,7 @@ export class ActionButton extends SizedMixin(ButtonBase) {
         if (this.holdAffordance) {
             buttonContent.unshift(html`
                 <sp-icon-corner-triangle300
-                    id="hold-affordance"
-                    class="${holdAffordanceClass[
+                    class="hold-affordance ${holdAffordanceClass[
                         this.size as DefaultElementSize
                     ]}"
                 ></sp-icon-corner-triangle300>

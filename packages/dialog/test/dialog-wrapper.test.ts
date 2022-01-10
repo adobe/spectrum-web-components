@@ -198,16 +198,17 @@ describe('Dialog Wrapper', () => {
         expect(cancelSpy.called).to.be.false;
         expect(secondarySpy.called).to.be.false;
 
-        const root = el.shadowRoot ? el.shadowRoot : el;
-        const ctaButton = root.querySelector('[variant="cta"]') as Button;
-        const primaryButton = root.querySelector(
+        const accentButton = el.shadowRoot.querySelector(
+            '[variant="accent"]'
+        ) as Button;
+        const primaryButton = el.shadowRoot.querySelector(
             '[variant="primary"]'
         ) as Button;
-        const secondaryButton = root.querySelector(
+        const secondaryButton = el.shadowRoot.querySelector(
             '[variant="secondary"]'
         ) as Button;
 
-        ctaButton.click();
+        accentButton.click();
 
         await elementUpdated(el);
         expect(confirmSpy.called, 'dispatched `confirm`').to.be.true;

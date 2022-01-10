@@ -142,8 +142,10 @@ export const alertConfirmation = (): TemplateResult => {
             <h2 slot="heading">Enable Smart Filters?</h2>
             Smart filters are nondestructive and will preserve your original
             images.
-            <sp-button variant="secondary" slot="button">Cancel</sp-button>
-            <sp-button variant="cta" slot="button">Enable</sp-button>
+            <sp-button variant="secondary" treatment="outline" slot="button">
+                Cancel
+            </sp-button>
+            <sp-button variant="accent" slot="button">Enable</sp-button>
         </sp-dialog>
     `;
 };
@@ -154,8 +156,12 @@ export const alertInformation = (): TemplateResult => {
             <h2 slot="heading">Enable Smart Filters?</h2>
             Smart filters are nondestructive and will preserve your original
             images.
-            <sp-button variant="secondary" slot="button">Cancel</sp-button>
-            <sp-button variant="primary" slot="button">Enable</sp-button>
+            <sp-button variant="secondary" treatment="outline" slot="button">
+                Cancel
+            </sp-button>
+            <sp-button variant="primary" treatment="outline" slot="button">
+                Enable
+            </sp-button>
         </sp-dialog>
     `;
 };
@@ -166,7 +172,9 @@ export const alertDestructive = (): TemplateResult => {
             <h2 slot="heading">Enable Smart Filters?</h2>
             Smart filters are nondestructive and will preserve your original
             images.
-            <sp-button variant="secondary" slot="button">Cancel</sp-button>
+            <sp-button variant="secondary" treatment="outline" slot="button">
+                Cancel
+            </sp-button>
             <sp-button variant="negative" slot="button">Enable</sp-button>
         </sp-dialog>
     `;
@@ -178,8 +186,12 @@ export const alertError = (): TemplateResult => {
             <h2 slot="heading">Enable Smart Filters?</h2>
             Smart filters are nondestructive and will preserve your original
             images.
-            <sp-button variant="secondary" slot="button">Cancel</sp-button>
-            <sp-button variant="primary" slot="button">Enable</sp-button>
+            <sp-button variant="secondary" treatment="outline" slot="button">
+                Cancel
+            </sp-button>
+            <sp-button variant="primary" treatment="outline" slot="button">
+                Enable
+            </sp-button>
         </sp-dialog>
     `;
 };
@@ -190,8 +202,12 @@ export const alertErrorWithLongTitle = (): TemplateResult => {
             <h2 slot="heading">Unable to Share Project to Behance Community</h2>
             Smart filters are nondestructive and will preserve your original
             images.
-            <sp-button variant="secondary" slot="button">Cancel</sp-button>
-            <sp-button variant="primary" slot="button">Enable</sp-button>
+            <sp-button variant="secondary" treatment="outline" slot="button">
+                Cancel
+            </sp-button>
+            <sp-button variant="primary" treatment="outline" slot="button">
+                Enable
+            </sp-button>
         </sp-dialog>
     `;
 };
@@ -329,8 +345,10 @@ export const fullscreen = (): TemplateResult => {
             <div slot="footer">
                 Anything in the footer is sticky and aligned right.
             </div>
-            <sp-button variant="secondary" slot="button">Cancel</sp-button>
-            <sp-button variant="cta" slot="button">Enable</sp-button>
+            <sp-button variant="secondary" treatment="outline" slot="button">
+                Cancel
+            </sp-button>
+            <sp-button variant="accent" slot="button">Enable</sp-button>
         </sp-dialog>
     `;
 };
@@ -468,8 +486,10 @@ export const fullscreenTakeover = (): TemplateResult => {
             <div slot="footer">
                 Anything in the footer is sticky and aligned right.
             </div>
-            <sp-button variant="secondary" slot="button">Cancel</sp-button>
-            <sp-button variant="cta" slot="button">Enable</sp-button>
+            <sp-button variant="secondary" treatment="outline" slot="button">
+                Cancel
+            </sp-button>
+            <sp-button variant="accent" slot="button">Enable</sp-button>
         </sp-dialog>
     `;
 };
