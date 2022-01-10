@@ -27,10 +27,11 @@ export const dividers = (): TemplateResult => html`
                 'toolbar main properties';
             grid-template-columns: 50px 1fr 250px;
             grid-template-rows: 50px 1fr;
-            gap: var(--spectrum-global-dimension-dividers);
+            gap: var(--spectrum-global-alias-appframe-border-size);
             background: var(--spectrum-alias-background-color-tertiary);
         }
-        header, aside {
+        header,
+        aside {
             background: var(--spectrum-alias-background-color-secondary);
         }
         header {
