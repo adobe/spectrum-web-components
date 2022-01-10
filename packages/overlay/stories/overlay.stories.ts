@@ -677,7 +677,7 @@ complexModal.decorators = [complexModalDecorator];
 export const superComplexModal = (): TemplateResult => {
     return html`
         <overlay-trigger type="modal" placement="none">
-            <sp-button slot="trigger" variant="cta">Toggle Dialog</sp-button>
+            <sp-button slot="trigger" variant="accent">Toggle Dialog</sp-button>
             <sp-popover dialog slot="click-content">
                 <overlay-trigger>
                     <sp-button slot="trigger" variant="primary">

@@ -50,6 +50,12 @@ const config = {
                     name: 'icon',
                 },
             ],
+            complexSelectors: [
+                {
+                    replacement: "[variant='accent']",
+                    selector: '.spectrum-Button--accent',
+                },
+            ],
         },
     ],
 };

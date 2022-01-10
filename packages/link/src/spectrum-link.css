@@ -65,31 +65,31 @@ a:focus-visible {
 a {
     color: var(
         --spectrum-link-m-primary-text-color,
-        var(--spectrum-global-color-blue-600)
+        var(--spectrum-alias-link-primary-text-color-default)
     ); /* .spectrum-Link */
 }
 a:hover {
     color: var(
         --spectrum-link-m-primary-text-color-hover,
-        var(--spectrum-global-color-blue-600)
+        var(--spectrum-alias-link-primary-text-color-hover)
     ); /* .spectrum-Link:hover */
 }
 a:active {
     color: var(
         --spectrum-link-m-primary-text-color-down,
-        var(--spectrum-global-color-blue-700)
+        var(--spectrum-alias-link-primary-text-color-down)
     ); /* .spectrum-Link:active */
 }
 a.focus-visible {
     color: var(
         --spectrum-link-m-primary-text-color-key-focus,
-        var(--spectrum-alias-text-color-key-focus)
+        var(--spectrum-alias-link-primary-text-color-key-focus)
     ); /* .spectrum-Link.focus-ring */
 }
 a:focus-visible {
     color: var(
         --spectrum-link-m-primary-text-color-key-focus,
-        var(--spectrum-alias-text-color-key-focus)
+        var(--spectrum-alias-link-primary-text-color-key-focus)
     ); /* .spectrum-Link.focus-ring */
 }
 :host([variant='secondary']) a {

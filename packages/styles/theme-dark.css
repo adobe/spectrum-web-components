@@ -126,6 +126,15 @@ governing permissions and limitations under the License.
     --spectrum-alias-appframe-separator-color: var(
         --spectrum-global-color-gray-50
     );
+    --spectrum-scrollbar-mac-s-track-background-color: var(
+        --spectrum-global-color-gray-100
+    );
+    --spectrum-scrollbar-mac-m-track-background-color: var(
+        --spectrum-global-color-gray-100
+    );
+    --spectrum-scrollbar-mac-l-track-background-color: var(
+        --spectrum-global-color-gray-100
+    );
     --spectrum-slider-s-tick-editable-radial-reaction-color: hsla(
         0,
         0%,

@@ -68,40 +68,93 @@ governing permissions and limitations under the License.
 
 :host([compact][vertical]:not([quiet])) ::slotted(:not([role]):first-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-    --overriden-border-radius: var(--spectrum-alias-border-radius-regular)
-        var(--spectrum-alias-border-radius-regular) 0 0;
+    --overriden-border-radius: var(--spectrum-alias-component-border-radius)
+        var(--spectrum-alias-component-border-radius) 0 0;
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:not([role]):last-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-    --overriden-border-radius: 0 0 var(--spectrum-alias-border-radius-regular)
-        var(--spectrum-alias-border-radius-regular);
+    --overriden-border-radius: 0 0 var(--spectrum-alias-component-border-radius)
+        var(--spectrum-alias-component-border-radius);
 }
 
 :host([dir='ltr'][compact]:not([quiet]):not([vertical]))
     ::slotted(:not([role]):first-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-    --overriden-border-radius: var(--spectrum-alias-border-radius-regular) 0 0
-        var(--spectrum-alias-border-radius-regular);
+    --overriden-border-radius: var(--spectrum-alias-component-border-radius) 0 0
+        var(--spectrum-alias-component-border-radius);
 }
 
 :host([dir='rtl'][compact]:not([quiet]):not([vertical]))
     ::slotted(:not([role]):first-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-    --overriden-border-radius: 0 var(--spectrum-alias-border-radius-regular)
-        var(--spectrum-alias-border-radius-regular) 0;
+    --overriden-border-radius: 0 var(--spectrum-alias-component-border-radius)
+        var(--spectrum-alias-component-border-radius) 0;
 }
 
 :host([dir='ltr'][compact]:not([quiet]):not([vertical]))
     ::slotted(:not([role]):last-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-    --overriden-border-radius: 0 var(--spectrum-alias-border-radius-regular)
-        var(--spectrum-alias-border-radius-regular) 0;
+    --overriden-border-radius: 0 var(--spectrum-alias-component-border-radius)
+        var(--spectrum-alias-component-border-radius) 0;
 }
 
 :host([dir='rtl'][compact]:not([quiet]):not([vertical]))
     ::slotted(:not([role]):last-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-    --overriden-border-radius: var(--spectrum-alias-border-radius-regular) 0 0
-        var(--spectrum-alias-border-radius-regular);
+    --overriden-border-radius: var(--spectrum-alias-component-border-radius) 0 0
+        var(--spectrum-alias-component-border-radius);
+}
+
+:host([compact]:not([quiet])) ::slotted(*) {
+    --spectrum-actionbutton-after-border-radius: 0;
+}
+
+:host([compact][vertical]:not([quiet])) ::slotted(:first-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+    --spectrum-actionbutton-after-border-radius: var(
+            --spectrum-alias-component-border-radius
+        )
+        var(--spectrum-alias-component-border-radius) 0 0;
+}
+
+:host([compact][vertical]:not([quiet])) ::slotted(:last-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    --spectrum-actionbutton-after-border-radius: 0 0
+        var(--spectrum-alias-component-border-radius)
+        var(--spectrum-alias-component-border-radius);
+}
+
+:host([dir='ltr'][compact]:not([quiet]):not([vertical]))
+    ::slotted(:first-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+    --spectrum-actionbutton-after-border-radius: var(
+            --spectrum-alias-component-border-radius
+        )
+        0 0 var(--spectrum-alias-component-border-radius);
+}
+
+:host([dir='rtl'][compact]:not([quiet]):not([vertical]))
+    ::slotted(:first-child) {
+    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+    --spectrum-actionbutton-after-border-radius: 0
+        var(--spectrum-alias-component-border-radius)
+        var(--spectrum-alias-component-border-radius) 0;
+}
+
+:host([dir='ltr'][compact]:not([quiet]):not([vertical]))
+    ::slotted(:last-child) {
+    /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    --spectrum-actionbutton-after-border-radius: 0
+        var(--spectrum-alias-component-border-radius)
+        var(--spectrum-alias-component-border-radius) 0;
+}
+
+:host([dir='rtl'][compact]:not([quiet]):not([vertical]))
+    ::slotted(:last-child) {
+    /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    --spectrum-actionbutton-after-border-radius: var(
+            --spectrum-alias-component-border-radius
+        )
+        0 0 var(--spectrum-alias-component-border-radius);
 }

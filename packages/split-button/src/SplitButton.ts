@@ -58,7 +58,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
      * The visual variant to apply to this button.
      */
     @property({ reflect: true })
-    public variant: ButtonVariants = 'cta';
+    public variant: ButtonVariants = 'accent';
 
     public get target(): HTMLButtonElement | this {
         return this;
@@ -132,6 +132,10 @@ export class SplitButton extends SizedMixin(PickerBase) {
                     @click=${this.passClick}
                     ?disabled=${this.disabled}
                     variant=${this.variant}
+                    treatment=${this.variant === 'cta' ||
+                    this.variant === 'accent'
+                        ? 'fill'
+                        : 'outline'}
                     size=${this.size}
                 >
                     ${this.buttonContent}
@@ -148,6 +152,10 @@ export class SplitButton extends SizedMixin(PickerBase) {
                     ?disabled=${this.disabled}
                     aria-label="More"
                     variant=${this.variant}
+                    treatment=${this.variant === 'cta' ||
+                    this.variant === 'accent'
+                        ? 'fill'
+                        : 'outline'}
                     size=${this.size}
                 >
                     ${this.type === 'field'

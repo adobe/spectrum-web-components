@@ -1855,1124 +1855,2476 @@ governing permissions and limitations under the License.
     --spectrum-breadcrumb-l-item-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-cta-quiet-overbackground-texticon-text-padding-bottom: var(
+    --spectrum-button-s-accent-fill-icononly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-button-s-cta-quiet-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-s-accent-fill-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-cta-quiet-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-s-accent-fill-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-cta-quiet-texticon-text-padding-bottom: var(
+    --spectrum-button-s-primary-fill-icononly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-button-s-cta-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-s-primary-fill-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-cta-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-s-primary-fill-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-cta-overbackground-texticon-text-padding-bottom: var(
+    --spectrum-button-s-secondary-fill-icononly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-button-s-cta-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-s-secondary-fill-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-cta-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-s-secondary-fill-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-cta-texticon-text-padding-bottom: var(
+    --spectrum-button-s-negative-fill-icononly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-button-s-cta-texticon-touch-hit-x: var(
+    --spectrum-button-s-negative-fill-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-cta-texticon-touch-hit-y: var(
+    --spectrum-button-s-negative-fill-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-primary-quiet-overbackground-texticon-text-padding-bottom: var(
+    --spectrum-button-s-accent-fill-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-button-s-primary-quiet-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-s-accent-fill-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-primary-quiet-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-s-accent-fill-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-primary-quiet-texticon-text-padding-bottom: var(
+    --spectrum-button-s-primary-fill-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-button-s-primary-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-s-primary-fill-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-primary-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-s-primary-fill-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-primary-overbackground-texticon-text-padding-bottom: var(
+    --spectrum-button-s-secondary-fill-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-button-s-primary-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-s-secondary-fill-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-primary-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-s-secondary-fill-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-primary-texticon-text-padding-bottom: var(
+    --spectrum-button-s-negative-fill-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-button-s-primary-texticon-touch-hit-x: var(
+    --spectrum-button-s-negative-fill-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-primary-texticon-touch-hit-y: var(
+    --spectrum-button-s-negative-fill-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-secondary-quiet-overbackground-texticon-text-padding-bottom: var(
+    --spectrum-button-s-accent-fill-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-button-s-secondary-quiet-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-s-accent-fill-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-secondary-quiet-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-s-accent-fill-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-secondary-quiet-texticon-text-padding-bottom: var(
+    --spectrum-button-s-primary-fill-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-button-s-secondary-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-s-primary-fill-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-secondary-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-s-primary-fill-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-secondary-overbackground-texticon-text-padding-bottom: var(
+    --spectrum-button-s-secondary-fill-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-button-s-secondary-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-s-secondary-fill-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-secondary-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-s-secondary-fill-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-secondary-texticon-text-padding-bottom: var(
+    --spectrum-button-s-negative-fill-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );
-    --spectrum-button-s-secondary-texticon-touch-hit-x: var(
+    --spectrum-button-s-negative-fill-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-secondary-texticon-touch-hit-y: var(
+    --spectrum-button-s-negative-fill-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-negative-quiet-overbackground-texticon-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-negative-quiet-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-m-accent-fill-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-negative-quiet-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-m-accent-fill-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-negative-quiet-texticon-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-negative-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-m-primary-fill-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-negative-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-m-primary-fill-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-negative-overbackground-texticon-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-negative-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-m-secondary-fill-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-negative-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-m-secondary-fill-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-negative-texticon-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-negative-texticon-touch-hit-x: var(
+    --spectrum-button-m-negative-fill-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-negative-texticon-touch-hit-y: var(
+    --spectrum-button-m-negative-fill-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-cta-quiet-overbackground-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-cta-quiet-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-m-accent-fill-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-cta-quiet-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-m-accent-fill-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-s-cta-quiet-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-cta-quiet-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-cta-quiet-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-cta-overbackground-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-cta-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-cta-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-cta-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-cta-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-cta-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-primary-quiet-overbackground-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-primary-quiet-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-primary-quiet-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-primary-quiet-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-primary-quiet-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-primary-quiet-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-primary-overbackground-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-primary-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-primary-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-primary-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-primary-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-primary-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-secondary-quiet-overbackground-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-secondary-quiet-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-secondary-quiet-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-secondary-quiet-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-secondary-quiet-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-secondary-quiet-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-secondary-overbackground-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-secondary-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-secondary-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-secondary-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-secondary-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-secondary-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-negative-quiet-overbackground-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-negative-quiet-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-negative-quiet-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-negative-quiet-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-negative-quiet-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-negative-quiet-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-negative-overbackground-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-negative-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-negative-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-negative-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-s-negative-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-s-negative-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-cta-quiet-overbackground-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-cta-quiet-overbackground-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-cta-quiet-overbackground-texticon-padding-left: var(
+    --spectrum-button-m-accent-fill-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-cta-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-m-primary-fill-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-m-primary-fill-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-quiet-texticon-padding-left: var(
+    --spectrum-button-m-primary-fill-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-cta-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-m-secondary-fill-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-m-secondary-fill-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-overbackground-texticon-padding-left: var(
+    --spectrum-button-m-secondary-fill-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-cta-texticon-touch-hit-x: var(
+    --spectrum-button-m-negative-fill-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-texticon-touch-hit-y: var(
+    --spectrum-button-m-negative-fill-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-texticon-padding-left: var(
+    --spectrum-button-m-negative-fill-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-primary-quiet-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-m-accent-fill-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-primary-quiet-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-m-accent-fill-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-primary-quiet-overbackground-texticon-padding-left: var(
+    --spectrum-button-m-primary-fill-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-fill-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-fill-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-fill-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-fill-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-fill-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-accent-fill-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-accent-fill-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-fill-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-primary-fill-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-primary-fill-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-fill-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-fill-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-secondary-fill-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-secondary-fill-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-fill-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-fill-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-negative-fill-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-negative-fill-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-fill-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-accent-fill-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-accent-fill-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-fill-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-primary-fill-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-primary-fill-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-fill-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-fill-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-secondary-fill-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-secondary-fill-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-fill-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-fill-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-negative-fill-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-negative-fill-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-fill-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-accent-fill-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-accent-fill-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-fill-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-primary-fill-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-primary-fill-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-fill-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-fill-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-secondary-fill-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-secondary-fill-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-fill-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-fill-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-negative-fill-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-negative-fill-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-fill-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-texticon-padding-left: 21px;
+    --spectrum-button-xl-primary-fill-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-texticon-padding-left: 21px;
+    --spectrum-button-xl-secondary-fill-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-texticon-padding-left: 21px;
+    --spectrum-button-xl-negative-fill-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-texticon-padding-left: 21px;
+    --spectrum-button-xl-accent-fill-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-primary-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-m-primary-outline-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-primary-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-m-primary-outline-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-primary-quiet-texticon-padding-left: var(
+    --spectrum-button-m-primary-outline-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-primary-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-m-secondary-outline-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-primary-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-m-secondary-outline-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-primary-overbackground-texticon-padding-left: var(
+    --spectrum-button-m-secondary-outline-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-primary-texticon-touch-hit-x: var(
+    --spectrum-button-m-negative-outline-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-primary-texticon-touch-hit-y: var(
+    --spectrum-button-m-negative-outline-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-primary-texticon-padding-left: var(
+    --spectrum-button-m-negative-outline-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-secondary-quiet-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-m-accent-outline-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-secondary-quiet-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-m-accent-outline-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-secondary-quiet-overbackground-texticon-padding-left: var(
+    --spectrum-button-m-primary-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-outline-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-accent-outline-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-accent-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-outline-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-primary-outline-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-primary-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-outline-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-secondary-outline-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-secondary-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-outline-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-negative-outline-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-negative-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-outline-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-accent-outline-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-accent-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-outline-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-primary-outline-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-primary-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-outline-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-secondary-outline-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-secondary-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-outline-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-negative-outline-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-negative-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-outline-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-accent-outline-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-accent-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-outline-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-primary-outline-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-primary-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-outline-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-secondary-outline-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-secondary-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-outline-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-negative-outline-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-negative-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-outline-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-outline-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-outline-texticon-padding-left: 21px;
+    --spectrum-button-xl-primary-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-outline-texticon-padding-left: 21px;
+    --spectrum-button-xl-secondary-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-outline-texticon-padding-left: 21px;
+    --spectrum-button-xl-negative-outline-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-outline-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-outline-texticon-padding-left: 21px;
+    --spectrum-button-xl-accent-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-outline-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-outline-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-fill-white-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-fill-white-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-fill-white-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-fill-white-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-fill-white-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-fill-white-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-fill-white-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-fill-white-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-fill-white-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-fill-white-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-fill-white-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-fill-white-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-fill-white-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-secondary-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-m-primary-fill-white-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-secondary-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-m-primary-fill-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-secondary-quiet-texticon-padding-left: var(
+    --spectrum-button-m-primary-fill-white-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-secondary-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-m-secondary-fill-white-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-secondary-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-m-secondary-fill-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-secondary-overbackground-texticon-padding-left: var(
+    --spectrum-button-m-secondary-fill-white-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-secondary-texticon-touch-hit-x: var(
+    --spectrum-button-m-negative-fill-white-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-secondary-texticon-touch-hit-y: var(
+    --spectrum-button-m-negative-fill-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-secondary-texticon-padding-left: var(
+    --spectrum-button-m-negative-fill-white-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-negative-quiet-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-m-accent-fill-white-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-negative-quiet-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-m-accent-fill-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-negative-quiet-overbackground-texticon-padding-left: var(
+    --spectrum-button-m-primary-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-white-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-accent-fill-white-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-accent-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-fill-white-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-primary-fill-white-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-primary-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-fill-white-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-secondary-fill-white-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-secondary-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-fill-white-icononly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-negative-fill-white-icononly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-negative-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-white-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-accent-fill-white-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-accent-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-fill-white-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-primary-fill-white-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-primary-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-fill-white-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-secondary-fill-white-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-secondary-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-fill-white-texticon-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-negative-fill-white-texticon-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-negative-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-white-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-accent-fill-white-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-accent-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-fill-white-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-primary-fill-white-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-primary-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-primary-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-fill-white-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-secondary-fill-white-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-secondary-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-secondary-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-fill-white-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
+    );
+    --spectrum-button-l-negative-fill-white-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
+    );
+    --spectrum-button-l-negative-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-negative-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-white-texticon-padding-left: 21px;
+    --spectrum-button-xl-primary-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-white-texticon-padding-left: 21px;
+    --spectrum-button-xl-secondary-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-white-texticon-padding-left: 21px;
+    --spectrum-button-xl-negative-fill-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-white-texticon-padding-left: 21px;
+    --spectrum-button-xl-accent-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-white-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-outline-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-white-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-outline-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-white-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-outline-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-white-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-outline-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-white-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-outline-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-white-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-outline-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-white-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-outline-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-white-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-outline-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-white-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-outline-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-white-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-outline-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-white-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-outline-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-white-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-outline-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-outline-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-outline-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-outline-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-outline-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-outline-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-outline-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-white-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-negative-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-m-primary-outline-white-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-negative-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-m-primary-outline-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-negative-quiet-texticon-padding-left: var(
+    --spectrum-button-m-primary-outline-white-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-negative-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-m-secondary-outline-white-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-negative-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-m-secondary-outline-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-negative-overbackground-texticon-padding-left: var(
+    --spectrum-button-m-secondary-outline-white-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-negative-texticon-touch-hit-x: var(
+    --spectrum-button-m-negative-outline-white-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-negative-texticon-touch-hit-y: var(
+    --spectrum-button-m-negative-outline-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-negative-texticon-padding-left: var(
+    --spectrum-button-m-negative-outline-white-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-button-m-cta-quiet-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-m-accent-outline-white-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-quiet-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-m-accent-outline-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-quiet-textonly-touch-hit-x: var(
+    --spectrum-button-m-primary-outline-white-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-quiet-textonly-touch-hit-y: var(
+    --spectrum-button-m-primary-outline-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-m-secondary-outline-white-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-m-secondary-outline-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-textonly-touch-hit-x: var(
+    --spectrum-button-m-negative-outline-white-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-cta-textonly-touch-hit-y: var(
+    --spectrum-button-m-negative-outline-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-m-primary-quiet-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-primary-quiet-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-primary-quiet-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-primary-quiet-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-primary-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-primary-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-primary-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-primary-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-secondary-quiet-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-secondary-quiet-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-secondary-quiet-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-secondary-quiet-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-secondary-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-secondary-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-secondary-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-secondary-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-negative-quiet-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-negative-quiet-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-negative-quiet-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-negative-quiet-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-negative-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-negative-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-negative-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-m-negative-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-l-cta-quiet-overbackground-texticon-text-padding-top: var(
+    --spectrum-button-l-accent-outline-white-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-cta-quiet-overbackground-texticon-icon-size: var(
+    --spectrum-button-l-accent-outline-white-icononly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-cta-quiet-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-l-accent-outline-white-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-quiet-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-l-accent-outline-white-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-quiet-texticon-text-padding-top: var(
+    --spectrum-button-l-primary-outline-white-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-cta-quiet-texticon-icon-size: var(
+    --spectrum-button-l-primary-outline-white-icononly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-cta-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-l-primary-outline-white-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-l-primary-outline-white-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-overbackground-texticon-text-padding-top: var(
+    --spectrum-button-l-secondary-outline-white-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-cta-overbackground-texticon-icon-size: var(
+    --spectrum-button-l-secondary-outline-white-icononly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-cta-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-l-secondary-outline-white-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-l-secondary-outline-white-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-texticon-text-padding-top: var(
+    --spectrum-button-l-negative-outline-white-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-cta-texticon-icon-size: var(
+    --spectrum-button-l-negative-outline-white-icononly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-cta-texticon-touch-hit-x: var(
+    --spectrum-button-l-negative-outline-white-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-texticon-touch-hit-y: var(
+    --spectrum-button-l-negative-outline-white-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-quiet-overbackground-texticon-text-padding-top: var(
+    --spectrum-button-l-accent-outline-white-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-primary-quiet-overbackground-texticon-icon-size: var(
+    --spectrum-button-l-accent-outline-white-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-primary-quiet-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-l-accent-outline-white-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-quiet-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-l-accent-outline-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-quiet-texticon-text-padding-top: var(
+    --spectrum-button-l-primary-outline-white-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-primary-quiet-texticon-icon-size: var(
+    --spectrum-button-l-primary-outline-white-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-primary-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-l-primary-outline-white-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-l-primary-outline-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-overbackground-texticon-text-padding-top: var(
+    --spectrum-button-l-secondary-outline-white-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-primary-overbackground-texticon-icon-size: var(
+    --spectrum-button-l-secondary-outline-white-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-primary-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-l-secondary-outline-white-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-l-secondary-outline-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-texticon-text-padding-top: var(
+    --spectrum-button-l-negative-outline-white-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-primary-texticon-icon-size: var(
+    --spectrum-button-l-negative-outline-white-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-primary-texticon-touch-hit-x: var(
+    --spectrum-button-l-negative-outline-white-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-texticon-touch-hit-y: var(
+    --spectrum-button-l-negative-outline-white-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-quiet-overbackground-texticon-text-padding-top: var(
+    --spectrum-button-l-accent-outline-white-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-secondary-quiet-overbackground-texticon-icon-size: var(
+    --spectrum-button-l-accent-outline-white-textonly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-secondary-quiet-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-l-accent-outline-white-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-quiet-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-l-accent-outline-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-quiet-texticon-text-padding-top: var(
+    --spectrum-button-l-primary-outline-white-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-secondary-quiet-texticon-icon-size: var(
+    --spectrum-button-l-primary-outline-white-textonly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-secondary-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-l-primary-outline-white-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-l-primary-outline-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-overbackground-texticon-text-padding-top: var(
+    --spectrum-button-l-secondary-outline-white-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-secondary-overbackground-texticon-icon-size: var(
+    --spectrum-button-l-secondary-outline-white-textonly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-secondary-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-l-secondary-outline-white-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-l-secondary-outline-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-texticon-text-padding-top: var(
+    --spectrum-button-l-negative-outline-white-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-secondary-texticon-icon-size: var(
+    --spectrum-button-l-negative-outline-white-textonly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-secondary-texticon-touch-hit-x: var(
+    --spectrum-button-l-negative-outline-white-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-texticon-touch-hit-y: var(
+    --spectrum-button-l-negative-outline-white-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-quiet-overbackground-texticon-text-padding-top: var(
+    --spectrum-button-xl-accent-outline-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-outline-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-outline-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-outline-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-outline-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-outline-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-outline-white-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-outline-white-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-outline-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-outline-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-outline-white-texticon-padding-left: 21px;
+    --spectrum-button-xl-primary-outline-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-outline-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-outline-white-texticon-padding-left: 21px;
+    --spectrum-button-xl-secondary-outline-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-outline-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-outline-white-texticon-padding-left: 21px;
+    --spectrum-button-xl-negative-outline-white-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-outline-white-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-outline-white-texticon-padding-left: 21px;
+    --spectrum-button-xl-accent-outline-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-outline-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-outline-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-outline-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-outline-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-outline-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-outline-white-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-outline-white-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-fill-black-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-fill-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-fill-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-fill-black-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-fill-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-fill-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-fill-black-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-fill-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-fill-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-fill-black-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-fill-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-fill-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-fill-black-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-fill-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-fill-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-fill-black-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-fill-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-fill-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-fill-black-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-fill-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-fill-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-fill-black-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-fill-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-fill-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-fill-black-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-fill-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-fill-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-fill-black-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-fill-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-fill-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-fill-black-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-fill-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-fill-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-fill-black-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-fill-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-fill-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-fill-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-fill-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-fill-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-fill-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-fill-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-fill-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-fill-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-fill-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-fill-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-fill-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-fill-black-texticon-padding-left: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-button-m-primary-fill-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-fill-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-fill-black-texticon-padding-left: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-button-m-secondary-fill-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-fill-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-fill-black-texticon-padding-left: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-button-m-negative-fill-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-fill-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-fill-black-texticon-padding-left: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-button-m-accent-fill-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-fill-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-fill-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-fill-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-fill-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-fill-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-fill-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-fill-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-fill-black-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-negative-quiet-overbackground-texticon-icon-size: var(
+    --spectrum-button-l-accent-fill-black-icononly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-negative-quiet-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-l-accent-fill-black-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-quiet-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-l-accent-fill-black-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-quiet-texticon-text-padding-top: var(
+    --spectrum-button-l-primary-fill-black-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-negative-quiet-texticon-icon-size: var(
+    --spectrum-button-l-primary-fill-black-icononly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-negative-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-l-primary-fill-black-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-l-primary-fill-black-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-overbackground-texticon-text-padding-top: var(
+    --spectrum-button-l-secondary-fill-black-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-negative-overbackground-texticon-icon-size: var(
+    --spectrum-button-l-secondary-fill-black-icononly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-negative-overbackground-texticon-touch-hit-x: var(
+    --spectrum-button-l-secondary-fill-black-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-overbackground-texticon-touch-hit-y: var(
+    --spectrum-button-l-secondary-fill-black-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-texticon-text-padding-top: var(
+    --spectrum-button-l-negative-fill-black-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-negative-texticon-icon-size: var(
+    --spectrum-button-l-negative-fill-black-icononly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-negative-texticon-touch-hit-x: var(
+    --spectrum-button-l-negative-fill-black-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-texticon-touch-hit-y: var(
+    --spectrum-button-l-negative-fill-black-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-quiet-overbackground-textonly-text-padding-top: var(
+    --spectrum-button-l-accent-fill-black-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-cta-quiet-overbackground-textonly-icon-size: var(
+    --spectrum-button-l-accent-fill-black-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-cta-quiet-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-l-accent-fill-black-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-quiet-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-l-accent-fill-black-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-quiet-textonly-text-padding-top: var(
+    --spectrum-button-l-primary-fill-black-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-cta-quiet-textonly-icon-size: var(
+    --spectrum-button-l-primary-fill-black-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-cta-quiet-textonly-touch-hit-x: var(
+    --spectrum-button-l-primary-fill-black-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-quiet-textonly-touch-hit-y: var(
+    --spectrum-button-l-primary-fill-black-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-overbackground-textonly-text-padding-top: var(
+    --spectrum-button-l-secondary-fill-black-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-cta-overbackground-textonly-icon-size: var(
+    --spectrum-button-l-secondary-fill-black-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-cta-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-l-secondary-fill-black-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-l-secondary-fill-black-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-textonly-text-padding-top: var(
+    --spectrum-button-l-negative-fill-black-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-cta-textonly-icon-size: var(
+    --spectrum-button-l-negative-fill-black-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-cta-textonly-touch-hit-x: var(
+    --spectrum-button-l-negative-fill-black-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-cta-textonly-touch-hit-y: var(
+    --spectrum-button-l-negative-fill-black-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-quiet-overbackground-textonly-text-padding-top: var(
+    --spectrum-button-l-accent-fill-black-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-primary-quiet-overbackground-textonly-icon-size: var(
+    --spectrum-button-l-accent-fill-black-textonly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-primary-quiet-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-l-accent-fill-black-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-quiet-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-l-accent-fill-black-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-quiet-textonly-text-padding-top: var(
+    --spectrum-button-l-primary-fill-black-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-primary-quiet-textonly-icon-size: var(
+    --spectrum-button-l-primary-fill-black-textonly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-primary-quiet-textonly-touch-hit-x: var(
+    --spectrum-button-l-primary-fill-black-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-quiet-textonly-touch-hit-y: var(
+    --spectrum-button-l-primary-fill-black-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-overbackground-textonly-text-padding-top: var(
+    --spectrum-button-l-secondary-fill-black-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-primary-overbackground-textonly-icon-size: var(
+    --spectrum-button-l-secondary-fill-black-textonly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-primary-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-l-secondary-fill-black-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-l-secondary-fill-black-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-textonly-text-padding-top: var(
+    --spectrum-button-l-negative-fill-black-textonly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-primary-textonly-icon-size: var(
+    --spectrum-button-l-negative-fill-black-textonly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-primary-textonly-touch-hit-x: var(
+    --spectrum-button-l-negative-fill-black-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-primary-textonly-touch-hit-y: var(
+    --spectrum-button-l-negative-fill-black-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-quiet-overbackground-textonly-text-padding-top: var(
+    --spectrum-button-xl-accent-fill-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-black-texticon-padding-left: 21px;
+    --spectrum-button-xl-primary-fill-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-black-texticon-padding-left: 21px;
+    --spectrum-button-xl-secondary-fill-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-black-texticon-padding-left: 21px;
+    --spectrum-button-xl-negative-fill-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-black-texticon-padding-left: 21px;
+    --spectrum-button-xl-accent-fill-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-accent-fill-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-primary-fill-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-secondary-fill-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-xl-negative-fill-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-black-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-outline-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-black-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-outline-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-black-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-outline-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-black-icononly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-outline-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-black-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-outline-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-black-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-outline-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-black-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-outline-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-black-texticon-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-outline-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-black-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-accent-outline-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-accent-outline-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-black-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-primary-outline-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-primary-outline-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-black-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-secondary-outline-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-secondary-outline-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-black-textonly-text-padding-bottom: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-button-s-negative-outline-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-s-negative-outline-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-outline-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-outline-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-outline-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-outline-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-outline-black-icononly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-outline-black-icononly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-black-texticon-padding-left: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-button-m-primary-outline-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-outline-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-outline-black-texticon-padding-left: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-button-m-secondary-outline-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-outline-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-outline-black-texticon-padding-left: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-button-m-negative-outline-black-texticon-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-outline-black-texticon-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-outline-black-texticon-padding-left: var(
+        --spectrum-global-dimension-size-175
+    );
+    --spectrum-button-m-accent-outline-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-accent-outline-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-outline-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-primary-outline-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-outline-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-secondary-outline-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-outline-black-textonly-touch-hit-x: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-m-negative-outline-black-textonly-touch-hit-y: var(
+        --spectrum-global-dimension-static-size-100
+    );
+    --spectrum-button-l-accent-outline-black-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-secondary-quiet-overbackground-textonly-icon-size: var(
+    --spectrum-button-l-accent-outline-black-icononly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-secondary-quiet-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-l-accent-outline-black-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-quiet-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-l-accent-outline-black-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-quiet-textonly-text-padding-top: var(
+    --spectrum-button-l-primary-outline-black-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-secondary-quiet-textonly-icon-size: var(
+    --spectrum-button-l-primary-outline-black-icononly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-secondary-quiet-textonly-touch-hit-x: var(
+    --spectrum-button-l-primary-outline-black-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-quiet-textonly-touch-hit-y: var(
+    --spectrum-button-l-primary-outline-black-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-overbackground-textonly-text-padding-top: var(
+    --spectrum-button-l-secondary-outline-black-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-secondary-overbackground-textonly-icon-size: var(
+    --spectrum-button-l-secondary-outline-black-icononly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-secondary-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-l-secondary-outline-black-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-l-secondary-outline-black-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-textonly-text-padding-top: var(
+    --spectrum-button-l-negative-outline-black-icononly-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-secondary-textonly-icon-size: var(
+    --spectrum-button-l-negative-outline-black-icononly-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-secondary-textonly-touch-hit-x: var(
+    --spectrum-button-l-negative-outline-black-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-secondary-textonly-touch-hit-y: var(
+    --spectrum-button-l-negative-outline-black-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-quiet-overbackground-textonly-text-padding-top: var(
+    --spectrum-button-l-accent-outline-black-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-negative-quiet-overbackground-textonly-icon-size: var(
+    --spectrum-button-l-accent-outline-black-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-negative-quiet-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-l-accent-outline-black-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-quiet-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-l-accent-outline-black-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-quiet-textonly-text-padding-top: var(
+    --spectrum-button-l-primary-outline-black-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-negative-quiet-textonly-icon-size: var(
+    --spectrum-button-l-primary-outline-black-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-negative-quiet-textonly-touch-hit-x: var(
+    --spectrum-button-l-primary-outline-black-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-quiet-textonly-touch-hit-y: var(
+    --spectrum-button-l-primary-outline-black-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-overbackground-textonly-text-padding-top: var(
+    --spectrum-button-l-secondary-outline-black-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-negative-overbackground-textonly-icon-size: var(
+    --spectrum-button-l-secondary-outline-black-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-negative-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-l-secondary-outline-black-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-l-secondary-outline-black-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-textonly-text-padding-top: var(
+    --spectrum-button-l-negative-outline-black-texticon-text-padding-top: var(
         --spectrum-global-dimension-size-115
     );
-    --spectrum-button-l-negative-textonly-icon-size: var(
+    --spectrum-button-l-negative-outline-black-texticon-icon-size: var(
         --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-l-negative-textonly-touch-hit-x: var(
+    --spectrum-button-l-negative-outline-black-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-l-negative-textonly-touch-hit-y: var(
+    --spectrum-button-l-negative-outline-black-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-cta-quiet-overbackground-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-cta-quiet-overbackground-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-cta-quiet-overbackground-texticon-padding-left: 21px;
-    --spectrum-button-xl-cta-quiet-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-cta-quiet-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-cta-quiet-texticon-padding-left: 21px;
-    --spectrum-button-xl-cta-overbackground-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-cta-overbackground-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-cta-overbackground-texticon-padding-left: 21px;
-    --spectrum-button-xl-cta-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-cta-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-cta-texticon-padding-left: 21px;
-    --spectrum-button-xl-primary-quiet-overbackground-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-primary-quiet-overbackground-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-primary-quiet-overbackground-texticon-padding-left: 21px;
-    --spectrum-button-xl-primary-quiet-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-primary-quiet-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-primary-quiet-texticon-padding-left: 21px;
-    --spectrum-button-xl-primary-overbackground-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-primary-overbackground-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-primary-overbackground-texticon-padding-left: 21px;
-    --spectrum-button-xl-primary-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-primary-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-primary-texticon-padding-left: 21px;
-    --spectrum-button-xl-secondary-quiet-overbackground-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-secondary-quiet-overbackground-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-secondary-quiet-overbackground-texticon-padding-left: 21px;
-    --spectrum-button-xl-secondary-quiet-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-secondary-quiet-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-secondary-quiet-texticon-padding-left: 21px;
-    --spectrum-button-xl-secondary-overbackground-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-secondary-overbackground-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-secondary-overbackground-texticon-padding-left: 21px;
-    --spectrum-button-xl-secondary-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-secondary-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
-    );
-    --spectrum-button-xl-secondary-texticon-padding-left: 21px;
-    --spectrum-button-xl-negative-quiet-overbackground-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
+    --spectrum-button-l-accent-outline-black-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
     );
-    --spectrum-button-xl-negative-quiet-overbackground-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
+    --spectrum-button-l-accent-outline-black-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-xl-negative-quiet-overbackground-texticon-padding-left: 21px;
-    --spectrum-button-xl-negative-quiet-texticon-touch-hit-x: var(
+    --spectrum-button-l-accent-outline-black-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-negative-quiet-texticon-touch-hit-y: var(
+    --spectrum-button-l-accent-outline-black-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-negative-quiet-texticon-padding-left: 21px;
-    --spectrum-button-xl-negative-overbackground-texticon-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
+    --spectrum-button-l-primary-outline-black-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
     );
-    --spectrum-button-xl-negative-overbackground-texticon-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
+    --spectrum-button-l-primary-outline-black-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-xl-negative-overbackground-texticon-padding-left: 21px;
-    --spectrum-button-xl-negative-texticon-touch-hit-x: var(
+    --spectrum-button-l-primary-outline-black-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-negative-texticon-touch-hit-y: var(
+    --spectrum-button-l-primary-outline-black-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-negative-texticon-padding-left: 21px;
-    --spectrum-button-xl-cta-quiet-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
+    --spectrum-button-l-secondary-outline-black-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
     );
-    --spectrum-button-xl-cta-quiet-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
+    --spectrum-button-l-secondary-outline-black-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-xl-cta-quiet-textonly-touch-hit-x: var(
+    --spectrum-button-l-secondary-outline-black-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-cta-quiet-textonly-touch-hit-y: var(
+    --spectrum-button-l-secondary-outline-black-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-cta-overbackground-textonly-touch-hit-x: var(
-        --spectrum-global-dimension-static-size-100
+    --spectrum-button-l-negative-outline-black-textonly-text-padding-top: var(
+        --spectrum-global-dimension-size-115
     );
-    --spectrum-button-xl-cta-overbackground-textonly-touch-hit-y: var(
-        --spectrum-global-dimension-static-size-100
+    --spectrum-button-l-negative-outline-black-textonly-icon-size: var(
+        --spectrum-global-dimension-static-size-250
     );
-    --spectrum-button-xl-cta-textonly-touch-hit-x: var(
+    --spectrum-button-l-negative-outline-black-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-cta-textonly-touch-hit-y: var(
+    --spectrum-button-l-negative-outline-black-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-primary-quiet-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-xl-accent-outline-black-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-primary-quiet-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-xl-accent-outline-black-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-primary-quiet-textonly-touch-hit-x: var(
+    --spectrum-button-xl-primary-outline-black-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-primary-quiet-textonly-touch-hit-y: var(
+    --spectrum-button-xl-primary-outline-black-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-primary-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-xl-secondary-outline-black-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-primary-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-xl-secondary-outline-black-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-primary-textonly-touch-hit-x: var(
+    --spectrum-button-xl-negative-outline-black-icononly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-primary-textonly-touch-hit-y: var(
+    --spectrum-button-xl-negative-outline-black-icononly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-secondary-quiet-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-xl-accent-outline-black-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-secondary-quiet-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-xl-accent-outline-black-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-secondary-quiet-textonly-touch-hit-x: var(
+    --spectrum-button-xl-accent-outline-black-texticon-padding-left: 21px;
+    --spectrum-button-xl-primary-outline-black-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-secondary-quiet-textonly-touch-hit-y: var(
+    --spectrum-button-xl-primary-outline-black-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-secondary-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-xl-primary-outline-black-texticon-padding-left: 21px;
+    --spectrum-button-xl-secondary-outline-black-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-secondary-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-xl-secondary-outline-black-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-secondary-textonly-touch-hit-x: var(
+    --spectrum-button-xl-secondary-outline-black-texticon-padding-left: 21px;
+    --spectrum-button-xl-negative-outline-black-texticon-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-secondary-textonly-touch-hit-y: var(
+    --spectrum-button-xl-negative-outline-black-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-negative-quiet-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-xl-negative-outline-black-texticon-padding-left: 21px;
+    --spectrum-button-xl-accent-outline-black-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-negative-quiet-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-xl-accent-outline-black-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-negative-quiet-textonly-touch-hit-x: var(
+    --spectrum-button-xl-primary-outline-black-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-negative-quiet-textonly-touch-hit-y: var(
+    --spectrum-button-xl-primary-outline-black-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-negative-overbackground-textonly-touch-hit-x: var(
+    --spectrum-button-xl-secondary-outline-black-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-negative-overbackground-textonly-touch-hit-y: var(
+    --spectrum-button-xl-secondary-outline-black-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-negative-textonly-touch-hit-x: var(
+    --spectrum-button-xl-negative-outline-black-textonly-touch-hit-x: var(
         --spectrum-global-dimension-static-size-100
     );
-    --spectrum-button-xl-negative-textonly-touch-hit-y: var(
+    --spectrum-button-xl-negative-outline-black-textonly-touch-hit-y: var(
         --spectrum-global-dimension-static-size-100
     );
     --spectrum-checkbox-s-emphasized-text-padding-bottom: var(

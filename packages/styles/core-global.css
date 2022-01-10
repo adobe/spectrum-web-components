@@ -127,6 +127,57 @@ governing permissions and limitations under the License.
     --spectrum-global-color-static-seafoam-600: #16878c;
     --spectrum-global-color-static-seafoam-700: #0f797d;
     --spectrum-global-color-static-seafoam-800: #096c6f;
+    --spectrum-global-color-static-transparent-white-200: hsla(
+        0,
+        0%,
+        100%,
+        0.1
+    );
+    --spectrum-global-color-static-transparent-white-300: hsla(
+        0,
+        0%,
+        100%,
+        0.25
+    );
+    --spectrum-global-color-static-transparent-white-400: hsla(
+        0,
+        0%,
+        100%,
+        0.4
+    );
+    --spectrum-global-color-static-transparent-white-500: hsla(
+        0,
+        0%,
+        100%,
+        0.55
+    );
+    --spectrum-global-color-static-transparent-white-600: hsla(
+        0,
+        0%,
+        100%,
+        0.7
+    );
+    --spectrum-global-color-static-transparent-white-700: hsla(
+        0,
+        0%,
+        100%,
+        0.8
+    );
+    --spectrum-global-color-static-transparent-white-800: hsla(
+        0,
+        0%,
+        100%,
+        0.9
+    );
+    --spectrum-global-color-static-transparent-white-900: #fff;
+    --spectrum-global-color-static-transparent-black-200: rgba(0, 0, 0, 0.1);
+    --spectrum-global-color-static-transparent-black-300: rgba(0, 0, 0, 0.25);
+    --spectrum-global-color-static-transparent-black-400: rgba(0, 0, 0, 0.4);
+    --spectrum-global-color-static-transparent-black-500: rgba(0, 0, 0, 0.55);
+    --spectrum-global-color-static-transparent-black-600: rgba(0, 0, 0, 0.7);
+    --spectrum-global-color-static-transparent-black-700: rgba(0, 0, 0, 0.8);
+    --spectrum-global-color-static-transparent-black-800: rgba(0, 0, 0, 0.9);
+    --spectrum-global-color-static-transparent-black-900: #000;
     --spectrum-global-color-sequential-cerulean: #e9fff1, #c8f1e4, #a5e3d7,
         #82d5ca, #68c5c1, #54b4ba, #3fa2b2, #2991ac, #2280a2, #1f6d98, #1d5c8d,
         #1a4b83, #1a3979, #1a266f, #191264, #180057;
@@ -1520,6 +1571,48 @@ governing permissions and limitations under the License.
 :root {
     /* spectrum-colorAliases.css */
     --spectrum-alias-colorhandle-outer-border-color: rgba(0, 0, 0, 0.42);
+    --spectrum-alias-transparent-blue-background-color-hover: rgba(
+        13,
+        102,
+        208,
+        0.15
+    );
+    --spectrum-alias-transparent-blue-background-color-down: rgba(
+        9,
+        90,
+        186,
+        0.15
+    );
+    --spectrum-alias-transparent-blue-background-color-key-focus: var(
+        --spectrum-alias-transparent-blue-background-color-hover
+    );
+    --spectrum-alias-transparent-blue-background-color-mouse-focus: var(
+        --spectrum-alias-transparent-blue-background-color-hover
+    );
+    --spectrum-alias-transparent-blue-background-color: var(
+        --spectrum-alias-component-text-color-default
+    );
+    --spectrum-alias-transparent-red-background-color-hover: rgba(
+        201,
+        37,
+        45,
+        0.15
+    );
+    --spectrum-alias-transparent-red-background-color-down: rgba(
+        187,
+        18,
+        26,
+        0.15
+    );
+    --spectrum-alias-transparent-red-background-color-key-focus: var(
+        --spectrum-alias-transparent-red-background-color-hover
+    );
+    --spectrum-alias-transparent-red-background-color-mouse-focus: var(
+        --spectrum-alias-transparent-red-background-color-hover
+    );
+    --spectrum-alias-transparent-red-background-color: var(
+        --spectrum-alias-component-text-color-default
+    );
     --spectrum-alias-component-text-color-disabled: var(
         --spectrum-global-color-gray-500
     );
@@ -2364,6 +2457,36 @@ governing permissions and limitations under the License.
         0.2
     );
     --spectrum-alias-heading-text-color: var(--spectrum-global-color-gray-900);
+    --spectrum-alias-link-primary-text-color-default: var(
+        --spectrum-global-color-blue-600
+    );
+    --spectrum-alias-link-primary-text-color-hover: var(
+        --spectrum-global-color-blue-600
+    );
+    --spectrum-alias-link-primary-text-color-down: var(
+        --spectrum-global-color-blue-700
+    );
+    --spectrum-alias-link-primary-text-color-key-focus: var(
+        --spectrum-alias-text-color-key-focus
+    );
+    --spectrum-alias-link-primary-text-color: var(
+        --spectrum-alias-link-primary-text-color-default
+    );
+    --spectrum-alias-link-secondary-text-color-default: var(
+        --spectrum-alias-link-primary-text-color-default
+    );
+    --spectrum-alias-link-secondary-text-color-hover: var(
+        --spectrum-alias-link-primary-text-color-hover
+    );
+    --spectrum-alias-link-secondary-text-color-down: var(
+        --spectrum-alias-link-primary-text-color-down
+    );
+    --spectrum-alias-link-secondary-text-color-key-focus: var(
+        --spectrum-alias-link-primary-text-color-key-focus
+    );
+    --spectrum-alias-link-secondary-text-color: var(
+        --spectrum-alias-link-secondary-text-color-default
+    );
     --spectrum-alias-border-color: var(--spectrum-global-color-gray-400);
     --spectrum-alias-border-color-hover: var(--spectrum-global-color-gray-500);
     --spectrum-alias-border-color-down: var(--spectrum-global-color-gray-500);

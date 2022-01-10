@@ -670,7 +670,7 @@ describe('Overlay Trigger - sync', () => {
         it('manages multiple layers of `type="modal"', async () => {
             const el = await fixture(html`
                 <overlay-trigger type="modal" placement="none">
-                    <sp-button slot="trigger" variant="cta">
+                    <sp-button slot="trigger" variant="accent">
                         Toggle Dialog
                     </sp-button>
                     <sp-popover dialog slot="click-content">

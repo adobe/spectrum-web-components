@@ -30,6 +30,11 @@ const config = {
                 },
                 {
                     type: 'boolean',
+                    selector: ':disabled',
+                    name: 'disabled',
+                },
+                {
+                    type: 'boolean',
                     name: 'selected',
                     selector: '.is-selected',
                 },
@@ -47,6 +52,20 @@ const config = {
                     type: 'boolean',
                     name: 'emphasized',
                     selector: '.spectrum-ActionButton--emphasized',
+                },
+                {
+                    type: 'enum',
+                    name: 'variant',
+                    values: [
+                        {
+                            name: 'white',
+                            selector: '.spectrum-ActionButton--staticWhite',
+                        },
+                        {
+                            name: 'black',
+                            selector: '.spectrum-ActionButton--staticBlack',
+                        },
+                    ],
                 },
                 {
                     type: 'enum',
@@ -71,13 +90,17 @@ const config = {
                     ],
                 },
             ],
-            ids: [
-                '.spectrum-ActionButton-label',
+            classes: [
                 {
                     name: 'hold-affordance',
                     selector: '.spectrum-ActionButton-hold',
                 },
+                {
+                    name: 'hold-affordance',
+                    selector: '.spectrum-ActionButton-holdIcon',
+                },
             ],
+            ids: ['.spectrum-ActionButton-label'],
             slots: [
                 {
                     name: 'icon',
@@ -100,6 +123,12 @@ const config = {
                     replacement:
                         ":host([dir=rtl]) slot:not([icon-only])::slotted([slot='icon']), :host([dir=rtl]) slot:not([icon-only]) sp-icon",
                     selector: /\:host\(\[dir=rtl\]\) \.spectrum-Icon$/,
+                },
+                {
+                    replacement:
+                        ':host([size][variant="black"][disabled][selected])',
+                    selector:
+                        '.spectrum-ActionButton.spectrum-ActionButton--staticBlack:disabled.is-selected',
                 },
             ],
         },
