@@ -3972,9 +3972,9 @@
   integrity sha512-TsxbOaKCIUqzu2Mj2EYt/oSWRh27ft8yw53/S8ngbSM5Qs6uydxQjzKce6XbxWr28+F6dMbkVnCuGFKNOmEDrQ==
 
 "@spectrum-css/colorslider@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorslider/-/colorslider-1.0.9.tgz#1f3486c4ace22ce42650d69b978bcdbaa48616ff"
-  integrity sha512-yo7e7tCba2T/M3b4HURRq21EVV6RnYM+AwGVPkmedtQGZFnQc0nzjIG++uY/pU2FHidYqgsGku49OBHl9uJyaw==
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorslider/-/colorslider-1.0.11.tgz#3604cd2ae18dc710d2fd0f87a8618c85d232c080"
+  integrity sha512-pdYmvtHpRD+8WkxiEidshKGXRManqGDWLu863x+7p2mCnlfXfIaFGDSuNykQIjBIbePDXpp6kPogyVVlzMs2UQ==
 
 "@spectrum-css/colorwheel@^1.0.9":
   version "1.0.9"
