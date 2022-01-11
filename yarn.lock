@@ -3951,10 +3951,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-3.0.10.tgz#b94547f4c9ab63e932cf840ad0b5a44cd4e3ece9"
   integrity sha512-IBFh36xqYqaTLqejtMcgLqdIu5zrGWT/i+JKBGN0enp2bA0/KeBdXCF2wKulR6VOGWbWky36Cxls2EKCA4mmpw==
 
-"@spectrum-css/coachmark@^3.0.10":
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-3.0.10.tgz#6f69a8dd140b0ddb18580d381e9c8a5abb6caf42"
-  integrity sha512-HrVslPui2c/Z86kzmY+HU65zGjfDKZcRjINam1erGKPiBXSrvDgIikRxmjbDgVvfIdgEaNutIxWkBtNjPqMSKQ==
+"@spectrum-css/coachmark@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-5.0.0.tgz#7628366c6d90cdd39f5a4f86b20863889e413b9a"
+  integrity sha512-Ord1RC6iwmCN6pJzt8J49Oi9XTMdTUg1qiPmi58l2lzD2ylrJbAZwCJb473i07ldLS/VJ16DK+K5CGfHU1rjwQ==
 
 "@spectrum-css/colorarea@^1.0.9":
   version "1.0.9"
