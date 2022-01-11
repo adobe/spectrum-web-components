@@ -3992,11 +3992,11 @@
   integrity sha512-50rbFa+9eUKT+3uYBX7CkmI7SbQ0Z3CAFwjyjai+itYZ8kf/FcHVFwcLjgrry9scUnKhexMs94kkr0gfQpPe8Q==
 
 "@spectrum-css/divider@^1.0.10":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-1.0.11.tgz#e0e22083e574cf706c92b5346967f9d4927cc2fa"
-  integrity sha512-8Koy4ayOv7gndMzFfyYwRcvcCwWXuj1kHOJ6IszEDk97tjTZfJiEB/q6FREgczP4UmRcpMEGkAXtdkv1xL30bQ==
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-1.0.13.tgz#d31b368e85b53114427f765ca3bffefbd4643cd6"
+  integrity sha512-b9BKy1got3Trx2HOT1D3U+H8D1vtSeRcZBbSJiluyJERpcenPr1sWiGVUZMG6Mqu2TCHTWf7lWibqnCmOWKQIw==
   dependencies:
-    "@spectrum-css/vars" "^4.3.1"
+    "@spectrum-css/vars" "^6.0.0"
 
 "@spectrum-css/dropzone@^3.0.10":
   version "3.0.11"
@@ -4172,6 +4172,11 @@
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-4.3.1.tgz#d333fa41909f691c8750b5c15ad9ba029df2248e"
   integrity sha512-rX6Iasu9BsFMVgEN0vGRPm9dmSxva+IK/uqQAa9HM0lliwqUiFrJxrFXHHpiAgNuux/U4srEJwbSpGzfF+CegQ==
+
+"@spectrum-css/vars@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-6.0.0.tgz#a159995a3e04cb4cc5ed1475f3125c305e7956d4"
+  integrity sha512-cybE4jDpw0L3GdyGDgSVQl6O7GEL9xTs5FRpJu20B1l5G9rERq3yKW8iZVyEYRtyr3iChe1idDPB5TG8bXNxqQ==
 
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
