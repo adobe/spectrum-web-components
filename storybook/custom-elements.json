@@ -207,6 +207,21 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/button-group/sp-button-group.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-button-group",
+          "declaration": {
+            "name": "ButtonGroup",
+            "module": "/packages/button-group/src/ButtonGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/button/sp-button.ts",
       "declarations": [],
       "exports": [
@@ -237,15 +252,15 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/button-group/sp-button-group.ts",
+      "path": "packages/card/sp-card.ts",
       "declarations": [],
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "sp-button-group",
+          "name": "sp-card",
           "declaration": {
-            "name": "ButtonGroup",
-            "module": "/packages/button-group/src/ButtonGroup.js"
+            "name": "Card",
+            "module": "/packages/card/src/Card.js"
           }
         }
       ]
@@ -276,21 +291,6 @@
           "declaration": {
             "name": "Coachmark",
             "module": "/packages/coachmark/src/Coachmark.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/card/sp-card.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-card",
-          "declaration": {
-            "name": "Card",
-            "module": "/packages/card/src/Card.js"
           }
         }
       ]
@@ -432,21 +432,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/field-label/sp-field-label.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-field-label",
-          "declaration": {
-            "name": "FieldLabel",
-            "module": "/packages/field-label/src/FieldLabel.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/field-group/sp-field-group.ts",
       "declarations": [],
       "exports": [
@@ -456,6 +441,21 @@
           "declaration": {
             "name": "FieldGroup",
             "module": "/packages/field-group/src/FieldGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/field-label/sp-field-label.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-field-label",
+          "declaration": {
+            "name": "FieldLabel",
+            "module": "/packages/field-label/src/FieldLabel.js"
           }
         }
       ]
@@ -6851,6 +6851,196 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/button-group/src/ButtonGroup.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ButtonGroup",
+          "slots": [
+            {
+              "description": "the sp-button elements that make up the group",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-button-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ButtonGroup",
+          "declaration": {
+            "name": "ButtonGroup",
+            "module": "packages/button-group/src/ButtonGroup.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/button-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-flex-grow:1}:host([dir=ltr][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:left}:host([dir=rtl][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:right}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/button-group/src/button-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ButtonGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/spectrum-button-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/button-group/src/spectrum-button-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/button/src/Button.ts",
       "declarations": [
         {
@@ -10940,29 +11130,560 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/button-group/src/ButtonGroup.ts",
+      "path": "packages/card/src/Card.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "ButtonGroup",
+          "name": "Card",
           "slots": [
             {
-              "description": "the sp-button elements that make up the group",
-              "name": ""
+              "description": "This is the preview image for Gallery Cards",
+              "name": "preview"
+            },
+            {
+              "description": "This is the cover photo for Default and Quiet Cards",
+              "name": "cover-photo"
+            },
+            {
+              "description": "HTML content to be listed as the heading",
+              "name": "heading"
+            },
+            {
+              "description": "HTML content to be listed as the subheading",
+              "name": "subheading"
+            },
+            {
+              "description": "A description of the card",
+              "name": "description"
+            },
+            {
+              "description": "an `sp-action-menu` element outlining actions to take on the represened object",
+              "name": "actions"
+            },
+            {
+              "description": "Footer text",
+              "name": "footer"
             }
           ],
           "members": [
             {
               "kind": "field",
-              "name": "vertical",
+              "name": "asset",
+              "type": {
+                "text": "'file' | 'folder' | undefined"
+              },
+              "privacy": "public",
+              "attribute": "asset"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "'standard' | 'gallery' | 'quiet'"
+              },
+              "privacy": "public",
+              "default": "'standard'",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "selected",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "false",
-              "attribute": "vertical",
+              "attribute": "selected",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "heading"
+            },
+            {
+              "kind": "field",
+              "name": "horizontal",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "horizontal",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "likeAnchor",
+              "type": {
+                "text": "HTMLAnchorElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "focused",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "focused",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "toggles",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "toggles",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "subheading",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "subheading"
+            },
+            {
+              "kind": "field",
+              "name": "hasCoverPhoto",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "hasPreview",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "click",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "handleFocusin",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "handleFocusout",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleKeydown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleSelectedChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "{\n        target: { checked },\n    }",
+                  "type": {
+                    "text": "Event & { target: Checkbox }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "toggleSelected",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "announceChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "stopPropagationOnHref",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handlePointerdown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "renderHeading",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "renderPreviewImage",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "renderCoverImage",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "images",
+              "type": {
+                "text": "TemplateResult[]"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "renderImage",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "TemplateResult[]"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "renderSubtitleAndDescription",
+              "type": {
+                "text": "TemplateResult"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "download",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "attribute": "download",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "attribute": "label",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "attribute": "href",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "type": {
+                "text": "'_blank' | '_parent' | '_self' | '_top' | undefined"
+              },
+              "privacy": "public",
+              "attribute": "target",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "rel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "attribute": "rel",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderAnchor",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "{\n            id,\n            className,\n            ariaHidden,\n            labelledby,\n            tabindex,\n            // prettier-ignore\n            anchorContent = html`<slot></slot>`,\n        }",
+                  "type": {
+                    "text": "RenderAnchorOptions"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "privacy": "public",
+              "attribute": "size",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_size",
+              "type": {
+                "text": "ElementSize | null"
+              },
+              "privacy": "private",
+              "default": "defaultSize",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changes",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "[slotElementObserver]",
+              "type": {
+                "text": "MutationObserver"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ObserveSlotPresence",
+                "module": "packages/shared/src/observe-slot-presence.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "slotContentIsPresent",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ObserveSlotPresence",
+                "module": "packages/shared/src/observe-slot-presence.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "[slotContentIsPresent]",
+              "type": {
+                "text": "Map<string, boolean>"
+              },
+              "privacy": "private",
+              "default": "new Map()",
+              "inheritedFrom": {
+                "name": "ObserveSlotPresence",
+                "module": "packages/shared/src/observe-slot-presence.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getSlotContentPresence",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "selector",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ObserveSlotPresence",
+                "module": "packages/shared/src/observe-slot-presence.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "managePresenceObservedSlot",
+              "privacy": "public",
+              "inheritedFrom": {
+                "name": "ObserveSlotPresence",
+                "module": "packages/shared/src/observe-slot-presence.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "[startObserving]",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "ObserveSlotPresence",
+                "module": "packages/shared/src/observe-slot-presence.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "[$endPolyfillCoordination]",
+              "type": {
+                "text": "EndPolyfillCoordinationCallback | null"
+              },
+              "privacy": "private",
+              "default": "null",
+              "inheritedFrom": {
+                "name": "FocusVisiblePolyfillMixin",
+                "module": "packages/shared/src/focus-visible.ts"
+              }
             },
             {
               "kind": "field",
@@ -11030,14 +11751,150 @@
               }
             }
           ],
+          "events": [
+            {
+              "name": "click",
+              "type": {
+                "text": "Event"
+              }
+            },
+            {
+              "name": "change",
+              "type": {
+                "text": "Event"
+              },
+              "description": "Announces a change in the `selected` property of a card"
+            }
+          ],
           "attributes": [
             {
-              "name": "vertical",
+              "name": "asset",
+              "type": {
+                "text": "'file' | 'folder' | undefined"
+              },
+              "fieldName": "asset"
+            },
+            {
+              "name": "variant",
+              "type": {
+                "text": "'standard' | 'gallery' | 'quiet'"
+              },
+              "default": "'standard'",
+              "fieldName": "variant"
+            },
+            {
+              "name": "selected",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "fieldName": "vertical"
+              "fieldName": "selected"
+            },
+            {
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "heading"
+            },
+            {
+              "name": "horizontal",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "horizontal"
+            },
+            {
+              "name": "focused",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "focused"
+            },
+            {
+              "name": "toggles",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "toggles"
+            },
+            {
+              "name": "subheading",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "subheading"
+            },
+            {
+              "name": "download",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "download",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "label",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "href",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "target",
+              "type": {
+                "text": "'_blank' | '_parent' | '_self' | '_top' | undefined"
+              },
+              "fieldName": "target",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "rel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "rel",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "fieldName": "size",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
             },
             {
               "name": "dir",
@@ -11052,33 +11909,51 @@
               }
             }
           ],
+          "mixins": [
+            {
+              "name": "LikeAnchor",
+              "package": "@spectrum-web-components/shared/src/like-anchor.js"
+            },
+            {
+              "name": "SizedMixin",
+              "package": "@spectrum-web-components/base"
+            },
+            {
+              "name": "ObserveSlotPresence",
+              "package": "@spectrum-web-components/shared/src/observe-slot-presence.js"
+            },
+            {
+              "name": "FocusVisiblePolyfillMixin",
+              "package": "@spectrum-web-components/shared/src/focus-visible.js"
+            }
+          ],
           "superclass": {
             "name": "SpectrumElement",
             "package": "@spectrum-web-components/base"
           },
-          "tagName": "sp-button-group",
+          "tagName": "sp-card",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ButtonGroup",
+          "name": "Card",
           "declaration": {
-            "name": "ButtonGroup",
-            "module": "packages/button-group/src/ButtonGroup.ts"
+            "name": "Card",
+            "module": "packages/card/src/Card.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "packages/button-group/src/button-group.css.ts",
+      "path": "packages/card/src/card.css.ts",
       "declarations": [
         {
           "kind": "variable",
           "name": "styles",
-          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-flex-grow:1}:host([dir=ltr][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:left}:host([dir=rtl][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:right}\n`"
+          "default": "css`\n:host([size=s]){--spectrum-card-quiet-body-header-margin-top:var(\n--spectrum-card-s-quiet-body-header-margin-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-quiet-body-header-height:var(\n--spectrum-card-s-quiet-body-header-height,var(--spectrum-global-dimension-size-150)\n);--spectrum-card-quiet-preview-padding:var(\n--spectrum-card-s-quiet-preview-padding,var(--spectrum-global-dimension-size-150)\n);--spectrum-card-quiet-min-width:var(\n--spectrum-card-s-quiet-min-width,var(--spectrum-global-dimension-size-1200)\n);--spectrum-card-quiet-min-height:var(\n--spectrum-card-s-quiet-min-height,var(--spectrum-global-dimension-size-900)\n);--spectrum-card-quiet-border-radius:var(\n--spectrum-card-s-quiet-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-quiet-border-size:var(\n--spectrum-card-s-quiet-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-body-header-height:var(\n--spectrum-card-s-body-header-height,var(--spectrum-global-dimension-size-150)\n);--spectrum-card-body-content-min-height:var(\n--spectrum-card-s-body-content-min-height,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-body-content-margin-top:var(\n--spectrum-card-s-body-content-margin-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-card-body-padding-top:var(\n--spectrum-card-s-body-padding-top,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-bottom:var(\n--spectrum-card-s-body-padding-bottom,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-left:var(\n--spectrum-card-s-body-padding-left,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-body-padding-right:var(\n--spectrum-card-s-body-padding-right,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-coverphoto-height:var(\n--spectrum-card-s-coverphoto-height,var(--spectrum-global-dimension-size-1700)\n);--spectrum-card-coverphoto-border-bottom-size:var(\n--spectrum-card-s-coverphoto-border-bottom-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-checkbox-margin:var(\n--spectrum-card-s-checkbox-margin,var(--spectrum-global-dimension-size-125)\n);--spectrum-card-title-padding-right:var(\n--spectrum-card-s-title-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-subtitle-text-size:var(\n--spectrum-card-s-subtitle-text-size,var(--spectrum-global-dimension-font-size-50)\n);--spectrum-card-subtitle-padding-right:var(\n--spectrum-card-s-subtitle-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-actions-margin:var(\n--spectrum-card-s-actions-margin,var(--spectrum-global-dimension-size-125)\n);--spectrum-card-footer-padding-top:var(\n--spectrum-card-s-footer-padding-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-footer-border-top-size:var(\n--spectrum-card-s-footer-border-top-size,var(--spectrum-global-dimension-size-10)\n);--spectrum-card-min-width:var(\n--spectrum-card-s-min-width,var(--spectrum-global-dimension-size-1250)\n);--spectrum-card-border-radius:var(\n--spectrum-card-s-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-border-size:var(\n--spectrum-card-s-border-size,var(--spectrum-alias-border-size-thin)\n)}:host([size=m]){--spectrum-card-quiet-body-header-margin-top:var(\n--spectrum-card-m-quiet-body-header-margin-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-quiet-body-header-height:var(\n--spectrum-card-m-quiet-body-header-height,var(--spectrum-global-dimension-size-225)\n);--spectrum-card-quiet-preview-padding:var(\n--spectrum-card-m-quiet-preview-padding,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-quiet-min-width:var(\n--spectrum-card-m-quiet-min-width,var(--spectrum-global-dimension-size-2500)\n);--spectrum-card-quiet-min-height:var(\n--spectrum-card-m-quiet-min-height,var(--spectrum-global-dimension-size-1700)\n);--spectrum-card-quiet-border-radius:var(\n--spectrum-card-m-quiet-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-quiet-border-size:var(\n--spectrum-card-m-quiet-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-body-header-height:var(\n--spectrum-card-m-body-header-height,var(--spectrum-global-dimension-size-225)\n);--spectrum-card-body-content-min-height:var(\n--spectrum-card-m-body-content-min-height,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-body-content-margin-top:var(\n--spectrum-card-m-body-content-margin-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-card-body-padding-top:var(\n--spectrum-card-m-body-padding-top,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-bottom:var(\n--spectrum-card-m-body-padding-bottom,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-left:var(\n--spectrum-card-m-body-padding-left,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-body-padding-right:var(\n--spectrum-card-m-body-padding-right,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-coverphoto-height:var(\n--spectrum-card-m-coverphoto-height,var(--spectrum-global-dimension-size-1700)\n);--spectrum-card-coverphoto-border-bottom-size:var(\n--spectrum-card-m-coverphoto-border-bottom-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-checkbox-margin:var(\n--spectrum-card-m-checkbox-margin,var(--spectrum-global-dimension-size-200)\n);--spectrum-card-title-padding-right:var(\n--spectrum-card-m-title-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-subtitle-text-size:var(\n--spectrum-card-m-subtitle-text-size,var(--spectrum-global-dimension-font-size-50)\n);--spectrum-card-subtitle-padding-right:var(\n--spectrum-card-m-subtitle-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-actions-margin:var(\n--spectrum-card-m-actions-margin,var(--spectrum-global-dimension-size-125)\n);--spectrum-card-footer-padding-top:var(\n--spectrum-card-m-footer-padding-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-footer-border-top-size:var(\n--spectrum-card-m-footer-border-top-size,var(--spectrum-global-dimension-size-10)\n);--spectrum-card-min-width:var(\n--spectrum-card-m-min-width,var(--spectrum-global-dimension-size-2500)\n);--spectrum-card-border-radius:var(\n--spectrum-card-m-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-border-size:var(\n--spectrum-card-m-border-size,var(--spectrum-alias-border-size-thin)\n)}:host{border:var(--spectrum-card-border-size) solid transparent;border-radius:var(--spectrum-card-border-radius);box-sizing:border-box;display:inline-flex;flex-direction:column;min-width:var(--spectrum-card-min-width);position:relative;text-decoration:none}:host(:focus){outline:none}:host(:focus) .actions,:host(:focus) .quick-actions,:host(:hover) .actions,:host(:hover) .quick-actions,:host([focused]) .actions,:host([focused]) .quick-actions,:host([selected]) .actions,:host([selected]) .quick-actions{opacity:1;pointer-events:all;visibility:visible}:host([dir=ltr]) .actions{right:var(\n--spectrum-card-actions-margin\n)}:host([dir=rtl]) .actions{left:var(\n--spectrum-card-actions-margin\n)}.actions{height:var(\n--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500)\n);position:absolute;top:var(--spectrum-card-actions-margin);visibility:hidden}:host([dir=ltr]) .quick-actions{left:var(\n--spectrum-card-checkbox-margin\n)}:host([dir=rtl]) .quick-actions{right:var(\n--spectrum-card-checkbox-margin\n)}.quick-actions{height:var(\n--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500)\n);position:absolute;top:var(--spectrum-card-checkbox-margin);visibility:hidden;width:var(\n--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500)\n)}:host([dir=ltr]) .quick-actions .checkbox,:host([dir=rtl]) .quick-actions .checkbox{margin:0}#cover-photo{align-items:center;background-position:50%;background-size:cover;border-bottom:var(--spectrum-card-coverphoto-border-bottom-size) solid transparent;border-bottom-left-radius:0;border-bottom-right-radius:0;border-top-left-radius:calc(var(--spectrum-card-border-radius) - 1px);border-top-right-radius:calc(var(--spectrum-card-border-radius) - 1px);box-sizing:border-box;display:flex;height:var(\n--spectrum-card-coverphoto-height\n);justify-content:center}:host([dir=ltr]) .body{padding-right:var(\n--spectrum-card-body-padding-right\n)}:host([dir=rtl]) .body{padding-left:var(\n--spectrum-card-body-padding-right\n)}:host([dir=ltr]) .body{padding-left:var(\n--spectrum-card-body-padding-left\n)}:host([dir=rtl]) .body{padding-right:var(\n--spectrum-card-body-padding-left\n)}.body{padding-bottom:var(--spectrum-card-body-padding-bottom);padding-top:var(\n--spectrum-card-body-padding-top\n)}.body:last-child{border-bottom-left-radius:var(--spectrum-card-border-radius);border-bottom-right-radius:var(--spectrum-card-border-radius);border-top-left-radius:0;border-top-right-radius:0}#preview{border-bottom-left-radius:0;border-bottom-right-radius:0;border-top-left-radius:calc(var(--spectrum-card-border-radius) - 1px);border-top-right-radius:calc(var(--spectrum-card-border-radius) - 1px);overflow:hidden}.header{height:var(--spectrum-card-body-header-height)}.content{display:flex;height:var(--spectrum-card-body-content-min-height);margin-top:var(--spectrum-card-body-content-margin-top)}:host([dir=ltr]) .title{padding-right:var(\n--spectrum-card-title-padding-right\n)}:host([dir=rtl]) .title{padding-left:var(\n--spectrum-card-title-padding-right\n)}.title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}:host([dir=ltr]) .subtitle{padding-right:var(\n--spectrum-card-subtitle-padding-right\n)}:host([dir=rtl]) .subtitle{padding-left:var(\n--spectrum-card-subtitle-padding-right\n)}::slotted([slot=description]){font-size:var(\n--spectrum-card-subtitle-text-size\n)}:host([dir=ltr]) .subtitle+::slotted([slot=description]):before{padding-right:var(\n--spectrum-card-subtitle-padding-right\n)}:host([dir=rtl]) .subtitle+::slotted([slot=description]):before{padding-left:var(\n--spectrum-card-subtitle-padding-right\n)}.subtitle+::slotted([slot=description]):before{content:\"•\"}:host([dir=ltr]) ::slotted([slot=footer]){margin-right:var(\n--spectrum-card-body-padding-right\n)}:host([dir=rtl]) ::slotted([slot=footer]){margin-left:var(\n--spectrum-card-body-padding-right\n)}:host([dir=ltr]) ::slotted([slot=footer]){margin-left:var(\n--spectrum-card-body-padding-left\n)}:host([dir=rtl]) ::slotted([slot=footer]){margin-right:var(\n--spectrum-card-body-padding-left\n)}::slotted([slot=footer]){border-top:var(--spectrum-card-footer-border-top-size) solid;padding-bottom:var(--spectrum-card-body-padding-bottom);padding-top:var(\n--spectrum-card-footer-padding-top\n)}.header{align-items:baseline;display:flex}.action-button{align-self:center;display:flex;flex:1;justify-content:flex-end}:host([variant=quiet]) #preview{min-height:var(\n--spectrum-card-quiet-min-height\n)}:host([variant=gallery]),:host([variant=quiet]){border-radius:0;border-width:0;height:100%;min-width:var(--spectrum-card-quiet-min-width);overflow:visible}:host([variant=gallery]) #preview,:host([variant=quiet]) #preview{border-radius:var(--spectrum-card-quiet-border-radius);box-sizing:border-box;flex:1;margin:0 auto;overflow:visible;padding:var(--spectrum-card-quiet-preview-padding);position:relative;transition:background-color var(--spectrum-global-animation-duration-100,.13s);width:100%}:host([dir=ltr][variant=gallery]) #preview:before,:host([dir=ltr][variant=quiet]) #preview:before{left:0}:host([dir=rtl][variant=gallery]) #preview:before,:host([dir=rtl][variant=quiet]) #preview:before{right:0}:host([variant=gallery]) #preview:before,:host([variant=quiet]) #preview:before{border:var(--spectrum-card-quiet-border-size) solid transparent;border-radius:inherit;box-sizing:border-box;content:\"\";height:100%;position:absolute;top:0;width:100%}:host([variant=gallery][drop-target]) #preview,:host([variant=quiet][drop-target]) #preview{transition:none}:host([variant=gallery]) .header,:host([variant=quiet]) .header{height:var(\n--spectrum-card-quiet-body-header-height\n);margin-top:var(--spectrum-card-quiet-body-header-margin-top)}:host([variant=gallery]) .body,:host([variant=quiet]) .body{padding:0}:host([horizontal]){flex-direction:row}:host([dir=ltr][horizontal]) #preview{border-top-left-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=rtl][horizontal]) #preview{border-top-right-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=ltr][horizontal]) #preview{border-top-right-radius:0}:host([dir=rtl][horizontal]) #preview{border-top-left-radius:0}:host([dir=ltr][horizontal]) #preview{border-bottom-left-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=rtl][horizontal]) #preview{border-bottom-right-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=ltr][horizontal]) #preview{border-bottom-right-radius:0}:host([dir=rtl][horizontal]) #preview{border-bottom-left-radius:0}:host([dir=ltr][horizontal]) #preview{border-right:var(--spectrum-card-border-size) solid transparent}:host([dir=rtl][horizontal]) #preview{border-left:var(--spectrum-card-border-size) solid transparent}:host([horizontal]) #preview{align-items:center;display:flex;flex-shrink:0;justify-content:center;min-height:0;padding:var(--spectrum-global-dimension-size-175)}:host([horizontal]) .content,:host([horizontal]) .header{height:auto;margin-top:0}:host([dir=ltr][horizontal]) .title{padding-right:0}:host([dir=rtl][horizontal]) .title{padding-left:0}:host([horizontal]) .body{display:flex;flex-direction:column;flex-shrink:0;justify-content:center;padding-bottom:0;padding-left:var(--spectrum-global-dimension-size-200);padding-right:var(--spectrum-global-dimension-size-200);padding-top:0}:host([variant=gallery]){min-width:0}:host([variant=gallery]) #preview{border-radius:0;padding:0}:host{background-color:var(\n--spectrum-card-m-background-color,var(--spectrum-global-color-gray-50)\n);border-color:var(\n--spectrum-card-m-border-color,var(--spectrum-global-color-gray-200)\n)}:host(:hover){border-color:var(\n--spectrum-card-m-border-color-hover,var(--spectrum-global-color-gray-400)\n)}:host(.focus-visible),:host([selected]){border-color:var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host(:focus-visible),:host([selected]){border-color:var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host([drop-target]){background-color:var(--spectrum-alias-highlight-selected);border-color:var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}.subtitle{color:var(\n--spectrum-card-m-description-text-color,var(--spectrum-global-color-gray-700)\n)}::slotted([slot=description]){color:var(\n--spectrum-card-m-description-text-color,var(--spectrum-global-color-gray-700)\n)}#cover-photo{background-color:var(\n--spectrum-card-m-coverphoto-background-color,var(--spectrum-global-color-gray-200)\n);border-bottom-color:var(\n--spectrum-card-m-coverphoto-border-color,var(--spectrum-global-color-gray-200)\n)}::slotted([slot=footer]){border-color:var(\n--spectrum-card-m-border-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery]),:host([variant=quiet]){background-color:transparent;border-color:transparent}:host([variant=gallery]) #preview,:host([variant=quiet]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery]:hover),:host([variant=quiet]:hover){border-color:transparent}:host([variant=gallery]:hover) #preview,:host([variant=quiet]:hover) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color-hover,var(--spectrum-global-color-gray-300)\n)}:host([variant=gallery].focus-visible),:host([variant=gallery][selected]),:host([variant=quiet].focus-visible),:host([variant=quiet][selected]){border-color:transparent;box-shadow:none}:host([variant=gallery]:focus-visible),:host([variant=gallery][selected]),:host([variant=quiet]:focus-visible),:host([variant=quiet][selected]){border-color:transparent;box-shadow:none}:host([variant=gallery].focus-visible) #preview,:host([variant=gallery][selected]) #preview,:host([variant=quiet].focus-visible) #preview,:host([variant=quiet][selected]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery]:focus-visible) #preview,:host([variant=gallery][selected]) #preview,:host([variant=quiet]:focus-visible) #preview,:host([variant=quiet][selected]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery].focus-visible) #preview:before,:host([variant=gallery][selected]) #preview:before,:host([variant=quiet].focus-visible) #preview:before,:host([variant=quiet][selected]) #preview:before{border-color:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery]:focus-visible) #preview:before,:host([variant=gallery][selected]) #preview:before,:host([variant=quiet]:focus-visible) #preview:before,:host([variant=quiet][selected]) #preview:before{border-color:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery][drop-target]),:host([variant=quiet][drop-target]){background-color:transparent;border-color:transparent;box-shadow:none}:host([variant=gallery][drop-target]) #preview,:host([variant=quiet][drop-target]) #preview{background-color:var(\n--spectrum-alias-highlight-selected\n)}:host([variant=gallery][drop-target]) #preview:before,:host([variant=quiet][drop-target]) #preview:before{border-color:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery][drop-target]) .spectrum-Asset-fileBackground,:host([variant=gallery][drop-target]) .spectrum-Asset-folderBackground,:host([variant=quiet][drop-target]) .spectrum-Asset-fileBackground,:host([variant=quiet][drop-target]) .spectrum-Asset-folderBackground{fill:var(\n--spectrum-alias-highlight-selected\n)}:host([variant=gallery][drop-target]) .spectrum-Asset-fileOutline,:host([variant=gallery][drop-target]) .spectrum-Asset-folderOutline,:host([variant=quiet][drop-target]) .spectrum-Asset-fileOutline,:host([variant=quiet][drop-target]) .spectrum-Asset-folderOutline{fill:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery]) .title,:host([variant=quiet]) .title{color:var(\n--spectrum-card-m-quiet-title-text-color,var(--spectrum-global-color-gray-800)\n)}:host([variant=gallery]) .subtitle,:host([variant=quiet]) .subtitle{color:var(\n--spectrum-card-m-quiet-subtitle-text-color,var(--spectrum-global-color-gray-700)\n)}:host([horizontal]:hover) #preview{border-color:var(\n--spectrum-card-m-border-color-hover,var(--spectrum-global-color-gray-400)\n)}:host([horizontal]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n);border-color:var(\n--spectrum-card-m-border-color,var(--spectrum-global-color-gray-200)\n)}:host([href]:not([href=\"\"])){cursor:pointer}#like-anchor{inset:0;pointer-events:none;position:absolute}.action-button{flex-grow:0}:host([dir=ltr]) .action-button{margin-left:auto}:host([dir=rtl]) .action-button{margin-right:auto}slot[name=description]{font-size:var(\n--spectrum-card-subtitle-text-size,var(--spectrum-global-dimension-font-size-50)\n)}#cover-photo,#preview{order:-1;overflow:hidden}#preview+#cover-photo{display:none}#cover-photo ::slotted(*),#preview ::slotted(*){display:block;object-fit:cover;width:100%}:host(:not([variant=gallery])) #preview ::slotted(*){height:100%}:host([horizontal]) #preview{width:auto}sp-quick-actions{z-index:1}.title{width:var(--spectrum-card-title-width)}.subtitle{text-transform:none}\n`"
         }
       ],
       "exports": [
@@ -11087,14 +11962,14 @@
           "name": "default",
           "declaration": {
             "name": "styles",
-            "module": "packages/button-group/src/button-group.css.ts"
+            "module": "packages/card/src/card.css.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "packages/button-group/src/index.ts",
+      "path": "packages/card/src/index.ts",
       "declarations": [],
       "exports": [
         {
@@ -11102,19 +11977,19 @@
           "name": "*",
           "declaration": {
             "name": "*",
-            "package": "./ButtonGroup.js"
+            "package": "./Card.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "packages/button-group/src/spectrum-button-group.css.ts",
+      "path": "packages/card/src/spectrum-card.css.ts",
       "declarations": [
         {
           "kind": "variable",
           "name": "styles",
-          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}\n`"
+          "default": "css`\n:host([size=s]){--spectrum-card-quiet-body-header-margin-top:var(\n--spectrum-card-s-quiet-body-header-margin-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-quiet-body-header-height:var(\n--spectrum-card-s-quiet-body-header-height,var(--spectrum-global-dimension-size-150)\n);--spectrum-card-quiet-preview-padding:var(\n--spectrum-card-s-quiet-preview-padding,var(--spectrum-global-dimension-size-150)\n);--spectrum-card-quiet-min-width:var(\n--spectrum-card-s-quiet-min-width,var(--spectrum-global-dimension-size-1200)\n);--spectrum-card-quiet-min-height:var(\n--spectrum-card-s-quiet-min-height,var(--spectrum-global-dimension-size-900)\n);--spectrum-card-quiet-border-radius:var(\n--spectrum-card-s-quiet-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-quiet-border-size:var(\n--spectrum-card-s-quiet-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-body-header-height:var(\n--spectrum-card-s-body-header-height,var(--spectrum-global-dimension-size-150)\n);--spectrum-card-body-content-min-height:var(\n--spectrum-card-s-body-content-min-height,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-body-content-margin-top:var(\n--spectrum-card-s-body-content-margin-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-card-body-padding-top:var(\n--spectrum-card-s-body-padding-top,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-bottom:var(\n--spectrum-card-s-body-padding-bottom,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-left:var(\n--spectrum-card-s-body-padding-left,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-body-padding-right:var(\n--spectrum-card-s-body-padding-right,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-coverphoto-height:var(\n--spectrum-card-s-coverphoto-height,var(--spectrum-global-dimension-size-1700)\n);--spectrum-card-coverphoto-border-bottom-size:var(\n--spectrum-card-s-coverphoto-border-bottom-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-checkbox-margin:var(\n--spectrum-card-s-checkbox-margin,var(--spectrum-global-dimension-size-125)\n);--spectrum-card-title-padding-right:var(\n--spectrum-card-s-title-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-subtitle-text-size:var(\n--spectrum-card-s-subtitle-text-size,var(--spectrum-global-dimension-font-size-50)\n);--spectrum-card-subtitle-padding-right:var(\n--spectrum-card-s-subtitle-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-actions-margin:var(\n--spectrum-card-s-actions-margin,var(--spectrum-global-dimension-size-125)\n);--spectrum-card-footer-padding-top:var(\n--spectrum-card-s-footer-padding-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-footer-border-top-size:var(\n--spectrum-card-s-footer-border-top-size,var(--spectrum-global-dimension-size-10)\n);--spectrum-card-min-width:var(\n--spectrum-card-s-min-width,var(--spectrum-global-dimension-size-1250)\n);--spectrum-card-border-radius:var(\n--spectrum-card-s-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-border-size:var(\n--spectrum-card-s-border-size,var(--spectrum-alias-border-size-thin)\n)}:host([size=m]){--spectrum-card-quiet-body-header-margin-top:var(\n--spectrum-card-m-quiet-body-header-margin-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-quiet-body-header-height:var(\n--spectrum-card-m-quiet-body-header-height,var(--spectrum-global-dimension-size-225)\n);--spectrum-card-quiet-preview-padding:var(\n--spectrum-card-m-quiet-preview-padding,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-quiet-min-width:var(\n--spectrum-card-m-quiet-min-width,var(--spectrum-global-dimension-size-2500)\n);--spectrum-card-quiet-min-height:var(\n--spectrum-card-m-quiet-min-height,var(--spectrum-global-dimension-size-1700)\n);--spectrum-card-quiet-border-radius:var(\n--spectrum-card-m-quiet-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-quiet-border-size:var(\n--spectrum-card-m-quiet-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-body-header-height:var(\n--spectrum-card-m-body-header-height,var(--spectrum-global-dimension-size-225)\n);--spectrum-card-body-content-min-height:var(\n--spectrum-card-m-body-content-min-height,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-body-content-margin-top:var(\n--spectrum-card-m-body-content-margin-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-card-body-padding-top:var(\n--spectrum-card-m-body-padding-top,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-bottom:var(\n--spectrum-card-m-body-padding-bottom,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-left:var(\n--spectrum-card-m-body-padding-left,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-body-padding-right:var(\n--spectrum-card-m-body-padding-right,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-coverphoto-height:var(\n--spectrum-card-m-coverphoto-height,var(--spectrum-global-dimension-size-1700)\n);--spectrum-card-coverphoto-border-bottom-size:var(\n--spectrum-card-m-coverphoto-border-bottom-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-checkbox-margin:var(\n--spectrum-card-m-checkbox-margin,var(--spectrum-global-dimension-size-200)\n);--spectrum-card-title-padding-right:var(\n--spectrum-card-m-title-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-subtitle-text-size:var(\n--spectrum-card-m-subtitle-text-size,var(--spectrum-global-dimension-font-size-50)\n);--spectrum-card-subtitle-padding-right:var(\n--spectrum-card-m-subtitle-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-actions-margin:var(\n--spectrum-card-m-actions-margin,var(--spectrum-global-dimension-size-125)\n);--spectrum-card-footer-padding-top:var(\n--spectrum-card-m-footer-padding-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-footer-border-top-size:var(\n--spectrum-card-m-footer-border-top-size,var(--spectrum-global-dimension-size-10)\n);--spectrum-card-min-width:var(\n--spectrum-card-m-min-width,var(--spectrum-global-dimension-size-2500)\n);--spectrum-card-border-radius:var(\n--spectrum-card-m-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-border-size:var(\n--spectrum-card-m-border-size,var(--spectrum-alias-border-size-thin)\n)}:host{border:var(--spectrum-card-border-size) solid transparent;border-radius:var(--spectrum-card-border-radius);box-sizing:border-box;display:inline-flex;flex-direction:column;min-width:var(--spectrum-card-min-width);position:relative;text-decoration:none}:host(:focus){outline:none}:host(:focus) .actions,:host(:focus) .quick-actions,:host(:hover) .actions,:host(:hover) .quick-actions,:host([focused]) .actions,:host([focused]) .quick-actions,:host([selected]) .actions,:host([selected]) .quick-actions{opacity:1;pointer-events:all;visibility:visible}:host([dir=ltr]) .actions{right:var(\n--spectrum-card-actions-margin\n)}:host([dir=rtl]) .actions{left:var(\n--spectrum-card-actions-margin\n)}.actions{height:var(\n--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500)\n);position:absolute;top:var(--spectrum-card-actions-margin);visibility:hidden}:host([dir=ltr]) .quick-actions{left:var(\n--spectrum-card-checkbox-margin\n)}:host([dir=rtl]) .quick-actions{right:var(\n--spectrum-card-checkbox-margin\n)}.quick-actions{height:var(\n--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500)\n);position:absolute;top:var(--spectrum-card-checkbox-margin);visibility:hidden;width:var(\n--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500)\n)}:host([dir=ltr]) .quick-actions .checkbox,:host([dir=rtl]) .quick-actions .checkbox{margin:0}#cover-photo{align-items:center;background-position:50%;background-size:cover;border-bottom:var(--spectrum-card-coverphoto-border-bottom-size) solid transparent;border-bottom-left-radius:0;border-bottom-right-radius:0;border-top-left-radius:calc(var(--spectrum-card-border-radius) - 1px);border-top-right-radius:calc(var(--spectrum-card-border-radius) - 1px);box-sizing:border-box;display:flex;height:var(\n--spectrum-card-coverphoto-height\n);justify-content:center}:host([dir=ltr]) .body{padding-right:var(\n--spectrum-card-body-padding-right\n)}:host([dir=rtl]) .body{padding-left:var(\n--spectrum-card-body-padding-right\n)}:host([dir=ltr]) .body{padding-left:var(\n--spectrum-card-body-padding-left\n)}:host([dir=rtl]) .body{padding-right:var(\n--spectrum-card-body-padding-left\n)}.body{padding-bottom:var(--spectrum-card-body-padding-bottom);padding-top:var(\n--spectrum-card-body-padding-top\n)}.body:last-child{border-bottom-left-radius:var(--spectrum-card-border-radius);border-bottom-right-radius:var(--spectrum-card-border-radius);border-top-left-radius:0;border-top-right-radius:0}#preview{border-bottom-left-radius:0;border-bottom-right-radius:0;border-top-left-radius:calc(var(--spectrum-card-border-radius) - 1px);border-top-right-radius:calc(var(--spectrum-card-border-radius) - 1px);overflow:hidden}.header{height:var(--spectrum-card-body-header-height)}.content{display:flex;height:var(--spectrum-card-body-content-min-height);margin-top:var(--spectrum-card-body-content-margin-top)}:host([dir=ltr]) .title{padding-right:var(\n--spectrum-card-title-padding-right\n)}:host([dir=rtl]) .title{padding-left:var(\n--spectrum-card-title-padding-right\n)}.title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}:host([dir=ltr]) .subtitle{padding-right:var(\n--spectrum-card-subtitle-padding-right\n)}:host([dir=rtl]) .subtitle{padding-left:var(\n--spectrum-card-subtitle-padding-right\n)}::slotted([slot=description]){font-size:var(\n--spectrum-card-subtitle-text-size\n)}:host([dir=ltr]) .subtitle+::slotted([slot=description]):before{padding-right:var(\n--spectrum-card-subtitle-padding-right\n)}:host([dir=rtl]) .subtitle+::slotted([slot=description]):before{padding-left:var(\n--spectrum-card-subtitle-padding-right\n)}.subtitle+::slotted([slot=description]):before{content:\"•\"}:host([dir=ltr]) ::slotted([slot=footer]){margin-right:var(\n--spectrum-card-body-padding-right\n)}:host([dir=rtl]) ::slotted([slot=footer]){margin-left:var(\n--spectrum-card-body-padding-right\n)}:host([dir=ltr]) ::slotted([slot=footer]){margin-left:var(\n--spectrum-card-body-padding-left\n)}:host([dir=rtl]) ::slotted([slot=footer]){margin-right:var(\n--spectrum-card-body-padding-left\n)}::slotted([slot=footer]){border-top:var(--spectrum-card-footer-border-top-size) solid;padding-bottom:var(--spectrum-card-body-padding-bottom);padding-top:var(\n--spectrum-card-footer-padding-top\n)}.header{align-items:baseline;display:flex}.action-button{align-self:center;display:flex;flex:1;justify-content:flex-end}:host([variant=quiet]) #preview{min-height:var(\n--spectrum-card-quiet-min-height\n)}:host([variant=gallery]),:host([variant=quiet]){border-radius:0;border-width:0;height:100%;min-width:var(--spectrum-card-quiet-min-width);overflow:visible}:host([variant=gallery]) #preview,:host([variant=quiet]) #preview{border-radius:var(--spectrum-card-quiet-border-radius);box-sizing:border-box;flex:1;margin:0 auto;overflow:visible;padding:var(--spectrum-card-quiet-preview-padding);position:relative;transition:background-color var(--spectrum-global-animation-duration-100,.13s);width:100%}:host([dir=ltr][variant=gallery]) #preview:before,:host([dir=ltr][variant=quiet]) #preview:before{left:0}:host([dir=rtl][variant=gallery]) #preview:before,:host([dir=rtl][variant=quiet]) #preview:before{right:0}:host([variant=gallery]) #preview:before,:host([variant=quiet]) #preview:before{border:var(--spectrum-card-quiet-border-size) solid transparent;border-radius:inherit;box-sizing:border-box;content:\"\";height:100%;position:absolute;top:0;width:100%}:host([variant=gallery][drop-target]) #preview,:host([variant=quiet][drop-target]) #preview{transition:none}:host([variant=gallery]) .header,:host([variant=quiet]) .header{height:var(\n--spectrum-card-quiet-body-header-height\n);margin-top:var(--spectrum-card-quiet-body-header-margin-top)}:host([variant=gallery]) .body,:host([variant=quiet]) .body{padding:0}:host([horizontal]){flex-direction:row}:host([dir=ltr][horizontal]) #preview{border-top-left-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=rtl][horizontal]) #preview{border-top-right-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=ltr][horizontal]) #preview{border-top-right-radius:0}:host([dir=rtl][horizontal]) #preview{border-top-left-radius:0}:host([dir=ltr][horizontal]) #preview{border-bottom-left-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=rtl][horizontal]) #preview{border-bottom-right-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=ltr][horizontal]) #preview{border-bottom-right-radius:0}:host([dir=rtl][horizontal]) #preview{border-bottom-left-radius:0}:host([dir=ltr][horizontal]) #preview{border-right:var(--spectrum-card-border-size) solid transparent}:host([dir=rtl][horizontal]) #preview{border-left:var(--spectrum-card-border-size) solid transparent}:host([horizontal]) #preview{align-items:center;display:flex;flex-shrink:0;justify-content:center;min-height:0;padding:var(--spectrum-global-dimension-size-175)}:host([horizontal]) .content,:host([horizontal]) .header{height:auto;margin-top:0}:host([dir=ltr][horizontal]) .title{padding-right:0}:host([dir=rtl][horizontal]) .title{padding-left:0}:host([horizontal]) .body{display:flex;flex-direction:column;flex-shrink:0;justify-content:center;padding-bottom:0;padding-left:var(--spectrum-global-dimension-size-200);padding-right:var(--spectrum-global-dimension-size-200);padding-top:0}:host([variant=gallery]){min-width:0}:host([variant=gallery]) #preview{border-radius:0;padding:0}:host{background-color:var(\n--spectrum-card-m-background-color,var(--spectrum-global-color-gray-50)\n);border-color:var(\n--spectrum-card-m-border-color,var(--spectrum-global-color-gray-200)\n)}:host(:hover){border-color:var(\n--spectrum-card-m-border-color-hover,var(--spectrum-global-color-gray-400)\n)}:host(.focus-visible),:host([selected]){border-color:var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host(:focus-visible),:host([selected]){border-color:var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host([drop-target]){background-color:var(--spectrum-alias-highlight-selected);border-color:var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}.subtitle{color:var(\n--spectrum-card-m-description-text-color,var(--spectrum-global-color-gray-700)\n)}::slotted([slot=description]){color:var(\n--spectrum-card-m-description-text-color,var(--spectrum-global-color-gray-700)\n)}#cover-photo{background-color:var(\n--spectrum-card-m-coverphoto-background-color,var(--spectrum-global-color-gray-200)\n);border-bottom-color:var(\n--spectrum-card-m-coverphoto-border-color,var(--spectrum-global-color-gray-200)\n)}::slotted([slot=footer]){border-color:var(\n--spectrum-card-m-border-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery]),:host([variant=quiet]){background-color:transparent;border-color:transparent}:host([variant=gallery]) #preview,:host([variant=quiet]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery]:hover),:host([variant=quiet]:hover){border-color:transparent}:host([variant=gallery]:hover) #preview,:host([variant=quiet]:hover) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color-hover,var(--spectrum-global-color-gray-300)\n)}:host([variant=gallery].focus-visible),:host([variant=gallery][selected]),:host([variant=quiet].focus-visible),:host([variant=quiet][selected]){border-color:transparent;box-shadow:none}:host([variant=gallery]:focus-visible),:host([variant=gallery][selected]),:host([variant=quiet]:focus-visible),:host([variant=quiet][selected]){border-color:transparent;box-shadow:none}:host([variant=gallery].focus-visible) #preview,:host([variant=gallery][selected]) #preview,:host([variant=quiet].focus-visible) #preview,:host([variant=quiet][selected]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery]:focus-visible) #preview,:host([variant=gallery][selected]) #preview,:host([variant=quiet]:focus-visible) #preview,:host([variant=quiet][selected]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery].focus-visible) #preview:before,:host([variant=gallery][selected]) #preview:before,:host([variant=quiet].focus-visible) #preview:before,:host([variant=quiet][selected]) #preview:before{border-color:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery]:focus-visible) #preview:before,:host([variant=gallery][selected]) #preview:before,:host([variant=quiet]:focus-visible) #preview:before,:host([variant=quiet][selected]) #preview:before{border-color:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery][drop-target]),:host([variant=quiet][drop-target]){background-color:transparent;border-color:transparent;box-shadow:none}:host([variant=gallery][drop-target]) #preview,:host([variant=quiet][drop-target]) #preview{background-color:var(\n--spectrum-alias-highlight-selected\n)}:host([variant=gallery][drop-target]) #preview:before,:host([variant=quiet][drop-target]) #preview:before{border-color:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery][drop-target]) .spectrum-Asset-fileBackground,:host([variant=gallery][drop-target]) .spectrum-Asset-folderBackground,:host([variant=quiet][drop-target]) .spectrum-Asset-fileBackground,:host([variant=quiet][drop-target]) .spectrum-Asset-folderBackground{fill:var(\n--spectrum-alias-highlight-selected\n)}:host([variant=gallery][drop-target]) .spectrum-Asset-fileOutline,:host([variant=gallery][drop-target]) .spectrum-Asset-folderOutline,:host([variant=quiet][drop-target]) .spectrum-Asset-fileOutline,:host([variant=quiet][drop-target]) .spectrum-Asset-folderOutline{fill:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery]) .title,:host([variant=quiet]) .title{color:var(\n--spectrum-card-m-quiet-title-text-color,var(--spectrum-global-color-gray-800)\n)}:host([variant=gallery]) .subtitle,:host([variant=quiet]) .subtitle{color:var(\n--spectrum-card-m-quiet-subtitle-text-color,var(--spectrum-global-color-gray-700)\n)}:host([horizontal]:hover) #preview{border-color:var(\n--spectrum-card-m-border-color-hover,var(--spectrum-global-color-gray-400)\n)}:host([horizontal]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n);border-color:var(\n--spectrum-card-m-border-color,var(--spectrum-global-color-gray-200)\n)}\n`"
         }
       ],
       "exports": [
@@ -11123,7 +11998,7 @@
           "name": "default",
           "declaration": {
             "name": "styles",
-            "module": "packages/button-group/src/spectrum-button-group.css.ts"
+            "module": "packages/card/src/spectrum-card.css.ts"
           }
         }
       ]
@@ -12431,881 +13306,6 @@
           "declaration": {
             "name": "styles",
             "module": "packages/coachmark/src/spectrum-coachmark.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/card/src/Card.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Card",
-          "slots": [
-            {
-              "description": "This is the preview image for Gallery Cards",
-              "name": "preview"
-            },
-            {
-              "description": "This is the cover photo for Default and Quiet Cards",
-              "name": "cover-photo"
-            },
-            {
-              "description": "HTML content to be listed as the heading",
-              "name": "heading"
-            },
-            {
-              "description": "HTML content to be listed as the subheading",
-              "name": "subheading"
-            },
-            {
-              "description": "A description of the card",
-              "name": "description"
-            },
-            {
-              "description": "an `sp-action-menu` element outlining actions to take on the represened object",
-              "name": "actions"
-            },
-            {
-              "description": "Footer text",
-              "name": "footer"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "asset",
-              "type": {
-                "text": "'file' | 'folder' | undefined"
-              },
-              "privacy": "public",
-              "attribute": "asset"
-            },
-            {
-              "kind": "field",
-              "name": "variant",
-              "type": {
-                "text": "'standard' | 'gallery' | 'quiet'"
-              },
-              "privacy": "public",
-              "default": "'standard'",
-              "attribute": "variant",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "selected",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "selected",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "heading",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "heading"
-            },
-            {
-              "kind": "field",
-              "name": "horizontal",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "horizontal",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "likeAnchor",
-              "type": {
-                "text": "HTMLAnchorElement | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "focused",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "focused",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "toggles",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "toggles",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "subheading",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "subheading"
-            },
-            {
-              "kind": "field",
-              "name": "hasCoverPhoto",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "field",
-              "name": "hasPreview",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "method",
-              "name": "click",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "handleFocusin",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "handleFocusout",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleKeydown",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "KeyboardEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleSelectedChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "{\n        target: { checked },\n    }",
-                  "type": {
-                    "text": "Event & { target: Checkbox }"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "toggleSelected",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "announceChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "stopPropagationOnHref",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handlePointerdown",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "renderHeading",
-              "type": {
-                "text": "TemplateResult"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "field",
-              "name": "renderPreviewImage",
-              "type": {
-                "text": "TemplateResult"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "field",
-              "name": "renderCoverImage",
-              "type": {
-                "text": "TemplateResult"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "field",
-              "name": "images",
-              "type": {
-                "text": "TemplateResult[]"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "method",
-              "name": "renderImage",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "TemplateResult[]"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "renderSubtitleAndDescription",
-              "type": {
-                "text": "TemplateResult"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "download",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "attribute": "download",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "attribute": "label",
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "href",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "attribute": "href",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "target",
-              "type": {
-                "text": "'_blank' | '_parent' | '_self' | '_top' | undefined"
-              },
-              "privacy": "public",
-              "attribute": "target",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "rel",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "attribute": "rel",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "renderAnchor",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "{\n            id,\n            className,\n            ariaHidden,\n            labelledby,\n            tabindex,\n            // prettier-ignore\n            anchorContent = html`<slot></slot>`,\n        }",
-                  "type": {
-                    "text": "RenderAnchorOptions"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "privacy": "public",
-              "attribute": "size",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_size",
-              "type": {
-                "text": "ElementSize | null"
-              },
-              "privacy": "private",
-              "default": "defaultSize",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "firstUpdated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "changes",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "[slotElementObserver]",
-              "type": {
-                "text": "MutationObserver"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "ObserveSlotPresence",
-                "module": "packages/shared/src/observe-slot-presence.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "slotContentIsPresent",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "ObserveSlotPresence",
-                "module": "packages/shared/src/observe-slot-presence.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "[slotContentIsPresent]",
-              "type": {
-                "text": "Map<string, boolean>"
-              },
-              "privacy": "private",
-              "default": "new Map()",
-              "inheritedFrom": {
-                "name": "ObserveSlotPresence",
-                "module": "packages/shared/src/observe-slot-presence.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getSlotContentPresence",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "selector",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "ObserveSlotPresence",
-                "module": "packages/shared/src/observe-slot-presence.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "managePresenceObservedSlot",
-              "privacy": "public",
-              "inheritedFrom": {
-                "name": "ObserveSlotPresence",
-                "module": "packages/shared/src/observe-slot-presence.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "[startObserving]",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "ObserveSlotPresence",
-                "module": "packages/shared/src/observe-slot-presence.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "[$endPolyfillCoordination]",
-              "type": {
-                "text": "EndPolyfillCoordinationCallback | null"
-              },
-              "privacy": "private",
-              "default": "null",
-              "inheritedFrom": {
-                "name": "FocusVisiblePolyfillMixin",
-                "module": "packages/shared/src/focus-visible.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "click",
-              "type": {
-                "text": "Event"
-              }
-            },
-            {
-              "name": "change",
-              "type": {
-                "text": "Event"
-              },
-              "description": "Announces a change in the `selected` property of a card"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "asset",
-              "type": {
-                "text": "'file' | 'folder' | undefined"
-              },
-              "fieldName": "asset"
-            },
-            {
-              "name": "variant",
-              "type": {
-                "text": "'standard' | 'gallery' | 'quiet'"
-              },
-              "default": "'standard'",
-              "fieldName": "variant"
-            },
-            {
-              "name": "selected",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "selected"
-            },
-            {
-              "name": "heading",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "heading"
-            },
-            {
-              "name": "horizontal",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "horizontal"
-            },
-            {
-              "name": "focused",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "focused"
-            },
-            {
-              "name": "toggles",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "toggles"
-            },
-            {
-              "name": "subheading",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "subheading"
-            },
-            {
-              "name": "download",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "download",
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "name": "href",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "href",
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "name": "target",
-              "type": {
-                "text": "'_blank' | '_parent' | '_self' | '_top' | undefined"
-              },
-              "fieldName": "target",
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "name": "rel",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "rel",
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "fieldName": "size",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "mixins": [
-            {
-              "name": "LikeAnchor",
-              "package": "@spectrum-web-components/shared/src/like-anchor.js"
-            },
-            {
-              "name": "SizedMixin",
-              "package": "@spectrum-web-components/base"
-            },
-            {
-              "name": "ObserveSlotPresence",
-              "package": "@spectrum-web-components/shared/src/observe-slot-presence.js"
-            },
-            {
-              "name": "FocusVisiblePolyfillMixin",
-              "package": "@spectrum-web-components/shared/src/focus-visible.js"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-card",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Card",
-          "declaration": {
-            "name": "Card",
-            "module": "packages/card/src/Card.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/card/src/card.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-card-quiet-body-header-margin-top:var(\n--spectrum-card-s-quiet-body-header-margin-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-quiet-body-header-height:var(\n--spectrum-card-s-quiet-body-header-height,var(--spectrum-global-dimension-size-150)\n);--spectrum-card-quiet-preview-padding:var(\n--spectrum-card-s-quiet-preview-padding,var(--spectrum-global-dimension-size-150)\n);--spectrum-card-quiet-min-width:var(\n--spectrum-card-s-quiet-min-width,var(--spectrum-global-dimension-size-1200)\n);--spectrum-card-quiet-min-height:var(\n--spectrum-card-s-quiet-min-height,var(--spectrum-global-dimension-size-900)\n);--spectrum-card-quiet-border-radius:var(\n--spectrum-card-s-quiet-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-quiet-border-size:var(\n--spectrum-card-s-quiet-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-body-header-height:var(\n--spectrum-card-s-body-header-height,var(--spectrum-global-dimension-size-150)\n);--spectrum-card-body-content-min-height:var(\n--spectrum-card-s-body-content-min-height,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-body-content-margin-top:var(\n--spectrum-card-s-body-content-margin-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-card-body-padding-top:var(\n--spectrum-card-s-body-padding-top,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-bottom:var(\n--spectrum-card-s-body-padding-bottom,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-left:var(\n--spectrum-card-s-body-padding-left,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-body-padding-right:var(\n--spectrum-card-s-body-padding-right,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-coverphoto-height:var(\n--spectrum-card-s-coverphoto-height,var(--spectrum-global-dimension-size-1700)\n);--spectrum-card-coverphoto-border-bottom-size:var(\n--spectrum-card-s-coverphoto-border-bottom-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-checkbox-margin:var(\n--spectrum-card-s-checkbox-margin,var(--spectrum-global-dimension-size-125)\n);--spectrum-card-title-padding-right:var(\n--spectrum-card-s-title-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-subtitle-text-size:var(\n--spectrum-card-s-subtitle-text-size,var(--spectrum-global-dimension-font-size-50)\n);--spectrum-card-subtitle-padding-right:var(\n--spectrum-card-s-subtitle-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-actions-margin:var(\n--spectrum-card-s-actions-margin,var(--spectrum-global-dimension-size-125)\n);--spectrum-card-footer-padding-top:var(\n--spectrum-card-s-footer-padding-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-footer-border-top-size:var(\n--spectrum-card-s-footer-border-top-size,var(--spectrum-global-dimension-size-10)\n);--spectrum-card-min-width:var(\n--spectrum-card-s-min-width,var(--spectrum-global-dimension-size-1250)\n);--spectrum-card-border-radius:var(\n--spectrum-card-s-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-border-size:var(\n--spectrum-card-s-border-size,var(--spectrum-alias-border-size-thin)\n)}:host([size=m]){--spectrum-card-quiet-body-header-margin-top:var(\n--spectrum-card-m-quiet-body-header-margin-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-quiet-body-header-height:var(\n--spectrum-card-m-quiet-body-header-height,var(--spectrum-global-dimension-size-225)\n);--spectrum-card-quiet-preview-padding:var(\n--spectrum-card-m-quiet-preview-padding,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-quiet-min-width:var(\n--spectrum-card-m-quiet-min-width,var(--spectrum-global-dimension-size-2500)\n);--spectrum-card-quiet-min-height:var(\n--spectrum-card-m-quiet-min-height,var(--spectrum-global-dimension-size-1700)\n);--spectrum-card-quiet-border-radius:var(\n--spectrum-card-m-quiet-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-quiet-border-size:var(\n--spectrum-card-m-quiet-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-body-header-height:var(\n--spectrum-card-m-body-header-height,var(--spectrum-global-dimension-size-225)\n);--spectrum-card-body-content-min-height:var(\n--spectrum-card-m-body-content-min-height,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-body-content-margin-top:var(\n--spectrum-card-m-body-content-margin-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-card-body-padding-top:var(\n--spectrum-card-m-body-padding-top,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-bottom:var(\n--spectrum-card-m-body-padding-bottom,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-left:var(\n--spectrum-card-m-body-padding-left,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-body-padding-right:var(\n--spectrum-card-m-body-padding-right,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-coverphoto-height:var(\n--spectrum-card-m-coverphoto-height,var(--spectrum-global-dimension-size-1700)\n);--spectrum-card-coverphoto-border-bottom-size:var(\n--spectrum-card-m-coverphoto-border-bottom-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-checkbox-margin:var(\n--spectrum-card-m-checkbox-margin,var(--spectrum-global-dimension-size-200)\n);--spectrum-card-title-padding-right:var(\n--spectrum-card-m-title-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-subtitle-text-size:var(\n--spectrum-card-m-subtitle-text-size,var(--spectrum-global-dimension-font-size-50)\n);--spectrum-card-subtitle-padding-right:var(\n--spectrum-card-m-subtitle-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-actions-margin:var(\n--spectrum-card-m-actions-margin,var(--spectrum-global-dimension-size-125)\n);--spectrum-card-footer-padding-top:var(\n--spectrum-card-m-footer-padding-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-footer-border-top-size:var(\n--spectrum-card-m-footer-border-top-size,var(--spectrum-global-dimension-size-10)\n);--spectrum-card-min-width:var(\n--spectrum-card-m-min-width,var(--spectrum-global-dimension-size-2500)\n);--spectrum-card-border-radius:var(\n--spectrum-card-m-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-border-size:var(\n--spectrum-card-m-border-size,var(--spectrum-alias-border-size-thin)\n)}:host{border:var(--spectrum-card-border-size) solid transparent;border-radius:var(--spectrum-card-border-radius);box-sizing:border-box;display:inline-flex;flex-direction:column;min-width:var(--spectrum-card-min-width);position:relative;text-decoration:none}:host(:focus){outline:none}:host(:focus) .actions,:host(:focus) .quick-actions,:host(:hover) .actions,:host(:hover) .quick-actions,:host([focused]) .actions,:host([focused]) .quick-actions,:host([selected]) .actions,:host([selected]) .quick-actions{opacity:1;pointer-events:all;visibility:visible}:host([dir=ltr]) .actions{right:var(\n--spectrum-card-actions-margin\n)}:host([dir=rtl]) .actions{left:var(\n--spectrum-card-actions-margin\n)}.actions{height:var(\n--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500)\n);position:absolute;top:var(--spectrum-card-actions-margin);visibility:hidden}:host([dir=ltr]) .quick-actions{left:var(\n--spectrum-card-checkbox-margin\n)}:host([dir=rtl]) .quick-actions{right:var(\n--spectrum-card-checkbox-margin\n)}.quick-actions{height:var(\n--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500)\n);position:absolute;top:var(--spectrum-card-checkbox-margin);visibility:hidden;width:var(\n--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500)\n)}:host([dir=ltr]) .quick-actions .checkbox,:host([dir=rtl]) .quick-actions .checkbox{margin:0}#cover-photo{align-items:center;background-position:50%;background-size:cover;border-bottom:var(--spectrum-card-coverphoto-border-bottom-size) solid transparent;border-bottom-left-radius:0;border-bottom-right-radius:0;border-top-left-radius:calc(var(--spectrum-card-border-radius) - 1px);border-top-right-radius:calc(var(--spectrum-card-border-radius) - 1px);box-sizing:border-box;display:flex;height:var(\n--spectrum-card-coverphoto-height\n);justify-content:center}:host([dir=ltr]) .body{padding-right:var(\n--spectrum-card-body-padding-right\n)}:host([dir=rtl]) .body{padding-left:var(\n--spectrum-card-body-padding-right\n)}:host([dir=ltr]) .body{padding-left:var(\n--spectrum-card-body-padding-left\n)}:host([dir=rtl]) .body{padding-right:var(\n--spectrum-card-body-padding-left\n)}.body{padding-bottom:var(--spectrum-card-body-padding-bottom);padding-top:var(\n--spectrum-card-body-padding-top\n)}.body:last-child{border-bottom-left-radius:var(--spectrum-card-border-radius);border-bottom-right-radius:var(--spectrum-card-border-radius);border-top-left-radius:0;border-top-right-radius:0}#preview{border-bottom-left-radius:0;border-bottom-right-radius:0;border-top-left-radius:calc(var(--spectrum-card-border-radius) - 1px);border-top-right-radius:calc(var(--spectrum-card-border-radius) - 1px);overflow:hidden}.header{height:var(--spectrum-card-body-header-height)}.content{display:flex;height:var(--spectrum-card-body-content-min-height);margin-top:var(--spectrum-card-body-content-margin-top)}:host([dir=ltr]) .title{padding-right:var(\n--spectrum-card-title-padding-right\n)}:host([dir=rtl]) .title{padding-left:var(\n--spectrum-card-title-padding-right\n)}.title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}:host([dir=ltr]) .subtitle{padding-right:var(\n--spectrum-card-subtitle-padding-right\n)}:host([dir=rtl]) .subtitle{padding-left:var(\n--spectrum-card-subtitle-padding-right\n)}::slotted([slot=description]){font-size:var(\n--spectrum-card-subtitle-text-size\n)}:host([dir=ltr]) .subtitle+::slotted([slot=description]):before{padding-right:var(\n--spectrum-card-subtitle-padding-right\n)}:host([dir=rtl]) .subtitle+::slotted([slot=description]):before{padding-left:var(\n--spectrum-card-subtitle-padding-right\n)}.subtitle+::slotted([slot=description]):before{content:\"•\"}:host([dir=ltr]) ::slotted([slot=footer]){margin-right:var(\n--spectrum-card-body-padding-right\n)}:host([dir=rtl]) ::slotted([slot=footer]){margin-left:var(\n--spectrum-card-body-padding-right\n)}:host([dir=ltr]) ::slotted([slot=footer]){margin-left:var(\n--spectrum-card-body-padding-left\n)}:host([dir=rtl]) ::slotted([slot=footer]){margin-right:var(\n--spectrum-card-body-padding-left\n)}::slotted([slot=footer]){border-top:var(--spectrum-card-footer-border-top-size) solid;padding-bottom:var(--spectrum-card-body-padding-bottom);padding-top:var(\n--spectrum-card-footer-padding-top\n)}.header{align-items:baseline;display:flex}.action-button{align-self:center;display:flex;flex:1;justify-content:flex-end}:host([variant=quiet]) #preview{min-height:var(\n--spectrum-card-quiet-min-height\n)}:host([variant=gallery]),:host([variant=quiet]){border-radius:0;border-width:0;height:100%;min-width:var(--spectrum-card-quiet-min-width);overflow:visible}:host([variant=gallery]) #preview,:host([variant=quiet]) #preview{border-radius:var(--spectrum-card-quiet-border-radius);box-sizing:border-box;flex:1;margin:0 auto;overflow:visible;padding:var(--spectrum-card-quiet-preview-padding);position:relative;transition:background-color var(--spectrum-global-animation-duration-100,.13s);width:100%}:host([dir=ltr][variant=gallery]) #preview:before,:host([dir=ltr][variant=quiet]) #preview:before{left:0}:host([dir=rtl][variant=gallery]) #preview:before,:host([dir=rtl][variant=quiet]) #preview:before{right:0}:host([variant=gallery]) #preview:before,:host([variant=quiet]) #preview:before{border:var(--spectrum-card-quiet-border-size) solid transparent;border-radius:inherit;box-sizing:border-box;content:\"\";height:100%;position:absolute;top:0;width:100%}:host([variant=gallery][drop-target]) #preview,:host([variant=quiet][drop-target]) #preview{transition:none}:host([variant=gallery]) .header,:host([variant=quiet]) .header{height:var(\n--spectrum-card-quiet-body-header-height\n);margin-top:var(--spectrum-card-quiet-body-header-margin-top)}:host([variant=gallery]) .body,:host([variant=quiet]) .body{padding:0}:host([horizontal]){flex-direction:row}:host([dir=ltr][horizontal]) #preview{border-top-left-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=rtl][horizontal]) #preview{border-top-right-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=ltr][horizontal]) #preview{border-top-right-radius:0}:host([dir=rtl][horizontal]) #preview{border-top-left-radius:0}:host([dir=ltr][horizontal]) #preview{border-bottom-left-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=rtl][horizontal]) #preview{border-bottom-right-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=ltr][horizontal]) #preview{border-bottom-right-radius:0}:host([dir=rtl][horizontal]) #preview{border-bottom-left-radius:0}:host([dir=ltr][horizontal]) #preview{border-right:var(--spectrum-card-border-size) solid transparent}:host([dir=rtl][horizontal]) #preview{border-left:var(--spectrum-card-border-size) solid transparent}:host([horizontal]) #preview{align-items:center;display:flex;flex-shrink:0;justify-content:center;min-height:0;padding:var(--spectrum-global-dimension-size-175)}:host([horizontal]) .content,:host([horizontal]) .header{height:auto;margin-top:0}:host([dir=ltr][horizontal]) .title{padding-right:0}:host([dir=rtl][horizontal]) .title{padding-left:0}:host([horizontal]) .body{display:flex;flex-direction:column;flex-shrink:0;justify-content:center;padding-bottom:0;padding-left:var(--spectrum-global-dimension-size-200);padding-right:var(--spectrum-global-dimension-size-200);padding-top:0}:host([variant=gallery]){min-width:0}:host([variant=gallery]) #preview{border-radius:0;padding:0}:host{background-color:var(\n--spectrum-card-m-background-color,var(--spectrum-global-color-gray-50)\n);border-color:var(\n--spectrum-card-m-border-color,var(--spectrum-global-color-gray-200)\n)}:host(:hover){border-color:var(\n--spectrum-card-m-border-color-hover,var(--spectrum-global-color-gray-400)\n)}:host(.focus-visible),:host([selected]){border-color:var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host(:focus-visible),:host([selected]){border-color:var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host([drop-target]){background-color:var(--spectrum-alias-highlight-selected);border-color:var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}.subtitle{color:var(\n--spectrum-card-m-description-text-color,var(--spectrum-global-color-gray-700)\n)}::slotted([slot=description]){color:var(\n--spectrum-card-m-description-text-color,var(--spectrum-global-color-gray-700)\n)}#cover-photo{background-color:var(\n--spectrum-card-m-coverphoto-background-color,var(--spectrum-global-color-gray-200)\n);border-bottom-color:var(\n--spectrum-card-m-coverphoto-border-color,var(--spectrum-global-color-gray-200)\n)}::slotted([slot=footer]){border-color:var(\n--spectrum-card-m-border-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery]),:host([variant=quiet]){background-color:transparent;border-color:transparent}:host([variant=gallery]) #preview,:host([variant=quiet]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery]:hover),:host([variant=quiet]:hover){border-color:transparent}:host([variant=gallery]:hover) #preview,:host([variant=quiet]:hover) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color-hover,var(--spectrum-global-color-gray-300)\n)}:host([variant=gallery].focus-visible),:host([variant=gallery][selected]),:host([variant=quiet].focus-visible),:host([variant=quiet][selected]){border-color:transparent;box-shadow:none}:host([variant=gallery]:focus-visible),:host([variant=gallery][selected]),:host([variant=quiet]:focus-visible),:host([variant=quiet][selected]){border-color:transparent;box-shadow:none}:host([variant=gallery].focus-visible) #preview,:host([variant=gallery][selected]) #preview,:host([variant=quiet].focus-visible) #preview,:host([variant=quiet][selected]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery]:focus-visible) #preview,:host([variant=gallery][selected]) #preview,:host([variant=quiet]:focus-visible) #preview,:host([variant=quiet][selected]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery].focus-visible) #preview:before,:host([variant=gallery][selected]) #preview:before,:host([variant=quiet].focus-visible) #preview:before,:host([variant=quiet][selected]) #preview:before{border-color:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery]:focus-visible) #preview:before,:host([variant=gallery][selected]) #preview:before,:host([variant=quiet]:focus-visible) #preview:before,:host([variant=quiet][selected]) #preview:before{border-color:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery][drop-target]),:host([variant=quiet][drop-target]){background-color:transparent;border-color:transparent;box-shadow:none}:host([variant=gallery][drop-target]) #preview,:host([variant=quiet][drop-target]) #preview{background-color:var(\n--spectrum-alias-highlight-selected\n)}:host([variant=gallery][drop-target]) #preview:before,:host([variant=quiet][drop-target]) #preview:before{border-color:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery][drop-target]) .spectrum-Asset-fileBackground,:host([variant=gallery][drop-target]) .spectrum-Asset-folderBackground,:host([variant=quiet][drop-target]) .spectrum-Asset-fileBackground,:host([variant=quiet][drop-target]) .spectrum-Asset-folderBackground{fill:var(\n--spectrum-alias-highlight-selected\n)}:host([variant=gallery][drop-target]) .spectrum-Asset-fileOutline,:host([variant=gallery][drop-target]) .spectrum-Asset-folderOutline,:host([variant=quiet][drop-target]) .spectrum-Asset-fileOutline,:host([variant=quiet][drop-target]) .spectrum-Asset-folderOutline{fill:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery]) .title,:host([variant=quiet]) .title{color:var(\n--spectrum-card-m-quiet-title-text-color,var(--spectrum-global-color-gray-800)\n)}:host([variant=gallery]) .subtitle,:host([variant=quiet]) .subtitle{color:var(\n--spectrum-card-m-quiet-subtitle-text-color,var(--spectrum-global-color-gray-700)\n)}:host([horizontal]:hover) #preview{border-color:var(\n--spectrum-card-m-border-color-hover,var(--spectrum-global-color-gray-400)\n)}:host([horizontal]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n);border-color:var(\n--spectrum-card-m-border-color,var(--spectrum-global-color-gray-200)\n)}:host([href]:not([href=\"\"])){cursor:pointer}#like-anchor{inset:0;pointer-events:none;position:absolute}.action-button{flex-grow:0}:host([dir=ltr]) .action-button{margin-left:auto}:host([dir=rtl]) .action-button{margin-right:auto}slot[name=description]{font-size:var(\n--spectrum-card-subtitle-text-size,var(--spectrum-global-dimension-font-size-50)\n)}#cover-photo,#preview{order:-1;overflow:hidden}#preview+#cover-photo{display:none}#cover-photo ::slotted(*),#preview ::slotted(*){display:block;object-fit:cover;width:100%}:host(:not([variant=gallery])) #preview ::slotted(*){height:100%}:host([horizontal]) #preview{width:auto}sp-quick-actions{z-index:1}.title{width:var(--spectrum-card-title-width)}.subtitle{text-transform:none}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/card/src/card.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/card/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Card.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/card/src/spectrum-card.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-card-quiet-body-header-margin-top:var(\n--spectrum-card-s-quiet-body-header-margin-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-quiet-body-header-height:var(\n--spectrum-card-s-quiet-body-header-height,var(--spectrum-global-dimension-size-150)\n);--spectrum-card-quiet-preview-padding:var(\n--spectrum-card-s-quiet-preview-padding,var(--spectrum-global-dimension-size-150)\n);--spectrum-card-quiet-min-width:var(\n--spectrum-card-s-quiet-min-width,var(--spectrum-global-dimension-size-1200)\n);--spectrum-card-quiet-min-height:var(\n--spectrum-card-s-quiet-min-height,var(--spectrum-global-dimension-size-900)\n);--spectrum-card-quiet-border-radius:var(\n--spectrum-card-s-quiet-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-quiet-border-size:var(\n--spectrum-card-s-quiet-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-body-header-height:var(\n--spectrum-card-s-body-header-height,var(--spectrum-global-dimension-size-150)\n);--spectrum-card-body-content-min-height:var(\n--spectrum-card-s-body-content-min-height,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-body-content-margin-top:var(\n--spectrum-card-s-body-content-margin-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-card-body-padding-top:var(\n--spectrum-card-s-body-padding-top,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-bottom:var(\n--spectrum-card-s-body-padding-bottom,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-left:var(\n--spectrum-card-s-body-padding-left,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-body-padding-right:var(\n--spectrum-card-s-body-padding-right,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-coverphoto-height:var(\n--spectrum-card-s-coverphoto-height,var(--spectrum-global-dimension-size-1700)\n);--spectrum-card-coverphoto-border-bottom-size:var(\n--spectrum-card-s-coverphoto-border-bottom-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-checkbox-margin:var(\n--spectrum-card-s-checkbox-margin,var(--spectrum-global-dimension-size-125)\n);--spectrum-card-title-padding-right:var(\n--spectrum-card-s-title-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-subtitle-text-size:var(\n--spectrum-card-s-subtitle-text-size,var(--spectrum-global-dimension-font-size-50)\n);--spectrum-card-subtitle-padding-right:var(\n--spectrum-card-s-subtitle-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-actions-margin:var(\n--spectrum-card-s-actions-margin,var(--spectrum-global-dimension-size-125)\n);--spectrum-card-footer-padding-top:var(\n--spectrum-card-s-footer-padding-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-footer-border-top-size:var(\n--spectrum-card-s-footer-border-top-size,var(--spectrum-global-dimension-size-10)\n);--spectrum-card-min-width:var(\n--spectrum-card-s-min-width,var(--spectrum-global-dimension-size-1250)\n);--spectrum-card-border-radius:var(\n--spectrum-card-s-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-border-size:var(\n--spectrum-card-s-border-size,var(--spectrum-alias-border-size-thin)\n)}:host([size=m]){--spectrum-card-quiet-body-header-margin-top:var(\n--spectrum-card-m-quiet-body-header-margin-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-quiet-body-header-height:var(\n--spectrum-card-m-quiet-body-header-height,var(--spectrum-global-dimension-size-225)\n);--spectrum-card-quiet-preview-padding:var(\n--spectrum-card-m-quiet-preview-padding,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-quiet-min-width:var(\n--spectrum-card-m-quiet-min-width,var(--spectrum-global-dimension-size-2500)\n);--spectrum-card-quiet-min-height:var(\n--spectrum-card-m-quiet-min-height,var(--spectrum-global-dimension-size-1700)\n);--spectrum-card-quiet-border-radius:var(\n--spectrum-card-m-quiet-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-quiet-border-size:var(\n--spectrum-card-m-quiet-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-body-header-height:var(\n--spectrum-card-m-body-header-height,var(--spectrum-global-dimension-size-225)\n);--spectrum-card-body-content-min-height:var(\n--spectrum-card-m-body-content-min-height,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-body-content-margin-top:var(\n--spectrum-card-m-body-content-margin-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-card-body-padding-top:var(\n--spectrum-card-m-body-padding-top,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-bottom:var(\n--spectrum-card-m-body-padding-bottom,var(--spectrum-global-dimension-size-250)\n);--spectrum-card-body-padding-left:var(\n--spectrum-card-m-body-padding-left,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-body-padding-right:var(\n--spectrum-card-m-body-padding-right,var(--spectrum-global-dimension-size-300)\n);--spectrum-card-coverphoto-height:var(\n--spectrum-card-m-coverphoto-height,var(--spectrum-global-dimension-size-1700)\n);--spectrum-card-coverphoto-border-bottom-size:var(\n--spectrum-card-m-coverphoto-border-bottom-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-card-checkbox-margin:var(\n--spectrum-card-m-checkbox-margin,var(--spectrum-global-dimension-size-200)\n);--spectrum-card-title-padding-right:var(\n--spectrum-card-m-title-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-subtitle-text-size:var(\n--spectrum-card-m-subtitle-text-size,var(--spectrum-global-dimension-font-size-50)\n);--spectrum-card-subtitle-padding-right:var(\n--spectrum-card-m-subtitle-padding-right,var(--spectrum-global-dimension-size-100)\n);--spectrum-card-actions-margin:var(\n--spectrum-card-m-actions-margin,var(--spectrum-global-dimension-size-125)\n);--spectrum-card-footer-padding-top:var(\n--spectrum-card-m-footer-padding-top,var(--spectrum-global-dimension-size-175)\n);--spectrum-card-footer-border-top-size:var(\n--spectrum-card-m-footer-border-top-size,var(--spectrum-global-dimension-size-10)\n);--spectrum-card-min-width:var(\n--spectrum-card-m-min-width,var(--spectrum-global-dimension-size-2500)\n);--spectrum-card-border-radius:var(\n--spectrum-card-m-border-radius,var(--spectrum-alias-border-radius-regular)\n);--spectrum-card-border-size:var(\n--spectrum-card-m-border-size,var(--spectrum-alias-border-size-thin)\n)}:host{border:var(--spectrum-card-border-size) solid transparent;border-radius:var(--spectrum-card-border-radius);box-sizing:border-box;display:inline-flex;flex-direction:column;min-width:var(--spectrum-card-min-width);position:relative;text-decoration:none}:host(:focus){outline:none}:host(:focus) .actions,:host(:focus) .quick-actions,:host(:hover) .actions,:host(:hover) .quick-actions,:host([focused]) .actions,:host([focused]) .quick-actions,:host([selected]) .actions,:host([selected]) .quick-actions{opacity:1;pointer-events:all;visibility:visible}:host([dir=ltr]) .actions{right:var(\n--spectrum-card-actions-margin\n)}:host([dir=rtl]) .actions{left:var(\n--spectrum-card-actions-margin\n)}.actions{height:var(\n--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500)\n);position:absolute;top:var(--spectrum-card-actions-margin);visibility:hidden}:host([dir=ltr]) .quick-actions{left:var(\n--spectrum-card-checkbox-margin\n)}:host([dir=rtl]) .quick-actions{right:var(\n--spectrum-card-checkbox-margin\n)}.quick-actions{height:var(\n--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500)\n);position:absolute;top:var(--spectrum-card-checkbox-margin);visibility:hidden;width:var(\n--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500)\n)}:host([dir=ltr]) .quick-actions .checkbox,:host([dir=rtl]) .quick-actions .checkbox{margin:0}#cover-photo{align-items:center;background-position:50%;background-size:cover;border-bottom:var(--spectrum-card-coverphoto-border-bottom-size) solid transparent;border-bottom-left-radius:0;border-bottom-right-radius:0;border-top-left-radius:calc(var(--spectrum-card-border-radius) - 1px);border-top-right-radius:calc(var(--spectrum-card-border-radius) - 1px);box-sizing:border-box;display:flex;height:var(\n--spectrum-card-coverphoto-height\n);justify-content:center}:host([dir=ltr]) .body{padding-right:var(\n--spectrum-card-body-padding-right\n)}:host([dir=rtl]) .body{padding-left:var(\n--spectrum-card-body-padding-right\n)}:host([dir=ltr]) .body{padding-left:var(\n--spectrum-card-body-padding-left\n)}:host([dir=rtl]) .body{padding-right:var(\n--spectrum-card-body-padding-left\n)}.body{padding-bottom:var(--spectrum-card-body-padding-bottom);padding-top:var(\n--spectrum-card-body-padding-top\n)}.body:last-child{border-bottom-left-radius:var(--spectrum-card-border-radius);border-bottom-right-radius:var(--spectrum-card-border-radius);border-top-left-radius:0;border-top-right-radius:0}#preview{border-bottom-left-radius:0;border-bottom-right-radius:0;border-top-left-radius:calc(var(--spectrum-card-border-radius) - 1px);border-top-right-radius:calc(var(--spectrum-card-border-radius) - 1px);overflow:hidden}.header{height:var(--spectrum-card-body-header-height)}.content{display:flex;height:var(--spectrum-card-body-content-min-height);margin-top:var(--spectrum-card-body-content-margin-top)}:host([dir=ltr]) .title{padding-right:var(\n--spectrum-card-title-padding-right\n)}:host([dir=rtl]) .title{padding-left:var(\n--spectrum-card-title-padding-right\n)}.title{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}:host([dir=ltr]) .subtitle{padding-right:var(\n--spectrum-card-subtitle-padding-right\n)}:host([dir=rtl]) .subtitle{padding-left:var(\n--spectrum-card-subtitle-padding-right\n)}::slotted([slot=description]){font-size:var(\n--spectrum-card-subtitle-text-size\n)}:host([dir=ltr]) .subtitle+::slotted([slot=description]):before{padding-right:var(\n--spectrum-card-subtitle-padding-right\n)}:host([dir=rtl]) .subtitle+::slotted([slot=description]):before{padding-left:var(\n--spectrum-card-subtitle-padding-right\n)}.subtitle+::slotted([slot=description]):before{content:\"•\"}:host([dir=ltr]) ::slotted([slot=footer]){margin-right:var(\n--spectrum-card-body-padding-right\n)}:host([dir=rtl]) ::slotted([slot=footer]){margin-left:var(\n--spectrum-card-body-padding-right\n)}:host([dir=ltr]) ::slotted([slot=footer]){margin-left:var(\n--spectrum-card-body-padding-left\n)}:host([dir=rtl]) ::slotted([slot=footer]){margin-right:var(\n--spectrum-card-body-padding-left\n)}::slotted([slot=footer]){border-top:var(--spectrum-card-footer-border-top-size) solid;padding-bottom:var(--spectrum-card-body-padding-bottom);padding-top:var(\n--spectrum-card-footer-padding-top\n)}.header{align-items:baseline;display:flex}.action-button{align-self:center;display:flex;flex:1;justify-content:flex-end}:host([variant=quiet]) #preview{min-height:var(\n--spectrum-card-quiet-min-height\n)}:host([variant=gallery]),:host([variant=quiet]){border-radius:0;border-width:0;height:100%;min-width:var(--spectrum-card-quiet-min-width);overflow:visible}:host([variant=gallery]) #preview,:host([variant=quiet]) #preview{border-radius:var(--spectrum-card-quiet-border-radius);box-sizing:border-box;flex:1;margin:0 auto;overflow:visible;padding:var(--spectrum-card-quiet-preview-padding);position:relative;transition:background-color var(--spectrum-global-animation-duration-100,.13s);width:100%}:host([dir=ltr][variant=gallery]) #preview:before,:host([dir=ltr][variant=quiet]) #preview:before{left:0}:host([dir=rtl][variant=gallery]) #preview:before,:host([dir=rtl][variant=quiet]) #preview:before{right:0}:host([variant=gallery]) #preview:before,:host([variant=quiet]) #preview:before{border:var(--spectrum-card-quiet-border-size) solid transparent;border-radius:inherit;box-sizing:border-box;content:\"\";height:100%;position:absolute;top:0;width:100%}:host([variant=gallery][drop-target]) #preview,:host([variant=quiet][drop-target]) #preview{transition:none}:host([variant=gallery]) .header,:host([variant=quiet]) .header{height:var(\n--spectrum-card-quiet-body-header-height\n);margin-top:var(--spectrum-card-quiet-body-header-margin-top)}:host([variant=gallery]) .body,:host([variant=quiet]) .body{padding:0}:host([horizontal]){flex-direction:row}:host([dir=ltr][horizontal]) #preview{border-top-left-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=rtl][horizontal]) #preview{border-top-right-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=ltr][horizontal]) #preview{border-top-right-radius:0}:host([dir=rtl][horizontal]) #preview{border-top-left-radius:0}:host([dir=ltr][horizontal]) #preview{border-bottom-left-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=rtl][horizontal]) #preview{border-bottom-right-radius:var(\n--spectrum-card-quiet-border-radius\n)}:host([dir=ltr][horizontal]) #preview{border-bottom-right-radius:0}:host([dir=rtl][horizontal]) #preview{border-bottom-left-radius:0}:host([dir=ltr][horizontal]) #preview{border-right:var(--spectrum-card-border-size) solid transparent}:host([dir=rtl][horizontal]) #preview{border-left:var(--spectrum-card-border-size) solid transparent}:host([horizontal]) #preview{align-items:center;display:flex;flex-shrink:0;justify-content:center;min-height:0;padding:var(--spectrum-global-dimension-size-175)}:host([horizontal]) .content,:host([horizontal]) .header{height:auto;margin-top:0}:host([dir=ltr][horizontal]) .title{padding-right:0}:host([dir=rtl][horizontal]) .title{padding-left:0}:host([horizontal]) .body{display:flex;flex-direction:column;flex-shrink:0;justify-content:center;padding-bottom:0;padding-left:var(--spectrum-global-dimension-size-200);padding-right:var(--spectrum-global-dimension-size-200);padding-top:0}:host([variant=gallery]){min-width:0}:host([variant=gallery]) #preview{border-radius:0;padding:0}:host{background-color:var(\n--spectrum-card-m-background-color,var(--spectrum-global-color-gray-50)\n);border-color:var(\n--spectrum-card-m-border-color,var(--spectrum-global-color-gray-200)\n)}:host(:hover){border-color:var(\n--spectrum-card-m-border-color-hover,var(--spectrum-global-color-gray-400)\n)}:host(.focus-visible),:host([selected]){border-color:var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host(:focus-visible),:host([selected]){border-color:var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host([drop-target]){background-color:var(--spectrum-alias-highlight-selected);border-color:var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}.subtitle{color:var(\n--spectrum-card-m-description-text-color,var(--spectrum-global-color-gray-700)\n)}::slotted([slot=description]){color:var(\n--spectrum-card-m-description-text-color,var(--spectrum-global-color-gray-700)\n)}#cover-photo{background-color:var(\n--spectrum-card-m-coverphoto-background-color,var(--spectrum-global-color-gray-200)\n);border-bottom-color:var(\n--spectrum-card-m-coverphoto-border-color,var(--spectrum-global-color-gray-200)\n)}::slotted([slot=footer]){border-color:var(\n--spectrum-card-m-border-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery]),:host([variant=quiet]){background-color:transparent;border-color:transparent}:host([variant=gallery]) #preview,:host([variant=quiet]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery]:hover),:host([variant=quiet]:hover){border-color:transparent}:host([variant=gallery]:hover) #preview,:host([variant=quiet]:hover) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color-hover,var(--spectrum-global-color-gray-300)\n)}:host([variant=gallery].focus-visible),:host([variant=gallery][selected]),:host([variant=quiet].focus-visible),:host([variant=quiet][selected]){border-color:transparent;box-shadow:none}:host([variant=gallery]:focus-visible),:host([variant=gallery][selected]),:host([variant=quiet]:focus-visible),:host([variant=quiet][selected]){border-color:transparent;box-shadow:none}:host([variant=gallery].focus-visible) #preview,:host([variant=gallery][selected]) #preview,:host([variant=quiet].focus-visible) #preview,:host([variant=quiet][selected]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery]:focus-visible) #preview,:host([variant=gallery][selected]) #preview,:host([variant=quiet]:focus-visible) #preview,:host([variant=quiet][selected]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n)}:host([variant=gallery].focus-visible) #preview:before,:host([variant=gallery][selected]) #preview:before,:host([variant=quiet].focus-visible) #preview:before,:host([variant=quiet][selected]) #preview:before{border-color:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery]:focus-visible) #preview:before,:host([variant=gallery][selected]) #preview:before,:host([variant=quiet]:focus-visible) #preview:before,:host([variant=quiet][selected]) #preview:before{border-color:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery][drop-target]),:host([variant=quiet][drop-target]){background-color:transparent;border-color:transparent;box-shadow:none}:host([variant=gallery][drop-target]) #preview,:host([variant=quiet][drop-target]) #preview{background-color:var(\n--spectrum-alias-highlight-selected\n)}:host([variant=gallery][drop-target]) #preview:before,:host([variant=quiet][drop-target]) #preview:before{border-color:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n);box-shadow:0 0 0 1px var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery][drop-target]) .spectrum-Asset-fileBackground,:host([variant=gallery][drop-target]) .spectrum-Asset-folderBackground,:host([variant=quiet][drop-target]) .spectrum-Asset-fileBackground,:host([variant=quiet][drop-target]) .spectrum-Asset-folderBackground{fill:var(\n--spectrum-alias-highlight-selected\n)}:host([variant=gallery][drop-target]) .spectrum-Asset-fileOutline,:host([variant=gallery][drop-target]) .spectrum-Asset-folderOutline,:host([variant=quiet][drop-target]) .spectrum-Asset-fileOutline,:host([variant=quiet][drop-target]) .spectrum-Asset-folderOutline{fill:var(\n--spectrum-card-m-quiet-border-color-selected,var(--spectrum-global-color-blue-500)\n)}:host([variant=gallery]) .title,:host([variant=quiet]) .title{color:var(\n--spectrum-card-m-quiet-title-text-color,var(--spectrum-global-color-gray-800)\n)}:host([variant=gallery]) .subtitle,:host([variant=quiet]) .subtitle{color:var(\n--spectrum-card-m-quiet-subtitle-text-color,var(--spectrum-global-color-gray-700)\n)}:host([horizontal]:hover) #preview{border-color:var(\n--spectrum-card-m-border-color-hover,var(--spectrum-global-color-gray-400)\n)}:host([horizontal]) #preview{background-color:var(\n--spectrum-card-m-quiet-preview-background-color,var(--spectrum-global-color-gray-200)\n);border-color:var(\n--spectrum-card-m-border-color,var(--spectrum-global-color-gray-200)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/card/src/spectrum-card.css.ts"
           }
         }
       ]
@@ -17781,6 +17781,308 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/field-group/src/FieldGroup.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "FieldGroup",
+          "slots": [
+            {
+              "description": "the form controls that make up the group",
+              "name": ""
+            },
+            {
+              "description": "default or non-negative help text to associate to your form element",
+              "name": "help-text"
+            },
+            {
+              "description": "negative help text to associate to your form element when `invalid`",
+              "name": "negative-help-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "horizontal",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "horizontal",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "invalid",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "helpTextManager",
+              "default": "new HelpTextManager(this, { mode })",
+              "inheritedFrom": {
+                "name": "ManageHelpText",
+                "module": "packages/help-text/src/manage-help-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "helpTextId",
+              "type": {
+                "text": "string"
+              },
+              "inheritedFrom": {
+                "name": "ManageHelpText",
+                "module": "packages/help-text/src/manage-help-text.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderHelpText",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "negative",
+                  "optional": true,
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ManageHelpText",
+                "module": "packages/help-text/src/manage-help-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "horizontal",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "horizontal"
+            },
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            },
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ManageHelpText",
+              "package": "@spectrum-web-components/help-text/src/manage-help-text.js"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-field-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FieldGroup",
+          "declaration": {
+            "name": "FieldGroup",
+            "module": "packages/field-group/src/FieldGroup.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/field-group/src/field-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-fieldgroup-margin:var(\n--spectrum-global-dimension-size-200\n)}.group{display:flex;flex-wrap:wrap;vertical-align:top}:host([dir=ltr][horizontal]) slot:not([name])::slotted(:not(:last-child)){margin-right:var(\n--spectrum-fieldgroup-margin\n)}:host([dir=rtl][horizontal]) slot:not([name])::slotted(:not(:last-child)){margin-left:var(\n--spectrum-fieldgroup-margin\n)}:host([vertical]) .group{display:inline-flex;flex-direction:column}:host([dir=rtl]:not([vertical])) slot:not([name])::slotted(:not(:last-child)),:host([horizontal][dir=rtl]) slot:not([name])::slotted(:not(:last-child)){margin:0 0 0 var(--spectrum-fieldgroup-margin)}:host([dir=ltr]:not([vertical])) slot:not([name])::slotted(:not(:last-child)),:host([horizontal][dir=ltr]) slot:not([name])::slotted(:not(:last-child)){margin:0 var(--spectrum-fieldgroup-margin) 0 0}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/field-group/src/field-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/field-group/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./FieldGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/field-group/src/spectrum-field-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-fieldgroup-margin:var(\n--spectrum-global-dimension-size-200\n)}.group{display:flex;flex-wrap:wrap;vertical-align:top}:host([dir=ltr][horizontal]) slot:not([name])::slotted(:not(:last-child)){margin-right:var(\n--spectrum-fieldgroup-margin\n)}:host([dir=rtl][horizontal]) slot:not([name])::slotted(:not(:last-child)){margin-left:var(\n--spectrum-fieldgroup-margin\n)}:host([vertical]) .group{display:inline-flex;flex-direction:column}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/field-group/src/spectrum-field-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/field-label/src/FieldLabel.ts",
       "declarations": [
         {
@@ -18165,308 +18467,6 @@
           "declaration": {
             "name": "styles",
             "module": "packages/field-label/src/spectrum-field-label.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/field-group/src/FieldGroup.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "FieldGroup",
-          "slots": [
-            {
-              "description": "the form controls that make up the group",
-              "name": ""
-            },
-            {
-              "description": "default or non-negative help text to associate to your form element",
-              "name": "help-text"
-            },
-            {
-              "description": "negative help text to associate to your form element when `invalid`",
-              "name": "negative-help-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "horizontal",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "horizontal",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "invalid",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "invalid",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "vertical",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "helpTextManager",
-              "default": "new HelpTextManager(this, { mode })",
-              "inheritedFrom": {
-                "name": "ManageHelpText",
-                "module": "packages/help-text/src/manage-help-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "helpTextId",
-              "type": {
-                "text": "string"
-              },
-              "inheritedFrom": {
-                "name": "ManageHelpText",
-                "module": "packages/help-text/src/manage-help-text.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "renderHelpText",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "negative",
-                  "optional": true,
-                  "type": {
-                    "text": "boolean"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "ManageHelpText",
-                "module": "packages/help-text/src/manage-help-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "horizontal",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "horizontal"
-            },
-            {
-              "name": "invalid",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "invalid"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
-            },
-            {
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "vertical"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "mixins": [
-            {
-              "name": "ManageHelpText",
-              "package": "@spectrum-web-components/help-text/src/manage-help-text.js"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-field-group",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "FieldGroup",
-          "declaration": {
-            "name": "FieldGroup",
-            "module": "packages/field-group/src/FieldGroup.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/field-group/src/field-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-fieldgroup-margin:var(\n--spectrum-global-dimension-size-200\n)}.group{display:flex;flex-wrap:wrap;vertical-align:top}:host([dir=ltr][horizontal]) slot:not([name])::slotted(:not(:last-child)){margin-right:var(\n--spectrum-fieldgroup-margin\n)}:host([dir=rtl][horizontal]) slot:not([name])::slotted(:not(:last-child)){margin-left:var(\n--spectrum-fieldgroup-margin\n)}:host([vertical]) .group{display:inline-flex;flex-direction:column}:host([dir=rtl]:not([vertical])) slot:not([name])::slotted(:not(:last-child)),:host([horizontal][dir=rtl]) slot:not([name])::slotted(:not(:last-child)){margin:0 0 0 var(--spectrum-fieldgroup-margin)}:host([dir=ltr]:not([vertical])) slot:not([name])::slotted(:not(:last-child)),:host([horizontal][dir=ltr]) slot:not([name])::slotted(:not(:last-child)){margin:0 var(--spectrum-fieldgroup-margin) 0 0}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/field-group/src/field-group.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/field-group/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./FieldGroup.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/field-group/src/spectrum-field-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-fieldgroup-margin:var(\n--spectrum-global-dimension-size-200\n)}.group{display:flex;flex-wrap:wrap;vertical-align:top}:host([dir=ltr][horizontal]) slot:not([name])::slotted(:not(:last-child)){margin-right:var(\n--spectrum-fieldgroup-margin\n)}:host([dir=rtl][horizontal]) slot:not([name])::slotted(:not(:last-child)){margin-left:var(\n--spectrum-fieldgroup-margin\n)}:host([vertical]) .group{display:inline-flex;flex-direction:column}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/field-group/src/spectrum-field-group.css.ts"
           }
         }
       ]
@@ -34121,12 +34121,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/overlay/sync/overlay-trigger.ts",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/overlay/src/ActiveOverlay.ts",
       "declarations": [
         {
@@ -36369,6 +36363,12 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/sync/overlay-trigger.ts",
+      "declarations": [],
+      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -44521,6 +44521,24 @@
               }
             },
             {
+              "kind": "method",
+              "name": "waitForUpgrade",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "handle",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ]
+            },
+            {
               "kind": "field",
               "name": "extractModelFromLightDom",
               "privacy": "private"
@@ -46105,6 +46123,16 @@
           "customElement": true,
           "events": [
             {
+              "name": "sp-slider-handle-ready",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "inheritedFrom": {
+                "name": "SliderHandle",
+                "module": "packages/slider/src/SliderHandle.ts"
+              }
+            },
+            {
               "description": "The value of the element has changed.",
               "name": "input",
               "inheritedFrom": {
@@ -46643,6 +46671,12 @@
             }
           ],
           "events": [
+            {
+              "name": "sp-slider-handle-ready",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
             {
               "description": "The value of the element has changed.",
               "name": "input"
@@ -58150,6 +58184,64 @@
     },
     {
       "kind": "javascript-module",
+      "path": "projects/documentation/src/utils/templates.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "toHtmlTemplateString",
+          "return": {
+            "type": {
+              "text": "TemplateResult"
+            }
+          },
+          "parameters": [
+            {
+              "name": "code",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "toCssTemplateString",
+          "return": {
+            "type": {
+              "text": "CSSResultGroup"
+            }
+          },
+          "parameters": [
+            {
+              "name": "code",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "toHtmlTemplateString",
+          "declaration": {
+            "name": "toHtmlTemplateString",
+            "module": "projects/documentation/src/utils/templates.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "toCssTemplateString",
+          "declaration": {
+            "name": "toCssTemplateString",
+            "module": "projects/documentation/src/utils/templates.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "projects/documentation/src/components/adobe-logo.ts",
       "declarations": [
         {
@@ -59079,64 +59171,6 @@
           "declaration": {
             "name": "SideNav",
             "module": "projects/documentation/src/components/side-nav.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "projects/documentation/src/utils/templates.ts",
-      "declarations": [
-        {
-          "kind": "function",
-          "name": "toHtmlTemplateString",
-          "return": {
-            "type": {
-              "text": "TemplateResult"
-            }
-          },
-          "parameters": [
-            {
-              "name": "code",
-              "type": {
-                "text": "string"
-              }
-            }
-          ]
-        },
-        {
-          "kind": "function",
-          "name": "toCssTemplateString",
-          "return": {
-            "type": {
-              "text": "CSSResultGroup"
-            }
-          },
-          "parameters": [
-            {
-              "name": "code",
-              "type": {
-                "text": "string"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "toHtmlTemplateString",
-          "declaration": {
-            "name": "toHtmlTemplateString",
-            "module": "projects/documentation/src/utils/templates.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "toCssTemplateString",
-          "declaration": {
-            "name": "toCssTemplateString",
-            "module": "projects/documentation/src/utils/templates.ts"
           }
         }
       ]
