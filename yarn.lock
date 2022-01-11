@@ -4149,9 +4149,9 @@
   integrity sha512-u3DOtfNpevPU9FrxDDMswW9t4NzwFgqWHY0BJvVa1nLljVKPsKSL9Yp6LimiTo3yhkKSsO8yatziCGM1K9IVzg==
 
 "@spectrum-css/tooltip@^3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-3.1.4.tgz#6be51d1ed9d8d3e6763ad0bbe00d0a1f84a762d8"
-  integrity sha512-cQ5FKxnQshjIe8Cv79wj+I1sbaEo8WF+WujYi1uPDMT7zYDbVt1RcHO+ZhwyR3nAVMALATod/g6wiE9Tbxr0QA==
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-3.1.6.tgz#cbd811c2231bb9826a3e0b63d25397b6886aef70"
+  integrity sha512-shIO/Z8sgG+eRP7NDBl9LR4U9ViUChW/3+C+4Li8oFOj8z1PtKqX9vOwEShjP9W8Aeg783IdhmONFA2N8W33eg==
 
 "@spectrum-css/tray@^1.0.11":
   version "1.0.11"
