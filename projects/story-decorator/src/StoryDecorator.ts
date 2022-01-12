@@ -107,7 +107,6 @@ export class StoryDecorator extends SpectrumElement {
                         2 * var(--spectrum-alias-focus-ring-size) +
                             var(--spectrum-alias-item-height-m)
                     );
-                box-sizing: border-box;
                 background-color: var(--spectrum-global-color-gray-100);
                 color: var(
                     --spectrum-body-text-color,
