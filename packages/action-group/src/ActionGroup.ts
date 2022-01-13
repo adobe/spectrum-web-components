@@ -27,6 +27,8 @@ const EMPTY_SELECTION: string[] = [];
 /**
  * @element sp-action-group
  * @slot - the sp-action-button elements that make up the group
+ *
+ * @fires change - Announces that selection state has been changed by user
  */
 export class ActionGroup extends SpectrumElement {
     public static get styles(): CSSResultArray {
@@ -58,14 +60,7 @@ export class ActionGroup extends SpectrumElement {
     public vertical = false;
 
     @property({ type: Array })
-    public get selected(): string[] {
-        return this._selected;
-    }
-
-    public set selected(selected: string[]) {
-        if (selected === this.selected) return;
-        this._selected = selected;
-    }
+    public selected: string[] = EMPTY_SELECTION;
 
     private dispatchChange(old: string[]) {
         const applyDefault = this.dispatchEvent(
@@ -77,7 +72,7 @@ export class ActionGroup extends SpectrumElement {
         );
 
         if (!applyDefault) {
-            this._selected = old;
+            this.selected = old;
             this.buttons.map((button) => {
                 button.selected = this.selected.includes(button.value);
             });
@@ -85,12 +80,12 @@ export class ActionGroup extends SpectrumElement {
     }
 
     private setSelected(selected: string[]) {
+        if (selected === this.selected) return;
+
         const old = this.selected;
         this.selected = selected;
         this.dispatchChange(old);
     }
-
-    private _selected: string[] = EMPTY_SELECTION;
 
     public focus(options?: FocusOptions): void {
         if (!this.buttons.length) {
@@ -146,6 +141,13 @@ export class ActionGroup extends SpectrumElement {
                     selected.splice(this.selected.indexOf(target.value), 1);
                 }
                 this.setSelected(selected);
+
+                this.buttons.forEach((button) => {
+                    button.tabIndex = -1;
+                });
+
+                target.tabIndex = 0;
+
                 break;
             }
             default:
@@ -279,7 +281,6 @@ export class ActionGroup extends SpectrumElement {
             case 'single': {
                 this.setAttribute('role', 'radiogroup');
                 const selections: ActionButton[] = [];
-                let selection: ActionButton | undefined;
                 let firstEnabled: ActionButton | undefined;
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
@@ -291,7 +292,6 @@ export class ActionGroup extends SpectrumElement {
                     option.tabIndex = option.selected ? 0 : -1;
                     if (option.selected) {
                         selections.push(option);
-                        selection = option;
                     }
                     if (!firstEnabled && !option.disabled) {
                         firstEnabled = option;
@@ -299,31 +299,23 @@ export class ActionGroup extends SpectrumElement {
                 });
                 await Promise.all(updates);
                 // if user passes in multiple values in .selected
-                if (selections.length > 1) {
-                    selections.forEach((button) => {
-                        button.tabIndex = 0;
-                    });
-                    const selected = selections.map((button) => {
-                        return button.value;
-                    });
-                    this.selected = selected;
-                } else {
-                    if (selection || firstEnabled) {
-                        (
-                            (selection || firstEnabled) as ActionButton
-                        ).tabIndex = 0;
-                    }
-
-                    const selected = selection
-                        ? [selection.value]
-                        : EMPTY_SELECTION;
-                    this.selected = selected;
+                if (selections.length) {
+                    selections[0].tabIndex = 0;
+                } else if (firstEnabled) {
+                    firstEnabled.tabIndex = 0;
                 }
+
+                const selected = selections.map((button) => {
+                    return button.value;
+                });
+
+                this.selected = selected || EMPTY_SELECTION;
                 break;
             }
             case 'multiple': {
                 this.setAttribute('role', 'group');
                 const selection: string[] = [];
+                const selections: ActionButton[] = [];
                 const updates = options.map(async (option) => {
                     await option.updateComplete;
                     option.setAttribute('role', 'checkbox');
@@ -331,9 +323,10 @@ export class ActionGroup extends SpectrumElement {
                         'aria-checked',
                         option.selected ? 'true' : 'false'
                     );
-                    option.tabIndex = 0;
+                    option.tabIndex = -1;
                     if (option.selected) {
                         selection.push(option.value);
+                        selections.push(option);
                     }
                 });
                 await Promise.all(updates);
@@ -341,11 +334,16 @@ export class ActionGroup extends SpectrumElement {
                     ? selection
                     : EMPTY_SELECTION;
                 this.selected = selected;
+                if (selections.length) {
+                    selections[0].tabIndex = 0;
+                } else {
+                    this.buttons[0].tabIndex = 0;
+                }
                 break;
             }
             default:
                 // if user defines .selected
-                if (this.selected.length > 0) {
+                if (this.selected.length) {
                     const selections: ActionButton[] = [];
                     const updates = options.map(async (option) => {
                         await option.updateComplete;
@@ -354,26 +352,24 @@ export class ActionGroup extends SpectrumElement {
                             option.selected ? 'true' : 'false'
                         );
                         option.setAttribute('role', 'button');
-                        option.tabIndex = option.selected ? 0 : -1;
+                        option.tabIndex = -1;
                         if (option.selected) {
                             selections.push(option);
                         }
                     });
                     await Promise.all(updates);
-                    // if user passes in multiple values in .selected
-                    selections.forEach((button) => {
-                        button.tabIndex = 0;
-                    });
 
-                    const selected = selections.map((button) => {
+                    selections[0].tabIndex = 0;
+
+                    this.selected = selections.map((button) => {
                         return button.value;
                     });
-                    this.selected = selected;
                 } else {
                     this.buttons.forEach((option) => {
                         option.setAttribute('role', 'button');
-                        option.tabIndex = 0;
+                        option.tabIndex = -1; // roving tab index means you only want 1 button with 0
                     });
+                    this.buttons[0].tabIndex = 0;
                     this.removeAttribute('role');
                     break;
                 }
@@ -460,12 +456,6 @@ export class ActionGroup extends SpectrumElement {
             this.manageButtons();
         }
         this.observer.observe(this, { childList: true, subtree: true });
-
-        // change event shouldn't be dispatched when initializing
-        if (this.hasAttribute('selected')) {
-            const selected = this.getAttribute('selected')!;
-            this.selected = JSON.parse(selected);
-        }
     }
 
     public disconnectedCallback(): void {

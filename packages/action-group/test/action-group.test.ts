@@ -805,6 +805,33 @@ describe('ActionGroup', () => {
         expect(secondElement.selected, 'second child not selected').to.be.false;
     });
 
+    it('will accept selected as a JSON string', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects Single Group"
+                    selects="single"
+                    selected='["first"]'
+                >
+                    <sp-action-button class="first" value="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button class="second" value="second">
+                        Second
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+        // checking if the first element is selected
+        await elementUpdated(el);
+        const firstElement = el.querySelector('.first') as ActionButton;
+        const secondElement = el.querySelector('.second') as ActionButton;
+
+        expect(el.selected.length).to.equal(1);
+        expect(firstElement.selected, 'first child selected').to.be.true;
+        expect(secondElement.selected, 'second child selected').to.be.false;
+    });
+
     const acceptKeyboardInput = async (el: ActionGroup): Promise<void> => {
         const thirdElement = el.querySelector('.third') as ActionButton;
 
