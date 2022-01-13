@@ -101,7 +101,7 @@ An `<sp-action-group selects="multiple">` will manage its `<sp-action-button>` c
 
 ## Selected
 
-The `selected` property represents the selection state within a button group. This property can be managed either by the component or by the user. Passing in an array of button values will make `<sp-action-group>` a controllable component.
+The `selected` property represents the selection state within a button group. This property can be managed either by the component or by the user. Passing in an array of button values will make `<sp-action-group>` a controllable component. Though `selected` would more commonly be set via Javascript expressions (i.e. `<sp-action-group .selected=${["first"]}>`), it is also possible to set `selected` as a JSON string.
 
 ```html
 <sp-action-group selects="single" selected='["first"]'>
