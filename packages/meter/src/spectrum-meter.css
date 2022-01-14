@@ -240,7 +240,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 @keyframes indeterminate-loop-ltr {
     0% {
         transform: translate(
-            calc(-1 * var(--spectrum-progressbar-indeterminate-fill-width))
+            calc(var(--spectrum-progressbar-indeterminate-fill-width) * -1)
         );
     }
     to {
@@ -252,7 +252,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         transform: translate(var(--spectrum-progressbar-width));
     }
     to {
-        transform: translate(calc(-1 * var(--spectrum-progressbar-width)));
+        transform: translate(calc(var(--spectrum-progressbar-width) * -1));
     }
 }
 .fill {

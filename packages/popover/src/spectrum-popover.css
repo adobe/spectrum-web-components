@@ -37,7 +37,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([placement*='top'][open]) {
     transform: translateY(
-        calc(-1 * var(--spectrum-overlay-animation-distance))
+        calc(var(--spectrum-overlay-animation-distance) * -1)
     ); /* .spectrum-Popover--top.is-open */
 }
 :host([placement*='right'][open]) {
@@ -47,7 +47,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([placement*='left'][open]) {
     transform: translateX(
-        calc(-1 * var(--spectrum-overlay-animation-distance))
+        calc(var(--spectrum-overlay-animation-distance) * -1)
     ); /* .spectrum-Popover--left.is-open */
 }
 :host {

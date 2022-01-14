@@ -95,7 +95,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='rtl'][checked]) #input + #switch:before {
     transform: translateX(
-        calc(-1 * (var(--spectrum-switch-track-width) - 100%))
+        calc((var(--spectrum-switch-track-width) - 100%) * -1)
     ); /* [dir=rtl] .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
 }
 #input[disabled],

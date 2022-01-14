@@ -177,12 +177,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #header:focus:after {
     bottom: calc(
-        -1 * var(--spectrum-accordion-item-border-size, var(--spectrum-alias-border-size-thin))
+        var(
+                --spectrum-accordion-item-border-size,
+                var(--spectrum-alias-border-size-thin)
+            ) * -1
     );
     content: ''; /* .spectrum-Accordion-itemHeader:focus:after */
     position: absolute;
     top: calc(
-        -1 * var(--spectrum-accordion-item-border-size, var(--spectrum-alias-border-size-thin))
+        var(
+                --spectrum-accordion-item-border-size,
+                var(--spectrum-alias-border-size-thin)
+            ) * -1
     );
     width: var(
         --spectrum-accordion-item-border-left-size,

@@ -209,12 +209,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .clear-button {
     margin-right: calc(
-        -1 * var(--spectrum-tag-texticon-padding-right)
+        var(--spectrum-tag-texticon-padding-right) * -1
     ); /* [dir=ltr] .spectrum-Tag .spectrum-ClearButton */
 }
 :host([dir='rtl']) .clear-button {
     margin-left: calc(
-        -1 * var(--spectrum-tag-texticon-padding-right)
+        var(--spectrum-tag-texticon-padding-right) * -1
     ); /* [dir=rtl] .spectrum-Tag .spectrum-ClearButton */
 }
 .spectrum-Tag-label {

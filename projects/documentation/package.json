@@ -52,7 +52,7 @@
         "rollup": "^2.56.2",
         "rollup-plugin-lit-css": "^3.0.2",
         "rollup-plugin-minify-html-literals": "^1.2.6",
-        "rollup-plugin-styles": "^3.14.1",
+        "rollup-plugin-styles": "^4.0.0",
         "rollup-plugin-visualizer": "^5.5.2",
         "rollup-plugin-workbox": "^6.2.0"
     },

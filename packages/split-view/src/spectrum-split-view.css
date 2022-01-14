@@ -176,7 +176,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) / 2 * -1
     ); /* .spectrum-SplitView--vertical .spectrum-SplitView-gripper */
     transform: translate(
-        calc(-1 * var(--spectrum-splitview-vertical-gripper-width))
+        calc(var(--spectrum-splitview-vertical-gripper-width) * -1)
     );
     width: var(
         --spectrum-dragbar-gripper-height,

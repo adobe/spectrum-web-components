@@ -420,14 +420,18 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) ::slotted([slot='icon']) {
     margin-left: calc(
-        -1 * (var(--spectrum-button-primary-textonly-padding-left-adjusted) -
-                    var(--spectrum-button-primary-padding-left-adjusted))
+        (
+                var(--spectrum-button-primary-textonly-padding-left-adjusted) -
+                    var(--spectrum-button-primary-padding-left-adjusted)
+            ) * -1
     ); /* [dir=ltr] .spectrum-Button .spectrum-Icon */
 }
 :host([dir='rtl']) ::slotted([slot='icon']) {
     margin-right: calc(
-        -1 * (var(--spectrum-button-primary-textonly-padding-left-adjusted) -
-                    var(--spectrum-button-primary-padding-left-adjusted))
+        (
+                var(--spectrum-button-primary-textonly-padding-left-adjusted) -
+                    var(--spectrum-button-primary-padding-left-adjusted)
+            ) * -1
     ); /* [dir=rtl] .spectrum-Button .spectrum-Icon */
 }
 :host([dir='ltr']) slot[name='icon'] + #label {

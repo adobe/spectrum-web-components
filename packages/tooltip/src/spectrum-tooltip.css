@@ -37,7 +37,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([placement*='top'][open]) {
     transform: translateY(
-        calc(-1 * var(--spectrum-overlay-animation-distance))
+        calc(var(--spectrum-overlay-animation-distance) * -1)
     ); /* .spectrum-Tooltip--top.is-open */
 }
 :host([placement*='right'][open]) {
@@ -47,7 +47,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([placement*='left'][open]) {
     transform: translateX(
-        calc(-1 * var(--spectrum-overlay-animation-distance))
+        calc(var(--spectrum-overlay-animation-distance) * -1)
     ); /* .spectrum-Tooltip--left.is-open */
 }
 :host {
@@ -135,7 +135,10 @@ p {
 :host([placement*='left']) #tip,
 :host([placement*='right']) #tip {
     margin-top: calc(
-        -1 * var(--spectrum-tooltip-neutral-tip-width, var(--spectrum-global-dimension-size-100))
+        var(
+                --spectrum-tooltip-neutral-tip-width,
+                var(--spectrum-global-dimension-size-100)
+            ) * -1
     );
     top: 50%; /* .spectrum-Tooltip--right .spectrum-Tooltip-tip,
    * .spectrum-Tooltip--left .spectrum-Tooltip-tip */
@@ -180,7 +183,10 @@ p {
     left: 50%; /* .spectrum-Tooltip--bottom .spectrum-Tooltip-tip,
    * .spectrum-Tooltip--top .spectrum-Tooltip-tip */
     margin-left: calc(
-        -1 * var(--spectrum-tooltip-neutral-tip-width, var(--spectrum-global-dimension-size-100))
+        var(
+                --spectrum-tooltip-neutral-tip-width,
+                var(--spectrum-global-dimension-size-100)
+            ) * -1
     );
 }
 :host([dir='ltr']) ::slotted([slot='icon']) {

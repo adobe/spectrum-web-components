@@ -46,22 +46,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']):before {
     left: calc(
-        -1 * var(--spectrum-tabs-focus-ring-padding-x)
+        var(--spectrum-tabs-focus-ring-padding-x) * -1
     ); /* [dir=ltr] .spectrum-Tabs-item:before */
 }
 :host([dir='rtl']):before {
     right: calc(
-        -1 * var(--spectrum-tabs-focus-ring-padding-x)
+        var(--spectrum-tabs-focus-ring-padding-x) * -1
     ); /* [dir=rtl] .spectrum-Tabs-item:before */
 }
 :host([dir='ltr']):before {
     right: calc(
-        -1 * var(--spectrum-tabs-focus-ring-padding-x)
+        var(--spectrum-tabs-focus-ring-padding-x) * -1
     ); /* [dir=ltr] .spectrum-Tabs-item:before */
 }
 :host([dir='rtl']):before {
     left: calc(
-        -1 * var(--spectrum-tabs-focus-ring-padding-x)
+        var(--spectrum-tabs-focus-ring-padding-x) * -1
     ); /* [dir=rtl] .spectrum-Tabs-item:before */
 }
 :host:before {
