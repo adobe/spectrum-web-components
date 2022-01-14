@@ -207,6 +207,21 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/button-group/sp-button-group.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-button-group",
+          "declaration": {
+            "name": "ButtonGroup",
+            "module": "/packages/button-group/src/ButtonGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/button/sp-button.ts",
       "declarations": [],
       "exports": [
@@ -231,21 +246,6 @@
           "declaration": {
             "name": "ClearButton",
             "module": "/packages/button/src/ClearButton.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/sp-button-group.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-button-group",
-          "declaration": {
-            "name": "ButtonGroup",
-            "module": "/packages/button-group/src/ButtonGroup.js"
           }
         }
       ]
@@ -6892,6 +6892,196 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/button-group/src/ButtonGroup.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ButtonGroup",
+          "slots": [
+            {
+              "description": "the sp-button elements that make up the group",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-button-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ButtonGroup",
+          "declaration": {
+            "name": "ButtonGroup",
+            "module": "packages/button-group/src/ButtonGroup.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/button-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-flex-grow:1}:host([dir=ltr][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:left}:host([dir=rtl][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:right}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/button-group/src/button-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ButtonGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/spectrum-button-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/button-group/src/spectrum-button-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/button/src/Button.ts",
       "declarations": [
         {
@@ -10975,196 +11165,6 @@
           "declaration": {
             "name": "styles",
             "module": "packages/button/src/spectrum-clear-button.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/ButtonGroup.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ButtonGroup",
-          "slots": [
-            {
-              "description": "the sp-button elements that make up the group",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "vertical",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "vertical"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-button-group",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ButtonGroup",
-          "declaration": {
-            "name": "ButtonGroup",
-            "module": "packages/button-group/src/ButtonGroup.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/button-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-flex-grow:1}:host([dir=ltr][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:left}:host([dir=rtl][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:right}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/button-group/src/button-group.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ButtonGroup.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/spectrum-button-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/button-group/src/spectrum-button-group.css.ts"
           }
         }
       ]
@@ -54168,6 +54168,279 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/thumbnail/src/Thumbnail.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Thumbnail",
+          "slots": [
+            {
+              "description": "image element to present in the Thumbnail",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "background",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "attribute": "background",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "cover",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "cover",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "privacy": "public",
+              "attribute": "size",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_size",
+              "type": {
+                "text": "ElementSize | null"
+              },
+              "privacy": "private",
+              "default": "defaultSize",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changes",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "background",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "background"
+            },
+            {
+              "name": "cover",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "cover"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "fieldName": "size",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SizedMixin",
+              "package": "@spectrum-web-components/base"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-thumbnail",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Thumbnail",
+          "declaration": {
+            "name": "Thumbnail",
+            "module": "packages/thumbnail/src/Thumbnail.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/thumbnail/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Thumbnail.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/thumbnail/src/spectrum-thumbnail.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{align-items:center;background-position:0 0,0 var(--spectrum-global-dimension-static-size-100,8px),var(--spectrum-global-dimension-static-size-100,8px) calc(var(--spectrum-global-dimension-static-size-100, 8px)*-1),calc(var(--spectrum-global-dimension-static-size-100, 8px)*-1) 0;background-size:var(--spectrum-global-dimension-static-size-200,16px) var(--spectrum-global-dimension-static-size-200,16px);border-radius:var(--spectrum-thumbnail-border-radius);display:flex;height:var(--spectrum-thumbnail-height);justify-content:center;margin:0;overflow:hidden;padding:0;position:relative;vertical-align:top;width:var(--spectrum-thumbnail-width)}:host:before{border-radius:var(--spectrum-thumbnail-border-radius);content:\"\";height:100%;position:absolute;width:100%;z-index:2}:host([size=xxs]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-xxs-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-xxs-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-xxs-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-xxs-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-xxs-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-xxs-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-xxs-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-xxs-width,var(--spectrum-global-dimension-size-225)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-xxs-height,var(--spectrum-global-dimension-size-225)\n)}:host([size=xs]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-xs-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-xs-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-xs-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-xs-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-xs-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-xs-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-xs-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-xs-width,var(--spectrum-global-dimension-size-300)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-xs-height,var(--spectrum-global-dimension-size-300)\n)}:host([size=s]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-s-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-s-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-s-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-s-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-s-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-s-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-s-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-s-width,var(--spectrum-global-dimension-size-400)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-s-height,var(--spectrum-global-dimension-size-400)\n)}:host([size=m]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-m-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-m-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-m-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-m-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-m-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-m-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-m-width,var(--spectrum-global-dimension-size-500)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-m-height,var(--spectrum-global-dimension-size-500)\n)}:host([size=l]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-l-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-l-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-l-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-l-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-l-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-l-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-l-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-l-width,var(--spectrum-global-dimension-size-700)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-l-height,var(--spectrum-global-dimension-size-700)\n)}::slotted(*){max-height:100%;max-width:100%;z-index:1}:host([cover]) ::slotted(*){height:100%;object-fit:cover;object-position:center;width:100%}.background{background-position:50%;background-size:cover;bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%;z-index:0}:host{background-color:var(\n--spectrum-global-color-static-white,#fff\n);background-image:linear-gradient(-45deg,transparent 75.5%,var(--spectrum-thumbnail-darksquare-background-color) 75.5%),linear-gradient(45deg,transparent 75.5%,var(--spectrum-thumbnail-darksquare-background-color) 75.5%),linear-gradient(-45deg,var(--spectrum-thumbnail-darksquare-background-color) 25.5%,transparent 25.5%),linear-gradient(45deg,var(--spectrum-thumbnail-darksquare-background-color) 25.5%,transparent 25.5%)}:host:before{box-shadow:inset 0 0 0 var(--spectrum-thumbnail-border-size) var(--spectrum-thumbnail-border-color)}:host([selected]){box-shadow:0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host([selected]):before{box-shadow:inset 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host(.focus-visible),:host([focused]){box-shadow:0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected);outline:none;overflow:visible}:host(:focus-visible),:host([focused]){box-shadow:0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected);outline:none;overflow:visible}:host(.focus-visible):before,:host([focused]):before{box-shadow:inset 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host(:focus-visible):before,:host([focused]):before{box-shadow:inset 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host(.focus-visible):after,:host([focused]):after{border-radius:calc(var(--spectrum-thumbnail-border-radius) + var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n));bottom:0;box-shadow:0 0 0 var(--spectrum-thumbnail-border-size-selected-key-focus) var(--spectrum-thumbnail-border-color-key-focus);content:\"\";display:block;left:0;margin:calc(var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n)*-1);position:absolute;right:0;top:0}:host(:focus-visible):after,:host([focused]):after{border-radius:calc(var(--spectrum-thumbnail-border-radius) + var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n));bottom:0;box-shadow:0 0 0 var(--spectrum-thumbnail-border-size-selected-key-focus) var(--spectrum-thumbnail-border-color-key-focus);content:\"\";display:block;left:0;margin:calc(var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n)*-1);position:absolute;right:0;top:0}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/thumbnail/src/spectrum-thumbnail.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/thumbnail/src/thumbnail.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{align-items:center;background-position:0 0,0 var(--spectrum-global-dimension-static-size-100,8px),var(--spectrum-global-dimension-static-size-100,8px) calc(var(--spectrum-global-dimension-static-size-100, 8px)*-1),calc(var(--spectrum-global-dimension-static-size-100, 8px)*-1) 0;background-size:var(--spectrum-global-dimension-static-size-200,16px) var(--spectrum-global-dimension-static-size-200,16px);border-radius:var(--spectrum-thumbnail-border-radius);display:flex;height:var(--spectrum-thumbnail-height);justify-content:center;margin:0;overflow:hidden;padding:0;position:relative;vertical-align:top;width:var(--spectrum-thumbnail-width)}:host:before{border-radius:var(--spectrum-thumbnail-border-radius);content:\"\";height:100%;position:absolute;width:100%;z-index:2}:host([size=xxs]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-xxs-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-xxs-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-xxs-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-xxs-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-xxs-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-xxs-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-xxs-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-xxs-width,var(--spectrum-global-dimension-size-225)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-xxs-height,var(--spectrum-global-dimension-size-225)\n)}:host([size=xs]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-xs-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-xs-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-xs-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-xs-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-xs-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-xs-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-xs-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-xs-width,var(--spectrum-global-dimension-size-300)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-xs-height,var(--spectrum-global-dimension-size-300)\n)}:host([size=s]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-s-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-s-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-s-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-s-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-s-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-s-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-s-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-s-width,var(--spectrum-global-dimension-size-400)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-s-height,var(--spectrum-global-dimension-size-400)\n)}:host([size=m]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-m-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-m-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-m-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-m-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-m-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-m-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-m-width,var(--spectrum-global-dimension-size-500)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-m-height,var(--spectrum-global-dimension-size-500)\n)}:host([size=l]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-l-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-l-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-l-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-l-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-l-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-l-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-l-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-l-width,var(--spectrum-global-dimension-size-700)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-l-height,var(--spectrum-global-dimension-size-700)\n)}::slotted(*){max-height:100%;max-width:100%;z-index:1}:host([cover]) ::slotted(*){height:100%;object-fit:cover;object-position:center;width:100%}.background{background-position:50%;background-size:cover;bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%;z-index:0}:host{background-color:var(\n--spectrum-global-color-static-white,#fff\n);background-image:linear-gradient(-45deg,transparent 75.5%,var(--spectrum-thumbnail-darksquare-background-color) 75.5%),linear-gradient(45deg,transparent 75.5%,var(--spectrum-thumbnail-darksquare-background-color) 75.5%),linear-gradient(-45deg,var(--spectrum-thumbnail-darksquare-background-color) 25.5%,transparent 25.5%),linear-gradient(45deg,var(--spectrum-thumbnail-darksquare-background-color) 25.5%,transparent 25.5%)}:host:before{box-shadow:inset 0 0 0 var(--spectrum-thumbnail-border-size) var(--spectrum-thumbnail-border-color)}:host([selected]){box-shadow:0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host([selected]):before{box-shadow:inset 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host(.focus-visible),:host([focused]){box-shadow:0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected);outline:none;overflow:visible}:host(:focus-visible),:host([focused]){box-shadow:0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected);outline:none;overflow:visible}:host(.focus-visible):before,:host([focused]):before{box-shadow:inset 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host(:focus-visible):before,:host([focused]):before{box-shadow:inset 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host(.focus-visible):after,:host([focused]):after{border-radius:calc(var(--spectrum-thumbnail-border-radius) + var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n));bottom:0;box-shadow:0 0 0 var(--spectrum-thumbnail-border-size-selected-key-focus) var(--spectrum-thumbnail-border-color-key-focus);content:\"\";display:block;left:0;margin:calc(var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n)*-1);position:absolute;right:0;top:0}:host(:focus-visible):after,:host([focused]):after{border-radius:calc(var(--spectrum-thumbnail-border-radius) + var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n));bottom:0;box-shadow:0 0 0 var(--spectrum-thumbnail-border-size-selected-key-focus) var(--spectrum-thumbnail-border-color-key-focus);content:\"\";display:block;left:0;margin:calc(var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n)*-1);position:absolute;right:0;top:0}::slotted(:not(img)){display:none}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/thumbnail/src/thumbnail.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/theme/src/Theme.ts",
       "declarations": [
         {
@@ -54674,279 +54947,6 @@
           "declaration": {
             "name": "styles",
             "module": "packages/theme/src/typography.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/thumbnail/src/Thumbnail.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Thumbnail",
-          "slots": [
-            {
-              "description": "image element to present in the Thumbnail",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "background",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "attribute": "background",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "cover",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "cover",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "privacy": "public",
-              "attribute": "size",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_size",
-              "type": {
-                "text": "ElementSize | null"
-              },
-              "privacy": "private",
-              "default": "defaultSize",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "firstUpdated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "changes",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "background",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "background"
-            },
-            {
-              "name": "cover",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "cover"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "fieldName": "size",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "mixins": [
-            {
-              "name": "SizedMixin",
-              "package": "@spectrum-web-components/base"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-thumbnail",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Thumbnail",
-          "declaration": {
-            "name": "Thumbnail",
-            "module": "packages/thumbnail/src/Thumbnail.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/thumbnail/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Thumbnail.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/thumbnail/src/spectrum-thumbnail.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{align-items:center;background-position:0 0,0 var(--spectrum-global-dimension-static-size-100,8px),var(--spectrum-global-dimension-static-size-100,8px) calc(var(--spectrum-global-dimension-static-size-100, 8px)*-1),calc(var(--spectrum-global-dimension-static-size-100, 8px)*-1) 0;background-size:var(--spectrum-global-dimension-static-size-200,16px) var(--spectrum-global-dimension-static-size-200,16px);border-radius:var(--spectrum-thumbnail-border-radius);display:flex;height:var(--spectrum-thumbnail-height);justify-content:center;margin:0;overflow:hidden;padding:0;position:relative;vertical-align:top;width:var(--spectrum-thumbnail-width)}:host:before{border-radius:var(--spectrum-thumbnail-border-radius);content:\"\";height:100%;position:absolute;width:100%;z-index:2}:host([size=xxs]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-xxs-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-xxs-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-xxs-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-xxs-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-xxs-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-xxs-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-xxs-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-xxs-width,var(--spectrum-global-dimension-size-225)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-xxs-height,var(--spectrum-global-dimension-size-225)\n)}:host([size=xs]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-xs-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-xs-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-xs-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-xs-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-xs-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-xs-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-xs-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-xs-width,var(--spectrum-global-dimension-size-300)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-xs-height,var(--spectrum-global-dimension-size-300)\n)}:host([size=s]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-s-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-s-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-s-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-s-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-s-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-s-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-s-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-s-width,var(--spectrum-global-dimension-size-400)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-s-height,var(--spectrum-global-dimension-size-400)\n)}:host([size=m]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-m-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-m-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-m-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-m-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-m-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-m-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-m-width,var(--spectrum-global-dimension-size-500)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-m-height,var(--spectrum-global-dimension-size-500)\n)}:host([size=l]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-l-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-l-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-l-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-l-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-l-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-l-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-l-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-l-width,var(--spectrum-global-dimension-size-700)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-l-height,var(--spectrum-global-dimension-size-700)\n)}::slotted(*){max-height:100%;max-width:100%;z-index:1}:host([cover]) ::slotted(*){height:100%;object-fit:cover;object-position:center;width:100%}.background{background-position:50%;background-size:cover;bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%;z-index:0}:host{background-color:var(\n--spectrum-global-color-static-white,#fff\n);background-image:linear-gradient(-45deg,transparent 75.5%,var(--spectrum-thumbnail-darksquare-background-color) 75.5%),linear-gradient(45deg,transparent 75.5%,var(--spectrum-thumbnail-darksquare-background-color) 75.5%),linear-gradient(-45deg,var(--spectrum-thumbnail-darksquare-background-color) 25.5%,transparent 25.5%),linear-gradient(45deg,var(--spectrum-thumbnail-darksquare-background-color) 25.5%,transparent 25.5%)}:host:before{box-shadow:inset 0 0 0 var(--spectrum-thumbnail-border-size) var(--spectrum-thumbnail-border-color)}:host([selected]){box-shadow:0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host([selected]):before{box-shadow:inset 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host(.focus-visible),:host([focused]){box-shadow:0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected);outline:none;overflow:visible}:host(:focus-visible),:host([focused]){box-shadow:0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected);outline:none;overflow:visible}:host(.focus-visible):before,:host([focused]):before{box-shadow:inset 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host(:focus-visible):before,:host([focused]):before{box-shadow:inset 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host(.focus-visible):after,:host([focused]):after{border-radius:calc(var(--spectrum-thumbnail-border-radius) + var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n));bottom:0;box-shadow:0 0 0 var(--spectrum-thumbnail-border-size-selected-key-focus) var(--spectrum-thumbnail-border-color-key-focus);content:\"\";display:block;left:0;margin:calc(var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n)*-1);position:absolute;right:0;top:0}:host(:focus-visible):after,:host([focused]):after{border-radius:calc(var(--spectrum-thumbnail-border-radius) + var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n));bottom:0;box-shadow:0 0 0 var(--spectrum-thumbnail-border-size-selected-key-focus) var(--spectrum-thumbnail-border-color-key-focus);content:\"\";display:block;left:0;margin:calc(var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n)*-1);position:absolute;right:0;top:0}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/thumbnail/src/spectrum-thumbnail.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/thumbnail/src/thumbnail.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{align-items:center;background-position:0 0,0 var(--spectrum-global-dimension-static-size-100,8px),var(--spectrum-global-dimension-static-size-100,8px) calc(var(--spectrum-global-dimension-static-size-100, 8px)*-1),calc(var(--spectrum-global-dimension-static-size-100, 8px)*-1) 0;background-size:var(--spectrum-global-dimension-static-size-200,16px) var(--spectrum-global-dimension-static-size-200,16px);border-radius:var(--spectrum-thumbnail-border-radius);display:flex;height:var(--spectrum-thumbnail-height);justify-content:center;margin:0;overflow:hidden;padding:0;position:relative;vertical-align:top;width:var(--spectrum-thumbnail-width)}:host:before{border-radius:var(--spectrum-thumbnail-border-radius);content:\"\";height:100%;position:absolute;width:100%;z-index:2}:host([size=xxs]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-xxs-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-xxs-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-xxs-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-xxs-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-xxs-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-xxs-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-xxs-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-xxs-width,var(--spectrum-global-dimension-size-225)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-xxs-height,var(--spectrum-global-dimension-size-225)\n)}:host([size=xs]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-xs-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-xs-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-xs-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-xs-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-xs-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-xs-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-xs-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-xs-width,var(--spectrum-global-dimension-size-300)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-xs-height,var(--spectrum-global-dimension-size-300)\n)}:host([size=s]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-s-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-s-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-s-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-s-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-s-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-s-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-s-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-s-width,var(--spectrum-global-dimension-size-400)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-s-height,var(--spectrum-global-dimension-size-400)\n)}:host([size=m]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-m-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-m-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-m-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-m-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-m-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-m-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-m-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-m-width,var(--spectrum-global-dimension-size-500)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-m-height,var(--spectrum-global-dimension-size-500)\n)}:host([size=l]){--spectrum-thumbnail-border-color-selected:var(\n--spectrum-thumbnail-l-border-color-selected,var(--spectrum-alias-border-color-selected)\n);--spectrum-thumbnail-border-size-selected-key-focus:var(\n--spectrum-thumbnail-l-border-size-selected-key-focus,var(--spectrum-alias-border-size-thick)\n);--spectrum-thumbnail-border-size:var(\n--spectrum-thumbnail-l-border-size,var(--spectrum-alias-border-size-thin)\n);--spectrum-thumbnail-border-color:var(\n--spectrum-thumbnail-l-border-color,var(--spectrum-alias-border-color-translucent)\n);--spectrum-thumbnail-border-color-key-focus:var(\n--spectrum-thumbnail-l-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n);--spectrum-thumbnail-darksquare-background-color:var(\n--spectrum-thumbnail-l-darksquare-background-color,var(--spectrum-alias-thumbnail-darksquare-background-color)\n);--spectrum-thumbnail-border-radius:var(\n--spectrum-thumbnail-l-border-radius,var(--spectrum-alias-thumbnail-border-radius-small)\n);--spectrum-thumbnail-width:var(\n--spectrum-thumbnail-l-width,var(--spectrum-global-dimension-size-700)\n);--spectrum-thumbnail-height:var(\n--spectrum-thumbnail-l-height,var(--spectrum-global-dimension-size-700)\n)}::slotted(*){max-height:100%;max-width:100%;z-index:1}:host([cover]) ::slotted(*){height:100%;object-fit:cover;object-position:center;width:100%}.background{background-position:50%;background-size:cover;bottom:0;height:100%;left:0;position:absolute;right:0;top:0;width:100%;z-index:0}:host{background-color:var(\n--spectrum-global-color-static-white,#fff\n);background-image:linear-gradient(-45deg,transparent 75.5%,var(--spectrum-thumbnail-darksquare-background-color) 75.5%),linear-gradient(45deg,transparent 75.5%,var(--spectrum-thumbnail-darksquare-background-color) 75.5%),linear-gradient(-45deg,var(--spectrum-thumbnail-darksquare-background-color) 25.5%,transparent 25.5%),linear-gradient(45deg,var(--spectrum-thumbnail-darksquare-background-color) 25.5%,transparent 25.5%)}:host:before{box-shadow:inset 0 0 0 var(--spectrum-thumbnail-border-size) var(--spectrum-thumbnail-border-color)}:host([selected]){box-shadow:0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host([selected]):before{box-shadow:inset 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host(.focus-visible),:host([focused]){box-shadow:0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected);outline:none;overflow:visible}:host(:focus-visible),:host([focused]){box-shadow:0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected);outline:none;overflow:visible}:host(.focus-visible):before,:host([focused]):before{box-shadow:inset 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host(:focus-visible):before,:host([focused]):before{box-shadow:inset 0 0 0 calc(var(--spectrum-thumbnail-border-size-selected-key-focus)/2) var(--spectrum-thumbnail-border-color-selected)}:host(.focus-visible):after,:host([focused]):after{border-radius:calc(var(--spectrum-thumbnail-border-radius) + var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n));bottom:0;box-shadow:0 0 0 var(--spectrum-thumbnail-border-size-selected-key-focus) var(--spectrum-thumbnail-border-color-key-focus);content:\"\";display:block;left:0;margin:calc(var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n)*-1);position:absolute;right:0;top:0}:host(:focus-visible):after,:host([focused]):after{border-radius:calc(var(--spectrum-thumbnail-border-radius) + var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n));bottom:0;box-shadow:0 0 0 var(--spectrum-thumbnail-border-size-selected-key-focus) var(--spectrum-thumbnail-border-color-key-focus);content:\"\";display:block;left:0;margin:calc(var(\n--spectrum-alias-focus-ring-gap,\nvar(--spectrum-global-dimension-static-size-25)\n)*-1);position:absolute;right:0;top:0}::slotted(:not(img)){display:none}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/thumbnail/src/thumbnail.css.ts"
           }
         }
       ]
