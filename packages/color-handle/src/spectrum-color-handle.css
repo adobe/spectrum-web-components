@@ -29,10 +29,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) * 2
     );
     margin-left: calc(
-        -1 * var(--spectrum-colorhandle-size, var(--spectrum-global-dimension-size-200))
+        var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) * -1
     );
     margin-top: calc(
-        -1 * var(--spectrum-colorhandle-size, var(--spectrum-global-dimension-size-200))
+        var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) * -1
     );
     width: calc(
         var(
@@ -51,10 +57,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) * 2
     );
     margin-left: calc(
-        -1 * var(--spectrum-colorhandle-size, var(--spectrum-global-dimension-size-200))
+        var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) * -1
     );
     margin-top: calc(
-        -1 * var(--spectrum-colorhandle-size, var(--spectrum-global-dimension-size-200))
+        var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) * -1
     );
     width: calc(
         var(
@@ -77,10 +89,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                     var(--spectrum-colorhandle-background-offset)
             )
             calc(
-                -1 * var(--spectrum-colorhandle-checkerboard-size) + var(--spectrum-colorhandle-background-offset)
+                var(--spectrum-colorhandle-checkerboard-size) * -1 +
+                    var(--spectrum-colorhandle-background-offset)
             ),
         calc(
-                -1 * var(--spectrum-colorhandle-checkerboard-size) + var(--spectrum-colorhandle-background-offset)
+                var(--spectrum-colorhandle-checkerboard-size) * -1 +
+                    var(--spectrum-colorhandle-background-offset)
             )
             var(--spectrum-colorhandle-background-offset);
     background-size: var(--spectrum-global-dimension-static-size-200, 16px)
@@ -97,16 +111,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-dimension-size-200)
     );
     margin-left: calc(
-        -1 * var(
+        var(
                 --spectrum-colorhandle-size,
                 var(--spectrum-global-dimension-size-200)
-            ) / 2
+            ) * -1 / 2
     );
     margin-top: calc(
-        -1 * var(
+        var(
                 --spectrum-colorhandle-size,
                 var(--spectrum-global-dimension-size-200)
-            ) / 2
+            ) * -1 / 2
     );
     position: absolute;
     transition: width var(--spectrum-colorhandle-animation-duration)
@@ -149,7 +163,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host {
     --spectrum-colorhandle-background-offset: calc(
-        -1 * var(--spectrum-global-dimension-static-size-25, 2px)
+        var(--spectrum-global-dimension-static-size-25, 2px) * -1
     ); /* .spectrum-ColorHandle */
     --spectrum-colorhandle-checkerboard-size: var(
         --spectrum-global-dimension-static-size-100,

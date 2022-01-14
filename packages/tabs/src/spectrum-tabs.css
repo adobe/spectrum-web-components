@@ -351,22 +351,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) ::slotted(:not([slot])):before {
     left: calc(
-        -1 * var(--spectrum-tabs-focus-ring-padding-x)
+        var(--spectrum-tabs-focus-ring-padding-x) * -1
     ); /* [dir=ltr] .spectrum-Tabs-item:before */
 }
 :host([dir='rtl']) ::slotted(:not([slot])):before {
     right: calc(
-        -1 * var(--spectrum-tabs-focus-ring-padding-x)
+        var(--spectrum-tabs-focus-ring-padding-x) * -1
     ); /* [dir=rtl] .spectrum-Tabs-item:before */
 }
 :host([dir='ltr']) ::slotted(:not([slot])):before {
     right: calc(
-        -1 * var(--spectrum-tabs-focus-ring-padding-x)
+        var(--spectrum-tabs-focus-ring-padding-x) * -1
     ); /* [dir=ltr] .spectrum-Tabs-item:before */
 }
 :host([dir='rtl']) ::slotted(:not([slot])):before {
     left: calc(
-        -1 * var(--spectrum-tabs-focus-ring-padding-x)
+        var(--spectrum-tabs-focus-ring-padding-x) * -1
     ); /* [dir=rtl] .spectrum-Tabs-item:before */
 }
 :host([dir='ltr']) #selection-indicator {
@@ -410,7 +410,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([direction^='horizontal']) #selection-indicator {
     bottom: 0;
-    bottom: calc(-1 * var(--spectrum-tabs-divider-size));
+    bottom: calc(var(--spectrum-tabs-divider-size) * -1);
     height: var(--spectrum-tabs-divider-size);
     position: absolute; /* .spectrum-Tabs--horizontal .spectrum-Tabs-selectionIndicator */
 }
@@ -458,22 +458,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][direction^='vertical']) ::slotted(:not([slot])):before {
     left: calc(
-        -1 * var(--spectrum-tabs-focus-ring-size)
+        var(--spectrum-tabs-focus-ring-size) * -1
     ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
 }
 :host([dir='rtl'][direction^='vertical']) ::slotted(:not([slot])):before {
     right: calc(
-        -1 * var(--spectrum-tabs-focus-ring-size)
+        var(--spectrum-tabs-focus-ring-size) * -1
     ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
 }
 :host([dir='ltr'][direction^='vertical']) ::slotted(:not([slot])):before {
     right: calc(
-        -1 * var(--spectrum-tabs-focus-ring-size)
+        var(--spectrum-tabs-focus-ring-size) * -1
     ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
 }
 :host([dir='rtl'][direction^='vertical']) ::slotted(:not([slot])):before {
     left: calc(
-        -1 * var(--spectrum-tabs-focus-ring-size)
+        var(--spectrum-tabs-focus-ring-size) * -1
     ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
 }
 :host([direction^='vertical']) ::slotted(:not([slot])):before {
@@ -502,12 +502,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr'][direction^='vertical']) #selection-indicator {
     left: calc(
-        -1 * var(--spectrum-tabs-vertical-divider-size)
+        var(--spectrum-tabs-vertical-divider-size) * -1
     ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
 }
 :host([dir='rtl'][direction^='vertical']) #selection-indicator {
     right: calc(
-        -1 * var(--spectrum-tabs-vertical-divider-size)
+        var(--spectrum-tabs-vertical-divider-size) * -1
     ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
 }
 :host([direction^='vertical']) #selection-indicator {

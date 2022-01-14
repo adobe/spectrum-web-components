@@ -27,10 +27,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ) * 2
     );
     margin-left: calc(
-        -1 * var(--spectrum-colorhandle-size, var(--spectrum-global-dimension-size-200))
+        var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) * -1
     );
     margin-top: calc(
-        -1 * var(--spectrum-colorhandle-size, var(--spectrum-global-dimension-size-200))
+        var(
+                --spectrum-colorhandle-size,
+                var(--spectrum-global-dimension-size-200)
+            ) * -1
     );
     width: calc(
         var(
@@ -101,8 +107,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     background-position: 0 0,
         0 var(--spectrum-global-dimension-static-size-100, 8px),
         var(--spectrum-global-dimension-static-size-100, 8px)
-            calc(-1 * var(--spectrum-global-dimension-static-size-100, 8px)),
-        calc(-1 * var(--spectrum-global-dimension-static-size-100, 8px)) 0;
+            calc(var(--spectrum-global-dimension-static-size-100, 8px) * -1),
+        calc(var(--spectrum-global-dimension-static-size-100, 8px) * -1) 0;
     background-size: var(--spectrum-global-dimension-static-size-200, 16px)
         var(--spectrum-global-dimension-static-size-200, 16px); /* .spectrum-ColorSlider-checkerboard */
 }

@@ -604,7 +604,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(--spectrum-alias-focus-ring-color)
         );
     bottom: calc(
-        -1 * var(--spectrum-alias-input-quiet-focusline-gap, var(--spectrum-global-dimension-static-size-10))
+        var(
+                --spectrum-alias-input-quiet-focusline-gap,
+                var(--spectrum-global-dimension-static-size-10)
+            ) * -1
     );
     box-shadow: none;
     margin: 0; /* .spectrum-Textfield.is-keyboardFocused.spectrum-Textfield--quiet:after */

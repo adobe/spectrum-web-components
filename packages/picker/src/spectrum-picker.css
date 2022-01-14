@@ -443,26 +443,30 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) .spectrum-Picker-popover--quiet {
     margin-left: calc(
-        -1 * (var(
+        (
+                var(
                         --spectrum-picker-m-quiet-texticon-popover-offset-x,
                         var(--spectrum-global-dimension-size-150)
                     ) +
                     var(
                         --spectrum-popover-border-size,
                         var(--spectrum-alias-border-size-thin)
-                    ))
+                    )
+            ) * -1
     ); /* [dir=ltr] .spectrum-Picker-popover--quiet */
 }
 :host([dir='rtl']) .spectrum-Picker-popover--quiet {
     margin-right: calc(
-        -1 * (var(
+        (
+                var(
                         --spectrum-picker-m-quiet-texticon-popover-offset-x,
                         var(--spectrum-global-dimension-size-150)
                     ) +
                     var(
                         --spectrum-popover-border-size,
                         var(--spectrum-alias-border-size-thin)
-                    ))
+                    )
+            ) * -1
     ); /* [dir=rtl] .spectrum-Picker-popover--quiet */
 }
 #button {
