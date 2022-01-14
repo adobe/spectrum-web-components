@@ -131,10 +131,18 @@ function renderButtons(args: Properties): TemplateResult {
     `;
 }
 
+function displaySelectionState() {
+    const group = document.querySelector('sp-action-group') as ActionGroup;
+    const selectedDiv = group.nextElementSibling;
+    if (selectedDiv) {
+        selectedDiv.textContent = `Selected: ${JSON.stringify(group.selected)}`;
+    }
+}
 export const Default = (args: Properties): TemplateResult =>
     renderButtons(args);
 
 export const selectsSingle = (args: Properties): TemplateResult => {
+    requestAnimationFrame(displaySelectionState);
     return html`
         <sp-action-group
             ?compact=${args.compact}
@@ -161,6 +169,7 @@ export const selectsSingle = (args: Properties): TemplateResult => {
 };
 
 export const selectsMultiple = (args: Properties): TemplateResult => {
+    requestAnimationFrame(displaySelectionState);
     return html`
         <sp-action-group
             ${spreadProps(args)}
@@ -217,6 +226,30 @@ export const selectsMultipleWithTooltips = (
                 <sp-action-button slot="trigger">Yellow</sp-action-button>
                 <sp-tooltip slot="hover-content">The sun at noon.</sp-tooltip>
             </overlay-trigger>
+        </sp-action-group>
+        <div>Selected:</div>
+    `;
+};
+
+export const selectsMultipleControlled = (args: Properties): TemplateResult => {
+    requestAnimationFrame(displaySelectionState);
+    return html`
+        <sp-action-group
+            ${spreadProps(args)}
+            selects="multiple"
+            .selected=${['donuts', 'crepecakes']}
+            label="Favorite Dessert"
+            @change=${({ target }: Event & { target: ActionGroup }) => {
+                const next = target.nextElementSibling as HTMLDivElement;
+                next.textContent = `Selected: ${JSON.stringify(
+                    target.selected
+                )}`;
+            }}
+        >
+            <sp-action-button value="lavacakes">Lava Cakes</sp-action-button>
+            <sp-action-button value="donuts">Donuts</sp-action-button>
+            <sp-action-button value="crepecakes">Crepe Cake</sp-action-button>
+            <sp-action-button value="fruittarts">Fruit Tarts</sp-action-button>
         </sp-action-group>
         <div>Selected:</div>
     `;

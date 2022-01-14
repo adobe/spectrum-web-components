@@ -120,6 +120,15 @@ interface Properties {
 }
 
 const template = (args: Properties): TemplateResult => {
+    requestAnimationFrame(() => {
+        const group = document.querySelector('sp-action-group') as ActionGroup;
+        const selectedDiv = group.nextElementSibling;
+        if (selectedDiv) {
+            selectedDiv.textContent = `Selected: ${JSON.stringify(
+                group.selected
+            )}`;
+        }
+    });
     return html`
         <sp-action-group
             label="Favorite Color"
@@ -154,11 +163,11 @@ const template = (args: Properties): TemplateResult => {
                 <sp-tooltip slot="hover-content">The sun at noon.</sp-tooltip>
             </overlay-trigger>
         </sp-action-group>
-        ${args.selects == 'none'
-            ? html``
-            : html`
+        ${!!args.selects
+            ? html`
                   <div>Selected:</div>
-              `}
+              `
+            : html``}
     `;
 };
 
@@ -183,6 +192,7 @@ justified.args = {
     compact: true,
     emphasized: true,
     justified: true,
+    selects: undefined,
 };
 
 export const vertical = (args: Properties): TemplateResult => template(args);
@@ -190,4 +200,5 @@ vertical.args = {
     compact: true,
     emphasized: true,
     vertical: true,
+    selects: undefined,
 };

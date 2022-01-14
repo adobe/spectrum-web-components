@@ -99,6 +99,37 @@ An `<sp-action-group selects="multiple">` will manage its `<sp-action-button>` c
 </sp-action-group>
 ```
 
+## Selected
+
+The `selected` property represents the selection state within a button group. This property can be managed either by the component or by the user. Passing in an array of button values will make `<sp-action-group>` a controllable component. Though `selected` would more commonly be set via Javascript expressions (i.e. `<sp-action-group .selected=${["first"]}>`), it is also possible to set `selected` as a JSON string.
+
+```html
+<sp-action-group selects="single" selected='["first"]'>
+    <sp-action-button value="first">First</sp-action-button>
+    <sp-action-button value="second">Second</sp-action-button>
+</sp-action-group>
+```
+
+By default, an `<sp-action-group>` will select any button passed into `selected`. Afterwards, `.selects` controls how button values are added to the selection state. For example, if `.selects` is not specified when `selected` is set, any further interaction will result in no change to the selection.
+
+```html
+<sp-action-group selected='["first", "second"]'>
+    <sp-action-button value="first">First</sp-action-button>
+    <sp-action-button value="second">Second</sp-action-button>
+    <sp-action-button value="third">Third</sp-action-button>
+</sp-action-group>
+```
+
+Similarly, if `selected` contains more than one button value, but `selects = "single"`, then those initial buttons will be highlighted, but further interaction will result in radio-button functionality.
+
+```html
+<sp-action-group selects="single" selected='["first", "second"]'>
+    <sp-action-button value="first">First</sp-action-button>
+    <sp-action-button value="second">Second</sp-action-button>
+    <sp-action-button value="third">Third</sp-action-button>
+</sp-action-group>
+```
+
 ## Horizontal
 
 By default, an `<sp-action-group>` will organize its child buttons horizontally and the delivery of those buttons can be modified with the `compact`, `emphasized`, or `quiet` attributes.
