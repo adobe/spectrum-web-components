@@ -8,7 +8,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: a60ebceaaf594760a8d5d9c4592fab3ec2ab1e51
+        default: 0cf165b5a9d1e4d30ac22084a02d44a99ad240fe
 commands:
     downstream:
         steps:
@@ -152,7 +152,6 @@ jobs:
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
                   yarn netlify deploy --alias=$branch
-
     visual:
         executor: node
         parameters:
