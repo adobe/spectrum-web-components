@@ -171,21 +171,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/avatar/sp-avatar.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-avatar",
-          "declaration": {
-            "name": "Avatar",
-            "module": "/packages/avatar/src/Avatar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/banner/sp-banner.ts",
       "declarations": [],
       "exports": [
@@ -201,24 +186,24 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/bundle/elements.ts",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/sp-button-group.ts",
+      "path": "packages/avatar/sp-avatar.ts",
       "declarations": [],
       "exports": [
         {
           "kind": "custom-element-definition",
-          "name": "sp-button-group",
+          "name": "sp-avatar",
           "declaration": {
-            "name": "ButtonGroup",
-            "module": "/packages/button-group/src/ButtonGroup.js"
+            "name": "Avatar",
+            "module": "/packages/avatar/src/Avatar.js"
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/bundle/elements.ts",
+      "declarations": [],
+      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -246,6 +231,21 @@
           "declaration": {
             "name": "ClearButton",
             "module": "/packages/button/src/ClearButton.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/sp-button-group.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-button-group",
+          "declaration": {
+            "name": "ButtonGroup",
+            "module": "/packages/button-group/src/ButtonGroup.js"
           }
         }
       ]
@@ -402,21 +402,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/divider/sp-divider.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-divider",
-          "declaration": {
-            "name": "Divider",
-            "module": "/packages/divider/src/Divider.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/dropzone/sp-dropzone.ts",
       "declarations": [],
       "exports": [
@@ -426,6 +411,21 @@
           "declaration": {
             "name": "Dropzone",
             "module": "/packages/dropzone/src/Dropzone.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/divider/sp-divider.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-divider",
+          "declaration": {
+            "name": "Divider",
+            "module": "/packages/divider/src/Divider.js"
           }
         }
       ]
@@ -5501,6 +5501,144 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/banner/src/Banner.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Banner",
+          "slots": [
+            {
+              "description": "Primary message of the banner.",
+              "name": "header"
+            },
+            {
+              "description": "Secondary message of the banner. Used to provide a description.",
+              "name": "content"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "'info' | 'warning' | 'error'"
+              },
+              "privacy": "public",
+              "default": "'info'",
+              "attribute": "type",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "corner",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "corner",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "description": "Determines the style, can be \"info\", \"warning\", or \"error\". Default is \"info\"",
+              "name": "type",
+              "type": {
+                "text": "'info' | 'warning' | 'error'"
+              },
+              "default": "'info'",
+              "fieldName": "type"
+            },
+            {
+              "description": "Determines if banner sets position at upper right corner or not.",
+              "name": "corner",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "corner"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-banner",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Banner",
+          "declaration": {
+            "name": "Banner",
+            "module": "packages/banner/src/Banner.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/banner/src/banner.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{border-radius:var(\n--spectrum-banner-border-radius,var(--spectrum-global-dimension-static-size-100)\n);display:inline-block;font-size:var(\n--spectrum-banner-text-size,var(--spectrum-global-dimension-font-size-75)\n);line-height:var(\n--spectrum-banner-text-line-height,var(--spectrum-alias-heading-text-line-height)\n);padding:var(\n--spectrum-banner-padding-y,var(--spectrum-global-dimension-static-size-50)\n) var(\n--spectrum-banner-padding-x,var(--spectrum-global-dimension-static-size-100)\n)}#header{font-weight:700}:host([dir=ltr][corner]){right:-10px}:host([dir=rtl][corner]){left:-10px}:host([corner]){position:absolute;top:-10px}:host{color:var(\n--spectrum-banner-text-color,var(--spectrum-global-color-static-white)\n)}:host([type=info]){background-color:var(\n--spectrum-banner-info-background-color,var(--spectrum-semantic-informative-color-default)\n)}:host([type=warning]){background-color:var(\n--spectrum-banner-warning-background-color,var(--spectrum-semantic-notice-color-default)\n)}:host([type=error]){background-color:var(\n--spectrum-banner-error-background-color,var(--spectrum-semantic-negative-color-default)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/banner/src/banner.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/banner/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Banner.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/banner/src/spectrum-banner.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{border-radius:var(\n--spectrum-banner-border-radius,var(--spectrum-global-dimension-static-size-100)\n);display:inline-block;font-size:var(\n--spectrum-banner-text-size,var(--spectrum-global-dimension-font-size-75)\n);line-height:var(\n--spectrum-banner-text-line-height,var(--spectrum-alias-heading-text-line-height)\n);padding:var(\n--spectrum-banner-padding-y,var(--spectrum-global-dimension-static-size-50)\n) var(\n--spectrum-banner-padding-x,var(--spectrum-global-dimension-static-size-100)\n)}#header{font-weight:700}:host([dir=ltr][corner]){right:-10px}:host([dir=rtl][corner]){left:-10px}:host([corner]){position:absolute;top:-10px}:host{color:var(\n--spectrum-banner-text-color,var(--spectrum-global-color-static-white)\n)}:host([type=info]){background-color:var(\n--spectrum-banner-info-background-color,var(--spectrum-semantic-informative-color-default)\n)}:host([type=warning]){background-color:var(\n--spectrum-banner-warning-background-color,var(--spectrum-semantic-notice-color-default)\n)}:host([type=error]){background-color:var(\n--spectrum-banner-error-background-color,var(--spectrum-semantic-negative-color-default)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/banner/src/spectrum-banner.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/avatar/src/Avatar.ts",
       "declarations": [
         {
@@ -5645,144 +5783,6 @@
           "declaration": {
             "name": "styles",
             "module": "packages/avatar/src/spectrum-avatar.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/banner/src/Banner.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Banner",
-          "slots": [
-            {
-              "description": "Primary message of the banner.",
-              "name": "header"
-            },
-            {
-              "description": "Secondary message of the banner. Used to provide a description.",
-              "name": "content"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "type",
-              "type": {
-                "text": "'info' | 'warning' | 'error'"
-              },
-              "privacy": "public",
-              "default": "'info'",
-              "attribute": "type",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "corner",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "corner",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "description": "Determines the style, can be \"info\", \"warning\", or \"error\". Default is \"info\"",
-              "name": "type",
-              "type": {
-                "text": "'info' | 'warning' | 'error'"
-              },
-              "default": "'info'",
-              "fieldName": "type"
-            },
-            {
-              "description": "Determines if banner sets position at upper right corner or not.",
-              "name": "corner",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "corner"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-banner",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Banner",
-          "declaration": {
-            "name": "Banner",
-            "module": "packages/banner/src/Banner.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/banner/src/banner.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{border-radius:var(\n--spectrum-banner-border-radius,var(--spectrum-global-dimension-static-size-100)\n);display:inline-block;font-size:var(\n--spectrum-banner-text-size,var(--spectrum-global-dimension-font-size-75)\n);line-height:var(\n--spectrum-banner-text-line-height,var(--spectrum-alias-heading-text-line-height)\n);padding:var(\n--spectrum-banner-padding-y,var(--spectrum-global-dimension-static-size-50)\n) var(\n--spectrum-banner-padding-x,var(--spectrum-global-dimension-static-size-100)\n)}#header{font-weight:700}:host([dir=ltr][corner]){right:-10px}:host([dir=rtl][corner]){left:-10px}:host([corner]){position:absolute;top:-10px}:host{color:var(\n--spectrum-banner-text-color,var(--spectrum-global-color-static-white)\n)}:host([type=info]){background-color:var(\n--spectrum-banner-info-background-color,var(--spectrum-semantic-informative-color-default)\n)}:host([type=warning]){background-color:var(\n--spectrum-banner-warning-background-color,var(--spectrum-semantic-notice-color-default)\n)}:host([type=error]){background-color:var(\n--spectrum-banner-error-background-color,var(--spectrum-semantic-negative-color-default)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/banner/src/banner.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/banner/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Banner.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/banner/src/spectrum-banner.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{border-radius:var(\n--spectrum-banner-border-radius,var(--spectrum-global-dimension-static-size-100)\n);display:inline-block;font-size:var(\n--spectrum-banner-text-size,var(--spectrum-global-dimension-font-size-75)\n);line-height:var(\n--spectrum-banner-text-line-height,var(--spectrum-alias-heading-text-line-height)\n);padding:var(\n--spectrum-banner-padding-y,var(--spectrum-global-dimension-static-size-50)\n) var(\n--spectrum-banner-padding-x,var(--spectrum-global-dimension-static-size-100)\n)}#header{font-weight:700}:host([dir=ltr][corner]){right:-10px}:host([dir=rtl][corner]){left:-10px}:host([corner]){position:absolute;top:-10px}:host{color:var(\n--spectrum-banner-text-color,var(--spectrum-global-color-static-white)\n)}:host([type=info]){background-color:var(\n--spectrum-banner-info-background-color,var(--spectrum-semantic-informative-color-default)\n)}:host([type=warning]){background-color:var(\n--spectrum-banner-warning-background-color,var(--spectrum-semantic-notice-color-default)\n)}:host([type=error]){background-color:var(\n--spectrum-banner-error-background-color,var(--spectrum-semantic-negative-color-default)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/banner/src/spectrum-banner.css.ts"
           }
         }
       ]
@@ -6886,196 +6886,6 @@
           "declaration": {
             "name": "*",
             "package": "@spectrum-web-components/underlay"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/ButtonGroup.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ButtonGroup",
-          "slots": [
-            {
-              "description": "the sp-button elements that make up the group",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "vertical",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "vertical"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-button-group",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ButtonGroup",
-          "declaration": {
-            "name": "ButtonGroup",
-            "module": "packages/button-group/src/ButtonGroup.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/button-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-flex-grow:1}:host([dir=ltr][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:left}:host([dir=rtl][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:right}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/button-group/src/button-group.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ButtonGroup.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/spectrum-button-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/button-group/src/spectrum-button-group.css.ts"
           }
         }
       ]
@@ -11165,6 +10975,196 @@
           "declaration": {
             "name": "styles",
             "module": "packages/button/src/spectrum-clear-button.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/ButtonGroup.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ButtonGroup",
+          "slots": [
+            {
+              "description": "the sp-button elements that make up the group",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-button-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ButtonGroup",
+          "declaration": {
+            "name": "ButtonGroup",
+            "module": "packages/button-group/src/ButtonGroup.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/button-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-flex-grow:1}:host([dir=ltr][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:left}:host([dir=rtl][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:right}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/button-group/src/button-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ButtonGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/spectrum-button-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/button-group/src/spectrum-button-group.css.ts"
           }
         }
       ]
@@ -17264,256 +17264,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/divider/src/Divider.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Divider",
-          "members": [
-            {
-              "kind": "field",
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "vertical",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "privacy": "public",
-              "attribute": "size",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_size",
-              "type": {
-                "text": "ElementSize | null"
-              },
-              "privacy": "private",
-              "default": "defaultSize",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "firstUpdated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "changes",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "vertical"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "fieldName": "size",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "mixins": [
-            {
-              "name": "SizedMixin",
-              "package": "@spectrum-web-components/base"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-divider",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Divider",
-          "declaration": {
-            "name": "Divider",
-            "module": "packages/divider/src/Divider.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/divider/src/divider.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-divider-height:var(\n--spectrum-divider-s-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-s-vertical-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-s-vertical-width,var(--spectrum-global-dimension-size-10)\n)}:host([size=m]){--spectrum-divider-height:var(\n--spectrum-divider-m-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-m-vertical-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-m-vertical-width,var(--spectrum-global-dimension-size-25)\n)}:host([size=l]){--spectrum-divider-height:var(\n--spectrum-divider-l-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-l-vertical-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-l-vertical-width,var(--spectrum-global-dimension-size-50)\n)}:host{--spectrum-divider-vertical-height:100%}:host{border-width:medium;border:var(--spectrum-divider-height);border-radius:var(--spectrum-divider-height);height:var(--spectrum-divider-height);overflow:visible;width:100%}:host([vertical]){height:var(\n--spectrum-divider-vertical-height\n);width:var(--spectrum-divider-vertical-width)}:host{--spectrum-divider-l-background-color:var(\n--spectrum-global-color-gray-800\n);--spectrum-divider-m-background-color:var(\n--spectrum-global-color-gray-300\n);--spectrum-divider-s-background-color:var(\n--spectrum-global-color-gray-300\n)}:host([size=l]){background-color:var(\n--spectrum-divider-l-background-color,var(--spectrum-global-color-gray-800)\n)}:host([size=m]){background-color:var(\n--spectrum-divider-m-background-color,var(--spectrum-global-color-gray-300)\n)}:host([size=s]){background-color:var(\n--spectrum-divider-s-background-color,var(--spectrum-global-color-gray-300)\n)}:host{display:block}hr{border:none;margin:0}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/divider/src/divider.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/divider/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Divider.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/divider/src/spectrum-divider.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-divider-height:var(\n--spectrum-divider-s-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-s-vertical-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-s-vertical-width,var(--spectrum-global-dimension-size-10)\n)}:host([size=m]){--spectrum-divider-height:var(\n--spectrum-divider-m-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-m-vertical-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-m-vertical-width,var(--spectrum-global-dimension-size-25)\n)}:host([size=l]){--spectrum-divider-height:var(\n--spectrum-divider-l-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-l-vertical-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-l-vertical-width,var(--spectrum-global-dimension-size-50)\n)}:host{--spectrum-divider-vertical-height:100%}:host{border-width:medium;border:var(--spectrum-divider-height);border-radius:var(--spectrum-divider-height);height:var(--spectrum-divider-height);overflow:visible;width:100%}:host([vertical]){height:var(\n--spectrum-divider-vertical-height\n);width:var(--spectrum-divider-vertical-width)}:host{--spectrum-divider-l-background-color:var(\n--spectrum-global-color-gray-800\n);--spectrum-divider-m-background-color:var(\n--spectrum-global-color-gray-300\n);--spectrum-divider-s-background-color:var(\n--spectrum-global-color-gray-300\n)}:host([size=l]){background-color:var(\n--spectrum-divider-l-background-color,var(--spectrum-global-color-gray-800)\n)}:host([size=m]){background-color:var(\n--spectrum-divider-m-background-color,var(--spectrum-global-color-gray-300)\n)}:host([size=s]){background-color:var(\n--spectrum-divider-s-background-color,var(--spectrum-global-color-gray-300)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/divider/src/spectrum-divider.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/dropzone/src/Dropzone.ts",
       "declarations": [
         {
@@ -17816,6 +17566,256 @@
           "declaration": {
             "name": "styles",
             "module": "packages/dropzone/src/spectrum-dropzone.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/divider/src/Divider.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Divider",
+          "members": [
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "privacy": "public",
+              "attribute": "size",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_size",
+              "type": {
+                "text": "ElementSize | null"
+              },
+              "privacy": "private",
+              "default": "defaultSize",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changes",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "fieldName": "size",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SizedMixin",
+              "package": "@spectrum-web-components/base"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-divider",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Divider",
+          "declaration": {
+            "name": "Divider",
+            "module": "packages/divider/src/Divider.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/divider/src/divider.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([size=s]){--spectrum-divider-height:var(\n--spectrum-divider-s-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-s-vertical-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-s-vertical-width,var(--spectrum-global-dimension-size-10)\n)}:host([size=m]){--spectrum-divider-height:var(\n--spectrum-divider-m-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-m-vertical-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-m-vertical-width,var(--spectrum-global-dimension-size-25)\n)}:host([size=l]){--spectrum-divider-height:var(\n--spectrum-divider-l-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-l-vertical-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-l-vertical-width,var(--spectrum-global-dimension-size-50)\n)}:host{--spectrum-divider-vertical-height:100%}:host{border-width:medium;border:var(--spectrum-divider-height);border-radius:var(--spectrum-divider-height);height:var(--spectrum-divider-height);overflow:visible;width:100%}:host([vertical]){height:var(\n--spectrum-divider-vertical-height\n);width:var(--spectrum-divider-vertical-width)}:host{--spectrum-divider-l-background-color:var(\n--spectrum-global-color-gray-800\n);--spectrum-divider-m-background-color:var(\n--spectrum-global-color-gray-300\n);--spectrum-divider-s-background-color:var(\n--spectrum-global-color-gray-300\n)}:host([size=l]){background-color:var(\n--spectrum-divider-l-background-color,var(--spectrum-global-color-gray-800)\n)}:host([size=m]){background-color:var(\n--spectrum-divider-m-background-color,var(--spectrum-global-color-gray-300)\n)}:host([size=s]){background-color:var(\n--spectrum-divider-s-background-color,var(--spectrum-global-color-gray-300)\n)}:host{display:block}hr{border:none;margin:0}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/divider/src/divider.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/divider/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Divider.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/divider/src/spectrum-divider.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([size=s]){--spectrum-divider-height:var(\n--spectrum-divider-s-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-s-vertical-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-s-vertical-width,var(--spectrum-global-dimension-size-10)\n)}:host([size=m]){--spectrum-divider-height:var(\n--spectrum-divider-m-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-m-vertical-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-m-vertical-width,var(--spectrum-global-dimension-size-25)\n)}:host([size=l]){--spectrum-divider-height:var(\n--spectrum-divider-l-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-l-vertical-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-l-vertical-width,var(--spectrum-global-dimension-size-50)\n)}:host{--spectrum-divider-vertical-height:100%}:host{border-width:medium;border:var(--spectrum-divider-height);border-radius:var(--spectrum-divider-height);height:var(--spectrum-divider-height);overflow:visible;width:100%}:host([vertical]){height:var(\n--spectrum-divider-vertical-height\n);width:var(--spectrum-divider-vertical-width)}:host{--spectrum-divider-l-background-color:var(\n--spectrum-global-color-gray-800\n);--spectrum-divider-m-background-color:var(\n--spectrum-global-color-gray-300\n);--spectrum-divider-s-background-color:var(\n--spectrum-global-color-gray-300\n)}:host([size=l]){background-color:var(\n--spectrum-divider-l-background-color,var(--spectrum-global-color-gray-800)\n)}:host([size=m]){background-color:var(\n--spectrum-divider-m-background-color,var(--spectrum-global-color-gray-300)\n)}:host([size=s]){background-color:var(\n--spectrum-divider-s-background-color,var(--spectrum-global-color-gray-300)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/divider/src/spectrum-divider.css.ts"
           }
         }
       ]
@@ -27551,594 +27551,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/iconset/src/iconset-registry.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "IconsetRegistry",
-          "members": [
-            {
-              "kind": "method",
-              "name": "getInstance",
-              "privacy": "public",
-              "static": true,
-              "return": {
-                "type": {
-                  "text": "IconsetRegistry"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "instance",
-              "type": {
-                "text": "IconsetRegistry"
-              },
-              "privacy": "private",
-              "static": true
-            },
-            {
-              "kind": "field",
-              "name": "iconsetMap",
-              "privacy": "private",
-              "default": "new Map<string, Iconset>()"
-            },
-            {
-              "kind": "method",
-              "name": "addIconset",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "name",
-                  "type": {
-                    "text": "string"
-                  }
-                },
-                {
-                  "name": "iconset",
-                  "type": {
-                    "text": "Iconset"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "removeIconset",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "name",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "getIconset",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "Iconset | undefined"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "name",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "IconsetRegistry",
-          "declaration": {
-            "name": "IconsetRegistry",
-            "module": "packages/iconset/src/iconset-registry.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/iconset/src/iconset-svg.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "IconsetSVG",
-          "members": [
-            {
-              "kind": "field",
-              "name": "iconMap",
-              "type": {
-                "text": "Map<string, SVGSymbolElement>"
-              },
-              "privacy": "private",
-              "default": "new Map()"
-            },
-            {
-              "kind": "field",
-              "name": "slotContainer",
-              "type": {
-                "text": "HTMLSlotElement | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "applyIconToElement",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "el",
-                  "type": {
-                    "text": "HTMLElement"
-                  },
-                  "description": "the element to apply the icon to"
-                },
-                {
-                  "name": "icon",
-                  "type": {
-                    "text": "string"
-                  },
-                  "description": "the name of the icon within this set to apply."
-                },
-                {
-                  "name": "_size",
-                  "type": {
-                    "text": "string"
-                  }
-                },
-                {
-                  "name": "label",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ],
-              "description": "Applies the requested icon from this iconset instance to the given element.",
-              "inheritedFrom": {
-                "name": "Iconset",
-                "module": "packages/iconset/src/iconset.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "getIconList",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "string[]"
-                }
-              },
-              "description": "Returns a list of all icons in this iconset.",
-              "inheritedFrom": {
-                "name": "Iconset",
-                "module": "packages/iconset/src/iconset.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "prepareSvgClone",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "SVGSVGElement"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "sourceSvg",
-                  "type": {
-                    "text": "SVGSymbolElement"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "getSVGIconName",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "string"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "icon",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "getSanitizedIconName",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "string"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "icon",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "renderDefaultContent",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "updateSVG",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "nodes",
-                  "type": {
-                    "text": "SVGElement[]"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "getSVGNodes",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "SVGElement[]"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "slotTarget",
-                  "type": {
-                    "text": "HTMLSlotElement"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "onSlotChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "registered",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected",
-              "default": "false",
-              "inheritedFrom": {
-                "name": "Iconset",
-                "module": "packages/iconset/src/iconset.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_name",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "Iconset",
-                "module": "packages/iconset/src/iconset.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "privacy": "public",
-              "description": "Name of the iconset, used by the IconsetRegistry to serve this icon set\nto consuming icons.",
-              "type": {
-                "text": "string"
-              },
-              "attribute": "name",
-              "inheritedFrom": {
-                "name": "Iconset",
-                "module": "packages/iconset/src/iconset.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "handleRemoved",
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "Iconset",
-                "module": "packages/iconset/src/iconset.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "addIconset",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Iconset",
-                "module": "packages/iconset/src/iconset.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "removeIconset",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Iconset",
-                "module": "packages/iconset/src/iconset.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "Iconset",
-            "module": "/packages/iconset/src/iconset.js"
-          },
-          "attributes": [
-            {
-              "name": "name",
-              "description": "Name of the iconset, used by the IconsetRegistry to serve this icon set\nto consuming icons.",
-              "type": {
-                "text": "string"
-              },
-              "fieldName": "name",
-              "inheritedFrom": {
-                "name": "Iconset",
-                "module": "packages/iconset/src/iconset.ts"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "IconsetSVG",
-          "declaration": {
-            "name": "IconsetSVG",
-            "module": "packages/iconset/src/iconset-svg.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/iconset/src/iconset.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Iconset",
-          "members": [
-            {
-              "kind": "field",
-              "name": "registered",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "_name",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "name",
-              "privacy": "public",
-              "description": "Name of the iconset, used by the IconsetRegistry to serve this icon set\nto consuming icons.",
-              "type": {
-                "text": "string"
-              },
-              "attribute": "name"
-            },
-            {
-              "kind": "method",
-              "name": "applyIconToElement",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "el",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                },
-                {
-                  "name": "icon",
-                  "type": {
-                    "text": "string"
-                  }
-                },
-                {
-                  "name": "size",
-                  "type": {
-                    "text": "string"
-                  }
-                },
-                {
-                  "name": "label",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ],
-              "description": "Applies an icon to the given element"
-            },
-            {
-              "kind": "method",
-              "name": "getIconList",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "string[]"
-                }
-              },
-              "description": "Returns a list of all icons in this iconset."
-            },
-            {
-              "kind": "field",
-              "name": "handleRemoved",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "addIconset",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "removeIconset",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "name",
-              "description": "Name of the iconset, used by the IconsetRegistry to serve this icon set\nto consuming icons.",
-              "type": {
-                "text": "string"
-              },
-              "fieldName": "name"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Iconset",
-          "declaration": {
-            "name": "Iconset",
-            "module": "packages/iconset/src/iconset.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/iconset/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./iconset.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./iconset-svg.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./iconset-registry.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/illustrated-message/src/IllustratedMessage.ts",
       "declarations": [
         {
@@ -29047,6 +28459,594 @@
           "declaration": {
             "name": "styles",
             "module": "packages/link/src/spectrum-link.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/iconset/src/iconset-registry.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "IconsetRegistry",
+          "members": [
+            {
+              "kind": "method",
+              "name": "getInstance",
+              "privacy": "public",
+              "static": true,
+              "return": {
+                "type": {
+                  "text": "IconsetRegistry"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "instance",
+              "type": {
+                "text": "IconsetRegistry"
+              },
+              "privacy": "private",
+              "static": true
+            },
+            {
+              "kind": "field",
+              "name": "iconsetMap",
+              "privacy": "private",
+              "default": "new Map<string, Iconset>()"
+            },
+            {
+              "kind": "method",
+              "name": "addIconset",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "iconset",
+                  "type": {
+                    "text": "Iconset"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "removeIconset",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "getIconset",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Iconset | undefined"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "IconsetRegistry",
+          "declaration": {
+            "name": "IconsetRegistry",
+            "module": "packages/iconset/src/iconset-registry.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/iconset/src/iconset-svg.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "IconsetSVG",
+          "members": [
+            {
+              "kind": "field",
+              "name": "iconMap",
+              "type": {
+                "text": "Map<string, SVGSymbolElement>"
+              },
+              "privacy": "private",
+              "default": "new Map()"
+            },
+            {
+              "kind": "field",
+              "name": "slotContainer",
+              "type": {
+                "text": "HTMLSlotElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "applyIconToElement",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "el",
+                  "type": {
+                    "text": "HTMLElement"
+                  },
+                  "description": "the element to apply the icon to"
+                },
+                {
+                  "name": "icon",
+                  "type": {
+                    "text": "string"
+                  },
+                  "description": "the name of the icon within this set to apply."
+                },
+                {
+                  "name": "_size",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "label",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "description": "Applies the requested icon from this iconset instance to the given element.",
+              "inheritedFrom": {
+                "name": "Iconset",
+                "module": "packages/iconset/src/iconset.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "getIconList",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "string[]"
+                }
+              },
+              "description": "Returns a list of all icons in this iconset.",
+              "inheritedFrom": {
+                "name": "Iconset",
+                "module": "packages/iconset/src/iconset.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "prepareSvgClone",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "SVGSVGElement"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "sourceSvg",
+                  "type": {
+                    "text": "SVGSymbolElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "getSVGIconName",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "icon",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "getSanitizedIconName",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "icon",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderDefaultContent",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "updateSVG",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "nodes",
+                  "type": {
+                    "text": "SVGElement[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "getSVGNodes",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "SVGElement[]"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "slotTarget",
+                  "type": {
+                    "text": "HTMLSlotElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onSlotChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "registered",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "Iconset",
+                "module": "packages/iconset/src/iconset.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_name",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "Iconset",
+                "module": "packages/iconset/src/iconset.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "privacy": "public",
+              "description": "Name of the iconset, used by the IconsetRegistry to serve this icon set\nto consuming icons.",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "name",
+              "inheritedFrom": {
+                "name": "Iconset",
+                "module": "packages/iconset/src/iconset.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "handleRemoved",
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "Iconset",
+                "module": "packages/iconset/src/iconset.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "addIconset",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Iconset",
+                "module": "packages/iconset/src/iconset.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "removeIconset",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Iconset",
+                "module": "packages/iconset/src/iconset.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "Iconset",
+            "module": "/packages/iconset/src/iconset.js"
+          },
+          "attributes": [
+            {
+              "name": "name",
+              "description": "Name of the iconset, used by the IconsetRegistry to serve this icon set\nto consuming icons.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "name",
+              "inheritedFrom": {
+                "name": "Iconset",
+                "module": "packages/iconset/src/iconset.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "IconsetSVG",
+          "declaration": {
+            "name": "IconsetSVG",
+            "module": "packages/iconset/src/iconset-svg.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/iconset/src/iconset.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Iconset",
+          "members": [
+            {
+              "kind": "field",
+              "name": "registered",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_name",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "privacy": "public",
+              "description": "Name of the iconset, used by the IconsetRegistry to serve this icon set\nto consuming icons.",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "name"
+            },
+            {
+              "kind": "method",
+              "name": "applyIconToElement",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "el",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                },
+                {
+                  "name": "icon",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "size",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "label",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "description": "Applies an icon to the given element"
+            },
+            {
+              "kind": "method",
+              "name": "getIconList",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "string[]"
+                }
+              },
+              "description": "Returns a list of all icons in this iconset."
+            },
+            {
+              "kind": "field",
+              "name": "handleRemoved",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "addIconset",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "removeIconset",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "description": "Name of the iconset, used by the IconsetRegistry to serve this icon set\nto consuming icons.",
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "name"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Iconset",
+          "declaration": {
+            "name": "Iconset",
+            "module": "packages/iconset/src/iconset.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/iconset/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./iconset.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./iconset-svg.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./iconset-registry.js"
           }
         }
       ]
@@ -44353,6 +44353,12 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/slider/sync/sp-slider.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/slider/src/HandleController.ts",
       "declarations": [
         {
@@ -46957,12 +46963,6 @@
           }
         }
       ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/slider/sync/sp-slider.ts",
-      "declarations": [],
-      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -58225,6 +58225,64 @@
     },
     {
       "kind": "javascript-module",
+      "path": "projects/documentation/src/utils/templates.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "toHtmlTemplateString",
+          "return": {
+            "type": {
+              "text": "TemplateResult"
+            }
+          },
+          "parameters": [
+            {
+              "name": "code",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "toCssTemplateString",
+          "return": {
+            "type": {
+              "text": "CSSResultGroup"
+            }
+          },
+          "parameters": [
+            {
+              "name": "code",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "toHtmlTemplateString",
+          "declaration": {
+            "name": "toHtmlTemplateString",
+            "module": "projects/documentation/src/utils/templates.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "toCssTemplateString",
+          "declaration": {
+            "name": "toCssTemplateString",
+            "module": "projects/documentation/src/utils/templates.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "projects/documentation/src/components/adobe-logo.ts",
       "declarations": [
         {
@@ -59154,64 +59212,6 @@
           "declaration": {
             "name": "SideNav",
             "module": "projects/documentation/src/components/side-nav.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "projects/documentation/src/utils/templates.ts",
-      "declarations": [
-        {
-          "kind": "function",
-          "name": "toHtmlTemplateString",
-          "return": {
-            "type": {
-              "text": "TemplateResult"
-            }
-          },
-          "parameters": [
-            {
-              "name": "code",
-              "type": {
-                "text": "string"
-              }
-            }
-          ]
-        },
-        {
-          "kind": "function",
-          "name": "toCssTemplateString",
-          "return": {
-            "type": {
-              "text": "CSSResultGroup"
-            }
-          },
-          "parameters": [
-            {
-              "name": "code",
-              "type": {
-                "text": "string"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "toHtmlTemplateString",
-          "declaration": {
-            "name": "toHtmlTemplateString",
-            "module": "projects/documentation/src/utils/templates.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "toCssTemplateString",
-          "declaration": {
-            "name": "toCssTemplateString",
-            "module": "projects/documentation/src/utils/templates.ts"
           }
         }
       ]
