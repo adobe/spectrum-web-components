@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     SpectrumElement,
-    CSSResultArray,
     TemplateResult,
-    property,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import styles from './asset.css.js';
 
@@ -58,6 +58,7 @@ const folder = (label: string): TemplateResult => html`
 
 /**
  * @element sp-asset
+ * @slot - content to be displayed in the asset when an acceptable value for `file` is not present
  */
 export class Asset extends SpectrumElement {
     public static get styles(): CSSResultArray {

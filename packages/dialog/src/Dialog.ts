@@ -11,15 +11,17 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
+    html,
+    PropertyValues,
+    SpectrumElement,
     TemplateResult,
+} from '@spectrum-web-components/base';
+import {
     property,
     query,
-    ifDefined,
-    PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -28,9 +30,10 @@ import crossStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.c
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import {
-    ObserveSlotPresence,
     FocusVisiblePolyfillMixin,
+    ObserveSlotPresence,
 } from '@spectrum-web-components/shared';
+import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 
 import styles from './dialog.css.js';
 
@@ -83,13 +86,11 @@ export class Dialog extends FocusVisiblePolyfillMixin(
     public mode?: 'fullscreen' | 'fullscreenTakeover';
 
     @property({ type: String, reflect: true })
-    public size?: 'small' | 'medium' | 'large' | 'alert';
+    public size?: 's' | 'm' | 'l';
 
     public focus(): void {
         if (this.shadowRoot) {
-            const firstFocusable = this.shadowRoot.querySelector(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
-            ) as SpectrumElement;
+            const firstFocusable = firstFocusableIn(this.shadowRoot);
             if (firstFocusable) {
                 if (firstFocusable.updateComplete) {
                     firstFocusable.updateComplete.then(() =>
@@ -146,9 +147,9 @@ export class Dialog extends FocusVisiblePolyfillMixin(
                 ${this.hasButtons
                     ? html`
                           <sp-button-group
-                              class="buttonGroup ${this.hasFooter
+                              class="button-group ${this.hasFooter
                                   ? ''
-                                  : 'buttonGroup--noFooter'}"
+                                  : 'button-group--noFooter'}"
                           >
                               <slot name="button"></slot>
                           </sp-button-group>
@@ -174,7 +175,7 @@ export class Dialog extends FocusVisiblePolyfillMixin(
         `;
     }
 
-    private shouldManageTabOrderForScrolling = (): void => {
+    public shouldManageTabOrderForScrolling = (): void => {
         const { offsetHeight, scrollHeight } = this.contentElement;
         if (offsetHeight < scrollHeight) {
             this.contentElement.tabIndex = 0;

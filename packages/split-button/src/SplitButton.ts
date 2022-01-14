@@ -12,17 +12,20 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
-    TemplateResult,
-    property,
-    PropertyValues,
+    DefaultElementSize,
     html,
-    query,
-    ifDefined,
+    PropertyValues,
     SizedMixin,
-    ElementSize,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/button/sp-button.js';
 import { ButtonVariants } from '@spectrum-web-components/button';
 import { PickerBase } from '@spectrum-web-components/picker';
@@ -40,8 +43,9 @@ const chevronClass = {
 
 /**
  * @element sp-split-button
+ *
+ * @slot - menu items to be listed in the Button
  **/
-type SplitButtonSize = Exclude<ElementSize, 'xxl'>;
 export class SplitButton extends SizedMixin(PickerBase) {
     public static get styles(): CSSResultArray {
         return [styles, chevronStyles];
@@ -69,16 +73,14 @@ export class SplitButton extends SizedMixin(PickerBase) {
     protected listRole: 'listbox' | 'menu' = 'menu';
     protected itemRole = 'menuitem';
 
-    public focus(): void {
-        if (this.disabled) {
-            return;
+    public get focusElement(): HTMLElement {
+        if (this.open) {
+            return this.optionsMenu;
         }
         if (this.left) {
-            this.trigger.focus();
-            return;
+            return this.trigger;
         }
-
-        super.focus();
+        return this.button;
     }
 
     protected sizePopover(popover: HTMLElement): void {
@@ -89,7 +91,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
         const target =
             this.type === 'more'
                 ? this.menuItems[0]
-                : this.menuItems.find((el) => el.selected) || this.menuItems[0];
+                : this.selectedItem || this.menuItems[0];
         if (target) {
             target.click();
         }
@@ -109,11 +111,21 @@ export class SplitButton extends SizedMixin(PickerBase) {
         ];
     }
 
+    protected update(changes: PropertyValues<this>): void {
+        if (changes.has('type')) {
+            if (this.type === 'more') {
+                this.selects = undefined;
+            } else {
+                this.selects = 'single';
+            }
+        }
+        super.update(changes);
+    }
+
     protected render(): TemplateResult {
         const buttons: TemplateResult[] = [
             html`
                 <sp-button
-                    aria-haspopup="true"
                     aria-label=${ifDefined(this.label || undefined)}
                     id="button"
                     class="button ${this.variant}"
@@ -127,6 +139,8 @@ export class SplitButton extends SizedMixin(PickerBase) {
             `,
             html`
                 <sp-button
+                    aria-haspopup="true"
+                    aria-expanded=${this.open ? 'true' : 'false'}
                     class="button trigger ${this.variant}"
                     @blur=${this.onButtonBlur}
                     @click=${this.onButtonClick}
@@ -140,7 +154,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
                         ? html`
                               <sp-icon-chevron100
                                   class="icon ${chevronClass[
-                                      this.size as SplitButtonSize
+                                      this.size as DefaultElementSize
                                   ]}"
                               ></sp-icon-chevron100>
                           `
@@ -175,12 +189,11 @@ export class SplitButton extends SizedMixin(PickerBase) {
             if (this.type === 'more') {
                 this.menuItems[0].hidden = true;
                 this.menuItems.forEach((el) => (el.selected = false));
-                this.menuItems[0].selected = true;
                 this.selectedItem = this.menuItems[0];
             } else {
                 this.selectedItem = this.selectedItem || this.menuItems[0];
-                this.selectedItem.selected = true;
             }
+            this.value = this.selectedItem.value;
             return;
         }
         await this.updateComplete;

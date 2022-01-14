@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.4.0...@spectrum-web-components/split-view@0.4.1) (2021-12-13)
+
+**Note:** Version bump only for package @spectrum-web-components/split-view
+
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.3.1...@spectrum-web-components/split-view@0.4.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.3.0...@spectrum-web-components/split-view@0.3.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/split-view
+
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.11...@spectrum-web-components/split-view@0.3.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.2.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.10...@spectrum-web-components/split-view@0.2.11) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/split-view
+
+## [0.2.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.9...@spectrum-web-components/split-view@0.2.10) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/split-view
+
+## [0.2.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.8...@spectrum-web-components/split-view@0.2.9) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.2.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.7...@spectrum-web-components/split-view@0.2.8) (2021-07-22)
+
+### Bug Fixes
+
+-   **split-view:** redraw when primary-size change ([665d238](https://github.com/adobe/spectrum-web-components/commit/665d2384ca7f43d89fd7e2b7b3fb7536a5e24df8))
+
+## [0.2.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.6...@spectrum-web-components/split-view@0.2.7) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/split-view
+
 ## [0.2.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.2.5...@spectrum-web-components/split-view@0.2.6) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/split-view

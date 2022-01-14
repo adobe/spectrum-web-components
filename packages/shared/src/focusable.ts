@@ -9,11 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import {
-    SpectrumElement,
-    property,
-    PropertyValues,
-} from '@spectrum-web-components/base';
+import { PropertyValues, SpectrumElement } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import { FocusVisiblePolyfillMixin } from './focus-visible.js';
 
@@ -164,8 +161,9 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     public blur(): void {
-        if (this.focusElement !== this) {
-            this.focusElement.blur();
+        const focusElement = this.focusElement || this;
+        if (focusElement !== this) {
+            focusElement.blur();
         } else {
             HTMLElement.prototype.blur.apply(this);
         }
@@ -176,8 +174,9 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             return;
         }
 
-        if (this.focusElement !== this) {
-            this.focusElement.click();
+        const focusElement = this.focusElement || this;
+        if (focusElement !== this) {
+            focusElement.click();
         } else {
             HTMLElement.prototype.click.apply(this);
         }
@@ -210,7 +209,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
-    protected update(changedProperties: Map<string, boolean>): void {
+    protected update(changedProperties: PropertyValues): void {
         if (changedProperties.has('disabled')) {
             this.handleDisabledChanged(
                 this.disabled,

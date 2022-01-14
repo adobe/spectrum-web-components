@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
-    property,
+    html,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
@@ -24,8 +24,9 @@ import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-c
 import styles from './accordion-item.css.js';
 
 /**
- * @element sp-accordion
+ * @element sp-accordion-item
  * @slot - The content of the item that is hidden when the item is not open
+ * @fires sp-accordion-item-toggle - Announce that an accordion item has been toggled while allowing the event to be cancelled.
  */
 export class AccordionItem extends Focusable {
     public static get styles(): CSSResultArray {

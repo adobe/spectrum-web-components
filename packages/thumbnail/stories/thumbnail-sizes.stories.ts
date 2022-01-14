@@ -23,7 +23,7 @@ export default {
 const thumbnail = ({
     size,
 }: {
-    size: 's' | 'm' | 'l' | 'xl' | 'xxl';
+    size: 'xxs' | 'xs' | 's' | 'm' | 'l';
 }): TemplateResult => {
     return html`
         <sp-thumbnail size=${size}>
@@ -32,12 +32,12 @@ const thumbnail = ({
     `;
 };
 
+export const XXS = (): TemplateResult => thumbnail({ size: 'xxs' });
+
+export const XS = (): TemplateResult => thumbnail({ size: 'xs' });
+
 export const s = (): TemplateResult => thumbnail({ size: 's' });
 
 export const m = (): TemplateResult => thumbnail({ size: 'm' });
 
 export const l = (): TemplateResult => thumbnail({ size: 'l' });
-
-export const XL = (): TemplateResult => thumbnail({ size: 'xl' });
-
-export const XXL = (): TemplateResult => thumbnail({ size: 'xxl' });

@@ -11,19 +11,17 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Menu-divider */
-    box-sizing: content-box;
-    overflow: visible;
-    height: var(--spectrum-listitem-divider-size);
-    margin: calc(var(--spectrum-listitem-divider-padding) / 2)
-        var(--spectrum-listitem-padding-y);
-    padding: 0;
     border: none;
+    box-sizing: content-box; /* .spectrum-Menu-divider */
+    height: var(--spectrum-listitem-texticon-divider-size);
+    margin: calc(var(--spectrum-listitem-texticon-divider-padding) / 2)
+        var(--spectrum-listitem-texticon-padding-y);
+    overflow: visible;
+    padding: 0;
 }
 :host {
-    /* .spectrum-Menu-divider */
     background-color: var(
-        --spectrum-listitem-m-divider-color,
+        --spectrum-listitem-m-texticon-divider-color,
         var(--spectrum-alias-border-color-extralight)
-    );
+    ); /* .spectrum-Menu-divider */
 }

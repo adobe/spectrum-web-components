@@ -10,7 +10,7 @@ governing permissions and limitations under the License.
 */
 import '../sp-banner.js';
 import { Banner } from '../';
-import { fixture, html, expect } from '@open-wc/testing';
+import { expect, fixture, html } from '@open-wc/testing';
 
 describe('banner', () => {
     let testDiv!: HTMLDivElement;

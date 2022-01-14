@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/base",
-    "version": "0.4.3",
+    "version": "0.5.1",
     "publishConfig": {
         "access": "public"
     },
@@ -22,6 +22,12 @@
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*",
+        "./decorators": "./src/decorators.js",
+        "./decorators.js": "./src/decorators.js",
+        "./directives": "./src/directives.js",
+        "./directives.js": "./src/directives.js",
+        "./html": "./src/html.js",
+        "./html.js": "./src/html.js",
         "./streaming-listener": "./src/streaming-listener.js",
         "./streaming-listener.js": "./src/streaming-listener.js",
         "./package.json": "./package.json"
@@ -30,11 +36,12 @@
         "test": "karma start --coverage"
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -43,10 +50,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "lit-element": "^2.4.0",
-        "lit-html": "^1.0.0",
+        "lit": "^2.0.0",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
     "sideEffects": false
 }

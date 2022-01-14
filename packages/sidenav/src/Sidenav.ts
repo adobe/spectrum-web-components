@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
-    property,
+    html,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import sidenavStyles from './sidenav.css.js';
 import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
@@ -30,6 +30,7 @@ export interface SidenavSelectDetail {
 /**
  * @element sp-sidenav
  *
+ * @slot - the Sidenav Items to display
  * @fires change - Announces a change in the `value` property of the navigation element.
  * This change can be "canceled" via `event.preventDefault()`.
  */
@@ -229,7 +230,10 @@ export class SideNav extends Focusable {
     protected render(): TemplateResult {
         return html`
             <nav @sidenav-select=${this.handleSelect}>
-                <slot @slotchange=${this.handleSlotchange}></slot>
+                <slot
+                    name="descendant"
+                    @slotchange=${this.handleSlotchange}
+                ></slot>
             </nav>
         `;
     }

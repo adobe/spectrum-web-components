@@ -13,19 +13,14 @@ governing permissions and limitations under the License.
 import '../sp-radio.js';
 import { Radio } from '../';
 import {
-    fixture,
     elementUpdated,
-    triggerBlurFor,
-    html,
     expect,
+    fixture,
+    html,
+    triggerBlurFor,
     waitUntil,
 } from '@open-wc/testing';
-
-function inputForRadio(radio: Radio): HTMLInputElement {
-    if (!radio.shadowRoot) throw new Error('No shadowRoot');
-
-    return radio.shadowRoot.querySelector('#input') as HTMLInputElement;
-}
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 function labelNodeForRadio(radio: Radio): Node {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');
@@ -84,7 +79,7 @@ describe('Radio', () => {
         expect(value).to.equal('');
         expect(checked).to.be.false;
 
-        inputForRadio(el).click();
+        el.click();
         await elementUpdated(el);
 
         expect(el.checked).to.be.true;
@@ -113,10 +108,63 @@ describe('Radio', () => {
 
         expect(el.checked).to.be.false;
 
-        inputForRadio(el).click();
+        el.click();
         await elementUpdated(el);
 
         expect(el.checked).to.be.false;
+    });
+
+    it('renders [invalid]', async () => {
+        const el = await fixture<Radio>(html`
+            <sp-radio invalid>Component</sp-radio>
+        `);
+
+        expect(el.getAttribute('aria-invalid')).to.equal('true');
+    });
+
+    describe('accepts "clicks"', () => {
+        let el!: Radio;
+        beforeEach(async () => {
+            el = await fixture<Radio>(html`
+                <sp-radio>Component</sp-radio>
+            `);
+        });
+        it('imperatively', async () => {
+            el.click();
+            await elementUpdated(el);
+
+            expect(el.checked).to.be.true;
+        });
+        it('as events', async () => {
+            el.dispatchEvent(new Event('click'));
+            await elementUpdated(el);
+
+            expect(el.checked).to.be.true;
+        });
+        it('imperatively', async () => {
+            const boundingClientRecrt = el.getBoundingClientRect();
+            const radioPosition: [number, number] = [
+                boundingClientRecrt.x + boundingClientRecrt.width / 2,
+                boundingClientRecrt.y + boundingClientRecrt.height / 2,
+            ];
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: radioPosition,
+                    },
+                    {
+                        type: 'down',
+                    },
+                    {
+                        type: 'up',
+                    },
+                ],
+            });
+            await elementUpdated(el);
+
+            expect(el.checked).to.be.true;
+        });
     });
 
     it('maintains its value when [readonly]', async () => {
@@ -125,7 +173,7 @@ describe('Radio', () => {
         `);
         expect(el.checked).to.be.true;
 
-        el.focusElement.click();
+        el.click();
         await elementUpdated(el);
 
         expect(el.checked).to.be.true;

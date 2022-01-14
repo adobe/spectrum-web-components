@@ -126,7 +126,13 @@ themes.forEach(async (theme) => {
 scales.forEach(async (scale) => {
     const srcPath = path.join(spectrumPath, `spectrum-${scale}.css`);
     const dstPath = path.resolve(
-        path.join(__dirname, '..', 'packages', 'styles', `scale-${scale}.css`)
+        path.join(
+            __dirname,
+            '..',
+            'packages',
+            'styles',
+            `spectrum-scale-${scale}.css`
+        )
     );
     console.log(`processing scale  ${srcPath}`);
     processes.push(await processCSS(srcPath, dstPath, scale));

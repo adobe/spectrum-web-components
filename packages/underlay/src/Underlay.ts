@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     SpectrumElement,
-    CSSResultArray,
     TemplateResult,
-    property,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import styles from './underlay.css.js';
 
@@ -28,7 +28,7 @@ export class Underlay extends SpectrumElement {
         return [styles];
     }
 
-    @property({ type: Boolean })
+    @property({ type: Boolean, reflect: true })
     public open = false;
 
     protected render(): TemplateResult {

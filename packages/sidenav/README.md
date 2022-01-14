@@ -7,6 +7,8 @@ prioritize content or features based on your users’ needs in a way that
 maintains clear, persistent visibility. Use side navigation within the context
 of larger elements and mechanisms within the app frame.
 
+`<sp-sidenav>` elements accept both `<sp-sidenav-item>` and `<sp-sidenav-heading>` elements as children in order to construct a hierarchy of navigation elements. [`<sp-sidenav-item>`](./components/sidenav-item) elements will place themselves as a togglable child of their `<sp-sidenav>` element parent. `<sp-sidenav-heading>` elements will create visible structure by grouping their child `<sp-sidenav-item>` children under a non-interactive heading.
+
 ### Usage
 
 [![See it on NPM!](https://img.shields.io/npm/v/@spectrum-web-components/sidenav?style=for-the-badge)](https://www.npmjs.com/package/@spectrum-web-components/sidenav)
@@ -39,40 +41,33 @@ import {
 
 ```html
 <sp-sidenav defaultValue="Docs">
-    <sp-sidenav-item
-        value="Docs"
-        label="Docs"
-        href="/components/SideNav"
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="Guides"
-        label="Guides"
-        href="/guides/getting_started"
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="Community"
-        label="Community"
-        href="/community"
-    ></sp-sidenav-item>
-    <sp-sidenav-item
-        value="Storybook"
-        label="Storybook"
-        href="/storybook"
-        target="_blank"
-    ></sp-sidenav-item>
+    <sp-sidenav-item value="Docs" href="/components/SideNav">
+        Docs
+    </sp-sidenav-item>
+    <sp-sidenav-item value="Guides" href="/guides/getting_started">
+        Guides
+    </sp-sidenav-item>
+    <sp-sidenav-item value="Community" href="/community">
+        Community
+    </sp-sidenav-item>
+    <sp-sidenav-item value="Storybook" href="/storybook" target="_blank">
+        Storybook
+    </sp-sidenav-item>
     <sp-sidenav-item
         value="Releases"
-        label="Releases"
         href="http://git.corp.adobe.com/React/react-spectrum/releases"
         target="_blank"
         disabled
-    ></sp-sidenav-item>
+    >
+        Releases
+    </sp-sidenav-item>
     <sp-sidenav-item
         value="GitHub"
-        label="GitHub"
         href="http://git.corp.adobe.com/React/react-spectrum"
         target="_blank"
-    ></sp-sidenav-item>
+    >
+        GitHub
+    </sp-sidenav-item>
 </sp-sidenav>
 ```
 
@@ -103,7 +98,6 @@ will send the user to the location of the item.
 ## Icon
 
 ```html
-<sp-icons-medium></sp-icons-medium>
 <sp-sidenav>
     <sp-sidenav-item value="Section Title 1" label="Section Title 1">
         <sp-icon-star slot="icon"></sp-icon-star>

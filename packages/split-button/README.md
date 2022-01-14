@@ -18,6 +18,12 @@ Import the side effectful registration of `<sp-split-button>` via:
 import '@spectrum-web-components/split-button/sp-split-button.js';
 ```
 
+The default of `<sp-split-button>` will load dependencies in `@spectrum-web-components/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-split-button>` as follows:
+
+```
+import '@spectrum-web-components/split-button/sync/sp-split-button.js';
+```
+
 When looking to leverage the `SplitButton` base class as a type and/or for extension purposes, do so via:
 
 ```

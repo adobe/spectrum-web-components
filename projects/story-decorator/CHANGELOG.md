@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.4.1...@spectrum-web-components/story-decorator@0.4.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.4.0...@spectrum-web-components/story-decorator@0.4.1) (2021-12-13)
+
+### Bug Fixes
+
+-   use typescript@^4.5 for "native" document.fonts typings ([a3e4aea](https://github.com/adobe/spectrum-web-components/commit/a3e4aea802c796e9029b2bc32f58639954db831b))
+
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.22...@spectrum-web-components/story-decorator@0.4.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.3.22](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.21...@spectrum-web-components/story-decorator@0.3.22) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.3.21](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.20...@spectrum-web-components/story-decorator@0.3.21) (2021-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.3.20](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.19...@spectrum-web-components/story-decorator@0.3.20) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.3.19](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.18...@spectrum-web-components/story-decorator@0.3.19) (2021-10-05)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.3.18](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.17...@spectrum-web-components/story-decorator@0.3.18) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.3.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.16...@spectrum-web-components/story-decorator@0.3.17) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.3.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.15...@spectrum-web-components/story-decorator@0.3.16) (2021-08-24)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.3.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.14...@spectrum-web-components/story-decorator@0.3.15) (2021-08-17)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.3.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.13...@spectrum-web-components/story-decorator@0.3.14) (2021-08-03)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.3.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.12...@spectrum-web-components/story-decorator@0.3.13) (2021-07-22)
+
+### Bug Fixes
+
+-   **overlay:** allow external style access to "sp-theme" elements in overlays as a CSS part ([a107f66](https://github.com/adobe/spectrum-web-components/commit/a107f66ae171e857e5f84cfff9f7a27cc5bd320d))
+
+## [0.3.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.11...@spectrum-web-components/story-decorator@0.3.12) (2021-07-01)
+
+### Bug Fixes
+
+-   manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/adobe/spectrum-web-components/commit/b1e3457ae447427c54f8645c478866340329750c))
+
+## [0.3.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.10...@spectrum-web-components/story-decorator@0.3.11) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
+## [0.3.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.9...@spectrum-web-components/story-decorator@0.3.10) (2021-06-11)
+
+**Note:** Version bump only for package @spectrum-web-components/story-decorator
+
 ## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.3.8...@spectrum-web-components/story-decorator@0.3.9) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/story-decorator

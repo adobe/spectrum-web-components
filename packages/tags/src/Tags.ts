@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     SpectrumElement,
-    CSSResultArray,
     TemplateResult,
-    queryAssignedNodes,
 } from '@spectrum-web-components/base';
+import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 
 import { Tag } from './Tag.js';
@@ -25,6 +25,8 @@ import styles from './tags.css.js';
 
 /**
  * @element sp-tags
+ *
+ * @slot - Tag elements to manage as a group
  */
 export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {

@@ -11,14 +11,25 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Radio */
+    --spectrum-radio-circle-dot-size: var(
+        --spectrum-radio-m-circle-dot-size,
+        var(--spectrum-global-dimension-static-size-50)
+    ); /* .spectrum-Radio */
+    --spectrum-radio-circle-diameter: var(
+        --spectrum-radio-m-circle-diameter,
+        var(--spectrum-alias-control-two-size-m)
+    );
     --spectrum-radio-circle-border-size: var(
         --spectrum-radio-m-circle-border-size,
         var(--spectrum-alias-border-size-thick)
     );
-    --spectrum-radio-circle-dot-size: var(
-        --spectrum-radio-m-circle-dot-size,
-        var(--spectrum-global-dimension-static-size-50)
+    --spectrum-radio-text-size: var(
+        --spectrum-radio-m-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-radio-text-gap: var(
+        --spectrum-radio-m-text-gap,
+        var(--spectrum-global-dimension-size-125)
     );
     --spectrum-radio-text-font-style: var(
         --spectrum-radio-m-text-font-style,
@@ -32,21 +43,9 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-radio-m-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     );
-    --spectrum-radio-text-size: var(
-        --spectrum-radio-m-text-size,
-        var(--spectrum-alias-item-text-size-m)
-    );
     --spectrum-radio-height: var(
         --spectrum-radio-m-height,
-        var(--spectrum-alias-item-height-m)
-    );
-    --spectrum-radio-circle-diameter: var(
-        --spectrum-radio-m-circle-diameter,
-        var(--spectrum-alias-item-control-2-size-m)
-    );
-    --spectrum-radio-text-gap: var(
-        --spectrum-radio-m-text-gap,
-        var(--spectrum-alias-item-control-gap-m)
+        var(--spectrum-global-dimension-size-400)
     );
     --spectrum-radio-radius: calc(var(--spectrum-radio-circle-diameter) / 2);
     --spectrum-radio-border-width-checked: calc(
@@ -59,77 +58,85 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         0 0 0;
     --spectrum-radio-labelbelow-height: auto;
     --spectrum-radio-label-margin-top: var(--spectrum-global-dimension-size-75);
-    display: inline-flex;
+}
+:host {
     align-items: flex-start;
-    position: relative;
-    min-height: var(--spectrum-radio-height);
+    display: inline-flex; /* .spectrum-Radio */
     max-width: 100%;
+    min-height: var(--spectrum-radio-height);
+    position: relative;
     vertical-align: top;
 }
 #input {
-    /* .spectrum-Radio-input */
-    font-family: inherit;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-family: inherit; /* .spectrum-Radio-input */
     font-size: 100%;
+    height: 100%;
     line-height: 1.15;
     margin: 0;
+    opacity: 0;
     overflow: visible;
-    box-sizing: border-box;
     padding: 0;
     position: absolute;
     width: 100%;
-    height: 100%;
-    opacity: 0.0001;
     z-index: 1;
-    cursor: pointer;
 }
 :host([disabled]) #input {
-    /* .spectrum-Radio-input:disabled */
-    cursor: default;
+    cursor: default; /* .spectrum-Radio-input:disabled */
 }
 :host([checked]) #input + #button:before {
-    /* .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
-    border-width: var(--spectrum-radio-border-width-checked);
+    border-width: var(
+        --spectrum-radio-border-width-checked
+    ); /* .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
 }
-#input:focus-visible + #button:after {
-    /* .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
+:host(.focus-visible) #input + #button:after {
     margin: calc(
         var(
                 --spectrum-alias-focus-ring-gap,
                 var(--spectrum-global-dimension-static-size-25)
             ) * -1
-    );
+    ); /* .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
+}
+:host(:focus-visible) #input + #button:after {
+    margin: calc(
+        var(
+                --spectrum-alias-focus-ring-gap,
+                var(--spectrum-global-dimension-static-size-25)
+            ) * -1
+    ); /* .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
 }
 :host([dir='ltr']) #label {
-    /* [dir=ltr] .spectrum-Radio-label */
-    text-align: left;
+    text-align: left; /* [dir=ltr] .spectrum-Radio-label */
 }
 :host([dir='rtl']) #label {
-    /* [dir=rtl] .spectrum-Radio-label */
-    text-align: right;
+    text-align: right; /* [dir=rtl] .spectrum-Radio-label */
 }
 :host([dir='ltr']) #label {
-    /* [dir=ltr] .spectrum-Radio-label */
-    margin-left: var(--spectrum-radio-text-gap);
+    margin-left: var(
+        --spectrum-radio-text-gap
+    ); /* [dir=ltr] .spectrum-Radio-label */
 }
 :host([dir='rtl']) #label {
-    /* [dir=rtl] .spectrum-Radio-label */
-    margin-right: var(--spectrum-radio-text-gap);
+    margin-right: var(
+        --spectrum-radio-text-gap
+    ); /* [dir=rtl] .spectrum-Radio-label */
 }
 #label {
-    /* .spectrum-Radio-label */
-    margin-top: var(--spectrum-radio-label-margin-top);
     font-size: var(--spectrum-radio-text-size);
-    font-weight: var(--spectrum-radio-text-font-weight);
     font-style: var(--spectrum-radio-text-font-style);
+    font-weight: var(--spectrum-radio-text-font-weight);
     line-height: var(--spectrum-radio-text-line-height);
+    margin-top: var(
+        --spectrum-radio-label-margin-top
+    ); /* .spectrum-Radio-label */
     transition: color var(--spectrum-global-animation-duration-100, 0.13s)
         ease-in-out;
 }
 #button {
-    /* .spectrum-Radio-button */
-    position: relative;
     box-sizing: border-box;
-    width: var(--spectrum-radio-circle-diameter);
+    flex-grow: 0;
+    flex-shrink: 0;
     height: var(--spectrum-radio-circle-diameter);
     margin: calc(
             (
@@ -138,274 +145,290 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 ) / 2
         )
         0;
-    flex-grow: 0;
-    flex-shrink: 0;
+    position: relative; /* .spectrum-Radio-button */
+    width: var(--spectrum-radio-circle-diameter);
 }
 #button:before {
-    /* .spectrum-Radio-button:before */
-    display: block;
-    z-index: 0;
-    content: '';
-    box-sizing: border-box;
-    position: absolute;
-    width: var(--spectrum-radio-circle-diameter);
-    height: var(--spectrum-radio-circle-diameter);
     border-radius: var(--spectrum-radio-radius);
-    border-width: var(--spectrum-radio-circle-border-size);
     border-style: solid;
+    border-width: var(--spectrum-radio-circle-border-size);
+    box-sizing: border-box;
+    content: '';
+    display: block; /* .spectrum-Radio-button:before */
+    height: var(--spectrum-radio-circle-diameter);
+    position: absolute;
     transition: border var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
         box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out;
+    width: var(--spectrum-radio-circle-diameter);
+    z-index: 0;
 }
 #button:after {
-    /* .spectrum-Radio-button:after */
-    border-radius: 100%;
+    border-radius: 100%; /* .spectrum-Radio-button:after */
+    bottom: 0;
     content: '';
     display: block;
-    position: absolute;
     left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
     margin: var(
         --spectrum-alias-focus-ring-gap,
         var(--spectrum-global-dimension-static-size-25)
     );
+    position: absolute;
+    right: 0;
+    top: 0;
     transition: opacity var(--spectrum-global-animation-duration-100, 0.13s)
             ease-out,
         margin var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
 }
 :host([label-below]) {
-    /* .spectrum-Radio--labelBelow */
-    display: inline-flex;
-    flex-direction: column;
     align-items: center;
+    display: inline-flex; /* .spectrum-Radio--labelBelow */
+    flex-direction: column;
     height: var(--spectrum-radio-labelbelow-height);
 }
 :host([label-below]) #button {
-    /* .spectrum-Radio--labelBelow .spectrum-Radio-button */
-    flex-shrink: 0;
+    flex-shrink: 0; /* .spectrum-Radio--labelBelow .spectrum-Radio-button */
     margin: 0;
 }
 :host([label-below]) #label {
-    /* .spectrum-Radio--labelBelow .spectrum-Radio-label */
-    margin: var(--spectrum-radio-labelbelow-label-margin);
+    margin: var(
+        --spectrum-radio-labelbelow-label-margin
+    ); /* .spectrum-Radio--labelBelow .spectrum-Radio-label */
 }
 :host {
-    /* .spectrum-Radio */
     --spectrum-radio-m-emphasized-circle-border-color-selected-key-focus: var(
         --spectrum-radio-m-emphasized-circle-border-color-selected-hover,
-        var(--spectrum-global-color-blue-600)
-    );
+        var(--spectrum-alias-toggle-background-color-emphasized-selected-hover)
+    ); /* .spectrum-Radio */
 }
 :host([checked]) #input + #button:before {
-    /* .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-circle-border-color-selected,
-        var(--spectrum-global-color-gray-700)
-    );
+        var(--spectrum-alias-toggle-background-color-default)
+    ); /* .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
 }
 #label {
-    /* .spectrum-Radio-label */
-    color: var(--spectrum-radio-m-text-color, var(--spectrum-alias-text-color));
+    color: var(
+        --spectrum-radio-m-text-color,
+        var(--spectrum-alias-component-text-color-default)
+    ); /* .spectrum-Radio-label */
 }
 #button:before {
-    /* .spectrum-Radio-button:before */
-    forced-color-adjust: none;
     background-color: var(
         --spectrum-radio-m-circle-background-color,
         var(--spectrum-global-color-gray-75)
     );
     border-color: var(
         --spectrum-radio-m-circle-border-color,
-        var(--spectrum-global-color-gray-600)
+        var(--spectrum-alias-toggle-border-color-default)
     );
+    forced-color-adjust: none; /* .spectrum-Radio-button:before */
 }
 :host(:hover) #button:before {
-    /* .spectrum-Radio:hover .spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-circle-border-color-hover,
-        var(--spectrum-global-color-gray-700)
-    );
+        var(--spectrum-alias-toggle-border-color-hover)
+    ); /* .spectrum-Radio:hover .spectrum-Radio-button:before */
     box-shadow: none;
 }
 :host(:hover[checked]) #input + #button:before {
-    /* .spectrum-Radio:hover .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-circle-border-color-selected-hover,
-        var(--spectrum-global-color-gray-800)
-    );
+        var(--spectrum-alias-toggle-background-color-hover)
+    ); /* .spectrum-Radio:hover .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
 }
 :host(:hover) #label {
-    /* .spectrum-Radio:hover .spectrum-Radio-label */
     color: var(
         --spectrum-radio-m-text-color-hover,
-        var(--spectrum-alias-text-color-hover)
-    );
+        var(--spectrum-alias-component-text-color-hover)
+    ); /* .spectrum-Radio:hover .spectrum-Radio-label */
 }
 :host(:active) #button:before {
-    /* .spectrum-Radio:active .spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-circle-border-color-down,
-        var(--spectrum-global-color-gray-800)
-    );
+        var(--spectrum-alias-toggle-border-color-down)
+    ); /* .spectrum-Radio:active .spectrum-Radio-button:before */
 }
 :host(:active[checked]) #input + #button:before {
-    /* .spectrum-Radio:active .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-circle-border-color-selected-down,
-        var(--spectrum-global-color-gray-900)
-    );
+        var(--spectrum-alias-toggle-background-color-down)
+    ); /* .spectrum-Radio:active .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
 }
 :host(:active) #label {
-    /* .spectrum-Radio:active .spectrum-Radio-label */
     color: var(
         --spectrum-radio-m-text-color-down,
-        var(--spectrum-alias-text-color-down)
-    );
+        var(--spectrum-alias-component-text-color-down)
+    ); /* .spectrum-Radio:active .spectrum-Radio-label */
 }
 :host([emphasized][checked]) #input + #button:before {
-    /* .spectrum-Radio--emphasized .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-emphasized-circle-border-color-selected,
-        var(--spectrum-global-color-blue-500)
-    );
+        var(
+            --spectrum-alias-toggle-background-color-emphasized-selected-default
+        )
+    ); /* .spectrum-Radio--emphasized .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
 }
 :host([emphasized][checked]:hover) #input + #button:before {
-    /* .spectrum-Radio--emphasized:hover .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-emphasized-circle-border-color-selected-hover,
-        var(--spectrum-global-color-blue-600)
-    );
+        var(--spectrum-alias-toggle-background-color-emphasized-selected-hover)
+    ); /* .spectrum-Radio--emphasized:hover .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
 }
 :host([emphasized][checked]:active) #input + #button:before {
-    /* .spectrum-Radio--emphasized:active .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-emphasized-circle-border-color-selected-down,
-        var(--spectrum-global-color-blue-700)
-    );
+        var(--spectrum-alias-toggle-background-color-emphasized-selected-down)
+    ); /* .spectrum-Radio--emphasized:active .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
 }
 :host([emphasized][invalid]:hover) #input + #button:before,
 :host([invalid]:hover) #input + #button:before {
-    /* .spectrum-Radio--emphasized.is-invalid:hover .spectrum-Radio-input+.spectrum-Radio-button:before,
-   * .spectrum-Radio.is-invalid:hover .spectrum-Radio-input+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-emphasized-circle-border-color-error-hover,
         var(--spectrum-global-color-red-600)
-    );
+    ); /* .spectrum-Radio.is-invalid:hover .spectrum-Radio-input+.spectrum-Radio-button:before,
+   * .spectrum-Radio--emphasized.is-invalid:hover .spectrum-Radio-input+.spectrum-Radio-button:before */
 }
 :host([emphasized][invalid]:hover) #label,
 :host([invalid]:hover) #label {
-    /* .spectrum-Radio--emphasized.is-invalid:hover .spectrum-Radio-label,
-   * .spectrum-Radio.is-invalid:hover .spectrum-Radio-label */
     color: var(
         --spectrum-radio-m-emphasized-text-color-error-hover,
-        var(--spectrum-global-color-red-700)
-    );
+        var(--spectrum-alias-component-text-color-error-hover)
+    ); /* .spectrum-Radio.is-invalid:hover .spectrum-Radio-label,
+   * .spectrum-Radio--emphasized.is-invalid:hover .spectrum-Radio-label */
 }
 :host([emphasized][invalid]:active) #input + #button:before,
 :host([invalid]:active) #input + #button:before {
-    /* .spectrum-Radio--emphasized.is-invalid:active .spectrum-Radio-input+.spectrum-Radio-button:before,
-   * .spectrum-Radio.is-invalid:active .spectrum-Radio-input+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-emphasized-text-color-error-hover,
-        var(--spectrum-global-color-red-700)
-    );
+        var(--spectrum-alias-component-text-color-error-hover)
+    ); /* .spectrum-Radio.is-invalid:active .spectrum-Radio-input+.spectrum-Radio-button:before,
+   * .spectrum-Radio--emphasized.is-invalid:active .spectrum-Radio-input+.spectrum-Radio-button:before */
 }
 :host([emphasized][invalid]:active) #label,
 :host([invalid]:active) #label {
-    /* .spectrum-Radio--emphasized.is-invalid:active .spectrum-Radio-label,
-   * .spectrum-Radio.is-invalid:active .spectrum-Radio-label */
     color: var(
         --spectrum-radio-m-emphasized-text-color-error-down,
-        var(--spectrum-global-color-red-700)
-    );
+        var(--spectrum-alias-component-text-color-error-down)
+    ); /* .spectrum-Radio.is-invalid:active .spectrum-Radio-label,
+   * .spectrum-Radio--emphasized.is-invalid:active .spectrum-Radio-label */
 }
 :host([emphasized][invalid]) #button:before,
 :host([emphasized][invalid][checked]) #input + #button:before,
 :host([invalid]) #button:before,
 :host([invalid][checked]) #input + #button:before {
-    /* .spectrum-Radio--emphasized.is-invalid .spectrum-Radio-button:before,
-   * .spectrum-Radio--emphasized.is-invalid .spectrum-Radio-input:checked+.spectrum-Radio-button:before,
-   * .spectrum-Radio.is-invalid .spectrum-Radio-button:before,
-   * .spectrum-Radio.is-invalid .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
     border-color: var(
         --spectrum-radio-m-emphasized-circle-border-color-error,
         var(--spectrum-global-color-red-500)
-    );
+    ); /* .spectrum-Radio.is-invalid .spectrum-Radio-button:before,
+   * .spectrum-Radio.is-invalid .spectrum-Radio-input:checked+.spectrum-Radio-button:before,
+   * .spectrum-Radio--emphasized.is-invalid .spectrum-Radio-button:before,
+   * .spectrum-Radio--emphasized.is-invalid .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
 }
 :host([emphasized][invalid]) #label,
 :host([invalid]) #label {
-    /* .spectrum-Radio--emphasized.is-invalid .spectrum-Radio-label,
-   * .spectrum-Radio.is-invalid .spectrum-Radio-label */
     color: var(
         --spectrum-radio-m-emphasized-text-color-error,
-        var(--spectrum-global-color-red-600)
-    );
+        var(--spectrum-alias-component-text-color-error-default)
+    ); /* .spectrum-Radio.is-invalid .spectrum-Radio-label,
+   * .spectrum-Radio--emphasized.is-invalid .spectrum-Radio-label */
 }
 :host([checked][disabled]) #input + #button:before,
 :host([disabled]) #input + #button:before {
-    /* .spectrum-Radio .spectrum-Radio-input:checked:disabled+.spectrum-Radio-button:before,
-   * .spectrum-Radio .spectrum-Radio-input:disabled+.spectrum-Radio-button:before */
     border-color: var(
-        --spectrum-radio-m-emphasized-circle-border-color-disabled,
+        --spectrum-radio-m-circle-border-color-disabled,
         var(--spectrum-global-color-gray-400)
-    );
+    ); /* .spectrum-Radio .spectrum-Radio-input:disabled+.spectrum-Radio-button:before,
+   * .spectrum-Radio .spectrum-Radio-input:checked:disabled+.spectrum-Radio-button:before */
 }
 :host([checked][disabled]) #input ~ #label,
 :host([disabled]) #input ~ #label {
-    /* .spectrum-Radio .spectrum-Radio-input:checked:disabled~.spectrum-Radio-label,
-   * .spectrum-Radio .spectrum-Radio-input:disabled~.spectrum-Radio-label */
     color: var(
-        --spectrum-radio-m-emphasized-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
-    );
+        --spectrum-radio-m-text-color-disabled,
+        var(--spectrum-alias-component-text-color-disabled)
+    ); /* .spectrum-Radio .spectrum-Radio-input:disabled~.spectrum-Radio-label,
+   * .spectrum-Radio .spectrum-Radio-input:checked:disabled~.spectrum-Radio-label */
 }
-:host([emphasized]) #input:focus-visible + #button:before,
-:host([emphasized]:hover) #input:focus-visible + #button:before,
-#input:focus-visible + #button:before,
-:host(:hover) #input:focus-visible + #button:before {
-    /* .spectrum-Radio--emphasized .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before,
-   * .spectrum-Radio--emphasized:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before,
-   * .spectrum-Radio .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before,
-   * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before */
+:host(.focus-visible) #input + #button:before,
+:host(:hover.focus-visible) #input + #button:before {
     border-color: var(
         --spectrum-radio-m-circle-border-color-key-focus,
-        var(--spectrum-global-color-gray-700)
-    );
+        var(--spectrum-alias-toggle-border-color-key-focus)
+    ); /* .spectrum-Radio .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before,
+   * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before */
 }
-:host([emphasized]) #input:focus-visible + #button:after,
-:host([emphasized]:hover) #input:focus-visible + #button:after,
-#input:focus-visible + #button:after,
-:host(:hover) #input:focus-visible + #button:after {
-    /* .spectrum-Radio--emphasized .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
-   * .spectrum-Radio--emphasized:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
-   * .spectrum-Radio .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
-   * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
-    forced-color-adjust: none;
+:host(:focus-visible) #input + #button:before,
+:host(:hover:focus-visible) #input + #button:before {
+    border-color: var(
+        --spectrum-radio-m-circle-border-color-key-focus,
+        var(--spectrum-alias-toggle-border-color-key-focus)
+    ); /* .spectrum-Radio .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before,
+   * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:before */
+}
+:host(.focus-visible) #input + #button:after,
+:host(:hover.focus-visible) #input + #button:after {
     box-shadow: 0 0 0
         var(
-            --spectrum-radio-m-focus-ring-size-key-focus,
+            --spectrum-radio-m-focus-ring-size,
             var(--spectrum-alias-focus-ring-size)
         )
         var(
             --spectrum-radio-m-focus-ring-color-key-focus,
             var(--spectrum-alias-focus-ring-color)
         );
+    forced-color-adjust: none; /* .spectrum-Radio .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
+   * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
 }
-:host([emphasized][checked]) #input:focus-visible + #button:before,
-:host([emphasized][checked]:hover) #input:focus-visible + #button:before,
-:host([checked]) #input:focus-visible + #button:before,
-:host(:hover[checked]) #input:focus-visible + #button:before {
-    /* .spectrum-Radio--emphasized .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before,
-   * .spectrum-Radio--emphasized:hover .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before,
-   * .spectrum-Radio .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before,
+:host(:focus-visible) #input + #button:after,
+:host(:hover:focus-visible) #input + #button:after {
+    box-shadow: 0 0 0
+        var(
+            --spectrum-radio-m-focus-ring-size,
+            var(--spectrum-alias-focus-ring-size)
+        )
+        var(
+            --spectrum-radio-m-focus-ring-color-key-focus,
+            var(--spectrum-alias-focus-ring-color)
+        );
+    forced-color-adjust: none; /* .spectrum-Radio .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
+   * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
+}
+:host(.focus-visible[checked]) #input + #button:before,
+:host(:hover.focus-visible[checked]) #input + #button:before {
+    border-color: var(
+        --spectrum-radio-m-circle-border-color-selected-key-focus,
+        var(--spectrum-alias-toggle-background-color-key-focus)
+    ); /* .spectrum-Radio .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before,
    * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before */
+}
+:host(:focus-visible[checked]) #input + #button:before,
+:host(:hover:focus-visible[checked]) #input + #button:before {
+    border-color: var(
+        --spectrum-radio-m-circle-border-color-selected-key-focus,
+        var(--spectrum-alias-toggle-background-color-key-focus)
+    ); /* .spectrum-Radio .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before,
+   * .spectrum-Radio:hover .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before */
+}
+:host([emphasized][checked].focus-visible) #input + #button:before,
+:host([emphasized][checked]:hover.focus-visible) #input + #button:before {
     border-color: var(
         --spectrum-radio-m-emphasized-circle-border-color-selected-key-focus,
-        var(--spectrum-global-color-blue-600)
-    );
+        var(
+            --spectrum-alias-toggle-background-color-emphasized-selected-key-focus
+        )
+    ); /* .spectrum-Radio--emphasized .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before,
+   * .spectrum-Radio--emphasized:hover .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before */
+}
+:host([emphasized][checked]:focus-visible) #input + #button:before,
+:host([emphasized][checked]:hover:focus-visible) #input + #button:before {
+    border-color: var(
+        --spectrum-radio-m-emphasized-circle-border-color-selected-key-focus,
+        var(
+            --spectrum-alias-toggle-background-color-emphasized-selected-key-focus
+        )
+    ); /* .spectrum-Radio--emphasized .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before,
+   * .spectrum-Radio--emphasized:hover .spectrum-Radio-input.focus-ring:checked+.spectrum-Radio-button:before */
 }
 @media (forced-colors: active) {
     :host {
@@ -417,14 +440,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-radio-m-circle-border-color-selected-hover: Highlight;
         --spectrum-radio-m-circle-border-color-selected: Highlight;
         --spectrum-radio-m-circle-border-color: ButtonText;
-        --spectrum-radio-m-emphasized-circle-border-color-disabled: GrayText;
         --spectrum-radio-m-emphasized-circle-border-color-error-hover: Highlight;
         --spectrum-radio-m-emphasized-circle-border-color-error: ButtonText;
         --spectrum-radio-m-emphasized-circle-border-color-selected-down: Highlight;
         --spectrum-radio-m-emphasized-circle-border-color-selected-hover: Highlight;
         --spectrum-radio-m-emphasized-circle-border-color-selected-key-focus: Highlight;
         --spectrum-radio-m-emphasized-circle-border-color-selected: Highlight;
-        --spectrum-radio-m-emphasized-text-color-disabled: GrayText;
         --spectrum-radio-m-emphasized-text-color-error-down: CanvasText;
         --spectrum-radio-m-emphasized-text-color-error-hover: CanvasText;
         --spectrum-radio-m-emphasized-text-color-error: CanvasText;
@@ -436,7 +457,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     :host([invalid][checked]) #input + #button:before {
         border-color: var(
             --spectrum-radio-m-circle-border-color-selected,
-            var(--spectrum-global-color-gray-700)
+            var(--spectrum-alias-toggle-background-color-default)
         );
     }
 }

@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.6.1...@spectrum-web-components/accordion@0.6.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/accordion
+
+## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.6.0...@spectrum-web-components/accordion@0.6.1) (2021-12-13)
+
+**Note:** Version bump only for package @spectrum-web-components/accordion
+
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.5.1...@spectrum-web-components/accordion@0.6.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/accordion
+
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.5.0...@spectrum-web-components/accordion@0.5.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/accordion
+
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.18...@spectrum-web-components/accordion@0.5.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.4.18](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.17...@spectrum-web-components/accordion@0.4.18) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/accordion
+
+## [0.4.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.16...@spectrum-web-components/accordion@0.4.17) (2021-10-05)
+
+### Bug Fixes
+
+-   **accordion:** ensure item toggle events can be prevented from the outside ([30dbfc8](https://github.com/adobe/spectrum-web-components/commit/30dbfc8435c298e8f68083553ddc0fca1309fdf8))
+
+## [0.4.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.15...@spectrum-web-components/accordion@0.4.16) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/accordion
+
+## [0.4.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.14...@spectrum-web-components/accordion@0.4.15) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/accordion
+
+## [0.4.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.13...@spectrum-web-components/accordion@0.4.14) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.4.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.12...@spectrum-web-components/accordion@0.4.13) (2021-08-03)
+
+**Note:** Version bump only for package @spectrum-web-components/accordion
+
+## [0.4.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.11...@spectrum-web-components/accordion@0.4.12) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/accordion
+
+## [0.4.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.10...@spectrum-web-components/accordion@0.4.11) (2021-07-01)
+
+**Note:** Version bump only for package @spectrum-web-components/accordion
+
+## [0.4.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.9...@spectrum-web-components/accordion@0.4.10) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/accordion
+
 ## [0.4.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.4.8...@spectrum-web-components/accordion@0.4.9) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/accordion

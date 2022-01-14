@@ -43,10 +43,18 @@ const config = {
                     type: 'enum',
                     name: 'size',
                     values: [
-                        '.spectrum-Dialog--small',
-                        '.spectrum-Dialog--medium',
-                        '.spectrum-Dialog--large',
-                        '.spectrum-Dialog--alert',
+                        {
+                            name: 's',
+                            selector: '.spectrum-Dialog--small',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Dialog--medium',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Dialog--large',
+                        },
                     ],
                 },
                 {
@@ -107,11 +115,11 @@ const config = {
                 },
                 {
                     selector: '.spectrum-Dialog-buttonGroup',
-                    name: 'buttonGroup',
+                    name: 'button-group',
                 },
                 {
                     selector: '.spectrum-Dialog-buttonGroup--noFooter',
-                    name: 'buttonGroup--noFooter',
+                    name: 'button-group--noFooter',
                 },
             ],
             complexSelectors: [

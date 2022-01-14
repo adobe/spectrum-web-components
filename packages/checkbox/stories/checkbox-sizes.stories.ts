@@ -16,58 +16,75 @@ import '../sp-checkbox.js';
 export default {
     component: 'sp-checkbox',
     title: 'Checkbox/Sizes',
+    argTypes: {
+        onClick: { action: 'click' },
+        onChange: { action: 'change' },
+    },
 };
 
 const checkbox = ({
     size,
     checked,
     indeterminate,
+    onClick,
+    onChange,
 }: {
     size: 's' | 'm' | 'l' | 'xl';
     checked?: boolean;
     indeterminate?: boolean;
+    onClick: () => void;
+    onChange: () => void;
 }): TemplateResult => {
     return html`
         <sp-checkbox
             size=${size}
             ?checked=${checked}
             ?indeterminate=${indeterminate}
-            @click="${() => console.log('Click')}"
-            @change="${() => console.log('Change')}"
+            @click="${onClick}"
+            @change="${onChange}"
         >
             Checkbox
         </sp-checkbox>
     `;
 };
 
-export const s = (): TemplateResult => checkbox({ size: 's' });
+type StoryArgs = {
+    onClick: () => void;
+    onChange: () => void;
+};
 
-export const sChecked = (): TemplateResult =>
-    checkbox({ size: 's', checked: true });
+export const s = (args: StoryArgs): TemplateResult =>
+    checkbox({ ...args, size: 's' });
 
-export const sIndeterminate = (): TemplateResult =>
-    checkbox({ size: 's', indeterminate: true });
+export const sChecked = (args: StoryArgs): TemplateResult =>
+    checkbox({ ...args, size: 's', checked: true });
 
-export const m = (): TemplateResult => checkbox({ size: 'm' });
+export const sIndeterminate = (args: StoryArgs): TemplateResult =>
+    checkbox({ ...args, size: 's', indeterminate: true });
 
-export const mChecked = (): TemplateResult =>
-    checkbox({ size: 'm', checked: true });
+export const m = (args: StoryArgs): TemplateResult =>
+    checkbox({ ...args, size: 'm' });
 
-export const mIndeterminate = (): TemplateResult =>
-    checkbox({ size: 'm', indeterminate: true });
+export const mChecked = (args: StoryArgs): TemplateResult =>
+    checkbox({ ...args, size: 'm', checked: true });
 
-export const l = (): TemplateResult => checkbox({ size: 'l' });
+export const mIndeterminate = (args: StoryArgs): TemplateResult =>
+    checkbox({ ...args, size: 'm', indeterminate: true });
 
-export const lChecked = (): TemplateResult =>
-    checkbox({ size: 'l', checked: true });
+export const l = (args: StoryArgs): TemplateResult =>
+    checkbox({ ...args, size: 'l' });
 
-export const lIndeterminate = (): TemplateResult =>
-    checkbox({ size: 'l', indeterminate: true });
+export const lChecked = (args: StoryArgs): TemplateResult =>
+    checkbox({ ...args, size: 'l', checked: true });
 
-export const XL = (): TemplateResult => checkbox({ size: 'xl' });
+export const lIndeterminate = (args: StoryArgs): TemplateResult =>
+    checkbox({ ...args, size: 'l', indeterminate: true });
 
-export const XLChecked = (): TemplateResult =>
-    checkbox({ size: 'xl', checked: true });
+export const XL = (args: StoryArgs): TemplateResult =>
+    checkbox({ ...args, size: 'xl' });
 
-export const XLIndeterminate = (): TemplateResult =>
-    checkbox({ size: 'xl', indeterminate: true });
+export const XLChecked = (args: StoryArgs): TemplateResult =>
+    checkbox({ ...args, size: 'xl', checked: true });
+
+export const XLIndeterminate = (args: StoryArgs): TemplateResult =>
+    checkbox({ ...args, size: 'xl', indeterminate: true });

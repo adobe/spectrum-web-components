@@ -10,12 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import {
     property,
-    html,
-    TemplateResult,
     query,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 export class CheckboxBase extends Focusable {

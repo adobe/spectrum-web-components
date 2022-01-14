@@ -19,11 +19,7 @@ import darkStyles from '../src/theme-dark.css.js';
 import darkestStyles from '../src/theme-darkest.css.js';
 import largeStyles from '../src/scale-large.css.js';
 import mediumStyles from '../src/scale-medium.css.js';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
-
-type TestableTheme = {
-    hasAdoptedStyles: boolean;
-};
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 type TestableThemeConstructor = {
     instances: Set<Theme>;
@@ -32,7 +28,9 @@ type TestableThemeConstructor = {
 
 describe('Themes - lazy', () => {
     beforeEach(() => {
-        ((Theme as unknown) as TestableThemeConstructor).themeFragmentsByKind.clear();
+        (
+            Theme as unknown as TestableThemeConstructor
+        ).themeFragmentsByKind.clear();
         // Core is registered by default in `theme.ts`
         Theme.registerThemeFragment('core', 'core', coreStyles);
     });
@@ -53,7 +51,13 @@ describe('Themes - lazy', () => {
 
         await elementUpdated(el);
 
-        expect(((el as unknown) as TestableTheme).hasAdoptedStyles).to.be.false;
+        if (el.shadowRoot.adoptedStyleSheets) {
+            expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(1);
+        } else {
+            expect(
+                [...el.shadowRoot.querySelectorAll('style')].length
+            ).to.equal(1);
+        }
         expect(el.color).to.equal('');
         expect(el.scale).to.equal('');
     });
@@ -71,7 +75,13 @@ describe('Themes - lazy', () => {
 
         await elementUpdated(el);
 
-        expect(((el as unknown) as TestableTheme).hasAdoptedStyles).to.be.true;
+        if (el.shadowRoot.adoptedStyleSheets) {
+            expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(1);
+        } else {
+            expect(
+                [...el.shadowRoot.querySelectorAll('style')].length
+            ).to.equal(1);
+        }
         expect(el.color).to.equal('light');
         expect(el.scale).to.equal('medium');
     });
@@ -84,7 +94,13 @@ describe('Themes - lazy', () => {
 
         await elementUpdated(el);
 
-        expect(((el as unknown) as TestableTheme).hasAdoptedStyles).to.be.false;
+        if (el.shadowRoot.adoptedStyleSheets) {
+            expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(1);
+        } else {
+            expect(
+                [...el.shadowRoot.querySelectorAll('style')].length
+            ).to.equal(1);
+        }
     });
     it('loads w/ not enough themes', async () => {
         const el = await fixture<Theme>(
@@ -100,7 +116,13 @@ describe('Themes - lazy', () => {
 
         await elementUpdated(el);
 
-        expect(((el as unknown) as TestableTheme).hasAdoptedStyles).to.be.false;
+        if (el.shadowRoot.adoptedStyleSheets) {
+            expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(1);
+        } else {
+            expect(
+                [...el.shadowRoot.querySelectorAll('style')].length
+            ).to.equal(1);
+        }
     });
     it('loads w/ lazy themes', async () => {
         const el = await fixture<Theme>(
@@ -116,13 +138,25 @@ describe('Themes - lazy', () => {
 
         await elementUpdated(el);
 
-        expect(((el as unknown) as TestableTheme).hasAdoptedStyles).to.be.false;
+        if (el.shadowRoot.adoptedStyleSheets) {
+            expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(1);
+        } else {
+            expect(
+                [...el.shadowRoot.querySelectorAll('style')].length
+            ).to.equal(1);
+        }
 
         Theme.registerThemeFragment('lightest', 'color', lightestStyles);
         Theme.registerThemeFragment('large', 'scale', largeStyles);
 
         await elementUpdated(el);
 
-        expect(((el as unknown) as TestableTheme).hasAdoptedStyles).to.be.true;
+        if (el.shadowRoot.adoptedStyleSheets) {
+            expect(el.shadowRoot.adoptedStyleSheets.length).to.equal(3);
+        } else {
+            expect(
+                [...el.shadowRoot.querySelectorAll('style')].length
+            ).to.equal(3);
+        }
     });
 });

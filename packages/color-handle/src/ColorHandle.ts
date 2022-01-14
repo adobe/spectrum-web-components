@@ -11,13 +11,13 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
-    property,
+    html,
     PropertyValues,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
@@ -34,6 +34,12 @@ export type ColorValue =
     | HSL
     | HSLA;
 
+export const extractHueAndSaturationRegExp =
+    /^hs[v|l]a?\s?\((\d{1,3}\.?\d*?),?\s?(\d{1,3})/;
+export const replaceHueAndSaturationRegExp =
+    /(^hs[v|l]a?\s?\()\d{1,3}\.?\d*?(,?\s?)\d{1,3}/;
+export const replaceHueRegExp = /(^hs[v|l]a?\()\d{1,3}/;
+
 /**
  * @element sp-color-handle
  */
@@ -44,6 +50,9 @@ export class ColorHandle extends SpectrumElement {
 
     @property({ type: Boolean, reflect: true })
     public disabled = false;
+
+    @property({ type: Boolean, reflect: true })
+    public focused = false;
 
     @property({ type: Boolean, reflect: true })
     public open = false;

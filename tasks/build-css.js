@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 
 import path from 'path';
 import fs from 'fs';
-import globby from 'globby';
+import fg from 'fast-glob';
 import postcss from 'postcss';
 import cssProcessing from '../scripts/css-processing.cjs';
 import { fileURLToPath } from 'url';
@@ -26,7 +26,7 @@ const header = fs.readFileSync(path.join(configPath, 'license.js'), 'utf8');
 export const processCSS = async (cssPath) => {
     let wrappedCSS = header;
     const originCSS = fs.readFileSync(cssPath, 'utf8');
-    const processedCSS = await postcss(postCSSPlugins(cssPath))
+    const processedCSS = await postcss(postCSSPlugins(cssPath, true))
         .process(originCSS, {
             from: cssPath,
         })
@@ -38,7 +38,7 @@ export const processCSS = async (cssPath) => {
 };
 
 const buildCSS = async () => {
-    for await (const cssPath of globby.stream(`./packages/*/src/*.css`)) {
+    for (const cssPath of await fg(`./packages/*/src/*.css`)) {
         processCSS(cssPath);
     }
 };

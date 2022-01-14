@@ -3,6 +3,101 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.9.1...@spectrum-web-components/picker@0.9.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.9.0...@spectrum-web-components/picker@0.9.1) (2021-12-13)
+
+### Bug Fixes
+
+-   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+-   **picker:** allow menu items to be added, updated, and removed ([73511ba](https://github.com/adobe/spectrum-web-components/commit/73511ba996154c006602dfd1c7f1d94746049782))
+
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.8.1...@spectrum-web-components/picker@0.9.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.8.0...@spectrum-web-components/picker@0.8.1) (2021-11-08)
+
+### Bug Fixes
+
+-   abstract "hasVisibleFocusInTree" functionality and return trigger focus after close ([4f39f2c](https://github.com/adobe/spectrum-web-components/commit/4f39f2c506066b789834584d2c9c24185ea57118))
+
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.7.5...@spectrum-web-components/picker@0.8.0) (2021-11-02)
+
+### Bug Fixes
+
+-   update screen reader interface with menu items list ([16756b5](https://github.com/adobe/spectrum-web-components/commit/16756b56c0f7f9561426acc202997fb098e8f19a))
+-   **picker:** use "modal" as the menu overlay interaction ([c8fbbe2](https://github.com/adobe/spectrum-web-components/commit/c8fbbe27b19702909855575b1afd38fb064e8378))
+-   include late added items in the item list for the Picker ([9232eb1](https://github.com/adobe/spectrum-web-components/commit/9232eb1009ccbcdf6166e48928bd8416c23d50b2))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.7.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.7.4...@spectrum-web-components/picker@0.7.5) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+## [0.7.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.7.3...@spectrum-web-components/picker@0.7.4) (2021-10-05)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+## [0.7.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.7.2...@spectrum-web-components/picker@0.7.3) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.7.1...@spectrum-web-components/picker@0.7.2) (2021-09-13)
+
+### Bug Fixes
+
+-   give Picker a focus helper to enable tab navigation in Safari ([e796525](https://github.com/adobe/spectrum-web-components/commit/e7965251651b42e28bfbcaf752f2ab9b19700835))
+-   simplify focus application in Menu ([6140169](https://github.com/adobe/spectrum-web-components/commit/61401699b36298b6f11cc80703aff664cbb867a7))
+
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.7.0...@spectrum-web-components/picker@0.7.1) (2021-08-24)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.6.0...@spectrum-web-components/picker@0.7.0) (2021-08-17)
+
+### Features
+
+-   **picker:** update "icons-only" to "icons=only" to support more variations ([de16a62](https://github.com/adobe/spectrum-web-components/commit/de16a628f6ec7cfcbe405c71414bef6ed72b1726))
+
+### Performance Improvements
+
+-   reorganize inheritance and composition in Menu Items ([d96ccb6](https://github.com/adobe/spectrum-web-components/commit/d96ccb621833277444d69535126c3669343c2eaf))
+
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.5.4...@spectrum-web-components/picker@0.6.0) (2021-08-03)
+
+### Bug Fixes
+
+-   allow "updateComplete" to resolve to a boolean like the LitElement default ([6127946](https://github.com/adobe/spectrum-web-components/commit/6127946fd3ffd048a30b7eb4bf6aadf9e7c8752a))
+-   expand sync offering for elements with overlay content ([0195843](https://github.com/adobe/spectrum-web-components/commit/0195843e9efac5760a78fa302d91139c84ea5747))
+
+### Features
+
+-   add selects attribute to menu ([bdf2578](https://github.com/adobe/spectrum-web-components/commit/bdf25780e56c7b92368904dce2a02f2594c364a2))
+
+## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.5.3...@spectrum-web-components/picker@0.5.4) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
+## [0.5.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.5.2...@spectrum-web-components/picker@0.5.3) (2021-07-01)
+
+### Bug Fixes
+
+-   add icon present and icon-only support to Picker ([f6887a3](https://github.com/adobe/spectrum-web-components/commit/f6887a34e228473e33893c81017492bf3e8fd6c3))
+
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.5.1...@spectrum-web-components/picker@0.5.2) (2021-06-16)
+
+### Bug Fixes
+
+-   prevent console.log in source and test files ([3ee082c](https://github.com/adobe/spectrum-web-components/commit/3ee082ceadd9eeef167bb8ac6241fe1501e4426c))
+
 ## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.5.0...@spectrum-web-components/picker@0.5.1) (2021-06-07)
 
 ### Bug Fixes

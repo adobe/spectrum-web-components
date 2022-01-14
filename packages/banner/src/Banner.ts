@@ -11,17 +11,17 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     SpectrumElement,
-    property,
-    CSSResultArray,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import bannerStyles from './banner.css.js';
 
 /**
- * Banner component
+ * @element sp-banner
  *
  * @attr type - Determines the style, can be "info", "warning", or "error". Default is "info"
  * @attr corner - Determines if banner sets position at upper right corner or not.

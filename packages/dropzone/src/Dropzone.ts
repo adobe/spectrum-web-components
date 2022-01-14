@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     SpectrumElement,
-    property,
-    CSSResultArray,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import dropzoneStyles from './dropzone.css.js';
 
@@ -25,6 +25,8 @@ export type DropzoneEventDetail = DragEvent;
 export type DropEffects = 'copy' | 'move' | 'link' | 'none';
 
 /**
+ * @element sp-dropzone
+ *
  * @slot - The default slot on an `sp-dropzone` is a great place to place upload instructions
  * built with an `sp-illustrated-message` or other information, possibly even built from data
  * provided by the upload, to support users successfully interacting with the drag and drop

@@ -86,6 +86,9 @@ class SpectrumProcessor {
         // e.g. ".spectrum-Button .spectrum-Button-label" -> ".spectrum-Button-label"
         astTransforms.push((selector, rule) => {
             const result = selector.clone();
+            if (this.component.keepHostSelector) {
+                return result;
+            }
             if (
                 result.length > 1 &&
                 this.component.isRootSpectrumClass(result.first) &&
@@ -111,7 +114,7 @@ class SpectrumProcessor {
 
         // If the first part of a selector references the host, then
         // add a :host wrapper
-        // e.g. ".spectrum-Button:hover" -> ":host(hover)"
+        // e.g. ".spectrum-Button:hover" -> ":host(:hover)"
         astTransforms.push((selector, rule) => {
             if (this.component.isRootSpectrumClass(selector.first)) {
                 const result = selector.clone();
@@ -288,7 +291,15 @@ class SpectrumProcessor {
                     node.parent.parent &&
                     node.parent.parent.type === 'pseudo'
                 ) {
-                    node.replaceWith(attribute.shadowNode.clone());
+                    if (!this.component.spectrumClassIsHost) {
+                        // Attributes in pseudo classes need to be on the :host, too.
+                        const treeRoot = node.parent.parent;
+                        treeRoot.remove();
+                        node.replaceWith(attribute.shadowNode.clone());
+                        addNodeToHost(result, treeRoot);
+                    } else {
+                        node.replaceWith(attribute.shadowNode.clone());
+                    }
                     return;
                 }
 
@@ -393,9 +404,8 @@ class SpectrumProcessor {
             const result = selector.clone();
             let attributeFound = false;
             result.walk((node) => {
-                const attribute = this.component.descendantAttributeForNode(
-                    node
-                );
+                const attribute =
+                    this.component.descendantAttributeForNode(node);
                 if (!attribute) return;
 
                 node.replaceWith(attribute.shadowNode.clone());
@@ -467,7 +477,7 @@ class SpectrumProcessor {
                 let shouldStartWithHost = true;
                 if (startsWithDir.test(selector)) {
                     const mutateSelector = (dir) => {
-                        selector = selector.replace(`[dir=${dir}] `, '');
+                        selector = selector.replace(`[dir="${dir}"] `, '');
                         if (this.component.hostShadowSelector !== ':host') {
                             if (!hasHost.test(selector)) {
                                 selector = `:host([dir=${dir}]) ${selector}`;
@@ -487,7 +497,7 @@ class SpectrumProcessor {
                             selector = `${this.component.hostSelector}[dir=${dir}] ${selector}`;
                         }
                     };
-                    if (selector.search(/\[dir\=ltr\]/) > -1) {
+                    if (selector.search(/\[dir\="ltr"\]/) > -1) {
                         mutateSelector('ltr');
                     } else {
                         mutateSelector('rtl');
@@ -579,7 +589,7 @@ class SpectrumProcessor {
         const comment = postcss.comment({ text: this.headerText });
         this.result.root = postcss.root({
             nodes: [
-                postcss.comment({ text: 'stylelint-disable' }),
+                postcss.comment({ text: ' stylelint-disable ' }),
                 postcss.comment({ text: this.headerText }),
             ],
         });
@@ -675,6 +685,7 @@ class SpectrumProcessor {
                 decl.remove();
             });
             if (hasCustomProperties) {
+                // eslint-disable-next-line no-console
                 console.log('Apply new :host rule');
                 this.appendRule(
                     [':host'],
@@ -704,7 +715,13 @@ class SpectrumProcessor {
         this.result.root.append(parentRule);
 
         if (comment) {
-            comment = postcss.comment({ text: comment });
+            comment = comment.replace(/dir\=\"(.*)\"/g, 'dir=$1');
+            comment = comment.replace('::after', ':after');
+            comment = comment.replace('::before', ':before');
+            comment = comment.replace(/\s\+\s/g, '+');
+            comment = comment.replace(/\s>\s/g, '>');
+            comment = comment.replace(/\s~\s/g, '~');
+            comment = postcss.comment({ text: ` ${comment} ` });
             parentRule.append(comment);
         }
 
@@ -755,7 +772,7 @@ class SpectrumProcessor {
                 encoding: 'utf8',
             });
             licenseText = licenseText.split('\n').slice(1, -2).join('\n');
-            this._headerText = `\n${licenseText}\n\nTHIS FILE IS MACHINE GENERATED. DO NOT EDIT`;
+            this._headerText = ` \n${licenseText}\n\nTHIS FILE IS MACHINE GENERATED. DO NOT EDIT `;
         }
         return this._headerText;
     }

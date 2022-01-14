@@ -10,21 +10,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { html } from 'lit/static-html.js';
 
 import '../sp-tag.js';
 import '../sp-tags.js';
-import { Tags, Tag } from '..';
+import { Tag, Tags } from '..';
 import {
-    arrowUpEvent,
     arrowDownEvent,
     arrowLeftEvent,
     arrowRightEvent,
+    arrowUpEvent,
     endEvent,
-    homeEvent,
-    pageUpEvent,
-    pageDownEvent,
     enterEvent,
+    homeEvent,
+    pageDownEvent,
+    pageUpEvent,
 } from '../../../test/testing-helpers.js';
 import { executeServerCommand } from '@web/test-runner-commands';
 

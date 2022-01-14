@@ -85,6 +85,13 @@ const optionDefinitions: commandLineUsage.OptionDefinition[] = [
         type: String,
         defaultValue: 'element',
     },
+    {
+        name: 'json',
+        description: 'Save output to json.',
+        alias: 'j',
+        type: Boolean,
+        defaultValue: false,
+    },
 ];
 
 interface Options {
@@ -93,15 +100,17 @@ interface Options {
     remote: string;
     'sample-size': string;
     timeout: string;
-    browser: string;
+    browser: 'chrome' | 'firefox';
     compare: string;
     start: string;
+    json: boolean;
 }
 
 (async () => {
     const opts = commandLineArgs(optionDefinitions) as Options;
 
     if (opts.help) {
+        // eslint-disable-next-line no-console
         console.log(
             commandLineUsage([
                 {
@@ -188,6 +197,7 @@ $ node test/benchmark/cli -n 20
                 pathjoin(process.cwd(), 'packages', packageName, 'package.json')
             );
             if (pjson.version === '0.0.1' && opts.compare !== 'none') {
+                // eslint-disable-next-line no-console
                 console.log(
                     `⚠️  It looks like '${packageName}' has yet to be published to NPM. Skipping comparison!`
                 );
@@ -202,11 +212,12 @@ $ node test/benchmark/cli -n 20
                         label: 'remote',
                         dependencies: {
                             '@spectrum-web-components/bundle': opts.compare,
+                            lit: '^2.0.0',
                         },
                     },
                     measurement: 'global',
                     browser: {
-                        name: 'chrome',
+                        name: opts.browser,
                         headless: true,
                         windowSize: {
                             width: 800,
@@ -220,7 +231,7 @@ $ node test/benchmark/cli -n 20
                 url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}`,
                 measurement: 'global',
                 browser: {
-                    name: 'chrome',
+                    name: opts.browser,
                     headless: true,
                     windowSize: {
                         width: 800,
@@ -238,11 +249,15 @@ $ node test/benchmark/cli -n 20
             }
         );
 
-        const statResults = await main([
-            ...runCommands,
-            `--config=./test/benchmark/config.json`,
-            `--force-clean-npm-install`,
-        ]);
+        if (opts.json) {
+            runCommands.push(
+                `--json-file=tach-results.${opts.browser}.${packageName}.json`
+            );
+        }
+        runCommands.push(`--config=./test/benchmark/config.json`);
+        runCommands.push(`--force-clean-npm-install`);
+
+        const statResults = await main(runCommands);
 
         if (!statResults) {
             return;
@@ -257,6 +272,7 @@ $ node test/benchmark/cli -n 20
     }
 
     for (const printResult of printResults) {
+        // eslint-disable-next-line no-console
         console.log(printResult);
     }
 })();

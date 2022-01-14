@@ -11,48 +11,36 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
-    property,
+    html,
     PropertyValues,
-    query,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ProvideLang } from '@spectrum-web-components/theme';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { NumberFormatter, NumberParser } from '@internationalized/number';
 
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron75.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import {
+    isAndroid,
+    isIPhone,
+} from '@spectrum-web-components/shared/src/platform.js';
 import { TextfieldBase } from '@spectrum-web-components/textfield';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import styles from './number-field.css.js';
 
-function testPlatform(re: RegExp): boolean {
-    return typeof window !== 'undefined' && window.navigator != null
-        ? re.test(window.navigator.platform)
-        : /* c8 ignore next */
-          false;
-}
-
-function testUserAgent(re: RegExp): boolean {
-    return typeof window !== 'undefined' && window.navigator != null
-        ? re.test(window.navigator.userAgent)
-        : /* c8 ignore next */
-          false;
-}
-
-function isIPhone(): boolean {
-    return testPlatform(/^iPhone/);
-}
-
-function isAndroid(): boolean {
-    return testUserAgent(/Android/);
-}
-
 export const FRAMES_PER_CHANGE = 5;
+export const indeterminatePlaceholder = '-';
 
 /**
  * @element sp-number-field
+ * @slot help-text - default or non-negative help text to associate to your form element
+ * @slot negative-help-text - negative help text to associate to your form element when `invalid`
  */
 export class NumberField extends TextfieldBase {
     public static get styles(): CSSResultArray {
@@ -65,9 +53,11 @@ export class NumberField extends TextfieldBase {
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    _forcedUnit = '';
+
     /**
-     * An `<sp-number-field>` element will process its numeric value with
-     * `new Intl.NumberFormat(navigator.language, this.formatOptions).format(this.valueAsNumber)`
+     * An `&lt;sp-number-field&gt;` element will process its numeric value with
+     * `new Intl.NumberFormat(this.resolvedLanguage, this.formatOptions).format(this.valueAsNumber)`
      * in order to prepare it for visual delivery in the input. In order to customize this
      * processing supply your own `Intl.NumberFormatOptions` object here.
      *
@@ -82,11 +72,8 @@ export class NumberField extends TextfieldBase {
     @property({ type: Boolean, reflect: true, attribute: 'hide-stepper' })
     public hideStepper = false;
 
-    /**
-     * Whether the component is scrubbable (drag left/right to increment/decrement)
-     */
     @property({ type: Boolean, reflect: true })
-    public scrubbable = false;
+    public indeterminate = false;
 
     @property({ type: Boolean, reflect: true, attribute: 'keyboard-focused' })
     public keyboardFocused = false;
@@ -97,6 +84,10 @@ export class NumberField extends TextfieldBase {
     @property({ type: Number })
     public min?: number;
 
+    @property({ attribute: false })
+    private resolvedLanguage =
+        document.documentElement.lang || navigator.language;
+
     /**
      * The distance by which to alter the value of the element when taking a "step".
      *
@@ -105,6 +96,11 @@ export class NumberField extends TextfieldBase {
      */
     @property({ type: Number })
     public step?: number;
+
+    public stepperActive = false;
+
+    @property({ type: Number, reflect: true, attribute: 'step-modifier' })
+    public stepModifier = 10;
 
     @property({ type: Number })
     public shiftmultiply = 10;
@@ -126,7 +122,14 @@ export class NumberField extends TextfieldBase {
         return this._value;
     }
 
+    private get inputValue(): string {
+        return this.indeterminate
+            ? this.formattedValue
+            : this.inputElement.value;
+    }
+
     public _value = NaN;
+    private _trackingValue = '';
 
     constructor() {
         super();
@@ -141,24 +144,19 @@ export class NumberField extends TextfieldBase {
     }
 
     public set valueAsString(value: string) {
-        this.value = new NumberParser(
-            navigator.language,
-            this.formatOptions
-        ).parse(value);
+        this.value = this.numberParser.parse(value);
     }
 
     public get formattedValue(): string {
         if (isNaN(this.value)) return '';
-        return new NumberFormatter(
-            navigator.language,
-            this.formatOptions
-        ).format(this.value);
+        return (
+            this.numberFormatter.format(this.value) +
+            (this.focused ? '' : this._forcedUnit)
+        );
     }
 
     private convertValueToNumber(value: string): number {
-        return new NumberParser(navigator.language, this.formatOptions).parse(
-            value
-        );
+        return this.numberParser.parse(value);
     }
 
     private get _step(): number {
@@ -174,7 +172,7 @@ export class NumberField extends TextfieldBase {
     private nextChange!: number;
     private changeCount = 0;
     private findChange!: (event: PointerEvent) => void;
-    private change!: () => void;
+    private change!: (event: PointerEvent) => void;
     private safty!: number;
     private pointerDragXLocation?: number;
     private scrubDistance = 0;
@@ -184,47 +182,44 @@ export class NumberField extends TextfieldBase {
             event.preventDefault();
             return;
         }
+        this.stepperActive = true;
         this.buttons.setPointerCapture(event.pointerId);
         const stepUpRect = this.buttons.children[0].getBoundingClientRect();
         const stepDownRect = this.buttons.children[1].getBoundingClientRect();
-        if (
-            event.target === this.buttons.children[0] ||
-            event.target === this.buttons.children[1]
-        ) {
-            this.findChange = (event: PointerEvent) => {
-                if (
-                    event.clientX >= stepUpRect.x &&
-                    event.clientY >= stepUpRect.y &&
-                    event.clientX <= stepUpRect.x + stepUpRect.width &&
-                    event.clientY <= stepUpRect.y + stepUpRect.height
-                ) {
-                    this.change = () => this.increment();
-                } else if (
-                    event.clientX >= stepDownRect.x &&
-                    event.clientY >= stepDownRect.y &&
-                    event.clientX <= stepDownRect.x + stepDownRect.width &&
-                    event.clientY <= stepDownRect.y + stepDownRect.height
-                ) {
-                    this.change = () => this.decrement();
-                }
-            };
-            this.findChange(event);
-            this.startChange();
-        } else if (!this.focused && this.scrubbable) {
-            this.scrub(event);
-        }
+
+        this.findChange = (event: PointerEvent) => {
+            if (
+                event.clientX >= stepUpRect.x &&
+                event.clientY >= stepUpRect.y &&
+                event.clientX <= stepUpRect.x + stepUpRect.width &&
+                event.clientY <= stepUpRect.y + stepUpRect.height
+            ) {
+                this.change = (event: PointerEvent) =>
+                    this.increment(event.shiftKey ? this.stepModifier : 1);
+            } else if (
+                event.clientX >= stepDownRect.x &&
+                event.clientY >= stepDownRect.y &&
+                event.clientX <= stepDownRect.x + stepDownRect.width &&
+                event.clientY <= stepDownRect.y + stepDownRect.height
+            ) {
+                this.change = (event: PointerEvent) =>
+                    this.decrement(event.shiftKey ? this.stepModifier : 1);
+            }
+        };
+        this.findChange(event);
+        this.startChange(event);
     }
 
-    private startChange(): void {
+    private startChange(event: PointerEvent): void {
         this.changeCount = 0;
-        this.doChange();
-        this.safty = (setTimeout(() => {
-            this.doNextChange();
-        }, 400) as unknown) as number;
+        this.doChange(event);
+        this.safty = setTimeout(() => {
+            this.doNextChange(event);
+        }, 400) as unknown as number;
     }
 
-    private doChange(): void {
-        this.change();
+    private doChange(event: PointerEvent): void {
+        this.change(event);
     }
 
     private handlePointermove(event: PointerEvent): void {
@@ -246,19 +241,23 @@ export class NumberField extends TextfieldBase {
         this.dispatchEvent(
             new Event('change', { bubbles: true, composed: true })
         );
+        this.stepperActive = false;
     }
 
-    private doNextChange(): number {
+    private doNextChange(event: PointerEvent): number {
         this.changeCount += 1;
         if (this.changeCount % FRAMES_PER_CHANGE === 0) {
-            this.doChange();
+            this.doChange(event);
         }
         return requestAnimationFrame(() => {
-            this.nextChange = this.doNextChange();
+            this.nextChange = this.doNextChange(event);
         });
     }
 
     private stepBy(count: number): void {
+        if (this.disabled || this.readonly) {
+            return;
+        }
         const min = typeof this.min !== 'undefined' ? this.min : 0;
         let value = this.value;
         value += count * this._step;
@@ -270,6 +269,7 @@ export class NumberField extends TextfieldBase {
         this.dispatchEvent(
             new Event('input', { bubbles: true, composed: true })
         );
+        this.indeterminate = false;
         this.focus();
     }
 
@@ -281,97 +281,18 @@ export class NumberField extends TextfieldBase {
         this.stepBy(-1 * factor);
     }
 
-    private documentMoveListener = (event: PointerEvent): void => {
-        this.handlePointermove(event);
-    };
-
-    private documentUpListener = (event: PointerEvent): void => {
-        this.handlePointerup(event);
-    };
-
-    private scrub(event: PointerEvent): void {
-        switch (event.type) {
-            case 'pointerdown':
-                this.pointerDragXLocation = event.clientX;
-                document.body.addEventListener(
-                    'pointermove',
-                    this.documentMoveListener
-                );
-                document.body.addEventListener(
-                    'pointerup',
-                    this.documentUpListener
-                );
-                document.body.addEventListener(
-                    'pointercancel',
-                    this.documentUpListener
-                );
-                event.preventDefault();
-                break;
-
-            case 'pointermove':
-                if (this.pointerDragXLocation) {
-                    const amtPerPixel = this.stepperpixel || this._step;
-                    const dist: number =
-                        event.clientX - this.pointerDragXLocation;
-                    const delta =
-                        Math.round(dist * amtPerPixel) *
-                        (event.shiftKey ? this.shiftmultiply : 1);
-                    this.scrubDistance += dist;
-                    this.pointerDragXLocation = event.clientX;
-                    this.stepBy(delta);
-                    event.preventDefault();
-                }
-                break;
-
-            default:
-                this.pointerDragXLocation = undefined;
-                document.body.removeEventListener(
-                    'pointermove',
-                    this.documentMoveListener
-                );
-                document.body.removeEventListener(
-                    'pointerup',
-                    this.documentUpListener
-                );
-                document.body.removeEventListener(
-                    'pointercancel',
-                    this.documentUpListener
-                );
-
-                // if user has scrubbed, disallow focus of field
-                const bounds = this.getBoundingClientRect();
-                if (this.scrubDistance > 0) {
-                    this.inputElement.blur();
-                    event.preventDefault();
-                } else if (
-                    event.clientX >= bounds.x &&
-                    event.clientX <= bounds.x + bounds.width &&
-                    event.clientY >= bounds.y &&
-                    event.clientY <= bounds.y + bounds.height
-                ) {
-                    this.focus();
-                }
-                this.scrubDistance = 0;
-                break;
-        }
-    }
-
     private handleKeydown(event: KeyboardEvent): void {
-        if (event.ctrlKey || event.metaKey || event.altKey) {
-            // Don't do work when modifiers are present.
-            return;
-        }
         switch (event.code) {
             case 'ArrowUp':
                 event.preventDefault();
-                this.increment(event.shiftKey ? this.shiftmultiply : 1);
+                this.increment(event.shiftKey ? this.stepModifier : 1);
                 this.dispatchEvent(
                     new Event('change', { bubbles: true, composed: true })
                 );
                 break;
             case 'ArrowDown':
                 event.preventDefault();
-                this.decrement(event.shiftKey ? this.shiftmultiply : 1);
+                this.decrement(event.shiftKey ? this.stepModifier : 1);
                 this.dispatchEvent(
                     new Event('change', { bubbles: true, composed: true })
                 );
@@ -381,7 +302,12 @@ export class NumberField extends TextfieldBase {
 
     protected onScroll(event: WheelEvent): void {
         event.preventDefault();
-        this.stepBy(event.deltaY);
+        const direction = event.shiftKey
+            ? event.deltaX / Math.abs(event.deltaX)
+            : event.deltaY / Math.abs(event.deltaY);
+        if (direction !== 0 && !isNaN(direction)) {
+            this.stepBy(direction * (event.shiftKey ? this.stepModifier : 1));
+        }
     }
 
     protected onFocus(): void {
@@ -389,6 +315,7 @@ export class NumberField extends TextfieldBase {
             return;
         }
         super.onFocus();
+        this._trackingValue = this.inputValue;
         this.keyboardFocused = true;
         this.addEventListener('wheel', this.onScroll);
     }
@@ -409,22 +336,65 @@ export class NumberField extends TextfieldBase {
         this.keyboardFocused = false;
     }
 
+    private wasIndeterminate = false;
+    private indeterminateValue?: number;
+
     protected onChange(): void {
-        const value = this.convertValueToNumber(this.inputElement.value);
+        const value = this.convertValueToNumber(this.inputValue);
+        if (this.wasIndeterminate) {
+            this.wasIndeterminate = false;
+            this.indeterminateValue = undefined;
+            if (isNaN(value)) {
+                this.indeterminate = true;
+                return;
+            }
+        }
         this.value = value;
         super.onChange();
     }
 
     protected onInput(): void {
-        const value = this.convertValueToNumber(this.inputElement.value);
-        this._value = this.validateInput(value);
+        if (this.indeterminate) {
+            this.wasIndeterminate = true;
+            this.indeterminateValue = this.value;
+            this.inputElement.value = this.inputElement.value.replace(
+                indeterminatePlaceholder,
+                ''
+            );
+        }
+        const { value, selectionStart } = this.inputElement;
+        if (this.numberParser.isValidPartialNumber(value)) {
+            const valueAsNumber = this.convertValueToNumber(value);
+            if (!value && this.indeterminateValue) {
+                this.indeterminate = true;
+                this._value = this.indeterminateValue;
+            } else {
+                this.indeterminate = false;
+                this._value = this.validateInput(valueAsNumber);
+            }
+            this._trackingValue = value;
+            return;
+        }
+        const currentLength = value.length;
+        const previousLength = this._trackingValue.length;
+        const nextSelectStart =
+            (selectionStart || currentLength) -
+            (currentLength - previousLength);
+        this.inputElement.value = this.indeterminate
+            ? indeterminatePlaceholder
+            : this._trackingValue;
+        this.inputElement.setSelectionRange(nextSelectStart, nextSelectStart);
     }
 
     private validateInput(value: number): number {
         if (typeof this.min !== 'undefined') {
             value = Math.max(this.min, value);
         }
-        if (typeof this.step !== 'undefined') {
+        if (typeof this.max !== 'undefined') {
+            value = Math.min(this.max, value);
+        }
+        // Step shouldn't validate when 0...
+        if (this.step) {
             const min = typeof this.min !== 'undefined' ? this.min : 0;
             const moduloStep = (value - min) % this.step;
             const fallsOnStep = moduloStep === 0;
@@ -442,26 +412,97 @@ export class NumberField extends TextfieldBase {
                 }
             }
         }
-        if (typeof this.max !== 'undefined') {
-            if (typeof this.step !== 'undefined') {
-                while (value > this.max) {
-                    value -= this.step;
-                }
-            } else {
-                value = Math.min(this.max, value);
-            }
-        }
         return value;
     }
 
     protected get displayValue(): string {
-        return this.formattedValue;
+        const indeterminateValue = this.focused ? '' : indeterminatePlaceholder;
+        return this.indeterminate ? indeterminateValue : this.formattedValue;
     }
 
-    protected render(): TemplateResult {
+    protected clearNumberFormatterCache(): void {
+        this._numberFormatter = undefined;
+        this._numberParser = undefined;
+    }
+
+    protected get numberFormatter(): NumberFormatter {
+        if (!this._numberFormatter || !this._numberFormatterFocused) {
+            const {
+                style,
+                unit,
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                unitDisplay,
+                ...formatOptionsNoUnit
+            } = this.formatOptions;
+            if (style !== 'unit') {
+                (formatOptionsNoUnit as Intl.NumberFormatOptions).style = style;
+            }
+            this._numberFormatterFocused = new NumberFormatter(
+                this.resolvedLanguage,
+                formatOptionsNoUnit
+            );
+            try {
+                this._numberFormatter = new NumberFormatter(
+                    this.resolvedLanguage,
+                    this.formatOptions
+                );
+                this._forcedUnit = '';
+                this._numberFormatter.format(1);
+            } catch (error) {
+                if (style === 'unit') {
+                    this._forcedUnit = unit as string;
+                }
+                this._numberFormatter = this._numberFormatterFocused;
+            }
+        }
+        return this.focused
+            ? this._numberFormatterFocused
+            : this._numberFormatter;
+    }
+
+    private _numberFormatter?: NumberFormatter;
+    private _numberFormatterFocused?: NumberFormatter;
+
+    protected get numberParser(): NumberParser {
+        if (!this._numberParser || !this._numberParserFocused) {
+            const {
+                style,
+                unit,
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                unitDisplay,
+                ...formatOptionsNoUnit
+            } = this.formatOptions;
+            if (style !== 'unit') {
+                (formatOptionsNoUnit as Intl.NumberFormatOptions).style = style;
+            }
+            this._numberParserFocused = new NumberParser(
+                this.resolvedLanguage,
+                formatOptionsNoUnit
+            );
+            try {
+                this._numberParser = new NumberParser(
+                    this.resolvedLanguage,
+                    this.formatOptions
+                );
+                this._forcedUnit = '';
+                this._numberParser.parse('0');
+            } catch (error) {
+                if (style === 'unit') {
+                    this._forcedUnit = unit as string;
+                }
+                this._numberParser = this._numberParserFocused;
+            }
+        }
+        return this.focused ? this._numberParserFocused : this._numberParser;
+    }
+
+    private _numberParser?: NumberParser;
+    private _numberParserFocused?: NumberParser;
+
+    protected renderField(): TemplateResult {
         this.autocomplete = 'off';
         return html`
-            ${super.render()}
+            ${super.renderField()}
             ${this.hideStepper
                 ? html``
                 : html`
@@ -469,26 +510,23 @@ export class NumberField extends TextfieldBase {
                           class="buttons"
                           @focusin=${this.handleFocusin}
                           @focusout=${this.handleFocusout}
-                          @manage=${streamingListener(
-                              {
-                                  type: 'pointerdown',
-                                  fn: this.handlePointerdown,
-                              },
-                              {
-                                  type: [
+                          ${streamingListener({
+                              start: ['pointerdown', this.handlePointerdown],
+                              streamInside: [
+                                  [
                                       'pointermove',
                                       'pointerenter',
                                       'pointerleave',
                                       'pointerover',
                                       'pointerout',
                                   ],
-                                  fn: this.handlePointermove,
-                              },
-                              {
-                                  type: ['pointerup', 'pointercancel'],
-                                  fn: this.handlePointerup,
-                              }
-                          )}
+                                  this.handlePointermove,
+                              ],
+                              end: [
+                                  ['pointerup', 'pointercancel'],
+                                  this.handlePointerup,
+                              ],
+                          })}
                       >
                           <sp-action-button
                               class="stepUp"
@@ -499,6 +537,7 @@ export class NumberField extends TextfieldBase {
                               this.readonly ||
                               (typeof this.max !== 'undefined' &&
                                   this.value === this.max)}
+                              ?quiet=${this.quiet}
                           >
                               <sp-icon-chevron75
                                   slot="icon"
@@ -514,6 +553,7 @@ export class NumberField extends TextfieldBase {
                               this.readonly ||
                               (typeof this.min !== 'undefined' &&
                                   this.value === this.min)}
+                              ?quiet=${this.quiet}
                           >
                               <sp-icon-chevron75
                                   slot="icon"
@@ -523,6 +563,13 @@ export class NumberField extends TextfieldBase {
                       </span>
                   `}
         `;
+    }
+
+    protected update(changes: PropertyValues): void {
+        if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
+            this.clearNumberFormatterCache();
+        }
+        super.update(changes);
     }
 
     protected firstUpdated(changes: PropertyValues): void {
@@ -538,10 +585,9 @@ export class NumberField extends TextfieldBase {
             changes.has('min') ||
             changes.has('min')
         ) {
-            const value = new NumberParser(
-                navigator.language,
-                this.formatOptions
-            ).parse(this.inputElement.value);
+            const value = this.numberParser.parse(
+                this.inputValue.replace(this._forcedUnit, '')
+            );
             this.value = this.validateInput(value);
         }
         if (changes.has('min') || changes.has('formatOptions')) {
@@ -550,6 +596,7 @@ export class NumberField extends TextfieldBase {
             const { maximumFractionDigits } = this.formatOptions;
             const hasDecimals =
                 maximumFractionDigits && maximumFractionDigits > 0;
+            /* c8 ignore next 18 */
             if (isIPhone()) {
                 // iPhone doesn't have a minus sign in either numeric or decimal.
                 // Note this is only for iPhone, not iPad, which always has both
@@ -570,5 +617,32 @@ export class NumberField extends TextfieldBase {
             }
             this.inputElement.inputMode = inputMode;
         }
+    }
+
+    public connectedCallback(): void {
+        super.connectedCallback();
+        this.resolveLanguage();
+    }
+
+    public disconnectedCallback(): void {
+        this.resolveLanguage();
+        super.disconnectedCallback();
+    }
+
+    private resolveLanguage(): void {
+        const queryThemeEvent = new CustomEvent<ProvideLang>(
+            'sp-language-context',
+            {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    callback: (lang: string) => {
+                        this.resolvedLanguage = lang;
+                    },
+                },
+                cancelable: true,
+            }
+        );
+        this.dispatchEvent(queryThemeEvent);
     }
 }

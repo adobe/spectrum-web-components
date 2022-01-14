@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.5.1...@spectrum-web-components/top-nav@0.5.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/top-nav
+
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.5.0...@spectrum-web-components/top-nav@0.5.1) (2021-12-13)
+
+### Bug Fixes
+
+-   use typescript@^4.5 for "native" document.fonts typings ([a3e4aea](https://github.com/adobe/spectrum-web-components/commit/a3e4aea802c796e9029b2bc32f58639954db831b))
+
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.4.1...@spectrum-web-components/top-nav@0.5.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/top-nav
+
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.4.0...@spectrum-web-components/top-nav@0.4.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/top-nav
+
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.10...@spectrum-web-components/top-nav@0.4.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.3.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.9...@spectrum-web-components/top-nav@0.3.10) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/top-nav
+
+## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.8...@spectrum-web-components/top-nav@0.3.9) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/top-nav
+
+## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.7...@spectrum-web-components/top-nav@0.3.8) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/top-nav
+
+## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.6...@spectrum-web-components/top-nav@0.3.7) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.3.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.5...@spectrum-web-components/top-nav@0.3.6) (2021-08-03)
+
+**Note:** Version bump only for package @spectrum-web-components/top-nav
+
+## [0.3.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.4...@spectrum-web-components/top-nav@0.3.5) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/top-nav
+
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.3...@spectrum-web-components/top-nav@0.3.4) (2021-07-01)
+
+### Bug Fixes
+
+-   update indicator animation for loading and content direction ([f607f8b](https://github.com/adobe/spectrum-web-components/commit/f607f8b4fca280b7aa5eae835554ea62845abd1c))
+
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.2...@spectrum-web-components/top-nav@0.3.3) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/top-nav
+
 ## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.3.1...@spectrum-web-components/top-nav@0.3.2) (2021-06-07)
 
 ### Bug Fixes

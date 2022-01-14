@@ -10,19 +10,5 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Picker } from '../src/Picker.js';
-import {
-    Overlay,
-    OverlayOptions,
-    TriggerInteractions,
-} from '@spectrum-web-components/overlay';
+import './index.js';
 import '../sp-picker.js';
-
-Picker.openOverlay = async (
-    target: HTMLElement,
-    interaction: TriggerInteractions,
-    content: HTMLElement,
-    options: OverlayOptions
-): Promise<() => void> => {
-    return await Overlay.open(target, interaction, content, options);
-};

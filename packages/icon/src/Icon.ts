@@ -10,18 +10,20 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { html, TemplateResult } from '@spectrum-web-components/base';
 import {
-    html,
     property,
     query,
-    TemplateResult,
-    ifDefined,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
 
 import { IconBase } from './IconBase.js';
 
+/**
+ * @element sp-icon
+ */
 export class Icon extends IconBase {
     @property()
     public src?: string;
@@ -82,6 +84,9 @@ export class Icon extends IconBase {
     }
 
     private async updateIcon(): Promise<void> {
+        if (this.updateIconPromise) {
+            await this.updateIconPromise;
+        }
         if (!this.name) {
             return Promise.resolve();
         }
@@ -116,8 +121,9 @@ export class Icon extends IconBase {
         return { iconset: iconsetName, icon: iconName };
     }
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.updateIconPromise;
+        return complete;
     }
 }

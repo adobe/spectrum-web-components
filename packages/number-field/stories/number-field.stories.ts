@@ -14,7 +14,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-number-field.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import { spreadProps } from '@open-wc/lit-helpers';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     title: 'Number Field',
@@ -24,7 +24,7 @@ export default {
         readonly: false,
         quiet: false,
         value: undefined,
-        placeholder: '100',
+        placeholder: '',
         min: undefined,
         max: undefined,
         step: undefined,
@@ -35,6 +35,19 @@ export default {
             type: { name: 'boolean', required: false },
             description:
                 'Disable this control. It will not receive focus or events.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        indeterminate: {
+            name: 'indeterminate',
+            type: { name: 'boolean', required: false },
+            description:
+                'Whether the value of the Number Field can be determined for display.',
             table: {
                 type: { summary: 'boolean' },
                 defaultValue: { summary: false },
@@ -118,8 +131,8 @@ export default {
                 type: 'number',
             },
         },
-        shiftmultiply: {
-            name: 'shiftmultiply',
+        stepModifier: {
+            name: 'step modifier',
             type: { name: 'number', required: false },
             description:
                 'Amount to scale the step increment/decrement when holding the shift key',
@@ -131,26 +144,12 @@ export default {
                 type: 'number',
             },
         },
-        stepperpixel: {
-            name: 'stepperpixel',
-            type: { name: 'number', required: false },
-            description:
-                'Amount to increment/decrement when scrubbable per each pixel (defaults to step value)',
-            table: {
-                type: { summary: 'number' },
-                defaultValue: { summary: undefined },
-            },
-            control: {
-                type: 'number',
-            },
-        },
         placeholder: {
             name: 'placeholder',
             type: { name: 'string', required: false },
             description: 'Placeholder to apply to the control.',
             table: {
                 type: { summary: 'string' },
-                defaultValue: { summary: '100' },
             },
             control: {
                 type: 'text',
@@ -185,6 +184,7 @@ export default {
 
 interface StoryArgs {
     disabled?: boolean;
+    indeterminate?: boolean;
     invalid?: boolean;
     value?: number;
     placeholder?: string;
@@ -193,10 +193,10 @@ interface StoryArgs {
     hideStepper?: boolean;
     readonly?: boolean;
     step?: number;
-    scrubbable?: boolean;
+    [prop: string]: unknown;
 }
 
-export const Default = (args: StoryArgs): TemplateResult => {
+export const Default = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-field-label for="default">Enter a number</sp-field-label>
         <sp-number-field
@@ -205,6 +205,42 @@ export const Default = (args: StoryArgs): TemplateResult => {
             style="width: 150px"
         ></sp-number-field>
     `;
+};
+
+Default.args = {
+    value: 100,
+};
+
+export const quiet = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <sp-field-label for="default">Enter a number</sp-field-label>
+        <sp-number-field
+            id="default"
+            ...=${spreadProps(args)}
+            style="width: 150px"
+        ></sp-number-field>
+    `;
+};
+
+quiet.args = {
+    quiet: true,
+    value: 100,
+};
+
+export const indeterminate = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <sp-field-label for="default">Enter a number</sp-field-label>
+        <sp-number-field
+            id="default"
+            ...=${spreadProps(args)}
+            style="width: 150px"
+        ></sp-number-field>
+    `;
+};
+
+indeterminate.args = {
+    value: 100,
+    indeterminate: true,
 };
 
 export const decimals = (args: StoryArgs): TemplateResult => {
@@ -225,19 +261,30 @@ export const decimals = (args: StoryArgs): TemplateResult => {
     `;
 };
 
-export const percents = (args: StoryArgs): TemplateResult => {
+decimals.args = {
+    value: 19.274,
+};
+
+export const percents = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-field-label for="percents">Enter a percentage</sp-field-label>
         <sp-number-field
             id="percents"
             style="width: 200px"
             ...=${spreadProps(args)}
-            .formatOptions=${{ style: 'percent' }}
+            .formatOptions=${{
+                style: 'percent',
+                unitDisplay: 'narrow',
+            }}
         ></sp-number-field>
     `;
 };
 
-export const currency = (args: StoryArgs): TemplateResult => {
+percents.args = {
+    value: 0.372,
+};
+
+export const currency = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-field-label for="currency">Enter a value in Euros</sp-field-label>
         <sp-number-field
@@ -251,6 +298,10 @@ export const currency = (args: StoryArgs): TemplateResult => {
             }}
         ></sp-number-field>
     `;
+};
+
+currency.args = {
+    value: 23.19,
 };
 
 export const units = (args: StoryArgs): TemplateResult => {
@@ -267,6 +318,29 @@ export const units = (args: StoryArgs): TemplateResult => {
             }}
         ></sp-number-field>
     `;
+};
+
+units.args = {
+    value: 24,
+};
+
+export const pixels = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="units">Enter a lengths in pixels</sp-field-label>
+        <sp-number-field
+            id="units"
+            style="width: 200px"
+            .formatOptions=${{
+                style: 'unit',
+                unit: 'px',
+            }}
+            ...=${spreadProps(args)}
+        ></sp-number-field>
+    `;
+};
+
+pixels.args = {
+    value: 800,
 };
 
 export const minMax = (args: StoryArgs): TemplateResult => html`
@@ -299,6 +373,24 @@ export const hideStepper = (args: StoryArgs): TemplateResult => {
 };
 hideStepper.args = {
     hideStepper: true,
+    value: 67,
+};
+
+export const hideStepperQuiet = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="hideStepper">
+            Enter a number without the stepper UI
+        </sp-field-label>
+        <sp-number-field
+            id="hideStepper"
+            ...=${spreadProps(args)}
+        ></sp-number-field>
+    `;
+};
+hideStepperQuiet.args = {
+    hideStepper: true,
+    value: 67,
+    quiet: true,
 };
 
 export const scrubbable = (args: StoryArgs): TemplateResult => {
@@ -319,7 +411,7 @@ scrubbable.args = {
 export const disabled = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="disabled">
-            Enter a number without the stepper UI
+            This Number Field is disabled
         </sp-field-label>
         <sp-number-field
             id="disabled"
@@ -329,6 +421,7 @@ export const disabled = (args: StoryArgs): TemplateResult => {
 };
 disabled.args = {
     disabled: true,
+    value: 892,
 };
 
 export const readOnly = (args: StoryArgs): TemplateResult => {
@@ -344,4 +437,5 @@ export const readOnly = (args: StoryArgs): TemplateResult => {
 };
 readOnly.args = {
     readonly: true,
+    value: '15',
 };

@@ -14,6 +14,7 @@
     ],
     "rules": {
         "no-debugger": 2,
+        "no-console": ["error", { "allow": ["warn", "error"] }],
         "spectrum-web-components/prevent-argument-names": [
             "error",
             ["e", "ev", "evt", "err"]
@@ -30,6 +31,15 @@
             1,
             {
                 "allowExpressions": true
+            }
+        ],
+        "sort-imports": [
+            "error",
+            {
+                "ignoreCase": true,
+                "ignoreDeclarationSort": true,
+                "ignoreMemberSort": false,
+                "allowSeparatedGroups": false
             }
         ],
         "lit-a11y/click-events-have-key-events": [
@@ -55,6 +65,18 @@
                 "spectrum-web-components/document-active-element": ["off"],
                 "lit-a11y/no-autofocus": ["off"],
                 "lit-a11y/tabindex-no-positive": ["off"]
+            }
+        },
+        {
+            "files": ["**/icons/*.ts", "**/src/elements/*.ts"],
+            "rules": {
+                "sort-imports": ["off"]
+            }
+        },
+        {
+            "files": ["*.stories.ts"],
+            "rules": {
+                "no-console": ["off"]
             }
         },
         {

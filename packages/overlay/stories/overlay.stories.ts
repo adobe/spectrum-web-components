@@ -8,9 +8,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html, TemplateResult, ifDefined } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
     openOverlay,
+    Overlay,
     OverlayContentTypes,
     OverlayTrigger,
     Placement,
@@ -23,6 +25,7 @@ import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { DialogWrapper } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
@@ -38,7 +41,9 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '../../../projects/story-decorator/src/types.js';
 
-import './overlay-story-components';
+import './overlay-story-components.js';
+import { render } from 'lit-html';
+import { Popover } from '@spectrum-web-components/popover';
 
 const storyStyles = html`
     <style>
@@ -65,7 +70,7 @@ const storyStyles = html`
         }
 
         #styled-div {
-            background-color: blue;
+            background-color: var(--styled-div-background-color, blue);
             color: white;
             padding: 4px 10px;
             margin-bottom: 10px;
@@ -139,7 +144,6 @@ const template = ({ placement, offset, open }: Properties): TemplateResult => {
                 slot="click-content"
                 placement="${placement}"
                 tip
-                open
             >
                 <div class="options-popover-content">
                     <sp-slider
@@ -197,6 +201,22 @@ export const openClickContent = (args: Properties): TemplateResult =>
         open: 'click',
     });
 
+export const customizedClickContent = (
+    args: Properties
+): TemplateResult => html`
+    <style>
+        active-overlay::part(theme) {
+            --styled-div-background-color: var(--spectrum-semantic-cta-background-color-default);
+            --spectrum-button-m-cta-texticon-background-color: rebeccapurple;
+        }
+    </style>
+    </style>
+    ${template({
+        ...args,
+        open: 'click',
+    })}
+`;
+
 const extraText = html`
     <p>This is some text.</p>
     <p>This is some text.</p>
@@ -251,7 +271,7 @@ export const modalLoose = (): TemplateResult => {
         <overlay-trigger type="modal" placement="none">
             <sp-button slot="trigger">Open</sp-button>
             <sp-dialog
-                size="small"
+                size="s"
                 dismissable
                 slot="click-content"
                 @closed=${(event: Event & { target: DialogWrapper }) =>
@@ -537,21 +557,61 @@ export const longpress = (): TemplateResult => {
     `;
 };
 
-export const complexModal = (): TemplateResult => {
-    requestAnimationFrame(() => {
+function nextFrame(): Promise<void> {
+    return new Promise((res) => requestAnimationFrame(() => res()));
+}
+
+class ComplexModalReady extends HTMLElement {
+    ready!: (value: boolean | PromiseLike<boolean>) => void;
+
+    constructor() {
+        super();
+        this.readyPromise = new Promise((res) => {
+            this.ready = res;
+            this.setup();
+        });
+    }
+
+    async setup(): Promise<void> {
+        await nextFrame();
+
         const overlay = document.querySelector(
             `overlay-trigger`
         ) as OverlayTrigger;
-        const trigger = (overlay.shadowRoot as ShadowRoot).querySelector(
-            '#trigger'
-        ) as HTMLElement;
-        trigger.addEventListener('sp-opened', () => {
-            requestAnimationFrame(() => {
-                const picker = document.querySelector('#test-picker') as Picker;
-                picker.open = true;
-            });
-        });
-    });
+        overlay.addEventListener('sp-opened', this.handleTriggerOpened);
+    }
+
+    handleTriggerOpened = async (): Promise<void> => {
+        await nextFrame();
+
+        const picker = document.querySelector('#test-picker') as Picker;
+        picker.addEventListener('sp-opened', this.handlePickerOpen);
+        picker.open = true;
+    };
+
+    handlePickerOpen = async (): Promise<void> => {
+        await nextFrame();
+
+        this.ready(true);
+    };
+
+    private readyPromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.readyPromise;
+    }
+}
+
+customElements.define('complex-modal-ready', ComplexModalReady);
+
+const complexModalDecorator = (story: () => TemplateResult): TemplateResult => {
+    return html`
+        ${story()}
+        <complex-modal-ready></complex-modal-ready>
+    `;
+};
+
+export const complexModal = (): TemplateResult => {
     return html`
         <style>
             body {
@@ -608,6 +668,8 @@ export const complexModal = (): TemplateResult => {
     `;
 };
 
+complexModal.decorators = [complexModalDecorator];
+
 export const superComplexModal = (): TemplateResult => {
     return html`
         <overlay-trigger type="modal" placement="none">
@@ -645,30 +707,32 @@ export const superComplexModal = (): TemplateResult => {
     `;
 };
 
+class StartEndContextmenu extends HTMLElement {
+    shadowRoot!: ShadowRoot;
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
+            <style>
+                :host {
+                    display: flex;
+                    align-items: stretch;
+                }
+                div {
+                    width: 50%;
+                    height: 100%;
+                }
+            </style>
+            <div id="start"></div>
+            <div id="end"></div>
+        `;
+    }
+}
+
+customElements.define('start-end-contextmenu', StartEndContextmenu);
+
 export const virtualElement = (args: Properties): TemplateResult => {
-    const pointerenter = async (event: PointerEvent): Promise<void> => {
-        event.preventDefault();
-        const trigger = event.target as HTMLElement;
-        const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
-        openOverlay(
-            trigger,
-            'modal',
-            trigger.nextElementSibling as HTMLElement,
-            {
-                placement: args.placement,
-                receivesFocus: 'auto',
-                virtualTrigger,
-            }
-        );
-    };
-    return html`
-        <style>
-            .app-root {
-                position: absolute;
-                inset: 0;
-            }
-        </style>
-        <div class="app-root" @contextmenu=${pointerenter}></div>
+    const contextMenuTemplate = (kind = ''): TemplateResult => html`
         <sp-popover
             style="max-width: 33vw;"
             @click=${(event: Event) =>
@@ -677,18 +741,169 @@ export const virtualElement = (args: Properties): TemplateResult => {
                 )}
         >
             <sp-menu>
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item>Select inverse</sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-item>Select and mask...</sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>Save selection</sp-menu-item>
-                <sp-menu-item disabled>Make work path</sp-menu-item>
+                <sp-menu-group>
+                    <span slot="header">Menu source: ${kind}</span>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save selection</sp-menu-item>
+                    <sp-menu-item disabled>Make work path</sp-menu-item>
+                </sp-menu-group>
             </sp-menu>
         </sp-popover>
+    `;
+    const pointerenter = async (event: PointerEvent): Promise<void> => {
+        event.preventDefault();
+        const source = event.composedPath()[0] as HTMLDivElement;
+        const { id } = source;
+        const trigger = event.target as HTMLElement;
+        const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
+        const fragment = document.createDocumentFragment();
+        render(contextMenuTemplate(id), fragment);
+        const popover = fragment.querySelector('sp-popover') as Popover;
+        openOverlay(trigger, 'modal', popover, {
+            placement: args.placement,
+            receivesFocus: 'auto',
+            virtualTrigger,
+        });
+    };
+    return html`
+        <style>
+            .app-root {
+                position: absolute;
+                inset: 0;
+            }
+        </style>
+        <start-end-contextmenu
+            class="app-root"
+            @contextmenu=${pointerenter}
+        ></start-end-contextmenu>
     `;
 };
 
 virtualElement.args = {
-    placement: 'right-end',
+    placement: 'right-end' as Placement,
 };
+
+export const detachedElement = (): TemplateResult => {
+    let closeOverlay: (() => void) | undefined;
+    const openDetachedOverlayContent = async ({
+        target,
+    }: {
+        target: HTMLElement;
+    }): Promise<void> => {
+        if (closeOverlay) {
+            closeOverlay();
+            closeOverlay = undefined;
+            return;
+        }
+        const div = document.createElement('div');
+        div.textContent = 'This div is overlaid';
+        div.setAttribute(
+            'style',
+            `
+            background-color: var(--spectrum-global-color-gray-50);
+            color: var(--spectrum-global-color-gray-800);
+            border: 1px solid;
+            padding: 2em;
+        `
+        );
+        closeOverlay = await Overlay.open(target, 'click', div, {
+            offset: 0,
+            placement: 'bottom',
+        });
+    };
+    requestAnimationFrame(() => {
+        openDetachedOverlayContent({
+            target: document.querySelector(
+                '#detached-content-trigger'
+            ) as HTMLElement,
+        });
+    });
+    return html`
+        <sp-action-button
+            id="detached-content-trigger"
+            @click=${openDetachedOverlayContent}
+            @sp-closed=${() => (closeOverlay = undefined)}
+        >
+            <sp-icon-open-in
+                slot="icon"
+                label="Open in overlay"
+            ></sp-icon-open-in>
+        </sp-action-button>
+    `;
+};
+
+class DefinedOverlayReady extends HTMLElement {
+    ready!: (value: boolean | PromiseLike<boolean>) => void;
+
+    constructor() {
+        super();
+        this.readyPromise = new Promise((res) => {
+            this.ready = res;
+            this.setup();
+        });
+    }
+
+    async setup(): Promise<void> {
+        await nextFrame();
+
+        const overlay = document.querySelector(
+            `overlay-trigger`
+        ) as OverlayTrigger;
+        const button = document.querySelector(
+            `[slot="trigger"]`
+        ) as HTMLButtonElement;
+        overlay.addEventListener('sp-opened', this.handleTriggerOpened);
+        button.click();
+    }
+
+    handleTriggerOpened = async (): Promise<void> => {
+        await nextFrame();
+
+        const popover = document.querySelector('popover-content');
+        if (!popover) {
+            return;
+        }
+        popover.addEventListener('sp-opened', this.handlePopoverOpen);
+        popover.button.click();
+    };
+
+    handlePopoverOpen = async (): Promise<void> => {
+        await nextFrame();
+
+        this.ready(true);
+    };
+
+    private readyPromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.readyPromise;
+    }
+}
+
+customElements.define('defined-overlay-ready', DefinedOverlayReady);
+
+const definedOverlayDecorator = (
+    story: () => TemplateResult
+): TemplateResult => {
+    return html`
+        ${story()}
+        <defined-overlay-ready></defined-overlay-ready>
+    `;
+};
+
+export const definedOverlayElement = (): TemplateResult => {
+    return html`
+        <overlay-trigger placement="bottom" type="modal">
+            <sp-button variant="primary" slot="trigger">Open popover</sp-button>
+            <sp-popover slot="click-content" direction="bottom" dialog>
+                <popover-content></popover-content>
+            </sp-popover>
+        </overlay-trigger>
+    `;
+};
+
+definedOverlayElement.decorators = [definedOverlayDecorator];

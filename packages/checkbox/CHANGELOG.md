@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.12.1...@spectrum-web-components/checkbox@0.12.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.12.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.12.0...@spectrum-web-components/checkbox@0.12.1) (2021-12-13)
+
+### Bug Fixes
+
+-   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+
+# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.11.1...@spectrum-web-components/checkbox@0.12.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.11.0...@spectrum-web-components/checkbox@0.11.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.9...@spectrum-web-components/checkbox@0.11.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.10.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.8...@spectrum-web-components/checkbox@0.10.9) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.10.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.7...@spectrum-web-components/checkbox@0.10.8) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.6...@spectrum-web-components/checkbox@0.10.7) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.5...@spectrum-web-components/checkbox@0.10.6) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.10.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.4...@spectrum-web-components/checkbox@0.10.5) (2021-08-03)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.10.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.3...@spectrum-web-components/checkbox@0.10.4) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.2...@spectrum-web-components/checkbox@0.10.3) (2021-07-01)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
+## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.1...@spectrum-web-components/checkbox@0.10.2) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/checkbox
+
 ## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.10.0...@spectrum-web-components/checkbox@0.10.1) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/checkbox

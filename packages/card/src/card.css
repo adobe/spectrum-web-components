@@ -12,6 +12,28 @@ governing permissions and limitations under the License.
 
 @import './spectrum-card.css';
 
+:host([href]:not([href=''])) {
+    cursor: pointer;
+}
+
+#like-anchor {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.action-button {
+    flex-grow: 0;
+}
+
+:host([dir='ltr']) .action-button {
+    margin-left: auto;
+}
+
+:host([dir='rtl']) .action-button {
+    margin-right: auto;
+}
+
 /* The description slot has a psuedo-element that also needs to receive the font styling. 
 We need to add the declaration to the slot as well */
 slot[name='description'] {
@@ -24,6 +46,7 @@ slot[name='description'] {
 #preview,
 #cover-photo {
     overflow: hidden;
+    order: -1;
 }
 
 #preview + #cover-photo {

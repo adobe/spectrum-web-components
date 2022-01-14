@@ -10,12 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    UpdatingElement,
-    property,
-    TemplateResult,
     html,
-    ifDefined,
+    ReactiveElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,6 +28,8 @@ type RenderAnchorOptions = {
     className?: string;
     ariaHidden?: boolean;
     anchorContent?: TemplateResult | TemplateResult[];
+    labelledby?: string;
+    tabindex?: -1 | 0;
 };
 
 export interface LikeAnchorInterface {
@@ -39,7 +41,7 @@ export interface LikeAnchorInterface {
     renderAnchor(options: RenderAnchorOptions): TemplateResult;
 }
 
-export function LikeAnchor<T extends Constructor<UpdatingElement>>(
+export function LikeAnchor<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<LikeAnchorInterface> {
     class LikeAnchorElement extends constructor {
@@ -62,6 +64,8 @@ export function LikeAnchor<T extends Constructor<UpdatingElement>>(
             id,
             className,
             ariaHidden,
+            labelledby,
+            tabindex,
             // prettier-ignore
             anchorContent = html`<slot></slot>`,
         }: RenderAnchorOptions): TemplateResult {
@@ -74,7 +78,9 @@ export function LikeAnchor<T extends Constructor<UpdatingElement>>(
                     download=${ifDefined(this.download)}
                     target=${ifDefined(this.target)}
                     aria-label=${ifDefined(this.label)}
+                    aria-labelledby=${ifDefined(labelledby)}
                     aria-hidden=${ifDefined(ariaHidden ? 'true' : undefined)}
+                    tabindex=${ifDefined(tabindex)}
                     rel=${ifDefined(this.rel)}
                 >${anchorContent}</a>`;
         }

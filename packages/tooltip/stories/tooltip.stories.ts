@@ -10,14 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import '../sp-tooltip.js';
-import '@spectrum-web-components/icon/sp-icon';
-import { html, ifDefined, TemplateResult } from '@spectrum-web-components/base';
-import {
-    AlertIcon,
-    CheckmarkIcon,
-    InfoIcon,
-} from '@spectrum-web-components/icons-workflow';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 import { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 
@@ -35,9 +34,18 @@ const iconOptions: {
     }) => TemplateResult | string;
 } = {
     '': () => html``,
-    negative: AlertIcon,
-    positive: CheckmarkIcon,
-    info: InfoIcon,
+    negative: () =>
+        html`
+            <sp-icon-alert slot="icon"></sp-icon-alert>
+        `,
+    positive: () =>
+        html`
+            <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+        `,
+    info: () =>
+        html`
+            <sp-icon-info slot="icon"></sp-icon-info>
+        `,
 };
 
 export default {
@@ -50,6 +58,8 @@ interface Properties {
     placement?: Placement;
     variant?: string;
     text?: string;
+    offset?: number;
+    delayed?: boolean;
 }
 
 export const Default = ({
@@ -145,12 +155,7 @@ export const wIcon = ({
 }: Properties): TemplateResult => {
     return html`
         <sp-tooltip ?open=${open} placement=${placement} variant=${variant}>
-            ${!!variant
-                ? html`
-                      <sp-icon slot="icon">${iconOptions[variant]()}</sp-icon>
-                  `
-                : html``}
-            ${text}
+            ${!!variant ? iconOptions[variant]() : html``} ${text}
         </sp-tooltip>
     `;
 };
@@ -254,18 +259,24 @@ const overlayStyles = html`
             flex: none;
             margin: 24px 0;
         }
+
+        .self-managed:nth-child(3) {
+            margin-left: 50px;
+        }
     </style>
 `;
 
 const overlaid = (openPlacement: Placement): TemplateResult => {
     return html`
         ${overlayStyles}
-        ${([
-            ['bottom', ''],
-            ['left', 'negative'],
-            ['right', 'positive'],
-            ['top', 'info'],
-        ] as [Placement, string][]).map(([placement, variant]) => {
+        ${(
+            [
+                ['bottom', ''],
+                ['left', 'negative'],
+                ['right', 'positive'],
+                ['top', 'info'],
+            ] as [Placement, string][]
+        ).map(([placement, variant]) => {
             return html`
                 <overlay-trigger
                     placement=${placement}
@@ -290,3 +301,71 @@ export const overlaidTop = (): TemplateResult => overlaid('top');
 export const overlaidRight = (): TemplateResult => overlaid('right');
 export const overlaidBottom = (): TemplateResult => overlaid('bottom');
 export const overlaidLeft = (): TemplateResult => overlaid('left');
+
+export const selfManaged = ({
+    placement,
+    offset,
+    delayed,
+}: Properties): TemplateResult => html`
+    ${overlayStyles}
+    <sp-action-button class="self-managed">
+        This is a button.
+        <sp-tooltip
+            self-managed
+            placement=${placement}
+            offset=${offset}
+            ?delayed=${delayed}
+            open
+        >
+            This is a tooltip.
+        </sp-tooltip>
+    </sp-action-button>
+`;
+selfManaged.args = {
+    placement: 'top',
+    offset: 6,
+    delayed: false,
+};
+selfManaged.argTypes = {
+    delayed: {
+        name: 'delayed',
+        type: { name: 'boolean', required: false },
+        description: 'Whether to manage the tooltip with the warmup timer',
+    },
+    offset: {
+        name: 'offset',
+        type: { name: 'number', required: false },
+        description:
+            'The pixel distance from the parent element to place the tooltip',
+    },
+    placement: {
+        name: 'placement',
+        type: { name: 'string', required: false },
+        description: 'The placement of the tooltip in relation to its parent',
+        table: {
+            type: { summary: 'string' },
+            defaultValue: { summary: 'top' },
+        },
+        control: {
+            type: 'inline-radio',
+            options: [
+                'auto',
+                'auto-start',
+                'auto-end',
+                'top',
+                'bottom',
+                'right',
+                'left',
+                'top-start',
+                'top-end',
+                'bottom-start',
+                'bottom-end',
+                'right-start',
+                'right-end',
+                'left-start',
+                'left-end',
+                'none',
+            ],
+        },
+    },
+};

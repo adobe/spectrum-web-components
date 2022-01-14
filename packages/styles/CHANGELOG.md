@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.11.1...@spectrum-web-components/styles@0.11.2) (2022-01-07)
+
+### Bug Fixes
+
+-   support --spectrum-global-dimension-dividers token ([59fda81](https://github.com/adobe/spectrum-web-components/commit/59fda81db6e2e43c0c51f719b17fb5eba64ff242))
+
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.11.0...@spectrum-web-components/styles@0.11.1) (2021-12-13)
+
+**Note:** Version bump only for package @spectrum-web-components/styles
+
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.10.1...@spectrum-web-components/styles@0.11.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/styles
+
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.10.0...@spectrum-web-components/styles@0.10.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/styles
+
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.9.11...@spectrum-web-components/styles@0.10.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.9.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.9.10...@spectrum-web-components/styles@0.9.11) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/styles
+
+## [0.9.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.9.9...@spectrum-web-components/styles@0.9.10) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/styles
+
+## [0.9.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.9.8...@spectrum-web-components/styles@0.9.9) (2021-07-01)
+
+### Bug Fixes
+
+-   export CSS with appropriate scoping ([3cf9f40](https://github.com/adobe/spectrum-web-components/commit/3cf9f40c504c827e14231db23c0f8b9b189b222e))
+
+## [0.9.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.9.7...@spectrum-web-components/styles@0.9.8) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/styles
+
 ## [0.9.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.9.6...@spectrum-web-components/styles@0.9.7) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/styles

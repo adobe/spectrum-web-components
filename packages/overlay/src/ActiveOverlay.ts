@@ -13,20 +13,21 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
-    ifDefined,
-    property,
     PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { reparentChildren } from '@spectrum-web-components/shared';
+import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import { Color, Scale } from '@spectrum-web-components/theme';
 import styles from './active-overlay.css.js';
 import {
+    OverlayOpenCloseDetail,
     OverlayOpenDetail,
     Placement,
     TriggerInteractions,
-    OverlayOpenCloseDetail,
 } from './overlay-types.js';
 import { applyMaxSize, createPopper, Instance, maxSize } from './popper.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
@@ -40,14 +41,6 @@ export interface PositionResult {
     positionTop: number;
 }
 
-declare global {
-    interface Document {
-        fonts?: {
-            ready: Promise<void>;
-        };
-    }
-}
-
 type OverlayStateType =
     | 'idle'
     | 'active'
@@ -55,7 +48,7 @@ type OverlayStateType =
     | 'hiding'
     | 'dispose'
     | 'disposed';
-type ContentAnimation = 'spOverlayFadeIn' | 'spOverlayFadeOut';
+type ContentAnimation = 'sp-overlay-fade-in' | 'sp-overlay-fade-out';
 
 const stateMachine: {
     initial: OverlayStateType;
@@ -113,6 +106,23 @@ const stateTransition = (
     return stateMachine.states[state].on[event] || state;
 };
 
+const parentOverlayOf = (el: Element): ActiveOverlay | null => {
+    const closestOverlay = el.closest('active-overlay');
+    if (closestOverlay) {
+        return closestOverlay;
+    }
+    const rootNode = el.getRootNode() as ShadowRoot;
+    if (rootNode.host) {
+        return parentOverlayOf(rootNode.host);
+    }
+    return null;
+};
+
+/**
+ * @element active-overlay
+ *
+ * @slot - content to display in the overlay
+ */
 export class ActiveOverlay extends SpectrumElement {
     public overlayContent!: HTMLElement;
     public overlayContentTip?: HTMLElement;
@@ -149,11 +159,13 @@ export class ActiveOverlay extends SpectrumElement {
     @property({ reflect: true })
     public placement?: Placement;
     @property({ attribute: false })
-    public color?: Color;
+    public theme: {
+        color?: Color;
+        scale?: Scale;
+        lang?: string;
+    } = {};
     @property({ attribute: false })
     public receivesFocus?: 'auto';
-    @property({ attribute: false })
-    public scale?: Scale;
 
     public tabbingAway = false;
     private originalPlacement?: Placement;
@@ -168,9 +180,7 @@ export class ActiveOverlay extends SpectrumElement {
     public dataPopperPlacement?: Placement;
 
     public focus(): void {
-        const firstFocusable = this.querySelector(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
-        ) as HTMLElement;
+        const firstFocusable = firstFocusableIn(this);
         if (firstFocusable) {
             firstFocusable.focus();
             /* c8 ignore next 3 */
@@ -181,7 +191,7 @@ export class ActiveOverlay extends SpectrumElement {
     }
 
     private get hasTheme(): boolean {
-        return !!this.color || !!this.scale;
+        return !!this.theme.color || !!this.theme.scale || !!this.theme.lang;
     }
 
     public offset = 6;
@@ -209,7 +219,7 @@ export class ActiveOverlay extends SpectrumElement {
 
     public feature(): void {
         this.tabIndex = -1;
-        const parentOverlay = this.trigger.closest('active-overlay');
+        const parentOverlay = parentOverlayOf(this.trigger);
         const parentIsModal = parentOverlay && parentOverlay.slot === 'open';
         // If an overlay it triggered from within a "modal" overlay, it needs to continue
         // to act like one to get treated correctly in regards to tab trapping.
@@ -230,7 +240,7 @@ export class ActiveOverlay extends SpectrumElement {
             this.removeAttribute('slot');
             // Obscure upto and including the next modal root.
             if (this.interaction !== 'modal') {
-                const parentOverlay = this.trigger.closest('active-overlay');
+                const parentOverlay = parentOverlayOf(this.trigger);
                 this._modalRoot = parentOverlay?.obscure(
                     nextOverlayInteraction
                 );
@@ -287,7 +297,7 @@ export class ActiveOverlay extends SpectrumElement {
 
         this.feature();
         this.updateOverlayPosition()
-            .then(() => this.applyContentAnimation('spOverlayFadeIn'))
+            .then(() => this.applyContentAnimation('sp-overlay-fade-in'))
             .then(() => {
                 if (this.receivesFocus) {
                     this.focus();
@@ -307,7 +317,9 @@ export class ActiveOverlay extends SpectrumElement {
 
     private updateOverlayPopperPlacement(): void {
         /* c8 ignore next */
-        if (!this.overlayContent) return;
+        const activeWithContent =
+            this.state === 'active' && this.overlayContent;
+        if (!activeWithContent) return;
 
         if (this.dataPopperPlacement) {
             // Copy this attribute to the actual overlay node so that it can use
@@ -345,8 +357,7 @@ export class ActiveOverlay extends SpectrumElement {
         this.placement = detail.placement;
         this.offset = detail.offset;
         this.interaction = detail.interaction;
-        this.color = detail.theme.color;
-        this.scale = detail.theme.scale;
+        this.theme = detail.theme;
         this.receivesFocus = detail.receivesFocus;
     }
 
@@ -416,7 +427,7 @@ export class ActiveOverlay extends SpectrumElement {
     public async hide(animated = true): Promise<void> {
         this.state = 'hiding';
         if (animated) {
-            await this.applyContentAnimation('spOverlayFadeOut');
+            await this.applyContentAnimation('sp-overlay-fade-out');
         }
         this.state = 'dispose';
     }
@@ -476,9 +487,14 @@ export class ActiveOverlay extends SpectrumElement {
     }
 
     public renderTheme(content: TemplateResult): TemplateResult {
-        const { color, scale } = this;
+        const { color, scale, lang } = this.theme;
         return html`
-            <sp-theme color=${ifDefined(color)} scale=${ifDefined(scale)}>
+            <sp-theme
+                color=${ifDefined(color)}
+                scale=${ifDefined(scale)}
+                lang=${ifDefined(lang)}
+                part="theme"
+            >
                 ${content}
             </sp-theme>
         `;
@@ -506,8 +522,9 @@ export class ActiveOverlay extends SpectrumElement {
     private stealOverlayContentPromise = Promise.resolve();
     private stealOverlayContentResolver!: () => void;
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.stealOverlayContentPromise;
+        return complete;
     }
 }

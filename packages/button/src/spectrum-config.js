@@ -61,10 +61,7 @@ const config = {
                         '.spectrum-Button--cta',
                         '.spectrum-Button--primary',
                         '.spectrum-Button--secondary',
-                        {
-                            name: 'negative',
-                            selector: '.spectrum-Button--warning',
-                        },
+                        '.spectrum-Button--negative',
                         '.spectrum-Button--overBackground',
                         '.spectrum-Button--secondary',
                     ],
@@ -141,11 +138,38 @@ const config = {
                         '.spectrum-ClearButton--secondary',
                     ],
                 },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-ClearButton--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-ClearButton--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-ClearButton--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-ClearButton--sizeXL',
+                        },
+                    ],
+                },
             ],
             classes: [
                 {
                     name: 'icon',
                     selector: '.spectrum-Icon',
+                },
+                {
+                    name: 'fill',
+                    selector: '.spectrum-ClearButton-fill',
                 },
             ],
             exclude: [/\.spectrum-Button/],

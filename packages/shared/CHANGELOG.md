@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.13.1...@spectrum-web-components/shared@0.13.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/shared
+
+## [0.13.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.13.0...@spectrum-web-components/shared@0.13.1) (2021-12-13)
+
+**Note:** Version bump only for package @spectrum-web-components/shared
+
+# [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.11...@spectrum-web-components/shared@0.13.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.12.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.10...@spectrum-web-components/shared@0.12.11) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/shared
+
+## [0.12.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.9...@spectrum-web-components/shared@0.12.10) (2021-11-02)
+
+### Bug Fixes
+
+-   centralize updated first focusable selector ([300e84c](https://github.com/adobe/spectrum-web-components/commit/300e84c404d031ddad92b4952e48ad3332c4aafd))
+
+## [0.12.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.8...@spectrum-web-components/shared@0.12.9) (2021-10-12)
+
+### Bug Fixes
+
+-   add likeAnchor API to Card element ([5c338fb](https://github.com/adobe/spectrum-web-components/commit/5c338fbfc73d9d20c8f771e11114064cadeeb732))
+
+## [0.12.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.7...@spectrum-web-components/shared@0.12.8) (2021-09-13)
+
+### Bug Fixes
+
+-   ensure lazily loaded focusElements do not crash ([64f2a54](https://github.com/adobe/spectrum-web-components/commit/64f2a54a5a6934306e97433e8102da6fe38b2660))
+
+## [0.12.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.6...@spectrum-web-components/shared@0.12.7) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/shared
+
+## [0.12.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.5...@spectrum-web-components/shared@0.12.6) (2021-07-01)
+
+### Bug Fixes
+
+-   allow detached elements to be used as content for an overlay ([3ad8383](https://github.com/adobe/spectrum-web-components/commit/3ad83837b6c9a693a4fc24501e3fc7fb2383a12b))
+-   manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/adobe/spectrum-web-components/commit/b1e3457ae447427c54f8645c478866340329750c))
+
+## [0.12.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.4...@spectrum-web-components/shared@0.12.5) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/shared
+
 ## [0.12.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.12.3...@spectrum-web-components/shared@0.12.4) (2021-05-24)
 
 ### Bug Fixes

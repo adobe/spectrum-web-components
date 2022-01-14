@@ -11,11 +11,18 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Banner */
-    display: inline-block;
     border-radius: var(
         --spectrum-banner-border-radius,
         var(--spectrum-global-dimension-static-size-100)
+    );
+    display: inline-block; /* .spectrum-Banner */
+    font-size: var(
+        --spectrum-banner-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    line-height: var(
+        --spectrum-banner-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
     );
     padding: var(
             --spectrum-banner-padding-y,
@@ -25,57 +32,41 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-banner-padding-x,
             var(--spectrum-global-dimension-static-size-100)
         );
-    font-size: var(
-        --spectrum-banner-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    line-height: var(
-        --spectrum-banner-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
 }
 #header {
-    /* .spectrum-Banner-header */
-    font-weight: 700;
+    font-weight: 700; /* .spectrum-Banner-header */
 }
 :host([dir='ltr'][corner]) {
-    /* [dir=ltr] .spectrum-Banner--corner */
-    right: -10px;
+    right: -10px; /* [dir=ltr] .spectrum-Banner--corner */
 }
 :host([dir='rtl'][corner]) {
-    /* [dir=rtl] .spectrum-Banner--corner */
-    left: -10px;
+    left: -10px; /* [dir=rtl] .spectrum-Banner--corner */
 }
 :host([corner]) {
-    /* .spectrum-Banner--corner */
-    position: absolute;
+    position: absolute; /* .spectrum-Banner--corner */
     top: -10px;
 }
 :host {
-    /* .spectrum-Banner */
     color: var(
         --spectrum-banner-text-color,
         var(--spectrum-global-color-static-white)
-    );
+    ); /* .spectrum-Banner */
 }
 :host([type='info']) {
-    /* .spectrum-Banner--info */
     background-color: var(
         --spectrum-banner-info-background-color,
         var(--spectrum-semantic-informative-color-default)
-    );
+    ); /* .spectrum-Banner--info */
 }
 :host([type='warning']) {
-    /* .spectrum-Banner--warning */
     background-color: var(
         --spectrum-banner-warning-background-color,
         var(--spectrum-semantic-notice-color-default)
-    );
+    ); /* .spectrum-Banner--warning */
 }
 :host([type='error']) {
-    /* .spectrum-Banner--error */
     background-color: var(
         --spectrum-banner-error-background-color,
         var(--spectrum-semantic-negative-color-default)
-    );
+    ); /* .spectrum-Banner--error */
 }

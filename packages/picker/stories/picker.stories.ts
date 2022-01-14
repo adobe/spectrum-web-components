@@ -16,9 +16,12 @@ import '../sp-picker.js';
 import { Picker } from '../';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-delete.js';
 import { states } from './states.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import { spreadProps } from '@open-wc/lit-helpers';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     title: 'Picker',
@@ -30,6 +33,7 @@ export default {
         quiet: false,
     },
     argTypes: {
+        onChange: { action: 'change' },
         disabled: {
             name: 'disabled',
             type: { name: 'boolean', required: false },
@@ -83,19 +87,26 @@ interface StoryArgs {
     invalid?: boolean;
     open?: boolean;
     quiet?: boolean;
+    showText?: boolean;
+    onChange?: (val: string) => void;
+    [prop: string]: unknown;
 }
+
+const handleChange =
+    ({ onChange }: StoryArgs) =>
+    (event: Event): void => {
+        const picker = event.target as Picker;
+        if (onChange) onChange(picker.value);
+    };
 
 export const Default = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="picker-1">Where do you live?</sp-field-label>
         <sp-picker
             id="picker-1"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             label="Select a Country with a very long label, too long, in fact"
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
         >
             <sp-menu-item>Deselect</sp-menu-item>
             <sp-menu-item>Select Inverse</sp-menu-item>
@@ -119,12 +130,9 @@ export const quiet = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="picker-quiet">Where do you live?</sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             id="picker-quiet"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             label="Pick an item"
         >
             <sp-menu-item value="1">Item 1</sp-menu-item>
@@ -145,6 +153,125 @@ quiet.args = {
     quiet: true,
 };
 
+export const icons = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="picker-quiet">
+            Choose an action type...
+        </sp-field-label>
+        <sp-picker
+            ...=${spreadProps(args)}
+            id="picker-quiet"
+            @change=${handleChange(args)}
+            label="Pick an action"
+            value="1"
+        >
+            <sp-menu-item value="1">
+                <sp-icon-edit slot="icon"></sp-icon-edit>
+                Edit
+            </sp-menu-item>
+            <sp-menu-item value="2">
+                <sp-icon-copy slot="icon"></sp-icon-copy>
+                Copy
+            </sp-menu-item>
+            <sp-menu-item value="3">
+                <sp-icon-delete slot="icon"></sp-icon-delete>
+                Delete
+            </sp-menu-item>
+        </sp-picker>
+    `;
+};
+
+export const iconsNone = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="picker-quiet">
+            Choose an action type...
+        </sp-field-label>
+        <sp-picker
+            ...=${spreadProps(args)}
+            id="picker-quiet"
+            @change=${handleChange(args)}
+            label="Pick an action"
+            value="1"
+            icons="none"
+        >
+            <sp-menu-item value="1">
+                <sp-icon-edit slot="icon"></sp-icon-edit>
+                Edit
+            </sp-menu-item>
+            <sp-menu-item value="2">
+                <sp-icon-copy slot="icon"></sp-icon-copy>
+                Copy
+            </sp-menu-item>
+            <sp-menu-item value="3">
+                <sp-icon-delete slot="icon"></sp-icon-delete>
+                Delete
+            </sp-menu-item>
+        </sp-picker>
+    `;
+};
+iconsNone.args = {
+    open: true,
+};
+
+export const iconValue = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="picker-quiet">
+            Choose an action type...
+        </sp-field-label>
+        <sp-picker
+            ...=${spreadProps(args)}
+            id="picker-quiet"
+            @change=${handleChange(args)}
+            label="Pick an action"
+            icons="only"
+            style="--spectrum-picker-width: 100px"
+            value="2"
+        >
+            <sp-menu-item value="1">
+                <sp-icon-edit slot="icon"></sp-icon-edit>
+                Edit
+            </sp-menu-item>
+            <sp-menu-item value="2">
+                <sp-icon-copy slot="icon"></sp-icon-copy>
+                Copy
+            </sp-menu-item>
+            <sp-menu-item value="3">
+                <sp-icon-delete slot="icon"></sp-icon-delete>
+                Delete
+            </sp-menu-item>
+        </sp-picker>
+    `;
+};
+
+export const iconsOnly = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="picker-quiet">
+            Choose an action type...
+        </sp-field-label>
+        <sp-picker
+            ...=${spreadProps(args)}
+            id="picker-quiet"
+            @change=${handleChange(args)}
+            label="Pick an action"
+            style="--spectrum-picker-width: 100px"
+            value="3"
+        >
+            <sp-menu-item value="1">
+                <sp-icon-edit slot="icon" label="Edit"></sp-icon-edit>
+            </sp-menu-item>
+            <sp-menu-item value="2">
+                <sp-icon-copy slot="icon" label="Copy"></sp-icon-copy>
+            </sp-menu-item>
+            <sp-menu-item value="3">
+                <sp-icon-delete slot="icon" label="Delete"></sp-icon-delete>
+            </sp-menu-item>
+        </sp-picker>
+    `;
+};
+iconsOnly.args = {
+    open: true,
+};
+
 export const Open = (args: StoryArgs): TemplateResult => {
     return html`
         <style>
@@ -161,11 +288,8 @@ export const Open = (args: StoryArgs): TemplateResult => {
             <sp-picker
                 id="picker-open"
                 label="Open picker"
-                ...=${spreadProps(args)}
-                @change="${(event: Event): void => {
-                    const picker = event.target as Picker;
-                    console.log(`Change: ${picker.value}`);
-                }}"
+                ${spreadProps(args)}
+                @change=${handleChange(args)}
             >
                 <span slot="label">
                     Select a Country with a very long label, too long, in fact
@@ -186,10 +310,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
             <sp-picker
                 id="picker-closed"
                 label="Picker that displays below the options"
-                @change="${(event: Event): void => {
-                    const picker = event.target as Picker;
-                    console.log(`Change: ${picker.value}`);
-                }}"
+                @change=${handleChange(args)}
             >
                 <span slot="label">
                     Other menu that goes behind the open one
@@ -208,12 +329,9 @@ export const initialValue = (args: StoryArgs): TemplateResult => {
         <sp-field-label for="picker-initial">Where do you live?</sp-field-label>
         <sp-picker
             id="picker-initial"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             value="item-2"
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
         >
             <span slot="label">
                 Select a Country with a very long label, too long in fact
@@ -232,13 +350,10 @@ export const initialValue = (args: StoryArgs): TemplateResult => {
 export const readonly = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-picker
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             readonly
             value="item-2"
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
         >
             <span slot="label">
                 Select a Country with a very long label, too long in fact
@@ -262,13 +377,10 @@ export const custom = (args: StoryArgs): TemplateResult => {
         </sp-field-label>
         <sp-picker
             style="width: 400px;"
-            @change="${(event: Event): void => {
-                const picker = event.target as Picker;
-                console.log(`Change: ${picker.value}`);
-            }}"
+            @change=${handleChange(args)}
             id="picker-state"
             label="Pick a state"
-            ...=${spreadProps(args)}
+            ${spreadProps(args)}
             value=${initialState}
         >
             ${states.map(

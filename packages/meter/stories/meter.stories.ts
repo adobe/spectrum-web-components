@@ -33,15 +33,15 @@ export const sideLabel = (): TemplateResult => {
     `;
 };
 
-export const critical = (): TemplateResult => {
+export const negative = (): TemplateResult => {
     return html`
-        <sp-meter critical progress="95">Storage Space</sp-meter>
+        <sp-meter negative progress="95">Storage Space</sp-meter>
     `;
 };
 
-export const warning = (): TemplateResult => {
+export const notice = (): TemplateResult => {
     return html`
-        <sp-meter warning progress="73">Storage Space</sp-meter>
+        <sp-meter notice progress="73">Storage Space</sp-meter>
     `;
 };
 

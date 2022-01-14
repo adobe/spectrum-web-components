@@ -16,12 +16,18 @@ import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import { Default, smallHorizontal } from '../stories/card.stories.js';
+import {
+    Default,
+    href,
+    smallHorizontal,
+    StoryArgs,
+} from '../stories/card.stories.js';
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import { spy } from 'sinon';
 import { spaceEvent } from '../../../test/testing-helpers.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('card', () => {
     it('loads', async () => {
@@ -70,7 +76,7 @@ describe('card', () => {
         const el = await fixture<Card>(
             html`
                 <sp-card
-                    small
+                    size="s"
                     heading="Card Heading"
                     subheading="JPG"
                     variant="quiet"
@@ -82,7 +88,11 @@ describe('card', () => {
                         slot="preview"
                     />
                     <div slot="footer">Footer</div>
-                    <sp-action-menu slot="actions" placement="bottom-end">
+                    <sp-action-menu
+                        slot="actions"
+                        placement="bottom-end"
+                        label="More Actions"
+                    >
                         <sp-menu>
                             <sp-menu-item>Deselect</sp-menu-item>
                             <sp-menu-item>Select Inverse</sp-menu-item>
@@ -125,17 +135,131 @@ describe('card', () => {
         await expect(el).to.be.accessible();
     });
     it('loads - [horizontal]', async () => {
-        const el = await fixture<Card>(smallHorizontal(smallHorizontal.args));
+        const el = await fixture<Card>(
+            smallHorizontal(smallHorizontal.args as StoryArgs)
+        );
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
+    it('[href] is clickable', async () => {
+        const clickSpy = spy();
+        const el = await fixture<Card>(href({}));
+
+        await elementUpdated(el);
+
+        el.addEventListener('click', (event: Event) => {
+            const composedTarget = event.composedPath()[0] as HTMLElement;
+            if (composedTarget.id !== 'like-anchor') return;
+            clickSpy();
+        });
+
+        el.click();
+
+        expect(clickSpy.callCount).to.equal(1);
+
+        (el.shadowRoot.querySelector('#like-anchor') as HTMLElement).click();
+
+        expect(clickSpy.callCount).to.equal(2);
+
+        const img = el.querySelector('img') as HTMLImageElement;
+        const boundingRect = img.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        boundingRect.x + boundingRect.width / 2,
+                        boundingRect.y + boundingRect.height / 2,
+                    ],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+
+        expect(clickSpy.callCount).to.equal(3);
+    });
+    it('links in [href] do not pass their click', async () => {
+        const clickSpy = spy();
+        const el = await fixture<Card>(href({}));
+        el.setAttribute(
+            'style',
+            [
+                'width: 200px;',
+                'display: inline-flex;',
+                '--spectrum-card-coverphoto-height: 136px;',
+                '--spectrum-actionbutton-height: 32px;',
+                '--spectrum-icon-tshirt-size-height: 18px;',
+                '--spectrum-icon-tshirt-size-width: 18px;',
+            ].join('')
+        );
+
+        await elementUpdated(el);
+        el.addEventListener('click', (event: Event) => {
+            event.preventDefault();
+            const path = event.composedPath();
+            const hasLikeAnchor = path.some(
+                (el) => (el as HTMLElement).id === 'like-anchor'
+            );
+            if (!hasLikeAnchor) return;
+            clickSpy();
+        });
+
+        el.click();
+
+        expect(clickSpy.callCount).to.equal(1);
+
+        const footer = el.querySelector('[slot="footer"]') as HTMLElement;
+        let boundingRect = footer.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [boundingRect.x, boundingRect.y],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+
+        expect(clickSpy.callCount).to.equal(2);
+
+        const link = el.querySelector(
+            'sp-link[href="https://google.com"]'
+        ) as HTMLElement;
+        link.setAttribute('style', 'display: block');
+        boundingRect = link.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [boundingRect.x + 1, boundingRect.y + 1],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'up',
+                },
+            ],
+        });
+
+        expect(clickSpy.callCount).to.equal(2);
+    });
     it('converts `Space` to `click` event', async () => {
         const clickSpy = spy();
         const handleClick = (): void => clickSpy();
-        const test = await fixture<HTMLDivElement>(Default(Default.args));
-        const el = test.querySelector('sp-card') as Card;
+        const el = await fixture<Card>(Default(Default.args));
         el.addEventListener('click', handleClick);
 
         await elementUpdated(el);
@@ -152,8 +276,7 @@ describe('card', () => {
         expect(clickSpy.calledOnce).to.be.true;
     });
     it('can be `[toggles]`', async () => {
-        const test = await fixture<HTMLDivElement>(Default(Default.args));
-        const el = test.querySelector('sp-card') as Card;
+        const el = await fixture<Card>(Default(Default.args));
         el.toggles = true;
 
         await elementUpdated(el);
@@ -213,13 +336,12 @@ describe('card', () => {
         await elementUpdated(el);
         expect(el.focused, 'still not focused, again 2').to.be.false;
         // change event is prevented
-        expect(el.selected, 'still selected, again 3');
+        expect(el.selected, 'still selected, again 3').to.be.true;
     });
 
     it('announces when `[toggles]`', async () => {
         const changeSpy = spy();
-        const test = await fixture<HTMLDivElement>(Default(Default.args));
-        const el = test.querySelector('sp-card') as Card;
+        const el = await fixture<Card>(Default(Default.args));
         el.toggles = true;
         el.addEventListener('change', changeSpy);
 
@@ -230,7 +352,7 @@ describe('card', () => {
         checkbox.click();
         await elementUpdated(el);
 
-        expect(el.selected, 'selected');
+        expect(el.selected, 'selected').to.be.true;
         expect(changeSpy.callCount).to.equal(1);
         checkbox.click();
         await elementUpdated(el);

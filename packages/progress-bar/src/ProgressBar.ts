@@ -11,14 +11,14 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
-    property,
     SizedMixin,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import styles from './progress-bar.css.js';

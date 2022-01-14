@@ -11,13 +11,13 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
-    property,
+    html,
     PropertyValues,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { ActionButton } from '@spectrum-web-components/action-button';
 
 import styles from './action-group.css.js';
@@ -26,6 +26,7 @@ const EMPTY_SELECTION: string[] = [];
 
 /**
  * @element sp-action-group
+ * @slot - the sp-action-button elements that make up the group
  */
 export class ActionGroup extends SpectrumElement {
     public static get styles(): CSSResultArray {
@@ -79,6 +80,21 @@ export class ActionGroup extends SpectrumElement {
         }
     }
     private _selected: string[] = EMPTY_SELECTION;
+
+    public focus(options?: FocusOptions): void {
+        if (!this.buttons.length) {
+            return;
+        }
+        const firstButtonNonDisabled = this.buttons.find((button) => {
+            if (this.selected) {
+                return button.selected;
+            }
+            return !button.disabled;
+        });
+        if (firstButtonNonDisabled) {
+            firstButtonNonDisabled.focus(options);
+        }
+    }
 
     private handleClick(event: Event): void {
         const target = event.target as ActionButton;
@@ -190,9 +206,9 @@ export class ActionGroup extends SpectrumElement {
             case 'PageDown':
             default:
                 const tagsSiblings = [
-                    ...(this.getRootNode() as Document).querySelectorAll<ActionGroup>(
-                        'sp-action-group'
-                    ),
+                    ...(
+                        this.getRootNode() as Document
+                    ).querySelectorAll<ActionGroup>('sp-action-group'),
                 ];
                 if (tagsSiblings.length < 2) {
                     return;
@@ -306,7 +322,7 @@ export class ActionGroup extends SpectrumElement {
 
     protected render(): TemplateResult {
         return html`
-            <slot role="presentation"></slot>
+            <slot role="presentation" @slotchange=${this.manageButtons}></slot>
         `;
     }
 
@@ -347,23 +363,31 @@ export class ActionGroup extends SpectrumElement {
         });
     }
 
+    private manageButtons = (): void => {
+        const slot = this.shadowRoot.querySelector('slot');
+        if (!slot) return;
+        const assignedElements = slot.assignedElements({ flatten: true });
+        const buttons = assignedElements.reduce((acc: unknown[], el) => {
+            if (el.matches(this._buttonSelector)) {
+                acc.push(el);
+            } else {
+                const buttonDescendents = Array.from(
+                    el.querySelectorAll(`:scope > ${this._buttonSelector}`)
+                );
+                acc.push(...buttonDescendents);
+            }
+            return acc;
+        }, []);
+        this.buttons = buttons as ActionButton[];
+        this.manageChildren();
+        this.manageSelects();
+    };
+
     public connectedCallback(): void {
         super.connectedCallback();
         if (!this.observer) {
-            const findButtons = (): void => {
-                const buttons = [
-                    ...this.querySelectorAll(this._buttonSelector),
-                ] as ActionButton[];
-                buttons.filter((button) => {
-                    const buttonParent = button.parentElement;
-                    return !buttonParent?.closest(this._buttonSelector);
-                });
-                this.buttons = buttons;
-                this.manageChildren();
-                this.manageSelects();
-            };
-            this.observer = new MutationObserver(findButtons);
-            findButtons();
+            this.observer = new MutationObserver(this.manageButtons);
+            this.manageButtons();
         }
         this.observer.observe(this, { childList: true, subtree: true });
     }

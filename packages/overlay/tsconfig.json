@@ -6,5 +6,9 @@
     },
     "include": ["*.ts", "src/*.ts", "sync/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
-    "references": [{ "path": "../theme" }]
+    "references": [
+        { "path": "../base" },
+        { "path": "../theme" },
+        { "path": "../shared" }
+    ]
 }

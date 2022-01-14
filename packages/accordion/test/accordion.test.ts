@@ -10,14 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-accordion.js';
 import { Default } from '../stories/accordion.stories.js';
 import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
 import {
-    arrowUpEvent,
     arrowDownEvent,
+    arrowUpEvent,
     shiftTabEvent,
 } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
@@ -133,8 +133,8 @@ describe('Accordion', () => {
 
         firstButton.click();
         await elementUpdated(el);
-        expect(firstItem.open);
-        expect(!secondItem.open);
+        expect(firstItem.open).to.be.true;
+        expect(secondItem.open).to.be.false;
 
         el.addEventListener('sp-accordion-item-toggle', (event: Event) =>
             event.preventDefault()
@@ -142,8 +142,8 @@ describe('Accordion', () => {
 
         secondButton.click();
         await elementUpdated(el);
-        expect(firstItem.open);
-        expect(!secondItem.open);
+        expect(firstItem.open).to.be.true;
+        expect(secondItem.open).to.be.false;
     });
     it('allows more than one open item when `[allow-multiple]`', async () => {
         const el = await fixture<Accordion>(Default());
@@ -188,18 +188,18 @@ describe('Accordion', () => {
 
         firstButton.click();
         await elementUpdated(el);
-        expect(firstItem.open);
-        expect(!secondItem.open);
+        expect(firstItem.open).to.be.true;
+        expect(secondItem.open).to.be.false;
 
         secondButton.click();
         await elementUpdated(el);
-        expect(!firstItem.open);
-        expect(secondItem.open);
+        expect(firstItem.open).to.be.false;
+        expect(secondItem.open).to.be.true;
 
         secondButton.click();
         await elementUpdated(el);
-        expect(!firstItem.open);
-        expect(!secondItem.open);
+        expect(firstItem.open).to.be.false;
+        expect(secondItem.open).to.be.false;
     });
 
     it('ensures that the correct item is open and that items can be closed when [allow-multiple]', async () => {

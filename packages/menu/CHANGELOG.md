@@ -3,6 +3,96 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.11.1...@spectrum-web-components/menu@0.11.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.11.0...@spectrum-web-components/menu@0.11.1) (2021-12-13)
+
+### Bug Fixes
+
+-   **picker:** allow menu items to be added, updated, and removed ([73511ba](https://github.com/adobe/spectrum-web-components/commit/73511ba996154c006602dfd1c7f1d94746049782))
+
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.10.1...@spectrum-web-components/menu@0.11.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.10.0...@spectrum-web-components/menu@0.10.1) (2021-11-08)
+
+### Bug Fixes
+
+-   abstract "hasVisibleFocusInTree" functionality and return trigger focus after close ([4f39f2c](https://github.com/adobe/spectrum-web-components/commit/4f39f2c506066b789834584d2c9c24185ea57118))
+
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.9.6...@spectrum-web-components/menu@0.10.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.9.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.9.5...@spectrum-web-components/menu@0.9.6) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+## [0.9.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.9.4...@spectrum-web-components/menu@0.9.5) (2021-10-05)
+
+### Bug Fixes
+
+-   **menu:** cache item parent element to correct disconnecting event dispatch ([f375510](https://github.com/adobe/spectrum-web-components/commit/f3755109ebf64623ba4884871ad8f6eb3b02bc33))
+
+## [0.9.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.9.3...@spectrum-web-components/menu@0.9.4) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/menu
+
+## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.9.2...@spectrum-web-components/menu@0.9.3) (2021-09-13)
+
+### Bug Fixes
+
+-   simplify focus application in Menu ([6140169](https://github.com/adobe/spectrum-web-components/commit/61401699b36298b6f11cc80703aff664cbb867a7))
+
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.9.1...@spectrum-web-components/menu@0.9.2) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.9.0...@spectrum-web-components/menu@0.9.1) (2021-08-17)
+
+### Performance Improvements
+
+-   reorganize inheritance and composition in Menu Items ([d96ccb6](https://github.com/adobe/spectrum-web-components/commit/d96ccb621833277444d69535126c3669343c2eaf))
+
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.10...@spectrum-web-components/menu@0.9.0) (2021-08-03)
+
+### Bug Fixes
+
+-   add value/selection checks to the tests and fix up the value logic ([933106f](https://github.com/adobe/spectrum-web-components/commit/933106f88dfa99f22fc1046c1395eb53f051b5c4))
+-   **split-button:** hide "selected" item from menu ([322a966](https://github.com/adobe/spectrum-web-components/commit/322a96655855f42b390ba2c94d0b017bf93aebd9))
+
+### Features
+
+-   add selects attribute to menu ([bdf2578](https://github.com/adobe/spectrum-web-components/commit/bdf25780e56c7b92368904dce2a02f2594c364a2))
+
+## [0.8.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.9...@spectrum-web-components/menu@0.8.10) (2021-07-22)
+
+### Bug Fixes
+
+-   style clean up ([49e1537](https://github.com/adobe/spectrum-web-components/commit/49e15377f3a839d0ed5dc2504dd71396aa156eb5))
+
+## [0.8.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.8...@spectrum-web-components/menu@0.8.9) (2021-07-01)
+
+### Bug Fixes
+
+-   add "value" slot to sp-menu-item ([e1bd264](https://github.com/adobe/spectrum-web-components/commit/e1bd2646a5198d9ef64710ad0a3749606f08c74e))
+-   add icon present and icon-only support to Picker ([f6887a3](https://github.com/adobe/spectrum-web-components/commit/f6887a34e228473e33893c81017492bf3e8fd6c3))
+
+## [0.8.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.7...@spectrum-web-components/menu@0.8.8) (2021-06-16)
+
+### Bug Fixes
+
+-   update role application logic to not overwrite menu\* roles ([94b6aec](https://github.com/adobe/spectrum-web-components/commit/94b6aecffc1e5686feab09361d4e07ec3e854726))
+
 ## [0.8.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.8.6...@spectrum-web-components/menu@0.8.7) (2021-06-07)
 
 ### Bug Fixes

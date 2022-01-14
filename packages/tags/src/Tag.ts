@@ -11,22 +11,29 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
-    property,
+    html,
     PropertyValues,
+    SizedMixin,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import '@spectrum-web-components/button/sp-clear-button.js';
 
 import styles from './tag.css.js';
 
 /**
- * @element sp-tags
+ * @element sp-tag
+ *
+ * @slot - text content for labeling the tag
+ * @slot avatar - an avatar element to display within the Tag
+ * @slot icon - an icon element to display within the Tag
  */
-export class Tag extends SpectrumElement {
+export class Tag extends SizedMixin(SpectrumElement, {
+    validSizes: ['s', 'm', 'l'],
+}) {
     public static get styles(): CSSResultArray {
         return [styles];
     }
@@ -115,7 +122,7 @@ export class Tag extends SpectrumElement {
                           class="clear-button"
                           ?disabled=${this.disabled}
                           label="Remove"
-                          small
+                          size="s"
                           tabindex="-1"
                           @click=${this.delete}
                       ></sp-clear-button>

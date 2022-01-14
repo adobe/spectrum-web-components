@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.5.0...@spectrum-web-components/base@0.5.1) (2021-12-13)
+
+### Bug Fixes
+
+-   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.6...@spectrum-web-components/base@0.5.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.4.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.5...@spectrum-web-components/base@0.4.6) (2021-11-08)
+
+### Bug Fixes
+
+-   abstract "hasVisibleFocusInTree" functionality and return trigger focus after close ([4f39f2c](https://github.com/adobe/spectrum-web-components/commit/4f39f2c506066b789834584d2c9c24185ea57118))
+
+## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.4...@spectrum-web-components/base@0.4.5) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
+## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.3...@spectrum-web-components/base@0.4.4) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/base
+
 ## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.4.2...@spectrum-web-components/base@0.4.3) (2021-04-09)
 
 ### Bug Fixes

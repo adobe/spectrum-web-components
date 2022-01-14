@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.5.1...example-project-rollup@0.5.2) (2022-01-07)
+
+**Note:** Version bump only for package example-project-rollup
+
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.5.0...example-project-rollup@0.5.1) (2021-12-13)
+
+**Note:** Version bump only for package example-project-rollup
+
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.4.1...example-project-rollup@0.5.0) (2021-11-08)
+
+**Note:** Version bump only for package example-project-rollup
+
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.4.0...example-project-rollup@0.4.1) (2021-11-08)
+
+**Note:** Version bump only for package example-project-rollup
+
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.17...example-project-rollup@0.4.0) (2021-11-02)
+
+### Features
+
+- adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.3.17](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.16...example-project-rollup@0.3.17) (2021-10-12)
+
+**Note:** Version bump only for package example-project-rollup
+
+## [0.3.16](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.15...example-project-rollup@0.3.16) (2021-10-05)
+
+**Note:** Version bump only for package example-project-rollup
+
+## [0.3.15](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.14...example-project-rollup@0.3.15) (2021-09-20)
+
+**Note:** Version bump only for package example-project-rollup
+
+## [0.3.14](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.13...example-project-rollup@0.3.14) (2021-09-13)
+
+**Note:** Version bump only for package example-project-rollup
+
+## [0.3.13](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.12...example-project-rollup@0.3.13) (2021-08-24)
+
+**Note:** Version bump only for package example-project-rollup
+
+## [0.3.12](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.11...example-project-rollup@0.3.12) (2021-08-17)
+
+**Note:** Version bump only for package example-project-rollup
+
+## [0.3.11](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.10...example-project-rollup@0.3.11) (2021-08-03)
+
+**Note:** Version bump only for package example-project-rollup
+
+## [0.3.10](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.9...example-project-rollup@0.3.10) (2021-07-22)
+
+**Note:** Version bump only for package example-project-rollup
+
+## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.8...example-project-rollup@0.3.9) (2021-07-01)
+
+**Note:** Version bump only for package example-project-rollup
+
+## [0.3.8](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.7...example-project-rollup@0.3.8) (2021-06-16)
+
+**Note:** Version bump only for package example-project-rollup
+
 ## [0.3.7](https://github.com/adobe/spectrum-web-components/compare/example-project-rollup@0.3.6...example-project-rollup@0.3.7) (2021-06-07)
 
 **Note:** Version bump only for package example-project-rollup

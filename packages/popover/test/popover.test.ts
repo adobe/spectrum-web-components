@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import '../sp-popover.js';
 import { Popover } from '../';
-import { fixture, html, expect, elementUpdated } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';
 
 describe('popover', () => {
@@ -21,9 +21,7 @@ describe('popover', () => {
         popover = await fixture<Popover>(
             html`
                 <sp-popover variant="dialog" placement="top" open>
-                    <div id="title">
-                        Popover Title
-                    </div>
+                    <div id="title">Popover Title</div>
                     <div id="content">
                         Cupcake ipsum dolor sit amet jelly beans. Chocolate
                         jelly caramels. Icing soufflé chupa chups donut
@@ -59,9 +57,7 @@ describe('popover', () => {
         const el = await fixture<Popover>(
             html`
                 <sp-popover variant="dialog" placement="top" tip open>
-                    <div id="title">
-                        Popover Title
-                    </div>
+                    <div id="title">Popover Title</div>
                     <div id="content">
                         Cupcake ipsum dolor sit amet jelly beans. Chocolate
                         jelly caramels. Icing soufflé chupa chups donut
@@ -75,14 +71,13 @@ describe('popover', () => {
         await elementUpdated(el);
 
         const overlayDetailQuery: OverlayDisplayQueryDetail = {};
-        const queryOverlayDetailEvent = new CustomEvent<
-            OverlayDisplayQueryDetail
-        >('sp-overlay-query', {
-            bubbles: true,
-            composed: true,
-            detail: overlayDetailQuery,
-            cancelable: true,
-        });
+        const queryOverlayDetailEvent =
+            new CustomEvent<OverlayDisplayQueryDetail>('sp-overlay-query', {
+                bubbles: true,
+                composed: true,
+                detail: overlayDetailQuery,
+                cancelable: true,
+            });
         el.dispatchEvent(queryOverlayDetailEvent);
 
         expect(overlayDetailQuery.overlayContentTipElement).to.exist;

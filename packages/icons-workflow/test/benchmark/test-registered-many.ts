@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-abc.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-actions.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-ad-display.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-ad-print.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-display-advert.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-print-advert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-add.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-add-circle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-add-to.js';
@@ -52,8 +52,8 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 measureFixtureCreation(html`
     <sp-icon-abc></sp-icon-abc>
     <sp-icon-actions></sp-icon-actions>
-    <sp-icon-ad-display></sp-icon-ad-display>
-    <sp-icon-ad-print></sp-icon-ad-print>
+    <sp-icon-display-advert></sp-icon-display-advert>
+    <sp-icon-print-advert></sp-icon-print-advert>
     <sp-icon-add></sp-icon-add>
     <sp-icon-add-circle></sp-icon-add-circle>
     <sp-icon-add-to></sp-icon-add-to>

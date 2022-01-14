@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { ActiveOverlay } from './ActiveOverlay.js';
-import { OverlayOpenDetail, OverlayOpenCloseDetail } from './overlay-types';
+import { OverlayOpenCloseDetail, OverlayOpenDetail } from './overlay-types';
 import { OverlayTimer } from './overlay-timer.js';
 import '../active-overlay.js';
 
@@ -39,16 +39,15 @@ export class OverlayStack {
     private handlingResize = false;
     private overlayTimer = new OverlayTimer();
 
-    public constructor() {
-        this.addEventListeners();
-    }
-
     private canTabTrap = true;
     private trappingInited = false;
     private tabTrapper!: HTMLElement;
     private overlayHolder!: HTMLElement;
+    private _eventsAreBound = false;
 
     private initTabTrapping(): void {
+        if (this.trappingInited) return;
+        this.trappingInited = true;
         /* c8 ignore next 4 */
         if (this.document.body.shadowRoot) {
             this.canTabTrap = false;
@@ -61,7 +60,6 @@ export class OverlayStack {
         }
         const root = this.document.body.shadowRoot as ShadowRoot;
         root.innerHTML = `
-            <div id="actual"><slot></slot></div>
             <style>
             #actual {
                 position: relative;
@@ -80,14 +78,18 @@ export class OverlayStack {
                 left: 0;
                 position: fixed;
             }
-            #holder[hidden] {
-                display: none !important;
+            [name="open"]::slotted(*) {
+                pointer-events: all;
             }
-            #actual[tabindex="-1"] {
-                pointer-events: none;  /* just in case? */
+            #holder {
+                display: none;
+            }
+            #actual[aria-hidden] + #holder {
+                display: block;
             }
             </style>
-            <div id="holder" hidden><slot name="open"></slot></div>
+            <div id="actual"><slot></slot></div>
+            <div id="holder"><slot name="open"></slot></div>
         `;
         this.tabTrapper = root.querySelector('#actual') as HTMLElement;
         this.overlayHolder = root.querySelector('#holder') as HTMLElement;
@@ -95,31 +97,52 @@ export class OverlayStack {
         if (this.tabTrapper.shadowRoot) {
             this.tabTrapper.shadowRoot.innerHTML = '<slot></slot>';
         }
+        this.overlayHolder.addEventListener(
+            'contextmenu',
+            this.forwardContextmenuEvent,
+            true
+        );
+        requestAnimationFrame(() => {
+            this.applyBodyMargins();
+            const observer = new ResizeObserver(() => {
+                this.applyBodyMargins();
+            });
+            observer.observe(document.body);
+        });
+    }
+
+    private _bodyMarginsApplied = false;
+
+    private applyBodyMargins(): void {
+        const { marginLeft, marginRight, marginTop, marginBottom } =
+            getComputedStyle(document.body);
+        const allZero =
+            parseFloat(marginLeft) === 0 &&
+            parseFloat(marginRight) === 0 &&
+            parseFloat(marginTop) === 0 &&
+            parseFloat(marginBottom) === 0;
+        if (allZero && !this._bodyMarginsApplied) {
+            return;
+        }
+        this.tabTrapper.style.setProperty(
+            '--swc-body-margins-inline',
+            `calc(${marginLeft} + ${marginRight})`
+        );
+        this.tabTrapper.style.setProperty(
+            '--swc-body-margins-block',
+            `calc(${marginTop} + ${marginBottom})`
+        );
+        this._bodyMarginsApplied = !allZero;
     }
 
     private startTabTrapping(): void {
-        if (!this.trappingInited) {
-            this.initTabTrapping();
-            this.trappingInited = true;
-        }
+        this.initTabTrapping();
         /* c8 ignore next 3 */
         if (!this.canTabTrap) {
             return;
         }
         this.tabTrapper.tabIndex = -1;
         this.tabTrapper.setAttribute('aria-hidden', 'true');
-        this.overlayHolder.hidden = false;
-        requestAnimationFrame(() => {
-            const bodyStyles = getComputedStyle(document.body);
-            this.tabTrapper.style.setProperty(
-                '--swc-body-margins-inline',
-                `calc(${bodyStyles.marginLeft} + ${bodyStyles.marginRight})`
-            );
-            this.tabTrapper.style.setProperty(
-                '--swc-body-margins-block',
-                `calc(${bodyStyles.marginTop} + ${bodyStyles.marginBottom})`
-            );
-        });
     }
 
     private stopTabTrapping(): void {
@@ -129,8 +152,32 @@ export class OverlayStack {
         }
         this.tabTrapper.removeAttribute('tabindex');
         this.tabTrapper.removeAttribute('aria-hidden');
-        this.overlayHolder.hidden = true;
     }
+
+    private forwardContextmenuEvent = async (
+        event: MouseEvent
+    ): Promise<void> => {
+        const topOverlay = this.overlays[this.overlays.length - 1];
+        if (!this.trappingInited || topOverlay.interaction !== 'modal') {
+            return;
+        }
+        event.stopPropagation();
+        event.preventDefault();
+        await this.closeTopOverlay();
+        let target = document.elementFromPoint(event.clientX, event.clientY);
+        while (target?.shadowRoot) {
+            const innerTarget = (
+                target.shadowRoot as unknown as {
+                    elementFromPoint: (x: number, y: number) => Element | null;
+                }
+            ).elementFromPoint(event.clientX, event.clientY);
+            if (!innerTarget || innerTarget === target) {
+                break;
+            }
+            target = innerTarget;
+        }
+        target?.dispatchEvent(new MouseEvent('contextmenu', event));
+    };
 
     private get document(): Document {
         return this.root.ownerDocument /* c8 ignore next */ || document;
@@ -152,6 +199,8 @@ export class OverlayStack {
     }
 
     private addEventListeners(): void {
+        if (this._eventsAreBound) return;
+        this._eventsAreBound = true;
         this.document.addEventListener('click', this.handleMouseCapture, true);
         this.document.addEventListener('click', this.handleMouse);
         this.document.addEventListener('keyup', this.handleKeyUp);
@@ -165,6 +214,7 @@ export class OverlayStack {
     }
 
     public async openOverlay(details: OverlayOpenDetail): Promise<boolean> {
+        this.addEventListeners();
         if (this.findOverlayForContent(details.content)) {
             return false;
         }
@@ -175,7 +225,8 @@ export class OverlayStack {
             this.startTabTrapping();
         }
 
-        const contentWithLifecycle = (details.content as unknown) as ManagedOverlayContent;
+        const contentWithLifecycle =
+            details.content as unknown as ManagedOverlayContent;
         if (contentWithLifecycle.overlayWillOpenCallback) {
             const { trigger } = details;
             contentWithLifecycle.overlayWillOpenCallback({ trigger });
@@ -302,7 +353,8 @@ export class OverlayStack {
             }
 
             event.stopPropagation();
-            const triggerWithLifecycle = (activeOverlay.trigger as unknown) as ManagedOverlayContent;
+            const triggerWithLifecycle =
+                activeOverlay.trigger as unknown as ManagedOverlayContent;
             if (typeof triggerWithLifecycle.open !== 'undefined') {
                 triggerWithLifecycle.open = false;
             }
@@ -350,80 +402,98 @@ export class OverlayStack {
         }
     }
 
+    private manageFocusAfterCloseWhenOverlaysRemain(): void {
+        const topOverlay = this.overlays[this.overlays.length - 1];
+        topOverlay.feature();
+        // Push focus in the the next remaining overlay as needed when a `type="modal"` overlay exists.
+        if (topOverlay.interaction === 'modal' || topOverlay.hasModalRoot) {
+            topOverlay.focus();
+        } else {
+            this.stopTabTrapping();
+        }
+    }
+
+    private manageFocusAfterCloseWhenLastOverlay(overlay: ActiveOverlay): void {
+        this.stopTabTrapping();
+        const isModal = overlay.interaction === 'modal';
+        const isReplace = overlay.interaction === 'replace';
+        const isInline = overlay.interaction === 'inline';
+        const isTabbingAwayFromInlineOrReplace =
+            (isReplace || isInline) && !overlay.tabbingAway;
+        overlay.tabbingAway = false;
+        if (!isModal && !isTabbingAwayFromInlineOrReplace) {
+            return;
+        }
+        // Manage post closure focus when needed.
+        const overlayRoot = overlay.overlayContent.getRootNode() as ShadowRoot;
+        const overlayContentActiveElement = overlayRoot.activeElement;
+        let triggerRoot: ShadowRoot;
+        let triggerActiveElement: Element | null;
+        const contentContainsActiveElement = (): boolean =>
+            overlay.overlayContent.contains(overlayContentActiveElement);
+        const triggerRootContainsActiveElement = (): boolean => {
+            triggerRoot = overlay.trigger.getRootNode() as ShadowRoot;
+            triggerActiveElement = triggerRoot.activeElement;
+            return triggerRoot.contains(triggerActiveElement);
+        };
+        const triggerHostIsActiveElement = (): boolean =>
+            triggerRoot.host && triggerRoot.host === triggerActiveElement;
+        // Return focus to the trigger as long as the user hasn't actively focused
+        // something outside of the current overlay interface; trigger, root, host.
+        if (
+            isModal ||
+            contentContainsActiveElement() ||
+            triggerRootContainsActiveElement() ||
+            triggerHostIsActiveElement()
+        ) {
+            overlay.trigger.focus();
+        }
+    }
+
     private async hideAndCloseOverlay(
         overlay?: ActiveOverlay,
         animated?: boolean
     ): Promise<void> {
-        if (overlay) {
-            await overlay.hide(animated);
-            const contentWithLifecycle = (overlay.overlayContent as unknown) as ManagedOverlayContent;
-            if (typeof contentWithLifecycle.open !== 'undefined') {
-                contentWithLifecycle.open = false;
-            }
-            if (contentWithLifecycle.overlayCloseCallback) {
-                const { trigger } = overlay;
-                contentWithLifecycle.overlayCloseCallback({ trigger });
-            }
-            if (overlay.state != 'dispose') return;
-
-            const index = this.overlays.indexOf(overlay);
-            if (index >= 0) {
-                this.overlays.splice(index, 1);
-            }
-            if (this.overlays.length) {
-                const topOverlay = this.overlays[this.overlays.length - 1];
-                topOverlay.feature();
-                if (
-                    topOverlay.interaction === 'modal' ||
-                    topOverlay.hasModalRoot
-                ) {
-                    topOverlay.focus();
-                } else {
-                    this.stopTabTrapping();
-                }
-            } else {
-                this.stopTabTrapping();
-                if (
-                    overlay.interaction === 'modal' ||
-                    ((overlay.interaction === 'replace' ||
-                        overlay.interaction === 'inline') &&
-                        !overlay.tabbingAway)
-                ) {
-                    const overlayRoot = overlay.overlayContent.getRootNode() as ShadowRoot;
-                    const overlayContentActiveElement =
-                        overlayRoot.activeElement;
-                    const triggerRoot = overlay.trigger.getRootNode() as ShadowRoot;
-                    const triggerActiveElement = triggerRoot.activeElement;
-                    if (
-                        overlay.overlayContent.contains(
-                            overlayContentActiveElement
-                        ) ||
-                        overlay.trigger
-                            .getRootNode()
-                            .contains(triggerActiveElement) ||
-                        (triggerRoot.host &&
-                            triggerRoot.host === triggerActiveElement)
-                    ) {
-                        overlay.trigger.focus();
-                    }
-                }
-                overlay.tabbingAway = false;
-            }
-
-            overlay.remove();
-            overlay.dispose();
-
-            overlay.trigger.dispatchEvent(
-                new CustomEvent<OverlayOpenCloseDetail>('sp-closed', {
-                    bubbles: true,
-                    composed: true,
-                    cancelable: true,
-                    detail: {
-                        interaction: overlay.interaction,
-                    },
-                })
-            );
+        if (!overlay) {
+            return;
         }
+        await overlay.hide(animated);
+        const contentWithLifecycle =
+            overlay.overlayContent as unknown as ManagedOverlayContent;
+        if (typeof contentWithLifecycle.open !== 'undefined') {
+            contentWithLifecycle.open = false;
+        }
+        if (contentWithLifecycle.overlayCloseCallback) {
+            const { trigger } = overlay;
+            contentWithLifecycle.overlayCloseCallback({ trigger });
+        }
+
+        if (overlay.state != 'dispose') return;
+
+        const index = this.overlays.indexOf(overlay);
+        if (index >= 0) {
+            this.overlays.splice(index, 1);
+        }
+
+        if (this.overlays.length) {
+            this.manageFocusAfterCloseWhenOverlaysRemain();
+        } else {
+            this.manageFocusAfterCloseWhenLastOverlay(overlay);
+        }
+
+        overlay.remove();
+        overlay.dispose();
+
+        overlay.trigger.dispatchEvent(
+            new CustomEvent<OverlayOpenCloseDetail>('sp-closed', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                detail: {
+                    interaction: overlay.interaction,
+                },
+            })
+        );
     }
 
     private closeTopOverlay(): Promise<void> {
@@ -450,9 +520,7 @@ export class OverlayStack {
 
     private handleKeyUp = (event: KeyboardEvent): void => {
         if (event.code === 'Escape') {
-            const overlay = this.topOverlay as ActiveOverlay;
             this.closeTopOverlay();
-            overlay && overlay.trigger.focus();
         }
     };
 

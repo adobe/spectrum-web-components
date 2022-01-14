@@ -10,23 +10,23 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import {
-    shiftEvent,
-    arrowUpEvent,
     arrowDownEvent,
-    arrowLeftEvent,
-    arrowRightEvent,
-    arrowUpKeyupEvent,
     arrowDownKeyupEvent,
+    arrowLeftEvent,
     arrowLeftKeyupEvent,
+    arrowRightEvent,
     arrowRightKeyupEvent,
-    shiftKeyupEvent,
+    arrowUpEvent,
+    arrowUpKeyupEvent,
 } from '../../../test/testing-helpers.js';
 
 import '../sp-color-wheel.js';
-import { ColorWheel } from '..';
+import { ColorWheel } from '../';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
 
 describe('ColorWheel', () => {
     it('loads default color-wheel accessibly', async () => {
@@ -40,6 +40,65 @@ describe('ColorWheel', () => {
 
         await expect(el).to.be.accessible();
     });
+
+    it('manages a single tab stop', async () => {
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <div>
+                    <input type="text" id="test-input-1" />
+                    <sp-color-wheel></sp-color-wheel>
+                    <input type="text" id="test-input-2" />
+                </div>
+            `
+        );
+        const el = test.querySelector('sp-color-wheel') as ColorWheel;
+        const input1 = test.querySelector(
+            'input:nth-of-type(1)'
+        ) as HTMLInputElement;
+        const input2 = test.querySelector(
+            'input:nth-of-type(2)'
+        ) as HTMLInputElement;
+
+        await elementUpdated(el);
+
+        input1.focus();
+
+        expect(document.activeElement).to.equal(input1);
+
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        expect(document.activeElement).to.equal(el);
+
+        let value = el.value;
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        expect(el.value).to.not.equal(value);
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        expect(document.activeElement).to.equal(input2);
+
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement).to.equal(el);
+
+        value = el.value;
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        expect(el.value).to.not.equal(value);
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement).to.equal(input1);
+    });
     it('manages [focused]', async () => {
         const el = await fixture<ColorWheel>(
             html`
@@ -49,15 +108,81 @@ describe('ColorWheel', () => {
 
         await elementUpdated(el);
 
-        el.focusElement.dispatchEvent(new FocusEvent('focus'));
+        el.dispatchEvent(new FocusEvent('focusin'));
         await elementUpdated(el);
 
-        expect(el.focused);
+        expect(el.focused).to.be.true;
 
-        el.focusElement.dispatchEvent(new FocusEvent('blur'));
+        el.dispatchEvent(new FocusEvent('focusout'));
         await elementUpdated(el);
 
-        expect(!el.focused);
+        expect(el.focused).to.be.false;
+    });
+    it('dispatches input and change events in response to "Arrow*" keypresses', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+        const el = await fixture<ColorWheel>(
+            html`
+                <sp-color-wheel
+                    @change=${() => changeSpy()}
+                    @input=${() => inputSpy()}
+                ></sp-color-wheel>
+            `
+        );
+
+        await elementUpdated(el);
+        el.focus();
+
+        await sendKeys({ press: 'ArrowRight' });
+        expect(inputSpy.callCount).to.equal(1);
+        expect(changeSpy.callCount).to.equal(1);
+
+        await sendKeys({ press: 'ArrowLeft' });
+        expect(inputSpy.callCount).to.equal(2);
+        expect(changeSpy.callCount).to.equal(2);
+
+        await sendKeys({ press: 'ArrowUp' });
+        expect(inputSpy.callCount).to.equal(3);
+        expect(changeSpy.callCount).to.equal(3);
+
+        await sendKeys({ press: 'ArrowDown' });
+        expect(inputSpy.callCount).to.equal(4);
+        expect(changeSpy.callCount).to.equal(4);
+    });
+    it('responds to events on the internal input element', async () => {
+        // screen reader interactions dispatch events as found in the following test
+        const inputSpy = spy();
+        const changeSpy = spy();
+        const el = await fixture<ColorWheel>(
+            html`
+                <sp-color-wheel
+                    @change=${() => changeSpy()}
+                    @input=${() => inputSpy()}
+                ></sp-color-wheel>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const input = el.focusElement;
+
+        el.focus();
+
+        input.dispatchEvent(
+            new Event('input', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        input.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: false, // native change events do not compose themselves by default
+            })
+        );
+
+        expect(inputSpy.callCount).to.equal(1);
+        expect(changeSpy.callCount).to.equal(1);
     });
     it('accepts "Arrow*" keypresses', async () => {
         const el = await fixture<ColorWheel>(
@@ -165,44 +290,54 @@ describe('ColorWheel', () => {
         );
 
         await elementUpdated(el);
-
+        el.focus();
         expect(el.value).to.equal(0);
 
-        const input = el.focusElement;
-
-        input.dispatchEvent(shiftEvent);
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
+        await sendKeys({
+            down: 'Shift',
+        });
+        await sendKeys({
+            press: 'ArrowUp',
+        });
+        await sendKeys({
+            press: 'ArrowUp',
+        });
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(20);
 
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        await sendKeys({
+            press: 'ArrowRight',
+        });
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(40);
 
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await sendKeys({
+            press: 'ArrowDown',
+        });
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(20);
 
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
-        input.dispatchEvent(shiftKeyupEvent);
+        await sendKeys({
+            press: 'ArrowLeft',
+        });
+        await sendKeys({
+            press: 'ArrowLeft',
+        });
+        await sendKeys({
+            up: 'Shift',
+        });
 
         await elementUpdated(el);
 
@@ -221,7 +356,7 @@ describe('ColorWheel', () => {
 
         await elementUpdated(el);
 
-        const { handle } = (el as unknown) as { handle: HTMLElement };
+        const { handle } = el as unknown as { handle: HTMLElement };
 
         handle.setPointerCapture = () => {
             return;
@@ -373,5 +508,52 @@ describe('ColorWheel', () => {
         const color = new TinyColor('rgb(204, 51, 204)');
         el.color = color;
         expect(color.equals(el.color));
+    });
+    it(`maintains hue value`, async () => {
+        const el = await fixture<ColorWheel>(
+            html`
+                <sp-color-wheel></sp-color-wheel>
+            `
+        );
+        const hue = 300;
+        const hsl = `hsl(${hue}, 60%, 100%)`;
+        el.color = hsl;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsl);
+
+        const hsla = `hsla(${hue}, 60%, 100%, 0.9)`;
+        el.color = hsla;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsla);
+
+        const hsv = `hsv(${hue}, 60%, 100%)`;
+        el.color = hsv;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsv);
+
+        const hsva = `hsva(${hue}, 60%, 100%, 0.9)`;
+        el.color = hsva;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsva);
+
+        const tinyHSV = new TinyColor({ h: hue, s: 60, v: 100 });
+        el.color = tinyHSV;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSV.equals(el.color)).to.be.true;
+
+        const tinyHSVA = new TinyColor({ h: hue, s: 60, v: 100, a: 1 });
+        el.color = tinyHSVA;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSVA.equals(el.color)).to.be.true;
+
+        const tinyHSL = new TinyColor({ h: hue, s: 60, l: 100 });
+        el.color = tinyHSL;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSL.equals(el.color)).to.be.true;
+
+        const tinyHSLA = new TinyColor({ h: hue, s: 60, l: 100, a: 1 });
+        el.color = tinyHSLA;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSLA.equals(el.color)).to.be.true;
     });
 });

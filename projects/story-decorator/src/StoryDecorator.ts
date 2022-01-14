@@ -11,14 +11,17 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     css,
-    property,
-    TemplateResult,
-    ifDefined,
+    html,
     nothing,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    queryAsync,
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -28,7 +31,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/switch/sp-switch.js';
 import { Picker } from '@spectrum-web-components/picker';
 import { Switch } from '@spectrum-web-components/switch';
-import { Scale, Color } from '@spectrum-web-components/theme';
+import { Color, Scale, Theme } from '@spectrum-web-components/theme';
 import { ActiveOverlay } from '@spectrum-web-components/overlay';
 import './types.js';
 
@@ -67,7 +70,7 @@ const reduceMotionProperties = css`
 ActiveOverlay.prototype.renderTheme = function (
     content: TemplateResult
 ): TemplateResult {
-    const { color, scale } = this;
+    const { color, scale, lang } = this.theme;
     return html`
         ${window.__swc_hack_knobs__.defaultReduceMotion
             ? html`
@@ -78,7 +81,12 @@ ActiveOverlay.prototype.renderTheme = function (
                   </style>
               `
             : html``}
-        <sp-theme color=${ifDefined(color)} scale=${ifDefined(scale)}>
+        <sp-theme
+            color=${ifDefined(color)}
+            scale=${ifDefined(scale)}
+            lang=${ifDefined(lang)}
+            part="theme"
+        >
             ${content}
         </sp-theme>
     `;
@@ -99,7 +107,6 @@ export class StoryDecorator extends SpectrumElement {
                         2 * var(--spectrum-alias-focus-ring-size) +
                             var(--spectrum-alias-item-height-m)
                     );
-                box-sizing: border-box;
                 background-color: var(--spectrum-global-color-gray-100);
                 color: var(
                     --spectrum-body-text-color,
@@ -169,7 +176,18 @@ export class StoryDecorator extends SpectrumElement {
     @property({ type: Boolean, reflect: true })
     public screenshot = false;
 
+    @queryAsync('sp-theme')
+    private theme!: Theme;
+
     public ready = false;
+
+    public async startManagingContentDirection(el: HTMLElement): Promise<void> {
+        (await this.theme).startManagingContentDirection(el);
+    }
+
+    public async stopManagingContentDirection(el: HTMLElement): Promise<void> {
+        (await this.theme).stopManagingContentDirection(el);
+    }
 
     private updateTheme({ target }: Event & { target: Picker | Switch }): void {
         const { id } = target;
@@ -177,19 +195,37 @@ export class StoryDecorator extends SpectrumElement {
         const { checked } = target as Switch;
         switch (id) {
             case 'color':
-                this.color = color = window.__swc_hack_knobs__.defaultColor = value as Color;
+                this.color =
+                    color =
+                    window.__swc_hack_knobs__.defaultColor =
+                        value as Color;
                 break;
             case 'scale':
-                this.scale = scale = window.__swc_hack_knobs__.defaultScale = value as Scale;
+                this.scale =
+                    scale =
+                    window.__swc_hack_knobs__.defaultScale =
+                        value as Scale;
                 break;
             case 'dir':
-                this.direction = dir = window.__swc_hack_knobs__.defaultDirection = value as
-                    | 'ltr'
-                    | 'rtl';
+                this.direction =
+                    dir =
+                    window.__swc_hack_knobs__.defaultDirection =
+                        value as 'ltr' | 'rtl';
                 break;
             case 'reduceMotion':
-                this.reduceMotion = reduceMotion = window.__swc_hack_knobs__.defaultReduceMotion = checked as boolean;
+                this.reduceMotion =
+                    reduceMotion =
+                    window.__swc_hack_knobs__.defaultReduceMotion =
+                        checked as boolean;
                 break;
+        }
+    }
+
+    protected handleKeydown(event: KeyboardEvent): void {
+        const path = event.composedPath();
+        const hasInput = path.some((node) => node instanceof HTMLInputElement);
+        if (hasInput) {
+            event.stopPropagation();
         }
     }
 
@@ -200,6 +236,7 @@ export class StoryDecorator extends SpectrumElement {
                 scale=${this.scale}
                 dir=${this.direction}
                 part="container"
+                @keydown=${this.handleKeydown}
             >
                 <slot @slotchange=${this.checkReady}></slot>
                 ${this.screenshot ? nothing : this.manageTheme}
@@ -231,7 +268,7 @@ export class StoryDecorator extends SpectrumElement {
 
     private get manageTheme(): TemplateResult {
         return html`
-            <div class="manage-theme">
+            <div class="manage-theme" part="controls">
                 ${this.colorControl} ${this.scaleControl} ${this.dirControl}
                 ${this.reduceMotionControl}
             </div>

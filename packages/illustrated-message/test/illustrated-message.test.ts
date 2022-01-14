@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import '../sp-illustrated-message.js';
 import { IllustratedMessage } from '../';
-import { fixture, html, expect } from '@open-wc/testing';
+import { expect, fixture, html } from '@open-wc/testing';
 
 describe('Illustrated Message', () => {
     it('loads', async () => {

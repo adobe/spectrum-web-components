@@ -11,18 +11,22 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
-    property,
     CSSResultArray,
+    html,
+    PropertyValues,
+    SpectrumElement,
     TemplateResult,
-    ifDefined,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import avatarStyles from './avatar.css.js';
 
+export type AvatarSize = 50 | 75 | 100 | 200 | 300 | 400 | 500 | 600 | 700;
+const validSizes = [50, 75, 100, 200, 300, 400, 500, 600, 700];
+
 /**
- * Avatar component
+ * @element sp-avatar
  */
 export class Avatar extends SpectrumElement {
     public static get styles(): CSSResultArray {
@@ -35,9 +39,44 @@ export class Avatar extends SpectrumElement {
     @property()
     public src = '';
 
+    @property({ type: Number, reflect: true })
+    public get size(): AvatarSize {
+        return this._size || 100;
+    }
+
+    public set size(value: AvatarSize) {
+        const defaultSize = 100;
+        const size = value;
+        const validSize = (
+            validSizes.includes(size) ? size : defaultSize
+        ) as AvatarSize;
+        if (validSize) {
+            this.setAttribute('size', `${validSize}`);
+        }
+        if (this._size === validSize) {
+            return;
+        }
+        const oldSize = this._size;
+        this._size = validSize;
+        this.requestUpdate('size', oldSize);
+    }
+
+    private _size: AvatarSize | null = 100;
+
     protected render(): TemplateResult {
         return html`
-            <img alt=${ifDefined(this.label || undefined)} src=${this.src} />
+            <img
+                class="image"
+                alt=${ifDefined(this.label || undefined)}
+                src=${this.src}
+            />
         `;
+    }
+
+    protected firstUpdated(changes: PropertyValues): void {
+        super.firstUpdated(changes);
+        if (!this.hasAttribute('size')) {
+            this.setAttribute('size', `${this.size}`);
+        }
     }
 }

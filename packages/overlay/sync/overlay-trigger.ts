@@ -20,5 +20,5 @@ OverlayTrigger.openOverlay = async (
     content: HTMLElement,
     options: OverlayOptions
 ): Promise<() => void> => {
-    return await Overlay.open(target, interaction, content, options);
+    return Overlay.open(target, interaction, content, options);
 };

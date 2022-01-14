@@ -30,29 +30,53 @@ const config = {
                 },
                 {
                     type: 'enum',
-                    name: 'direction',
+                    name: 'direction^',
                     values: [
                         '.spectrum-Tabs--vertical',
                         '.spectrum-Tabs--horizontal',
+                    ],
+                },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-Tabs--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Tabs--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Tabs--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-Tabs--sizeXL',
+                        },
                     ],
                 },
             ],
             ids: [
                 {
                     selector: '.spectrum-Tabs-selectionIndicator',
-                    name: 'selectionIndicator',
+                    name: 'selection-indicator',
                 },
             ],
             slots: [
                 {
                     selector: '.spectrum-Tabs-item',
+                    contents: ':not([slot])',
                 },
             ],
             complexSelectors: [
                 {
                     replacement: '::slotted(:not([slot]):not(:first-child))',
                     selector:
-                        '.spectrum-Tabs-item+:not(.spectrum-Tabs-selectionIndicator)',
+                        /\.spectrum-Tabs-item\s?\+\s?\*:not\(.spectrum-Tabs-selectionIndicator\)/,
                 },
             ],
             exclude: [
@@ -82,7 +106,7 @@ const config = {
             ids: [
                 {
                     selector: '.spectrum-Tabs-itemLabel',
-                    name: 'itemLabel',
+                    name: 'item-label',
                 },
             ],
             slots: [

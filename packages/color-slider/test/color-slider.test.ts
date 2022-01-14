@@ -10,23 +10,23 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import {
-    shiftEvent,
-    arrowUpEvent,
     arrowDownEvent,
-    arrowLeftEvent,
-    arrowRightEvent,
-    arrowUpKeyupEvent,
     arrowDownKeyupEvent,
+    arrowLeftEvent,
     arrowLeftKeyupEvent,
+    arrowRightEvent,
     arrowRightKeyupEvent,
-    shiftKeyupEvent,
+    arrowUpEvent,
+    arrowUpKeyupEvent,
 } from '../../../test/testing-helpers.js';
 
 import '../sp-color-slider.js';
-import { ColorSlider } from '..';
+import { ColorSlider } from '../';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
+import { sendKeys } from '@web/test-runner-commands';
+import { spy } from 'sinon';
 
 describe('ColorSlider', () => {
     it('loads default color-slider accessibly', async () => {
@@ -40,6 +40,65 @@ describe('ColorSlider', () => {
 
         await expect(el).to.be.accessible();
     });
+
+    it('manages a single tab stop', async () => {
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <div>
+                    <input type="text" id="test-input-1" />
+                    <sp-color-slider></sp-color-slider>
+                    <input type="text" id="test-input-2" />
+                </div>
+            `
+        );
+        const el = test.querySelector('sp-color-slider') as ColorSlider;
+        const input1 = test.querySelector(
+            'input:nth-of-type(1)'
+        ) as HTMLInputElement;
+        const input2 = test.querySelector(
+            'input:nth-of-type(2)'
+        ) as HTMLInputElement;
+
+        await elementUpdated(el);
+
+        input1.focus();
+
+        expect(document.activeElement).to.equal(input1);
+
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        expect(document.activeElement).to.equal(el);
+
+        let value = el.value;
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        expect(el.value).to.not.equal(value);
+        await sendKeys({
+            press: 'Tab',
+        });
+
+        expect(document.activeElement).to.equal(input2);
+
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement).to.equal(el);
+
+        value = el.value;
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        expect(el.value).to.not.equal(value);
+        await sendKeys({
+            press: 'Shift+Tab',
+        });
+
+        expect(document.activeElement).to.equal(input1);
+    });
     it('manages [focused]', async () => {
         const el = await fixture<ColorSlider>(
             html`
@@ -49,17 +108,81 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        el.focusElement.dispatchEvent(new FocusEvent('focus'));
+        el.dispatchEvent(new FocusEvent('focusin'));
         await elementUpdated(el);
 
-        expect(el.focused);
+        expect(el.focused).to.be.true;
 
-        el.focusElement.dispatchEvent(new FocusEvent('blur'));
+        el.dispatchEvent(new FocusEvent('focusout'));
         await elementUpdated(el);
 
-        expect(!el.focused);
+        expect(el.focused).to.be.false;
     });
-    it('accepts "Arrow*" keypresses', async () => {
+    it('dispatches input and change events in response to "Arrow*" keypresses', async () => {
+        const inputSpy = spy();
+        const changeSpy = spy();
+        const el = await fixture<ColorSlider>(
+            html`
+                <sp-color-slider
+                    @change=${() => changeSpy()}
+                    @input=${() => inputSpy()}
+                ></sp-color-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        el.focus();
+
+        await sendKeys({ press: 'ArrowRight' });
+
+        expect(inputSpy.callCount).to.equal(1);
+        expect(changeSpy.callCount).to.equal(1);
+
+        await sendKeys({ press: 'ArrowLeft' });
+        expect(inputSpy.callCount).to.equal(2);
+        expect(changeSpy.callCount).to.equal(2);
+
+        await sendKeys({ press: 'ArrowUp' });
+        expect(inputSpy.callCount).to.equal(3);
+        expect(changeSpy.callCount).to.equal(3);
+
+        await sendKeys({ press: 'ArrowDown' });
+        expect(inputSpy.callCount).to.equal(4);
+        expect(changeSpy.callCount).to.equal(4);
+    });
+    it('responds to events on the internal input element', async () => {
+        // screen reader interactions dispatch events as found in the following test
+        const inputSpy = spy();
+        const changeSpy = spy();
+        const el = await fixture<ColorSlider>(
+            html`
+                <sp-color-slider
+                    @change=${() => changeSpy()}
+                    @input=${() => inputSpy()}
+                ></sp-color-slider>
+            `
+        );
+        await elementUpdated(el);
+
+        el.focus();
+        el.focusElement.dispatchEvent(
+            new Event('input', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        el.focusElement.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: false, // native change events do not compose themselves by default
+            })
+        );
+
+        expect(inputSpy.callCount).to.equal(1);
+        expect(changeSpy.callCount).to.equal(1);
+    });
+    it('manages value on "Arrow*" keypresses', async () => {
         const el = await fixture<ColorSlider>(
             html`
                 <sp-color-slider
@@ -167,44 +290,54 @@ describe('ColorSlider', () => {
         );
 
         await elementUpdated(el);
-
+        el.focus();
         expect(el.sliderHandlePosition).to.equal(0);
 
-        const input = el.focusElement;
-
-        input.dispatchEvent(shiftEvent);
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
+        await sendKeys({
+            down: 'Shift',
+        });
+        await sendKeys({
+            press: 'ArrowUp',
+        });
+        await sendKeys({
+            press: 'ArrowUp',
+        });
 
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(20);
 
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        await sendKeys({
+            press: 'ArrowRight',
+        });
 
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(40);
 
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
+        await sendKeys({
+            press: 'ArrowDown',
+        });
+        await sendKeys({
+            press: 'ArrowDown',
+        });
 
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(20);
 
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
-        input.dispatchEvent(shiftKeyupEvent);
+        await sendKeys({
+            press: 'ArrowLeft',
+        });
+        await sendKeys({
+            press: 'ArrowLeft',
+        });
+        await sendKeys({
+            up: 'Shift',
+        });
 
         await elementUpdated(el);
 
@@ -223,7 +356,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        const { handle } = (el as unknown) as { handle: HTMLElement };
+        const { handle } = el as unknown as { handle: HTMLElement };
 
         handle.setPointerCapture = () => {
             return;
@@ -328,7 +461,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        const { handle } = (el as unknown) as { handle: HTMLElement };
+        const { handle } = el as unknown as { handle: HTMLElement };
 
         handle.setPointerCapture = () => {
             return;
@@ -382,6 +515,7 @@ describe('ColorSlider', () => {
         expect(el.sliderHandlePosition).to.equal(53.125);
     });
     it('accepts pointer events in dir="rtl"', async () => {
+        document.documentElement.dir = 'rtl';
         const el = await fixture<ColorSlider>(
             html`
                 <sp-color-slider
@@ -390,10 +524,9 @@ describe('ColorSlider', () => {
                 ></sp-color-slider>
             `
         );
-        document.documentElement.dir = 'rtl';
         await elementUpdated(el);
 
-        const { handle } = (el as unknown) as { handle: HTMLElement };
+        const { handle } = el as unknown as { handle: HTMLElement };
         const clientWidth = document.documentElement.offsetWidth;
 
         handle.setPointerCapture = () => {
@@ -405,13 +538,13 @@ describe('ColorSlider', () => {
 
         expect(el.sliderHandlePosition).to.equal(0);
 
-        const root = el.shadowRoot ? el.shadowRoot : el;
-        const gradient = root.querySelector('.gradient') as HTMLElement;
-
+        const gradient = el.shadowRoot.querySelector(
+            '.gradient'
+        ) as HTMLElement;
         gradient.dispatchEvent(
             new PointerEvent('pointerdown', {
                 pointerId: 1,
-                clientX: clientWidth - 100,
+                clientX: 700,
                 clientY: 15,
                 bubbles: true,
                 composed: true,
@@ -536,28 +669,45 @@ describe('ColorSlider', () => {
                 <sp-color-slider></sp-color-slider>
             `
         );
-        el.color = 'hsl(300, 60%, 100%)';
-        expect(el.value).to.equal(300);
+        const hue = 300;
+        const hsl = `hsl(${hue}, 60%, 100%)`;
+        el.color = hsl;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsl);
 
-        el.color = 'hsla(300, 60%, 100%, 1)';
-        expect(el.value).to.equal(300);
+        const hsla = `hsla(${hue}, 60%, 100%, 0.9)`;
+        el.color = hsla;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsla);
 
-        el.color = 'hsv(300, 60%, 100%)';
-        expect(el.value).to.equal(300);
+        const hsv = `hsv(${hue}, 60%, 100%)`;
+        el.color = hsv;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsv);
 
-        el.color = 'hsva(300, 60%, 100%, 1)';
-        expect(el.value).to.equal(300);
+        const hsva = `hsva(${hue}, 60%, 100%, 0.9)`;
+        el.color = hsva;
+        expect(el.value).to.equal(hue);
+        expect(el.color).to.equal(hsva);
 
-        el.color = new TinyColor({ h: 300, s: 60, v: 100 });
-        expect(el.value).to.equal(300);
+        const tinyHSV = new TinyColor({ h: hue, s: 60, v: 100 });
+        el.color = tinyHSV;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSV.equals(el.color)).to.be.true;
 
-        el.color = new TinyColor({ h: 300, s: 60, v: 100, a: 1 });
-        expect(el.value).to.equal(300);
+        const tinyHSVA = new TinyColor({ h: hue, s: 60, v: 100, a: 1 });
+        el.color = tinyHSVA;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSVA.equals(el.color)).to.be.true;
 
-        el.color = new TinyColor({ h: 300, s: 60, l: 100 });
-        expect(el.value).to.equal(300);
+        const tinyHSL = new TinyColor({ h: hue, s: 60, l: 100 });
+        el.color = tinyHSL;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSL.equals(el.color)).to.be.true;
 
-        el.color = new TinyColor({ h: 300, s: 60, l: 100, a: 1 });
-        expect(el.value).to.equal(300);
+        const tinyHSLA = new TinyColor({ h: hue, s: 60, l: 100, a: 1 });
+        el.color = tinyHSLA;
+        expect(el.value).to.equal(hue);
+        expect(tinyHSLA.equals(el.color)).to.be.true;
     });
 });

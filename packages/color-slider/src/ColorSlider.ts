@@ -11,13 +11,16 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
+    html,
+    PropertyValues,
     TemplateResult,
+} from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
     property,
     query,
-    PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
@@ -25,11 +28,16 @@ import styles from './color-slider.css.js';
 import {
     ColorHandle,
     ColorValue,
-} from '@spectrum-web-components/color-handle/src/ColorHandle';
+    extractHueAndSaturationRegExp,
+    replaceHueAndSaturationRegExp,
+} from '@spectrum-web-components/color-handle';
 import { TinyColor } from '@ctrl/tinycolor';
 
 /**
  * @element sp-color-slider
+ * @slot gradient - a custom gradient visually outlining the available color values
+ * @fires input - The value of the Color Slider has changed.
+ * @fires change - An alteration to the value of the Color Slider has been committed by the user.
  */
 export class ColorSlider extends Focusable {
     public static get styles(): CSSResultArray {
@@ -103,13 +111,27 @@ export class ColorSlider extends Focusable {
             case 'name':
                 return this._color.toName() || this._color.toRgbString();
             case 'hsl':
-                return this._format.isString
-                    ? this._color.toHslString()
-                    : this._color.toHsl();
+                if (this._format.isString) {
+                    const hslString = this._color.toHslString();
+                    return hslString.replace(
+                        replaceHueAndSaturationRegExp,
+                        `$1${this.value}$2${this._saturation}`
+                    );
+                } else {
+                    const { s, l, a } = this._color.toHsl();
+                    return { h: this.value, s, l, a };
+                }
             case 'hsv':
-                return this._format.isString
-                    ? this._color.toHsvString()
-                    : this._color.toHsv();
+                if (this._format.isString) {
+                    const hsvString = this._color.toHsvString();
+                    return hsvString.replace(
+                        replaceHueAndSaturationRegExp,
+                        `$1${this.value}$2${this._saturation}`
+                    );
+                } else {
+                    const { s, v, a } = this._color.toHsv();
+                    return { h: this.value, s, v, a };
+                }
             default:
                 return 'No color format applied.';
         }
@@ -134,20 +156,17 @@ export class ColorSlider extends Focusable {
         };
 
         if (isString && format.startsWith('hs')) {
-            const hueExp = /^hs[v|va|l|la]\((\d{1,3})/;
-            const values = hueExp.exec(color as string);
-
+            const values = extractHueAndSaturationRegExp.exec(color as string);
             if (values !== null) {
-                const [, h] = values;
+                const [, h, s] = values;
                 this.value = Number(h);
+                this._saturation = Number(s);
             }
         } else if (!isString && format.startsWith('hs')) {
             const colorInput = this._color.originalInput;
             const colorValues = Object.values(colorInput);
             this.value = colorValues[0];
-
-            // The below code line causes some tests to fail
-            //this.value = parseFloat((color as HSV).h.toString());
+            this._saturation = colorValues[1];
         } else {
             const { h } = this._color.toHsv();
             this.value = h;
@@ -159,6 +178,8 @@ export class ColorSlider extends Focusable {
     private _color = new TinyColor({ h: 0, s: 1, v: 1 });
 
     private _previousColor = new TinyColor({ h: 0, s: 1, v: 1 });
+
+    private _saturation!: number;
 
     private _format: { format: string; isString: boolean } = {
         format: '',
@@ -179,8 +200,6 @@ export class ColorSlider extends Focusable {
 
     private _altered = 0;
 
-    private altKeys = new Set();
-
     @query('input')
     public input!: HTMLInputElement;
 
@@ -189,12 +208,11 @@ export class ColorSlider extends Focusable {
     }
 
     private handleKeydown(event: KeyboardEvent): void {
-        event.preventDefault();
         const { key } = event;
-        if (['Shift', 'Meta', 'Control', 'Alt'].includes(key)) {
-            this.altKeys.add(key);
-            this.altered = this.altKeys.size;
-        }
+        this.focused = true;
+        this.altered = [event.shiftKey, event.ctrlKey, event.altKey].filter(
+            (key) => !!key
+        ).length;
         let delta = 0;
         switch (key) {
             case 'ArrowUp':
@@ -209,21 +227,31 @@ export class ColorSlider extends Focusable {
             case 'ArrowRight':
                 delta = this.step * (this.isLTR ? 1 : -1);
                 break;
+            default:
+                return;
         }
+        event.preventDefault();
+
         this.sliderHandlePosition = Math.min(
             100,
             Math.max(0, this.sliderHandlePosition + delta)
         );
         this.value = 360 * (this.sliderHandlePosition / 100);
         this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
-    }
 
-    private handleKeyup(event: KeyboardEvent): void {
-        event.preventDefault();
-        const { key } = event;
-        if (['Shift', 'Meta', 'Control', 'Alt'].includes(key)) {
-            this.altKeys.delete(key);
-            this.altered = this.altKeys.size;
+        if (delta != 0) {
+            this.dispatchEvent(
+                new Event('input', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            this.dispatchEvent(
+                new Event('change', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
         }
     }
 
@@ -235,26 +263,52 @@ export class ColorSlider extends Focusable {
         this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
     }
 
-    private handleFocus(): void {
+    private handleChange(event: Event & { target: HTMLInputElement }): void {
+        this.handleInput(event);
+        this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
+    public focus(focusOptions: FocusOptions = {}): void {
+        super.focus(focusOptions);
+        this.forwardFocus();
+    }
+
+    private forwardFocus(): void {
+        this.focused = this.hasVisibleFocusInTree();
+        this.input.focus();
+    }
+
+    private handleFocusin(): void {
         this.focused = true;
     }
 
-    private handleBlur(): void {
+    private handleFocusout(): void {
+        if (this._pointerDown) {
+            return;
+        }
+        this.altered = 0;
         this.focused = false;
     }
 
     private boundingClientRect!: DOMRect;
+    private _pointerDown = false;
 
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             event.preventDefault();
             return;
         }
+        this._pointerDown = true;
         this._previousColor = this._color.clone();
         this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
         if (event.pointerType === 'mouse') {
-            this.handleFocus();
+            this.focused = true;
         }
     }
 
@@ -274,7 +328,7 @@ export class ColorSlider extends Focusable {
     }
 
     private handlePointerup(event: PointerEvent): void {
-        // Retain focus on input element after mouse up to enable keyboard interactions
+        this._pointerDown = false;
         (event.target as HTMLElement).releasePointerCapture(event.pointerId);
 
         const applyDefault = this.dispatchEvent(
@@ -287,8 +341,10 @@ export class ColorSlider extends Focusable {
         if (!applyDefault) {
             this._color = this._previousColor;
         }
+        // Retain focus on input element after mouse up to enable keyboard interactions
+        this.focus();
         if (event.pointerType === 'mouse') {
-            this.handleBlur();
+            this.focused = false;
         }
     }
 
@@ -323,6 +379,12 @@ export class ColorSlider extends Focusable {
         this.handlePointermove(event);
     }
 
+    private get handlePositionStyles(): string {
+        return `${this.vertical ? 'top' : 'left'}: ${
+            this.sliderHandlePosition
+        }%`;
+    }
+
     protected render(): TemplateResult {
         return html`
             <div
@@ -341,19 +403,18 @@ export class ColorSlider extends Focusable {
                 </div>
             </div>
             <sp-color-handle
+                tabindex=${ifDefined(this.focused ? undefined : '0')}
+                @focus=${this.forwardFocus}
+                ?focused=${this.focused}
                 class="handle"
-                color="hsl(${this._color.toHsl().h}, 100%, 50%)"
+                color="hsl(${this.value}, 100%, 50%)"
                 ?disabled=${this.disabled}
-                style="${this.vertical ? 'top' : 'left'}: ${this
-                    .sliderHandlePosition}%"
-                @manage=${streamingListener(
-                    { type: 'pointerdown', fn: this.handlePointerdown },
-                    { type: 'pointermove', fn: this.handlePointermove },
-                    {
-                        type: ['pointerup', 'pointercancel'],
-                        fn: this.handlePointerup,
-                    }
-                )}
+                style=${this.handlePositionStyles}
+                ${streamingListener({
+                    start: ['pointerdown', this.handlePointerdown],
+                    streamInside: ['pointermove', this.handlePointermove],
+                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                })}
             ></sp-color-handle>
             <input
                 type="range"
@@ -364,10 +425,8 @@ export class ColorSlider extends Focusable {
                 aria-label=${this.label}
                 .value=${String(this.value)}
                 @input=${this.handleInput}
+                @change=${this.handleChange}
                 @keydown=${this.handleKeydown}
-                @keyup=${this.handleKeyup}
-                @focus=${this.handleFocus}
-                @blur=${this.handleBlur}
             />
         `;
     }
@@ -375,5 +434,7 @@ export class ColorSlider extends Focusable {
     protected firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
+        this.addEventListener('focusin', this.handleFocusin);
+        this.addEventListener('focusout', this.handleFocusout);
     }
 }

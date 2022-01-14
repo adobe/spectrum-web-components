@@ -10,13 +10,15 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     LitElement,
-    CSSResultArray,
     TemplateResult,
-    property,
-    customElement,
 } from '@spectrum-web-components/base';
+import {
+    customElement,
+    property,
+} from '@spectrum-web-components/base/src/decorators.js';
 
 import styles from '@spectrum-web-components/theme/src/typography.css.js';
 

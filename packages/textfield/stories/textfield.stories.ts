@@ -9,8 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html } from 'lit-html';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-textfield.js';
 
@@ -75,5 +74,22 @@ export const readonly = (): TemplateResult => html`
         value="A readonly textfield"
         readonly
         placeholder="Enter your life story"
+    ></sp-textfield>
+`;
+
+export const types = (): TemplateResult => html`
+    <sp-textfield label="Default" placeholder="default (text)"></sp-textfield>
+    <sp-textfield label="Text" type="text" placeholder="text"></sp-textfield>
+    <sp-textfield label="URL" type="url" placeholder="url"></sp-textfield>
+    <sp-textfield label="Tel" type="tel" placeholder="tel"></sp-textfield>
+    <sp-textfield
+        label="E-Mail"
+        type="email"
+        placeholder="email"
+    ></sp-textfield>
+    <sp-textfield
+        label="Password"
+        type="password"
+        placeholder="password"
     ></sp-textfield>
 `;

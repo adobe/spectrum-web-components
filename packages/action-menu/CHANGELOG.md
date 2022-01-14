@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.13.1...@spectrum-web-components/action-menu@0.13.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.13.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.13.0...@spectrum-web-components/action-menu@0.13.1) (2021-12-13)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+# [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.12.1...@spectrum-web-components/action-menu@0.13.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.12.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.12.0...@spectrum-web-components/action-menu@0.12.1) (2021-11-08)
+
+### Bug Fixes
+
+-   abstract "hasVisibleFocusInTree" functionality and return trigger focus after close ([4f39f2c](https://github.com/adobe/spectrum-web-components/commit/4f39f2c506066b789834584d2c9c24185ea57118))
+
+# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.11.6...@spectrum-web-components/action-menu@0.12.0) (2021-11-02)
+
+### Features
+
+-   track the associated Spectrum CSS package ([86b1be5](https://github.com/adobe/spectrum-web-components/commit/86b1be5d1d2b6e870049a8642dabc3520c359716))
+
+## [0.11.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.11.5...@spectrum-web-components/action-menu@0.11.6) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.11.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.11.4...@spectrum-web-components/action-menu@0.11.5) (2021-10-05)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.11.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.11.3...@spectrum-web-components/action-menu@0.11.4) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.11.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.11.2...@spectrum-web-components/action-menu@0.11.3) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.11.1...@spectrum-web-components/action-menu@0.11.2) (2021-08-24)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.11.0...@spectrum-web-components/action-menu@0.11.1) (2021-08-17)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.10.4...@spectrum-web-components/action-menu@0.11.0) (2021-08-03)
+
+### Bug Fixes
+
+-   expand sync offering for elements with overlay content ([0195843](https://github.com/adobe/spectrum-web-components/commit/0195843e9efac5760a78fa302d91139c84ea5747))
+
+### Features
+
+-   **action-menu:** remove menu selection by default ([54d636f](https://github.com/adobe/spectrum-web-components/commit/54d636f0206e8fa7dd67a465de643e6dd9fc29cf))
+
+## [0.10.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.10.3...@spectrum-web-components/action-menu@0.10.4) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.10.2...@spectrum-web-components/action-menu@0.10.3) (2021-07-01)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
+## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.10.1...@spectrum-web-components/action-menu@0.10.2) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
 ## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.10.0...@spectrum-web-components/action-menu@0.10.1) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

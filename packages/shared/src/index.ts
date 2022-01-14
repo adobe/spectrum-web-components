@@ -10,10 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+export * from './first-focusable-in.js';
 export * from './focus-visible.js';
 export * from './focusable.js';
 export * from './get-active-element.js';
 export * from './like-anchor.js';
 export * from './observe-slot-presence.js';
 export * from './observe-slot-text.js';
+export * from './platform.js';
 export * from './reparent-children.js';

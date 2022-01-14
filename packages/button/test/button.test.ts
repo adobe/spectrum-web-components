@@ -13,9 +13,9 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
 import {
-    fixture,
     elementUpdated,
     expect,
+    fixture,
     html,
     waitUntil,
 } from '@open-wc/testing';
@@ -63,7 +63,7 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
-        expect(!((el as unknown) as { hasIcon: boolean }).hasIcon);
+        expect(!(el as unknown as { hasIcon: boolean }).hasIcon);
         await expect(el).to.be.accessible();
     });
     it('loads default only icon', async () => {
@@ -92,7 +92,12 @@ describe('Button', () => {
         el.href = '#';
 
         await elementUpdated(el);
-        expect(el.hasAttribute('role')).to.be.false;
+        expect(el.getAttribute('role')).to.equal('link');
+
+        el.removeAttribute('href');
+
+        await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('button');
     });
     it('allows label to be toggled', async () => {
         const testNode = document.createTextNode('Button');
@@ -107,7 +112,7 @@ describe('Button', () => {
 
         await elementUpdated(el);
 
-        const labelTestableEl = (el as unknown) as TestableButtonType;
+        const labelTestableEl = el as unknown as TestableButtonType;
 
         expect(labelTestableEl.hasLabel, 'starts with label').to.be.true;
 
@@ -178,16 +183,14 @@ describe('Button', () => {
         const clickSpy = spy();
         const el = await fixture<Button>(
             html`
-                <sp-button @click=${() => clickSpy()}>
-                    Button
-                </sp-button>
+                <sp-button @click=${() => clickSpy()}>Button</sp-button>
             `
         );
 
         await elementUpdated(el);
         el.click();
         await elementUpdated(el);
-        expect(clickSpy.calledOnce);
+        expect(clickSpy.calledOnce).to.be.true;
 
         clickSpy.resetHistory();
         el.disabled = true;
@@ -206,7 +209,7 @@ describe('Button', () => {
         el.disabled = false;
         el.click();
         await elementUpdated(el);
-        expect(clickSpy.calledOnce);
+        expect(clickSpy.calledOnce).to.be.true;
     });
     it('manages `aria-disabled`', async () => {
         const el = await fixture<Button>(
@@ -294,6 +297,20 @@ describe('Button', () => {
                 cancelable: true,
                 code: 'Enter',
                 key: 'Enter',
+            })
+        );
+
+        await elementUpdated(el);
+        expect(clickSpy.callCount).to.equal(1);
+        clickSpy.resetHistory();
+
+        el.dispatchEvent(
+            new KeyboardEvent('keypress', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+                code: 'NumpadEnter',
+                key: 'NumpadEnter',
             })
         );
 
@@ -448,9 +465,11 @@ describe('Button', () => {
         );
 
         await elementUpdated(el);
-        ((el as unknown) as {
-            anchorElement: HTMLAnchorElement;
-        }).anchorElement.addEventListener('click', (event: Event): void => {
+        (
+            el as unknown as {
+                anchorElement: HTMLAnchorElement;
+            }
+        ).anchorElement.addEventListener('click', (event: Event): void => {
             event.preventDefault();
             event.stopPropagation();
             clickSpy();

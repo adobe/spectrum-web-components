@@ -11,22 +11,26 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-FieldGroup */
-    --spectrum-fieldgroup-margin: var(--spectrum-global-dimension-size-200);
-    display: flex;
-    vertical-align: top;
+    --spectrum-fieldgroup-margin: var(
+        --spectrum-global-dimension-size-200
+    ); /* .spectrum-FieldGroup */
+}
+.group {
+    display: flex; /* .spectrum-FieldGroup */
     flex-wrap: wrap;
+    vertical-align: top;
 }
-:host([dir='ltr'][horizontal]) .spectrum-FieldGroup-item:not(:last-child) {
-    /* [dir=ltr] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
-    margin-right: var(--spectrum-fieldgroup-margin);
+:host([dir='ltr'][horizontal]) slot:not([name])::slotted(:not(:last-child)) {
+    margin-right: var(
+        --spectrum-fieldgroup-margin
+    ); /* [dir=ltr] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
 }
-:host([dir='rtl'][horizontal]) .spectrum-FieldGroup-item:not(:last-child) {
-    /* [dir=rtl] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
-    margin-left: var(--spectrum-fieldgroup-margin);
+:host([dir='rtl'][horizontal]) slot:not([name])::slotted(:not(:last-child)) {
+    margin-left: var(
+        --spectrum-fieldgroup-margin
+    ); /* [dir=rtl] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
 }
-:host([vertical]) {
-    /* .spectrum-FieldGroup--vertical */
-    display: inline-flex;
+:host([vertical]) .group {
+    display: inline-flex; /* .spectrum-FieldGroup--vertical */
     flex-direction: column;
 }

@@ -3,6 +3,101 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.13.1...@spectrum-web-components/overlay@0.13.2) (2022-01-07)
+
+### Bug Fixes
+
+-   **overlay:** reduce DOM and use of "display: contents" for simplicity and accessibility ([2e02075](https://github.com/adobe/spectrum-web-components/commit/2e0207583eb8514a54254b43214f2c9e39d98e81))
+
+## [0.13.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.13.0...@spectrum-web-components/overlay@0.13.1) (2021-12-13)
+
+### Bug Fixes
+
+-   use typescript@^4.5 for "native" document.fonts typings ([a3e4aea](https://github.com/adobe/spectrum-web-components/commit/a3e4aea802c796e9029b2bc32f58639954db831b))
+
+# [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.12.1...@spectrum-web-components/overlay@0.13.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.12.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.12.0...@spectrum-web-components/overlay@0.12.1) (2021-11-08)
+
+### Bug Fixes
+
+-   abstract "hasVisibleFocusInTree" functionality and return trigger focus after close ([4f39f2c](https://github.com/adobe/spectrum-web-components/commit/4f39f2c506066b789834584d2c9c24185ea57118))
+-   prevent touch scolling on non-modal content ([e471feb](https://github.com/adobe/spectrum-web-components/commit/e471febf14e64d35b57ebc0c1596c52282a6ff2a))
+
+# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.16...@spectrum-web-components/overlay@0.12.0) (2021-11-02)
+
+### Bug Fixes
+
+-   centralize updated first focusable selector ([300e84c](https://github.com/adobe/spectrum-web-components/commit/300e84c404d031ddad92b4952e48ad3332c4aafd))
+-   update screen reader interface with menu items list ([16756b5](https://github.com/adobe/spectrum-web-components/commit/16756b56c0f7f9561426acc202997fb098e8f19a))
+-   **picker:** use "modal" as the menu overlay interaction ([c8fbbe2](https://github.com/adobe/spectrum-web-components/commit/c8fbbe27b19702909855575b1afd38fb064e8378))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.11.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.15...@spectrum-web-components/overlay@0.11.16) (2021-10-12)
+
+### Bug Fixes
+
+-   **overlay:** allow [type="modal"] hover overlays to be closed ([5a6802b](https://github.com/adobe/spectrum-web-components/commit/5a6802bc06869cd255bdbfcc460f836c247f01fb))
+-   **overlay:** resolve async races with closeOverlays and manageOpen ([ff3738e](https://github.com/adobe/spectrum-web-components/commit/ff3738ea7afc12f258a7745777034ee70d6bf601))
+-   **overlay:** traverse up through shadow roots when determining parent overlay ([27f232c](https://github.com/adobe/spectrum-web-components/commit/27f232c28d30288b75187b80744b2581d6017b77))
+
+## [0.11.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.14...@spectrum-web-components/overlay@0.11.15) (2021-09-20)
+
+### Bug Fixes
+
+-   allow contextmenu event passing to pierce shadow roots ([05b69e9](https://github.com/adobe/spectrum-web-components/commit/05b69e90a56676c44e4757a6c2e19e6fe333b145))
+-   correct add/remove timing of overlay events ([474ec6e](https://github.com/adobe/spectrum-web-components/commit/474ec6e85840dc1efee8b134cc6e6163f228920f))
+
+## [0.11.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.13...@spectrum-web-components/overlay@0.11.14) (2021-09-13)
+
+### Bug Fixes
+
+-   close modal overlays with contextmenu events and pass those to the underlying page ([9e83f3c](https://github.com/adobe/spectrum-web-components/commit/9e83f3c0d2398323ebe941ba253d7a0dc0f40ba6))
+
+## [0.11.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.12...@spectrum-web-components/overlay@0.11.13) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.11.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.11...@spectrum-web-components/overlay@0.11.12) (2021-08-17)
+
+### Bug Fixes
+
+-   update when events are added to manage overlays ([60cddac](https://github.com/adobe/spectrum-web-components/commit/60cddac69554d00095aee492608d85d6513c8928))
+
+## [0.11.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.10...@spectrum-web-components/overlay@0.11.11) (2021-08-03)
+
+### Bug Fixes
+
+-   allow "updateComplete" to resolve to a boolean like the LitElement default ([6127946](https://github.com/adobe/spectrum-web-components/commit/6127946fd3ffd048a30b7eb4bf6aadf9e7c8752a))
+-   expand sync offering for elements with overlay content ([0195843](https://github.com/adobe/spectrum-web-components/commit/0195843e9efac5760a78fa302d91139c84ea5747))
+
+## [0.11.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.9...@spectrum-web-components/overlay@0.11.10) (2021-07-22)
+
+### Bug Fixes
+
+-   **overlay:** allow external style access to "sp-theme" elements in overlays as a CSS part ([a107f66](https://github.com/adobe/spectrum-web-components/commit/a107f66ae171e857e5f84cfff9f7a27cc5bd320d))
+-   delete the used cleanup method ([942ef0f](https://github.com/adobe/spectrum-web-components/commit/942ef0fdc6e7c89e4f554e032c7b9fb760ca47a0))
+
+## [0.11.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.8...@spectrum-web-components/overlay@0.11.9) (2021-07-01)
+
+### Bug Fixes
+
+-   allow detached elements to be used as content for an overlay ([3ad8383](https://github.com/adobe/spectrum-web-components/commit/3ad83837b6c9a693a4fc24501e3fc7fb2383a12b))
+-   manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/adobe/spectrum-web-components/commit/b1e3457ae447427c54f8645c478866340329750c))
+
+## [0.11.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.7...@spectrum-web-components/overlay@0.11.8) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
 ## [0.11.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.11.6...@spectrum-web-components/overlay@0.11.7) (2021-06-07)
 
 ### Bug Fixes

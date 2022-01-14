@@ -9,14 +9,14 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { PropertyValues, ReactiveElement } from '@spectrum-web-components/base';
 import {
-    PropertyValues,
-    UpdatingElement,
-    queryAssignedNodes,
     property,
-} from '@spectrum-web-components/base';
+    queryAssignedNodes,
+} from '@spectrum-web-components/base/src/decorators.js';
 
 const slotElementObserver = Symbol('slotElementObserver');
+// Fix needed for: https://github.com/lit/lit/issues/1789
 const assignedNodesList = Symbol('assignedNodes');
 const startObserving = Symbol('startObserving');
 
@@ -31,12 +31,14 @@ export interface SlotTextObservingInterface {
     manageTextObservedSlot(): void;
 }
 
-export function ObserveSlotText<T extends Constructor<UpdatingElement>>(
+export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
     constructor: T,
     slotSelector?: string
 ): T & Constructor<SlotTextObservingInterface> {
-    class SlotTextObservingElement extends constructor
-        implements SlotTextObservingInterface {
+    class SlotTextObservingElement
+        extends constructor
+        implements SlotTextObservingInterface
+    {
         private [slotElementObserver]: MutationObserver;
 
         @property({ type: Boolean, attribute: false })

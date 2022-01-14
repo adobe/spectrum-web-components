@@ -19,7 +19,7 @@ import { html, render, nothing } from 'lit-html';
 const review = document.querySelector('vrt-compare');
 const resultTypes = ['new', 'updated', 'removed', 'passed'];
 
-function buildNavigation(tests) {
+function buildNavigation(tests, metadata) {
     const sidenav = document.querySelector('sp-sidenav');
     const resultsByType = resultTypes.reduce((acc, type) => {
         acc[type] = Object.keys(tests[type]).reduce((acc, group) => {
@@ -29,6 +29,30 @@ function buildNavigation(tests) {
     }, {});
     render(
         html`
+            <sp-sidenav-heading label="Results for">
+                <sp-sidenav-item
+                    label=${metadata.branch}
+                    style="user-select: all"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    label=${metadata.theme}
+                    style="user-select: all"
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    label=${metadata.commit}
+                    style="user-select: all"
+                ></sp-sidenav-item>
+            </sp-sidenav-heading>
+            <sp-sidenav-item multilevel label="Other VRT Results">
+                ${metadata.themes.map(
+                    (theme) => html`
+                        <sp-sidenav-item
+                            label=${theme[0]}
+                            href=${theme[1]}
+                        ></sp-sidenav-item>
+                    `
+                )}
+            </sp-sidenav-item>
             ${resultTypes.map((resultType) => {
                 const groups = Object.keys(tests[resultType]).sort();
                 return html`
@@ -135,9 +159,13 @@ function placeTest(test) {
 }
 
 async function run() {
-    const response = await fetch('./tests.json');
-    const tests = await response.json();
-    buildNavigation(tests);
+    const response = await fetch('./data.json');
+    const data = await response.json();
+    const decorator = document.querySelector('sp-story-decorator');
+    const theme = data.meta.theme.split(' ');
+    decorator.color = theme[0];
+    decorator.scale = theme[1];
+    buildNavigation(data.tests, data.meta);
 }
 
 run();

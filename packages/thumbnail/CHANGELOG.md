@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.4.1...@spectrum-web-components/thumbnail@0.4.2) (2022-01-07)
+
+### Bug Fixes
+
+-   use latest @spectrum-css/thumbnail with built in "cover" support ([d152b4e](https://github.com/adobe/spectrum-web-components/commit/d152b4ec2e62201f1675c95fb08083768ab5a6e1))
+
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.4.0...@spectrum-web-components/thumbnail@0.4.1) (2021-12-13)
+
+### Bug Fixes
+
+-   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.3.1...@spectrum-web-components/thumbnail@0.4.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/thumbnail
+
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.3.0...@spectrum-web-components/thumbnail@0.3.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/thumbnail
+
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.5...@spectrum-web-components/thumbnail@0.3.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.2.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.4...@spectrum-web-components/thumbnail@0.2.5) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/thumbnail
+
+## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.3...@spectrum-web-components/thumbnail@0.2.4) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/thumbnail
+
+## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.2...@spectrum-web-components/thumbnail@0.2.3) (2021-08-24)
+
+**Note:** Version bump only for package @spectrum-web-components/thumbnail
+
+## [0.2.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.1...@spectrum-web-components/thumbnail@0.2.2) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/thumbnail
+
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.2.0...@spectrum-web-components/thumbnail@0.2.1) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/thumbnail
+
 # [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.1.5...@spectrum-web-components/thumbnail@0.2.0) (2021-06-07)
 
 ### Features

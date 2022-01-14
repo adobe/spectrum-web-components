@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { LitElement, property, UpdatingElement } from 'lit-element';
+import { LitElement, ReactiveElement } from 'lit';
+import { property } from 'lit/decorators.js';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;
@@ -25,6 +26,7 @@ type Constructor<T = Record<string, unknown>> = {
 export interface SpectrumInterface {
     shadowRoot: ShadowRoot;
     isLTR: boolean;
+    hasVisibleFocusInTree(): boolean;
     dir: 'ltr' | 'rtl';
 }
 
@@ -55,7 +57,7 @@ const canManageContentDirection = (el: ContentDirectionManager): boolean =>
     typeof el.startManagingContentDirection !== 'undefined' ||
     el.tagName === 'SP-THEME';
 
-export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
+export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<SpectrumInterface> {
     class SlotTextObservingElement extends constructor {
@@ -78,6 +80,26 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
             return this.dir === 'ltr';
         }
 
+        public hasVisibleFocusInTree(): boolean {
+            const activeElement = (this.getRootNode() as Document)
+                .activeElement as HTMLElement;
+            if (!activeElement) {
+                return false;
+            }
+            // Browsers without support for the `:focus-visible`
+            // selector will throw on the following test (Safari, older things).
+            // Some won't throw, but will be focusing item rather than the menu and
+            // will rely on the polyfill to know whether focus is "visible" or not.
+            try {
+                return (
+                    activeElement.matches(':focus-visible') ||
+                    activeElement.matches('.focus-visible')
+                );
+            } catch (error) {
+                return activeElement.matches('.focus-visible');
+            }
+        }
+
         public connectedCallback(): void {
             if (!this.hasAttribute('dir')) {
                 let dirParent = ((this as HTMLElement).assignedSlot ||
@@ -90,7 +112,7 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
                 ) {
                     dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
                         dirParent.parentNode || // DOM Element detected
-                        ((dirParent as unknown) as ShadowRoot)
+                        (dirParent as unknown as ShadowRoot)
                             .host) as HTMLElement;
                 }
                 this.dir =
@@ -104,9 +126,9 @@ export function SpectrumMixin<T extends Constructor<UpdatingElement>>(
                         !customElements.get(localName)
                     ) {
                         customElements.whenDefined(localName).then(() => {
-                            (dirParent as ThemeRoot).startManagingContentDirection(
-                                this
-                            );
+                            (
+                                dirParent as ThemeRoot
+                            ).startManagingContentDirection(this);
                         });
                     } else {
                         (dirParent as ThemeRoot).startManagingContentDirection(

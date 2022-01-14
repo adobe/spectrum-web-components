@@ -11,19 +11,25 @@ governing permissions and limitations under the License.
 */
 
 import {
-    property,
     html,
-    TemplateResult,
-    query,
     PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import {
-    ObserveSlotText,
     ObserveSlotPresence,
+    ObserveSlotText,
 } from '@spectrum-web-components/shared';
 
+/**
+ * @slot - text content to be displayed in the Button element
+ * @slot icon - icon element(s) to display at the start of the button
+ */
 export class ButtonBase extends LikeAnchor(
     ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
 ) {
@@ -159,6 +165,7 @@ export class ButtonBase extends LikeAnchor(
         const { code } = event;
         switch (code) {
             case 'Enter':
+            case 'NumpadEnter':
                 this.click();
                 break;
             default:
@@ -189,10 +196,17 @@ export class ButtonBase extends LikeAnchor(
 
     private manageAnchor(): void {
         if (this.href && this.href.length > 0) {
-            this.removeAttribute('role');
+            if (this.getAttribute('role') === 'button') {
+                this.setAttribute('role', 'link');
+            }
             this.removeEventListener('click', this.shouldProxyClick);
-        } else if (!this.hasAttribute('role')) {
-            this.setAttribute('role', 'button');
+        } else {
+            if (
+                !this.hasAttribute('role') ||
+                this.getAttribute('role') === 'link'
+            ) {
+                this.setAttribute('role', 'button');
+            }
             this.addEventListener('click', this.shouldProxyClick);
         }
     }

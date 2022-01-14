@@ -30,6 +30,7 @@
         { "path": "../dropzone" },
         { "path": "../field-group" },
         { "path": "../field-label" },
+        { "path": "../help-text" },
         { "path": "../icon" },
         { "path": "../icons" },
         { "path": "../icons-ui" },
@@ -61,6 +62,7 @@
         { "path": "../thumbnail" },
         { "path": "../toast" },
         { "path": "../tooltip" },
+        { "path": "../top-nav" },
         { "path": "../tray" },
         { "path": "../underlay" }
     ]

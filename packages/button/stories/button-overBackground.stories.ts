@@ -10,9 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { renderButtonSet, bellIcon, makeOverBackground } from './index.js';
+import { bellIcon, makeOverBackground, renderButtonSet } from './index.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
-import { HelpIcon } from '@spectrum-web-components/icons-workflow';
 
 export default {
     component: 'sp-button',
@@ -118,9 +117,7 @@ export const withIcon = (props: Properties): TemplateResult => {
 export const iconSizeOverridden = (): TemplateResult => {
     return html`
         <sp-button label="Edit" size="xl" variant=${variant}>
-            <sp-icon slot="icon" size="s">
-                ${HelpIcon({ hidden: true })} Testing
-            </sp-icon>
+            <sp-icon-help slot="icon" size="s">Testing</sp-icon-help>
         </sp-button>
         <h1 style="color: var(--spectrum-global-color-gray-50)">
             For testing purposes only

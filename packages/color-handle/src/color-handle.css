@@ -15,3 +15,7 @@ governing permissions and limitations under the License.
 :host {
     touch-action: none;
 }
+
+:host(:focus) {
+    outline: none;
+}

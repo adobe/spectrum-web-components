@@ -11,19 +11,26 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
+    html,
+    PropertyValues,
+    SpectrumElement,
     TemplateResult,
-    property,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 
 import styles from './field-group.css.js';
 
 /**
  * @element sp-field-group
+ * @slot - the form controls that make up the group
+ * @slot help-text - default or non-negative help text to associate to your form element
+ * @slot negative-help-text - negative help text to associate to your form element when `invalid`
  */
-export class FieldGroup extends SpectrumElement {
+export class FieldGroup extends ManageHelpText(SpectrumElement, {
+    mode: 'external',
+}) {
     public static get styles(): CSSResultArray {
         return [styles];
     }
@@ -32,11 +39,31 @@ export class FieldGroup extends SpectrumElement {
     public horizontal = false;
 
     @property({ type: Boolean, reflect: true })
+    public invalid = false;
+
+    @property()
+    public label = '';
+
+    @property({ type: Boolean, reflect: true })
     public vertical = false;
 
     protected render(): TemplateResult {
         return html`
-            <slot></slot>
+            <div class="group" role="presentation">
+                <slot></slot>
+            </div>
+            ${this.renderHelpText(this.invalid)}
         `;
+    }
+
+    protected updated(changes: PropertyValues<this>): void {
+        super.updated(changes);
+        if (changes.has('label')) {
+            if (this.label) {
+                this.setAttribute('aria-label', this.label);
+            } else {
+                this.removeAttribute('aria-label');
+            }
+        }
     }
 }

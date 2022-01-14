@@ -1,67 +1,71 @@
-lib
-src/**/*.css.ts
-packages/**/*.css.ts
-styles/**/*.css.ts
-
-node_modules
-npm-debug.log
+# logging / private config
 lerna-debug.log
 yarn-error.log
 .DS_STORE
 .DS_Store
 .chrome
 .firefox
-.npmrc
 .tsbuildinfo
 .rush
 .devcontainer
+tach-results.*
+.gitconfig
+.netlify/plugins
 
+# documentation
 documentation/components/searchIndex.json
-
-coverage
-custom-elements.json
 documentation/api-docs
 documentation/dist
-test/**/*.js
-test/**/*.js.map
-test/**/*.d.ts
-test/visual/src/tests.json
+
+# dependency folders
+coverage
+lib
+
+# build artifacts
+custom-elements.json
+
 packages/*/src/**/*.css.js
 packages/*/custom-elements.json
 packages/**/*.js
-!packages/**/*/spectrum-config.js
 packages/**/spectrum-vars.json
 packages/**/*.js.map
 packages/**/*.d.ts
+packages/**/*.test-vrt.ts
+!packages/**/*/spectrum-config.js
+!packages/*/test/global.d.ts
 !packages/*/global.d.ts
 !packages/*/local.d.ts
-packages/*/*/*.d.ts
-!test/global.d.ts
-!packages/*/test/global.d.ts
-packages/**/*.test-vrt.ts
-*.tsbuildinfo
 
 projects/**/*.js
 projects/**/*.js.map
 projects/**/*.d.ts
 !projects/*/global.d.ts
 
-spectrum-web-components.build.log
-spectrum-web-components.build.error.log
+# typescript assets
+!test/global.d.ts
+*.tsbuildinfo
+
+# built css assets
+packages/**/*.css.ts
+projects/**/*.css.ts
+styles/**/*.css.ts
+
+# test assets
 TESTS.xml
 test-results.xml
-
-/test/benchmark/**/*.js
-/test/benchmark/**/*.js.map
-/test/benchmark/**/*.d.ts
 test/benchmark/cli.cjs
-!test/visual/**/*.js
-test/visual/test.js
-test/visual/story-imports.js
 test/visual/review/
 test/visual/screenshots-baseline/
 test/visual/screenshots-actual/
 test/visual/screenshots-current/
+test/visual/src/data.json
+test/**/*.js
+test/**/*.js.map
+test/**/*.d.ts
+!test/visual/**/*.js
+test/visual/test.js
 
+# npm assets
+node_modules
+npm-debug.log
 package-lock.json
-custom-elements.json

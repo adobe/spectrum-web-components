@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.8.1...@spectrum-web-components/dialog@0.8.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/dialog
+
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.8.0...@spectrum-web-components/dialog@0.8.1) (2021-12-13)
+
+**Note:** Version bump only for package @spectrum-web-components/dialog
+
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.7.1...@spectrum-web-components/dialog@0.8.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/dialog
+
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.7.0...@spectrum-web-components/dialog@0.7.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/dialog
+
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.18...@spectrum-web-components/dialog@0.7.0) (2021-11-02)
+
+### Bug Fixes
+
+-   centralize updated first focusable selector ([300e84c](https://github.com/adobe/spectrum-web-components/commit/300e84c404d031ddad92b4952e48ad3332c4aafd))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.6.18](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.17...@spectrum-web-components/dialog@0.6.18) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/dialog
+
+## [0.6.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.16...@spectrum-web-components/dialog@0.6.17) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/dialog
+
+## [0.6.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.15...@spectrum-web-components/dialog@0.6.16) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/dialog
+
+## [0.6.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.14...@spectrum-web-components/dialog@0.6.15) (2021-08-24)
+
+**Note:** Version bump only for package @spectrum-web-components/dialog
+
+## [0.6.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.13...@spectrum-web-components/dialog@0.6.14) (2021-08-17)
+
+### Bug Fixes
+
+-   **dialog:** normalize sizing technique to align with future t-shirt size usage ([da33797](https://github.com/adobe/spectrum-web-components/commit/da33797e724d0943a6abf059c96641a220182e5f))
+
+## [0.6.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.12...@spectrum-web-components/dialog@0.6.13) (2021-08-03)
+
+**Note:** Version bump only for package @spectrum-web-components/dialog
+
+## [0.6.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.11...@spectrum-web-components/dialog@0.6.12) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/dialog
+
+## [0.6.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.10...@spectrum-web-components/dialog@0.6.11) (2021-07-01)
+
+### Bug Fixes
+
+-   have sp-dialog-wrapper confirm scroll management of its dialog when opening ([fed9536](https://github.com/adobe/spectrum-web-components/commit/fed953672722dde152b66614141bfd1c3bb824a1))
+-   match footer default color to content ([fd2b6f9](https://github.com/adobe/spectrum-web-components/commit/fd2b6f9552662365a982f534eac8f9d535a123f6))
+
+## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.9...@spectrum-web-components/dialog@0.6.10) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/dialog
+
 ## [0.6.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.6.8...@spectrum-web-components/dialog@0.6.9) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/dialog

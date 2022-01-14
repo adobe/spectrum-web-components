@@ -11,14 +11,14 @@ governing permissions and limitations under the License.
 */
 
 import {
-    SpectrumElement,
-    html,
     css,
-    property,
-    TemplateResult,
+    html,
+    nothing,
     PropertyValues,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
-import { nothing } from 'lit-html';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ObserveSlotPresence } from '@spectrum-web-components/shared';
 import { ActionGroup } from '@spectrum-web-components/action-group';
 import bodyStyles from '@spectrum-web-components/styles/body.js';

@@ -11,26 +11,35 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
-    property,
+    html,
     PropertyValues,
-    query,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
-import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
-import { ColorHandle, ColorValue } from '@spectrum-web-components/color-handle';
+import { SWCResizeObserverEntry, WithSWCResizeObserver } from './types';
+import {
+    ColorHandle,
+    ColorValue,
+    extractHueAndSaturationRegExp,
+    replaceHueRegExp,
+} from '@spectrum-web-components/color-handle';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import { TinyColor } from '@ctrl/tinycolor';
 
 import styles from './color-area.css.js';
 
-const preventDefault = (event: KeyboardEvent): void => event.preventDefault();
-
 /**
  * @element sp-color-area
+ * @slot gradient - a custom gradient visually outlining the available color values
+ * @fires input - The value of the Color Area has changed.
+ * @fires change - An alteration to the value of the Color Area has been committed by the user.
  */
 export class ColorArea extends SpectrumElement {
     public static get styles(): CSSResultArray {
@@ -44,7 +53,13 @@ export class ColorArea extends SpectrumElement {
     public focused = false;
 
     @property({ type: String })
-    public label = 'saturation and luminosity';
+    public label: string | undefined;
+
+    @property({ type: String, attribute: 'label-x' })
+    public labelX = 'saturation';
+
+    @property({ type: String, attribute: 'label-y' })
+    public labelY = 'luminosity';
 
     @query('.handle')
     private handle!: ColorHandle;
@@ -92,18 +107,16 @@ export class ColorArea extends SpectrumElement {
                 return this._color.toName() || this._color.toRgbString();
             case 'hsl':
                 if (this._format.isString) {
-                    const hueExp = /(^hs[v|va|l|la]\()\d{1,3}/;
                     const hslString = this._color.toHslString();
-                    return hslString.replace(hueExp, `$1${this.hue}`);
+                    return hslString.replace(replaceHueRegExp, `$1${this.hue}`);
                 } else {
                     const { s, l, a } = this._color.toHsl();
                     return { h: this.hue, s, l, a };
                 }
             case 'hsv':
                 if (this._format.isString) {
-                    const hueExp = /(^hs[v|va|l|la]\()\d{1,3}/;
                     const hsvString = this._color.toHsvString();
-                    return hsvString.replace(hueExp, `$1${this.hue}`);
+                    return hsvString.replace(replaceHueRegExp, `$1${this.hue}`);
                 } else {
                     const { s, v, a } = this._color.toHsv();
                     return { h: this.hue, s, v, a };
@@ -141,8 +154,7 @@ export class ColorArea extends SpectrumElement {
         let originalHue: number | undefined = undefined;
 
         if (isString && format.startsWith('hs')) {
-            const hueExp = /^hs[v|va|l|la]\((\d{1,3})/;
-            const values = hueExp.exec(color as string);
+            const values = extractHueAndSaturationRegExp.exec(color as string);
 
             if (values !== null) {
                 const [, h] = values;
@@ -169,11 +181,52 @@ export class ColorArea extends SpectrumElement {
         isString: false,
     };
 
-    @property({ type: Number })
-    public x = 1;
+    @property({ attribute: false })
+    private activeAxis = 'x';
 
     @property({ type: Number })
-    public y = 0;
+    public get x(): number {
+        return this._x;
+    }
+
+    public set x(x: number) {
+        if (x === this.x) {
+            return;
+        }
+        const oldValue = this.x;
+        if (this.inputX) {
+            // Use the native `input[type='range']` control to validate this value after `firstUpdate`
+            this.inputX.value = x.toString();
+            this._x = this.inputX.valueAsNumber;
+        } else {
+            this._x = x;
+        }
+        this.requestUpdate('x', oldValue);
+    }
+
+    private _x = 1;
+
+    @property({ type: Number })
+    public get y(): number {
+        return this._y;
+    }
+
+    public set y(y: number) {
+        if (y === this.y) {
+            return;
+        }
+        const oldValue = this.y;
+        if (this.inputY) {
+            // Use the native `input[type='range']` control to validate this value after `firstUpdate`
+            this.inputY.value = y.toString();
+            this._y = this.inputY.valueAsNumber;
+        } else {
+            this._y = y;
+        }
+        this.requestUpdate('y', oldValue);
+    }
+
+    private _y = 0;
 
     @property({ type: Number })
     public step = 0.01;
@@ -184,70 +237,77 @@ export class ColorArea extends SpectrumElement {
     @query('[name="y"]')
     public inputY!: HTMLInputElement;
 
-    private get altered(): number {
-        return this._altered;
-    }
-
-    private set altered(altered: number) {
-        this._altered = altered;
-        this.step = Math.max(0.01, this.altered * 5 * 0.01);
-    }
-
-    private _altered = 0;
-
-    private altKeys = new Set();
+    private altered = 0;
 
     private activeKeys = new Set();
+
+    public focus(focusOptions: FocusOptions = {}): void {
+        super.focus(focusOptions);
+        this.forwardFocus();
+    }
+
+    private forwardFocus(): void {
+        this.focused = this.hasVisibleFocusInTree();
+        if (this.activeAxis === 'x') {
+            this.inputX.focus();
+        } else {
+            this.inputY.focus();
+        }
+    }
 
     private handleFocusin(): void {
         this.focused = true;
     }
 
     private handleFocusout(): void {
+        if (this._pointerDown) {
+            return;
+        }
         this.focused = false;
     }
 
     private handleKeydown(event: KeyboardEvent): void {
-        const { key, code } = event;
-        if (['Shift', 'Meta', 'Control', 'Alt'].includes(key)) {
-            this.altKeys.add(key);
-            this.altered = this.altKeys.size;
-        }
-        if (code.search('Arrow') === 0) {
+        const { code } = event;
+        this.focused = true;
+        this.altered = [event.shiftKey, event.ctrlKey, event.altKey].filter(
+            (key) => !!key
+        ).length;
+        const isArrowKey = code.search('Arrow') === 0;
+        if (isArrowKey) {
+            event.preventDefault();
             this.activeKeys.add(code);
+            this.handleKeypress();
         }
-        this.handleKeypress();
     }
 
     private handleKeypress(): void {
         let deltaX = 0;
         let deltaY = 0;
+        const step = Math.max(this.step, this.altered * 5 * this.step);
         this.activeKeys.forEach((code) => {
             switch (code) {
                 case 'ArrowUp':
-                case 'Up':
-                    deltaY = this.step * -1;
+                    deltaY = step * -1;
                     break;
                 case 'ArrowDown':
-                case 'Down':
-                    deltaY = this.step * 1;
+                    deltaY = step * 1;
                     break;
                 case 'ArrowLeft':
-                case 'Left':
-                    deltaX = this.step * -1;
+                    deltaX = step * -1;
                     break;
                 case 'ArrowRight':
-                case 'Right':
-                    deltaX = this.step * 1;
+                    deltaX = step * 1;
                     break;
                 /* c8 ignore next 2 */
                 default:
                     break;
             }
         });
-        if (deltaX) {
+        if (deltaX != 0) {
+            this.activeAxis = 'x';
             this.inputX.focus();
-        } else if (deltaY) {
+        } else if (deltaY != 0) {
+            this.activeAxis = 'y';
             this.inputY.focus();
         }
         this.x = Math.min(1, Math.max(this.x + deltaX, 0));
@@ -256,27 +316,30 @@ export class ColorArea extends SpectrumElement {
         this._previousColor = this._color.clone();
         this._color = new TinyColor({ h: this.hue, s: this.x, v: 1 - this.y });
 
-        const applyDefault = this.dispatchEvent(
-            new Event('change', {
-                bubbles: true,
-                composed: true,
-                cancelable: true,
-            })
-        );
-        if (!applyDefault) {
-            this._color = this._previousColor;
+        if (deltaX != 0 || deltaY != 0) {
+            this.dispatchEvent(
+                new Event('input', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            const applyDefault = this.dispatchEvent(
+                new Event('change', {
+                    bubbles: true,
+                    composed: true,
+                    cancelable: true,
+                })
+            );
+            if (!applyDefault) {
+                this._color = this._previousColor;
+            }
         }
     }
 
     private handleKeyup(event: KeyboardEvent): void {
-        const { key, code } = event;
-        if (['Shift', 'Meta', 'Control', 'Alt'].includes(key)) {
-            this.altKeys.delete(key);
-            this.altered = this.altKeys.size;
-        }
-        if (code.search('Arrow') === 0) {
-            this.activeKeys.delete(code);
-        }
+        event.preventDefault();
+        const { code } = event;
+        this.activeKeys.delete(code);
     }
 
     private handleInput(event: Event & { target: HTMLInputElement }): void {
@@ -286,19 +349,31 @@ export class ColorArea extends SpectrumElement {
         this._color = new TinyColor({ h: this.hue, s: this.x, v: 1 - this.y });
     }
 
+    private handleChange(event: Event & { target: HTMLInputElement }): void {
+        this.handleInput(event);
+        this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+    }
+
     private boundingClientRect!: DOMRect;
+    private _pointerDown = false;
 
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             event.preventDefault();
             return;
         }
+        this._pointerDown = true;
         this._previousColor = this._color.clone();
         this.boundingClientRect = this.getBoundingClientRect();
-
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
         if (event.pointerType === 'mouse') {
-            this.handleFocusin();
+            this.focused = true;
         }
     }
 
@@ -319,10 +394,8 @@ export class ColorArea extends SpectrumElement {
 
     private handlePointerup(event: PointerEvent): void {
         event.preventDefault();
+        this._pointerDown = false;
         (event.target as HTMLElement).releasePointerCapture(event.pointerId);
-        if (event.pointerType === 'mouse') {
-            this.handleFocusout();
-        }
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 bubbles: true,
@@ -330,6 +403,10 @@ export class ColorArea extends SpectrumElement {
                 cancelable: true,
             })
         );
+        this.inputX.focus();
+        if (event.pointerType === 'mouse') {
+            this.focused = false;
+        }
         if (!applyDefault) {
             this._color = this._previousColor;
         }
@@ -384,53 +461,59 @@ export class ColorArea extends SpectrumElement {
                 class="gradient"
                 style="background:
                     linear-gradient(to top, black 0%, hsla(${this
-                    .hue}, 100%, 0%, 0) 100%),
+                    .hue}, 100%, 0.01%, 0) 100%),
                     linear-gradient(to right, white 0%, hsla(${this
-                    .hue}, 100%, 0%, 0) 100%), hsl(${this.hue}, 100%, 50%);"
+                    .hue}, 100%, 0.01%, 0) 100%), hsl(${this.hue}, 100%, 50%);"
             >
                 <slot name="gradient"></slot>
             </div>
 
             <sp-color-handle
+                tabindex=${ifDefined(this.focused ? undefined : '0')}
+                @focus=${this.forwardFocus}
+                ?focused=${this.focused}
                 class="handle"
                 color=${this._color.toHslString()}
                 ?disabled=${this.disabled}
                 style="transform: translate(${this.x * width}px, ${this.y *
                 height}px);"
-                @manage=${streamingListener(
-                    { type: 'pointerdown', fn: this.handlePointerdown },
-                    { type: 'pointermove', fn: this.handlePointermove },
-                    {
-                        type: ['pointerup', 'pointercancel'],
-                        fn: this.handlePointerup,
-                    }
-                )}
+                ${streamingListener({
+                    start: ['pointerdown', this.handlePointerdown],
+                    streamInside: ['pointermove', this.handlePointermove],
+                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                })}
             ></sp-color-handle>
 
-            <input
-                type="range"
-                class="slider"
-                name="x"
-                aria-label=${this.label}
-                min="0"
-                max="1"
-                step=${this.step}
-                .value=${String(this.x)}
-                @input=${this.handleInput}
-                @keydown=${preventDefault}
-            />
-            <input
-                type="range"
-                class="slider"
-                name="y"
-                aria-label=${this.label}
-                min="0"
-                max="1"
-                step=${this.step}
-                .value=${String(this.y)}
-                @input=${this.handleInput}
-                @keydown=${preventDefault}
-            />
+            <div>
+                <input
+                    type="range"
+                    class="slider"
+                    name="x"
+                    aria-label=${this.label ?? this.labelX}
+                    min="0"
+                    max="1"
+                    step=${this.step}
+                    tabindex="-1"
+                    .value=${String(this.x)}
+                    @input=${this.handleInput}
+                    @change=${this.handleChange}
+                />
+            </div>
+            <div>
+                <input
+                    type="range"
+                    class="slider"
+                    name="y"
+                    aria-label=${this.label ?? this.labelY}
+                    min="0"
+                    max="1"
+                    step=${this.step}
+                    tabindex="-1"
+                    .value=${String(this.y)}
+                    @input=${this.handleInput}
+                    @change=${this.handleChange}
+                />
+            </div>
         `;
     }
 
@@ -444,22 +527,46 @@ export class ColorArea extends SpectrumElement {
         this.addEventListener('keydown', this.handleKeydown);
     }
 
+    protected updated(changed: PropertyValues): void {
+        super.updated(changed);
+        if (this.x !== this.inputX.valueAsNumber) {
+            this.x = this.inputX.valueAsNumber;
+        }
+        if (this.y !== this.inputY.valueAsNumber) {
+            this.y = this.inputY.valueAsNumber;
+        }
+        if (changed.has('focused') && this.focused) {
+            // Lazily bind the `input[type="range"]` elements in shadow roots
+            // so that browsers with certain settings (Webkit) aren't allowed
+            // multiple tab stops within the Color Area.
+            const parentX = this.inputX.parentElement as HTMLDivElement;
+            const parentY = this.inputY.parentElement as HTMLDivElement;
+            if (!parentX.shadowRoot && !parentY.shadowRoot) {
+                parentX.attachShadow({ mode: 'open' });
+                parentY.attachShadow({ mode: 'open' });
+                const slot = '<div tabindex="-1"><slot></slot></div>';
+                (parentX.shadowRoot as unknown as ShadowRoot).innerHTML = slot;
+                (parentY.shadowRoot as unknown as ShadowRoot).innerHTML = slot;
+            }
+        }
+    }
+
     private observer?: WithSWCResizeObserver['ResizeObserver'];
 
     public connectedCallback(): void {
         super.connectedCallback();
         if (
             !this.observer &&
-            ((window as unknown) as WithSWCResizeObserver).ResizeObserver
+            (window as unknown as WithSWCResizeObserver).ResizeObserver
         ) {
-            this.observer = new ((window as unknown) as WithSWCResizeObserver).ResizeObserver(
-                (entries: SWCResizeObserverEntry[]) => {
-                    for (const entry of entries) {
-                        this.boundingClientRect = entry.contentRect;
-                    }
-                    this.requestUpdate();
+            this.observer = new (
+                window as unknown as WithSWCResizeObserver
+            ).ResizeObserver((entries: SWCResizeObserverEntry[]) => {
+                for (const entry of entries) {
+                    this.boundingClientRect = entry.contentRect;
                 }
-            );
+                this.requestUpdate();
+            });
         }
         this.observer?.observe(this);
     }

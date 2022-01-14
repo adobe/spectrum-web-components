@@ -11,34 +11,76 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    property,
     CSSResultArray,
+    html,
     TemplateResult,
-    query,
-    PropertyValues,
-    styleMap,
-    ifDefined,
 } from '@spectrum-web-components/base';
-import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import {
+    classMap,
+    ifDefined,
+    repeat,
+    styleMap,
+} from '@spectrum-web-components/base/src/directives.js';
 
 import sliderStyles from './slider.css.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import { StyleInfo } from 'lit-html/directives/style-map';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import type { NumberField } from '@spectrum-web-components/number-field';
+import { HandleController, HandleValueDictionary } from './HandleController.js';
+import { SliderHandle } from './SliderHandle.js';
+import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 
 export const variants = ['filled', 'ramp', 'range', 'tick'];
 
-export class Slider extends ObserveSlotText(Focusable, '') {
+/**
+ * @element sp-slider
+ *
+ * @slot - text label for the Slider
+ */
+export class Slider extends ObserveSlotText(SliderHandle, '') {
     public static get styles(): CSSResultArray {
         return [sliderStyles];
     }
 
+    public handleController: HandleController = new HandleController(this);
+
+    /**
+     * Whether to display a Number Field along side the slider UI
+     */
+    @property({ type: Boolean, reflect: true })
+    public get editable(): boolean {
+        return this._editable;
+    }
+
+    public set editable(editable: boolean) {
+        if (editable === this.editable) return;
+        const oldValue = this.editable;
+        this._editable = this.handleController.size < 2 ? editable : false;
+        if (this.editable) {
+            this._numberFieldInput = import(
+                '@spectrum-web-components/number-field/sp-number-field.js'
+            );
+        }
+        if (oldValue !== this.editable) {
+            this.requestUpdate('editable', oldValue);
+        }
+    }
+
+    private _editable = false;
+
+    /**
+     * Whether the stepper UI of the Number Field is hidden or not
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'hide-stepper' })
+    public hideStepper = false;
+
     @property()
     public type = '';
-
-    @property({ type: Number, reflect: true })
-    public value = 10;
 
     @property({ type: String })
     public set variant(variant: string) {
@@ -60,31 +102,42 @@ export class Slider extends ObserveSlotText(Focusable, '') {
         return this._variant;
     }
 
+    public get values(): HandleValueDictionary {
+        return this.handleController.values;
+    }
+
+    public get handleName(): string {
+        return 'value';
+    }
+
     /* Ensure that a '' value for `variant` removes the attribute instead of a blank value */
     private _variant = '';
 
     @property({ attribute: false })
-    public getAriaValueText: (value: number) => string = (value) => `${value}`;
+    public getAriaValueText: (values: Map<string, string>) => string = (
+        values
+    ) => {
+        const valueArray = [...values.values()];
+        if (valueArray.length === 2)
+            return `${valueArray[0]}${this._forcedUnit} - ${valueArray[1]}${this._forcedUnit}`;
+        return valueArray.join(`${this._forcedUnit}, `) + this._forcedUnit;
+    };
 
-    @property({ attribute: false })
-    private get ariaValueText(): string {
+    public get ariaValueText(): string {
         if (!this.getAriaValueText) {
-            return `${this.value}`;
+            return `${this.value}${this._forcedUnit}`;
         }
-        return this.getAriaValueText(this.value);
+        return this.getAriaValueText(this.handleController.formattedValues);
     }
 
-    @property()
-    public label = '';
+    @property({ type: String, reflect: true, attribute: 'label-visibility' })
+    public labelVisibility?: 'text' | 'value' | 'none';
 
-    @property({ reflect: true, attribute: 'aria-label' })
-    public ariaLabel?: string;
-
-    @property({ type: Number })
-    public max = 100;
-
-    @property({ type: Number })
+    @property({ type: Number, reflect: true })
     public min = 0;
+
+    @property({ type: Number, reflect: true })
+    public max = 100;
 
     @property({ type: Number })
     public step = 1;
@@ -98,82 +151,99 @@ export class Slider extends ObserveSlotText(Focusable, '') {
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 
-    @property({ type: Boolean, reflect: true })
-    public dragging = false;
-
-    @property({ type: Boolean, reflect: true, attribute: 'handle-highlight' })
-    public handleHighlight = false;
-
-    @query('#handle')
-    private handle!: HTMLDivElement;
-
-    @query('#input')
-    private input!: HTMLInputElement;
-
     @query('#label')
-    private labelEl!: HTMLLabelElement;
+    public labelEl!: HTMLLabelElement;
 
-    private boundingClientRect?: DOMRect;
+    @query('#number-field')
+    public numberField!: NumberField;
+
+    @query('#track')
+    public track!: HTMLDivElement;
+
+    public get numberFormat(): Intl.NumberFormat {
+        return this.getNumberFormat();
+    }
 
     public get focusElement(): HTMLElement {
-        return this.input;
+        return this.handleController.focusElement;
+    }
+
+    protected handleLabelClick(event: Event): void {
+        if (this.editable) {
+            event.preventDefault();
+            this.focus();
+        }
     }
 
     protected render(): TemplateResult {
         return html`
             ${this.renderLabel()} ${this.renderTrack()}
+            ${this.editable
+                ? html`
+                      <sp-number-field
+                          .formatOptions=${this.formatOptions || {}}
+                          id="number-field"
+                          min=${this.min}
+                          max=${this.max}
+                          step=${this.step}
+                          value=${this.value}
+                          ?hide-stepper=${this.hideStepper}
+                          ?disabled=${this.disabled}
+                          @input=${this.handleNumberInput}
+                          @change=${this.handleNumberChange}
+                      ></sp-number-field>
+                  `
+                : html``}
         `;
     }
 
-    protected updated(changedProperties: PropertyValues): void {
-        if (changedProperties.has('value')) {
-            if (this.value === this.input.valueAsNumber) {
-                this.dispatchInputEvent();
-            } else {
-                this.value = this.input.valueAsNumber;
-            }
-        }
+    public connectedCallback(): void {
+        super.connectedCallback();
+        this.handleController.hostConnected();
+    }
+
+    public disconnectedCallback(): void {
+        super.disconnectedCallback();
+        this.handleController.hostDisconnected();
+    }
+
+    public update(changedProperties: Map<string, boolean>): void {
+        this.handleController.hostUpdate();
+        super.update(changedProperties);
     }
 
     private renderLabel(): TemplateResult {
+        const textLabelVisible =
+            this.labelVisibility === 'none' || this.labelVisibility === 'value';
+        const valueLabelVisible =
+            this.labelVisibility === 'none' || this.labelVisibility === 'text';
         return html`
-            <div id="labelContainer">
-                <label id="label" for="input">
+            <div id="label-container">
+                <sp-field-label
+                    class=${classMap({
+                        'visually-hidden': textLabelVisible,
+                    })}
+                    ?disabled=${this.disabled}
+                    id="label"
+                    for=${this.editable
+                        ? 'number-field'
+                        : this.handleController.activeHandleInputId}
+                    @click=${this.handleLabelClick}
+                >
                     ${this.slotHasContent ? html`` : this.label}
                     <slot>${this.label}</slot>
-                </label>
-                <output id="value" aria-live="off" for="input">
+                </sp-field-label>
+                <output
+                    class=${classMap({
+                        'visually-hidden': valueLabelVisible,
+                    })}
+                    id="value"
+                    aria-live="off"
+                    for="input"
+                >
                     ${this.ariaValueText}
                 </output>
             </div>
-        `;
-    }
-
-    private renderTrackLeft(): TemplateResult {
-        if (this.variant === 'ramp') {
-            return html``;
-        }
-        return html`
-            <div
-                class="track"
-                id="track-left"
-                style=${styleMap(this.trackStartStyles)}
-                role="presentation"
-            ></div>
-        `;
-    }
-
-    private renderTrackRight(): TemplateResult {
-        if (this.variant === 'ramp') {
-            return html``;
-        }
-        return html`
-            <div
-                class="track"
-                id="track-right"
-                style=${styleMap(this.trackEndStyles)}
-                role="presentation"
-            ></div>
         `;
     }
 
@@ -202,7 +272,8 @@ export class Slider extends ObserveSlotText(Focusable, '') {
             return html``;
         }
         const tickStep = this.tickStep || this.step;
-        const tickCount = (this.max - this.min) / tickStep;
+        const tickCount =
+            ((this.max as number) - (this.min as number)) / tickStep;
         const partialFit = tickCount % 1 !== 0;
         const ticks = new Array(Math.floor(tickCount + 1));
         ticks.fill(0, 0, tickCount + 1);
@@ -232,194 +303,110 @@ export class Slider extends ObserveSlotText(Focusable, '') {
         `;
     }
 
-    private renderHandle(): TemplateResult {
+    private renderTrackSegment(start: number, end: number): TemplateResult {
+        if (this.variant === 'ramp') {
+            return html``;
+        }
         return html`
             <div
-                id="handle"
-                style=${this.handleStyle}
-                @manage=${streamingListener(
-                    { type: 'pointerdown', fn: this.handlePointerdown },
-                    { type: 'pointermove', fn: this.handlePointermove },
-                    {
-                        type: ['pointerup', 'pointercancel'],
-                        fn: this.handlePointerup,
-                    }
-                )}
+                class="track"
+                style=${styleMap(this.trackSegmentStyles(start, end))}
                 role="presentation"
-            >
-                <input
-                    type="range"
-                    id="input"
-                    min=${this.min}
-                    max=${this.max}
-                    step=${this.step}
-                    .value=${this.value.toString()}
-                    aria-disabled=${ifDefined(
-                        this.disabled ? 'true' : undefined
-                    )}
-                    aria-valuetext=${this.ariaValueText}
-                    @change=${this.onInputChange}
-                    @focus=${this.onInputFocus}
-                    @blur=${this.onInputBlur}
-                />
-            </div>
+            ></div>
         `;
     }
 
     private renderTrack(): TemplateResult {
+        const segments = this.handleController.trackSegments();
+
+        const trackItems = [
+            { id: 'track0', html: this.renderTrackSegment(...segments[0]) },
+            { id: 'ramp', html: this.renderRamp() },
+            { id: 'ticks', html: this.renderTicks() },
+            { id: 'handles', html: this.handleController.render() },
+            ...segments.slice(1).map(([start, end], index) => ({
+                id: `track${index + 1}`,
+                html: this.renderTrackSegment(start, end),
+            })),
+        ];
+
         return html`
-            <div @pointerdown=${this.handleTrackPointerdown}>
+            <div
+                id="track"
+                ${streamingListener({
+                    start: ['pointerdown', this.handlePointerdown],
+                    streamInside: ['pointermove', this.handlePointermove],
+                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                })}
+            >
                 <div id="controls">
-                    ${this.renderTrackLeft()} ${this.renderRamp()}
-                    ${this.renderTicks()} ${this.renderHandle()}
-                    ${this.renderTrackRight()}
+                    ${repeat(
+                        trackItems,
+                        (item) => item.id,
+                        (item) => item.html
+                    )}
                 </div>
             </div>
         `;
     }
 
-    private handlePointerdown(event: PointerEvent): void {
-        if (this.disabled || event.button !== 0) {
-            event.preventDefault();
-            return;
-        }
-        this.boundingClientRect = this.getBoundingClientRect();
-        this.labelEl.click();
-        this.dragging = true;
-        this.handle.setPointerCapture(event.pointerId);
+    protected handlePointerdown(event: PointerEvent): void {
+        this.handleController.handlePointerdown(event);
     }
 
-    private handlePointerup(event: PointerEvent): void {
-        // Retain focus on input element after mouse up to enable keyboard interactions
-        this.labelEl.click();
-        this.handleHighlight = false;
-        this.dragging = false;
-        this.handle.releasePointerCapture(event.pointerId);
-        this.dispatchChangeEvent();
+    protected handlePointermove(event: PointerEvent): void {
+        this.handleController.handlePointermove(event);
     }
 
-    private handlePointermove(event: PointerEvent): void {
-        if (!this.dragging) {
-            return;
-        }
-        this.value = this.calculateHandlePosition(event);
+    protected handlePointerup(event: PointerEvent): void {
+        this.handleController.handlePointerup(event);
     }
 
-    /**
-     * Move the handle under the cursor and begin start a pointer capture when the track
-     * is moused down
-     */
-    private handleTrackPointerdown(event: PointerEvent): void {
-        if (event.target === this.handle) {
+    private handleNumberInput(event: Event & { target: NumberField }): void {
+        const { value } = event.target;
+        if (event.target?.stepperActive && !isNaN(value)) {
+            this.value = value;
             return;
         }
-
+        // Do not apply uncommited values to the parent element unless interacting with the stepper UI.
+        // Stop uncommited input from being annoucned to the parent application.
         event.stopPropagation();
-        event.preventDefault();
-        const applyDefault = this.handle.dispatchEvent(
-            new PointerEvent('pointerdown', event)
-        );
-        if (applyDefault) {
-            this.handlePointermove(event);
+    }
+
+    private handleNumberChange(event: Event & { target: NumberField }): void {
+        const { value } = event.target;
+        if (isNaN(value)) {
+            event.target.value = this.value;
+            event.stopPropagation();
+        } else {
+            this.value = value;
+            if (!event.target?.stepperActive) {
+                // When stepper is not active, sythesize an `input` event so that the
+                // `change` event isn't surprising.
+                this.dispatchInputEvent();
+            }
         }
     }
 
-    /**
-     * Keep the slider value property in sync with the input element's value
-     */
-    private onInputChange(): void {
-        const inputValue = parseFloat(this.input.value);
-        this.value = inputValue;
-
-        this.dispatchChangeEvent();
-    }
-
-    private onInputFocus(): void {
-        let isFocusVisible;
-        try {
-            isFocusVisible =
-                this.input.matches(':focus-visible') ||
-                this.matches('.focus-visible');
-        } catch (error) {
-            isFocusVisible = this.matches('.focus-visible');
-        }
-        this.handleHighlight = isFocusVisible;
-    }
-
-    private onInputBlur(): void {
-        this.handleHighlight = false;
-    }
-
-    /**
-     * Returns the value under the cursor
-     * @param: PointerEvent on slider
-     * @return: Slider value that correlates to the position under the pointer
-     */
-    private calculateHandlePosition(event: PointerEvent | MouseEvent): number {
-        if (!this.boundingClientRect) {
-            return this.value;
-        }
-        const rect = this.boundingClientRect;
-        const minOffset = rect.left;
-        const offset = event.clientX;
-        const size = rect.width;
-
-        const percent = (offset - minOffset) / size;
-        const value = this.min + (this.max - this.min) * percent;
-
-        return this.isLTR ? value : this.max - value;
-    }
-
-    private dispatchInputEvent(): void {
-        if (!this.dragging) {
-            return;
-        }
-        const inputEvent = new Event('input', {
-            bubbles: true,
-            composed: true,
-        });
-
-        this.dispatchEvent(inputEvent);
-    }
-
-    private dispatchChangeEvent(): void {
-        this.input.value = this.value.toString();
-
-        const changeEvent = new Event('change', {
-            bubbles: true,
-            composed: true,
-        });
-
-        this.dispatchEvent(changeEvent);
-    }
-
-    /**
-     * Ratio representing the slider's position on the track
-     */
-    private get trackProgress(): number {
-        const range = this.max - this.min;
-        const progress = this.value - this.min;
-
-        return progress / range;
-    }
-
-    private get trackStartStyles(): StyleInfo {
-        return {
-            width: `${this.trackProgress * 100}%`,
-            '--spectrum-slider-track-background-size': `calc(100% / ${this.trackProgress})`,
+    private trackSegmentStyles(start: number, end: number): StyleInfo {
+        const size = end - start;
+        const styles: StyleInfo = {
+            width: `${size * 100}%`,
+            '--spectrum-slider-track-background-size': `${(1 / size) * 100}%`,
+            '--spectrum-slider-track-segment-position': `${start * 100}%`,
         };
+        return styles;
     }
 
-    private get trackEndStyles(): StyleInfo {
-        return {
-            width: `${100 - this.trackProgress * 100}%`,
-            '--spectrum-slider-track-background-size': `calc(100% / ${
-                1 - this.trackProgress
-            })`,
-        };
-    }
+    private _numberFieldInput: Promise<unknown> = Promise.resolve();
 
-    private get handleStyle(): string {
-        return `${this.isLTR ? 'left' : 'right'}: ${this.trackProgress * 100}%`;
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
+        if (this.editable) {
+            await this._numberFieldInput;
+            await this.numberField.updateComplete;
+        }
+        await this.handleController.handleUpdatesComplete();
+        return complete;
     }
 }

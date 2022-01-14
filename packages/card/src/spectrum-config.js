@@ -39,7 +39,7 @@ const config = {
                 },
                 {
                     selector: '.spectrum-Card-quickActions',
-                    name: 'quickActions',
+                    name: 'quick-actions',
                 },
                 {
                     selector: '.spectrum-Card-actions',
@@ -47,7 +47,7 @@ const config = {
                 },
                 {
                     selector: '.spectrum-Card-actionButton',
-                    name: 'actionButton',
+                    name: 'action-button',
                 },
                 {
                     selector: '.spectrum-Checkbox',
@@ -79,14 +79,42 @@ const config = {
                     selector: '.is-drop-target',
                 },
                 {
-                    type: 'boolean',
-                    name: 'small',
-                    selector: '.spectrum-Card--small',
+                    type: 'enum',
+                    name: 'size',
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-Card--small',
+                        },
+                    ],
                 },
                 {
                     type: 'boolean',
                     name: 'horizontal',
                     selector: '.spectrum-Card--horizontal',
+                },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-Card--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Card--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Card--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-Card--sizeXL',
+                        },
+                    ],
                 },
             ],
             ids: [

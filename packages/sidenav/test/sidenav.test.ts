@@ -21,15 +21,15 @@ import {
     shiftTabEvent,
 } from '../../../test/testing-helpers.js';
 import {
-    fixture,
     elementUpdated,
-    html,
     expect,
+    fixture,
+    html,
     waitUntil,
 } from '@open-wc/testing';
-import { TemplateResult, LitElement } from '@spectrum-web-components/base';
+import { LitElement, TemplateResult } from '@spectrum-web-components/base';
 import { spy } from 'sinon';
-import { executeServerCommand } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Sidenav', () => {
     it('loads', async () => {
@@ -370,7 +370,7 @@ describe('Sidenav', () => {
         expect(firstItem.tabIndex).to.equal(-1);
 
         const firstRect = firstItem.getBoundingClientRect();
-        await executeServerCommand('send-mouse', {
+        await sendMouse({
             steps: [
                 {
                     type: 'move',

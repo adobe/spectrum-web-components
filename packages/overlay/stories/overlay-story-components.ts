@@ -10,17 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    LitElement,
-    html,
     css,
-    property,
+    CSSResultGroup,
+    html,
+    LitElement,
     TemplateResult,
-    CSSResult,
-    CSSResultArray,
-    query,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 
-import { Overlay, Placement } from '../';
+import { Overlay, OverlayTrigger, Placement } from '../';
 import { RadioGroup } from '@spectrum-web-components/radio';
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
@@ -33,7 +34,7 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 const MAX_DEPTH = 7;
 
 class OverlayTargetIcon extends LitElement {
-    static get styles(): CSSResult {
+    static get styles(): CSSResultGroup {
         return css`
             :host {
                 position: absolute;
@@ -76,7 +77,7 @@ class OverlayDrag extends LitElement {
 
     private targetElement: HTMLElement | undefined | null;
 
-    static get styles(): CSSResult {
+    static get styles(): CSSResultGroup {
         return css`
             :host {
                 display: block;
@@ -194,7 +195,7 @@ class RecursivePopover extends LitElement {
 
     public shadowRoot!: ShadowRoot;
 
-    public static get styles(): CSSResultArray {
+    public static get styles(): CSSResultGroup {
         return [
             css`
                 :host {
@@ -304,3 +305,33 @@ class RecursivePopover extends LitElement {
     }
 }
 customElements.define('recursive-popover', RecursivePopover);
+
+export class PopoverContent extends LitElement {
+    @query('[slot="trigger"]')
+    public button!: Button;
+
+    @query('overlay-trigger')
+    public trigger!: OverlayTrigger;
+
+    render(): TemplateResult {
+        return html`
+            <overlay-trigger>
+                <sp-button slot="trigger">Open me</sp-button>
+                <sp-popover slot="click-content" direction="bottom" dialog>
+                    <p>This is all the content.</p>
+                    <p>This is all the content.</p>
+                    <p>This is all the content.</p>
+                    <p>This is all the content.</p>
+                </sp-popover>
+            </overlay-trigger>
+        `;
+    }
+}
+
+customElements.define('popover-content', PopoverContent);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'popover-content': PopoverContent;
+    }
+}

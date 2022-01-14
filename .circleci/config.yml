@@ -2,13 +2,13 @@ version: 2.1
 executors:
     node:
         docker:
-            - image: mcr.microsoft.com/playwright:bionic
+            - image: mcr.microsoft.com/playwright:focal
         environment:
             NODE_ENV: development
 parameters:
     current_golden_images_hash:
         type: string
-        default: af2206f0506c49d7127e6ae9070d8f2359b7e12e
+        default: a60ebceaaf594760a8d5d9c4592fab3ec2ab1e51
 commands:
     downstream:
         steps:
@@ -43,23 +43,27 @@ commands:
                   name: Count baseline images
                   command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
             - run: |
-                  yarn test:ci --config web-test-runner.config.ci.js --group vrt-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                  yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/
             # build diff review site
             - run:
-                  when: always
+                  when: on_fail
                   name: Create review site
                   command: |
-                      node test/visual/review.js
+                      branch=$(git symbolic-ref --short HEAD)
+                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --theme="<< parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
-            - store_artifacts:
-                  path: test/visual/review
-            - store_artifacts:
-                  path: test/visual/screenshots-actual
-            - store_artifacts:
-                  path: test/visual/screenshots-baseline
+            - run:
+                  when: on_fail
+                  name: Publish review site
+                  command: |
+                      cp projects/documentation/content/favicon.ico test/visual
+                      branch=$(git symbolic-ref --short HEAD)
+                      hash=$(echo -n $branch-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
+                      echo hash
+                      yarn netlify deploy --alias=$hash --dir=test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
             - run:
                   when: always
@@ -113,7 +117,7 @@ jobs:
                       source $BASH_ENV
             - run:
                   name: Lint commit message
-                  command: echo "$COMMIT_MESSAGE" | npx commitlint
+                  command: echo "$COMMIT_MESSAGE" | npx commitlint --config commitlint.config.cjs
 
     test:
         executor: node
@@ -142,172 +146,28 @@ jobs:
             - downstream
             - run:
                   name: Generate Docs
-                  command: yarn docs:build
-            - run: echo '/*    /index.html   200' > documentation/dist/_redirects
+                  command: yarn docs:preview
+            - run: echo '/*    /index.html   200' > projects/documentation/dist/_redirects
             - run: |
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
                   yarn netlify deploy --alias=$branch
 
-    visual-lightest-medium-ltr:
+    visual:
         executor: node
-
+        parameters:
+            color:
+                type: string
+            scale:
+                type: string
+            dir:
+                type: string
         steps:
             - downstream
             - run-regressions:
-                  regression_color: lightest
-                  regression_scale: medium
-                  regression_dir: ltr
-
-    visual-lightest-medium-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: lightest
-                  regression_scale: medium
-                  regression_dir: rtl
-
-    visual-lightest-large-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: lightest
-                  regression_scale: large
-                  regression_dir: ltr
-
-    visual-lightest-large-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: lightest
-                  regression_scale: large
-                  regression_dir: rtl
-
-    visual-light-medium-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: light
-                  regression_scale: medium
-                  regression_dir: ltr
-
-    visual-light-medium-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: light
-                  regression_scale: medium
-                  regression_dir: rtl
-
-    visual-light-large-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: light
-                  regression_scale: large
-                  regression_dir: ltr
-
-    visual-light-large-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: light
-                  regression_scale: large
-                  regression_dir: rtl
-
-    visual-dark-medium-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: dark
-                  regression_scale: medium
-                  regression_dir: ltr
-
-    visual-dark-medium-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: dark
-                  regression_scale: medium
-                  regression_dir: rtl
-
-    visual-dark-large-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: dark
-                  regression_scale: large
-                  regression_dir: ltr
-
-    visual-dark-large-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: dark
-                  regression_scale: large
-                  regression_dir: rtl
-
-    visual-darkest-medium-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: darkest
-                  regression_scale: medium
-                  regression_dir: ltr
-
-    visual-darkest-medium-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: darkest
-                  regression_scale: medium
-                  regression_dir: rtl
-
-    visual-darkest-large-ltr:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: darkest
-                  regression_scale: large
-                  regression_dir: ltr
-
-    visual-darkest-large-rtl:
-        executor: node
-
-        steps:
-            - downstream
-            - run-regressions:
-                  regression_color: darkest
-                  regression_scale: large
-                  regression_dir: rtl
+                  regression_color: << parameters.color >>
+                  regression_scale: << parameters.scale >>
+                  regression_dir: << parameters.dir >>
 
     docs-publish:
         executor: node
@@ -317,10 +177,9 @@ jobs:
             - run:
                   name: Generate Docs
                   command: yarn docs:ci
-            - run: cp documentation/404.html documentation/dist/
-            - run: touch documentation/dist/.nojekyll
+            - run: touch projects/documentation/dist/.nojekyll
             - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
-            - run: yarn gh-pages -d documentation/dist -m "[skip ci] update demonstration site" -t
+            - run: yarn gh-pages -d projects/documentation/dist -m "[skip ci] update demonstration site" -t
 
 workflows:
     version: 2
@@ -331,82 +190,13 @@ workflows:
         jobs:
             - test
             - docs-preview
-            - visual-lightest-medium-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-lightest-large-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-light-medium-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-light-large-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-dark-medium-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-dark-large-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-darkest-medium-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-darkest-large-ltr:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-lightest-medium-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-lightest-large-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-light-medium-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-light-large-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-dark-medium-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-dark-large-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-darkest-medium-rtl:
-                  filters:
-                      branches:
-                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
-                          ignore: /pull\/[0-9]+/
-            - visual-darkest-large-rtl:
+            - visual:
+                  name: visual-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
+                  matrix:
+                      parameters:
+                          color: [lightest, light, dark, darkest]
+                          scale: [medium, large]
+                          dir: [ltr, rtl]
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX

@@ -12,42 +12,43 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    property,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
+    SizedMixin,
     SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { TopNavItem } from './TopNavItem.js';
 
 import tabStyles from '@spectrum-web-components/tabs/src/tabs.css.js';
 
-declare global {
-    interface Document {
-        fonts?: {
-            ready: Promise<void>;
-        };
-    }
-}
+const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
 /**
  * @element sp-top-nav
- * @slot - Child tab elements
+ *
+ * @slot - Nav Items to display as a group
  * @attr {Boolean} quiet - The tabs border is a lot smaller
  * @attr {Boolean} compact - The collection of tabs take up less space
  */
 
-export class TopNav extends SpectrumElement {
+export class TopNav extends SizedMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
         return [tabStyles];
     }
 
     @property()
-    public selectionIndicatorStyle = '';
+    public selectionIndicatorStyle = noSelectionStyle;
+
+    @property({ attribute: false })
+    public shouldAnimate = false;
 
     private onClick = (event: Event): void => {
         const target = event.target as TopNavItem;
+        this.shouldAnimate = true;
         this.selectTarget(target);
     };
 
@@ -89,7 +90,10 @@ export class TopNav extends SpectrumElement {
             <div @click=${this.onClick} id="list">
                 <slot @slotchange=${this.onSlotChange}></slot>
                 <div
-                    id="selectionIndicator"
+                    id="selection-indicator"
+                    class=${ifDefined(
+                        this.shouldAnimate ? undefined : 'first-position'
+                    )}
                     style=${this.selectionIndicatorStyle}
                 ></div>
             </div>
@@ -106,6 +110,12 @@ export class TopNav extends SpectrumElement {
         super.updated(changes);
         if (changes.has('dir')) {
             this.updateSelectionIndicator();
+        }
+        if (
+            !this.shouldAnimate &&
+            typeof changes.get('shouldAnimate') !== 'undefined'
+        ) {
+            this.shouldAnimate = true;
         }
     }
 
@@ -151,7 +161,7 @@ export class TopNav extends SpectrumElement {
                 item.value === window.location.href
         );
         if (!selectedItem) {
-            this.selectionIndicatorStyle = `transform: translateX(0px) scaleX(0) scaleY(0);`;
+            this.selectionIndicatorStyle = noSelectionStyle;
             return;
         }
         await Promise.all([
@@ -163,23 +173,20 @@ export class TopNav extends SpectrumElement {
 
         const width = itemBoundingClientRect.width;
         const offset =
-            itemBoundingClientRect.left - parentBoundingClientRect.left;
+            this.dir === 'ltr'
+                ? itemBoundingClientRect.left - parentBoundingClientRect.left
+                : itemBoundingClientRect.right - parentBoundingClientRect.right;
 
-        this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${width});`;
+        this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${
+            this.dir === 'ltr' ? width : -1 * width
+        });`;
     };
 
     public connectedCallback(): void {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    addEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.addEventListener(
+            document.fonts.addEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );
@@ -189,14 +196,16 @@ export class TopNav extends SpectrumElement {
     public disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    removeEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.removeEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        removeEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.removeEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );

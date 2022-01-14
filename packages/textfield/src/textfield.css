@@ -12,60 +12,69 @@ governing permissions and limitations under the License.
 
 @import './spectrum-textfield.css';
 
-:host([grows]) #input {
+:host {
+    display: inline-flex;
+    flex-direction: column;
+    width: var(
+        --spectrum-alias-single-line-width,
+        var(--spectrum-global-dimension-size-2400)
+    );
+}
+
+:host([multiline]) {
+    resize: both;
+}
+
+#textfield {
+    width: 100%;
+}
+
+#textfield,
+textarea {
+    resize: inherit;
+}
+
+:host([grows]) .input {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     resize: none;
+    overflow: hidden;
 }
 
 :host([grows]) #sizer {
     box-sizing: border-box;
-    border: var(
-            --spectrum-textfield-border-size,
-            var(--spectrum-alias-border-size-thin)
-        )
-        solid;
-    border-radius: var(
-        --spectrum-textfield-border-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    padding: 3px
-        var(
-            --spectrum-textfield-padding-x,
-            var(--spectrum-global-dimension-size-150)
-        )
-        5px
-        calc(
-            var(
-                    --spectrum-textfield-padding-x,
-                    var(--spectrum-global-dimension-size-150)
-                ) - 1px
-        );
+    overflow-wrap: break-word;
+    border: var(--spectrum-textfield-texticon-border-size) solid;
+    border-radius: var(--spectrum-textfield-texticon-border-radius);
+    padding: var(--spectrum-textarea-padding-top)
+        var(--spectrum-textarea-padding-right)
+        var(--spectrum-textarea-padding-bottom)
+        calc(var(--spectrum-textarea-padding-left) - 1px);
     text-indent: 0;
     width: 100%;
     vertical-align: top;
     margin: 0;
-    font-family: var(
-        --spectrum-alias-body-text-font-family,
-        var(--spectrum-global-font-family-base)
-    );
-    font-size: var(
-        --spectrum-textfield-text-size,
-        var(--spectrum-alias-font-size-default)
-    );
-    line-height: var(
-        --spectrum-textfield-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
-    );
+    overflow: visible;
+    font-family: var(--spectrum-textfield-texticon-text-font-family);
+    font-size: var(--spectrum-textfield-texticon-text-size);
+    line-height: var(--spectrum-textfield-texticon-text-line-height);
+    text-overflow: ellipsis;
+    transition: border-color
+            var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
+        box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out;
+    outline: none;
+    -webkit-appearance: none; /* stylelint-disable-line */
+    -moz-appearance: textfield; /* stylelint-disable-line */
 }
 
 :host([grows][quiet]) #sizer {
-    padding-left: var(--spectrum-textfield-quiet-padding-x, 0);
-    padding-right: var(--spectrum-textfield-quiet-padding-x, 0);
-    border-right-width: 0;
-    border-left-width: 0;
+    border-radius: var(--spectrum-textfield-quiet-texticon-border-radius);
+    border-width: 0 0 var(--spectrum-textfield-quiet-texticon-border-size) 0;
+    resize: none;
+    overflow-y: hidden;
 }
 
 .icon,

@@ -10,7 +10,41 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import fs from 'fs';
-import globby from 'globby';
+import fg from 'fast-glob';
+import { PNG } from 'pngjs';
+import pixelmatch from 'pixelmatch';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import crypto from 'crypto';
+
+const { commit, theme, branch } = yargs(hideBin(process.argv)).argv;
+
+const themes = [];
+// const themes = ['Classic', 'Express']; // prepping for Spectrum Express
+const scales = ['Medium', 'Large'];
+const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
+const directions = ['LTR', 'RTL'];
+// themes.map((theme) =>
+colors.map((color) =>
+    scales.map((scale) =>
+        directions.map((direction) => {
+            // const context = `-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+            const context = `${branch}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+            const md5 = crypto.createHash('md5');
+            md5.update(context);
+            const hash = md5.digest('hex');
+            themes.push([
+                `${color} | ${scale} | ${direction}`,
+                `https://${hash}--spectrum-web-components.netlify.app/review/`,
+            ]);
+            // themes.push([
+            //     `${theme} | ${color} | ${scale} | ${direction}`,
+            //     `https://${hash}--spectrum-web-components.netlify.app/review/`
+            // ]);
+        })
+    )
+);
+// );
 
 function cleanURL(url) {
     return url.replace('test/visual/', '../');
@@ -22,9 +56,7 @@ function cleanID(url, type) {
 
 async function main() {
     const allTests = [];
-    for await (const path of globby.stream(
-        `test/visual/screenshots-baseline/**/*.png`
-    )) {
+    for (const path of await fg(`test/visual/screenshots-baseline/**/*.png`)) {
         const pathParts = path.split('/');
         const name = pathParts[pathParts.length - 1];
         const baseline = cleanURL(path);
@@ -33,10 +65,32 @@ async function main() {
             id,
             name,
             baseline,
+            baselinePath: path,
         };
         allTests.push(test);
     }
-    for await (const path of globby.stream(
+    for (const path of await fg(
+        `test/visual/screenshots-actual/updates/**/*.png`
+    )) {
+        const pathParts = path.split('/');
+        const name = pathParts[pathParts.length - 1];
+        const actual = cleanURL(path);
+        const id = cleanID(path, 'screenshots-actual/updates');
+        const test = {
+            id,
+            name,
+            actual,
+            actualPath: path,
+        };
+        const existingTest = allTests.find((test) => test.id === id);
+        if (existingTest) {
+            existingTest.actual = actual;
+            existingTest.actualPath = path;
+        } else {
+            allTests.push(test);
+        }
+    }
+    for (const path of await fg(
         `test/visual/screenshots-actual/diff/**/*.png`
     )) {
         const pathParts = path.split('/');
@@ -50,26 +104,34 @@ async function main() {
         };
         const existingTest = allTests.find((test) => test.id === id);
         if (existingTest) {
-            existingTest.diff = diff;
-        } else {
-            allTests.push(test);
-        }
-    }
-    for await (const path of globby.stream(
-        `test/visual/screenshots-actual/updates/**/*.png`
-    )) {
-        const pathParts = path.split('/');
-        const name = pathParts[pathParts.length - 1];
-        const actual = cleanURL(path);
-        const id = cleanID(path, 'screenshots-actual/updates');
-        const test = {
-            id,
-            name,
-            actual,
-        };
-        const existingTest = allTests.find((test) => test.id === id);
-        if (existingTest) {
-            existingTest.actual = actual;
+            // When a VRT passes on the second try, it will still have created a diff from the first pass.
+            // Confirm if the actual and baseline images are actually different before including the diff here.
+            const actual = PNG.sync.read(
+                fs.readFileSync(existingTest.actualPath)
+            );
+            const baseline = PNG.sync.read(
+                fs.readFileSync(existingTest.baselinePath)
+            );
+            const { width, height } = actual;
+            const result = new PNG({ width, height });
+            try {
+                const numpixels = pixelmatch(
+                    actual.data,
+                    baseline.data,
+                    result.data,
+                    width,
+                    height,
+                    { threshold: 0 }
+                );
+                if (numpixels > 0) {
+                    existingTest.diff = diff;
+                }
+            } catch (error) {
+                // This likely means that the two images where of different sizes.
+                existingTest.diff = diff;
+            }
+            delete existingTest.actualPath;
+            delete existingTest.baselinePath;
         } else {
             allTests.push(test);
         }
@@ -102,7 +164,16 @@ async function main() {
     if (!fs.existsSync('test/visual/review')) {
         fs.mkdirSync('test/visual/review');
     }
-    fs.writeFileSync('test/visual/src/tests.json', JSON.stringify(tests));
+    const data = JSON.stringify({
+        meta: {
+            branch,
+            commit,
+            theme,
+            themes,
+        },
+        tests,
+    });
+    fs.writeFileSync('test/visual/src/data.json', data);
 }
 
 main();

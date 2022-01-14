@@ -58,6 +58,20 @@ const config = {
                     name: 'label',
                 },
             ],
+            complexSelectors: [
+                {
+                    replacement: ':host(:focus-visible) .spectrum-Radio-input',
+                    selector: /^.spectrum-Radio .spectrum-Radio-input.focus-ring/,
+                },
+                {
+                    replacement: ':focus-visible .spectrum-Radio-input',
+                    selector: /\s.spectrum-Radio-input.focus-ring/,
+                },
+                {
+                    replacement: ':host(:focus-visible) .spectrum-Radio-input',
+                    selector: /^.spectrum-Radio-input.focus-ring/,
+                },
+            ],
         },
     ],
 };

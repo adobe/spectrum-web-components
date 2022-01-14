@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    oneEvent,
+} from '@open-wc/testing';
 import { spy } from 'sinon';
 
 import '../sp-split-button.js';
@@ -20,8 +26,9 @@ import splitButtonDefault, {
     more,
 } from '../stories/split-button-cta.stories.js';
 import { MenuItem } from '@spectrum-web-components/menu';
-import { arrowDownEvent } from '../../../test/testing-helpers.js';
 import { TemplateResult } from '@spectrum-web-components/base';
+import { sendKeys } from '@web/test-runner-commands';
+import type { Button } from '@spectrum-web-components/button';
 
 // wrap in div method
 
@@ -102,17 +109,96 @@ describe('Splitbutton', () => {
         await expect(el1).to.be.accessible();
         await expect(el2).to.be.accessible();
     });
+    it('[type="field"] toggles open/close multiple time', async () => {
+        const test = await fixture<HTMLDivElement>(
+            wrapInDiv(field(splitButtonDefault.args))
+        );
+        const el = test.querySelector('sp-split-button') as SplitButton;
 
+        await elementUpdated(el);
+        let items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(3);
+
+        let opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+
+        expect(el.open).to.be.true;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(0);
+
+        let closed = oneEvent(el, 'sp-closed');
+        el.open = false;
+        await closed;
+
+        expect(el.open).to.be.false;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(3);
+
+        opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+
+        expect(el.open).to.be.true;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(0);
+
+        closed = oneEvent(el, 'sp-closed');
+        el.open = false;
+        await closed;
+
+        expect(el.open).to.be.false;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(3);
+    });
+    it('[type="more"] toggles open/close multiple time', async () => {
+        const test = await fixture<HTMLDivElement>(
+            wrapInDiv(more({ ...splitButtonDefault.args, ...more.args }))
+        );
+        const el = test.querySelector('sp-split-button') as SplitButton;
+
+        await elementUpdated(el);
+        let items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(3);
+
+        let opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+
+        expect(el.open).to.be.true;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(0);
+
+        let closed = oneEvent(el, 'sp-closed');
+        el.open = false;
+        await closed;
+
+        expect(el.open).to.be.false;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(3);
+
+        opened = oneEvent(el, 'sp-opened');
+        el.open = true;
+        await opened;
+
+        expect(el.open).to.be.true;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(0);
+
+        closed = oneEvent(el, 'sp-closed');
+        el.open = false;
+        await closed;
+
+        expect(el.open).to.be.false;
+        items = el.querySelectorAll('sp-menu-item');
+        expect(items.length).to.equal(3);
+    });
     it('receives "focus()"', async () => {
         const test = await fixture<HTMLDivElement>(
             wrapInDiv(field(splitButtonDefault.args))
         );
         const el1 = test.querySelector('sp-split-button') as SplitButton;
         const el2 = test.querySelector('sp-split-button[left]') as SplitButton;
-        const el1FocusElement = el1.focusElement;
-        const el2FocusElement = el2.shadowRoot.querySelector(
-            '.trigger'
-        ) as HTMLElement;
 
         await elementUpdated(el1);
         await elementUpdated(el2);
@@ -120,14 +206,14 @@ describe('Splitbutton', () => {
         el1.focus();
         await elementUpdated(el1);
 
-        expect(document.activeElement === el1);
-        expect(el1.shadowRoot.activeElement === el1FocusElement);
+        expect(document.activeElement).to.equal(el1);
+        expect(el1.shadowRoot.activeElement).to.equal(el1.focusElement);
 
         el2.focus();
         await elementUpdated(el2);
 
-        expect(document.activeElement === el2);
-        expect(el1.shadowRoot.activeElement === el2FocusElement);
+        expect(document.activeElement).to.equal(el2);
+        expect(el2.shadowRoot.activeElement).to.equal(el2.focusElement);
     });
     it('[type="field"] manages `selectedItem`', async () => {
         const test = await fixture<HTMLDivElement>(
@@ -145,18 +231,24 @@ describe('Splitbutton', () => {
         const toggleButton = root.querySelector(
             '.trigger'
         ) as HTMLButtonElement;
+        const opened = oneEvent(el, 'sp-opened');
         toggleButton.click();
+        await opened;
 
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
 
+        const closed = oneEvent(el, 'sp-closed');
         item3.click();
+        await closed;
 
         await elementUpdated(el);
 
-        expect(el.open).to.be.false;
         expect(el.selectedItem?.itemText).to.equal('Short');
+        expect(el.open).to.be.false;
+        expect(document.activeElement).to.equal(el);
+        expect(el.shadowRoot.activeElement).to.equal(el.focusElement);
     });
     it('[type="more"] manages `selectedItem.itemText`', async () => {
         const test = await fixture<HTMLDivElement>(
@@ -174,13 +266,17 @@ describe('Splitbutton', () => {
         const toggleButton = root.querySelector(
             '.trigger'
         ) as HTMLButtonElement;
+        const opened = oneEvent(el, 'sp-opened');
         toggleButton.click();
+        await opened;
 
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
 
+        const closed = oneEvent(el, 'sp-closed');
         item3.click();
+        await closed;
 
         await elementUpdated(el);
 
@@ -201,7 +297,6 @@ describe('Splitbutton', () => {
             )
         );
         const el = test.querySelector('sp-split-button') as SplitButton;
-
         await elementUpdated(el);
 
         expect(el.selectedItem?.itemText).to.equal('Option 1');
@@ -210,8 +305,7 @@ describe('Splitbutton', () => {
         const item1 = el.querySelector('sp-menu-item:nth-child(1)') as MenuItem;
         const item2 = el.querySelector('sp-menu-item:nth-child(2)') as MenuItem;
         const item3 = el.querySelector('sp-menu-item:nth-child(3)') as MenuItem;
-        const root = el.shadowRoot ? el.shadowRoot : el;
-        const main = root.querySelector('#button') as HTMLButtonElement;
+        const main = el.button;
 
         main.click();
 
@@ -220,23 +314,26 @@ describe('Splitbutton', () => {
         expect(firstItemSpy.called, 'first called').to.be.true;
         expect(firstItemSpy.calledOnce, 'first calledOnce').to.be.true;
 
-        const trigger = root.querySelector('.trigger') as HTMLButtonElement;
+        const trigger = (el as unknown as { trigger: Button }).trigger;
+        let opened = oneEvent(el, 'sp-opened');
         trigger.click();
+        await opened;
 
         await elementUpdated(el);
 
         expect(el.open, 'open').to.be.true;
 
+        let closed = oneEvent(el, 'sp-closed');
         item3.click();
+        await closed;
 
         await elementUpdated(el);
 
-        expect(el.open).to.be.false;
+        expect(el.open, 'not open').to.be.false;
         expect(thirdItemSpy.called, 'third called').to.be.true;
         expect(thirdItemSpy.calledOnce, 'third calledOnce').to.be.true;
 
         main.click();
-
         await elementUpdated(el);
 
         expect(el.open).to.be.false;
@@ -245,14 +342,22 @@ describe('Splitbutton', () => {
         expect(thirdItemSpy.callCount, 'third callCount').to.equal(2);
         expect(thirdItemSpy.calledTwice, 'third calledTwice').to.be.true;
 
-        trigger.focus();
-        trigger.dispatchEvent(arrowDownEvent);
+        await sendKeys({
+            press: 'Tab',
+        });
+        opened = oneEvent(el, 'sp-opened');
+        sendKeys({
+            press: 'ArrowDown',
+        });
+        await opened;
 
         await elementUpdated(el);
 
         expect(el.open, 'reopened').to.be.true;
 
+        closed = oneEvent(el, 'sp-closed');
         item2.click();
+        await closed;
 
         await elementUpdated(el);
 
@@ -265,13 +370,17 @@ describe('Splitbutton', () => {
         expect(secondItemSpy.called, 'second called').to.be.true;
         expect(secondItemSpy.calledTwice, 'second twice').to.be.true;
 
+        opened = oneEvent(el, 'sp-opened');
         trigger.click();
+        await opened;
 
         await elementUpdated(el);
 
         expect(el.open, 'opened again').to.be.true;
 
+        closed = oneEvent(el, 'sp-closed');
         item1.click();
+        await closed;
         await elementUpdated(el);
 
         main.click();
@@ -318,29 +427,33 @@ describe('Splitbutton', () => {
         expect(firstItemSpy.calledOnce, '1st called once').to.be.true;
 
         const trigger = root.querySelector('.trigger') as HTMLButtonElement;
+        let opened = oneEvent(el, 'sp-opened');
         trigger.click();
+        await opened;
 
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
 
+        let closed = oneEvent(el, 'sp-closed');
         item3.click();
-
+        await closed;
         await elementUpdated(el);
 
-        expect(el.open).to.be.false;
+        expect(el.open, 'not open').to.be.false;
         expect(el.selectedItem?.itemText).to.equal('Option 1');
         expect(thirdItemSpy.called, '3rd called').to.be.true;
         expect(thirdItemSpy.calledOnce, '3rd called once').to.be.true;
-
+        opened = oneEvent(el, 'sp-opened');
         trigger.click();
-
+        await opened;
         await elementUpdated(el);
 
         expect(el.open).to.be.true;
 
+        closed = oneEvent(el, 'sp-closed');
         item2.click();
-
+        await closed;
         await elementUpdated(el);
 
         expect(el.open).to.be.false;

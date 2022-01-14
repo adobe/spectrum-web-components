@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.10.0...@spectrum-web-components/status-light@0.10.1) (2021-12-13)
+
+**Note:** Version bump only for package @spectrum-web-components/status-light
+
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.9.1...@spectrum-web-components/status-light@0.10.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/status-light
+
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.9.0...@spectrum-web-components/status-light@0.9.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/status-light
+
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.8.3...@spectrum-web-components/status-light@0.9.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.8.2...@spectrum-web-components/status-light@0.8.3) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/status-light
+
+## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.8.1...@spectrum-web-components/status-light@0.8.2) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.8.0...@spectrum-web-components/status-light@0.8.1) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/status-light
+
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.7.5...@spectrum-web-components/status-light@0.8.0) (2021-06-16)
+
+### Features
+
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+
 ## [0.7.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.7.4...@spectrum-web-components/status-light@0.7.5) (2021-05-12)
 
 **Note:** Version bump only for package @spectrum-web-components/status-light

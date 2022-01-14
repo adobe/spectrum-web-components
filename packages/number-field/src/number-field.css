@@ -12,6 +12,14 @@ governing permissions and limitations under the License.
 
 @import './spectrum-number-field.css';
 
+:host {
+    width: var(--spectrum-stepper-width);
+}
+
+#textfield {
+    width: 100%;
+}
+
 sp-field-button {
     --spectrum-dropdown-height: 100%;
     --spectrum-dropdown-padding-x: 0;
@@ -21,15 +29,12 @@ sp-field-button {
     font-variant-numeric: tabular-nums;
 }
 
-:host(:not([focused]):not([disabled])[scrubbable]) {
-    cursor: ew-resize;
+
+:host([readonly]) .buttons {
+    pointer-events: none;
 }
 
-:host(:not([focused]):not([disabled])[scrubbable]) input {
-    cursor: ew-resize;
-}
-
-:host([hide-stepper]) .input {
+:host([hide-stepper]:not([quiet])) .input {
     border-radius: var(
         --spectrum-alias-border-radius-regular,
         var(--spectrum-global-dimension-size-50)
@@ -82,6 +87,7 @@ sp-field-button {
     /* [dir=ltr] .spectrum-Textfield--quiet.spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
     right: var(--spectrum-stepper-button-width);
 }
+
 :host([dir='rtl'][quiet][valid]:not([hide-stepper])) .icon {
     /* [dir=rtl] .spectrum-Textfield--quiet.spectrum-Textfield.is-valid .spectrum-Textfield-validationIcon */
     left: var(--spectrum-stepper-button-width);

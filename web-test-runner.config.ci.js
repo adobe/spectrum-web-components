@@ -14,9 +14,9 @@ import { defaultReporter } from '@web/test-runner';
 import { junitReporter } from '@web/test-runner-junit-reporter';
 
 standard.reporters = [
-    // use the default reporter only for reporting test progress
-    defaultReporter({ reportTestResults: false, reportTestProgress: true }),
-    // use another reporter to report test results
+    // Use the default reporter for console logging in the test job.
+    defaultReporter(),
+    // Use junit reporter for agregate test success/timing results across jobs.
     junitReporter({
         outputPath: './results/test-results.xml', // default `'./test-results.xml'`
         reportLogs: true, // default `false`

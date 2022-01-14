@@ -13,7 +13,15 @@ governing permissions and limitations under the License.
 import '../sp-tooltip.js';
 import { Tooltip } from '../';
 import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    oneEvent,
+} from '@open-wc/testing';
+import { Button } from '@spectrum-web-components/button';
+import '@spectrum-web-components/button/sp-button.js';
 
 describe('Tooltip', () => {
     it('loads', async () => {
@@ -26,6 +34,66 @@ describe('Tooltip', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+    it('self manages', async () => {
+        const button = await fixture<Button>(
+            html`
+                <sp-button>
+                    This is a button.
+                    <sp-tooltip self-managed>Help text.</sp-tooltip>
+                </sp-button>
+            `
+        );
+
+        const el = button.querySelector('sp-tooltip') as Tooltip;
+
+        await elementUpdated(el);
+        await expect(button).to.be.accessible();
+
+        const opened = oneEvent(button, 'sp-opened');
+        button.focus();
+        await opened;
+        await elementUpdated(el);
+
+        expect(el.open).to.be.true;
+        await expect(button).to.be.accessible();
+
+        const closed = oneEvent(button, 'sp-closed');
+        button.blur();
+        await closed;
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
+    });
+    it('cleans up when self manages', async () => {
+        const button = await fixture<Button>(
+            html`
+                <sp-button>
+                    This is a button.
+                    <sp-tooltip self-managed>Help text.</sp-tooltip>
+                </sp-button>
+            `
+        );
+
+        const el = button.querySelector('sp-tooltip') as Tooltip;
+
+        await elementUpdated(el);
+
+        const opened = oneEvent(button, 'sp-opened');
+        button.focus();
+        await opened;
+        await elementUpdated(el);
+
+        expect(el.open).to.be.true;
+        let activeOverlay = document.querySelector('active-overlay');
+        expect(activeOverlay).to.not.be.null;
+
+        const closed = oneEvent(button, 'sp-closed');
+        button.remove();
+        await closed;
+
+        activeOverlay = document.querySelector('active-overlay');
+        expect(activeOverlay).to.be.null;
     });
     it('accepts variants', async () => {
         const el = await fixture<Tooltip>(
@@ -97,14 +165,13 @@ describe('Tooltip', () => {
         await elementUpdated(el);
 
         const overlayDetailQuery: OverlayDisplayQueryDetail = {};
-        const queryOverlayDetailEvent = new CustomEvent<
-            OverlayDisplayQueryDetail
-        >('sp-overlay-query', {
-            bubbles: true,
-            composed: true,
-            detail: overlayDetailQuery,
-            cancelable: true,
-        });
+        const queryOverlayDetailEvent =
+            new CustomEvent<OverlayDisplayQueryDetail>('sp-overlay-query', {
+                bubbles: true,
+                composed: true,
+                detail: overlayDetailQuery,
+                cancelable: true,
+            });
         el.dispatchEvent(queryOverlayDetailEvent);
 
         expect(overlayDetailQuery.overlayContentTipElement).to.exist;

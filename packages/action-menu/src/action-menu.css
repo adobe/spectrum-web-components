@@ -44,6 +44,7 @@ governing permissions and limitations under the License.
                     var(--spectrum-actionbutton-padding-left-adjusted))
     );
 }
+
 :host([dir='rtl']) ::slotted([slot='icon']),
 :host([dir='rtl']) .icon {
     /* [dir=rtl] .spectrum-ActionButton .spectrum-Icon */

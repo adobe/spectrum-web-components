@@ -50,7 +50,7 @@ sp-popover {
 }
 
 .picker,
-.validationIcon {
+.validation-icon {
     flex-shrink: 0;
 }
 
@@ -74,4 +74,25 @@ sp-popover {
         --spectrum-picker-icon-color-key-focus,
         var(--spectrum-alias-icon-color-focus)
     );
+}
+
+.visually-hidden {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: 0 -1px -1px 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    white-space: nowrap;
+}
+
+:host([dir='ltr']) #label.visually-hidden + .picker {
+    margin-left: auto;
+}
+
+:host([dir='rtl']) #label.visually-hidden + .picker {
+    margin-right: auto;
 }

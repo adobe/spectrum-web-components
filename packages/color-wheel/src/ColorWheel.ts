@@ -11,27 +11,34 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
+    html,
+    PropertyValues,
     TemplateResult,
+} from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
     property,
     query,
-    PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
-import { WithSWCResizeObserver, SWCResizeObserverEntry } from './types';
+import { SWCResizeObserverEntry, WithSWCResizeObserver } from './types';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import styles from './color-wheel.css.js';
-import { wheel } from './wheel-svg.js';
 import {
     ColorHandle,
     ColorValue,
-} from '@spectrum-web-components/color-handle/src/ColorHandle';
+    extractHueAndSaturationRegExp,
+    replaceHueAndSaturationRegExp,
+} from '@spectrum-web-components/color-handle';
 import { TinyColor } from '@ctrl/tinycolor';
 
 /**
  * @element sp-color-wheel
+ * @slot gradient - a custom gradient visually outlining the available color values
+ * @fires input - The value of the Color Wheel has changed.
+ * @fires change - An alteration to the value of the Color Wheel has been committed by the user.
  */
 export class ColorWheel extends Focusable {
     public static get styles(): CSSResultArray {
@@ -97,13 +104,27 @@ export class ColorWheel extends Focusable {
             case 'name':
                 return this._color.toName() || this._color.toRgbString();
             case 'hsl':
-                return this._format.isString
-                    ? this._color.toHslString()
-                    : this._color.toHsl();
+                if (this._format.isString) {
+                    const hslString = this._color.toHslString();
+                    return hslString.replace(
+                        replaceHueAndSaturationRegExp,
+                        `$1${this.value}$2${this._saturation}`
+                    );
+                } else {
+                    const { s, l, a } = this._color.toHsl();
+                    return { h: this.value, s, l, a };
+                }
             case 'hsv':
-                return this._format.isString
-                    ? this._color.toHsvString()
-                    : this._color.toHsv();
+                if (this._format.isString) {
+                    const hsvString = this._color.toHsvString();
+                    return hsvString.replace(
+                        replaceHueAndSaturationRegExp,
+                        `$1${this.value}$2${this._saturation}`
+                    );
+                } else {
+                    const { s, v, a } = this._color.toHsv();
+                    return { h: this.value, s, v, a };
+                }
             default:
                 return 'No color format applied.';
         }
@@ -128,17 +149,18 @@ export class ColorWheel extends Focusable {
         };
 
         if (isString && format.startsWith('hs')) {
-            const hueExp = /^hs[v|va|l|la]\((\d{1,3})/;
-            const values = hueExp.exec(color as string);
+            const values = extractHueAndSaturationRegExp.exec(color as string);
 
             if (values !== null) {
-                const [, h] = values;
+                const [, h, s] = values;
                 this.value = Number(h);
+                this._saturation = Number(s);
             }
         } else if (!isString && format.startsWith('hs')) {
             const colorInput = this._color.originalInput;
             const colorValues = Object.values(colorInput);
             this.value = colorValues[0];
+            this._saturation = colorValues[1];
         } else {
             const { h } = this._color.toHsv();
             this.value = h;
@@ -149,6 +171,8 @@ export class ColorWheel extends Focusable {
     private _color = new TinyColor({ h: 0, s: 1, v: 1 });
 
     private _previousColor = new TinyColor({ h: 0, s: 1, v: 1 });
+
+    private _saturation!: number;
 
     private _format: { format: string; isString: boolean } = {
         format: '',
@@ -165,8 +189,6 @@ export class ColorWheel extends Focusable {
 
     private _altered = 0;
 
-    private altKeys = new Set();
-
     @query('input')
     public input!: HTMLInputElement;
 
@@ -176,10 +198,10 @@ export class ColorWheel extends Focusable {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { key } = event;
-        if (['Shift', 'Meta', 'Control', 'Alt'].includes(key)) {
-            this.altKeys.add(key);
-            this.altered = this.altKeys.size;
-        }
+        this.focused = true;
+        this.altered = [event.shiftKey, event.ctrlKey, event.altKey].filter(
+            (key) => !!key
+        ).length;
         let delta = 0;
         switch (key) {
             case 'ArrowUp':
@@ -194,17 +216,28 @@ export class ColorWheel extends Focusable {
             case 'ArrowRight':
                 delta = this.step * (this.isLTR ? 1 : -1);
                 break;
+            default:
+                return;
         }
-        this.value = (360 + this.value + delta) % 360;
-        this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
-    }
-
-    private handleKeyup(event: KeyboardEvent): void {
         event.preventDefault();
-        const { key } = event;
-        if (['Shift', 'Meta', 'Control', 'Alt'].includes(key)) {
-            this.altKeys.delete(key);
-            this.altered = this.altKeys.size;
+        this.value = (360 + this.value + delta) % 360;
+        this._previousColor = this._color.clone();
+        this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
+        this.dispatchEvent(
+            new Event('input', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        const applyDefault = this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true,
+                cancelable: true,
+            })
+        );
+        if (!applyDefault) {
+            this._color = this._previousColor;
         }
     }
 
@@ -214,26 +247,53 @@ export class ColorWheel extends Focusable {
         this.value = valueAsNumber;
         this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
     }
-    private handleFocus(): void {
+
+    private handleChange(event: Event & { target: HTMLInputElement }): void {
+        this.handleInput(event);
+        this.dispatchEvent(
+            new Event('change', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
+    public focus(focusOptions: FocusOptions = {}): void {
+        super.focus(focusOptions);
+        this.forwardFocus();
+    }
+
+    private forwardFocus(): void {
+        this.focused = this.hasVisibleFocusInTree();
+        this.input.focus();
+    }
+
+    private handleFocusin(): void {
         this.focused = true;
     }
 
-    private handleBlur(): void {
+    private handleFocusout(): void {
+        if (this._pointerDown) {
+            return;
+        }
+        this.altered = 0;
         this.focused = false;
     }
 
     private boundingClientRect!: DOMRect;
+    private _pointerDown = false;
 
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
             event.preventDefault();
             return;
         }
+        this._pointerDown = true;
         this._previousColor = this._color.clone();
         this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
         if (event.pointerType === 'mouse') {
-            this.handleFocus();
+            this.focused = true;
         }
     }
 
@@ -251,7 +311,7 @@ export class ColorWheel extends Focusable {
     }
 
     private handlePointerup(event: PointerEvent): void {
-        // Retain focus on input element after mouse up to enable keyboard interactions
+        this._pointerDown = false;
         (event.target as HTMLElement).releasePointerCapture(event.pointerId);
 
         const applyDefault = this.dispatchEvent(
@@ -264,8 +324,10 @@ export class ColorWheel extends Focusable {
         if (!applyDefault) {
             this._color = this._previousColor;
         }
+        // Retain focus on input element after mouse up to enable keyboard interactions
+        this.focus();
         if (event.pointerType === 'mouse') {
-            this.handleBlur();
+            this.focused = false;
         }
     }
 
@@ -304,9 +366,13 @@ export class ColorWheel extends Focusable {
     }
 
     protected render(): TemplateResult {
-        const { width = 0 } = this.boundingClientRect || {};
+        const { width: diameter = 160 } = this.boundingClientRect || {};
 
-        const radius = width / 2;
+        const radius = diameter / 2;
+        const trackWidth = 24;
+        const innerRadius = radius - trackWidth;
+        const innerDiameter = innerRadius * 2;
+        const clipPath = `path(evenodd, "M ${radius} ${radius} m -${radius} 0 a ${radius} ${radius} 0 1 0 ${diameter} 0 a ${radius} ${radius} 0 1 0 -${diameter} 0 M ${radius} ${radius} m -${innerRadius} 0 a ${innerRadius} ${innerRadius} 0 1 0 ${innerDiameter} 0 a ${innerRadius} ${innerRadius} 0 1 0 -${innerDiameter} 0")`;
         const handleLocationStyles = `transform: translate(${
             (radius - 12.5) * Math.cos((this.value * Math.PI) / 180)
         }px, ${(radius - 12.5) * Math.sin((this.value * Math.PI) / 180)}px);`;
@@ -315,22 +381,22 @@ export class ColorWheel extends Focusable {
                 name="gradient"
                 @pointerdown=${this.handleGradientPointerdown}
             >
-                ${wheel(radius)}
+                <div class="wheel" style="clip-path: ${clipPath}"></div>
             </slot>
 
             <sp-color-handle
+                tabindex=${ifDefined(this.focused ? undefined : '0')}
+                @focus=${this.forwardFocus}
+                ?focused=${this.focused}
                 class="handle"
-                color="hsl(${this._color.toHsl().h}, 100%, 50%)"
+                color="hsl(${this.value}, 100%, 50%)"
                 ?disabled=${this.disabled}
                 style=${handleLocationStyles}
-                @manage=${streamingListener(
-                    { type: 'pointerdown', fn: this.handlePointerdown },
-                    { type: 'pointermove', fn: this.handlePointermove },
-                    {
-                        type: ['pointerup', 'pointercancel'],
-                        fn: this.handlePointerup,
-                    }
-                )}
+                ${streamingListener({
+                    start: ['pointerdown', this.handlePointerdown],
+                    streamInside: ['pointermove', this.handlePointermove],
+                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                })}
             ></sp-color-handle>
 
             <input
@@ -342,10 +408,8 @@ export class ColorWheel extends Focusable {
                 step=${this.step}
                 .value=${String(this.value)}
                 @input=${this.handleInput}
+                @change=${this.handleChange}
                 @keydown=${this.handleKeydown}
-                @keyup=${this.handleKeyup}
-                @focus=${this.handleFocus}
-                @blur=${this.handleBlur}
             />
         `;
     }
@@ -353,6 +417,8 @@ export class ColorWheel extends Focusable {
     protected firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
+        this.addEventListener('focusin', this.handleFocusin);
+        this.addEventListener('focusout', this.handleFocusout);
     }
 
     private observer?: WithSWCResizeObserver['ResizeObserver'];
@@ -361,16 +427,16 @@ export class ColorWheel extends Focusable {
         super.connectedCallback();
         if (
             !this.observer &&
-            ((window as unknown) as WithSWCResizeObserver).ResizeObserver
+            (window as unknown as WithSWCResizeObserver).ResizeObserver
         ) {
-            this.observer = new ((window as unknown) as WithSWCResizeObserver).ResizeObserver(
-                (entries: SWCResizeObserverEntry[]) => {
-                    for (const entry of entries) {
-                        this.boundingClientRect = entry.contentRect;
-                    }
-                    this.requestUpdate();
+            this.observer = new (
+                window as unknown as WithSWCResizeObserver
+            ).ResizeObserver((entries: SWCResizeObserverEntry[]) => {
+                for (const entry of entries) {
+                    this.boundingClientRect = entry.contentRect;
                 }
-            );
+                this.requestUpdate();
+            });
         }
         this.observer?.observe(this);
     }

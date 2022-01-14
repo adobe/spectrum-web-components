@@ -11,20 +11,25 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
-    property,
+    html,
     PropertyValues,
-    ifDefined,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import { Focusable } from '@spectrum-web-components/shared';
+import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
-import { SidenavSelectDetail, SideNav } from './Sidenav.js';
+import { SideNav, SidenavSelectDetail } from './Sidenav.js';
 
 import sidenavItemStyles from './sidenav-item.css.js';
 
+/**
+ * @element sp-sidenav-item
+ *
+ * @slot - the Sidenav Items to display as children of this item
+ */
 export class SideNavItem extends LikeAnchor(Focusable) {
     public static get styles(): CSSResultArray {
         return [sidenavItemStyles];
@@ -103,7 +108,14 @@ export class SideNavItem extends LikeAnchor(Focusable) {
     }
 
     public get focusElement(): HTMLElement {
-        return this.shadowRoot.querySelector('#itemLink') as HTMLElement;
+        return this.shadowRoot.querySelector('#item-link') as HTMLElement;
+    }
+
+    protected update(changes: PropertyValues): void {
+        if (!this.hasAttribute('slot')) {
+            this.slot = 'descendant';
+        }
+        super.update(changes);
     }
 
     protected render(): TemplateResult {
@@ -115,28 +127,29 @@ export class SideNavItem extends LikeAnchor(Focusable) {
                 rel=${ifDefined(this.rel)}
                 data-level="${this.depth}"
                 @click="${this.handleClick}"
-                id="itemLink"
+                id="item-link"
                 aria-current=${ifDefined(
                     this.selected && this.href ? 'page' : undefined
                 )}
             >
                 <slot name="icon"></slot>
                 ${this.label}
+                <slot></slot>
             </a>
             ${this.expanded
                 ? html`
-                      <slot></slot>
+                      <slot name="descendant"></slot>
                   `
                 : html``}
         `;
     }
 
     protected updated(changes: PropertyValues): void {
-        super.updated(changes);
         if (changes.has('selected') || changes.has('manageTabIndex')) {
             const tabIndexForSelectedState = this.selected ? 0 : -1;
             this.tabIndex = this.manageTabIndex ? tabIndexForSelectedState : 0;
         }
+        super.updated(changes);
     }
 
     public connectedCallback(): void {

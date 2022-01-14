@@ -28,8 +28,14 @@ const config = {
                     type: 'enum',
                     name: 'size',
                     values: [
-                        '.spectrum-ProgressCircle--small',
-                        '.spectrum-ProgressCircle--large',
+                        {
+                            name: 's',
+                            selector: '.spectrum-ProgressCircle--small',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-ProgressCircle--large',
+                        },
                     ],
                 },
                 {

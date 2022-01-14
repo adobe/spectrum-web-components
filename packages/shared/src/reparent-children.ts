@@ -22,7 +22,9 @@ function restoreChildren<T extends Element>(
         if (cleanupCallbacks[index]) {
             cleanupCallbacks[index](srcElement);
         }
-        parentElement.replaceChild(srcElement, placeholderItem);
+        if (parentElement && parentElement !== placeholderItem) {
+            parentElement.replaceChild(srcElement, placeholderItem);
+        }
         delete placeholderItems[index];
     }
     return srcElements;
@@ -37,11 +39,6 @@ export const reparentChildren = <T extends Element>(
     const cleanupCallbacks: ((el: T) => void)[] = [];
 
     for (let index = 0; index < srcElements.length; ++index) {
-        const placeholderItem: Comment = document.createComment(
-            'placeholder for reparented element'
-        );
-        placeholderItems.push(placeholderItem);
-
         const srcElement = srcElements[index];
         if (prepareCallback) {
             cleanupCallbacks.push(
@@ -51,9 +48,15 @@ export const reparentChildren = <T extends Element>(
                     })
             );
         }
+        const placeholderItem: Comment = document.createComment(
+            'placeholder for reparented element'
+        );
+        placeholderItems.push(placeholderItem);
         const parentElement =
             srcElement.parentElement || srcElement.getRootNode();
-        parentElement.replaceChild(placeholderItem, srcElement);
+        if (parentElement && parentElement !== srcElement) {
+            parentElement.replaceChild(placeholderItem, srcElement);
+        }
         newParent.append(srcElement);
     }
 

@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-@keyframes spOverlayFadeIn {
+@keyframes sp-overlay-fade-in {
     from {
         opacity: 0;
         transform: var(--sp-overlay-from);
@@ -22,7 +22,7 @@ governing permissions and limitations under the License.
     }
 }
 
-@keyframes spOverlayFadeOut {
+@keyframes sp-overlay-fade-out {
     from {
         opacity: 1;
         transform: translate(0, 0);

@@ -9,13 +9,11 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import { css, html, SpectrumElement } from '@spectrum-web-components/base';
 import {
-    SpectrumElement,
-    html,
-    css,
     property,
     queryAssignedNodes,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
 import { Slider } from '@spectrum-web-components/slider';
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';

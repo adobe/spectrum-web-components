@@ -17,6 +17,7 @@ const config = {
             name: 'textfield',
             host: {
                 selector: '.spectrum-Textfield',
+                shadowSelector: '#textfield',
             },
             classes: [
                 {

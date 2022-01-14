@@ -1,0 +1,13 @@
+diff --git a/node_modules/@popperjs/core/dist/esm/modifiers/computeStyles.js b/node_modules/@popperjs/core/dist/esm/modifiers/computeStyles.js
+index 05fa6a1..c00090b 100644
+--- a/node_modules/@popperjs/core/dist/esm/modifiers/computeStyles.js
++++ b/node_modules/@popperjs/core/dist/esm/modifiers/computeStyles.js
+@@ -91,6 +91,8 @@ export function mapToStyles(_ref2) {
+     position: position
+   }, adaptive && unsetSides);
+ 
++  ({x, y} = roundOffsets === true ? roundOffsetsByDPR({x, y}) : {x, y});
++
+   if (gpuAcceleration) {
+     var _Object$assign;
+ 

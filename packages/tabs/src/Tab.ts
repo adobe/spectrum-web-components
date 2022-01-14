@@ -11,13 +11,13 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    property,
     CSSResultArray,
-    TemplateResult,
-    SpectrumElement,
+    html,
     PropertyValues,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import {
     FocusVisiblePolyfillMixin,
     ObserveSlotPresence,
@@ -27,9 +27,11 @@ import {
 import tabItemStyles from './tab.css.js';
 
 /**
+ * @element sp-tab
+ *
+ * @slot - text label of the Tab
  * @slot icon - The icon that appears on the left of the label
  */
-
 export class Tab extends FocusVisiblePolyfillMixin(
     ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), '')
 ) {
@@ -50,6 +52,9 @@ export class Tab extends FocusVisiblePolyfillMixin(
         return !!this.label || this.slotHasContent;
     }
 
+    @property({ type: Boolean, reflect: true })
+    public disabled = false;
+
     @property({ reflect: true })
     public label = '';
 
@@ -62,6 +67,18 @@ export class Tab extends FocusVisiblePolyfillMixin(
     @property({ type: String, reflect: true })
     public value = '';
 
+    protected handleContentChange(): void {
+        /**
+         * When the content in a tab has changed, JS powered layout related to that content may also need to be changed.
+         */
+        this.dispatchEvent(
+            new Event('sp-tab-contentchange', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
     protected render(): TemplateResult {
         return html`
             ${this.hasIcon
@@ -69,7 +86,7 @@ export class Tab extends FocusVisiblePolyfillMixin(
                       <slot name="icon"></slot>
                   `
                 : html``}
-            <label id="itemLabel" ?hidden=${!this.hasLabel}>
+            <label id="item-label" ?hidden=${!this.hasLabel}>
                 ${this.slotHasContent ? html`` : this.label}
                 <slot>${this.label}</slot>
             </label>
@@ -82,16 +99,35 @@ export class Tab extends FocusVisiblePolyfillMixin(
         if (!this.hasAttribute('id')) {
             this.id = `sp-tab-${Tab.instanceCount++}`;
         }
+        // @TODO - refactor this as a ResizeObserver up to `sp-tabs` so that it can be more
+        // resiliant to Tab content changes, as well as other content slotted into the "tablist".
+        this.shadowRoot.addEventListener(
+            'slotchange',
+            this.handleContentChange
+        );
     }
 
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
+        if (
+            changes.has('label') &&
+            typeof changes.get('label') !== 'undefined'
+        ) {
+            this.handleContentChange();
+        }
         if (changes.has('selected')) {
             this.setAttribute(
                 'aria-selected',
                 this.selected ? 'true' : 'false'
             );
             this.setAttribute('tabindex', this.selected ? '0' : '-1');
+        }
+        if (changes.has('disabled')) {
+            if (this.disabled) {
+                this.setAttribute('aria-disabled', 'true');
+            } else {
+                this.removeAttribute('aria-disabled');
+            }
         }
     }
 }

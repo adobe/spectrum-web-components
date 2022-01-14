@@ -12,25 +12,25 @@ governing permissions and limitations under the License.
 import '../sp-tabs.js';
 import '../sp-tab.js';
 import '../sp-tab-panel.js';
-import { Tabs, Tab, TabPanel } from '../';
-import '@spectrum-web-components/icon/sp-icon.js';
+import { Tab, TabPanel, Tabs } from '../';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import {
-    fixture,
     elementUpdated,
-    html,
     expect,
+    fixture,
+    oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+import { html } from 'lit/static-html.js';
 import { LitElement, TemplateResult } from '@spectrum-web-components/base';
-import { waitForPredicate, tabEvent } from '../../../test/testing-helpers.js';
+import { tabEvent, waitForPredicate } from '../../../test/testing-helpers.js';
 import {
+    arrowDownEvent,
+    arrowLeftEvent,
+    arrowRightEvent,
+    arrowUpEvent,
     enterEvent,
     spaceEvent,
-    arrowRightEvent,
-    arrowLeftEvent,
-    arrowUpEvent,
-    arrowDownEvent,
 } from '../../../test/testing-helpers.js';
 
 const createTabs = async (): Promise<Tabs> => {
@@ -79,6 +79,32 @@ describe('Tabs', () => {
         expect(tabList.length).to.equal(3);
 
         await expect(tabs).to.be.accessible();
+    });
+
+    it('can be disabled', async () => {
+        const tabs = await createTabs();
+        const tab = tabs.querySelector('[label="Tab 3"]') as Tab;
+        tabs.disabled = true;
+        await elementUpdated(tabs);
+        expect(tabs.selected).to.equal('first');
+        tab.click();
+        await elementUpdated(tabs);
+        expect(tabs.selected).to.equal('first');
+    });
+
+    it('can have disabled sp-tab children', async () => {
+        const tabs = await createTabs();
+        const tab2 = tabs.querySelector('[label="Tab 2"]') as Tab;
+        const tab3 = tabs.querySelector('[label="Tab 3"]') as Tab;
+        tab3.disabled = true;
+        await elementUpdated(tab3);
+        expect(tabs.selected).to.equal('first');
+        tab3.click();
+        await elementUpdated(tabs);
+        expect(tabs.selected).to.equal('first');
+        tab2.click();
+        await elementUpdated(tabs);
+        expect(tabs.selected).to.equal('second');
     });
 
     it('reflects selected tab with selected property', async () => {
@@ -480,7 +506,7 @@ describe('Tabs', () => {
             }
         }
         customElements.define('tab-test-el', TabTestEl);
-        const el = await fixture<Tabs>(
+        const el = await fixture<TabTestEl>(
             html`
                 <tab-test-el></tab-test-el>
             `
@@ -571,5 +597,79 @@ describe('Tabs', () => {
 
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
+    });
+    it('selects through slotted DOM', async () => {
+        const el = await fixture<Tabs>(
+            html`
+                <sp-tabs selected="first">
+                    <sp-tab value="first">Tab 1</sp-tab>
+                    <sp-tab value="second"><span>Tab 2</span></sp-tab>
+                </sp-tabs>
+            `
+        );
+        const span = el.querySelector('span') as HTMLSpanElement;
+        await elementUpdated(el);
+
+        expect(el.selected).to.equal('first');
+
+        span.click();
+        await elementUpdated(el);
+
+        expect(el.selected).to.equal('second');
+    });
+    it('updates selection indicator in response to tab updates', async () => {
+        const el = await fixture<Tabs>(
+            html`
+                <sp-tabs selected="first">
+                    <sp-tab value="first">Tab 1</sp-tab>
+                    <sp-tab value="second">Tab 2</sp-tab>
+                </sp-tabs>
+            `
+        );
+        const selected = el.querySelector('[value="first"]') as Tab;
+        await elementUpdated(el);
+
+        const extractScaleX = /scaleX\((.+)\)/;
+        const initialExec = extractScaleX.exec(
+            el.selectionIndicatorStyle
+        ) as unknown as [string, string];
+        const initialWidth = parseFloat(initialExec[1]);
+        let contentchanged = oneEvent(el, 'sp-tab-contentchange');
+        selected.textContent = 'WWWWWWWWWWWWWWWWWWWWWWWWW';
+        await contentchanged;
+        await elementUpdated(el);
+
+        const longerExec = extractScaleX.exec(
+            el.selectionIndicatorStyle
+        ) as unknown as [string, string];
+        const longerWidth = parseFloat(longerExec[1]);
+        expect(initialWidth).to.be.lessThan(longerWidth);
+        contentchanged = oneEvent(el, 'sp-tab-contentchange');
+        selected.textContent = 'W';
+        await contentchanged;
+        await elementUpdated(el);
+
+        const shorterExec = extractScaleX.exec(
+            el.selectionIndicatorStyle
+        ) as unknown as [string, string];
+        const shorterWidth = parseFloat(shorterExec[1]);
+        expect(initialWidth).to.be.greaterThan(shorterWidth);
+        expect(longerWidth).to.be.greaterThan(shorterWidth);
+    });
+    it('clicks on #list do not throw', async () => {
+        const tabs = await createTabs();
+        const tabList = (tabs.shadowRoot as ShadowRoot).querySelector(
+            '#list'
+        ) as HTMLDivElement;
+        // exceptions thrown in event listeners do not propagate to caller
+        // we must catch them with window.onerror
+        let hasError = false;
+        const oldOnerror = window.onerror;
+        window.onerror = () => {
+            hasError = true;
+        };
+        tabList.dispatchEvent(new MouseEvent('click'));
+        expect(hasError, 'it should not error').to.be.false;
+        window.onerror = oldOnerror;
     });
 });

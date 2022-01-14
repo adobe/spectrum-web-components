@@ -11,80 +11,140 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Search */
     --spectrum-search-quiet-button-offset: calc(
         var(
-                --spectrum-actionbutton-m-min-width,
+                --spectrum-actionbutton-m-texticon-min-width,
                 var(--spectrum-global-dimension-size-400)
-            ) / 2 -
-            var(
-                --spectrum-icon-cross-small-width,
-                var(--spectrum-global-dimension-size-100)
-            ) / 2
-    );
-    display: inline-block;
+            ) / 2 - var(--spectrum-alias-ui-icon-cross-size-100) / 2
+    ); /* .spectrum-Search */
+}
+#textfield {
+    display: inline-block; /* .spectrum-Search */
     position: relative;
 }
 :host([dir='ltr']) #button {
-    /* [dir=ltr] .spectrum-Search-clearButton */
-    right: 0;
+    right: 0; /* [dir=ltr] .spectrum-Search-clearButton */
 }
 :host([dir='rtl']) #button {
-    /* [dir=rtl] .spectrum-Search-clearButton */
-    left: 0;
+    left: 0; /* [dir=rtl] .spectrum-Search-clearButton */
 }
 #button {
-    /* .spectrum-Search-clearButton */
-    position: absolute;
+    position: absolute; /* .spectrum-Search-clearButton */
     top: 0;
 }
 #input {
-    /* .spectrum-Search-input */
-    -webkit-appearance: none;
+    -webkit-appearance: none; /* .spectrum-Search-input */
+    border-radius: var(
+        --spectrum-alias-search-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    );
     outline-offset: -2px;
 }
 #input::-webkit-search-cancel-button,
 #input::-webkit-search-decoration {
-    /* .spectrum-Search-input::-webkit-search-cancel-button,
+    -webkit-appearance: none; /* .spectrum-Search-input::-webkit-search-cancel-button,
    * .spectrum-Search-input::-webkit-search-decoration */
-    -webkit-appearance: none;
 }
-.spectrum-Search--quiet #button {
-    /* .spectrum-Search--quiet .spectrum-Search-clearButton */
-    transform: translateX(var(--spectrum-search-quiet-button-offset));
+#textfield:after {
+    border-radius: var(
+        --spectrum-alias-search-border-radius,
+        var(--spectrum-global-dimension-size-50)
+    ); /* .spectrum-Search-textfield:after */
+}
+:host([dir='ltr']:not([quiet])) #textfield .icon {
+    left: var(
+        --spectrum-alias-search-padding-left-m
+    ); /* [dir=ltr] .spectrum-Search:not(.spectrum-Search--quiet) .spectrum-Search-icon */
+}
+:host([dir='rtl']:not([quiet])) #textfield .icon {
+    right: var(
+        --spectrum-alias-search-padding-left-m
+    ); /* [dir=rtl] .spectrum-Search:not(.spectrum-Search--quiet) .spectrum-Search-icon */
+}
+:host([dir='ltr']:not([quiet])) #textfield #input {
+    padding-left: calc(
+        var(--spectrum-alias-search-padding-left-m) +
+            var(
+                --spectrum-alias-workflow-icon-size-m,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-textfield-m-texticon-icon-gap,
+                var(--spectrum-global-dimension-size-100)
+            ) -
+            var(
+                --spectrum-textfield-m-texticon-border-size,
+                var(--spectrum-alias-input-border-size)
+            )
+    ); /* [dir=ltr] .spectrum-Search:not(.spectrum-Search--quiet) .spectrum-Search-input */
+}
+:host([dir='rtl']:not([quiet])) #textfield #input {
+    padding-right: calc(
+        var(--spectrum-alias-search-padding-left-m) +
+            var(
+                --spectrum-alias-workflow-icon-size-m,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-textfield-m-texticon-icon-gap,
+                var(--spectrum-global-dimension-size-100)
+            ) -
+            var(
+                --spectrum-textfield-m-texticon-border-size,
+                var(--spectrum-alias-input-border-size)
+            )
+    ); /* [dir=rtl] .spectrum-Search:not(.spectrum-Search--quiet) .spectrum-Search-input */
+}
+:host([quiet]) #button {
+    transform: translateX(
+        var(--spectrum-search-quiet-button-offset)
+    ); /* .spectrum-Search--quiet .spectrum-Search-clearButton */
+}
+:host([quiet]) #input {
+    border-radius: var(
+        --spectrum-alias-search-border-radius-quiet,
+        0
+    ); /* .spectrum-Search--quiet .spectrum-Search-input */
+}
+:host([quiet]) #textfield:after {
+    border-radius: var(
+        --spectrum-alias-search-border-radius-quiet,
+        0
+    ); /* .spectrum-Search--quiet .spectrum-Search-textfield:after */
 }
 .icon {
-    /* .spectrum-Search-icon */
     color: var(
-        --spectrum-textfield-m-icon-color,
-        var(--spectrum-alias-icon-color)
-    );
+        --spectrum-textfield-m-texticon-icon-color,
+        var(--spectrum-alias-component-icon-color-default)
+    ); /* .spectrum-Search-icon */
 }
 #input:hover ~ .icon {
-    /* .spectrum-Search-input:hover~.spectrum-Search-icon */
     color: var(
         --spectrum-search-m-icon-color-hover,
-        var(--spectrum-global-color-gray-900)
-    );
+        var(--spectrum-alias-component-icon-color-hover)
+    ); /* .spectrum-Search-input:hover~.spectrum-Search-icon */
 }
 #input:active ~ .icon {
-    /* .spectrum-Search-input:active~.spectrum-Search-icon */
     color: var(
         --spectrum-search-m-icon-color-down,
-        var(--spectrum-alias-icon-color-down)
-    );
+        var(--spectrum-alias-component-icon-color-down)
+    ); /* .spectrum-Search-input:active~.spectrum-Search-icon */
 }
-#input:focus-visible ~ .icon {
-    /* .spectrum-Search-input.focus-ring~.spectrum-Search-icon */
+#input.focus-visible ~ .icon {
     color: var(
         --spectrum-search-m-icon-color-key-focus,
-        var(--spectrum-global-color-gray-900)
-    );
+        var(--spectrum-alias-component-icon-color-key-focus)
+    ); /* .spectrum-Search-input.focus-ring~.spectrum-Search-icon */
+}
+#input:focus-visible ~ .icon {
+    color: var(
+        --spectrum-search-m-icon-color-key-focus,
+        var(--spectrum-alias-component-icon-color-key-focus)
+    ); /* .spectrum-Search-input.focus-ring~.spectrum-Search-icon */
 }
 #input:disabled ~ .icon {
-    /* .spectrum-Search-input:disabled~.spectrum-Search-icon */
     color: var(
-        --spectrum-textfield-m-text-color-disabled,
-        var(--spectrum-alias-text-color-disabled)
-    );
+        --spectrum-textfield-m-texticon-text-color-disabled,
+        var(--spectrum-alias-component-text-color-disabled)
+    ); /* .spectrum-Search-input:disabled~.spectrum-Search-icon */
 }

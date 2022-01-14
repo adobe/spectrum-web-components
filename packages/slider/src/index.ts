@@ -10,3 +10,5 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 export * from './Slider.js';
+export * from './SliderHandle.js';
+export * from './HandleController.js';

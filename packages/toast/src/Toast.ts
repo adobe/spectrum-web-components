@@ -11,13 +11,13 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
-    SpectrumElement,
-    property,
+    html,
     PropertyValues,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/button/sp-clear-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
@@ -42,7 +42,12 @@ export type ToastVariants =
     | '';
 
 /**
+ * @element sp-toast
+ *
  * @slot - The toast content
+ * @slot action - button element surfacing an action in the Toast
+ *
+ * @fires close - Announces that the Toast has been closed by the user or by its timeout.
  */
 
 export class Toast extends SpectrumElement {
@@ -137,7 +142,7 @@ export class Toast extends SpectrumElement {
             this.countdownStart = performance.now();
         }
         if (time - this.countdownStart > (this._timeout as number)) {
-            this.open = false;
+            this.shouldClose();
             this.countdownStart = 0;
         } else {
             this.countdown();
@@ -169,6 +174,19 @@ export class Toast extends SpectrumElement {
         this.countdownStart = 0;
     }
 
+    private shouldClose(): void {
+        const applyDefault = this.dispatchEvent(
+            new CustomEvent('close', {
+                composed: true,
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+        if (applyDefault) {
+            this.close();
+        }
+    }
+
     public close(): void {
         this.open = false;
     }
@@ -186,7 +204,7 @@ export class Toast extends SpectrumElement {
                 <sp-clear-button
                     label="Close"
                     variant="overBackground"
-                    @click=${this.close}
+                    @click=${this.shouldClose}
                 ></sp-clear-button>
             </div>
         `;
@@ -202,16 +220,6 @@ export class Toast extends SpectrumElement {
             } else {
                 if (this.timeout) {
                     this.stopCountdown();
-                }
-                const applyDefault = this.dispatchEvent(
-                    new CustomEvent('close', {
-                        composed: true,
-                        bubbles: true,
-                        cancelable: true,
-                    })
-                );
-                if (!applyDefault) {
-                    this.open = true;
                 }
             }
         }

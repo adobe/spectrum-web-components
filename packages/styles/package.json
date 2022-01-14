@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/styles",
-    "version": "0.9.7",
+    "version": "0.11.2",
     "publishConfig": {
         "access": "public"
     },
@@ -21,7 +21,23 @@
     "type": "module",
     "exports": {
         ".": "./src/spectrum-base.css.js",
-        "./*.css": "./*.css",
+        "./all-large-dark.css": "./all-large-dark.css",
+        "./all-large-darkest.css": "./all-large-darkest.css",
+        "./all-large-light.css": "./all-large-light.css",
+        "./all-large-lightest.css": "./all-large-lightest.css",
+        "./all-medium-dark.css": "./all-medium-dark.css",
+        "./all-medium-darkest.css": "./all-medium-darkest.css",
+        "./all-medium-light.css": "./all-medium-light.css",
+        "./all-medium-lightest.css": "./all-medium-lightest.css",
+        "./core-global.css": "./core-global.css",
+        "./fonts.css": "./fonts.css",
+        "./scale-large.css": "./scale-large.css",
+        "./scale-medium.css": "./scale-medium.css",
+        "./theme-dark.css": "./theme-dark.css",
+        "./theme-darkest.css": "./theme-darkest.css",
+        "./theme-light.css": "./theme-light.css",
+        "./theme-lightest.css": "./theme-lightest.css",
+        "./typography.css": "./typography.css",
         "./body": "./body.js",
         "./body.js": "./body.js",
         "./code": "./code.js",
@@ -38,11 +54,13 @@
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.css",
-        "*.js",
-        "*.map",
-        "*.ts",
-        "custom-elements.json"
+        "**/*.css",
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -51,13 +69,14 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.3"
+        "@spectrum-web-components/base": "^0.5.1"
     },
     "devDependencies": {
-        "@spectrum-css/commons": "^3.0.2",
-        "@spectrum-css/typography": "^3.0.2",
-        "@spectrum-css/vars": "^3.0.2"
+        "@spectrum-css/commons": "^3.0.3",
+        "@spectrum-css/typography": "^4.0.7",
+        "@spectrum-css/vars": "^4.3.1"
     },
+    "customElements": "custom-elements.json",
     "sideEffects": [
         "./*.css"
     ],

@@ -11,18 +11,23 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
-    property,
-    PropertyValues,
-    ifDefined,
-    query,
-    nothing,
+    html,
     LitElement,
-    classMap,
+    nothing,
+    PropertyValues,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import {
+    classMap,
+    ifDefined,
+} from '@spectrum-web-components/base/src/directives.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 
 import { WithSWCResizeObserver } from './types';
 
@@ -40,6 +45,7 @@ const COLLAPSE_THREASHOLD = 50;
 
 /**
  * @element sp-split-view
+ *
  * @slot Two sibling elements to be sized by the element attritubes
  */
 export class SplitView extends SpectrumElement {
@@ -118,8 +124,7 @@ export class SplitView extends SpectrumElement {
 
     public constructor() {
         super();
-        const RO = ((window as unknown) as WithSWCResizeObserver)
-            .ResizeObserver;
+        const RO = (window as unknown as WithSWCResizeObserver).ResizeObserver;
         if (RO) {
             this.observer = new RO(() => {
                 this.rect = undefined;
@@ -190,8 +195,14 @@ export class SplitView extends SpectrumElement {
                               this.resizable ? '0' : undefined
                           )}
                           @keydown=${this.onKeydown}
-                          @pointerdown=${this.onPointerdown}
-                          @pointerup=${this.onPointerup}
+                          ${streamingListener({
+                              start: ['pointerdown', this.onPointerdown],
+                              streamInside: ['pointermove', this.onPointermove],
+                              end: [
+                                  ['pointerup', 'pointercancel'],
+                                  this.onPointerup,
+                              ],
+                          })}
                       >
                           ${this.resizable
                               ? html`
@@ -211,10 +222,10 @@ export class SplitView extends SpectrumElement {
 
     private onPointerdown(event: PointerEvent): void {
         if (!this.resizable || (event.button && event.button !== 0)) {
+            event.preventDefault();
             return;
         }
         this.splitter.setPointerCapture(event.pointerId);
-        this.onpointermove = this.onPointermove;
         this.offset = this.getOffset();
     }
 
@@ -235,7 +246,6 @@ export class SplitView extends SpectrumElement {
 
     private onPointerup(event: PointerEvent): void {
         this.splitter.releasePointerCapture(event.pointerId);
-        this.onpointermove = null;
     }
 
     private getOffset(): number {
@@ -401,6 +411,10 @@ export class SplitView extends SpectrumElement {
 
     protected updated(changed: PropertyValues): void {
         super.updated(changed);
+        if (changed.has('primarySize')) {
+            this.splitterPos = undefined;
+            this.checkResize();
+        }
         if (
             changed.has('splitterPos') &&
             this.splitterPos !== undefined &&

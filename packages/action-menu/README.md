@@ -1,6 +1,6 @@
 ## Description
 
-An `<sp-action-menu>` is an action button with a Popover. Use an `<sp-menu>` element to outline the items that will be made available to the user when interacting with the `sp-action-menu` element.
+An `<sp-action-menu>` is an action button that triggers an overlay with `<sp-menu-items>` for activation. Use an `<sp-menu>` element to outline the items that will be made available to the user when interacting with the `<sp-action-menu>` element. By default `<sp-action-menu>` does not manage a selection. If you'd like for a selection to be held by the `<sp-menu>` that is presented in its overlay, use `selects="single"` to activate this functionality.
 
 ### Usage
 
@@ -16,6 +16,12 @@ Import the side effectful registration of `<sp-action-menu>` via:
 
 ```
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
+```
+
+The default of `<sp-action-menu>` will load dependencies in `@spectrum-web-components/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<sp-action-menu>` as follows:
+
+```
+import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
 ```
 
 When looking to leverage the `ActionMenu` base class as a type and/or for extension purposes, do so via:
@@ -210,6 +216,29 @@ A custom icon can be supplied via the `icon` slot in order to replace the defaul
     <sp-menu-item disabled>
         Make work path
     </sp-menu-item>
+</sp-action-menu>
+```
+
+### Selection.
+
+When `selects` is set to `single`, the `<sp-action-menu>` element will maintain one selected item after an initial selection is made.
+
+```html
+<p>
+    The value of the `&lt;sp-action-menu&gt;` element is:
+    <span id="single-value"></span>
+</p>
+<sp-action-menu
+    selects="single"
+    onchange="this.previousElementSibling.querySelector('#single-value').textContent=this.value"
+>
+    <span slot="label">Available shapes</span>
+    <sp-menu-item value="shape-1-square">Square</sp-menu-item>
+    <sp-menu-item value="shape-2-triangle">Triangle</sp-menu-item>
+    <sp-menu-item value="shape-3-parallelogram">Parallelogram</sp-menu-item>
+    <sp-menu-item value="shape-4-star">Star</sp-menu-item>
+    <sp-menu-item value="shape-5-hexagon">Hexagon</sp-menu-item>
+    <sp-menu-item value="shape-6-circle" disabled>Circle</sp-menu-item>
 </sp-action-menu>
 ```
 

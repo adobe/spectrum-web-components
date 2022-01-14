@@ -11,12 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import '../sp-toast.js';
-import { toastVariants, Toast } from '../';
+import { Toast, toastVariants } from '../';
 import {
-    fixture,
     elementUpdated,
-    html,
     expect,
+    fixture,
+    html,
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
@@ -66,7 +66,7 @@ describe('Toast', () => {
         await elementUpdated(el);
         expect(el.open).to.be.false;
 
-        ((el as unknown) as TestableToast)._timeout = 100;
+        (el as unknown as TestableToast)._timeout = 100;
         el.open = true;
         await elementUpdated(el);
 
@@ -83,7 +83,7 @@ describe('Toast', () => {
         await elementUpdated(el);
         expect(el.open).to.be.false;
 
-        const testableEl = (el as unknown) as TestableToast;
+        const testableEl = el as unknown as TestableToast;
         testableEl._timeout = 100;
         el.open = true;
         await elementUpdated(el);
@@ -120,7 +120,7 @@ describe('Toast', () => {
 
         await elementUpdated(el);
 
-        const testableEl = (el as unknown) as TestableToast;
+        const testableEl = el as unknown as TestableToast;
         expect(el.open, 'not open to start').to.be.false;
 
         el.open = true;
@@ -188,6 +188,39 @@ describe('Toast', () => {
         await elementUpdated(el);
         expect(el.open).to.be.true;
     });
+    it('can be a controlled element', async () => {
+        const closeSpy = spy();
+        const handleClose = (event: CustomEvent): void => {
+            event.preventDefault();
+            closeSpy();
+        };
+        const el = await fixture<Toast>(
+            html`
+                <sp-toast open timeout="100" @close=${handleClose}>
+                    Help text.
+                </sp-toast>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+        expect(closeSpy.callCount).to.equal(0);
+
+        const renderRoot = el.shadowRoot ? el.shadowRoot : el;
+        const clearButton = renderRoot.querySelector(
+            'sp-clear-button'
+        ) as ClearButton;
+        clearButton.click();
+
+        await elementUpdated(el);
+        expect(el.open).to.be.true;
+        expect(closeSpy.callCount).to.equal(1);
+
+        el.open = false;
+        await elementUpdated(el);
+        expect(el.open).to.be.false;
+        expect(closeSpy.callCount).to.equal(1);
+    });
     it('validates variants', async () => {
         const el = await fixture<Toast>(
             html`
@@ -221,15 +254,14 @@ describe('Toast', () => {
 
         await elementUpdated(el);
         expect(el.variant).to.equal('positive');
+        const parent = el.parentElement as HTMLElement;
 
         el.remove();
 
-        await elementUpdated(el);
         expect(el.variant).to.equal('positive');
 
-        document.body.append(el);
+        parent.append(el);
 
-        await elementUpdated(el);
         expect(el.variant).to.equal('positive');
     });
     it('reopens', async () => {
@@ -249,17 +281,20 @@ describe('Toast', () => {
         );
 
         await elementUpdated(el);
-        expect(el.open);
+        expect(el.open).to.be.true;
 
-        el.open = false;
+        const closeButton = el.shadowRoot.querySelector(
+            'sp-clear-button'
+        ) as HTMLElement;
+        closeButton.click();
 
         await elementUpdated(el);
-        expect(!el.open);
+        expect(el.open).to.be.false;
 
         el.open = true;
 
         await elementUpdated(el);
-        expect(el.open);
+        expect(el.open).to.be.true;
         expect(closeSpy.callCount).to.equal(1);
     });
 });

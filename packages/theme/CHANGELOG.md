@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.9.1...@spectrum-web-components/theme@0.9.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.9.0...@spectrum-web-components/theme@0.9.1) (2021-12-13)
+
+### Bug Fixes
+
+-   use local declaration of ShadowRoot.adoptedStyleSheets ([43f1c63](https://github.com/adobe/spectrum-web-components/commit/43f1c63fb920d0f750226f2e567e03e4dcba7a79))
+
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.16...@spectrum-web-components/theme@0.9.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.8.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.15...@spectrum-web-components/theme@0.8.16) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+## [0.8.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.14...@spectrum-web-components/theme@0.8.15) (2021-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+## [0.8.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.13...@spectrum-web-components/theme@0.8.14) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+## [0.8.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.12...@spectrum-web-components/theme@0.8.13) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.8.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.11...@spectrum-web-components/theme@0.8.12) (2021-08-03)
+
+### Bug Fixes
+
+-   resolve "updateComplete" with a boolean like LitElement ([2ebcd44](https://github.com/adobe/spectrum-web-components/commit/2ebcd449185a2a26b8ca60441793048a76bb3ed7))
+
+## [0.8.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.10...@spectrum-web-components/theme@0.8.11) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
+## [0.8.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.9...@spectrum-web-components/theme@0.8.10) (2021-07-01)
+
+### Bug Fixes
+
+-   manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/adobe/spectrum-web-components/commit/b1e3457ae447427c54f8645c478866340329750c))
+
+## [0.8.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.8...@spectrum-web-components/theme@0.8.9) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/theme
+
 ## [0.8.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.8.7...@spectrum-web-components/theme@0.8.8) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/theme

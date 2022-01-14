@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/textfield",
-    "version": "0.8.8",
+    "version": "0.10.2",
     "publishConfig": {
         "access": "public"
     },
@@ -30,11 +30,12 @@
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -43,20 +44,20 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/icon": "^0.9.6",
-        "@spectrum-web-components/icons-ui": "^0.6.6",
-        "@spectrum-web-components/icons-workflow": "^0.6.6",
-        "@spectrum-web-components/shared": "^0.12.4",
+        "@spectrum-web-components/base": "^0.5.1",
+        "@spectrum-web-components/help-text": "^0.1.0",
+        "@spectrum-web-components/icon": "^0.11.1",
+        "@spectrum-web-components/icons-ui": "^0.8.1",
+        "@spectrum-web-components/icons-workflow": "^0.8.1",
+        "@spectrum-web-components/shared": "^0.13.2",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/textfield": "^3.0.2"
+        "@spectrum-css/textfield": "^3.1.1"
     },
     "types": "./src/index.d.ts",
-    "customElementsManifest": "custom-elements.json",
+    "customElements": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js",
-        "./sp-*.ts"
+        "./sp-*.js"
     ]
 }

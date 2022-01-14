@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-thumbnail.js';
 import { Thumbnail } from '..';
@@ -30,10 +30,10 @@ describe('Thumbnail', () => {
 
         await expect(el).to.be.accessible();
     });
-    it('can be size `xxl`', async () => {
+    it('can be size `xxs`', async () => {
         const el = await fixture<Thumbnail>(
             html`
-                <sp-thumbnail size="xxl">
+                <sp-thumbnail size="xxs">
                     <img src=${thumbnail} alt="Woman crouching" />
                 </sp-thumbnail>
             `
@@ -41,6 +41,6 @@ describe('Thumbnail', () => {
 
         await elementUpdated(el);
 
-        expect(el.size).to.equal('xxl');
+        expect(el.size).to.equal('xxs');
     });
 });

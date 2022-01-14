@@ -39,63 +39,69 @@ governing permissions and limitations under the License.
 
 :host([compact]:not([quiet])) ::slotted(:not([role])) {
     /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item */
-    --spectrum-actionbutton-m-border-radius: 0;
-    --spectrum-actionbutton-s-border-radius: var(
-        --spectrum-actionbutton-m-border-radius
+    --overriden-border-radius: 0;
+    --spectrum-actionbutton-s-quiet-textonly-border-radius: var(
+        --overriden-border-radius
     );
-    --spectrum-actionbutton-l-border-radius: var(
-        --spectrum-actionbutton-m-border-radius
+    --spectrum-actionbutton-s-textonly-border-radius: var(
+        --overriden-border-radius
     );
-    --spectrum-actionbutton-xl-border-radius: var(
-        --spectrum-actionbutton-m-border-radius
+    --spectrum-actionbutton-m-quiet-textonly-border-radius: var(
+        --overriden-border-radius
+    );
+    --spectrum-actionbutton-m-textonly-border-radius: var(
+        --overriden-border-radius
+    );
+    --spectrum-actionbutton-l-quiet-textonly-border-radius: var(
+        --overriden-border-radius
+    );
+    --spectrum-actionbutton-l-textonly-border-radius: var(
+        --overriden-border-radius
+    );
+    --spectrum-actionbutton-xl-quiet-textonly-border-radius: var(
+        --overriden-border-radius
+    );
+    --spectrum-actionbutton-xl-textonly-border-radius: var(
+        --overriden-border-radius
     );
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:not([role]):first-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-    --spectrum-actionbutton-m-border-radius: var(
-            --spectrum-alias-border-radius-regular
-        )
+    --overriden-border-radius: var(--spectrum-alias-border-radius-regular)
         var(--spectrum-alias-border-radius-regular) 0 0;
 }
 
 :host([compact][vertical]:not([quiet])) ::slotted(:not([role]):last-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-    --spectrum-actionbutton-m-border-radius: 0 0
-        var(--spectrum-alias-border-radius-regular)
+    --overriden-border-radius: 0 0 var(--spectrum-alias-border-radius-regular)
         var(--spectrum-alias-border-radius-regular);
 }
 
 :host([dir='ltr'][compact]:not([quiet]):not([vertical]))
     ::slotted(:not([role]):first-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-    --spectrum-actionbutton-m-border-radius: var(
-            --spectrum-alias-border-radius-regular
-        )
-        0 0 var(--spectrum-alias-border-radius-regular);
+    --overriden-border-radius: var(--spectrum-alias-border-radius-regular) 0 0
+        var(--spectrum-alias-border-radius-regular);
 }
 
 :host([dir='rtl'][compact]:not([quiet]):not([vertical]))
     ::slotted(:not([role]):first-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-    --spectrum-actionbutton-m-border-radius: 0
-        var(--spectrum-alias-border-radius-regular)
+    --overriden-border-radius: 0 var(--spectrum-alias-border-radius-regular)
         var(--spectrum-alias-border-radius-regular) 0;
 }
 
 :host([dir='ltr'][compact]:not([quiet]):not([vertical]))
     ::slotted(:not([role]):last-child) {
     /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-    --spectrum-actionbutton-m-border-radius: 0
-        var(--spectrum-alias-border-radius-regular)
+    --overriden-border-radius: 0 var(--spectrum-alias-border-radius-regular)
         var(--spectrum-alias-border-radius-regular) 0;
 }
 
 :host([dir='rtl'][compact]:not([quiet]):not([vertical]))
     ::slotted(:not([role]):last-child) {
     /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-    --spectrum-actionbutton-m-border-radius: var(
-            --spectrum-alias-border-radius-regular
-        )
-        0 0 var(--spectrum-alias-border-radius-regular);
+    --overriden-border-radius: var(--spectrum-alias-border-radius-regular) 0 0
+        var(--spectrum-alias-border-radius-regular);
 }

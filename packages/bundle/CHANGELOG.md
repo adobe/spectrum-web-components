@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.24.0...@spectrum-web-components/bundle@0.24.1) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+# [0.24.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.23.0...@spectrum-web-components/bundle@0.24.0) (2021-12-13)
+
+### Features
+
+-   add Help Text pattern ([fdbb812](https://github.com/adobe/spectrum-web-components/commit/fdbb812e05a1202e5b5912a5e93cfba59a3dae9e))
+
+# [0.23.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.12...@spectrum-web-components/bundle@0.23.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.22.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.11...@spectrum-web-components/bundle@0.22.12) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.22.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.10...@spectrum-web-components/bundle@0.22.11) (2021-11-02)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.22.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.9...@spectrum-web-components/bundle@0.22.10) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.22.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.8...@spectrum-web-components/bundle@0.22.9) (2021-10-05)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.22.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.7...@spectrum-web-components/bundle@0.22.8) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.22.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.6...@spectrum-web-components/bundle@0.22.7) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.22.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.5...@spectrum-web-components/bundle@0.22.6) (2021-08-24)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.22.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.4...@spectrum-web-components/bundle@0.22.5) (2021-08-17)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.22.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.3...@spectrum-web-components/bundle@0.22.4) (2021-08-03)
+
+### Bug Fixes
+
+-   allow "updateComplete" to resolve to a boolean like the LitElement default ([6127946](https://github.com/adobe/spectrum-web-components/commit/6127946fd3ffd048a30b7eb4bf6aadf9e7c8752a))
+
+## [0.22.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.2...@spectrum-web-components/bundle@0.22.3) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.22.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.1...@spectrum-web-components/bundle@0.22.2) (2021-07-01)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+## [0.22.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.22.0...@spectrum-web-components/bundle@0.22.1) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/bundle
+
+# [0.22.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.21.2...@spectrum-web-components/bundle@0.22.0) (2021-06-11)
+
+### Features
+
+-   multi-handle slider implementation ([8d5a743](https://github.com/adobe/spectrum-web-components/commit/8d5a74309ec171107a9504695216cb90abe39023)), closes [#1385](https://github.com/adobe/spectrum-web-components/issues/1385)
+
 ## [0.21.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/bundle@0.21.1...@spectrum-web-components/bundle@0.21.2) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/bundle

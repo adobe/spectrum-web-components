@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.11.1...@spectrum-web-components/popover@0.11.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.11.0...@spectrum-web-components/popover@0.11.1) (2021-12-13)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.10.1...@spectrum-web-components/popover@0.11.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.10.0...@spectrum-web-components/popover@0.10.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.18...@spectrum-web-components/popover@0.10.0) (2021-11-02)
+
+### Bug Fixes
+
+-   update screen reader interface with menu items list ([16756b5](https://github.com/adobe/spectrum-web-components/commit/16756b56c0f7f9561426acc202997fb098e8f19a))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.9.18](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.17...@spectrum-web-components/popover@0.9.18) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
+## [0.9.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.16...@spectrum-web-components/popover@0.9.17) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
+## [0.9.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.15...@spectrum-web-components/popover@0.9.16) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
+## [0.9.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.14...@spectrum-web-components/popover@0.9.15) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.9.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.13...@spectrum-web-components/popover@0.9.14) (2021-08-17)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
+## [0.9.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.12...@spectrum-web-components/popover@0.9.13) (2021-08-03)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
+## [0.9.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.11...@spectrum-web-components/popover@0.9.12) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
+## [0.9.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.10...@spectrum-web-components/popover@0.9.11) (2021-07-01)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
+## [0.9.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.9...@spectrum-web-components/popover@0.9.10) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
 ## [0.9.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.9.8...@spectrum-web-components/popover@0.9.9) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/popover

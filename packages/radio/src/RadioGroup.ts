@@ -10,23 +10,26 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { PropertyValues } from '@spectrum-web-components/base';
 import {
-    html,
     property,
-    TemplateResult,
     queryAssignedNodes,
-    PropertyValues,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
+import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared/src/focus-visible.js';
 import { FieldGroup } from '@spectrum-web-components/field-group';
 
 import { Radio } from './Radio.js';
 
 /**
- * Radio group component
- * @slot - The `sp-radio` elements to display/manage in the group.
+ * @element sp-radio-group
  *
+ * @slot - The `sp-radio` elements to display/manage in the group.
+ * @slot help-text - default or non-negative help text to associate to your form element
+ * @slot negative-help-text - negative help text to associate to your form element when `invalid`
+ *
+ * @fires change - An alteration to the value of the element has been committed by the user.
  */
-export class RadioGroup extends FieldGroup {
+export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     @property({ type: String })
     public name = '';
 
@@ -119,9 +122,9 @@ export class RadioGroup extends FieldGroup {
             case 'PageUp':
             case 'PageDown':
                 const tagsSiblings = [
-                    ...(this.getRootNode() as Document).querySelectorAll<RadioGroup>(
-                        'sp-radio-group'
-                    ),
+                    ...(
+                        this.getRootNode() as Document
+                    ).querySelectorAll<RadioGroup>('sp-radio-group'),
                 ];
                 if (tagsSiblings.length < 2) {
                     return;
@@ -198,14 +201,9 @@ export class RadioGroup extends FieldGroup {
     @property({ reflect: true })
     public selected = '';
 
-    protected render(): TemplateResult {
-        return html`
-            <slot></slot>
-        `;
-    }
-
     protected firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
+        this.setAttribute('role', 'radiogroup');
         const checkedRadio = this.querySelector('sp-radio[checked]') as Radio;
         const checkedRadioValue = checkedRadio ? checkedRadio.value : '';
         // Prefer the checked item over the selected value

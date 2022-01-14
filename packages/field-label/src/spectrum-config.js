@@ -65,7 +65,7 @@ const config = {
             classes: [
                 {
                     selector: '.spectrum-FieldLabel-requiredIcon',
-                    name: 'requiredIcon',
+                    name: 'required-icon',
                 },
             ],
         },

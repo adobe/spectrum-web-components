@@ -11,17 +11,23 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    property,
     CSSResultArray,
-    query,
-    TemplateResult,
-    PropertyValues,
+    html,
     nothing,
+    PropertyValues,
+    TemplateResult,
+} from '@spectrum-web-components/base';
+import {
     ifDefined,
     live,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/directives.js';
+import {
+    property,
+    query,
+    state,
+} from '@spectrum-web-components/base/src/decorators.js';
 
+import { ManageHelpText } from '@spectrum-web-components/help-text/src/manage-help-text.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
@@ -29,7 +35,14 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import textfieldStyles from './textfield.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
 
-export class TextfieldBase extends Focusable {
+const textfieldTypes = ['text', 'url', 'tel', 'email', 'password'] as const;
+export type TextfieldType = typeof textfieldTypes[number];
+
+/**
+ * @fires input - The value of the element has changed.
+ * @fires change - An alteration to the value of the element has been committed by the user.
+ */
+export class TextfieldBase extends ManageHelpText(Focusable) {
     public static get styles(): CSSResultArray {
         return [textfieldStyles, checkmarkStyles];
     }
@@ -51,6 +64,20 @@ export class TextfieldBase extends Focusable {
 
     @property()
     public placeholder = '';
+
+    @property({ attribute: 'type', reflect: true })
+    private _type: TextfieldType = 'text';
+
+    @state()
+    get type(): TextfieldType {
+        return textfieldTypes.find((t) => t === this._type) ?? 'text';
+    }
+
+    set type(val: TextfieldType) {
+        const prev = this._type;
+        this._type = val;
+        this.requestUpdate('type', prev);
+    }
 
     @property()
     public pattern?: string;
@@ -120,10 +147,6 @@ export class TextfieldBase extends Focusable {
             }
         }
         this.value = this.inputElement.value;
-        const selectionStart = this.inputElement.selectionStart as number;
-        this.updateComplete.then(() => {
-            this.inputElement.setSelectionRange(selectionStart, selectionStart);
-        });
     }
 
     protected onChange(): void {
@@ -176,6 +199,7 @@ export class TextfieldBase extends Focusable {
                 : nothing}
             <!-- @ts-ignore -->
             <textarea
+                aria-describedby=${this.helpTextId}
                 aria-label=${this.label || this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
@@ -204,7 +228,8 @@ export class TextfieldBase extends Focusable {
         return html`
             <!-- @ts-ignore -->
             <input
-                type="text"
+                type=${this.type}
+                aria-describedby=${this.helpTextId}
                 aria-label=${this.label || this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
                 class="input"
@@ -229,10 +254,17 @@ export class TextfieldBase extends Focusable {
         `;
     }
 
-    protected render(): TemplateResult {
+    protected renderField(): TemplateResult {
         return html`
             ${this.renderStateIcons()}
             ${this.multiline ? this.renderMultiline : this.renderInput}
+        `;
+    }
+
+    protected render(): TemplateResult {
+        return html`
+            <div id="textfield">${this.renderField()}</div>
+            ${this.renderHelpText(this.invalid)}
         `;
     }
 
@@ -263,6 +295,11 @@ export class TextfieldBase extends Focusable {
     }
 }
 
+/**
+ * @element sp-textfield
+ * @slot help-text - default or non-negative help text to associate to your form element
+ * @slot negative-help-text - negative help text to associate to your form element when `invalid`
+ */
 export class Textfield extends TextfieldBase {
     @property({ type: String })
     public set value(value: string) {

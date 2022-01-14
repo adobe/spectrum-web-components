@@ -11,16 +11,22 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
-    property,
     CSSResultArray,
+    html,
+    PropertyValues,
+    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import sidenavItemStyles from './sidenav-item.css.js';
 import sidenavHeadingStyles from './sidenav-heading.css.js';
 
+/**
+ * @element sp-sidenav-heading
+ *
+ * @slot - the Sidenav Items to display in association with the heading
+ */
 export class SideNavHeading extends SpectrumElement {
     @property({ reflect: true })
     public label = '';
@@ -29,11 +35,18 @@ export class SideNavHeading extends SpectrumElement {
         return [sidenavItemStyles, sidenavHeadingStyles];
     }
 
+    protected update(changes: PropertyValues): void {
+        if (!this.hasAttribute('slot')) {
+            this.slot = 'descendant';
+        }
+        super.update(changes);
+    }
+
     protected render(): TemplateResult {
         return html`
             <h2 id="heading">${this.label}</h2>
             <div id="list" aria-labelledby="heading">
-                <slot></slot>
+                <slot name="descendant"></slot>
             </div>
         `;
     }

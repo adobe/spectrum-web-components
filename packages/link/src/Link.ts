@@ -12,17 +12,20 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
-    TemplateResult,
-    query,
     SizedMixin,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import linkStyles from './link.css.js';
 
 /**
- * Spectrum Link Component
+ * @element sp-link
  *
  * @attr quiet - uses quiet styles or not
  * @attr over-background - uses over background styles or not
@@ -36,6 +39,9 @@ export class Link extends SizedMixin(LikeAnchor(Focusable), {
 
     @query('#anchor')
     anchorElement!: HTMLAnchorElement;
+
+    @property({ type: String, reflect: true })
+    public variant: 'secondary' | undefined;
 
     public get focusElement(): HTMLElement {
         return this.anchorElement;

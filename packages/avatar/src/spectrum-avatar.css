@@ -10,24 +10,221 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    /* .spectrum-Avatar */
-    width: var(
+:host([size='50']) {
+    --spectrum-avatar-border-radius: var(
+        --spectrum-avatar-size-50-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    ); /* .spectrum-Avatar--size50 */
+    --spectrum-avatar-border-size: var(
+        --spectrum-avatar-size-50-border-size,
+        var(--spectrum-alias-avatar-border-size)
+    );
+    --spectrum-avatar-width: var(
         --spectrum-avatar-size-50-width,
         var(--spectrum-alias-avatar-size-50)
     );
-    height: var(
+    --spectrum-avatar-height: var(
         --spectrum-avatar-size-50-height,
         var(--spectrum-alias-avatar-size-50)
     );
-    border-radius: var(--spectrum-avatar-size-50-border-radius, 50%);
-    border-style: none;
+}
+:host([size='75']) {
+    --spectrum-avatar-border-radius: var(
+        --spectrum-avatar-size-75-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    ); /* .spectrum-Avatar--size75 */
+    --spectrum-avatar-border-size: var(
+        --spectrum-avatar-size-75-border-size,
+        var(--spectrum-alias-avatar-border-size)
+    );
+    --spectrum-avatar-width: var(
+        --spectrum-avatar-size-75-width,
+        var(--spectrum-alias-avatar-size-75)
+    );
+    --spectrum-avatar-height: var(
+        --spectrum-avatar-size-75-height,
+        var(--spectrum-alias-avatar-size-75)
+    );
+}
+:host([size='100']) {
+    --spectrum-avatar-border-radius: var(
+        --spectrum-avatar-size-100-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    ); /* .spectrum-Avatar--size100 */
+    --spectrum-avatar-border-size: var(
+        --spectrum-avatar-size-100-border-size,
+        var(--spectrum-alias-avatar-border-size)
+    );
+    --spectrum-avatar-width: var(
+        --spectrum-avatar-size-100-width,
+        var(--spectrum-alias-avatar-size-100)
+    );
+    --spectrum-avatar-height: var(
+        --spectrum-avatar-size-100-height,
+        var(--spectrum-alias-avatar-size-100)
+    );
+}
+:host([size='200']) {
+    --spectrum-avatar-border-radius: var(
+        --spectrum-avatar-size-200-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    ); /* .spectrum-Avatar--size200 */
+    --spectrum-avatar-border-size: var(
+        --spectrum-avatar-size-200-border-size,
+        var(--spectrum-alias-avatar-border-size)
+    );
+    --spectrum-avatar-width: var(
+        --spectrum-avatar-size-200-width,
+        var(--spectrum-alias-avatar-size-200)
+    );
+    --spectrum-avatar-height: var(
+        --spectrum-avatar-size-200-height,
+        var(--spectrum-alias-avatar-size-200)
+    );
+}
+:host([size='300']) {
+    --spectrum-avatar-border-radius: var(
+        --spectrum-avatar-size-300-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    ); /* .spectrum-Avatar--size300 */
+    --spectrum-avatar-border-size: var(
+        --spectrum-avatar-size-300-border-size,
+        var(--spectrum-alias-avatar-border-size)
+    );
+    --spectrum-avatar-width: var(
+        --spectrum-avatar-size-300-width,
+        var(--spectrum-alias-avatar-size-300)
+    );
+    --spectrum-avatar-height: var(
+        --spectrum-avatar-size-300-height,
+        var(--spectrum-alias-avatar-size-300)
+    );
+}
+:host([size='400']) {
+    --spectrum-avatar-border-radius: var(
+        --spectrum-avatar-size-400-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    ); /* .spectrum-Avatar--size400 */
+    --spectrum-avatar-border-size: var(
+        --spectrum-avatar-size-400-border-size,
+        var(--spectrum-alias-avatar-border-size)
+    );
+    --spectrum-avatar-width: var(
+        --spectrum-avatar-size-400-width,
+        var(--spectrum-alias-avatar-size-400)
+    );
+    --spectrum-avatar-height: var(
+        --spectrum-avatar-size-400-height,
+        var(--spectrum-alias-avatar-size-400)
+    );
+}
+:host([size='500']) {
+    --spectrum-avatar-border-radius: var(
+        --spectrum-avatar-size-500-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    ); /* .spectrum-Avatar--size500 */
+    --spectrum-avatar-border-size: var(
+        --spectrum-avatar-size-500-border-size,
+        var(--spectrum-alias-avatar-border-size)
+    );
+    --spectrum-avatar-width: var(
+        --spectrum-avatar-size-500-width,
+        var(--spectrum-alias-avatar-size-500)
+    );
+    --spectrum-avatar-height: var(
+        --spectrum-avatar-size-500-height,
+        var(--spectrum-alias-avatar-size-500)
+    );
+}
+:host([size='600']) {
+    --spectrum-avatar-border-radius: var(
+        --spectrum-avatar-size-600-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    ); /* .spectrum-Avatar--size600 */
+    --spectrum-avatar-border-size: var(
+        --spectrum-avatar-size-600-border-size,
+        var(--spectrum-alias-avatar-border-size)
+    );
+    --spectrum-avatar-width: var(
+        --spectrum-avatar-size-600-width,
+        var(--spectrum-alias-avatar-size-600)
+    );
+    --spectrum-avatar-height: var(
+        --spectrum-avatar-size-600-height,
+        var(--spectrum-alias-avatar-size-600)
+    );
+}
+:host([size='700']) {
+    --spectrum-avatar-border-radius: var(
+        --spectrum-avatar-size-700-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    ); /* .spectrum-Avatar--size700 */
+    --spectrum-avatar-border-size: var(
+        --spectrum-avatar-size-700-border-size,
+        var(--spectrum-alias-avatar-border-size)
+    );
+    --spectrum-avatar-width: var(
+        --spectrum-avatar-size-700-width,
+        var(--spectrum-alias-avatar-size-700)
+    );
+    --spectrum-avatar-height: var(
+        --spectrum-avatar-size-700-height,
+        var(--spectrum-alias-avatar-size-700)
+    );
+}
+:host {
     -webkit-user-drag: none;
+    border-radius: var(--spectrum-avatar-border-radius);
+    border-width: 0;
+    display: inline-block; /* .spectrum-Avatar */
+    height: var(--spectrum-avatar-height);
+    overflow: hidden;
+    position: relative;
     -webkit-user-select: none;
     user-select: none;
-    opacity: var(--spectrum-avatar-size-100-opacity, 1);
+    width: var(--spectrum-avatar-width);
+}
+:host([dir='ltr']):after {
+    left: 0; /* [dir=ltr] .spectrum-Avatar:after */
+}
+:host([dir='rtl']):after {
+    right: 0; /* [dir=rtl] .spectrum-Avatar:after */
+}
+:host([dir='ltr']):after {
+    right: 0; /* [dir=ltr] .spectrum-Avatar:after */
+}
+:host([dir='rtl']):after {
+    left: 0; /* [dir=rtl] .spectrum-Avatar:after */
+}
+:host:after {
+    border-radius: var(--spectrum-avatar-border-radius);
+    border-style: solid;
+    border-width: var(--spectrum-avatar-border-size);
+    bottom: 0;
+    box-sizing: border-box;
+    content: ''; /* .spectrum-Avatar:after */
+    position: absolute;
+    top: 0;
+}
+.image {
+    height: var(--spectrum-avatar-height);
+    width: var(--spectrum-avatar-width); /* .spectrum-Avatar-image */
+}
+:host {
+    opacity: var(
+        --spectrum-avatar-size-100-opacity,
+        var(--spectrum-global-color-opacity-100)
+    ); /* .spectrum-Avatar */
+}
+:host:after {
+    border-color: var(
+        --spectrum-avatar-size-100-border-color,
+        var(--spectrum-alias-avatar-border-color-default)
+    ); /* .spectrum-Avatar:after */
 }
 :host([disabled]) {
-    /* .spectrum-Avatar.is-disabled */
-    opacity: var(--spectrum-avatar-size-100-opacity-disabled, 0.3);
+    opacity: var(
+        --spectrum-avatar-size-100-opacity-disabled,
+        var(--spectrum-global-color-opacity-30)
+    ); /* .spectrum-Avatar.is-disabled */
 }

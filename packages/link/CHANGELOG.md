@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.11.1...@spectrum-web-components/link@0.11.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.11.0...@spectrum-web-components/link@0.11.1) (2021-12-13)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.10.1...@spectrum-web-components/link@0.11.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.10.0...@spectrum-web-components/link@0.10.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.8...@spectrum-web-components/link@0.10.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.9.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.7...@spectrum-web-components/link@0.9.8) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
+## [0.9.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.6...@spectrum-web-components/link@0.9.7) (2021-09-20)
+
+### Bug Fixes
+
+-   **link:** support "secondary" variant ([3808b96](https://github.com/adobe/spectrum-web-components/commit/3808b968f483748e98b6e4d3ea6640c63e29cc5f))
+
+## [0.9.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.5...@spectrum-web-components/link@0.9.6) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
+## [0.9.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.4...@spectrum-web-components/link@0.9.5) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.9.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.3...@spectrum-web-components/link@0.9.4) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
+## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.2...@spectrum-web-components/link@0.9.3) (2021-07-01)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.1...@spectrum-web-components/link@0.9.2) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/link
+
 ## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.9.0...@spectrum-web-components/link@0.9.1) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/link

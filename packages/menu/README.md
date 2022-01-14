@@ -58,6 +58,8 @@ import {
 </sp-menu>
 ```
 
+Often an `<sp-menu>` element will be delivered inside of an `<sp-popover>` element when displaying it above other content.
+
 ```html
 <sp-popover open style="position: relative">
     <sp-menu>
@@ -71,6 +73,90 @@ import {
 </sp-popover>
 ```
 
-## Accessibility
+## Managing a selection
 
-`<sp-menu>`, `<sp-menu-group>`, and `<sp-menu-item>` each deliver a different part of the wai-aria "menu" pattern and support the `menu`, `group`, and `menuitem` roles respectively. To support ease of keyboard navigation, only the first active _or_ first selected `<sp-menu-item>` can be accessed in the tab order. Once the focus has entered the menu the up and down arrow keys can be used to access the rest of the menu.
+The `<sp-menu>` element can be instructed to maintain a selection via the `selects` attribute. Depending on the chosen algorithm, the `<sp-menu>` element will hold a `value` property and manage the `selected` state of its `<sp-menu-item>` descendants.
+
+### selects="single"
+
+When `selects` is set to `single`, the `<sp-menu>` element will maintain one selected item after an initial selection is made.
+
+```html
+<p>
+    The value of the `&lt;sp-menu&gt;` element is:
+    <span id="single-value"></span>
+</p>
+<sp-menu
+    label="Choose a shape"
+    selects="single"
+    onchange="this.previousElementSibling.querySelector('#single-value').textContent=this.value"
+>
+    <sp-menu-item value="item-1">Square</sp-menu-item>
+    <sp-menu-item value="item-2">Triangle</sp-menu-item>
+    <sp-menu-item value="item-3">Parallelogram</sp-menu-item>
+    <sp-menu-item value="item-4">Star</sp-menu-item>
+    <sp-menu-item value="item-5">Hexagon</sp-menu-item>
+    <sp-menu-item value="item-6" disabled>Circle</sp-menu-item>
+</sp-menu>
+```
+
+### selects="multiple"
+
+When `selects` is set to `multiple`, the `<sp-menu>` element will maintain zero or more selected items.
+
+```html
+<p>
+    The value of the `&lt;sp-menu&gt;` element is:
+    <span id="multiple-value">item-3,item-4</span>
+</p>
+<sp-menu
+    label="Choose some fruit"
+    selects="multiple"
+    onchange="this.previousElementSibling.querySelector('#multiple-value').textContent=this.value"
+>
+    <sp-menu-item value="item-1">Apple</sp-menu-item>
+    <sp-menu-item value="item-2">Banana</sp-menu-item>
+    <sp-menu-item value="item-3" selected>Goji berry</sp-menu-item>
+    <sp-menu-item value="item-4" selected>Grapes</sp-menu-item>
+    <sp-menu-item value="item-5" disabled>Kumquat</sp-menu-item>
+    <sp-menu-item value="item-6">Orange</sp-menu-item>
+</sp-menu>
+```
+
+### selects="inherit"
+
+When `selects` is set to `inherit`, the `<sp-menu>` element will allow its `<sp-menu-item>` children to participate in the selection of its nearest `<sp-menu>` ancestor.
+
+```html
+<p>
+    The value of the `&lt;sp-menu&gt;` element is:
+    <span id="inherit-value">item-3 || item-4 || item-8 || item-11</span>
+</p>
+<sp-menu
+    label="Choose some groceries"
+    selects="multiple"
+    value-separator=" || "
+    onchange="this.previousElementSibling.querySelector('#inherit-value').textContent=this.value"
+>
+    <sp-menu label="Fruit" selects="inherit">
+        <sp-menu-item value="item-1">Apple</sp-menu-item>
+        <sp-menu-item value="item-2">Banana</sp-menu-item>
+        <sp-menu-item value="item-3" selected>Goji berry</sp-menu-item>
+        <sp-menu-item value="item-4" selected>Grapes</sp-menu-item>
+        <sp-menu-item value="item-5" disabled>Kumquat</sp-menu-item>
+        <sp-menu-item value="item-6">Orange</sp-menu-item>
+    </sp-menu>
+    <sp-menu label="Vegetables" selects="inherit">
+        <sp-menu-item value="item-7">Carrot</sp-menu-item>
+        <sp-menu-item value="item-8" selected>Garlic</sp-menu-item>
+        <sp-menu-item value="item-9" disabled>Lettuce</sp-menu-item>
+        <sp-menu-item value="item-10">Onion</sp-menu-item>
+        <sp-menu-item value="item-11" selected>Potato</sp-menu-item>
+        <sp-menu-item value="item-12">Tomato</sp-menu-item>
+    </sp-menu>
+</sp-menu>
+```
+
+## "change" event
+
+Whether `<sp-menu>` carries a selection or not, when one of the `<sp-menu-item>` children that it manages is activated the `<sp-menu>` element will dispatch a `change` event. At dispatch time, even when a selection is not held due to the absence of the `selects` attribute, the `value` of the `<sp-menu>` will correspond to the `<sp-menu-item>` that was activated. When the `selects` attribute is present, this `value` will be persisted beyond the lifecycle of the `change` event. When `selects="multiple"` the values of multiple items will be comma separated unless otherwise set via the `value-separator` attribute.

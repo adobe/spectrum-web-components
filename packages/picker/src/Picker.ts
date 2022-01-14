@@ -11,17 +11,20 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
-    property,
-    PropertyValues,
-    query,
+    DefaultElementSize,
+    html,
     nothing,
-    ifDefined,
+    PropertyValues,
+    render,
     SizedMixin,
-    ElementSize,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { classMap } from '@spectrum-web-components/base/src/directives.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 
 import pickerStyles from './picker.css.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
@@ -31,19 +34,20 @@ import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-c
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/menu/sp-menu.js';
-import {
-    MenuItem,
-    MenuItemQueryRoleEventDetail,
+import type {
     Menu,
-    MenuQueryRoleEventDetail,
+    MenuItem,
+    MenuItemAddedOrUpdatedEvent,
+    MenuItemChildren,
+    MenuItemRemovedEvent,
 } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import {
-    Placement,
     openOverlay,
-    TriggerInteractions,
     OverlayOptions,
+    Placement,
+    TriggerInteractions,
 } from '@spectrum-web-components/overlay';
 
 const chevronClass = {
@@ -53,12 +57,11 @@ const chevronClass = {
     xl: 'spectrum-UIIcon-ChevronDown300',
 };
 
-type PickerSize = Exclude<ElementSize, 'xxl'>;
-
 /**
  * @element sp-picker
- * @slot label - The placeholder content for the picker
  *
+ * @slot label - The placeholder content for the Picker
+ * @slot - menu items to be listed in the Picker
  * @fires change - Announces that the `value` of the element has changed
  * @fires sp-opened - Announces that the overlay has been opened
  * @fires sp-closed - Announces that the overlay has been closed
@@ -89,6 +92,9 @@ export class PickerBase extends SizedMixin(Focusable) {
     @property({ type: Boolean, reflect: true })
     public focused = false;
 
+    @property({ type: String, reflect: true })
+    public icons?: 'only' | 'none';
+
     @property({ type: Boolean, reflect: true })
     public invalid = false;
 
@@ -100,6 +106,8 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     @property({ type: Boolean, reflect: true })
     public readonly = false;
+
+    public selects: undefined | 'single' = 'single';
 
     public menuItems: MenuItem[] = [];
     private restoreChildren?: () => void;
@@ -125,7 +133,6 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     private closeOverlay?: () => void;
 
-    @query('sp-popover')
     private popover!: Popover;
 
     protected listRole: 'listbox' | 'menu' = 'listbox';
@@ -134,21 +141,6 @@ export class PickerBase extends SizedMixin(Focusable) {
     public constructor() {
         super();
         this.onKeydown = this.onKeydown.bind(this);
-
-        this.addEventListener(
-            'sp-menu-item-query-role',
-            (event: CustomEvent<MenuItemQueryRoleEventDetail>) => {
-                event.stopPropagation();
-                event.detail.role = this.itemRole;
-            }
-        );
-        this.addEventListener(
-            'sp-menu-query-role',
-            (event: CustomEvent<MenuQueryRoleEventDetail>) => {
-                event.stopPropagation();
-                event.detail.role = this.listRole;
-            }
-        );
     }
 
     public get focusElement(): HTMLElement {
@@ -174,6 +166,20 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.toggle();
     }
 
+    public focus(options?: FocusOptions): void {
+        super.focus(options);
+
+        if (!this.disabled && this.focusElement) {
+            this.focused = this.hasVisibleFocusInTree();
+        }
+    }
+
+    public onHelperFocus(): void {
+        // set focused to true here instead of onButtonFocus so clicks don't flash a focus outline
+        this.focused = true;
+        this.button.focus();
+    }
+
     public onButtonFocus(): void {
         (this.target as HTMLButtonElement).addEventListener(
             'keydown',
@@ -181,21 +187,15 @@ export class PickerBase extends SizedMixin(Focusable) {
         );
     }
 
-    public onClick(event: Event): void {
-        const target = event.target as MenuItem;
-        /* c8 ignore 6 */
-        if (!target || target.disabled) {
-            if (target) {
-                this.focus();
-            }
-            return;
-        }
-        if (target.value) {
-            this.setValueFromItem(target);
-        }
+    public handleChange(event: Event): void {
+        event.stopPropagation();
+        const target = event.target as Menu;
+        const [selected] = target.selectedItems;
+        this.setValueFromItem(selected, event);
     }
 
     protected onKeydown = (event: KeyboardEvent): void => {
+        this.focused = true;
         if (event.code !== 'ArrowDown' && event.code !== 'ArrowUp') {
             return;
         }
@@ -203,7 +203,10 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.toggle(true);
     };
 
-    public async setValueFromItem(item: MenuItem): Promise<void> {
+    public async setValueFromItem(
+        item: MenuItem,
+        menuChangeEvent?: Event
+    ): Promise<void> {
         const oldSelectedItem = this.selectedItem;
         const oldValue = this.value;
         this.selectedItem = item;
@@ -218,6 +221,13 @@ export class PickerBase extends SizedMixin(Focusable) {
             })
         );
         if (!applyDefault) {
+            if (menuChangeEvent) {
+                menuChangeEvent.preventDefault();
+            }
+            this.selectedItem.selected = false;
+            if (oldSelectedItem) {
+                oldSelectedItem.selected = true;
+            }
             this.selectedItem = oldSelectedItem;
             this.value = oldValue;
             this.open = true;
@@ -226,7 +236,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         if (oldSelectedItem) {
             oldSelectedItem.selected = false;
         }
-        item.selected = true;
+        item.selected = !!this.selects;
     }
 
     public toggle(target?: boolean): void {
@@ -243,6 +253,10 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.open = false;
     }
 
+    public overlayCloseCallback = (): void => {
+        this.open = false;
+    };
+
     protected onOverlayClosed(): void {
         this.close();
         if (this.restoreChildren) {
@@ -253,11 +267,29 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.menuStateResolver();
     }
 
+    private popoverFragment!: DocumentFragment;
+
+    private generatePopover(deprecatedMenu: Menu | null): void {
+        if (this.popoverFragment) return;
+
+        this.popoverFragment = document.createDocumentFragment();
+        render(this.renderPopover, this.popoverFragment, { host: this });
+        this.popover = this.popoverFragment.children[0] as Popover;
+        this.optionsMenu = this.popover.children[1] as Menu;
+
+        if (deprecatedMenu) {
+            console.warn(
+                `Deprecation Notice: You no longer need to provide an sp-menu child to ${this.tagName.toLowerCase()}. Any styling or attributes on the sp-menu will be ignored.`
+            );
+        }
+    }
+
     private async openMenu(): Promise<void> {
         /* c8 ignore next 9 */
         let reparentableChildren: Element[] = [];
-
         const deprecatedMenu = this.querySelector('sp-menu');
+
+        this.generatePopover(deprecatedMenu);
         if (deprecatedMenu) {
             reparentableChildren = Array.from(deprecatedMenu.children);
         } else {
@@ -283,24 +315,34 @@ export class PickerBase extends SizedMixin(Focusable) {
             };
         });
 
-        this.optionsMenu.selectable = true;
-
         this.sizePopover(this.popover);
-        const { popover } = this;
-        this.closeOverlay = await Picker.openOverlay(this, 'inline', popover, {
-            placement: this.placement,
-            receivesFocus: 'auto',
-        });
-        this.manageSelection();
-        this.menuStateResolver();
+        this.addEventListener(
+            'sp-opened',
+            async () => {
+                this.updateMenuItems();
+                await Promise.all([
+                    this.itemsUpdated,
+                    this.optionsMenu.updateComplete,
+                ]);
+                this.menuStateResolver();
+            },
+            { once: true }
+        );
+        this.closeOverlay = await Picker.openOverlay(
+            this,
+            'modal',
+            this.popover,
+            {
+                placement: this.placement,
+                receivesFocus: 'auto',
+            }
+        );
     }
 
     protected sizePopover(popover: HTMLElement): void {
+        if (this.quiet) return;
         // only use `this.offsetWidth` when Standard variant
-        const menuWidth = !this.quiet && `${this.offsetWidth}px`;
-        if (menuWidth) {
-            popover.style.setProperty('width', menuWidth);
-        }
+        popover.style.setProperty('min-width', `${this.offsetWidth}px`);
     }
 
     private closeMenu(): void {
@@ -310,88 +352,156 @@ export class PickerBase extends SizedMixin(Focusable) {
         }
     }
 
+    protected get selectedItemContent(): MenuItemChildren {
+        if (this.selectedItem) {
+            return this.selectedItem.itemChildren;
+        }
+        return { icon: [], content: [] };
+    }
+
+    protected renderLabelContent(content: Node[]): TemplateResult | Node[] {
+        if (this.value && this.selectedItem) {
+            return content;
+        }
+        return html`
+            <slot name="label">${this.label}</slot>
+        `;
+    }
+
     protected get buttonContent(): TemplateResult[] {
+        const labelClasses = {
+            'visually-hidden': this.icons === 'only' && !!this.value,
+            placeholder: !this.value,
+        };
         return [
             html`
-                <span
-                    id="label"
-                    class=${ifDefined(this.value ? undefined : 'placeholder')}
-                >
-                    ${this.value && this.selectedItem
-                        ? this.selectedItem.itemText
-                        : html`
-                              <slot name="label">${this.label}</slot>
-                          `}
+                <span id="icon" ?hidden=${this.icons === 'none'}>
+                    ${this.selectedItemContent.icon}
+                </span>
+                <span id="label" class=${classMap(labelClasses)}>
+                    ${this.renderLabelContent(this.selectedItemContent.content)}
                 </span>
                 ${this.invalid
                     ? html`
-                          <sp-icon-alert class="validationIcon"></sp-icon-alert>
+                          <sp-icon-alert
+                              class="validation-icon"
+                          ></sp-icon-alert>
                       `
                     : nothing}
                 <sp-icon-chevron100
-                    class="icon picker ${chevronClass[this.size as PickerSize]}"
+                    class="picker ${chevronClass[
+                        this.size as DefaultElementSize
+                    ]}"
                 ></sp-icon-chevron100>
             `,
         ];
     }
 
-    protected get renderButton(): TemplateResult {
+    // a helper to throw focus to the button is needed because Safari
+    // won't include buttons in the tab order even with tabindex="0"
+    protected render(): TemplateResult {
         return html`
+            <span
+                id="focus-helper"
+                tabindex="${this.focused ? '-1' : '0'}"
+                @focus=${this.onHelperFocus}
+            ></span>
             <button
                 aria-haspopup="true"
                 aria-expanded=${this.open ? 'true' : 'false'}
-                aria-labelledby="button label"
+                aria-labelledby="button icon label"
                 id="button"
                 class="button"
                 @blur=${this.onButtonBlur}
                 @click=${this.onButtonClick}
                 @focus=${this.onButtonFocus}
                 ?disabled=${this.disabled}
+                tabindex="-1"
             >
                 ${this.buttonContent}
             </button>
         `;
     }
 
-    protected render(): TemplateResult {
+    protected update(changes: PropertyValues<this>): void {
+        if (this.selects) {
+            // Always force `selects` to "single" when set.
+            // TODO: Add support functionally and visually for "multiple"
+            this.selects = 'single';
+        }
+        super.update(changes);
+    }
+
+    protected get dismissHelper(): TemplateResult {
         return html`
-            ${this.renderButton} ${this.renderPopover}
+            <div class="visually-hidden">
+                <button
+                    tabindex="-1"
+                    arial-label="Dismiss"
+                    @click=${this.close}
+                ></button>
+            </div>
         `;
     }
 
     protected get renderPopover(): TemplateResult {
         return html`
             <sp-popover
-                open
                 id="popover"
-                @click=${this.onClick}
+                role="dialog"
+                @sp-menu-item-added-or-updated=${this.updateMenuItems}
                 @sp-overlay-closed=${this.onOverlayClosed}
+                .overlayCloseCallback=${this.overlayCloseCallback}
             >
-                <sp-menu id="menu" role="${this.listRole}"></sp-menu>
+                ${this.dismissHelper}
+                <sp-menu
+                    id="menu"
+                    role="${this.listRole}"
+                    @change=${this.handleChange}
+                    .selects=${this.selects}
+                ></sp-menu>
+                ${this.dismissHelper}
             </sp-popover>
         `;
     }
 
-    protected updateMenuItems(): void {
-        this.menuItems = [
-            ...this.querySelectorAll('sp-menu-item'),
-        ] as MenuItem[];
-    }
+    private _willUpdateItems = false;
+    protected itemsUpdated: Promise<void> = Promise.resolve();
 
-    protected firstUpdated(changedProperties: PropertyValues): void {
-        super.firstUpdated(changedProperties);
-
-        // Since the sp-menu gets reparented by the popover, initialize it here
-        this.optionsMenu = this.shadowRoot.querySelector('sp-menu') as Menu;
-
-        this.updateMenuItems();
-
-        const deprecatedMenu = this.querySelector('sp-menu');
-        if (deprecatedMenu) {
-            console.warn(
-                `Deprecation Notice: You no longer need to provide an sp-menu child to ${this.tagName.toLowerCase()}. Any styling or attributes on the sp-menu will be ignored.`
-            );
+    /**
+     * Acquire the available MenuItems in the Picker by
+     * direct element query or by assuming the list managed
+     * by the Menu within the open options overlay.
+     */
+    protected updateMenuItems(
+        event?: MenuItemAddedOrUpdatedEvent | MenuItemRemovedEvent
+    ): void {
+        if (this.open && event?.type === 'sp-menu-item-removed') return;
+        if (this._willUpdateItems) return;
+        this._willUpdateItems = true;
+        if (event?.item === this.selectedItem) {
+            this.requestUpdate();
         }
+
+        let resolve = (): void => {
+            return;
+        };
+        this.itemsUpdated = new Promise((res) => (resolve = res));
+        // Debounce the update so we only update once
+        // if multiple items have changed
+        window.requestAnimationFrame(async () => {
+            if (this.open) {
+                await this.optionsMenu.updateComplete;
+                this.menuItems = this.optionsMenu.childItems;
+            } else {
+                this.menuItems = [
+                    ...this.querySelectorAll('sp-menu-item'),
+                ] as MenuItem[];
+            }
+            this.manageSelection();
+            resolve();
+            this._willUpdateItems = false;
+        });
     }
 
     protected updated(changedProperties: PropertyValues): void {
@@ -400,7 +510,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             changedProperties.has('value') &&
             !changedProperties.has('selectedItem')
         ) {
-            this.manageSelection();
+            this.updateMenuItems();
         }
         if (changedProperties.has('disabled') && this.disabled) {
             this.open = false;
@@ -421,45 +531,45 @@ export class PickerBase extends SizedMixin(Focusable) {
     }
 
     protected manageSelection(): void {
-        if (!this.open) {
-            this.updateMenuItems();
-        }
-        /* c8 ignore next 3 */
-        if (this.menuItems.length > 0) {
-            let selectedItem: MenuItem | undefined;
-            this.menuItems.forEach((item) => {
-                if (this.value === item.value && !item.disabled) {
-                    selectedItem = item;
-                } else {
-                    item.selected = false;
-                }
-            });
-            if (selectedItem) {
-                selectedItem.selected = true;
-                this.selectedItem = selectedItem;
+        let selectedItem: MenuItem | undefined;
+        this.menuItems.forEach((item) => {
+            if (this.value === item.value && !item.disabled) {
+                selectedItem = item;
             } else {
-                this.value = '';
-                this.selectedItem = undefined;
+                item.selected = false;
             }
-            if (this.open) {
+        });
+        if (selectedItem) {
+            selectedItem.selected = !!this.selects;
+            this.selectedItem = selectedItem;
+        } else {
+            this.value = '';
+            this.selectedItem = undefined;
+        }
+        if (this.open) {
+            this.optionsMenu.updateComplete.then(() => {
                 this.optionsMenu.updateSelectedItemIndex();
-            }
-            return;
+            });
         }
     }
 
     private menuStatePromise = Promise.resolve();
     private menuStateResolver!: () => void;
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.menuStatePromise;
+        await this.itemsUpdated;
+        return complete;
     }
 
     public connectedCallback(): void {
-        if (!this.open) {
-            this.updateMenuItems();
-        }
+        this.updateMenuItems();
+        this.addEventListener(
+            'sp-menu-item-added-or-updated',
+            this.updateMenuItems
+        );
+        this.addEventListener('sp-menu-item-removed', this.updateMenuItems);
         super.connectedCallback();
     }
 
@@ -477,6 +587,7 @@ export class Picker extends PickerBase {
 
     protected onKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
+        this.focused = true;
         if (!code.startsWith('Arrow') || this.readonly) {
             return;
         }

@@ -11,21 +11,25 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
-    ifDefined,
+    TemplateResult,
+} from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
     property,
     query,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable, LikeAnchor } from '@spectrum-web-components/shared';
 
 import itemStyles from '@spectrum-web-components/tabs/src/tab.css.js';
 import topNavItemStyles from './top-nav-item.css.js';
 
 /**
- * @slot icon - The icon that appears on the left of the label
+ * @element sp-top-nav-item
+ *
+ * @slot - text label of the Top Nav Item
  */
 
 export class TopNavItem extends LikeAnchor(Focusable) {
@@ -52,7 +56,7 @@ export class TopNavItem extends LikeAnchor(Focusable) {
     protected render(): TemplateResult {
         return html`
             <a
-                id="itemLabel"
+                id="item-label"
                 href=${ifDefined(this.href)}
                 download=${ifDefined(this.download)}
                 target=${ifDefined(this.target)}

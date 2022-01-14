@@ -13,7 +13,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-action-menu.js';
 import '@spectrum-web-components/icon/sp-icon.js';
-import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 export const ActionMenuMarkup = ({
@@ -23,7 +23,9 @@ export const ActionMenuMarkup = ({
     open = false,
     visibleLabel = '',
     customIcon = '' as string | TemplateResult,
-    size = 'm',
+    size = 'm' as 'm' | 's' | 'l' | 'xl' | 'xxl',
+    selects = '' as 'single',
+    selected = false,
 } = {}): TemplateResult => {
     return html`
         <sp-action-menu
@@ -32,26 +34,22 @@ export const ActionMenuMarkup = ({
             ?open=${open}
             size=${size}
             @change="${changeHandler}"
+            .selects=${selects ? selects : undefined}
+            value=${selected ? 'Select Inverse' : ''}
         >
-            ${customIcon
-                ? html`
-                      <sp-icon slot="icon">${customIcon}</sp-icon>
-                  `
-                : html``}
+            ${customIcon ? customIcon : html``}
             ${visibleLabel
                 ? html`
                       <span slot="label">${visibleLabel}</span>
                   `
                 : html``}
-            <sp-menu>
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item>Select Inverse</sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-item>Select and Mask...</sp-menu-item>
-                <sp-menu-divider></sp-menu-divider>
-                <sp-menu-item>Save Selection</sp-menu-item>
-                <sp-menu-item disabled>Make Work Path</sp-menu-item>
-            </sp-menu>
+            <sp-menu-item>Deselect</sp-menu-item>
+            <sp-menu-item ?selected=${selected}>Select Inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
         </sp-action-menu>
     `;
 };

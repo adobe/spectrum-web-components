@@ -12,13 +12,13 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
+    DefaultElementSize,
     html,
-    property,
     PropertyValues,
-    TemplateResult,
     SizedMixin,
-    ElementSize,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from '@spectrum-web-components/button';
 import buttonStyles from './action-button.css.js';
 import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
@@ -38,11 +38,11 @@ export type LongpressEvent = {
     source: 'pointer' | 'keyboard';
 };
 
-type ActionButtonSize = Exclude<ElementSize, 'xxl'>;
-
 /**
- * @element sp-card
+ * @element sp-action-button
  *
+ * @slot - text label of the Action Button
+ * @slot icon - The icon to use for Action Button
  * @fires change - Announces a change in the `selected` property of an action button
  * @fires longpress - Synthesizes a "longpress" interaction that signifies a
  * `pointerdown` event that is >=300ms or a keyboard event wher code is `Space` or code is `ArrowDown`
@@ -62,9 +62,21 @@ export class ActionButton extends SizedMixin(ButtonBase) {
     @property({ type: Boolean, reflect: true })
     public quiet = false;
 
+    @property({ reflect: true })
+    public role = 'button';
+
+    /**
+     * Whether an Action Button with `role='button'`
+     * should also be `aria-pressed='true'`
+     */
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
+    /**
+     * Whether to automatically manage the `selected`
+     * attribute on interaction and whether `aria-pressed="false"`
+     * should be used when `selected === false`
+     */
     @property({ type: Boolean, reflect: true })
     public toggles = false;
 
@@ -181,7 +193,7 @@ export class ActionButton extends SizedMixin(ButtonBase) {
                 <sp-icon-corner-triangle300
                     id="hold-affordance"
                     class="${holdAffordanceClass[
-                        this.size as ActionButtonSize
+                        this.size as DefaultElementSize
                     ]}"
                 ></sp-icon-corner-triangle300>
             `);
@@ -191,11 +203,22 @@ export class ActionButton extends SizedMixin(ButtonBase) {
 
     protected updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (this.toggles && changes.has('selected')) {
-            this.focusElement.setAttribute(
-                'aria-pressed',
-                this.selected ? 'true' : 'false'
-            );
+        const isButton = this.role === 'button';
+        const canBePressed = isButton && (this.selected || this.toggles);
+        if (changes.has('selected') || changes.has('role')) {
+            // When role !== 'button' then the Action Button is within
+            // an Action Group that manages selects which means the
+            // Action Button is a "checkbox" or "radio" and cannot
+            // accept the `aria-pressed` attribute.
+            if (canBePressed) {
+                this.setAttribute(
+                    'aria-pressed',
+                    this.selected ? 'true' : 'false'
+                );
+            } else {
+                // When !this.toggles the lack of "aria-pressed" is inconsequential.
+                this.removeAttribute('aria-pressed');
+            }
         }
     }
 }

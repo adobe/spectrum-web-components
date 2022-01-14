@@ -11,13 +11,14 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    property,
     CSSResultArray,
-    TemplateResult,
+    html,
     PropertyValues,
-    ifDefined,
+    SizedMixin,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Tab } from './Tab.js';
 import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
 
@@ -30,21 +31,19 @@ const availableArrowsByDirection = {
     horizontal: ['ArrowLeft', 'ArrowRight'],
 };
 
-declare global {
-    interface Document {
-        fonts?: {
-            ready: Promise<void>;
-        };
-    }
-}
+const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
 /**
- * @slot - Child tab elements
+ * @element sp-tabs
+ *
+ * @slot - Tab elements to manage as a group
+ * @slot tab-panel - Tab Panel elements related to the listed Tab elements
  * @attr {Boolean} quiet - The tabs border is a lot smaller
  * @attr {Boolean} compact - The collection of tabs take up less space
+ *
+ * @fires change - The selected Tab child has changed.
  */
-
-export class Tabs extends Focusable {
+export class Tabs extends SizedMixin(Focusable) {
     public static get styles(): CSSResultArray {
         return [tabStyles];
     }
@@ -68,7 +67,10 @@ export class Tabs extends Focusable {
     public label = '';
 
     @property({ attribute: false })
-    public selectionIndicatorStyle = '';
+    public selectionIndicatorStyle = noSelectionStyle;
+
+    @property({ attribute: false })
+    public shouldAnimate = false;
 
     @property({ reflect: true })
     public get selected(): string {
@@ -94,14 +96,16 @@ export class Tabs extends Focusable {
     /**
      * @private
      */
-    public get focusElement(): Tab {
+    public get focusElement(): Tab | this {
         const focusElement = this.tabs.find(
-            (tab) => tab.selected || tab.value === this.selected
+            (tab) =>
+                !tab.disabled && (tab.selected || tab.value === this.selected)
         );
         if (focusElement) {
             return focusElement;
         }
-        return this.tabs[0];
+        const fallback = this.tabs.find((tab) => !tab.disabled);
+        return fallback || this;
     }
 
     protected manageAutoFocus(): void {
@@ -110,7 +114,7 @@ export class Tabs extends Focusable {
             if (typeof tab.updateComplete !== 'undefined') {
                 return tab.updateComplete;
             }
-            return Promise.resolve();
+            return Promise.resolve(true);
         });
         Promise.all(tabUpdateCompletes).then(() => super.manageAutoFocus());
     }
@@ -138,12 +142,16 @@ export class Tabs extends Focusable {
                 @keydown=${this.onKeyDown}
                 @mousedown=${this.manageFocusinType}
                 @focusin=${this.startListeningToKeyboard}
+                @sp-tab-contentchange=${this.updateSelectionIndicator}
                 id="list"
                 role="tablist"
             >
                 <slot @slotchange=${this.onSlotChange}></slot>
                 <div
-                    id="selectionIndicator"
+                    id="selection-indicator"
+                    class=${ifDefined(
+                        this.shouldAnimate ? undefined : 'first-position'
+                    )}
                     style=${this.selectionIndicatorStyle}
                     role="presentation"
                 ></div>
@@ -160,7 +168,7 @@ export class Tabs extends Focusable {
         }
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (changes.has('selected')) {
             if (changes.get('selected')) {
@@ -183,6 +191,19 @@ export class Tabs extends Focusable {
         }
         if (changes.has('dir')) {
             this.updateSelectionIndicator();
+        }
+        if (changes.has('disabled')) {
+            if (this.disabled) {
+                this.setAttribute('aria-disabled', 'true');
+            } else {
+                this.removeAttribute('aria-disabled');
+            }
+        }
+        if (
+            !this.shouldAnimate &&
+            typeof changes.get('shouldAnimate') !== 'undefined'
+        ) {
+            this.shouldAnimate = true;
         }
     }
 
@@ -237,9 +258,10 @@ export class Tabs extends Focusable {
         const currentFocusedTab = getActiveElement(this) as Tab;
         let currentFocusedTabIndex = this.tabs.indexOf(currentFocusedTab);
         currentFocusedTabIndex += code === availableArrows[0] ? -1 : 1;
-        const nextTab = this.tabs[
-            (currentFocusedTabIndex + this.tabs.length) % this.tabs.length
-        ];
+        const nextTab =
+            this.tabs[
+                (currentFocusedTabIndex + this.tabs.length) % this.tabs.length
+            ];
         nextTab.focus();
         if (this.auto) {
             this.selected = nextTab.value;
@@ -247,7 +269,16 @@ export class Tabs extends Focusable {
     }
 
     private onClick = (event: Event): void => {
-        const target = event.target as HTMLElement;
+        if (this.disabled) {
+            return;
+        }
+        const target = event
+            .composedPath()
+            .find((el) => (el as Tab).parentElement === this) as Tab;
+        if (!target || target.disabled) {
+            return;
+        }
+        this.shouldAnimate = true;
         this.selectTarget(target);
         if (this.shouldApplyFocusVisible && event.composedPath()[0] !== this) {
             /* Trick :focus-visible polyfill into thinking keyboard based focus */
@@ -331,7 +362,7 @@ export class Tabs extends Focusable {
     private updateSelectionIndicator = async (): Promise<void> => {
         const selectedElement = this.tabs.find((el) => el.selected);
         if (!selectedElement) {
-            this.selectionIndicatorStyle = `transform: translateX(0px) scaleX(0) scaleY(0);`;
+            this.selectionIndicatorStyle = noSelectionStyle;
             return;
         }
         await Promise.all([
@@ -344,9 +375,14 @@ export class Tabs extends Focusable {
         if (this.direction === 'horizontal') {
             const width = tabBoundingClientRect.width;
             const offset =
-                tabBoundingClientRect.left - parentBoundingClientRect.left;
+                this.dir === 'ltr'
+                    ? tabBoundingClientRect.left - parentBoundingClientRect.left
+                    : tabBoundingClientRect.right -
+                      parentBoundingClientRect.right;
 
-            this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${width});`;
+            this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${
+                this.dir === 'ltr' ? width : -1 * width
+            });`;
         } else {
             const height = tabBoundingClientRect.height;
             const offset =
@@ -361,23 +397,26 @@ export class Tabs extends Focusable {
         return;
     };
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this.tabChangePromise;
+        return complete;
     }
 
     public connectedCallback(): void {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    addEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.addEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        addEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.addEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );
@@ -387,14 +426,16 @@ export class Tabs extends Focusable {
     public disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
-            ((document as unknown) as {
-                fonts: {
-                    removeEventListener: (
-                        name: string,
-                        callback: () => void
-                    ) => void;
-                };
-            }).fonts.removeEventListener(
+            (
+                document as unknown as {
+                    fonts: {
+                        removeEventListener: (
+                            name: string,
+                            callback: () => void
+                        ) => void;
+                    };
+                }
+            ).fonts.removeEventListener(
                 'loadingdone',
                 this.updateSelectionIndicator
             );

@@ -17,12 +17,13 @@ const config = {
             name: 'search',
             host: {
                 selector: '.spectrum-Search',
+                shadowSelector: '#textfield',
             },
             focus: '#input',
             attributes: [
                 {
                     type: 'boolean',
-                    selector: '.spectrum-Textfield--quiet',
+                    selector: '.spectrum-Search--quiet',
                     name: 'quiet',
                 },
             ],
@@ -34,6 +35,10 @@ const config = {
                 {
                     selector: '.spectrum-Search-clearButton',
                     name: 'button',
+                },
+                {
+                    selector: '.spectrum-Search-textfield',
+                    name: 'textfield',
                 },
             ],
             classes: [

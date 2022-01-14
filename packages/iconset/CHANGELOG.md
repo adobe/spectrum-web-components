@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/iconset@0.6.0...@spectrum-web-components/iconset@0.6.1) (2021-12-13)
+
+### Bug Fixes
+
+-   apply "HelpTextMixin" to form elements ([a952447](https://github.com/adobe/spectrum-web-components/commit/a952447254d091b99fe9270b2857cddc48df7c73))
+
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/iconset@0.5.8...@spectrum-web-components/iconset@0.6.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.5.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/iconset@0.5.7...@spectrum-web-components/iconset@0.5.8) (2021-11-08)
+
+### Bug Fixes
+
+-   allow "updateComplete" to resolve to a boolean like the LitElement default ([6127946](https://github.com/adobe/spectrum-web-components/commit/6127946fd3ffd048a30b7eb4bf6aadf9e7c8752a))
+
+## [0.5.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/iconset@0.5.6...@spectrum-web-components/iconset@0.5.7) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/iconset
+
+## [0.5.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/iconset@0.5.5...@spectrum-web-components/iconset@0.5.6) (2021-06-16)
+
+### Bug Fixes
+
+-   lint away debugger statements ([34a498e](https://github.com/adobe/spectrum-web-components/commit/34a498e784221f98dbf26e9366114c82fabc9c5b))
+
 ## [0.5.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/iconset@0.5.4...@spectrum-web-components/iconset@0.5.5) (2021-04-09)
 
 **Note:** Version bump only for package @spectrum-web-components/iconset

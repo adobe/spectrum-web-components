@@ -11,22 +11,24 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
-    property,
+    html,
     SizedMixin,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import styles from './thumbnail.css.js';
 
 /**
  * @element sp-thumbnail
+ *
+ * @slot - image element to present in the Thumbnail
  */
 export class Thumbnail extends SizedMixin(SpectrumElement, {
-    validSizes: ['s', 'm', 'l', 'xl', 'xxl'],
-    noDefaultSize: true,
+    validSizes: ['xxs', 'xs', 's', 'm', 'l'],
+    defaultSize: 's',
 }) {
     public static get styles(): CSSResultArray {
         return [styles];
@@ -34,6 +36,9 @@ export class Thumbnail extends SizedMixin(SpectrumElement, {
 
     @property({ type: String, reflect: true })
     public background?: string;
+
+    @property({ type: Boolean, reflect: true })
+    public cover = false;
 
     protected render(): TemplateResult {
         return html`

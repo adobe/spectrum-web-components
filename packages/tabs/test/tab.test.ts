@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 import '../sp-tabs.js';
 import '../sp-tab.js';
-import { Tabs, Tab } from '../';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { Tab, Tabs } from '../';
+import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { html } from 'lit/static-html.js';
 
 describe('Tab', () => {
     it('loads default tab accessibly', async () => {
@@ -41,7 +42,7 @@ describe('Tab', () => {
         const firstTab = el.querySelector('sp-tab') as Tab;
         const label = firstTab.shadowRoot
             ? (firstTab.shadowRoot.querySelector(
-                  '#itemLabel'
+                  '#item-label'
               ) as HTMLLabelElement)
             : (firstTab.querySelector('#itemLabel') as HTMLLabelElement);
         expect(label.textContent).to.include('Tab 1');

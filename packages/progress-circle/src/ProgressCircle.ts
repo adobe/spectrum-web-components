@@ -11,21 +11,24 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
-    property,
+    html,
     PropertyValues,
-    ifDefined,
+    SizedMixin,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import progressCircleStyles from './progress-circle.css.js';
 
 /**
  * @element sp-progress-circle
  */
-export class ProgressCircle extends SpectrumElement {
+export class ProgressCircle extends SizedMixin(SpectrumElement, {
+    validSizes: ['s', 'm', 'l'],
+}) {
     public static get styles(): CSSResultArray {
         return [progressCircleStyles];
     }
@@ -41,9 +44,6 @@ export class ProgressCircle extends SpectrumElement {
 
     @property({ type: Number })
     public progress = 0;
-
-    @property({ type: String, reflect: true })
-    public size: '' | 'small' | 'large' = '';
 
     private makeRotation(rotation: number): string | undefined {
         return this.indeterminate

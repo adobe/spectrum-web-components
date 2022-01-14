@@ -11,19 +11,23 @@ governing permissions and limitations under the License.
 */
 import { IconsetAddedDetail } from '../';
 import {
-    SpectrumElement,
     css,
+    CSSResultGroup,
     html,
+    SpectrumElement,
     TemplateResult,
-    CSSResult,
-    property,
-    customElement,
 } from '@spectrum-web-components/base';
+import {
+    customElement,
+    property,
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { Search } from '@spectrum-web-components/search';
 import '@spectrum-web-components/search/sp-search.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import bodyStyles from '@spectrum-web-components/styles/body.js';
 import '@spectrum-web-components/icon/sp-icon.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
 
 @customElement('delayed-ready')
 export class DelayedReady extends SpectrumElement {
@@ -42,16 +46,19 @@ export class DelayedReady extends SpectrumElement {
         );
     }
 
-    protected async _getUpdateComplete(): Promise<void> {
-        await super._getUpdateComplete();
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
         await this._delayedReady;
+        return complete;
     }
 
     public handleSlotchange({
         target,
     }: Event & { target: HTMLSlotElement }): void {
         if (target.assignedElements({ flatten: true }).length) {
-            this._resolveDelayedReady();
+            requestAnimationFrame(() => {
+                this._resolveDelayedReady();
+            });
         }
     }
 }
@@ -60,6 +67,9 @@ export class DelayedReady extends SpectrumElement {
 export class IconsDemo extends SpectrumElement {
     @property()
     public name = 'ui';
+
+    @property()
+    public package = '';
 
     @property()
     public size = 'm';
@@ -93,7 +103,7 @@ export class IconsDemo extends SpectrumElement {
         this.iconset = iconset.getIconList();
         this.requestUpdate();
     }
-    public static get styles(): CSSResult[] {
+    public static get styles(): CSSResultGroup {
         return [
             ...bodyStyles,
             css`
@@ -101,11 +111,20 @@ export class IconsDemo extends SpectrumElement {
                     display: grid;
                     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
                     gap: 20px;
+                    align-items: flex-start;
                 }
                 .icon {
                     display: flex;
                     flex-direction: column;
                     align-items: center;
+                    text-align: center;
+                    border-radius: var(
+                        --spectrum-alias-focus-ring-gap,
+                        var(--spectrum-global-dimension-static-size-25)
+                    );
+                }
+                :host([package]) .icon {
+                    cursor: pointer;
                 }
                 sp-icon {
                     margin-bottom: 10px;
@@ -114,8 +133,45 @@ export class IconsDemo extends SpectrumElement {
                     grid-column-start: 1;
                     grid-column-end: -1;
                 }
+                .icon[tabindex]:focus {
+                    outline: none;
+                }
+                .icon[tabindex]:focus-visible {
+                    outline: var(--spectrum-alias-focus-ring-size) solid
+                        var(--spectrum-alias-focus-ring-color);
+                    outline-offset: calc(
+                        var(
+                                --spectrum-alias-focus-ring-gap,
+                                var(--spectrum-global-dimension-static-size-25)
+                            ) * 2
+                    );
+                }
             `,
         ];
+    }
+    private handleKeydown(event: KeyboardEvent, tag: string): void {
+        const { code } = event;
+        if (code !== 'Enter' && code !== 'NumpadEnter' && code !== 'Space') {
+            return;
+        }
+        event.preventDefault();
+        this.shouldCopy(tag);
+    }
+
+    private shouldCopy(tag: string): void {
+        if (!this.package) return;
+        const conditionedTag = tag.slice(1, tag.length - 1);
+        const importURL = `import '@spectrum-web-components/${this.package}/icons/${conditionedTag}.js';`;
+        this.dispatchEvent(
+            new CustomEvent('copy-text', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    message: 'Import statement copied to clipboard!',
+                    text: importURL,
+                },
+            })
+        );
     }
     private updateSearch(event: Event & { target: Search }): void {
         event.stopPropagation();
@@ -132,7 +188,7 @@ export class IconsDemo extends SpectrumElement {
               )
             : this.icons;
         return html`
-            <div class="search">
+            <div class="search" part="search">
                 <sp-field-label for="search">Spectrum icons:</sp-field-label>
                 <sp-search
                     id="search"
@@ -142,15 +198,27 @@ export class IconsDemo extends SpectrumElement {
                     .value=${this.search}
                     label="Search for icons"
                     autocomplete="off"
-                ></sp-search>
-                <p class="spectrum-Body spectrum-Body--sizeM">
-                    Showing ${matchingIcons.length} of ${this.icons.length}
-                    available icons.
-                </p>
+                >
+                    <sp-help-text slot="help-text">
+                        Showing ${matchingIcons.length} of ${this.icons.length}
+                        available icons.
+                    </sp-help-text>
+                </sp-search>
             </div>
             ${matchingIcons.map((icon) => {
                 return html`
-                    <div class="icon">${icon.story(this.size)} ${icon.tag}</div>
+                    <bdo
+                        class="icon"
+                        part="icon"
+                        dir="ltr"
+                        class="icon"
+                        @click=${() => this.shouldCopy(icon.tag)}
+                        @keydown=${(event: KeyboardEvent) =>
+                            this.handleKeydown(event, icon.tag)}
+                        tabindex=${ifDefined(this.package ? '0' : undefined)}
+                    >
+                        ${icon.story(this.size)} ${icon.tag}
+                    </bdo>
                 `;
             })}
         `;
@@ -164,13 +232,13 @@ export class IconsDemo extends SpectrumElement {
                   `}
             ${this.iconset.map(
                 (icon) => html`
-                    <div class="icon">
+                    <bdo class="icon" dir="ltr">
                         <sp-icon
                             size="xl"
                             name=${`${this.name}:${icon}`}
                         ></sp-icon>
                         ${icon}
-                    </div>
+                    </bdo>
                 `
             )}
         `;

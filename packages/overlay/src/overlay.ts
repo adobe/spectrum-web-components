@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 
 import { ThemeData } from '@spectrum-web-components/theme';
 import {
-    TriggerInteractions,
     OverlayDisplayQueryDetail,
     OverlayOptions,
+    TriggerInteractions,
 } from './overlay-types';
 import { OverlayStack } from './overlay-stack.js';
 
@@ -108,6 +108,7 @@ export class Overlay {
         const queryThemeDetail: ThemeData = {
             color: undefined,
             scale: undefined,
+            lang: undefined,
         };
         const queryThemeEvent = new CustomEvent<ThemeData>('sp-query-theme', {
             bubbles: true,
@@ -118,15 +119,13 @@ export class Overlay {
         this.owner.dispatchEvent(queryThemeEvent);
 
         const overlayDetailQuery: OverlayDisplayQueryDetail = {};
-        const queryOverlayDetailEvent = new CustomEvent<OverlayDisplayQueryDetail>(
-            'sp-overlay-query',
-            {
+        const queryOverlayDetailEvent =
+            new CustomEvent<OverlayDisplayQueryDetail>('sp-overlay-query', {
                 bubbles: true,
                 composed: true,
                 detail: overlayDetailQuery,
                 cancelable: true,
-            }
-        );
+            });
         this.overlayElement.dispatchEvent(queryOverlayDetailEvent);
 
         await Overlay.overlayStack.openOverlay({

@@ -11,20 +11,27 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     SpectrumElement,
-    CSSResultArray,
     TemplateResult,
+} from '@spectrum-web-components/base';
+import {
     property,
     query,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
+import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 
 import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
 import styles from './tray.css.js';
 
 /**
  * @element sp-tray
+ *
+ * @slot - content to display within the Tray
+ *
+ * @fires close - Announces that the Tray has been closed.
  */
 export class Tray extends SpectrumElement {
     public static get styles(): CSSResultArray {
@@ -38,9 +45,7 @@ export class Tray extends SpectrumElement {
     private tray!: HTMLDivElement;
 
     public focus(): void {
-        const firstFocusable = this.querySelector(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
-        ) as HTMLElement;
+        const firstFocusable = firstFocusableIn(this);
         if (firstFocusable) {
             firstFocusable.focus();
         } else if (this.children.length === 1) {

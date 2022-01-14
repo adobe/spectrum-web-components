@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons@0.8.0...@spectrum-web-components/icons@0.8.1) (2021-12-13)
+
+**Note:** Version bump only for package @spectrum-web-components/icons
+
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons@0.7.9...@spectrum-web-components/icons@0.8.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/icons
+
+## [0.7.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons@0.7.8...@spectrum-web-components/icons@0.7.9) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/icons
+
+## [0.7.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons@0.7.7...@spectrum-web-components/icons@0.7.8) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.7.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons@0.7.6...@spectrum-web-components/icons@0.7.7) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/icons
+
+## [0.7.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons@0.7.5...@spectrum-web-components/icons@0.7.6) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/icons
+
 ## [0.7.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icons@0.7.4...@spectrum-web-components/icons@0.7.5) (2021-04-09)
 
 **Note:** Version bump only for package @spectrum-web-components/icons

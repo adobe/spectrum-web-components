@@ -11,14 +11,17 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
-    property,
-    CSSResultArray,
-    query,
-    ifDefined,
 } from '@spectrum-web-components/base';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '@spectrum-web-components/underlay/sp-underlay.js';
 import '@spectrum-web-components/button/sp-button.js';
@@ -27,10 +30,12 @@ import '../sp-dialog.js';
 import styles from '@spectrum-web-components/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
+import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 
 /**
  * @element sp-dialog-wrapper
  *
+ * @slot - content for the dialog
  * @fires secondary - Announces that the "secondary" button has been clicked.
  * @fires cancel - Announces that the "cancel" button has been clicked.
  * @fires confirm - Announces that the "confirm" button has been clicked.
@@ -72,7 +77,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public mode?: 'fullscreen' | 'fullscreenTakeover';
 
     @property({ type: String, reflect: true })
-    public size?: 'small' | 'medium' | 'large' | 'alert';
+    public size?: 's' | 'm' | 'l';
 
     @property({ attribute: 'secondary-label' })
     public secondaryLabel = '';
@@ -91,9 +96,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     public focus(): void {
         if (this.shadowRoot) {
-            const firstFocusable = this.shadowRoot.querySelector(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [focusable]'
-            ) as SpectrumElement;
+            const firstFocusable = firstFocusableIn(this.shadowRoot);
             if (firstFocusable) {
                 if (firstFocusable.updateComplete) {
                     firstFocusable.updateComplete.then(() =>
@@ -235,5 +238,13 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 </sp-dialog>
             </div>
         `;
+    }
+
+    protected updated(changes: PropertyValues<this>): void {
+        if (changes.has('open') && this.open) {
+            this.dialog.updateComplete.then(() => {
+                this.dialog.shouldManageTabOrderForScrolling();
+            });
+        }
     }
 }

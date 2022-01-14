@@ -11,17 +11,19 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     SpectrumElement,
-    CSSResultArray,
     TemplateResult,
-    property,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import styles from './quick-actions.css.js';
 
 /**
  * @element sp-quick-actions
+ *
+ * @slot - Action Buttons to displayed for quick use
  */
 export class QuickActions extends SpectrumElement {
     public static get styles(): CSSResultArray {

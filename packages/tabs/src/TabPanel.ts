@@ -12,15 +12,18 @@ governing permissions and limitations under the License.
 
 import {
     html,
-    TemplateResult,
-    SpectrumElement,
-    property,
     PropertyValues,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import panelStyles from './tab-panel.css.js';
 
 /**
+ * @element sp-tab-panel
+ *
+ * @slot - content of the Tab Panel
  */
 export class TabPanel extends SpectrumElement {
     static styles = [panelStyles];

@@ -11,3 +11,9 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-progress-circle.css';
+
+:host {
+    --spectrum-progresscircle-m-over-background-track-fill-color: var(
+        --spectrum-alias-track-fill-color-overbackground
+    );
+}

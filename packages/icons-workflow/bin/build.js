@@ -38,7 +38,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */`;
 
-glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (err, icons) => {
+glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
     if (!fs.existsSync(`${rootDir}packages/icons-workflow/src`)) {
         fs.mkdirSync(`${rootDir}packages/icons-workflow/src`);
     }
@@ -170,6 +170,7 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (err, icons) => {
             'utf-8'
         );
 
+        const iconElementName = `sp-icon-${Case.kebab(ComponentName)}`;
         const iconElement = `
         ${disclaimer}
 
@@ -188,6 +189,9 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (err, icons) => {
             setCustomTemplateLiteralTag
         } from '../custom-tag.js';
 
+        /**
+         * @element ${iconElementName}
+         */
         export class Icon${ComponentName} extends IconBase {
             protected render(): TemplateResult {
                 setCustomTemplateLiteralTag(html);
@@ -221,7 +225,6 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (err, icons) => {
             'utf-8'
         );
 
-        const iconElementName = `sp-icon-${Case.kebab(ComponentName)}`;
         const iconRegistration = `
         ${disclaimer}
 

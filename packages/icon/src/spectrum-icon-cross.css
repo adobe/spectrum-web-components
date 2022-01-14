@@ -17,37 +17,44 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     }
 }
 .spectrum-UIIcon-Cross75 {
-    /* .spectrum-UIIcon-Cross75 */
-    width: var(--spectrum-alias-ui-icon-cross-size-75);
     height: var(--spectrum-alias-ui-icon-cross-size-75);
+    width: var(
+        --spectrum-alias-ui-icon-cross-size-75
+    ); /* .spectrum-UIIcon-Cross75 */
 }
 .spectrum-UIIcon-Cross100 {
-    /* .spectrum-UIIcon-Cross100 */
-    width: var(--spectrum-alias-ui-icon-cross-size-100);
     height: var(--spectrum-alias-ui-icon-cross-size-100);
+    width: var(
+        --spectrum-alias-ui-icon-cross-size-100
+    ); /* .spectrum-UIIcon-Cross100 */
 }
 .spectrum-UIIcon-Cross200 {
-    /* .spectrum-UIIcon-Cross200 */
-    width: var(--spectrum-alias-ui-icon-cross-size-200);
     height: var(--spectrum-alias-ui-icon-cross-size-200);
+    width: var(
+        --spectrum-alias-ui-icon-cross-size-200
+    ); /* .spectrum-UIIcon-Cross200 */
 }
 .spectrum-UIIcon-Cross300 {
-    /* .spectrum-UIIcon-Cross300 */
-    width: var(--spectrum-alias-ui-icon-cross-size-300);
     height: var(--spectrum-alias-ui-icon-cross-size-300);
+    width: var(
+        --spectrum-alias-ui-icon-cross-size-300
+    ); /* .spectrum-UIIcon-Cross300 */
 }
 .spectrum-UIIcon-Cross400 {
-    /* .spectrum-UIIcon-Cross400 */
-    width: var(--spectrum-alias-ui-icon-cross-size-400);
     height: var(--spectrum-alias-ui-icon-cross-size-400);
+    width: var(
+        --spectrum-alias-ui-icon-cross-size-400
+    ); /* .spectrum-UIIcon-Cross400 */
 }
 .spectrum-UIIcon-Cross500 {
-    /* .spectrum-UIIcon-Cross500 */
-    width: var(--spectrum-alias-ui-icon-cross-size-500);
     height: var(--spectrum-alias-ui-icon-cross-size-500);
+    width: var(
+        --spectrum-alias-ui-icon-cross-size-500
+    ); /* .spectrum-UIIcon-Cross500 */
 }
 .spectrum-UIIcon-Cross600 {
-    /* .spectrum-UIIcon-Cross600 */
-    width: var(--spectrum-alias-ui-icon-cross-size-600);
     height: var(--spectrum-alias-ui-icon-cross-size-600);
+    width: var(
+        --spectrum-alias-ui-icon-cross-size-600
+    ); /* .spectrum-UIIcon-Cross600 */
 }

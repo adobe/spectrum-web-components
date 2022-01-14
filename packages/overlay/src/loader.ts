@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { TriggerInteractions, OverlayOptions } from './overlay-types';
+import { OverlayOptions, TriggerInteractions } from './overlay-types';
 
 export const openOverlay = async (
     target: HTMLElement,
@@ -19,5 +19,5 @@ export const openOverlay = async (
     options: OverlayOptions
 ): Promise<() => void> => {
     const { Overlay } = await import('./overlay.js');
-    return await Overlay.open(target, interaction, content, options);
+    return Overlay.open(target, interaction, content, options);
 };

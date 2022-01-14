@@ -131,6 +131,64 @@ Event handlers for clicks and other user actions can be registered on an `<sp-ra
 </sp-radio>
 ```
 
+## Help text
+
+Help text can be accessibly associated with an `<sp-radio-group>` element by using the `help-text` or `negative-help-text` slots. When using the `negative-help-text` slot, `<sp-radio-group>` will self manage the presence of this content based on the value of the `invalid` property on your `<sp-radio-group>` element. Content within the `help-text` slot will be show by default. When your `<sp-radio-group>` should receive help text based on state outside of the complexity of `invalid` or not, manage the content addressed to the `help-text` from above to ensure that it displays the right messaging and possesses the right `variant`.
+
+<sp-tabs selected="self" auto label="Help text usage in radio groups">
+<sp-tab value="self">Self managed</sp-tab>
+<sp-tab-panel value="self">
+
+```html
+<sp-field-label for="self">
+    What is your favorite ice cream flavor?
+</sp-field-label>
+<sp-radio-group
+    is="self"
+    onchange="
+        this.invalid = this.selected === 'fourth';
+    "
+>
+    <sp-radio value="first">Vanilla</sp-radio>
+    <sp-radio value="second">Chocolate</sp-radio>
+    <sp-radio value="third">Strawberry</sp-radio>
+    <sp-radio value="fourth">I don't like ice cream</sp-radio>
+    <sp-help-text slot="help-text">Everyone likes ice cream.</sp-help-text>
+    <sp-help-text slot="negative-help-text" icon>
+        You can't not like ice cream.
+    </sp-help-text>
+</sp-radio-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="above">Managed from above</sp-tab>
+<sp-tab-panel value="above">
+
+```html
+<sp-field-label for="managed">
+    What is your favorite ice cream flavor?
+</sp-field-label>
+<sp-radio-group
+    is="managed"
+    onchange="
+        const helpText = this.querySelector(`[slot='help-text']`);
+        const isInvalid = this.selected === 'fourth';
+        helpText.icon = isInvalid;
+        helpText.textContent = isInvalid ? 'You can\'t not like ice cream.' : 'Everyone likes ice cream.';
+        helpText.variant = isInvalid ? 'negative' : 'neutral';
+    "
+>
+    <sp-radio value="first">Vanilla</sp-radio>
+    <sp-radio value="second">Chocolate</sp-radio>
+    <sp-radio value="third">Strawberry</sp-radio>
+    <sp-radio value="fourth">I don't like ice cream</sp-radio>
+    <sp-help-text slot="help-text">Everyone likes ice cream.</sp-help-text>
+</sp-radio-group>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
 ## Accessibility
 
 Radio buttons are accessible by default, rendered in HTML using the `<input type="radio">` element. Tabbing into a group of radio buttons places the focus on the first radio button selected. If none of the radio buttons are selected, the focus is set on the first one in the group. Space selects the radio button in focus (if not already selected). Using the arrow keys moves focus and selection to the previous or next radio button in the group (last becomes first, and first becomes last). The new radio button in focus gets selected even if the previous one was not.

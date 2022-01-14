@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-menu",
-    "version": "0.10.1",
+    "version": "0.13.2",
     "publishConfig": {
         "access": "public"
     },
@@ -24,17 +24,20 @@
         "./src/*": "./src/*",
         "./package.json": "./package.json",
         "./sp-action-menu": "./sp-action-menu.js",
-        "./sp-action-menu.js": "./sp-action-menu.js"
+        "./sp-action-menu.js": "./sp-action-menu.js",
+        "./sync/sp-action-menu": "./sync/sp-action-menu.js",
+        "./sync/sp-action-menu.js": "./sync/sp-action-menu.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
     "files": [
-        "*.d.ts",
-        "*.js",
-        "*.js.map",
-        "/src/",
-        "custom-elements.json"
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
     ],
     "keywords": [
         "spectrum css",
@@ -43,19 +46,22 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.5.1",
-        "@spectrum-web-components/base": "^0.4.3",
-        "@spectrum-web-components/icon": "^0.9.6",
-        "@spectrum-web-components/icons-workflow": "^0.6.6",
-        "@spectrum-web-components/menu": "^0.8.7",
-        "@spectrum-web-components/picker": "^0.5.1",
-        "@spectrum-web-components/shared": "^0.12.4",
+        "@spectrum-web-components/action-button": "^0.7.2",
+        "@spectrum-web-components/base": "^0.5.1",
+        "@spectrum-web-components/icon": "^0.11.1",
+        "@spectrum-web-components/icons-workflow": "^0.8.1",
+        "@spectrum-web-components/menu": "^0.11.2",
+        "@spectrum-web-components/picker": "^0.9.2",
+        "@spectrum-web-components/shared": "^0.13.2",
         "tslib": "^2.0.0"
     },
+    "devDependencies": {
+        "@spectrum-css/actionmenu": "^3.0.10"
+    },
     "types": "./src/index.d.ts",
-    "customElementsManifest": "custom-elements.json",
+    "customElements": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",
-        "./sp-*.ts"
+        "./sync/sp-*.js"
     ]
 }

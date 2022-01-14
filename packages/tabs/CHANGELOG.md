@@ -3,6 +3,75 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.8.1...@spectrum-web-components/tabs@0.8.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+## [0.8.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.8.0...@spectrum-web-components/tabs@0.8.1) (2021-12-13)
+
+### Bug Fixes
+
+-   allow Tab elements to accept slotted DOM content ([29c9517](https://github.com/adobe/spectrum-web-components/commit/29c951790159d9e02b9850f5739ecaeb486e82b1))
+-   ensure that updates to Tab element content update the Selection Indicator ([94891eb](https://github.com/adobe/spectrum-web-components/commit/94891eb06022f8744558137d9fa237fd541ebca2))
+-   use typescript@^4.5 for "native" document.fonts typings ([a3e4aea](https://github.com/adobe/spectrum-web-components/commit/a3e4aea802c796e9029b2bc32f58639954db831b))
+
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.7.1...@spectrum-web-components/tabs@0.8.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.7.0...@spectrum-web-components/tabs@0.7.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.10...@spectrum-web-components/tabs@0.7.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.9...@spectrum-web-components/tabs@0.6.10) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+## [0.6.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.8...@spectrum-web-components/tabs@0.6.9) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+## [0.6.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.7...@spectrum-web-components/tabs@0.6.8) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
+## [0.6.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.6...@spectrum-web-components/tabs@0.6.7) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.6.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.5...@spectrum-web-components/tabs@0.6.6) (2021-08-03)
+
+### Bug Fixes
+
+-   allow "updateComplete" to resolve to a boolean like the LitElement default ([6127946](https://github.com/adobe/spectrum-web-components/commit/6127946fd3ffd048a30b7eb4bf6aadf9e7c8752a))
+
+## [0.6.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.4...@spectrum-web-components/tabs@0.6.5) (2021-07-22)
+
+### Bug Fixes
+
+-   **tabs:** ensure tabs has layout ([7aba515](https://github.com/adobe/spectrum-web-components/commit/7aba51561965342ea3e18404621659aa32c2ed8f))
+-   **tabs:** manage disabled state on tabs and tab elements ([58def1f](https://github.com/adobe/spectrum-web-components/commit/58def1fd7a724cc078459c56f39c19ebe2005f97))
+
+## [0.6.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.3...@spectrum-web-components/tabs@0.6.4) (2021-07-01)
+
+### Bug Fixes
+
+-   update indicator animation for loading and content direction ([f607f8b](https://github.com/adobe/spectrum-web-components/commit/f607f8b4fca280b7aa5eae835554ea62845abd1c))
+
+## [0.6.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.2...@spectrum-web-components/tabs@0.6.3) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
 ## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.6.1...@spectrum-web-components/tabs@0.6.2) (2021-06-07)
 
 ### Bug Fixes

@@ -26,8 +26,6 @@ import { Toast } from '@spectrum-web-components/toast';
 
 ## Example
 
-### Default
-
 ```html
 <sp-toast open>
     This is important information that you should read, soon.
@@ -56,9 +54,9 @@ import { Toast } from '@spectrum-web-components/toast';
 </sp-toast>
 ```
 
-### Variants
+## Variants
 
-#### Negative
+### Negative
 
 ```html
 <sp-toast open variant="negative">
@@ -66,7 +64,7 @@ import { Toast } from '@spectrum-web-components/toast';
 </sp-toast>
 ```
 
-#### Positive
+### Positive
 
 ```html
 <sp-toast open variant="positive">
@@ -74,7 +72,7 @@ import { Toast } from '@spectrum-web-components/toast';
 </sp-toast>
 ```
 
-#### Info
+### Info
 
 ```html
 <sp-toast open variant="info">

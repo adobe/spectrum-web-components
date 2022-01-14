@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import '@spectrum-web-components/icon/sp-icon.js';
 import '../../iconset/stories/icons-demo.js';
-import { html, TemplateResult, until } from '@spectrum-web-components/base';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { until } from '@spectrum-web-components/base/src/directives.js';
 
 export default {
     title: 'Icons/UI',
@@ -28,6 +29,11 @@ export default {
     args: {
         color: '#000000',
         size: 'm',
+    },
+    swc_vrt: {
+        preload: async (): Promise<void> => {
+            await import('./icon-manifest.js');
+        },
     },
 };
 
@@ -52,6 +58,7 @@ export const elements = ({ color, size }: Properties): TemplateResult => {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                text-align: center;
             }
             sp-icon {
                 margin-bottom: 10px;
@@ -86,10 +93,10 @@ export const Icons = ({ color, size }: Properties): TemplateResult => {
             <icons-demo style="color: ${color}">
                 ${iconTemplates.map(
                     (icon) => html`
-                        <div class="icon">
+                        <bdo class="icon" dir="ltr">
                             <sp-icon size=${size}>${icon.template()}</sp-icon>
                             ${icon.name}
-                        </div>
+                        </bdo>
                     `
                 )}
             </icons-demo>
@@ -101,6 +108,7 @@ export const Icons = ({ color, size }: Properties): TemplateResult => {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                text-align: center;
             }
             sp-icon {
                 margin-bottom: 10px;

@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import '../sp-link.js';
 import { Link } from '../';
-import { fixture, elementUpdated, html, expect } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('Link', () => {
     it('loads', async () => {

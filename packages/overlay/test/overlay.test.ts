@@ -14,17 +14,25 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import { Dialog } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
-import { Overlay, Placement } from '../';
+import { ActiveOverlay, Overlay, OverlayTrigger, Placement } from '../';
 
-import { waitForPredicate, isVisible } from '../../../test/testing-helpers.js';
+import { isVisible, waitForPredicate } from '../../../test/testing-helpers.js';
 import {
+    elementUpdated,
+    expect,
     fixture,
     html,
-    expect,
-    elementUpdated,
+    nextFrame,
+    oneEvent,
     waitUntil,
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
+import {
+    definedOverlayElement,
+    virtualElement,
+} from '../stories/overlay.stories';
+import { PopoverContent } from '../stories/overlay-story-components.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Overlays', () => {
     let testDiv!: HTMLDivElement;
@@ -391,18 +399,18 @@ describe('Overlays', () => {
     it('closes an inline overlay when tabbing past the content', async () => {
         const el = await fixture<HTMLDivElement>(html`
             <div>
-                <button class="trigger">Trigger</button>
+                <sp-button class="trigger">Trigger</sp-button>
                 <div class="content">
                     <input />
                 </div>
-                <a href="#">After</a>
+                <input value="After" id="after" />
             </div>
         `);
 
         const trigger = el.querySelector('.trigger') as HTMLElement;
         const content = el.querySelector('.content') as HTMLElement;
         const input = el.querySelector('input') as HTMLInputElement;
-        const after = el.querySelector('a') as HTMLAnchorElement;
+        const after = el.querySelector('#after') as HTMLAnchorElement;
 
         openOverlays.push(await Overlay.open(trigger, 'inline', content, {}));
 
@@ -411,36 +419,36 @@ describe('Overlays', () => {
             press: 'Tab',
         });
 
-        expect(document.activeElement === input);
+        expect(document.activeElement).to.equal(input);
         expect(input.closest('active-overlay') !== null);
 
         await sendKeys({
             press: 'Shift+Tab',
         });
 
-        expect(document.activeElement === trigger);
+        expect(document.activeElement).to.equal(trigger);
 
         await sendKeys({
             press: 'Tab',
         });
 
-        expect(document.activeElement === input);
+        expect(document.activeElement).to.equal(input);
 
         await sendKeys({
             press: 'Tab',
         });
 
-        expect(document.activeElement === after);
+        expect(document.activeElement).to.equal(after);
         await waitUntil(
-            () => document.querySelector('active-element') === null
+            () => document.querySelector('active-overlay') === null
         );
     });
 
     it('closes an inline overlay when tabbing before the trigger', async () => {
         const el = await fixture<HTMLDivElement>(html`
             <div>
-                <a href="#">Before</a>
-                <button class="trigger">Trigger</button>
+                <input value="Before" id="before" />
+                <sp-button class="trigger">Trigger</sp-button>
                 <div class="content">
                     <label>
                         Content in an inline overlay.
@@ -452,8 +460,8 @@ describe('Overlays', () => {
 
         const trigger = el.querySelector('.trigger') as HTMLElement;
         const content = el.querySelector('.content') as HTMLElement;
-        const input = el.querySelector('input') as HTMLInputElement;
-        const before = el.querySelector('a') as HTMLAnchorElement;
+        const input = el.querySelector('.content input') as HTMLInputElement;
+        const before = el.querySelector('#before') as HTMLAnchorElement;
 
         openOverlays.push(await Overlay.open(trigger, 'inline', content, {}));
 
@@ -462,22 +470,254 @@ describe('Overlays', () => {
             press: 'Tab',
         });
 
-        expect(document.activeElement === input);
+        expect(document.activeElement).to.equal(input);
         expect(input.closest('active-overlay') !== null);
 
         await sendKeys({
             press: 'Shift+Tab',
         });
 
-        expect(document.activeElement === trigger);
+        expect(document.activeElement).to.equal(trigger);
 
         await sendKeys({
             press: 'Shift+Tab',
         });
 
-        expect(document.activeElement === before);
+        expect(document.activeElement).to.equal(before);
         await waitUntil(
-            () => document.querySelector('active-element') === null
+            () => document.querySelector('active-overlay') === null
         );
+    });
+
+    it('opens detached content', async () => {
+        const textContent = 'This is a detached element that has been overlaid';
+        const el = await fixture<HTMLButtonElement>(
+            html`
+                <button>Trigger</button>
+            `
+        );
+
+        const content = document.createElement('div');
+        content.textContent = textContent;
+
+        const opened = oneEvent(el, 'sp-opened');
+        const closeOverlay = await Overlay.open(el, 'click', content, {
+            placement: 'bottom',
+        });
+        await opened;
+
+        let activeOverlay = document.querySelector('active-overlay');
+
+        if (activeOverlay) {
+            expect(activeOverlay.textContent).to.equal(textContent);
+        } else {
+            expect(activeOverlay).to.not.be.null;
+        }
+
+        const closed = oneEvent(el, 'sp-closed');
+        closeOverlay();
+        await closed;
+
+        activeOverlay = document.querySelector('active-overlay');
+
+        expect(activeOverlay).to.be.null;
+
+        content.remove();
+    });
+});
+describe('Overlay - type="modal"', () => {
+    it('closes on `contextmenu` and passes that to the underlying page', async () => {
+        await fixture<HTMLDivElement>(html`
+            ${virtualElement({
+                ...virtualElement.args,
+                offset: 6,
+            })}
+        `);
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        let opened = oneEvent(document, 'sp-opened');
+        // Right click to over "context menu" overlay.
+        sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [width / 2 + 50, height / 2],
+                },
+                {
+                    type: 'click',
+                    options: {
+                        button: 'right',
+                    },
+                    position: [width / 2 + 50, height / 2],
+                },
+            ],
+        });
+        await opened;
+        const firstOverlay = document.querySelector(
+            'active-overlay'
+        ) as ActiveOverlay;
+        const firstHeadline = firstOverlay.querySelector(
+            '[slot="header"]'
+        ) as HTMLSpanElement;
+        expect(firstOverlay, 'first overlay').to.not.be.null;
+        expect(firstOverlay.isConnected).to.be.true;
+        expect(firstHeadline.textContent).to.equal('Menu source: end');
+        let closed = oneEvent(document, 'sp-closed');
+        opened = oneEvent(document, 'sp-opened');
+        // Right click to out of the "context menu" overlay to both close
+        // the first overlay and have the event passed to the surfacing page
+        // in order to open a subsequent "context menu" overlay.
+        sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [width / 4, height / 4],
+                },
+                {
+                    type: 'click',
+                    options: {
+                        button: 'right',
+                    },
+                    position: [width / 4, height / 4],
+                },
+            ],
+        });
+        await closed;
+        await opened;
+        const secondOverlay = document.querySelector(
+            'active-overlay'
+        ) as ActiveOverlay;
+        const secondHeadline = secondOverlay.querySelector(
+            '[slot="header"]'
+        ) as HTMLSpanElement;
+        expect(secondOverlay, 'second overlay').to.not.be.null;
+        expect(secondOverlay).to.not.equal(firstOverlay);
+        expect(firstOverlay.isConnected).to.be.false;
+        expect(secondOverlay.isConnected).to.be.true;
+        expect(secondHeadline.textContent).to.equal('Menu source: start');
+        closed = oneEvent(document, 'sp-closed');
+        sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [width / 8, height / 8],
+                },
+                {
+                    type: 'click',
+                    position: [width / 8, height / 8],
+                },
+            ],
+        });
+        await closed;
+        await nextFrame();
+    });
+    it('opens children in the modal stack through shadow roots', async () => {
+        const el = await fixture<OverlayTrigger>(definedOverlayElement());
+        const trigger = el.querySelector(
+            '[slot="trigger"]'
+        ) as HTMLButtonElement;
+        let open = oneEvent(el, 'sp-opened');
+        trigger.click();
+        await open;
+        const content = document.querySelector(
+            'popover-content'
+        ) as PopoverContent;
+        open = oneEvent(content, 'sp-opened');
+        content.button.click();
+        await open;
+        const activeOverlays = document.querySelectorAll('active-overlay');
+        activeOverlays.forEach((overlay) => {
+            expect(overlay.slot).to.equal('open');
+        });
+        let close = oneEvent(content, 'sp-closed');
+        content.trigger.removeAttribute('open');
+        await close;
+        close = oneEvent(el, 'sp-closed');
+        el.removeAttribute('open');
+        await close;
+    });
+});
+describe('Overlay - timing', () => {
+    it('manages multiple modals in a row without preventing them from closing', async () => {
+        const test = await fixture<HTMLDivElement>(html`
+            <div>
+                <overlay-trigger>
+                    <sp-button slot="trigger">Trigger 1</sp-button>
+                    <sp-popover slot="hover-content">
+                        <p>Hover contentent for "Trigger 1".</p>
+                    </sp-popover>
+                </overlay-trigger>
+                <overlay-trigger>
+                    <sp-button slot="trigger">Trigger 2</sp-button>
+                    <sp-popover slot="hover-content">
+                        <p>Hover contentent for "Trigger 2".</p>
+                    </sp-popover>
+                    <sp-popover slot="click-content">
+                        <p>Click contentent for "Trigger 2".</p>
+                    </sp-popover>
+                </overlay-trigger>
+            </div>
+        `);
+
+        const overlayTrigger1 = test.querySelector(
+            'overlay-trigger:first-child'
+        ) as OverlayTrigger;
+        const overlayTrigger2 = test.querySelector(
+            'overlay-trigger:last-child'
+        ) as OverlayTrigger;
+        const trigger1 = overlayTrigger1.querySelector(
+            '[slot="trigger"]'
+        ) as HTMLButtonElement;
+        const trigger2 = overlayTrigger2.querySelector(
+            '[slot="trigger"]'
+        ) as HTMLButtonElement;
+
+        trigger1.dispatchEvent(
+            new MouseEvent('mouseenter', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await nextFrame();
+        trigger1.dispatchEvent(
+            new MouseEvent('mouseleave', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        trigger2.dispatchEvent(
+            new MouseEvent('mouseenter', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await nextFrame();
+        const opened = oneEvent(trigger2, 'sp-opened');
+        trigger2.dispatchEvent(
+            new MouseEvent('click', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await opened;
+
+        expect(overlayTrigger1.hasAttribute('open')).to.be.false;
+        expect(overlayTrigger2.hasAttribute('open')).to.be.true;
+        expect(overlayTrigger2.getAttribute('open')).to.equal('click');
+
+        const closed = oneEvent(overlayTrigger2, 'sp-closed');
+        document.body.dispatchEvent(
+            new MouseEvent('click', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await closed;
+
+        // sometimes safari needs to wait a few frames for the open attribute to update
+        for (let i = 0; i < 3; i++) await nextFrame();
+
+        expect(overlayTrigger1.hasAttribute('open')).to.be.false;
+        expect(overlayTrigger2.hasAttribute('open')).to.be.false;
     });
 });

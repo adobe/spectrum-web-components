@@ -11,17 +11,18 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     SpectrumElement,
-    CSSResultArray,
     TemplateResult,
-    property,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import actionBarStyles from './action-bar.css.js';
 export const actionBarVariants = ['sticky', 'fixed'];
 
 /**
  * @element sp-action-bar
+ * @slot - Content to display with the Action Bar
  */
 export class ActionBar extends SpectrumElement {
     public static get styles(): CSSResultArray {
@@ -68,7 +69,7 @@ export class ActionBar extends SpectrumElement {
 
     public render(): TemplateResult {
         return html`
-            <sp-popover open id="popover">
+            <sp-popover ?open=${this.open} id="popover">
                 <slot></slot>
             </sp-popover>
         `;

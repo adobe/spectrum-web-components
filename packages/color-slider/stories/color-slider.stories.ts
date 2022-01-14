@@ -47,41 +47,77 @@ export const vertical = (): TemplateResult => {
 };
 
 export const canvas = (): TemplateResult => {
-    requestAnimationFrame(() => {
-        const canvas = document.querySelector(
-            'canvas[slot="gradient"]'
-        ) as HTMLCanvasElement;
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        const context = canvas.getContext('2d');
-        if (context) {
-            context.rect(0, 0, canvas.width, canvas.height);
-
-            const gradient = context.createLinearGradient(
-                0,
-                0,
-                canvas.width,
-                canvas.height
-            );
-
-            gradient.addColorStop(0, 'rgb(255, 0, 0)');
-            gradient.addColorStop(0.17, 'rgb(255, 255, 0)');
-            gradient.addColorStop(0.33, 'rgb(0, 255, 0)');
-            gradient.addColorStop(0.5, 'rgb(0, 255, 255)');
-            gradient.addColorStop(0.67, 'rgb(0, 0, 255)');
-            gradient.addColorStop(0.83, 'rgb(255, 0, 255)');
-            gradient.addColorStop(1, 'rgb(255, 0, 0)');
-
-            context.fillStyle = gradient;
-            context.fill();
-        }
-    });
     return html`
         <sp-color-slider color="rgb(255, 0, 0)">
             <canvas slot="gradient" role="presentation"></canvas>
         </sp-color-slider>
     `;
 };
+
+class CanvasWriter extends HTMLElement {
+    writeToCanvas(): void {
+        const { previousElementSibling } = this;
+        if (previousElementSibling) {
+            const canvas = previousElementSibling.querySelector(
+                'canvas[slot="gradient"]'
+            ) as HTMLCanvasElement;
+
+            if (canvas) {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                const context = canvas.getContext('2d');
+                if (context) {
+                    context.rect(0, 0, canvas.width, canvas.height);
+
+                    const gradient = context.createLinearGradient(
+                        0,
+                        0,
+                        canvas.width,
+                        canvas.height
+                    );
+
+                    gradient.addColorStop(0, 'rgb(255, 0, 0)');
+                    gradient.addColorStop(0.17, 'rgb(255, 255, 0)');
+                    gradient.addColorStop(0.33, 'rgb(0, 255, 0)');
+                    gradient.addColorStop(0.5, 'rgb(0, 255, 255)');
+                    gradient.addColorStop(0.67, 'rgb(0, 0, 255)');
+                    gradient.addColorStop(0.83, 'rgb(255, 0, 255)');
+                    gradient.addColorStop(1, 'rgb(255, 0, 0)');
+
+                    context.fillStyle = gradient;
+                    context.fill();
+                }
+            }
+        }
+    }
+
+    constructor() {
+        super();
+        this.writeStatePromise = new Promise((res) => {
+            requestAnimationFrame(() => {
+                this.writeToCanvas();
+                res(true);
+            });
+        });
+    }
+
+    private writeStatePromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.writeStatePromise;
+    }
+}
+
+customElements.define('slider-canvas-writer', CanvasWriter);
+
+canvas.decorators = [
+    (story: () => TemplateResult): TemplateResult => {
+        return html`
+            ${story()}
+            <slider-canvas-writer></slider-canvas-writer>
+        `;
+    },
+];
 
 export const image = (): TemplateResult => {
     return html`

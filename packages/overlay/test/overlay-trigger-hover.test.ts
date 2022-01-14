@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    fixture,
     elementUpdated,
-    waitUntil,
-    html,
     expect,
+    fixture,
+    html,
+    waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -126,5 +126,41 @@ describe('Overlay Trigger - Hover', () => {
         await elementUpdated(el);
 
         expect(el.open).to.equal('longpress');
+    });
+    it('closes `hover` overlay when [type="modal"]', async () => {
+        const el = await fixture<OverlayTrigger>(
+            (() => html`
+                <overlay-trigger placement="right-start" type="modal">
+                    <sp-action-button slot="trigger">
+                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                    </sp-action-button>
+                    <sp-popover slot="hover-content" tip></sp-popover>
+                </overlay-trigger>
+            `)()
+        );
+        await elementUpdated(el);
+
+        expect(el.open).to.be.undefined;
+
+        const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
+        trigger.dispatchEvent(
+            new Event('mouseenter', {
+                bubbles: true,
+            })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.open).to.equal('hover');
+
+        trigger.dispatchEvent(
+            new Event('mouseleave', {
+                bubbles: true,
+            })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.open).to.be.null;
     });
 });

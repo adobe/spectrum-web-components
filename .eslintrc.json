@@ -13,6 +13,7 @@
     },
     "rules": {
         "no-debugger": 2,
+        "no-console": ["error", { "allow": ["warn", "error"] }],
         "import/extensions": ["error", "ignorePackages", { "ts": "never" }],
         "import/prefer-default-export": "off",
         "spectrum-web-components/prevent-argument-names": [
@@ -24,6 +25,15 @@
             {
                 "mustMatch": "Copyright [0-9]{0,4} Adobe. All rights reserved.",
                 "templateFile": "config/license.js"
+            }
+        ],
+        "sort-imports": [
+            "error",
+            {
+                "ignoreCase": true,
+                "ignoreDeclarationSort": true,
+                "ignoreMemberSort": false,
+                "allowSeparatedGroups": false
             }
         ],
         "lit-a11y/click-events-have-key-events": [
@@ -42,5 +52,13 @@
             }
         ]
     },
-    "extends": ["plugin:prettier/recommended", "plugin:lit-a11y/recommended"]
+    "extends": ["plugin:prettier/recommended", "plugin:lit-a11y/recommended"],
+    "overrides": [
+        {
+            "files": ["tasks/*"],
+            "rules": {
+                "no-console": ["off"]
+            }
+        }
+    ]
 }

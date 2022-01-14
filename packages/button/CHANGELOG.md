@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.16.1...@spectrum-web-components/button@0.16.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
+## [0.16.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.16.0...@spectrum-web-components/button@0.16.1) (2021-12-13)
+
+### Bug Fixes
+
+-   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+
+# [0.16.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.15.1...@spectrum-web-components/button@0.16.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.15.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.15.0...@spectrum-web-components/button@0.15.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
+# [0.15.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.14.9...@spectrum-web-components/button@0.15.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.14.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.14.8...@spectrum-web-components/button@0.14.9) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
+## [0.14.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.14.7...@spectrum-web-components/button@0.14.8) (2021-09-20)
+
+### Bug Fixes
+
+-   ensure "click" on "NumpadEnter" key press ([450fa01](https://github.com/adobe/spectrum-web-components/commit/450fa019d44f447a349707d77635f95bbc9f1049))
+
+## [0.14.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.14.6...@spectrum-web-components/button@0.14.7) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
+## [0.14.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.14.5...@spectrum-web-components/button@0.14.6) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.14.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.14.4...@spectrum-web-components/button@0.14.5) (2021-08-03)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
+## [0.14.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.14.3...@spectrum-web-components/button@0.14.4) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
+## [0.14.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.14.2...@spectrum-web-components/button@0.14.3) (2021-07-01)
+
+**Note:** Version bump only for package @spectrum-web-components/button
+
+## [0.14.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.14.1...@spectrum-web-components/button@0.14.2) (2021-06-16)
+
+### Bug Fixes
+
+-   update role application logic to not overwrite menu\* roles ([94b6aec](https://github.com/adobe/spectrum-web-components/commit/94b6aecffc1e5686feab09361d4e07ec3e854726))
+
 ## [0.14.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.14.0...@spectrum-web-components/button@0.14.1) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/button

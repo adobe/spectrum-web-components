@@ -11,20 +11,19 @@ governing permissions and limitations under the License.
 */
 const stripIndent = require('common-tags').stripIndents;
 
-const postCSSPlugins = (resourcePath) => {
+const postCSSPlugins = (resourcePath, toTS) => {
     const postCSSImportConfig = {};
     if (resourcePath) {
         postCSSImportConfig['root'] = resourcePath;
     }
     return [
         require('postcss-import')(postCSSImportConfig),
-        require('postcss-inherit')(),
         require('postcss-preset-env')({
             browsers: [
                 'last 2 Chrome versions',
                 'last 2 Firefox versions',
-                'last 4 Safari versions',
-                'last 4 iOS versions',
+                'last 2 Safari versions',
+                'last 2 iOS versions',
             ],
             stage: 2,
             features: {
@@ -37,6 +36,8 @@ const postCSSPlugins = (resourcePath) => {
                 'default',
                 {
                     svgo: false,
+                    discardComments: !!toTS,
+                    uniqueSelectors: false,
                 },
             ],
         }),

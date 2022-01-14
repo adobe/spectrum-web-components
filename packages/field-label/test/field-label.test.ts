@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { stub } from 'sinon';
 
 import '@spectrum-web-components/textfield/sp-textfield.js';
@@ -73,21 +73,21 @@ describe('FieldLabel', () => {
         );
         await elementUpdated(el);
         const manageSpy = stub(
-            (el as unknown) as { manageFor(): Promise<string> },
+            el as unknown as { manageFor(): Promise<string> },
             'manageFor'
         );
-        manageSpy.callsFake(
-            async (...args): Promise<string> => {
-                try {
-                    await ((FieldLabel.prototype as unknown) as {
+        manageSpy.callsFake(async (...args): Promise<string> => {
+            try {
+                await (
+                    FieldLabel.prototype as unknown as {
                         manageFor(): Promise<void>;
-                    }).manageFor.apply(el, ...args);
-                } catch (error) {
-                    return 'Error was thrown.';
-                }
-                return 'No error was thrown.';
+                    }
+                ).manageFor.apply(el, ...args);
+            } catch (error) {
+                return 'Error was thrown.';
             }
-        );
+            return 'No error was thrown.';
+        });
 
         el.for = 'not-available';
         await elementUpdated(el);
@@ -128,7 +128,7 @@ describe('FieldLabel', () => {
         el.click();
         await elementUpdated(el);
 
-        expect(document.activeElement === input);
+        expect(document.activeElement).to.equal(input);
     });
     it('associates itself to an element with a focueElement whose "id" matches its "for" attribute', async () => {
         const test = await fixture<HTMLDivElement>(
@@ -167,7 +167,7 @@ describe('FieldLabel', () => {
         el.click();
         await elementUpdated(el);
 
-        expect(document.activeElement === input);
+        expect(document.activeElement).to.equal(input);
     });
     it('forces focus visible when available', async () => {
         const test = await fixture<HTMLDivElement>(
@@ -184,12 +184,12 @@ describe('FieldLabel', () => {
         const picker = test.querySelector('sp-picker') as Picker;
 
         await elementUpdated(el);
-        expect(!picker.focused);
+        expect(picker.focused).to.be.false;
 
         el.click();
         await elementUpdated(el);
 
-        expect(document.activeElement === picker);
-        expect(picker.focused);
+        expect(document.activeElement).to.equal(picker);
+        expect(picker.focused).to.be.true;
     });
 });

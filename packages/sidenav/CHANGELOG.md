@@ -3,6 +3,66 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.12.1...@spectrum-web-components/sidenav@0.12.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/sidenav
+
+## [0.12.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.12.0...@spectrum-web-components/sidenav@0.12.1) (2021-12-13)
+
+**Note:** Version bump only for package @spectrum-web-components/sidenav
+
+# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.11.1...@spectrum-web-components/sidenav@0.12.0) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/sidenav
+
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.11.0...@spectrum-web-components/sidenav@0.11.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/sidenav
+
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.10...@spectrum-web-components/sidenav@0.11.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.10.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.9...@spectrum-web-components/sidenav@0.10.10) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/sidenav
+
+## [0.10.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.8...@spectrum-web-components/sidenav@0.10.9) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/sidenav
+
+## [0.10.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.7...@spectrum-web-components/sidenav@0.10.8) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/sidenav
+
+## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.6...@spectrum-web-components/sidenav@0.10.7) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.5...@spectrum-web-components/sidenav@0.10.6) (2021-08-17)
+
+### Bug Fixes
+
+-   update slotting in "sp-sidenav-item" to allow for labelling in HTML ([928c476](https://github.com/adobe/spectrum-web-components/commit/928c476294c482f1d3acf1b787ef995f960edcbb))
+
+## [0.10.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.4...@spectrum-web-components/sidenav@0.10.5) (2021-07-22)
+
+### Bug Fixes
+
+-   style clean up ([49e1537](https://github.com/adobe/spectrum-web-components/commit/49e15377f3a839d0ed5dc2504dd71396aa156eb5))
+
+## [0.10.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.3...@spectrum-web-components/sidenav@0.10.4) (2021-07-01)
+
+**Note:** Version bump only for package @spectrum-web-components/sidenav
+
+## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.2...@spectrum-web-components/sidenav@0.10.3) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/sidenav
+
 ## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.10.1...@spectrum-web-components/sidenav@0.10.2) (2021-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/sidenav

@@ -3,6 +3,73 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.3.1...@spectrum-web-components/color-wheel@0.3.2) (2022-01-07)
+
+**Note:** Version bump only for package @spectrum-web-components/color-wheel
+
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.3.0...@spectrum-web-components/color-wheel@0.3.1) (2021-12-13)
+
+**Note:** Version bump only for package @spectrum-web-components/color-wheel
+
+# [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.2.1...@spectrum-web-components/color-wheel@0.3.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.2.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.2.0...@spectrum-web-components/color-wheel@0.2.1) (2021-11-08)
+
+### Bug Fixes
+
+-   abstract "hasVisibleFocusInTree" functionality and return trigger focus after close ([4f39f2c](https://github.com/adobe/spectrum-web-components/commit/4f39f2c506066b789834584d2c9c24185ea57118))
+
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.1.13...@spectrum-web-components/color-wheel@0.2.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.1.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.1.12...@spectrum-web-components/color-wheel@0.1.13) (2021-10-12)
+
+### Bug Fixes
+
+-   **color-wheel:** use correct focus events in test ([f6f35ec](https://github.com/adobe/spectrum-web-components/commit/f6f35ec5359c717331200b8d13dc58d3c4b3ff7a))
+
+## [0.1.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.1.11...@spectrum-web-components/color-wheel@0.1.12) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/color-wheel
+
+## [0.1.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.1.10...@spectrum-web-components/color-wheel@0.1.11) (2021-09-13)
+
+### Bug Fixes
+
+-   manage "focused" across more contexts ([9273c15](https://github.com/adobe/spectrum-web-components/commit/9273c15144323bd8d62626b4e35b1975bffabf2a))
+
+## [0.1.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.1.9...@spectrum-web-components/color-wheel@0.1.10) (2021-08-24)
+
+**Note:** Version bump only for package @spectrum-web-components/color-wheel
+
+## [0.1.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.1.8...@spectrum-web-components/color-wheel@0.1.9) (2021-08-17)
+
+### Bug Fixes
+
+-   key interaction handling no longer prevents "tab" presses ([b542ce8](https://github.com/adobe/spectrum-web-components/commit/b542ce8f98a8a26badfa856f2e09ebda16dbcbb1))
+
+## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.1.7...@spectrum-web-components/color-wheel@0.1.8) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/color-wheel
+
+## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.1.6...@spectrum-web-components/color-wheel@0.1.7) (2021-07-01)
+
+### Bug Fixes
+
+-   expand support for maintaining hue and saturation across customization ([fe18944](https://github.com/adobe/spectrum-web-components/commit/fe18944da268bd16fbb3e643fa4695d7e2d0e5d7))
+-   normalize focus passing during and after pointer events ([357931b](https://github.com/adobe/spectrum-web-components/commit/357931b6eb803759925b10b629d21878e8249678))
+
+## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.1.5...@spectrum-web-components/color-wheel@0.1.6) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/color-wheel
+
 ## [0.1.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.1.4...@spectrum-web-components/color-wheel@0.1.5) (2021-05-24)
 
 ### Bug Fixes

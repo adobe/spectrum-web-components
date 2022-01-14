@@ -49,7 +49,7 @@ import { Card } from '@spectrum-web-components/card';
 
 ## Heading
 
-By default, the heading for an `sp-card` is applied via the `heading` attribute, which is restricted to string content only. When HTML content is desired, a slot named `heading` available for applying the heading.
+By default, the heading for an `<sp-card>` is applied via the `heading` attribute, which is restricted to string content only. For HTML content, use the `heading` slot instead.
 
 ```html demo
 <sp-card
@@ -59,6 +59,22 @@ By default, the heading for an `sp-card` is applied via the `heading` attribute,
     <h1 slot="heading">Card Heading</h1>
     <img alt="" slot="cover-photo" src="https://picsum.photos/200/300" />
     <div slot="footer">Footer</div>
+</sp-card>
+```
+
+## Linking
+
+An `<sp-card>` can be provided with an `href` attribute in order for it to act as one large anchor element. When leveraging the `href` attribute, the `download`, `target` and `rel` attributes customize the card's linking behavior. Use them as follows:
+
+<!-- prettier-ignore -->
+```html
+<sp-card
+    heading="Card Title"
+    subheading="JPG"
+    href="https://opensource.adobe.com/spectrum-web-components"
+    target="_blank"
+>
+    <img slot="cover-photo" src="https://picsum.photos/200/300" alt="Demo Image" />
 </sp-card>
 ```
 
@@ -192,13 +208,13 @@ Gallery cards can contain a heading, a subheading, an image preview, a descripti
 </div>
 ```
 
-### Small
+### Size
 
-The `small` attriibute can be applied to a standard card:
+`size="s"` will delivery the `<sp-card>` element at a "small" size. It can be leveraged with a standard card:
 
 ```html demo
 <div style="width: 208px; height: 264px">
-    <sp-card small heading="Card Heading" subheading="JPG Photo">
+    <sp-card size="s" heading="Card Heading" subheading="JPG Photo">
         <img
             slot="cover-photo"
             alt="Demo Image"
@@ -215,7 +231,7 @@ A `horizontal` card:
 <div
     style="color: var(--spectrum-body-text-color, var(--spectrum-alias-text-color));"
 >
-    <sp-card small horizontal heading="Card Heading" subheading="JPG Photo">
+    <sp-card size="s" horizontal heading="Card Heading" subheading="JPG Photo">
         <sp-icon slot="preview" style="width: 36px; height: 36px;">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -241,7 +257,7 @@ Or a `quiet` card:
     style="color: var(--spectrum-body-text-color, var(--spectrum-alias-text-color)); width: 110px;"
 >
     <sp-card
-        small
+        size="s"
         heading="Card Heading"
         subheading="JPG Photo"
         variant="quiet"

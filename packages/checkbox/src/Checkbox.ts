@@ -12,13 +12,13 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
-    TemplateResult,
+    DefaultElementSize,
     html,
-    property,
     PropertyValues,
     SizedMixin,
-    ElementSize,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { CheckboxBase } from './CheckboxBase.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark75.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-checkmark100.js';
@@ -86,8 +86,10 @@ const dashIcon = {
     `,
 };
 
-type CheckboxSize = Exclude<ElementSize, 'xxl'>;
-
+/**
+ * @element sp-checkbox
+ * @slot - content to display as the label for the Checkbox
+ */
 export class Checkbox extends SizedMixin(CheckboxBase) {
     @property({ type: Boolean, reflect: true })
     public indeterminate = false;
@@ -106,8 +108,8 @@ export class Checkbox extends SizedMixin(CheckboxBase) {
         return html`
             ${super.render()}
             <span id="box">
-                ${checkmarkIcon[this.size as CheckboxSize]}
-                ${dashIcon[this.size as CheckboxSize]}
+                ${checkmarkIcon[this.size as DefaultElementSize]}
+                ${dashIcon[this.size as DefaultElementSize]}
             </span>
             <label id="label"><slot></slot></label>
         `;

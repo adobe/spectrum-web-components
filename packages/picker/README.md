@@ -177,6 +177,106 @@ import { Picker } from '@spectrum-web-components/picker';
 </sp-tab-panel>
 </sp-tabs>
 
+## Icons
+
+`<sp-menu-item>`s in an `<sp-picker>` that are provided content addressed to their `icon` slot will be passed to the `<sp-picker>` element when that item is chosen.
+
+```html
+<sp-field-label for="picker-icons">Choose an action...</sp-field-label>
+<sp-picker label="What would you like to do?" value="item-2" id="picker-icons">
+    <sp-menu-item>
+        <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
+        Save
+    </sp-menu-item>
+    <sp-menu-item>
+        <sp-icon-stopwatch slot="icon"></sp-icon-stopwatch>
+        Finish
+    </sp-menu-item>
+    <sp-menu-item>
+        <sp-icon-user-activity slot="icon"></sp-icon-user-activity>
+        Review
+    </sp-menu-item>
+</sp-picker>
+```
+
+When you choose to leverage `<sp-menu-item>` elements without text content, you will need to be sure to leverage the `value` attribute so that the `<sp-picker>` element can differentiate between the available options. Further, it is important that you apply accessible labeling to the `[slot="icon"]` content as follows:
+
+```html
+<sp-field-label for="picker-icons-only">Choose an action...</sp-field-label>
+<sp-picker
+    label="What would you like to do?"
+    value="item-2"
+    id="picker-icons-only"
+>
+    <sp-menu-item value="item-1">
+        <sp-icon-save-floppy slot="icon" label="Save"></sp-icon-save-floppy>
+    </sp-menu-item>
+    <sp-menu-item value="item-2">
+        <sp-icon-stopwatch slot="icon" label="Finish"></sp-icon-stopwatch>
+    </sp-menu-item>
+    <sp-menu-item value="item-3">
+        <sp-icon-user-activity
+            slot="icon"
+            label="Review"
+        ></sp-icon-user-activity>
+    </sp-menu-item>
+</sp-picker>
+```
+
+### Advanced icon management
+
+The `icons` attribute allows you to manage whether to `only` display the icon in the `<sp-picker>` element or to display `none` of the icons in the `<sp-picker>`.
+
+When using `icons="only"` and your `<sp-menu-item>` elements still have text content, that content will be applied to `<sp-picker>` element in a non-visible way.
+
+```html
+<sp-field-label for="picker-icons-value">Choose an action...</sp-field-label>
+<sp-picker
+    label="What would you like to do?"
+    value="item-2"
+    id="picker-icons-value"
+    icons="only"
+>
+    <sp-menu-item>
+        <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
+        Save
+    </sp-menu-item>
+    <sp-menu-item>
+        <sp-icon-stopwatch slot="icon"></sp-icon-stopwatch>
+        Finish
+    </sp-menu-item>
+    <sp-menu-item>
+        <sp-icon-user-activity slot="icon"></sp-icon-user-activity>
+        Review
+    </sp-menu-item>
+</sp-picker>
+```
+
+When using `icons="none"`, the icons will only be available in the overlaid menu.
+
+```html
+<sp-field-label for="picker-icons-none">Choose an action...</sp-field-label>
+<sp-picker
+    label="What would you like to do?"
+    value="item-2"
+    id="picker-icons-none"
+    icons="none"
+>
+    <sp-menu-item>
+        <sp-icon-save-floppy slot="icon"></sp-icon-save-floppy>
+        Save
+    </sp-menu-item>
+    <sp-menu-item>
+        <sp-icon-stopwatch slot="icon"></sp-icon-stopwatch>
+        Finish
+    </sp-menu-item>
+    <sp-menu-item>
+        <sp-icon-user-activity slot="icon"></sp-icon-user-activity>
+        Review
+    </sp-menu-item>
+</sp-picker>
+```
+
 ## Value
 
 When the `value` of an `<sp-picker>` matches the `value` attribute or the trimmed `textContent` (or `itemText`) of a descendent `<sp-menu-item>` element, it will make that element as `selected`.

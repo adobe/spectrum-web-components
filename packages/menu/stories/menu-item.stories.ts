@@ -14,6 +14,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 
 import '../sp-menu.js';
 import '../sp-menu-item.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 
 export default {
     component: 'sp-menu-item',
@@ -38,12 +39,45 @@ export const noWrap = (): TemplateResult => {
     `;
 };
 
+export const valueSlot = (): TemplateResult => {
+    /**
+     * This story featurs zero width spaces between the characters in the `<kbd>` element.
+     * While their absence has not caused issues in the local Storybook, the visual regression
+     * suite was causig the `⌘​` character to display different between the various Menu Items
+     * without the intevening zero width space character. When reviewing in the future,
+     * `font-variant-ligatures: none` was also not enough to address this situation.
+     */
+    //
+    //
+    return html`
+        <style>
+            kbd {
+                font-family: var(--spectrum-alias-body-text-font-family);
+                white-space: nowrap;
+            }
+        </style>
+        <sp-menu style="width: 150px;" selects="single">
+            <sp-menu-item>
+                Save
+                <kbd slot="value">⌘​S</kbd>
+            </sp-menu-item>
+            <sp-menu-item selected>
+                Save As...
+                <kbd slot="value">⇧​⌘​S</kbd>
+            </sp-menu-item>
+            <sp-menu-item disabled>
+                Save All
+                <kbd slot="value">⌥​⌘​S</kbd>
+            </sp-menu-item>
+        </sp-menu>
+    `;
+};
+
 export const href = (): TemplateResult => {
     return html`
         <sp-menu style="width: 150px;">
             <sp-menu-item
                 href="https://opensource.adobe.com/spectrum-web-components"
-                target="_blank"
             >
                 <sp-icon-edit slot="icon"></sp-icon-edit>
                 Edit the Documentation Site

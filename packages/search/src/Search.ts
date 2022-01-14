@@ -11,14 +11,16 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
     CSSResultArray,
+    html,
     PropertyValues,
     TemplateResult,
+} from '@spectrum-web-components/base';
+import {
     property,
     query,
-    ifDefined,
-} from '@spectrum-web-components/base';
+} from '@spectrum-web-components/base/src/decorators.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import { Textfield } from '@spectrum-web-components/textfield';
 import '@spectrum-web-components/button/sp-clear-button.js';
@@ -28,13 +30,20 @@ import searchStyles from './search.css.js';
 
 const stopPropagation = (event: Event): void => event.stopPropagation();
 
+/**
+ * @element sp-search
+ * @slot help-text - default or non-negative help text to associate to your form element
+ * @slot negative-help-text - negative help text to associate to your form element when `invalid`
+ *
+ * @fires submit - The search form has been submitted.
+ */
 export class Search extends Textfield {
     public static get styles(): CSSResultArray {
         return [...super.styles, searchStyles];
     }
 
     @property()
-    public action?: string;
+    public action = '';
 
     @property()
     public label = 'Search';
@@ -88,10 +97,10 @@ export class Search extends Textfield {
         );
     }
 
-    protected render(): TemplateResult {
+    protected renderField(): TemplateResult {
         return html`
             <form
-                action=${ifDefined(this.action)}
+                action=${this.action}
                 id="form"
                 method=${ifDefined(this.method)}
                 @submit=${this.handleSubmit}
@@ -101,7 +110,7 @@ export class Search extends Textfield {
                 <sp-icon-magnify
                     class="icon magnifier icon-workflow"
                 ></sp-icon-magnify>
-                ${super.render()}
+                ${super.renderField()}
                 ${this.value
                     ? html`
                           <sp-clear-button
@@ -115,6 +124,11 @@ export class Search extends Textfield {
                     : html``}
             </form>
         `;
+    }
+
+    public firstUpdated(changedProperties: PropertyValues): void {
+        super.firstUpdated(changedProperties);
+        this.inputElement.setAttribute('type', 'search');
     }
 
     public updated(changedProperties: PropertyValues): void {

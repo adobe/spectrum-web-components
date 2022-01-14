@@ -52,19 +52,19 @@ const config = {
                     replacement:
                         ':host([disabled][checked][dir]) #input + #switch',
                     selector:
-                        '.spectrum-Switch .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch',
+                        '.spectrum-Switch .spectrum-Switch-input:disabled:checked + .spectrum-Switch-switch',
                 },
                 {
                     replacement:
                         ':host([disabled][checked][dir]) #input + #switch:before',
                     selector:
-                        '.spectrum-Switch .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch:before',
+                        '.spectrum-Switch .spectrum-Switch-input:disabled:checked + .spectrum-Switch-switch::before',
                 },
                 {
                     replacement:
                         ':host([disabled][checked][dir]) #input ~ #label',
                     selector:
-                        '.spectrum-Switch .spectrum-Switch-input:disabled:checked~.spectrum-Switch-label',
+                        '.spectrum-Switch .spectrum-Switch-input:disabled:checked ~ .spectrum-Switch-label',
                 },
             ],
         },

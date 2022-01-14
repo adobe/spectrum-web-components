@@ -17,23 +17,44 @@ import '../sp-split-view.js';
 export default {
     title: 'Split View',
     component: 'sp-split-view',
+    args: {
+        primarySize: 100,
+    },
+    argTypes: {
+        primarySize: {
+            name: 'primarySize',
+            type: { name: 'number', required: false },
+            description: 'Size of the primary panel.',
+            table: {
+                type: { summary: 'number' },
+                defaultValue: { summary: undefined },
+            },
+            control: {
+                type: 'number',
+            },
+        },
+    },
 };
 
-export const Horizontal = (): TemplateResult => {
+interface Properties {
+    primarySize?: string;
+}
+
+export const Horizontal = (args: Properties): TemplateResult => {
     return html`
-        <sp-split-view style="height: 200px" primary-size="100">
+        <sp-split-view style="height: 200px" .primarySize="${args.primarySize}">
             <div>First panel</div>
             <div>Second panel</div>
         </sp-split-view>
     `;
 };
 
-export const HorizontalResizable = (): TemplateResult => {
+export const HorizontalResizable = (args: Properties): TemplateResult => {
     return html`
         <sp-split-view
             resizable
             primary-min="50"
-            primary-size="100"
+            .primarySize="${args.primarySize}"
             secondary-min="50"
         >
             <div>
@@ -55,7 +76,9 @@ export const HorizontalResizable = (): TemplateResult => {
     `;
 };
 
-export const HorizontalResizableCollapsible = (): TemplateResult => {
+export const HorizontalResizableCollapsible = (
+    args: Properties
+): TemplateResult => {
     return html`
         <sp-split-view
             resizable
@@ -63,6 +86,7 @@ export const HorizontalResizableCollapsible = (): TemplateResult => {
             primary-min="50"
             secondary-min="50"
             style="height: 500px;"
+            .primarySize="${args.primarySize}"
         >
             <div>
                 <h1>First panel</h1>
@@ -99,16 +123,24 @@ export const HorizontalResizableCollapsible = (): TemplateResult => {
     `;
 };
 
-export const Vertical = (): TemplateResult => {
+HorizontalResizableCollapsible.args = {
+    primarySize: undefined,
+};
+
+export const Vertical = (args: Properties): TemplateResult => {
     return html`
-        <sp-split-view vertical>
+        <sp-split-view vertical .primarySize="${args.primarySize}">
             <div>First panel</div>
             <div>Second panel</div>
         </sp-split-view>
     `;
 };
 
-export const VerticalResizable = (): TemplateResult => {
+Vertical.args = {
+    primarySize: undefined,
+};
+
+export const VerticalResizable = (args: Properties): TemplateResult => {
     return html`
         <sp-split-view
             vertical
@@ -117,6 +149,7 @@ export const VerticalResizable = (): TemplateResult => {
             primary-max="100"
             secondary-min="50"
             style="height: 400px;"
+            .primarySize="${args.primarySize}"
         >
             <div>
                 <h1>First panel</h1>
@@ -153,16 +186,22 @@ export const VerticalResizable = (): TemplateResult => {
     `;
 };
 
-export const VerticalResizableCollapsible = (): TemplateResult => {
+VerticalResizable.args = {
+    primarySize: undefined,
+};
+
+export const VerticalResizableCollapsible = (
+    args: Properties
+): TemplateResult => {
     return html`
         <sp-split-view
             vertical
             resizable
             collapsible
             primary-min="50"
-            primary-size="250"
             secondary-min="40"
             style="height: 400px;"
+            .primarySize="${args.primarySize}"
         >
             <div>
                 <h1>First panel</h1>
@@ -199,7 +238,11 @@ export const VerticalResizableCollapsible = (): TemplateResult => {
     `;
 };
 
-export const MultipleLevels = (): TemplateResult => {
+VerticalResizableCollapsible.args = {
+    primarySize: 250,
+};
+
+export const MultipleLevels = (args: Properties): TemplateResult => {
     return html`
         <sp-split-view
             resizable
@@ -229,7 +272,7 @@ export const MultipleLevels = (): TemplateResult => {
                     vertical
                     resizable
                     primary-min="50"
-                    primary-size="100"
+                    .primarySize="${args.primarySize}"
                     secondary-min="50"
                     style="height: 300px;"
                 >
@@ -254,20 +297,24 @@ export const MultipleLevels = (): TemplateResult => {
     `;
 };
 
-export const OnePaneNoSplitter = (): TemplateResult => {
+export const OnePaneNoSplitter = (args: Properties): TemplateResult => {
     return html`
-        <sp-split-view style="height: 200px">
+        <sp-split-view style="height: 200px" .primarySize="${args.primarySize}">
             <div>First panel</div>
         </sp-split-view>
     `;
 };
 
-export const ShowFirstTwoPanes = (): TemplateResult => {
+export const ShowFirstTwoPanes = (args: Properties): TemplateResult => {
     return html`
-        <sp-split-view style="height: 200px">
+        <sp-split-view style="height: 200px" .primarySize="${args.primarySize}">
             <div>First panel</div>
             <div>Second panel</div>
             <div>Third (invisible) panel</div>
         </sp-split-view>
     `;
+};
+
+ShowFirstTwoPanes.args = {
+    primarySize: undefined,
 };

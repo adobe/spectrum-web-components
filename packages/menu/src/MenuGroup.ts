@@ -11,49 +11,82 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
+    html,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { queryAssignedNodes } from '@spectrum-web-components/base/src/decorators.js';
 
+import { Menu } from './Menu.js';
 import '../sp-menu.js';
 import menuGroupStyles from './menu-group.css.js';
 
 /**
- * Spectrum Menu Group Component
  * @element sp-menu-group
  *
  * @slot header - headline of the menu group
  * @slot - menu items to be listed in the group
  */
-export class MenuGroup extends SpectrumElement {
+export class MenuGroup extends Menu {
     public static get styles(): CSSResultArray {
-        return [menuGroupStyles];
+        return [...super.styles, menuGroupStyles];
     }
 
-    private instanceCount = MenuGroup.instances;
-
     private static instances = 0;
+
+    private headerId!: string;
 
     public constructor() {
         super();
         MenuGroup.instances += 1;
+        this.headerId = `sp-menu-group-label-${MenuGroup.instances}`;
+    }
+
+    @queryAssignedNodes('header', true)
+    private headerElements!: NodeListOf<HTMLElement>;
+
+    private headerElement?: HTMLElement;
+
+    protected get ownRole(): string {
+        switch (this.selects) {
+            case 'multiple':
+            case 'single':
+            case 'inherit':
+                return 'group';
+            default:
+                return 'menu';
+        }
+    }
+
+    protected updateLabel(): void {
+        const headerElement = this.headerElements.length
+            ? this.headerElements[0]
+            : undefined;
+        if (headerElement !== this.headerElement) {
+            if (this.headerElement && this.headerElement.id === this.headerId) {
+                this.headerElement.removeAttribute('id');
+            }
+            if (headerElement) {
+                const headerId = headerElement.id || this.headerId;
+                if (!headerElement.id) {
+                    headerElement.id = headerId;
+                }
+                this.setAttribute('aria-labelledby', headerId);
+            } else {
+                this.removeAttribute('aria-labelledby');
+            }
+        }
+        this.headerElement = headerElement;
     }
 
     public render(): TemplateResult {
-        const labelledby = `menu-heading-category-${this.instanceCount}`;
         return html`
-            <span class="header" id=${labelledby} aria-hidden="true">
-                <slot name="header"></slot>
+            <span class="header" aria-hidden="true">
+                <slot name="header" @slotchange=${this.updateLabel}></slot>
             </span>
-            <sp-menu role="presentation">
+            <sp-menu role="none">
                 <slot></slot>
             </sp-menu>
         `;
-    }
-
-    protected firstUpdated(): void {
-        this.setAttribute('role', 'none');
     }
 }

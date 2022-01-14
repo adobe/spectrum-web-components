@@ -146,6 +146,10 @@ The work to both open and close an overlay is asynchronous. This asynchrony is s
 </sp-popover>
 ```
 
+## Styling
+
+When an overlay is opened from within a styled DOM scope as created by an `<sp-theme>` element, this scope will be resolved and recreated with in the `<active-overlay>` element that is created to host the overlaid content directly in the `<body>`. By default, the generated `<sp-theme>` element will be supplied with settings of the scope from which the overlay is triggered, including any "app" centric CSS Custom Properties that might be applied via `Theme.registerThemeFragment('app', 'app', themeFragment)` therein. In the case that you have set CSS Custom Properties for the scope created by an `<sp-theme>` element via other methods, you can specify that those values should also be applied to overlay content using the `theme` part on the `<active-overlay>` element via the `active-overlay::part(theme) { /* styles */ }` selector.
+
 ## Advanced Usage
 
 When working with the DOM-based APIs of custom elements, it is sometimes preferred to project content into an overlay from a different shadow root (eg projecting a single-slotted element into the overlay). To ensure that the content can be marshalled through any number of `<slot>` elements which are addressed into subsequent `<slot>` elements, be sure to use the `flatten: true` option when querying `slot.asignedNodes()`:

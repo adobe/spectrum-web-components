@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { fixture, elementUpdated, expect } from '@open-wc/testing';
+import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { spy } from 'sinon';
 
 import '../sp-dialog-wrapper.js';
@@ -19,12 +19,12 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 import { Button } from '@spectrum-web-components/button';
 import { Underlay } from '@spectrum-web-components/underlay';
 import {
-    wrapperLabeledHero,
-    wrapperDismissable,
     wrapperButtons,
-    wrapperFullscreen,
     wrapperButtonsUnderlay,
+    wrapperDismissable,
     wrapperDismissableUnderlayError,
+    wrapperFullscreen,
+    wrapperLabeledHero,
 } from '../stories/dialog-wrapper.stories.js';
 
 describe('Dialog Wrapper', () => {
@@ -79,9 +79,7 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.true;
     });
     it('dismisses', async () => {
-        const el = await fixture<DialogWrapper>(
-            wrapperDismissable({ actionTracking: false })
-        );
+        const el = await fixture<DialogWrapper>(wrapperDismissable());
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -148,9 +146,7 @@ describe('Dialog Wrapper', () => {
         const handleConfirm = (): void => confirmSpy();
         const handleCancel = (): void => cancelSpy();
         const handleSecondary = (): void => secondarySpy();
-        const el = await fixture<DialogWrapper>(
-            wrapperButtons({ actionTracking: false })
-        );
+        const el = await fixture<DialogWrapper>(wrapperButtons());
         el.addEventListener('confirm', handleConfirm);
         el.addEventListener('cancel', handleCancel);
         el.addEventListener('secondary', handleSecondary);

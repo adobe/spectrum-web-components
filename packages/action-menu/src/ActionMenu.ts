@@ -12,11 +12,14 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
-    TemplateResult,
-    PropertyValues,
     html,
-    ifDefined,
+    PropertyValues,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/popover/sp-popover.js';
 import { PickerBase } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
@@ -25,13 +28,21 @@ import actionMenuStyles from './action-menu.css.js';
 
 /**
  * @element sp-action-menu
- * @slot icon - The icon to use for action button
- * @slot label - The label to use on for the action button
+ *
+ * @slot - menu items to be listed in the Action Menu
+ * @slot icon - The icon to use for Action Menu
+ * @slot label - The label to use on for the Action Menu
+ * @attr selects - By default `sp-action-menu` does not manage a selection. If
+ *   you'd like for a selection to be held by the `sp-menu` that it presents in
+ *   its overlay, use `selects="single" to activate this functionality.
  */
 export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     public static get styles(): CSSResultArray {
         return [actionMenuStyles];
     }
+
+    @property({ type: String })
+    public selects: undefined | 'single' = undefined;
 
     protected listRole: 'listbox' | 'menu' = 'menu';
     protected itemRole = 'menuitem';
@@ -50,7 +61,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         ];
     }
 
-    protected get renderButton(): TemplateResult {
+    protected render(): TemplateResult {
         return html`
             <sp-action-button
                 quiet

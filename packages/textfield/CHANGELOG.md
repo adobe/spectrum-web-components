@@ -3,6 +3,78 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.10.1...@spectrum-web-components/textfield@0.10.2) (2022-01-07)
+
+### Bug Fixes
+
+-   **textfield:** prevent IME selection misalignment in Safari when using hiragana input modality ([f8e1e70](https://github.com/adobe/spectrum-web-components/commit/f8e1e709e99d62e67589d8f54f15d49a9ecf2f32))
+
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.10.0...@spectrum-web-components/textfield@0.10.1) (2021-12-13)
+
+### Bug Fixes
+
+-   apply "HelpTextMixin" to form elements ([a952447](https://github.com/adobe/spectrum-web-components/commit/a952447254d091b99fe9270b2857cddc48df7c73))
+
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.9.1...@spectrum-web-components/textfield@0.10.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.9.0...@spectrum-web-components/textfield@0.9.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/textfield
+
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.16...@spectrum-web-components/textfield@0.9.0) (2021-11-02)
+
+### Bug Fixes
+
+-   **textfield:** respect type=text|url|tel|email|password ([1b7a59a](https://github.com/adobe/spectrum-web-components/commit/1b7a59a208ce00a62c23c80b75bacabf73c3e6ea))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.8.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.15...@spectrum-web-components/textfield@0.8.16) (2021-10-12)
+
+### Bug Fixes
+
+-   **textfield:** respect resize styling ([04993c3](https://github.com/adobe/spectrum-web-components/commit/04993c380d485b0e9b02fd6ad196e5caaf29e0a2))
+
+## [0.8.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.14...@spectrum-web-components/textfield@0.8.15) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/textfield
+
+## [0.8.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.13...@spectrum-web-components/textfield@0.8.14) (2021-09-13)
+
+**Note:** Version bump only for package @spectrum-web-components/textfield
+
+## [0.8.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.12...@spectrum-web-components/textfield@0.8.13) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.8.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.11...@spectrum-web-components/textfield@0.8.12) (2021-08-03)
+
+### Bug Fixes
+
+-   **textfield:** break very long words within the Textarea's sizer element ([2f95ac0](https://github.com/adobe/spectrum-web-components/commit/2f95ac04a3ad3c200172cd3c364c9014c7d6dfde))
+
+## [0.8.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.10...@spectrum-web-components/textfield@0.8.11) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/textfield
+
+## [0.8.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.9...@spectrum-web-components/textfield@0.8.10) (2021-07-01)
+
+### Bug Fixes
+
+-   correct sp-textfield[multiline][grows] styling and add story for regression testing ([58c9331](https://github.com/adobe/spectrum-web-components/commit/58c9331b75c94d2bcbe1742b023e1bd884c52bb3))
+
+## [0.8.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.8...@spectrum-web-components/textfield@0.8.9) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/textfield
+
 ## [0.8.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.8.7...@spectrum-web-components/textfield@0.8.8) (2021-06-07)
 
 ### Bug Fixes

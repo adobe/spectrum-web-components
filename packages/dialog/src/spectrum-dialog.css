@@ -11,8 +11,7 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    /* .spectrum-Dialog */
-    --spectrum-dialog-fullscreen-header-text-size: 28px;
+    --spectrum-dialog-fullscreen-header-text-size: 28px; /* .spectrum-Dialog */
     --spectrum-dialog-confirm-small-width: 400px;
     --spectrum-dialog-confirm-medium-width: 480px;
     --spectrum-dialog-confirm-large-width: 640px;
@@ -47,126 +46,121 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-global-dimension-static-size-25,
         2px
     );
-    display: flex;
+}
+:host {
     box-sizing: border-box;
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
-    width: fit-content;
+    display: flex; /* .spectrum-Dialog */
+    max-height: inherit;
+    max-width: 100%;
     min-width: var(
         --spectrum-dialog-confirm-min-width,
         var(--spectrum-global-dimension-static-size-3600)
     );
-    max-width: 100%;
-    max-height: inherit;
     outline: none;
+    width: -moz-fit-content;
+    width: fit-content;
 }
-:host([size='small']) {
-    /* .spectrum-Dialog--small */
-    width: var(--spectrum-dialog-confirm-small-width);
+:host([size='s']) {
+    width: var(
+        --spectrum-dialog-confirm-small-width
+    ); /* .spectrum-Dialog--small */
 }
-:host([size='medium']) {
-    /* .spectrum-Dialog--medium */
-    width: var(--spectrum-dialog-confirm-medium-width);
+:host([size='m']) {
+    width: var(
+        --spectrum-dialog-confirm-medium-width
+    ); /* .spectrum-Dialog--medium */
 }
-:host([size='large']) {
-    /* .spectrum-Dialog--large */
-    width: var(--spectrum-dialog-confirm-large-width);
+:host([size='l']) {
+    width: var(
+        --spectrum-dialog-confirm-large-width
+    ); /* .spectrum-Dialog--large */
 }
 ::slotted([slot='hero']) {
-    /* .spectrum-Dialog-hero */
-    grid-area: hero;
-    height: var(--spectrum-dialog-confirm-hero-height);
+    background-position: 50%;
+    background-size: cover;
     border-top-left-radius: var(
         --spectrum-dialog-confirm-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-component-border-radius)
     );
     border-top-right-radius: var(
         --spectrum-dialog-confirm-border-radius,
-        var(--spectrum-global-dimension-size-50)
+        var(--spectrum-alias-component-border-radius)
     );
-    background-size: cover;
-    background-position: 50%;
+    grid-area: hero; /* .spectrum-Dialog-hero */
+    height: var(--spectrum-dialog-confirm-hero-height);
     overflow: hidden;
 }
 .grid {
-    /* .spectrum-Dialog .spectrum-Dialog-grid */
-    display: grid;
+    display: grid; /* .spectrum-Dialog .spectrum-Dialog-grid */
+    grid-template-areas: 'hero hero    hero    hero        hero        hero' '.    .       .       .           .           .' '.    heading header  header      typeIcon    .' '.    divider divider divider     divider     .' '.    content content content     content     .' '.    footer  footer  buttonGroup buttonGroup .' '.    .       .       .           .           .';
     grid-template-columns:
         var(--spectrum-dialog-confirm-padding) auto 1fr auto minmax(0, auto)
         var(--spectrum-dialog-confirm-padding);
     grid-template-rows: auto var(--spectrum-dialog-confirm-padding) auto auto 1fr auto var(
             --spectrum-dialog-confirm-padding
         );
-    grid-template-areas: 'hero hero    hero    hero        hero        hero' '.    .       .       .           .           .' '.    heading header  header      typeIcon    .' '.    divider divider divider     divider     .' '.    content content content     content     .' '.    footer  footer  buttonGroup buttonGroup .' '.    .       .       .           .           .';
     width: 100%;
 }
 :host([dir='ltr']) ::slotted([slot='heading']) {
-    /* [dir=ltr] .spectrum-Dialog-heading */
-    padding-right: var(--spectrum-dialog-confirm-gap-size);
+    padding-right: var(
+        --spectrum-dialog-confirm-gap-size
+    ); /* [dir=ltr] .spectrum-Dialog-heading */
 }
 :host([dir='rtl']) ::slotted([slot='heading']) {
-    /* [dir=rtl] .spectrum-Dialog-heading */
-    padding-left: var(--spectrum-dialog-confirm-gap-size);
+    padding-left: var(
+        --spectrum-dialog-confirm-gap-size
+    ); /* [dir=rtl] .spectrum-Dialog-heading */
 }
 ::slotted([slot='heading']) {
-    /* .spectrum-Dialog-heading */
-    grid-area: heading;
-    margin: 0;
     font-size: var(--spectrum-dialog-confirm-title-text-size);
     font-weight: var(
         --spectrum-dialog-confirm-title-text-font-weight,
-        var(--spectrum-global-font-weight-bold)
+        var(--spectrum-alias-heading-text-font-weight-regular)
     );
+    grid-area: heading; /* .spectrum-Dialog-heading */
     line-height: var(
         --spectrum-dialog-confirm-title-text-line-height,
         var(--spectrum-alias-heading-text-line-height)
     );
+    margin: 0;
     outline: none;
 }
 :host([dir='ltr']) .no-header::slotted([slot='heading']) {
-    /* [dir=ltr] .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
-    padding-right: 0;
+    padding-right: 0; /* [dir=ltr] .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
 }
 :host([dir='rtl']) .no-header::slotted([slot='heading']) {
-    /* [dir=rtl] .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
-    padding-left: 0;
+    padding-left: 0; /* [dir=rtl] .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
 }
 .no-header::slotted([slot='heading']) {
-    /* .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
-    grid-area: heading-start/heading-start/header-end/header-end;
+    grid-area: heading-start/heading-start/header-end/header-end; /* .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
 }
 .header {
-    /* .spectrum-Dialog-header */
-    grid-area: header;
-    display: flex;
     align-items: center;
-    justify-content: flex-end;
     box-sizing: border-box;
+    display: flex;
+    grid-area: header; /* .spectrum-Dialog-header */
+    justify-content: flex-end;
     outline: none;
 }
 .type-icon {
-    /* .spectrum-Dialog-typeIcon */
-    grid-area: typeIcon;
+    grid-area: typeIcon; /* .spectrum-Dialog-typeIcon */
 }
 .divider {
-    /* .spectrum-Dialog .spectrum-Dialog-divider */
-    grid-area: divider;
-    width: 100%;
-    margin-top: var(
-        --spectrum-dialog-confirm-divider-margin-top,
-        var(--spectrum-global-dimension-static-size-150)
-    );
+    grid-area: divider; /* .spectrum-Dialog .spectrum-Dialog-divider */
     margin-bottom: var(
         --spectrum-dialog-confirm-divider-margin-bottom,
         var(--spectrum-global-dimension-static-size-200)
     );
+    margin-top: var(
+        --spectrum-dialog-confirm-divider-margin-top,
+        var(--spectrum-global-dimension-static-size-150)
+    );
+    width: 100%;
 }
 :host([no-divider]) .divider {
-    /* .spectrum-Dialog--noDivider .spectrum-Dialog-divider */
-    display: none;
+    display: none; /* .spectrum-Dialog--noDivider .spectrum-Dialog-divider */
 }
 :host([no-divider]) ::slotted([slot='heading']) {
-    /* .spectrum-Dialog--noDivider .spectrum-Dialog-heading */
     padding-bottom: calc(
         var(
                 --spectrum-dialog-confirm-divider-margin-top,
@@ -175,182 +169,178 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             var(
                 --spectrum-dialog-confirm-divider-margin-bottom,
                 var(--spectrum-global-dimension-static-size-200)
-            ) + var(--spectrum-dialog-confirm-divider-height)
-    );
+            ) +
+            var(
+                --spectrum-dialog-confirm-divider-height,
+                var(--spectrum-global-dimension-size-25)
+            )
+    ); /* .spectrum-Dialog--noDivider .spectrum-Dialog-heading */
 }
 .content {
-    /* .spectrum-Dialog-content */
-    grid-area: content;
-    box-sizing: border-box;
-    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    outline: none;
+    box-sizing: border-box;
     font-size: var(--spectrum-dialog-confirm-description-text-size);
     font-weight: var(
         --spectrum-dialog-confirm-description-text-font-weight,
         var(--spectrum-global-font-weight-regular)
     );
+    grid-area: content; /* .spectrum-Dialog-content */
     line-height: var(
         --spectrum-dialog-confirm-description-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     );
-    padding: 0 var(--spectrum-dialog-confirm-description-padding);
     margin: 0 var(--spectrum-dialog-confirm-description-margin);
+    overflow-y: auto;
+    padding: 0 var(--spectrum-dialog-confirm-description-padding);
 }
+.content,
 .footer {
-    /* .spectrum-Dialog-footer */
-    grid-area: footer;
-    padding-top: var(--spectrum-dialog-confirm-footer-padding-top);
-    display: flex;
-    flex-wrap: wrap;
     outline: none;
 }
-.footer > ::slotted(*),
-.footer > .button + .button {
-    /* .spectrum-Dialog-footer>*,
-   * .spectrum-Dialog-footer>.spectrum-Button+.spectrum-Button */
-    margin-bottom: 0;
-}
-:host([dir='ltr']) .buttonGroup {
-    /* [dir=ltr] .spectrum-Dialog-buttonGroup */
-    padding-left: var(--spectrum-dialog-confirm-gap-size);
-}
-:host([dir='rtl']) .buttonGroup {
-    /* [dir=rtl] .spectrum-Dialog-buttonGroup */
-    padding-right: var(--spectrum-dialog-confirm-gap-size);
-}
-.buttonGroup {
-    /* .spectrum-Dialog-buttonGroup */
-    grid-area: buttonGroup;
-    padding-top: var(--spectrum-dialog-confirm-buttongroup-padding-top);
+.footer {
     display: flex;
-    justify-content: flex-end;
+    flex-wrap: wrap;
+    grid-area: footer; /* .spectrum-Dialog-footer */
+    padding-top: var(--spectrum-dialog-confirm-footer-padding-top);
 }
-.buttonGroup.buttonGroup--noFooter {
-    /* .spectrum-Dialog-buttonGroup.spectrum-Dialog-buttonGroup--noFooter */
-    grid-area: footer-start/footer-start/buttonGroup-end/buttonGroup-end;
+.footer > .button + .button,
+.footer > ::slotted(*) {
+    margin-bottom: 0; /* .spectrum-Dialog-footer>*,
+   * .spectrum-Dialog-footer>.spectrum-Button+.spectrum-Button */
+}
+:host([dir='ltr']) .button-group {
+    padding-left: var(
+        --spectrum-dialog-confirm-gap-size
+    ); /* [dir=ltr] .spectrum-Dialog-buttonGroup */
+}
+:host([dir='rtl']) .button-group {
+    padding-right: var(
+        --spectrum-dialog-confirm-gap-size
+    ); /* [dir=rtl] .spectrum-Dialog-buttonGroup */
+}
+.button-group {
+    display: flex;
+    grid-area: buttonGroup; /* .spectrum-Dialog-buttonGroup */
+    justify-content: flex-end;
+    padding-top: var(--spectrum-dialog-confirm-buttongroup-padding-top);
+}
+.button-group.button-group--noFooter {
+    grid-area: footer-start/footer-start/buttonGroup-end/buttonGroup-end; /* .spectrum-Dialog-buttonGroup.spectrum-Dialog-buttonGroup--noFooter */
 }
 :host([dismissable]) .grid {
-    /* .spectrum-Dialog.spectrum-Dialog--dismissable .spectrum-Dialog-grid */
+    grid-template-areas: 'hero hero    hero    hero        hero        hero        hero' '.    .       .       .           .           closeButton closeButton' '.    heading header  header      typeIcon    closeButton closeButton' '.    divider divider divider     divider     divider     .' '.    content content content     content     content     .' '.    footer  footer  buttonGroup buttonGroup buttonGroup .' '.    .       .       .           .           .           .';
     grid-template-columns:
         var(--spectrum-dialog-confirm-padding) auto 1fr auto minmax(0, auto)
-        minmax(0, var(--spectrum-dialog-confirm-close-button-size)) var(--spectrum-dialog-confirm-padding);
+        minmax(0, var(--spectrum-dialog-confirm-close-button-size)) var(--spectrum-dialog-confirm-padding); /* .spectrum-Dialog.spectrum-Dialog--dismissable .spectrum-Dialog-grid */
     grid-template-rows: auto var(--spectrum-dialog-confirm-padding) auto auto 1fr auto var(
             --spectrum-dialog-confirm-padding
         );
-    grid-template-areas: 'hero hero    hero    hero        hero        hero        hero' '.    .       .       .           .           closeButton closeButton' '.    heading header  header      typeIcon    closeButton closeButton' '.    divider divider divider     divider     divider     .' '.    content content content     content     content     .' '.    footer  footer  buttonGroup buttonGroup buttonGroup .' '.    .       .       .           .           .           .';
 }
-:host([dismissable]) .grid .buttonGroup {
-    /* .spectrum-Dialog.spectrum-Dialog--dismissable .spectrum-Dialog-grid .spectrum-Dialog-buttonGroup */
-    display: none;
+:host([dismissable]) .grid .button-group {
+    display: none; /* .spectrum-Dialog.spectrum-Dialog--dismissable .spectrum-Dialog-grid .spectrum-Dialog-buttonGroup */
 }
 :host([dismissable]) .grid .footer {
-    /* .spectrum-Dialog.spectrum-Dialog--dismissable .spectrum-Dialog-grid .spectrum-Dialog-footer */
-    grid-area: footer/footer/buttonGroup/buttonGroup;
+    grid-area: footer/footer/buttonGroup/buttonGroup; /* .spectrum-Dialog.spectrum-Dialog--dismissable .spectrum-Dialog-grid .spectrum-Dialog-footer */
 }
 :host([dir='ltr']) .close-button {
-    /* [dir=ltr] .spectrum-Dialog-closeButton */
-    margin-right: var(--spectrum-dialog-confirm-close-button-padding);
+    margin-right: var(
+        --spectrum-dialog-confirm-close-button-padding
+    ); /* [dir=ltr] .spectrum-Dialog-closeButton */
 }
 :host([dir='rtl']) .close-button {
-    /* [dir=rtl] .spectrum-Dialog-closeButton */
-    margin-left: var(--spectrum-dialog-confirm-close-button-padding);
+    margin-left: var(
+        --spectrum-dialog-confirm-close-button-padding
+    ); /* [dir=rtl] .spectrum-Dialog-closeButton */
 }
 .close-button {
-    /* .spectrum-Dialog-closeButton */
-    grid-area: closeButton;
     align-self: start;
+    grid-area: closeButton; /* .spectrum-Dialog-closeButton */
     justify-self: end;
     margin-top: var(--spectrum-dialog-confirm-close-button-padding);
 }
 :host([error]) {
-    /* .spectrum-Dialog--error */
-    width: var(--spectrum-dialog-error-width, 90%);
+    width: var(
+        --spectrum-dialog-error-width,
+        90%
+    ); /* .spectrum-Dialog--error */
 }
 :host([mode='fullscreen']) {
-    /* .spectrum-Dialog--fullscreen */
-    width: 100%;
     height: 100%;
+    width: 100%; /* .spectrum-Dialog--fullscreen */
 }
 :host([mode='fullscreenTakeover']) {
-    /* .spectrum-Dialog--fullscreenTakeover */
-    width: 100%;
-    height: 100%;
     border-radius: 0;
+    height: 100%;
+    width: 100%; /* .spectrum-Dialog--fullscreenTakeover */
 }
 :host([mode='fullscreen']),
 :host([mode='fullscreenTakeover']) {
-    /* .spectrum-Dialog--fullscreen,
+    max-height: none; /* .spectrum-Dialog--fullscreen,
    * .spectrum-Dialog--fullscreenTakeover */
-    max-height: none;
     max-width: none;
 }
 :host([mode='fullscreen']) .grid,
 :host([mode='fullscreenTakeover']) .grid {
-    /* .spectrum-Dialog--fullscreen.spectrum-Dialog .spectrum-Dialog-grid,
+    display: grid; /* .spectrum-Dialog--fullscreen.spectrum-Dialog .spectrum-Dialog-grid,
    * .spectrum-Dialog--fullscreenTakeover.spectrum-Dialog .spectrum-Dialog-grid */
-    display: grid;
+    grid-template-areas: '.    .       .       .            .' '.    heading header  buttonGroup  .' '.    divider divider divider      .' '.    content content content      .' '.    .       .       .            .';
     grid-template-columns: var(--spectrum-dialog-confirm-padding) 1fr auto auto var(
             --spectrum-dialog-confirm-padding
         );
     grid-template-rows: var(--spectrum-dialog-confirm-padding) auto auto 1fr var(
             --spectrum-dialog-confirm-padding
         );
-    grid-template-areas: '.    .       .       .            .' '.    heading header  buttonGroup  .' '.    divider divider divider      .' '.    content content content      .' '.    .       .       .            .';
 }
 :host([mode='fullscreen']) ::slotted([slot='heading']),
 :host([mode='fullscreenTakeover']) ::slotted([slot='heading']) {
-    /* .spectrum-Dialog--fullscreen .spectrum-Dialog-heading,
+    font-size: var(
+        --spectrum-dialog-fullscreen-header-text-size
+    ); /* .spectrum-Dialog--fullscreen .spectrum-Dialog-heading,
    * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-heading */
-    font-size: var(--spectrum-dialog-fullscreen-header-text-size);
 }
 :host([mode='fullscreen']) .content,
 :host([mode='fullscreenTakeover']) .content {
-    /* .spectrum-Dialog--fullscreen .spectrum-Dialog-content,
+    max-height: none; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-content,
    * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-content */
-    max-height: none;
 }
-:host([mode='fullscreen']) .buttonGroup,
+:host([mode='fullscreen']) .button-group,
 :host([mode='fullscreen']) .footer,
-:host([mode='fullscreenTakeover']) .buttonGroup,
+:host([mode='fullscreenTakeover']) .button-group,
 :host([mode='fullscreenTakeover']) .footer {
-    /* .spectrum-Dialog--fullscreen .spectrum-Dialog-buttonGroup,
-   * .spectrum-Dialog--fullscreen .spectrum-Dialog-footer,
-   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-buttonGroup,
-   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-footer */
-    padding-top: 0;
-}
-:host([mode='fullscreen']) .footer,
-:host([mode='fullscreenTakeover']) .footer {
-    /* .spectrum-Dialog--fullscreen .spectrum-Dialog-footer,
-   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-footer */
-    display: none;
-}
-:host([mode='fullscreen']) .buttonGroup,
-:host([mode='fullscreenTakeover']) .buttonGroup {
-    /* .spectrum-Dialog--fullscreen .spectrum-Dialog-buttonGroup,
+    padding-top: 0; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-footer,
+   * .spectrum-Dialog--fullscreen .spectrum-Dialog-buttonGroup,
+   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-footer,
    * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-buttonGroup */
-    grid-area: buttonGroup;
-    align-self: start;
 }
-@media screen and (max-inline-size: 700px) {
+:host([mode='fullscreen']) .footer,
+:host([mode='fullscreenTakeover']) .footer {
+    display: none; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-footer,
+   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-footer */
+}
+:host([mode='fullscreen']) .button-group,
+:host([mode='fullscreenTakeover']) .button-group {
+    align-self: start;
+    grid-area: buttonGroup; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-buttonGroup,
+   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-buttonGroup */
+}
+@media screen and (max-width: 700px) {
     .grid {
+        grid-template-areas: 'hero hero    hero    hero        hero        hero' '.    .       .       .           .           .' '.    heading heading heading     typeIcon    .' '.    header  header  header      header      .' '.    divider divider divider     divider     .' '.    content content content     content     .' '.    footer  footer  buttonGroup buttonGroup .' '.    .       .       .           .           .';
         grid-template-columns:
             var(--spectrum-dialog-confirm-padding) auto 1fr auto minmax(0, auto)
             var(--spectrum-dialog-confirm-padding);
-        grid-template-areas: 'hero hero    hero    hero        hero        hero' '.    .       .       .           .           .' '.    heading heading heading     typeIcon    .' '.    header  header  header      header      .' '.    divider divider divider     divider     .' '.    content content content     content     .' '.    footer  footer  buttonGroup buttonGroup .' '.    .       .       .           .           .';
-    }
-    :host([dismissable]) .grid,
-    .grid {
         grid-template-rows: auto var(--spectrum-dialog-confirm-padding) auto auto auto 1fr auto var(
                 --spectrum-dialog-confirm-padding
             );
     }
     :host([dismissable]) .grid {
+        grid-template-areas: 'hero hero    hero    hero        hero        hero        hero' '.    .       .       .           .           closeButton closeButton' '.    heading heading heading     typeIcon    closeButton closeButton' '.    header  header  header      header      header      .' '.    divider divider divider     divider     divider     .' '.    content content content     content     content     .' '.    footer  footer  buttonGroup buttonGroup buttonGroup .' '.    .       .       .           .           .           .';
         grid-template-columns:
             var(--spectrum-dialog-confirm-padding) auto 1fr auto minmax(0, auto)
             minmax(0, var(--spectrum-dialog-confirm-close-button-size)) var(--spectrum-dialog-confirm-padding);
-        grid-template-areas: 'hero hero    hero    hero        hero        hero        hero' '.    .       .       .           .           closeButton closeButton' '.    heading heading heading     typeIcon    closeButton closeButton' '.    header  header  header      header      header      .' '.    divider divider divider     divider     divider     .' '.    content content content     content     content     .' '.    footer  footer  buttonGroup buttonGroup buttonGroup .' '.    .       .       .           .           .           .';
+        grid-template-rows: auto var(--spectrum-dialog-confirm-padding) auto auto auto 1fr auto var(
+                --spectrum-dialog-confirm-padding
+            );
     }
     .header {
         justify-content: flex-start;
@@ -358,16 +348,16 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     :host([mode='fullscreen']) .grid,
     :host([mode='fullscreenTakeover']) .grid {
         display: grid;
+        grid-template-areas: '.    .            .' '.    heading      .' '.    header       .' '.    divider      .' '.    content      .' '.    buttonGroup  .' '.    .            .';
         grid-template-columns: var(--spectrum-dialog-confirm-padding) 1fr var(
                 --spectrum-dialog-confirm-padding
             );
         grid-template-rows: var(--spectrum-dialog-confirm-padding) auto auto auto 1fr auto var(
                 --spectrum-dialog-confirm-padding
             );
-        grid-template-areas: '.    .            .' '.    heading      .' '.    header       .' '.    divider      .' '.    content      .' '.    buttonGroup  .' '.    .            .';
     }
-    :host([mode='fullscreen']) .buttonGroup,
-    :host([mode='fullscreenTakeover']) .buttonGroup {
+    :host([mode='fullscreen']) .button-group,
+    :host([mode='fullscreenTakeover']) .button-group {
         padding-top: var(--spectrum-dialog-confirm-buttongroup-padding-top);
     }
     :host([mode='fullscreen']) ::slotted([slot='heading']),
@@ -381,30 +371,27 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     }
 }
 ::slotted([slot='heading']) {
-    /* .spectrum-Dialog-heading */
     color: var(
         --spectrum-dialog-confirm-title-text-color,
-        var(--spectrum-global-color-gray-900)
-    );
+        var(--spectrum-alias-heading-text-color)
+    ); /* .spectrum-Dialog-heading */
 }
-.content {
-    /* .spectrum-Dialog-content */
+.content,
+.footer {
     color: var(
         --spectrum-dialog-confirm-description-text-color,
         var(--spectrum-global-color-gray-800)
-    );
+    ); /* .spectrum-Dialog-footer */
 }
 .type-icon {
-    /* .spectrum-Dialog-typeIcon */
     color: var(
         --spectrum-dialog-confirm-icon-color,
         var(--spectrum-global-color-gray-900)
-    );
+    ); /* .spectrum-Dialog-typeIcon */
 }
 :host([error]) .type-icon {
-    /* .spectrum-Dialog--error .spectrum-Dialog-typeIcon */
     color: var(
         --spectrum-dialog-error-icon-color,
-        var(--spectrum-semantic-negative-color-icon)
-    );
+        var(--spectrum-semantic-negative-icon-color)
+    ); /* .spectrum-Dialog--error .spectrum-Dialog-typeIcon */
 }

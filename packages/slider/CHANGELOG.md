@@ -3,6 +3,100 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.1...@spectrum-web-components/slider@0.12.2) (2022-01-07)
+
+### Bug Fixes
+
+-   simplify touch-action application ([d23f735](https://github.com/adobe/spectrum-web-components/commit/d23f735db3cea01c2243e0485448d1598c6a8692))
+
+## [0.12.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.0...@spectrum-web-components/slider@0.12.1) (2021-12-13)
+
+### Bug Fixes
+
+-   **slider:** response to orientation changes when measuring the bounding box ([c1412f1](https://github.com/adobe/spectrum-web-components/commit/c1412f19a5e91dd518b51277d3bbed3aff6dafac))
+
+# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.11.1...@spectrum-web-components/slider@0.12.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.11.0...@spectrum-web-components/slider@0.11.1) (2021-11-08)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.10...@spectrum-web-components/slider@0.11.0) (2021-11-02)
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+
+## [0.10.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.9...@spectrum-web-components/slider@0.10.10) (2021-10-12)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+## [0.10.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.8...@spectrum-web-components/slider@0.10.9) (2021-10-05)
+
+### Bug Fixes
+
+-   **slider:** make implicit dependency on sp-slider-handle explicit ([cb8d84b](https://github.com/adobe/spectrum-web-components/commit/cb8d84b55beb968fcb92198854321d66ce01cbf4))
+
+## [0.10.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.7...@spectrum-web-components/slider@0.10.8) (2021-09-20)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.6...@spectrum-web-components/slider@0.10.7) (2021-09-13)
+
+### Bug Fixes
+
+-   **slider:** support non-supported units in "Intl.numberFormat" ([ac32355](https://github.com/adobe/spectrum-web-components/commit/ac32355f3d6459937b025d2fce9f006b0226622e))
+-   ensure lazily loaded focusElements do not crash ([64f2a54](https://github.com/adobe/spectrum-web-components/commit/64f2a54a5a6934306e97433e8102da6fe38b2660))
+-   flappy Slider/Color Area tests ([c769c87](https://github.com/adobe/spectrum-web-components/commit/c769c8750a66139588191a8289abf13df7012c46))
+
+## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.5...@spectrum-web-components/slider@0.10.6) (2021-08-24)
+
+### Bug Fixes
+
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+
+## [0.10.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.4...@spectrum-web-components/slider@0.10.5) (2021-08-17)
+
+### Bug Fixes
+
+-   add "editable" option to "sp-slider" ([e86d7fa](https://github.com/adobe/spectrum-web-components/commit/e86d7fa84491b41a39dbab9c8d85eec42df320cd))
+-   **slider:** support customizing visible label delivery ([a55b585](https://github.com/adobe/spectrum-web-components/commit/a55b58517f0f20df356a523a14550d8870b7282a))
+
+## [0.10.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.3...@spectrum-web-components/slider@0.10.4) (2021-08-03)
+
+### Bug Fixes
+
+-   resolve "updateComplete" with a boolean like LitElement ([2ebcd44](https://github.com/adobe/spectrum-web-components/commit/2ebcd449185a2a26b8ca60441793048a76bb3ed7))
+
+## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.2...@spectrum-web-components/slider@0.10.3) (2021-07-22)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.1...@spectrum-web-components/slider@0.10.2) (2021-07-01)
+
+### Bug Fixes
+
+-   manage "lang" via context provided by "sp-theme" ([b1e3457](https://github.com/adobe/spectrum-web-components/commit/b1e3457ae447427c54f8645c478866340329750c))
+
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.10.0...@spectrum-web-components/slider@0.10.1) (2021-06-16)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.9.7...@spectrum-web-components/slider@0.10.0) (2021-06-11)
+
+### Bug Fixes
+
+-   **slider:** apply "handle.highlight = true" when using the keyboard to interact with handles ([94e6349](https://github.com/adobe/spectrum-web-components/commit/94e6349a7750b43c455377cb096a24072d668056))
+-   **slider:** work around Spectrum CSS bug in variant="range" styling ([e5810a9](https://github.com/adobe/spectrum-web-components/commit/e5810a9c8304f90a2d6f78ea9f1c911fb37d037f))
+
+### Features
+
+-   multi-handle slider implementation ([8d5a743](https://github.com/adobe/spectrum-web-components/commit/8d5a74309ec171107a9504695216cb90abe39023)), closes [#1385](https://github.com/adobe/spectrum-web-components/issues/1385)
+
 ## [0.9.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.9.6...@spectrum-web-components/slider@0.9.7) (2021-06-07)
 
 ### Bug Fixes

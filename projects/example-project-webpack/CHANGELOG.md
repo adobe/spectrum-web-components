@@ -3,6 +3,68 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.4.1...example-project-webpack@1.4.2) (2022-01-07)
+
+**Note:** Version bump only for package example-project-webpack
+
+## [1.4.1](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.4.0...example-project-webpack@1.4.1) (2021-12-13)
+
+**Note:** Version bump only for package example-project-webpack
+
+# [1.4.0](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.19...example-project-webpack@1.4.0) (2021-11-08)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
+## [1.3.19](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.18...example-project-webpack@1.3.19) (2021-11-08)
+
+**Note:** Version bump only for package example-project-webpack
+
+## [1.3.18](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.17...example-project-webpack@1.3.18) (2021-11-02)
+
+**Note:** Version bump only for package example-project-webpack
+
+## [1.3.17](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.16...example-project-webpack@1.3.17) (2021-10-12)
+
+**Note:** Version bump only for package example-project-webpack
+
+## [1.3.16](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.15...example-project-webpack@1.3.16) (2021-10-05)
+
+**Note:** Version bump only for package example-project-webpack
+
+## [1.3.15](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.14...example-project-webpack@1.3.15) (2021-09-20)
+
+**Note:** Version bump only for package example-project-webpack
+
+## [1.3.14](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.13...example-project-webpack@1.3.14) (2021-09-13)
+
+**Note:** Version bump only for package example-project-webpack
+
+## [1.3.13](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.12...example-project-webpack@1.3.13) (2021-08-24)
+
+**Note:** Version bump only for package example-project-webpack
+
+## [1.3.12](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.11...example-project-webpack@1.3.12) (2021-08-17)
+
+**Note:** Version bump only for package example-project-webpack
+
+## [1.3.11](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.10...example-project-webpack@1.3.11) (2021-08-03)
+
+**Note:** Version bump only for package example-project-webpack
+
+## [1.3.10](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.9...example-project-webpack@1.3.10) (2021-07-22)
+
+**Note:** Version bump only for package example-project-webpack
+
+## [1.3.9](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.8...example-project-webpack@1.3.9) (2021-07-01)
+
+**Note:** Version bump only for package example-project-webpack
+
+## [1.3.8](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.7...example-project-webpack@1.3.8) (2021-06-16)
+
+**Note:** Version bump only for package example-project-webpack
+
 ## [1.3.7](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.3.6...example-project-webpack@1.3.7) (2021-06-07)
 
 **Note:** Version bump only for package example-project-webpack

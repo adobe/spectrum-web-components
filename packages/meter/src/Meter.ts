@@ -11,14 +11,14 @@ governing permissions and limitations under the License.
 */
 
 import {
-    html,
-    SpectrumElement,
     CSSResultArray,
-    TemplateResult,
-    property,
+    html,
     PropertyValues,
     SizedMixin,
+    SpectrumElement,
+    TemplateResult,
 } from '@spectrum-web-components/base';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -26,6 +26,8 @@ import styles from './meter.css.js';
 
 /**
  * @element sp-meter
+ *
+ * @slot - text labeling the Meter
  */
 export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     public static get styles(): CSSResultArray {
@@ -39,10 +41,10 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     public overBackground = false;
 
     @property({ type: Boolean, reflect: true })
-    public warning = false;
+    public notice = false;
 
     @property({ type: Boolean, reflect: true })
-    public critical = false;
+    public negative = false;
 
     @property({ type: Boolean, reflect: true })
     public positive = false;
