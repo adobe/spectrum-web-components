@@ -476,6 +476,32 @@ describe('Picker, sync', () => {
             expect(el.selectedItem?.itemText).to.equal('Deselect');
             expect(el.value).to.equal('Deselect');
         });
+        it('dispatches bubbling and composed events', async () => {
+            const changeSpy = spy();
+            const parent = el.parentElement as HTMLElement;
+            parent.attachShadow({ mode: 'open' });
+            (parent.shadowRoot as ShadowRoot).append(el);
+            const secondItem = el.querySelector(
+                'sp-menu-item:nth-of-type(2)'
+            ) as MenuItem;
+
+            parent.addEventListener('change', () => changeSpy());
+
+            expect(el.value).to.equal('');
+
+            const opened = oneEvent(el, 'sp-opened');
+            el.open = true;
+            await opened;
+            await elementUpdated(el);
+
+            const closed = oneEvent(el, 'sp-closed');
+            secondItem.click();
+            await closed;
+            await elementUpdated(el);
+
+            expect(el.value).to.equal(secondItem.value);
+            expect(changeSpy.calledOnce).to.be.true;
+        });
         it('can have selection prevented', async () => {
             const preventChangeSpy = spy();
             const secondItem = el.querySelector(
@@ -804,8 +830,8 @@ describe('Picker, sync', () => {
                 await blured;
 
                 expect(el.open).to.be.true;
-                expect(document.activeElement).to.not.equal(input1);
-                expect(document.activeElement).to.not.equal(input2);
+                expect(document.activeElement === input1).to.be.false;
+                expect(document.activeElement === input2).to.be.false;
             });
             it('traps tab in the menu as a `type="modal"` overlay backwards', async () => {
                 el.focus();
@@ -828,8 +854,8 @@ describe('Picker, sync', () => {
                 await blured;
 
                 expect(el.open).to.be.true;
-                expect(document.activeElement).to.not.equal(input1);
-                expect(document.activeElement).to.not.equal(input2);
+                expect(document.activeElement === input1).to.be.false;
+                expect(document.activeElement === input2).to.be.false;
             });
             it('can close and immediate tab to the next tab stop', async () => {
                 el.focus();
@@ -851,14 +877,14 @@ describe('Picker, sync', () => {
                 await closed;
 
                 expect(el.open).to.be.false;
-                expect(document.activeElement).to.equal(el);
+                expect(document.activeElement === el).to.be.true;
 
                 const focused = oneEvent(input2, 'focus');
                 await sendKeys({ press: 'Tab' });
                 await focused;
 
                 expect(el.open).to.be.false;
-                expect(document.activeElement).to.equal(input2);
+                expect(document.activeElement === input2).to.be.true;
             });
             it('can close and immediate shift+tab to the previous tab stop', async () => {
                 el.focus();
@@ -880,14 +906,14 @@ describe('Picker, sync', () => {
                 await closed;
 
                 expect(el.open).to.be.false;
-                expect(document.activeElement).to.equal(el);
+                expect(document.activeElement === el).to.be.true;
 
                 const focused = oneEvent(input1, 'focus');
                 await sendKeys({ press: 'Shift+Tab' });
                 await focused;
 
                 expect(el.open).to.be.false;
-                expect(document.activeElement).to.equal(input1);
+                expect(document.activeElement === input1).to.be.true;
             });
         });
         it('does not open when [readonly]', async () => {
