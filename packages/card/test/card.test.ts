@@ -269,7 +269,7 @@ describe('card', () => {
         await elementUpdated(el);
         expect(el.focused, 'first time focused').to.be.true;
 
-        el.dispatchEvent(spaceEvent);
+        el.dispatchEvent(spaceEvent());
         await elementUpdated(el);
         expect(el.focused, 'still focused').to.be.true;
         expect(clickSpy.called).to.be.true;
@@ -291,14 +291,14 @@ describe('card', () => {
         expect(el.focused, 'first time focused').to.be.true;
         expect(el.selected, 'still not selected').to.be.false;
 
-        el.dispatchEvent(spaceEvent);
+        el.dispatchEvent(spaceEvent());
 
         await elementUpdated(el);
         expect(el.focused, 'still focused').to.be.true;
         expect(el.selected, 'first selected').to.be.true;
 
         el.addEventListener('change', (event: Event) => event.preventDefault());
-        el.dispatchEvent(spaceEvent);
+        el.dispatchEvent(spaceEvent());
 
         await elementUpdated(el);
         expect(el.focused, 'still focused after default prevented').to.be.true;

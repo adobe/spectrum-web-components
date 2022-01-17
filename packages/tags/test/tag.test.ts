@@ -146,7 +146,7 @@ describe('Tag', () => {
         el.dispatchEvent(new FocusEvent('focusin'));
         await elementUpdated(el);
 
-        el.dispatchEvent(deleteEvent);
+        el.dispatchEvent(deleteEvent());
         await elementUpdated(el);
 
         expect(deleteSpy.called).to.be.false;
@@ -154,19 +154,19 @@ describe('Tag', () => {
         el.deletable = true;
         await elementUpdated(el);
 
-        el.dispatchEvent(enterEvent);
+        el.dispatchEvent(enterEvent());
         await elementUpdated(el);
 
         expect(deleteSpy.called).to.be.false;
 
-        testKeyboardEvent(deleteEvent);
-        testKeyboardEvent(spaceEvent);
-        testKeyboardEvent(backspaceEvent);
+        testKeyboardEvent(deleteEvent());
+        testKeyboardEvent(spaceEvent());
+        testKeyboardEvent(backspaceEvent());
 
         el.dispatchEvent(new FocusEvent('focusout'));
         await elementUpdated(el);
 
-        el.dispatchEvent(deleteEvent);
+        el.dispatchEvent(deleteEvent());
         expect(
             deleteSpy.callCount,
             'Does not respond after `focusout`'

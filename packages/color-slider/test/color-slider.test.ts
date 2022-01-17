@@ -197,37 +197,37 @@ describe('ColorSlider', () => {
 
         const input = el.focusElement;
 
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
+        input.dispatchEvent(arrowUpEvent());
+        input.dispatchEvent(arrowUpKeyupEvent());
+        input.dispatchEvent(arrowUpEvent());
+        input.dispatchEvent(arrowUpKeyupEvent());
 
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(2);
 
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
+        input.dispatchEvent(arrowRightEvent());
+        input.dispatchEvent(arrowRightKeyupEvent());
+        input.dispatchEvent(arrowRightEvent());
+        input.dispatchEvent(arrowRightKeyupEvent());
 
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(3.9999999999999996);
 
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
+        input.dispatchEvent(arrowDownEvent());
+        input.dispatchEvent(arrowDownKeyupEvent());
+        input.dispatchEvent(arrowDownEvent());
+        input.dispatchEvent(arrowDownKeyupEvent());
 
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(1.9999999999999998);
 
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
+        input.dispatchEvent(arrowLeftEvent());
+        input.dispatchEvent(arrowLeftKeyupEvent());
+        input.dispatchEvent(arrowLeftEvent());
+        input.dispatchEvent(arrowLeftKeyupEvent());
 
         await elementUpdated(el);
 
@@ -246,37 +246,37 @@ describe('ColorSlider', () => {
 
         const input = el.focusElement;
 
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
+        input.dispatchEvent(arrowUpEvent());
+        input.dispatchEvent(arrowUpKeyupEvent());
+        input.dispatchEvent(arrowUpEvent());
+        input.dispatchEvent(arrowUpKeyupEvent());
 
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(2);
 
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
+        input.dispatchEvent(arrowRightEvent());
+        input.dispatchEvent(arrowRightKeyupEvent());
+        input.dispatchEvent(arrowRightEvent());
+        input.dispatchEvent(arrowRightKeyupEvent());
 
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(0);
 
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
+        input.dispatchEvent(arrowLeftEvent());
+        input.dispatchEvent(arrowLeftKeyupEvent());
+        input.dispatchEvent(arrowLeftEvent());
+        input.dispatchEvent(arrowLeftKeyupEvent());
 
         await elementUpdated(el);
 
         expect(el.sliderHandlePosition).to.equal(2);
 
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
+        input.dispatchEvent(arrowDownEvent());
+        input.dispatchEvent(arrowDownKeyupEvent());
+        input.dispatchEvent(arrowDownEvent());
+        input.dispatchEvent(arrowDownKeyupEvent());
 
         await elementUpdated(el);
 

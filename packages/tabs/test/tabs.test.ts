@@ -389,25 +389,25 @@ describe('Tabs', () => {
         expect(document.activeElement === firstTab, 'Focus first tab').to.be
             .true;
 
-        firstTab.dispatchEvent(arrowLeftEvent);
-        firstTab.dispatchEvent(arrowUpEvent);
+        firstTab.dispatchEvent(arrowLeftEvent());
+        firstTab.dispatchEvent(arrowUpEvent());
 
         await elementUpdated(el);
         expect(document.activeElement === secondTab, 'Focus second tab').to.be
             .true;
 
-        secondTab.dispatchEvent(enterEvent);
+        secondTab.dispatchEvent(enterEvent());
 
         await elementUpdated(el);
         expect(el.selected).to.be.equal('second');
 
-        secondTab.dispatchEvent(arrowRightEvent);
+        secondTab.dispatchEvent(arrowRightEvent());
 
         await elementUpdated(el);
         expect(document.activeElement === firstTab, 'Focus first tab').to.be
             .true;
 
-        firstTab.dispatchEvent(spaceEvent);
+        firstTab.dispatchEvent(spaceEvent());
 
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');
@@ -427,7 +427,7 @@ describe('Tabs', () => {
         expect(tab2.classList.contains('focus-visible')).to.be.false;
         expect(tab3.classList.contains('focus-visible')).to.be.false;
 
-        tab1.dispatchEvent(tabEvent);
+        tab1.dispatchEvent(tabEvent());
         tab1.focus();
         await elementUpdated(tab1);
         expect(document.activeElement, 'first tab is focused').to.equal(tab1);
@@ -528,25 +528,25 @@ describe('Tabs', () => {
         let activeElement = rootNode.activeElement as Tab;
         expect(activeElement === firstTab, 'Focus first tab').to.be.true;
 
-        firstTab.dispatchEvent(arrowLeftEvent);
-        firstTab.dispatchEvent(arrowUpEvent);
+        firstTab.dispatchEvent(arrowLeftEvent());
+        firstTab.dispatchEvent(arrowUpEvent());
 
         await elementUpdated(el);
         activeElement = rootNode.activeElement as Tab;
         expect(activeElement === secondTab, 'Focus second tab').to.be.true;
 
-        secondTab.dispatchEvent(enterEvent);
+        secondTab.dispatchEvent(enterEvent());
 
         await elementUpdated(el);
         expect(tabsEl.selected).to.be.equal('second');
 
-        secondTab.dispatchEvent(arrowRightEvent);
+        secondTab.dispatchEvent(arrowRightEvent());
 
         await elementUpdated(el);
         activeElement = rootNode.activeElement as Tab;
         expect(activeElement === firstTab, 'Focus first tab').to.be.true;
 
-        firstTab.dispatchEvent(spaceEvent);
+        firstTab.dispatchEvent(spaceEvent());
 
         await elementUpdated(el);
         expect(tabsEl.selected).to.be.equal('first');
@@ -575,25 +575,25 @@ describe('Tabs', () => {
         expect(document.activeElement === firstTab, 'Focus first tab').to.be
             .true;
 
-        firstTab.dispatchEvent(arrowLeftEvent);
-        firstTab.dispatchEvent(arrowUpEvent);
+        firstTab.dispatchEvent(arrowLeftEvent());
+        firstTab.dispatchEvent(arrowUpEvent());
 
         await elementUpdated(el);
         expect(document.activeElement === secondTab, 'Focus second tab').to.be
             .true;
 
-        secondTab.dispatchEvent(enterEvent);
+        secondTab.dispatchEvent(enterEvent());
 
         await elementUpdated(el);
         expect(el.selected).to.be.equal('second');
 
-        secondTab.dispatchEvent(arrowDownEvent);
+        secondTab.dispatchEvent(arrowDownEvent());
 
         await elementUpdated(el);
         expect(document.activeElement === firstTab, 'Focus first tab').to.be
             .true;
 
-        firstTab.dispatchEvent(spaceEvent);
+        firstTab.dispatchEvent(spaceEvent());
 
         await elementUpdated(el);
         expect(el.selected).to.be.equal('first');

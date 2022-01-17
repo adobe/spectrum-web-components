@@ -66,7 +66,7 @@ describe('Search', () => {
 
         const root = el.shadowRoot ? el.shadowRoot : el;
         const clearButton = root.querySelector('#button') as HTMLButtonElement;
-        clearButton.dispatchEvent(escapeEvent);
+        clearButton.dispatchEvent(escapeEvent());
 
         await elementUpdated(el);
 
@@ -137,14 +137,14 @@ describe('Search', () => {
         await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
 
         expect(el.value).to.equal('Test');
-        el.focusElement.dispatchEvent(spaceEvent);
+        el.focusElement.dispatchEvent(spaceEvent());
 
         await elementUpdated(el);
         expect(el.value).to.equal('Test');
 
         inputSpy.resetHistory();
         changeSpy.resetHistory();
-        el.focusElement.dispatchEvent(escapeEvent);
+        el.focusElement.dispatchEvent(escapeEvent());
 
         await elementUpdated(el);
 

@@ -47,30 +47,33 @@ const keyboardEvent = (
         key: code,
     });
 };
-export const shiftTabEvent = keyboardEvent('Tab', { shiftKey: true });
-export const shiftEvent = keyboardEvent('Shift', { shiftKey: true });
-export const enterEvent = keyboardEvent('Enter');
-export const escapeEvent = keyboardEvent('Escape');
-export const arrowRightEvent = keyboardEvent('ArrowRight');
-export const arrowLeftEvent = keyboardEvent('ArrowLeft');
-export const arrowUpEvent = keyboardEvent('ArrowUp');
-export const arrowDownEvent = keyboardEvent('ArrowDown');
-export const deleteEvent = keyboardEvent('Delete');
-export const spaceEvent = keyboardEvent('Space');
-export const backspaceEvent = keyboardEvent('Backspace');
-export const endEvent = keyboardEvent('End');
-export const homeEvent = keyboardEvent('Home');
-export const pageUpEvent = keyboardEvent('PageUp');
-export const pageDownEvent = keyboardEvent('PageDown');
-export const tabEvent = keyboardEvent('Tab');
-export const tEvent = keyboardEvent('t');
+export const shiftTabEvent = (): KeyboardEvent =>
+    keyboardEvent('Tab', { shiftKey: true });
+export const shiftEvent = (): KeyboardEvent =>
+    keyboardEvent('Shift', { shiftKey: true });
+export const enterEvent = (): KeyboardEvent => keyboardEvent('Enter');
+export const escapeEvent = (): KeyboardEvent => keyboardEvent('Escape');
+export const arrowRightEvent = (): KeyboardEvent => keyboardEvent('ArrowRight');
+export const arrowLeftEvent = (): KeyboardEvent => keyboardEvent('ArrowLeft');
+export const arrowUpEvent = (): KeyboardEvent => keyboardEvent('ArrowUp');
+export const arrowDownEvent = (): KeyboardEvent => keyboardEvent('ArrowDown');
+export const deleteEvent = (): KeyboardEvent => keyboardEvent('Delete');
+export const spaceEvent = (): KeyboardEvent => keyboardEvent('Space');
+export const backspaceEvent = (): KeyboardEvent => keyboardEvent('Backspace');
+export const endEvent = (): KeyboardEvent => keyboardEvent('End');
+export const homeEvent = (): KeyboardEvent => keyboardEvent('Home');
+export const pageUpEvent = (): KeyboardEvent => keyboardEvent('PageUp');
+export const pageDownEvent = (): KeyboardEvent => keyboardEvent('PageDown');
+export const tabEvent = (): KeyboardEvent => keyboardEvent('Tab');
+export const tEvent = (): KeyboardEvent => keyboardEvent('t');
 
-export const shiftKeyupEvent = keyboardEvent(
-    'Shift',
-    { shiftKey: true },
-    'keyup'
-);
-export const arrowRightKeyupEvent = keyboardEvent('ArrowRight', {}, 'keyup');
-export const arrowLeftKeyupEvent = keyboardEvent('ArrowLeft', {}, 'keyup');
-export const arrowUpKeyupEvent = keyboardEvent('ArrowUp', {}, 'keyup');
-export const arrowDownKeyupEvent = keyboardEvent('ArrowDown', {}, 'keyup');
+export const shiftKeyupEvent = (): KeyboardEvent =>
+    keyboardEvent('Shift', { shiftKey: true }, 'keyup');
+export const arrowRightKeyupEvent = (): KeyboardEvent =>
+    keyboardEvent('ArrowRight', {}, 'keyup');
+export const arrowLeftKeyupEvent = (): KeyboardEvent =>
+    keyboardEvent('ArrowLeft', {}, 'keyup');
+export const arrowUpKeyupEvent = (): KeyboardEvent =>
+    keyboardEvent('ArrowUp', {}, 'keyup');
+export const arrowDownKeyupEvent = (): KeyboardEvent =>
+    keyboardEvent('ArrowDown', {}, 'keyup');

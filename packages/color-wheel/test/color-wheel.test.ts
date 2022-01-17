@@ -197,37 +197,37 @@ describe('ColorWheel', () => {
 
         const input = el.focusElement;
 
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
+        input.dispatchEvent(arrowUpEvent());
+        input.dispatchEvent(arrowUpKeyupEvent());
+        input.dispatchEvent(arrowUpEvent());
+        input.dispatchEvent(arrowUpKeyupEvent());
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(2);
 
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
+        input.dispatchEvent(arrowRightEvent());
+        input.dispatchEvent(arrowRightKeyupEvent());
+        input.dispatchEvent(arrowRightEvent());
+        input.dispatchEvent(arrowRightKeyupEvent());
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(4);
 
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
+        input.dispatchEvent(arrowDownEvent());
+        input.dispatchEvent(arrowDownKeyupEvent());
+        input.dispatchEvent(arrowDownEvent());
+        input.dispatchEvent(arrowDownKeyupEvent());
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(2);
 
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
+        input.dispatchEvent(arrowLeftEvent());
+        input.dispatchEvent(arrowLeftKeyupEvent());
+        input.dispatchEvent(arrowLeftEvent());
+        input.dispatchEvent(arrowLeftKeyupEvent());
 
         await elementUpdated(el);
 
@@ -246,37 +246,37 @@ describe('ColorWheel', () => {
 
         const input = el.focusElement;
 
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
-        input.dispatchEvent(arrowUpEvent);
-        input.dispatchEvent(arrowUpKeyupEvent);
+        input.dispatchEvent(arrowUpEvent());
+        input.dispatchEvent(arrowUpKeyupEvent());
+        input.dispatchEvent(arrowUpEvent());
+        input.dispatchEvent(arrowUpKeyupEvent());
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(2);
 
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
-        input.dispatchEvent(arrowRightEvent);
-        input.dispatchEvent(arrowRightKeyupEvent);
+        input.dispatchEvent(arrowRightEvent());
+        input.dispatchEvent(arrowRightKeyupEvent());
+        input.dispatchEvent(arrowRightEvent());
+        input.dispatchEvent(arrowRightKeyupEvent());
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(0);
 
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
-        input.dispatchEvent(arrowLeftEvent);
-        input.dispatchEvent(arrowLeftKeyupEvent);
+        input.dispatchEvent(arrowLeftEvent());
+        input.dispatchEvent(arrowLeftKeyupEvent());
+        input.dispatchEvent(arrowLeftEvent());
+        input.dispatchEvent(arrowLeftKeyupEvent());
 
         await elementUpdated(el);
 
         expect(el.value).to.equal(2);
 
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
-        input.dispatchEvent(arrowDownEvent);
-        input.dispatchEvent(arrowDownKeyupEvent);
+        input.dispatchEvent(arrowDownEvent());
+        input.dispatchEvent(arrowDownKeyupEvent());
+        input.dispatchEvent(arrowDownEvent());
+        input.dispatchEvent(arrowDownKeyupEvent());
 
         await elementUpdated(el);
 
