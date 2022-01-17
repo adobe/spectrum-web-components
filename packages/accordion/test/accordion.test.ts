@@ -278,16 +278,16 @@ describe('Accordion', () => {
         await elementUpdated(el);
         expect(document.activeElement === secondItem).to.be.true;
 
-        el.dispatchEvent(arrowUpEvent);
-        el.dispatchEvent(arrowUpEvent);
+        el.dispatchEvent(arrowUpEvent());
+        el.dispatchEvent(arrowUpEvent());
 
         expect(document.activeElement === thirdToLastItem).to.be.true;
 
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowDownEvent());
 
         expect(document.activeElement === secondToLastItem).to.be.true;
 
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowDownEvent());
         expect(document.activeElement === secondItem).to.be.true;
 
         document.body.focus();
@@ -296,7 +296,7 @@ describe('Accordion', () => {
         const focused = el.focusElement as AccordionItem;
         expect(document.activeElement === focused).to.be.true;
 
-        focused.dispatchEvent(shiftTabEvent);
+        focused.dispatchEvent(shiftTabEvent());
         await elementUpdated(el);
 
         const outsideFocused = document.activeElement as HTMLElement;

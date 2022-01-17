@@ -580,12 +580,12 @@ describe('Picker, sync', () => {
 
             expect(el.open, 'inially closed').to.be.false;
 
-            button.dispatchEvent(tEvent);
+            button.dispatchEvent(tEvent());
             await elementUpdated(el);
 
             expect(el.open, 'still closed').to.be.false;
 
-            button.dispatchEvent(arrowUpEvent);
+            button.dispatchEvent(arrowUpEvent());
             await elementUpdated(el);
 
             expect(el.open, 'open by ArrowUp').to.be.true;
@@ -623,7 +623,7 @@ describe('Picker, sync', () => {
             expect(el.open, 'inially closed').to.be.false;
 
             const opened = oneEvent(el, 'sp-opened');
-            button.dispatchEvent(arrowDownEvent);
+            button.dispatchEvent(arrowDownEvent());
             await opened;
             await elementUpdated(el);
 
@@ -649,25 +649,25 @@ describe('Picker, sync', () => {
             const button = el.button as HTMLButtonElement;
 
             el.focus();
-            button.dispatchEvent(arrowLeftEvent);
+            button.dispatchEvent(arrowLeftEvent());
 
             await elementUpdated(el);
 
             expect(selectionSpy.callCount).to.equal(1);
             expect(selectionSpy.calledWith('Deselected'));
-            button.dispatchEvent(arrowLeftEvent);
+            button.dispatchEvent(arrowLeftEvent());
 
             await elementUpdated(el);
             expect(selectionSpy.callCount).to.equal(1);
-            button.dispatchEvent(arrowRightEvent);
+            button.dispatchEvent(arrowRightEvent());
 
             await elementUpdated(el);
             expect(selectionSpy.calledWith('option-2'));
 
-            button.dispatchEvent(arrowRightEvent);
-            button.dispatchEvent(arrowRightEvent);
-            button.dispatchEvent(arrowRightEvent);
-            button.dispatchEvent(arrowRightEvent);
+            button.dispatchEvent(arrowRightEvent());
+            button.dispatchEvent(arrowRightEvent());
+            button.dispatchEvent(arrowRightEvent());
+            button.dispatchEvent(arrowRightEvent());
 
             await elementUpdated(el);
             expect(selectionSpy.callCount).to.equal(5);
@@ -683,7 +683,7 @@ describe('Picker, sync', () => {
             const button = el.button as HTMLButtonElement;
 
             el.focus();
-            button.dispatchEvent(arrowRightEvent);
+            button.dispatchEvent(arrowRightEvent());
 
             await elementUpdated(el);
 
@@ -960,7 +960,7 @@ describe('Picker, sync', () => {
             lastItem.dispatchEvent(
                 new FocusEvent('focusin', { bubbles: true })
             );
-            lastItem.dispatchEvent(arrowDownEvent);
+            lastItem.dispatchEvent(arrowDownEvent());
             await elementUpdated(el);
             await nextFrame();
             expect(getParentOffset(lastItem)).to.be.greaterThan(40);

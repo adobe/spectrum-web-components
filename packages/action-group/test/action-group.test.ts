@@ -59,7 +59,9 @@ class EmphasizedActionGroup extends LitElement {
 }
 customElements.define('emphasized-action-group', EmphasizedActionGroup);
 
-async function singleSelectedActionGroup(selected: string[]) {
+async function singleSelectedActionGroup(
+    selected: string[]
+): Promise<ActionGroup> {
     const el = await fixture<ActionGroup>(
         html`
             <sp-action-group
@@ -79,7 +81,9 @@ async function singleSelectedActionGroup(selected: string[]) {
     return el;
 }
 
-async function multipleSelectedActionGroup(selected: string[]) {
+async function multipleSelectedActionGroup(
+    selected: string[]
+): Promise<ActionGroup> {
     const el = await fixture<ActionGroup>(
         html`
             <sp-action-group
@@ -847,7 +851,7 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('Third');
 
-        el.dispatchEvent(arrowRightEvent);
+        el.dispatchEvent(arrowRightEvent());
         await sendKeys({ press: 'Enter' });
 
         await elementUpdated(el);
@@ -855,14 +859,14 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('First');
 
-        el.dispatchEvent(arrowLeftEvent);
-        el.dispatchEvent(arrowUpEvent);
+        el.dispatchEvent(arrowLeftEvent());
+        el.dispatchEvent(arrowUpEvent());
         await sendKeys({ press: 'Enter' });
 
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('Second');
 
-        el.dispatchEvent(endEvent);
+        el.dispatchEvent(endEvent());
         await sendKeys({ press: 'Enter' });
 
         expect(el.selected.length).to.equal(1);
@@ -871,13 +875,13 @@ describe('ActionGroup', () => {
         await sendKeys({ press: 'PageUp' });
         await sendKeys({ press: 'Enter' });
 
-        el.dispatchEvent(homeEvent);
+        el.dispatchEvent(homeEvent());
         await sendKeys({ press: 'Enter' });
 
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('First');
 
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowDownEvent());
         await sendKeys({ press: 'Enter' });
 
         expect(el.selected.length).to.equal(1);
@@ -953,7 +957,7 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('Third');
 
-        el.dispatchEvent(arrowRightEvent);
+        el.dispatchEvent(arrowRightEvent());
         await sendKeys({ press: 'Enter' });
 
         await elementUpdated(el);
@@ -961,7 +965,7 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('First');
 
-        el.dispatchEvent(arrowUpEvent);
+        el.dispatchEvent(arrowUpEvent());
         await sendKeys({ press: 'Enter' });
 
         expect(el.selected.length).to.equal(1);

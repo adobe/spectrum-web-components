@@ -130,33 +130,33 @@ describe('Tags', () => {
         tag1.focus();
         await elementUpdated(el);
 
-        el.dispatchEvent(pageUpEvent);
-        el.dispatchEvent(arrowRightEvent);
+        el.dispatchEvent(pageUpEvent());
+        el.dispatchEvent(arrowRightEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag2).to.be.true;
 
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowDownEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag3).to.be.true;
 
-        el.dispatchEvent(endEvent);
+        el.dispatchEvent(endEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag5).to.be.true;
 
-        el.dispatchEvent(arrowLeftEvent);
+        el.dispatchEvent(arrowLeftEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag4).to.be.true;
 
-        el.dispatchEvent(arrowUpEvent);
+        el.dispatchEvent(arrowUpEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag3).to.be.true;
 
-        el.dispatchEvent(homeEvent);
+        el.dispatchEvent(homeEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag1).to.be.true;
@@ -184,23 +184,23 @@ describe('Tags', () => {
         tag2.focus();
         await elementUpdated(el);
 
-        el.dispatchEvent(enterEvent);
-        el.dispatchEvent(endEvent);
+        el.dispatchEvent(enterEvent());
+        el.dispatchEvent(endEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag4).to.be.true;
 
-        el.dispatchEvent(homeEvent);
+        el.dispatchEvent(homeEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag2).to.be.true;
 
-        el.dispatchEvent(arrowUpEvent);
+        el.dispatchEvent(arrowUpEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag4).to.be.true;
 
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowDownEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag2).to.be.true;
@@ -226,23 +226,23 @@ describe('Tags', () => {
         tag1.focus();
         await elementUpdated(el);
 
-        el.dispatchEvent(enterEvent);
-        el.dispatchEvent(endEvent);
+        el.dispatchEvent(enterEvent());
+        el.dispatchEvent(endEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag5).to.be.true;
 
-        el.dispatchEvent(homeEvent);
+        el.dispatchEvent(homeEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag1).to.be.true;
 
-        el.dispatchEvent(arrowUpEvent);
+        el.dispatchEvent(arrowUpEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag5).to.be.true;
 
-        el.dispatchEvent(arrowUpEvent);
+        el.dispatchEvent(arrowUpEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === tag1).to.be.true;
@@ -284,7 +284,7 @@ describe('Tags', () => {
         });
         expect(document.activeElement === tagA).to.be.true;
 
-        tagset2.dispatchEvent(arrowDownEvent);
+        tagset2.dispatchEvent(arrowDownEvent());
         expect(document.activeElement === tagB).to.be.true;
     });
     it('loads accepts "PageUp" and "PageDown" keys', async () => {
@@ -315,19 +315,19 @@ describe('Tags', () => {
         const tag4 = tags4.querySelector('sp-tag:not([disabled])') as Tag;
 
         tag1.focus();
-        tag1.dispatchEvent(pageUpEvent);
+        tag1.dispatchEvent(pageUpEvent());
 
         expect(document.activeElement === tag4).to.be.true;
 
-        tag4.dispatchEvent(pageDownEvent);
+        tag4.dispatchEvent(pageDownEvent());
 
         expect(document.activeElement === tag1).to.be.true;
 
-        tag1.dispatchEvent(pageDownEvent);
+        tag1.dispatchEvent(pageDownEvent());
 
         expect(document.activeElement === tag2).to.be.true;
 
-        tag2.dispatchEvent(pageDownEvent);
+        tag2.dispatchEvent(pageDownEvent());
 
         expect(document.activeElement === tag4, 'Focuses `tag4`').to.be.true;
     });

@@ -88,7 +88,7 @@ describe('Accordion Item', () => {
 
         expect(open).to.be.false;
 
-        el.dispatchEvent(enterEvent);
+        el.dispatchEvent(enterEvent());
 
         await elementUpdated(el);
 
@@ -97,7 +97,7 @@ describe('Accordion Item', () => {
         el.disabled = false;
         await elementUpdated(el);
 
-        el.dispatchEvent(enterEvent);
+        el.dispatchEvent(enterEvent());
 
         await elementUpdated(el);
 
@@ -124,7 +124,7 @@ describe('Accordion Item', () => {
 
         expect(open).to.be.false;
 
-        el.dispatchEvent(spaceEvent);
+        el.dispatchEvent(spaceEvent());
 
         await elementUpdated(el);
 
@@ -133,7 +133,7 @@ describe('Accordion Item', () => {
         el.disabled = false;
         await elementUpdated(el);
 
-        el.dispatchEvent(spaceEvent);
+        el.dispatchEvent(spaceEvent());
 
         await elementUpdated(el);
 

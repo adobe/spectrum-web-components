@@ -676,47 +676,47 @@ describe('SplitView', () => {
             '#splitter'
         ) as HTMLDivElement;
 
-        splitter.dispatchEvent(arrowLeftEvent);
+        splitter.dispatchEvent(arrowLeftEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos - 10);
 
-        splitter.dispatchEvent(arrowRightEvent);
+        splitter.dispatchEvent(arrowRightEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos);
 
-        splitter.dispatchEvent(arrowUpEvent);
+        splitter.dispatchEvent(arrowUpEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos + 10);
 
-        splitter.dispatchEvent(arrowDownEvent);
+        splitter.dispatchEvent(arrowDownEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos);
 
-        splitter.dispatchEvent(pageUpEvent);
+        splitter.dispatchEvent(pageUpEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos + 50);
 
-        splitter.dispatchEvent(pageDownEvent);
+        splitter.dispatchEvent(pageDownEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos);
 
-        splitter.dispatchEvent(homeEvent);
+        splitter.dispatchEvent(homeEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(50);
 
-        splitter.dispatchEvent(arrowLeftEvent);
+        splitter.dispatchEvent(arrowLeftEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(50);
 
-        splitter.dispatchEvent(endEvent);
+        splitter.dispatchEvent(endEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(splitTotalWidth - 50);
 
-        splitter.dispatchEvent(arrowRightEvent);
+        splitter.dispatchEvent(arrowRightEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(splitTotalWidth - 50);
 
-        splitter.dispatchEvent(shiftTabEvent);
+        splitter.dispatchEvent(shiftTabEvent());
         await elementUpdated(el);
         const outsideFocused = document.activeElement as HTMLElement;
         expect(typeof outsideFocused).not.to.equal(splitter);
@@ -745,39 +745,39 @@ describe('SplitView', () => {
             '#splitter'
         ) as HTMLDivElement;
 
-        splitter.dispatchEvent(arrowLeftEvent);
+        splitter.dispatchEvent(arrowLeftEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos + 10);
 
-        splitter.dispatchEvent(arrowRightEvent);
+        splitter.dispatchEvent(arrowRightEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos);
 
-        splitter.dispatchEvent(arrowUpEvent);
+        splitter.dispatchEvent(arrowUpEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos + 10);
 
-        splitter.dispatchEvent(arrowDownEvent);
+        splitter.dispatchEvent(arrowDownEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos);
 
-        splitter.dispatchEvent(pageUpEvent);
+        splitter.dispatchEvent(pageUpEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos + 50);
 
-        splitter.dispatchEvent(pageDownEvent);
+        splitter.dispatchEvent(pageDownEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos);
 
-        splitter.dispatchEvent(homeEvent);
+        splitter.dispatchEvent(homeEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(0);
 
-        splitter.dispatchEvent(endEvent);
+        splitter.dispatchEvent(endEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(splitTotalWidth - el.splitterSize);
 
-        splitter.dispatchEvent(shiftTabEvent);
+        splitter.dispatchEvent(shiftTabEvent());
         await elementUpdated(el);
         const outsideFocused = document.activeElement as HTMLElement;
         expect(typeof outsideFocused).not.to.equal(splitter);
@@ -805,41 +805,41 @@ describe('SplitView', () => {
             '#splitter'
         ) as HTMLDivElement;
 
-        splitter.dispatchEvent(arrowLeftEvent);
+        splitter.dispatchEvent(arrowLeftEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos - 10);
 
-        splitter.dispatchEvent(arrowRightEvent);
+        splitter.dispatchEvent(arrowRightEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos);
 
-        splitter.dispatchEvent(arrowUpEvent);
+        splitter.dispatchEvent(arrowUpEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos - 10);
 
-        splitter.dispatchEvent(arrowDownEvent);
+        splitter.dispatchEvent(arrowDownEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos);
 
-        splitter.dispatchEvent(pageUpEvent);
+        splitter.dispatchEvent(pageUpEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos - 50);
 
-        splitter.dispatchEvent(pageDownEvent);
+        splitter.dispatchEvent(pageDownEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos);
 
-        splitter.dispatchEvent(homeEvent);
+        splitter.dispatchEvent(homeEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(0);
 
-        splitter.dispatchEvent(endEvent);
+        splitter.dispatchEvent(endEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(
             splitTotalHeight - el.splitterSize
         );
 
-        splitter.dispatchEvent(shiftTabEvent);
+        splitter.dispatchEvent(shiftTabEvent());
         await elementUpdated(el);
         const outsideFocused = document.activeElement as HTMLElement;
         expect(typeof outsideFocused).not.to.equal(splitter);
@@ -869,11 +869,11 @@ describe('SplitView', () => {
             '#splitter'
         ) as HTMLDivElement;
 
-        splitter.dispatchEvent(homeEvent);
+        splitter.dispatchEvent(homeEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(0);
 
-        splitter.dispatchEvent(endEvent);
+        splitter.dispatchEvent(endEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(splitTotalWidth - el.splitterSize);
     });
@@ -897,7 +897,7 @@ describe('SplitView', () => {
         splitter.dispatchEvent(new PointerEvent('pointerdown'));
         await elementUpdated(el);
         //Send keyboard events to resize
-        splitter.dispatchEvent(arrowLeftEvent);
+        splitter.dispatchEvent(arrowLeftEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos);
     });
@@ -1036,7 +1036,7 @@ describe('SplitView', () => {
             '#splitter'
         ) as HTMLDivElement;
 
-        splitter.dispatchEvent(arrowLeftEvent);
+        splitter.dispatchEvent(arrowLeftEvent());
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(pos - 10);
         expect(changeSpy.callCount).to.equal(1);

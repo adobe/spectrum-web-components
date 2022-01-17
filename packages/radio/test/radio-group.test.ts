@@ -166,33 +166,33 @@ describe('Radio Group - focus control', () => {
         radio1.focus();
         await elementUpdated(el);
 
-        el.dispatchEvent(pageUpEvent);
-        el.dispatchEvent(arrowRightEvent);
+        el.dispatchEvent(pageUpEvent());
+        el.dispatchEvent(arrowRightEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === radio2).to.be.true;
 
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowDownEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === radio3).to.be.true;
 
-        el.dispatchEvent(endEvent);
+        el.dispatchEvent(endEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === radio5).to.be.true;
 
-        el.dispatchEvent(arrowLeftEvent);
+        el.dispatchEvent(arrowLeftEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === radio4).to.be.true;
 
-        el.dispatchEvent(arrowUpEvent);
+        el.dispatchEvent(arrowUpEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === radio3).to.be.true;
 
-        el.dispatchEvent(homeEvent);
+        el.dispatchEvent(homeEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === radio1).to.be.true;
@@ -221,23 +221,23 @@ describe('Radio Group - focus control', () => {
         await elementUpdated(el);
         expect(document.activeElement === radio2, 'start 2').to.be.true;
 
-        el.dispatchEvent(enterEvent);
-        el.dispatchEvent(endEvent);
+        el.dispatchEvent(enterEvent());
+        el.dispatchEvent(endEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === radio4, 'first 4').to.be.true;
 
-        el.dispatchEvent(homeEvent);
+        el.dispatchEvent(homeEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === radio2, 'second 2').to.be.true;
 
-        el.dispatchEvent(arrowUpEvent);
+        el.dispatchEvent(arrowUpEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === radio4, 'third 4').to.be.true;
 
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowDownEvent());
         await elementUpdated(el);
 
         expect(document.activeElement === radio2, 'fourth 2').to.be.true;
@@ -278,19 +278,19 @@ describe('Radio Group - focus control', () => {
         ) as Radio;
 
         radio1.focus();
-        radio1.dispatchEvent(pageUpEvent);
+        radio1.dispatchEvent(pageUpEvent());
 
         expect(document.activeElement === radio4).to.be.true;
 
-        radio4.dispatchEvent(pageDownEvent);
+        radio4.dispatchEvent(pageDownEvent());
 
         expect(document.activeElement === radio1).to.be.true;
 
-        radio1.dispatchEvent(pageDownEvent);
+        radio1.dispatchEvent(pageDownEvent());
 
         expect(document.activeElement === radio2).to.be.true;
 
-        radio2.dispatchEvent(pageDownEvent);
+        radio2.dispatchEvent(pageDownEvent());
 
         expect(document.activeElement === radio4, 'Focuses `radio4`').to.be
             .true;

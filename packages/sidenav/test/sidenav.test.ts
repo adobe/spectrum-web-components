@@ -173,7 +173,7 @@ describe('Sidenav', () => {
         focused.click();
         expect(focused.selected).to.be.true;
 
-        el.dispatchEvent(shiftTabEvent);
+        el.dispatchEvent(shiftTabEvent());
         const outsideFocused = document.activeElement as HTMLElement;
 
         expect(typeof outsideFocused).not.to.equal(SideNavItem);
@@ -319,7 +319,7 @@ describe('Sidenav', () => {
         expect(el.value).to.equal('Section 1');
 
         el.focus();
-        el.dispatchEvent(arrowUpEvent);
+        el.dispatchEvent(arrowUpEvent());
         let focused = document.activeElement as SideNavItem;
         focused.focusElement.click();
 
@@ -328,8 +328,8 @@ describe('Sidenav', () => {
         expect(el.value).to.equal('Section 0');
 
         el.focus();
-        el.dispatchEvent(arrowDownEvent);
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowDownEvent());
+        el.dispatchEvent(arrowDownEvent());
         focused = document.activeElement as SideNavItem;
         expect(focused.expanded, 'not expanded').to.be.false;
         focused.focusElement.click();
@@ -338,7 +338,7 @@ describe('Sidenav', () => {
 
         expect(focused.expanded, 'expanded').to.be.true;
 
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowDownEvent());
         await elementUpdated(el);
         focused = document.activeElement as SideNavItem;
         focused.focusElement.click();
@@ -353,7 +353,7 @@ describe('Sidenav', () => {
         focused = document.activeElement as SideNavItem;
         expect(focused.selected, 'selected').to.be.true;
 
-        el.dispatchEvent(shiftTabEvent);
+        el.dispatchEvent(shiftTabEvent());
         const outsideFocused = document.activeElement as HTMLElement;
 
         expect(typeof outsideFocused).not.to.equal(SideNavItem);
@@ -404,7 +404,7 @@ describe('Sidenav', () => {
         expect(sidenavEl.value).to.equal('Section 1');
 
         sidenavEl.focus();
-        sidenavEl.dispatchEvent(arrowUpEvent);
+        sidenavEl.dispatchEvent(arrowUpEvent());
         let focused = rootNode.activeElement as SideNavItem;
         focused.focusElement.click();
 
@@ -413,8 +413,8 @@ describe('Sidenav', () => {
         expect(sidenavEl.value).to.equal('Section 0');
 
         sidenavEl.focus();
-        sidenavEl.dispatchEvent(arrowDownEvent);
-        sidenavEl.dispatchEvent(arrowDownEvent);
+        sidenavEl.dispatchEvent(arrowDownEvent());
+        sidenavEl.dispatchEvent(arrowDownEvent());
         focused = rootNode.activeElement as SideNavItem;
         expect(focused.expanded).to.be.false;
         focused.focusElement.click();
@@ -423,7 +423,7 @@ describe('Sidenav', () => {
 
         expect(focused.expanded).to.be.true;
 
-        sidenavEl.dispatchEvent(arrowDownEvent);
+        sidenavEl.dispatchEvent(arrowDownEvent());
         await elementUpdated(sidenavEl);
         focused = rootNode.activeElement as SideNavItem;
         focused.focusElement.click();
@@ -438,7 +438,7 @@ describe('Sidenav', () => {
         focused = rootNode.activeElement as SideNavItem;
         expect(focused.selected).to.be.true;
 
-        sidenavEl.dispatchEvent(shiftTabEvent);
+        sidenavEl.dispatchEvent(shiftTabEvent());
         const outsideFocused = rootNode.activeElement as HTMLElement;
 
         expect(typeof outsideFocused).not.to.equal(SideNavItem);

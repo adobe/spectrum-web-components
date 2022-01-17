@@ -173,7 +173,7 @@ describe('Button', () => {
 
         expect(focusedCount).to.equal(1);
 
-        el.dispatchEvent(shiftTabEvent);
+        el.dispatchEvent(shiftTabEvent());
         el.dispatchEvent(new Event('focusin'));
         await elementUpdated(el);
 

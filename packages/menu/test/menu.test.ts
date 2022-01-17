@@ -219,14 +219,14 @@ describe('Menu', () => {
         expect(document.activeElement === el).to.be.true;
         expect(firstItem.focused).to.be.true;
 
-        el.dispatchEvent(arrowUpEvent);
-        el.dispatchEvent(arrowUpEvent);
-        el.dispatchEvent(tEvent);
+        el.dispatchEvent(arrowUpEvent());
+        el.dispatchEvent(arrowUpEvent());
+        el.dispatchEvent(tEvent());
 
         expect(document.activeElement === el).to.be.true;
         expect(thirdToLastItem.focused).to.be.true;
 
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowDownEvent());
 
         expect(document.activeElement === el).to.be.true;
         expect(secondToLastItem.focused).to.be.true;
@@ -293,7 +293,7 @@ describe('Menu', () => {
             .true;
         expect(prependedItem.focused, 'another visibly focused').to.be.true;
 
-        el.dispatchEvent(arrowUpEvent);
+        el.dispatchEvent(arrowUpEvent());
 
         expect(document.activeElement === el, 'last active element').to.be.true;
         expect(appendedItem.focused, 'last visibly focused').to.be.true;
@@ -331,11 +331,11 @@ describe('Menu', () => {
         await sendKeys({ press: 'ArrowUp' });
         expect(document.activeElement === el).to.be.true;
         expect(firstItem.focused, 'first').to.be.true;
-        el.dispatchEvent(arrowDownEvent);
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowDownEvent());
+        el.dispatchEvent(arrowDownEvent());
         expect(thirdItem.focused, 'third').to.be.true;
         // imitate tabbing away
-        el.dispatchEvent(tabEvent);
+        el.dispatchEvent(tabEvent());
         el.dispatchEvent(
             new CustomEvent('focusout', {
                 composed: true,
@@ -346,7 +346,7 @@ describe('Menu', () => {
         // re-bind keyevents
         el.startListeningToKeyboard();
         // focus management should start again from the first item.
-        el.dispatchEvent(arrowDownEvent);
+        el.dispatchEvent(arrowDownEvent());
         expect(secondItem.focused, 'second').to.be.true;
     });
     it('handles focus across focused MenuItem removals', async () => {
