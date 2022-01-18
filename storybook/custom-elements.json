@@ -141,21 +141,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/action-menu/sp-action-menu.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-action-menu",
-          "declaration": {
-            "name": "ActionMenu",
-            "module": "/packages/action-menu/src/ActionMenu.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/asset/sp-asset.ts",
       "declarations": [],
       "exports": [
@@ -165,6 +150,21 @@
           "declaration": {
             "name": "Asset",
             "module": "/packages/asset/src/Asset.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-menu/sp-action-menu.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-action-menu",
+          "declaration": {
+            "name": "ActionMenu",
+            "module": "/packages/action-menu/src/ActionMenu.js"
           }
         }
       ]
@@ -207,6 +207,21 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/button-group/sp-button-group.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-button-group",
+          "declaration": {
+            "name": "ButtonGroup",
+            "module": "/packages/button-group/src/ButtonGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/button/sp-button.ts",
       "declarations": [],
       "exports": [
@@ -231,21 +246,6 @@
           "declaration": {
             "name": "ClearButton",
             "module": "/packages/button/src/ClearButton.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/sp-button-group.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-button-group",
-          "declaration": {
-            "name": "ButtonGroup",
-            "module": "/packages/button-group/src/ButtonGroup.js"
           }
         }
       ]
@@ -4005,6 +4005,135 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/asset/src/Asset.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Asset",
+          "slots": [
+            {
+              "description": "content to be displayed in the asset when an acceptable value for `file` is not present",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "'file' | 'folder' | undefined"
+              },
+              "privacy": "public",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "'file' | 'folder' | undefined"
+              },
+              "fieldName": "variant"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-asset",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Asset",
+          "declaration": {
+            "name": "Asset",
+            "module": "packages/asset/src/Asset.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/asset/src/asset.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{align-items:center;display:flex;height:100%;justify-content:center;width:100%}::slotted(*){max-height:100%;max-width:100%;object-fit:contain;transition:opacity var(--spectrum-global-animation-duration-100,.13s)}.file,.folder{height:100%;margin:var(\n--spectrum-asset-icon-margin,var(--spectrum-global-dimension-size-250)\n);max-width:var(\n--spectrum-asset-icon-max-width,var(--spectrum-global-dimension-static-size-1000)\n);min-width:var(\n--spectrum-asset-icon-min-width,var(--spectrum-global-dimension-size-600)\n);width:100%}.folderBackground{fill:var(\n--spectrum-asset-folder-background-color,var(--spectrum-global-color-gray-300)\n)}.fileBackground{fill:var(\n--spectrum-asset-file-background-color,var(--spectrum-global-color-gray-50)\n)}.fileOutline,.folderOutline{fill:var(\n--spectrum-asset-icon-outline-color,var(--spectrum-global-color-gray-500)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/asset/src/asset.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/asset/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Asset.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/asset/src/spectrum-asset.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{align-items:center;display:flex;height:100%;justify-content:center;width:100%}::slotted(*){max-height:100%;max-width:100%;object-fit:contain;transition:opacity var(--spectrum-global-animation-duration-100,.13s)}.file,.folder{height:100%;margin:var(\n--spectrum-asset-icon-margin,var(--spectrum-global-dimension-size-250)\n);max-width:var(\n--spectrum-asset-icon-max-width,var(--spectrum-global-dimension-static-size-1000)\n);min-width:var(\n--spectrum-asset-icon-min-width,var(--spectrum-global-dimension-size-600)\n);width:100%}.folderBackground{fill:var(\n--spectrum-asset-folder-background-color,var(--spectrum-global-color-gray-300)\n)}.fileBackground{fill:var(\n--spectrum-asset-file-background-color,var(--spectrum-global-color-gray-50)\n)}.fileOutline,.folderOutline{fill:var(\n--spectrum-asset-icon-outline-color,var(--spectrum-global-color-gray-500)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/asset/src/spectrum-asset.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/action-menu/src/ActionMenu.ts",
       "declarations": [
         {
@@ -5369,135 +5498,6 @@
       "path": "packages/action-menu/sync/sp-action-menu.ts",
       "declarations": [],
       "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/asset/src/Asset.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Asset",
-          "slots": [
-            {
-              "description": "content to be displayed in the asset when an acceptable value for `file` is not present",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "variant",
-              "type": {
-                "text": "'file' | 'folder' | undefined"
-              },
-              "privacy": "public",
-              "attribute": "variant",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "label"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "variant",
-              "type": {
-                "text": "'file' | 'folder' | undefined"
-              },
-              "fieldName": "variant"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-asset",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Asset",
-          "declaration": {
-            "name": "Asset",
-            "module": "packages/asset/src/Asset.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/asset/src/asset.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{align-items:center;display:flex;height:100%;justify-content:center;width:100%}::slotted(*){max-height:100%;max-width:100%;object-fit:contain;transition:opacity var(--spectrum-global-animation-duration-100,.13s)}.file,.folder{height:100%;margin:var(\n--spectrum-asset-icon-margin,var(--spectrum-global-dimension-size-250)\n);max-width:var(\n--spectrum-asset-icon-max-width,var(--spectrum-global-dimension-static-size-1000)\n);min-width:var(\n--spectrum-asset-icon-min-width,var(--spectrum-global-dimension-size-600)\n);width:100%}.folderBackground{fill:var(\n--spectrum-asset-folder-background-color,var(--spectrum-global-color-gray-300)\n)}.fileBackground{fill:var(\n--spectrum-asset-file-background-color,var(--spectrum-global-color-gray-50)\n)}.fileOutline,.folderOutline{fill:var(\n--spectrum-asset-icon-outline-color,var(--spectrum-global-color-gray-500)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/asset/src/asset.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/asset/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Asset.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/asset/src/spectrum-asset.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{align-items:center;display:flex;height:100%;justify-content:center;width:100%}::slotted(*){max-height:100%;max-width:100%;object-fit:contain;transition:opacity var(--spectrum-global-animation-duration-100,.13s)}.file,.folder{height:100%;margin:var(\n--spectrum-asset-icon-margin,var(--spectrum-global-dimension-size-250)\n);max-width:var(\n--spectrum-asset-icon-max-width,var(--spectrum-global-dimension-static-size-1000)\n);min-width:var(\n--spectrum-asset-icon-min-width,var(--spectrum-global-dimension-size-600)\n);width:100%}.folderBackground{fill:var(\n--spectrum-asset-folder-background-color,var(--spectrum-global-color-gray-300)\n)}.fileBackground{fill:var(\n--spectrum-asset-file-background-color,var(--spectrum-global-color-gray-50)\n)}.fileOutline,.folderOutline{fill:var(\n--spectrum-asset-icon-outline-color,var(--spectrum-global-color-gray-500)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/asset/src/spectrum-asset.css.ts"
-          }
-        }
-      ]
     },
     {
       "kind": "javascript-module",
@@ -6886,6 +6886,196 @@
           "declaration": {
             "name": "*",
             "package": "@spectrum-web-components/underlay"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/ButtonGroup.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ButtonGroup",
+          "slots": [
+            {
+              "description": "the sp-button elements that make up the group",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-button-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ButtonGroup",
+          "declaration": {
+            "name": "ButtonGroup",
+            "module": "packages/button-group/src/ButtonGroup.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/button-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-flex-grow:1}:host([dir=ltr][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:left}:host([dir=rtl][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:right}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/button-group/src/button-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ButtonGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/spectrum-button-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/button-group/src/spectrum-button-group.css.ts"
           }
         }
       ]
@@ -10975,196 +11165,6 @@
           "declaration": {
             "name": "styles",
             "module": "packages/button/src/spectrum-clear-button.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/ButtonGroup.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ButtonGroup",
-          "slots": [
-            {
-              "description": "the sp-button elements that make up the group",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "vertical",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "vertical"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-button-group",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ButtonGroup",
-          "declaration": {
-            "name": "ButtonGroup",
-            "module": "packages/button-group/src/ButtonGroup.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/button-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-flex-grow:1}:host([dir=ltr][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:left}:host([dir=rtl][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:right}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/button-group/src/button-group.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ButtonGroup.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/spectrum-button-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/button-group/src/spectrum-button-group.css.ts"
           }
         }
       ]
@@ -34162,2251 +34162,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/overlay/src/ActiveOverlay.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ActiveOverlay",
-          "slots": [
-            {
-              "description": "content to display in the overlay",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "overlayContent",
-              "type": {
-                "text": "HTMLElement"
-              },
-              "privacy": "public"
-            },
-            {
-              "kind": "field",
-              "name": "overlayContentTip",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "public"
-            },
-            {
-              "kind": "field",
-              "name": "trigger",
-              "type": {
-                "text": "HTMLElement"
-              },
-              "privacy": "public"
-            },
-            {
-              "kind": "field",
-              "name": "virtualTrigger",
-              "type": {
-                "text": "VirtualTrigger | undefined"
-              },
-              "privacy": "public"
-            },
-            {
-              "kind": "field",
-              "name": "popper",
-              "type": {
-                "text": "Instance | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_state",
-              "privacy": "public",
-              "attribute": "_state"
-            },
-            {
-              "kind": "field",
-              "name": "state",
-              "type": {
-                "text": "OverlayStateType"
-              },
-              "privacy": "public"
-            },
-            {
-              "kind": "field",
-              "name": "animating",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "animating",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "placement",
-              "type": {
-                "text": "Placement | undefined"
-              },
-              "privacy": "public",
-              "attribute": "placement",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "theme",
-              "type": {
-                "text": "{\n        color?: Color;\n        scale?: Scale;\n        lang?: string;\n    }"
-              },
-              "privacy": "public",
-              "default": "{}"
-            },
-            {
-              "kind": "field",
-              "name": "receivesFocus",
-              "type": {
-                "text": "'auto' | undefined"
-              },
-              "privacy": "public"
-            },
-            {
-              "kind": "field",
-              "name": "tabbingAway",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "originalPlacement",
-              "type": {
-                "text": "Placement | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "restoreContent",
-              "type": {
-                "text": "() => Element[] | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "dataPopperPlacement",
-              "type": {
-                "text": "Placement | undefined"
-              },
-              "privacy": "public",
-              "attribute": "data-popper-placement"
-            },
-            {
-              "kind": "method",
-              "name": "focus",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "hasTheme",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "offset",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "6"
-            },
-            {
-              "kind": "field",
-              "name": "interaction",
-              "type": {
-                "text": "TriggerInteractions"
-              },
-              "privacy": "public",
-              "default": "'hover'"
-            },
-            {
-              "kind": "field",
-              "name": "positionAnimationFrame",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "0"
-            },
-            {
-              "kind": "field",
-              "name": "timeout",
-              "type": {
-                "text": "number | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_modalRoot",
-              "type": {
-                "text": "ActiveOverlay | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "hasModalRoot",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public"
-            },
-            {
-              "kind": "method",
-              "name": "feature",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "obscure",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "ActiveOverlay | undefined"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "nextOverlayInteraction",
-                  "type": {
-                    "text": "TriggerInteractions"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "updateOverlayPopperPlacement",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "open",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "openDetail",
-                  "type": {
-                    "text": "OverlayOpenDetail"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "extractDetail",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "detail",
-                  "type": {
-                    "text": "OverlayOpenDetail"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "dispose",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "stealOverlayContent",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "element",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "willNotifyClosed",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "method",
-              "name": "returnOverlayContent",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "updateOverlayPosition",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hide",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "animated",
-                  "default": "true"
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "schedulePositionUpdate",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "onSlotChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "handleInlineTriggerKeydown",
-              "privacy": "public"
-            },
-            {
-              "kind": "method",
-              "name": "applyContentAnimation",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "Promise<boolean>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "animation",
-                  "type": {
-                    "text": "ContentAnimation"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "renderTheme",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "content",
-                  "type": {
-                    "text": "TemplateResult"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "create",
-              "privacy": "public",
-              "static": true,
-              "return": {
-                "type": {
-                  "text": "ActiveOverlay"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "details",
-                  "type": {
-                    "text": "OverlayOpenDetail"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "stealOverlayContentPromise",
-              "privacy": "private",
-              "default": "new Promise(\n            (res) => (this.stealOverlayContentResolver = res)\n        )"
-            },
-            {
-              "kind": "field",
-              "name": "stealOverlayContentResolver",
-              "type": {
-                "text": "() => void"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "getUpdateComplete",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "Promise<boolean>"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "_state",
-              "fieldName": "_state"
-            },
-            {
-              "name": "animating",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "animating"
-            },
-            {
-              "name": "placement",
-              "type": {
-                "text": "Placement | undefined"
-              },
-              "fieldName": "placement"
-            },
-            {
-              "name": "data-popper-placement",
-              "type": {
-                "text": "Placement | undefined"
-              },
-              "fieldName": "dataPopperPlacement"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "active-overlay",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ActiveOverlay",
-          "declaration": {
-            "name": "ActiveOverlay",
-            "module": "packages/overlay/src/ActiveOverlay.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/OverlayTrigger.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "LONGPRESS_INSTRUCTIONS",
-          "type": {
-            "text": "object"
-          },
-          "default": "{\n    touch: 'Double tap and long press for additional options',\n    keyboard: 'Press Space or Alt+Down Arrow for additional options',\n    mouse: 'Click and hold for additional options',\n}"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "OverlayTrigger",
-          "slots": [
-            {
-              "description": "The content that will trigger the various overlays",
-              "name": "trigger"
-            },
-            {
-              "description": "The content that will be displayed on hover",
-              "name": "hover-content"
-            },
-            {
-              "description": "The content that will be displayed on click",
-              "name": "click-content"
-            },
-            {
-              "description": "The content that will be displayed on click",
-              "name": "longpress-content"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "closeClickOverlay",
-              "type": {
-                "text": "Promise<() => void> | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "closeLongpressOverlay",
-              "type": {
-                "text": "Promise<() => void> | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "closeHoverOverlay",
-              "type": {
-                "text": "Promise<() => void> | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "placement",
-              "type": {
-                "text": "\"auto\" | \"auto-start\" | \"auto-end\" | \"top\" | \"bottom\" | \"right\" | \"left\" | \"top-start\" | \"top-end\" | \"bottom-start\" | \"bottom-end\" | \"right-start\" | \"right-end\" | \"left-start\" | \"left-end\" | \"none\""
-              },
-              "privacy": "public",
-              "default": "'bottom'",
-              "attribute": "placement",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "type",
-              "type": {
-                "text": "Extract<TriggerInteractions, 'inline' | 'modal' | 'replace'> | undefined"
-              },
-              "privacy": "public",
-              "attribute": "type"
-            },
-            {
-              "kind": "field",
-              "name": "offset",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "6",
-              "attribute": "offset",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "OverlayContentTypes | undefined"
-              },
-              "privacy": "public",
-              "attribute": "open",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "disabled",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "hasLongpressContent",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "longpressDescriptor",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "clickContent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "longpressContent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "hoverContent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "targetContent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_longpressId",
-              "privacy": "private",
-              "default": "`longpress-describedby-descriptor`"
-            },
-            {
-              "kind": "method",
-              "name": "handleClose",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "optional": true,
-                  "type": {
-                    "text": "CustomEvent<OverlayOpenCloseDetail>"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "manageLongpressDescriptor",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "closeAllOverlays",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageOpen",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "openOverlay",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<() => void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "target",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                },
-                {
-                  "name": "interaction",
-                  "type": {
-                    "text": "TriggerInteractions"
-                  }
-                },
-                {
-                  "name": "content",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                },
-                {
-                  "name": "options",
-                  "type": {
-                    "text": "OverlayOptions"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "openOverlay",
-              "privacy": "public",
-              "static": true
-            },
-            {
-              "kind": "field",
-              "name": "overlayOptions",
-              "type": {
-                "text": "OverlayOptions"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "onTrigger",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "CustomEvent<LongpressEvent>"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "prepareToFocusOverlayContent",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "overlayContent",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "onTriggerClick",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_longpressEvent",
-              "type": {
-                "text": "CustomEvent<LongpressEvent> | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "onTriggerLongpress",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "abortOverlay",
-              "type": {
-                "text": "(cancelled: boolean) => void"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "onTriggerMouseEnter",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "onClickSlotChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event & { target: HTMLSlotElement }"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "onLongpressSlotChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event & { target: HTMLSlotElement }"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "onHoverSlotChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event & { target: HTMLSlotElement }"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "onTargetSlotChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event & { target: HTMLSlotElement }"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "extractSlotContentFromEvent",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "HTMLElement | undefined"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "openStatePromise",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "openStateResolver",
-              "type": {
-                "text": "() => void"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "getUpdateComplete",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "Promise<boolean>"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "events": [
-            {
-              "description": "Announces that the overlay has been opened",
-              "name": "sp-opened"
-            },
-            {
-              "description": "Announces that the overlay has been closed",
-              "name": "sp-closed"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "placement",
-              "type": {
-                "text": "\"auto\" | \"auto-start\" | \"auto-end\" | \"top\" | \"bottom\" | \"right\" | \"left\" | \"top-start\" | \"top-end\" | \"bottom-start\" | \"bottom-end\" | \"right-start\" | \"right-end\" | \"left-start\" | \"left-end\" | \"none\""
-              },
-              "default": "'bottom'",
-              "fieldName": "placement",
-              "attribute": "placement"
-            },
-            {
-              "name": "type",
-              "type": {
-                "text": "Extract<TriggerInteractions, 'inline' | 'modal' | 'replace'> | undefined"
-              },
-              "fieldName": "type"
-            },
-            {
-              "name": "offset",
-              "type": {
-                "text": "number"
-              },
-              "default": "6",
-              "fieldName": "offset"
-            },
-            {
-              "name": "open",
-              "type": {
-                "text": "OverlayContentTypes | undefined"
-              },
-              "fieldName": "open"
-            },
-            {
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "disabled"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "overlay-trigger",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "LONGPRESS_INSTRUCTIONS",
-          "declaration": {
-            "name": "LONGPRESS_INSTRUCTIONS",
-            "module": "packages/overlay/src/OverlayTrigger.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "OverlayTrigger",
-          "declaration": {
-            "name": "OverlayTrigger",
-            "module": "packages/overlay/src/OverlayTrigger.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/VirtualTrigger.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "VirtualTrigger",
-          "members": [
-            {
-              "kind": "field",
-              "name": "x",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "x"
-            },
-            {
-              "kind": "field",
-              "name": "y",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "y"
-            },
-            {
-              "kind": "method",
-              "name": "updateBoundingClientRect",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "x",
-                  "type": {
-                    "text": "number"
-                  }
-                },
-                {
-                  "name": "y",
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "getBoundingClientRect",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "DOMRect"
-                }
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "VirtualTrigger",
-          "declaration": {
-            "name": "VirtualTrigger",
-            "module": "packages/overlay/src/VirtualTrigger.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/active-overlay.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n@keyframes sp-overlay-fade-in{0%{opacity:0;transform:var(--sp-overlay-from)}to{opacity:1;transform:translate(0)}}@keyframes sp-overlay-fade-out{0%{opacity:1;transform:translate(0)}to{opacity:0;transform:var(--sp-overlay-from)}}:host{display:inline-block;left:0;pointer-events:none;position:absolute;top:0;z-index:1000}:host(:focus){outline:none}#contents,sp-theme{height:100%}#contents{animation-duration:var(--spectrum-global-animation-duration-200,.16s);animation-timing-function:var(\n--spectrum-global-animation-ease-out,ease-out\n);display:inline-block;opacity:1;pointer-events:none;visibility:visible}:host([data-popper-placement*=top]) #contents{--sp-overlay-from:translateY(var(--spectrum-global-dimension-size-75))}:host([data-popper-placement*=right]) #contents{--sp-overlay-from:translateX(calc(var(--spectrum-global-dimension-size-75)*-1))}:host([data-popper-placement*=bottom]) #contents{--sp-overlay-from:translateY(calc(var(--spectrum-global-dimension-size-75)*-1))}:host([data-popper-placement*=left]) #contents{--sp-overlay-from:translateX(var(--spectrum-global-dimension-size-75))}:host([animating]) ::slotted(*){pointer-events:none}:host(:not([animating])) ::slotted(*){pointer-events:auto}#contents ::slotted(*){position:relative}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/overlay/src/active-overlay.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/apply-max-size.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "applyMaxSize",
-          "type": {
-            "text": "Modifier<'applyMaxSize', Record<string, unknown>>"
-          },
-          "default": "{\n    name: 'applyMaxSize',\n    enabled: true,\n    phase: 'beforeWrite',\n    requires: ['maxSize'],\n    fn({ state }: ModifierArguments<Record<string, unknown>>): void {\n        const { height: maxHeight } = state.modifiersData.maxSize;\n        if (!appliedSizeDefaults.has(state.elements.popper)) {\n            appliedSizeDefaults.set(\n                state.elements.popper,\n                state.rects.popper.height\n            );\n        }\n        const actualHeight = appliedSizeDefaults.get(state.elements.popper);\n        const constrainHeight = maxHeight < actualHeight;\n        const appliedHeight = constrainHeight ? `${maxHeight}px` : '';\n        state.styles.popper.maxHeight = appliedHeight;\n        state.styles.popper.height = appliedHeight;\n    },\n}"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "applyMaxSize",
-          "declaration": {
-            "name": "applyMaxSize",
-            "module": "packages/overlay/src/apply-max-size.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./overlay.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./OverlayTrigger.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./overlay-types.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ActiveOverlay.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./loader.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./VirtualTrigger.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/loader.ts",
-      "declarations": [
-        {
-          "kind": "function",
-          "name": "openOverlay",
-          "return": {
-            "type": {
-              "text": "Promise<() => void>"
-            }
-          },
-          "parameters": [
-            {
-              "name": "target",
-              "type": {
-                "text": "HTMLElement"
-              }
-            },
-            {
-              "name": "interaction",
-              "type": {
-                "text": "TriggerInteractions"
-              }
-            },
-            {
-              "name": "content",
-              "type": {
-                "text": "HTMLElement"
-              }
-            },
-            {
-              "name": "options",
-              "type": {
-                "text": "OverlayOptions"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "openOverlay",
-          "declaration": {
-            "name": "openOverlay",
-            "module": "packages/overlay/src/loader.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/overlay-stack.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "OverlayStack",
-          "members": [
-            {
-              "kind": "field",
-              "name": "overlays",
-              "type": {
-                "text": "ActiveOverlay[]"
-              },
-              "privacy": "public",
-              "default": "[]"
-            },
-            {
-              "kind": "field",
-              "name": "preventMouseRootClose",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "root",
-              "type": {
-                "text": "HTMLElement"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handlingResize",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "overlayTimer",
-              "privacy": "private",
-              "default": "new OverlayTimer()"
-            },
-            {
-              "kind": "field",
-              "name": "canTabTrap",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "true"
-            },
-            {
-              "kind": "field",
-              "name": "trappingInited",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "tabTrapper",
-              "type": {
-                "text": "HTMLElement"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "overlayHolder",
-              "type": {
-                "text": "HTMLElement"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_eventsAreBound",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "method",
-              "name": "initTabTrapping",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_bodyMarginsApplied",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "method",
-              "name": "applyBodyMargins",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "startTabTrapping",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "stopTabTrapping",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "forwardContextmenuEvent",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "document",
-              "type": {
-                "text": "Document"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "topOverlay",
-              "type": {
-                "text": "ActiveOverlay | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "findOverlayForContent",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "ActiveOverlay | undefined"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "overlayContent",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "addEventListeners",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "isClickOverlayActiveForTrigger",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "trigger",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "openOverlay",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "Promise<boolean>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "details",
-                  "type": {
-                    "text": "OverlayOpenDetail"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "addOverlayEventListeners",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "activeOverlay",
-                  "type": {
-                    "text": "ActiveOverlay"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "addReplaceOverlayEventListeners",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "activeOverlay",
-                  "type": {
-                    "text": "ActiveOverlay"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "addInlineOverlayEventListeners",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "activeOverlay",
-                  "type": {
-                    "text": "ActiveOverlay"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "closeOverlay",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "content",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "handleMouseCapture",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "closeAllHoverOverlays",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageFocusAfterCloseWhenOverlaysRemain",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageFocusAfterCloseWhenLastOverlay",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "overlay",
-                  "type": {
-                    "text": "ActiveOverlay"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "hideAndCloseOverlay",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "overlay",
-                  "optional": true,
-                  "type": {
-                    "text": "ActiveOverlay"
-                  }
-                },
-                {
-                  "name": "animated",
-                  "optional": true,
-                  "type": {
-                    "text": "boolean"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "closeTopOverlay",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_doesNotCloseOnFirstClick",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "description": "A \"longpress\" occurs before the \"click\" that creates it has occured.\nIn that way the first click will still be part of the \"longpress\" and\nnot part of closing the overlay."
-            },
-            {
-              "kind": "field",
-              "name": "handleMouse",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleKeyUp",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "handleResize",
-              "privacy": "private"
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "OverlayStack",
-          "declaration": {
-            "name": "OverlayStack",
-            "module": "packages/overlay/src/overlay-stack.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/overlay-timer.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "A timer to help with implementation of warnup/cooldown behavior as described here:\nhttps://spectrum.adobe.com/page/tooltip/#Immediate-or-delayed-appearance",
-          "name": "OverlayTimer",
-          "members": [
-            {
-              "kind": "field",
-              "name": "warmUpDelay",
-              "privacy": "private",
-              "default": "1000",
-              "type": {
-                "text": "number"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "coolDownDelay",
-              "privacy": "private",
-              "default": "1000",
-              "type": {
-                "text": "number"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isWarm",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "cooldownTimeout",
-              "type": {
-                "text": "number | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "component",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "timeout",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "0"
-            },
-            {
-              "kind": "field",
-              "name": "promise",
-              "type": {
-                "text": "Promise<boolean> | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "resolve",
-              "type": {
-                "text": "(cancelled: boolean) => void | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "openTimer",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "Promise<boolean>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "component",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "close",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "component",
-                  "type": {
-                    "text": "HTMLElement"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "resetCooldownTimer",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "cancelCooldownTimer",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "OverlayTimer",
-          "declaration": {
-            "name": "OverlayTimer",
-            "module": "packages/overlay/src/overlay-timer.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/overlay-trigger.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([disabled]) ::slotted([slot=trigger]){pointer-events:none}#overlay-content{display:none}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/overlay/src/overlay-trigger.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/overlay-types.ts",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/overlay.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "This class allows access to the overlay system which allows a client to\nposition an element in the overlay positioned relative to another node.",
-          "name": "Overlay",
-          "members": [
-            {
-              "kind": "field",
-              "name": "overlayStack",
-              "privacy": "private",
-              "static": true,
-              "default": "new OverlayStack()"
-            },
-            {
-              "kind": "field",
-              "name": "isOpen",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "overlayElement",
-              "type": {
-                "text": "HTMLElement"
-              },
-              "privacy": "private",
-              "default": "overlayElement"
-            },
-            {
-              "kind": "field",
-              "name": "owner",
-              "type": {
-                "text": "HTMLElement"
-              },
-              "privacy": "private",
-              "default": "owner"
-            },
-            {
-              "kind": "field",
-              "name": "interaction",
-              "type": {
-                "text": "TriggerInteractions"
-              },
-              "privacy": "private",
-              "default": "interaction"
-            },
-            {
-              "kind": "method",
-              "name": "open",
-              "privacy": "public",
-              "static": true,
-              "return": {
-                "type": {
-                  "text": ""
-                }
-              },
-              "parameters": [
-                {
-                  "name": "owner",
-                  "type": {
-                    "text": "HTMLElement"
-                  },
-                  "description": "the parent element we will use to position the overlay element"
-                },
-                {
-                  "name": "interaction",
-                  "type": {
-                    "text": "TriggerInteractions"
-                  },
-                  "description": "the type of interaction that caused this overlay to be shown"
-                },
-                {
-                  "name": "overlayElement",
-                  "type": {
-                    "text": "HTMLElement"
-                  },
-                  "description": "the item to display as an overlay"
-                },
-                {
-                  "name": "options",
-                  "type": {
-                    "text": "OverlayOptions"
-                  },
-                  "description": "display parameters"
-                },
-                {
-                  "description": "if true delay opening of the overlay based on the global warmup/cooldown timer",
-                  "name": "options.delayed"
-                },
-                {
-                  "description": "distance to offset the overlay",
-                  "name": "options.offset"
-                },
-                {
-                  "description": "side on which to position the overlay",
-                  "name": "options.placement"
-                }
-              ],
-              "description": "Open an overlay"
-            },
-            {
-              "kind": "method",
-              "name": "open",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": ""
-                }
-              },
-              "parameters": [
-                {
-                  "name": "{\n        abortPromise,\n        delayed,\n        offset = 0,\n        placement = 'top',\n        receivesFocus,\n        notImmediatelyClosable,\n        virtualTrigger,\n    }",
-                  "type": {
-                    "text": "OverlayOptions"
-                  }
-                },
-                {
-                  "description": "display parameters",
-                  "name": "options"
-                },
-                {
-                  "description": "delay before opening the overlay",
-                  "name": "options.delayed"
-                },
-                {
-                  "description": "distance to offset the overlay",
-                  "name": "options.offset"
-                },
-                {
-                  "description": "side on which to position the overlay",
-                  "name": "options.placement"
-                }
-              ],
-              "description": "Open an overlay"
-            },
-            {
-              "kind": "method",
-              "name": "close",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Close the overlay if it is open"
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Overlay",
-          "declaration": {
-            "name": "Overlay",
-            "module": "packages/overlay/src/overlay.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/popper.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "createPopper"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "createPopper",
-          "declaration": {
-            "name": "createPopper",
-            "module": "packages/overlay/src/popper.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "Instance",
-          "declaration": {
-            "name": "Instance",
-            "module": "packages/overlay/src/popper.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "Placement",
-          "declaration": {
-            "name": "Placement",
-            "module": "packages/overlay/src/popper.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "VirtualElement",
-          "declaration": {
-            "name": "VirtualElement",
-            "module": "packages/overlay/src/popper.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "maxSize",
-          "declaration": {
-            "name": "maxSize",
-            "module": "packages/overlay/src/popper.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "applyMaxSize",
-          "declaration": {
-            "name": "applyMaxSize",
-            "module": "packages/overlay/src/popper.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/overlay/sync/overlay-trigger.ts",
       "declarations": [],
       "exports": []
@@ -39108,6 +36863,2251 @@
           "declaration": {
             "name": "styles",
             "module": "packages/popover/src/spectrum-popover.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/ActiveOverlay.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ActiveOverlay",
+          "slots": [
+            {
+              "description": "content to display in the overlay",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "overlayContent",
+              "type": {
+                "text": "HTMLElement"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "overlayContentTip",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "trigger",
+              "type": {
+                "text": "HTMLElement"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "virtualTrigger",
+              "type": {
+                "text": "VirtualTrigger | undefined"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "popper",
+              "type": {
+                "text": "Instance | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_state",
+              "privacy": "public",
+              "attribute": "_state"
+            },
+            {
+              "kind": "field",
+              "name": "state",
+              "type": {
+                "text": "OverlayStateType"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "animating",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "animating",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "placement",
+              "type": {
+                "text": "Placement | undefined"
+              },
+              "privacy": "public",
+              "attribute": "placement",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "theme",
+              "type": {
+                "text": "{\n        color?: Color;\n        scale?: Scale;\n        lang?: string;\n    }"
+              },
+              "privacy": "public",
+              "default": "{}"
+            },
+            {
+              "kind": "field",
+              "name": "receivesFocus",
+              "type": {
+                "text": "'auto' | undefined"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "tabbingAway",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "originalPlacement",
+              "type": {
+                "text": "Placement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "restoreContent",
+              "type": {
+                "text": "() => Element[] | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "dataPopperPlacement",
+              "type": {
+                "text": "Placement | undefined"
+              },
+              "privacy": "public",
+              "attribute": "data-popper-placement"
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hasTheme",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "offset",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "6"
+            },
+            {
+              "kind": "field",
+              "name": "interaction",
+              "type": {
+                "text": "TriggerInteractions"
+              },
+              "privacy": "public",
+              "default": "'hover'"
+            },
+            {
+              "kind": "field",
+              "name": "positionAnimationFrame",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "timeout",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_modalRoot",
+              "type": {
+                "text": "ActiveOverlay | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "hasModalRoot",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "method",
+              "name": "feature",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "obscure",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "ActiveOverlay | undefined"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "nextOverlayInteraction",
+                  "type": {
+                    "text": "TriggerInteractions"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "updateOverlayPopperPlacement",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "open",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "openDetail",
+                  "type": {
+                    "text": "OverlayOpenDetail"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "extractDetail",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "detail",
+                  "type": {
+                    "text": "OverlayOpenDetail"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "dispose",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "stealOverlayContent",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "element",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "willNotifyClosed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "method",
+              "name": "returnOverlayContent",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "updateOverlayPosition",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hide",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "animated",
+                  "default": "true"
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "schedulePositionUpdate",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onSlotChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "handleInlineTriggerKeydown",
+              "privacy": "public"
+            },
+            {
+              "kind": "method",
+              "name": "applyContentAnimation",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Promise<boolean>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "animation",
+                  "type": {
+                    "text": "ContentAnimation"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "content",
+                  "type": {
+                    "text": "TemplateResult"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "create",
+              "privacy": "public",
+              "static": true,
+              "return": {
+                "type": {
+                  "text": "ActiveOverlay"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "details",
+                  "type": {
+                    "text": "OverlayOpenDetail"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "stealOverlayContentPromise",
+              "privacy": "private",
+              "default": "new Promise(\n            (res) => (this.stealOverlayContentResolver = res)\n        )"
+            },
+            {
+              "kind": "field",
+              "name": "stealOverlayContentResolver",
+              "type": {
+                "text": "() => void"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "getUpdateComplete",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "Promise<boolean>"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "_state",
+              "fieldName": "_state"
+            },
+            {
+              "name": "animating",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "animating"
+            },
+            {
+              "name": "placement",
+              "type": {
+                "text": "Placement | undefined"
+              },
+              "fieldName": "placement"
+            },
+            {
+              "name": "data-popper-placement",
+              "type": {
+                "text": "Placement | undefined"
+              },
+              "fieldName": "dataPopperPlacement"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "active-overlay",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ActiveOverlay",
+          "declaration": {
+            "name": "ActiveOverlay",
+            "module": "packages/overlay/src/ActiveOverlay.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/OverlayTrigger.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "LONGPRESS_INSTRUCTIONS",
+          "type": {
+            "text": "object"
+          },
+          "default": "{\n    touch: 'Double tap and long press for additional options',\n    keyboard: 'Press Space or Alt+Down Arrow for additional options',\n    mouse: 'Click and hold for additional options',\n}"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "OverlayTrigger",
+          "slots": [
+            {
+              "description": "The content that will trigger the various overlays",
+              "name": "trigger"
+            },
+            {
+              "description": "The content that will be displayed on hover",
+              "name": "hover-content"
+            },
+            {
+              "description": "The content that will be displayed on click",
+              "name": "click-content"
+            },
+            {
+              "description": "The content that will be displayed on click",
+              "name": "longpress-content"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "closeClickOverlay",
+              "type": {
+                "text": "Promise<() => void> | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "closeLongpressOverlay",
+              "type": {
+                "text": "Promise<() => void> | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "closeHoverOverlay",
+              "type": {
+                "text": "Promise<() => void> | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "placement",
+              "type": {
+                "text": "\"auto\" | \"auto-start\" | \"auto-end\" | \"top\" | \"bottom\" | \"right\" | \"left\" | \"top-start\" | \"top-end\" | \"bottom-start\" | \"bottom-end\" | \"right-start\" | \"right-end\" | \"left-start\" | \"left-end\" | \"none\""
+              },
+              "privacy": "public",
+              "default": "'bottom'",
+              "attribute": "placement",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "Extract<TriggerInteractions, 'inline' | 'modal' | 'replace'> | undefined"
+              },
+              "privacy": "public",
+              "attribute": "type"
+            },
+            {
+              "kind": "field",
+              "name": "offset",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "6",
+              "attribute": "offset",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "OverlayContentTypes | undefined"
+              },
+              "privacy": "public",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "hasLongpressContent",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "longpressDescriptor",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "clickContent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "longpressContent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "hoverContent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "targetContent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_longpressId",
+              "privacy": "private",
+              "default": "`longpress-describedby-descriptor`"
+            },
+            {
+              "kind": "method",
+              "name": "handleClose",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "optional": true,
+                  "type": {
+                    "text": "CustomEvent<OverlayOpenCloseDetail>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "manageLongpressDescriptor",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "closeAllOverlays",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageOpen",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "openOverlay",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<() => void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "target",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                },
+                {
+                  "name": "interaction",
+                  "type": {
+                    "text": "TriggerInteractions"
+                  }
+                },
+                {
+                  "name": "content",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "text": "OverlayOptions"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "openOverlay",
+              "privacy": "public",
+              "static": true
+            },
+            {
+              "kind": "field",
+              "name": "overlayOptions",
+              "type": {
+                "text": "OverlayOptions"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "onTrigger",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "CustomEvent<LongpressEvent>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "prepareToFocusOverlayContent",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "overlayContent",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onTriggerClick",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_longpressEvent",
+              "type": {
+                "text": "CustomEvent<LongpressEvent> | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "onTriggerLongpress",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "abortOverlay",
+              "type": {
+                "text": "(cancelled: boolean) => void"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "onTriggerMouseEnter",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onClickSlotChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & { target: HTMLSlotElement }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onLongpressSlotChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & { target: HTMLSlotElement }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onHoverSlotChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & { target: HTMLSlotElement }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onTargetSlotChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & { target: HTMLSlotElement }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "extractSlotContentFromEvent",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "HTMLElement | undefined"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "openStatePromise",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "openStateResolver",
+              "type": {
+                "text": "() => void"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "getUpdateComplete",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "Promise<boolean>"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "events": [
+            {
+              "description": "Announces that the overlay has been opened",
+              "name": "sp-opened"
+            },
+            {
+              "description": "Announces that the overlay has been closed",
+              "name": "sp-closed"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "placement",
+              "type": {
+                "text": "\"auto\" | \"auto-start\" | \"auto-end\" | \"top\" | \"bottom\" | \"right\" | \"left\" | \"top-start\" | \"top-end\" | \"bottom-start\" | \"bottom-end\" | \"right-start\" | \"right-end\" | \"left-start\" | \"left-end\" | \"none\""
+              },
+              "default": "'bottom'",
+              "fieldName": "placement",
+              "attribute": "placement"
+            },
+            {
+              "name": "type",
+              "type": {
+                "text": "Extract<TriggerInteractions, 'inline' | 'modal' | 'replace'> | undefined"
+              },
+              "fieldName": "type"
+            },
+            {
+              "name": "offset",
+              "type": {
+                "text": "number"
+              },
+              "default": "6",
+              "fieldName": "offset"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "OverlayContentTypes | undefined"
+              },
+              "fieldName": "open"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "overlay-trigger",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LONGPRESS_INSTRUCTIONS",
+          "declaration": {
+            "name": "LONGPRESS_INSTRUCTIONS",
+            "module": "packages/overlay/src/OverlayTrigger.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "OverlayTrigger",
+          "declaration": {
+            "name": "OverlayTrigger",
+            "module": "packages/overlay/src/OverlayTrigger.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/VirtualTrigger.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "VirtualTrigger",
+          "members": [
+            {
+              "kind": "field",
+              "name": "x",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "x"
+            },
+            {
+              "kind": "field",
+              "name": "y",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "y"
+            },
+            {
+              "kind": "method",
+              "name": "updateBoundingClientRect",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "x",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "y",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "getBoundingClientRect",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "DOMRect"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VirtualTrigger",
+          "declaration": {
+            "name": "VirtualTrigger",
+            "module": "packages/overlay/src/VirtualTrigger.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/active-overlay.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n@keyframes sp-overlay-fade-in{0%{opacity:0;transform:var(--sp-overlay-from)}to{opacity:1;transform:translate(0)}}@keyframes sp-overlay-fade-out{0%{opacity:1;transform:translate(0)}to{opacity:0;transform:var(--sp-overlay-from)}}:host{display:inline-block;left:0;pointer-events:none;position:absolute;top:0;z-index:1000}:host(:focus){outline:none}#contents,sp-theme{height:100%}#contents{animation-duration:var(--spectrum-global-animation-duration-200,.16s);animation-timing-function:var(\n--spectrum-global-animation-ease-out,ease-out\n);display:inline-block;opacity:1;pointer-events:none;visibility:visible}:host([data-popper-placement*=top]) #contents{--sp-overlay-from:translateY(var(--spectrum-global-dimension-size-75))}:host([data-popper-placement*=right]) #contents{--sp-overlay-from:translateX(calc(var(--spectrum-global-dimension-size-75)*-1))}:host([data-popper-placement*=bottom]) #contents{--sp-overlay-from:translateY(calc(var(--spectrum-global-dimension-size-75)*-1))}:host([data-popper-placement*=left]) #contents{--sp-overlay-from:translateX(var(--spectrum-global-dimension-size-75))}:host([animating]) ::slotted(*){pointer-events:none}:host(:not([animating])) ::slotted(*){pointer-events:auto}#contents ::slotted(*){position:relative}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/overlay/src/active-overlay.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/apply-max-size.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "applyMaxSize",
+          "type": {
+            "text": "Modifier<'applyMaxSize', Record<string, unknown>>"
+          },
+          "default": "{\n    name: 'applyMaxSize',\n    enabled: true,\n    phase: 'beforeWrite',\n    requires: ['maxSize'],\n    fn({ state }: ModifierArguments<Record<string, unknown>>): void {\n        const { height: maxHeight } = state.modifiersData.maxSize;\n        if (!appliedSizeDefaults.has(state.elements.popper)) {\n            appliedSizeDefaults.set(\n                state.elements.popper,\n                state.rects.popper.height\n            );\n        }\n        const actualHeight = appliedSizeDefaults.get(state.elements.popper);\n        const constrainHeight = maxHeight < actualHeight;\n        const appliedHeight = constrainHeight ? `${maxHeight}px` : '';\n        state.styles.popper.maxHeight = appliedHeight;\n        state.styles.popper.height = appliedHeight;\n    },\n}"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "applyMaxSize",
+          "declaration": {
+            "name": "applyMaxSize",
+            "module": "packages/overlay/src/apply-max-size.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./overlay.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./OverlayTrigger.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./overlay-types.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ActiveOverlay.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./loader.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./VirtualTrigger.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/loader.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "openOverlay",
+          "return": {
+            "type": {
+              "text": "Promise<() => void>"
+            }
+          },
+          "parameters": [
+            {
+              "name": "target",
+              "type": {
+                "text": "HTMLElement"
+              }
+            },
+            {
+              "name": "interaction",
+              "type": {
+                "text": "TriggerInteractions"
+              }
+            },
+            {
+              "name": "content",
+              "type": {
+                "text": "HTMLElement"
+              }
+            },
+            {
+              "name": "options",
+              "type": {
+                "text": "OverlayOptions"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "openOverlay",
+          "declaration": {
+            "name": "openOverlay",
+            "module": "packages/overlay/src/loader.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/overlay-stack.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "OverlayStack",
+          "members": [
+            {
+              "kind": "field",
+              "name": "overlays",
+              "type": {
+                "text": "ActiveOverlay[]"
+              },
+              "privacy": "public",
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "preventMouseRootClose",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "root",
+              "type": {
+                "text": "HTMLElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handlingResize",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "overlayTimer",
+              "privacy": "private",
+              "default": "new OverlayTimer()"
+            },
+            {
+              "kind": "field",
+              "name": "canTabTrap",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "true"
+            },
+            {
+              "kind": "field",
+              "name": "trappingInited",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "tabTrapper",
+              "type": {
+                "text": "HTMLElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "overlayHolder",
+              "type": {
+                "text": "HTMLElement"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_eventsAreBound",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "method",
+              "name": "initTabTrapping",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_bodyMarginsApplied",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "method",
+              "name": "applyBodyMargins",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "startTabTrapping",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "stopTabTrapping",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "forwardContextmenuEvent",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "document",
+              "type": {
+                "text": "Document"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "topOverlay",
+              "type": {
+                "text": "ActiveOverlay | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "findOverlayForContent",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "ActiveOverlay | undefined"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "overlayContent",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "addEventListeners",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "isClickOverlayActiveForTrigger",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "trigger",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "openOverlay",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Promise<boolean>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "details",
+                  "type": {
+                    "text": "OverlayOpenDetail"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "addOverlayEventListeners",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "activeOverlay",
+                  "type": {
+                    "text": "ActiveOverlay"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "addReplaceOverlayEventListeners",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "activeOverlay",
+                  "type": {
+                    "text": "ActiveOverlay"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "addInlineOverlayEventListeners",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "activeOverlay",
+                  "type": {
+                    "text": "ActiveOverlay"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "closeOverlay",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "content",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "handleMouseCapture",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "closeAllHoverOverlays",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageFocusAfterCloseWhenOverlaysRemain",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageFocusAfterCloseWhenLastOverlay",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "overlay",
+                  "type": {
+                    "text": "ActiveOverlay"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "hideAndCloseOverlay",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "overlay",
+                  "optional": true,
+                  "type": {
+                    "text": "ActiveOverlay"
+                  }
+                },
+                {
+                  "name": "animated",
+                  "optional": true,
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "closeTopOverlay",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_doesNotCloseOnFirstClick",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "description": "A \"longpress\" occurs before the \"click\" that creates it has occured.\nIn that way the first click will still be part of the \"longpress\" and\nnot part of closing the overlay."
+            },
+            {
+              "kind": "field",
+              "name": "handleMouse",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleKeyUp",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleResize",
+              "privacy": "private"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OverlayStack",
+          "declaration": {
+            "name": "OverlayStack",
+            "module": "packages/overlay/src/overlay-stack.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/overlay-timer.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A timer to help with implementation of warnup/cooldown behavior as described here:\nhttps://spectrum.adobe.com/page/tooltip/#Immediate-or-delayed-appearance",
+          "name": "OverlayTimer",
+          "members": [
+            {
+              "kind": "field",
+              "name": "warmUpDelay",
+              "privacy": "private",
+              "default": "1000",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "coolDownDelay",
+              "privacy": "private",
+              "default": "1000",
+              "type": {
+                "text": "number"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isWarm",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "cooldownTimeout",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "component",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "timeout",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "promise",
+              "type": {
+                "text": "Promise<boolean> | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "resolve",
+              "type": {
+                "text": "(cancelled: boolean) => void | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "openTimer",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "Promise<boolean>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "component",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "close",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "component",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "resetCooldownTimer",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "cancelCooldownTimer",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OverlayTimer",
+          "declaration": {
+            "name": "OverlayTimer",
+            "module": "packages/overlay/src/overlay-timer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/overlay-trigger.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([disabled]) ::slotted([slot=trigger]){pointer-events:none}#overlay-content{display:none}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/overlay/src/overlay-trigger.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/overlay-types.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/overlay.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "This class allows access to the overlay system which allows a client to\nposition an element in the overlay positioned relative to another node.",
+          "name": "Overlay",
+          "members": [
+            {
+              "kind": "field",
+              "name": "overlayStack",
+              "privacy": "private",
+              "static": true,
+              "default": "new OverlayStack()"
+            },
+            {
+              "kind": "field",
+              "name": "isOpen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "overlayElement",
+              "type": {
+                "text": "HTMLElement"
+              },
+              "privacy": "private",
+              "default": "overlayElement"
+            },
+            {
+              "kind": "field",
+              "name": "owner",
+              "type": {
+                "text": "HTMLElement"
+              },
+              "privacy": "private",
+              "default": "owner"
+            },
+            {
+              "kind": "field",
+              "name": "interaction",
+              "type": {
+                "text": "TriggerInteractions"
+              },
+              "privacy": "private",
+              "default": "interaction"
+            },
+            {
+              "kind": "method",
+              "name": "open",
+              "privacy": "public",
+              "static": true,
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "owner",
+                  "type": {
+                    "text": "HTMLElement"
+                  },
+                  "description": "the parent element we will use to position the overlay element"
+                },
+                {
+                  "name": "interaction",
+                  "type": {
+                    "text": "TriggerInteractions"
+                  },
+                  "description": "the type of interaction that caused this overlay to be shown"
+                },
+                {
+                  "name": "overlayElement",
+                  "type": {
+                    "text": "HTMLElement"
+                  },
+                  "description": "the item to display as an overlay"
+                },
+                {
+                  "name": "options",
+                  "type": {
+                    "text": "OverlayOptions"
+                  },
+                  "description": "display parameters"
+                },
+                {
+                  "description": "if true delay opening of the overlay based on the global warmup/cooldown timer",
+                  "name": "options.delayed"
+                },
+                {
+                  "description": "distance to offset the overlay",
+                  "name": "options.offset"
+                },
+                {
+                  "description": "side on which to position the overlay",
+                  "name": "options.placement"
+                }
+              ],
+              "description": "Open an overlay"
+            },
+            {
+              "kind": "method",
+              "name": "open",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "{\n        abortPromise,\n        delayed,\n        offset = 0,\n        placement = 'top',\n        receivesFocus,\n        notImmediatelyClosable,\n        virtualTrigger,\n    }",
+                  "type": {
+                    "text": "OverlayOptions"
+                  }
+                },
+                {
+                  "description": "display parameters",
+                  "name": "options"
+                },
+                {
+                  "description": "delay before opening the overlay",
+                  "name": "options.delayed"
+                },
+                {
+                  "description": "distance to offset the overlay",
+                  "name": "options.offset"
+                },
+                {
+                  "description": "side on which to position the overlay",
+                  "name": "options.placement"
+                }
+              ],
+              "description": "Open an overlay"
+            },
+            {
+              "kind": "method",
+              "name": "close",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Close the overlay if it is open"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Overlay",
+          "declaration": {
+            "name": "Overlay",
+            "module": "packages/overlay/src/overlay.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/overlay/src/popper.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "createPopper"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "createPopper",
+          "declaration": {
+            "name": "createPopper",
+            "module": "packages/overlay/src/popper.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "Instance",
+          "declaration": {
+            "name": "Instance",
+            "module": "packages/overlay/src/popper.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "Placement",
+          "declaration": {
+            "name": "Placement",
+            "module": "packages/overlay/src/popper.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "VirtualElement",
+          "declaration": {
+            "name": "VirtualElement",
+            "module": "packages/overlay/src/popper.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "maxSize",
+          "declaration": {
+            "name": "maxSize",
+            "module": "packages/overlay/src/popper.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "applyMaxSize",
+          "declaration": {
+            "name": "applyMaxSize",
+            "module": "packages/overlay/src/popper.ts"
           }
         }
       ]
