@@ -4897,9 +4897,9 @@
   integrity sha512-9dYBMhCEkjy+p75XJIfCA2/zU4JAqsJrL7fkYIDXakS6/BzeVtIvAW/6JaIHtLIA9lrj0Sn4m+ZjceKnZNIv1w==
 
 "@spectrum-css/taggroup@^3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-3.1.4.tgz#077cfb78451e7d495eec74f77d10b07dfde98d6e"
-  integrity sha512-AcbHviT33Cjj6A9WKt9qvebPwl/+NeMkD6n7pDPwpo081hAakevGXtcQX1BkErMk/x18LIQ10+iaq+g0V0aT6g==
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-3.3.0.tgz#99b0bcecf43995849b080fe3a880cd569d267549"
+  integrity sha512-hBNGdXnJHdGtCZoGGESmSGJcjAtpasQ4zba3O0/vEDrIIPsirF9qSo0oNBX7f5ruwiOVPRitTwCI6tqOY0S+cw==
 
 "@spectrum-css/textfield@^3.1.1":
   version "3.1.1"
