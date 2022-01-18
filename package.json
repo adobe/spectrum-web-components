@@ -90,7 +90,7 @@
     },
     "dependencies": {},
     "devDependencies": {
-        "@commitlint/cli": "^15.0.0",
+        "@commitlint/cli": "^16.0.2",
         "@commitlint/config-conventional": "^15.0.0",
         "@commitlint/config-lerna-scopes": "^15.0.0",
         "@custom-elements-manifest/analyzer": "^0.5.7",
