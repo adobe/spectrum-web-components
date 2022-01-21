@@ -131,6 +131,35 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
         return this.inputElement;
     }
 
+    /**
+     * Sets the stard and end positions of the current selection.
+     *
+     * @param selectionStart The 0-based index of the first selected character. An index greater than the length of the
+     *  element's value is treated as pointing to the end of the value.
+     * @param selectionEnd The 0-based index of the character after the last selected character. An index greater than
+     *  the length of the element's value is treated as pointing to the end of the value.
+     * @param [selectionDirection="none"] A string indicating the direction in which the selection is considered to
+     *  have been performed.
+     */
+    public setSelectionRange(
+        selectionStart: number,
+        selectionEnd: number,
+        selectionDirection: 'forward' | 'backward' | 'none' = 'none'
+    ): void {
+        this.inputElement.setSelectionRange(
+            selectionStart,
+            selectionEnd,
+            selectionDirection
+        );
+    }
+
+    /**
+     * Selects all the text.
+     */
+    public select(): void {
+        this.inputElement.select();
+    }
+
     protected onInput(): void {
         if (this.allowedKeys && this.inputElement.value) {
             const regExp = new RegExp(`^[${this.allowedKeys}]*$`, 'u');
@@ -184,10 +213,6 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
 
     protected get displayValue(): string {
         return this.value.toString();
-    }
-
-    public select(): void {
-        this.inputElement.select();
     }
 
     private get renderMultiline(): TemplateResult {
