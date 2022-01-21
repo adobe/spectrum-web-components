@@ -15166,835 +15166,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/color-wheel/src/ColorWheel.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ColorWheel",
-          "slots": [
-            {
-              "description": "a custom gradient visually outlining the available color values",
-              "name": "gradient"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Disable this control. It will not receive focus or events",
-              "attribute": "disabled",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "focused",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "focused",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "handle",
-              "type": {
-                "text": "ColorHandle"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'hue'",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "step",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "1",
-              "attribute": "step"
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "attribute": "value"
-            },
-            {
-              "kind": "field",
-              "name": "_value",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "0"
-            },
-            {
-              "kind": "field",
-              "name": "color",
-              "type": {
-                "text": "ColorValue"
-              },
-              "privacy": "public",
-              "attribute": "color"
-            },
-            {
-              "kind": "field",
-              "name": "_color",
-              "privacy": "private",
-              "default": "new TinyColor({ h: 0, s: 1, v: 1 })"
-            },
-            {
-              "kind": "field",
-              "name": "_previousColor",
-              "privacy": "private",
-              "default": "new TinyColor({ h: 0, s: 1, v: 1 })"
-            },
-            {
-              "kind": "field",
-              "name": "_saturation",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_format",
-              "type": {
-                "text": "{ format: string; isString: boolean }"
-              },
-              "privacy": "private",
-              "default": "{\n        format: '',\n        isString: false,\n    }"
-            },
-            {
-              "kind": "field",
-              "name": "altered",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_altered",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "0"
-            },
-            {
-              "kind": "field",
-              "name": "input",
-              "type": {
-                "text": "HTMLInputElement"
-              },
-              "privacy": "public"
-            },
-            {
-              "kind": "field",
-              "name": "focusElement",
-              "type": {
-                "text": "DisableableElement"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleKeydown",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "KeyboardEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleInput",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event & { target: HTMLInputElement }"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event & { target: HTMLInputElement }"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "focus",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "focusOptions",
-                  "default": "{}",
-                  "type": {
-                    "text": "FocusOptions"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "forwardFocus",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleFocusin",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleFocusout",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "boundingClientRect",
-              "type": {
-                "text": "DOMRect"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_pointerDown",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false"
-            },
-            {
-              "kind": "method",
-              "name": "handlePointerdown",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handlePointermove",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handlePointerup",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "calculateHandlePosition",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": ""
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                },
-                {
-                  "description": ": PointerEvent on slider",
-                  "name": ""
-                }
-              ],
-              "description": "Returns the value under the cursor"
-            },
-            {
-              "kind": "method",
-              "name": "handleGradientPointerdown",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "PointerEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "observer",
-              "type": {
-                "text": "WithSWCResizeObserver['ResizeObserver'] | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "autofocus",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "description": "When this control is rendered, focus it automatically",
-              "attribute": "autofocus",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "tabIndex",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
-              "attribute": "tabIndex",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_tabIndex",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "0",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "onPointerdownManagementOfTabIndex",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageFocusElementTabindex",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "tabIndex",
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "manipulatingTabindex",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "blur",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "click",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageAutoFocus",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleDisabledChanged",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "disabled",
-                  "type": {
-                    "text": "boolean"
-                  }
-                },
-                {
-                  "name": "oldDisabled",
-                  "type": {
-                    "text": "boolean"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "[$endPolyfillCoordination]",
-              "type": {
-                "text": "EndPolyfillCoordinationCallback | null"
-              },
-              "privacy": "private",
-              "default": "null",
-              "inheritedFrom": {
-                "name": "FocusVisiblePolyfillMixin",
-                "module": "packages/shared/src/focus-visible.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "input",
-              "type": {
-                "text": "Event"
-              },
-              "description": "The value of the Color Wheel has changed."
-            },
-            {
-              "name": "change",
-              "type": {
-                "text": "Event"
-              },
-              "description": "An alteration to the value of the Color Wheel has been committed by the user."
-            },
-            {
-              "name": "keydown",
-              "type": {
-                "text": "KeyboardEvent"
-              },
-              "description": "Trick :focus-visible polyfill into thinking keyboard based focus",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Disable this control. It will not receive focus or events",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "name": "focused",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "focused"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'hue'",
-              "fieldName": "label"
-            },
-            {
-              "name": "step",
-              "type": {
-                "text": "number"
-              },
-              "default": "1",
-              "fieldName": "step"
-            },
-            {
-              "name": "value",
-              "type": {
-                "text": "number"
-              },
-              "fieldName": "value"
-            },
-            {
-              "name": "color",
-              "type": {
-                "text": "ColorValue"
-              },
-              "fieldName": "color"
-            },
-            {
-              "name": "autofocus",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "When this control is rendered, focus it automatically",
-              "fieldName": "autofocus",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "name": "tabIndex",
-              "type": {
-                "text": "number"
-              },
-              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
-              "fieldName": "tabIndex",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "Focusable",
-            "package": "@spectrum-web-components/shared/src/focusable.js"
-          },
-          "tagName": "sp-color-wheel",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ColorWheel",
-          "declaration": {
-            "name": "ColorWheel",
-            "module": "packages/color-wheel/src/ColorWheel.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/color-wheel/src/color-wheel.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-colorwheel-border-radius:100%;--spectrum-colorwheel-width:calc(var(--spectrum-global-dimension-size-125)*16);--spectrum-colorwheel-height:var(\n--spectrum-colorwheel-width,var(--spectrum-global-dimension-size-2400)\n)}:host([focused]) .handle{height:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);width:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2)}.slider{height:100%;left:0;margin:0;opacity:0;pointer-events:none;position:absolute;top:0;width:100%;z-index:0}:host{border-radius:var(--spectrum-colorwheel-border-radius);cursor:default;display:block;height:var(\n--spectrum-colorwheel-height,var(--spectrum-global-dimension-size-2400)\n);position:relative;-webkit-user-select:none;user-select:none;width:var(\n--spectrum-colorwheel-width,var(--spectrum-global-dimension-size-2400)\n)}:host([focused]){z-index:2}:host([disabled]){pointer-events:none}:host([dragged]){z-index:2}::slotted([slot=gradient]){border-radius:100%;border-style:solid;border-width:var(\n--spectrum-colorwheel-border-size,var(--spectrum-alias-border-size-thin)\n);box-sizing:border-box;height:var(\n--spectrum-colorwheel-height,var(--spectrum-global-dimension-size-2400)\n);position:relative;width:var(\n--spectrum-colorwheel-width,var(--spectrum-global-dimension-size-2400)\n);z-index:0}.wheel{position:relative;z-index:1}.innerCircle,.outerCircle{fill:transparent;stroke-width:var(\n--spectrum-colorwheel-border-size,var(--spectrum-alias-border-size-thin)\n)}.handle{left:50%;top:50%}:host{--spectrum-colorwheel-border-color:var(\n--spectrum-colorarea-border-color,var(--spectrum-alias-border-color-translucent)\n)}:host([disabled]) .innerCircle,:host([disabled]) .outerCircle{stroke:var(\n--spectrum-colorwheel-border-color-disabled,var(--spectrum-alias-track-color-disabled)\n)}:host([disabled]) .outerCircle{fill:var(\n--spectrum-colorwheel-fill-color-disabled,var(--spectrum-alias-track-color-disabled)\n)}:host([disabled]) .segment{display:none}::slotted([slot=gradient]){border-color:var(\n--spectrum-colorwheel-border-color,var(--spectrum-alias-border-color-translucent)\n)}.innerCircle,.outerCircle{stroke:var(\n--spectrum-colorwheel-border-color,var(--spectrum-alias-border-color-translucent)\n)}@media (forced-colors:active){:host{--spectrum-colorwheel-border-color-disabled:GrayText;--spectrum-colorwheel-fill-color-disabled:Canvas}:host{forced-color-adjust:none}}:host{touch-action:none}:host(:focus){outline:none}.wheel{background:conic-gradient(from 90deg,red,#ff8000,#ff0,#80ff00,#0f0,#00ff80,#0ff,#0080ff,#00f,#8000ff,#f0f,#ff0080,red);height:100%;width:100%}.wheel:after,.wheel:before{border:var(\n--spectrum-colorwheel-border-size,var(--spectrum-alias-border-size-thin)\n) solid var(--spectrum-colorwheel-border-color);border-radius:50%;content:\"\";position:absolute}.wheel:after{inset:0}.wheel:before{inset:24px}:host([disabled]) .wheel:after,:host([disabled]) .wheel:before{border-color:var(\n--spectrum-colorwheel-border-color-disabled,var(--spectrum-global-color-gray-300)\n)}:host([disabled]) .wheel{background:var(\n--spectrum-colorwheel-fill-color-disabled,var(--spectrum-global-color-gray-300)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/color-wheel/src/color-wheel.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/color-wheel/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ColorWheel.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/color-wheel/src/spectrum-color-wheel.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-colorwheel-border-radius:100%;--spectrum-colorwheel-width:calc(var(--spectrum-global-dimension-size-125)*16);--spectrum-colorwheel-height:var(\n--spectrum-colorwheel-width,var(--spectrum-global-dimension-size-2400)\n)}:host([focused]) .handle{height:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);width:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2)}.slider{height:100%;left:0;margin:0;opacity:0;pointer-events:none;position:absolute;top:0;width:100%;z-index:0}:host{border-radius:var(--spectrum-colorwheel-border-radius);cursor:default;display:block;height:var(\n--spectrum-colorwheel-height,var(--spectrum-global-dimension-size-2400)\n);position:relative;-webkit-user-select:none;user-select:none;width:var(\n--spectrum-colorwheel-width,var(--spectrum-global-dimension-size-2400)\n)}:host([focused]){z-index:2}:host([disabled]){pointer-events:none}:host([dragged]){z-index:2}::slotted([slot=gradient]){border-radius:100%;border-style:solid;border-width:var(\n--spectrum-colorwheel-border-size,var(--spectrum-alias-border-size-thin)\n);box-sizing:border-box;height:var(\n--spectrum-colorwheel-height,var(--spectrum-global-dimension-size-2400)\n);position:relative;width:var(\n--spectrum-colorwheel-width,var(--spectrum-global-dimension-size-2400)\n);z-index:0}.wheel{position:relative;z-index:1}.innerCircle,.outerCircle{fill:transparent;stroke-width:var(\n--spectrum-colorwheel-border-size,var(--spectrum-alias-border-size-thin)\n)}.handle{left:50%;top:50%}:host{--spectrum-colorwheel-border-color:var(\n--spectrum-colorarea-border-color,var(--spectrum-alias-border-color-translucent)\n)}:host([disabled]) .innerCircle,:host([disabled]) .outerCircle{stroke:var(\n--spectrum-colorwheel-border-color-disabled,var(--spectrum-alias-track-color-disabled)\n)}:host([disabled]) .outerCircle{fill:var(\n--spectrum-colorwheel-fill-color-disabled,var(--spectrum-alias-track-color-disabled)\n)}:host([disabled]) .segment{display:none}::slotted([slot=gradient]){border-color:var(\n--spectrum-colorwheel-border-color,var(--spectrum-alias-border-color-translucent)\n)}.innerCircle,.outerCircle{stroke:var(\n--spectrum-colorwheel-border-color,var(--spectrum-alias-border-color-translucent)\n)}@media (forced-colors:active){:host{--spectrum-colorwheel-border-color-disabled:GrayText;--spectrum-colorwheel-fill-color-disabled:Canvas}:host{forced-color-adjust:none}}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/color-wheel/src/spectrum-color-wheel.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/color-wheel/src/types.ts",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/dialog/src/Dialog.ts",
       "declarations": [
         {
@@ -16962,6 +16133,835 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/color-wheel/src/ColorWheel.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ColorWheel",
+          "slots": [
+            {
+              "description": "a custom gradient visually outlining the available color values",
+              "name": "gradient"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Disable this control. It will not receive focus or events",
+              "attribute": "disabled",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "focused",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "focused",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "handle",
+              "type": {
+                "text": "ColorHandle"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'hue'",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "step",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "1",
+              "attribute": "step"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "_value",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "type": {
+                "text": "ColorValue"
+              },
+              "privacy": "public",
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "_color",
+              "privacy": "private",
+              "default": "new TinyColor({ h: 0, s: 1, v: 1 })"
+            },
+            {
+              "kind": "field",
+              "name": "_previousColor",
+              "privacy": "private",
+              "default": "new TinyColor({ h: 0, s: 1, v: 1 })"
+            },
+            {
+              "kind": "field",
+              "name": "_saturation",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_format",
+              "type": {
+                "text": "{ format: string; isString: boolean }"
+              },
+              "privacy": "private",
+              "default": "{\n        format: '',\n        isString: false,\n    }"
+            },
+            {
+              "kind": "field",
+              "name": "altered",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_altered",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "input",
+              "type": {
+                "text": "HTMLInputElement"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "focusElement",
+              "type": {
+                "text": "DisableableElement"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleKeydown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleInput",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & { target: HTMLInputElement }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event & { target: HTMLInputElement }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "focusOptions",
+                  "default": "{}",
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "forwardFocus",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleFocusin",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleFocusout",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "boundingClientRect",
+              "type": {
+                "text": "DOMRect"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_pointerDown",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "method",
+              "name": "handlePointerdown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handlePointermove",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handlePointerup",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "calculateHandlePosition",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                },
+                {
+                  "description": ": PointerEvent on slider",
+                  "name": ""
+                }
+              ],
+              "description": "Returns the value under the cursor"
+            },
+            {
+              "kind": "method",
+              "name": "handleGradientPointerdown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "PointerEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "observer",
+              "type": {
+                "text": "WithSWCResizeObserver['ResizeObserver'] | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "autofocus",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "description": "When this control is rendered, focus it automatically",
+              "attribute": "autofocus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
+              "attribute": "tabIndex",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onPointerdownManagementOfTabIndex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageFocusElementTabindex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "tabIndex",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "manipulatingTabindex",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "blur",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "click",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageAutoFocus",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleDisabledChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "disabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "oldDisabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "[$endPolyfillCoordination]",
+              "type": {
+                "text": "EndPolyfillCoordinationCallback | null"
+              },
+              "privacy": "private",
+              "default": "null",
+              "inheritedFrom": {
+                "name": "FocusVisiblePolyfillMixin",
+                "module": "packages/shared/src/focus-visible.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "input",
+              "type": {
+                "text": "Event"
+              },
+              "description": "The value of the Color Wheel has changed."
+            },
+            {
+              "name": "change",
+              "type": {
+                "text": "Event"
+              },
+              "description": "An alteration to the value of the Color Wheel has been committed by the user."
+            },
+            {
+              "name": "keydown",
+              "type": {
+                "text": "KeyboardEvent"
+              },
+              "description": "Trick :focus-visible polyfill into thinking keyboard based focus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disable this control. It will not receive focus or events",
+              "fieldName": "disabled",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "name": "focused",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "focused"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'hue'",
+              "fieldName": "label"
+            },
+            {
+              "name": "step",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "fieldName": "step"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "number"
+              },
+              "fieldName": "value"
+            },
+            {
+              "name": "color",
+              "type": {
+                "text": "ColorValue"
+              },
+              "fieldName": "color"
+            },
+            {
+              "name": "autofocus",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When this control is rendered, focus it automatically",
+              "fieldName": "autofocus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "name": "tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
+              "fieldName": "tabIndex",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "Focusable",
+            "package": "@spectrum-web-components/shared/src/focusable.js"
+          },
+          "tagName": "sp-color-wheel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ColorWheel",
+          "declaration": {
+            "name": "ColorWheel",
+            "module": "packages/color-wheel/src/ColorWheel.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/color-wheel/src/color-wheel.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-colorwheel-border-radius:100%;--spectrum-colorwheel-width:calc(var(--spectrum-global-dimension-size-125)*16);--spectrum-colorwheel-height:var(\n--spectrum-colorwheel-width,var(--spectrum-global-dimension-size-2400)\n)}:host([focused]) .handle{height:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);width:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2)}.slider{height:100%;left:0;margin:0;opacity:0;pointer-events:none;position:absolute;top:0;width:100%;z-index:0}:host{border-radius:var(--spectrum-colorwheel-border-radius);cursor:default;display:block;height:var(\n--spectrum-colorwheel-height,var(--spectrum-global-dimension-size-2400)\n);position:relative;-webkit-user-select:none;user-select:none;width:var(\n--spectrum-colorwheel-width,var(--spectrum-global-dimension-size-2400)\n)}:host([focused]){z-index:2}:host([disabled]){pointer-events:none}:host([dragged]){z-index:2}::slotted([slot=gradient]){border-radius:100%;border-style:solid;border-width:var(\n--spectrum-colorwheel-border-size,var(--spectrum-alias-border-size-thin)\n);box-sizing:border-box;height:var(\n--spectrum-colorwheel-height,var(--spectrum-global-dimension-size-2400)\n);position:relative;width:var(\n--spectrum-colorwheel-width,var(--spectrum-global-dimension-size-2400)\n);z-index:0}.wheel{position:relative;z-index:1}.innerCircle,.outerCircle{fill:transparent;stroke-width:var(\n--spectrum-colorwheel-border-size,var(--spectrum-alias-border-size-thin)\n)}.handle{left:50%;top:50%}:host{--spectrum-colorwheel-border-color:var(\n--spectrum-colorarea-border-color,var(--spectrum-alias-border-color-translucent)\n)}:host([disabled]) .innerCircle,:host([disabled]) .outerCircle{stroke:var(\n--spectrum-colorwheel-border-color-disabled,var(--spectrum-alias-track-color-disabled)\n)}:host([disabled]) .outerCircle{fill:var(\n--spectrum-colorwheel-fill-color-disabled,var(--spectrum-alias-track-color-disabled)\n)}:host([disabled]) .segment{display:none}::slotted([slot=gradient]){border-color:var(\n--spectrum-colorwheel-border-color,var(--spectrum-alias-border-color-translucent)\n)}.innerCircle,.outerCircle{stroke:var(\n--spectrum-colorwheel-border-color,var(--spectrum-alias-border-color-translucent)\n)}@media (forced-colors:active){:host{--spectrum-colorwheel-border-color-disabled:GrayText;--spectrum-colorwheel-fill-color-disabled:Canvas}:host{forced-color-adjust:none}}:host{touch-action:none}:host(:focus){outline:none}.wheel{background:conic-gradient(from 90deg,red,#ff8000,#ff0,#80ff00,#0f0,#00ff80,#0ff,#0080ff,#00f,#8000ff,#f0f,#ff0080,red);height:100%;width:100%}.wheel:after,.wheel:before{border:var(\n--spectrum-colorwheel-border-size,var(--spectrum-alias-border-size-thin)\n) solid var(--spectrum-colorwheel-border-color);border-radius:50%;content:\"\";position:absolute}.wheel:after{inset:0}.wheel:before{inset:24px}:host([disabled]) .wheel:after,:host([disabled]) .wheel:before{border-color:var(\n--spectrum-colorwheel-border-color-disabled,var(--spectrum-global-color-gray-300)\n)}:host([disabled]) .wheel{background:var(\n--spectrum-colorwheel-fill-color-disabled,var(--spectrum-global-color-gray-300)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/color-wheel/src/color-wheel.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/color-wheel/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ColorWheel.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/color-wheel/src/spectrum-color-wheel.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-colorwheel-border-radius:100%;--spectrum-colorwheel-width:calc(var(--spectrum-global-dimension-size-125)*16);--spectrum-colorwheel-height:var(\n--spectrum-colorwheel-width,var(--spectrum-global-dimension-size-2400)\n)}:host([focused]) .handle{height:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);width:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2)}.slider{height:100%;left:0;margin:0;opacity:0;pointer-events:none;position:absolute;top:0;width:100%;z-index:0}:host{border-radius:var(--spectrum-colorwheel-border-radius);cursor:default;display:block;height:var(\n--spectrum-colorwheel-height,var(--spectrum-global-dimension-size-2400)\n);position:relative;-webkit-user-select:none;user-select:none;width:var(\n--spectrum-colorwheel-width,var(--spectrum-global-dimension-size-2400)\n)}:host([focused]){z-index:2}:host([disabled]){pointer-events:none}:host([dragged]){z-index:2}::slotted([slot=gradient]){border-radius:100%;border-style:solid;border-width:var(\n--spectrum-colorwheel-border-size,var(--spectrum-alias-border-size-thin)\n);box-sizing:border-box;height:var(\n--spectrum-colorwheel-height,var(--spectrum-global-dimension-size-2400)\n);position:relative;width:var(\n--spectrum-colorwheel-width,var(--spectrum-global-dimension-size-2400)\n);z-index:0}.wheel{position:relative;z-index:1}.innerCircle,.outerCircle{fill:transparent;stroke-width:var(\n--spectrum-colorwheel-border-size,var(--spectrum-alias-border-size-thin)\n)}.handle{left:50%;top:50%}:host{--spectrum-colorwheel-border-color:var(\n--spectrum-colorarea-border-color,var(--spectrum-alias-border-color-translucent)\n)}:host([disabled]) .innerCircle,:host([disabled]) .outerCircle{stroke:var(\n--spectrum-colorwheel-border-color-disabled,var(--spectrum-alias-track-color-disabled)\n)}:host([disabled]) .outerCircle{fill:var(\n--spectrum-colorwheel-fill-color-disabled,var(--spectrum-alias-track-color-disabled)\n)}:host([disabled]) .segment{display:none}::slotted([slot=gradient]){border-color:var(\n--spectrum-colorwheel-border-color,var(--spectrum-alias-border-color-translucent)\n)}.innerCircle,.outerCircle{stroke:var(\n--spectrum-colorwheel-border-color,var(--spectrum-alias-border-color-translucent)\n)}@media (forced-colors:active){:host{--spectrum-colorwheel-border-color-disabled:GrayText;--spectrum-colorwheel-fill-color-disabled:Canvas}:host{forced-color-adjust:none}}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/color-wheel/src/spectrum-color-wheel.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/color-wheel/src/types.ts",
+      "declarations": [],
+      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -58221,64 +58221,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "projects/documentation/src/utils/templates.ts",
-      "declarations": [
-        {
-          "kind": "function",
-          "name": "toHtmlTemplateString",
-          "return": {
-            "type": {
-              "text": "TemplateResult"
-            }
-          },
-          "parameters": [
-            {
-              "name": "code",
-              "type": {
-                "text": "string"
-              }
-            }
-          ]
-        },
-        {
-          "kind": "function",
-          "name": "toCssTemplateString",
-          "return": {
-            "type": {
-              "text": "CSSResultGroup"
-            }
-          },
-          "parameters": [
-            {
-              "name": "code",
-              "type": {
-                "text": "string"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "toHtmlTemplateString",
-          "declaration": {
-            "name": "toHtmlTemplateString",
-            "module": "projects/documentation/src/utils/templates.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "toCssTemplateString",
-          "declaration": {
-            "name": "toCssTemplateString",
-            "module": "projects/documentation/src/utils/templates.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "projects/documentation/src/components/adobe-logo.ts",
       "declarations": [
         {
@@ -59208,6 +59150,64 @@
           "declaration": {
             "name": "SideNav",
             "module": "projects/documentation/src/components/side-nav.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/documentation/src/utils/templates.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "toHtmlTemplateString",
+          "return": {
+            "type": {
+              "text": "TemplateResult"
+            }
+          },
+          "parameters": [
+            {
+              "name": "code",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "toCssTemplateString",
+          "return": {
+            "type": {
+              "text": "CSSResultGroup"
+            }
+          },
+          "parameters": [
+            {
+              "name": "code",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "toHtmlTemplateString",
+          "declaration": {
+            "name": "toHtmlTemplateString",
+            "module": "projects/documentation/src/utils/templates.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "toCssTemplateString",
+          "declaration": {
+            "name": "toCssTemplateString",
+            "module": "projects/documentation/src/utils/templates.ts"
           }
         }
       ]
