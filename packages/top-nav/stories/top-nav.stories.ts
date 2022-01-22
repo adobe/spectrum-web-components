@@ -86,6 +86,46 @@ export const Selected = (): TemplateResult => {
     `;
 };
 
+class WrappedTopNav extends HTMLElement {
+    shadowRoot!: ShadowRoot;
+
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
+            <sp-top-nav>
+                <sp-top-nav-item href="#">Site Name</sp-top-nav-item>
+                <sp-top-nav-item href="#page-1" style="margin-inline-start: auto;">
+                    Page 1
+                </sp-top-nav-item>
+                <sp-top-nav-item href="#page-2">Page 2</sp-top-nav-item>
+                <sp-top-nav-item href="#page-3">Page 3</sp-top-nav-item>
+                <sp-top-nav-item href="#page-4" autofocus>
+                    Page with Really Long Name
+                </sp-top-nav-item>
+                <sp-action-menu label="Account" style="margin-inline-start: auto;">
+                    <sp-icon-settings slot="icon"></sp-icon-settings>
+                    <sp-menu-item>Account Settings</sp-menu-item>
+                    <sp-menu-item>My Profile</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Share</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Help</sp-menu-item>
+                    <sp-menu-item>Sign Out</sp-menu-item>
+                </sp-action-menu>
+            </sp-top-nav>
+        `;
+    }
+}
+
+customElements.define('wrapped-top-nav', WrappedTopNav);
+
+export const autofocus = (): TemplateResult => {
+    return html`
+        <wrapped-top-nav></wrapped-top-nav>
+    `;
+};
+
 // https://spectrum.adobe.com/page/application-frame/#Application-mode
 // https://spectrum.adobe.com/page/headers/#Anatomy
 
