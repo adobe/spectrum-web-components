@@ -39,10 +39,6 @@ describe('Menu', () => {
         );
 
         const anchor = el.querySelector('a') as HTMLAnchorElement;
-        await waitUntil(
-            () => !!window.applyFocusVisiblePolyfill,
-            'loaded polyfill'
-        );
         await elementUpdated(el);
         expect(document.activeElement === el, 'self not focused, 1').to.be
             .false;

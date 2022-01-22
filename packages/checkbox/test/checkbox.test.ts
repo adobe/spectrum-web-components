@@ -20,7 +20,6 @@ import {
     triggerBlurFor,
     waitUntil,
 } from '@open-wc/testing';
-import { waitForPredicate } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
@@ -70,9 +69,6 @@ describe('Checkbox', () => {
 
     it('loads', async () => {
         const el = testFixture.querySelector('sp-checkbox') as Checkbox;
-
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
-
         expect(el).to.not.equal(undefined);
         const textNode = labelNodeForCheckbox(el);
         const content = (textNode.textContent || '').trim();

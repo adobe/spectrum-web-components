@@ -12,11 +12,7 @@ governing permissions and limitations under the License.
 import '../sp-search.js';
 import { Search } from '../';
 import { elementUpdated, expect, html, litFixture } from '@open-wc/testing';
-import {
-    escapeEvent,
-    spaceEvent,
-    waitForPredicate,
-} from '../../../test/testing-helpers.js';
+import { escapeEvent, spaceEvent } from '../../../test/testing-helpers.js';
 import '@spectrum-web-components/shared/src/focus-visible.js';
 import { spy } from 'sinon';
 
@@ -40,8 +36,6 @@ describe('Search', () => {
         );
 
         await elementUpdated(el);
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
-
         expect(el.value).to.equal('Test');
 
         const root = el.shadowRoot ? el.shadowRoot : el;
@@ -60,8 +54,6 @@ describe('Search', () => {
         );
 
         await elementUpdated(el);
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
-
         expect(el.value).to.equal('Test');
 
         const root = el.shadowRoot ? el.shadowRoot : el;
@@ -94,8 +86,6 @@ describe('Search', () => {
         );
 
         await elementUpdated(el);
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
-
         expect(el.value).to.equal('Test');
 
         const root = el.shadowRoot ? el.shadowRoot : el;
@@ -134,8 +124,6 @@ describe('Search', () => {
         );
 
         await elementUpdated(el);
-        await waitForPredicate(() => !!window.applyFocusVisiblePolyfill);
-
         expect(el.value).to.equal('Test');
         el.focusElement.dispatchEvent(spaceEvent());
 

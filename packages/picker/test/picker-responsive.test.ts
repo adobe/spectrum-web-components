@@ -20,7 +20,6 @@ import {
     html,
     nextFrame,
     oneEvent,
-    waitUntil,
 } from '@open-wc/testing';
 import { setViewport } from '@web/test-runner-commands';
 
@@ -49,11 +48,6 @@ describe('Picker, responsive', () => {
                     </sp-picker>
                 </div>
             `
-        );
-
-        await waitUntil(
-            () => !!window.applyFocusVisiblePolyfill,
-            'polyfill loaded'
         );
 
         return test.querySelector('sp-picker') as Picker;

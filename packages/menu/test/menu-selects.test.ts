@@ -650,11 +650,16 @@ describe('Menu w/ groups [selects]', () => {
     it('manages focus', async () => {
         await elementUpdated(groupA);
         await elementUpdated(groupB);
-        options[0].focus();
-
-        await elementUpdated(el);
+        const input = document.createElement('input');
+        el.insertAdjacentElement('afterend', input);
+        input.focus();
+        expect(document.activeElement === input).to.be.true;
+        await sendKeys({ press: 'Shift+Tab' });
+        expect(document.activeElement === groupA).to.be.true;
         await sendKeys({ press: 'ArrowDown' });
         await sendKeys({ press: 'ArrowUp' });
+
+        await elementUpdated(el);
         for (const option of options) {
             const parentElement = option.parentElement as Menu;
             expect(document.activeElement === parentElement, 'parent focused')
