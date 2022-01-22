@@ -17,3 +17,24 @@ a {
 a:focus {
     outline: none;
 }
+
+:host(:focus-within) {
+    color: var(
+        --spectrum-tabs-m-text-color-key-focus,
+        var(--spectrum-alias-text-color-hover)
+    ); /* .spectrum-Tabs-item.focus-ring */
+}
+
+:host(:focus-within):before {
+    border-color: var(
+        --spectrum-tabs-m-focus-ring-color,
+        var(--spectrum-alias-border-color-key-focus)
+    ); /* .spectrum-Tabs-item.focus-ring:before */
+}
+
+:host(:focus-within) ::slotted([slot='icon']) {
+    color: var(
+        --spectrum-tabs-m-icon-color-key-focus,
+        var(--spectrum-alias-icon-color-key-focus)
+    ); /* .spectrum-Tabs-item.focus-ring .spectrum-Icon */
+}
