@@ -78,11 +78,6 @@ describe('Picker, sync', () => {
             `
         );
 
-        await waitUntil(
-            () => !!window.applyFocusVisiblePolyfill,
-            'polyfill loaded'
-        );
-
         return test.querySelector('sp-picker') as Picker;
     };
     describe('standard', () => {
@@ -641,13 +636,19 @@ describe('Picker, sync', () => {
         });
         it('refocuses on list when open', async () => {
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
+            const input = document.createElement('input');
+            el.insertAdjacentElement('afterend', input);
 
+            el.focus();
+            await sendKeys({ press: 'Tab' });
+            expect(document.activeElement === input).to.be.true;
+            await sendKeys({ press: 'Shift+Tab' });
+            expect(document.activeElement === el).to.be.true;
+            await sendKeys({ press: 'Enter' });
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
             await elementUpdated(el);
-            await sendKeys({ press: 'ArrowDown' });
-            await sendKeys({ press: 'ArrowUp' });
 
             await waitUntil(
                 () => firstItem.focused,
@@ -940,11 +941,6 @@ describe('Picker, sync', () => {
                 `
             );
 
-            await waitUntil(
-                () => !!window.applyFocusVisiblePolyfill,
-                'polyfill loaded'
-            );
-
             return test.querySelector('sp-picker') as Picker;
         };
         beforeEach(async () => {
@@ -991,11 +987,6 @@ describe('Picker, sync', () => {
                         </sp-picker>
                     </div>
                 `
-            );
-
-            await waitUntil(
-                () => !!window.applyFocusVisiblePolyfill,
-                'polyfill loaded'
             );
 
             return test.querySelector('sp-picker') as Picker;

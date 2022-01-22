@@ -10,8 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import 'focus-visible';
-
 declare global {
     interface Window {
         applyFocusVisiblePolyfill?: (scope: Document | ShadowRoot) => void;
@@ -40,6 +38,9 @@ try {
     document.body.querySelector(':focus-visible');
 } catch (error) {
     hasFocusVisible = false;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    import('focus-visible');
 }
 
 /**
