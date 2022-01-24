@@ -132,7 +132,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
     }
 
     /**
-     * Sets the stard and end positions of the current selection.
+     * Sets the start and end positions of the current selection.
      *
      * @param selectionStart The 0-based index of the first selected character. An index greater than the length of the
      *  element's value is treated as pointing to the end of the value.
