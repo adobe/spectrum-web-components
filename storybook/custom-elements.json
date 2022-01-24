@@ -96,21 +96,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/action-bar/sp-action-bar.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-action-bar",
-          "declaration": {
-            "name": "ActionBar",
-            "module": "/packages/action-bar/src/ActionBar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/action-button/sp-action-button.ts",
       "declarations": [],
       "exports": [
@@ -120,6 +105,21 @@
           "declaration": {
             "name": "ActionButton",
             "module": "/packages/action-button/src/ActionButton.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/sp-action-bar.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-action-bar",
+          "declaration": {
+            "name": "ActionBar",
+            "module": "/packages/action-bar/src/ActionBar.js"
           }
         }
       ]
@@ -1929,216 +1929,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/action-bar/src/ActionBar.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "actionBarVariants",
-          "type": {
-            "text": "array"
-          },
-          "default": "['sticky', 'fixed']"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ActionBar",
-          "slots": [
-            {
-              "description": "Content to display with the Action Bar",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "flexible",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
-              "parameters": [
-                {
-                  "name": "flexible",
-                  "type": {
-                    "text": "Boolean"
-                  }
-                }
-              ],
-              "attribute": "flexible",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "open",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "variant",
-              "privacy": "public",
-              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
-              "parameters": [
-                {
-                  "name": "variant",
-                  "type": {
-                    "text": "String"
-                  }
-                }
-              ],
-              "type": {
-                "text": "string"
-              },
-              "attribute": "variant",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "_variant",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private",
-              "default": "''"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "flexible",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
-              "parameters": [
-                {
-                  "name": "flexible",
-                  "type": {
-                    "text": "Boolean"
-                  }
-                }
-              ],
-              "fieldName": "flexible"
-            },
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "open"
-            },
-            {
-              "name": "variant",
-              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
-              "parameters": [
-                {
-                  "name": "variant",
-                  "type": {
-                    "text": "String"
-                  }
-                }
-              ],
-              "type": {
-                "text": "string"
-              },
-              "fieldName": "variant"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-action-bar",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "actionBarVariants",
-          "declaration": {
-            "name": "actionBarVariants",
-            "module": "packages/action-bar/src/ActionBar.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ActionBar",
-          "declaration": {
-            "name": "ActionBar",
-            "module": "packages/action-bar/src/ActionBar.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/action-bar.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/action-bar/src/action-bar.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ActionBar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/spectrum-action-bar.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/action-bar/src/spectrum-action-bar.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/action-button/src/ActionButton.ts",
       "declarations": [
         {
@@ -3300,6 +3090,216 @@
           "declaration": {
             "name": "styles",
             "module": "packages/action-button/src/spectrum-action-button.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/ActionBar.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "actionBarVariants",
+          "type": {
+            "text": "array"
+          },
+          "default": "['sticky', 'fixed']"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ActionBar",
+          "slots": [
+            {
+              "description": "Content to display with the Action Bar",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "flexible",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
+              "parameters": [
+                {
+                  "name": "flexible",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "attribute": "flexible",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "privacy": "public",
+              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "String"
+                  }
+                }
+              ],
+              "type": {
+                "text": "string"
+              },
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_variant",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "flexible",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
+              "parameters": [
+                {
+                  "name": "flexible",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "fieldName": "flexible"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "variant",
+              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "String"
+                  }
+                }
+              ],
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "variant"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-action-bar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "actionBarVariants",
+          "declaration": {
+            "name": "actionBarVariants",
+            "module": "packages/action-bar/src/ActionBar.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ActionBar",
+          "declaration": {
+            "name": "ActionBar",
+            "module": "packages/action-bar/src/ActionBar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/action-bar.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/action-bar/src/action-bar.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ActionBar.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/spectrum-action-bar.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/action-bar/src/spectrum-action-bar.css.ts"
           }
         }
       ]
@@ -28764,6 +28764,444 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/meter/src/Meter.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Meter",
+          "slots": [
+            {
+              "description": "text labeling the Meter",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "progress",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "0",
+              "attribute": "progress"
+            },
+            {
+              "kind": "field",
+              "name": "overBackground",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "over-background",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "notice",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "notice",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "negative",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "negative",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "positive",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "positive",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "sideLabel",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "side-label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "privacy": "public",
+              "attribute": "size",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_size",
+              "type": {
+                "text": "ElementSize | null"
+              },
+              "privacy": "private",
+              "default": "defaultSize",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changes",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "[slotElementObserver]",
+              "type": {
+                "text": "MutationObserver"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "slotHasContent",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "[assignedNodesList]",
+              "type": {
+                "text": "NodeListOf<HTMLElement>"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageTextObservedSlot",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "[startObserving]",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "progress",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "progress"
+            },
+            {
+              "name": "over-background",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "overBackground"
+            },
+            {
+              "name": "notice",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "notice"
+            },
+            {
+              "name": "negative",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "negative"
+            },
+            {
+              "name": "positive",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "positive"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            },
+            {
+              "name": "side-label",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "sideLabel"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "fieldName": "size",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SizedMixin",
+              "package": "@spectrum-web-components/base"
+            },
+            {
+              "name": "ObserveSlotText",
+              "package": "@spectrum-web-components/shared/src/observe-slot-text.js"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-meter",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Meter",
+          "declaration": {
+            "name": "Meter",
+            "module": "packages/meter/src/Meter.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/meter/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Meter.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/meter/src/meter.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([size=s]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-s-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-s-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-s-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-s-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-s-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-s-width,var(--spectrum-global-dimension-static-size-2400)\n)}:host([size=m]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-m-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-m-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-m-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-m-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-m-height,var(--spectrum-global-dimension-size-75)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-m-width,var(--spectrum-global-dimension-static-size-2400)\n);--spectrum-fieldlabel-side-padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([size=l]){--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-l-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-l-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-l-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-l-height,var(--spectrum-global-dimension-size-100)\n);--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-l-border-radius,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-l-width,var(--spectrum-global-dimension-static-size-2500)\n)}:host([size=xl]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-xl-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-xl-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-xl-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-xl-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-xl-height,var(--spectrum-global-dimension-size-125)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-xl-width,var(--spectrum-global-dimension-static-size-2800)\n)}:host{align-items:center;display:inline-flex;flex-flow:row wrap;justify-content:space-between;position:relative;vertical-align:top;width:var(--spectrum-progressbar-width)}.track{border-radius:var(--spectrum-progressbar-border-radius);overflow:hidden;width:100%;z-index:1}.fill,.track{height:var(--spectrum-progressbar-height)}.fill{border:none;transition:width 1s}:host([dir=ltr]) .label,:host([dir=ltr]) .percentage{text-align:left}:host([dir=rtl]) .label,:host([dir=rtl]) .percentage{text-align:right}.label,.percentage{margin-bottom:var(\n--spectrum-progressbar-value-gap-y\n)}.label{flex:1 1 0%}:host([dir=ltr]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}.percentage{align-self:flex-start}:host([side-label]){display:inline-flex;flex-flow:row;justify-content:space-between;width:auto}:host([side-label]) .track{flex:1 1 var(--spectrum-progressbar-width);min-width:var(\n--spectrum-progressbar-width\n)}:host([dir=ltr][side-label]) .label{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .label{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .label{flex-grow:0;margin-bottom:0}:host([dir=ltr][side-label]) .percentage{text-align:right}:host([dir=rtl][side-label]) .percentage{text-align:left}:host([dir=ltr][side-label]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .percentage{margin-bottom:0;order:3}:host([indeterminate]) .fill{animation-timing-function:var(\n--spectrum-progressbar-indeterminate-animation-ease\n);position:relative;width:var(\n--spectrum-progressbar-indeterminate-fill-width\n);will-change:transform}:host([dir=ltr][indeterminate]) .fill{animation:indeterminate-loop-ltr var(--spectrum-progressbar-indeterminate-duration) infinite}:host([dir=rtl][indeterminate]) .fill{animation:indeterminate-loop-rtl var(--spectrum-progressbar-indeterminate-duration) infinite}@keyframes indeterminate-loop-ltr{0%{transform:translate(calc(var(--spectrum-progressbar-indeterminate-fill-width)*-1))}to{transform:translate(var(--spectrum-progressbar-width))}}@keyframes indeterminate-loop-rtl{0%{transform:translate(var(--spectrum-progressbar-width))}to{transform:translate(calc(var(--spectrum-progressbar-width)*-1))}}.fill{background:var(\n--spectrum-progressbar-m-track-fill-color,var(--spectrum-semantic-informative-color-default)\n)}.track{background-color:var(\n--spectrum-progressbar-m-track-color,var(--spectrum-alias-track-color-default)\n)}:host([over-background]) .fill{background:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .label,:host([over-background]) .percentage{color:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .track{background-color:var(\n--spectrum-progressbar-m-overbackground-track-color,var(--spectrum-alias-track-color-overbackground)\n)}:host([positive]) .fill{background:var(\n--spectrum-meter-m-positive-track-fill-color,var(--spectrum-semantic-positive-status-color)\n)}:host([notice]) .fill{background:var(\n--spectrum-meter-m-notice-track-fill-color,var(--spectrum-semantic-notice-status-color)\n)}:host([negative]) .fill{background:var(\n--spectrum-meter-m-negative-track-fill-color,var(--spectrum-semantic-negative-status-color)\n)}.label,.percentage{color:var(\n--spectrum-fieldlabel-m-text-color,var(--spectrum-alias-label-text-color)\n)}.fill{transform-origin:left}:host([dir=rtl]) .fill{transform-origin:right}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/meter/src/meter.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/meter/src/spectrum-meter.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([size=s]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-s-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-s-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-s-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-s-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-s-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-s-width,var(--spectrum-global-dimension-static-size-2400)\n)}:host([size=m]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-m-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-m-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-m-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-m-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-m-height,var(--spectrum-global-dimension-size-75)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-m-width,var(--spectrum-global-dimension-static-size-2400)\n);--spectrum-fieldlabel-side-padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([size=l]){--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-l-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-l-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-l-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-l-height,var(--spectrum-global-dimension-size-100)\n);--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-l-border-radius,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-l-width,var(--spectrum-global-dimension-static-size-2500)\n)}:host([size=xl]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-xl-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-xl-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-xl-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-xl-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-xl-height,var(--spectrum-global-dimension-size-125)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-xl-width,var(--spectrum-global-dimension-static-size-2800)\n)}:host{align-items:center;display:inline-flex;flex-flow:row wrap;justify-content:space-between;position:relative;vertical-align:top;width:var(--spectrum-progressbar-width)}.track{border-radius:var(--spectrum-progressbar-border-radius);overflow:hidden;width:100%;z-index:1}.fill,.track{height:var(--spectrum-progressbar-height)}.fill{border:none;transition:width 1s}:host([dir=ltr]) .label,:host([dir=ltr]) .percentage{text-align:left}:host([dir=rtl]) .label,:host([dir=rtl]) .percentage{text-align:right}.label,.percentage{margin-bottom:var(\n--spectrum-progressbar-value-gap-y\n)}.label{flex:1 1 0%}:host([dir=ltr]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}.percentage{align-self:flex-start}:host([side-label]){display:inline-flex;flex-flow:row;justify-content:space-between;width:auto}:host([side-label]) .track{flex:1 1 var(--spectrum-progressbar-width);min-width:var(\n--spectrum-progressbar-width\n)}:host([dir=ltr][side-label]) .label{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .label{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .label{flex-grow:0;margin-bottom:0}:host([dir=ltr][side-label]) .percentage{text-align:right}:host([dir=rtl][side-label]) .percentage{text-align:left}:host([dir=ltr][side-label]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .percentage{margin-bottom:0;order:3}:host([indeterminate]) .fill{animation-timing-function:var(\n--spectrum-progressbar-indeterminate-animation-ease\n);position:relative;width:var(\n--spectrum-progressbar-indeterminate-fill-width\n);will-change:transform}:host([dir=ltr][indeterminate]) .fill{animation:indeterminate-loop-ltr var(--spectrum-progressbar-indeterminate-duration) infinite}:host([dir=rtl][indeterminate]) .fill{animation:indeterminate-loop-rtl var(--spectrum-progressbar-indeterminate-duration) infinite}@keyframes indeterminate-loop-ltr{0%{transform:translate(calc(var(--spectrum-progressbar-indeterminate-fill-width)*-1))}to{transform:translate(var(--spectrum-progressbar-width))}}@keyframes indeterminate-loop-rtl{0%{transform:translate(var(--spectrum-progressbar-width))}to{transform:translate(calc(var(--spectrum-progressbar-width)*-1))}}.fill{background:var(\n--spectrum-progressbar-m-track-fill-color,var(--spectrum-semantic-informative-color-default)\n)}.track{background-color:var(\n--spectrum-progressbar-m-track-color,var(--spectrum-alias-track-color-default)\n)}:host([over-background]) .fill{background:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .label,:host([over-background]) .percentage{color:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .track{background-color:var(\n--spectrum-progressbar-m-overbackground-track-color,var(--spectrum-alias-track-color-overbackground)\n)}:host([positive]) .fill{background:var(\n--spectrum-meter-m-positive-track-fill-color,var(--spectrum-semantic-positive-status-color)\n)}:host([notice]) .fill{background:var(\n--spectrum-meter-m-notice-track-fill-color,var(--spectrum-semantic-notice-status-color)\n)}:host([negative]) .fill{background:var(\n--spectrum-meter-m-negative-track-fill-color,var(--spectrum-semantic-negative-status-color)\n)}.label,.percentage{color:var(\n--spectrum-fieldlabel-m-text-color,var(--spectrum-alias-label-text-color)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/meter/src/spectrum-meter.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/menu/src/Menu.ts",
       "declarations": [
         {
@@ -31600,444 +32038,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/meter/src/Meter.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Meter",
-          "slots": [
-            {
-              "description": "text labeling the Meter",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "progress",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "0",
-              "attribute": "progress"
-            },
-            {
-              "kind": "field",
-              "name": "overBackground",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "over-background",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "notice",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "notice",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "negative",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "negative",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "positive",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "positive",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "label",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "sideLabel",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "side-label",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "privacy": "public",
-              "attribute": "size",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_size",
-              "type": {
-                "text": "ElementSize | null"
-              },
-              "privacy": "private",
-              "default": "defaultSize",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "firstUpdated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "changes",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "[slotElementObserver]",
-              "type": {
-                "text": "MutationObserver"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "slotHasContent",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "[assignedNodesList]",
-              "type": {
-                "text": "NodeListOf<HTMLElement>"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageTextObservedSlot",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "[startObserving]",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "progress",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "fieldName": "progress"
-            },
-            {
-              "name": "over-background",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "overBackground"
-            },
-            {
-              "name": "notice",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "notice"
-            },
-            {
-              "name": "negative",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "negative"
-            },
-            {
-              "name": "positive",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "positive"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
-            },
-            {
-              "name": "side-label",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "sideLabel"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "fieldName": "size",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "mixins": [
-            {
-              "name": "SizedMixin",
-              "package": "@spectrum-web-components/base"
-            },
-            {
-              "name": "ObserveSlotText",
-              "package": "@spectrum-web-components/shared/src/observe-slot-text.js"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-meter",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Meter",
-          "declaration": {
-            "name": "Meter",
-            "module": "packages/meter/src/Meter.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/meter/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Meter.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/meter/src/meter.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-s-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-s-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-s-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-s-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-s-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-s-width,var(--spectrum-global-dimension-static-size-2400)\n)}:host([size=m]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-m-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-m-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-m-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-m-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-m-height,var(--spectrum-global-dimension-size-75)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-m-width,var(--spectrum-global-dimension-static-size-2400)\n);--spectrum-fieldlabel-side-padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([size=l]){--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-l-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-l-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-l-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-l-height,var(--spectrum-global-dimension-size-100)\n);--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-l-border-radius,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-l-width,var(--spectrum-global-dimension-static-size-2500)\n)}:host([size=xl]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-xl-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-xl-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-xl-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-xl-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-xl-height,var(--spectrum-global-dimension-size-125)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-xl-width,var(--spectrum-global-dimension-static-size-2800)\n)}:host{align-items:center;display:inline-flex;flex-flow:row wrap;justify-content:space-between;position:relative;vertical-align:top;width:var(--spectrum-progressbar-width)}.track{border-radius:var(--spectrum-progressbar-border-radius);overflow:hidden;width:100%;z-index:1}.fill,.track{height:var(--spectrum-progressbar-height)}.fill{border:none;transition:width 1s}:host([dir=ltr]) .label,:host([dir=ltr]) .percentage{text-align:left}:host([dir=rtl]) .label,:host([dir=rtl]) .percentage{text-align:right}.label,.percentage{margin-bottom:var(\n--spectrum-progressbar-value-gap-y\n)}.label{flex:1 1 0%}:host([dir=ltr]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}.percentage{align-self:flex-start}:host([side-label]){display:inline-flex;flex-flow:row;justify-content:space-between;width:auto}:host([side-label]) .track{flex:1 1 var(--spectrum-progressbar-width);min-width:var(\n--spectrum-progressbar-width\n)}:host([dir=ltr][side-label]) .label{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .label{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .label{flex-grow:0;margin-bottom:0}:host([dir=ltr][side-label]) .percentage{text-align:right}:host([dir=rtl][side-label]) .percentage{text-align:left}:host([dir=ltr][side-label]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .percentage{margin-bottom:0;order:3}:host([indeterminate]) .fill{animation-timing-function:var(\n--spectrum-progressbar-indeterminate-animation-ease\n);position:relative;width:var(\n--spectrum-progressbar-indeterminate-fill-width\n);will-change:transform}:host([dir=ltr][indeterminate]) .fill{animation:indeterminate-loop-ltr var(--spectrum-progressbar-indeterminate-duration) infinite}:host([dir=rtl][indeterminate]) .fill{animation:indeterminate-loop-rtl var(--spectrum-progressbar-indeterminate-duration) infinite}@keyframes indeterminate-loop-ltr{0%{transform:translate(calc(var(--spectrum-progressbar-indeterminate-fill-width)*-1))}to{transform:translate(var(--spectrum-progressbar-width))}}@keyframes indeterminate-loop-rtl{0%{transform:translate(var(--spectrum-progressbar-width))}to{transform:translate(calc(var(--spectrum-progressbar-width)*-1))}}.fill{background:var(\n--spectrum-progressbar-m-track-fill-color,var(--spectrum-semantic-informative-color-default)\n)}.track{background-color:var(\n--spectrum-progressbar-m-track-color,var(--spectrum-alias-track-color-default)\n)}:host([over-background]) .fill{background:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .label,:host([over-background]) .percentage{color:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .track{background-color:var(\n--spectrum-progressbar-m-overbackground-track-color,var(--spectrum-alias-track-color-overbackground)\n)}:host([positive]) .fill{background:var(\n--spectrum-meter-m-positive-track-fill-color,var(--spectrum-semantic-positive-status-color)\n)}:host([notice]) .fill{background:var(\n--spectrum-meter-m-notice-track-fill-color,var(--spectrum-semantic-notice-status-color)\n)}:host([negative]) .fill{background:var(\n--spectrum-meter-m-negative-track-fill-color,var(--spectrum-semantic-negative-status-color)\n)}.label,.percentage{color:var(\n--spectrum-fieldlabel-m-text-color,var(--spectrum-alias-label-text-color)\n)}.fill{transform-origin:left}:host([dir=rtl]) .fill{transform-origin:right}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/meter/src/meter.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/meter/src/spectrum-meter.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-s-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-s-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-s-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-s-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-s-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-s-width,var(--spectrum-global-dimension-static-size-2400)\n)}:host([size=m]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-m-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-m-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-m-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-m-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-m-height,var(--spectrum-global-dimension-size-75)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-m-width,var(--spectrum-global-dimension-static-size-2400)\n);--spectrum-fieldlabel-side-padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([size=l]){--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-l-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-l-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-l-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-l-height,var(--spectrum-global-dimension-size-100)\n);--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-l-border-radius,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-l-width,var(--spectrum-global-dimension-static-size-2500)\n)}:host([size=xl]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-xl-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-xl-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-xl-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-xl-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-xl-height,var(--spectrum-global-dimension-size-125)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-xl-width,var(--spectrum-global-dimension-static-size-2800)\n)}:host{align-items:center;display:inline-flex;flex-flow:row wrap;justify-content:space-between;position:relative;vertical-align:top;width:var(--spectrum-progressbar-width)}.track{border-radius:var(--spectrum-progressbar-border-radius);overflow:hidden;width:100%;z-index:1}.fill,.track{height:var(--spectrum-progressbar-height)}.fill{border:none;transition:width 1s}:host([dir=ltr]) .label,:host([dir=ltr]) .percentage{text-align:left}:host([dir=rtl]) .label,:host([dir=rtl]) .percentage{text-align:right}.label,.percentage{margin-bottom:var(\n--spectrum-progressbar-value-gap-y\n)}.label{flex:1 1 0%}:host([dir=ltr]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}.percentage{align-self:flex-start}:host([side-label]){display:inline-flex;flex-flow:row;justify-content:space-between;width:auto}:host([side-label]) .track{flex:1 1 var(--spectrum-progressbar-width);min-width:var(\n--spectrum-progressbar-width\n)}:host([dir=ltr][side-label]) .label{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .label{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .label{flex-grow:0;margin-bottom:0}:host([dir=ltr][side-label]) .percentage{text-align:right}:host([dir=rtl][side-label]) .percentage{text-align:left}:host([dir=ltr][side-label]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .percentage{margin-bottom:0;order:3}:host([indeterminate]) .fill{animation-timing-function:var(\n--spectrum-progressbar-indeterminate-animation-ease\n);position:relative;width:var(\n--spectrum-progressbar-indeterminate-fill-width\n);will-change:transform}:host([dir=ltr][indeterminate]) .fill{animation:indeterminate-loop-ltr var(--spectrum-progressbar-indeterminate-duration) infinite}:host([dir=rtl][indeterminate]) .fill{animation:indeterminate-loop-rtl var(--spectrum-progressbar-indeterminate-duration) infinite}@keyframes indeterminate-loop-ltr{0%{transform:translate(calc(var(--spectrum-progressbar-indeterminate-fill-width)*-1))}to{transform:translate(var(--spectrum-progressbar-width))}}@keyframes indeterminate-loop-rtl{0%{transform:translate(var(--spectrum-progressbar-width))}to{transform:translate(calc(var(--spectrum-progressbar-width)*-1))}}.fill{background:var(\n--spectrum-progressbar-m-track-fill-color,var(--spectrum-semantic-informative-color-default)\n)}.track{background-color:var(\n--spectrum-progressbar-m-track-color,var(--spectrum-alias-track-color-default)\n)}:host([over-background]) .fill{background:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .label,:host([over-background]) .percentage{color:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .track{background-color:var(\n--spectrum-progressbar-m-overbackground-track-color,var(--spectrum-alias-track-color-overbackground)\n)}:host([positive]) .fill{background:var(\n--spectrum-meter-m-positive-track-fill-color,var(--spectrum-semantic-positive-status-color)\n)}:host([notice]) .fill{background:var(\n--spectrum-meter-m-notice-track-fill-color,var(--spectrum-semantic-notice-status-color)\n)}:host([negative]) .fill{background:var(\n--spectrum-meter-m-negative-track-fill-color,var(--spectrum-semantic-negative-status-color)\n)}.label,.percentage{color:var(\n--spectrum-fieldlabel-m-text-color,var(--spectrum-alias-label-text-color)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/meter/src/spectrum-meter.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/modal/src/modal.css.ts",
       "declarations": [
         {
@@ -33961,14 +33961,6 @@
             },
             {
               "kind": "field",
-              "name": "popper",
-              "type": {
-                "text": "Instance | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
               "name": "_state",
               "privacy": "public",
               "attribute": "_state"
@@ -34043,15 +34035,6 @@
                 "text": "() => Element[] | undefined"
               },
               "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "dataPopperPlacement",
-              "type": {
-                "text": "Placement | undefined"
-              },
-              "privacy": "public",
-              "attribute": "data-popper-placement"
             },
             {
               "kind": "method",
@@ -34152,16 +34135,6 @@
             },
             {
               "kind": "method",
-              "name": "updateOverlayPopperPlacement",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
               "name": "open",
               "privacy": "private",
               "return": {
@@ -34219,7 +34192,7 @@
                 {
                   "name": "element",
                   "type": {
-                    "text": "HTMLElement"
+                    "text": "HTMLElement & { placement: Placement }"
                   }
                 }
               ]
@@ -34244,14 +34217,26 @@
               }
             },
             {
-              "kind": "method",
+              "kind": "field",
+              "name": "initialHeight",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "isConstrained",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "field",
               "name": "updateOverlayPosition",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              }
+              "privacy": "public"
             },
             {
               "kind": "method",
@@ -34458,13 +34443,6 @@
                 "text": "Placement | undefined"
               },
               "fieldName": "placement"
-            },
-            {
-              "name": "data-popper-placement",
-              "type": {
-                "text": "Placement | undefined"
-              },
-              "fieldName": "dataPopperPlacement"
             },
             {
               "name": "dir",
@@ -35196,7 +35174,7 @@
         {
           "kind": "variable",
           "name": "styles",
-          "default": "css`\n@keyframes sp-overlay-fade-in{0%{opacity:0;transform:var(--sp-overlay-from)}to{opacity:1;transform:translate(0)}}@keyframes sp-overlay-fade-out{0%{opacity:1;transform:translate(0)}to{opacity:0;transform:var(--sp-overlay-from)}}:host{display:inline-block;left:0;pointer-events:none;position:absolute;top:0;z-index:1000}:host(:focus){outline:none}#contents,sp-theme{height:100%}#contents{animation-duration:var(--spectrum-global-animation-duration-200,.16s);animation-timing-function:var(\n--spectrum-global-animation-ease-out,ease-out\n);display:inline-block;opacity:1;pointer-events:none;visibility:visible}:host([data-popper-placement*=top]) #contents{--sp-overlay-from:translateY(var(--spectrum-global-dimension-size-75))}:host([data-popper-placement*=right]) #contents{--sp-overlay-from:translateX(calc(var(--spectrum-global-dimension-size-75)*-1))}:host([data-popper-placement*=bottom]) #contents{--sp-overlay-from:translateY(calc(var(--spectrum-global-dimension-size-75)*-1))}:host([data-popper-placement*=left]) #contents{--sp-overlay-from:translateX(var(--spectrum-global-dimension-size-75))}:host([animating]) ::slotted(*){pointer-events:none}:host(:not([animating])) ::slotted(*){pointer-events:auto}#contents ::slotted(*){position:relative}\n`"
+          "default": "css`\n@keyframes sp-overlay-fade-in{0%{opacity:0;transform:var(--sp-overlay-from)}to{opacity:1;transform:translate(0)}}@keyframes sp-overlay-fade-out{0%{opacity:1;transform:translate(0)}to{opacity:0;transform:var(--sp-overlay-from)}}:host{display:inline-block;left:0;pointer-events:none;position:absolute;top:0;z-index:1000}:host(:focus){outline:none}#contents,sp-theme{height:100%}#contents{animation-duration:var(--spectrum-global-animation-duration-200,.16s);animation-timing-function:var(\n--spectrum-global-animation-ease-out,ease-out\n);display:inline-block;opacity:1;pointer-events:none;visibility:visible}:host([actual-placement*=top]) #contents{--sp-overlay-from:translateY(var(--spectrum-global-dimension-size-75));align-items:flex-end;display:inline-flex}:host([actual-placement*=right]) #contents{--sp-overlay-from:translateX(calc(var(--spectrum-global-dimension-size-75)*-1))}:host([actual-placement*=bottom]) #contents{--sp-overlay-from:translateY(calc(var(--spectrum-global-dimension-size-75)*-1))}:host([actual-placement*=left]) #contents{--sp-overlay-from:translateX(var(--spectrum-global-dimension-size-75))}:host([animating]) ::slotted(*){pointer-events:none}:host(:not([animating])) ::slotted(*){pointer-events:auto}#contents ::slotted(*){position:relative}\n`"
         }
       ],
       "exports": [
@@ -35206,30 +35184,6 @@
           "declaration": {
             "name": "styles",
             "module": "packages/overlay/src/active-overlay.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/apply-max-size.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "applyMaxSize",
-          "type": {
-            "text": "Modifier<'applyMaxSize', Record<string, unknown>>"
-          },
-          "default": "{\n    name: 'applyMaxSize',\n    enabled: true,\n    phase: 'beforeWrite',\n    requires: ['maxSize'],\n    fn({ state }: ModifierArguments<Record<string, unknown>>): void {\n        const { height: maxHeight } = state.modifiersData.maxSize;\n        if (!appliedSizeDefaults.has(state.elements.popper)) {\n            appliedSizeDefaults.set(\n                state.elements.popper,\n                state.rects.popper.height\n            );\n        }\n        const actualHeight = appliedSizeDefaults.get(state.elements.popper);\n        const constrainHeight = maxHeight < actualHeight;\n        const appliedHeight = constrainHeight ? `${maxHeight}px` : '';\n        state.styles.popper.maxHeight = appliedHeight;\n        state.styles.popper.height = appliedHeight;\n    },\n}"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "applyMaxSize",
-          "declaration": {
-            "name": "applyMaxSize",
-            "module": "packages/overlay/src/apply-max-size.ts"
           }
         }
       ]
@@ -36093,66 +36047,6 @@
           "declaration": {
             "name": "Overlay",
             "module": "packages/overlay/src/overlay.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/overlay/src/popper.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "createPopper"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "createPopper",
-          "declaration": {
-            "name": "createPopper",
-            "module": "packages/overlay/src/popper.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "Instance",
-          "declaration": {
-            "name": "Instance",
-            "module": "packages/overlay/src/popper.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "Placement",
-          "declaration": {
-            "name": "Placement",
-            "module": "packages/overlay/src/popper.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "VirtualElement",
-          "declaration": {
-            "name": "VirtualElement",
-            "module": "packages/overlay/src/popper.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "maxSize",
-          "declaration": {
-            "name": "maxSize",
-            "module": "packages/overlay/src/popper.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "applyMaxSize",
-          "declaration": {
-            "name": "applyMaxSize",
-            "module": "packages/overlay/src/popper.ts"
           }
         }
       ]
