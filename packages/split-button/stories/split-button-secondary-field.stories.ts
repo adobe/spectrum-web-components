@@ -12,6 +12,8 @@ governing permissions and limitations under the License.
 
 import { TemplateResult } from '@spectrum-web-components/base';
 import { splitbutton } from './index.js';
+import { openSplitButtonDecorator } from './helpers.js';
+import './helpers.js';
 
 import '../sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -19,6 +21,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 export default {
     title: 'Split Button/Secondary/Field',
     component: 'sp-split-button',
+    decorators: [openSplitButtonDecorator],
 };
 
 const variant = 'secondary';

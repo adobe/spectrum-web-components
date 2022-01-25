@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import { TemplateResult } from '@spectrum-web-components/base';
 import { renderSplitButtonSet } from './index.js';
+import './helpers.js';
 
 import '../sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
