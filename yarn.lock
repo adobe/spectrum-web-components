@@ -18463,9 +18463,9 @@ postcss-place@^7.0.3:
     postcss-value-parser "^4.2.0"
 
 postcss-prefixwrap@^1.26.0:
-  version "1.26.0"
-  resolved "https://registry.yarnpkg.com/postcss-prefixwrap/-/postcss-prefixwrap-1.26.0.tgz#8f526d440faa7795490e18ba21f8e3b2490bdfb9"
-  integrity sha512-iJ9yi26g9vDuNTM0GiqJKYx3AABfD7W7WURhP18OCBye/Pc6LNd89VlPCaKKXZxUqptUrMulX1trlXEbw2L3UQ==
+  version "1.27.0"
+  resolved "https://registry.yarnpkg.com/postcss-prefixwrap/-/postcss-prefixwrap-1.27.0.tgz#059363c9dc63cbe9abad0fe377fe5d510c65d6be"
+  integrity sha512-eFrmvzJ8Xx4uoY+G0B3lTh1EVEM6ZlEMPS3jtmBafcGXSrJIid1sTaAiqFtZ3D6kGd9ckdm8HMh/AFcDVSZhrw==
 
 postcss-preset-env@^7.0.0, postcss-preset-env@^7.2.3:
   version "7.2.3"
