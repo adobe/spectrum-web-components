@@ -11,6 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { openSplitButtonDecorator } from './helpers.js';
+import './helpers.js';
 
 import '../sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
@@ -65,6 +67,7 @@ export const ctaOpen = (options: StoryArgs = {}): TemplateResult => {
 ctaOpen.story = {
     name: 'Field, Open, variant: CTA',
 };
+ctaOpen.decorators = [openSplitButtonDecorator];
 
 export const primary = (options: StoryArgs = {}): TemplateResult => {
     return html`
@@ -124,6 +127,7 @@ export const moreCtaOpen = (options: StoryArgs = {}): TemplateResult => {
 moreCtaOpen.story = {
     name: 'More, Open, variant: CTA',
 };
+moreCtaOpen.decorators = [openSplitButtonDecorator];
 
 export const morePrimary = (options: StoryArgs = {}): TemplateResult => {
     return html`
