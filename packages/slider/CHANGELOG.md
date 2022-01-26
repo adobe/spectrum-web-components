@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.2...@spectrum-web-components/slider@0.12.3) (2022-01-26)
+
+### Bug Fixes
+
+-   **slider:** ensure that handles are upgraded before extracting a model from them ([bbbb21f](https://github.com/adobe/spectrum-web-components/commit/bbbb21faba2111480441a30224a3c26ad9858441))
+
 ## [0.12.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.1...@spectrum-web-components/slider@0.12.2) (2022-01-07)
 
 ### Bug Fixes

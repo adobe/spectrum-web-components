@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.11.2...@spectrum-web-components/styles@0.11.3) (2022-01-26)
+
+### Bug Fixes
+
+-   use CSS Custom Property name supplied by Spectrum for dividers ([e6977c3](https://github.com/adobe/spectrum-web-components/commit/e6977c341cb61b7e99020afdcb739ecc2722bc57))
+
 ## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.11.1...@spectrum-web-components/styles@0.11.2) (2022-01-07)
 
 ### Bug Fixes

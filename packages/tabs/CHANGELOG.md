@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.8.2...@spectrum-web-components/tabs@0.8.3) (2022-01-26)
+
+### Bug Fixes
+
+-   **tabs:** added test ([7d5f41f](https://github.com/adobe/spectrum-web-components/commit/7d5f41f74d2467e9d12a1a2328db1ff3dd6a8a71))
+-   **tabs:** error on click - undefined tab target ([9742227](https://github.com/adobe/spectrum-web-components/commit/974222739745e1a8c082ed77e3e68199907f7890))
+
 ## [0.8.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.8.1...@spectrum-web-components/tabs@0.8.2) (2022-01-07)
 
 **Note:** Version bump only for package @spectrum-web-components/tabs

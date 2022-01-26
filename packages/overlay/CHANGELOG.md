@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.13.2...@spectrum-web-components/overlay@0.13.3) (2022-01-26)
+
+### Bug Fixes
+
+-   describe longpress button to screen readers ([acdcaf4](https://github.com/adobe/spectrum-web-components/commit/acdcaf49adbc701381bfdf1f95f12ab42f791a67))
+
 ## [0.13.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.13.1...@spectrum-web-components/overlay@0.13.2) (2022-01-07)
 
 ### Bug Fixes

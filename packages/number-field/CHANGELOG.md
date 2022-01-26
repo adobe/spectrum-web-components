@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.3.2...@spectrum-web-components/number-field@0.3.3) (2022-01-26)
+
+### Bug Fixes
+
+-   **number-field:** process 2 byte characters as their single byte cousins ([f424c0a](https://github.com/adobe/spectrum-web-components/commit/f424c0aa9e04baf24aa3f6c23dd4697ab0699fc0))
+
 ## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.3.1...@spectrum-web-components/number-field@0.3.2) (2022-01-07)
 
 ### Bug Fixes

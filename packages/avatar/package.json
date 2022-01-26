@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/avatar",
-    "version": "0.9.1",
+    "version": "0.9.2",
     "publishConfig": {
         "access": "public"
     },

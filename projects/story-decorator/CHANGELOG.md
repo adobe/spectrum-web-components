@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.4.2...@spectrum-web-components/story-decorator@0.4.3) (2022-01-26)
+
+### Bug Fixes
+
+-   remove duplicate box-sizing style from storybook-decorator ([3f45dd7](https://github.com/adobe/spectrum-web-components/commit/3f45dd7fbdca6ffd4d811fd4805ad24b885ef09f))
+
 ## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.4.1...@spectrum-web-components/story-decorator@0.4.2) (2022-01-07)
 
 **Note:** Version bump only for package @spectrum-web-components/story-decorator

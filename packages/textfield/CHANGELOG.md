@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.10.2...@spectrum-web-components/textfield@0.11.0) (2022-01-26)
+
+### Bug Fixes
+
+-   **number-field:** process 2 byte characters as their single byte cousins ([f424c0a](https://github.com/adobe/spectrum-web-components/commit/f424c0aa9e04baf24aa3f6c23dd4697ab0699fc0))
+
+### Features
+
+-   **textfield:** add support for setSelectionRange ([#2070](https://github.com/adobe/spectrum-web-components/issues/2070)) ([dd17ba0](https://github.com/adobe/spectrum-web-components/commit/dd17ba0f50cc604b4dcd14699d5129710aac121b))
+
 ## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.10.1...@spectrum-web-components/textfield@0.10.2) (2022-01-07)
 
 ### Bug Fixes

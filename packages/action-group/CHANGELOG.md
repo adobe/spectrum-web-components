@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.6.2...@spectrum-web-components/action-group@0.7.0) (2022-01-26)
+
+### Features
+
+-   modified .selected to make <sp-action-group> a controllable component ([#2006](https://github.com/adobe/spectrum-web-components/issues/2006)) ([4c69b25](https://github.com/adobe/spectrum-web-components/commit/4c69b251fdf09fe898ce98482881e647b857205d))
+
 ## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.6.1...@spectrum-web-components/action-group@0.6.2) (2022-01-07)
 
 **Note:** Version bump only for package @spectrum-web-components/action-group

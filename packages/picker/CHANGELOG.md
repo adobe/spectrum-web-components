@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.9.2...@spectrum-web-components/picker@0.9.3) (2022-01-26)
+
+### Bug Fixes
+
+-   **picker:** make "change" event bubbling and composed ([1fdd33d](https://github.com/adobe/spectrum-web-components/commit/1fdd33de0f8a01640b91ecda2cb9e81bd8076adf))
+
 ## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.9.1...@spectrum-web-components/picker@0.9.2) (2022-01-07)
 
 **Note:** Version bump only for package @spectrum-web-components/picker
