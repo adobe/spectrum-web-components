@@ -110,16 +110,16 @@ slot[name='icon'] + #label {
     text-overflow: ellipsis; /* .spectrum-Menu-itemLabel--wrapping */
     white-space: nowrap;
 }
-:host([dir='ltr']) .checkmark,
-:host([dir='ltr']) .chevron {
+:host([dir='ltr']) .chevron,
+:host([dir='ltr']) .checkmark {
     padding-left: var(
         --spectrum-listitem-texticon-icon-gap
     ); /* [dir=ltr] .spectrum-Menu-checkmark,
    * [dir=ltr] 
 .spectrum-Menu-chevron */
 }
-:host([dir='rtl']) .checkmark,
-:host([dir='rtl']) .chevron {
+:host([dir='rtl']) .chevron,
+:host([dir='rtl']) .checkmark {
     padding-right: var(
         --spectrum-listitem-texticon-icon-gap
     ); /* [dir=rtl] .spectrum-Menu-checkmark,
@@ -139,8 +139,8 @@ slot[name='icon'] + #label {
         var(--spectrum-alias-component-text-color-default)
     );
 }
-:host([dir='ltr'][focused]),
-:host([dir='ltr'].focus-visible) {
+:host([dir='ltr'].focus-visible),
+:host([dir='ltr'][focused]) {
     border-left-color: var(
         --spectrum-listitem-m-texticon-focus-indicator-color,
         var(--spectrum-alias-border-color-key-focus)
@@ -148,8 +148,8 @@ slot[name='icon'] + #label {
    * [dir=ltr] 
   .spectrum-Menu-item.is-focused */
 }
-:host([dir='ltr'][focused]),
-:host([dir='ltr']:focus-visible) {
+:host([dir='ltr']:focus-visible),
+:host([dir='ltr'][focused]) {
     border-left-color: var(
         --spectrum-listitem-m-texticon-focus-indicator-color,
         var(--spectrum-alias-border-color-key-focus)
@@ -157,8 +157,8 @@ slot[name='icon'] + #label {
    * [dir=ltr] 
   .spectrum-Menu-item.is-focused */
 }
-:host([dir='rtl'][focused]),
-:host([dir='rtl'].focus-visible) {
+:host([dir='rtl'].focus-visible),
+:host([dir='rtl'][focused]) {
     border-right-color: var(
         --spectrum-listitem-m-texticon-focus-indicator-color,
         var(--spectrum-alias-border-color-key-focus)
@@ -166,8 +166,8 @@ slot[name='icon'] + #label {
    * [dir=rtl] 
   .spectrum-Menu-item.is-focused */
 }
-:host([dir='rtl'][focused]),
-:host([dir='rtl']:focus-visible) {
+:host([dir='rtl']:focus-visible),
+:host([dir='rtl'][focused]) {
     border-right-color: var(
         --spectrum-listitem-m-texticon-focus-indicator-color,
         var(--spectrum-alias-border-color-key-focus)

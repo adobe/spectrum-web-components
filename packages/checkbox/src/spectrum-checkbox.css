@@ -347,14 +347,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             ease-out,
         margin var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
 }
-:host([dir='ltr']) #checkmark,
-:host([dir='ltr']) #partialCheckmark {
+:host([dir='ltr']) #partialCheckmark,
+:host([dir='ltr']) #checkmark {
     left: 50%; /* [dir=ltr] .spectrum-Checkbox-checkmark,
    * [dir=ltr] 
 .spectrum-Checkbox-partialCheckmark */
 }
-:host([dir='rtl']) #checkmark,
-:host([dir='rtl']) #partialCheckmark {
+:host([dir='rtl']) #partialCheckmark,
+:host([dir='rtl']) #checkmark {
     right: 50%; /* [dir=rtl] .spectrum-Checkbox-checkmark,
    * [dir=rtl] 
 .spectrum-Checkbox-partialCheckmark */
