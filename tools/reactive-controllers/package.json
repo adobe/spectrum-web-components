@@ -45,5 +45,6 @@
         "lit": "^2.0.2",
         "tslib": "^2.0.0"
     },
-    "types": "./src/index.d.ts"
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json"
 }
