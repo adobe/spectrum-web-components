@@ -66,21 +66,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/action-bar/sp-action-bar.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-action-bar",
-          "declaration": {
-            "name": "ActionBar",
-            "module": "/packages/action-bar/src/ActionBar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/accordion/sp-accordion-item.ts",
       "declarations": [],
       "exports": [
@@ -126,6 +111,21 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/action-bar/sp-action-bar.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-action-bar",
+          "declaration": {
+            "name": "ActionBar",
+            "module": "/packages/action-bar/src/ActionBar.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/action-group/sp-action-group.ts",
       "declarations": [],
       "exports": [
@@ -156,21 +156,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/avatar/sp-avatar.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-avatar",
-          "declaration": {
-            "name": "Avatar",
-            "module": "/packages/avatar/src/Avatar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/asset/sp-asset.ts",
       "declarations": [],
       "exports": [
@@ -180,6 +165,21 @@
           "declaration": {
             "name": "Asset",
             "module": "/packages/asset/src/Asset.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/avatar/sp-avatar.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-avatar",
+          "declaration": {
+            "name": "Avatar",
+            "module": "/packages/avatar/src/Avatar.js"
           }
         }
       ]
@@ -1303,216 +1303,6 @@
           "declaration": {
             "name": "VrtCompare",
             "module": "/projects/vrt-compare/src/VrtCompare.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/ActionBar.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "actionBarVariants",
-          "type": {
-            "text": "array"
-          },
-          "default": "['sticky', 'fixed']"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ActionBar",
-          "slots": [
-            {
-              "description": "Content to display with the Action Bar",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "flexible",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
-              "parameters": [
-                {
-                  "name": "flexible",
-                  "type": {
-                    "text": "Boolean"
-                  }
-                }
-              ],
-              "attribute": "flexible",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "open",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "variant",
-              "privacy": "public",
-              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
-              "parameters": [
-                {
-                  "name": "variant",
-                  "type": {
-                    "text": "String"
-                  }
-                }
-              ],
-              "type": {
-                "text": "string"
-              },
-              "attribute": "variant",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "_variant",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private",
-              "default": "''"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "flexible",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
-              "parameters": [
-                {
-                  "name": "flexible",
-                  "type": {
-                    "text": "Boolean"
-                  }
-                }
-              ],
-              "fieldName": "flexible"
-            },
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "open"
-            },
-            {
-              "name": "variant",
-              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
-              "parameters": [
-                {
-                  "name": "variant",
-                  "type": {
-                    "text": "String"
-                  }
-                }
-              ],
-              "type": {
-                "text": "string"
-              },
-              "fieldName": "variant"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-action-bar",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "actionBarVariants",
-          "declaration": {
-            "name": "actionBarVariants",
-            "module": "packages/action-bar/src/ActionBar.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ActionBar",
-          "declaration": {
-            "name": "ActionBar",
-            "module": "packages/action-bar/src/ActionBar.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/action-bar.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/action-bar/src/action-bar.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ActionBar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/spectrum-action-bar.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/action-bar/src/spectrum-action-bar.css.ts"
           }
         }
       ]
@@ -3306,6 +3096,216 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/action-bar/src/ActionBar.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "actionBarVariants",
+          "type": {
+            "text": "array"
+          },
+          "default": "['sticky', 'fixed']"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ActionBar",
+          "slots": [
+            {
+              "description": "Content to display with the Action Bar",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "flexible",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
+              "parameters": [
+                {
+                  "name": "flexible",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "attribute": "flexible",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "privacy": "public",
+              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "String"
+                  }
+                }
+              ],
+              "type": {
+                "text": "string"
+              },
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_variant",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "flexible",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
+              "parameters": [
+                {
+                  "name": "flexible",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "fieldName": "flexible"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "variant",
+              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "String"
+                  }
+                }
+              ],
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "variant"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-action-bar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "actionBarVariants",
+          "declaration": {
+            "name": "actionBarVariants",
+            "module": "packages/action-bar/src/ActionBar.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ActionBar",
+          "declaration": {
+            "name": "ActionBar",
+            "module": "packages/action-bar/src/ActionBar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/action-bar.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/action-bar/src/action-bar.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ActionBar.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/spectrum-action-bar.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/action-bar/src/spectrum-action-bar.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/action-group/src/ActionGroup.ts",
       "declarations": [
         {
@@ -5073,6 +5073,135 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/asset/src/Asset.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Asset",
+          "slots": [
+            {
+              "description": "content to be displayed in the asset when an acceptable value for `file` is not present",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "'file' | 'folder' | undefined"
+              },
+              "privacy": "public",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "'file' | 'folder' | undefined"
+              },
+              "fieldName": "variant"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-asset",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Asset",
+          "declaration": {
+            "name": "Asset",
+            "module": "packages/asset/src/Asset.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/asset/src/asset.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{align-items:center;display:flex;height:100%;justify-content:center;width:100%}::slotted(*){max-height:100%;max-width:100%;object-fit:contain;transition:opacity var(--spectrum-global-animation-duration-100,.13s)}.file,.folder{height:100%;margin:var(\n--spectrum-asset-icon-margin,var(--spectrum-global-dimension-size-250)\n);max-width:var(\n--spectrum-asset-icon-max-width,var(--spectrum-global-dimension-static-size-1000)\n);min-width:var(\n--spectrum-asset-icon-min-width,var(--spectrum-global-dimension-size-600)\n);width:100%}.folderBackground{fill:var(\n--spectrum-asset-folder-background-color,var(--spectrum-global-color-gray-300)\n)}.fileBackground{fill:var(\n--spectrum-asset-file-background-color,var(--spectrum-global-color-gray-50)\n)}.fileOutline,.folderOutline{fill:var(\n--spectrum-asset-icon-outline-color,var(--spectrum-global-color-gray-500)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/asset/src/asset.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/asset/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Asset.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/asset/src/spectrum-asset.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{align-items:center;display:flex;height:100%;justify-content:center;width:100%}::slotted(*){max-height:100%;max-width:100%;object-fit:contain;transition:opacity var(--spectrum-global-animation-duration-100,.13s)}.file,.folder{height:100%;margin:var(\n--spectrum-asset-icon-margin,var(--spectrum-global-dimension-size-250)\n);max-width:var(\n--spectrum-asset-icon-max-width,var(--spectrum-global-dimension-static-size-1000)\n);min-width:var(\n--spectrum-asset-icon-min-width,var(--spectrum-global-dimension-size-600)\n);width:100%}.folderBackground{fill:var(\n--spectrum-asset-folder-background-color,var(--spectrum-global-color-gray-300)\n)}.fileBackground{fill:var(\n--spectrum-asset-file-background-color,var(--spectrum-global-color-gray-50)\n)}.fileOutline,.folderOutline{fill:var(\n--spectrum-asset-icon-outline-color,var(--spectrum-global-color-gray-500)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/asset/src/spectrum-asset.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/avatar/src/Avatar.ts",
       "declarations": [
         {
@@ -5217,135 +5346,6 @@
           "declaration": {
             "name": "styles",
             "module": "packages/avatar/src/spectrum-avatar.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/asset/src/Asset.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Asset",
-          "slots": [
-            {
-              "description": "content to be displayed in the asset when an acceptable value for `file` is not present",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "variant",
-              "type": {
-                "text": "'file' | 'folder' | undefined"
-              },
-              "privacy": "public",
-              "attribute": "variant",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "label"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "variant",
-              "type": {
-                "text": "'file' | 'folder' | undefined"
-              },
-              "fieldName": "variant"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-asset",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Asset",
-          "declaration": {
-            "name": "Asset",
-            "module": "packages/asset/src/Asset.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/asset/src/asset.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{align-items:center;display:flex;height:100%;justify-content:center;width:100%}::slotted(*){max-height:100%;max-width:100%;object-fit:contain;transition:opacity var(--spectrum-global-animation-duration-100,.13s)}.file,.folder{height:100%;margin:var(\n--spectrum-asset-icon-margin,var(--spectrum-global-dimension-size-250)\n);max-width:var(\n--spectrum-asset-icon-max-width,var(--spectrum-global-dimension-static-size-1000)\n);min-width:var(\n--spectrum-asset-icon-min-width,var(--spectrum-global-dimension-size-600)\n);width:100%}.folderBackground{fill:var(\n--spectrum-asset-folder-background-color,var(--spectrum-global-color-gray-300)\n)}.fileBackground{fill:var(\n--spectrum-asset-file-background-color,var(--spectrum-global-color-gray-50)\n)}.fileOutline,.folderOutline{fill:var(\n--spectrum-asset-icon-outline-color,var(--spectrum-global-color-gray-500)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/asset/src/asset.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/asset/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Asset.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/asset/src/spectrum-asset.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{align-items:center;display:flex;height:100%;justify-content:center;width:100%}::slotted(*){max-height:100%;max-width:100%;object-fit:contain;transition:opacity var(--spectrum-global-animation-duration-100,.13s)}.file,.folder{height:100%;margin:var(\n--spectrum-asset-icon-margin,var(--spectrum-global-dimension-size-250)\n);max-width:var(\n--spectrum-asset-icon-max-width,var(--spectrum-global-dimension-static-size-1000)\n);min-width:var(\n--spectrum-asset-icon-min-width,var(--spectrum-global-dimension-size-600)\n);width:100%}.folderBackground{fill:var(\n--spectrum-asset-folder-background-color,var(--spectrum-global-color-gray-300)\n)}.fileBackground{fill:var(\n--spectrum-asset-file-background-color,var(--spectrum-global-color-gray-50)\n)}.fileOutline,.folderOutline{fill:var(\n--spectrum-asset-icon-outline-color,var(--spectrum-global-color-gray-500)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/asset/src/spectrum-asset.css.ts"
           }
         }
       ]
@@ -15995,6 +15995,256 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/divider/src/Divider.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Divider",
+          "members": [
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "privacy": "public",
+              "attribute": "size",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_size",
+              "type": {
+                "text": "ElementSize | null"
+              },
+              "privacy": "private",
+              "default": "defaultSize",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changes",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "fieldName": "size",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SizedMixin",
+              "package": "@spectrum-web-components/base"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-divider",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Divider",
+          "declaration": {
+            "name": "Divider",
+            "module": "packages/divider/src/Divider.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/divider/src/divider.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([size=s]){--spectrum-divider-height:var(\n--spectrum-divider-s-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-s-vertical-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-s-vertical-width,var(--spectrum-global-dimension-size-10)\n)}:host([size=m]){--spectrum-divider-height:var(\n--spectrum-divider-m-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-m-vertical-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-m-vertical-width,var(--spectrum-global-dimension-size-25)\n)}:host([size=l]){--spectrum-divider-height:var(\n--spectrum-divider-l-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-l-vertical-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-l-vertical-width,var(--spectrum-global-dimension-size-50)\n)}:host{--spectrum-divider-vertical-height:100%}:host{border-width:medium;border:var(--spectrum-divider-height);border-radius:var(--spectrum-divider-height);height:var(--spectrum-divider-height);overflow:visible;width:100%}:host([vertical]){height:var(\n--spectrum-divider-vertical-height\n);width:var(--spectrum-divider-vertical-width)}:host{--spectrum-divider-l-background-color:var(\n--spectrum-global-color-gray-800\n);--spectrum-divider-m-background-color:var(\n--spectrum-global-color-gray-300\n);--spectrum-divider-s-background-color:var(\n--spectrum-global-color-gray-300\n)}:host([size=l]){background-color:var(\n--spectrum-divider-l-background-color,var(--spectrum-global-color-gray-800)\n)}:host([size=m]){background-color:var(\n--spectrum-divider-m-background-color,var(--spectrum-global-color-gray-300)\n)}:host([size=s]){background-color:var(\n--spectrum-divider-s-background-color,var(--spectrum-global-color-gray-300)\n)}:host{display:block}hr{border:none;margin:0}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/divider/src/divider.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/divider/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Divider.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/divider/src/spectrum-divider.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([size=s]){--spectrum-divider-height:var(\n--spectrum-divider-s-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-s-vertical-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-s-vertical-width,var(--spectrum-global-dimension-size-10)\n)}:host([size=m]){--spectrum-divider-height:var(\n--spectrum-divider-m-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-m-vertical-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-m-vertical-width,var(--spectrum-global-dimension-size-25)\n)}:host([size=l]){--spectrum-divider-height:var(\n--spectrum-divider-l-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-l-vertical-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-l-vertical-width,var(--spectrum-global-dimension-size-50)\n)}:host{--spectrum-divider-vertical-height:100%}:host{border-width:medium;border:var(--spectrum-divider-height);border-radius:var(--spectrum-divider-height);height:var(--spectrum-divider-height);overflow:visible;width:100%}:host([vertical]){height:var(\n--spectrum-divider-vertical-height\n);width:var(--spectrum-divider-vertical-width)}:host{--spectrum-divider-l-background-color:var(\n--spectrum-global-color-gray-800\n);--spectrum-divider-m-background-color:var(\n--spectrum-global-color-gray-300\n);--spectrum-divider-s-background-color:var(\n--spectrum-global-color-gray-300\n)}:host([size=l]){background-color:var(\n--spectrum-divider-l-background-color,var(--spectrum-global-color-gray-800)\n)}:host([size=m]){background-color:var(\n--spectrum-divider-m-background-color,var(--spectrum-global-color-gray-300)\n)}:host([size=s]){background-color:var(\n--spectrum-divider-s-background-color,var(--spectrum-global-color-gray-300)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/divider/src/spectrum-divider.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/dialog/src/Dialog.ts",
       "declarations": [
         {
@@ -16959,256 +17209,6 @@
           "declaration": {
             "name": "styles",
             "module": "packages/dialog/src/spectrum-dialog.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/divider/src/Divider.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Divider",
-          "members": [
-            {
-              "kind": "field",
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "vertical",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "privacy": "public",
-              "attribute": "size",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_size",
-              "type": {
-                "text": "ElementSize | null"
-              },
-              "privacy": "private",
-              "default": "defaultSize",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "firstUpdated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "changes",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "vertical"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "fieldName": "size",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "mixins": [
-            {
-              "name": "SizedMixin",
-              "package": "@spectrum-web-components/base"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-divider",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Divider",
-          "declaration": {
-            "name": "Divider",
-            "module": "packages/divider/src/Divider.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/divider/src/divider.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-divider-height:var(\n--spectrum-divider-s-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-s-vertical-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-s-vertical-width,var(--spectrum-global-dimension-size-10)\n)}:host([size=m]){--spectrum-divider-height:var(\n--spectrum-divider-m-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-m-vertical-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-m-vertical-width,var(--spectrum-global-dimension-size-25)\n)}:host([size=l]){--spectrum-divider-height:var(\n--spectrum-divider-l-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-l-vertical-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-l-vertical-width,var(--spectrum-global-dimension-size-50)\n)}:host{--spectrum-divider-vertical-height:100%}:host{border-width:medium;border:var(--spectrum-divider-height);border-radius:var(--spectrum-divider-height);height:var(--spectrum-divider-height);overflow:visible;width:100%}:host([vertical]){height:var(\n--spectrum-divider-vertical-height\n);width:var(--spectrum-divider-vertical-width)}:host{--spectrum-divider-l-background-color:var(\n--spectrum-global-color-gray-800\n);--spectrum-divider-m-background-color:var(\n--spectrum-global-color-gray-300\n);--spectrum-divider-s-background-color:var(\n--spectrum-global-color-gray-300\n)}:host([size=l]){background-color:var(\n--spectrum-divider-l-background-color,var(--spectrum-global-color-gray-800)\n)}:host([size=m]){background-color:var(\n--spectrum-divider-m-background-color,var(--spectrum-global-color-gray-300)\n)}:host([size=s]){background-color:var(\n--spectrum-divider-s-background-color,var(--spectrum-global-color-gray-300)\n)}:host{display:block}hr{border:none;margin:0}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/divider/src/divider.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/divider/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Divider.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/divider/src/spectrum-divider.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-divider-height:var(\n--spectrum-divider-s-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-s-vertical-height,var(--spectrum-global-dimension-size-10)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-s-vertical-width,var(--spectrum-global-dimension-size-10)\n)}:host([size=m]){--spectrum-divider-height:var(\n--spectrum-divider-m-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-m-vertical-height,var(--spectrum-global-dimension-size-25)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-m-vertical-width,var(--spectrum-global-dimension-size-25)\n)}:host([size=l]){--spectrum-divider-height:var(\n--spectrum-divider-l-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-height:var(\n--spectrum-divider-l-vertical-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-divider-vertical-width:var(\n--spectrum-divider-l-vertical-width,var(--spectrum-global-dimension-size-50)\n)}:host{--spectrum-divider-vertical-height:100%}:host{border-width:medium;border:var(--spectrum-divider-height);border-radius:var(--spectrum-divider-height);height:var(--spectrum-divider-height);overflow:visible;width:100%}:host([vertical]){height:var(\n--spectrum-divider-vertical-height\n);width:var(--spectrum-divider-vertical-width)}:host{--spectrum-divider-l-background-color:var(\n--spectrum-global-color-gray-800\n);--spectrum-divider-m-background-color:var(\n--spectrum-global-color-gray-300\n);--spectrum-divider-s-background-color:var(\n--spectrum-global-color-gray-300\n)}:host([size=l]){background-color:var(\n--spectrum-divider-l-background-color,var(--spectrum-global-color-gray-800)\n)}:host([size=m]){background-color:var(\n--spectrum-divider-m-background-color,var(--spectrum-global-color-gray-300)\n)}:host([size=s]){background-color:var(\n--spectrum-divider-s-background-color,var(--spectrum-global-color-gray-300)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/divider/src/spectrum-divider.css.ts"
           }
         }
       ]
@@ -42748,6 +42748,1222 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/sidenav/src/Sidenav.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "SideNav",
+          "slots": [
+            {
+              "description": "the Sidenav Items to display",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "items",
+              "privacy": "private",
+              "default": "new Set<SideNavItem>()"
+            },
+            {
+              "kind": "method",
+              "name": "startTrackingSelectionForItem",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "item",
+                  "type": {
+                    "text": "SideNavItem"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "stopTrackingSelectionForItem",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "item",
+                  "type": {
+                    "text": "SideNavItem"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "rovingTabindexController",
+              "default": "new RovingTabindexController<SideNavItem>(this, {\n        focusInIndex: (elements: SideNavItem[]) => {\n            return elements.findIndex((el) => {\n                return this.value\n                    ? !el.disabled &&\n                          !this.isDisabledChild(el) &&\n                          el.value === this.value\n                    : !el.disabled && !this.isDisabledChild(el);\n            });\n        },\n        direction: 'vertical',\n        elements: () => [...this.querySelectorAll('sp-sidenav-item')],\n        isFocusableElement: (el: SideNavItem) =>\n            !el.disabled && !this.isDisabledChild(el),\n    })"
+            },
+            {
+              "kind": "field",
+              "name": "manageTabIndex",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "manage-tab-index",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "default": "undefined",
+              "attribute": "value",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "handleSelect",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "CustomEvent<SidenavSelectDetail> & { target: SideNavItem }"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "blur",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "click",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "focusElement",
+              "type": {
+                "text": "SideNavItem | SideNav"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "method",
+              "name": "isDisabledChild",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "child",
+                  "type": {
+                    "text": "SideNavItem"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleSlotchange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "type": {
+                "text": "Event"
+              },
+              "description": "Announces a change in the `value` property of the navigation element. This change can be \"canceled\" via `event.preventDefault()`."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "manage-tab-index",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "manageTabIndex"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "packages/sidenav/src/Sidenav.ts"
+              },
+              "fieldName": "value"
+            }
+          ],
+          "superclass": {
+            "name": "Focusable",
+            "package": "@spectrum-web-components/shared"
+          },
+          "tagName": "sp-sidenav",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SideNav",
+          "declaration": {
+            "name": "SideNav",
+            "module": "packages/sidenav/src/Sidenav.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/sidenav/src/SidenavHeading.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "SideNavHeading",
+          "slots": [
+            {
+              "description": "the Sidenav Items to display in association with the heading",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-sidenav-heading",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SideNavHeading",
+          "declaration": {
+            "name": "SideNavHeading",
+            "module": "packages/sidenav/src/SidenavHeading.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/sidenav/src/SidenavItem.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "SideNavItem",
+          "slots": [
+            {
+              "description": "the Sidenav Items to display as children of this item",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "default": "undefined",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "selected",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "expanded",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "parentSideNav",
+              "type": {
+                "text": "SideNav | undefined"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "_parentSidenav",
+              "type": {
+                "text": "SideNav | undefined"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "hasChildren",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "depth",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "method",
+              "name": "handleSideNavSelect",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleClick",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "optional": true,
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "announceSelected",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "click",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "focusElement",
+              "type": {
+                "text": "DisableableElement"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "startTrackingSelection",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "stopTrackingSelection",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "download",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "attribute": "download",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "attribute": "label",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "attribute": "href",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "type": {
+                "text": "'_blank' | '_parent' | '_self' | '_top' | undefined"
+              },
+              "privacy": "public",
+              "attribute": "target",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "rel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "attribute": "rel",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderAnchor",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "{\n            id,\n            className,\n            ariaHidden,\n            labelledby,\n            tabindex,\n            // prettier-ignore\n            anchorContent = html`<slot></slot>`,\n        }",
+                  "type": {
+                    "text": "RenderAnchorOptions"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Disable this control. It will not receive focus or events",
+              "attribute": "disabled",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autofocus",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "description": "When this control is rendered, focus it automatically",
+              "attribute": "autofocus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
+              "attribute": "tabIndex",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onPointerdownManagementOfTabIndex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageFocusElementTabindex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "tabIndex",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "manipulatingTabindex",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "blur",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageAutoFocus",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleDisabledChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "disabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "oldDisabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "[$endPolyfillCoordination]",
+              "type": {
+                "text": "EndPolyfillCoordinationCallback | null"
+              },
+              "privacy": "private",
+              "default": "null",
+              "inheritedFrom": {
+                "name": "FocusVisiblePolyfillMixin",
+                "module": "packages/shared/src/focus-visible.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              },
+              "default": "undefined",
+              "resolveInitializer": {
+                "module": "packages/sidenav/src/SidenavItem.ts"
+              },
+              "fieldName": "value"
+            },
+            {
+              "name": "selected",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "selected"
+            },
+            {
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "expanded"
+            },
+            {
+              "name": "download",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "download",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "label",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "href",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "href",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "target",
+              "type": {
+                "text": "'_blank' | '_parent' | '_self' | '_top' | undefined"
+              },
+              "fieldName": "target",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "rel",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "rel",
+              "inheritedFrom": {
+                "name": "LikeAnchor",
+                "module": "packages/shared/src/like-anchor.ts"
+              }
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disable this control. It will not receive focus or events",
+              "fieldName": "disabled",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "name": "autofocus",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When this control is rendered, focus it automatically",
+              "fieldName": "autofocus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "name": "tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
+              "fieldName": "tabIndex",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "LikeAnchor",
+              "package": "@spectrum-web-components/shared/src/like-anchor.js"
+            }
+          ],
+          "superclass": {
+            "name": "Focusable",
+            "package": "@spectrum-web-components/shared/src/focusable.js"
+          },
+          "tagName": "sp-sidenav-item",
+          "customElement": true,
+          "events": [
+            {
+              "name": "keydown",
+              "type": {
+                "text": "KeyboardEvent"
+              },
+              "description": "Trick :focus-visible polyfill into thinking keyboard based focus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SideNavItem",
+          "declaration": {
+            "name": "SideNavItem",
+            "module": "packages/sidenav/src/SidenavItem.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/sidenav/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Sidenav.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./SidenavItem.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./SidenavHeading.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/sidenav/src/sidenav-heading.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n#list{--spectrum-sidenav-item-padding-y:var(\n--spectrum-global-dimension-size-65\n);list-style-type:none;margin:0;padding:0}:host([dir=ltr]) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon{margin-right:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}:host([dir=rtl]) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon{margin-left:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}:host([dir=ltr]) #heading{margin-right:0}:host([dir=rtl]) #heading{margin-left:0}:host([dir=ltr]) #heading{margin-left:0}:host([dir=rtl]) #heading{margin-right:0}#heading{border-radius:var(\n--spectrum-sidenav-heading-border-radius,var(--spectrum-alias-border-radius-regular)\n);font-size:var(\n--spectrum-sidenav-heading-text-size,var(--spectrum-global-dimension-font-size-50)\n);font-style:normal;font-weight:var(\n--spectrum-sidenav-heading-text-font-weight,var(--spectrum-global-font-weight-medium)\n);height:var(\n--spectrum-sidenav-heading-height,var(--spectrum-alias-single-line-height)\n);letter-spacing:var(\n--spectrum-sidenav-heading-text-letter-spacing,var(--spectrum-global-font-letter-spacing-medium)\n);line-height:var(\n--spectrum-sidenav-heading-height,var(--spectrum-alias-single-line-height)\n);margin-bottom:var(\n--spectrum-sidenav-heading-gap-bottom,var(--spectrum-global-dimension-size-50)\n);margin-top:var(\n--spectrum-sidenav-heading-gap-top,var(--spectrum-global-dimension-size-200)\n);padding-bottom:0;padding-left:var(\n--spectrum-sidenav-heading-padding-x,var(--spectrum-global-dimension-size-150)\n);padding-right:var(\n--spectrum-sidenav-heading-padding-x,var(--spectrum-global-dimension-size-150)\n);padding-top:0;text-transform:uppercase}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list .spectrum-SideNav-itemLink{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list .spectrum-SideNav-itemLink{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list #list .spectrum-SideNav-itemLink{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list #list .spectrum-SideNav-itemLink{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}#heading{color:var(\n--spectrum-sidenav-heading-text-color,var(--spectrum-global-color-gray-700)\n)}:host{display:block}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/sidenav/src/sidenav-heading.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/sidenav/src/sidenav-item.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n#list{--spectrum-sidenav-item-padding-y:var(\n--spectrum-global-dimension-size-65\n);list-style-type:none;margin:0;padding:0}:host{list-style-type:none;margin-bottom:var(\n--spectrum-sidenav-item-gap,var(--spectrum-global-dimension-size-50)\n);margin-left:0;margin-right:0;margin-top:var(\n--spectrum-sidenav-item-gap,var(--spectrum-global-dimension-size-50)\n)}#item-link{align-items:center;border-radius:var(\n--spectrum-sidenav-item-border-radius,var(--spectrum-alias-border-radius-regular)\n);box-sizing:border-box;cursor:pointer;display:inline-flex;font-size:var(\n--spectrum-sidenav-item-text-size,var(--spectrum-alias-font-size-default)\n);font-style:normal;font-weight:var(\n--spectrum-sidenav-item-text-font-weight,var(--spectrum-global-font-weight-regular)\n);-webkit-hyphens:auto;hyphens:auto;justify-content:left;min-height:var(\n--spectrum-sidenav-item-height,var(--spectrum-alias-single-line-height)\n);padding:var(--spectrum-sidenav-item-padding-y) var(\n--spectrum-sidenav-item-padding-x,var(--spectrum-global-dimension-size-150)\n);position:relative;text-decoration:none;transition:background-color var(--spectrum-global-animation-duration-100,.13s) ease-out,color var(--spectrum-global-animation-duration-100,.13s) ease-out;width:100%;word-break:break-word}#item-link:focus{outline:none}#item-link:before{border:var(\n--spectrum-tabs-m-focus-ring-size,var(--spectrum-alias-border-size-thick)\n) solid transparent;border-radius:var(\n--spectrum-sidenav-item-border-radius,var(--spectrum-alias-border-radius-regular)\n);bottom:0;content:\"\";left:0;pointer-events:none;position:absolute;right:0;top:0;transition:border var(--spectrum-global-animation-duration-100,.13s) ease-out}:host([dir=ltr]) #item-link ::slotted([slot=icon]){margin-right:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}:host([dir=rtl]) #item-link ::slotted([slot=icon]){margin-left:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}#item-link ::slotted([slot=icon]){flex-shrink:0}:host([dir=ltr]) .spectrum-SideNav-heading{margin-right:0}:host([dir=rtl]) .spectrum-SideNav-heading{margin-left:0}:host([dir=ltr]) .spectrum-SideNav-heading{margin-left:0}:host([dir=rtl]) .spectrum-SideNav-heading{margin-right:0}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list #item-link{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list #item-link{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list #list #item-link{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list #list #item-link{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([selected])>#item-link{background-color:var(\n--spectrum-sidenav-item-background-color-selected,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-selected,var(--spectrum-alias-text-color-hover)\n)}.is-active>#item-link{background-color:var(\n--spectrum-sidenav-item-background-color-down,var(--spectrum-alias-highlight-hover)\n)}:host([disabled]) #item-link{background-color:var(\n--spectrum-sidenav-item-background-color-disabled,var(--spectrum-alias-background-color-transparent)\n);color:var(\n--spectrum-sidenav-item-text-color-disabled,var(--spectrum-alias-text-color-disabled)\n);cursor:default;pointer-events:none}#item-link{background-color:var(\n--spectrum-sidenav-item-background-color,var(--spectrum-alias-background-color-transparent)\n);color:var(\n--spectrum-sidenav-item-text-color,var(--spectrum-alias-text-color)\n)}#item-link:hover{background-color:var(\n--spectrum-sidenav-item-background-color-hover,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-hover,var(--spectrum-alias-text-color-hover)\n)}#item-link:active{background-color:var(\n--spectrum-sidenav-item-background-color-down,var(--spectrum-alias-highlight-hover)\n)}#item-link.focus-visible{background-color:var(\n--spectrum-sidenav-item-background-color-key-focus,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-key-focus,var(--spectrum-alias-text-color-hover)\n)}#item-link:focus-visible{background-color:var(\n--spectrum-sidenav-item-background-color-key-focus,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-key-focus,var(--spectrum-alias-text-color-hover)\n)}#item-link.focus-visible:before{border-color:var(\n--spectrum-sidenav-item-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}#item-link:focus-visible:before{border-color:var(\n--spectrum-sidenav-item-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host{display:block}:host([disabled]){pointer-events:none}:host([multiLevel]){--spectrum-web-component-sidenav-font-weight:var(\n--spectrum-sidenav-item-font-weight,700\n)}::slotted(sp-sidenav-item:not([multiLevel])){--spectrum-web-component-sidenav-font-weight:var(\n--spectrum-sidenav-item-font-weight,400\n)}#item-link{font-weight:var(--spectrum-web-component-sidenav-font-weight);justify-content:start}:host([dir=ltr]) #item-link[data-level=\"1\"]{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-indentation-level1,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=ltr]) #item-link[data-level=\"2\"]{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-indentation-level2,\nvar(--spectrum-global-dimension-size-300)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) #item-link[data-level=\"1\"]{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-indentation-level1,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) #item-link[data-level=\"2\"]{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-indentation-level2,\nvar(--spectrum-global-dimension-size-300)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}a ::slotted(sp-sidenav-item){display:none}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/sidenav/src/sidenav-item.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/sidenav/src/sidenav.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-sidenav-item-padding-y:var(\n--spectrum-global-dimension-size-65\n)}:host{list-style-type:none;margin:0;padding:0}:host{--spectrum-web-component-sidenav-font-weight:var(\n--spectrum-sidenav-item-font-weight,var(--spectrum-global-font-weight-regular)\n);display:block;width:240px}:host([variant=multilevel]){--spectrum-web-component-sidenav-font-weight:var(\n--spectrum-sidenav-multilevel-main-item-font-weight,var(--spectrum-global-font-weight-bold)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/sidenav/src/sidenav.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/sidenav/src/spectrum-sidenav-heading.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n#list{--spectrum-sidenav-item-padding-y:var(\n--spectrum-global-dimension-size-65\n);list-style-type:none;margin:0;padding:0}:host([dir=ltr]) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon{margin-right:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}:host([dir=rtl]) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon{margin-left:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}:host([dir=ltr]) #heading{margin-right:0}:host([dir=rtl]) #heading{margin-left:0}:host([dir=ltr]) #heading{margin-left:0}:host([dir=rtl]) #heading{margin-right:0}#heading{border-radius:var(\n--spectrum-sidenav-heading-border-radius,var(--spectrum-alias-border-radius-regular)\n);font-size:var(\n--spectrum-sidenav-heading-text-size,var(--spectrum-global-dimension-font-size-50)\n);font-style:normal;font-weight:var(\n--spectrum-sidenav-heading-text-font-weight,var(--spectrum-global-font-weight-medium)\n);height:var(\n--spectrum-sidenav-heading-height,var(--spectrum-alias-single-line-height)\n);letter-spacing:var(\n--spectrum-sidenav-heading-text-letter-spacing,var(--spectrum-global-font-letter-spacing-medium)\n);line-height:var(\n--spectrum-sidenav-heading-height,var(--spectrum-alias-single-line-height)\n);margin-bottom:var(\n--spectrum-sidenav-heading-gap-bottom,var(--spectrum-global-dimension-size-50)\n);margin-top:var(\n--spectrum-sidenav-heading-gap-top,var(--spectrum-global-dimension-size-200)\n);padding-bottom:0;padding-left:var(\n--spectrum-sidenav-heading-padding-x,var(--spectrum-global-dimension-size-150)\n);padding-right:var(\n--spectrum-sidenav-heading-padding-x,var(--spectrum-global-dimension-size-150)\n);padding-top:0;text-transform:uppercase}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list .spectrum-SideNav-itemLink{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list .spectrum-SideNav-itemLink{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list #list .spectrum-SideNav-itemLink{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list #list .spectrum-SideNav-itemLink{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}#heading{color:var(\n--spectrum-sidenav-heading-text-color,var(--spectrum-global-color-gray-700)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/sidenav/src/spectrum-sidenav-heading.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/sidenav/src/spectrum-sidenav-item.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n#list{--spectrum-sidenav-item-padding-y:var(\n--spectrum-global-dimension-size-65\n);list-style-type:none;margin:0;padding:0}:host{list-style-type:none;margin-bottom:var(\n--spectrum-sidenav-item-gap,var(--spectrum-global-dimension-size-50)\n);margin-left:0;margin-right:0;margin-top:var(\n--spectrum-sidenav-item-gap,var(--spectrum-global-dimension-size-50)\n)}#item-link{align-items:center;border-radius:var(\n--spectrum-sidenav-item-border-radius,var(--spectrum-alias-border-radius-regular)\n);box-sizing:border-box;cursor:pointer;display:inline-flex;font-size:var(\n--spectrum-sidenav-item-text-size,var(--spectrum-alias-font-size-default)\n);font-style:normal;font-weight:var(\n--spectrum-sidenav-item-text-font-weight,var(--spectrum-global-font-weight-regular)\n);-webkit-hyphens:auto;hyphens:auto;justify-content:left;min-height:var(\n--spectrum-sidenav-item-height,var(--spectrum-alias-single-line-height)\n);padding:var(--spectrum-sidenav-item-padding-y) var(\n--spectrum-sidenav-item-padding-x,var(--spectrum-global-dimension-size-150)\n);position:relative;text-decoration:none;transition:background-color var(--spectrum-global-animation-duration-100,.13s) ease-out,color var(--spectrum-global-animation-duration-100,.13s) ease-out;width:100%;word-break:break-word}#item-link:focus{outline:none}#item-link:before{border:var(\n--spectrum-tabs-m-focus-ring-size,var(--spectrum-alias-border-size-thick)\n) solid transparent;border-radius:var(\n--spectrum-sidenav-item-border-radius,var(--spectrum-alias-border-radius-regular)\n);bottom:0;content:\"\";left:0;pointer-events:none;position:absolute;right:0;top:0;transition:border var(--spectrum-global-animation-duration-100,.13s) ease-out}:host([dir=ltr]) #item-link ::slotted([slot=icon]){margin-right:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}:host([dir=rtl]) #item-link ::slotted([slot=icon]){margin-left:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}#item-link ::slotted([slot=icon]){flex-shrink:0}:host([dir=ltr]) .spectrum-SideNav-heading{margin-right:0}:host([dir=rtl]) .spectrum-SideNav-heading{margin-left:0}:host([dir=ltr]) .spectrum-SideNav-heading{margin-left:0}:host([dir=rtl]) .spectrum-SideNav-heading{margin-right:0}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list #item-link{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list #item-link{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list #list #item-link{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list #list #item-link{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([selected])>#item-link{background-color:var(\n--spectrum-sidenav-item-background-color-selected,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-selected,var(--spectrum-alias-text-color-hover)\n)}.is-active>#item-link{background-color:var(\n--spectrum-sidenav-item-background-color-down,var(--spectrum-alias-highlight-hover)\n)}:host([disabled]) #item-link{background-color:var(\n--spectrum-sidenav-item-background-color-disabled,var(--spectrum-alias-background-color-transparent)\n);color:var(\n--spectrum-sidenav-item-text-color-disabled,var(--spectrum-alias-text-color-disabled)\n);cursor:default;pointer-events:none}#item-link{background-color:var(\n--spectrum-sidenav-item-background-color,var(--spectrum-alias-background-color-transparent)\n);color:var(\n--spectrum-sidenav-item-text-color,var(--spectrum-alias-text-color)\n)}#item-link:hover{background-color:var(\n--spectrum-sidenav-item-background-color-hover,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-hover,var(--spectrum-alias-text-color-hover)\n)}#item-link:active{background-color:var(\n--spectrum-sidenav-item-background-color-down,var(--spectrum-alias-highlight-hover)\n)}#item-link.focus-visible{background-color:var(\n--spectrum-sidenav-item-background-color-key-focus,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-key-focus,var(--spectrum-alias-text-color-hover)\n)}#item-link:focus-visible{background-color:var(\n--spectrum-sidenav-item-background-color-key-focus,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-key-focus,var(--spectrum-alias-text-color-hover)\n)}#item-link.focus-visible:before{border-color:var(\n--spectrum-sidenav-item-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}#item-link:focus-visible:before{border-color:var(\n--spectrum-sidenav-item-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/sidenav/src/spectrum-sidenav-item.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/sidenav/src/spectrum-sidenav.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-sidenav-item-padding-y:var(\n--spectrum-global-dimension-size-65\n)}:host{list-style-type:none;margin:0;padding:0}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/sidenav/src/spectrum-sidenav.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/slider/src/HandleController.ts",
       "declarations": [
         {
@@ -45349,1222 +46565,6 @@
           "declaration": {
             "name": "styles",
             "module": "packages/slider/src/spectrum-slider.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/sidenav/src/Sidenav.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "SideNav",
-          "slots": [
-            {
-              "description": "the Sidenav Items to display",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "items",
-              "privacy": "private",
-              "default": "new Set<SideNavItem>()"
-            },
-            {
-              "kind": "method",
-              "name": "startTrackingSelectionForItem",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "item",
-                  "type": {
-                    "text": "SideNavItem"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "stopTrackingSelectionForItem",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "item",
-                  "type": {
-                    "text": "SideNavItem"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "field",
-              "name": "rovingTabindexController",
-              "default": "new RovingTabindexController<SideNavItem>(this, {\n        focusInIndex: (elements: SideNavItem[]) => {\n            return elements.findIndex((el) => {\n                return this.value\n                    ? !el.disabled &&\n                          !this.isDisabledChild(el) &&\n                          el.value === this.value\n                    : !el.disabled && !this.isDisabledChild(el);\n            });\n        },\n        direction: 'vertical',\n        elements: () => [...this.querySelectorAll('sp-sidenav-item')],\n        isFocusableElement: (el: SideNavItem) =>\n            !el.disabled && !this.isDisabledChild(el),\n    })"
-            },
-            {
-              "kind": "field",
-              "name": "manageTabIndex",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "manage-tab-index",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "default": "undefined",
-              "attribute": "value",
-              "reflects": true
-            },
-            {
-              "kind": "method",
-              "name": "handleSelect",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "CustomEvent<SidenavSelectDetail> & { target: SideNavItem }"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "focus",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "blur",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "click",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "focusElement",
-              "type": {
-                "text": "SideNavItem | SideNav"
-              },
-              "privacy": "public"
-            },
-            {
-              "kind": "method",
-              "name": "isDisabledChild",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "child",
-                  "type": {
-                    "text": "SideNavItem"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleSlotchange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "change",
-              "type": {
-                "text": "Event"
-              },
-              "description": "Announces a change in the `value` property of the navigation element. This change can be \"canceled\" via `event.preventDefault()`."
-            }
-          ],
-          "attributes": [
-            {
-              "name": "manage-tab-index",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "manageTabIndex"
-            },
-            {
-              "name": "value",
-              "type": {
-                "text": "string | undefined"
-              },
-              "default": "undefined",
-              "resolveInitializer": {
-                "module": "packages/sidenav/src/Sidenav.ts"
-              },
-              "fieldName": "value"
-            }
-          ],
-          "superclass": {
-            "name": "Focusable",
-            "package": "@spectrum-web-components/shared"
-          },
-          "tagName": "sp-sidenav",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "SideNav",
-          "declaration": {
-            "name": "SideNav",
-            "module": "packages/sidenav/src/Sidenav.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/sidenav/src/SidenavHeading.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "SideNavHeading",
-          "slots": [
-            {
-              "description": "the Sidenav Items to display in association with the heading",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "label",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-sidenav-heading",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "SideNavHeading",
-          "declaration": {
-            "name": "SideNavHeading",
-            "module": "packages/sidenav/src/SidenavHeading.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/sidenav/src/SidenavItem.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "SideNavItem",
-          "slots": [
-            {
-              "description": "the Sidenav Items to display as children of this item",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "default": "undefined",
-              "attribute": "value"
-            },
-            {
-              "kind": "field",
-              "name": "selected",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "selected",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "expanded",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "expanded",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "parentSideNav",
-              "type": {
-                "text": "SideNav | undefined"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "field",
-              "name": "_parentSidenav",
-              "type": {
-                "text": "SideNav | undefined"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "field",
-              "name": "hasChildren",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "field",
-              "name": "depth",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "method",
-              "name": "handleSideNavSelect",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleClick",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "optional": true,
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "announceSelected",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "string"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "click",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "focusElement",
-              "type": {
-                "text": "DisableableElement"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "startTrackingSelection",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "stopTrackingSelection",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "download",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "attribute": "download",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "attribute": "label",
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "href",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "attribute": "href",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "target",
-              "type": {
-                "text": "'_blank' | '_parent' | '_self' | '_top' | undefined"
-              },
-              "privacy": "public",
-              "attribute": "target",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "rel",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "attribute": "rel",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "renderAnchor",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "{\n            id,\n            className,\n            ariaHidden,\n            labelledby,\n            tabindex,\n            // prettier-ignore\n            anchorContent = html`<slot></slot>`,\n        }",
-                  "type": {
-                    "text": "RenderAnchorOptions"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Disable this control. It will not receive focus or events",
-              "attribute": "disabled",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "autofocus",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "description": "When this control is rendered, focus it automatically",
-              "attribute": "autofocus",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "tabIndex",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
-              "attribute": "tabIndex",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_tabIndex",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "0",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "onPointerdownManagementOfTabIndex",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageFocusElementTabindex",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "tabIndex",
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "manipulatingTabindex",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "focus",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "options",
-                  "optional": true,
-                  "type": {
-                    "text": "FocusOptions"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "blur",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageAutoFocus",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleDisabledChanged",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "disabled",
-                  "type": {
-                    "text": "boolean"
-                  }
-                },
-                {
-                  "name": "oldDisabled",
-                  "type": {
-                    "text": "boolean"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "[$endPolyfillCoordination]",
-              "type": {
-                "text": "EndPolyfillCoordinationCallback | null"
-              },
-              "privacy": "private",
-              "default": "null",
-              "inheritedFrom": {
-                "name": "FocusVisiblePolyfillMixin",
-                "module": "packages/shared/src/focus-visible.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "value",
-              "type": {
-                "text": "string | undefined"
-              },
-              "default": "undefined",
-              "resolveInitializer": {
-                "module": "packages/sidenav/src/SidenavItem.ts"
-              },
-              "fieldName": "value"
-            },
-            {
-              "name": "selected",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "selected"
-            },
-            {
-              "name": "expanded",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "expanded"
-            },
-            {
-              "name": "download",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "download",
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "label",
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "name": "href",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "href",
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "name": "target",
-              "type": {
-                "text": "'_blank' | '_parent' | '_self' | '_top' | undefined"
-              },
-              "fieldName": "target",
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "name": "rel",
-              "type": {
-                "text": "string | undefined"
-              },
-              "fieldName": "rel",
-              "inheritedFrom": {
-                "name": "LikeAnchor",
-                "module": "packages/shared/src/like-anchor.ts"
-              }
-            },
-            {
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Disable this control. It will not receive focus or events",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "name": "autofocus",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "When this control is rendered, focus it automatically",
-              "fieldName": "autofocus",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "name": "tabIndex",
-              "type": {
-                "text": "number"
-              },
-              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
-              "fieldName": "tabIndex",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "mixins": [
-            {
-              "name": "LikeAnchor",
-              "package": "@spectrum-web-components/shared/src/like-anchor.js"
-            }
-          ],
-          "superclass": {
-            "name": "Focusable",
-            "package": "@spectrum-web-components/shared/src/focusable.js"
-          },
-          "tagName": "sp-sidenav-item",
-          "customElement": true,
-          "events": [
-            {
-              "name": "keydown",
-              "type": {
-                "text": "KeyboardEvent"
-              },
-              "description": "Trick :focus-visible polyfill into thinking keyboard based focus",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "SideNavItem",
-          "declaration": {
-            "name": "SideNavItem",
-            "module": "packages/sidenav/src/SidenavItem.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/sidenav/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Sidenav.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./SidenavItem.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./SidenavHeading.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/sidenav/src/sidenav-heading.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n#list{--spectrum-sidenav-item-padding-y:var(\n--spectrum-global-dimension-size-65\n);list-style-type:none;margin:0;padding:0}:host([dir=ltr]) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon{margin-right:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}:host([dir=rtl]) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon{margin-left:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}:host([dir=ltr]) #heading{margin-right:0}:host([dir=rtl]) #heading{margin-left:0}:host([dir=ltr]) #heading{margin-left:0}:host([dir=rtl]) #heading{margin-right:0}#heading{border-radius:var(\n--spectrum-sidenav-heading-border-radius,var(--spectrum-alias-border-radius-regular)\n);font-size:var(\n--spectrum-sidenav-heading-text-size,var(--spectrum-global-dimension-font-size-50)\n);font-style:normal;font-weight:var(\n--spectrum-sidenav-heading-text-font-weight,var(--spectrum-global-font-weight-medium)\n);height:var(\n--spectrum-sidenav-heading-height,var(--spectrum-alias-single-line-height)\n);letter-spacing:var(\n--spectrum-sidenav-heading-text-letter-spacing,var(--spectrum-global-font-letter-spacing-medium)\n);line-height:var(\n--spectrum-sidenav-heading-height,var(--spectrum-alias-single-line-height)\n);margin-bottom:var(\n--spectrum-sidenav-heading-gap-bottom,var(--spectrum-global-dimension-size-50)\n);margin-top:var(\n--spectrum-sidenav-heading-gap-top,var(--spectrum-global-dimension-size-200)\n);padding-bottom:0;padding-left:var(\n--spectrum-sidenav-heading-padding-x,var(--spectrum-global-dimension-size-150)\n);padding-right:var(\n--spectrum-sidenav-heading-padding-x,var(--spectrum-global-dimension-size-150)\n);padding-top:0;text-transform:uppercase}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list .spectrum-SideNav-itemLink{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list .spectrum-SideNav-itemLink{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list #list .spectrum-SideNav-itemLink{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list #list .spectrum-SideNav-itemLink{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}#heading{color:var(\n--spectrum-sidenav-heading-text-color,var(--spectrum-global-color-gray-700)\n)}:host{display:block}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/sidenav/src/sidenav-heading.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/sidenav/src/sidenav-item.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n#list{--spectrum-sidenav-item-padding-y:var(\n--spectrum-global-dimension-size-65\n);list-style-type:none;margin:0;padding:0}:host{list-style-type:none;margin-bottom:var(\n--spectrum-sidenav-item-gap,var(--spectrum-global-dimension-size-50)\n);margin-left:0;margin-right:0;margin-top:var(\n--spectrum-sidenav-item-gap,var(--spectrum-global-dimension-size-50)\n)}#item-link{align-items:center;border-radius:var(\n--spectrum-sidenav-item-border-radius,var(--spectrum-alias-border-radius-regular)\n);box-sizing:border-box;cursor:pointer;display:inline-flex;font-size:var(\n--spectrum-sidenav-item-text-size,var(--spectrum-alias-font-size-default)\n);font-style:normal;font-weight:var(\n--spectrum-sidenav-item-text-font-weight,var(--spectrum-global-font-weight-regular)\n);-webkit-hyphens:auto;hyphens:auto;justify-content:left;min-height:var(\n--spectrum-sidenav-item-height,var(--spectrum-alias-single-line-height)\n);padding:var(--spectrum-sidenav-item-padding-y) var(\n--spectrum-sidenav-item-padding-x,var(--spectrum-global-dimension-size-150)\n);position:relative;text-decoration:none;transition:background-color var(--spectrum-global-animation-duration-100,.13s) ease-out,color var(--spectrum-global-animation-duration-100,.13s) ease-out;width:100%;word-break:break-word}#item-link:focus{outline:none}#item-link:before{border:var(\n--spectrum-tabs-m-focus-ring-size,var(--spectrum-alias-border-size-thick)\n) solid transparent;border-radius:var(\n--spectrum-sidenav-item-border-radius,var(--spectrum-alias-border-radius-regular)\n);bottom:0;content:\"\";left:0;pointer-events:none;position:absolute;right:0;top:0;transition:border var(--spectrum-global-animation-duration-100,.13s) ease-out}:host([dir=ltr]) #item-link ::slotted([slot=icon]){margin-right:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}:host([dir=rtl]) #item-link ::slotted([slot=icon]){margin-left:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}#item-link ::slotted([slot=icon]){flex-shrink:0}:host([dir=ltr]) .spectrum-SideNav-heading{margin-right:0}:host([dir=rtl]) .spectrum-SideNav-heading{margin-left:0}:host([dir=ltr]) .spectrum-SideNav-heading{margin-left:0}:host([dir=rtl]) .spectrum-SideNav-heading{margin-right:0}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list #item-link{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list #item-link{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list #list #item-link{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list #list #item-link{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([selected])>#item-link{background-color:var(\n--spectrum-sidenav-item-background-color-selected,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-selected,var(--spectrum-alias-text-color-hover)\n)}.is-active>#item-link{background-color:var(\n--spectrum-sidenav-item-background-color-down,var(--spectrum-alias-highlight-hover)\n)}:host([disabled]) #item-link{background-color:var(\n--spectrum-sidenav-item-background-color-disabled,var(--spectrum-alias-background-color-transparent)\n);color:var(\n--spectrum-sidenav-item-text-color-disabled,var(--spectrum-alias-text-color-disabled)\n);cursor:default;pointer-events:none}#item-link{background-color:var(\n--spectrum-sidenav-item-background-color,var(--spectrum-alias-background-color-transparent)\n);color:var(\n--spectrum-sidenav-item-text-color,var(--spectrum-alias-text-color)\n)}#item-link:hover{background-color:var(\n--spectrum-sidenav-item-background-color-hover,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-hover,var(--spectrum-alias-text-color-hover)\n)}#item-link:active{background-color:var(\n--spectrum-sidenav-item-background-color-down,var(--spectrum-alias-highlight-hover)\n)}#item-link.focus-visible{background-color:var(\n--spectrum-sidenav-item-background-color-key-focus,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-key-focus,var(--spectrum-alias-text-color-hover)\n)}#item-link:focus-visible{background-color:var(\n--spectrum-sidenav-item-background-color-key-focus,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-key-focus,var(--spectrum-alias-text-color-hover)\n)}#item-link.focus-visible:before{border-color:var(\n--spectrum-sidenav-item-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}#item-link:focus-visible:before{border-color:var(\n--spectrum-sidenav-item-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host{display:block}:host([disabled]){pointer-events:none}:host([multiLevel]){--spectrum-web-component-sidenav-font-weight:var(\n--spectrum-sidenav-item-font-weight,700\n)}::slotted(sp-sidenav-item:not([multiLevel])){--spectrum-web-component-sidenav-font-weight:var(\n--spectrum-sidenav-item-font-weight,400\n)}#item-link{font-weight:var(--spectrum-web-component-sidenav-font-weight);justify-content:start}:host([dir=ltr]) #item-link[data-level=\"1\"]{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-indentation-level1,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=ltr]) #item-link[data-level=\"2\"]{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-indentation-level2,\nvar(--spectrum-global-dimension-size-300)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) #item-link[data-level=\"1\"]{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-indentation-level1,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) #item-link[data-level=\"2\"]{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-indentation-level2,\nvar(--spectrum-global-dimension-size-300)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}a ::slotted(sp-sidenav-item){display:none}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/sidenav/src/sidenav-item.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/sidenav/src/sidenav.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-sidenav-item-padding-y:var(\n--spectrum-global-dimension-size-65\n)}:host{list-style-type:none;margin:0;padding:0}:host{--spectrum-web-component-sidenav-font-weight:var(\n--spectrum-sidenav-item-font-weight,var(--spectrum-global-font-weight-regular)\n);display:block;width:240px}:host([variant=multilevel]){--spectrum-web-component-sidenav-font-weight:var(\n--spectrum-sidenav-multilevel-main-item-font-weight,var(--spectrum-global-font-weight-bold)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/sidenav/src/sidenav.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/sidenav/src/spectrum-sidenav-heading.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n#list{--spectrum-sidenav-item-padding-y:var(\n--spectrum-global-dimension-size-65\n);list-style-type:none;margin:0;padding:0}:host([dir=ltr]) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon{margin-right:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}:host([dir=rtl]) .spectrum-SideNav-itemLink .spectrum-SideNav-itemIcon{margin-left:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}:host([dir=ltr]) #heading{margin-right:0}:host([dir=rtl]) #heading{margin-left:0}:host([dir=ltr]) #heading{margin-left:0}:host([dir=rtl]) #heading{margin-right:0}#heading{border-radius:var(\n--spectrum-sidenav-heading-border-radius,var(--spectrum-alias-border-radius-regular)\n);font-size:var(\n--spectrum-sidenav-heading-text-size,var(--spectrum-global-dimension-font-size-50)\n);font-style:normal;font-weight:var(\n--spectrum-sidenav-heading-text-font-weight,var(--spectrum-global-font-weight-medium)\n);height:var(\n--spectrum-sidenav-heading-height,var(--spectrum-alias-single-line-height)\n);letter-spacing:var(\n--spectrum-sidenav-heading-text-letter-spacing,var(--spectrum-global-font-letter-spacing-medium)\n);line-height:var(\n--spectrum-sidenav-heading-height,var(--spectrum-alias-single-line-height)\n);margin-bottom:var(\n--spectrum-sidenav-heading-gap-bottom,var(--spectrum-global-dimension-size-50)\n);margin-top:var(\n--spectrum-sidenav-heading-gap-top,var(--spectrum-global-dimension-size-200)\n);padding-bottom:0;padding-left:var(\n--spectrum-sidenav-heading-padding-x,var(--spectrum-global-dimension-size-150)\n);padding-right:var(\n--spectrum-sidenav-heading-padding-x,var(--spectrum-global-dimension-size-150)\n);padding-top:0;text-transform:uppercase}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list .spectrum-SideNav-itemLink{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list .spectrum-SideNav-itemLink{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list #list .spectrum-SideNav-itemLink{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list #list .spectrum-SideNav-itemLink{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}#heading{color:var(\n--spectrum-sidenav-heading-text-color,var(--spectrum-global-color-gray-700)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/sidenav/src/spectrum-sidenav-heading.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/sidenav/src/spectrum-sidenav-item.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n#list{--spectrum-sidenav-item-padding-y:var(\n--spectrum-global-dimension-size-65\n);list-style-type:none;margin:0;padding:0}:host{list-style-type:none;margin-bottom:var(\n--spectrum-sidenav-item-gap,var(--spectrum-global-dimension-size-50)\n);margin-left:0;margin-right:0;margin-top:var(\n--spectrum-sidenav-item-gap,var(--spectrum-global-dimension-size-50)\n)}#item-link{align-items:center;border-radius:var(\n--spectrum-sidenav-item-border-radius,var(--spectrum-alias-border-radius-regular)\n);box-sizing:border-box;cursor:pointer;display:inline-flex;font-size:var(\n--spectrum-sidenav-item-text-size,var(--spectrum-alias-font-size-default)\n);font-style:normal;font-weight:var(\n--spectrum-sidenav-item-text-font-weight,var(--spectrum-global-font-weight-regular)\n);-webkit-hyphens:auto;hyphens:auto;justify-content:left;min-height:var(\n--spectrum-sidenav-item-height,var(--spectrum-alias-single-line-height)\n);padding:var(--spectrum-sidenav-item-padding-y) var(\n--spectrum-sidenav-item-padding-x,var(--spectrum-global-dimension-size-150)\n);position:relative;text-decoration:none;transition:background-color var(--spectrum-global-animation-duration-100,.13s) ease-out,color var(--spectrum-global-animation-duration-100,.13s) ease-out;width:100%;word-break:break-word}#item-link:focus{outline:none}#item-link:before{border:var(\n--spectrum-tabs-m-focus-ring-size,var(--spectrum-alias-border-size-thick)\n) solid transparent;border-radius:var(\n--spectrum-sidenav-item-border-radius,var(--spectrum-alias-border-radius-regular)\n);bottom:0;content:\"\";left:0;pointer-events:none;position:absolute;right:0;top:0;transition:border var(--spectrum-global-animation-duration-100,.13s) ease-out}:host([dir=ltr]) #item-link ::slotted([slot=icon]){margin-right:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}:host([dir=rtl]) #item-link ::slotted([slot=icon]){margin-left:var(\n--spectrum-sidenav-icon-gap,var(--spectrum-global-dimension-size-100)\n)}#item-link ::slotted([slot=icon]){flex-shrink:0}:host([dir=ltr]) .spectrum-SideNav-heading{margin-right:0}:host([dir=rtl]) .spectrum-SideNav-heading{margin-left:0}:host([dir=ltr]) .spectrum-SideNav-heading{margin-left:0}:host([dir=rtl]) .spectrum-SideNav-heading{margin-right:0}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list #item-link{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list #item-link{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=ltr]) .spectrum-SideNav--multiLevel #list #list #item-link{padding-left:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([dir=rtl]) .spectrum-SideNav--multiLevel #list #list #item-link{padding-right:calc(var(\n--spectrum-sidenav-multilevel-item-margin-left,\nvar(--spectrum-global-dimension-size-150)\n) + var(\n--spectrum-sidenav-item-padding-x,\nvar(--spectrum-global-dimension-size-150)\n))}:host([selected])>#item-link{background-color:var(\n--spectrum-sidenav-item-background-color-selected,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-selected,var(--spectrum-alias-text-color-hover)\n)}.is-active>#item-link{background-color:var(\n--spectrum-sidenav-item-background-color-down,var(--spectrum-alias-highlight-hover)\n)}:host([disabled]) #item-link{background-color:var(\n--spectrum-sidenav-item-background-color-disabled,var(--spectrum-alias-background-color-transparent)\n);color:var(\n--spectrum-sidenav-item-text-color-disabled,var(--spectrum-alias-text-color-disabled)\n);cursor:default;pointer-events:none}#item-link{background-color:var(\n--spectrum-sidenav-item-background-color,var(--spectrum-alias-background-color-transparent)\n);color:var(\n--spectrum-sidenav-item-text-color,var(--spectrum-alias-text-color)\n)}#item-link:hover{background-color:var(\n--spectrum-sidenav-item-background-color-hover,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-hover,var(--spectrum-alias-text-color-hover)\n)}#item-link:active{background-color:var(\n--spectrum-sidenav-item-background-color-down,var(--spectrum-alias-highlight-hover)\n)}#item-link.focus-visible{background-color:var(\n--spectrum-sidenav-item-background-color-key-focus,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-key-focus,var(--spectrum-alias-text-color-hover)\n)}#item-link:focus-visible{background-color:var(\n--spectrum-sidenav-item-background-color-key-focus,var(--spectrum-alias-highlight-hover)\n);color:var(\n--spectrum-sidenav-item-text-color-key-focus,var(--spectrum-alias-text-color-hover)\n)}#item-link.focus-visible:before{border-color:var(\n--spectrum-sidenav-item-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}#item-link:focus-visible:before{border-color:var(\n--spectrum-sidenav-item-border-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/sidenav/src/spectrum-sidenav-item.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/sidenav/src/spectrum-sidenav.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-sidenav-item-padding-y:var(\n--spectrum-global-dimension-size-65\n)}:host{list-style-type:none;margin:0;padding:0}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/sidenav/src/spectrum-sidenav.css.ts"
           }
         }
       ]
@@ -58291,64 +58291,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "projects/documentation/src/utils/templates.ts",
-      "declarations": [
-        {
-          "kind": "function",
-          "name": "toHtmlTemplateString",
-          "return": {
-            "type": {
-              "text": "TemplateResult"
-            }
-          },
-          "parameters": [
-            {
-              "name": "code",
-              "type": {
-                "text": "string"
-              }
-            }
-          ]
-        },
-        {
-          "kind": "function",
-          "name": "toCssTemplateString",
-          "return": {
-            "type": {
-              "text": "CSSResultGroup"
-            }
-          },
-          "parameters": [
-            {
-              "name": "code",
-              "type": {
-                "text": "string"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "toHtmlTemplateString",
-          "declaration": {
-            "name": "toHtmlTemplateString",
-            "module": "projects/documentation/src/utils/templates.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "toCssTemplateString",
-          "declaration": {
-            "name": "toCssTemplateString",
-            "module": "projects/documentation/src/utils/templates.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "projects/documentation/src/components/adobe-logo.ts",
       "declarations": [
         {
@@ -59278,6 +59220,64 @@
           "declaration": {
             "name": "SideNav",
             "module": "projects/documentation/src/components/side-nav.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/documentation/src/utils/templates.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "toHtmlTemplateString",
+          "return": {
+            "type": {
+              "text": "TemplateResult"
+            }
+          },
+          "parameters": [
+            {
+              "name": "code",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "toCssTemplateString",
+          "return": {
+            "type": {
+              "text": "CSSResultGroup"
+            }
+          },
+          "parameters": [
+            {
+              "name": "code",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "toHtmlTemplateString",
+          "declaration": {
+            "name": "toHtmlTemplateString",
+            "module": "projects/documentation/src/utils/templates.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "toCssTemplateString",
+          "declaration": {
+            "name": "toCssTemplateString",
+            "module": "projects/documentation/src/utils/templates.ts"
           }
         }
       ]
