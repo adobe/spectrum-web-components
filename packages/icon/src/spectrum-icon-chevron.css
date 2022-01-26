@@ -16,12 +16,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         forced-color-adjust: auto;
     }
 }
-.spectrum-UIIcon-ChevronDown75,
 .spectrum-UIIcon-ChevronDown100,
 .spectrum-UIIcon-ChevronDown200,
 .spectrum-UIIcon-ChevronDown300,
 .spectrum-UIIcon-ChevronDown400,
-.spectrum-UIIcon-ChevronDown500 {
+.spectrum-UIIcon-ChevronDown500,
+.spectrum-UIIcon-ChevronDown75 {
     transform: rotate(
         90deg
     ); /* .spectrum-UIIcon-ChevronDown75,
@@ -38,12 +38,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-UIIcon-ArrowDown500,
    * .spectrum-UIIcon-ArrowDown600 */
 }
-.spectrum-UIIcon-ChevronLeft75,
 .spectrum-UIIcon-ChevronLeft100,
 .spectrum-UIIcon-ChevronLeft200,
 .spectrum-UIIcon-ChevronLeft300,
 .spectrum-UIIcon-ChevronLeft400,
-.spectrum-UIIcon-ChevronLeft500 {
+.spectrum-UIIcon-ChevronLeft500,
+.spectrum-UIIcon-ChevronLeft75 {
     transform: rotate(
         180deg
     ); /* .spectrum-UIIcon-ChevronLeft75,
@@ -60,12 +60,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-UIIcon-ArrowLeft500,
    * .spectrum-UIIcon-ArrowLeft600 */
 }
-.spectrum-UIIcon-ChevronUp75,
 .spectrum-UIIcon-ChevronUp100,
 .spectrum-UIIcon-ChevronUp200,
 .spectrum-UIIcon-ChevronUp300,
 .spectrum-UIIcon-ChevronUp400,
-.spectrum-UIIcon-ChevronUp500 {
+.spectrum-UIIcon-ChevronUp500,
+.spectrum-UIIcon-ChevronUp75 {
     transform: rotate(
         270deg
     ); /* .spectrum-UIIcon-ChevronUp75,

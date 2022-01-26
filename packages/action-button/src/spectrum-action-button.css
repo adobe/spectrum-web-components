@@ -1223,8 +1223,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     padding-left: 0; /* [dir=rtl] .spectrum-ActionButton .spectrum-Icon+.spectrum-ActionButton-label */
 }
 #hold-affordance + ::slotted([slot='icon']),
-:host([dir]) slot[icon-only]::slotted([slot='icon']),
-:host([dir]) slot[icon-only] sp-icon {
+:host([dir]) slot[icon-only] sp-icon,
+:host([dir]) slot[icon-only]::slotted([slot='icon']) {
     margin-left: calc(
         (
                 var(--spectrum-actionbutton-textonly-padding-left-adjusted) -

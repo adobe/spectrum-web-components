@@ -273,14 +273,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     height: 100%;
     width: 100%; /* .spectrum-Dialog--fullscreenTakeover */
 }
-:host([mode='fullscreen']),
-:host([mode='fullscreenTakeover']) {
+:host([mode='fullscreenTakeover']),
+:host([mode='fullscreen']) {
     max-height: none; /* .spectrum-Dialog--fullscreen,
    * .spectrum-Dialog--fullscreenTakeover */
     max-width: none;
 }
-:host([mode='fullscreen']) .grid,
-:host([mode='fullscreenTakeover']) .grid {
+:host([mode='fullscreenTakeover']) .grid,
+:host([mode='fullscreen']) .grid {
     display: grid; /* .spectrum-Dialog--fullscreen.spectrum-Dialog .spectrum-Dialog-grid,
    * .spectrum-Dialog--fullscreenTakeover.spectrum-Dialog .spectrum-Dialog-grid */
     grid-template-areas: '.    .       .       .            .' '.    heading header  buttonGroup  .' '.    divider divider divider      .' '.    content content content      .' '.    .       .       .            .';
@@ -291,34 +291,34 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
             --spectrum-dialog-confirm-padding
         );
 }
-:host([mode='fullscreen']) ::slotted([slot='heading']),
-:host([mode='fullscreenTakeover']) ::slotted([slot='heading']) {
+:host([mode='fullscreenTakeover']) ::slotted([slot='heading']),
+:host([mode='fullscreen']) ::slotted([slot='heading']) {
     font-size: var(
         --spectrum-dialog-fullscreen-header-text-size
     ); /* .spectrum-Dialog--fullscreen .spectrum-Dialog-heading,
    * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-heading */
 }
-:host([mode='fullscreen']) .content,
-:host([mode='fullscreenTakeover']) .content {
+:host([mode='fullscreenTakeover']) .content,
+:host([mode='fullscreen']) .content {
     max-height: none; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-content,
    * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-content */
 }
-:host([mode='fullscreen']) .button-group,
-:host([mode='fullscreen']) .footer,
 :host([mode='fullscreenTakeover']) .button-group,
-:host([mode='fullscreenTakeover']) .footer {
+:host([mode='fullscreenTakeover']) .footer,
+:host([mode='fullscreen']) .button-group,
+:host([mode='fullscreen']) .footer {
     padding-top: 0; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-footer,
    * .spectrum-Dialog--fullscreen .spectrum-Dialog-buttonGroup,
    * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-footer,
    * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-buttonGroup */
 }
-:host([mode='fullscreen']) .footer,
-:host([mode='fullscreenTakeover']) .footer {
+:host([mode='fullscreenTakeover']) .footer,
+:host([mode='fullscreen']) .footer {
     display: none; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-footer,
    * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-footer */
 }
-:host([mode='fullscreen']) .button-group,
-:host([mode='fullscreenTakeover']) .button-group {
+:host([mode='fullscreenTakeover']) .button-group,
+:host([mode='fullscreen']) .button-group {
     align-self: start;
     grid-area: buttonGroup; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-buttonGroup,
    * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-buttonGroup */
@@ -345,8 +345,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     .header {
         justify-content: flex-start;
     }
-    :host([mode='fullscreen']) .grid,
-    :host([mode='fullscreenTakeover']) .grid {
+    :host([mode='fullscreenTakeover']) .grid,
+    :host([mode='fullscreen']) .grid {
         display: grid;
         grid-template-areas: '.    .            .' '.    heading      .' '.    header       .' '.    divider      .' '.    content      .' '.    buttonGroup  .' '.    .            .';
         grid-template-columns: var(--spectrum-dialog-confirm-padding) 1fr var(
@@ -356,12 +356,12 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 --spectrum-dialog-confirm-padding
             );
     }
-    :host([mode='fullscreen']) .button-group,
-    :host([mode='fullscreenTakeover']) .button-group {
+    :host([mode='fullscreenTakeover']) .button-group,
+    :host([mode='fullscreen']) .button-group {
         padding-top: var(--spectrum-dialog-confirm-buttongroup-padding-top);
     }
-    :host([mode='fullscreen']) ::slotted([slot='heading']),
-    :host([mode='fullscreenTakeover']) ::slotted([slot='heading']) {
+    :host([mode='fullscreenTakeover']) ::slotted([slot='heading']),
+    :host([mode='fullscreen']) ::slotted([slot='heading']) {
         font-size: var(--spectrum-dialog-confirm-title-text-size);
     }
 }
