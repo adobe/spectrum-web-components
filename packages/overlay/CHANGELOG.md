@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.13.3...@spectrum-web-components/overlay@0.13.4) (2022-01-26)
+
+### Bug Fixes
+
+-   **overlay:** remove unused dependency ([a3f3a72](https://github.com/adobe/spectrum-web-components/commit/a3f3a72993311e4218e635d4e6e6b1dab0ef5478))
+
 ## [0.13.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.13.2...@spectrum-web-components/overlay@0.13.3) (2022-01-26)
 
 ### Bug Fixes

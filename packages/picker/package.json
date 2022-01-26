@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/picker",
-    "version": "0.9.3",
+    "version": "0.9.4",
     "publishConfig": {
         "access": "public"
     },
@@ -54,8 +54,8 @@
         "@spectrum-web-components/icons-ui": "^0.8.2",
         "@spectrum-web-components/icons-workflow": "^0.8.2",
         "@spectrum-web-components/menu": "^0.11.3",
-        "@spectrum-web-components/overlay": "^0.13.3",
-        "@spectrum-web-components/popover": "^0.11.3",
+        "@spectrum-web-components/overlay": "^0.13.4",
+        "@spectrum-web-components/popover": "^0.11.4",
         "@spectrum-web-components/shared": "^0.13.3",
         "tslib": "^2.0.0"
     },
