@@ -53,7 +53,6 @@
         "@spectrum-web-components/base": "^0.5.1",
         "@spectrum-web-components/shared": "^0.13.3",
         "@spectrum-web-components/theme": "^0.9.3",
-        "popper-max-size-modifier": "^0.2.0",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
