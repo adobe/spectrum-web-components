@@ -672,33 +672,64 @@ describe('Overlay - timing', () => {
             '[slot="trigger"]'
         ) as HTMLButtonElement;
 
-        trigger1.dispatchEvent(
-            new MouseEvent('mouseenter', {
-                bubbles: true,
-                composed: true,
-            })
-        );
+        const boundingRectTrigger1 = trigger1.getBoundingClientRect();
+        const boundingRectTrigger2 = trigger2.getBoundingClientRect();
+        const trigger1Position: [number, number] = [
+            boundingRectTrigger1.left + boundingRectTrigger1.width / 2,
+            boundingRectTrigger1.top + boundingRectTrigger1.height / 2,
+        ];
+        const outsideTrigger1: [number, number] = [
+            boundingRectTrigger1.left + boundingRectTrigger1.width * 2,
+            boundingRectTrigger1.top + boundingRectTrigger1.height * 2,
+        ];
+        const trigger2Position: [number, number] = [
+            boundingRectTrigger2.left + boundingRectTrigger2.width / 2,
+            boundingRectTrigger2.top + boundingRectTrigger2.height / 2,
+        ];
+        const outsideTrigger2: [number, number] = [
+            boundingRectTrigger2.left + boundingRectTrigger2.width * 2,
+            boundingRectTrigger2.top + boundingRectTrigger2.height / 2,
+        ];
+
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: trigger1Position,
+                },
+            ],
+        });
         await nextFrame();
-        trigger1.dispatchEvent(
-            new MouseEvent('mouseleave', {
-                bubbles: true,
-                composed: true,
-            })
-        );
-        trigger2.dispatchEvent(
-            new MouseEvent('mouseenter', {
-                bubbles: true,
-                composed: true,
-            })
-        );
+        await nextFrame();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: outsideTrigger1,
+                },
+            ],
+        });
+        await nextFrame();
+        await nextFrame();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: trigger2Position,
+                },
+            ],
+        });
+        await nextFrame();
         await nextFrame();
         const opened = oneEvent(trigger2, 'sp-opened');
-        trigger2.dispatchEvent(
-            new MouseEvent('click', {
-                bubbles: true,
-                composed: true,
-            })
-        );
+        sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: trigger2Position,
+                },
+            ],
+        });
         await opened;
 
         expect(overlayTrigger1.hasAttribute('open')).to.be.false;
@@ -706,18 +737,21 @@ describe('Overlay - timing', () => {
         expect(overlayTrigger2.getAttribute('open')).to.equal('click');
 
         const closed = oneEvent(overlayTrigger2, 'sp-closed');
-        document.body.dispatchEvent(
-            new MouseEvent('click', {
-                bubbles: true,
-                composed: true,
-            })
-        );
+        sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: outsideTrigger2,
+                },
+            ],
+        });
         await closed;
 
         // sometimes safari needs to wait a few frames for the open attribute to update
         for (let i = 0; i < 3; i++) await nextFrame();
 
         expect(overlayTrigger1.hasAttribute('open')).to.be.false;
-        expect(overlayTrigger2.hasAttribute('open')).to.be.false;
+        expect(overlayTrigger2.hasAttribute('open'), overlayTrigger2.open).to.be
+            .false;
     });
 });

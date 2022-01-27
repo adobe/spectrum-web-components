@@ -14,6 +14,19 @@ const config = {
     spectrum: 'tray',
     components: [
         {
+            name: 'tray-wrapper',
+            host: {
+                selector: '.spectrum-Tray-wrapper',
+            },
+            attributes: [
+                {
+                    type: 'boolean',
+                    selector: '.is-open',
+                    name: 'open',
+                },
+            ],
+        },
+        {
             name: 'tray',
             host: {
                 selector: '.spectrum-Tray',

@@ -123,6 +123,8 @@ export class ActiveOverlay extends SpectrumElement {
     public trigger!: HTMLElement;
     public virtualTrigger?: VirtualTrigger;
 
+    protected childrenReady!: Promise<unknown[]>;
+
     @property()
     public _state = stateTransition();
     public get state(): OverlayStateType {
@@ -245,7 +247,12 @@ export class ActiveOverlay extends SpectrumElement {
 
         this.state = 'active';
         this.feature();
-        if (this.placement && this.placement !== 'none') {
+        if (this.placement === 'none') {
+            this.style.setProperty(
+                '--swc-visual-viewport-height',
+                `${window.innerHeight}px`
+            );
+        } else if (this.placement) {
             await this.updateOverlayPosition();
             document.addEventListener(
                 'sp-update-overlays',
@@ -253,10 +260,27 @@ export class ActiveOverlay extends SpectrumElement {
             );
             window.addEventListener('scroll', this.updateOverlayPosition);
         }
-        await this.applyContentAnimation('sp-overlay-fade-in');
+        const actions: Promise<unknown>[] = [];
+        if (this.placement && this.placement !== 'none') {
+            actions.push(this.applyContentAnimation('sp-overlay-fade-in'));
+        }
+        if (
+            typeof (this.overlayContent as SpectrumElement).updateComplete !==
+            'undefined'
+        ) {
+            actions.push(
+                (this.overlayContent as SpectrumElement).updateComplete
+            );
+        }
+        this.childrenReady = Promise.all(actions);
+    }
+
+    public async openCallback(): Promise<void> {
+        await this.updateComplete;
         if (this.receivesFocus) {
             this.focus();
         }
+
         this.trigger.dispatchEvent(
             new CustomEvent<OverlayOpenCloseDetail>('sp-opened', {
                 bubbles: true,
@@ -519,9 +543,15 @@ export class ActiveOverlay extends SpectrumElement {
     private stealOverlayContentResolver!: () => void;
 
     protected async getUpdateComplete(): Promise<boolean> {
-        const complete = (await super.getUpdateComplete()) as boolean;
-        await this.stealOverlayContentPromise;
-        return complete;
+        const actions: Promise<unknown>[] = [
+            super.getUpdateComplete(),
+            this.stealOverlayContentPromise,
+        ];
+        if (this.childrenReady) {
+            actions.push(this.childrenReady);
+        }
+        const [complete] = await Promise.all(actions);
+        return complete as boolean;
     }
 
     disconnectedCallback(): void {

@@ -25,10 +25,18 @@ function hasModifier(event: MouseEvent): boolean {
 
 interface ManagedOverlayContent {
     open: boolean;
+    // Allow the overlaid content to do something before it is thrown.
     overlayWillOpenCallback?: (args: { trigger: HTMLElement }) => void;
+    // Allow the overlaid content to do something when it has been thrown.
     overlayOpenCallback?: (args: { trigger: HTMLElement }) => void;
+    // Allow the overlaid content to do something when its throw has been cancelled.
     overlayOpenCancelledCallback?: (args: { trigger: HTMLElement }) => void;
+    // Allow the overlaid content to do something before it is recalled, and return `true` if it will self managing the recall.
+    overlayWillCloseCallback?: (args: { trigger: HTMLElement }) => boolean;
+    // Allow the overlaid content to do something when it has been recalled.
     overlayCloseCallback?: (args: { trigger: HTMLElement }) => void;
+    // Surface possible LitElement lifecycle methods on the synthetically types element.
+    updateComplete?: Promise<boolean>;
 }
 
 export class OverlayStack {
@@ -129,6 +137,14 @@ export class OverlayStack {
             `calc(${marginLeft} + ${marginRight})`
         );
         this.tabTrapper.style.setProperty(
+            '--swc-body-margins-block',
+            `calc(${marginTop} + ${marginBottom})`
+        );
+        this.overlayHolder.style.setProperty(
+            '--swc-body-margins-inline',
+            `calc(${marginLeft} + ${marginRight})`
+        );
+        this.overlayHolder.style.setProperty(
             '--swc-body-margins-block',
             `calc(${marginTop} + ${marginBottom})`
         );
@@ -292,9 +308,7 @@ export class OverlayStack {
                     const { trigger } = activeOverlay;
                     contentWithLifecycle.overlayOpenCallback({ trigger });
                 }
-                if (details.receivesFocus === 'auto') {
-                    activeOverlay.focus();
-                }
+                activeOverlay.openCallback();
                 return false;
             }
         );
@@ -461,9 +475,17 @@ export class OverlayStack {
         if (!overlay) {
             return;
         }
-        await overlay.hide(animated);
         const contentWithLifecycle =
             overlay.overlayContent as unknown as ManagedOverlayContent;
+        if (
+            typeof contentWithLifecycle.overlayWillCloseCallback !== 'undefined'
+        ) {
+            const { trigger } = overlay;
+            if (contentWithLifecycle.overlayWillCloseCallback({ trigger })) {
+                return;
+            }
+        }
+        await overlay.hide(animated);
         if (typeof contentWithLifecycle.open !== 'undefined') {
             contentWithLifecycle.open = false;
         }
