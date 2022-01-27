@@ -767,9 +767,8 @@ describe('Picker, sync', () => {
                 // start at input1
                 input1.focus();
                 await nextFrame();
-                expect(document.activeElement, 'focuses input 1').to.equal(
-                    input1
-                );
+                expect(document.activeElement === input1, 'focuses input 1').to
+                    .true;
                 // tab to the picker
                 let focused = oneEvent(el, 'focus');
                 await sendKeys({ press: 'Tab' });
@@ -777,14 +776,13 @@ describe('Picker, sync', () => {
 
                 expect(el.focused, 'focused').to.be.true;
                 expect(el.open, 'closed').to.be.false;
-                expect(document.activeElement, 'focuses el').to.equal(el);
+                expect(document.activeElement === el, 'focuses el').to.be.true;
                 // tab through the picker to input2
                 focused = oneEvent(input2, 'focus');
                 await sendKeys({ press: 'Tab' });
                 await focused;
-                expect(document.activeElement, 'focuses input 2').to.equal(
-                    input2
-                );
+                expect(document.activeElement === input2, 'focuses input 2').to
+                    .true;
             });
             it('shift+tabs backwards through the element', async () => {
                 // start at input1
@@ -929,7 +927,9 @@ describe('Picker, sync', () => {
             expect(el.open).to.be.false;
         });
         it('scrolls selected into view on open', async () => {
-            (el as unknown as { generatePopover(): void }).generatePopover();
+            await (
+                el as unknown as { generatePopover(): void }
+            ).generatePopover();
             (el as unknown as { popover: Popover }).popover.style.height =
                 '40px';
 
@@ -1146,10 +1146,6 @@ describe('Picker, sync', () => {
         await waitUntil(() => el1.open && !el2.open, '1 open, 2 closed: again');
     });
     it('displays selected item text by default', async () => {
-        const focusSelectedSpy = spy();
-        const focusFirstSpy = spy();
-        const handleFirstFocus = (): void => focusFirstSpy();
-        const handleSelectedFocus = (): void => focusSelectedSpy();
         const el = await fixture<Picker>(
             html`
                 <sp-picker
@@ -1180,9 +1176,6 @@ describe('Picker, sync', () => {
             'sp-menu-item:nth-of-type(2)'
         ) as MenuItem;
 
-        firstItem.addEventListener('focus', handleFirstFocus);
-        secondItem.addEventListener('focus', handleSelectedFocus);
-
         expect(el.value).to.equal('inverse');
         expect(el.selectedItem?.itemText).to.equal('Select Inverse');
 
@@ -1191,10 +1184,14 @@ describe('Picker, sync', () => {
         sendKeys({ press: 'Enter' });
         await opened;
 
-        await waitUntil(() => isMenuActiveElement(), 'menu focused');
+        const menu = document.querySelector('sp-menu') as Menu;
+        await elementUpdated(menu);
 
-        expect(focusFirstSpy.called, 'do not focus first element').to.be.false;
+        expect(firstItem.focused, 'firstItem NOT "focused"').to.be.false;
         expect(secondItem.focused, 'secondItem "focused"').to.be.true;
+        expect(menu.getAttribute('aria-activedescendant')).to.equal(
+            secondItem.id
+        );
     });
     it('resets value when item not available', async () => {
         const el = await fixture<Picker>(

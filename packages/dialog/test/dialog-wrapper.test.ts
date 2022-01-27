@@ -10,15 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, oneEvent } from '@open-wc/testing';
 import { spy } from 'sinon';
 
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
 import '../sp-dialog-wrapper.js';
 import { Dialog, DialogWrapper } from '../';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import { Button } from '@spectrum-web-components/button';
 import { Underlay } from '@spectrum-web-components/underlay';
 import {
+    longContent,
     wrapperButtons,
     wrapperButtonsUnderlay,
     wrapperDismissable,
@@ -26,38 +29,68 @@ import {
     wrapperFullscreen,
     wrapperLabeledHero,
 } from '../stories/dialog-wrapper.stories.js';
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
+import { html, TemplateResult } from '@spectrum-web-components/base';
+import { Theme } from '@spectrum-web-components/theme';
+
+async function styledFixture<T extends Element>(
+    story: TemplateResult
+): Promise<T> {
+    const test = await fixture<Theme>(html`
+        <sp-theme scale="medium" color="dark">${story}</sp-theme>
+    `);
+    return test.children[0] as T;
+}
 
 describe('Dialog Wrapper', () => {
     it('loads wrapped dialog accessibly', async () => {
-        const el = await fixture<DialogWrapper>(wrapperDismissable());
+        const el = await styledFixture<DialogWrapper>(wrapperDismissable());
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads labeled hero dialog accessibly', async () => {
-        const el = await fixture<DialogWrapper>(wrapperLabeledHero());
+        const el = await styledFixture<DialogWrapper>(wrapperLabeledHero());
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads fullscreen wrapped dialog accessibly', async () => {
-        const el = await fixture<DialogWrapper>(wrapperFullscreen());
+        const el = await styledFixture<DialogWrapper>(wrapperFullscreen());
 
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
     });
     it('loads with underlay and no headline accessibly', async () => {
-        const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
+        const el = await styledFixture<DialogWrapper>(wrapperButtonsUnderlay());
         await elementUpdated(el);
         el.headline = '';
         await elementUpdated(el);
         expect(el).to.be.accessible();
     });
+    it('opens and closes', async () => {
+        const test = await styledFixture<OverlayTrigger>(longContent());
+        const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
+
+        await elementUpdated(el);
+
+        const opened = oneEvent(test, 'sp-opened');
+        test.open = 'click';
+        await opened;
+
+        expect(el.open).to.be.true;
+
+        const closed = oneEvent(test, 'sp-closed');
+        test.open = undefined;
+        await closed;
+
+        expect(el.open).to.be.false;
+    });
     it('dismisses via clicking the underlay when [dismissable]', async () => {
-        const test = await fixture<HTMLDivElement>(
+        const test = await styledFixture<DialogWrapper>(
             wrapperDismissableUnderlayError()
         );
         const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
@@ -70,7 +103,7 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.false;
     });
     it('does not dismiss via clicking the underlay :not([dismissable])', async () => {
-        const el = await fixture<DialogWrapper>(wrapperButtonsUnderlay());
+        const el = await styledFixture<DialogWrapper>(wrapperButtonsUnderlay());
         await elementUpdated(el);
         expect(el.open).to.be.true;
         const underlay = el.shadowRoot.querySelector('sp-underlay') as Underlay;
@@ -79,7 +112,7 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.true;
     });
     it('dismisses', async () => {
-        const el = await fixture<DialogWrapper>(wrapperDismissable());
+        const el = await styledFixture<DialogWrapper>(wrapperDismissable());
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -96,7 +129,7 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.false;
     });
     it('manages entry focus - dismissable', async () => {
-        const el = await fixture<DialogWrapper>(wrapperDismissable());
+        const el = await styledFixture<DialogWrapper>(wrapperDismissable());
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -122,7 +155,7 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.false;
     });
     it('manages entry focus - buttons', async () => {
-        const el = await fixture<DialogWrapper>(wrapperButtons());
+        const el = await styledFixture<DialogWrapper>(wrapperButtons());
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -146,7 +179,7 @@ describe('Dialog Wrapper', () => {
         const handleConfirm = (): void => confirmSpy();
         const handleCancel = (): void => cancelSpy();
         const handleSecondary = (): void => secondarySpy();
-        const el = await fixture<DialogWrapper>(wrapperButtons());
+        const el = await styledFixture<DialogWrapper>(wrapperButtons());
         el.addEventListener('confirm', handleConfirm);
         el.addEventListener('cancel', handleCancel);
         el.addEventListener('secondary', handleSecondary);

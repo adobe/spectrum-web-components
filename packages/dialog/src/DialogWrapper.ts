@@ -27,7 +27,8 @@ import '@spectrum-web-components/underlay/sp-underlay.js';
 import '@spectrum-web-components/button/sp-button.js';
 
 import '../sp-dialog.js';
-import styles from '@spectrum-web-components/modal/src/modal.css.js';
+import modalWrapperStyles from '@spectrum-web-components/modal/src/modal-wrapper.css.js';
+import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
 import { Dialog } from './Dialog.js';
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
@@ -43,7 +44,7 @@ import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focu
  */
 export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public static get styles(): CSSResultArray {
-        return [styles];
+        return [modalWrapperStyles, modalStyles];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -87,6 +88,10 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     @property({ type: Boolean })
     public responsive = false;
+
+    private transitionPromise = Promise.resolve();
+
+    private resolveTransitionPromise!: () => void;
 
     @property({ type: Boolean })
     public underlay = false;
@@ -156,6 +161,27 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
         );
     }
 
+    protected handleUnderlayTransitionend(): void {
+        if (!this.open) {
+            this.resolveTransitionPromise();
+        }
+    }
+
+    protected handleModalTransitionend(): void {
+        if (this.open || !this.underlay) {
+            this.resolveTransitionPromise();
+        }
+    }
+
+    protected update(changes: PropertyValues<this>): void {
+        if (changes.has('open') && changes.get('open') !== undefined) {
+            this.transitionPromise = new Promise(
+                (res) => (this.resolveTransitionPromise = res)
+            );
+        }
+        super.update(changes);
+    }
+
     protected render(): TemplateResult {
         return html`
             ${this.underlay
@@ -163,10 +189,14 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
                       <sp-underlay
                           ?open=${this.open}
                           @click=${this.dismiss}
+                          @transitionend=${this.handleUnderlayTransitionend}
                       ></sp-underlay>
                   `
                 : html``}
-            <div class="modal ${this.mode}">
+            <div
+                class="modal ${this.mode}"
+                @transitionend=${this.handleModalTransitionend}
+            >
                 <sp-dialog
                     ?dismissable=${this.dismissable}
                     ?no-divider=${this.noDivider}
@@ -246,5 +276,19 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
                 this.dialog.shouldManageTabOrderForScrolling();
             });
         }
+    }
+
+    /**
+     * Bind the open/close transition into the update complete lifecycle so
+     * that the overlay system can wait for it to be "visibly ready" before
+     * attempting to throw focus into the content contained herein. Not
+     * waiting for this can cause small amounts of page scroll to happen
+     * while opening the Tray when focusable content is included: e.g. Menu
+     * elements whose selected Menu Item is not the first Menu Item.
+     */
+    protected async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
+        await this.transitionPromise;
+        return complete;
     }
 }

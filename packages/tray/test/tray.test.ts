@@ -15,11 +15,14 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     oneEvent,
 } from '@open-wc/testing';
 
 import '../sp-tray.js';
 import { Tray } from '..';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
 
 describe('Tray', () => {
     it('loads default tray accessibly', async () => {
@@ -52,13 +55,24 @@ describe('Tray', () => {
         expect(document.activeElement).to.equal(anchor);
     });
     it('closes', async () => {
-        const el = await fixture<Tray>(
+        const test = await fixture<HTMLElement>(
             html`
-                <sp-tray open></sp-tray>
+                <sp-theme scale="medium" color="dark">
+                    <sp-tray></sp-tray>
+                </sp-theme>
             `
         );
 
+        const el = test.querySelector('sp-tray') as Tray;
+        // Ensure closed styles are set before opening so that
+        // the `transitionend` event will be met below.
+        await nextFrame();
+        await nextFrame();
+        expect(el.open).to.be.false;
+
+        el.open = true;
         await elementUpdated(el);
+
         expect(el.open).to.be.true;
         const closed = oneEvent(el, 'close');
         const overlay = el.shadowRoot.querySelector(

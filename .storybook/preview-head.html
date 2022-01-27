@@ -7,7 +7,6 @@
 <!-- NOTE: you'll need to rebuild storybook to test this locally.
     <link rel="stylesheet" href="https://use.typekit.net/yfg6hha.css" />
     -->
-
 <style>
     body {
         margin: 0;
@@ -31,3 +30,12 @@
         min-height: 200px;
     }
 </style>
+<script>
+    // Needed while tachometer does not surface support for export conditions.
+    // @floating-ui/core leverages `process.env.NODE_ENV` in their 'default' export.
+    window.process = window.process || {
+        env: {
+            NODE_ENV: 'production',
+        },
+    };
+</script>

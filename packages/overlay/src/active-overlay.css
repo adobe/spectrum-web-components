@@ -47,6 +47,10 @@ governing permissions and limitations under the License.
     outline: none;
 }
 
+:host([placement='none']) {
+    max-height: var(--swc-visual-viewport-height);
+}
+
 sp-theme,
 #contents {
     height: 100%;
@@ -55,7 +59,10 @@ sp-theme,
 #contents {
     display: inline-block;
     pointer-events: none;
-    animation-duration: var(--spectrum-global-animation-duration-200, 160ms);
+    animation-duration: var(
+        --swc-test-duration,
+        var(--spectrum-global-animation-duration-200, 160ms)
+    );
     animation-timing-function: var(
         --spectrum-global-animation-ease-out,
         ease-out
