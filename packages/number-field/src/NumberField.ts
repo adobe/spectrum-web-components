@@ -122,7 +122,8 @@ export class NumberField extends TextfieldBase {
     public stepModifier = 10;
 
     @property({ type: Number })
-    public set value(value: number) {
+    public set value(rawValue: number) {
+        const value = this.validateInput(rawValue);
         if (value === this.value) {
             return;
         }
@@ -587,7 +588,7 @@ export class NumberField extends TextfieldBase {
             const value = this.numberParser.parse(
                 this.inputValue.replace(this._forcedUnit, '')
             );
-            this.value = this.validateInput(value);
+            this.value = value;
         }
         if (changes.has('min') || changes.has('formatOptions')) {
             let inputMode = 'numeric';

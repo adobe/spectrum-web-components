@@ -681,8 +681,28 @@ describe('NumberField', () => {
     });
     describe('max', () => {
         let el: NumberField;
+        let lastInputValue = 0;
+        let lastChangeValue = 0;
         beforeEach(async () => {
-            el = await getElFrom(Default({ max: 10, value: 10 }));
+            el = await getElFrom(
+                Default({
+                    max: 10,
+                    value: 10,
+                    onInput: (value: number) => (lastInputValue = value),
+                    onChange: (value: number) => (lastChangeValue = value),
+                })
+            );
+            expect(el.formattedValue).to.equal('10');
+            expect(el.valueAsString).to.equal('10');
+            expect(el.value).to.equal(10);
+        });
+        it('constrains input', async () => {
+            el.focus();
+            await sendKeys({ type: '15' });
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(el);
+            expect(lastInputValue, 'last input value').to.equal(10);
+            expect(lastChangeValue, 'last change value').to.equal(10);
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
@@ -719,8 +739,30 @@ describe('NumberField', () => {
     });
     describe('min', () => {
         let el: NumberField;
+        let lastInputValue = 0;
+        let lastChangeValue = 0;
         beforeEach(async () => {
-            el = await getElFrom(Default({ min: 10, value: 10 }));
+            el = await getElFrom(
+                Default({
+                    min: 10,
+                    value: 10,
+                    onInput: (value: number) => (lastInputValue = value),
+                    onChange: (value: number) => (lastChangeValue = value),
+                })
+            );
+            expect(el.formattedValue).to.equal('10');
+            expect(el.valueAsString).to.equal('10');
+            expect(el.value).to.equal(10);
+        });
+        it('constrains input', async () => {
+            el.focus();
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ press: 'Backspace' });
+            await sendKeys({ type: '5' });
+            await sendKeys({ press: 'Enter' });
+            await elementUpdated(el);
+            expect(lastInputValue, 'last input value').to.equal(10);
+            expect(lastChangeValue, 'last change value').to.equal(10);
             expect(el.formattedValue).to.equal('10');
             expect(el.valueAsString).to.equal('10');
             expect(el.value).to.equal(10);
