@@ -29581,444 +29581,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/meter/src/Meter.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Meter",
-          "slots": [
-            {
-              "description": "text labeling the Meter",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "progress",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "0",
-              "attribute": "progress"
-            },
-            {
-              "kind": "field",
-              "name": "overBackground",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "over-background",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "notice",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "notice",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "negative",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "negative",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "positive",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "positive",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "label",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "sideLabel",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "side-label",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "privacy": "public",
-              "attribute": "size",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_size",
-              "type": {
-                "text": "ElementSize | null"
-              },
-              "privacy": "private",
-              "default": "defaultSize",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "firstUpdated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "changes",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "[slotElementObserver]",
-              "type": {
-                "text": "MutationObserver"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "slotHasContent",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "[assignedNodesList]",
-              "type": {
-                "text": "NodeListOf<HTMLElement>"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageTextObservedSlot",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "[startObserving]",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "progress",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "fieldName": "progress"
-            },
-            {
-              "name": "over-background",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "overBackground"
-            },
-            {
-              "name": "notice",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "notice"
-            },
-            {
-              "name": "negative",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "negative"
-            },
-            {
-              "name": "positive",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "positive"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
-            },
-            {
-              "name": "side-label",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "sideLabel"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "fieldName": "size",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "mixins": [
-            {
-              "name": "SizedMixin",
-              "package": "@spectrum-web-components/base"
-            },
-            {
-              "name": "ObserveSlotText",
-              "package": "@spectrum-web-components/shared/src/observe-slot-text.js"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-meter",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Meter",
-          "declaration": {
-            "name": "Meter",
-            "module": "packages/meter/src/Meter.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/meter/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Meter.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/meter/src/meter.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-s-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-s-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-s-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-s-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-s-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-s-width,var(--spectrum-global-dimension-static-size-2400)\n)}:host([size=m]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-m-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-m-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-m-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-m-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-m-height,var(--spectrum-global-dimension-size-75)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-m-width,var(--spectrum-global-dimension-static-size-2400)\n);--spectrum-fieldlabel-side-padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([size=l]){--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-l-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-l-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-l-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-l-height,var(--spectrum-global-dimension-size-100)\n);--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-l-border-radius,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-l-width,var(--spectrum-global-dimension-static-size-2500)\n)}:host([size=xl]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-xl-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-xl-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-xl-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-xl-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-xl-height,var(--spectrum-global-dimension-size-125)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-xl-width,var(--spectrum-global-dimension-static-size-2800)\n)}:host{align-items:center;display:inline-flex;flex-flow:row wrap;justify-content:space-between;position:relative;vertical-align:top;width:var(--spectrum-progressbar-width)}.track{border-radius:var(--spectrum-progressbar-border-radius);overflow:hidden;width:100%;z-index:1}.fill,.track{height:var(--spectrum-progressbar-height)}.fill{border:none;transition:width 1s}:host([dir=ltr]) .label,:host([dir=ltr]) .percentage{text-align:left}:host([dir=rtl]) .label,:host([dir=rtl]) .percentage{text-align:right}.label,.percentage{margin-bottom:var(\n--spectrum-progressbar-value-gap-y\n)}.label{flex:1 1 0%}:host([dir=ltr]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}.percentage{align-self:flex-start}:host([side-label]){display:inline-flex;flex-flow:row;justify-content:space-between;width:auto}:host([side-label]) .track{flex:1 1 var(--spectrum-progressbar-width);min-width:var(\n--spectrum-progressbar-width\n)}:host([dir=ltr][side-label]) .label{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .label{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .label{flex-grow:0;margin-bottom:0}:host([dir=ltr][side-label]) .percentage{text-align:right}:host([dir=rtl][side-label]) .percentage{text-align:left}:host([dir=ltr][side-label]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .percentage{margin-bottom:0;order:3}:host([indeterminate]) .fill{animation-timing-function:var(\n--spectrum-progressbar-indeterminate-animation-ease\n);position:relative;width:var(\n--spectrum-progressbar-indeterminate-fill-width\n);will-change:transform}:host([dir=ltr][indeterminate]) .fill{animation:indeterminate-loop-ltr var(--spectrum-progressbar-indeterminate-duration) infinite}:host([dir=rtl][indeterminate]) .fill{animation:indeterminate-loop-rtl var(--spectrum-progressbar-indeterminate-duration) infinite}@keyframes indeterminate-loop-ltr{0%{transform:translate(calc(var(--spectrum-progressbar-indeterminate-fill-width)*-1))}to{transform:translate(var(--spectrum-progressbar-width))}}@keyframes indeterminate-loop-rtl{0%{transform:translate(var(--spectrum-progressbar-width))}to{transform:translate(calc(var(--spectrum-progressbar-width)*-1))}}.fill{background:var(\n--spectrum-progressbar-m-track-fill-color,var(--spectrum-semantic-informative-color-default)\n)}.track{background-color:var(\n--spectrum-progressbar-m-track-color,var(--spectrum-alias-track-color-default)\n)}:host([over-background]) .fill{background:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .label,:host([over-background]) .percentage{color:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .track{background-color:var(\n--spectrum-progressbar-m-overbackground-track-color,var(--spectrum-alias-track-color-overbackground)\n)}:host([positive]) .fill{background:var(\n--spectrum-meter-m-positive-track-fill-color,var(--spectrum-semantic-positive-status-color)\n)}:host([notice]) .fill{background:var(\n--spectrum-meter-m-notice-track-fill-color,var(--spectrum-semantic-notice-status-color)\n)}:host([negative]) .fill{background:var(\n--spectrum-meter-m-negative-track-fill-color,var(--spectrum-semantic-negative-status-color)\n)}.label,.percentage{color:var(\n--spectrum-fieldlabel-m-text-color,var(--spectrum-alias-label-text-color)\n)}.fill{transform-origin:left}:host([dir=rtl]) .fill{transform-origin:right}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/meter/src/meter.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/meter/src/spectrum-meter.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-s-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-s-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-s-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-s-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-s-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-s-width,var(--spectrum-global-dimension-static-size-2400)\n)}:host([size=m]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-m-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-m-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-m-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-m-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-m-height,var(--spectrum-global-dimension-size-75)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-m-width,var(--spectrum-global-dimension-static-size-2400)\n);--spectrum-fieldlabel-side-padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([size=l]){--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-l-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-l-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-l-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-l-height,var(--spectrum-global-dimension-size-100)\n);--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-l-border-radius,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-l-width,var(--spectrum-global-dimension-static-size-2500)\n)}:host([size=xl]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-xl-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-xl-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-xl-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-xl-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-xl-height,var(--spectrum-global-dimension-size-125)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-xl-width,var(--spectrum-global-dimension-static-size-2800)\n)}:host{align-items:center;display:inline-flex;flex-flow:row wrap;justify-content:space-between;position:relative;vertical-align:top;width:var(--spectrum-progressbar-width)}.track{border-radius:var(--spectrum-progressbar-border-radius);overflow:hidden;width:100%;z-index:1}.fill,.track{height:var(--spectrum-progressbar-height)}.fill{border:none;transition:width 1s}:host([dir=ltr]) .label,:host([dir=ltr]) .percentage{text-align:left}:host([dir=rtl]) .label,:host([dir=rtl]) .percentage{text-align:right}.label,.percentage{margin-bottom:var(\n--spectrum-progressbar-value-gap-y\n)}.label{flex:1 1 0%}:host([dir=ltr]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}.percentage{align-self:flex-start}:host([side-label]){display:inline-flex;flex-flow:row;justify-content:space-between;width:auto}:host([side-label]) .track{flex:1 1 var(--spectrum-progressbar-width);min-width:var(\n--spectrum-progressbar-width\n)}:host([dir=ltr][side-label]) .label{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .label{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .label{flex-grow:0;margin-bottom:0}:host([dir=ltr][side-label]) .percentage{text-align:right}:host([dir=rtl][side-label]) .percentage{text-align:left}:host([dir=ltr][side-label]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .percentage{margin-bottom:0;order:3}:host([indeterminate]) .fill{animation-timing-function:var(\n--spectrum-progressbar-indeterminate-animation-ease\n);position:relative;width:var(\n--spectrum-progressbar-indeterminate-fill-width\n);will-change:transform}:host([dir=ltr][indeterminate]) .fill{animation:indeterminate-loop-ltr var(--spectrum-progressbar-indeterminate-duration) infinite}:host([dir=rtl][indeterminate]) .fill{animation:indeterminate-loop-rtl var(--spectrum-progressbar-indeterminate-duration) infinite}@keyframes indeterminate-loop-ltr{0%{transform:translate(calc(var(--spectrum-progressbar-indeterminate-fill-width)*-1))}to{transform:translate(var(--spectrum-progressbar-width))}}@keyframes indeterminate-loop-rtl{0%{transform:translate(var(--spectrum-progressbar-width))}to{transform:translate(calc(var(--spectrum-progressbar-width)*-1))}}.fill{background:var(\n--spectrum-progressbar-m-track-fill-color,var(--spectrum-semantic-informative-color-default)\n)}.track{background-color:var(\n--spectrum-progressbar-m-track-color,var(--spectrum-alias-track-color-default)\n)}:host([over-background]) .fill{background:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .label,:host([over-background]) .percentage{color:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .track{background-color:var(\n--spectrum-progressbar-m-overbackground-track-color,var(--spectrum-alias-track-color-overbackground)\n)}:host([positive]) .fill{background:var(\n--spectrum-meter-m-positive-track-fill-color,var(--spectrum-semantic-positive-status-color)\n)}:host([notice]) .fill{background:var(\n--spectrum-meter-m-notice-track-fill-color,var(--spectrum-semantic-notice-status-color)\n)}:host([negative]) .fill{background:var(\n--spectrum-meter-m-negative-track-fill-color,var(--spectrum-semantic-negative-status-color)\n)}.label,.percentage{color:var(\n--spectrum-fieldlabel-m-text-color,var(--spectrum-alias-label-text-color)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/meter/src/spectrum-meter.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/menu/src/Menu.ts",
       "declarations": [
         {
@@ -32849,6 +32411,444 @@
           "declaration": {
             "name": "styles",
             "module": "packages/menu/src/spectrum-menu.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/meter/src/Meter.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Meter",
+          "slots": [
+            {
+              "description": "text labeling the Meter",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "progress",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "0",
+              "attribute": "progress"
+            },
+            {
+              "kind": "field",
+              "name": "overBackground",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "over-background",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "notice",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "notice",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "negative",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "negative",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "positive",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "positive",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "sideLabel",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "side-label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "privacy": "public",
+              "attribute": "size",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_size",
+              "type": {
+                "text": "ElementSize | null"
+              },
+              "privacy": "private",
+              "default": "defaultSize",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changes",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "[slotElementObserver]",
+              "type": {
+                "text": "MutationObserver"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "slotHasContent",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "[assignedNodesList]",
+              "type": {
+                "text": "NodeListOf<HTMLElement>"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageTextObservedSlot",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "[startObserving]",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "progress",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "progress"
+            },
+            {
+              "name": "over-background",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "overBackground"
+            },
+            {
+              "name": "notice",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "notice"
+            },
+            {
+              "name": "negative",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "negative"
+            },
+            {
+              "name": "positive",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "positive"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            },
+            {
+              "name": "side-label",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "sideLabel"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "fieldName": "size",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SizedMixin",
+              "package": "@spectrum-web-components/base"
+            },
+            {
+              "name": "ObserveSlotText",
+              "package": "@spectrum-web-components/shared/src/observe-slot-text.js"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-meter",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Meter",
+          "declaration": {
+            "name": "Meter",
+            "module": "packages/meter/src/Meter.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/meter/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Meter.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/meter/src/meter.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([size=s]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-s-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-s-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-s-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-s-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-s-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-s-width,var(--spectrum-global-dimension-static-size-2400)\n)}:host([size=m]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-m-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-m-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-m-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-m-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-m-height,var(--spectrum-global-dimension-size-75)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-m-width,var(--spectrum-global-dimension-static-size-2400)\n);--spectrum-fieldlabel-side-padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([size=l]){--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-l-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-l-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-l-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-l-height,var(--spectrum-global-dimension-size-100)\n);--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-l-border-radius,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-l-width,var(--spectrum-global-dimension-static-size-2500)\n)}:host([size=xl]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-xl-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-xl-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-xl-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-xl-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-xl-height,var(--spectrum-global-dimension-size-125)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-xl-width,var(--spectrum-global-dimension-static-size-2800)\n)}:host{align-items:center;display:inline-flex;flex-flow:row wrap;justify-content:space-between;position:relative;vertical-align:top;width:var(--spectrum-progressbar-width)}.track{border-radius:var(--spectrum-progressbar-border-radius);overflow:hidden;width:100%;z-index:1}.fill,.track{height:var(--spectrum-progressbar-height)}.fill{border:none;transition:width 1s}:host([dir=ltr]) .label,:host([dir=ltr]) .percentage{text-align:left}:host([dir=rtl]) .label,:host([dir=rtl]) .percentage{text-align:right}.label,.percentage{margin-bottom:var(\n--spectrum-progressbar-value-gap-y\n)}.label{flex:1 1 0%}:host([dir=ltr]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}.percentage{align-self:flex-start}:host([side-label]){display:inline-flex;flex-flow:row;justify-content:space-between;width:auto}:host([side-label]) .track{flex:1 1 var(--spectrum-progressbar-width);min-width:var(\n--spectrum-progressbar-width\n)}:host([dir=ltr][side-label]) .label{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .label{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .label{flex-grow:0;margin-bottom:0}:host([dir=ltr][side-label]) .percentage{text-align:right}:host([dir=rtl][side-label]) .percentage{text-align:left}:host([dir=ltr][side-label]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .percentage{margin-bottom:0;order:3}:host([indeterminate]) .fill{animation-timing-function:var(\n--spectrum-progressbar-indeterminate-animation-ease\n);position:relative;width:var(\n--spectrum-progressbar-indeterminate-fill-width\n);will-change:transform}:host([dir=ltr][indeterminate]) .fill{animation:indeterminate-loop-ltr var(--spectrum-progressbar-indeterminate-duration) infinite}:host([dir=rtl][indeterminate]) .fill{animation:indeterminate-loop-rtl var(--spectrum-progressbar-indeterminate-duration) infinite}@keyframes indeterminate-loop-ltr{0%{transform:translate(calc(var(--spectrum-progressbar-indeterminate-fill-width)*-1))}to{transform:translate(var(--spectrum-progressbar-width))}}@keyframes indeterminate-loop-rtl{0%{transform:translate(var(--spectrum-progressbar-width))}to{transform:translate(calc(var(--spectrum-progressbar-width)*-1))}}.fill{background:var(\n--spectrum-progressbar-m-track-fill-color,var(--spectrum-semantic-informative-color-default)\n)}.track{background-color:var(\n--spectrum-progressbar-m-track-color,var(--spectrum-alias-track-color-default)\n)}:host([over-background]) .fill{background:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .label,:host([over-background]) .percentage{color:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .track{background-color:var(\n--spectrum-progressbar-m-overbackground-track-color,var(--spectrum-alias-track-color-overbackground)\n)}:host([positive]) .fill{background:var(\n--spectrum-meter-m-positive-track-fill-color,var(--spectrum-semantic-positive-status-color)\n)}:host([notice]) .fill{background:var(\n--spectrum-meter-m-notice-track-fill-color,var(--spectrum-semantic-notice-status-color)\n)}:host([negative]) .fill{background:var(\n--spectrum-meter-m-negative-track-fill-color,var(--spectrum-semantic-negative-status-color)\n)}.label,.percentage{color:var(\n--spectrum-fieldlabel-m-text-color,var(--spectrum-alias-label-text-color)\n)}.fill{transform-origin:left}:host([dir=rtl]) .fill{transform-origin:right}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/meter/src/meter.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/meter/src/spectrum-meter.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([size=s]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-s-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-s-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-s-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-s-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-s-height,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-s-width,var(--spectrum-global-dimension-static-size-2400)\n)}:host([size=m]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-m-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-m-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-m-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-m-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-m-height,var(--spectrum-global-dimension-size-75)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-m-width,var(--spectrum-global-dimension-static-size-2400)\n);--spectrum-fieldlabel-side-padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([size=l]){--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-l-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-l-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-l-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-l-height,var(--spectrum-global-dimension-size-100)\n);--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-l-border-radius,var(--spectrum-global-dimension-size-50)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-l-width,var(--spectrum-global-dimension-static-size-2500)\n)}:host([size=xl]){--spectrum-progressbar-border-radius:var(\n--spectrum-progressbar-xl-border-radius\n);--spectrum-progressbar-indeterminate-fill-width:var(\n--spectrum-progressbar-xl-indeterminate-fill-width,var(--spectrum-global-dimension-static-percent-70)\n);--spectrum-progressbar-indeterminate-duration:var(\n--spectrum-progressbar-xl-indeterminate-duration,var(--spectrum-global-animation-duration-2000)\n);--spectrum-progressbar-value-gap-y:var(\n--spectrum-progressbar-xl-value-gap-y,0px\n);--spectrum-progressbar-height:var(\n--spectrum-progressbar-xl-height,var(--spectrum-global-dimension-size-125)\n);--spectrum-progressbar-width:var(\n--spectrum-progressbar-xl-width,var(--spectrum-global-dimension-static-size-2800)\n)}:host{align-items:center;display:inline-flex;flex-flow:row wrap;justify-content:space-between;position:relative;vertical-align:top;width:var(--spectrum-progressbar-width)}.track{border-radius:var(--spectrum-progressbar-border-radius);overflow:hidden;width:100%;z-index:1}.fill,.track{height:var(--spectrum-progressbar-height)}.fill{border:none;transition:width 1s}:host([dir=ltr]) .label,:host([dir=ltr]) .percentage{text-align:left}:host([dir=rtl]) .label,:host([dir=rtl]) .percentage{text-align:right}.label,.percentage{margin-bottom:var(\n--spectrum-progressbar-value-gap-y\n)}.label{flex:1 1 0%}:host([dir=ltr]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}.percentage{align-self:flex-start}:host([side-label]){display:inline-flex;flex-flow:row;justify-content:space-between;width:auto}:host([side-label]) .track{flex:1 1 var(--spectrum-progressbar-width);min-width:var(\n--spectrum-progressbar-width\n)}:host([dir=ltr][side-label]) .label{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .label{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .label{flex-grow:0;margin-bottom:0}:host([dir=ltr][side-label]) .percentage{text-align:right}:host([dir=rtl][side-label]) .percentage{text-align:left}:host([dir=ltr][side-label]) .percentage{margin-left:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([dir=rtl][side-label]) .percentage{margin-right:var(\n--spectrum-fieldlabel-side-padding-right\n)}:host([side-label]) .percentage{margin-bottom:0;order:3}:host([indeterminate]) .fill{animation-timing-function:var(\n--spectrum-progressbar-indeterminate-animation-ease\n);position:relative;width:var(\n--spectrum-progressbar-indeterminate-fill-width\n);will-change:transform}:host([dir=ltr][indeterminate]) .fill{animation:indeterminate-loop-ltr var(--spectrum-progressbar-indeterminate-duration) infinite}:host([dir=rtl][indeterminate]) .fill{animation:indeterminate-loop-rtl var(--spectrum-progressbar-indeterminate-duration) infinite}@keyframes indeterminate-loop-ltr{0%{transform:translate(calc(var(--spectrum-progressbar-indeterminate-fill-width)*-1))}to{transform:translate(var(--spectrum-progressbar-width))}}@keyframes indeterminate-loop-rtl{0%{transform:translate(var(--spectrum-progressbar-width))}to{transform:translate(calc(var(--spectrum-progressbar-width)*-1))}}.fill{background:var(\n--spectrum-progressbar-m-track-fill-color,var(--spectrum-semantic-informative-color-default)\n)}.track{background-color:var(\n--spectrum-progressbar-m-track-color,var(--spectrum-alias-track-color-default)\n)}:host([over-background]) .fill{background:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .label,:host([over-background]) .percentage{color:var(\n--spectrum-progressbar-m-overbackground-track-fill-color,var(--spectrum-alias-track-fill-color-overbackground)\n)}:host([over-background]) .track{background-color:var(\n--spectrum-progressbar-m-overbackground-track-color,var(--spectrum-alias-track-color-overbackground)\n)}:host([positive]) .fill{background:var(\n--spectrum-meter-m-positive-track-fill-color,var(--spectrum-semantic-positive-status-color)\n)}:host([notice]) .fill{background:var(\n--spectrum-meter-m-notice-track-fill-color,var(--spectrum-semantic-notice-status-color)\n)}:host([negative]) .fill{background:var(\n--spectrum-meter-m-negative-track-fill-color,var(--spectrum-semantic-negative-status-color)\n)}.label,.percentage{color:var(\n--spectrum-fieldlabel-m-text-color,var(--spectrum-alias-label-text-color)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/meter/src/spectrum-meter.css.ts"
           }
         }
       ]
@@ -48851,285 +48851,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/status-light/src/StatusLight.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "StatusLight",
-          "slots": [
-            {
-              "description": "text label of the Status Light",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "A status light in a disabled state shows that a status exists, but is not available in that circumstance. This can be used to maintain layout continuity and communicate that a status may become available later.",
-              "attribute": "disabled",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "variant",
-              "type": {
-                "text": "| 'negative'\n        | 'notice'\n        | 'positive'\n        | 'info'\n        | 'neutral'\n        | 'yellow'\n        | 'fuchsia'\n        | 'indigo'\n        | 'seafoam'\n        | 'chartreuse'\n        | 'magenta'\n        | 'celery'\n        | 'purple'"
-              },
-              "privacy": "public",
-              "default": "'info'",
-              "description": "The visual variant to apply to this status light.",
-              "attribute": "variant",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "privacy": "public",
-              "attribute": "size",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_size",
-              "type": {
-                "text": "ElementSize | null"
-              },
-              "privacy": "private",
-              "default": "defaultSize",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "firstUpdated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "changes",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "A status light in a disabled state shows that a status exists, but is not available in that circumstance. This can be used to maintain layout continuity and communicate that a status may become available later.",
-              "fieldName": "disabled"
-            },
-            {
-              "name": "variant",
-              "type": {
-                "text": "| 'negative'\n        | 'notice'\n        | 'positive'\n        | 'info'\n        | 'neutral'\n        | 'yellow'\n        | 'fuchsia'\n        | 'indigo'\n        | 'seafoam'\n        | 'chartreuse'\n        | 'magenta'\n        | 'celery'\n        | 'purple'"
-              },
-              "default": "'info'",
-              "description": "The visual variant to apply to this status light.",
-              "fieldName": "variant"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "fieldName": "size",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "mixins": [
-            {
-              "name": "SizedMixin",
-              "package": "@spectrum-web-components/base"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-status-light",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "StatusLight",
-          "declaration": {
-            "name": "StatusLight",
-            "module": "packages/status-light/src/StatusLight.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/status-light/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./StatusLight.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/status-light/src/spectrum-status-light.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-s-info-text-padding-bottom\n);--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-s-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-s-info-dot-margin-top,var(--spectrum-global-dimension-size-100)\n);--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-s-info-dot-size,var(--spectrum-global-dimension-static-size-100)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-s-info-text-gap,var(--spectrum-global-dimension-size-115)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-s-info-text-size,var(--spectrum-global-dimension-font-size-75)\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-s-info-text-padding-top,var(--spectrum-global-dimension-static-size-50)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-s-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-s-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-s-info-height,var(--spectrum-global-dimension-size-300)\n)}:host([size=m]){--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-m-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-m-info-dot-margin-top,var(--spectrum-global-dimension-size-130)\n);--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-m-info-dot-size,var(--spectrum-global-dimension-size-100)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-m-info-text-gap,var(--spectrum-global-dimension-size-125)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-m-info-text-size,var(--spectrum-global-dimension-font-size-100)\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-m-info-text-padding-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-m-info-text-padding-bottom,var(--spectrum-global-dimension-size-115)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-m-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-m-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-m-info-height,var(--spectrum-global-dimension-size-400)\n)}:host([size=l]){--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-l-info-dot-size\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-l-info-text-padding-top\n);--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-l-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-l-info-dot-margin-top,var(--spectrum-global-dimension-size-185)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-l-info-text-gap,var(--spectrum-global-dimension-size-130)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-l-info-text-size,var(--spectrum-global-dimension-font-size-200)\n);--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-l-info-text-padding-bottom,var(--spectrum-global-dimension-size-130)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-l-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-l-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-l-info-height,var(--spectrum-global-dimension-size-500)\n)}:host([size=xl]){--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-xl-info-dot-size\n);--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-xl-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-xl-info-dot-margin-top,var(--spectrum-global-dimension-size-250)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-xl-info-text-gap,var(--spectrum-global-dimension-size-160)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-xl-info-text-size,var(--spectrum-global-dimension-font-size-300)\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-xl-info-text-padding-top,var(--spectrum-global-dimension-size-150)\n);--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-xl-info-text-padding-bottom,var(--spectrum-global-dimension-size-175)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-xl-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-xl-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-xl-info-height,var(--spectrum-global-dimension-size-600)\n)}:host([dir]){--spectrum-statuslight-info-dot-resolved-margin-top:calc(var(--spectrum-statuslight-info-dot-margin-top) - var(--spectrum-statuslight-info-text-padding-top));align-items:flex-start;box-sizing:border-box;display:flex;flex-direction:row;font-size:var(--spectrum-statuslight-info-text-size);font-weight:var(--spectrum-statuslight-info-text-font-weight);line-height:var(--spectrum-statuslight-info-text-line-height);min-height:var(--spectrum-statuslight-info-height);padding-bottom:var(--spectrum-statuslight-info-text-padding-bottom);padding-left:0;padding-right:0;padding-top:var(--spectrum-statuslight-info-text-padding-top)}:host([dir=ltr]):before{margin-left:var(\n--spectrum-global-dimension-size-0\n);margin-right:var(--spectrum-statuslight-info-text-gap)}:host([dir=rtl]):before{margin-left:var(--spectrum-statuslight-info-text-gap);margin-right:var(\n--spectrum-global-dimension-size-0\n)}:host:before{-ms-high-contrast-adjust:none;border-radius:var(--spectrum-statuslight-info-dot-border-radius);content:\"\";display:inline-block;flex-grow:0;flex-shrink:0;forced-color-adjust:none;height:var(--spectrum-statuslight-info-dot-size);margin-bottom:var(--spectrum-global-dimension-size-0);margin-top:var(--spectrum-statuslight-info-dot-resolved-margin-top);width:var(--spectrum-statuslight-info-dot-size)}:host([variant=neutral]){font-style:italic}:host([dir]){color:var(\n--spectrum-statuslight-m-info-text-color,var(--spectrum-alias-text-color)\n)}:host([disabled]),:host([disabled]){color:var(\n--spectrum-statuslight-m-info-text-color-disabled,var(--spectrum-alias-text-color-disabled)\n)}:host([disabled]):before,:host([disabled]):before{background-color:var(\n--spectrum-statuslight-m-info-dot-color-disabled,var(--spectrum-global-color-gray-400)\n)}:host([variant=negative]):before{background-color:var(\n--spectrum-statuslight-m-negative-dot-color,var(--spectrum-semantic-negative-status-color)\n)}:host([variant=notice]):before{background-color:var(\n--spectrum-statuslight-m-notice-dot-color,var(--spectrum-semantic-notice-status-color)\n)}:host([variant=positive]):before{background-color:var(\n--spectrum-statuslight-m-positive-dot-color,var(--spectrum-semantic-positive-status-color)\n)}:host([active]):before,:host([variant=info]):before{background-color:var(\n--spectrum-statuslight-m-info-dot-color,var(--spectrum-semantic-informative-status-color)\n)}:host([variant=neutral]){color:var(\n--spectrum-statuslight-m-neutral-text-color,var(--spectrum-alias-label-text-color)\n)}:host([variant=neutral]):before{background-color:var(\n--spectrum-statuslight-m-neutral-dot-color,var(--spectrum-global-color-gray-500)\n)}:host([variant=celery]):before{background-color:var(\n--spectrum-statuslight-m-celery-dot-color,var(--spectrum-global-color-celery-400)\n)}:host([variant=yellow]):before{background-color:var(\n--spectrum-statuslight-m-yellow-dot-color,var(--spectrum-global-color-yellow-400)\n)}:host([variant=fuchsia]):before{background-color:var(\n--spectrum-statuslight-m-fuchsia-dot-color,var(--spectrum-global-color-fuchsia-400)\n)}:host([variant=indigo]):before{background-color:var(\n--spectrum-statuslight-m-indigo-dot-color,var(--spectrum-global-color-indigo-400)\n)}:host([variant=seafoam]):before{background-color:var(\n--spectrum-statuslight-m-seafoam-dot-color,var(--spectrum-global-color-seafoam-400)\n)}:host([variant=chartreuse]):before{background-color:var(\n--spectrum-statuslight-m-chartreuse-dot-color,var(--spectrum-global-color-chartreuse-400)\n)}:host([variant=magenta]):before{background-color:var(\n--spectrum-statuslight-m-magenta-dot-color,var(--spectrum-global-color-magenta-400)\n)}:host([variant=purple]):before{background-color:var(\n--spectrum-statuslight-m-purple-dot-color,var(--spectrum-global-color-purple-400)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/status-light/src/spectrum-status-light.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/status-light/src/status-light.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-s-info-text-padding-bottom\n);--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-s-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-s-info-dot-margin-top,var(--spectrum-global-dimension-size-100)\n);--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-s-info-dot-size,var(--spectrum-global-dimension-static-size-100)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-s-info-text-gap,var(--spectrum-global-dimension-size-115)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-s-info-text-size,var(--spectrum-global-dimension-font-size-75)\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-s-info-text-padding-top,var(--spectrum-global-dimension-static-size-50)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-s-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-s-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-s-info-height,var(--spectrum-global-dimension-size-300)\n)}:host([size=m]){--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-m-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-m-info-dot-margin-top,var(--spectrum-global-dimension-size-130)\n);--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-m-info-dot-size,var(--spectrum-global-dimension-size-100)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-m-info-text-gap,var(--spectrum-global-dimension-size-125)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-m-info-text-size,var(--spectrum-global-dimension-font-size-100)\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-m-info-text-padding-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-m-info-text-padding-bottom,var(--spectrum-global-dimension-size-115)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-m-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-m-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-m-info-height,var(--spectrum-global-dimension-size-400)\n)}:host([size=l]){--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-l-info-dot-size\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-l-info-text-padding-top\n);--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-l-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-l-info-dot-margin-top,var(--spectrum-global-dimension-size-185)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-l-info-text-gap,var(--spectrum-global-dimension-size-130)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-l-info-text-size,var(--spectrum-global-dimension-font-size-200)\n);--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-l-info-text-padding-bottom,var(--spectrum-global-dimension-size-130)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-l-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-l-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-l-info-height,var(--spectrum-global-dimension-size-500)\n)}:host([size=xl]){--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-xl-info-dot-size\n);--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-xl-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-xl-info-dot-margin-top,var(--spectrum-global-dimension-size-250)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-xl-info-text-gap,var(--spectrum-global-dimension-size-160)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-xl-info-text-size,var(--spectrum-global-dimension-font-size-300)\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-xl-info-text-padding-top,var(--spectrum-global-dimension-size-150)\n);--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-xl-info-text-padding-bottom,var(--spectrum-global-dimension-size-175)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-xl-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-xl-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-xl-info-height,var(--spectrum-global-dimension-size-600)\n)}:host([dir]){--spectrum-statuslight-info-dot-resolved-margin-top:calc(var(--spectrum-statuslight-info-dot-margin-top) - var(--spectrum-statuslight-info-text-padding-top));align-items:flex-start;box-sizing:border-box;display:flex;flex-direction:row;font-size:var(--spectrum-statuslight-info-text-size);font-weight:var(--spectrum-statuslight-info-text-font-weight);line-height:var(--spectrum-statuslight-info-text-line-height);min-height:var(--spectrum-statuslight-info-height);padding-bottom:var(--spectrum-statuslight-info-text-padding-bottom);padding-left:0;padding-right:0;padding-top:var(--spectrum-statuslight-info-text-padding-top)}:host([dir=ltr]):before{margin-left:var(\n--spectrum-global-dimension-size-0\n);margin-right:var(--spectrum-statuslight-info-text-gap)}:host([dir=rtl]):before{margin-left:var(--spectrum-statuslight-info-text-gap);margin-right:var(\n--spectrum-global-dimension-size-0\n)}:host:before{-ms-high-contrast-adjust:none;border-radius:var(--spectrum-statuslight-info-dot-border-radius);content:\"\";display:inline-block;flex-grow:0;flex-shrink:0;forced-color-adjust:none;height:var(--spectrum-statuslight-info-dot-size);margin-bottom:var(--spectrum-global-dimension-size-0);margin-top:var(--spectrum-statuslight-info-dot-resolved-margin-top);width:var(--spectrum-statuslight-info-dot-size)}:host([variant=neutral]){font-style:italic}:host([dir]){color:var(\n--spectrum-statuslight-m-info-text-color,var(--spectrum-alias-text-color)\n)}:host([disabled]),:host([disabled]){color:var(\n--spectrum-statuslight-m-info-text-color-disabled,var(--spectrum-alias-text-color-disabled)\n)}:host([disabled]):before,:host([disabled]):before{background-color:var(\n--spectrum-statuslight-m-info-dot-color-disabled,var(--spectrum-global-color-gray-400)\n)}:host([variant=negative]):before{background-color:var(\n--spectrum-statuslight-m-negative-dot-color,var(--spectrum-semantic-negative-status-color)\n)}:host([variant=notice]):before{background-color:var(\n--spectrum-statuslight-m-notice-dot-color,var(--spectrum-semantic-notice-status-color)\n)}:host([variant=positive]):before{background-color:var(\n--spectrum-statuslight-m-positive-dot-color,var(--spectrum-semantic-positive-status-color)\n)}:host([active]):before,:host([variant=info]):before{background-color:var(\n--spectrum-statuslight-m-info-dot-color,var(--spectrum-semantic-informative-status-color)\n)}:host([variant=neutral]){color:var(\n--spectrum-statuslight-m-neutral-text-color,var(--spectrum-alias-label-text-color)\n)}:host([variant=neutral]):before{background-color:var(\n--spectrum-statuslight-m-neutral-dot-color,var(--spectrum-global-color-gray-500)\n)}:host([variant=celery]):before{background-color:var(\n--spectrum-statuslight-m-celery-dot-color,var(--spectrum-global-color-celery-400)\n)}:host([variant=yellow]):before{background-color:var(\n--spectrum-statuslight-m-yellow-dot-color,var(--spectrum-global-color-yellow-400)\n)}:host([variant=fuchsia]):before{background-color:var(\n--spectrum-statuslight-m-fuchsia-dot-color,var(--spectrum-global-color-fuchsia-400)\n)}:host([variant=indigo]):before{background-color:var(\n--spectrum-statuslight-m-indigo-dot-color,var(--spectrum-global-color-indigo-400)\n)}:host([variant=seafoam]):before{background-color:var(\n--spectrum-statuslight-m-seafoam-dot-color,var(--spectrum-global-color-seafoam-400)\n)}:host([variant=chartreuse]):before{background-color:var(\n--spectrum-statuslight-m-chartreuse-dot-color,var(--spectrum-global-color-chartreuse-400)\n)}:host([variant=magenta]):before{background-color:var(\n--spectrum-statuslight-m-magenta-dot-color,var(--spectrum-global-color-magenta-400)\n)}:host([variant=purple]):before{background-color:var(\n--spectrum-statuslight-m-purple-dot-color,var(--spectrum-global-color-purple-400)\n)}:host([disabled]):before{background-color:var(\n--spectrum-statuslight-dot-color-disabled,var(--spectrum-global-color-gray-400)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/status-light/src/status-light.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/split-view/src/SplitView.ts",
       "declarations": [
         {
@@ -49825,6 +49546,285 @@
       "path": "packages/split-view/src/types.ts",
       "declarations": [],
       "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/status-light/src/StatusLight.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "StatusLight",
+          "slots": [
+            {
+              "description": "text label of the Status Light",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "A status light in a disabled state shows that a status exists, but is not available in that circumstance. This can be used to maintain layout continuity and communicate that a status may become available later.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "| 'negative'\n        | 'notice'\n        | 'positive'\n        | 'info'\n        | 'neutral'\n        | 'yellow'\n        | 'fuchsia'\n        | 'indigo'\n        | 'seafoam'\n        | 'chartreuse'\n        | 'magenta'\n        | 'celery'\n        | 'purple'"
+              },
+              "privacy": "public",
+              "default": "'info'",
+              "description": "The visual variant to apply to this status light.",
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "privacy": "public",
+              "attribute": "size",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_size",
+              "type": {
+                "text": "ElementSize | null"
+              },
+              "privacy": "private",
+              "default": "defaultSize",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changes",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "A status light in a disabled state shows that a status exists, but is not available in that circumstance. This can be used to maintain layout continuity and communicate that a status may become available later.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "variant",
+              "type": {
+                "text": "| 'negative'\n        | 'notice'\n        | 'positive'\n        | 'info'\n        | 'neutral'\n        | 'yellow'\n        | 'fuchsia'\n        | 'indigo'\n        | 'seafoam'\n        | 'chartreuse'\n        | 'magenta'\n        | 'celery'\n        | 'purple'"
+              },
+              "default": "'info'",
+              "description": "The visual variant to apply to this status light.",
+              "fieldName": "variant"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "fieldName": "size",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SizedMixin",
+              "package": "@spectrum-web-components/base"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-status-light",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "StatusLight",
+          "declaration": {
+            "name": "StatusLight",
+            "module": "packages/status-light/src/StatusLight.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/status-light/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./StatusLight.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/status-light/src/spectrum-status-light.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([size=s]){--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-s-info-text-padding-bottom\n);--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-s-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-s-info-dot-margin-top,var(--spectrum-global-dimension-size-100)\n);--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-s-info-dot-size,var(--spectrum-global-dimension-static-size-100)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-s-info-text-gap,var(--spectrum-global-dimension-size-115)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-s-info-text-size,var(--spectrum-global-dimension-font-size-75)\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-s-info-text-padding-top,var(--spectrum-global-dimension-static-size-50)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-s-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-s-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-s-info-height,var(--spectrum-global-dimension-size-300)\n)}:host([size=m]){--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-m-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-m-info-dot-margin-top,var(--spectrum-global-dimension-size-130)\n);--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-m-info-dot-size,var(--spectrum-global-dimension-size-100)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-m-info-text-gap,var(--spectrum-global-dimension-size-125)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-m-info-text-size,var(--spectrum-global-dimension-font-size-100)\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-m-info-text-padding-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-m-info-text-padding-bottom,var(--spectrum-global-dimension-size-115)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-m-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-m-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-m-info-height,var(--spectrum-global-dimension-size-400)\n)}:host([size=l]){--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-l-info-dot-size\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-l-info-text-padding-top\n);--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-l-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-l-info-dot-margin-top,var(--spectrum-global-dimension-size-185)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-l-info-text-gap,var(--spectrum-global-dimension-size-130)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-l-info-text-size,var(--spectrum-global-dimension-font-size-200)\n);--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-l-info-text-padding-bottom,var(--spectrum-global-dimension-size-130)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-l-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-l-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-l-info-height,var(--spectrum-global-dimension-size-500)\n)}:host([size=xl]){--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-xl-info-dot-size\n);--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-xl-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-xl-info-dot-margin-top,var(--spectrum-global-dimension-size-250)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-xl-info-text-gap,var(--spectrum-global-dimension-size-160)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-xl-info-text-size,var(--spectrum-global-dimension-font-size-300)\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-xl-info-text-padding-top,var(--spectrum-global-dimension-size-150)\n);--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-xl-info-text-padding-bottom,var(--spectrum-global-dimension-size-175)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-xl-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-xl-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-xl-info-height,var(--spectrum-global-dimension-size-600)\n)}:host([dir]){--spectrum-statuslight-info-dot-resolved-margin-top:calc(var(--spectrum-statuslight-info-dot-margin-top) - var(--spectrum-statuslight-info-text-padding-top));align-items:flex-start;box-sizing:border-box;display:flex;flex-direction:row;font-size:var(--spectrum-statuslight-info-text-size);font-weight:var(--spectrum-statuslight-info-text-font-weight);line-height:var(--spectrum-statuslight-info-text-line-height);min-height:var(--spectrum-statuslight-info-height);padding-bottom:var(--spectrum-statuslight-info-text-padding-bottom);padding-left:0;padding-right:0;padding-top:var(--spectrum-statuslight-info-text-padding-top)}:host([dir=ltr]):before{margin-left:var(\n--spectrum-global-dimension-size-0\n);margin-right:var(--spectrum-statuslight-info-text-gap)}:host([dir=rtl]):before{margin-left:var(--spectrum-statuslight-info-text-gap);margin-right:var(\n--spectrum-global-dimension-size-0\n)}:host:before{-ms-high-contrast-adjust:none;border-radius:var(--spectrum-statuslight-info-dot-border-radius);content:\"\";display:inline-block;flex-grow:0;flex-shrink:0;forced-color-adjust:none;height:var(--spectrum-statuslight-info-dot-size);margin-bottom:var(--spectrum-global-dimension-size-0);margin-top:var(--spectrum-statuslight-info-dot-resolved-margin-top);width:var(--spectrum-statuslight-info-dot-size)}:host([variant=neutral]){font-style:italic}:host([dir]){color:var(\n--spectrum-statuslight-m-info-text-color,var(--spectrum-alias-text-color)\n)}:host([disabled]),:host([disabled]){color:var(\n--spectrum-statuslight-m-info-text-color-disabled,var(--spectrum-alias-text-color-disabled)\n)}:host([disabled]):before,:host([disabled]):before{background-color:var(\n--spectrum-statuslight-m-info-dot-color-disabled,var(--spectrum-global-color-gray-400)\n)}:host([variant=negative]):before{background-color:var(\n--spectrum-statuslight-m-negative-dot-color,var(--spectrum-semantic-negative-status-color)\n)}:host([variant=notice]):before{background-color:var(\n--spectrum-statuslight-m-notice-dot-color,var(--spectrum-semantic-notice-status-color)\n)}:host([variant=positive]):before{background-color:var(\n--spectrum-statuslight-m-positive-dot-color,var(--spectrum-semantic-positive-status-color)\n)}:host([active]):before,:host([variant=info]):before{background-color:var(\n--spectrum-statuslight-m-info-dot-color,var(--spectrum-semantic-informative-status-color)\n)}:host([variant=neutral]){color:var(\n--spectrum-statuslight-m-neutral-text-color,var(--spectrum-alias-label-text-color)\n)}:host([variant=neutral]):before{background-color:var(\n--spectrum-statuslight-m-neutral-dot-color,var(--spectrum-global-color-gray-500)\n)}:host([variant=celery]):before{background-color:var(\n--spectrum-statuslight-m-celery-dot-color,var(--spectrum-global-color-celery-400)\n)}:host([variant=yellow]):before{background-color:var(\n--spectrum-statuslight-m-yellow-dot-color,var(--spectrum-global-color-yellow-400)\n)}:host([variant=fuchsia]):before{background-color:var(\n--spectrum-statuslight-m-fuchsia-dot-color,var(--spectrum-global-color-fuchsia-400)\n)}:host([variant=indigo]):before{background-color:var(\n--spectrum-statuslight-m-indigo-dot-color,var(--spectrum-global-color-indigo-400)\n)}:host([variant=seafoam]):before{background-color:var(\n--spectrum-statuslight-m-seafoam-dot-color,var(--spectrum-global-color-seafoam-400)\n)}:host([variant=chartreuse]):before{background-color:var(\n--spectrum-statuslight-m-chartreuse-dot-color,var(--spectrum-global-color-chartreuse-400)\n)}:host([variant=magenta]):before{background-color:var(\n--spectrum-statuslight-m-magenta-dot-color,var(--spectrum-global-color-magenta-400)\n)}:host([variant=purple]):before{background-color:var(\n--spectrum-statuslight-m-purple-dot-color,var(--spectrum-global-color-purple-400)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/status-light/src/spectrum-status-light.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/status-light/src/status-light.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([size=s]){--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-s-info-text-padding-bottom\n);--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-s-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-s-info-dot-margin-top,var(--spectrum-global-dimension-size-100)\n);--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-s-info-dot-size,var(--spectrum-global-dimension-static-size-100)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-s-info-text-gap,var(--spectrum-global-dimension-size-115)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-s-info-text-size,var(--spectrum-global-dimension-font-size-75)\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-s-info-text-padding-top,var(--spectrum-global-dimension-static-size-50)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-s-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-s-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-s-info-height,var(--spectrum-global-dimension-size-300)\n)}:host([size=m]){--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-m-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-m-info-dot-margin-top,var(--spectrum-global-dimension-size-130)\n);--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-m-info-dot-size,var(--spectrum-global-dimension-size-100)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-m-info-text-gap,var(--spectrum-global-dimension-size-125)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-m-info-text-size,var(--spectrum-global-dimension-font-size-100)\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-m-info-text-padding-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-m-info-text-padding-bottom,var(--spectrum-global-dimension-size-115)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-m-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-m-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-m-info-height,var(--spectrum-global-dimension-size-400)\n)}:host([size=l]){--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-l-info-dot-size\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-l-info-text-padding-top\n);--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-l-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-l-info-dot-margin-top,var(--spectrum-global-dimension-size-185)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-l-info-text-gap,var(--spectrum-global-dimension-size-130)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-l-info-text-size,var(--spectrum-global-dimension-font-size-200)\n);--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-l-info-text-padding-bottom,var(--spectrum-global-dimension-size-130)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-l-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-l-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-l-info-height,var(--spectrum-global-dimension-size-500)\n)}:host([size=xl]){--spectrum-statuslight-info-dot-size:var(\n--spectrum-statuslight-xl-info-dot-size\n);--spectrum-statuslight-info-dot-border-radius:var(\n--spectrum-statuslight-xl-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-statuslight-info-dot-margin-top:var(\n--spectrum-statuslight-xl-info-dot-margin-top,var(--spectrum-global-dimension-size-250)\n);--spectrum-statuslight-info-text-gap:var(\n--spectrum-statuslight-xl-info-text-gap,var(--spectrum-global-dimension-size-160)\n);--spectrum-statuslight-info-text-size:var(\n--spectrum-statuslight-xl-info-text-size,var(--spectrum-global-dimension-font-size-300)\n);--spectrum-statuslight-info-text-padding-top:var(\n--spectrum-statuslight-xl-info-text-padding-top,var(--spectrum-global-dimension-size-150)\n);--spectrum-statuslight-info-text-padding-bottom:var(\n--spectrum-statuslight-xl-info-text-padding-bottom,var(--spectrum-global-dimension-size-175)\n);--spectrum-statuslight-info-text-font-weight:var(\n--spectrum-statuslight-xl-info-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-statuslight-info-text-line-height:var(\n--spectrum-statuslight-xl-info-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-statuslight-info-height:var(\n--spectrum-statuslight-xl-info-height,var(--spectrum-global-dimension-size-600)\n)}:host([dir]){--spectrum-statuslight-info-dot-resolved-margin-top:calc(var(--spectrum-statuslight-info-dot-margin-top) - var(--spectrum-statuslight-info-text-padding-top));align-items:flex-start;box-sizing:border-box;display:flex;flex-direction:row;font-size:var(--spectrum-statuslight-info-text-size);font-weight:var(--spectrum-statuslight-info-text-font-weight);line-height:var(--spectrum-statuslight-info-text-line-height);min-height:var(--spectrum-statuslight-info-height);padding-bottom:var(--spectrum-statuslight-info-text-padding-bottom);padding-left:0;padding-right:0;padding-top:var(--spectrum-statuslight-info-text-padding-top)}:host([dir=ltr]):before{margin-left:var(\n--spectrum-global-dimension-size-0\n);margin-right:var(--spectrum-statuslight-info-text-gap)}:host([dir=rtl]):before{margin-left:var(--spectrum-statuslight-info-text-gap);margin-right:var(\n--spectrum-global-dimension-size-0\n)}:host:before{-ms-high-contrast-adjust:none;border-radius:var(--spectrum-statuslight-info-dot-border-radius);content:\"\";display:inline-block;flex-grow:0;flex-shrink:0;forced-color-adjust:none;height:var(--spectrum-statuslight-info-dot-size);margin-bottom:var(--spectrum-global-dimension-size-0);margin-top:var(--spectrum-statuslight-info-dot-resolved-margin-top);width:var(--spectrum-statuslight-info-dot-size)}:host([variant=neutral]){font-style:italic}:host([dir]){color:var(\n--spectrum-statuslight-m-info-text-color,var(--spectrum-alias-text-color)\n)}:host([disabled]),:host([disabled]){color:var(\n--spectrum-statuslight-m-info-text-color-disabled,var(--spectrum-alias-text-color-disabled)\n)}:host([disabled]):before,:host([disabled]):before{background-color:var(\n--spectrum-statuslight-m-info-dot-color-disabled,var(--spectrum-global-color-gray-400)\n)}:host([variant=negative]):before{background-color:var(\n--spectrum-statuslight-m-negative-dot-color,var(--spectrum-semantic-negative-status-color)\n)}:host([variant=notice]):before{background-color:var(\n--spectrum-statuslight-m-notice-dot-color,var(--spectrum-semantic-notice-status-color)\n)}:host([variant=positive]):before{background-color:var(\n--spectrum-statuslight-m-positive-dot-color,var(--spectrum-semantic-positive-status-color)\n)}:host([active]):before,:host([variant=info]):before{background-color:var(\n--spectrum-statuslight-m-info-dot-color,var(--spectrum-semantic-informative-status-color)\n)}:host([variant=neutral]){color:var(\n--spectrum-statuslight-m-neutral-text-color,var(--spectrum-alias-label-text-color)\n)}:host([variant=neutral]):before{background-color:var(\n--spectrum-statuslight-m-neutral-dot-color,var(--spectrum-global-color-gray-500)\n)}:host([variant=celery]):before{background-color:var(\n--spectrum-statuslight-m-celery-dot-color,var(--spectrum-global-color-celery-400)\n)}:host([variant=yellow]):before{background-color:var(\n--spectrum-statuslight-m-yellow-dot-color,var(--spectrum-global-color-yellow-400)\n)}:host([variant=fuchsia]):before{background-color:var(\n--spectrum-statuslight-m-fuchsia-dot-color,var(--spectrum-global-color-fuchsia-400)\n)}:host([variant=indigo]):before{background-color:var(\n--spectrum-statuslight-m-indigo-dot-color,var(--spectrum-global-color-indigo-400)\n)}:host([variant=seafoam]):before{background-color:var(\n--spectrum-statuslight-m-seafoam-dot-color,var(--spectrum-global-color-seafoam-400)\n)}:host([variant=chartreuse]):before{background-color:var(\n--spectrum-statuslight-m-chartreuse-dot-color,var(--spectrum-global-color-chartreuse-400)\n)}:host([variant=magenta]):before{background-color:var(\n--spectrum-statuslight-m-magenta-dot-color,var(--spectrum-global-color-magenta-400)\n)}:host([variant=purple]):before{background-color:var(\n--spectrum-statuslight-m-purple-dot-color,var(--spectrum-global-color-purple-400)\n)}:host([disabled]):before{background-color:var(\n--spectrum-statuslight-dot-color-disabled,var(--spectrum-global-color-gray-400)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/status-light/src/status-light.css.ts"
+          }
+        }
+      ]
     },
     {
       "kind": "javascript-module",
