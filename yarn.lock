@@ -4834,10 +4834,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/slider/-/slider-3.0.11.tgz#b39b65fab07dd050a20478ea6879af6dab0458c8"
   integrity sha512-aDYJWTqAB6EebzjEyiOTe/7WG4q8CHZ/iZ/lSACCdWbYHGUJVzdQVaJAeQP3w5hytExf5+eGLdFkYtKTyh3bSQ==
 
-"@spectrum-css/splitbutton@^3.0.10":
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-3.0.10.tgz#97fbaff9eb1514ec76cf8ebd1980909dda58d4bd"
-  integrity sha512-neNY6OhCw/sCQcPWebLa19gIrBnwKcMGtGRQKjeuUNO0rGUyTJJadgJvv53CBZKfEjM5frSjU0RwLUDM5yqdbQ==
+"@spectrum-css/splitbutton@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-5.0.2.tgz#d672986ff0765d95a0d4088594a6bf194abc0229"
+  integrity sha512-jhjW+tJCoT9ztLbfIAtq7EmqfSnkJGg36ZwqachAjOepqLjPVRI7lB8ZPPnQ/537uF0CpdX4wulqsQmuKTfoCg==
 
 "@spectrum-css/splitview@^3.0.11":
   version "3.0.11"
