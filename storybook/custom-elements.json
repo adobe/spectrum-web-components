@@ -162,6 +162,21 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/action-bar/sp-action-bar.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-action-bar",
+          "declaration": {
+            "name": "ActionBar",
+            "module": "/packages/action-bar/src/ActionBar.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/accordion/sp-accordion-item.ts",
       "declarations": [],
       "exports": [
@@ -186,21 +201,6 @@
           "declaration": {
             "name": "Accordion",
             "module": "/packages/accordion/src/Accordion.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/sp-action-bar.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-action-bar",
-          "declaration": {
-            "name": "ActionBar",
-            "module": "/packages/action-bar/src/ActionBar.js"
           }
         }
       ]
@@ -2126,6 +2126,216 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/action-bar/src/ActionBar.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "actionBarVariants",
+          "type": {
+            "text": "array"
+          },
+          "default": "['sticky', 'fixed']"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ActionBar",
+          "slots": [
+            {
+              "description": "Content to display with the Action Bar",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "flexible",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
+              "parameters": [
+                {
+                  "name": "flexible",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "attribute": "flexible",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "privacy": "public",
+              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "String"
+                  }
+                }
+              ],
+              "type": {
+                "text": "string"
+              },
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_variant",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "flexible",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
+              "parameters": [
+                {
+                  "name": "flexible",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "fieldName": "flexible"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "variant",
+              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "String"
+                  }
+                }
+              ],
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "variant"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-action-bar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "actionBarVariants",
+          "declaration": {
+            "name": "actionBarVariants",
+            "module": "packages/action-bar/src/ActionBar.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ActionBar",
+          "declaration": {
+            "name": "ActionBar",
+            "module": "packages/action-bar/src/ActionBar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/action-bar.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/action-bar/src/action-bar.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ActionBar.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/spectrum-action-bar.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/action-bar/src/spectrum-action-bar.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/accordion/src/Accordion.ts",
       "declarations": [
         {
@@ -2740,216 +2950,6 @@
           "declaration": {
             "name": "styles",
             "module": "packages/accordion/src/spectrum-accordion.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/ActionBar.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "actionBarVariants",
-          "type": {
-            "text": "array"
-          },
-          "default": "['sticky', 'fixed']"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ActionBar",
-          "slots": [
-            {
-              "description": "Content to display with the Action Bar",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "flexible",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
-              "parameters": [
-                {
-                  "name": "flexible",
-                  "type": {
-                    "text": "Boolean"
-                  }
-                }
-              ],
-              "attribute": "flexible",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "open",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "variant",
-              "privacy": "public",
-              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
-              "parameters": [
-                {
-                  "name": "variant",
-                  "type": {
-                    "text": "String"
-                  }
-                }
-              ],
-              "type": {
-                "text": "string"
-              },
-              "attribute": "variant",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "_variant",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private",
-              "default": "''"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "flexible",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
-              "parameters": [
-                {
-                  "name": "flexible",
-                  "type": {
-                    "text": "Boolean"
-                  }
-                }
-              ],
-              "fieldName": "flexible"
-            },
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "open"
-            },
-            {
-              "name": "variant",
-              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
-              "parameters": [
-                {
-                  "name": "variant",
-                  "type": {
-                    "text": "String"
-                  }
-                }
-              ],
-              "type": {
-                "text": "string"
-              },
-              "fieldName": "variant"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-action-bar",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "actionBarVariants",
-          "declaration": {
-            "name": "actionBarVariants",
-            "module": "packages/action-bar/src/ActionBar.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ActionBar",
-          "declaration": {
-            "name": "ActionBar",
-            "module": "packages/action-bar/src/ActionBar.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/action-bar.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/action-bar/src/action-bar.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ActionBar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/spectrum-action-bar.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/action-bar/src/spectrum-action-bar.css.ts"
           }
         }
       ]
