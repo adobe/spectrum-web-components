@@ -15,6 +15,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '../sp-number-field.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
+import { NumberField } from '../src/NumberField.js';
 
 export default {
     title: 'Number Field',
@@ -181,16 +182,31 @@ interface StoryArgs {
     hideStepper?: boolean;
     readonly?: boolean;
     step?: number;
+    onChange?: (value: number) => void;
+    onInput?: (value: number) => void;
     [prop: string]: unknown;
 }
 
 export const Default = (args: StoryArgs = {}): TemplateResult => {
+    const onChange =
+        (args.onChange as (value: number) => void) ||
+        (() => {
+            return;
+        });
+    const onInput =
+        (args.onInput as (value: number) => void) ||
+        (() => {
+            return;
+        });
     return html`
         <sp-field-label for="default">Enter a number</sp-field-label>
         <sp-number-field
             id="default"
             ...=${spreadProps(args)}
-            @change=${args.onChange}
+            @input=${(event: Event) =>
+                onInput((event.target as NumberField).value)}
+            @change=${(event: Event) =>
+                onChange((event.target as NumberField).value)}
             style="width: 150px"
         ></sp-number-field>
     `;
@@ -200,34 +216,15 @@ Default.args = {
     value: 100,
 };
 
-export const quiet = (args: StoryArgs = {}): TemplateResult => {
-    return html`
-        <sp-field-label for="default">Enter a number</sp-field-label>
-        <sp-number-field
-            id="default"
-            ...=${spreadProps(args)}
-            @change=${args.onChange}
-            style="width: 150px"
-        ></sp-number-field>
-    `;
-};
+export const quiet = (args: StoryArgs = {}): TemplateResult => Default(args);
 
 quiet.args = {
     quiet: true,
     value: 100,
 };
 
-export const indeterminate = (args: StoryArgs = {}): TemplateResult => {
-    return html`
-        <sp-field-label for="default">Enter a number</sp-field-label>
-        <sp-number-field
-            id="default"
-            ...=${spreadProps(args)}
-            @change=${args.onChange}
-            style="width: 150px"
-        ></sp-number-field>
-    `;
-};
+export const indeterminate = (args: StoryArgs = {}): TemplateResult =>
+    Default(args);
 
 indeterminate.args = {
     value: 100,
