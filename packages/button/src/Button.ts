@@ -53,7 +53,7 @@ export class Button extends SizedMixin(StyledButton) {
     /**
      * The visual variant to apply to this button.
      */
-    @property({ reflect: true })
+    @property()
     public get variant(): ButtonVariants {
         return this._variant;
     }
