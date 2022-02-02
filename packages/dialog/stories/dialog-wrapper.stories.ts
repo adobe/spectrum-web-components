@@ -241,6 +241,54 @@ export const form = (
     `;
 };
 
+function nextFrame(): Promise<void> {
+    return new Promise((res) => requestAnimationFrame(() => res()));
+}
+
+class OverlayTriggerReady extends HTMLElement {
+    ready!: (value: boolean | PromiseLike<boolean>) => void;
+
+    constructor() {
+        super();
+        this.readyPromise = new Promise((res) => {
+            this.ready = res;
+            this.setup();
+        });
+    }
+
+    async setup(): Promise<void> {
+        await nextFrame();
+
+        const overlay = document.querySelector(
+            `overlay-trigger`
+        ) as HTMLElement;
+        overlay.addEventListener('sp-opened', this.handleTriggerOpened);
+    }
+
+    handleTriggerOpened = async (): Promise<void> => {
+        await nextFrame();
+
+        this.ready(true);
+    };
+
+    private readyPromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.readyPromise;
+    }
+}
+
+customElements.define('overlay-trigger-ready', OverlayTriggerReady);
+
+const overlayTriggerDecorator = (
+    story: () => TemplateResult
+): TemplateResult => {
+    return html`
+        ${story()}
+        <overlay-trigger-ready></overlay-trigger-ready>
+    `;
+};
+
 export const longContent = (
     args: StoryArgs = {},
     context: { viewMode?: string } = {}
@@ -360,6 +408,8 @@ export const longContent = (
         </overlay-trigger>
     `;
 };
+
+longContent.decorators = [overlayTriggerDecorator];
 
 export const wrapperDismissableUnderlayError = (
     args: StoryArgs = {},

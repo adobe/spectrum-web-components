@@ -123,6 +123,9 @@ export class SplitButton extends SizedMixin(PickerBase) {
     }
 
     protected render(): TemplateResult {
+        const treatment = ['cta', 'accent'].includes(this.variant)
+            ? 'fill'
+            : 'outline';
         const buttons: TemplateResult[] = [
             html`
                 <sp-button
@@ -132,10 +135,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
                     @click=${this.passClick}
                     ?disabled=${this.disabled}
                     variant=${this.variant}
-                    treatment=${this.variant === 'cta' ||
-                    this.variant === 'accent'
-                        ? 'fill'
-                        : 'outline'}
+                    treatment=${treatment}
                     size=${this.size}
                 >
                     ${this.buttonContent}
@@ -152,10 +152,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
                     ?disabled=${this.disabled}
                     aria-label="More"
                     variant=${this.variant}
-                    treatment=${this.variant === 'cta' ||
-                    this.variant === 'accent'
-                        ? 'fill'
-                        : 'outline'}
+                    treatment=${treatment}
                     size=${this.size}
                 >
                     ${this.type === 'field'
