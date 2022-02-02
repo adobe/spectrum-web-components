@@ -66,36 +66,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/accordion/sp-accordion-item.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-accordion-item",
-          "declaration": {
-            "name": "AccordionItem",
-            "module": "/packages/accordion/src/AccordionItem.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/accordion/sp-accordion.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-accordion",
-          "declaration": {
-            "name": "Accordion",
-            "module": "/packages/accordion/src/Accordion.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/action-bar/sp-action-bar.ts",
       "declarations": [],
       "exports": [
@@ -120,6 +90,36 @@
           "declaration": {
             "name": "ActionButton",
             "module": "/packages/action-button/src/ActionButton.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/accordion/sp-accordion-item.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-accordion-item",
+          "declaration": {
+            "name": "AccordionItem",
+            "module": "/packages/accordion/src/AccordionItem.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/accordion/sp-accordion.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-accordion",
+          "declaration": {
+            "name": "Accordion",
+            "module": "/packages/accordion/src/Accordion.js"
           }
         }
       ]
@@ -1303,626 +1303,6 @@
           "declaration": {
             "name": "VrtCompare",
             "module": "/projects/vrt-compare/src/VrtCompare.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/accordion/src/Accordion.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Accordion",
-          "slots": [
-            {
-              "description": "The sp-accordion-item children to display.",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "allowMultiple",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Allows multiple accordion items to be opened at the same time",
-              "attribute": "allow-multiple",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "defaultNodes",
-              "type": {
-                "text": "NodeListOf<AccordionItem>"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "items",
-              "type": {
-                "text": "AccordionItem[]"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "rovingTabindexController",
-              "default": "new RovingTabindexController<AccordionItem>(\n        this,\n        {\n            focusInIndex: (elements: AccordionItem[]) => {\n                return elements.findIndex((el) => {\n                    return !el.disabled;\n                });\n            },\n            direction: 'vertical',\n            elements: () => this.items,\n            isFocusableElement: (el: AccordionItem) => !el.disabled,\n        }\n    )"
-            },
-            {
-              "kind": "method",
-              "name": "focus",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "onToggle",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "handleSlotchange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "allow-multiple",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Allows multiple accordion items to be opened at the same time",
-              "fieldName": "allowMultiple"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-accordion",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Accordion",
-          "declaration": {
-            "name": "Accordion",
-            "module": "packages/accordion/src/Accordion.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/accordion/src/AccordionItem.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AccordionItem",
-          "slots": [
-            {
-              "description": "The content of the item that is hidden when the item is not open",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "open",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "label",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Disable this control. It will not receive focus or events",
-              "attribute": "disabled",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "focusElement",
-              "type": {
-                "text": "DisableableElement"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "onKeyDown",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "KeyboardEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "onClick",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "toggle",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "autofocus",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "description": "When this control is rendered, focus it automatically",
-              "attribute": "autofocus",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "tabIndex",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
-              "attribute": "tabIndex",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_tabIndex",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "private",
-              "default": "0",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "onPointerdownManagementOfTabIndex",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageFocusElementTabindex",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "tabIndex",
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "manipulatingTabindex",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "false",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "focus",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "options",
-                  "optional": true,
-                  "type": {
-                    "text": "FocusOptions"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "blur",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "click",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageAutoFocus",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleDisabledChanged",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "disabled",
-                  "type": {
-                    "text": "boolean"
-                  }
-                },
-                {
-                  "name": "oldDisabled",
-                  "type": {
-                    "text": "boolean"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "[$endPolyfillCoordination]",
-              "type": {
-                "text": "EndPolyfillCoordinationCallback | null"
-              },
-              "privacy": "private",
-              "default": "null",
-              "inheritedFrom": {
-                "name": "FocusVisiblePolyfillMixin",
-                "module": "packages/shared/src/focus-visible.ts"
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "sp-accordion-item-toggle",
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Announce that an accordion item has been toggled while allowing the event to be cancelled."
-            },
-            {
-              "name": "keydown",
-              "type": {
-                "text": "KeyboardEvent"
-              },
-              "description": "Trick :focus-visible polyfill into thinking keyboard based focus",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
-            },
-            {
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Disable this control. It will not receive focus or events",
-              "fieldName": "disabled",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "name": "autofocus",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "When this control is rendered, focus it automatically",
-              "fieldName": "autofocus",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            },
-            {
-              "name": "tabIndex",
-              "type": {
-                "text": "number"
-              },
-              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
-              "fieldName": "tabIndex",
-              "inheritedFrom": {
-                "name": "Focusable",
-                "module": "packages/shared/src/focusable.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "Focusable",
-            "package": "@spectrum-web-components/shared/src/focusable.js"
-          },
-          "tagName": "sp-accordion-item",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AccordionItem",
-          "declaration": {
-            "name": "AccordionItem",
-            "module": "packages/accordion/src/AccordionItem.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/accordion/src/accordion-item.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([dir=ltr]) #indicator{left:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=rtl]) #indicator{right:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=rtl]) #indicator{transform:matrix(-1,0,0,1,0,0)}#indicator{display:block;position:absolute;transition:transform ease var(--spectrum-accordion-animation-duration)}:host{border-bottom:var(\n--spectrum-accordion-item-border-size,var(--spectrum-alias-border-size-thin)\n) solid transparent;display:list-item;margin:0;position:relative;z-index:inherit}:host(:first-of-type){border-top:var(\n--spectrum-accordion-item-border-size,var(--spectrum-alias-border-size-thin)\n) solid transparent}#heading{box-sizing:border-box;margin:0}:host([dir=ltr]) #header{padding-left:calc(var(\n--spectrum-accordion-item-padding-x,\nvar(--spectrum-global-dimension-size-225)\n) + var(\n--spectrum-accordion-icon-height,\nvar(--spectrum-global-dimension-size-125)\n) + var(\n--spectrum-accordion-icon-gap,\nvar(--spectrum-global-dimension-size-100)\n) + var(\n--spectrum-accordion-item-border-left-size,\nvar(--spectrum-alias-border-size-thick)\n))}:host([dir=rtl]) #header{padding-right:calc(var(\n--spectrum-accordion-item-padding-x,\nvar(--spectrum-global-dimension-size-225)\n) + var(\n--spectrum-accordion-icon-height,\nvar(--spectrum-global-dimension-size-125)\n) + var(\n--spectrum-accordion-icon-gap,\nvar(--spectrum-global-dimension-size-100)\n) + var(\n--spectrum-accordion-item-border-left-size,\nvar(--spectrum-alias-border-size-thick)\n))}:host([dir=ltr]) #header{padding-right:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=rtl]) #header{padding-left:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=ltr]) #header{text-align:left}:host([dir=rtl]) #header{text-align:right}#header{align-items:center;-webkit-appearance:none;appearance:none;background-color:inherit;border:0;box-sizing:border-box;cursor:pointer;display:flex;font-family:inherit;font-size:var(\n--spectrum-accordion-item-title-text-size,var(--spectrum-global-dimension-font-size-50)\n);font-weight:500;justify-content:flex-start;letter-spacing:calc(var(\n--spectrum-accordion-item-title-tracking,\nvar(--spectrum-global-font-letter-spacing-medium)\n)/100);line-height:var(\n--spectrum-accordion-text-line-height,var(--spectrum-alias-component-text-line-height)\n);margin:0;padding-bottom:var(--spectrum-accordion-item-title-padding-y);padding-top:var(--spectrum-accordion-item-title-padding-y);position:relative;text-overflow:ellipsis;text-transform:uppercase;width:100%}#header:focus{outline:none}:host([dir=ltr]) #header:focus:after{left:0}:host([dir=rtl]) #header:focus:after{right:0}#header:focus:after{bottom:calc(var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1);content:\"\";position:absolute;top:calc(var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1);width:var(\n--spectrum-accordion-item-border-left-size,var(--spectrum-alias-border-size-thick)\n)}#content{display:none;padding-bottom:var(\n--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200)\n);padding-left:var(\n--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200)\n);padding-right:var(\n--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200)\n);padding-top:0}:host([dir=ltr][open])>#heading>#indicator{transform:rotate(90deg)}:host([dir=rtl][open])>#heading>#indicator{transform:matrix(-1,0,0,1,0,0) rotate(90deg)}:host([dir=ltr][open])>#indicator{transform:rotate(90deg)}:host([dir=rtl][open])>#indicator{transform:matrix(-1,0,0,1,0,0) rotate(90deg)}:host([open])>#content{display:block}:host([disabled]) #header{cursor:default}:host{border-color:var(\n--spectrum-accordion-border-color,var(--spectrum-global-color-gray-300)\n)}#indicator{color:var(\n--spectrum-accordion-icon-color,var(--spectrum-global-color-gray-600)\n)}#header{color:var(\n--spectrum-accordion-text-color,var(--spectrum-global-color-gray-700)\n)}#header:hover{background-color:var(\n--spectrum-accordion-item-background-color-hover,var(--spectrum-global-color-gray-200)\n);color:var(\n--spectrum-accordion-text-color-hover,var(--spectrum-global-color-gray-900)\n)}#header:hover+#indicator{color:var(\n--spectrum-accordion-icon-color-hover,var(--spectrum-alias-icon-color-hover)\n)}#header.focus-visible:after{background-color:var(\n--spectrum-accordion-item-border-left-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}#header:focus-visible:after{background-color:var(\n--spectrum-accordion-item-border-left-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host([open]) #header:hover{background-color:transparent}:host([disabled]) #header,:host([disabled]) #header.focus-visible,:host([disabled]) #header:hover{background-color:transparent;color:var(\n--spectrum-accordion-text-color-disabled,var(--spectrum-global-color-gray-500)\n)}:host([disabled]) #header,:host([disabled]) #header:focus-visible,:host([disabled]) #header:hover{background-color:transparent;color:var(\n--spectrum-accordion-text-color-disabled,var(--spectrum-global-color-gray-500)\n)}:host([disabled]) #header+#indicator{color:var(\n--spectrum-accordion-icon-color-disabled,var(--spectrum-alias-icon-color-disabled)\n)}:host{--spectrum-accordion-item-header-height:46px}#indicator{top:calc(50% - var(\n--spectrum-accordion-icon-height,\nvar(--spectrum-global-dimension-size-125)\n)/2)}#heading{height:auto;position:relative}#header{min-height:calc(100% - var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n))}:host([open])>#header:after{height:calc(100% - var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n))}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/accordion/src/accordion-item.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/accordion/src/accordion.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-accordion-item-title-padding-y:var(\n--spectrum-global-dimension-size-150\n);--spectrum-accordion-animation-duration:var(\n--spectrum-global-animation-duration-100,130ms\n)}:host{display:block;list-style:none;margin:0;padding:0}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/accordion/src/accordion.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/accordion/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Accordion.js"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./AccordionItem.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/accordion/src/spectrum-accordion-item.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([dir=ltr]) #indicator{left:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=rtl]) #indicator{right:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=rtl]) #indicator{transform:matrix(-1,0,0,1,0,0)}#indicator{display:block;position:absolute;top:calc(50% - var(\n--spectrum-accordion-icon-height,\nvar(--spectrum-global-dimension-size-125)\n)/2);transition:transform ease var(--spectrum-accordion-animation-duration)}:host{border-bottom:var(\n--spectrum-accordion-item-border-size,var(--spectrum-alias-border-size-thin)\n) solid transparent;display:list-item;margin:0;position:relative;z-index:inherit}:host(:first-of-type){border-top:var(\n--spectrum-accordion-item-border-size,var(--spectrum-alias-border-size-thin)\n) solid transparent}#heading{box-sizing:border-box;margin:0;position:relative}:host([dir=ltr]) #header{padding-left:calc(var(\n--spectrum-accordion-item-padding-x,\nvar(--spectrum-global-dimension-size-225)\n) + var(\n--spectrum-accordion-icon-height,\nvar(--spectrum-global-dimension-size-125)\n) + var(\n--spectrum-accordion-icon-gap,\nvar(--spectrum-global-dimension-size-100)\n) + var(\n--spectrum-accordion-item-border-left-size,\nvar(--spectrum-alias-border-size-thick)\n))}:host([dir=rtl]) #header{padding-right:calc(var(\n--spectrum-accordion-item-padding-x,\nvar(--spectrum-global-dimension-size-225)\n) + var(\n--spectrum-accordion-icon-height,\nvar(--spectrum-global-dimension-size-125)\n) + var(\n--spectrum-accordion-icon-gap,\nvar(--spectrum-global-dimension-size-100)\n) + var(\n--spectrum-accordion-item-border-left-size,\nvar(--spectrum-alias-border-size-thick)\n))}:host([dir=ltr]) #header{padding-right:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=rtl]) #header{padding-left:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=ltr]) #header{text-align:left}:host([dir=rtl]) #header{text-align:right}#header{align-items:center;-webkit-appearance:none;appearance:none;background-color:inherit;border:0;box-sizing:border-box;cursor:pointer;display:flex;font-family:inherit;font-size:var(\n--spectrum-accordion-item-title-text-size,var(--spectrum-global-dimension-font-size-50)\n);font-weight:500;justify-content:flex-start;letter-spacing:calc(var(\n--spectrum-accordion-item-title-tracking,\nvar(--spectrum-global-font-letter-spacing-medium)\n)/100);line-height:var(\n--spectrum-accordion-text-line-height,var(--spectrum-alias-component-text-line-height)\n);margin:0;min-height:calc(100% - var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n));padding-bottom:var(--spectrum-accordion-item-title-padding-y);padding-top:var(--spectrum-accordion-item-title-padding-y);position:relative;text-overflow:ellipsis;text-transform:uppercase;width:100%}#header:focus{outline:none}:host([dir=ltr]) #header:focus:after{left:0}:host([dir=rtl]) #header:focus:after{right:0}#header:focus:after{bottom:calc(var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1);content:\"\";position:absolute;top:calc(var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1);width:var(\n--spectrum-accordion-item-border-left-size,var(--spectrum-alias-border-size-thick)\n)}#content{display:none;padding-bottom:var(\n--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200)\n);padding-left:var(\n--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200)\n);padding-right:var(\n--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200)\n);padding-top:0}:host([dir=ltr][open])>#heading>#indicator{transform:rotate(90deg)}:host([dir=rtl][open])>#heading>#indicator{transform:matrix(-1,0,0,1,0,0) rotate(90deg)}:host([dir=ltr][open])>#indicator{transform:rotate(90deg)}:host([dir=rtl][open])>#indicator{transform:matrix(-1,0,0,1,0,0) rotate(90deg)}:host([open])>#header:after{height:calc(100% - var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n))}:host([open])>#content{display:block}:host([disabled]) #header{cursor:default}:host{border-color:var(\n--spectrum-accordion-border-color,var(--spectrum-global-color-gray-300)\n)}#indicator{color:var(\n--spectrum-accordion-icon-color,var(--spectrum-global-color-gray-600)\n)}#header{color:var(\n--spectrum-accordion-text-color,var(--spectrum-global-color-gray-700)\n)}#header:hover{background-color:var(\n--spectrum-accordion-item-background-color-hover,var(--spectrum-global-color-gray-200)\n);color:var(\n--spectrum-accordion-text-color-hover,var(--spectrum-global-color-gray-900)\n)}#header:hover+#indicator{color:var(\n--spectrum-accordion-icon-color-hover,var(--spectrum-alias-icon-color-hover)\n)}#header.focus-visible:after{background-color:var(\n--spectrum-accordion-item-border-left-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}#header:focus-visible:after{background-color:var(\n--spectrum-accordion-item-border-left-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host([open]) #header:hover{background-color:transparent}:host([disabled]) #header,:host([disabled]) #header.focus-visible,:host([disabled]) #header:hover{background-color:transparent;color:var(\n--spectrum-accordion-text-color-disabled,var(--spectrum-global-color-gray-500)\n)}:host([disabled]) #header,:host([disabled]) #header:focus-visible,:host([disabled]) #header:hover{background-color:transparent;color:var(\n--spectrum-accordion-text-color-disabled,var(--spectrum-global-color-gray-500)\n)}:host([disabled]) #header+#indicator{color:var(\n--spectrum-accordion-icon-color-disabled,var(--spectrum-alias-icon-color-disabled)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/accordion/src/spectrum-accordion-item.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/accordion/src/spectrum-accordion.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-accordion-item-title-padding-y:var(\n--spectrum-global-dimension-size-150\n);--spectrum-accordion-animation-duration:var(\n--spectrum-global-animation-duration-100,130ms\n)}:host{display:block;list-style:none;margin:0;padding:0}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/accordion/src/spectrum-accordion.css.ts"
           }
         }
       ]
@@ -3300,6 +2680,626 @@
           "declaration": {
             "name": "styles",
             "module": "packages/action-button/src/spectrum-action-button.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/accordion/src/Accordion.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Accordion",
+          "slots": [
+            {
+              "description": "The sp-accordion-item children to display.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "allowMultiple",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Allows multiple accordion items to be opened at the same time",
+              "attribute": "allow-multiple",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "defaultNodes",
+              "type": {
+                "text": "NodeListOf<AccordionItem>"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "items",
+              "type": {
+                "text": "AccordionItem[]"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "rovingTabindexController",
+              "default": "new RovingTabindexController<AccordionItem>(\n        this,\n        {\n            focusInIndex: (elements: AccordionItem[]) => {\n                return elements.findIndex((el) => {\n                    return !el.disabled;\n                });\n            },\n            direction: 'vertical',\n            elements: () => this.items,\n            isFocusableElement: (el: AccordionItem) => !el.disabled,\n        }\n    )"
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onToggle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "handleSlotchange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "allow-multiple",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Allows multiple accordion items to be opened at the same time",
+              "fieldName": "allowMultiple"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-accordion",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Accordion",
+          "declaration": {
+            "name": "Accordion",
+            "module": "packages/accordion/src/Accordion.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/accordion/src/AccordionItem.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AccordionItem",
+          "slots": [
+            {
+              "description": "The content of the item that is hidden when the item is not open",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Disable this control. It will not receive focus or events",
+              "attribute": "disabled",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "focusElement",
+              "type": {
+                "text": "DisableableElement"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onKeyDown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onClick",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "toggle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "autofocus",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "description": "When this control is rendered, focus it automatically",
+              "attribute": "autofocus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
+              "attribute": "tabIndex",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private",
+              "default": "0",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onPointerdownManagementOfTabIndex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageFocusElementTabindex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "tabIndex",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "manipulatingTabindex",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "blur",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "click",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageAutoFocus",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleDisabledChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "disabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "oldDisabled",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "[$endPolyfillCoordination]",
+              "type": {
+                "text": "EndPolyfillCoordinationCallback | null"
+              },
+              "privacy": "private",
+              "default": "null",
+              "inheritedFrom": {
+                "name": "FocusVisiblePolyfillMixin",
+                "module": "packages/shared/src/focus-visible.ts"
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "sp-accordion-item-toggle",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Announce that an accordion item has been toggled while allowing the event to be cancelled."
+            },
+            {
+              "name": "keydown",
+              "type": {
+                "text": "KeyboardEvent"
+              },
+              "description": "Trick :focus-visible polyfill into thinking keyboard based focus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disable this control. It will not receive focus or events",
+              "fieldName": "disabled",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "name": "autofocus",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When this control is rendered, focus it automatically",
+              "fieldName": "autofocus",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            },
+            {
+              "name": "tabIndex",
+              "type": {
+                "text": "number"
+              },
+              "description": "The tab index to apply to this control. See general documentation about\nthe tabindex HTML property",
+              "fieldName": "tabIndex",
+              "inheritedFrom": {
+                "name": "Focusable",
+                "module": "packages/shared/src/focusable.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "Focusable",
+            "package": "@spectrum-web-components/shared/src/focusable.js"
+          },
+          "tagName": "sp-accordion-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AccordionItem",
+          "declaration": {
+            "name": "AccordionItem",
+            "module": "packages/accordion/src/AccordionItem.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/accordion/src/accordion-item.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([dir=ltr]) #indicator{left:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=rtl]) #indicator{right:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=rtl]) #indicator{transform:matrix(-1,0,0,1,0,0)}#indicator{display:block;position:absolute;transition:transform ease var(--spectrum-accordion-animation-duration)}:host{border-bottom:var(\n--spectrum-accordion-item-border-size,var(--spectrum-alias-border-size-thin)\n) solid transparent;display:list-item;margin:0;position:relative;z-index:inherit}:host(:first-of-type){border-top:var(\n--spectrum-accordion-item-border-size,var(--spectrum-alias-border-size-thin)\n) solid transparent}#heading{box-sizing:border-box;margin:0}:host([dir=ltr]) #header{padding-left:calc(var(\n--spectrum-accordion-item-padding-x,\nvar(--spectrum-global-dimension-size-225)\n) + var(\n--spectrum-accordion-icon-height,\nvar(--spectrum-global-dimension-size-125)\n) + var(\n--spectrum-accordion-icon-gap,\nvar(--spectrum-global-dimension-size-100)\n) + var(\n--spectrum-accordion-item-border-left-size,\nvar(--spectrum-alias-border-size-thick)\n))}:host([dir=rtl]) #header{padding-right:calc(var(\n--spectrum-accordion-item-padding-x,\nvar(--spectrum-global-dimension-size-225)\n) + var(\n--spectrum-accordion-icon-height,\nvar(--spectrum-global-dimension-size-125)\n) + var(\n--spectrum-accordion-icon-gap,\nvar(--spectrum-global-dimension-size-100)\n) + var(\n--spectrum-accordion-item-border-left-size,\nvar(--spectrum-alias-border-size-thick)\n))}:host([dir=ltr]) #header{padding-right:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=rtl]) #header{padding-left:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=ltr]) #header{text-align:left}:host([dir=rtl]) #header{text-align:right}#header{align-items:center;-webkit-appearance:none;appearance:none;background-color:inherit;border:0;box-sizing:border-box;cursor:pointer;display:flex;font-family:inherit;font-size:var(\n--spectrum-accordion-item-title-text-size,var(--spectrum-global-dimension-font-size-50)\n);font-weight:500;justify-content:flex-start;letter-spacing:calc(var(\n--spectrum-accordion-item-title-tracking,\nvar(--spectrum-global-font-letter-spacing-medium)\n)/100);line-height:var(\n--spectrum-accordion-text-line-height,var(--spectrum-alias-component-text-line-height)\n);margin:0;padding-bottom:var(--spectrum-accordion-item-title-padding-y);padding-top:var(--spectrum-accordion-item-title-padding-y);position:relative;text-overflow:ellipsis;text-transform:uppercase;width:100%}#header:focus{outline:none}:host([dir=ltr]) #header:focus:after{left:0}:host([dir=rtl]) #header:focus:after{right:0}#header:focus:after{bottom:calc(var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1);content:\"\";position:absolute;top:calc(var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1);width:var(\n--spectrum-accordion-item-border-left-size,var(--spectrum-alias-border-size-thick)\n)}#content{display:none;padding-bottom:var(\n--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200)\n);padding-left:var(\n--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200)\n);padding-right:var(\n--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200)\n);padding-top:0}:host([dir=ltr][open])>#heading>#indicator{transform:rotate(90deg)}:host([dir=rtl][open])>#heading>#indicator{transform:matrix(-1,0,0,1,0,0) rotate(90deg)}:host([dir=ltr][open])>#indicator{transform:rotate(90deg)}:host([dir=rtl][open])>#indicator{transform:matrix(-1,0,0,1,0,0) rotate(90deg)}:host([open])>#content{display:block}:host([disabled]) #header{cursor:default}:host{border-color:var(\n--spectrum-accordion-border-color,var(--spectrum-global-color-gray-300)\n)}#indicator{color:var(\n--spectrum-accordion-icon-color,var(--spectrum-global-color-gray-600)\n)}#header{color:var(\n--spectrum-accordion-text-color,var(--spectrum-global-color-gray-700)\n)}#header:hover{background-color:var(\n--spectrum-accordion-item-background-color-hover,var(--spectrum-global-color-gray-200)\n);color:var(\n--spectrum-accordion-text-color-hover,var(--spectrum-global-color-gray-900)\n)}#header:hover+#indicator{color:var(\n--spectrum-accordion-icon-color-hover,var(--spectrum-alias-icon-color-hover)\n)}#header.focus-visible:after{background-color:var(\n--spectrum-accordion-item-border-left-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}#header:focus-visible:after{background-color:var(\n--spectrum-accordion-item-border-left-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host([open]) #header:hover{background-color:transparent}:host([disabled]) #header,:host([disabled]) #header.focus-visible,:host([disabled]) #header:hover{background-color:transparent;color:var(\n--spectrum-accordion-text-color-disabled,var(--spectrum-global-color-gray-500)\n)}:host([disabled]) #header,:host([disabled]) #header:focus-visible,:host([disabled]) #header:hover{background-color:transparent;color:var(\n--spectrum-accordion-text-color-disabled,var(--spectrum-global-color-gray-500)\n)}:host([disabled]) #header+#indicator{color:var(\n--spectrum-accordion-icon-color-disabled,var(--spectrum-alias-icon-color-disabled)\n)}:host{--spectrum-accordion-item-header-height:46px}#indicator{top:calc(50% - var(\n--spectrum-accordion-icon-height,\nvar(--spectrum-global-dimension-size-125)\n)/2)}#heading{height:auto;position:relative}#header{min-height:calc(100% - var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n))}:host([open])>#header:after{height:calc(100% - var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n))}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/accordion/src/accordion-item.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/accordion/src/accordion.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-accordion-item-title-padding-y:var(\n--spectrum-global-dimension-size-150\n);--spectrum-accordion-animation-duration:var(\n--spectrum-global-animation-duration-100,130ms\n)}:host{display:block;list-style:none;margin:0;padding:0}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/accordion/src/accordion.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/accordion/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Accordion.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./AccordionItem.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/accordion/src/spectrum-accordion-item.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([dir=ltr]) #indicator{left:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=rtl]) #indicator{right:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=rtl]) #indicator{transform:matrix(-1,0,0,1,0,0)}#indicator{display:block;position:absolute;top:calc(50% - var(\n--spectrum-accordion-icon-height,\nvar(--spectrum-global-dimension-size-125)\n)/2);transition:transform ease var(--spectrum-accordion-animation-duration)}:host{border-bottom:var(\n--spectrum-accordion-item-border-size,var(--spectrum-alias-border-size-thin)\n) solid transparent;display:list-item;margin:0;position:relative;z-index:inherit}:host(:first-of-type){border-top:var(\n--spectrum-accordion-item-border-size,var(--spectrum-alias-border-size-thin)\n) solid transparent}#heading{box-sizing:border-box;margin:0;position:relative}:host([dir=ltr]) #header{padding-left:calc(var(\n--spectrum-accordion-item-padding-x,\nvar(--spectrum-global-dimension-size-225)\n) + var(\n--spectrum-accordion-icon-height,\nvar(--spectrum-global-dimension-size-125)\n) + var(\n--spectrum-accordion-icon-gap,\nvar(--spectrum-global-dimension-size-100)\n) + var(\n--spectrum-accordion-item-border-left-size,\nvar(--spectrum-alias-border-size-thick)\n))}:host([dir=rtl]) #header{padding-right:calc(var(\n--spectrum-accordion-item-padding-x,\nvar(--spectrum-global-dimension-size-225)\n) + var(\n--spectrum-accordion-icon-height,\nvar(--spectrum-global-dimension-size-125)\n) + var(\n--spectrum-accordion-icon-gap,\nvar(--spectrum-global-dimension-size-100)\n) + var(\n--spectrum-accordion-item-border-left-size,\nvar(--spectrum-alias-border-size-thick)\n))}:host([dir=ltr]) #header{padding-right:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=rtl]) #header{padding-left:var(\n--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225)\n)}:host([dir=ltr]) #header{text-align:left}:host([dir=rtl]) #header{text-align:right}#header{align-items:center;-webkit-appearance:none;appearance:none;background-color:inherit;border:0;box-sizing:border-box;cursor:pointer;display:flex;font-family:inherit;font-size:var(\n--spectrum-accordion-item-title-text-size,var(--spectrum-global-dimension-font-size-50)\n);font-weight:500;justify-content:flex-start;letter-spacing:calc(var(\n--spectrum-accordion-item-title-tracking,\nvar(--spectrum-global-font-letter-spacing-medium)\n)/100);line-height:var(\n--spectrum-accordion-text-line-height,var(--spectrum-alias-component-text-line-height)\n);margin:0;min-height:calc(100% - var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n));padding-bottom:var(--spectrum-accordion-item-title-padding-y);padding-top:var(--spectrum-accordion-item-title-padding-y);position:relative;text-overflow:ellipsis;text-transform:uppercase;width:100%}#header:focus{outline:none}:host([dir=ltr]) #header:focus:after{left:0}:host([dir=rtl]) #header:focus:after{right:0}#header:focus:after{bottom:calc(var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1);content:\"\";position:absolute;top:calc(var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1);width:var(\n--spectrum-accordion-item-border-left-size,var(--spectrum-alias-border-size-thick)\n)}#content{display:none;padding-bottom:var(\n--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200)\n);padding-left:var(\n--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200)\n);padding-right:var(\n--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200)\n);padding-top:0}:host([dir=ltr][open])>#heading>#indicator{transform:rotate(90deg)}:host([dir=rtl][open])>#heading>#indicator{transform:matrix(-1,0,0,1,0,0) rotate(90deg)}:host([dir=ltr][open])>#indicator{transform:rotate(90deg)}:host([dir=rtl][open])>#indicator{transform:matrix(-1,0,0,1,0,0) rotate(90deg)}:host([open])>#header:after{height:calc(100% - var(\n--spectrum-accordion-item-border-size,\nvar(--spectrum-alias-border-size-thin)\n))}:host([open])>#content{display:block}:host([disabled]) #header{cursor:default}:host{border-color:var(\n--spectrum-accordion-border-color,var(--spectrum-global-color-gray-300)\n)}#indicator{color:var(\n--spectrum-accordion-icon-color,var(--spectrum-global-color-gray-600)\n)}#header{color:var(\n--spectrum-accordion-text-color,var(--spectrum-global-color-gray-700)\n)}#header:hover{background-color:var(\n--spectrum-accordion-item-background-color-hover,var(--spectrum-global-color-gray-200)\n);color:var(\n--spectrum-accordion-text-color-hover,var(--spectrum-global-color-gray-900)\n)}#header:hover+#indicator{color:var(\n--spectrum-accordion-icon-color-hover,var(--spectrum-alias-icon-color-hover)\n)}#header.focus-visible:after{background-color:var(\n--spectrum-accordion-item-border-left-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}#header:focus-visible:after{background-color:var(\n--spectrum-accordion-item-border-left-color-key-focus,var(--spectrum-alias-border-color-key-focus)\n)}:host([open]) #header:hover{background-color:transparent}:host([disabled]) #header,:host([disabled]) #header.focus-visible,:host([disabled]) #header:hover{background-color:transparent;color:var(\n--spectrum-accordion-text-color-disabled,var(--spectrum-global-color-gray-500)\n)}:host([disabled]) #header,:host([disabled]) #header:focus-visible,:host([disabled]) #header:hover{background-color:transparent;color:var(\n--spectrum-accordion-text-color-disabled,var(--spectrum-global-color-gray-500)\n)}:host([disabled]) #header+#indicator{color:var(\n--spectrum-accordion-icon-color-disabled,var(--spectrum-alias-icon-color-disabled)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/accordion/src/spectrum-accordion-item.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/accordion/src/spectrum-accordion.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-accordion-item-title-padding-y:var(\n--spectrum-global-dimension-size-150\n);--spectrum-accordion-animation-duration:var(\n--spectrum-global-animation-duration-100,130ms\n)}:host{display:block;list-style:none;margin:0;padding:0}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/accordion/src/spectrum-accordion.css.ts"
           }
         }
       ]
@@ -60087,168 +60087,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "projects/documentation/node_modules/@web/dev-server/src/config/DevServerConfig.ts",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "projects/documentation/node_modules/@web/dev-server/src/config/mergeConfigs.ts",
-      "declarations": [
-        {
-          "kind": "function",
-          "name": "mergeConfigs",
-          "parameters": [
-            {
-              "name": "configs",
-              "type": {
-                "text": "Partial<DevServerConfig | undefined>[]"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "mergeConfigs",
-          "declaration": {
-            "name": "mergeConfigs",
-            "module": "projects/documentation/node_modules/@web/dev-server/src/config/mergeConfigs.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "projects/documentation/node_modules/@web/dev-server/src/config/parseConfig.ts",
-      "declarations": [
-        {
-          "kind": "function",
-          "name": "validateConfig",
-          "parameters": [
-            {
-              "name": "config",
-              "type": {
-                "text": "Partial<DevServerConfig>"
-              }
-            }
-          ]
-        },
-        {
-          "kind": "function",
-          "name": "parseConfig",
-          "return": {
-            "type": {
-              "text": "Promise<DevServerConfig>"
-            }
-          },
-          "parameters": [
-            {
-              "name": "config",
-              "type": {
-                "text": "Partial<DevServerConfig>"
-              }
-            },
-            {
-              "name": "cliArgs",
-              "optional": true,
-              "type": {
-                "text": "DevServerCliArgs"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "validateConfig",
-          "declaration": {
-            "name": "validateConfig",
-            "module": "projects/documentation/node_modules/@web/dev-server/src/config/parseConfig.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "parseConfig",
-          "declaration": {
-            "name": "parseConfig",
-            "module": "projects/documentation/node_modules/@web/dev-server/src/config/parseConfig.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "projects/documentation/node_modules/@web/dev-server/src/config/readCliArgs.ts",
-      "declarations": [
-        {
-          "kind": "function",
-          "name": "readCliArgs",
-          "return": {
-            "type": {
-              "text": "DevServerCliArgs"
-            }
-          },
-          "parameters": [
-            {
-              "name": "{ argv = process.argv }",
-              "default": "{}",
-              "type": {
-                "text": "ReadCliArgsParams"
-              }
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "readCliArgs",
-          "declaration": {
-            "name": "readCliArgs",
-            "module": "projects/documentation/node_modules/@web/dev-server/src/config/readCliArgs.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "projects/documentation/node_modules/@web/dev-server/src/config/readFileConfig.ts",
-      "declarations": [
-        {
-          "kind": "function",
-          "name": "readFileConfig",
-          "parameters": [
-            {
-              "name": "{\n  configName = 'web-dev-server.config',\n  configPath,\n}",
-              "default": "{}",
-              "type": {
-                "text": "ReadFileConfigParams"
-              }
-            },
-            {
-              "description": "the custom location to read the config from",
-              "name": "customConfig"
-            }
-          ],
-          "description": "Reads the config from disk, defaults to process.cwd() + web-dev-server.config.{mjs,js,cjs} or\na custom config path."
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "readFileConfig",
-          "declaration": {
-            "name": "readFileConfig",
-            "module": "projects/documentation/node_modules/@web/dev-server/src/config/readFileConfig.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "projects/documentation/node_modules/@web/dev-server/src/logger/DevServerLogger.ts",
       "declarations": [
         {
@@ -60519,6 +60357,168 @@
           "declaration": {
             "name": "watchPlugin",
             "module": "projects/documentation/node_modules/@web/dev-server/src/plugins/watchPlugin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/documentation/node_modules/@web/dev-server/src/config/DevServerConfig.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/documentation/node_modules/@web/dev-server/src/config/mergeConfigs.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "mergeConfigs",
+          "parameters": [
+            {
+              "name": "configs",
+              "type": {
+                "text": "Partial<DevServerConfig | undefined>[]"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "mergeConfigs",
+          "declaration": {
+            "name": "mergeConfigs",
+            "module": "projects/documentation/node_modules/@web/dev-server/src/config/mergeConfigs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/documentation/node_modules/@web/dev-server/src/config/parseConfig.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "validateConfig",
+          "parameters": [
+            {
+              "name": "config",
+              "type": {
+                "text": "Partial<DevServerConfig>"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "parseConfig",
+          "return": {
+            "type": {
+              "text": "Promise<DevServerConfig>"
+            }
+          },
+          "parameters": [
+            {
+              "name": "config",
+              "type": {
+                "text": "Partial<DevServerConfig>"
+              }
+            },
+            {
+              "name": "cliArgs",
+              "optional": true,
+              "type": {
+                "text": "DevServerCliArgs"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "validateConfig",
+          "declaration": {
+            "name": "validateConfig",
+            "module": "projects/documentation/node_modules/@web/dev-server/src/config/parseConfig.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "parseConfig",
+          "declaration": {
+            "name": "parseConfig",
+            "module": "projects/documentation/node_modules/@web/dev-server/src/config/parseConfig.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/documentation/node_modules/@web/dev-server/src/config/readCliArgs.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "readCliArgs",
+          "return": {
+            "type": {
+              "text": "DevServerCliArgs"
+            }
+          },
+          "parameters": [
+            {
+              "name": "{ argv = process.argv }",
+              "default": "{}",
+              "type": {
+                "text": "ReadCliArgsParams"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "readCliArgs",
+          "declaration": {
+            "name": "readCliArgs",
+            "module": "projects/documentation/node_modules/@web/dev-server/src/config/readCliArgs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/documentation/node_modules/@web/dev-server/src/config/readFileConfig.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "readFileConfig",
+          "parameters": [
+            {
+              "name": "{\n  configName = 'web-dev-server.config',\n  configPath,\n}",
+              "default": "{}",
+              "type": {
+                "text": "ReadFileConfigParams"
+              }
+            },
+            {
+              "description": "the custom location to read the config from",
+              "name": "customConfig"
+            }
+          ],
+          "description": "Reads the config from disk, defaults to process.cwd() + web-dev-server.config.{mjs,js,cjs} or\na custom config path."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "readFileConfig",
+          "declaration": {
+            "name": "readFileConfig",
+            "module": "projects/documentation/node_modules/@web/dev-server/src/config/readFileConfig.ts"
           }
         }
       ]
