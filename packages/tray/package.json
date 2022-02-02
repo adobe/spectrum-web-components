@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/tray",
-    "version": "0.2.3",
+    "version": "0.3.0",
     "publishConfig": {
         "access": "public"
     },
@@ -45,7 +45,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.5.1",
-        "@spectrum-web-components/modal": "^0.5.2",
+        "@spectrum-web-components/modal": "^0.6.0",
         "@spectrum-web-components/shared": "^0.13.3",
         "@spectrum-web-components/underlay": "^0.8.2",
         "tslib": "^2.0.0"

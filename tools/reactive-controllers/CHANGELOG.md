@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/reactive-controllers@0.1.0...@spectrum-web-components/reactive-controllers@0.2.0) (2022-02-02)
+
+### Features
+
+-   **picker:** support responsive delivery of menu ([20031d1](https://github.com/adobe/spectrum-web-components/commit/20031d1b42b36cdaa129a25ee70eb2bcbcdbdb5e))
+
 # 0.1.0 (2022-01-26)
 
 ### Features

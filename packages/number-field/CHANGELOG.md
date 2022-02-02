@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.3.3...@spectrum-web-components/number-field@0.3.4) (2022-02-02)
+
+### Bug Fixes
+
+-   **number-field:** validate value before dispatching "change" event ([8c2ad89](https://github.com/adobe/spectrum-web-components/commit/8c2ad89521b8bc39c3c1a29f6e46e8e2414dcd06))
+
 ## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.3.2...@spectrum-web-components/number-field@0.3.3) (2022-01-26)
 
 ### Bug Fixes
