@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.3.0...@spectrum-web-components/tray@0.3.1) (2022-02-03)
+
+### Bug Fixes
+
+-   **tray:** include correct dependency listing ([51cb231](https://github.com/adobe/spectrum-web-components/commit/51cb2315ebd44ec299d2562d9c5fad31ce361083))
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.2.3...@spectrum-web-components/tray@0.3.0) (2022-02-02)
 
 ### Features

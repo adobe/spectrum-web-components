@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/bundle",
-    "version": "0.24.4",
+    "version": "0.24.5",
     "publishConfig": {
         "access": "public"
     },
@@ -50,7 +50,7 @@
         "@spectrum-web-components/action-bar": "^0.4.5",
         "@spectrum-web-components/action-button": "^0.7.3",
         "@spectrum-web-components/action-group": "^0.7.1",
-        "@spectrum-web-components/action-menu": "^0.13.5",
+        "@spectrum-web-components/action-menu": "^0.13.6",
         "@spectrum-web-components/asset": "^0.6.2",
         "@spectrum-web-components/avatar": "^0.9.2",
         "@spectrum-web-components/banner": "^0.7.1",
@@ -81,7 +81,7 @@
         "@spectrum-web-components/meter": "^0.6.3",
         "@spectrum-web-components/number-field": "^0.3.4",
         "@spectrum-web-components/overlay": "^0.14.0",
-        "@spectrum-web-components/picker": "^0.10.0",
+        "@spectrum-web-components/picker": "^0.10.1",
         "@spectrum-web-components/popover": "^0.11.5",
         "@spectrum-web-components/progress-bar": "^0.5.3",
         "@spectrum-web-components/progress-circle": "^0.4.2",
@@ -90,7 +90,7 @@
         "@spectrum-web-components/search": "^0.10.3",
         "@spectrum-web-components/sidenav": "^0.12.4",
         "@spectrum-web-components/slider": "^0.12.4",
-        "@spectrum-web-components/split-button": "^0.7.5",
+        "@spectrum-web-components/split-button": "^0.7.6",
         "@spectrum-web-components/split-view": "^0.4.2",
         "@spectrum-web-components/status-light": "^0.10.2",
         "@spectrum-web-components/switch": "^0.9.3",
@@ -102,7 +102,7 @@
         "@spectrum-web-components/toast": "^0.10.3",
         "@spectrum-web-components/tooltip": "^0.10.5",
         "@spectrum-web-components/top-nav": "^0.5.4",
-        "@spectrum-web-components/tray": "^0.3.0",
+        "@spectrum-web-components/tray": "^0.3.1",
         "@spectrum-web-components/underlay": "^0.8.2",
         "tslib": "^2.0.0"
     },
