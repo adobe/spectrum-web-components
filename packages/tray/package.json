@@ -46,6 +46,7 @@
     "dependencies": {
         "@spectrum-web-components/base": "^0.5.1",
         "@spectrum-web-components/modal": "^0.6.0",
+        "@spectrum-web-components/reactive-controllers": "0.2.0",
         "@spectrum-web-components/shared": "^0.13.3",
         "@spectrum-web-components/underlay": "^0.8.2",
         "tslib": "^2.0.0"
