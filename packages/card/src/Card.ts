@@ -69,7 +69,16 @@ export class Card extends LikeAnchor(
     public variant: 'standard' | 'gallery' | 'quiet' = 'standard';
 
     @property({ type: Boolean, reflect: true })
-    public selected = false;
+    get selected(): boolean {
+        return this._selected;
+    }
+    set selected(selected: boolean) {
+        if (selected === this.selected) return;
+        this._selected = selected;
+        this.requestUpdate('selected', !this._selected);
+    }
+
+    private _selected = false;
 
     @property()
     public heading = '';
@@ -85,6 +94,9 @@ export class Card extends LikeAnchor(
 
     @property({ type: Boolean, reflect: true })
     public toggles = false;
+
+    @property()
+    public value = '';
 
     @property()
     public subheading = '';
@@ -125,6 +137,7 @@ export class Card extends LikeAnchor(
             case 'Space':
                 this.toggleSelected();
                 if (this.toggles) {
+                    event.preventDefault();
                     break;
                 }
             case 'Enter':
@@ -158,6 +171,8 @@ export class Card extends LikeAnchor(
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 cancelable: true,
+                bubbles: true,
+                composed: true,
             })
         );
         if (!applyDefault) {
@@ -290,6 +305,7 @@ export class Card extends LikeAnchor(
                               class="checkbox"
                               @change=${this.handleSelectedChange}
                               ?checked=${this.selected}
+                              tabindex=${this.toggles ? '-1' : '0'}
                           ></sp-checkbox>
                       </sp-quick-actions>
                   `

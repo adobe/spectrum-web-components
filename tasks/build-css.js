@@ -41,6 +41,9 @@ const buildCSS = async () => {
     for (const cssPath of await fg(`./packages/*/src/*.css`)) {
         processCSS(cssPath);
     }
+    for (const cssPath of await fg(`./tools/*/src/*.css`)) {
+        processCSS(cssPath);
+    }
 };
 
 buildCSS();

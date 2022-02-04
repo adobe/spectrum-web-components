@@ -8,11 +8,13 @@
     "include": [
         "../global.d.ts",
         "../packages/*/stories/**/*.ts",
+        "../tools/*/stories/**/*.ts",
         "../test/lit-helpers.ts"
     ],
     "exclude": [
         "../packages/*/src/**/*.ts",
         "../packages/*/icons/**/*.ts",
-        "../packages/*/node_modules/**/*.ts"
+        "../packages/*/node_modules/**/*.ts",
+        "../tools/*/node_modules/**/*.ts"
     ]
 }

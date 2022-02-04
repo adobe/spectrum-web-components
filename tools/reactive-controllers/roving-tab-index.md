@@ -1,6 +1,6 @@
 ## Description
 
-[Roving tabindex](https://www.w3.org/TR/wai-aria-practices-1.2/#kbd_roving_tabindex) in a pattern whereby multiple focusable elements are represented by a single `tabindex=0` element, while the individual elements maintain `tabindex=-1` and are made accessible via arrow keys after the entry element if focused. This allows keyboard users to quickly tab through a page without having to stop on every element in a large collection. Attaching a `RovingTabindexController` to your custom element will manage the supplied `elements` via this pattern.
+[Roving tabindex](https://www.w3.org/TR/wai-aria-practices-1.2/#kbd_roving_tabindex) is a pattern whereby multiple focusable elements are represented by a single `tabindex=0` element, while the individual elements maintain `tabindex=-1` and are made accessible via arrow keys after the entry element if focused. This allows keyboard users to quickly tab through a page without having to stop on every element in a large collection. Attaching a `RovingTabindexController` to your custom element will manage the supplied `elements` via this pattern.
 
 ### Usage
 

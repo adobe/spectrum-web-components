@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
 Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -12,16 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import chokidar from 'chokidar';
-import debounce from 'debounce';
-import { processCSS } from './build-css.js';
+import '@spectrum-web-components/grid/sp-grid.js';
+import { html } from '@spectrum-web-components/base';
+import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
-const debounceProcessCSS = debounce.debounce(processCSS, 200);
-
-// One-liner for current directory
-chokidar
-    .watch(['./packages/*/src/*.css', './tools/*/src/*.css'])
-    .on('change', debounceProcessCSS)
-    .on('add', debounceProcessCSS);
-
-console.log('Listening to CSS...');
+measureFixtureCreation(html`
+    <sp-grid></sp-grid>
+`);

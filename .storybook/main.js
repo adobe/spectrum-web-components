@@ -1,7 +1,10 @@
 const rollupJson = require('@rollup/plugin-json');
 
 module.exports = {
-    stories: ['../packages/*/stories/*.stories.js'],
+    stories: [
+        '../packages/*/stories/*.stories.js',
+        '../tools/*/stories/*.stories.js',
+    ],
     nodeResolve: {
         exportConditions: ['browser', 'development'],
     },
