@@ -145,7 +145,7 @@
         "gunzip-maybe": "^1.4.2",
         "husky": "^7.0.4",
         "lerna": "^4.0.0",
-        "lit": "^2.0.0",
+        "lit": "^2.1.2",
         "lit-analyzer": "^1.2.1",
         "mocha-junit-reporter": "^2.0.2",
         "netlify-cli": "^9.7.0",

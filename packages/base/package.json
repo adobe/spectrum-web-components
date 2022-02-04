@@ -52,7 +52,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "lit": "^2.0.0",
+        "lit": "^2.1.2",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

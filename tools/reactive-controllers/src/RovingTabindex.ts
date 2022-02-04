@@ -34,11 +34,11 @@ export class RovingTabindexController<T extends HTMLElement>
         if (this._currentIndex === -1) {
             this._currentIndex = this.focusInIndex;
         }
-        return this._currentIndex;
+        return this._currentIndex - this.offset;
     }
 
     set currentIndex(currentIndex) {
-        this._currentIndex = currentIndex;
+        this._currentIndex = currentIndex + this.offset;
     }
 
     private _currentIndex = -1;
@@ -49,7 +49,7 @@ export class RovingTabindexController<T extends HTMLElement>
 
     _direction = (): DirectionTypes => 'both';
 
-    directionLength = 5;
+    public directionLength = 5;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     elementEnterAction = (_el: T): void => {
@@ -101,6 +101,10 @@ export class RovingTabindexController<T extends HTMLElement>
 
     _listenerScope = (): HTMLElement => this.host;
 
+    // When elements are virtualized, the delta between the first element
+    // and the first rendered element.
+    offset = 0;
+
     private managed = true;
 
     constructor(
@@ -136,15 +140,25 @@ export class RovingTabindexController<T extends HTMLElement>
         }
     }
 
+    update(
+        { elements }: RovingTabindexConfig<T> = { elements: () => [] }
+    ): void {
+        this.unmanage();
+        this._elements = elements;
+        this.clearElementCache();
+        this.manage();
+    }
+
     focus(options?: FocusOptions): void {
         this.elements[this.currentIndex]?.focus(options);
     }
 
     private manageIndexesAnimationFrame = 0;
 
-    clearElementCache(): void {
+    clearElementCache(offset = 0): void {
         delete this.cachedElements;
         cancelAnimationFrame(this.manageIndexesAnimationFrame);
+        this.offset = offset;
         if (!this.managed) return;
 
         this.manageIndexesAnimationFrame = requestAnimationFrame(() =>
@@ -251,7 +265,16 @@ export class RovingTabindexController<T extends HTMLElement>
                 break;
         }
         event.preventDefault();
-        this.setCurrentIndexCircularly(diff);
+        if (this.direction === 'grid' && this.currentIndex + diff < 0) {
+            this.currentIndex = 0;
+        } else if (
+            this.direction === 'grid' &&
+            this.currentIndex + diff > this.elements.length - 1
+        ) {
+            this.currentIndex = this.elements.length - 1;
+        } else {
+            this.setCurrentIndexCircularly(diff);
+        }
         // To allow the `focusInIndex` to be calculated with the "after" state of the keyboard interaction
         // do `elementEnterAction` _before_ focusing the next element.
         this.elementEnterAction(this.elements[this.currentIndex]);

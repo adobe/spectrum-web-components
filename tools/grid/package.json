@@ -1,18 +1,18 @@
 {
-    "name": "@spectrum-web-components/reactive-controllers",
-    "version": "0.2.0",
+    "name": "@spectrum-web-components/grid",
+    "version": "0.0.1",
     "publishConfig": {
         "access": "public"
     },
-    "description": "ReactiveControllers for powering common UI patterns",
+    "description": "Web component implementation of a Spectrum design Grid",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/reactive-controllers"
+        "directory": "packages/grid"
     },
     "author": "",
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/reactive-controllers",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/grid",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
@@ -21,8 +21,10 @@
     "type": "module",
     "exports": {
         ".": "./src/index.js",
-        "./src/*": "./src/*",
-        "./package.json": "./package.json"
+        "./src/*": "./src/*.js",
+        "./package.json": "./package.json",
+        "./sp-grid": "./sp-grid.js",
+        "./sp-grid.js": "./sp-grid.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
@@ -31,6 +33,7 @@
         "**/*.d.ts",
         "**/*.js",
         "**/*.js.map",
+        "custom-elements.json",
         "!stories/",
         "!test/"
     ],
@@ -38,13 +41,18 @@
         "spectrum css",
         "web components",
         "lit-element",
-        "lit-html",
-        "reactive controllers"
+        "lit-html"
     ],
     "dependencies": {
-        "lit": "^2.1.2",
+        "@lit-labs/observers": "^1.0.1",
+        "@lit-labs/virtualizer": "0.7.0-pre.2",
+        "@spectrum-web-components/base": "^0.5.1",
+        "@spectrum-web-components/reactive-controllers": "^0.2.0",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json"
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js"
+    ]
 }
