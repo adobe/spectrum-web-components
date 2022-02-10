@@ -199,7 +199,11 @@ export class SplitView extends SpectrumElement {
                               start: ['pointerdown', this.onPointerdown],
                               streamInside: ['pointermove', this.onPointermove],
                               end: [
-                                  ['pointerup', 'pointercancel'],
+                                  [
+                                      'pointerup',
+                                      'pointercancel',
+                                      'pointerleave',
+                                  ],
                                   this.onPointerup,
                               ],
                           })}
