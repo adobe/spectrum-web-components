@@ -34,6 +34,10 @@ textarea {
     resize: inherit;
 }
 
+.input {
+    min-width: var(--spectrum-textfield-texticon-min-width);
+}
+
 :host([grows]) .input {
     position: absolute;
     top: 0;
@@ -44,6 +48,8 @@ textarea {
 }
 
 :host([grows]) #sizer {
+    word-break: break-word;
+    white-space: pre-wrap;
     box-sizing: border-box;
     overflow-wrap: break-word;
     border: var(--spectrum-textfield-texticon-border-size) solid;
@@ -80,4 +86,35 @@ textarea {
 .icon,
 .icon-workflow {
     pointer-events: none;
+}
+
+:host([multiline]) #textfield {
+    display: inline-grid;
+}
+
+:host([multiline]) textarea {
+    transition: box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out,
+        border-color var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out;
+}
+
+:host([multiline][focused]:not([quiet])) textarea,
+:host([multiline][focused]:not([quiet]):hover) textarea {
+    box-shadow: 0 0 0
+        calc(
+            0px +
+                var(
+                    --spectrum-textfield-m-texticon-focus-ring-border-width,
+                    var(--spectrum-alias-component-focusring-size)
+                )
+        )
+        var(
+            --spectrum-textfield-m-textonly-focus-ring-border-color-key-focus,
+            var(--spectrum-alias-focus-ring-color)
+        ) !important;
+}
+
+:host([multiline]:not([quiet])) #textfield:after {
+    box-shadow: none;
 }

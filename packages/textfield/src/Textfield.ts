@@ -219,7 +219,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
         return html`
             ${this.grows && !this.quiet
                 ? html`
-                      <div id="sizer">${this.value}</div>
+                      <div id="sizer">${this.value}&#8203;</div>
                   `
                 : nothing}
             <!-- @ts-ignore -->

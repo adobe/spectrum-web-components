@@ -13,6 +13,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-textfield.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
 
 export default {
     component: 'sp-textfield',
@@ -71,6 +72,17 @@ export const Default = (): TemplateResult => {
     `;
 };
 
+export const quiet = (): TemplateResult => html`
+    <sp-field-label for="story">Enter your life story...</sp-field-label>
+    <sp-textfield
+        autofocus
+        multiline
+        id="story"
+        quiet
+        placeholder="Enter your life story"
+    ></sp-textfield>
+`;
+
 export const grows = (): TemplateResult => html`
     <sp-field-label for="story">Enter your life story...</sp-field-label>
     <sp-textfield
@@ -80,6 +92,23 @@ export const grows = (): TemplateResult => html`
         grows
         placeholder="Enter your life story"
     ></sp-textfield>
+`;
+
+export const growsEmpty = (): TemplateResult => html`
+    <sp-field-label for="empty">
+        This textfield hasn't been used yet
+    </sp-field-label>
+    <sp-textfield
+        multiline
+        id="empty"
+        grows
+        placeholder="You can type here"
+        autofocus
+    >
+        <sp-help-text slot="help-text">
+            Even empty Textfield display correctly while waiting for content.
+        </sp-help-text>
+    </sp-textfield>
 `;
 
 export const growsWithLargeWords = (): TemplateResult => html`
@@ -126,4 +155,21 @@ export const resizeControls = (): TemplateResult => html`
         label="Horizontal resize control"
         placeholder="Horizontal resize control"
     ></sp-textfield>
+`;
+
+export const sized = (): TemplateResult => html`
+    <sp-field-label for="sized">
+        This textfield hasn't been used yet
+    </sp-field-label>
+    <sp-textfield
+        multiline
+        id="sized"
+        placeholder="You can type here"
+        autofocus
+        style="width: 400px"
+    >
+        <sp-help-text slot="help-text">
+            Even empty Textfield display correctly while waiting for content.
+        </sp-help-text>
+    </sp-textfield>
 `;
