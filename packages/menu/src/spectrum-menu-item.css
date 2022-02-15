@@ -110,16 +110,16 @@ slot[name='icon'] + #label {
     text-overflow: ellipsis; /* .spectrum-Menu-itemLabel--wrapping */
     white-space: nowrap;
 }
-:host([dir='ltr']) .chevron,
-:host([dir='ltr']) .checkmark {
+:host([dir='ltr']) .checkmark,
+:host([dir='ltr']) .chevron {
     padding-left: var(
         --spectrum-listitem-texticon-icon-gap
     ); /* [dir=ltr] .spectrum-Menu-checkmark,
    * [dir=ltr] 
 .spectrum-Menu-chevron */
 }
-:host([dir='rtl']) .chevron,
-:host([dir='rtl']) .checkmark {
+:host([dir='rtl']) .checkmark,
+:host([dir='rtl']) .chevron {
     padding-right: var(
         --spectrum-listitem-texticon-icon-gap
     ); /* [dir=rtl] .spectrum-Menu-checkmark,
