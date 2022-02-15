@@ -4647,9 +4647,9 @@
   integrity sha512-NNvsqxSSxOZct13dvbxhZc9B6T2fnRZNDeVsiXUnbs6O43YQCpRb1wLmGH4x93FLA/YFJAX8nUghKm7DiPCu8w==
 
 "@spectrum-css/actionmenu@^3.0.13":
-  version "3.0.13"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionmenu/-/actionmenu-3.0.13.tgz#4529a56fe4c7f5b9b08759cf454de6a27299dbd2"
-  integrity sha512-OJNbWFw0b+h9SMTc2OPt0GGpQBCp63QCnWmH4XqIvIlwG03q4IU6/+gTliojVTxyALgQ0SK6M0OvuD7ioEEUtg==
+  version "3.0.16"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionmenu/-/actionmenu-3.0.16.tgz#e4966a7713a52f72dd1424d7b8d49253f9d243cd"
+  integrity sha512-aqXIDfYa00utHULBEPr79ySPYhmolgJBoOt2kvgFM20s40NUmUZyreiKm/tghXNilyTGmkq6hY/hflJ9vl07HA==
 
 "@spectrum-css/asset@^3.0.11":
   version "3.0.11"
