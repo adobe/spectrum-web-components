@@ -31,6 +31,7 @@ import {
     enterEvent,
     spaceEvent,
 } from '../../../test/testing-helpers.js';
+import { sendKeys } from '@web/test-runner-commands';
 
 const createTabs = async (): Promise<Tabs> => {
     const tabs = await fixture<Tabs>(
@@ -174,6 +175,35 @@ describe('Tabs', () => {
             () => document.activeElement === autoElement,
             'Autofocused'
         );
+    });
+
+    it('auto', async () => {
+        const el = await fixture<Tabs>(
+            html`
+                <sp-tabs selected="second" auto>
+                    <sp-tab label="Tab 1" value="first"></sp-tab>
+                    <sp-tab label="Tab 2" value="second"></sp-tab>
+                    <sp-tab label="Tab 3" value="third"></sp-tab>
+                </sp-tabs>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.selected).to.equal('second');
+        el.focus();
+        await sendKeys({
+            press: 'ArrowLeft',
+        });
+        expect(el.selected).to.equal('first');
+        await sendKeys({
+            press: 'ArrowLeft',
+        });
+        expect(el.selected).to.equal('third');
+        await sendKeys({
+            press: 'ArrowRight',
+        });
+        expect(el.selected).to.equal('first');
     });
 
     it('forces only one tab to be selected', async () => {
