@@ -125,7 +125,7 @@
         "@webcomponents/webcomponentsjs": "^2.6.0",
         "alex": "^9.0.1",
         "chalk": "^4.1.2",
-        "chromedriver": "^96.0.0",
+        "chromedriver": "^98.0.0",
         "common-tags": "^1.8.2",
         "cssnano": "^5.0.15",
         "custom-elements-manifest": "^1.0.0",
