@@ -10,8 +10,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { readdirSync, existsSync, readFileSync } from 'fs';
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'fs';
+import { execSync } from 'child_process';
 import path from 'path';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+
+const { fix } = yargs(hideBin(process.argv)).argv;
 
 const getDirectories = (source) =>
     readdirSync(source, { withFileTypes: true })
@@ -46,15 +51,25 @@ function readPackageJsonNameVersion(filePath) {
     return {};
 }
 
+function readPackageJsonName(filePath) {
+    if (existsSync(filePath)) {
+        const jsonData = JSON.parse(readFileSync(filePath, 'utf-8'));
+        return jsonData.name;
+    }
+    return {};
+}
+
 function compareVersions(versionsA, versionsB) {
     let output = '';
     const newVersions = { ...versionsA };
+    const dependencyNamesAndVersions = [];
     Object.keys(versionsB).forEach((dep) => {
         if (
             versionsA[dep] &&
             versionsB[dep] &&
             versionsA[dep] !== versionsB[dep]
         ) {
+            dependencyNamesAndVersions.push([dep, versionsA[dep]]);
             output += `  - "${dep}" should be "${versionsA[dep]}" but is "${versionsB[dep]}"\n`;
         }
         if (!newVersions[dep]) {
@@ -63,6 +78,7 @@ function compareVersions(versionsA, versionsB) {
     });
 
     return {
+        dependencyNamesAndVersions,
         output,
         newVersions,
     };
@@ -70,6 +86,7 @@ function compareVersions(versionsA, versionsB) {
 
 let currentVersions = readPackageJsonDeps('./package.json');
 let endReturn = 0;
+let written = false;
 
 // find all versions in the monorepo
 getDirectories('./packages').forEach((subPackage) => {
@@ -84,18 +101,39 @@ getDirectories('./packages').forEach((subPackage) => {
 getDirectories('./packages').forEach((subPackage) => {
     const filePath = path.normalize(`./packages/${subPackage}/package.json`);
     const subPackageVersions = readPackageJsonDeps(filePath);
-    const { output, newVersions } = compareVersions(
+    const packageName = readPackageJsonName(filePath);
+    const { dependencyNamesAndVersions, output, newVersions } = compareVersions(
         currentVersions,
-        subPackageVersions
+        subPackageVersions,
+        packageName
     );
     currentVersions = { ...newVersions };
     if (output) {
-        console.log(`Version mismatches found in "${filePath}":`);
-        console.log(output);
-        console.log();
-        endReturn = 1;
+        if (fix) {
+            const jsonData = JSON.parse(readFileSync(filePath, 'utf-8'));
+            dependencyNamesAndVersions.forEach(([dep, version]) => {
+                if (jsonData.dependencies[dep]) {
+                    jsonData.dependencies[dep] = version;
+                }
+                if (jsonData.devDependencies[dep]) {
+                    jsonData.devDependencies[dep] = version;
+                }
+            });
+            writeFileSync(filePath, JSON.stringify(jsonData));
+            written = true;
+        } else {
+            console.log(`Version mismatches found in "${filePath}":`);
+            console.log(output);
+            console.log();
+            endReturn = 1;
+        }
     }
 });
+
+if (written) {
+    execSync('yarn lint:packagejson');
+    execSync('yarn --ignore-scripts');
+}
 
 if (endReturn === 0) {
     console.log('All versions are aligned 💪');
