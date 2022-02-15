@@ -138,14 +138,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     border: none; /* .spectrum-ProgressBar-fill */
     transition: width 1s;
 }
-:host([dir='ltr']) .percentage,
-:host([dir='ltr']) .label {
+:host([dir='ltr']) .label,
+:host([dir='ltr']) .percentage {
     text-align: left; /* [dir=ltr] .spectrum-ProgressBar-label,
    * [dir=ltr] 
 .spectrum-ProgressBar-percentage */
 }
-:host([dir='rtl']) .percentage,
-:host([dir='rtl']) .label {
+:host([dir='rtl']) .label,
+:host([dir='rtl']) .percentage {
     text-align: right; /* [dir=rtl] .spectrum-ProgressBar-label,
    * [dir=rtl] 
 .spectrum-ProgressBar-percentage */
