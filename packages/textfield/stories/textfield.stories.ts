@@ -12,6 +12,8 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-textfield.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
+import '@spectrum-web-components/help-text/sp-help-text.js';
 
 export default {
     component: 'sp-textfield',
@@ -46,6 +48,18 @@ export const Default = (): TemplateResult => {
             required
             value="Not a valid input"
             disabled
+        ></sp-textfield>
+    `;
+};
+
+export const quiet = (): TemplateResult => {
+    return html`
+        <sp-field-label for="name">Enter your name</sp-field-label>
+        <sp-textfield
+            autofocus
+            id="name"
+            placeholder="This Text Field doesn't make much noise"
+            quiet
         ></sp-textfield>
     `;
 };
@@ -92,4 +106,31 @@ export const types = (): TemplateResult => html`
         type="password"
         placeholder="password"
     ></sp-textfield>
+`;
+
+export const empty = (): TemplateResult => html`
+    <sp-field-label for="empty">
+        This textfield hasn't been used yet
+    </sp-field-label>
+    <sp-textfield id="empty" placeholder="You can type here" autofocus>
+        <sp-help-text slot="help-text">
+            Even empty Textfield display correctly while waiting for content.
+        </sp-help-text>
+    </sp-textfield>
+`;
+
+export const sized = (): TemplateResult => html`
+    <sp-field-label for="sized">
+        This textfield hasn't been used yet
+    </sp-field-label>
+    <sp-textfield
+        id="sized"
+        placeholder="You can type here"
+        autofocus
+        style="width: 400px"
+    >
+        <sp-help-text slot="help-text">
+            Even empty Textfield display correctly while waiting for content.
+        </sp-help-text>
+    </sp-textfield>
 `;
