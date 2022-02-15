@@ -105,7 +105,7 @@ export class Tabs extends SizedMixin(Focusable) {
     private _tabs: Tab[] = [];
 
     rovingTabindexController = new RovingTabindexController<Tab>(this, {
-        focusInIndex: (elements: Tab[]) => {
+        focusInIndex: (elements) => {
             let focusInIndex = 0;
             const firstFocusableElement = elements.find((el, index) => {
                 const focusInElement = this.selected
@@ -118,8 +118,14 @@ export class Tabs extends SizedMixin(Focusable) {
         },
         direction: () =>
             this.direction === 'horizontal' ? 'horizontal' : 'vertical',
+        elementEnterAction: (el) => {
+            if (!this.auto) return;
+
+            this.shouldAnimate = true;
+            this.selectTarget(el);
+        },
         elements: () => this.tabs,
-        isFocusableElement: (el: Tab) => !el.disabled,
+        isFocusableElement: (el) => !el.disabled,
         listenerScope: () => this.tabList,
     });
 
