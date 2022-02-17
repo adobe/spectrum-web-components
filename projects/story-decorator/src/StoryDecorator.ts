@@ -119,6 +119,7 @@ export class StoryDecorator extends SpectrumElement {
             }
             :host([screenshot]) sp-theme {
                 padding: var(--spectrum-global-dimension-size-100);
+                --swc-test-caret-color: transparent;
             }
             :host([reduce-motion]) sp-theme {
                 ${reduceMotionProperties}
