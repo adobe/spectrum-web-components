@@ -36,6 +36,7 @@ textarea {
 
 .input {
     min-width: var(--spectrum-textfield-texticon-min-width);
+    caret-color: var(--swc-test-caret-color);
 }
 
 :host([grows]) .input {
