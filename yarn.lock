@@ -4666,10 +4666,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/banner/-/banner-3.0.0-beta.2.tgz#df448a3dcb8ac63448bd628843a2895cec305780"
   integrity sha512-NqrT03ItWzj+L0dtqjedhop6wKOspBmaowzp9IOY/2kL561kRqYTLKR9vTteZ3cEDVD3ajKA8y+bKIW0eN+X7A==
 
-"@spectrum-css/button@^4.1.4":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-4.1.4.tgz#e7497ba9cd0032e19470ec9310965326502a7425"
-  integrity sha512-GO2s8SlPFrIrA/koxXtS7SFemeOEirRzaOxoMKkYvAwTcZgxo81QwODOvCOMKElRKZCe6ZHLBFHX0ztx9X6lwA==
+"@spectrum-css/button@^6.0.3":
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-6.0.3.tgz#bba42235bcdf682de1c050cd9bd8f4f8c980f7e2"
+  integrity sha512-54wFVfYh8O3zzeWXgnAAaYy+61wT9sSM4RVLEwOl4L1L1SymWYdOx6w2OIxerJxvdSqP6ywLSd9I+BVKrPAivQ==
 
 "@spectrum-css/buttongroup@^5.0.0":
   version "5.0.0"
