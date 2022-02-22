@@ -4692,9 +4692,9 @@
   integrity sha512-Ord1RC6iwmCN6pJzt8J49Oi9XTMdTUg1qiPmi58l2lzD2ylrJbAZwCJb473i07ldLS/VJ16DK+K5CGfHU1rjwQ==
 
 "@spectrum-css/colorarea@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorarea/-/colorarea-1.0.11.tgz#8a8177bd57614b82f7f39f12146c06e0a7d30c67"
-  integrity sha512-Rrd9j2oWBze6ybdRMJRd+Ro7tC/rEa0m8Fe2SV8I2cRUL8hJFbKPIf0559a5y2U8BrvUCe8Kk7glURXVMvbaYg==
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorarea/-/colorarea-1.0.13.tgz#d9ef46ef34bd9b6a88421fcf4ca71c99ac0eb1b2"
+  integrity sha512-LgxVcu+KwwKunWvRhUaahCw2jWy7ooTS+HqGY4Cy/zHJAPfxiUsJAft6Z81Tbg7sTqLT7Cg3THw9/nh0qbxFUw==
 
 "@spectrum-css/colorhandle@^1.0.11":
   version "1.0.11"
