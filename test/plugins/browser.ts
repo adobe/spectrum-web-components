@@ -17,7 +17,7 @@ import type { Step } from './send-mouse-plugin.js';
  * Return the mouse to the `up` position.
  */
 async function mouseCleanup() {
-    await executeServerCommand('send-mouse', {
+    await executeServerCommand('send-pointer', {
         steps: [
             {
                 type: 'up',
@@ -62,5 +62,5 @@ let mouseCleanupQueued = false;
  */
 export function sendMouse(options: { steps: Step[] }) {
     queueMouseCleanUp();
-    return executeServerCommand('send-mouse', options);
+    return executeServerCommand('send-pointer', options);
 }

@@ -19,7 +19,7 @@ export type Step = {
 
 export function sendMousePlugin() {
     return {
-        name: 'send-mouse-command',
+        name: 'send-pointer-command',
         async executeCommand({
             command,
             session,
@@ -32,7 +32,7 @@ export function sendMousePlugin() {
                 browser: { type: string; getPage: (id: string) => Page };
             };
         }): Promise<any> {
-            if (command === 'send-mouse') {
+            if (command === 'send-pointer') {
                 // handle specific behavior for playwright
                 if (session.browser.type === 'playwright') {
                     const page = session.browser.getPage(session.id);
