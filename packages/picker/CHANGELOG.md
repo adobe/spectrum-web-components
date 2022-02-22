@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.10.1...@spectrum-web-components/picker@0.10.2) (2022-02-22)
+
+**Note:** Version bump only for package @spectrum-web-components/picker
+
 ## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.10.0...@spectrum-web-components/picker@0.10.1) (2022-02-03)
 
 **Note:** Version bump only for package @spectrum-web-components/picker

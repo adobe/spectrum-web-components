@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.9.0...@spectrum-web-components/dialog@0.9.1) (2022-02-22)
+
+### Bug Fixes
+
+-   **dialog:** updates for delivering dialog content accessibly ([f0ed33c](https://github.com/adobe/spectrum-web-components/commit/f0ed33c3351ae9bc2017202ede8cf206fbf395c2))
+
 # [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.8.3...@spectrum-web-components/dialog@0.9.0) (2022-02-02)
 
 ### Features

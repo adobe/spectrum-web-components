@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/banner",
-    "version": "0.7.1",
+    "version": "0.7.2",
     "publishConfig": {
         "access": "public"
     },
@@ -44,7 +44,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.5.1",
+        "@spectrum-web-components/base": "^0.5.2",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

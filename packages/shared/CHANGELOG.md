@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.13.3...@spectrum-web-components/shared@0.13.4) (2022-02-22)
+
+### Bug Fixes
+
+-   **dialog:** updates for delivering dialog content accessibly ([f0ed33c](https://github.com/adobe/spectrum-web-components/commit/f0ed33c3351ae9bc2017202ede8cf206fbf395c2))
+
 ## [0.13.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.13.2...@spectrum-web-components/shared@0.13.3) (2022-01-26)
 
 **Note:** Version bump only for package @spectrum-web-components/shared

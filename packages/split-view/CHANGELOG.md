@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.4.2...@spectrum-web-components/split-view@0.4.3) (2022-02-22)
+
+### Bug Fixes
+
+-   **split-view:** end drag on pointerleave ([85e5258](https://github.com/adobe/spectrum-web-components/commit/85e525827a8aabcb4ebf441f05b7e1789b590b8b))
+
 ## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.4.1...@spectrum-web-components/split-view@0.4.2) (2022-01-26)
 
 **Note:** Version bump only for package @spectrum-web-components/split-view
