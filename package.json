@@ -168,7 +168,7 @@
         "pretty-quick": "^3.1.2",
         "re-template-tag": "^2.0.1",
         "rimraf": "^3.0.2",
-        "rollup": "^2.60.0",
+        "rollup": "^2.68.0",
         "sinon": "^13.0.1",
         "stylelint": "^14.2.0",
         "stylelint-config-prettier": "^9.0.3",
