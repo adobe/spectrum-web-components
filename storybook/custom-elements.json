@@ -1309,6 +1309,12 @@
     },
     {
       "kind": "javascript-module",
+      "path": "projects/example-project-rollup/src/example-app.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
       "path": "projects/documentation/src/components.ts",
       "declarations": [
         {
@@ -1355,12 +1361,6 @@
     {
       "kind": "javascript-module",
       "path": "projects/documentation/src/router.ts",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "projects/example-project-rollup/src/example-app.ts",
       "declarations": [],
       "exports": []
     },
