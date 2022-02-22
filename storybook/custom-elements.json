@@ -1309,12 +1309,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "projects/example-project-rollup/src/example-app.ts",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
       "path": "projects/documentation/src/components.ts",
       "declarations": [
         {
@@ -1361,6 +1355,12 @@
     {
       "kind": "javascript-module",
       "path": "projects/documentation/src/router.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/src/example-app.ts",
       "declarations": [],
       "exports": []
     },
@@ -60035,6 +60035,485 @@
     },
     {
       "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/DevServerStartError.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DevServerStartError",
+          "superclass": {
+            "name": "Error",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/DevServerStartError.ts"
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DevServerStartError",
+          "declaration": {
+            "name": "DevServerStartError",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/DevServerStartError.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/bin.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RollupNodeResolveOptions",
+          "declaration": {
+            "name": "RollupNodeResolveOptions",
+            "package": "@web/dev-server-rollup"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "startDevServer",
+          "declaration": {
+            "name": "startDevServer",
+            "module": "./startDevServer"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "mergeConfigs",
+          "declaration": {
+            "name": "mergeConfigs",
+            "module": "./config/mergeConfigs"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "DevServerStartError",
+          "declaration": {
+            "name": "DevServerStartError",
+            "module": "./DevServerStartError"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "esbuildPlugin",
+          "declaration": {
+            "name": "esbuildPlugin",
+            "module": "./plugins/esbuildPlugin"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "nodeResolvePlugin",
+          "declaration": {
+            "name": "nodeResolvePlugin",
+            "module": "./plugins/nodeResolvePlugin"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/openBrowser.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "openBrowser",
+          "parameters": [
+            {
+              "name": "config",
+              "type": {
+                "text": "DevServerConfig"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "openBrowser",
+          "declaration": {
+            "name": "openBrowser",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/openBrowser.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/startDevServer.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "startDevServer",
+          "parameters": [
+            {
+              "name": "options",
+              "default": "{}",
+              "type": {
+                "text": "StartDevServerParams"
+              }
+            }
+          ],
+          "description": "Starts the dev server."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "startDevServer",
+          "declaration": {
+            "name": "startDevServer",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/startDevServer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/createRollupPluginContextAdapter.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "createRollupPluginContextAdapter",
+          "parameters": [
+            {
+              "name": "pluginContext",
+              "type": {
+                "text": "T"
+              }
+            },
+            {
+              "name": "wdsPlugin",
+              "type": {
+                "text": "WdsPlugin"
+              }
+            },
+            {
+              "name": "config",
+              "type": {
+                "text": "DevServerCoreConfig"
+              }
+            },
+            {
+              "name": "fileWatcher",
+              "type": {
+                "text": "FSWatcher"
+              }
+            },
+            {
+              "name": "context",
+              "type": {
+                "text": "Context"
+              }
+            },
+            {
+              "name": "pluginMetaPerModule",
+              "type": {
+                "text": "Map<string, CustomPluginOptions>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "createRollupPluginContextAdapter",
+          "declaration": {
+            "name": "createRollupPluginContextAdapter",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/createRollupPluginContextAdapter.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/createRollupPluginContexts.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "createRollupPluginContexts",
+          "return": {
+            "type": {
+              "text": "Promise<RollupPluginContexts>"
+            }
+          },
+          "parameters": [
+            {
+              "name": "inputOptions",
+              "type": {
+                "text": "InputOptions"
+              }
+            }
+          ],
+          "description": "Runs rollup with an empty module in order to capture the plugin context and\nnormalized options."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "createRollupPluginContexts",
+          "declaration": {
+            "name": "createRollupPluginContexts",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/createRollupPluginContexts.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/fromRollup.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "fromRollup",
+          "parameters": [
+            {
+              "name": "rollupPluginFn",
+              "type": {
+                "text": "RollupPluginFn<T>"
+              }
+            },
+            {
+              "name": "rollupInputOptions",
+              "default": "{}",
+              "type": {
+                "text": "Partial<InputOptions>"
+              }
+            },
+            {
+              "name": "options",
+              "default": "{}",
+              "type": {
+                "text": "FromRollupOptions"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "fromRollup",
+          "declaration": {
+            "name": "fromRollup",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/fromRollup.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RollupNodeResolveOptions",
+          "declaration": {
+            "name": "RollupNodeResolveOptions",
+            "package": "@rollup/plugin-node-resolve"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "nodeResolve",
+          "declaration": {
+            "name": "nodeResolve",
+            "package": "@rollup/plugin-node-resolve"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "fromRollup",
+          "declaration": {
+            "name": "fromRollup",
+            "module": "./fromRollup"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "rollupAdapter",
+          "declaration": {
+            "name": "rollupAdapter",
+            "module": "./rollupAdapter"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "rollupBundlePlugin",
+          "declaration": {
+            "name": "rollupBundlePlugin",
+            "module": "./rollupBundlePlugin"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/rollupAdapter.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "rollupAdapter",
+          "return": {
+            "type": {
+              "text": "WdsPlugin"
+            }
+          },
+          "parameters": [
+            {
+              "name": "rollupPlugin",
+              "type": {
+                "text": "RollupPlugin"
+              }
+            },
+            {
+              "name": "rollupInputOptions",
+              "default": "{}",
+              "type": {
+                "text": "Partial<InputOptions>"
+              }
+            },
+            {
+              "name": "adapterOptions",
+              "default": "{}",
+              "type": {
+                "text": "RollupAdapterOptions"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "rollupAdapter",
+          "declaration": {
+            "name": "rollupAdapter",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/rollupAdapter.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/rollupBundlePlugin.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "rollupBundlePlugin",
+          "return": {
+            "type": {
+              "text": "Plugin"
+            }
+          },
+          "parameters": [
+            {
+              "name": "pluginOptions",
+              "type": {
+                "text": "RollupPluginOptions"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "rollupBundlePlugin",
+          "declaration": {
+            "name": "rollupBundlePlugin",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/rollupBundlePlugin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/utils.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "toBrowserPath",
+          "parameters": [
+            {
+              "name": "filePath",
+              "type": {
+                "text": "string"
+              }
+            }
+          ],
+          "description": "Turns a file path into a path suitable for browsers, with a / as seperator.",
+          "return": {
+            "type": {
+              "text": "string"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "isAbsoluteFilePath",
+          "parameters": [
+            {
+              "name": "path",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "isOutsideRootDir",
+          "parameters": [
+            {
+              "name": "path",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "toBrowserPath",
+          "declaration": {
+            "name": "toBrowserPath",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/utils.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isAbsoluteFilePath",
+          "declaration": {
+            "name": "isAbsoluteFilePath",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/utils.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isOutsideRootDir",
+          "declaration": {
+            "name": "isOutsideRootDir",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server-rollup/src/utils.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "projects/documentation/node_modules/@web/dev-server/src/config/DevServerConfig.ts",
       "declarations": [],
       "exports": []
@@ -60467,6 +60946,444 @@
           "declaration": {
             "name": "watchPlugin",
             "module": "projects/documentation/node_modules/@web/dev-server/src/plugins/watchPlugin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/config/DevServerConfig.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/config/mergeConfigs.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "mergeConfigs",
+          "parameters": [
+            {
+              "name": "configs",
+              "type": {
+                "text": "Partial<DevServerConfig | undefined>[]"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "mergeConfigs",
+          "declaration": {
+            "name": "mergeConfigs",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/config/mergeConfigs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/config/parseConfig.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "validateConfig",
+          "parameters": [
+            {
+              "name": "config",
+              "type": {
+                "text": "Partial<DevServerConfig>"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "parseConfig",
+          "return": {
+            "type": {
+              "text": "Promise<DevServerConfig>"
+            }
+          },
+          "parameters": [
+            {
+              "name": "config",
+              "type": {
+                "text": "Partial<DevServerConfig>"
+              }
+            },
+            {
+              "name": "cliArgs",
+              "optional": true,
+              "type": {
+                "text": "DevServerCliArgs"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "validateConfig",
+          "declaration": {
+            "name": "validateConfig",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/config/parseConfig.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "parseConfig",
+          "declaration": {
+            "name": "parseConfig",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/config/parseConfig.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/config/readCliArgs.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "readCliArgs",
+          "return": {
+            "type": {
+              "text": "DevServerCliArgs"
+            }
+          },
+          "parameters": [
+            {
+              "name": "{ argv = process.argv }",
+              "default": "{}",
+              "type": {
+                "text": "ReadCliArgsParams"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "readCliArgs",
+          "declaration": {
+            "name": "readCliArgs",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/config/readCliArgs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/config/readFileConfig.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "readFileConfig",
+          "parameters": [
+            {
+              "name": "{\n  configName = 'web-dev-server.config',\n  configPath,\n}",
+              "default": "{}",
+              "type": {
+                "text": "ReadFileConfigParams"
+              }
+            },
+            {
+              "description": "the custom location to read the config from",
+              "name": "customConfig"
+            }
+          ],
+          "description": "Reads the config from disk, defaults to process.cwd() + web-dev-server.config.{mjs,js,cjs} or\na custom config path."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "readFileConfig",
+          "declaration": {
+            "name": "readFileConfig",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/config/readFileConfig.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/logger/DevServerLogger.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DevServerLogger",
+          "members": [
+            {
+              "kind": "field",
+              "name": "debugLogging",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "debugLogging"
+            },
+            {
+              "kind": "field",
+              "name": "onSyntaxError",
+              "type": {
+                "text": "(msg: string) => void"
+              },
+              "privacy": "private",
+              "default": "onSyntaxError"
+            },
+            {
+              "kind": "method",
+              "name": "log",
+              "parameters": [
+                {
+                  "name": "messages",
+                  "type": {
+                    "text": "unknown[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "debug",
+              "parameters": [
+                {
+                  "name": "messages",
+                  "type": {
+                    "text": "unknown[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "error",
+              "parameters": [
+                {
+                  "name": "messages",
+                  "type": {
+                    "text": "unknown[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "warn",
+              "parameters": [
+                {
+                  "name": "messages",
+                  "type": {
+                    "text": "unknown[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "group"
+            },
+            {
+              "kind": "method",
+              "name": "groupEnd"
+            },
+            {
+              "kind": "method",
+              "name": "logSyntaxError",
+              "parameters": [
+                {
+                  "name": "error",
+                  "type": {
+                    "text": "PluginSyntaxError"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DevServerLogger",
+          "declaration": {
+            "name": "DevServerLogger",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/logger/DevServerLogger.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/logger/createLogger.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "createLogger",
+          "return": {
+            "type": {
+              "text": "{ logger: DevServerLogger; loggerPlugin: Plugin }"
+            }
+          },
+          "parameters": [
+            {
+              "name": "args",
+              "type": {
+                "text": "LoggerArgs"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "createLogger",
+          "declaration": {
+            "name": "createLogger",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/logger/createLogger.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/logger/logStartMessage.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "logStartMessage",
+          "parameters": [
+            {
+              "name": "config",
+              "type": {
+                "text": "DevServerConfig"
+              }
+            },
+            {
+              "name": "logger",
+              "type": {
+                "text": "Logger"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "logStartMessage",
+          "declaration": {
+            "name": "logStartMessage",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/logger/logStartMessage.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/plugins/esbuildPlugin.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "esbuildPlugin",
+          "parameters": [
+            {
+              "name": "target",
+              "type": {
+                "text": "string | string[]"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "esbuildPlugin",
+          "declaration": {
+            "name": "esbuildPlugin",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/plugins/esbuildPlugin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/plugins/nodeResolvePlugin.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "nodeResolvePlugin",
+          "return": {
+            "type": {
+              "text": "Plugin"
+            }
+          },
+          "parameters": [
+            {
+              "name": "rootDir",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "preserveSymlinks",
+              "optional": true,
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "name": "userOptions",
+              "optional": true,
+              "type": {
+                "text": "RollupNodeResolveOptions"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "nodeResolvePlugin",
+          "declaration": {
+            "name": "nodeResolvePlugin",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/plugins/nodeResolvePlugin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "projects/example-project-rollup/node_modules/@web/dev-server/src/plugins/watchPlugin.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "watchPlugin",
+          "return": {
+            "type": {
+              "text": "Plugin"
+            }
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "watchPlugin",
+          "declaration": {
+            "name": "watchPlugin",
+            "module": "projects/example-project-rollup/node_modules/@web/dev-server/src/plugins/watchPlugin.ts"
           }
         }
       ]
