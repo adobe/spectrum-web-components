@@ -23,7 +23,8 @@
         ".": "./src/index.js",
         "./src/*": "./src/*",
         "./icons/*": "./icons/*",
-        "./package.json": "./package.json"
+        "./package.json": "./package.json",
+        "./stories/icon-manifest.js": "./stories/icon-manifest.js"
     },
     "scripts": {
         "build": "node ./bin/build @adobe/spectrum-css-workflow-icons/dist/18"

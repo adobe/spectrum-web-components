@@ -21,7 +21,8 @@
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*",
-        "./package.json": "./package.json"
+        "./package.json": "./package.json",
+        "./stories/icons-demo.js": "./stories/icons-demo.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
