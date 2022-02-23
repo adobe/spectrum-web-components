@@ -46,8 +46,8 @@ const options = {
 }
 const callback = async (entries, observer) => {
     if (entries[0].intersectionRatio === 0) return;
-    import('@spectrum-web-components/iconset/stories/icons-demo.js');
-    import('@spectrum-web-components/icons-workflow/stories/icon-manifest.js').then(({iconManifest}) => {
+    import('@swc-packages-internal/iconset/stories/icons-demo.js');
+    import('@swc-packages-internal/icons-workflow/stories/icon-manifest.js').then(({iconManifest}) => {
         search.icons = iconManifest;
     });
     observer.disconnect();
