@@ -178,7 +178,7 @@
         "typescript": "^4.5.3",
         "yargs": "^17.2.1"
     },
-    "customElements": ".storybook/custom-elements.json",
+    "customElements": "projects/documentation/custom-elements.json",
     "workspaces": [
         "packages/*",
         "projects/*",

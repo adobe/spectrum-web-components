@@ -18,3 +18,5 @@ src/custom-elements.json
 // rollup build directory and artifacts
 dist/
 stats.html
+
+src/icon-helpers

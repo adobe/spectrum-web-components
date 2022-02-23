@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 import { minify } from 'html-minifier-terser';
 import { copy } from '@web/rollup-plugin-copy';
+import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import styles from 'rollup-plugin-styles';
 import litcss from 'rollup-plugin-lit-css';
@@ -249,6 +250,12 @@ module.exports = async () => {
         visualizer({
             brotliSize: true,
             gzipSize: true,
+        })
+    );
+
+    mpaConfig.plugins.push(
+        alias({
+            entries: [{ find: '@swc-docs', replacement: './_site' }],
         })
     );
     return [mpaConfig];

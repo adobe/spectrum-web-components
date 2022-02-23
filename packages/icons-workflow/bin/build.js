@@ -63,7 +63,21 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
         'stories',
         'icon-manifest.ts'
     );
+    const manifestPathDocs = path.join(
+        rootDir,
+        'projects',
+        'documentation',
+        'src',
+        'icon-helpers',
+        'icons-workflow'
+    );
+    const manifestPathDocsFile = path.join(
+        manifestPathDocs,
+        'icon-manifest.ts'
+    );
     fs.writeFileSync(manifestPath, disclaimer, 'utf-8');
+    fs.mkdirSync(manifestPathDocs, { recursive: true });
+    fs.writeFileSync(manifestPathDocsFile, disclaimer, 'utf-8');
     let manifestImports = `import {
         html,
         TemplateResult
@@ -262,7 +276,7 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
             iconRegistrationFile,
             'utf-8'
         );
-        const importStatement = `\r\nimport '../icons/${iconElementName}.js';`;
+        const importStatement = `\r\nimport '@spectrum-web-components/icons-workflow/icons/${iconElementName}.js';`;
         const metadata = `{name: '${Case.sentence(
             ComponentName
         )}', tag: '<${iconElementName}>', story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`},\r\n`;
@@ -278,6 +292,11 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
     );
     fs.appendFileSync(
         manifestPath,
+        `${manifestImports}${manifestListings}];\r\n`,
+        'utf-8'
+    );
+    fs.appendFileSync(
+        manifestPathDocsFile,
         `${manifestImports}${manifestListings}];\r\n`,
         'utf-8'
     );

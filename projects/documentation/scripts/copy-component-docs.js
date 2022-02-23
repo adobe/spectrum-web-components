@@ -29,6 +29,11 @@ const partialPath = path.resolve(
     __dirname,
     '../content/_includes/partials/components'
 );
+const iconHelpers = path.resolve(
+    __dirname,
+    '../../../packages/iconset/stories/icons-demo.ts'
+);
+const iconHelpersPath = path.resolve(__dirname, '../src/icon-helpers');
 
 const findDeclaration = (customElements, test) => {
     let declaration;
@@ -45,6 +50,11 @@ const findDeclaration = (customElements, test) => {
 async function main() {
     fs.mkdirSync(destinationPath, { recursive: true });
     fs.mkdirSync(partialPath, { recursive: true });
+
+    fs.copyFileSync(
+        iconHelpers,
+        path.resolve(iconHelpersPath, 'icons-demo.ts')
+    );
 
     const customElementJSONPath = path.resolve(
         projectDir,
