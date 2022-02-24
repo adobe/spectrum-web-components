@@ -26,70 +26,34 @@ import { Tray } from '@spectrum-web-components/tray';
 ## Dialog
 
 ```html
-<sp-button
-    variant="secondary"
-    onclick="
-    const trigger = this;
-    const interaction = 'modal';
-    const content = this.nextElementSibling;
-    const options = {
-        offset: 0,
-        placement: 'none',
-        receivesFocus: 'auto',
-    };
-    Overlay.open(
-        trigger, 
-        interaction,
-        content,
-        options
-    );
-"
->
-    Toggle tray
-</sp-button>
-<sp-tray>
-    <sp-dialog size="small" dismissable>
-        <h2 slot="heading">New Messages</h2>
-        You have 5 new messages.
-    </sp-dialog>
-</sp-tray>
+<overlay-trigger type="modal" placement="none">
+    <sp-button slot="trigger" variant="secondary">Toggle tray</sp-button>
+    <sp-tray slot="click-content">
+        <sp-dialog size="small" dismissable>
+            <h2 slot="heading">New Messages</h2>
+            You have 5 new messages.
+        </sp-dialog>
+    </sp-tray>
+</overlay-trigger>
 ```
 
 ## Menu
 
 ```html
-<sp-button
-    variant="secondary"
-    onclick="
-    const trigger = this;
-    const interaction = 'modal';
-    const content = this.nextElementSibling;
-    const options = {
-        offset: 0,
-        placement: 'none',
-        receivesFocus: 'auto',
-    };
-    Overlay.open(
-        trigger, 
-        interaction,
-        content,
-        options
-    );
-"
->
-    Toggle menu
-</sp-button>
-<sp-tray>
-    <sp-menu style="width: 100%">
-        <sp-menu-item selected>Deselect</sp-menu-item>
-        <sp-menu-item>Select Inverse</sp-menu-item>
-        <sp-menu-item focused>Feather...</sp-menu-item>
-        <sp-menu-item>Select and Mask...</sp-menu-item>
-        <sp-menu-divider></sp-menu-divider>
-        <sp-menu-item>Save Selection</sp-menu-item>
-        <sp-menu-item disabled>Make Work Path</sp-menu-item>
-    </sp-menu>
-</sp-tray>
+<overlay-trigger type="modal" placement="none">
+    <sp-button slot="trigger" variant="secondary">Toggle menu</sp-button>
+    <sp-tray slot="click-content">
+        <sp-menu style="width: 100%">
+            <sp-menu-item selected>Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item focused>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+        </sp-menu>
+    </sp-tray>
+</overlay-trigger>
 ```
 
 ## Accessibility
