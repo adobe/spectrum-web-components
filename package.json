@@ -98,7 +98,7 @@
         "@custom-elements-manifest/analyzer": "^0.5.7",
         "@netlify/build": "^26.3.5",
         "@open-wc/dev-server-hmr": "^0.1.2",
-        "@open-wc/testing": "^3.0.4",
+        "@open-wc/testing": "^3.1.2",
         "@rollup/plugin-commonjs": "^21.0.1",
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-node-resolve": "^13.1.3",

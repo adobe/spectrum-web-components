@@ -44,6 +44,8 @@ export default {
     nodeResolve: {
         exportConditions: ['browser', 'development'],
     },
+    http2: true,
+    protocol: 'https:',
     concurrency: 4,
     concurrentBrowsers: 1,
     testsFinishTimeout: 30000,
@@ -98,10 +100,26 @@ export default {
     ],
     group: 'unit',
     browsers: [
-        playwrightLauncher({ product: 'chromium' }),
-        playwrightLauncher({ product: 'webkit' }),
+        playwrightLauncher({
+            product: 'chromium',
+            createBrowserContext: ({ browser }) =>
+                browser.newContext({
+                    ignoreHTTPSErrors: true,
+                }),
+        }),
+        playwrightLauncher({
+            product: 'webkit',
+            createBrowserContext: ({ browser }) =>
+                browser.newContext({
+                    ignoreHTTPSErrors: true,
+                }),
+        }),
         playwrightLauncher({
             product: 'firefox',
+            createBrowserContext: ({ browser }) =>
+                browser.newContext({
+                    ignoreHTTPSErrors: true,
+                }),
             launchOptions: {
                 firefoxUserPrefs: {
                     'toolkit.telemetry.reportingpolicy.firstRun': false,
