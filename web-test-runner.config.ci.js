@@ -23,4 +23,11 @@ standard.reporters = [
     }),
 ];
 
+standard.middleware = standard.middleware || [];
+standard.middleware.push(async (ctx, next) => {
+    await next();
+    // permanently cache ALL of the things!
+    ctx.set('Cache-Control', 'public, max-age=604800, immutable');
+});
+
 export default standard;

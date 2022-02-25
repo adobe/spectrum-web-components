@@ -77,7 +77,15 @@ themeVariants.forEach((themeVariant) => {
                     name: `vrt-${themeVariant}-${color}-${scale}-${dir}`,
                     files: 'packages/*/test/*.test-vrt.js',
                     testRunnerHtml: testHTML,
-                    browsers: [playwrightLauncher({ product: 'chromium' })],
+                    browsers: [
+                        playwrightLauncher({
+                            product: 'chromium',
+                            createBrowserContext: ({ browser }) =>
+                                browser.newContext({
+                                    ignoreHTTPSErrors: true,
+                                }),
+                        }),
+                    ],
                 });
             });
         });
@@ -95,7 +103,15 @@ vrtGroups = [
                 testRunnerHtml: vrtHTML({
                     reduceMotion: true,
                 }),
-                browsers: [playwrightLauncher({ product: 'chromium' })],
+                browsers: [
+                    playwrightLauncher({
+                        product: 'chromium',
+                        createBrowserContext: ({ browser }) =>
+                            browser.newContext({
+                                ignoreHTTPSErrors: true,
+                            }),
+                    }),
+                ],
             });
         }
         return acc;
