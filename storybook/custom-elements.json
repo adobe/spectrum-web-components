@@ -66,21 +66,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/action-bar/sp-action-bar.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-action-bar",
-          "declaration": {
-            "name": "ActionBar",
-            "module": "/packages/action-bar/src/ActionBar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/accordion/sp-accordion-item.ts",
       "declarations": [],
       "exports": [
@@ -105,6 +90,21 @@
           "declaration": {
             "name": "Accordion",
             "module": "/packages/accordion/src/Accordion.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/sp-action-bar.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-action-bar",
+          "declaration": {
+            "name": "ActionBar",
+            "module": "/packages/action-bar/src/ActionBar.js"
           }
         }
       ]
@@ -237,21 +237,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/card/sp-card.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-card",
-          "declaration": {
-            "name": "Card",
-            "module": "/packages/card/src/Card.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/button-group/sp-button-group.ts",
       "declarations": [],
       "exports": [
@@ -261,6 +246,21 @@
           "declaration": {
             "name": "ButtonGroup",
             "module": "/packages/button-group/src/ButtonGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/card/sp-card.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-card",
+          "declaration": {
+            "name": "Card",
+            "module": "/packages/card/src/Card.js"
           }
         }
       ]
@@ -447,21 +447,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/field-label/sp-field-label.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-field-label",
-          "declaration": {
-            "name": "FieldLabel",
-            "module": "/packages/field-label/src/FieldLabel.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/help-text/sp-help-text.ts",
       "declarations": [],
       "exports": [
@@ -486,6 +471,21 @@
           "declaration": {
             "name": "Icon",
             "module": "/packages/icon/src/Icon.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/field-label/sp-field-label.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-field-label",
+          "declaration": {
+            "name": "FieldLabel",
+            "module": "/packages/field-label/src/FieldLabel.js"
           }
         }
       ]
@@ -1309,216 +1309,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/action-bar/src/ActionBar.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "actionBarVariants",
-          "type": {
-            "text": "array"
-          },
-          "default": "['sticky', 'fixed']"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ActionBar",
-          "slots": [
-            {
-              "description": "Content to display with the Action Bar",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "flexible",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
-              "parameters": [
-                {
-                  "name": "flexible",
-                  "type": {
-                    "text": "Boolean"
-                  }
-                }
-              ],
-              "attribute": "flexible",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "open",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "variant",
-              "privacy": "public",
-              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
-              "parameters": [
-                {
-                  "name": "variant",
-                  "type": {
-                    "text": "String"
-                  }
-                }
-              ],
-              "type": {
-                "text": "string"
-              },
-              "attribute": "variant",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "_variant",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private",
-              "default": "''"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "flexible",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
-              "parameters": [
-                {
-                  "name": "flexible",
-                  "type": {
-                    "text": "Boolean"
-                  }
-                }
-              ],
-              "fieldName": "flexible"
-            },
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "open"
-            },
-            {
-              "name": "variant",
-              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
-              "parameters": [
-                {
-                  "name": "variant",
-                  "type": {
-                    "text": "String"
-                  }
-                }
-              ],
-              "type": {
-                "text": "string"
-              },
-              "fieldName": "variant"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-action-bar",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "actionBarVariants",
-          "declaration": {
-            "name": "actionBarVariants",
-            "module": "packages/action-bar/src/ActionBar.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ActionBar",
-          "declaration": {
-            "name": "ActionBar",
-            "module": "packages/action-bar/src/ActionBar.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/action-bar.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/action-bar/src/action-bar.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ActionBar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/spectrum-action-bar.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/action-bar/src/spectrum-action-bar.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/accordion/src/Accordion.ts",
       "declarations": [
         {
@@ -2133,6 +1923,216 @@
           "declaration": {
             "name": "styles",
             "module": "packages/accordion/src/spectrum-accordion.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/ActionBar.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "actionBarVariants",
+          "type": {
+            "text": "array"
+          },
+          "default": "['sticky', 'fixed']"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ActionBar",
+          "slots": [
+            {
+              "description": "Content to display with the Action Bar",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "flexible",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
+              "parameters": [
+                {
+                  "name": "flexible",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "attribute": "flexible",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "privacy": "public",
+              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "String"
+                  }
+                }
+              ],
+              "type": {
+                "text": "string"
+              },
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_variant",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "flexible",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
+              "parameters": [
+                {
+                  "name": "flexible",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "fieldName": "flexible"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "variant",
+              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "String"
+                  }
+                }
+              ],
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "variant"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-action-bar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "actionBarVariants",
+          "declaration": {
+            "name": "actionBarVariants",
+            "module": "packages/action-bar/src/ActionBar.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ActionBar",
+          "declaration": {
+            "name": "ActionBar",
+            "module": "packages/action-bar/src/ActionBar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/action-bar.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/action-bar/src/action-bar.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ActionBar.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-bar/src/spectrum-action-bar.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-actionbar-height:var(\n--spectrum-global-dimension-size-600\n);--spectrum-actionbar-padding-left:var(\n--spectrum-global-dimension-size-200\n);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(\n--spectrum-actionbar-height,\nvar(--spectrum-global-dimension-size-600)\n) + var(--spectrum-actionbar-margin-x)*2);opacity:1}:host([dir=ltr][variant=sticky]){left:0}:host([dir=rtl][variant=sticky]){right:0}:host([dir=ltr][variant=sticky]){right:0}:host([dir=rtl][variant=sticky]){left:0}:host([variant=sticky]){position:sticky}:host([flexible]) #popover{width:auto}:host([variant=fixed]){position:fixed}:host([dir=ltr]) #popover{padding-left:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=rtl]) #popover{padding-right:var(\n--spectrum-actionbar-padding-left\n)}:host([dir=ltr]) #popover{padding-right:var(\n--spectrum-actionbar-padding-right\n)}:host([dir=rtl]) #popover{padding-left:var(\n--spectrum-actionbar-padding-right\n)}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(\n--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600)\n);justify-content:space-between;margin:auto;max-width:var(\n--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500)\n);min-width:var(\n--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500)\n);pointer-events:auto;position:relative;width:100%}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/action-bar/src/spectrum-action-bar.css.ts"
           }
         }
       ]
@@ -10774,6 +10774,196 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/button-group/src/ButtonGroup.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ButtonGroup",
+          "slots": [
+            {
+              "description": "the sp-button elements that make up the group",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-button-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ButtonGroup",
+          "declaration": {
+            "name": "ButtonGroup",
+            "module": "packages/button-group/src/ButtonGroup.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/button-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-flex-grow:1}:host([dir=ltr][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:left}:host([dir=rtl][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:right}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/button-group/src/button-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ButtonGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/spectrum-button-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/button-group/src/spectrum-button-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/card/src/Card.ts",
       "declarations": [
         {
@@ -11643,196 +11833,6 @@
           "declaration": {
             "name": "styles",
             "module": "packages/card/src/spectrum-card.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/ButtonGroup.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ButtonGroup",
-          "slots": [
-            {
-              "description": "the sp-button elements that make up the group",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "vertical",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "vertical"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-button-group",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ButtonGroup",
-          "declaration": {
-            "name": "ButtonGroup",
-            "module": "packages/button-group/src/ButtonGroup.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/button-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-flex-grow:1}:host([dir=ltr][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:left}:host([dir=rtl][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:right}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/button-group/src/button-group.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ButtonGroup.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/spectrum-button-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/button-group/src/spectrum-button-group.css.ts"
           }
         }
       ]
@@ -18069,396 +18069,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/field-label/src/FieldLabel.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "FieldLabel",
-          "slots": [
-            {
-              "description": "text content of the label",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "instanceCount",
-              "type": {
-                "text": "number"
-              },
-              "static": true,
-              "default": "0",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "disabled",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "id",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "id"
-            },
-            {
-              "kind": "field",
-              "name": "for",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "for"
-            },
-            {
-              "kind": "field",
-              "name": "required",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "required",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "slotEl",
-              "type": {
-                "text": "HTMLSlotElement"
-              },
-              "privacy": "public"
-            },
-            {
-              "kind": "field",
-              "name": "sideAligned",
-              "type": {
-                "text": "'start' | 'end' | undefined"
-              },
-              "privacy": "public",
-              "attribute": "side-aligned",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "target",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "handleClick",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "manageFor",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "labelText",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "privacy": "public",
-              "attribute": "size",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_size",
-              "type": {
-                "text": "ElementSize | null"
-              },
-              "privacy": "private",
-              "default": "defaultSize",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "firstUpdated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "changes",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "disabled"
-            },
-            {
-              "name": "id",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "id"
-            },
-            {
-              "name": "for",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "for"
-            },
-            {
-              "name": "required",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "required"
-            },
-            {
-              "name": "side-aligned",
-              "type": {
-                "text": "'start' | 'end' | undefined"
-              },
-              "fieldName": "sideAligned"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "fieldName": "size",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "mixins": [
-            {
-              "name": "SizedMixin",
-              "package": "@spectrum-web-components/base"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-field-label",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "FieldLabel",
-          "declaration": {
-            "name": "FieldLabel",
-            "module": "packages/field-label/src/FieldLabel.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/field-label/src/field-label.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-s-padding-top,var(--spectrum-global-dimension-size-50)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-s-padding-bottom,var(--spectrum-global-dimension-size-65)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-s-text-size,var(--spectrum-global-dimension-font-size-75)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-s-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-s-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-s-asterisk-gap,var(--spectrum-global-dimension-size-50)\n)}:host([size=m]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-m-padding-top,var(--spectrum-global-dimension-size-50)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-m-padding-bottom,var(--spectrum-global-dimension-size-65)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-m-text-size,var(--spectrum-global-dimension-font-size-75)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-m-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-m-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-m-asterisk-gap,var(--spectrum-global-dimension-size-50)\n)}:host([size=l]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-l-padding-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-l-padding-bottom,var(--spectrum-global-dimension-size-115)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-l-text-size,var(--spectrum-global-dimension-font-size-100)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-l-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-l-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-l-asterisk-gap,var(--spectrum-global-dimension-size-65)\n)}:host([size=xl]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-xl-padding-top,var(--spectrum-global-dimension-size-115)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-xl-padding-bottom,var(--spectrum-global-dimension-size-130)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-xl-text-size,var(--spectrum-global-dimension-font-size-200)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-xl-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-xl-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-xl-asterisk-gap,var(--spectrum-global-dimension-size-65)\n)}:host{-webkit-font-smoothing:subpixel-antialiased;-moz-osx-font-smoothing:auto;font-smoothing:subpixel-antialiased;box-sizing:border-box;display:block;font-size:var(--spectrum-fieldlabel-text-size);font-weight:var(--spectrum-fieldlabel-text-font-weight);line-height:var(--spectrum-fieldlabel-text-line-height);padding-bottom:var(--spectrum-fieldlabel-padding-bottom);padding-left:0;padding-right:0;padding-top:var(--spectrum-fieldlabel-padding-top);vertical-align:top}:host([dir=ltr]) .required-icon{margin-left:var(\n--spectrum-fieldlabel-asterisk-gap\n);margin-right:0}:host([dir=rtl]) .required-icon{margin-left:0;margin-right:var(\n--spectrum-fieldlabel-asterisk-gap\n)}.required-icon{margin-bottom:0;margin-top:0}:host([dir=ltr][side-aligned=start]){padding-left:0;padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([dir=rtl][side-aligned=start]){padding-left:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n);padding-right:0}:host([side-aligned=start]){display:inline-block;padding-bottom:0;padding-top:var(\n--spectrum-fieldlabel-m-side-padding-top,var(--spectrum-global-dimension-size-100)\n)}:host([dir=ltr][side-aligned=start]) .required-icon{margin-left:var(\n--spectrum-fieldlabel-asterisk-gap\n);margin-right:0}:host([dir=rtl][side-aligned=start]) .required-icon{margin-left:0;margin-right:var(\n--spectrum-fieldlabel-asterisk-gap\n)}:host([side-aligned=start]) .required-icon{margin-bottom:0;margin-top:var(\n--spectrum-fieldlabel-m-side-asterisk-margin-y,var(--spectrum-global-dimension-size-100)\n)}:host([dir=ltr][side-aligned=end]){text-align:right}:host([dir=rtl][side-aligned=end]){text-align:left}:host([dir=ltr][side-aligned=end]){padding-left:0;padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([dir=rtl][side-aligned=end]){padding-left:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n);padding-right:0}:host([side-aligned=end]){display:inline-block;padding-bottom:0;padding-top:var(\n--spectrum-fieldlabel-m-side-padding-top,var(--spectrum-global-dimension-size-100)\n)}:host{color:var(\n--spectrum-fieldlabel-m-text-color,var(--spectrum-alias-label-text-color)\n)}:host([disabled]){color:var(\n--spectrum-fieldlabel-m-text-color-disabled,var(--spectrum-alias-text-color-disabled)\n)}:host([disabled]) .required-icon{color:var(\n--spectrum-fieldlabel-m-asterisk-color-disabled,var(--spectrum-alias-text-color-disabled)\n)}.required-icon{color:var(\n--spectrum-fieldlabel-m-asterisk-color,var(--spectrum-global-color-gray-600)\n)}:host([side-aligned=start]) .required-icon{margin-top:0}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/field-label/src/field-label.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/field-label/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./FieldLabel.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/field-label/src/spectrum-field-label.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=s]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-s-padding-top,var(--spectrum-global-dimension-size-50)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-s-padding-bottom,var(--spectrum-global-dimension-size-65)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-s-text-size,var(--spectrum-global-dimension-font-size-75)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-s-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-s-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-s-asterisk-gap,var(--spectrum-global-dimension-size-50)\n)}:host([size=m]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-m-padding-top,var(--spectrum-global-dimension-size-50)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-m-padding-bottom,var(--spectrum-global-dimension-size-65)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-m-text-size,var(--spectrum-global-dimension-font-size-75)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-m-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-m-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-m-asterisk-gap,var(--spectrum-global-dimension-size-50)\n)}:host([size=l]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-l-padding-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-l-padding-bottom,var(--spectrum-global-dimension-size-115)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-l-text-size,var(--spectrum-global-dimension-font-size-100)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-l-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-l-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-l-asterisk-gap,var(--spectrum-global-dimension-size-65)\n)}:host([size=xl]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-xl-padding-top,var(--spectrum-global-dimension-size-115)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-xl-padding-bottom,var(--spectrum-global-dimension-size-130)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-xl-text-size,var(--spectrum-global-dimension-font-size-200)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-xl-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-xl-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-xl-asterisk-gap,var(--spectrum-global-dimension-size-65)\n)}:host{-webkit-font-smoothing:subpixel-antialiased;-moz-osx-font-smoothing:auto;font-smoothing:subpixel-antialiased;box-sizing:border-box;display:block;font-size:var(--spectrum-fieldlabel-text-size);font-weight:var(--spectrum-fieldlabel-text-font-weight);line-height:var(--spectrum-fieldlabel-text-line-height);padding-bottom:var(--spectrum-fieldlabel-padding-bottom);padding-left:0;padding-right:0;padding-top:var(--spectrum-fieldlabel-padding-top);vertical-align:top}:host([dir=ltr]) .required-icon{margin-left:var(\n--spectrum-fieldlabel-asterisk-gap\n);margin-right:0}:host([dir=rtl]) .required-icon{margin-left:0;margin-right:var(\n--spectrum-fieldlabel-asterisk-gap\n)}.required-icon{margin-bottom:0;margin-top:0}:host([dir=ltr][side-aligned=start]){padding-left:0;padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([dir=rtl][side-aligned=start]){padding-left:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n);padding-right:0}:host([side-aligned=start]){display:inline-block;padding-bottom:0;padding-top:var(\n--spectrum-fieldlabel-m-side-padding-top,var(--spectrum-global-dimension-size-100)\n)}:host([dir=ltr][side-aligned=start]) .required-icon{margin-left:var(\n--spectrum-fieldlabel-asterisk-gap\n);margin-right:0}:host([dir=rtl][side-aligned=start]) .required-icon{margin-left:0;margin-right:var(\n--spectrum-fieldlabel-asterisk-gap\n)}:host([side-aligned=start]) .required-icon{margin-bottom:0;margin-top:var(\n--spectrum-fieldlabel-m-side-asterisk-margin-y,var(--spectrum-global-dimension-size-100)\n)}:host([dir=ltr][side-aligned=end]){text-align:right}:host([dir=rtl][side-aligned=end]){text-align:left}:host([dir=ltr][side-aligned=end]){padding-left:0;padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([dir=rtl][side-aligned=end]){padding-left:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n);padding-right:0}:host([side-aligned=end]){display:inline-block;padding-bottom:0;padding-top:var(\n--spectrum-fieldlabel-m-side-padding-top,var(--spectrum-global-dimension-size-100)\n)}:host{color:var(\n--spectrum-fieldlabel-m-text-color,var(--spectrum-alias-label-text-color)\n)}:host([disabled]){color:var(\n--spectrum-fieldlabel-m-text-color-disabled,var(--spectrum-alias-text-color-disabled)\n)}:host([disabled]) .required-icon{color:var(\n--spectrum-fieldlabel-m-asterisk-color-disabled,var(--spectrum-alias-text-color-disabled)\n)}.required-icon{color:var(\n--spectrum-fieldlabel-m-asterisk-color,var(--spectrum-global-color-gray-600)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/field-label/src/spectrum-field-label.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/help-text/src/HelpText.ts",
       "declarations": [
         {
@@ -19777,6 +19387,396 @@
           "declaration": {
             "name": "styles",
             "module": "packages/icon/src/spectrum-icon.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/field-label/src/FieldLabel.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "FieldLabel",
+          "slots": [
+            {
+              "description": "text content of the label",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "instanceCount",
+              "type": {
+                "text": "number"
+              },
+              "static": true,
+              "default": "0",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "id",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "id"
+            },
+            {
+              "kind": "field",
+              "name": "for",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "for"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "required",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "slotEl",
+              "type": {
+                "text": "HTMLSlotElement"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "sideAligned",
+              "type": {
+                "text": "'start' | 'end' | undefined"
+              },
+              "privacy": "public",
+              "attribute": "side-aligned",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "target",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "handleClick",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "manageFor",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "labelText",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "privacy": "public",
+              "attribute": "size",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_size",
+              "type": {
+                "text": "ElementSize | null"
+              },
+              "privacy": "private",
+              "default": "defaultSize",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changes",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "id",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "id"
+            },
+            {
+              "name": "for",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "for"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "required"
+            },
+            {
+              "name": "side-aligned",
+              "type": {
+                "text": "'start' | 'end' | undefined"
+              },
+              "fieldName": "sideAligned"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "fieldName": "size",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SizedMixin",
+              "package": "@spectrum-web-components/base"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-field-label",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FieldLabel",
+          "declaration": {
+            "name": "FieldLabel",
+            "module": "packages/field-label/src/FieldLabel.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/field-label/src/field-label.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([size=s]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-s-padding-top,var(--spectrum-global-dimension-size-50)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-s-padding-bottom,var(--spectrum-global-dimension-size-65)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-s-text-size,var(--spectrum-global-dimension-font-size-75)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-s-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-s-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-s-asterisk-gap,var(--spectrum-global-dimension-size-50)\n)}:host([size=m]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-m-padding-top,var(--spectrum-global-dimension-size-50)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-m-padding-bottom,var(--spectrum-global-dimension-size-65)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-m-text-size,var(--spectrum-global-dimension-font-size-75)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-m-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-m-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-m-asterisk-gap,var(--spectrum-global-dimension-size-50)\n)}:host([size=l]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-l-padding-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-l-padding-bottom,var(--spectrum-global-dimension-size-115)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-l-text-size,var(--spectrum-global-dimension-font-size-100)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-l-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-l-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-l-asterisk-gap,var(--spectrum-global-dimension-size-65)\n)}:host([size=xl]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-xl-padding-top,var(--spectrum-global-dimension-size-115)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-xl-padding-bottom,var(--spectrum-global-dimension-size-130)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-xl-text-size,var(--spectrum-global-dimension-font-size-200)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-xl-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-xl-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-xl-asterisk-gap,var(--spectrum-global-dimension-size-65)\n)}:host{-webkit-font-smoothing:subpixel-antialiased;-moz-osx-font-smoothing:auto;font-smoothing:subpixel-antialiased;box-sizing:border-box;display:block;font-size:var(--spectrum-fieldlabel-text-size);font-weight:var(--spectrum-fieldlabel-text-font-weight);line-height:var(--spectrum-fieldlabel-text-line-height);padding-bottom:var(--spectrum-fieldlabel-padding-bottom);padding-left:0;padding-right:0;padding-top:var(--spectrum-fieldlabel-padding-top);vertical-align:top}:host([dir=ltr]) .required-icon{margin-left:var(\n--spectrum-fieldlabel-asterisk-gap\n);margin-right:0}:host([dir=rtl]) .required-icon{margin-left:0;margin-right:var(\n--spectrum-fieldlabel-asterisk-gap\n)}.required-icon{margin-bottom:0;margin-top:0}:host([dir=ltr][side-aligned=start]){padding-left:0;padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([dir=rtl][side-aligned=start]){padding-left:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n);padding-right:0}:host([side-aligned=start]){display:inline-block;padding-bottom:0;padding-top:var(\n--spectrum-fieldlabel-m-side-padding-top,var(--spectrum-global-dimension-size-100)\n)}:host([dir=ltr][side-aligned=start]) .required-icon{margin-left:var(\n--spectrum-fieldlabel-asterisk-gap\n);margin-right:0}:host([dir=rtl][side-aligned=start]) .required-icon{margin-left:0;margin-right:var(\n--spectrum-fieldlabel-asterisk-gap\n)}:host([side-aligned=start]) .required-icon{margin-bottom:0;margin-top:var(\n--spectrum-fieldlabel-m-side-asterisk-margin-y,var(--spectrum-global-dimension-size-100)\n)}:host([dir=ltr][side-aligned=end]){text-align:right}:host([dir=rtl][side-aligned=end]){text-align:left}:host([dir=ltr][side-aligned=end]){padding-left:0;padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([dir=rtl][side-aligned=end]){padding-left:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n);padding-right:0}:host([side-aligned=end]){display:inline-block;padding-bottom:0;padding-top:var(\n--spectrum-fieldlabel-m-side-padding-top,var(--spectrum-global-dimension-size-100)\n)}:host{color:var(\n--spectrum-fieldlabel-m-text-color,var(--spectrum-alias-label-text-color)\n)}:host([disabled]){color:var(\n--spectrum-fieldlabel-m-text-color-disabled,var(--spectrum-alias-text-color-disabled)\n)}:host([disabled]) .required-icon{color:var(\n--spectrum-fieldlabel-m-asterisk-color-disabled,var(--spectrum-alias-text-color-disabled)\n)}.required-icon{color:var(\n--spectrum-fieldlabel-m-asterisk-color,var(--spectrum-global-color-gray-600)\n)}:host([side-aligned=start]) .required-icon{margin-top:0}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/field-label/src/field-label.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/field-label/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./FieldLabel.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/field-label/src/spectrum-field-label.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host([size=s]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-s-padding-top,var(--spectrum-global-dimension-size-50)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-s-padding-bottom,var(--spectrum-global-dimension-size-65)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-s-text-size,var(--spectrum-global-dimension-font-size-75)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-s-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-s-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-s-asterisk-gap,var(--spectrum-global-dimension-size-50)\n)}:host([size=m]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-m-padding-top,var(--spectrum-global-dimension-size-50)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-m-padding-bottom,var(--spectrum-global-dimension-size-65)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-m-text-size,var(--spectrum-global-dimension-font-size-75)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-m-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-m-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-m-asterisk-gap,var(--spectrum-global-dimension-size-50)\n)}:host([size=l]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-l-padding-top,var(--spectrum-global-dimension-size-75)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-l-padding-bottom,var(--spectrum-global-dimension-size-115)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-l-text-size,var(--spectrum-global-dimension-font-size-100)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-l-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-l-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-l-asterisk-gap,var(--spectrum-global-dimension-size-65)\n)}:host([size=xl]){--spectrum-fieldlabel-padding-top:var(\n--spectrum-fieldlabel-xl-padding-top,var(--spectrum-global-dimension-size-115)\n);--spectrum-fieldlabel-padding-bottom:var(\n--spectrum-fieldlabel-xl-padding-bottom,var(--spectrum-global-dimension-size-130)\n);--spectrum-fieldlabel-text-size:var(\n--spectrum-fieldlabel-xl-text-size,var(--spectrum-global-dimension-font-size-200)\n);--spectrum-fieldlabel-text-font-weight:var(\n--spectrum-fieldlabel-xl-text-font-weight,var(--spectrum-alias-body-text-font-weight)\n);--spectrum-fieldlabel-text-line-height:var(\n--spectrum-fieldlabel-xl-text-line-height,var(--spectrum-alias-component-text-line-height)\n);--spectrum-fieldlabel-asterisk-gap:var(\n--spectrum-fieldlabel-xl-asterisk-gap,var(--spectrum-global-dimension-size-65)\n)}:host{-webkit-font-smoothing:subpixel-antialiased;-moz-osx-font-smoothing:auto;font-smoothing:subpixel-antialiased;box-sizing:border-box;display:block;font-size:var(--spectrum-fieldlabel-text-size);font-weight:var(--spectrum-fieldlabel-text-font-weight);line-height:var(--spectrum-fieldlabel-text-line-height);padding-bottom:var(--spectrum-fieldlabel-padding-bottom);padding-left:0;padding-right:0;padding-top:var(--spectrum-fieldlabel-padding-top);vertical-align:top}:host([dir=ltr]) .required-icon{margin-left:var(\n--spectrum-fieldlabel-asterisk-gap\n);margin-right:0}:host([dir=rtl]) .required-icon{margin-left:0;margin-right:var(\n--spectrum-fieldlabel-asterisk-gap\n)}.required-icon{margin-bottom:0;margin-top:0}:host([dir=ltr][side-aligned=start]){padding-left:0;padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([dir=rtl][side-aligned=start]){padding-left:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n);padding-right:0}:host([side-aligned=start]){display:inline-block;padding-bottom:0;padding-top:var(\n--spectrum-fieldlabel-m-side-padding-top,var(--spectrum-global-dimension-size-100)\n)}:host([dir=ltr][side-aligned=start]) .required-icon{margin-left:var(\n--spectrum-fieldlabel-asterisk-gap\n);margin-right:0}:host([dir=rtl][side-aligned=start]) .required-icon{margin-left:0;margin-right:var(\n--spectrum-fieldlabel-asterisk-gap\n)}:host([side-aligned=start]) .required-icon{margin-bottom:0;margin-top:var(\n--spectrum-fieldlabel-m-side-asterisk-margin-y,var(--spectrum-global-dimension-size-100)\n)}:host([dir=ltr][side-aligned=end]){text-align:right}:host([dir=rtl][side-aligned=end]){text-align:left}:host([dir=ltr][side-aligned=end]){padding-left:0;padding-right:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n)}:host([dir=rtl][side-aligned=end]){padding-left:var(\n--spectrum-fieldlabel-m-side-padding-right,var(--spectrum-global-dimension-size-150)\n);padding-right:0}:host([side-aligned=end]){display:inline-block;padding-bottom:0;padding-top:var(\n--spectrum-fieldlabel-m-side-padding-top,var(--spectrum-global-dimension-size-100)\n)}:host{color:var(\n--spectrum-fieldlabel-m-text-color,var(--spectrum-alias-label-text-color)\n)}:host([disabled]){color:var(\n--spectrum-fieldlabel-m-text-color-disabled,var(--spectrum-alias-text-color-disabled)\n)}:host([disabled]) .required-icon{color:var(\n--spectrum-fieldlabel-m-asterisk-color-disabled,var(--spectrum-alias-text-color-disabled)\n)}.required-icon{color:var(\n--spectrum-fieldlabel-m-asterisk-color,var(--spectrum-global-color-gray-600)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/field-label/src/spectrum-field-label.css.ts"
           }
         }
       ]
