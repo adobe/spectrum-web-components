@@ -27,7 +27,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-top: calc(
         var(
                 --spectrum-actiongroup-button-gap-y,
-                var(--spectrum-global-dimension-size-100)
+                var(--spectrum-alias-actiongroup-button-gap)
             ) * -1
     ); /* .spectrum-ActionGroup:not(.spectrum-ActionGroup--vertical).spectrum-ActionGroup:not(.spectrum-ActionGroup--compact) */
 }
@@ -35,19 +35,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-shrink: 0; /* .spectrum-ActionGroup:not(.spectrum-ActionGroup--vertical).spectrum-ActionGroup:not(.spectrum-ActionGroup--compact) .spectrum-ActionGroup-item */
     margin-top: var(
         --spectrum-actiongroup-button-gap-y,
-        var(--spectrum-global-dimension-size-100)
+        var(--spectrum-alias-actiongroup-button-gap)
     );
 }
 :host([dir='ltr']:not([vertical]):not([compact])) ::slotted(:not(:last-child)) {
     margin-right: var(
         --spectrum-actiongroup-button-gap-x,
-        var(--spectrum-global-dimension-size-100)
+        var(--spectrum-alias-actiongroup-button-gap)
     ); /* [dir=ltr] .spectrum-ActionGroup:not(.spectrum-ActionGroup--vertical).spectrum-ActionGroup:not(.spectrum-ActionGroup--compact) .spectrum-ActionGroup-item:not(:last-child) */
 }
 :host([dir='rtl']:not([vertical]):not([compact])) ::slotted(:not(:last-child)) {
     margin-left: var(
         --spectrum-actiongroup-button-gap-x,
-        var(--spectrum-global-dimension-size-100)
+        var(--spectrum-alias-actiongroup-button-gap)
     ); /* [dir=rtl] .spectrum-ActionGroup:not(.spectrum-ActionGroup--vertical).spectrum-ActionGroup:not(.spectrum-ActionGroup--compact) .spectrum-ActionGroup-item:not(:last-child) */
 }
 :host([vertical]) {
@@ -67,7 +67,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([vertical]) ::slotted(:not(:first-child)) {
     margin-top: var(
         --spectrum-actiongroup-button-gap-y,
-        var(--spectrum-global-dimension-size-100)
+        var(--spectrum-alias-actiongroup-button-gap)
     ); /* .spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
 }
 :host([dir='ltr'][vertical][vertical]) {
@@ -83,7 +83,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([vertical][vertical]) {
     margin-top: var(
         --spectrum-actiongroup-button-gap-y,
-        var(--spectrum-global-dimension-size-100)
+        var(--spectrum-alias-actiongroup-button-gap)
     ); /* .spectrum-ActionGroup--vertical.spectrum-ActionGroup--vertical */
 }
 :host([dir='ltr'][compact][quiet]) ::slotted(:not(:first-child)) {
@@ -120,6 +120,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-wrap: nowrap; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) */
 }
 :host([compact]:not([quiet])) ::slotted(*) {
+    --spectrum-actionbutton-focus-ring-border-radius-adjusted: var(
+        --spectrum-alias-border-radius-xsmall,
+        var(--spectrum-global-dimension-size-10)
+    );
     border-radius: 0;
     position: relative; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item */
     z-index: 0;
@@ -163,6 +167,36 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
                 var(--spectrum-alias-border-size-thin)
             ) * -1 / 2
     ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+}
+:host([compact]:not([quiet])) ::slotted(:first-child) {
+    --spectrum-actionbutton-focus-ring-border-radius-adjusted: calc(
+            var(
+                    --spectrum-actionbutton-m-quiet-textonly-border-radius,
+                    var(--spectrum-alias-component-border-radius)
+                ) +
+                var(
+                    --spectrum-actionbutton-m-textonly-focus-ring-gap,
+                    var(--spectrum-alias-component-focusring-gap)
+                )
+        )
+        var(
+            --spectrum-alias-border-radius-xsmall,
+            var(--spectrum-global-dimension-size-10)
+        )
+        var(
+            --spectrum-alias-border-radius-xsmall,
+            var(--spectrum-global-dimension-size-10)
+        )
+        calc(
+            var(
+                    --spectrum-actionbutton-m-quiet-textonly-border-radius,
+                    var(--spectrum-alias-component-border-radius)
+                ) +
+                var(
+                    --spectrum-actionbutton-m-textonly-focus-ring-gap,
+                    var(--spectrum-alias-component-focusring-gap)
+                )
+        ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
 }
 :host([dir='ltr'][compact]:not([quiet])) ::slotted(:last-child) {
     border-top-right-radius: var(
@@ -209,6 +243,36 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='rtl'][compact]:not([quiet])) ::slotted(:last-child) {
     margin-left: 0; /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+}
+:host([compact]:not([quiet])) ::slotted(:last-child) {
+    --spectrum-actionbutton-focus-ring-border-radius-adjusted: var(
+            --spectrum-alias-border-radius-xsmall,
+            var(--spectrum-global-dimension-size-10)
+        )
+        calc(
+            var(
+                    --spectrum-actionbutton-m-quiet-textonly-border-radius,
+                    var(--spectrum-alias-component-border-radius)
+                ) +
+                var(
+                    --spectrum-actionbutton-m-textonly-focus-ring-gap,
+                    var(--spectrum-alias-component-focusring-gap)
+                )
+        )
+        calc(
+            var(
+                    --spectrum-actionbutton-m-quiet-textonly-border-radius,
+                    var(--spectrum-alias-component-border-radius)
+                ) +
+                var(
+                    --spectrum-actionbutton-m-textonly-focus-ring-gap,
+                    var(--spectrum-alias-component-focusring-gap)
+                )
+        )
+        var(
+            --spectrum-alias-border-radius-xsmall,
+            var(--spectrum-global-dimension-size-10)
+        ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
 }
 :host([compact]:not([quiet])) ::slotted([selected]) {
     z-index: 1; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item.is-selected */

@@ -1144,6 +1144,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-actionbutton-icononly-padding-right) -
             var(--spectrum-actionbutton-icononly-border-size)
     );
+    --spectrum-actionbutton-focus-ring-border-radius-adjusted: calc(
+        var(--spectrum-actionbutton-quiet-textonly-border-radius) +
+            var(--spectrum-actionbutton-focus-ring-gap)
+    );
 }
 :host([dir='ltr']) {
     padding-left: var(
@@ -1271,9 +1275,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out;
 }
 :host:after {
-    border-radius: calc(
-        var(--spectrum-actionbutton-quiet-textonly-border-radius) +
-            var(--spectrum-actionbutton-focus-ring-gap)
+    border-radius: var(
+        --spectrum-actionbutton-focus-ring-border-radius-adjusted
     );
     bottom: 0;
     content: '';

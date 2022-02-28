@@ -12,24 +12,14 @@ governing permissions and limitations under the License.
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-colorloupe-width-adjusted: calc(
-        var(
-                --spectrum-colorloupe-width,
-                var(--spectrum-global-dimension-static-size-600)
-            ) +
-            var(
-                --spectrum-colorhandle-inner-border-size,
-                var(--spectrum-global-dimension-static-size-25)
-            ) * 2
+        var(--spectrum-colorloupe-width, var(--spectrum-alias-colorloupe-width)) +
+            var(--spectrum-global-dimension-static-size-100, 8px)
     ); /* .spectrum-ColorLoupe */
     --spectrum-colorloupe-height-adjusted: calc(
         var(
                 --spectrum-colorloupe-height,
-                var(--spectrum-global-dimension-static-size-800)
-            ) +
-            var(
-                --spectrum-colorhandle-inner-border-size,
-                var(--spectrum-global-dimension-static-size-25)
-            ) * 2
+                var(--spectrum-alias-colorloupe-height)
+            ) + var(--spectrum-global-dimension-static-size-100, 8px)
     );
     --spectrum-colorloupe-offset: var(
         --spectrum-global-dimension-static-size-200,
@@ -59,15 +49,37 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .outer {
     stroke-width: var(
         --spectrum-colorloupe-outer-border-size,
-        var(--spectrum-global-dimension-static-size-10)
-    ); /* .spectrum-ColorLoupe-outer */ /* .spectrum-ColorLoupe-outer */
+        0
+    ); /* .spectrum-ColorLoupe-outer */
+}
+.spectrum-ColorLoupe-express {
+    display: var(
+        --spectrum-colorloupe-express-visibility,
+        none
+    ); /* .spectrum-ColorLoupe-express */
+}
+.spectrum-ColorLoupe-spectrum {
+    display: var(
+        --spectrum-colorloupe-spectrum-visibility,
+        block
+    ); /* .spectrum-ColorLoupe-spectrum */
+}
+.outer {
     fill: var(
         --spectrum-colorloupe-inner-border-color,
         var(--spectrum-global-color-static-white)
-    );
+    ); /* .spectrum-ColorLoupe-outer */
+    stroke: var(--spectrum-colorloupe-outer-border-color, transparent);
+}
+.inner {
+    fill: var(--spectrum-picked-color); /* .spectrum-ColorLoupe-inner */
     stroke: var(
-        --spectrum-colorloupe-outer-border-color,
-        var(--spectrum-alias-border-color-translucent)
+        --spectrum-colorloupe-outer-stroke-color,
+        var(--spectrum-global-color-static-transparent-black-200)
+    );
+    stroke-width: var(
+        --spectrum-colorloupe-outer-stroke-width,
+        var(--spectrum-alias-border-size-thick)
     );
 }
 @media (forced-colors: active) {

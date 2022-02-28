@@ -18,7 +18,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/button/sp-clear-button.js';
+import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
@@ -201,11 +201,11 @@ export class Toast extends SpectrumElement {
                 <slot name="action"></slot>
             </div>
             <div class="buttons">
-                <sp-clear-button
-                    label="Close"
-                    variant="overBackground"
+                <sp-close-button
                     @click=${this.shouldClose}
-                ></sp-clear-button>
+                    label="Close"
+                    variant="white"
+                ></sp-close-button>
             </div>
         `;
     }
