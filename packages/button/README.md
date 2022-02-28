@@ -20,12 +20,13 @@ Import the side effectful registration of `<sp-button>` or `<sp-clear-button>` a
 ```
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button/sp-clear-button.js';
+import '@spectrum-web-components/button/sp-close-button.js';
 ```
 
-When looking to leverage the `Button` or `ClearButton` base classes as a type and/or for extension purposes, do so via:
+When looking to leverage the `Button`, `ClearButton`, or `CloseButton` base classes as a type and/or for extension purposes, do so via:
 
 ```
-import { Button, ClearButton } from '@spectrum-web-components/button';
+import { Button, ClearButton, CloseButton } from '@spectrum-web-components/button';
 ```
 
 ## Sizes
