@@ -111,13 +111,13 @@ governing permissions and limitations under the License.
     );--spectrum-semantic-positive-color-key-focus:var(
         --spectrum-global-color-green-400
     );--spectrum-semantic-positive-background-color-default:var(
-        --spectrum-global-color-static-green-600
-    );--spectrum-semantic-positive-background-color-hover:var(
         --spectrum-global-color-static-green-700
+    );--spectrum-semantic-positive-background-color-hover:var(
+        --spectrum-global-color-static-green-800
     );--spectrum-semantic-positive-background-color-down:var(
         --spectrum-global-color-static-green-800
     );--spectrum-semantic-positive-background-color-key-focus:var(
-        --spectrum-global-color-static-green-700
+        --spectrum-global-color-static-green-800
     );--spectrum-semantic-informative-background-color:var(
         --spectrum-global-color-static-blue-700
     );--spectrum-semantic-informative-color-default:var(
@@ -174,7 +174,7 @@ governing permissions and limitations under the License.
 
     /* spectrum-dimensionGlobals.css */--spectrum-global-dimension-static-percent-50:50%;--spectrum-global-dimension-static-percent-70:70%;--spectrum-global-dimension-static-percent-100:100%;--spectrum-global-dimension-static-breakpoint-xsmall:304px;--spectrum-global-dimension-static-breakpoint-small:768px;--spectrum-global-dimension-static-breakpoint-medium:1280px;--spectrum-global-dimension-static-breakpoint-large:1768px;--spectrum-global-dimension-static-breakpoint-xlarge:2160px;--spectrum-global-dimension-static-grid-columns:12;--spectrum-global-dimension-static-grid-fluid-width:100%;--spectrum-global-dimension-static-grid-fixed-max-width:1280px;--spectrum-global-dimension-static-size-0:0px;--spectrum-global-dimension-static-size-10:1px;--spectrum-global-dimension-static-size-25:2px;--spectrum-global-dimension-static-size-40:3px;--spectrum-global-dimension-static-size-50:4px;--spectrum-global-dimension-static-size-65:5px;--spectrum-global-dimension-static-size-75:6px;--spectrum-global-dimension-static-size-85:7px;--spectrum-global-dimension-static-size-100:8px;--spectrum-global-dimension-static-size-115:9px;--spectrum-global-dimension-static-size-125:10px;--spectrum-global-dimension-static-size-130:11px;--spectrum-global-dimension-static-size-150:12px;--spectrum-global-dimension-static-size-160:13px;--spectrum-global-dimension-static-size-175:14px;--spectrum-global-dimension-static-size-200:16px;--spectrum-global-dimension-static-size-225:18px;--spectrum-global-dimension-static-size-250:20px;--spectrum-global-dimension-static-size-275:22px;--spectrum-global-dimension-static-size-300:24px;--spectrum-global-dimension-static-size-325:26px;--spectrum-global-dimension-static-size-400:32px;--spectrum-global-dimension-static-size-450:36px;--spectrum-global-dimension-static-size-500:40px;--spectrum-global-dimension-static-size-550:44px;--spectrum-global-dimension-static-size-600:48px;--spectrum-global-dimension-static-size-700:56px;--spectrum-global-dimension-static-size-800:64px;--spectrum-global-dimension-static-size-900:72px;--spectrum-global-dimension-static-size-1000:80px;--spectrum-global-dimension-static-size-1200:96px;--spectrum-global-dimension-static-size-1700:136px;--spectrum-global-dimension-static-size-2400:192px;--spectrum-global-dimension-static-size-2500:200px;--spectrum-global-dimension-static-size-2600:208px;--spectrum-global-dimension-static-size-2800:224px;--spectrum-global-dimension-static-size-3200:256px;--spectrum-global-dimension-static-size-3400:272px;--spectrum-global-dimension-static-size-3500:280px;--spectrum-global-dimension-static-size-3600:288px;--spectrum-global-dimension-static-size-3800:304px;--spectrum-global-dimension-static-size-4600:368px;--spectrum-global-dimension-static-size-5000:400px;--spectrum-global-dimension-static-size-6000:480px;--spectrum-global-dimension-static-size-16000:1280px;--spectrum-global-dimension-static-font-size-50:11px;--spectrum-global-dimension-static-font-size-75:12px;--spectrum-global-dimension-static-font-size-100:14px;--spectrum-global-dimension-static-font-size-150:15px;--spectrum-global-dimension-static-font-size-200:16px;--spectrum-global-dimension-static-font-size-300:18px;--spectrum-global-dimension-static-font-size-400:20px;--spectrum-global-dimension-static-font-size-500:22px;--spectrum-global-dimension-static-font-size-600:25px;--spectrum-global-dimension-static-font-size-700:28px;--spectrum-global-dimension-static-font-size-800:32px;--spectrum-global-dimension-static-font-size-900:36px;--spectrum-global-dimension-static-font-size-1000:40px;
 
-    /* spectrum-fontGlobals.css */--spectrum-global-font-family-base:adobe-clean,"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Trebuchet MS","Lucida Grande",sans-serif;--spectrum-global-font-family-serif:adobe-clean-serif,"Source Serif Pro",Georgia,serif;--spectrum-global-font-family-code:"Source Code Pro",Monaco,monospace;--spectrum-global-font-weight-thin:100;--spectrum-global-font-weight-ultra-light:200;--spectrum-global-font-weight-light:300;--spectrum-global-font-weight-regular:400;--spectrum-global-font-weight-medium:500;--spectrum-global-font-weight-semi-bold:600;--spectrum-global-font-weight-bold:700;--spectrum-global-font-weight-extra-bold:800;--spectrum-global-font-weight-black:900;--spectrum-global-font-style-regular:normal;--spectrum-global-font-style-italic:italic;--spectrum-global-font-letter-spacing-none:0;--spectrum-global-font-letter-spacing-small:0.0125em;--spectrum-global-font-letter-spacing-han:0.05em;--spectrum-global-font-letter-spacing-medium:0.06em;--spectrum-global-font-line-height-large:1.7;--spectrum-global-font-line-height-medium:1.5;--spectrum-global-font-line-height-small:1.3;--spectrum-global-font-multiplier-0:0em;--spectrum-global-font-multiplier-25:0.25em;--spectrum-global-font-multiplier-75:0.75em;--spectrum-global-font-font-family-ar:myriad-arabic,adobe-clean,"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Trebuchet MS","Lucida Grande",sans-serif;--spectrum-global-font-font-family-he:myriad-hebrew,adobe-clean,"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Trebuchet MS","Lucida Grande",sans-serif;--spectrum-global-font-font-family-zh:adobe-clean-han-traditional,source-han-traditional,"MingLiu","Heiti TC Light","sans-serif";--spectrum-global-font-font-family-zhhans:adobe-clean-han-simplified-c,source-han-simplified-c,"SimSun","Heiti SC Light","sans-serif";--spectrum-global-font-font-family-ko:adobe-clean-han-korean,source-han-korean,"Malgun Gothic","Apple Gothic","sans-serif";--spectrum-global-font-font-family-ja:adobe-clean-han-japanese,source-han-japanese,"Yu Gothic","\\30E1 \\30A4 \\30EA \\30AA","\\30D2 \\30E9 \\30AE \\30CE \\89D2 \\30B4  Pro W3","Hiragino Kaku Gothic Pro W3","Osaka","\\FF2D \\FF33 \\FF30 \\30B4 \\30B7 \\30C3 \\30AF","MS PGothic","sans-serif";--spectrum-global-font-font-family-condensed:adobe-clean-han-traditional,source-han-traditional,"MingLiu","Heiti TC Light",adobe-clean,"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Trebuchet MS","Lucida Grande",sans-serif;
+    /* spectrum-fontGlobals.css */--spectrum-global-font-family-base:adobe-clean,"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Trebuchet MS","Lucida Grande",sans-serif;--spectrum-global-font-family-serif:adobe-clean-serif,"Source Serif Pro",Georgia,serif;--spectrum-global-font-family-code:"Source Code Pro",Monaco,monospace;--spectrum-global-font-weight-thin:100;--spectrum-global-font-weight-ultra-light:200;--spectrum-global-font-weight-light:300;--spectrum-global-font-weight-regular:400;--spectrum-global-font-weight-medium:500;--spectrum-global-font-weight-semi-bold:600;--spectrum-global-font-weight-bold:700;--spectrum-global-font-weight-extra-bold:800;--spectrum-global-font-weight-black:900;--spectrum-global-font-style-regular:normal;--spectrum-global-font-style-italic:italic;--spectrum-global-font-letter-spacing-none:0;--spectrum-global-font-letter-spacing-small:0.0125em;--spectrum-global-font-letter-spacing-han:0.05em;--spectrum-global-font-letter-spacing-medium:0.06em;--spectrum-global-font-line-height-large:1.7;--spectrum-global-font-line-height-medium:1.5;--spectrum-global-font-line-height-small:1.3;--spectrum-global-font-multiplier-0:0em;--spectrum-global-font-multiplier-25:0.25em;--spectrum-global-font-multiplier-75:0.75em;--spectrum-global-font-font-family-ar:myriad-arabic,adobe-clean,"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Trebuchet MS","Lucida Grande",sans-serif;--spectrum-global-font-font-family-he:myriad-hebrew,adobe-clean,"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Trebuchet MS","Lucida Grande",sans-serif;--spectrum-global-font-font-family-zh:adobe-clean-han-traditional,source-han-traditional,"MingLiu","Heiti TC Light","sans-serif";--spectrum-global-font-font-family-zhhans:adobe-clean-han-simplified-c,source-han-simplified-c,"SimSun","Heiti SC Light","sans-serif";--spectrum-global-font-font-family-ko:adobe-clean-han-korean,source-han-korean,"Malgun Gothic","Apple Gothic","sans-serif";--spectrum-global-font-font-family-ja:adobe-clean-han-japanese,"Hiragino Kaku Gothic ProN","ヒラギノ角ゴ ProN W3","Osaka",YuGothic,"Yu Gothic","メイリオ",Meiryo,"ＭＳ Ｐゴシック","MS PGothic","sans-serif";--spectrum-global-font-font-family-condensed:adobe-clean-han-traditional,source-han-traditional,"MingLiu","Heiti TC Light",adobe-clean,"Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Ubuntu,"Trebuchet MS","Lucida Grande",sans-serif;
 
     /* spectrum-staticAliases.css */--spectrum-alias-loupe-entry-animation-duration:var(
         --spectrum-global-animation-duration-300
@@ -703,11 +703,19 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-150
     );--spectrum-alias-pickerbutton-border-radius-rounded:var(
         --spectrum-global-dimension-size-50
-    );--spectrum-alias-search-border-radius:var(
+    );--spectrum-alias-pickerbutton-border-radius-rounded-sided:0;--spectrum-alias-search-border-radius:var(
         --spectrum-global-dimension-size-50
     );--spectrum-alias-search-border-radius-quiet:0;--spectrum-alias-combobox-quiet-button-offset-x:var(
         --spectrum-global-dimension-size-100
     );--spectrum-alias-thumbnail-border-radius-small:var(
+        --spectrum-global-dimension-size-25
+    );--spectrum-alias-actiongroup-button-gap:var(
+        --spectrum-global-dimension-size-100
+    );--spectrum-alias-actiongroup-button-gap-compact:var(
+        --spectrum-global-dimension-size-0
+    );--spectrum-alias-actiongroup-button-gap-quiet:var(
+        --spectrum-global-dimension-size-100
+    );--spectrum-alias-actiongroup-button-gap-quiet-compact:var(
         --spectrum-global-dimension-size-25
     );--spectrum-alias-search-padding-left-s:var(
         --spectrum-global-dimension-size-85
@@ -829,14 +837,78 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-size-100
     );--spectrum-alias-avatar-size-50:var(--spectrum-global-dimension-size-200);--spectrum-alias-avatar-size-75:var(--spectrum-global-dimension-size-225);--spectrum-alias-avatar-size-200:var(--spectrum-global-dimension-size-275);--spectrum-alias-avatar-size-300:var(--spectrum-global-dimension-size-325);--spectrum-alias-avatar-size-500:var(--spectrum-global-dimension-size-400);--spectrum-alias-avatar-size-700:var(--spectrum-global-dimension-size-500);--spectrum-alias-avatar-border-size:var(
         --spectrum-global-dimension-size-0
+    );--spectrum-alias-tag-border-radius:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-tag-border-size-default:var(
+        --spectrum-global-dimension-static-size-10
+    );--spectrum-alias-tag-border-size-key-focus:var(
+        --spectrum-global-dimension-static-size-25
+    );--spectrum-alias-tag-border-size-disabled:var(
+        --spectrum-global-dimension-size-0
+    );--spectrum-alias-tag-border-size:var(
+        --spectrum-global-dimension-static-size-10
+    );--spectrum-alias-tag-padding-right-s:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-alias-tag-padding-right-m:var(
+        --spectrum-global-dimension-size-150
+    );--spectrum-alias-tag-padding-right-l:var(
+        --spectrum-global-dimension-size-185
+    );--spectrum-alias-tag-height-s:var(--spectrum-global-dimension-size-300);--spectrum-alias-tag-height-m:var(--spectrum-global-dimension-size-400);--spectrum-alias-tag-height-l:var(--spectrum-global-dimension-size-500);--spectrum-alias-tag-font-size-s:var(
+        --spectrum-global-dimension-font-size-75
+    );--spectrum-alias-tag-font-size-m:var(
+        --spectrum-global-dimension-font-size-100
+    );--spectrum-alias-tag-font-size-l:var(
+        --spectrum-global-dimension-font-size-200
+    );--spectrum-alias-tag-text-padding-top-s:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-tag-text-padding-top-m:var(
+        --spectrum-global-dimension-size-75
+    );--spectrum-alias-tag-text-padding-top-l:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-alias-tag-icon-size-s:var(--spectrum-global-dimension-size-200);--spectrum-alias-tag-icon-size-m:var(--spectrum-global-dimension-size-225);--spectrum-alias-tag-icon-margin-top-s:var(
+        --spectrum-global-dimension-size-50
+    );--spectrum-alias-tag-icon-margin-top-m:var(
+        --spectrum-global-dimension-size-85
+    );--spectrum-alias-tag-icon-margin-top-l:var(
+        --spectrum-global-dimension-size-125
+    );--spectrum-alias-tag-icon-margin-right-s:var(
+        --spectrum-global-dimension-size-85
+    );--spectrum-alias-tag-icon-margin-right-m:var(
+        --spectrum-global-dimension-size-100
+    );--spectrum-alias-tag-icon-margin-right-l:var(
+        --spectrum-global-dimension-size-115
+    );--spectrum-alias-tag-clearbutton-width-s:var(
+        --spectrum-global-dimension-size-300
+    );--spectrum-alias-tag-clearbutton-width-m:var(
+        --spectrum-global-dimension-size-400
+    );--spectrum-alias-tag-clearbutton-width-l:var(
+        --spectrum-global-dimension-size-500
+    );--spectrum-alias-tag-clearbutton-icon-margin-s:var(
+        --spectrum-global-dimension-size-100
+    );--spectrum-alias-tag-clearbutton-icon-margin-m:var(
+        --spectrum-global-dimension-size-150
+    );--spectrum-alias-tag-clearbutton-icon-margin-l:var(
+        --spectrum-global-dimension-size-185
+    );--spectrum-alias-tag-focusring-border-radius:var(
+        --spectrum-global-dimension-size-75
+    );--spectrum-alias-tag-focusring-size:var(
+        --spectrum-global-dimension-size-25
+    );--spectrum-alias-tag-focusring-gap:var(
+        --spectrum-global-dimension-static-size-0
+    );--spectrum-alias-tag-focusring-gap-selected:var(
+        --spectrum-global-dimension-size-25
+    );--spectrum-alias-colorloupe-width:var(
+        --spectrum-global-dimension-static-size-600
+    );--spectrum-alias-colorloupe-height:var(
+        --spectrum-global-dimension-static-size-800
     )}:root{
-    /* spectrum-colorAliases.css */--spectrum-alias-colorhandle-outer-border-color:rgba(0,0,0,.42);--spectrum-alias-transparent-blue-background-color-hover:rgba(13,102,208,.15);--spectrum-alias-transparent-blue-background-color-down:rgba(9,90,186,.15);--spectrum-alias-transparent-blue-background-color-key-focus:var(
+    /* spectrum-colorAliases.css */--spectrum-alias-colorhandle-outer-border-color:rgba(0,0,0,.42);--spectrum-alias-transparent-blue-background-color-hover:rgba(13,102,208,.15);--spectrum-alias-transparent-blue-background-color-down:rgba(9,90,186,.3);--spectrum-alias-transparent-blue-background-color-key-focus:var(
         --spectrum-alias-transparent-blue-background-color-hover
     );--spectrum-alias-transparent-blue-background-color-mouse-focus:var(
         --spectrum-alias-transparent-blue-background-color-hover
     );--spectrum-alias-transparent-blue-background-color:var(
         --spectrum-alias-component-text-color-default
-    );--spectrum-alias-transparent-red-background-color-hover:rgba(201,37,45,.15);--spectrum-alias-transparent-red-background-color-down:rgba(187,18,26,.15);--spectrum-alias-transparent-red-background-color-key-focus:var(
+    );--spectrum-alias-transparent-red-background-color-hover:rgba(201,37,45,.15);--spectrum-alias-transparent-red-background-color-down:rgba(187,18,26,.3);--spectrum-alias-transparent-red-background-color-key-focus:var(
         --spectrum-alias-transparent-red-background-color-hover
     );--spectrum-alias-transparent-red-background-color-mouse-focus:var(
         --spectrum-alias-transparent-red-background-color-hover
@@ -1028,6 +1100,110 @@ governing permissions and limitations under the License.
         --spectrum-semantic-cta-background-color-key-focus
     );--spectrum-alias-component-border-color-emphasized-selected:var(
         --spectrum-alias-component-border-color-emphasized-selected-default
+    );--spectrum-alias-tag-border-color-default:var(
+        --spectrum-alias-border-color-darker-default
+    );--spectrum-alias-tag-border-color-hover:var(
+        --spectrum-alias-border-color-darker-hover
+    );--spectrum-alias-tag-border-color-down:var(
+        --spectrum-alias-border-color-darker-hover
+    );--spectrum-alias-tag-border-color-key-focus:var(
+        --spectrum-alias-border-color-key-focus
+    );--spectrum-alias-tag-border-color-error-default:var(
+        --spectrum-semantic-negative-color-default
+    );--spectrum-alias-tag-border-color-error-hover:var(
+        --spectrum-semantic-negative-color-hover
+    );--spectrum-alias-tag-border-color-error-down:var(
+        --spectrum-semantic-negative-color-hover
+    );--spectrum-alias-tag-border-color-error-key-focus:var(
+        --spectrum-alias-border-color-key-focus
+    );--spectrum-alias-tag-border-color-error-selected:var(
+        --spectrum-semantic-negative-color-default
+    );--spectrum-alias-tag-border-color-selected:var(
+        --spectrum-alias-tag-background-color-selected-default
+    );--spectrum-alias-tag-border-color:var(
+        --spectrum-alias-tag-border-color-default
+    );--spectrum-alias-tag-border-color-disabled:var(
+        --spectrum-alias-border-color-disabled
+    );--spectrum-alias-tag-border-color-error:var(
+        --spectrum-alias-tag-border-color-error-default
+    );--spectrum-alias-tag-text-color-default:var(
+        --spectrum-alias-label-text-color
+    );--spectrum-alias-tag-text-color-hover:var(
+        --spectrum-alias-text-color-hover
+    );--spectrum-alias-tag-text-color-down:var(--spectrum-alias-text-color-down);--spectrum-alias-tag-text-color-key-focus:var(
+        --spectrum-alias-text-color-hover
+    );--spectrum-alias-tag-text-color-disabled:var(
+        --spectrum-global-color-gray-500
+    );--spectrum-alias-tag-text-color:var(
+        --spectrum-alias-tag-text-color-default
+    );--spectrum-alias-tag-text-color-error-default:var(
+        --spectrum-global-color-red-600
+    );--spectrum-alias-tag-text-color-error-hover:var(
+        --spectrum-global-color-red-700
+    );--spectrum-alias-tag-text-color-error-down:var(
+        --spectrum-global-color-red-700
+    );--spectrum-alias-tag-text-color-error-key-focus:var(
+        --spectrum-global-color-red-700
+    );--spectrum-alias-tag-text-color-error:var(
+        --spectrum-alias-tag-text-color-error-default
+    );--spectrum-alias-tag-text-color-selected:var(
+        --spectrum-global-color-gray-50
+    );--spectrum-alias-tag-icon-color-default:var(--spectrum-alias-icon-color);--spectrum-alias-tag-icon-color-hover:var(
+        --spectrum-alias-icon-color-hover
+    );--spectrum-alias-tag-icon-color-down:var(--spectrum-alias-icon-color-down);--spectrum-alias-tag-icon-color-key-focus:var(
+        --spectrum-alias-icon-color-hover
+    );--spectrum-alias-tag-icon-color-disabled:var(
+        --spectrum-alias-icon-color-disabled
+    );--spectrum-alias-tag-icon-color:var(
+        --spectrum-alias-tag-icon-color-default
+    );--spectrum-alias-tag-icon-color-error:var(--spectrum-global-color-red-600);--spectrum-alias-tag-icon-color-selected:var(
+        --spectrum-global-color-gray-50
+    );--spectrum-alias-tag-background-color-disabled:var(
+        --spectrum-global-color-gray-200
+    );--spectrum-alias-tag-background-color-default:var(
+        --spectrum-global-color-gray-50
+    );--spectrum-alias-tag-background-color-hover:var(
+        --spectrum-global-color-gray-50
+    );--spectrum-alias-tag-background-color-down:var(
+        --spectrum-global-color-gray-200
+    );--spectrum-alias-tag-background-color-key-focus:var(
+        --spectrum-global-color-gray-50
+    );--spectrum-alias-tag-background-color:var(
+        --spectrum-alias-tag-background-color-default
+    );--spectrum-alias-tag-background-color-error-default:var(
+        --spectrum-global-color-gray-50
+    );--spectrum-alias-tag-background-color-error-hover:var(
+        --spectrum-global-color-gray-50
+    );--spectrum-alias-tag-background-color-error-down:var(
+        --spectrum-global-color-gray-200
+    );--spectrum-alias-tag-background-color-error-key-focus:var(
+        --spectrum-global-color-gray-50
+    );--spectrum-alias-tag-background-color-error:var(
+        --spectrum-alias-tag-background-color-error-default
+    );--spectrum-alias-tag-background-color-error-selected-default:var(
+        --spectrum-semantic-negative-color-default
+    );--spectrum-alias-tag-background-color-error-selected-hover:var(
+        --spectrum-semantic-negative-color-hover
+    );--spectrum-alias-tag-background-color-error-selected-down:var(
+        --spectrum-semantic-negative-color-hover
+    );--spectrum-alias-tag-background-color-error-selected-key-focus:var(
+        --spectrum-global-color-red-600
+    );--spectrum-alias-tag-background-color-error-selected:var(
+        --spectrum-alias-tag-background-color-error-selected-default
+    );--spectrum-alias-tag-background-color-selected-default:var(
+        --spectrum-global-color-gray-700
+    );--spectrum-alias-tag-background-color-selected-hover:var(
+        --spectrum-global-color-gray-800
+    );--spectrum-alias-tag-background-color-selected-down:var(
+        --spectrum-global-color-gray-900
+    );--spectrum-alias-tag-background-color-selected-key-focus:var(
+        --spectrum-global-color-gray-900
+    );--spectrum-alias-tag-background-color-selected:var(
+        --spectrum-alias-tag-background-color-selected-default
+    );--spectrum-alias-tag-focusring-border-color-default:transparent;--spectrum-alias-tag-focusring-border-color-key-focus:transparent;--spectrum-alias-tag-focusring-border-color-disabled:transparent;--spectrum-alias-tag-focusring-border-color-selected-key-focus:var(
+        --spectrum-alias-focus-ring-color
+    );--spectrum-alias-tag-focusring-border-color:var(
+        --spectrum-alias-tag-focusring-border-color-default
     );--spectrum-alias-avatar-border-color-default:var(
         --spectrum-alias-background-color-transparent
     );--spectrum-alias-avatar-border-color-hover:var(
@@ -1276,7 +1452,73 @@ governing permissions and limitations under the License.
         --spectrum-alias-component-background-color-key-focus
     );--spectrum-alias-infieldbutton-fill-loudnessHigh-background-color-disabled:var(
         --spectrum-alias-component-background-color-disabled
-    );--spectrum-alias-actionbutton-staticBlack-border-color-default:rgba(0,0,0,.4);--spectrum-alias-actionbutton-staticBlack-background-color-default:transparent;--spectrum-alias-actionbutton-staticBlack-border-color-hover:rgba(0,0,0,.55);--spectrum-alias-actionbutton-staticBlack-background-color-hover:rgba(0,0,0,.25);--spectrum-alias-actionbutton-staticBlack-border-color-down:rgba(0,0,0,.7);--spectrum-alias-actionbutton-staticBlack-background-color-down:rgba(0,0,0,.4);--spectrum-alias-actionbutton-staticBlack-border-color-key-focus:rgba(0,0,0,.55);--spectrum-alias-actionbutton-staticBlack-background-color-key-focus:rgba(0,0,0,.25);--spectrum-alias-actionbutton-staticBlack-border-color-disabled:rgba(0,0,0,.25);--spectrum-alias-actionbutton-staticBlack-background-color-disabled:transparent;--spectrum-alias-actionbutton-staticBlack-border-color-disabled-selected:transparent;--spectrum-alias-actionbutton-staticBlack-background-color-disabled-selected:rgba(0,0,0,.1);--spectrum-alias-actionbutton-staticWhite-border-color-default:hsla(0,0%,100%,.4);--spectrum-alias-actionbutton-staticWhite-background-color-default:transparent;--spectrum-alias-actionbutton-staticWhite-border-color-hover:hsla(0,0%,100%,.55);--spectrum-alias-actionbutton-staticWhite-background-color-hover:hsla(0,0%,100%,.25);--spectrum-alias-actionbutton-staticWhite-border-color-down:hsla(0,0%,100%,.7);--spectrum-alias-actionbutton-staticWhite-background-color-down:hsla(0,0%,100%,.4);--spectrum-alias-actionbutton-staticWhite-border-color-key-focus:hsla(0,0%,100%,.55);--spectrum-alias-actionbutton-staticWhite-background-color-key-focus:hsla(0,0%,100%,.25);--spectrum-alias-actionbutton-staticWhite-border-color-disabled:hsla(0,0%,100%,.25);--spectrum-alias-actionbutton-staticWhite-background-color-disabled:transparent;--spectrum-alias-actionbutton-staticWhite-border-color-disabled-selected:transparent;--spectrum-alias-actionbutton-staticWhite-background-color-disabled-selected:hsla(0,0%,100%,.1);--spectrum-alias-background-color-default:var(
+    );--spectrum-alias-actionbutton-staticBlack-border-color-default:rgba(0,0,0,.4);--spectrum-alias-actionbutton-staticBlack-background-color-default:transparent;--spectrum-alias-actionbutton-staticBlack-border-color-hover:rgba(0,0,0,.55);--spectrum-alias-actionbutton-staticBlack-background-color-hover:rgba(0,0,0,.25);--spectrum-alias-actionbutton-staticBlack-border-color-down:rgba(0,0,0,.7);--spectrum-alias-actionbutton-staticBlack-background-color-down:rgba(0,0,0,.4);--spectrum-alias-actionbutton-staticBlack-border-color-key-focus:rgba(0,0,0,.55);--spectrum-alias-actionbutton-staticBlack-background-color-key-focus:rgba(0,0,0,.25);--spectrum-alias-actionbutton-staticBlack-border-color-disabled:rgba(0,0,0,.25);--spectrum-alias-actionbutton-staticBlack-background-color-disabled:transparent;--spectrum-alias-actionbutton-staticBlack-border-color-disabled-selected:transparent;--spectrum-alias-actionbutton-staticBlack-background-color-disabled-selected:rgba(0,0,0,.1);--spectrum-alias-actionbutton-staticWhite-border-color-default:hsla(0,0%,100%,.4);--spectrum-alias-actionbutton-staticWhite-background-color-default:transparent;--spectrum-alias-actionbutton-staticWhite-border-color-hover:hsla(0,0%,100%,.55);--spectrum-alias-actionbutton-staticWhite-background-color-hover:hsla(0,0%,100%,.25);--spectrum-alias-actionbutton-staticWhite-border-color-down:hsla(0,0%,100%,.7);--spectrum-alias-actionbutton-staticWhite-background-color-down:hsla(0,0%,100%,.4);--spectrum-alias-actionbutton-staticWhite-border-color-key-focus:hsla(0,0%,100%,.55);--spectrum-alias-actionbutton-staticWhite-background-color-key-focus:hsla(0,0%,100%,.25);--spectrum-alias-actionbutton-staticWhite-border-color-disabled:hsla(0,0%,100%,.25);--spectrum-alias-actionbutton-staticWhite-background-color-disabled:transparent;--spectrum-alias-actionbutton-staticWhite-border-color-disabled-selected:transparent;--spectrum-alias-actionbutton-staticWhite-background-color-disabled-selected:hsla(0,0%,100%,.1);--spectrum-alias-tabs-divider-background-color-default:var(
+        --spectrum-global-color-gray-300
+    );--spectrum-alias-tabs-divider-background-color-quiet:var(
+        --spectrum-alias-background-color-transparent
+    );--spectrum-alias-tabitem-text-color-default:var(
+        --spectrum-alias-label-text-color
+    );--spectrum-alias-tabitem-text-color-hover:var(
+        --spectrum-alias-text-color-hover
+    );--spectrum-alias-tabitem-text-color-down:var(
+        --spectrum-alias-text-color-down
+    );--spectrum-alias-tabitem-text-color-key-focus:var(
+        --spectrum-alias-text-color-hover
+    );--spectrum-alias-tabitem-text-color-mouse-focus:var(
+        --spectrum-alias-text-color-hover
+    );--spectrum-alias-tabitem-text-color:var(
+        --spectrum-alias-tabitem-text-color-default
+    );--spectrum-alias-tabitem-text-color-selected-default:var(
+        --spectrum-global-color-gray-900
+    );--spectrum-alias-tabitem-text-color-selected-hover:var(
+        --spectrum-alias-tabitem-text-color-selected-default
+    );--spectrum-alias-tabitem-text-color-selected-down:var(
+        --spectrum-alias-tabitem-text-color-selected-default
+    );--spectrum-alias-tabitem-text-color-selected-key-focus:var(
+        --spectrum-alias-tabitem-text-color-selected-default
+    );--spectrum-alias-tabitem-text-color-selected-mouse-focus:var(
+        --spectrum-alias-tabitem-text-color-selected-default
+    );--spectrum-alias-tabitem-text-color-selected:var(
+        --spectrum-alias-tabitem-text-color-selected-default
+    );--spectrum-alias-tabitem-text-color-emphasized:var(
+        --spectrum-alias-tabitem-text-color-default
+    );--spectrum-alias-tabitem-text-color-emphasized-selected-default:var(
+        --spectrum-global-color-static-blue-500
+    );--spectrum-alias-tabitem-text-color-emphasized-selected-hover:var(
+        --spectrum-alias-tabitem-text-color-emphasized-selected-default
+    );--spectrum-alias-tabitem-text-color-emphasized-selected-down:var(
+        --spectrum-alias-tabitem-text-color-emphasized-selected-default
+    );--spectrum-alias-tabitem-text-color-emphasized-selected-key-focus:var(
+        --spectrum-alias-tabitem-text-color-emphasized-selected-default
+    );--spectrum-alias-tabitem-text-color-emphasized-selected-mouse-focus:var(
+        --spectrum-alias-tabitem-text-color-emphasized-selected-default
+    );--spectrum-alias-tabitem-text-color-emphasized-selected:var(
+        --spectrum-alias-tabitem-text-color-emphasized-selected-default
+    );--spectrum-alias-tabitem-selection-indicator-color-default:var(
+        --spectrum-alias-tabitem-text-color-selected-default
+    );--spectrum-alias-tabitem-selection-indicator-color-emphasized:var(
+        --spectrum-alias-tabitem-text-color-emphasized-selected-default
+    );--spectrum-alias-tabitem-icon-color-disabled:var(
+        --spectrum-alias-text-color-disabled
+    );--spectrum-alias-tabitem-icon-color-default:var(
+        --spectrum-alias-icon-color
+    );--spectrum-alias-tabitem-icon-color-hover:var(
+        --spectrum-alias-icon-color-hover
+    );--spectrum-alias-tabitem-icon-color-down:var(
+        --spectrum-alias-icon-color-down
+    );--spectrum-alias-tabitem-icon-color-key-focus:var(
+        --spectrum-alias-icon-color-hover
+    );--spectrum-alias-tabitem-icon-color-mouse-focus:var(
+        --spectrum-alias-icon-color-down
+    );--spectrum-alias-tabitem-icon-color:var(
+        --spectrum-alias-tabitem-icon-color-default
+    );--spectrum-alias-tabitem-icon-color-selected:var(
+        --spectrum-alias-icon-color-selected-neutral
+    );--spectrum-alias-tabitem-icon-color-emphasized:var(
+        --spectrum-alias-tabitem-text-color-default
+    );--spectrum-alias-tabitem-icon-color-emphasized-selected:var(
+        --spectrum-alias-tabitem-text-color-emphasized-selected-default
+    );--spectrum-alias-background-color-default:var(
         --spectrum-global-color-gray-100
     );--spectrum-alias-background-color-disabled:var(
         --spectrum-global-color-gray-200
@@ -1412,6 +1654,18 @@ governing permissions and limitations under the License.
         --spectrum-global-color-static-magenta-200
     );--spectrum-alias-categorical-color-16:var(
         --spectrum-global-color-static-yellow-200
+    )}:root{--spectrum-colorloupe-express-visibility:none;--spectrum-colorloupe-spectrum-visibility:block;--spectrum-colorloupe-outer-border-color:transparent;--spectrum-colorloupe-outer-border-size:0;--spectrum-colorloupe-outer-stroke-color:var(
+        --spectrum-global-color-static-transparent-black-200
+    );--spectrum-colorloupe-outer-stroke-width:var(
+        --spectrum-alias-border-size-thick
+    );--spectrum-colorhandle-background-offset:calc(var(--spectrum-global-dimension-static-size-25)*-1);--spectrum-colorhandle-outer-shadow-color:rgba(0,0,0,.42);--spectrum-colorhandle-inner-shadow-color:var(
+        --spectrum-colorhandle-outer-shadow-color
+    );--spectrum-colorhandle-outer-shadow-blur:0;--spectrum-colorhandle-outer-shadow-spread:var(
+        --spectrum-alias-border-size-thin
+    );--spectrum-colorcontrol-checkerboard-light-color:var(
+        --spectrum-global-color-static-white
+    );--spectrum-colorcontrol-checkerboard-dark-color:var(
+        --spectrum-global-color-static-gray-300
     )}
 
 /* stylelint-enable */
@@ -1440,7 +1694,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* stylelint-disable */:root{--spectrum-global-dimension-scale-factor:1;--spectrum-global-dimension-size-0:0px;--spectrum-global-dimension-size-10:1px;--spectrum-global-dimension-size-25:2px;--spectrum-global-dimension-size-40:3px;--spectrum-global-dimension-size-50:4px;--spectrum-global-dimension-size-65:5px;--spectrum-global-dimension-size-75:6px;--spectrum-global-dimension-size-85:7px;--spectrum-global-dimension-size-100:8px;--spectrum-global-dimension-size-115:9px;--spectrum-global-dimension-size-125:10px;--spectrum-global-dimension-size-130:11px;--spectrum-global-dimension-size-150:12px;--spectrum-global-dimension-size-160:13px;--spectrum-global-dimension-size-175:14px;--spectrum-global-dimension-size-185:15px;--spectrum-global-dimension-size-200:16px;--spectrum-global-dimension-size-225:18px;--spectrum-global-dimension-size-250:20px;--spectrum-global-dimension-size-275:22px;--spectrum-global-dimension-size-300:24px;--spectrum-global-dimension-size-325:26px;--spectrum-global-dimension-size-350:28px;--spectrum-global-dimension-size-400:32px;--spectrum-global-dimension-size-450:36px;--spectrum-global-dimension-size-500:40px;--spectrum-global-dimension-size-550:44px;--spectrum-global-dimension-size-600:48px;--spectrum-global-dimension-size-650:52px;--spectrum-global-dimension-size-675:54px;--spectrum-global-dimension-size-700:56px;--spectrum-global-dimension-size-750:60px;--spectrum-global-dimension-size-800:64px;--spectrum-global-dimension-size-900:72px;--spectrum-global-dimension-size-1000:80px;--spectrum-global-dimension-size-1125:90px;--spectrum-global-dimension-size-1200:96px;--spectrum-global-dimension-size-1250:100px;--spectrum-global-dimension-size-1600:128px;--spectrum-global-dimension-size-1700:136px;--spectrum-global-dimension-size-1800:144px;--spectrum-global-dimension-size-2000:160px;--spectrum-global-dimension-size-2400:192px;--spectrum-global-dimension-size-2500:200px;--spectrum-global-dimension-size-3000:240px;--spectrum-global-dimension-size-3400:272px;--spectrum-global-dimension-size-3600:288px;--spectrum-global-dimension-size-4600:368px;--spectrum-global-dimension-size-5000:400px;--spectrum-global-dimension-size-6000:480px;--spectrum-global-dimension-font-size-25:10px;--spectrum-global-dimension-font-size-50:11px;--spectrum-global-dimension-font-size-75:12px;--spectrum-global-dimension-font-size-100:14px;--spectrum-global-dimension-font-size-150:15px;--spectrum-global-dimension-font-size-200:16px;--spectrum-global-dimension-font-size-300:18px;--spectrum-global-dimension-font-size-400:20px;--spectrum-global-dimension-font-size-500:22px;--spectrum-global-dimension-font-size-600:25px;--spectrum-global-dimension-font-size-700:28px;--spectrum-global-dimension-font-size-800:32px;--spectrum-global-dimension-font-size-900:36px;--spectrum-global-dimension-font-size-1000:40px;--spectrum-global-dimension-font-size-1100:45px;--spectrum-global-dimension-font-size-1200:50px;--spectrum-global-dimension-font-size-1300:60px;--spectrum-alias-item-text-padding-top-l:var(
+/* stylelint-disable */:root{--spectrum-global-dimension-scale-factor:1;--spectrum-global-dimension-size-0:0px;--spectrum-global-dimension-size-10:1px;--spectrum-global-dimension-size-25:2px;--spectrum-global-dimension-size-30:2px;--spectrum-global-dimension-size-40:3px;--spectrum-global-dimension-size-50:4px;--spectrum-global-dimension-size-65:5px;--spectrum-global-dimension-size-75:6px;--spectrum-global-dimension-size-85:7px;--spectrum-global-dimension-size-100:8px;--spectrum-global-dimension-size-115:9px;--spectrum-global-dimension-size-125:10px;--spectrum-global-dimension-size-130:11px;--spectrum-global-dimension-size-150:12px;--spectrum-global-dimension-size-160:13px;--spectrum-global-dimension-size-175:14px;--spectrum-global-dimension-size-185:15px;--spectrum-global-dimension-size-200:16px;--spectrum-global-dimension-size-225:18px;--spectrum-global-dimension-size-250:20px;--spectrum-global-dimension-size-275:22px;--spectrum-global-dimension-size-300:24px;--spectrum-global-dimension-size-325:26px;--spectrum-global-dimension-size-350:28px;--spectrum-global-dimension-size-400:32px;--spectrum-global-dimension-size-450:36px;--spectrum-global-dimension-size-500:40px;--spectrum-global-dimension-size-550:44px;--spectrum-global-dimension-size-600:48px;--spectrum-global-dimension-size-650:52px;--spectrum-global-dimension-size-675:54px;--spectrum-global-dimension-size-700:56px;--spectrum-global-dimension-size-750:60px;--spectrum-global-dimension-size-800:64px;--spectrum-global-dimension-size-900:72px;--spectrum-global-dimension-size-1000:80px;--spectrum-global-dimension-size-1125:90px;--spectrum-global-dimension-size-1200:96px;--spectrum-global-dimension-size-1250:100px;--spectrum-global-dimension-size-1600:128px;--spectrum-global-dimension-size-1700:136px;--spectrum-global-dimension-size-1800:144px;--spectrum-global-dimension-size-2000:160px;--spectrum-global-dimension-size-2400:192px;--spectrum-global-dimension-size-2500:200px;--spectrum-global-dimension-size-3000:240px;--spectrum-global-dimension-size-3400:272px;--spectrum-global-dimension-size-3600:288px;--spectrum-global-dimension-size-4600:368px;--spectrum-global-dimension-size-5000:400px;--spectrum-global-dimension-size-6000:480px;--spectrum-global-dimension-font-size-25:10px;--spectrum-global-dimension-font-size-50:11px;--spectrum-global-dimension-font-size-75:12px;--spectrum-global-dimension-font-size-100:14px;--spectrum-global-dimension-font-size-150:15px;--spectrum-global-dimension-font-size-200:16px;--spectrum-global-dimension-font-size-300:18px;--spectrum-global-dimension-font-size-400:20px;--spectrum-global-dimension-font-size-500:22px;--spectrum-global-dimension-font-size-600:25px;--spectrum-global-dimension-font-size-700:28px;--spectrum-global-dimension-font-size-800:32px;--spectrum-global-dimension-font-size-900:36px;--spectrum-global-dimension-font-size-1000:40px;--spectrum-global-dimension-font-size-1100:45px;--spectrum-global-dimension-font-size-1200:50px;--spectrum-global-dimension-font-size-1300:60px;--spectrum-alias-item-text-padding-top-l:var(
         --spectrum-global-dimension-size-115
     );--spectrum-alias-item-text-padding-bottom-s:var(
         --spectrum-global-dimension-static-size-65
@@ -1564,7 +1818,9 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-125
     );--spectrum-alias-ui-icon-asterisk-size-300:var(
         --spectrum-global-dimension-static-size-125
-    );--spectrum-alias-avatar-size-100:var(--spectrum-global-dimension-size-250);--spectrum-alias-avatar-size-400:var(--spectrum-global-dimension-size-350);--spectrum-alias-avatar-size-600:var(--spectrum-global-dimension-size-450);--spectrum-dragthumb-swatch-width:var(
+    );--spectrum-alias-avatar-size-100:var(--spectrum-global-dimension-size-250);--spectrum-alias-avatar-size-400:var(--spectrum-global-dimension-size-350);--spectrum-alias-avatar-size-600:var(--spectrum-global-dimension-size-450);--spectrum-alias-tag-icon-size-l:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-dragthumb-swatch-width:var(
         --spectrum-global-dimension-static-size-150
     );--spectrum-dragthumb-swatch-height:var(
         --spectrum-global-dimension-static-size-200
@@ -5272,146 +5528,74 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-100
     );--spectrum-switch-xl-touch-hit-y:var(
         --spectrum-global-dimension-static-size-100
-    );--spectrum-tabs-s-quiet-emphasized-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-s-quiet-emphasized-margin-left:-7px;--spectrum-tabs-s-quiet-emphasized-margin-right:-7px;--spectrum-tabs-s-quiet-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-quiet-focus-ring-border-radius:5px;--spectrum-tabs-s-quiet-margin-left:-7px;--spectrum-tabs-s-quiet-margin-right:-7px;--spectrum-tabs-s-emphasized-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-s-emphasized-margin-left:-7px;--spectrum-tabs-s-emphasized-margin-right:-7px;--spectrum-tabs-s-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-focus-ring-border-radius:5px;--spectrum-tabs-s-margin-left:-7px;--spectrum-tabs-s-margin-right:-7px;--spectrum-tabs-s-vertical-quiet-emphasized-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-vertical-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-s-vertical-quiet-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-vertical-quiet-focus-ring-border-radius:5px;--spectrum-tabs-s-vertical-emphasized-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-vertical-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-s-vertical-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-vertical-focus-ring-border-radius:5px;--spectrum-tabs-s-compact-quiet-emphasized-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-compact-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-s-compact-quiet-emphasized-margin-left:-7px;--spectrum-tabs-s-compact-quiet-emphasized-margin-right:-7px;--spectrum-tabs-s-compact-quiet-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-compact-quiet-focus-ring-border-radius:5px;--spectrum-tabs-s-compact-quiet-margin-left:-7px;--spectrum-tabs-s-compact-quiet-margin-right:-7px;--spectrum-tabs-s-compact-emphasized-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-compact-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-s-compact-emphasized-margin-left:-7px;--spectrum-tabs-s-compact-emphasized-margin-right:-7px;--spectrum-tabs-s-compact-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-compact-focus-ring-border-radius:5px;--spectrum-tabs-s-compact-margin-left:-7px;--spectrum-tabs-s-compact-margin-right:-7px;--spectrum-tabs-s-compact-vertical-quiet-emphasized-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-compact-vertical-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-s-compact-vertical-quiet-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-compact-vertical-quiet-focus-ring-border-radius:5px;--spectrum-tabs-s-compact-vertical-emphasized-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-compact-vertical-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-s-compact-vertical-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tabs-s-compact-vertical-focus-ring-border-radius:5px;--spectrum-tabs-m-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-m-quiet-emphasized-margin-left:-8px;--spectrum-tabs-m-quiet-emphasized-margin-right:-8px;--spectrum-tabs-m-quiet-focus-ring-border-radius:5px;--spectrum-tabs-m-quiet-margin-left:-8px;--spectrum-tabs-m-quiet-margin-right:-8px;--spectrum-tabs-m-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-m-emphasized-margin-left:-8px;--spectrum-tabs-m-emphasized-margin-right:-8px;--spectrum-tabs-m-focus-ring-border-radius:5px;--spectrum-tabs-m-margin-left:-8px;--spectrum-tabs-m-margin-right:-8px;--spectrum-tabs-m-vertical-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-m-vertical-quiet-focus-ring-border-radius:5px;--spectrum-tabs-m-vertical-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-m-vertical-focus-ring-border-radius:5px;--spectrum-tabs-m-compact-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-m-compact-quiet-emphasized-margin-left:-8px;--spectrum-tabs-m-compact-quiet-emphasized-margin-right:-8px;--spectrum-tabs-m-compact-quiet-focus-ring-border-radius:5px;--spectrum-tabs-m-compact-quiet-margin-left:-8px;--spectrum-tabs-m-compact-quiet-margin-right:-8px;--spectrum-tabs-m-compact-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-m-compact-emphasized-margin-left:-8px;--spectrum-tabs-m-compact-emphasized-margin-right:-8px;--spectrum-tabs-m-compact-focus-ring-border-radius:5px;--spectrum-tabs-m-compact-margin-left:-8px;--spectrum-tabs-m-compact-margin-right:-8px;--spectrum-tabs-m-compact-vertical-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-m-compact-vertical-quiet-focus-ring-border-radius:5px;--spectrum-tabs-m-compact-vertical-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-m-compact-vertical-focus-ring-border-radius:5px;--spectrum-tabs-l-quiet-emphasized-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-quiet-emphasized-icon-size:var(
+    );--spectrum-tabs-s-quiet-emphasized-texticon-margin-left:-7px;--spectrum-tabs-s-quiet-emphasized-texticon-margin-right:-7px;--spectrum-tabs-s-quiet-emphasized-textonly-margin-left:-7px;--spectrum-tabs-s-quiet-emphasized-textonly-margin-right:-7px;--spectrum-tabs-s-quiet-texticon-margin-left:-7px;--spectrum-tabs-s-quiet-texticon-margin-right:-7px;--spectrum-tabs-s-quiet-textonly-margin-left:-7px;--spectrum-tabs-s-quiet-textonly-margin-right:-7px;--spectrum-tabs-s-emphasized-texticon-margin-left:-7px;--spectrum-tabs-s-emphasized-texticon-margin-right:-7px;--spectrum-tabs-s-emphasized-textonly-margin-left:-7px;--spectrum-tabs-s-emphasized-textonly-margin-right:-7px;--spectrum-tabs-s-texticon-margin-left:-7px;--spectrum-tabs-s-texticon-margin-right:-7px;--spectrum-tabs-s-textonly-margin-left:-7px;--spectrum-tabs-s-textonly-margin-right:-7px;--spectrum-tabs-s-compact-quiet-emphasized-texticon-margin-left:-7px;--spectrum-tabs-s-compact-quiet-emphasized-texticon-margin-right:-7px;--spectrum-tabs-s-compact-quiet-emphasized-textonly-margin-left:-7px;--spectrum-tabs-s-compact-quiet-emphasized-textonly-margin-right:-7px;--spectrum-tabs-s-compact-quiet-texticon-margin-left:-7px;--spectrum-tabs-s-compact-quiet-texticon-margin-right:-7px;--spectrum-tabs-s-compact-quiet-textonly-margin-left:-7px;--spectrum-tabs-s-compact-quiet-textonly-margin-right:-7px;--spectrum-tabs-s-compact-emphasized-texticon-margin-left:-7px;--spectrum-tabs-s-compact-emphasized-texticon-margin-right:-7px;--spectrum-tabs-s-compact-emphasized-textonly-margin-left:-7px;--spectrum-tabs-s-compact-emphasized-textonly-margin-right:-7px;--spectrum-tabs-s-compact-texticon-margin-left:-7px;--spectrum-tabs-s-compact-texticon-margin-right:-7px;--spectrum-tabs-s-compact-textonly-margin-left:-7px;--spectrum-tabs-s-compact-textonly-margin-right:-7px;--spectrum-tabs-m-quiet-emphasized-texticon-margin-left:-8px;--spectrum-tabs-m-quiet-emphasized-texticon-margin-right:-8px;--spectrum-tabs-m-quiet-emphasized-textonly-margin-left:-8px;--spectrum-tabs-m-quiet-emphasized-textonly-margin-right:-8px;--spectrum-tabs-m-quiet-texticon-margin-left:-8px;--spectrum-tabs-m-quiet-texticon-margin-right:-8px;--spectrum-tabs-m-quiet-textonly-margin-left:-8px;--spectrum-tabs-m-quiet-textonly-margin-right:-8px;--spectrum-tabs-m-emphasized-texticon-margin-left:-8px;--spectrum-tabs-m-emphasized-texticon-margin-right:-8px;--spectrum-tabs-m-emphasized-textonly-margin-left:-8px;--spectrum-tabs-m-emphasized-textonly-margin-right:-8px;--spectrum-tabs-m-texticon-margin-left:-8px;--spectrum-tabs-m-texticon-margin-right:-8px;--spectrum-tabs-m-textonly-margin-left:-8px;--spectrum-tabs-m-textonly-margin-right:-8px;--spectrum-tabs-m-compact-quiet-emphasized-texticon-margin-left:-8px;--spectrum-tabs-m-compact-quiet-emphasized-texticon-margin-right:-8px;--spectrum-tabs-m-compact-quiet-emphasized-textonly-margin-left:-8px;--spectrum-tabs-m-compact-quiet-emphasized-textonly-margin-right:-8px;--spectrum-tabs-m-compact-quiet-texticon-margin-left:-8px;--spectrum-tabs-m-compact-quiet-texticon-margin-right:-8px;--spectrum-tabs-m-compact-quiet-textonly-margin-left:-8px;--spectrum-tabs-m-compact-quiet-textonly-margin-right:-8px;--spectrum-tabs-m-compact-emphasized-texticon-margin-left:-8px;--spectrum-tabs-m-compact-emphasized-texticon-margin-right:-8px;--spectrum-tabs-m-compact-emphasized-textonly-margin-left:-8px;--spectrum-tabs-m-compact-emphasized-textonly-margin-right:-8px;--spectrum-tabs-m-compact-texticon-margin-left:-8px;--spectrum-tabs-m-compact-texticon-margin-right:-8px;--spectrum-tabs-m-compact-textonly-margin-left:-8px;--spectrum-tabs-m-compact-textonly-margin-right:-8px;--spectrum-tabs-l-quiet-emphasized-texticon-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-l-quiet-emphasized-margin-left:-9px;--spectrum-tabs-l-quiet-emphasized-margin-right:-9px;--spectrum-tabs-l-quiet-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-quiet-icon-size:var(
+    );--spectrum-tabs-l-quiet-emphasized-texticon-margin-left:-9px;--spectrum-tabs-l-quiet-emphasized-texticon-margin-right:-9px;--spectrum-tabs-l-quiet-emphasized-textonly-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-quiet-focus-ring-border-radius:5px;--spectrum-tabs-l-quiet-margin-left:-9px;--spectrum-tabs-l-quiet-margin-right:-9px;--spectrum-tabs-l-emphasized-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-emphasized-icon-size:var(
+    );--spectrum-tabs-l-quiet-emphasized-textonly-margin-left:-9px;--spectrum-tabs-l-quiet-emphasized-textonly-margin-right:-9px;--spectrum-tabs-l-quiet-texticon-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-l-emphasized-margin-left:-9px;--spectrum-tabs-l-emphasized-margin-right:-9px;--spectrum-tabs-l-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-icon-size:var(
+    );--spectrum-tabs-l-quiet-texticon-margin-left:-9px;--spectrum-tabs-l-quiet-texticon-margin-right:-9px;--spectrum-tabs-l-quiet-textonly-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-focus-ring-border-radius:5px;--spectrum-tabs-l-margin-left:-9px;--spectrum-tabs-l-margin-right:-9px;--spectrum-tabs-l-vertical-quiet-emphasized-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-vertical-quiet-emphasized-icon-size:var(
+    );--spectrum-tabs-l-quiet-textonly-margin-left:-9px;--spectrum-tabs-l-quiet-textonly-margin-right:-9px;--spectrum-tabs-l-emphasized-texticon-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-vertical-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-l-vertical-quiet-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-vertical-quiet-icon-size:var(
+    );--spectrum-tabs-l-emphasized-texticon-margin-left:-9px;--spectrum-tabs-l-emphasized-texticon-margin-right:-9px;--spectrum-tabs-l-emphasized-textonly-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-vertical-quiet-focus-ring-border-radius:5px;--spectrum-tabs-l-vertical-emphasized-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-vertical-emphasized-icon-size:var(
+    );--spectrum-tabs-l-emphasized-textonly-margin-left:-9px;--spectrum-tabs-l-emphasized-textonly-margin-right:-9px;--spectrum-tabs-l-texticon-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-vertical-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-l-vertical-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-vertical-icon-size:var(
+    );--spectrum-tabs-l-texticon-margin-left:-9px;--spectrum-tabs-l-texticon-margin-right:-9px;--spectrum-tabs-l-textonly-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-vertical-focus-ring-border-radius:5px;--spectrum-tabs-l-compact-quiet-emphasized-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-compact-quiet-emphasized-icon-size:var(
+    );--spectrum-tabs-l-textonly-margin-left:-9px;--spectrum-tabs-l-textonly-margin-right:-9px;--spectrum-tabs-l-vertical-quiet-emphasized-texticon-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-compact-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-l-compact-quiet-emphasized-margin-left:-9px;--spectrum-tabs-l-compact-quiet-emphasized-margin-right:-9px;--spectrum-tabs-l-compact-quiet-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-compact-quiet-icon-size:var(
+    );--spectrum-tabs-l-vertical-quiet-emphasized-textonly-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-compact-quiet-focus-ring-border-radius:5px;--spectrum-tabs-l-compact-quiet-margin-left:-9px;--spectrum-tabs-l-compact-quiet-margin-right:-9px;--spectrum-tabs-l-compact-emphasized-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-compact-emphasized-icon-size:var(
+    );--spectrum-tabs-l-vertical-quiet-texticon-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-compact-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-l-compact-emphasized-margin-left:-9px;--spectrum-tabs-l-compact-emphasized-margin-right:-9px;--spectrum-tabs-l-compact-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-compact-icon-size:var(
+    );--spectrum-tabs-l-vertical-quiet-textonly-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-compact-focus-ring-border-radius:5px;--spectrum-tabs-l-compact-margin-left:-9px;--spectrum-tabs-l-compact-margin-right:-9px;--spectrum-tabs-l-compact-vertical-quiet-emphasized-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-compact-vertical-quiet-emphasized-icon-size:var(
+    );--spectrum-tabs-l-vertical-emphasized-texticon-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-compact-vertical-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-l-compact-vertical-quiet-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-compact-vertical-quiet-icon-size:var(
+    );--spectrum-tabs-l-vertical-emphasized-textonly-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-compact-vertical-quiet-focus-ring-border-radius:5px;--spectrum-tabs-l-compact-vertical-emphasized-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-compact-vertical-emphasized-icon-size:var(
+    );--spectrum-tabs-l-vertical-texticon-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-compact-vertical-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-l-compact-vertical-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tabs-l-compact-vertical-icon-size:var(
+    );--spectrum-tabs-l-vertical-textonly-tabitem-icon-size:var(
         --spectrum-global-dimension-static-size-250
-    );--spectrum-tabs-l-compact-vertical-focus-ring-border-radius:5px;--spectrum-tabs-xl-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-quiet-emphasized-margin-left:-10px;--spectrum-tabs-xl-quiet-emphasized-margin-right:-10px;--spectrum-tabs-xl-quiet-focus-ring-border-radius:5px;--spectrum-tabs-xl-quiet-margin-left:-10px;--spectrum-tabs-xl-quiet-margin-right:-10px;--spectrum-tabs-xl-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-emphasized-margin-left:-10px;--spectrum-tabs-xl-emphasized-margin-right:-10px;--spectrum-tabs-xl-focus-ring-border-radius:5px;--spectrum-tabs-xl-margin-left:-10px;--spectrum-tabs-xl-margin-right:-10px;--spectrum-tabs-xl-vertical-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-vertical-quiet-focus-ring-border-radius:5px;--spectrum-tabs-xl-vertical-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-vertical-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-quiet-emphasized-margin-left:-10px;--spectrum-tabs-xl-compact-quiet-emphasized-margin-right:-10px;--spectrum-tabs-xl-compact-quiet-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-quiet-margin-left:-10px;--spectrum-tabs-xl-compact-quiet-margin-right:-10px;--spectrum-tabs-xl-compact-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-emphasized-margin-left:-10px;--spectrum-tabs-xl-compact-emphasized-margin-right:-10px;--spectrum-tabs-xl-compact-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-margin-left:-10px;--spectrum-tabs-xl-compact-margin-right:-10px;--spectrum-tabs-xl-compact-vertical-quiet-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-vertical-quiet-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-vertical-emphasized-focus-ring-border-radius:5px;--spectrum-tabs-xl-compact-vertical-focus-ring-border-radius:5px;--spectrum-tag-s-removable-texticon-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tag-s-texticon-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tag-s-removable-textonly-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tag-s-textonly-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tag-s-removable-avatartext-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tag-s-avatartext-text-padding-bottom:var(
-        --spectrum-global-dimension-static-size-65
-    );--spectrum-tag-m-removable-texticon-padding-left:var(
+    );--spectrum-tabs-l-compact-quiet-emphasized-texticon-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-quiet-emphasized-texticon-margin-left:-9px;--spectrum-tabs-l-compact-quiet-emphasized-texticon-margin-right:-9px;--spectrum-tabs-l-compact-quiet-emphasized-textonly-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-quiet-emphasized-textonly-margin-left:-9px;--spectrum-tabs-l-compact-quiet-emphasized-textonly-margin-right:-9px;--spectrum-tabs-l-compact-quiet-texticon-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-quiet-texticon-margin-left:-9px;--spectrum-tabs-l-compact-quiet-texticon-margin-right:-9px;--spectrum-tabs-l-compact-quiet-textonly-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-quiet-textonly-margin-left:-9px;--spectrum-tabs-l-compact-quiet-textonly-margin-right:-9px;--spectrum-tabs-l-compact-emphasized-texticon-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-emphasized-texticon-margin-left:-9px;--spectrum-tabs-l-compact-emphasized-texticon-margin-right:-9px;--spectrum-tabs-l-compact-emphasized-textonly-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-emphasized-textonly-margin-left:-9px;--spectrum-tabs-l-compact-emphasized-textonly-margin-right:-9px;--spectrum-tabs-l-compact-texticon-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-texticon-margin-left:-9px;--spectrum-tabs-l-compact-texticon-margin-right:-9px;--spectrum-tabs-l-compact-textonly-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-textonly-margin-left:-9px;--spectrum-tabs-l-compact-textonly-margin-right:-9px;--spectrum-tabs-l-compact-vertical-quiet-emphasized-texticon-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-vertical-quiet-emphasized-textonly-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-vertical-quiet-texticon-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-vertical-quiet-textonly-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-vertical-emphasized-texticon-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-vertical-emphasized-textonly-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-vertical-texticon-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-l-compact-vertical-textonly-tabitem-icon-size:var(
+        --spectrum-global-dimension-static-size-250
+    );--spectrum-tabs-xl-quiet-emphasized-texticon-margin-left:-10px;--spectrum-tabs-xl-quiet-emphasized-texticon-margin-right:-10px;--spectrum-tabs-xl-quiet-emphasized-textonly-margin-left:-10px;--spectrum-tabs-xl-quiet-emphasized-textonly-margin-right:-10px;--spectrum-tabs-xl-quiet-texticon-margin-left:-10px;--spectrum-tabs-xl-quiet-texticon-margin-right:-10px;--spectrum-tabs-xl-quiet-textonly-margin-left:-10px;--spectrum-tabs-xl-quiet-textonly-margin-right:-10px;--spectrum-tabs-xl-emphasized-texticon-margin-left:-10px;--spectrum-tabs-xl-emphasized-texticon-margin-right:-10px;--spectrum-tabs-xl-emphasized-textonly-margin-left:-10px;--spectrum-tabs-xl-emphasized-textonly-margin-right:-10px;--spectrum-tabs-xl-texticon-margin-left:-10px;--spectrum-tabs-xl-texticon-margin-right:-10px;--spectrum-tabs-xl-textonly-margin-left:-10px;--spectrum-tabs-xl-textonly-margin-right:-10px;--spectrum-tabs-xl-compact-quiet-emphasized-texticon-margin-left:-10px;--spectrum-tabs-xl-compact-quiet-emphasized-texticon-margin-right:-10px;--spectrum-tabs-xl-compact-quiet-emphasized-textonly-margin-left:-10px;--spectrum-tabs-xl-compact-quiet-emphasized-textonly-margin-right:-10px;--spectrum-tabs-xl-compact-quiet-texticon-margin-left:-10px;--spectrum-tabs-xl-compact-quiet-texticon-margin-right:-10px;--spectrum-tabs-xl-compact-quiet-textonly-margin-left:-10px;--spectrum-tabs-xl-compact-quiet-textonly-margin-right:-10px;--spectrum-tabs-xl-compact-emphasized-texticon-margin-left:-10px;--spectrum-tabs-xl-compact-emphasized-texticon-margin-right:-10px;--spectrum-tabs-xl-compact-emphasized-textonly-margin-left:-10px;--spectrum-tabs-xl-compact-emphasized-textonly-margin-right:-10px;--spectrum-tabs-xl-compact-texticon-margin-left:-10px;--spectrum-tabs-xl-compact-texticon-margin-right:-10px;--spectrum-tabs-xl-compact-textonly-margin-left:-10px;--spectrum-tabs-xl-compact-textonly-margin-right:-10px;--spectrum-tag-m-removable-texticon-padding-left:var(
         --spectrum-global-dimension-size-125
     );--spectrum-tag-m-texticon-padding-left:var(
         --spectrum-global-dimension-size-125
-    );--spectrum-tag-m-removable-avatartext-padding-left:var(
-        --spectrum-global-dimension-size-125
-    );--spectrum-tag-m-avatartext-padding-left:var(
-        --spectrum-global-dimension-size-125
-    );--spectrum-tag-l-removable-texticon-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tag-l-removable-texticon-icon-size:var(
-        --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-texticon-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tag-l-texticon-icon-size:var(
-        --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-removable-textonly-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tag-l-removable-textonly-icon-size:var(
-        --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-textonly-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tag-l-textonly-icon-size:var(
-        --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-removable-avatartext-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tag-l-removable-avatartext-icon-size:var(
-        --spectrum-global-dimension-static-size-250
-    );--spectrum-tag-l-avatartext-text-padding-top:var(
-        --spectrum-global-dimension-size-115
-    );--spectrum-tag-l-avatartext-icon-size:var(
-        --spectrum-global-dimension-static-size-250
     );--spectrum-textarea-s-multiline-quiet-text-padding-bottom:var(
         --spectrum-global-dimension-static-size-65
     );--spectrum-textarea-s-multiline-quiet-placeholder-padding-bottom:var(
