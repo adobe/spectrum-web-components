@@ -78,3 +78,36 @@ governing permissions and limitations under the License.
 #item-label[hidden] {
     display: none;
 }
+
+@media (forced-colors: active) {
+    :host:before {
+        background-color: ButtonFace;
+    }
+
+    :host ::slotted([slot='icon']) {
+        z-index: 1;
+        position: relative;
+    }
+
+    #item-label {
+        position: relative;
+        z-index: 1;
+    }
+
+    :host([selected]) {
+        color: HighlightText;
+    }
+
+    :host([selected]) ::slotted([slot='icon']) {
+        color: HighlightText;
+    }
+
+    :host([selected]):before {
+        background-color: Highlight;
+        color: HighlightText;
+    }
+
+    :host([selected]) #item-label {
+        color: HighlightText;
+    }
+}
