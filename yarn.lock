@@ -4803,6 +4803,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/clearbutton/-/clearbutton-1.2.3.tgz#00c9ef3e829c632beff772f341872170fbbf6117"
   integrity sha512-MGuY5MTaZLX8ihL8/rAOZrJ87RvHYS1d5a4jkjHx8J9/qo1nye3RJ4XuAYQ0/vWdkmxLiKa2pZark92q2OILow==
 
+"@spectrum-css/closebutton@^1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/closebutton/-/closebutton-1.2.3.tgz#d97f1445286b78e292b95d0f50370e9dfabd48f1"
+  integrity sha512-dXnsKhMDqHKIe+dhlTCxtvAxSd2NaUZpNSWVHpi0dfwZoOoOW/dsayxAys+VAqaqc6a71tfBQw3VX+iG9Gyqng==
+
 "@spectrum-css/coachmark@^5.0.4":
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-5.0.4.tgz#8b78c0e91377e7a9c99233c224d50ba4d68274f7"
