@@ -52,7 +52,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     margin-top: -2px;
     padding: 0;
 }
-:host(:disabled) {
+:host([disabled]) {
     cursor: default; /* .spectrum-ClearButton:disabled */
 }
 :host {
@@ -318,7 +318,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-clearbutton-fill-uiicon-color-key-focus
     ); /* .spectrum-ClearButton.focus-ring */
 }
-:host(:disabled),
+:host([disabled]),
 :host([disabled]) {
     color: var(
         --spectrum-clearbutton-fill-uiicon-color-disabled
@@ -345,7 +345,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-clearbutton-fill-background-color-key-focus
     ); /* .spectrum-ClearButton.focus-ring .spectrum-ClearButton-fill */
 }
-:host(:disabled) .fill,
+:host([disabled]) .fill,
 :host([disabled]) .fill {
     background-color: var(
         --spectrum-clearbutton-fill-background-color-disabled
@@ -382,7 +382,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     ); /* .spectrum-ClearButton--overBackground.focus-ring */
 }
-:host([variant='overBackground']:disabled),
+:host([variant='overBackground'][disabled]),
 :host([variant='overBackground'][disabled]) .fill {
     background-color: var(
         --spectrum-alias-icon-color-overbackground-disabled,
@@ -484,7 +484,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-global-color-static-white)
     );
 }
-:host([variant='overBackground']:disabled),
+:host([variant='overBackground'][disabled]),
 :host([variant='overBackground'][disabled]) {
     background-color: var(
         --spectrum-button-m-primary-outline-white-texticon-background-color-disabled,

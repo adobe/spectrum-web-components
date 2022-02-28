@@ -43,7 +43,7 @@ const processCSSData = async (data, identifier) => {
     if (data.indexOf(selector1) >= 0) {
         result = result.replace(selector1, shadowSelector);
     } else if (data.indexOf(selector2) >= 0) {
-        result = result.replace(selector2, shadowSelector);
+        result = result.replace(/\.spectrum /g, shadowSelector);
         result = result.replace(
             `.spectrum--medium,
 .spectrum--large`,

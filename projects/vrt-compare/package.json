@@ -52,6 +52,7 @@
         "@spectrum-web-components/shared": "^0.13.4",
         "@spectrum-web-components/split-view": "^0.4.3",
         "@spectrum-web-components/styles": "^0.11.4",
+        "@spectrum-web-components/theme": "^0.9.4",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

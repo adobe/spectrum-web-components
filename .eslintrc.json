@@ -55,7 +55,7 @@
     "extends": ["plugin:prettier/recommended", "plugin:lit-a11y/recommended"],
     "overrides": [
         {
-            "files": ["tasks/*"],
+            "files": ["tasks/*", "scripts/*"],
             "rules": {
                 "no-console": ["off"]
             }

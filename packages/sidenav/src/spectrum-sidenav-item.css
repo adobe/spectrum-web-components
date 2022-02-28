@@ -74,8 +74,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #item-link:before {
     border: var(
-            --spectrum-tabs-m-focus-ring-size,
-            var(--spectrum-alias-border-size-thick)
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
         )
         solid transparent;
     border-radius: var(

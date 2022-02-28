@@ -54,7 +54,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/accordion": "^3.0.12"
+        "@spectrum-css/accordion": "^3.0.15"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

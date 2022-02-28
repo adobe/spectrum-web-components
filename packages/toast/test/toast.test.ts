@@ -20,7 +20,7 @@ import {
     nextFrame,
     waitUntil,
 } from '@open-wc/testing';
-import { ClearButton } from '@spectrum-web-components/button';
+import { CloseButton } from '@spectrum-web-components/button';
 import { waitForPredicate } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 
@@ -157,10 +157,10 @@ describe('Toast', () => {
         expect(el.open).to.be.true;
 
         const renderRoot = el.shadowRoot ? el.shadowRoot : el;
-        const clearButton = renderRoot.querySelector(
-            'sp-clear-button'
-        ) as ClearButton;
-        clearButton.click();
+        const closeButton = renderRoot.querySelector(
+            'sp-close-button'
+        ) as CloseButton;
+        closeButton.click();
 
         await elementUpdated(el);
         expect(el.open).to.be.false;
@@ -180,10 +180,10 @@ describe('Toast', () => {
         expect(el.open).to.be.true;
 
         const renderRoot = el.shadowRoot ? el.shadowRoot : el;
-        const clearButton = renderRoot.querySelector(
-            'sp-clear-button'
-        ) as ClearButton;
-        clearButton.click();
+        const closeButton = renderRoot.querySelector(
+            'sp-close-button'
+        ) as CloseButton;
+        closeButton.click();
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -207,10 +207,10 @@ describe('Toast', () => {
         expect(closeSpy.callCount).to.equal(0);
 
         const renderRoot = el.shadowRoot ? el.shadowRoot : el;
-        const clearButton = renderRoot.querySelector(
-            'sp-clear-button'
-        ) as ClearButton;
-        clearButton.click();
+        const closeButton = renderRoot.querySelector(
+            'sp-close-button'
+        ) as CloseButton;
+        closeButton.click();
 
         await elementUpdated(el);
         expect(el.open).to.be.true;
@@ -284,7 +284,7 @@ describe('Toast', () => {
         expect(el.open).to.be.true;
 
         const closeButton = el.shadowRoot.querySelector(
-            'sp-clear-button'
+            'sp-close-button'
         ) as HTMLElement;
         closeButton.click();
 

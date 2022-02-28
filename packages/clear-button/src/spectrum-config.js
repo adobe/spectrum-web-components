@@ -20,11 +20,6 @@ const config = {
             },
             attributes: [
                 {
-                    selector: '.spectrum-ClearButton--small',
-                    type: 'boolean',
-                    name: 'small',
-                },
-                {
                     type: 'boolean',
                     selector: ':active',
                     name: 'active',
@@ -32,6 +27,11 @@ const config = {
                 {
                     type: 'boolean',
                     selector: '.is-disabled',
+                    name: 'disabled',
+                },
+                {
+                    type: 'boolean',
+                    selector: ':disabled',
                     name: 'disabled',
                 },
                 {

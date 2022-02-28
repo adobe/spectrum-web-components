@@ -22,6 +22,33 @@ import buttonStyles from '@spectrum-web-components/clear-button/src/clear-button
 import '@spectrum-web-components/icons-ui/icons/sp-icon-cross75.js';
 import crossMediumStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
 
+const crossIcon: Record<string, () => TemplateResult> = {
+    s: () => html`
+        <sp-icon-cross75
+            slot="icon"
+            class="icon spectrum-UIIcon-Cross75"
+        ></sp-icon-cross75>
+    `,
+    m: () => html`
+        <sp-icon-cross100
+            slot="icon"
+            class="icon spectrum-UIIcon-Cross100"
+        ></sp-icon-cross100>
+    `,
+    l: () => html`
+        <sp-icon-cross200
+            slot="icon"
+            class="icon spectrum-UIIcon-Cross200"
+        ></sp-icon-cross200>
+    `,
+    xl: () => html`
+        <sp-icon-cross300
+            slot="icon"
+            class="icon spectrum-UIIcon-Cross300"
+        ></sp-icon-cross300>
+    `,
+};
+
 /**
  * @element sp-clear-button
  *
@@ -40,14 +67,7 @@ export class ClearButton extends SizedMixin(StyledButton) {
     public variant: 'overBackground' | '' = '';
 
     protected get buttonContent(): TemplateResult[] {
-        return [
-            html`
-                <sp-icon-cross75
-                    slot="icon"
-                    class="icon spectrum-UIIcon-Cross75"
-                ></sp-icon-cross75>
-            `,
-        ];
+        return [crossIcon[this.size]()];
     }
 
     protected render(): TemplateResult {
