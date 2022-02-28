@@ -14,6 +14,12 @@ governing permissions and limitations under the License.
 
 :host {
     display: grid;
+
+    --spectrum-tabs-emphasized-textonly-divider-background-color: transparent;
+    --spectrum-tabs-quiet-textonly-divider-background-color: transparent;
+    --spectrum-tabs-textonly-divider-background-color: transparent;
+    --spectrum-tabs-vertical-quiet-textonly-divider-background-color: transparent;
+    --spectrum-tabs-vertical-textonly-divider-background-color: transparent;
 }
 
 :host([direction^='vertical']) {
