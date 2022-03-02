@@ -39,8 +39,8 @@ governing permissions and limitations under the License.
     position: absolute;
     display: inline-block;
     pointer-events: none;
-    top: 0;
-    left: 0;
+    top: -9999em;
+    left: -9999em;
 }
 
 :host(:focus) {
@@ -52,6 +52,8 @@ governing permissions and limitations under the License.
     height: 100vh;
     height: fill-available;
     max-height: var(--swc-visual-viewport-height);
+    top: 0;
+    left: 0;
 }
 
 sp-theme,
