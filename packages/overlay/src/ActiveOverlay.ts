@@ -432,8 +432,9 @@ export class ActiveOverlay extends SpectrumElement {
         );
 
         Object.assign(this.style, {
-            left: `${roundByDPR(x)}px`,
-            top: `${roundByDPR(y)}px`,
+            top: '0px',
+            left: '0px',
+            transform: `translate(${roundByDPR(x)}px, ${roundByDPR(y)}px)`,
         });
 
         if (placement !== this.getAttribute('actual-placement')) {
