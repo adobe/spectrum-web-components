@@ -113,6 +113,8 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     static instanceCount = 0;
 
+    private isInSubmenu = false;
+
     @property({ type: Boolean, reflect: true })
     public active = false;
 
@@ -298,7 +300,14 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.hasSubmenu = this.open || !!assignedElements.length;
     }
 
-    private handleRemoveActive(): void {
+    private handleRemoveActive(event: Event): void {
+        if (
+            (event.type === 'pointerleave' && this.hasSubmenu) ||
+            this.hasSubmenu ||
+            this.open
+        ) {
+            return;
+        }
         this.active = false;
     }
 
@@ -334,7 +343,6 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     protected handlePointerleave(): void {
         if (this.hasSubmenu && this.open) {
-            this.active = true;
             this.leaveTimeout = setTimeout(() => {
                 delete this.leaveTimeout;
                 if (this.closeOverlay) this.closeOverlay(true);
@@ -350,7 +358,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
      * be closed.
      */
     protected handleSubmenuChange = (): void => {
-        this.click();
+        this.menuData.selectionRoot?.selectOrToggleItem(this);
     };
 
     protected handleSubmenuPointerenter = (): void => {
@@ -367,6 +375,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
             return;
         }
         this.open = true;
+        this.active = true;
         const submenu = (
             this.shadowRoot.querySelector(
                 'slot[name="submenu"]'
@@ -393,21 +402,32 @@ export class MenuItem extends LikeAnchor(Focusable) {
             delayed: !immediate && false,
         });
         let closing = false;
-        this.closeOverlay = async (leave = false): Promise<void> => {
+        const closeSubmenu = async (leave = false): Promise<void> => {
             delete this.closeOverlay;
-            this.active = false;
+            if (submenu.hasOpenSubmenu) {
+                await submenu.closeOpenSubmenu(leave);
+            }
             if (!leave) {
                 closing = true;
             }
             this.menuData.focusRoot?.submenuWillCloseOn(this);
             (await closeOverlay)();
         };
-        submenu.setCloseSelfAsSubmenu(this.closeOverlay);
+        this.closeOverlay = closeSubmenu;
+        if (this.menuData.focusRoot?.hasOpenSubmenu) {
+            this.menuData.focusRoot.closeOpenSubmenu(true);
+        }
+        const setup = (): void => {
+            submenu.setCloseSelfAsSubmenu(closeSubmenu);
+            this.menuData.focusRoot?.setCloseOpenSubmenu(closeSubmenu);
+        };
         const cleanup = (event: CustomEvent<OverlayOpenCloseDetail>): void => {
             event.stopPropagation();
             returnSubmenu();
-            submenu.setCloseSelfAsSubmenu();
+            submenu.setCloseSelfAsSubmenu(closeSubmenu);
+            this.menuData.focusRoot?.setCloseOpenSubmenu(closeSubmenu);
             this.open = false;
+            this.active = false;
             if (closing || event.detail.reason === 'external-click') {
                 this.menuData.focusRoot?.dispatchEvent(
                     new CustomEvent('close', {
@@ -418,6 +438,9 @@ export class MenuItem extends LikeAnchor(Focusable) {
                 );
             }
         };
+        this.addEventListener('sp-opened', setup as EventListener, {
+            once: true,
+        });
         this.addEventListener('sp-closed', cleanup as EventListener, {
             once: true,
         });
@@ -485,22 +508,30 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     public connectedCallback(): void {
         super.connectedCallback();
-        if (!this.closest('[slot="submenu"]')) {
-            addOrUpdateEvent.reset(this);
-            this.dispatchEvent(addOrUpdateEvent);
-            this._parentElement = this.parentElement as HTMLElement;
+        this.isInSubmenu = !!this.closest('[slot="submenu"]');
+        if (this.isInSubmenu) {
+            return;
         }
+        addOrUpdateEvent.reset(this);
+        this.dispatchEvent(addOrUpdateEvent);
+        this._parentElement = this.parentElement as HTMLElement;
     }
 
     _parentElement!: HTMLElement;
 
     public disconnectedCallback(): void {
         removeEvent.reset(this);
-        this._parentElement?.dispatchEvent(removeEvent);
+        if (!this.isInSubmenu) {
+            this._parentElement?.dispatchEvent(removeEvent);
+        }
+        this.isInSubmenu = false;
         super.disconnectedCallback();
     }
 
     public async triggerUpdate(): Promise<void> {
+        if (this.isInSubmenu) {
+            return;
+        }
         await new Promise((ready) => requestAnimationFrame(ready));
         addOrUpdateEvent.reset(this);
         this.dispatchEvent(addOrUpdateEvent);

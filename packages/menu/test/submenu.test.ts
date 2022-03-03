@@ -119,6 +119,125 @@ describe('Submenu', () => {
             .true;
         expect(submenuChanged.calledWith('Two'), 'submenu changed').to.be.true;
     });
+    it('closes deep tree on selection', async () => {
+        const rootChanged = spy();
+        const submenuChanged = spy();
+        const subSubmenuChanged = spy();
+        const el = await styledFixture<Menu>(
+            html`
+                <sp-menu
+                    @change=${(event: Event & { target: Menu }) => {
+                        rootChanged(event.target.value);
+                    }}
+                >
+                    <sp-menu-item class="root">
+                        Has submenu
+                        <sp-menu
+                            slot="submenu"
+                            @change=${(event: Event & { target: Menu }) => {
+                                submenuChanged(event.target.value);
+                            }}
+                        >
+                            <sp-menu-item class="submenu-item-1">
+                                One
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-2">
+                                Two
+                                <sp-menu
+                                    slot="submenu"
+                                    @change=${(
+                                        event: Event & { target: Menu }
+                                    ) => {
+                                        subSubmenuChanged(event.target.value);
+                                    }}
+                                >
+                                    <sp-menu-item class="sub-submenu-item-1">
+                                        A
+                                    </sp-menu-item>
+                                    <sp-menu-item class="sub-submenu-item-2">
+                                        B
+                                    </sp-menu-item>
+                                    <sp-menu-item class="sub-submenu-item-3">
+                                        C
+                                    </sp-menu-item>
+                                </sp-menu>
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-3">
+                                Three
+                            </sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-menu>
+            `
+        );
+
+        await elementUpdated(el);
+        const rootItem = el.querySelector('.root') as MenuItem;
+        const rootItemBoundingRect = rootItem.getBoundingClientRect();
+        expect(rootItem.open).to.be.false;
+
+        const opened = oneEvent(rootItem, 'sp-opened');
+        sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        rootItemBoundingRect.left +
+                            rootItemBoundingRect.width / 2,
+                        rootItemBoundingRect.top +
+                            rootItemBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+        await opened;
+
+        expect(rootItem.open).to.be.true;
+
+        const item2 = document.querySelector('.submenu-item-2') as MenuItem;
+        const item2BoundingRect = item2.getBoundingClientRect();
+
+        let closed = oneEvent(item2, 'sp-opened');
+        sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        item2BoundingRect.left + item2BoundingRect.width / 2,
+                        item2BoundingRect.top + item2BoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+        await closed;
+        await nextFrame();
+
+        expect(item2.open).to.be.true;
+
+        const itemC = document.querySelector('.sub-submenu-item-3') as MenuItem;
+        const itemCBoundingRect = itemC.getBoundingClientRect();
+
+        closed = oneEvent(rootItem, 'sp-closed');
+        sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [
+                        itemCBoundingRect.left + itemCBoundingRect.width / 2,
+                        itemCBoundingRect.top + itemCBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+        await closed;
+        await nextFrame();
+
+        expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
+            .true;
+        expect(submenuChanged.calledWith('Two'), 'submenu changed').to.be.true;
+        expect(subSubmenuChanged.calledWith('C'), 'sub submenu changed').to.be
+            .true;
+    });
     (
         [
             {

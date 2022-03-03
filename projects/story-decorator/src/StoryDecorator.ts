@@ -171,7 +171,7 @@ export class StoryDecorator extends SpectrumElement {
     @property({ type: String })
     public scale: Scale = window.__swc_hack_knobs__.defaultScale;
 
-    @property({ type: String })
+    @property({ type: String, reflect: true, attribute: 'dir' })
     public direction: 'ltr' | 'rtl' =
         window.__swc_hack_knobs__.defaultDirection;
 
@@ -216,6 +216,7 @@ export class StoryDecorator extends SpectrumElement {
                     dir =
                     window.__swc_hack_knobs__.defaultDirection =
                         value as 'ltr' | 'rtl';
+                document.documentElement.dir = dir;
                 break;
             case 'reduceMotion':
                 this.reduceMotion =
