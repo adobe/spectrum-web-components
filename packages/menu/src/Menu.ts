@@ -47,6 +47,11 @@ function elementIsOrContains(
     return !!isOrContains && (el === isOrContains || el.contains(isOrContains));
 }
 
+/* c8 ignore next 1 */
+const noop = (): void => {
+    return;
+};
+
 /**
  * Spectrum Menu Component
  * @element sp-menu
@@ -65,7 +70,26 @@ export class Menu extends SpectrumElement {
         return [menuStyles];
     }
 
-    public isSubmenu?: (leave?: boolean) => void;
+    public get closeSelfAsSubmenu(): (leave?: boolean) => void {
+        return this._closeSelfAsSubmenu;
+    }
+
+    public setCloseSelfAsSubmenu(cb?: (leave?: boolean) => void): void {
+        if (cb) {
+            this.isSubmenu = true;
+            this._closeSelfAsSubmenu = (leave?: boolean): void => {
+                this.isSubmenu = false;
+                cb(leave);
+            };
+            return;
+        }
+        this.isSubmenu = false;
+        this._closeSelfAsSubmenu = noop;
+    }
+
+    _closeSelfAsSubmenu = noop;
+
+    private isSubmenu = false;
 
     @property({ type: String, reflect: true })
     public label = '';
@@ -274,8 +298,9 @@ export class Menu extends SpectrumElement {
         }
     }
 
-    public submenuOpened(menuItem: MenuItem): void {
-        this.focusInItemIndex = this.childItems.indexOf(menuItem);
+    public submenuWillCloseOn(menuItem: MenuItem): void {
+        this.focusedItemIndex = this.childItems.indexOf(menuItem);
+        this.focusInItemIndex = this.focusedItemIndex;
     }
 
     private onClick(event: Event): void {
@@ -299,7 +324,7 @@ export class Menu extends SpectrumElement {
             event.preventDefault();
             this.selectOrToggleItem(target);
             if (this.isSubmenu) {
-                this.isSubmenu();
+                this.closeSelfAsSubmenu();
             }
         } else {
             return;
@@ -441,6 +466,38 @@ export class Menu extends SpectrumElement {
         }
     }
 
+    protected navigateWithinMenu(event: KeyboardEvent): void {
+        const { code } = event;
+        const lastFocusedItem = this.childItems[this.focusedItemIndex];
+        const direction = code === 'ArrowDown' ? 1 : -1;
+        const itemToFocus = this.focusMenuItemByOffset(direction);
+        if (itemToFocus === lastFocusedItem) {
+            return;
+        }
+        event.preventDefault();
+        itemToFocus.scrollIntoView({ block: 'nearest' });
+    }
+
+    protected navigateBetweenRelatedMenus(code: string): void {
+        const shouldOpenSubmenu =
+            (this.isLTR && code === 'ArrowRight') ||
+            (!this.isLTR && code === 'ArrowLeft');
+        const shouldCloseSelfAsSubmenu =
+            (this.isLTR && code === 'ArrowLeft') ||
+            (!this.isLTR && code === 'ArrowRight');
+        if (shouldOpenSubmenu) {
+            const lastFocusedItem = this.childItems[this.focusedItemIndex];
+            if (lastFocusedItem.hasSubmenu) {
+                // Remove focus while opening overlay from keyboard or the visible focus
+                // will slip back to the first item in the menu.
+                this.blur();
+                lastFocusedItem.openOverlay({ immediate: true });
+            }
+        } else if (this.isSubmenu && shouldCloseSelfAsSubmenu) {
+            this.closeSelfAsSubmenu(true);
+        }
+    }
+
     public handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
         if (code === 'Tab') {
@@ -452,36 +509,10 @@ export class Menu extends SpectrumElement {
             return;
         }
         if (code === 'ArrowDown' || code === 'ArrowUp') {
-            const lastFocusedItem = this.childItems[this.focusedItemIndex];
-            const direction = code === 'ArrowDown' ? 1 : -1;
-            const itemToFocus = this.focusMenuItemByOffset(direction);
-            if (itemToFocus === lastFocusedItem) {
-                return;
-            }
-            event.preventDefault();
-            itemToFocus.scrollIntoView({ block: 'nearest' });
+            this.navigateWithinMenu(event);
             return;
         }
-        if (
-            (this.isLTR && code === 'ArrowRight') ||
-            (!this.isLTR && code === 'ArrowLeft')
-        ) {
-            const lastFocusedItem = this.childItems[this.focusedItemIndex];
-            if (lastFocusedItem.hasSubmenu) {
-                if (lastFocusedItem.open) {
-                    lastFocusedItem.submenu?.focus();
-                } else {
-                    lastFocusedItem.openOverlay({ immediate: true });
-                }
-            }
-        } else if (
-            this.isSubmenu &&
-            ((this.isLTR && code === 'ArrowLeft') ||
-                (!this.isLTR && code === 'ArrowRight'))
-        ) {
-            this.isSubmenu(true);
-            delete this.isSubmenu;
-        }
+        this.navigateBetweenRelatedMenus(code);
     }
 
     public focusMenuItemByOffset(offset: number): MenuItem {
