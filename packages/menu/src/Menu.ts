@@ -47,7 +47,7 @@ function elementIsOrContains(
     return !!isOrContains && (el === isOrContains || el.contains(isOrContains));
 }
 
-/* c8 ignore next 1 */
+/* c8 ignore next 3 */
 const noop = (): void => {
     return;
 };
@@ -71,25 +71,42 @@ export class Menu extends SpectrumElement {
     }
 
     public get closeSelfAsSubmenu(): (leave?: boolean) => void {
+        this.isSubmenu = false;
         return this._closeSelfAsSubmenu;
     }
 
-    public setCloseSelfAsSubmenu(cb?: (leave?: boolean) => void): void {
-        if (cb) {
-            this.isSubmenu = true;
-            this._closeSelfAsSubmenu = (leave?: boolean): void => {
-                this.isSubmenu = false;
-                cb(leave);
-            };
+    public setCloseSelfAsSubmenu(cb: (leave?: boolean) => void): void {
+        if (cb === this._closeSelfAsSubmenu) {
+            this.isSubmenu = false;
+            this._closeSelfAsSubmenu = noop;
             return;
         }
-        this.isSubmenu = false;
-        this._closeSelfAsSubmenu = noop;
+        this.isSubmenu = true;
+        this._closeSelfAsSubmenu = cb;
     }
 
     _closeSelfAsSubmenu = noop;
 
-    private isSubmenu = false;
+    public isSubmenu = false;
+
+    public get closeOpenSubmenu(): (leave?: boolean) => void {
+        this.hasOpenSubmenu = false;
+        return this._closeOpenSubmenu;
+    }
+
+    public setCloseOpenSubmenu(cb: (leave?: boolean) => void): void {
+        if (cb === this._closeOpenSubmenu) {
+            this.hasOpenSubmenu = false;
+            this._closeOpenSubmenu = noop;
+            return;
+        }
+        this.hasOpenSubmenu = true;
+        this._closeOpenSubmenu = cb;
+    }
+
+    _closeOpenSubmenu = noop;
+
+    public hasOpenSubmenu = false;
 
     @property({ type: String, reflect: true })
     public label = '';
@@ -322,10 +339,16 @@ export class Menu extends SpectrumElement {
             this.childItems.length
         ) {
             event.preventDefault();
-            this.selectOrToggleItem(target);
+            if (target.hasSubmenu || target.open) {
+                return;
+            }
+            if (this.hasOpenSubmenu) {
+                this.closeOpenSubmenu();
+            }
             if (this.isSubmenu) {
                 this.closeSelfAsSubmenu();
             }
+            this.selectOrToggleItem(target);
         } else {
             return;
         }
@@ -503,6 +526,16 @@ export class Menu extends SpectrumElement {
         if (code === 'Tab') {
             this.prepareToCleanUp();
             return;
+        }
+        if (code === 'Space') {
+            const lastFocusedItem = this.childItems[this.focusedItemIndex];
+            if (lastFocusedItem.hasSubmenu) {
+                // Remove focus while opening overlay from keyboard or the visible focus
+                // will slip back to the first item in the menu.
+                this.blur();
+                lastFocusedItem.openOverlay({ immediate: true });
+                return;
+            }
         }
         if (code === 'Space' || code === 'Enter') {
             this.childItems[this.focusedItemIndex]?.click();
