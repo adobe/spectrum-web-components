@@ -316,8 +316,8 @@ export class OverlayStack {
         ) => {
             this.hideAndCloseOverlay(
                 activeOverlay,
-                true,
-                !!event.detail?.reason
+                true, // animated?
+                !!event.detail?.reason // clickAway?
             );
         }) as EventListener);
         switch (activeOverlay.interaction) {
