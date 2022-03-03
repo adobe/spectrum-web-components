@@ -207,21 +207,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/action-group/sp-action-group.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "sp-action-group",
-          "declaration": {
-            "name": "ActionGroup",
-            "module": "/packages/action-group/src/ActionGroup.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/action-button/sp-action-button.ts",
       "declarations": [],
       "exports": [
@@ -231,6 +216,21 @@
           "declaration": {
             "name": "ActionButton",
             "module": "/packages/action-button/src/ActionButton.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-group/sp-action-group.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "sp-action-group",
+          "declaration": {
+            "name": "ActionGroup",
+            "module": "/packages/action-group/src/ActionGroup.js"
           }
         }
       ]
@@ -1375,6 +1375,12 @@
     },
     {
       "kind": "javascript-module",
+      "path": "projects/example-project-rollup/src/example-app.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
       "path": "projects/example-project-webpack/src/styles.css.ts",
       "declarations": [
         {
@@ -1393,12 +1399,6 @@
           }
         }
       ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "projects/example-project-rollup/src/example-app.ts",
-      "declarations": [],
-      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -2971,406 +2971,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/action-group/src/ActionGroup.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ActionGroup",
-          "slots": [
-            {
-              "description": "the sp-action-button elements that make up the group",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "buttons",
-              "privacy": "public",
-              "type": {
-                "text": "ActionButton[]"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_buttons",
-              "type": {
-                "text": "ActionButton[]"
-              },
-              "privacy": "public",
-              "default": "[]"
-            },
-            {
-              "kind": "field",
-              "name": "_buttonSelector",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "protected",
-              "default": "'sp-action-button'"
-            },
-            {
-              "kind": "field",
-              "name": "rovingTabindexController",
-              "default": "new RovingTabindexController<ActionButton>(\n        this,\n        {\n            focusInIndex: (elements: ActionButton[]) => {\n                let firstEnabledIndex = -1;\n                const firstSelectedIndex = elements.findIndex((el, index) => {\n                    if (!elements[firstEnabledIndex] && !el.disabled) {\n                        firstEnabledIndex = index;\n                    }\n                    return el.selected && !el.disabled;\n                });\n                return elements[firstSelectedIndex]\n                    ? firstSelectedIndex\n                    : firstEnabledIndex;\n            },\n            elements: () => this.buttons,\n            isFocusableElement: (el: ActionButton) => !el.disabled,\n        }\n    )"
-            },
-            {
-              "kind": "field",
-              "name": "compact",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "compact",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "emphasized",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "emphasized",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "justified",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "justified",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "quiet",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "quiet",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "selects",
-              "type": {
-                "text": "undefined | 'single' | 'multiple'"
-              },
-              "privacy": "public",
-              "attribute": "selects"
-            },
-            {
-              "kind": "field",
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "vertical",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "selected",
-              "type": {
-                "text": "string[]"
-              },
-              "privacy": "public",
-              "default": "[]",
-              "attribute": "selected"
-            },
-            {
-              "kind": "method",
-              "name": "dispatchChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "old",
-                  "type": {
-                    "text": "string[]"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "setSelected",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "selected",
-                  "type": {
-                    "text": "string[]"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "focus",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "options",
-                  "optional": true,
-                  "type": {
-                    "text": "FocusOptions"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "deselectSelectedButtons",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "handleClick",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "manageSelects",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageChildren",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "manageButtons",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "observer",
-              "type": {
-                "text": "MutationObserver"
-              },
-              "privacy": "private"
-            }
-          ],
-          "events": [
-            {
-              "name": "change",
-              "type": {
-                "text": "Event"
-              },
-              "description": "Announces that selection state has been changed by user"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "compact",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "compact"
-            },
-            {
-              "name": "emphasized",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "emphasized"
-            },
-            {
-              "name": "justified",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "justified"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
-            },
-            {
-              "name": "quiet",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "quiet"
-            },
-            {
-              "name": "selects",
-              "type": {
-                "text": "undefined | 'single' | 'multiple'"
-              },
-              "fieldName": "selects"
-            },
-            {
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "vertical"
-            },
-            {
-              "name": "selected",
-              "type": {
-                "text": "string[]"
-              },
-              "default": "EMPTY_SELECTION",
-              "resolveInitializer": {
-                "module": "packages/action-group/src/ActionGroup.ts"
-              },
-              "fieldName": "selected"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-action-group",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ActionGroup",
-          "declaration": {
-            "name": "ActionGroup",
-            "module": "packages/action-group/src/ActionGroup.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-group/src/action-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-actiongroup-button-gap-reset:0;--spectrum-actiongroup-quiet-compact-button-gap:var(\n--spectrum-global-dimension-size-25\n)}:host{display:flex;flex-wrap:wrap}::slotted(*){flex-shrink:0}:host(:not([vertical]):not([compact])){margin-top:calc(var(\n--spectrum-actiongroup-button-gap-y,\nvar(--spectrum-alias-actiongroup-button-gap)\n)*-1)}:host(:not([vertical]):not([compact])) ::slotted(*){flex-shrink:0;margin-top:var(\n--spectrum-actiongroup-button-gap-y,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=ltr]:not([vertical]):not([compact])) ::slotted(:not(:last-child)){margin-right:var(\n--spectrum-actiongroup-button-gap-x,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=rtl]:not([vertical]):not([compact])) ::slotted(:not(:last-child)){margin-left:var(\n--spectrum-actiongroup-button-gap-x,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-child)){margin-left:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-child)){margin-right:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-child)){margin-top:var(\n--spectrum-actiongroup-button-gap-y,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=ltr][vertical][vertical]){margin-left:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=rtl][vertical][vertical]){margin-right:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([vertical][vertical]){margin-top:var(\n--spectrum-actiongroup-button-gap-y,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=ltr][compact][quiet]) ::slotted(:not(:first-child)){margin-left:var(\n--spectrum-actiongroup-quiet-compact-button-gap\n)}:host([dir=rtl][compact][quiet]) ::slotted(:not(:first-child)){margin-right:var(\n--spectrum-actiongroup-quiet-compact-button-gap\n)}:host([compact][quiet]) ::slotted(:not(:first-child)){margin-top:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=ltr][compact][quiet][vertical]) ::slotted(:not(:first-child)){margin-left:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=rtl][compact][quiet][vertical]) ::slotted(:not(:first-child)){margin-right:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([compact][quiet][vertical]) ::slotted(:not(:first-child)){margin-top:var(\n--spectrum-actiongroup-quiet-compact-button-gap\n)}:host([compact]:not([quiet])){flex-wrap:nowrap}:host([compact]:not([quiet])) ::slotted(*){--spectrum-actionbutton-focus-ring-border-radius-adjusted:var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n);border-radius:0;position:relative;z-index:0}:host([dir=ltr][compact]:not([quiet])) ::slotted(:first-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:first-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:first-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:first-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:first-child){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:first-child){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([compact]:not([quiet])) ::slotted(:first-child){--spectrum-actionbutton-focus-ring-border-radius-adjusted:calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n)) var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n) var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n) calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n))}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){margin-right:0}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){margin-left:0}:host([compact]:not([quiet])) ::slotted(:last-child){--spectrum-actionbutton-focus-ring-border-radius-adjusted:var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n) calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n)) calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n)) var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n)}:host([compact]:not([quiet])) ::slotted([selected]){z-index:1}:host([compact]:not([quiet])) ::slotted(:hover){z-index:2}:host([compact]:not([quiet])) ::slotted(.focus-visible){z-index:3}:host([compact]:not([quiet])) ::slotted(:focus-visible){z-index:3}:host([dir=ltr][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([compact][vertical]:not([quiet])) ::slotted(*){border-radius:0}:host([compact][vertical]:not([quiet])) ::slotted(:not(:first-child)){margin-bottom:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2);margin-top:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([compact][vertical]:not([quiet])) ::slotted(:first-child){border-radius:0;margin-bottom:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([compact][vertical]:not([quiet])) ::slotted(:last-child){border-radius:0;margin-bottom:0;margin-top:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([justified]) ::slotted(*){flex:1}:host([dir][compact][vertical]) ::slotted(:nth-child(n)){margin-left:0;margin-right:0}:host([justified]) ::slotted(:not([role])),:host([vertical]) ::slotted(:not([role])){align-items:stretch;display:flex;flex-direction:column}:host([compact]:not([quiet])) ::slotted(:not([role])){--overriden-border-radius:0;--spectrum-actionbutton-s-quiet-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-s-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-m-quiet-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-m-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-l-quiet-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-l-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-xl-quiet-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-xl-textonly-border-radius:var(\n--overriden-border-radius\n)}:host([compact][vertical]:not([quiet])) ::slotted(:not([role]):first-child){--overriden-border-radius:var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius) 0 0}:host([compact][vertical]:not([quiet])) ::slotted(:not([role]):last-child){--overriden-border-radius:0 0 var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius)}:host([dir=ltr][compact]:not([quiet]):not([vertical])) ::slotted(:not([role]):first-child){--overriden-border-radius:var(--spectrum-alias-component-border-radius) 0 0 var(--spectrum-alias-component-border-radius)}:host([dir=rtl][compact]:not([quiet]):not([vertical])) ::slotted(:not([role]):first-child){--overriden-border-radius:0 var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius) 0}:host([dir=ltr][compact]:not([quiet]):not([vertical])) ::slotted(:not([role]):last-child){--overriden-border-radius:0 var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius) 0}:host([dir=rtl][compact]:not([quiet]):not([vertical])) ::slotted(:not([role]):last-child){--overriden-border-radius:var(--spectrum-alias-component-border-radius) 0 0 var(--spectrum-alias-component-border-radius)}:host([compact]:not([quiet])) ::slotted(*){--spectrum-actionbutton-after-border-radius:0}:host([compact][vertical]:not([quiet])) ::slotted(:first-child){--spectrum-actionbutton-after-border-radius:var(\n--spectrum-alias-component-border-radius\n) var(--spectrum-alias-component-border-radius) 0 0}:host([compact][vertical]:not([quiet])) ::slotted(:last-child){--spectrum-actionbutton-after-border-radius:0 0 var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius)}:host([dir=ltr][compact]:not([quiet]):not([vertical])) ::slotted(:first-child){--spectrum-actionbutton-after-border-radius:var(\n--spectrum-alias-component-border-radius\n) 0 0 var(--spectrum-alias-component-border-radius)}:host([dir=rtl][compact]:not([quiet]):not([vertical])) ::slotted(:first-child){--spectrum-actionbutton-after-border-radius:0 var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius) 0}:host([dir=ltr][compact]:not([quiet]):not([vertical])) ::slotted(:last-child){--spectrum-actionbutton-after-border-radius:0 var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius) 0}:host([dir=rtl][compact]:not([quiet]):not([vertical])) ::slotted(:last-child){--spectrum-actionbutton-after-border-radius:var(\n--spectrum-alias-component-border-radius\n) 0 0 var(--spectrum-alias-component-border-radius)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/action-group/src/action-group.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-group/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ActionGroup.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-group/src/spectrum-action-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-actiongroup-button-gap-reset:0;--spectrum-actiongroup-quiet-compact-button-gap:var(\n--spectrum-global-dimension-size-25\n)}:host{display:flex;flex-wrap:wrap}::slotted(*){flex-shrink:0}:host(:not([vertical]):not([compact])){margin-top:calc(var(\n--spectrum-actiongroup-button-gap-y,\nvar(--spectrum-alias-actiongroup-button-gap)\n)*-1)}:host(:not([vertical]):not([compact])) ::slotted(*){flex-shrink:0;margin-top:var(\n--spectrum-actiongroup-button-gap-y,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=ltr]:not([vertical]):not([compact])) ::slotted(:not(:last-child)){margin-right:var(\n--spectrum-actiongroup-button-gap-x,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=rtl]:not([vertical]):not([compact])) ::slotted(:not(:last-child)){margin-left:var(\n--spectrum-actiongroup-button-gap-x,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-child)){margin-left:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-child)){margin-right:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-child)){margin-top:var(\n--spectrum-actiongroup-button-gap-y,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=ltr][vertical][vertical]){margin-left:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=rtl][vertical][vertical]){margin-right:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([vertical][vertical]){margin-top:var(\n--spectrum-actiongroup-button-gap-y,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=ltr][compact][quiet]) ::slotted(:not(:first-child)){margin-left:var(\n--spectrum-actiongroup-quiet-compact-button-gap\n)}:host([dir=rtl][compact][quiet]) ::slotted(:not(:first-child)){margin-right:var(\n--spectrum-actiongroup-quiet-compact-button-gap\n)}:host([compact][quiet]) ::slotted(:not(:first-child)){margin-top:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=ltr][compact][quiet][vertical]) ::slotted(:not(:first-child)){margin-left:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=rtl][compact][quiet][vertical]) ::slotted(:not(:first-child)){margin-right:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([compact][quiet][vertical]) ::slotted(:not(:first-child)){margin-top:var(\n--spectrum-actiongroup-quiet-compact-button-gap\n)}:host([compact]:not([quiet])){flex-wrap:nowrap}:host([compact]:not([quiet])) ::slotted(*){--spectrum-actionbutton-focus-ring-border-radius-adjusted:var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n);border-radius:0;position:relative;z-index:0}:host([dir=ltr][compact]:not([quiet])) ::slotted(:first-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:first-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:first-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:first-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:first-child){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:first-child){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([compact]:not([quiet])) ::slotted(:first-child){--spectrum-actionbutton-focus-ring-border-radius-adjusted:calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n)) var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n) var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n) calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n))}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){margin-right:0}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){margin-left:0}:host([compact]:not([quiet])) ::slotted(:last-child){--spectrum-actionbutton-focus-ring-border-radius-adjusted:var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n) calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n)) calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n)) var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n)}:host([compact]:not([quiet])) ::slotted([selected]){z-index:1}:host([compact]:not([quiet])) ::slotted(:hover){z-index:2}:host([compact]:not([quiet])) ::slotted(.focus-visible){z-index:3}:host([compact]:not([quiet])) ::slotted(:focus-visible){z-index:3}:host([dir=ltr][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([compact][vertical]:not([quiet])) ::slotted(*){border-radius:0}:host([compact][vertical]:not([quiet])) ::slotted(:not(:first-child)){margin-bottom:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2);margin-top:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([compact][vertical]:not([quiet])) ::slotted(:first-child){border-radius:0;margin-bottom:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([compact][vertical]:not([quiet])) ::slotted(:last-child){border-radius:0;margin-bottom:0;margin-top:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([justified]) ::slotted(*){flex:1}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/action-group/src/spectrum-action-group.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/action-button/src/ActionButton.ts",
       "declarations": [
         {
@@ -4549,6 +4149,406 @@
           "declaration": {
             "name": "styles",
             "module": "packages/action-button/src/spectrum-action-button.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-group/src/ActionGroup.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ActionGroup",
+          "slots": [
+            {
+              "description": "the sp-action-button elements that make up the group",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "buttons",
+              "privacy": "public",
+              "type": {
+                "text": "ActionButton[]"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_buttons",
+              "type": {
+                "text": "ActionButton[]"
+              },
+              "privacy": "public",
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "_buttonSelector",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "protected",
+              "default": "'sp-action-button'"
+            },
+            {
+              "kind": "field",
+              "name": "rovingTabindexController",
+              "default": "new RovingTabindexController<ActionButton>(\n        this,\n        {\n            focusInIndex: (elements: ActionButton[]) => {\n                let firstEnabledIndex = -1;\n                const firstSelectedIndex = elements.findIndex((el, index) => {\n                    if (!elements[firstEnabledIndex] && !el.disabled) {\n                        firstEnabledIndex = index;\n                    }\n                    return el.selected && !el.disabled;\n                });\n                return elements[firstSelectedIndex]\n                    ? firstSelectedIndex\n                    : firstEnabledIndex;\n            },\n            elements: () => this.buttons,\n            isFocusableElement: (el: ActionButton) => !el.disabled,\n        }\n    )"
+            },
+            {
+              "kind": "field",
+              "name": "compact",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "compact",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "emphasized",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "emphasized",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "justified",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "justified",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "quiet",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "quiet",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "selects",
+              "type": {
+                "text": "undefined | 'single' | 'multiple'"
+              },
+              "privacy": "public",
+              "attribute": "selects"
+            },
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "string[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "attribute": "selected"
+            },
+            {
+              "kind": "method",
+              "name": "dispatchChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "old",
+                  "type": {
+                    "text": "string[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "setSelected",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "selected",
+                  "type": {
+                    "text": "string[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "deselectSelectedButtons",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "handleClick",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "manageSelects",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageChildren",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "manageButtons",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "observer",
+              "type": {
+                "text": "MutationObserver"
+              },
+              "privacy": "private"
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "type": {
+                "text": "Event"
+              },
+              "description": "Announces that selection state has been changed by user"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "compact",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "compact"
+            },
+            {
+              "name": "emphasized",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "emphasized"
+            },
+            {
+              "name": "justified",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "justified"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            },
+            {
+              "name": "quiet",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "quiet"
+            },
+            {
+              "name": "selects",
+              "type": {
+                "text": "undefined | 'single' | 'multiple'"
+              },
+              "fieldName": "selects"
+            },
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "selected",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "EMPTY_SELECTION",
+              "resolveInitializer": {
+                "module": "packages/action-group/src/ActionGroup.ts"
+              },
+              "fieldName": "selected"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-action-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ActionGroup",
+          "declaration": {
+            "name": "ActionGroup",
+            "module": "packages/action-group/src/ActionGroup.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-group/src/action-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-actiongroup-button-gap-reset:0;--spectrum-actiongroup-quiet-compact-button-gap:var(\n--spectrum-global-dimension-size-25\n)}:host{display:flex;flex-wrap:wrap}::slotted(*){flex-shrink:0}:host(:not([vertical]):not([compact])){margin-top:calc(var(\n--spectrum-actiongroup-button-gap-y,\nvar(--spectrum-alias-actiongroup-button-gap)\n)*-1)}:host(:not([vertical]):not([compact])) ::slotted(*){flex-shrink:0;margin-top:var(\n--spectrum-actiongroup-button-gap-y,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=ltr]:not([vertical]):not([compact])) ::slotted(:not(:last-child)){margin-right:var(\n--spectrum-actiongroup-button-gap-x,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=rtl]:not([vertical]):not([compact])) ::slotted(:not(:last-child)){margin-left:var(\n--spectrum-actiongroup-button-gap-x,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-child)){margin-left:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-child)){margin-right:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-child)){margin-top:var(\n--spectrum-actiongroup-button-gap-y,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=ltr][vertical][vertical]){margin-left:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=rtl][vertical][vertical]){margin-right:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([vertical][vertical]){margin-top:var(\n--spectrum-actiongroup-button-gap-y,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=ltr][compact][quiet]) ::slotted(:not(:first-child)){margin-left:var(\n--spectrum-actiongroup-quiet-compact-button-gap\n)}:host([dir=rtl][compact][quiet]) ::slotted(:not(:first-child)){margin-right:var(\n--spectrum-actiongroup-quiet-compact-button-gap\n)}:host([compact][quiet]) ::slotted(:not(:first-child)){margin-top:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=ltr][compact][quiet][vertical]) ::slotted(:not(:first-child)){margin-left:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=rtl][compact][quiet][vertical]) ::slotted(:not(:first-child)){margin-right:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([compact][quiet][vertical]) ::slotted(:not(:first-child)){margin-top:var(\n--spectrum-actiongroup-quiet-compact-button-gap\n)}:host([compact]:not([quiet])){flex-wrap:nowrap}:host([compact]:not([quiet])) ::slotted(*){--spectrum-actionbutton-focus-ring-border-radius-adjusted:var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n);border-radius:0;position:relative;z-index:0}:host([dir=ltr][compact]:not([quiet])) ::slotted(:first-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:first-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:first-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:first-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:first-child){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:first-child){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([compact]:not([quiet])) ::slotted(:first-child){--spectrum-actionbutton-focus-ring-border-radius-adjusted:calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n)) var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n) var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n) calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n))}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){margin-right:0}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){margin-left:0}:host([compact]:not([quiet])) ::slotted(:last-child){--spectrum-actionbutton-focus-ring-border-radius-adjusted:var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n) calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n)) calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n)) var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n)}:host([compact]:not([quiet])) ::slotted([selected]){z-index:1}:host([compact]:not([quiet])) ::slotted(:hover){z-index:2}:host([compact]:not([quiet])) ::slotted(.focus-visible){z-index:3}:host([compact]:not([quiet])) ::slotted(:focus-visible){z-index:3}:host([dir=ltr][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([compact][vertical]:not([quiet])) ::slotted(*){border-radius:0}:host([compact][vertical]:not([quiet])) ::slotted(:not(:first-child)){margin-bottom:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2);margin-top:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([compact][vertical]:not([quiet])) ::slotted(:first-child){border-radius:0;margin-bottom:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([compact][vertical]:not([quiet])) ::slotted(:last-child){border-radius:0;margin-bottom:0;margin-top:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([justified]) ::slotted(*){flex:1}:host([dir][compact][vertical]) ::slotted(:nth-child(n)){margin-left:0;margin-right:0}:host([justified]) ::slotted(:not([role])),:host([vertical]) ::slotted(:not([role])){align-items:stretch;display:flex;flex-direction:column}:host([compact]:not([quiet])) ::slotted(:not([role])){--overriden-border-radius:0;--spectrum-actionbutton-s-quiet-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-s-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-m-quiet-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-m-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-l-quiet-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-l-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-xl-quiet-textonly-border-radius:var(\n--overriden-border-radius\n);--spectrum-actionbutton-xl-textonly-border-radius:var(\n--overriden-border-radius\n)}:host([compact][vertical]:not([quiet])) ::slotted(:not([role]):first-child){--overriden-border-radius:var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius) 0 0}:host([compact][vertical]:not([quiet])) ::slotted(:not([role]):last-child){--overriden-border-radius:0 0 var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius)}:host([dir=ltr][compact]:not([quiet]):not([vertical])) ::slotted(:not([role]):first-child){--overriden-border-radius:var(--spectrum-alias-component-border-radius) 0 0 var(--spectrum-alias-component-border-radius)}:host([dir=rtl][compact]:not([quiet]):not([vertical])) ::slotted(:not([role]):first-child){--overriden-border-radius:0 var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius) 0}:host([dir=ltr][compact]:not([quiet]):not([vertical])) ::slotted(:not([role]):last-child){--overriden-border-radius:0 var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius) 0}:host([dir=rtl][compact]:not([quiet]):not([vertical])) ::slotted(:not([role]):last-child){--overriden-border-radius:var(--spectrum-alias-component-border-radius) 0 0 var(--spectrum-alias-component-border-radius)}:host([compact]:not([quiet])) ::slotted(*){--spectrum-actionbutton-after-border-radius:0}:host([compact][vertical]:not([quiet])) ::slotted(:first-child){--spectrum-actionbutton-after-border-radius:var(\n--spectrum-alias-component-border-radius\n) var(--spectrum-alias-component-border-radius) 0 0}:host([compact][vertical]:not([quiet])) ::slotted(:last-child){--spectrum-actionbutton-after-border-radius:0 0 var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius)}:host([dir=ltr][compact]:not([quiet]):not([vertical])) ::slotted(:first-child){--spectrum-actionbutton-after-border-radius:var(\n--spectrum-alias-component-border-radius\n) 0 0 var(--spectrum-alias-component-border-radius)}:host([dir=rtl][compact]:not([quiet]):not([vertical])) ::slotted(:first-child){--spectrum-actionbutton-after-border-radius:0 var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius) 0}:host([dir=ltr][compact]:not([quiet]):not([vertical])) ::slotted(:last-child){--spectrum-actionbutton-after-border-radius:0 var(--spectrum-alias-component-border-radius) var(--spectrum-alias-component-border-radius) 0}:host([dir=rtl][compact]:not([quiet]):not([vertical])) ::slotted(:last-child){--spectrum-actionbutton-after-border-radius:var(\n--spectrum-alias-component-border-radius\n) 0 0 var(--spectrum-alias-component-border-radius)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/action-group/src/action-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-group/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ActionGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/action-group/src/spectrum-action-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-actiongroup-button-gap-reset:0;--spectrum-actiongroup-quiet-compact-button-gap:var(\n--spectrum-global-dimension-size-25\n)}:host{display:flex;flex-wrap:wrap}::slotted(*){flex-shrink:0}:host(:not([vertical]):not([compact])){margin-top:calc(var(\n--spectrum-actiongroup-button-gap-y,\nvar(--spectrum-alias-actiongroup-button-gap)\n)*-1)}:host(:not([vertical]):not([compact])) ::slotted(*){flex-shrink:0;margin-top:var(\n--spectrum-actiongroup-button-gap-y,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=ltr]:not([vertical]):not([compact])) ::slotted(:not(:last-child)){margin-right:var(\n--spectrum-actiongroup-button-gap-x,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=rtl]:not([vertical]):not([compact])) ::slotted(:not(:last-child)){margin-left:var(\n--spectrum-actiongroup-button-gap-x,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-child)){margin-left:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-child)){margin-right:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-child)){margin-top:var(\n--spectrum-actiongroup-button-gap-y,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=ltr][vertical][vertical]){margin-left:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=rtl][vertical][vertical]){margin-right:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([vertical][vertical]){margin-top:var(\n--spectrum-actiongroup-button-gap-y,var(--spectrum-alias-actiongroup-button-gap)\n)}:host([dir=ltr][compact][quiet]) ::slotted(:not(:first-child)){margin-left:var(\n--spectrum-actiongroup-quiet-compact-button-gap\n)}:host([dir=rtl][compact][quiet]) ::slotted(:not(:first-child)){margin-right:var(\n--spectrum-actiongroup-quiet-compact-button-gap\n)}:host([compact][quiet]) ::slotted(:not(:first-child)){margin-top:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=ltr][compact][quiet][vertical]) ::slotted(:not(:first-child)){margin-left:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([dir=rtl][compact][quiet][vertical]) ::slotted(:not(:first-child)){margin-right:var(\n--spectrum-actiongroup-button-gap-reset\n)}:host([compact][quiet][vertical]) ::slotted(:not(:first-child)){margin-top:var(\n--spectrum-actiongroup-quiet-compact-button-gap\n)}:host([compact]:not([quiet])){flex-wrap:nowrap}:host([compact]:not([quiet])) ::slotted(*){--spectrum-actionbutton-focus-ring-border-radius-adjusted:var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n);border-radius:0;position:relative;z-index:0}:host([dir=ltr][compact]:not([quiet])) ::slotted(:first-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:first-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:first-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:first-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:first-child){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:first-child){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([compact]:not([quiet])) ::slotted(:first-child){--spectrum-actionbutton-focus-ring-border-radius-adjusted:calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n)) var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n) var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n) calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n))}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:last-child){margin-right:0}:host([dir=rtl][compact]:not([quiet])) ::slotted(:last-child){margin-left:0}:host([compact]:not([quiet])) ::slotted(:last-child){--spectrum-actionbutton-focus-ring-border-radius-adjusted:var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n) calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n)) calc(var(\n--spectrum-actionbutton-m-quiet-textonly-border-radius,\nvar(--spectrum-alias-component-border-radius)\n) + var(\n--spectrum-actionbutton-m-textonly-focus-ring-gap,\nvar(--spectrum-alias-component-focusring-gap)\n)) var(\n--spectrum-alias-border-radius-xsmall,var(--spectrum-global-dimension-size-10)\n)}:host([compact]:not([quiet])) ::slotted([selected]){z-index:1}:host([compact]:not([quiet])) ::slotted(:hover){z-index:2}:host([compact]:not([quiet])) ::slotted(.focus-visible){z-index:3}:host([compact]:not([quiet])) ::slotted(:focus-visible){z-index:3}:host([dir=ltr][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-right:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=rtl][compact]:not([quiet])) ::slotted(:not(:first-child)){margin-left:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([compact][vertical]:not([quiet])) ::slotted(*){border-radius:0}:host([compact][vertical]:not([quiet])) ::slotted(:not(:first-child)){margin-bottom:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2);margin-top:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:first-child){border-top-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([compact][vertical]:not([quiet])) ::slotted(:first-child){border-radius:0;margin-bottom:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=ltr][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-right-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([dir=rtl][compact][vertical]:not([quiet])) ::slotted(:last-child){border-bottom-left-radius:var(\n--spectrum-actionbutton-m-texticon-border-radius,var(--spectrum-alias-component-border-radius)\n)}:host([compact][vertical]:not([quiet])) ::slotted(:last-child){border-radius:0;margin-bottom:0;margin-top:calc(var(\n--spectrum-actionbutton-m-texticon-border-size,\nvar(--spectrum-alias-border-size-thin)\n)*-1/2)}:host([justified]) ::slotted(*){flex:1}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/action-group/src/spectrum-action-group.css.ts"
           }
         }
       ]
@@ -6211,144 +6211,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/banner/src/Banner.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Banner",
-          "slots": [
-            {
-              "description": "Primary message of the banner.",
-              "name": "header"
-            },
-            {
-              "description": "Secondary message of the banner. Used to provide a description.",
-              "name": "content"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "type",
-              "type": {
-                "text": "'info' | 'warning' | 'error'"
-              },
-              "privacy": "public",
-              "default": "'info'",
-              "attribute": "type",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "corner",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "corner",
-              "reflects": true
-            }
-          ],
-          "attributes": [
-            {
-              "description": "Determines the style, can be \"info\", \"warning\", or \"error\". Default is \"info\"",
-              "name": "type",
-              "type": {
-                "text": "'info' | 'warning' | 'error'"
-              },
-              "default": "'info'",
-              "fieldName": "type"
-            },
-            {
-              "description": "Determines if banner sets position at upper right corner or not.",
-              "name": "corner",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "corner"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-banner",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Banner",
-          "declaration": {
-            "name": "Banner",
-            "module": "packages/banner/src/Banner.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/banner/src/banner.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{border-radius:var(\n--spectrum-banner-border-radius,var(--spectrum-global-dimension-static-size-100)\n);display:inline-block;font-size:var(\n--spectrum-banner-text-size,var(--spectrum-global-dimension-font-size-75)\n);line-height:var(\n--spectrum-banner-text-line-height,var(--spectrum-alias-heading-text-line-height)\n);padding:var(\n--spectrum-banner-padding-y,var(--spectrum-global-dimension-static-size-50)\n) var(\n--spectrum-banner-padding-x,var(--spectrum-global-dimension-static-size-100)\n)}#header{font-weight:700}:host([dir=ltr][corner]){right:-10px}:host([dir=rtl][corner]){left:-10px}:host([corner]){position:absolute;top:-10px}:host{color:var(\n--spectrum-banner-text-color,var(--spectrum-global-color-static-white)\n)}:host([type=info]){background-color:var(\n--spectrum-banner-info-background-color,var(--spectrum-semantic-informative-color-default)\n)}:host([type=warning]){background-color:var(\n--spectrum-banner-warning-background-color,var(--spectrum-semantic-notice-color-default)\n)}:host([type=error]){background-color:var(\n--spectrum-banner-error-background-color,var(--spectrum-semantic-negative-color-default)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/banner/src/banner.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/banner/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Banner.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/banner/src/spectrum-banner.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{border-radius:var(\n--spectrum-banner-border-radius,var(--spectrum-global-dimension-static-size-100)\n);display:inline-block;font-size:var(\n--spectrum-banner-text-size,var(--spectrum-global-dimension-font-size-75)\n);line-height:var(\n--spectrum-banner-text-line-height,var(--spectrum-alias-heading-text-line-height)\n);padding:var(\n--spectrum-banner-padding-y,var(--spectrum-global-dimension-static-size-50)\n) var(\n--spectrum-banner-padding-x,var(--spectrum-global-dimension-static-size-100)\n)}#header{font-weight:700}:host([dir=ltr][corner]){right:-10px}:host([dir=rtl][corner]){left:-10px}:host([corner]){position:absolute;top:-10px}:host{color:var(\n--spectrum-banner-text-color,var(--spectrum-global-color-static-white)\n)}:host([type=info]){background-color:var(\n--spectrum-banner-info-background-color,var(--spectrum-semantic-informative-color-default)\n)}:host([type=warning]){background-color:var(\n--spectrum-banner-warning-background-color,var(--spectrum-semantic-notice-color-default)\n)}:host([type=error]){background-color:var(\n--spectrum-banner-error-background-color,var(--spectrum-semantic-negative-color-default)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/banner/src/spectrum-banner.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/base/src/Base.ts",
       "declarations": [
         {
@@ -7074,6 +6936,221 @@
           "declaration": {
             "name": "StreamingListenerDirective",
             "module": "packages/base/src/streaming-listener.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/banner/src/Banner.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Banner",
+          "slots": [
+            {
+              "description": "Primary message of the banner.",
+              "name": "header"
+            },
+            {
+              "description": "Secondary message of the banner. Used to provide a description.",
+              "name": "content"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "'info' | 'warning' | 'error'"
+              },
+              "privacy": "public",
+              "default": "'info'",
+              "attribute": "type",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "corner",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "corner",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "description": "Determines the style, can be \"info\", \"warning\", or \"error\". Default is \"info\"",
+              "name": "type",
+              "type": {
+                "text": "'info' | 'warning' | 'error'"
+              },
+              "default": "'info'",
+              "fieldName": "type"
+            },
+            {
+              "description": "Determines if banner sets position at upper right corner or not.",
+              "name": "corner",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "corner"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-banner",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Banner",
+          "declaration": {
+            "name": "Banner",
+            "module": "packages/banner/src/Banner.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/banner/src/banner.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{border-radius:var(\n--spectrum-banner-border-radius,var(--spectrum-global-dimension-static-size-100)\n);display:inline-block;font-size:var(\n--spectrum-banner-text-size,var(--spectrum-global-dimension-font-size-75)\n);line-height:var(\n--spectrum-banner-text-line-height,var(--spectrum-alias-heading-text-line-height)\n);padding:var(\n--spectrum-banner-padding-y,var(--spectrum-global-dimension-static-size-50)\n) var(\n--spectrum-banner-padding-x,var(--spectrum-global-dimension-static-size-100)\n)}#header{font-weight:700}:host([dir=ltr][corner]){right:-10px}:host([dir=rtl][corner]){left:-10px}:host([corner]){position:absolute;top:-10px}:host{color:var(\n--spectrum-banner-text-color,var(--spectrum-global-color-static-white)\n)}:host([type=info]){background-color:var(\n--spectrum-banner-info-background-color,var(--spectrum-semantic-informative-color-default)\n)}:host([type=warning]){background-color:var(\n--spectrum-banner-warning-background-color,var(--spectrum-semantic-notice-color-default)\n)}:host([type=error]){background-color:var(\n--spectrum-banner-error-background-color,var(--spectrum-semantic-negative-color-default)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/banner/src/banner.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/banner/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Banner.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/banner/src/spectrum-banner.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{border-radius:var(\n--spectrum-banner-border-radius,var(--spectrum-global-dimension-static-size-100)\n);display:inline-block;font-size:var(\n--spectrum-banner-text-size,var(--spectrum-global-dimension-font-size-75)\n);line-height:var(\n--spectrum-banner-text-line-height,var(--spectrum-alias-heading-text-line-height)\n);padding:var(\n--spectrum-banner-padding-y,var(--spectrum-global-dimension-static-size-50)\n) var(\n--spectrum-banner-padding-x,var(--spectrum-global-dimension-static-size-100)\n)}#header{font-weight:700}:host([dir=ltr][corner]){right:-10px}:host([dir=rtl][corner]){left:-10px}:host([corner]){position:absolute;top:-10px}:host{color:var(\n--spectrum-banner-text-color,var(--spectrum-global-color-static-white)\n)}:host([type=info]){background-color:var(\n--spectrum-banner-info-background-color,var(--spectrum-semantic-informative-color-default)\n)}:host([type=warning]){background-color:var(\n--spectrum-banner-warning-background-color,var(--spectrum-semantic-notice-color-default)\n)}:host([type=error]){background-color:var(\n--spectrum-banner-error-background-color,var(--spectrum-semantic-negative-color-default)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/banner/src/spectrum-banner.css.ts"
           }
         }
       ]
@@ -37411,7 +37488,7 @@
         {
           "kind": "variable",
           "name": "styles",
-          "default": "css`\n@keyframes sp-overlay-fade-in{0%{opacity:0;transform:var(--sp-overlay-from)}to{opacity:1;transform:translate(0)}}@keyframes sp-overlay-fade-out{0%{opacity:1;transform:translate(0)}to{opacity:0;transform:var(--sp-overlay-from)}}:host{display:inline-block;left:0;pointer-events:none;position:absolute;top:0;z-index:1000}:host(:focus){outline:none}:host([placement=none]){height:100vh;height:-webkit-fill-available;height:fill-available;max-height:var(--swc-visual-viewport-height);position:fixed}#contents,sp-theme{height:100%}#contents{animation-duration:var(\n--swc-test-duration,var(--spectrum-global-animation-duration-200,.16s)\n);animation-timing-function:var(\n--spectrum-global-animation-ease-out,ease-out\n);display:inline-block;opacity:1;pointer-events:none;visibility:visible}:host([actual-placement*=top]) #contents{--sp-overlay-from:translateY(var(--spectrum-global-dimension-size-75));align-items:flex-end;display:inline-flex}:host([actual-placement*=right]) #contents{--sp-overlay-from:translateX(calc(var(--spectrum-global-dimension-size-75)*-1))}:host([actual-placement*=bottom]) #contents{--sp-overlay-from:translateY(calc(var(--spectrum-global-dimension-size-75)*-1))}:host([actual-placement*=left]) #contents{--sp-overlay-from:translateX(var(--spectrum-global-dimension-size-75))}:host([animating]) ::slotted(*){pointer-events:none}:host(:not([animating])) ::slotted(*){pointer-events:auto}#contents ::slotted(*){position:relative}\n`"
+          "default": "css`\n@keyframes sp-overlay-fade-in{0%{opacity:0;transform:var(--sp-overlay-from)}to{opacity:1;transform:translate(0)}}@keyframes sp-overlay-fade-out{0%{opacity:1;transform:translate(0)}to{opacity:0;transform:var(--sp-overlay-from)}}:host{display:inline-block;left:-9999em;pointer-events:none;position:absolute;top:-9999em;z-index:1000}:host(:focus){outline:none}:host([placement=none]){height:100vh;height:-webkit-fill-available;height:fill-available;left:0;max-height:var(--swc-visual-viewport-height);position:fixed;top:0}#contents,sp-theme{height:100%}#contents{animation-duration:var(\n--swc-test-duration,var(--spectrum-global-animation-duration-200,.16s)\n);animation-timing-function:var(\n--spectrum-global-animation-ease-out,ease-out\n);display:inline-block;opacity:1;pointer-events:none;visibility:visible}:host([actual-placement*=top]) #contents{--sp-overlay-from:translateY(var(--spectrum-global-dimension-size-75));align-items:flex-end;display:inline-flex}:host([actual-placement*=right]) #contents{--sp-overlay-from:translateX(calc(var(--spectrum-global-dimension-size-75)*-1))}:host([actual-placement*=bottom]) #contents{--sp-overlay-from:translateY(calc(var(--spectrum-global-dimension-size-75)*-1))}:host([actual-placement*=left]) #contents{--sp-overlay-from:translateX(var(--spectrum-global-dimension-size-75))}:host([animating]) ::slotted(*){pointer-events:none}:host(:not([animating])) ::slotted(*){pointer-events:auto}#contents ::slotted(*){position:relative}\n`"
         }
       ],
       "exports": [
