@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.7.4...@spectrum-web-components/action-button@0.8.0) (2022-03-04)
+
+### Features
+
+-   leverage latest Spectrum button API ([9caf2f6](https://github.com/adobe/spectrum-web-components/commit/9caf2f6313424450c91c039fafea89bf8aa72624))
+-   support static white and static black variants of Action Button ([7f1e25b](https://github.com/adobe/spectrum-web-components/commit/7f1e25bce122bd3601c6aa5ed505cba436e8b952))
+
 ## [0.7.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.7.3...@spectrum-web-components/action-button@0.7.4) (2022-02-22)
 
 **Note:** Version bump only for package @spectrum-web-components/action-button

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/modal@0.6.1...@spectrum-web-components/modal@0.6.2) (2022-03-04)
+
+**Note:** Version bump only for package @spectrum-web-components/modal
+
 ## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/modal@0.6.0...@spectrum-web-components/modal@0.6.1) (2022-02-22)
 
 ### Bug Fixes

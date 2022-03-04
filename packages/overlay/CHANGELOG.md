@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.14.1...@spectrum-web-components/overlay@0.15.0) (2022-03-04)
+
+### Bug Fixes
+
+-   **menu:** add support for submenu interactions ([68399af](https://github.com/adobe/spectrum-web-components/commit/68399af396bfb70b9c84c83ee2265aa9daa05e10))
+
+### Features
+
+-   leverage latest Spectrum button API ([9caf2f6](https://github.com/adobe/spectrum-web-components/commit/9caf2f6313424450c91c039fafea89bf8aa72624))
+
 ## [0.14.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.14.0...@spectrum-web-components/overlay@0.14.1) (2022-02-22)
 
 ### Bug Fixes

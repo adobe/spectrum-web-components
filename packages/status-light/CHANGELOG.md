@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.10.3...@spectrum-web-components/status-light@0.10.4) (2022-03-04)
+
+**Note:** Version bump only for package @spectrum-web-components/status-light
+
 ## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/status-light@0.10.2...@spectrum-web-components/status-light@0.10.3) (2022-02-22)
 
 **Note:** Version bump only for package @spectrum-web-components/status-light

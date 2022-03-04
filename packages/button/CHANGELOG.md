@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.16.4...@spectrum-web-components/button@0.17.0) (2022-03-04)
+
+### Features
+
+-   **close-button:** add Close Button pattern ([8e9e1ad](https://github.com/adobe/spectrum-web-components/commit/8e9e1ad1ac84a989c4052f1368d8d3d8ddc5f60e))
+-   leverage latest Spectrum button API ([9caf2f6](https://github.com/adobe/spectrum-web-components/commit/9caf2f6313424450c91c039fafea89bf8aa72624))
+-   support static white and static black variants of Action Button ([7f1e25b](https://github.com/adobe/spectrum-web-components/commit/7f1e25bce122bd3601c6aa5ed505cba436e8b952))
+
 ## [0.16.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.16.3...@spectrum-web-components/button@0.16.4) (2022-02-22)
 
 **Note:** Version bump only for package @spectrum-web-components/button

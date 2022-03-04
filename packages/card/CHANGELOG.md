@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.10.4...@spectrum-web-components/card@0.10.5) (2022-03-04)
+
+### Bug Fixes
+
+-   add Grid pattern ([341f493](https://github.com/adobe/spectrum-web-components/commit/341f4932087487be47bde355d1b0894886ed44ad))
+
 ## [0.10.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.10.3...@spectrum-web-components/card@0.10.4) (2022-02-22)
 
 **Note:** Version bump only for package @spectrum-web-components/card

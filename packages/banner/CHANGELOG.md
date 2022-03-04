@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/banner@0.7.2...@spectrum-web-components/banner@0.8.0) (2022-03-04)
+
+### Features
+
+-   leverage latest Spectrum button API ([9faeade](https://github.com/adobe/spectrum-web-components/commit/9faeade93893137285ae031c9516ce37d9a9041f))
+
 ## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/banner@0.7.1...@spectrum-web-components/banner@0.7.2) (2022-02-22)
 
 **Note:** Version bump only for package @spectrum-web-components/banner

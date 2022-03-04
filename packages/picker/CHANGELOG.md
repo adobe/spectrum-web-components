@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.10.2...@spectrum-web-components/picker@0.10.3) (2022-03-04)
+
+### Bug Fixes
+
+-   **menu:** add support for submenu interactions ([68399af](https://github.com/adobe/spectrum-web-components/commit/68399af396bfb70b9c84c83ee2265aa9daa05e10))
+
 ## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.10.1...@spectrum-web-components/picker@0.10.2) (2022-02-22)
 
 **Note:** Version bump only for package @spectrum-web-components/picker

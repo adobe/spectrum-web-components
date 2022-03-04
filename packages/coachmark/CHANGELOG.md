@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/coachmark@0.8.3...@spectrum-web-components/coachmark@0.9.0) (2022-03-04)
+
+### Features
+
+-   leverage latest Spectrum button API ([9faeade](https://github.com/adobe/spectrum-web-components/commit/9faeade93893137285ae031c9516ce37d9a9041f))
+
 ## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/coachmark@0.8.2...@spectrum-web-components/coachmark@0.8.3) (2022-02-22)
 
 **Note:** Version bump only for package @spectrum-web-components/coachmark
