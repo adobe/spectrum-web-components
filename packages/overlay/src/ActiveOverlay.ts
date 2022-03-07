@@ -19,7 +19,7 @@ import {
 } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { reparentChildren } from '@spectrum-web-components/shared';
+import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-children.js';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import type { Color, Scale } from '@spectrum-web-components/theme/src/Theme.js';
 import styles from './active-overlay.css.js';
