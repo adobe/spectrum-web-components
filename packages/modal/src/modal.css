@@ -11,3 +11,10 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-modal.css';
+
+:host {
+    --spectrum-dialog-confirm-exit-animation-duration: var(--swc-test-duration);
+    --spectrum-dialog-confirm-entry-animation-duration: var(
+        --swc-test-duration
+    );
+}

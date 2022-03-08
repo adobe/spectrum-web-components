@@ -422,12 +422,12 @@ export class OverlayStack {
         }
     }
 
-    private manageFocusAfterCloseWhenOverlaysRemain(): void {
+    private async manageFocusAfterCloseWhenOverlaysRemain(): Promise<void> {
         const topOverlay = this.overlays[this.overlays.length - 1];
         topOverlay.feature();
         // Push focus in the the next remaining overlay as needed when a `type="modal"` overlay exists.
         if (topOverlay.interaction === 'modal' || topOverlay.hasModalRoot) {
-            topOverlay.focus();
+            await topOverlay.focus();
         } else {
             this.stopTabTrapping();
         }
@@ -506,7 +506,7 @@ export class OverlayStack {
         }
 
         if (this.overlays.length) {
-            this.manageFocusAfterCloseWhenOverlaysRemain();
+            await this.manageFocusAfterCloseWhenOverlaysRemain();
         } else {
             this.manageFocusAfterCloseWhenLastOverlay(overlay);
         }
