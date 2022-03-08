@@ -4825,9 +4825,9 @@
   integrity sha512-R2zHy+wdTrVkSFj0p7HMlHpzc/b7W6x5z1io9ao6PCdaumw+yAeMRB/foI5R6PGyoWZ4imWCjQ4I42GsLu6zuw==
 
 "@spectrum-css/clearbutton@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/clearbutton/-/clearbutton-1.2.3.tgz#00c9ef3e829c632beff772f341872170fbbf6117"
-  integrity sha512-MGuY5MTaZLX8ihL8/rAOZrJ87RvHYS1d5a4jkjHx8J9/qo1nye3RJ4XuAYQ0/vWdkmxLiKa2pZark92q2OILow==
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/clearbutton/-/clearbutton-1.2.5.tgz#51795a83cbbd642c92a5e53b7ffda0b6ffe80ab4"
+  integrity sha512-XVEVphIsRmWyDT5vdL7oiqm1uU2m2A8SjwKGz2jeyUtnjkYrrgrEuOA8zlTqlfZOLL8oxYbByf90tEtqqtAyGA==
 
 "@spectrum-css/closebutton@^1.2.3":
   version "1.2.3"
