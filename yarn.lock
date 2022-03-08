@@ -4795,9 +4795,9 @@
   integrity sha512-vgku22Y20LwKUN5yfNnbgzDpJuM5aOCG0PhIod8/EHrEquxIYpma/DtBpTnpTD6sAlu1HGFHZKqtLRuanrU/xA==
 
 "@spectrum-css/avatar@^5.0.10":
-  version "5.0.10"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/avatar/-/avatar-5.0.10.tgz#04f5487daf5d6ea033eff8f87494588525c77cba"
-  integrity sha512-4qNdeCaJ02zbfXP/802ttj65sV1B1RURLSWqobNQiCxsBJJJ4gUMtH6Jr9fiNXdbylD1yWdGSnXLKCI6byt40A==
+  version "5.0.12"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/avatar/-/avatar-5.0.12.tgz#d056d38e7e6ad4ab2aff0ea0917af72dd454ad30"
+  integrity sha512-tWfK/SYTBpgoDatsRH0GqAFXPWDdGUdpbOx96n3fsiGZU0P8ieCISXS0BieWW29Nl24hIVpC9vKHznHT7hXFDw==
 
 "@spectrum-css/banner@^3.0.0-beta.2":
   version "3.0.0-beta.2"
