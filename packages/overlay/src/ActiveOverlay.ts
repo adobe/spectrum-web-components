@@ -161,10 +161,17 @@ export class ActiveOverlay extends SpectrumElement {
     private originalPlacement?: Placement;
     private restoreContent?: () => Element[];
 
-    public focus(): void {
+    public async focus(): Promise<void> {
         const firstFocusable = firstFocusableIn(this);
         if (firstFocusable) {
-            firstFocusable.focus();
+            if ((firstFocusable as SpectrumElement).updateComplete) {
+                await firstFocusable.updateComplete;
+            }
+            const activeElement = (this.getRootNode() as Document)
+                .activeElement;
+            if (activeElement === this || !this.contains(activeElement)) {
+                firstFocusable.focus();
+            }
             /* c8 ignore next 3 */
         } else {
             super.focus();
@@ -286,7 +293,7 @@ export class ActiveOverlay extends SpectrumElement {
     public async openCallback(): Promise<void> {
         await this.updateComplete;
         if (this.receivesFocus) {
-            this.focus();
+            await this.focus();
         }
 
         this.trigger.dispatchEvent(
