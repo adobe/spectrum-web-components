@@ -399,7 +399,8 @@ describe('Overlay Trigger - Longpress', () => {
             press: 'Tab',
         });
 
-        expect(document.activeElement).to.equal(trigger);
+        expect(document.activeElement === trigger, 'Trigger focused').to.be
+            .true;
 
         await findDescribedNode(
             'Trigger with hold affordance',

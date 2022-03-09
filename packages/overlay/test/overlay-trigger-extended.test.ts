@@ -196,7 +196,7 @@ describe('Overlay Trigger - extended', () => {
         textfield.remove();
     });
 
-    it.only('occludes wheel interactions behind the overlay', async () => {
+    it('occludes wheel interactions behind the overlay', async () => {
         ({ overlayTrigger, button, popover } = await initTest());
         const scrollingArea = document.createElement('div');
         Object.assign(scrollingArea.style, {
@@ -236,7 +236,7 @@ describe('Overlay Trigger - extended', () => {
         // wait for scroll to complete
         await waitUntil(
             () => scrollingArea.scrollTop === distance,
-            'scroll went to 50'
+            `scroll went to ${distance}`
         );
         expect(scrollingArea.scrollTop).to.equal(distance);
 
@@ -261,26 +261,10 @@ describe('Overlay Trigger - extended', () => {
                 },
             ],
         });
-        /**
-         * The following test works in _actual_ Firefox, but fails with no clear reason
-         * in Firefox at unit test time. Because of this, I've wrapped the failure in
-         * this context as expected, and set the test to "fail" when conditions in Firefox
-         * are no longer what they are today. So, once this test starts to fail again
-         * Firefox has been "fixed". This allows us to keep the test which works as
-         * expected in Chromium and WebKit.
-         */
-        let failed = false;
-        try {
-            expect(
-                scrollingArea.scrollTop,
-                `scrollTop should be ${distance}.`
-            ).to.equal(distance);
-        } catch (error) {
-            failed = true;
-        }
-        if (navigator.userAgent.match(/firefox|fxios/i)) {
-            expect(failed).to.be.true;
-        }
+        expect(
+            scrollingArea.scrollTop,
+            `scrollTop should be ${distance}.`
+        ).to.equal(distance);
         scrollingArea.remove();
     });
 });

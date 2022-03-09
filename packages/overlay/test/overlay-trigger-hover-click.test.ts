@@ -75,14 +75,19 @@ describe('Overlay Trigger - Hover and Click', () => {
 
         // hover over the button to trigger the tooltip
         const hoveredEvent = oneEvent(el, 'sp-opened');
-        await sendMouse({
+        sendMouse({
             steps: [
                 {
                     type: 'move',
-                    position: [
-                        bounds.left + bounds.width / 2,
-                        bounds.top + bounds.height / 2,
-                    ],
+                    position: [bounds.left - 1, bounds.top - 1],
+                },
+                {
+                    type: 'move',
+                    position: [bounds.left, bounds.top],
+                },
+                {
+                    type: 'move',
+                    position: [bounds.left + 1, bounds.top + 1],
                 },
             ],
         });
