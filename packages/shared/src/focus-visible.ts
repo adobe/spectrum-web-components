@@ -34,8 +34,6 @@ type MixableBaseClass = HTMLElement & OptionalLifecycleCallbacks;
 
 type EndPolyfillCoordinationCallback = () => void;
 
-import 'focus-visible';
-
 let hasFocusVisible = true;
 
 try {
@@ -121,7 +119,8 @@ export const FocusVisiblePolyfillMixin = <
     // syntax The mixin implementation assumes that the user will take the
     // appropriate steps to support both:
     class FocusVisibleCoordinator extends SuperClass {
-        private [$endPolyfillCoordination]: EndPolyfillCoordinationCallback | null = null;
+        private [$endPolyfillCoordination]: EndPolyfillCoordinationCallback | null =
+            null;
 
         // Attempt to coordinate with the polyfill when connected to the
         // document:
@@ -130,9 +129,8 @@ export const FocusVisiblePolyfillMixin = <
             if (!hasFocusVisible) {
                 requestAnimationFrame(() => {
                     if (this[$endPolyfillCoordination] == null) {
-                        this[$endPolyfillCoordination] = coordinateWithPolyfill(
-                            this
-                        );
+                        this[$endPolyfillCoordination] =
+                            coordinateWithPolyfill(this);
                     }
                 });
             }

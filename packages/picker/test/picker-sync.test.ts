@@ -303,75 +303,21 @@ describe('Picker, sync', () => {
             await waitUntil(() => !firstItem.focused, 'not visually focused');
         });
         it('opens without visible focus on a menu item on click', async () => {
-            /**
-             * Firefox will not accept a single "click" from Playwright as deactivating the
-             * :focus-visible heuristic. So, to trick it, we "click" three times! Once to
-             * open, once to close, and once to open again before taking the operative test
-             * that the first item in the menu is to given the `focused` attribute immediately.
-             */
-
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
             await elementUpdated(el);
             const boundingRect = el.getBoundingClientRect();
 
             expect(firstItem.focused, 'not visually focused').to.be.false;
-            let opened = oneEvent(el, 'sp-opened');
-            await sendMouse({
+            const opened = oneEvent(el, 'sp-opened');
+            sendMouse({
                 steps: [
                     {
-                        type: 'move',
+                        type: 'click',
                         position: [
                             boundingRect.x + boundingRect.width / 2,
                             boundingRect.y + boundingRect.height / 2,
                         ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
-            await opened;
-            expect(el.open).to.be.true;
-            const closed = oneEvent(el, 'sp-closed');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                    {
-                        type: 'up',
-                    },
-                ],
-            });
-            await closed;
-
-            expect(el.open).to.be.false;
-            opened = oneEvent(el, 'sp-opened');
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [
-                            boundingRect.x + boundingRect.width / 2,
-                            boundingRect.y + boundingRect.height / 2,
-                        ],
-                    },
-                    {
-                        type: 'down',
-                    },
-                    {
-                        type: 'up',
                     },
                 ],
             });
@@ -1133,17 +1079,32 @@ describe('Picker, sync', () => {
 
         expect(el1.open, 'closed 1').to.be.false;
         expect(el2.open, 'closed 1').to.be.false;
+        let open = oneEvent(el1, 'sp-opened');
         el1.click();
-        await Promise.all([elementUpdated(el1), elementUpdated(el2)]);
-        await waitUntil(() => el1.open && !el2.open, '1 open, 2 closed');
+        await open;
+        expect(el1.open).to.be.true;
+        expect(el2.open).to.be.false;
 
+        open = oneEvent(el2, 'sp-opened');
+        let closed = oneEvent(el1, 'sp-closed');
         el2.click();
-        await Promise.all([elementUpdated(el1), elementUpdated(el2)]);
-        await waitUntil(() => !el1.open && el2.open, '1 closed, 2 open');
+        await Promise.all([open, closed]);
+        expect(el1.open).to.be.false;
+        expect(el2.open).to.be.true;
 
+        open = oneEvent(el1, 'sp-opened');
+        closed = oneEvent(el2, 'sp-closed');
         el1.click();
-        await Promise.all([elementUpdated(el1), elementUpdated(el2)]);
-        await waitUntil(() => el1.open && !el2.open, '1 open, 2 closed: again');
+        await Promise.all([open, closed]);
+        expect(el1.open).to.be.true;
+        expect(el2.open).to.be.false;
+
+        closed = oneEvent(el1, 'sp-closed');
+        sendKeys({
+            press: 'Escape',
+        });
+        await closed;
+        expect(el1.open).to.be.false;
     });
     it('displays selected item text by default', async () => {
         const el = await fixture<Picker>(
@@ -1180,16 +1141,25 @@ describe('Picker, sync', () => {
         expect(el.selectedItem?.itemText).to.equal('Select Inverse');
 
         el.focus();
+        await elementUpdated(el);
+        expect(
+            el === document.activeElement,
+            `activeElement is ${document.activeElement?.localName}`
+        ).to.be.true;
+
         const opened = oneEvent(el, 'sp-opened');
         sendKeys({ press: 'Enter' });
         await opened;
+        await elementUpdated(el.optionsMenu);
 
-        const menu = document.querySelector('sp-menu') as Menu;
-        await elementUpdated(menu);
+        expect(
+            el.optionsMenu === document.activeElement,
+            `activeElement is ${document.activeElement?.localName}`
+        ).to.be.true;
 
         expect(firstItem.focused, 'firstItem NOT "focused"').to.be.false;
         expect(secondItem.focused, 'secondItem "focused"').to.be.true;
-        expect(menu.getAttribute('aria-activedescendant')).to.equal(
+        expect(el.optionsMenu.getAttribute('aria-activedescendant')).to.equal(
             secondItem.id
         );
     });
