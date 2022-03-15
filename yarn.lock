@@ -4875,11 +4875,11 @@
   integrity sha512-Tz9Ut04eYdFZf1ocOgZ98Anb6VeCctKpkiz35o7J4/GqA8b6YFuN++JQbW/OYqJLqI9pODG9jiS2nv/oWRokiQ==
 
 "@spectrum-css/divider@^1.0.17":
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-1.0.17.tgz#cae86fdcb5eb6dae95798ae19ec962e5735fc27f"
-  integrity sha512-wuijKLQ+hwZC/aN8x7fVY18KPoFrxnhohheoDB99OTH44nt5+jEggzcPtwMHiUyb5iWMZx045OrG2DdJHiGl1A==
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-1.0.19.tgz#0aa97be02148f8a4ebb778c5e9d40d20e518bf19"
+  integrity sha512-vXUTfl08Txd2Rc7DsZtFDkaRSTDw1TzBwDvMJaGBl2E6cdCAXL2zXMxuXsEXN1NlPT8unpXVFYVMppcTzv/FCg==
   dependencies:
-    "@spectrum-css/vars" "^7.0.0"
+    "@spectrum-css/vars" "^7.1.0"
 
 "@spectrum-css/dropzone@^3.0.16":
   version "3.0.16"
@@ -5051,10 +5051,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/underlay/-/underlay-2.0.23.tgz#9f3053f78001e558ab7d1cc3a2ce2745e005dd4d"
   integrity sha512-fEgAdC0yTpGIN2Y6eLELtVo5DH7uTZAwGsbStk9S4mwLETeCcW++wZyTZPLa5jsRmQXHdIHNO9Izwxfm5Nm+QA==
 
-"@spectrum-css/vars@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-7.0.0.tgz#61a10028f3eeb69d8e488cfeb6251ec75107076d"
-  integrity sha512-0c7i7B/OPrLjrSIQVAxhnDDmDs9tA46gMuuiiaqpRNqEjfS1pRv5eY06qxNMXO5TWL75bHxaiiTQy8NdGA/v6A==
+"@spectrum-css/vars@^7.0.0", "@spectrum-css/vars@^7.1.0":
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-7.1.0.tgz#6531de43d3d0dfcc96ddda4d283f656e0efb63f6"
+  integrity sha512-hSn2ZZpvPOOzMCof9XWhaKNIs9yQfVkeUM0N6y99uz+9dvCyMrFlD2bvm+4IRB7yvu2xJQicd5vjVzbWyW/P6Q==
 
 "@storybook/csf-tools@^6.4.9":
   version "6.4.19"
