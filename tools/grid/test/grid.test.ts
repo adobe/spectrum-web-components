@@ -251,4 +251,24 @@ describe('Grid', () => {
 
         expect(el.selected).to.deep.equal([{ id: 4 }]);
     });
+    it('does not claim lit-virtualizer on the global registry', async () => {
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <div>${Default()}</div>
+            `
+        );
+        const el = test.querySelector('sp-grid') as Grid;
+
+        await elementUpdated(el);
+
+        customElements.define('lit-virtualizer', class extends HTMLElement {});
+
+        // make sure we also don't prevent *any* registration of lit-virtualizer
+        expect(() => {
+            customElements.define(
+                'lit-virtualizer',
+                class extends HTMLElement {}
+            );
+        }).to.throw();
+    });
 });

@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import type { ReactiveController } from 'lit';
+import type { ReactiveController, ReactiveElement } from 'lit';
 
 import { ResizeController } from '@lit-labs/observers/resize_controller.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
@@ -17,7 +17,6 @@ import {
     RangeChangedEvent,
     VisibilityChangedEvent,
 } from '@lit-labs/virtualizer/Virtualizer.js';
-import type { LitVirtualizer } from '@lit-labs/virtualizer';
 
 interface ItemSize {
     width: number;
@@ -27,7 +26,7 @@ interface ItemSize {
 export class GridController<T extends HTMLElement>
     implements ReactiveController
 {
-    host!: LitVirtualizer;
+    host!: ReactiveElement;
 
     resizeController!: ResizeController;
 
@@ -61,7 +60,7 @@ export class GridController<T extends HTMLElement>
     _last = 0;
 
     constructor(
-        host: LitVirtualizer,
+        host: ReactiveElement,
         {
             elements,
             itemSize,
@@ -151,7 +150,7 @@ export class GridController<T extends HTMLElement>
                 });
             });
         };
-        const scrollToFirst = (): void => this.host.scrollToIndex(0);
+        const scrollToFirst = (): void => (this.host as any).scrollToIndex(0);
         const focusIntoGrid = (): void => {
             this.focus();
             this.host.tabIndex = -1;
