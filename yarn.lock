@@ -4907,9 +4907,9 @@
   integrity sha512-2yPy8NjlsPZyXvaYGSd+Ltu6sttHzq5lyfdWSy60utp2BHmn/Uiae26NVxhhjCbRofuIIWSY0mFS+VkTwCf2PA==
 
 "@spectrum-css/illustratedmessage@^3.0.15":
-  version "3.0.15"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-3.0.15.tgz#2fa465170e7e616ea6bc487a3238122f8cd9fe02"
-  integrity sha512-Tp+IMTMuMH6ug+sluF/w5GrSpr4HZ/WApC0TyLG1BPO94mAuw7pFSSX0hlZWMjKCDVvnU3UMaF1Pyw9xUo1mUg==
+  version "3.0.17"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-3.0.17.tgz#49cb2549fda97a6812156bfba6ccdd3a18bebd11"
+  integrity sha512-kpDqeq1U+rEjG1XuiXkbGvS71vn6mpFF/hiwCgFJWudVOfypDPQ4KLfYw1ditFSUzMCm5H6U/RqAShAJn8oMWA==
 
 "@spectrum-css/link@^3.1.15":
   version "3.1.15"
