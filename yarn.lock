@@ -4906,10 +4906,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-3.0.15.tgz#fa2614bcd175b9be81457a2ce3b8fcdd5a292e18"
   integrity sha512-2yPy8NjlsPZyXvaYGSd+Ltu6sttHzq5lyfdWSy60utp2BHmn/Uiae26NVxhhjCbRofuIIWSY0mFS+VkTwCf2PA==
 
-"@spectrum-css/illustratedmessage@^3.0.15":
-  version "3.0.15"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-3.0.15.tgz#2fa465170e7e616ea6bc487a3238122f8cd9fe02"
-  integrity sha512-Tp+IMTMuMH6ug+sluF/w5GrSpr4HZ/WApC0TyLG1BPO94mAuw7pFSSX0hlZWMjKCDVvnU3UMaF1Pyw9xUo1mUg==
+"@spectrum-css/illustratedmessage@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-4.0.0.tgz#be35950aa28a06d9bfcfbb72bbb4cecf94ad700b"
+  integrity sha512-68CS6l3vFufyl3imqgOUdtfoI4lHgaEElSr7LcygvXwayPL8vjeM4E+oBpQ/gBN+QDzefm8GpDJNYWjpJ5gnHg==
 
 "@spectrum-css/link@^3.1.15":
   version "3.1.15"
