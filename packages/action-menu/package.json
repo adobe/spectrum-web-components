@@ -52,6 +52,7 @@
         "@spectrum-web-components/icons-workflow": "^0.8.5",
         "@spectrum-web-components/menu": "^0.12.4",
         "@spectrum-web-components/picker": "^0.10.5",
+        "@spectrum-web-components/popover": "^0.11.9",
         "@spectrum-web-components/shared": "^0.13.6",
         "tslib": "^2.0.0"
     },
