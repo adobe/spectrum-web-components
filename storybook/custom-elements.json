@@ -6748,6 +6748,196 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/button-group/src/ButtonGroup.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ButtonGroup",
+          "slots": [
+            {
+              "description": "the sp-button elements that make up the group",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "vertical",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "vertical",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "vertical"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-button-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ButtonGroup",
+          "declaration": {
+            "name": "ButtonGroup",
+            "module": "packages/button-group/src/ButtonGroup.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/button-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-flex-grow:1}:host([dir=ltr][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:left}:host([dir=rtl][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:right}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/button-group/src/button-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ButtonGroup.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/button-group/src/spectrum-button-group.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/button-group/src/spectrum-button-group.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/button/src/Button.ts",
       "declarations": [
         {
@@ -11837,196 +12027,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/button-group/src/ButtonGroup.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ButtonGroup",
-          "slots": [
-            {
-              "description": "the sp-button elements that make up the group",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "vertical",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "vertical",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "vertical"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-button-group",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ButtonGroup",
-          "declaration": {
-            "name": "ButtonGroup",
-            "module": "packages/button-group/src/ButtonGroup.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/button-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-flex-grow:1}:host([dir=ltr][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:left}:host([dir=rtl][vertical]) ::slotted(sp-action-button){--spectrum-actionbutton-label-text-align:right}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/button-group/src/button-group.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ButtonGroup.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/button-group/src/spectrum-button-group.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-buttongroup-button-gap-reset:0}:host{display:flex}::slotted(*){flex-shrink:0}:host([dir=ltr]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([dir=rtl]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-x,var(--spectrum-global-dimension-static-size-200)\n)}:host([vertical]){display:inline-flex;flex-direction:column}:host([dir=ltr][vertical]) ::slotted(:not(:first-of-type)){margin-left:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([dir=rtl][vertical]) ::slotted(:not(:first-of-type)){margin-right:var(\n--spectrum-buttongroup-button-gap-reset\n)}:host([vertical]) ::slotted(:not(:first-of-type)){margin-top:var(\n--spectrum-buttongroup-button-gap-y,var(--spectrum-global-dimension-static-size-200)\n)}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/button-group/src/spectrum-button-group.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/card/src/Card.ts",
       "declarations": [
         {
@@ -15360,6 +15360,208 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/color-loupe/src/ColorLoupe.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ColorLoupe",
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "color",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'rgba(255, 0, 0, 0.5)'",
+              "attribute": "color"
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "color",
+              "type": {
+                "text": "string"
+              },
+              "default": "'rgba(255, 0, 0, 0.5)'",
+              "fieldName": "color"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-color-loupe",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ColorLoupe",
+          "declaration": {
+            "name": "ColorLoupe",
+            "module": "packages/color-loupe/src/ColorLoupe.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/color-loupe/src/color-loupe.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-colorloupe-width-adjusted:calc(var(--spectrum-colorloupe-width, var(--spectrum-alias-colorloupe-width)) + var(--spectrum-global-dimension-static-size-100, 8px));--spectrum-colorloupe-height-adjusted:calc(var(\n--spectrum-colorloupe-height,\nvar(--spectrum-alias-colorloupe-height)\n) + var(--spectrum-global-dimension-static-size-100, 8px));--spectrum-colorloupe-offset:var(\n--spectrum-global-dimension-static-size-200,16px\n);--spectrum-colorloupe-animation-distance:var(\n--spectrum-global-dimension-static-size-100,8px\n)}:host{bottom:calc(50% + var(--spectrum-colorloupe-offset));height:var(--spectrum-colorloupe-height-adjusted);left:calc(50% - var(--spectrum-colorloupe-width-adjusted)/2);opacity:0;pointer-events:none;position:absolute;transform:translateY(var(--spectrum-colorloupe-animation-distance));transform-origin:bottom center;transition:transform .1s ease-in-out,opacity 125ms ease-in-out;width:var(--spectrum-colorloupe-width-adjusted)}:host([open]){opacity:1;transform:translate(0)}.outer{stroke-width:var(\n--spectrum-colorloupe-outer-border-size,0\n)}.spectrum-ColorLoupe-express{display:var(\n--spectrum-colorloupe-express-visibility,none\n)}.spectrum-ColorLoupe-spectrum{display:var(\n--spectrum-colorloupe-spectrum-visibility,block\n)}.outer{fill:var(\n--spectrum-colorloupe-inner-border-color,var(--spectrum-global-color-static-white)\n);stroke:var(--spectrum-colorloupe-outer-border-color,transparent)}.inner{fill:var(--spectrum-picked-color);stroke:var(\n--spectrum-colorloupe-outer-stroke-color,var(--spectrum-global-color-static-transparent-black-200)\n);stroke-width:var(\n--spectrum-colorloupe-outer-stroke-width,var(--spectrum-alias-border-size-thick)\n)}@media (forced-colors:active){:host{--spectrum-colorloupe-outer-border-color:CanvasText}}svg{height:inherit;width:inherit}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/color-loupe/src/color-loupe.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/color-loupe/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ColorLoupe.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/color-loupe/src/spectrum-color-loupe.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-colorloupe-width-adjusted:calc(var(--spectrum-colorloupe-width, var(--spectrum-alias-colorloupe-width)) + var(--spectrum-global-dimension-static-size-100, 8px));--spectrum-colorloupe-height-adjusted:calc(var(\n--spectrum-colorloupe-height,\nvar(--spectrum-alias-colorloupe-height)\n) + var(--spectrum-global-dimension-static-size-100, 8px));--spectrum-colorloupe-offset:var(\n--spectrum-global-dimension-static-size-200,16px\n);--spectrum-colorloupe-animation-distance:var(\n--spectrum-global-dimension-static-size-100,8px\n)}:host{bottom:calc(50% + var(--spectrum-colorloupe-offset));height:var(--spectrum-colorloupe-height-adjusted);left:calc(50% - var(--spectrum-colorloupe-width-adjusted)/2);opacity:0;pointer-events:none;position:absolute;transform:translateY(var(--spectrum-colorloupe-animation-distance));transform-origin:bottom center;transition:transform .1s ease-in-out,opacity 125ms ease-in-out;width:var(--spectrum-colorloupe-width-adjusted)}:host([open]){opacity:1;transform:translate(0)}.outer{stroke-width:var(\n--spectrum-colorloupe-outer-border-size,0\n)}.spectrum-ColorLoupe-express{display:var(\n--spectrum-colorloupe-express-visibility,none\n)}.spectrum-ColorLoupe-spectrum{display:var(\n--spectrum-colorloupe-spectrum-visibility,block\n)}.outer{fill:var(\n--spectrum-colorloupe-inner-border-color,var(--spectrum-global-color-static-white)\n);stroke:var(--spectrum-colorloupe-outer-border-color,transparent)}.inner{fill:var(--spectrum-picked-color);stroke:var(\n--spectrum-colorloupe-outer-stroke-color,var(--spectrum-global-color-static-transparent-black-200)\n);stroke-width:var(\n--spectrum-colorloupe-outer-stroke-width,var(--spectrum-alias-border-size-thick)\n)}@media (forced-colors:active){:host{--spectrum-colorloupe-outer-border-color:CanvasText}}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/color-loupe/src/spectrum-color-loupe.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/color-slider/src/ColorSlider.ts",
       "declarations": [
         {
@@ -16224,208 +16426,6 @@
       "path": "packages/color-slider/src/types.ts",
       "declarations": [],
       "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/color-loupe/src/ColorLoupe.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ColorLoupe",
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "open",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "color",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'rgba(255, 0, 0, 0.5)'",
-              "attribute": "color"
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "open"
-            },
-            {
-              "name": "color",
-              "type": {
-                "text": "string"
-              },
-              "default": "'rgba(255, 0, 0, 0.5)'",
-              "fieldName": "color"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-color-loupe",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ColorLoupe",
-          "declaration": {
-            "name": "ColorLoupe",
-            "module": "packages/color-loupe/src/ColorLoupe.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/color-loupe/src/color-loupe.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-colorloupe-width-adjusted:calc(var(--spectrum-colorloupe-width, var(--spectrum-alias-colorloupe-width)) + var(--spectrum-global-dimension-static-size-100, 8px));--spectrum-colorloupe-height-adjusted:calc(var(\n--spectrum-colorloupe-height,\nvar(--spectrum-alias-colorloupe-height)\n) + var(--spectrum-global-dimension-static-size-100, 8px));--spectrum-colorloupe-offset:var(\n--spectrum-global-dimension-static-size-200,16px\n);--spectrum-colorloupe-animation-distance:var(\n--spectrum-global-dimension-static-size-100,8px\n)}:host{bottom:calc(50% + var(--spectrum-colorloupe-offset));height:var(--spectrum-colorloupe-height-adjusted);left:calc(50% - var(--spectrum-colorloupe-width-adjusted)/2);opacity:0;pointer-events:none;position:absolute;transform:translateY(var(--spectrum-colorloupe-animation-distance));transform-origin:bottom center;transition:transform .1s ease-in-out,opacity 125ms ease-in-out;width:var(--spectrum-colorloupe-width-adjusted)}:host([open]){opacity:1;transform:translate(0)}.outer{stroke-width:var(\n--spectrum-colorloupe-outer-border-size,0\n)}.spectrum-ColorLoupe-express{display:var(\n--spectrum-colorloupe-express-visibility,none\n)}.spectrum-ColorLoupe-spectrum{display:var(\n--spectrum-colorloupe-spectrum-visibility,block\n)}.outer{fill:var(\n--spectrum-colorloupe-inner-border-color,var(--spectrum-global-color-static-white)\n);stroke:var(--spectrum-colorloupe-outer-border-color,transparent)}.inner{fill:var(--spectrum-picked-color);stroke:var(\n--spectrum-colorloupe-outer-stroke-color,var(--spectrum-global-color-static-transparent-black-200)\n);stroke-width:var(\n--spectrum-colorloupe-outer-stroke-width,var(--spectrum-alias-border-size-thick)\n)}@media (forced-colors:active){:host{--spectrum-colorloupe-outer-border-color:CanvasText}}svg{height:inherit;width:inherit}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/color-loupe/src/color-loupe.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/color-loupe/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ColorLoupe.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/color-loupe/src/spectrum-color-loupe.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-colorloupe-width-adjusted:calc(var(--spectrum-colorloupe-width, var(--spectrum-alias-colorloupe-width)) + var(--spectrum-global-dimension-static-size-100, 8px));--spectrum-colorloupe-height-adjusted:calc(var(\n--spectrum-colorloupe-height,\nvar(--spectrum-alias-colorloupe-height)\n) + var(--spectrum-global-dimension-static-size-100, 8px));--spectrum-colorloupe-offset:var(\n--spectrum-global-dimension-static-size-200,16px\n);--spectrum-colorloupe-animation-distance:var(\n--spectrum-global-dimension-static-size-100,8px\n)}:host{bottom:calc(50% + var(--spectrum-colorloupe-offset));height:var(--spectrum-colorloupe-height-adjusted);left:calc(50% - var(--spectrum-colorloupe-width-adjusted)/2);opacity:0;pointer-events:none;position:absolute;transform:translateY(var(--spectrum-colorloupe-animation-distance));transform-origin:bottom center;transition:transform .1s ease-in-out,opacity 125ms ease-in-out;width:var(--spectrum-colorloupe-width-adjusted)}:host([open]){opacity:1;transform:translate(0)}.outer{stroke-width:var(\n--spectrum-colorloupe-outer-border-size,0\n)}.spectrum-ColorLoupe-express{display:var(\n--spectrum-colorloupe-express-visibility,none\n)}.spectrum-ColorLoupe-spectrum{display:var(\n--spectrum-colorloupe-spectrum-visibility,block\n)}.outer{fill:var(\n--spectrum-colorloupe-inner-border-color,var(--spectrum-global-color-static-white)\n);stroke:var(--spectrum-colorloupe-outer-border-color,transparent)}.inner{fill:var(--spectrum-picked-color);stroke:var(\n--spectrum-colorloupe-outer-stroke-color,var(--spectrum-global-color-static-transparent-black-200)\n);stroke-width:var(\n--spectrum-colorloupe-outer-stroke-width,var(--spectrum-alias-border-size-thick)\n)}@media (forced-colors:active){:host{--spectrum-colorloupe-outer-border-color:CanvasText}}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/color-loupe/src/spectrum-color-loupe.css.ts"
-          }
-        }
-      ]
     },
     {
       "kind": "javascript-module",
