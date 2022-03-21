@@ -101,10 +101,10 @@ export default {
             '**/node_modules/**',
         ],
         threshold: {
-            statements: 99,
+            statements: 98.5,
             branches: 96,
             functions: 98,
-            lines: 99,
+            lines: 98.5,
         },
     },
     testFramework: {

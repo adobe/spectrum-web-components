@@ -17,11 +17,79 @@ import fs from 'fs-extra';
 import postcss from 'postcss';
 import { postCSSPlugins } from './css-processing.cjs';
 import { fileURLToPath } from 'url';
-// import postcssCustomProperties from 'postcss-custom-properties';
+import fg from 'fast-glob';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const processCSSData = async (data, identifier, from) => {
+let removedVariableDeclarations = 0;
+
+/**
+ * Use postcss to remove CSS Custom Properties that are not leveraged in the project
+ *
+ * @param { variables: string[] } options - list of CSS Custom Properties found to be used
+ */
+function postcssFilterVariableDeclarations(options) {
+    options = options || {};
+
+    var variables = options.variables;
+
+    function filterDeclarations(root) {
+        root.walk(function (rule) {
+            if (rule.type === 'rule') {
+                rule.each(function (decl, index) {
+                    if (decl.variable) {
+                        // always include global and alias vars
+                        if (
+                            decl.prop.startsWith('--spectrum-global-') ||
+                            decl.prop.startsWith('--spectrum-alias-')
+                        ) {
+                            return;
+                        }
+                        // otherwise if the variable is not in the allowed list, remove it
+                        if (!variables.has(decl.prop)) {
+                            decl.remove();
+                            removedVariableDeclarations += 1;
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    return filterDeclarations;
+}
+
+const varRegex = /--spectrum-[^:,)\s]+/g;
+
+/**
+ * Construct an array of the all the CSS custom properties leveraged in packages
+ * that ARE NOT the styles or theme packages.
+ * @returns string[]
+ */
+const findUsedVars = async () => {
+    const usedVariables = new Set();
+    for (const cssPath of await fg(`./packages/*/src/*.css`)) {
+        if (
+            cssPath.includes('packages/styles') ||
+            cssPath.includes('packages/theme')
+        ) {
+            continue;
+        }
+        const originCSS = fs.readFileSync(cssPath, 'utf8');
+        const foundVars = originCSS.matchAll(varRegex);
+        for (const variable of foundVars) {
+            usedVariables.add(variable[0]);
+        }
+    }
+    return usedVariables;
+};
+
+const processCSSData = async (
+    data,
+    identifier,
+    from,
+    usedVariables = undefined
+) => {
     /* lit-html is a JS litteral, so `\` escapes by default.
      * for there to be unicode characters, the escape must
      * escape itself...
@@ -55,7 +123,15 @@ const processCSSData = async (data, identifier, from) => {
         );
     }
 
-    result = await postcss(postCSSPlugins())
+    const plugins = postCSSPlugins();
+    if (usedVariables) {
+        plugins.push(
+            postcssFilterVariableDeclarations({
+                variables: usedVariables,
+            })
+        );
+    }
+    result = await postcss(plugins)
         .process(result, {
             from,
         })
@@ -65,14 +141,28 @@ const processCSSData = async (data, identifier, from) => {
     return result;
 };
 
-const processCSS = async (srcPath, dstPath, identifier, from) => {
-    fs.readFile(srcPath, 'utf8', async function (error, data) {
-        if (error) {
-            return console.log(error);
-        }
+const processCSS = async (
+    srcPath,
+    dstPath,
+    identifier,
+    from,
+    usedVariables = undefined
+) => {
+    return new Promise((res) => {
+        fs.readFile(srcPath, 'utf8', async function (error, data) {
+            if (error) {
+                return console.log(error);
+            }
 
-        let result = await processCSSData(data, identifier, from);
-        fs.writeFile(dstPath, result, 'utf8');
+            let result = await processCSSData(
+                data,
+                identifier,
+                from,
+                usedVariables
+            );
+            fs.writeFileSync(dstPath, result, 'utf8');
+            res();
+        });
     });
 };
 
@@ -125,6 +215,8 @@ const scales = ['medium', 'large'];
 const cores = ['global'];
 const processes = [];
 
+const foundVars = await findUsedVars();
+
 spectrumPaths.forEach(async (spectrumPath, i) => {
     const packageDir = ['styles'];
     const isExpress = i === 1;
@@ -158,7 +250,9 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
             )
         );
         console.log(`processing scale  ${srcPath}`);
-        processes.push(await processCSS(srcPath, dstPath, scale));
+        processes.push(
+            await processCSS(srcPath, dstPath, scale, undefined, foundVars)
+        );
     });
 
     cores.forEach(async (core) => {
@@ -177,7 +271,7 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
     });
 });
 
-(async () => {
+async function processSpectrumVars() {
     {
         // Typography
         const typographyPath = path.join(
@@ -246,6 +340,10 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
     }
 
     Promise.all(processes).then(() => {
-        console.log('complete.');
+        console.log(
+            `Spectrum Vars processed. ${removedVariableDeclarations} Custom Property declarations were removed as unused.`
+        );
     });
-})();
+}
+
+processSpectrumVars();
