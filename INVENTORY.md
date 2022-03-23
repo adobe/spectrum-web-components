@@ -3,7 +3,7 @@
 Availability of [Spectrum](https://spectrum.adobe.com) components in [Spectrum CSS](https://opensource.adobe.com/spectrum-css/)
 and [Spectrum Web Components](https://opensource.adobe.com/spectrum-web-components/).
 
-| Component           | Design tokens (86) | CSS (69)                                                                | Web Components (51)                                                                       |
+| Component           | Design tokens (86) | CSS (74)                                                                | Web Components (53)                                                                       |
 | ------------------- | ------------------ | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | accordion           | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/accordion.html)          | [📄](https://opensource.adobe.com/spectrum-web-components/components/accordion)           |
 | actionbar           | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/actionbar.html)          | [📄](https://opensource.adobe.com/spectrum-web-components/components/action-bar)          |
@@ -13,6 +13,7 @@ and [Spectrum Web Components](https://opensource.adobe.com/spectrum-web-componen
 | alertbanner         | ✅                 |                                                                         |                                                                                           |
 | artboard            | ✅                 |                                                                         |                                                                                           |
 | asset               | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/asset.html)              | [📄](https://opensource.adobe.com/spectrum-web-components/components/asset)               |
+| assetcard           |                    | [📄](https://opensource.adobe.com/spectrum-css/assetcard.html)          | ❌                                                                                        |
 | assetlist           | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/assetlist.html)          | ❌                                                                                        |
 | avatar              | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/avatar.html)             | [📄](https://opensource.adobe.com/spectrum-web-components/components/avatar)              |
 | badge               | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/badge.html)              | ❌                                                                                        |
@@ -20,13 +21,13 @@ and [Spectrum Web Components](https://opensource.adobe.com/spectrum-web-componen
 | body                | ✅                 |                                                                         |                                                                                           |
 | bottomnavigation    | ✅                 |                                                                         |                                                                                           |
 | breadcrumb          | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/breadcrumb.html)         | ❌                                                                                        |
-| button              | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/logicbutton.html)        | [📄](https://opensource.adobe.com/spectrum-web-components/components/button)              |
+| button              | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/button-staticcolor.html) | [📄](https://opensource.adobe.com/spectrum-web-components/components/button)              |
 | buttongroup         | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/buttongroup.html)        | [📄](https://opensource.adobe.com/spectrum-web-components/components/button-group)        |
 | calendar            | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/calendar.html)           | ❌                                                                                        |
 | card                | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/card.html)               | [📄](https://opensource.adobe.com/spectrum-web-components/components/card)                |
 | checkbox            | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/checkbox.html)           | [📄](https://opensource.adobe.com/spectrum-web-components/components/checkbox)            |
-| clearbutton         | ✅                 |                                                                         |                                                                                           |
-| closebutton         | ✅                 |                                                                         |                                                                                           |
+| clearbutton         | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/clearbutton.html)        | [📄](https://opensource.adobe.com/spectrum-web-components/components/clear-button)        |
+| closebutton         | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/closebutton.html)        | [📄](https://opensource.adobe.com/spectrum-web-components/components/close-button)        |
 | coachmark           | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/coachmark.html)          | [📄](https://opensource.adobe.com/spectrum-web-components/components/coachmark)           |
 | code                | ✅                 |                                                                         |                                                                                           |
 | colorarea           | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/colorarea.html)          | [📄](https://opensource.adobe.com/spectrum-web-components/components/color-area)          |
@@ -52,13 +53,13 @@ and [Spectrum Web Components](https://opensource.adobe.com/spectrum-web-componen
 | helptext            | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/helptext.html)           | [📄](https://opensource.adobe.com/spectrum-web-components/components/help-text)           |
 | icon                |                    |                                                                         | [📄](https://opensource.adobe.com/spectrum-web-components/components/icon)                |
 | illustratedmessage  | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/illustratedmessage.html) | [📄](https://opensource.adobe.com/spectrum-web-components/components/illustrated-message) |
-| infieldbutton       | ✅                 |                                                                         |                                                                                           |
+| infieldbutton       | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/infieldbutton.html)      | ❌                                                                                        |
 | inlinealert         | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/inlinealert.html)        | ❌                                                                                        |
 | inputgroup          |                    | [📄](https://opensource.adobe.com/spectrum-css/datepicker.html)         | ❌                                                                                        |
 | label               | ✅                 |                                                                         |                                                                                           |
 | link                | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/link.html)               | [📄](https://opensource.adobe.com/spectrum-web-components/components/link)                |
 | listitem            | ✅                 |                                                                         |                                                                                           |
-| logicbutton         | ✅                 |                                                                         |                                                                                           |
+| logicbutton         | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/logicbutton.html)        | ❌                                                                                        |
 | menu                |                    | [📄](https://opensource.adobe.com/spectrum-css/menu.html)               | [📄](https://opensource.adobe.com/spectrum-web-components/components/menu)                |
 | meter               | ✅                 |                                                                         |                                                                                           |
 | miller              |                    | [📄](https://opensource.adobe.com/spectrum-css/miller.html)             | ❌                                                                                        |
