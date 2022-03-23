@@ -3619,10 +3619,10 @@
   dependencies:
     "@lit/reactive-element" "^1.1.0"
 
-"@lit-labs/virtualizer@0.7.0-pre.2":
-  version "0.7.0-pre.2"
-  resolved "https://registry.yarnpkg.com/@lit-labs/virtualizer/-/virtualizer-0.7.0-pre.2.tgz#4db58baeef0918d66d7806d0c13128e873341cb2"
-  integrity sha512-UfVSP30X2HIG/mhovN3dvaIG0M9tDg0Mo4OSMtsLzZByo0fABWh5AVPToJ6odmfwhnK6mKuUnSEYW9ONptmJjg==
+"@lit-labs/virtualizer@0.7.0-pre.3":
+  version "0.7.0-pre.3"
+  resolved "https://registry.yarnpkg.com/@lit-labs/virtualizer/-/virtualizer-0.7.0-pre.3.tgz#aad9014f79777cd3a0023a452611f270e70dd629"
+  integrity sha512-NFnXKfGGLiGhO7xocn7KqW6Mlc1jeoqsq7aw+lFxTAh3Kmu0UoFrMCrCTIcAypF2CPfwUxFud6x9bgNdUj4oRA==
   dependencies:
     event-target-shim "^5.0.1"
     lit "^2.0.0"

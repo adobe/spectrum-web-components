@@ -16,7 +16,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { LitVirtualizer } from './LitVirtualizer.js';
+import { LitVirtualizer } from '@lit-labs/virtualizer/LitVirtualizer.js';
 import { grid } from '@lit-labs/virtualizer/layouts/grid.js';
 import styles from './grid.css.js';
 import { GridController } from './GridController.js';
