@@ -116,4 +116,5 @@ export default {
             },
         }),
     ],
+    browserLogs: false,
 };
