@@ -138,7 +138,7 @@ jobs:
                   path: coverage
             - run:
                   name: Are there changes?
-                  command: git diff-files --quiet
+                  command: git diff-files
 
     docs-preview:
         executor: node
