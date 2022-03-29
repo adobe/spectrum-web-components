@@ -4702,9 +4702,9 @@
   integrity sha512-SfgANQcrWBddY7W/miYGuyyuXfjHmoiwqTv8b4jvcbg9UV52/x1rX4I3jZ7FmlJ4VhUVmAjwwss89QSeOdI8mg==
 
 "@spectrum-css/actionbar@^3.0.18":
-  version "3.0.18"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-3.0.18.tgz#01ce4bd80c7e57ff1589f53423adc186883a0bc8"
-  integrity sha512-oo8c0MhXeSJMgNc7e25z6iKVOJbKZPGyPvvMXbgadZGaxp6v5WLV9uCzU8GkyLhlQUh+/ez4IbUsyrEfSrcRlw==
+  version "3.0.22"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-3.0.22.tgz#7f508b85471d580453ba622c6d4360e2e2a3c40d"
+  integrity sha512-tWErP6uD6ZNu6qBzm7imsUCevReoJHTBLDiYoMFfDYt5UlXGragHDEHIdp6chC6xa5AnQPW++QkF1K1/eDIXVQ==
 
 "@spectrum-css/actionbutton@^1.1.6":
   version "1.1.6"
