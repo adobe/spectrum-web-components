@@ -4854,9 +4854,9 @@
   integrity sha512-4S2bpJtAQR+sc6/xoHKMMJxgA75W4NmSe86tAMTgS0JrhNxAS4KeQidVvBHfiQuRIx51IGQiUaIC/yip+FO/xw==
 
 "@spectrum-css/modal@^3.0.14":
-  version "3.0.14"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/modal/-/modal-3.0.14.tgz#bab86991ecb0391537e289e70f7ed8f3f4f60a56"
-  integrity sha512-trPY8qYhoAoCWr8CoW+eXODDWvweS8u5wN6qB0KP/0cMgOGxQoXyirF+c86QSkc243OOjOThm+ZNrVN1GMCvdA==
+  version "3.0.18"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/modal/-/modal-3.0.18.tgz#b466536fdecc635a07620a491e45adf344830825"
+  integrity sha512-vHNUN9u0rHRvst1up9/5SDz/BYKnC/WdPigoJaJorfK0hUQNamtwm/A8COib2JdfiZ5/mqjZex6z84dT93dmiA==
 
 "@spectrum-css/picker@^1.1.12":
   version "1.1.12"
