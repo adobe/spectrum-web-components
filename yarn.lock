@@ -4838,10 +4838,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-3.0.15.tgz#fa2614bcd175b9be81457a2ce3b8fcdd5a292e18"
   integrity sha512-2yPy8NjlsPZyXvaYGSd+Ltu6sttHzq5lyfdWSy60utp2BHmn/Uiae26NVxhhjCbRofuIIWSY0mFS+VkTwCf2PA==
 
-"@spectrum-css/illustratedmessage@^3.0.15":
-  version "3.0.15"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-3.0.15.tgz#2fa465170e7e616ea6bc487a3238122f8cd9fe02"
-  integrity sha512-Tp+IMTMuMH6ug+sluF/w5GrSpr4HZ/WApC0TyLG1BPO94mAuw7pFSSX0hlZWMjKCDVvnU3UMaF1Pyw9xUo1mUg==
+"@spectrum-css/illustratedmessage@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-4.0.2.tgz#6f8eb437818c419d0cf980fb016ad0290d9fbd25"
+  integrity sha512-1VlNsresSxt4K8/LrUYYBu8KwZB3xa6uGI3a6v9XTttWsjccletnkaaKmp8X5NgKtnp+WoM5JM5O7k4MZhBIlg==
 
 "@spectrum-css/link@^3.1.15":
   version "3.1.15"
