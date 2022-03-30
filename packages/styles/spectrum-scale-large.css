@@ -125,6 +125,9 @@ governing permissions and limitations under the License.
     --spectrum-alias-item-mark-size-m: var(
         --spectrum-global-dimension-static-size-325
     );
+    --spectrum-alias-component-focusring-border-radius: var(
+        --spectrum-global-dimension-static-size-75
+    );
     --spectrum-alias-control-two-size-s: var(
         --spectrum-global-dimension-size-160
     );
@@ -141,6 +144,9 @@ governing permissions and limitations under the License.
     --spectrum-alias-control-three-width-xl: 46px;
     --spectrum-alias-search-padding-left-m: var(
         --spectrum-global-dimension-static-size-150
+    );
+    --spectrum-alias-focus-ring-border-radius-regular: var(
+        --spectrum-global-dimension-static-size-115
     );
     --spectrum-alias-focus-ring-radius-default: var(
         --spectrum-global-dimension-static-size-115
@@ -282,6 +288,9 @@ governing permissions and limitations under the License.
     --spectrum-alias-avatar-size-600: 46px;
     --spectrum-alias-tag-icon-size-l: var(
         --spectrum-global-dimension-static-size-300
+    );
+    --spectrum-alias-tag-focusring-border-radius: var(
+        --spectrum-global-dimension-static-size-75
     );
     --spectrum-actionbutton-s-quiet-emphasized-texticon-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-85
@@ -4759,9 +4768,6 @@ governing permissions and limitations under the License.
     --spectrum-picker-m-quiet-texticon-touch-hit-y: var(
         --spectrum-global-dimension-static-size-50
     );
-    --spectrum-picker-m-texticon-popover-offset-x: var(
-        --spectrum-global-dimension-static-size-150
-    );
     --spectrum-picker-m-texticon-padding-left: var(
         --spectrum-global-dimension-static-size-150
     );
@@ -4788,9 +4794,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-picker-m-quiet-textthumbnail-touch-hit-y: var(
         --spectrum-global-dimension-static-size-50
-    );
-    --spectrum-picker-m-textthumbnail-popover-offset-x: var(
-        --spectrum-global-dimension-static-size-150
     );
     --spectrum-picker-m-textthumbnail-padding-left: var(
         --spectrum-global-dimension-static-size-150

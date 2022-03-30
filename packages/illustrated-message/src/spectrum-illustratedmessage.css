@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 
 THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-illustrated-message-description-max-width: 500px; /* .spectrum-IllustratedMessage */
-    --spectrum-illustrated-message-heading-max-width: 500px;
-    --spectrum-illustrated-message-illustration-margin-bottom: 24px;
-    --spectrum-illustrated-message-heading-margin: 0;
-    --spectrum-illustrated-message-description-margin: 4px 0 0 0;
+    --spectrum-illustratedmessage-description-max-width: 500px; /* .spectrum-IllustratedMessage */
+    --spectrum-illustratedmessage-heading-max-width: 500px;
+    --spectrum-illustratedmessage-illustration-margin-bottom: 24px;
+    --spectrum-illustratedmessage-heading-margin: 0;
+    --spectrum-illustratedmessage-description-margin: 4px 0 0 0;
 }
 :host {
     align-items: center;
@@ -27,24 +27,42 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 #illustration {
     margin-bottom: var(
-        --spectrum-illustrated-message-illustration-margin-bottom
+        --spectrum-illustratedmessage-illustration-margin-bottom
     ); /* .spectrum-IllustratedMessage-illustration */
 }
 #heading {
-    margin: var(--spectrum-illustrated-message-heading-margin);
-    max-width: var(
-        --spectrum-illustrated-message-heading-max-width
+    color: var(
+        --spectrum-illustratedmessage-heading-color,
+        var(--spectrum-global-color-gray-800)
     ); /* .spectrum-IllustratedMessage-heading */
+    font-size: var(
+        --spectrum-illustratedmessage-heading-font-size,
+        var(--spectrum-alias-heading-m-text-size)
+    );
+    font-weight: var(
+        --spectrum-illustratedmessage-heading-font-weight,
+        var(--spectrum-alias-heading-text-font-weight-regular)
+    );
+    margin: var(--spectrum-illustratedmessage-heading-margin);
+    max-width: var(--spectrum-illustratedmessage-heading-max-width);
 }
 #description {
-    font-style: italic;
-    margin: var(--spectrum-illustrated-message-description-margin);
-    max-width: var(
-        --spectrum-illustrated-message-description-max-width
+    color: var(
+        --spectrum-illustratedmessage-description-color,
+        var(--spectrum-global-color-gray-700)
     ); /* .spectrum-IllustratedMessage-description */
+    font-style: var(
+        --spectrum-illustratedmessage-description-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    margin: var(--spectrum-illustratedmessage-description-margin);
+    max-width: var(--spectrum-illustratedmessage-description-max-width);
 }
 :host([cta]) #description {
-    font-style: normal; /* .spectrum-IllustratedMessage--cta .spectrum-IllustratedMessage-description */
+    font-style: var(
+        --spectrum-illustratedmessage-description-font-style,
+        var(--spectrum-global-font-style-regular)
+    ); /* .spectrum-IllustratedMessage--cta .spectrum-IllustratedMessage-description */
 }
 #illustration {
     fill: currentColor;

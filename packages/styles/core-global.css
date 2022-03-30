@@ -390,6 +390,18 @@ governing permissions and limitations under the License.
     --spectrum-semantic-cta-background-color-key-focus: var(
         --spectrum-global-color-static-blue-600
     );
+    --spectrum-semantic-emphasized-border-color-default: var(
+        --spectrum-global-color-blue-500
+    );
+    --spectrum-semantic-emphasized-border-color-hover: var(
+        --spectrum-global-color-blue-600
+    );
+    --spectrum-semantic-emphasized-border-color-down: var(
+        --spectrum-global-color-blue-700
+    );
+    --spectrum-semantic-emphasized-border-color-key-focus: var(
+        --spectrum-global-color-blue-600
+    );
     --spectrum-semantic-neutral-background-color-default: var(
         --spectrum-global-color-static-gray-700
     );
@@ -446,12 +458,14 @@ governing permissions and limitations under the License.
     --spectrum-global-dimension-static-size-150: 12px;
     --spectrum-global-dimension-static-size-160: 13px;
     --spectrum-global-dimension-static-size-175: 14px;
+    --spectrum-global-dimension-static-size-185: 15px;
     --spectrum-global-dimension-static-size-200: 16px;
     --spectrum-global-dimension-static-size-225: 18px;
     --spectrum-global-dimension-static-size-250: 20px;
     --spectrum-global-dimension-static-size-275: 22px;
     --spectrum-global-dimension-static-size-300: 24px;
     --spectrum-global-dimension-static-size-325: 26px;
+    --spectrum-global-dimension-static-size-350: 28px;
     --spectrum-global-dimension-static-size-400: 32px;
     --spectrum-global-dimension-static-size-450: 36px;
     --spectrum-global-dimension-static-size-500: 40px;
@@ -1145,9 +1159,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-component-focusring-size-emphasized: var(
         --spectrum-global-dimension-static-size-25
     );
-    --spectrum-alias-component-focusring-border-radius: var(
-        --spectrum-global-dimension-size-75
-    );
     --spectrum-alias-input-border-size: var(
         --spectrum-global-dimension-static-size-10
     );
@@ -1183,6 +1194,21 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-control-two-border-radius-xxl: var(
         --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-control-two-focus-ring-border-radius-s: var(
+        --spectrum-global-dimension-size-125
+    );
+    --spectrum-alias-control-two-focus-ring-border-radius-m: var(
+        --spectrum-global-dimension-size-130
+    );
+    --spectrum-alias-control-two-focus-ring-border-radius-l: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-control-two-focus-ring-border-radius-xl: var(
+        --spectrum-global-dimension-size-160
+    );
+    --spectrum-alias-control-two-focus-ring-border-radius-xxl: var(
+        --spectrum-global-dimension-size-175
     );
     --spectrum-alias-control-three-height-m: var(
         --spectrum-global-dimension-size-175
@@ -1520,6 +1546,21 @@ governing permissions and limitations under the License.
     --spectrum-alias-border-radius-xlarge: var(
         --spectrum-global-dimension-size-300
     );
+    --spectrum-alias-focus-ring-border-radius-xsmall: var(
+        --spectrum-global-dimension-size-50
+    );
+    --spectrum-alias-focus-ring-border-radius-small: var(
+        --spectrum-global-dimension-static-size-65
+    );
+    --spectrum-alias-focus-ring-border-radius-medium: var(
+        --spectrum-global-dimension-size-150
+    );
+    --spectrum-alias-focus-ring-border-radius-large: var(
+        --spectrum-global-dimension-size-250
+    );
+    --spectrum-alias-focus-ring-border-radius-xlarge: var(
+        --spectrum-global-dimension-size-350
+    );
     --spectrum-alias-single-line-height: var(
         --spectrum-global-dimension-size-400
     );
@@ -1659,9 +1700,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-tag-clearbutton-icon-margin-l: var(
         --spectrum-global-dimension-size-185
-    );
-    --spectrum-alias-tag-focusring-border-radius: var(
-        --spectrum-global-dimension-size-75
     );
     --spectrum-alias-tag-focusring-size: var(
         --spectrum-global-dimension-size-25
@@ -2219,16 +2257,16 @@ governing permissions and limitations under the License.
         --spectrum-alias-toggle-background-color-default
     );
     --spectrum-alias-toggle-background-color-emphasized-selected-default: var(
-        --spectrum-semantic-cta-background-color-default
+        --spectrum-global-color-blue-500
     );
     --spectrum-alias-toggle-background-color-emphasized-selected-hover: var(
-        --spectrum-semantic-cta-background-color-hover
+        --spectrum-global-color-blue-600
     );
     --spectrum-alias-toggle-background-color-emphasized-selected-down: var(
-        --spectrum-semantic-cta-background-color-down
+        --spectrum-global-color-blue-700
     );
     --spectrum-alias-toggle-background-color-emphasized-selected-key-focus: var(
-        --spectrum-semantic-cta-background-color-key-focus
+        --spectrum-global-color-blue-600
     );
     --spectrum-alias-toggle-background-color-emphasized-selected: var(
         --spectrum-alias-toggle-background-color-emphasized-selected-default
@@ -2252,7 +2290,7 @@ governing permissions and limitations under the License.
         --spectrum-global-color-gray-75
     );
     --spectrum-alias-toggle-icon-color-emphasized-selected: var(
-        --spectrum-alias-component-icon-color-emphasized-selected-default
+        --spectrum-global-color-gray-75
     );
     --spectrum-alias-button-primary-background-color-default: var(
         --spectrum-alias-background-color-transparent
@@ -2760,6 +2798,24 @@ governing permissions and limitations under the License.
     --spectrum-alias-tabitem-icon-color-emphasized-selected: var(
         --spectrum-alias-tabitem-text-color-emphasized-selected-default
     );
+    --spectrum-alias-assetcard-selectionindicator-background-color-ordered: var(
+        --spectrum-global-color-blue-500
+    );
+    --spectrum-alias-assetcard-overlay-background-color: rgba(
+        38,
+        128,
+        235,
+        0.1
+    );
+    --spectrum-alias-assetcard-border-color-selected: var(
+        --spectrum-global-color-blue-500
+    );
+    --spectrum-alias-assetcard-border-color-selected-hover: var(
+        --spectrum-global-color-blue-500
+    );
+    --spectrum-alias-assetcard-border-color-selected-down: var(
+        --spectrum-global-color-blue-600
+    );
     --spectrum-alias-background-color-default: var(
         --spectrum-global-color-gray-100
     );
@@ -3046,10 +3102,10 @@ governing permissions and limitations under the License.
     --spectrum-colorhandle-background-offset: calc(
         var(--spectrum-global-dimension-static-size-25) * -1
     );
-    --spectrum-colorhandle-outer-shadow-color: rgba(0, 0, 0, 0.42);
     --spectrum-colorhandle-inner-shadow-color: var(
         --spectrum-colorhandle-outer-shadow-color
     );
+    --spectrum-colorhandle-outer-shadow-color: rgba(0, 0, 0, 0.42);
     --spectrum-colorhandle-outer-shadow-blur: 0;
     --spectrum-colorhandle-outer-shadow-spread: var(
         --spectrum-alias-border-size-thin
@@ -3059,6 +3115,12 @@ governing permissions and limitations under the License.
     );
     --spectrum-colorcontrol-checkerboard-dark-color: var(
         --spectrum-global-color-static-gray-300
+    );
+    --spectrum-slider-m-track-inside-border-radius: var(
+        --spectrum-slider-m-track-border-radius
+    );
+    --spectrum-slider-label-text-size: var(
+        --spectrum-global-dimension-font-size-75
     );
 }
 /* stylelint-enable */
