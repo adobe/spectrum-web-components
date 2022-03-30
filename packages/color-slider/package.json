@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-slider",
-    "version": "0.3.6",
+    "version": "0.3.7",
     "publishConfig": {
         "access": "public"
     },
@@ -47,7 +47,7 @@
         "@ctrl/tinycolor": "^3.3.3",
         "@spectrum-web-components/base": "^0.5.4",
         "@spectrum-web-components/color-handle": "^0.3.5",
-        "@spectrum-web-components/shared": "^0.13.6",
+        "@spectrum-web-components/shared": "^0.13.7",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

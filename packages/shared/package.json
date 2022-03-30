@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/shared",
-    "version": "0.13.6",
+    "version": "0.13.7",
     "publishConfig": {
         "access": "public"
     },

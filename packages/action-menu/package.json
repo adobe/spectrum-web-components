@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-menu",
-    "version": "0.13.10",
+    "version": "0.13.11",
     "publishConfig": {
         "access": "public"
     },
@@ -46,13 +46,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.8.1",
+        "@spectrum-web-components/action-button": "^0.8.2",
         "@spectrum-web-components/base": "^0.5.4",
         "@spectrum-web-components/icon": "^0.11.5",
         "@spectrum-web-components/icons-workflow": "^0.8.5",
-        "@spectrum-web-components/menu": "^0.12.4",
-        "@spectrum-web-components/picker": "^0.10.5",
-        "@spectrum-web-components/shared": "^0.13.6",
+        "@spectrum-web-components/menu": "^0.12.5",
+        "@spectrum-web-components/picker": "^0.10.6",
+        "@spectrum-web-components/shared": "^0.13.7",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

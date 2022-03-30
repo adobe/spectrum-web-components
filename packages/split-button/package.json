@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/split-button",
-    "version": "0.8.2",
+    "version": "0.8.3",
     "publishConfig": {
         "access": "public"
     },
@@ -47,12 +47,12 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.5.4",
-        "@spectrum-web-components/button": "^0.17.1",
+        "@spectrum-web-components/button": "^0.17.2",
         "@spectrum-web-components/icon": "^0.11.5",
         "@spectrum-web-components/icons-ui": "^0.8.5",
         "@spectrum-web-components/icons-workflow": "^0.8.5",
-        "@spectrum-web-components/overlay": "^0.15.2",
-        "@spectrum-web-components/picker": "^0.10.5",
+        "@spectrum-web-components/overlay": "^0.15.3",
+        "@spectrum-web-components/picker": "^0.10.6",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/grid@0.0.3...@spectrum-web-components/grid@0.0.4) (2022-03-30)
+
+### Bug Fixes
+
+-   avoid registering lit-virtualizer globally ([281071f](https://github.com/adobe/spectrum-web-components/commit/281071fc551b189afa0ef9ef21e542c27661d567))
+-   import LitVirtualizer from @lit-labs/virtualizer@0.7.0-pre.3 ([9886ce4](https://github.com/adobe/spectrum-web-components/commit/9886ce4a6fd612bae33feffea26f8dbe8af9d690))
+
 ## [0.0.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/grid@0.0.2...@spectrum-web-components/grid@0.0.3) (2022-03-08)
 
 **Note:** Version bump only for package @spectrum-web-components/grid

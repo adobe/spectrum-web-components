@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/tags",
-    "version": "0.8.7",
+    "version": "0.8.8",
     "publishConfig": {
         "access": "public"
     },
@@ -47,9 +47,9 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.5.4",
-        "@spectrum-web-components/button": "^0.17.1",
+        "@spectrum-web-components/button": "^0.17.2",
         "@spectrum-web-components/reactive-controllers": "^0.2.2",
-        "@spectrum-web-components/shared": "^0.13.6",
+        "@spectrum-web-components/shared": "^0.13.7",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
