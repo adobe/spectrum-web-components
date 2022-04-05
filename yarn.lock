@@ -11051,7 +11051,7 @@ fast-glob@^2.2.6:
     merge2 "^1.2.3"
     micromatch "^3.1.10"
 
-fast-glob@^3.0.3, fast-glob@^3.1.1, fast-glob@^3.2.2, fast-glob@^3.2.7, fast-glob@^3.2.9:
+fast-glob@^3.0.3, fast-glob@^3.1.1, fast-glob@^3.2.11, fast-glob@^3.2.2, fast-glob@^3.2.7, fast-glob@^3.2.9:
   version "3.2.11"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.2.11.tgz#a1172ad95ceb8a16e20caa5c5e56480e5129c1d9"
   integrity sha512-xrO3+1bxSo3ZVHAnqzyuewYT6aMFHRAd4Kcs92MAonjwQZLsK9d0SF1IyQ3k5PoirxTW0Oe/RqFgMQ6TcNE5Ew==
@@ -18297,13 +18297,12 @@ postcss-initial@^4.0.1:
   resolved "https://registry.yarnpkg.com/postcss-initial/-/postcss-initial-4.0.1.tgz#529f735f72c5724a0fb30527df6fb7ac54d7de42"
   integrity sha512-0ueD7rPqX8Pn1xJIjay0AZeIuDoF+V+VvMt/uOnn+4ezUKhZM/NokDeP6DwMNyIoYByuN/94IQnt5FEkaN59xQ==
 
-postcss-js@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/postcss-js/-/postcss-js-3.0.3.tgz#2f0bd370a2e8599d45439f6970403b5873abda33"
-  integrity sha512-gWnoWQXKFw65Hk/mi2+WTQTHdPD5UJdDXZmX073EY/B3BWnYjO4F4t0VneTCnCGQ5E5GsCdMkzPaTXwl3r5dJw==
+postcss-js@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/postcss-js/-/postcss-js-4.0.0.tgz#31db79889531b80dc7bc9b0ad283e418dce0ac00"
+  integrity sha512-77QESFBwgX4irogGVPgQ5s07vLvFqWr228qZY+w6lW599cRlK/HmnlivnnVUxkjHnCu4J16PDMHcH+e+2HbvTQ==
   dependencies:
     camelcase-css "^2.0.1"
-    postcss "^8.1.6"
 
 postcss-lab-function@^4.0.3:
   version "4.0.3"
@@ -18395,12 +18394,12 @@ postcss-minify-selectors@^5.2.0:
     postcss-selector-parser "^6.0.5"
 
 postcss-mixins@^9.0.1:
-  version "9.0.1"
-  resolved "https://registry.yarnpkg.com/postcss-mixins/-/postcss-mixins-9.0.1.tgz#eb00f8073b6d37881b10029e3c0ceea35f7d7576"
-  integrity sha512-4gFBr/JxMhSOlzHFfUDXV3vU0FNhDwIx/rzuvjvep/LAysJW9zcpeVxxNwBu1orM7STsTB9ZRULe44fD9lKWrA==
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/postcss-mixins/-/postcss-mixins-9.0.2.tgz#098969dafd1b9a98e2973fde024bef9d2563f604"
+  integrity sha512-LaFjXcR+7LRji+Sc6DRn1mUw43+Y9Lyh5JjFTQDedlIi4W6REAesRXRJLlms5424vb0zerBfCVZzS2ZHRxGZOA==
   dependencies:
-    fast-glob "^3.2.7"
-    postcss-js "^3.0.3"
+    fast-glob "^3.2.11"
+    postcss-js "^4.0.0"
     postcss-simple-vars "^6.0.3"
     sugarss "^4.0.1"
 
@@ -18689,7 +18688,7 @@ postcss-values-parser@^2.0.1:
     indexes-of "^1.0.1"
     uniq "^1.0.1"
 
-postcss@^8, postcss@^8.1.6, postcss@^8.1.7, postcss@^8.2.15, postcss@^8.3.11, postcss@^8.3.5, postcss@^8.4.5:
+postcss@^8, postcss@^8.1.7, postcss@^8.2.15, postcss@^8.3.11, postcss@^8.3.5, postcss@^8.4.5:
   version "8.4.5"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.5.tgz#bae665764dfd4c6fcc24dc0fdf7e7aa00cc77f95"
   integrity sha512-jBDboWM8qpaqwkMwItqTQTiFikhs/67OYVvblFFTM7MrZjt6yMKd6r2kgXizEbTTljacm4NldIlZnhbjr84QYg==
