@@ -16,8 +16,6 @@ import {
     supportsAdoptingStyleSheets,
 } from '@spectrum-web-components/base';
 
-import coreStyles from './theme.css.js';
-
 declare global {
     interface Window {
         ShadyCSS: {
@@ -42,24 +40,44 @@ type ShadowRootWithAdoptedStyleSheets = HTMLElement['shadowRoot'] & {
     adoptedStyleSheets?: CSSStyleSheet[];
 };
 
-type FragmentType = 'color' | 'scale' | 'core' | 'app';
-type SettableFragmentTypes = 'color' | 'scale';
+type FragmentType = 'color' | 'scale' | 'theme' | 'core' | 'app';
+type SettableFragmentTypes = 'color' | 'scale' | 'theme';
 type FragmentMap = Map<string, { name: string; styles: CSSResultGroup }>;
 export type ThemeFragmentMap = Map<FragmentType, FragmentMap>;
-export type Color = 'light' | 'lightest' | 'dark' | 'darkest';
-export type Scale = 'medium' | 'large';
-const ScaleValues = ['medium', 'large'];
-const ColorValues = ['light', 'lightest', 'dark', 'darkest'];
-type FragmentName = Color | Scale | 'core' | 'app';
+export type Color =
+    | 'light'
+    | 'lightest'
+    | 'dark'
+    | 'darkest'
+    | 'light-express'
+    | 'lightest-express'
+    | 'dark-express'
+    | 'darkest-express';
+export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
+export type ThemeVariant = 'spectrum' | 'express';
+const ThemeVariantValues = ['spectrum', 'express'];
+const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
+const ColorValues = [
+    'light',
+    'lightest',
+    'dark',
+    'darkest',
+    'light-express',
+    'lightest-express',
+    'dark-express',
+    'darkest-express',
+];
+type FragmentName = Color | Scale | ThemeVariant | 'core' | 'app';
 
 export interface ThemeData {
     color?: Color;
     scale?: Scale;
     lang?: string;
+    theme?: ThemeVariant;
 }
 
 type ThemeKindProvider = {
-    [P in SettableFragmentTypes]: Color | Scale | '';
+    [P in SettableFragmentTypes]: ThemeVariant | Color | Scale | '';
 };
 
 export interface ProvideLang {
@@ -73,16 +91,16 @@ export interface ProvideLang {
  */
 export class Theme extends HTMLElement implements ThemeKindProvider {
     private static themeFragmentsByKind: ThemeFragmentMap = new Map();
-    private static defaultFragments: Set<FragmentName> = new Set(['core']);
+    private static defaultFragments: Set<FragmentName> = new Set(['spectrum']);
     private static templateElement?: HTMLTemplateElement;
     private static instances: Set<Theme> = new Set();
 
     static get observedAttributes(): string[] {
-        return ['color', 'scale', 'lang'];
+        return ['color', 'scale', 'theme', 'lang'];
     }
 
     protected attributeChangedCallback(
-        attrName: SettableFragmentTypes,
+        attrName: SettableFragmentTypes | 'lang',
         old: string | null,
         value: string | null
     ): void {
@@ -96,6 +114,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         } else if (attrName === 'lang' && !!value) {
             this.lang = value;
             this._provideContext();
+        } else if (attrName === 'theme') {
+            this.theme = value as ThemeVariant;
         }
     }
 
@@ -108,6 +128,32 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     public shadowRoot!: ShadowRootWithAdoptedStyleSheets;
+
+    private _theme: ThemeVariant | '' = 'spectrum';
+
+    get theme(): ThemeVariant | '' {
+        const themeFragments = Theme.themeFragmentsByKind.get('theme');
+        const { name } =
+            (themeFragments && themeFragments.get('default')) || {};
+        return this._theme || (name as ThemeVariant) || '';
+    }
+
+    set theme(newValue: ThemeVariant | '') {
+        if (newValue === this._theme) return;
+        const theme =
+            !!newValue && ThemeVariantValues.includes(newValue)
+                ? newValue
+                : this.theme;
+        if (theme !== this._theme) {
+            this._theme = theme;
+            this.requestUpdate();
+        }
+        if (theme) {
+            this.setAttribute('theme', theme);
+        } else {
+            this.removeAttribute('theme');
+        }
+    }
 
     private _color: Color | '' = '';
 
@@ -161,31 +207,43 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
     }
 
-    private get styles(): CSSResult[] {
+    private get styles(): CSSResultGroup[] {
         const themeKinds: FragmentType[] = [
             ...Theme.themeFragmentsByKind.keys(),
         ];
+        const getStyle = (
+            fragments: FragmentMap,
+            name: FragmentName,
+            kind?: FragmentType
+        ): CSSResultGroup | undefined => {
+            const currentStyles =
+                kind && kind !== 'theme' && this.theme === 'express'
+                    ? fragments.get(`${name}-express`)
+                    : fragments.get(name);
+            // theme="spectrum" is available by default and doesn't need to be applied.
+            const isAppliedFragment =
+                name === 'spectrum' || !kind || this.hasAttribute(kind);
+            if (currentStyles && isAppliedFragment) {
+                return currentStyles.styles;
+            }
+            return;
+        };
         const styles = themeKinds.reduce((acc, kind) => {
             const kindFragments = Theme.themeFragmentsByKind.get(
                 kind
             ) as FragmentMap;
-            const addStyles = (
-                name: FragmentName,
-                kind?: FragmentType
-            ): void => {
-                const currentStyles = kindFragments.get(name);
-                if (currentStyles && (!kind || this.hasAttribute(kind))) {
-                    acc.push(currentStyles.styles as CSSResult);
-                }
-            };
+            let style: CSSResultGroup | undefined;
             if (kind === 'app' || kind === 'core') {
-                addStyles(kind);
+                style = getStyle(kindFragments, kind);
             } else {
                 const { [kind]: name } = this;
-                addStyles(<FragmentName>name, kind);
+                style = getStyle(kindFragments, <FragmentName>name, kind);
+            }
+            if (style) {
+                acc.push(style);
             }
             return acc;
-        }, [] as CSSResult[]);
+        }, [] as CSSResultGroup[]);
         return [...styles];
     }
 
@@ -233,6 +291,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         theme.scale = this.scale || undefined;
         theme.lang =
             this.lang || document.documentElement.lang || navigator.language;
+        theme.theme = this.theme || undefined;
     }
 
     protected connectedCallback(): void {
@@ -401,5 +460,3 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
     }
 }
-
-Theme.registerThemeFragment('core', 'core', coreStyles);

@@ -12,5 +12,6 @@ governing permissions and limitations under the License.
 
 import mediumStyles from './src/scale-medium.css.js';
 import { Theme } from './src/Theme.js';
+import './core.js';
 
 Theme.registerThemeFragment('medium', 'scale', mediumStyles);

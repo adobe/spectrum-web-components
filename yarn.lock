@@ -4796,7 +4796,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-1.0.18.tgz#2d1fc2107e62687a4bfaf2873f81ff8930cd4057"
   integrity sha512-qxnAHrXi2vTfyBl2rkzXYKPPpfFm0DAG2Rmwf7SWvNPetLgpnX+wI0OvmtJm7hJFLtHZrnXaEJG4/Hlfe2sysw==
 
-"@spectrum-css/commons@3.0.5":
+"@spectrum-css/commons@^3.0.5":
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@spectrum-css/commons/-/commons-3.0.5.tgz#25b86c97402145a6aaaf58cbf1070e1c345d4f9b"
   integrity sha512-9YcJru496pHkcQMWP8y7Njk+ySMfdcap0hBAG/Fx+Vfmlcv9Mt1WCMuyLZusQ6a/0RVU/aKI4kLnDeunphBpNQ==
@@ -4817,6 +4817,11 @@
   version "3.0.21"
   resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-3.0.21.tgz#d4e532a4a829c4c3b6a23ae6edfb77bc1faba3eb"
   integrity sha512-P9uWwp3NH+RaVlF+QEa+BCqZxEe4pL0piJjrI/ei6eiW1k1IwCk8VCnrIce0XNjLk8JIoAUsOjrMvWJq14VNGQ==
+
+"@spectrum-css/expressvars@^1.0.0-beta.30":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/expressvars/-/expressvars-1.0.1.tgz#0fb973180df58cac63ee68c22673182332291a93"
+  integrity sha512-HjiFp72aqGheM2z2qaIEWI/OIIFV/oyZ+xRokrYkXo7pcmM/idfhsBsq+PNB2nOCzEoJzLsh0+wYzZVG+WJUZg==
 
 "@spectrum-css/fieldgroup@3.0.19":
   version "3.0.19"
@@ -4973,7 +4978,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-1.0.23.tgz#8f7e6815d3013dba7c4026484773e7a5d6973cf9"
   integrity sha512-l68ivxBmIeAPZ0UWM1QHgD5WtsI+GQipdTArqwiBSGj8z+957W7KyY9eZbI9Q2D2UMjPdaCdO8jQ4Su+qpdlHg==
 
-"@spectrum-css/typography@4.0.16":
+"@spectrum-css/typography@^4.0.16":
   version "4.0.16"
   resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-4.0.16.tgz#474264c227069250c3c87259ec30f10adae4fc7c"
   integrity sha512-O3f8W9XBgfW194ObXtbRDMh3dOkQfi/os7VviE+ToyAWmiTHAn/dh8CB1d0EouogAPbLi51qYJmKOP8P/ZaXCg==
@@ -4983,7 +4988,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/underlay/-/underlay-2.0.27.tgz#cdaff9eddd4849eb2c96da42cb31e47db1f190ea"
   integrity sha512-+eyJul9ctFed+eiKPuIAk8OVb3DmNjkFUzuPDBIt/N/P0Nz/uJY0SawuzWVa7/h5vfWodHdn+t8cv1jmRsDcKQ==
 
-"@spectrum-css/vars@7.2.0", "@spectrum-css/vars@^7.2.0":
+"@spectrum-css/vars@^7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-7.2.0.tgz#3fc5164bb3916cd9b5037cacc7973a6a2c16fec4"
   integrity sha512-IyXmGojZgMpxpyaSTdGNwX9wMkw53aVZ+KK5JLVWBzCcIRtHjaG4T6ATj/6XLgG3cthyOkmsyx33cjkv8BE+Yg==

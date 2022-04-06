@@ -12,5 +12,6 @@ governing permissions and limitations under the License.
 
 import darkStyles from './src/theme-dark.css.js';
 import { Theme } from './src/Theme.js';
+import './core.js';
 
 Theme.registerThemeFragment('dark', 'color', darkStyles);

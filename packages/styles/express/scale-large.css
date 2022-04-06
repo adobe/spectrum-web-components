@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import largeStyles from './src/scale-large.css.js';
-import { Theme } from './src/Theme.js';
-import './core.js';
+@import './spectrum-scale-large.css';
 
-Theme.registerThemeFragment('large', 'scale', largeStyles);
+:host,
+:root {
+    --spectrum-global-alias-appframe-border-size: 1px;
+}
