@@ -232,12 +232,15 @@
 
         return temp.toLowerCase();
     };
-    let destScale = 'medium';
-    let destColor = 'light';
-    let destDir = 'ltr';
-    const { pathname } = window.location;
+    const { pathname, search } = window.location;
+    const flavor = search ? search.slice(1) : 'classic';
+    const destColor = 'light';
+    const destScale = 'medium';
+    const destDir = 'ltr';
     const branch = pathname.slice(1);
-    const hash = MD5(`${branch}-${destColor}-${destScale}-${destDir}`);
+    const hash = MD5(
+        `${branch}-${flavor}-${destColor}-${destScale}-${destDir}`
+    );
     const destination = `https://${hash}--spectrum-web-components.netlify.app/review`;
     window.location = destination;
 </script>

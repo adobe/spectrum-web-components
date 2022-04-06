@@ -14,7 +14,7 @@ import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
 import '@spectrum-web-components/vrt-compare/vrt-compare.js';
-import { html, render, nothing } from 'lit-html';
+import { html, nothing, render } from 'lit-html';
 
 const review = document.querySelector('vrt-compare');
 const resultTypes = ['new', 'updated', 'removed', 'passed'];
@@ -44,7 +44,7 @@ function buildNavigation(tests, metadata) {
                 ></sp-sidenav-item>
             </sp-sidenav-heading>
             <sp-sidenav-item multilevel label="Other VRT Results">
-                ${metadata.themes.map(
+                ${metadata.vrts.map(
                     (theme) => html`
                         <sp-sidenav-item
                             label=${theme[0]}

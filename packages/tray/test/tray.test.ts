@@ -57,7 +57,7 @@ describe('Tray', () => {
     it('closes', async () => {
         const test = await fixture<HTMLElement>(
             html`
-                <sp-theme scale="medium" color="dark">
+                <sp-theme theme="classic" scale="medium" color="dark">
                     <sp-tray></sp-tray>
                 </sp-theme>
             `

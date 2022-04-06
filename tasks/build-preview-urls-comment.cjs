@@ -48,27 +48,24 @@ const buildPreviewURLComment = (ref) => {
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
     const previewLinks = [];
-    // const themes = ['Classic', 'Express']; // prepping for Spectrum Express
+    const themes = ['Classic', 'Express']; // prepping for Spectrum Express
     const scales = ['Medium', 'Large'];
     const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
     const directions = ['LTR', 'RTL'];
-    // themes.map((theme) =>
-    colors.map((color) =>
-        scales.map((scale) =>
-            directions.map((direction) => {
-                // const context = `-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
-                const context = `${branch}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
-                const md5 = crypto.createHash('md5');
-                md5.update(context);
-                const hash = md5.digest('hex');
-                previewLinks.push(`
-- [${color} | ${scale} | ${direction}](https://${hash}--spectrum-web-components.netlify.app/review/)`);
-                //              previewLinks.push(`
-                // - [${theme} | ${color} | ${scale} | ${direction}](https://${hash}--spectrum-web-components.netlify.app/review/)`);
-            })
+    themes.map((theme) =>
+        colors.map((color) =>
+            scales.map((scale) =>
+                directions.map((direction) => {
+                    const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+                    const md5 = crypto.createHash('md5');
+                    md5.update(context);
+                    const hash = md5.digest('hex');
+                    previewLinks.push(`
+- [${theme} | ${color} | ${scale} | ${direction}](https://${hash}--spectrum-web-components.netlify.app/review/)`);
+                })
+            )
         )
     );
-    // );
     let comment = `# Branch Preview
 
 - [Documentation Site](https://${branchSlug}--spectrum-web-components.netlify.app/)
