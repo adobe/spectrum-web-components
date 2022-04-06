@@ -150,7 +150,12 @@ export class ButtonBase extends LikeAnchor(
         const { code } = event;
         switch (code) {
             case 'Space':
+                // only activate with Space key if we are keyboard focused
+                if (!this.shouldAllowKeyboardActivation(event)) {
+                    return;
+                }
                 event.preventDefault();
+                event.stopPropagation();
                 if (typeof this.href === 'undefined') {
                     this.addEventListener('keyup', this.handleKeyup);
                     this.active = true;

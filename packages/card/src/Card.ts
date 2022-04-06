@@ -132,16 +132,21 @@ export class Card extends LikeAnchor(
     }
 
     private handleKeydown(event: KeyboardEvent): void {
+        if (!this.shouldAllowKeyboardActivation(event)) {
+            return;
+        }
         const { code } = event;
         switch (code) {
             case 'Space':
                 this.toggleSelected();
                 if (this.toggles) {
+                    event.stopPropagation();
                     event.preventDefault();
                     break;
                 }
             case 'Enter':
             case 'NumpadEnter':
+                event.stopPropagation();
                 this.click();
         }
     }

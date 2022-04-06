@@ -30,6 +30,16 @@ interface OptionalLifecycleCallbacks {
     manageAutoFocus?(): void;
 }
 
+export interface FocusVisibleKeyboardActivation {
+    shouldAllowKeyboardActivation(event: KeyboardEvent): boolean;
+}
+
+type FVConstructor<T extends Constructor<MixableBaseClass>> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    new (...args: any[]): InstanceType<T> & FocusVisibleKeyboardActivation;
+    prototype: T['prototype'] & FocusVisibleKeyboardActivation;
+};
+
 type MixableBaseClass = HTMLElement & OptionalLifecycleCallbacks;
 
 type EndPolyfillCoordinationCallback = () => void;
@@ -40,6 +50,29 @@ try {
     document.body.querySelector(':focus-visible');
 } catch (error) {
     hasFocusVisible = false;
+}
+
+/**
+ * Tests if an element currently has focus-visible state
+ * @param el An element to test for focus-visible state
+ * @returns true if the element has focus-visible
+ */
+export function matchFocusVisible(el: HTMLElement): boolean {
+    return (
+        (hasFocusVisible && el.matches(':focus-visible')) ||
+        el.matches('.focus-visible') ||
+        el.hasAttribute('data-focus-visible-added')
+    );
+}
+
+export class KeyboardActivationEvent extends Event {
+    constructor(public keyboardEvent: KeyboardEvent) {
+        super('keyboard-activation', {
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+        });
+    }
 }
 
 /**
@@ -58,7 +91,7 @@ export const FocusVisiblePolyfillMixin = <
     T extends Constructor<MixableBaseClass>
 >(
     SuperClass: T
-): T => {
+): FVConstructor<T> => {
     const coordinateWithPolyfill = (
         instance: MixableBaseClass
     ): EndPolyfillCoordinationCallback => {
@@ -114,13 +147,57 @@ export const FocusVisiblePolyfillMixin = <
     };
 
     const $endPolyfillCoordination = Symbol('endPolyfillCoordination');
-
+    const $receivedFocusWithVisibility = Symbol('receivedFocusWithVisibility');
     // IE11 doesn't natively support custom elements or JavaScript class
     // syntax The mixin implementation assumes that the user will take the
     // appropriate steps to support both:
-    class FocusVisibleCoordinator extends SuperClass {
+    class FocusVisibleCoordinator
+        extends SuperClass
+        implements FocusVisibleKeyboardActivation
+    {
         private [$endPolyfillCoordination]: EndPolyfillCoordinationCallback | null =
             null;
+
+        /**
+         * Set to true if focus was received with focus-visibility
+         */
+        private [$receivedFocusWithVisibility] = false;
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        constructor(...args: any[]) {
+            super(...args);
+
+            // when we receive focus, test if we are focus-visible or not
+            this.addEventListener('focus', (): void => {
+                this[$receivedFocusWithVisibility] = matchFocusVisible(this);
+            });
+        }
+
+        /**
+         * Checks if the element had keyboard driven focus-visible state at the time it
+         * received focus. If it did, then keyboard-activation event is dispatched.
+         *
+         * Consumers of this element may call `preventDefault()` on this event to stop
+         * the activation of the control via keyboard.
+         *
+         * This function should be used within keyboard event handlers for dealing with
+         * activation keys like Space, where we want to only activate the control if
+         * it has focus-visible state.
+         *
+         * @returns true if the element had focus-visible at the time of focusing and
+         * the keyboard-activation event was not cancelled.
+         */
+        public shouldAllowKeyboardActivation(event: KeyboardEvent): boolean {
+            const hadVisibleFocus = this[$receivedFocusWithVisibility];
+            this[$receivedFocusWithVisibility] = matchFocusVisible(this);
+            if (!hadVisibleFocus) {
+                const allowActivation = this.dispatchEvent(
+                    new KeyboardActivationEvent(event)
+                );
+                return allowActivation;
+            }
+            return true;
+        }
 
         // Attempt to coordinate with the polyfill when connected to the
         // document:
@@ -152,5 +229,5 @@ export const FocusVisiblePolyfillMixin = <
         }
     }
 
-    return FocusVisibleCoordinator;
+    return FocusVisibleCoordinator as unknown as FVConstructor<T>;
 };

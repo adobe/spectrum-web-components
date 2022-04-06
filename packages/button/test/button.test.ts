@@ -19,6 +19,7 @@ import {
     html,
     waitUntil,
 } from '@open-wc/testing';
+
 import { shiftTabEvent } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 
@@ -280,6 +281,7 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(clickSpy.callCount).to.equal(0);
     });
+
     it('translates keyboard interactions to click', async () => {
         const clickSpy = spy();
         const el = await fixture<Button>(

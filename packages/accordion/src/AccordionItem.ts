@@ -57,7 +57,12 @@ export class AccordionItem extends Focusable {
             return;
         }
         if (event.code === 'Enter' || event.code === 'Space') {
+            // only activate with Space key if we are keyboard focused
+            if (!this.shouldAllowKeyboardActivation(event)) {
+                return;
+            }
             event.preventDefault();
+            event.stopPropagation();
             this.toggle();
         }
     }

@@ -31,6 +31,16 @@ export class CheckboxBase extends Focusable {
         return this.inputElement;
     }
 
+    public handleKeydown(event: KeyboardEvent): void {
+        if (event.code === 'Space') {
+            if (!this.shouldAllowKeyboardActivation(event)) {
+                event.preventDefault();
+                return;
+            }
+            event.stopPropagation();
+        }
+    }
+
     public handleChange(event: Event): void {
         if (this.readonly) {
             this.inputElement.checked = this.checked;
@@ -57,6 +67,7 @@ export class CheckboxBase extends Focusable {
                 aria-labelledby="label"
                 type="checkbox"
                 .checked=${this.checked}
+                @keydown=${this.handleKeydown}
                 @change=${this.handleChange}
             />
         `;
