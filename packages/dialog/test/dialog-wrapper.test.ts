@@ -37,7 +37,9 @@ async function styledFixture<T extends Element>(
     story: TemplateResult
 ): Promise<T> {
     const test = await fixture<Theme>(html`
-        <sp-theme scale="medium" color="dark">${story}</sp-theme>
+        <sp-theme theme="classic" scale="medium" color="dark">
+            ${story}
+        </sp-theme>
     `);
     return test.children[0] as T;
 }
