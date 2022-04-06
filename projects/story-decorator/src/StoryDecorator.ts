@@ -24,6 +24,7 @@ import {
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+import '@spectrum-web-components/theme/src/express/themes.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu.js';
@@ -31,7 +32,12 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/switch/sp-switch.js';
 import { Picker } from '@spectrum-web-components/picker';
 import { Switch } from '@spectrum-web-components/switch';
-import { Color, Scale, Theme } from '@spectrum-web-components/theme';
+import {
+    Color,
+    Scale,
+    Theme,
+    ThemeVariant,
+} from '@spectrum-web-components/theme';
 import { ActiveOverlay } from '@spectrum-web-components/overlay';
 import './types.js';
 
@@ -40,11 +46,14 @@ const urlParams = new URLSearchParams(queryString);
 
 export let dir: 'ltr' | 'rtl' =
     (urlParams.get('sp_dir') as 'ltr' | 'rtl') || 'ltr';
+export let theme: ThemeVariant =
+    (urlParams.get('sp_theme') as ThemeVariant) || 'spectrum';
 export let color: Color = (urlParams.get('sp_color') as Color) || 'light';
 export let scale: Scale = (urlParams.get('sp_scale') as Scale) || 'medium';
 export let reduceMotion = urlParams.get('sp_reduceMotion') === 'true';
 
 window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
+    defaultThemeVariant: theme,
     defaultColor: color,
     defaultScale: scale,
     defaultDirection: dir,
@@ -71,7 +80,7 @@ const reduceMotionProperties = css`
 ActiveOverlay.prototype.renderTheme = function (
     content: TemplateResult
 ): TemplateResult {
-    const { color, scale, lang } = this.theme;
+    const { color, scale, theme, lang } = this.theme;
     return html`
         ${window.__swc_hack_knobs__.defaultReduceMotion
             ? html`
@@ -83,6 +92,7 @@ ActiveOverlay.prototype.renderTheme = function (
               `
             : html``}
         <sp-theme
+            theme=${ifDefined(theme)}
             color=${ifDefined(color)}
             scale=${ifDefined(scale)}
             lang=${ifDefined(lang)}
@@ -94,76 +104,84 @@ ActiveOverlay.prototype.renderTheme = function (
 };
 
 export class StoryDecorator extends SpectrumElement {
-    static styles = [
-        css`
-            :host(:focus) {
-                outline: none;
-            }
-            sp-theme {
-                overflow-x: hidden;
-                display: block;
-                box-sizing: border-box;
-                width: 100%;
-                min-height: 100vh;
-                padding: var(--spectrum-global-dimension-size-100)
-                    var(--spectrum-global-dimension-size-100)
-                    calc(
-                        2 * var(--spectrum-alias-focus-ring-size) +
-                            var(--spectrum-alias-item-height-m)
+    static get styles() {
+        return [
+            css`
+                :host(:focus) {
+                    outline: none;
+                }
+                sp-theme {
+                    overflow-x: hidden;
+                    display: block;
+                    box-sizing: border-box;
+                    width: 100%;
+                    min-height: 100vh;
+                    padding: var(--spectrum-global-dimension-size-100)
+                        var(--spectrum-global-dimension-size-100)
+                        calc(
+                            2 * var(--spectrum-alias-focus-ring-size) +
+                                var(--spectrum-alias-item-height-m)
+                        );
+                    box-sizing: border-box;
+                    background-color: var(--spectrum-global-color-gray-100);
+                    color: var(
+                        --spectrum-body-text-color,
+                        var(--spectrum-alias-text-color)
                     );
-                background-color: var(--spectrum-global-color-gray-100);
-                color: var(
-                    --spectrum-body-text-color,
-                    var(--spectrum-alias-text-color)
-                );
-            }
-            :host([screenshot]) sp-theme {
-                padding: var(--spectrum-global-dimension-size-100);
-                --swc-test-caret-color: transparent;
-            }
-            :host([reduce-motion]) sp-theme {
-                ${reduceMotionProperties}
-            }
-            .manage-theme {
-                position: fixed;
-                bottom: 0;
-                left: var(--spectrum-global-dimension-size-200);
-                right: var(--spectrum-global-dimension-size-200);
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-                box-sizing: border-box;
-                background-color: var(--spectrum-global-color-gray-100);
-                padding-bottom: calc(2 * var(--spectrum-alias-focus-ring-size));
-            }
-            [dir='ltr'] sp-field-label {
-                padding-left: 0;
-                padding-right: var(
-                    --spectrum-fieldlabel-side-padding-x,
-                    var(--spectrum-global-dimension-size-100)
-                );
-                margin-left: var(--spectrum-global-dimension-size-400);
-            }
-            [dir='ltr'] sp-switch {
-                margin-left: var(--spectrum-global-dimension-size-400);
-                margin-right: 0;
-                padding: 0;
-            }
-            [dir='rtl'] sp-field-label {
-                padding-right: 0;
-                padding-left: var(
-                    --spectrum-fieldlabel-side-padding-x,
-                    var(--spectrum-global-dimension-size-100)
-                );
-                margin-right: var(--spectrum-global-dimension-size-400);
-            }
-            [dir='rtl'] sp-switch {
-                margin-right: var(--spectrum-global-dimension-size-400);
-                margin-left: 0;
-                padding: 0;
-            }
-        `,
-    ];
+                }
+                :host([screenshot]) sp-theme {
+                    padding: var(--spectrum-global-dimension-size-100);
+                    --swc-test-caret-color: transparent;
+                }
+                :host([reduce-motion]) sp-theme {
+                    ${reduceMotionProperties}
+                }
+                .manage-theme {
+                    position: fixed;
+                    bottom: 0;
+                    left: var(--spectrum-global-dimension-size-200);
+                    right: var(--spectrum-global-dimension-size-200);
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    box-sizing: border-box;
+                    background-color: var(--spectrum-global-color-gray-100);
+                    padding-bottom: calc(
+                        2 * var(--spectrum-alias-focus-ring-size)
+                    );
+                }
+                [dir='ltr'] sp-field-label {
+                    padding-left: 0;
+                    padding-right: var(
+                        --spectrum-fieldlabel-side-padding-x,
+                        var(--spectrum-global-dimension-size-100)
+                    );
+                    margin-left: var(--spectrum-global-dimension-size-400);
+                }
+                [dir='ltr'] sp-switch {
+                    margin-left: var(--spectrum-global-dimension-size-400);
+                    margin-right: 0;
+                    padding: 0;
+                }
+                [dir='rtl'] sp-field-label {
+                    padding-right: 0;
+                    padding-left: var(
+                        --spectrum-fieldlabel-side-padding-x,
+                        var(--spectrum-global-dimension-size-100)
+                    );
+                    margin-right: var(--spectrum-global-dimension-size-400);
+                }
+                [dir='rtl'] sp-switch {
+                    margin-right: var(--spectrum-global-dimension-size-400);
+                    margin-left: 0;
+                    padding: 0;
+                }
+            `,
+        ];
+    }
+
+    @property({ type: String })
+    public theme: ThemeVariant = window.__swc_hack_knobs__.defaultThemeVariant;
 
     @property({ type: String })
     public color: Color = window.__swc_hack_knobs__.defaultColor;
@@ -182,16 +200,16 @@ export class StoryDecorator extends SpectrumElement {
     public screenshot = false;
 
     @queryAsync('sp-theme')
-    private theme!: Theme;
+    private themeRoot!: Theme;
 
     public ready = false;
 
     public async startManagingContentDirection(el: HTMLElement): Promise<void> {
-        (await this.theme).startManagingContentDirection(el);
+        (await this.themeRoot).startManagingContentDirection(el);
     }
 
     public async stopManagingContentDirection(el: HTMLElement): Promise<void> {
-        (await this.theme).stopManagingContentDirection(el);
+        (await this.themeRoot).stopManagingContentDirection(el);
     }
 
     private updateTheme({ target }: Event & { target: Picker | Switch }): void {
@@ -199,6 +217,12 @@ export class StoryDecorator extends SpectrumElement {
         const { value } = target as Picker;
         const { checked } = target as Switch;
         switch (id) {
+            case 'theme':
+                this.theme =
+                    theme =
+                    window.__swc_hack_knobs__.defaultThemeVariant =
+                        value as ThemeVariant;
+                break;
             case 'color':
                 this.color =
                     color =
@@ -238,6 +262,7 @@ export class StoryDecorator extends SpectrumElement {
     protected render(): TemplateResult {
         return html`
             <sp-theme
+                theme=${this.theme}
                 color=${this.color}
                 scale=${this.scale}
                 dir=${this.direction}
@@ -275,9 +300,25 @@ export class StoryDecorator extends SpectrumElement {
     private get manageTheme(): TemplateResult {
         return html`
             <div class="manage-theme" part="controls">
-                ${this.colorControl} ${this.scaleControl} ${this.dirControl}
-                ${this.reduceMotionControl}
+                ${this.themeControl} ${this.colorControl} ${this.scaleControl}
+                ${this.dirControl} ${this.reduceMotionControl}
             </div>
+        `;
+    }
+
+    private get themeControl(): TemplateResult {
+        return html`
+            <sp-field-label for="theme">Spectrum</sp-field-label>
+            <sp-picker
+                id="theme"
+                placement="top"
+                quiet
+                .value=${this.theme}
+                @change=${this.updateTheme}
+            >
+                <sp-menu-item value="spectrum">Classic</sp-menu-item>
+                <sp-menu-item value="express">Express</sp-menu-item>
+            </sp-picker>
         `;
     }
 

@@ -38,7 +38,7 @@ export const processCSS = async (cssPath) => {
 };
 
 const buildCSS = async () => {
-    for (const cssPath of await fg(`./packages/*/src/*.css`)) {
+    for (const cssPath of await fg(`./packages/*/src/**/*.css`)) {
         processCSS(cssPath);
     }
     for (const cssPath of await fg(`./tools/*/src/*.css`)) {

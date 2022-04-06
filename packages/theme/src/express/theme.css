@@ -10,8 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import largeStyles from './src/scale-large.css.js';
-import { Theme } from './src/Theme.js';
-import './core.js';
+@import '@spectrum-web-components/styles/express/core-global.css';
+@import '@spectrum-web-components/styles/fonts.css';
 
-Theme.registerThemeFragment('large', 'scale', largeStyles);
+:host {
+    display: block;
+}
+
+#scale,
+#theme {
+    width: 100%;
+    height: 100%;
+}

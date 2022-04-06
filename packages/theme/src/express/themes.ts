@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import largeStyles from './src/scale-large.css.js';
-import { Theme } from './src/Theme.js';
-import './core.js';
-
-Theme.registerThemeFragment('large', 'scale', largeStyles);
+import '../../express/theme-light.js';
+import '../../express/theme-lightest.js';
+import '../../express/theme-dark.js';
+import '../../express/theme-darkest.js';
+import '../../express/scale-medium.js';
+import '../../express/scale-large.js';
