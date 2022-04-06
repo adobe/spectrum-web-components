@@ -82,6 +82,8 @@
         "test:visual:clean:current": "rimraf test/visual/screenshots-current",
         "test:watch": "yarn test:watch:focus unit",
         "test:watch:focus": "yarn test:build && run-p watch:css \"test:build -w\" \"test:start --watch --group {1}\" --",
+        "update:spectrum-css": "node ./scripts/update-spectrum-css.js || yarn update:spectrum-css:cleanup",
+        "update:spectrum-css:cleanup": "yarn lint:packagejson && yarn --ignore-scripts && yarn process-spectrum",
         "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link",
         "watch:css": "node ./tasks/watch-css.js"
     },
@@ -144,6 +146,7 @@
         "gh-pages": "^3.2.3",
         "gunzip-maybe": "^1.4.2",
         "husky": "^7.0.4",
+        "latest-version": "^6.0.0",
         "lerna": "^4.0.0",
         "lit": "^2.1.2",
         "lit-analyzer": "^1.2.1",
