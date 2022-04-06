@@ -15,10 +15,12 @@ governing permissions and limitations under the License.
     display: flex;
     margin: 1rem 0 2rem 0;
     flex-direction: column;
-    border-radius: 6px;
+    border-radius: var(--code-example-border-radius);
     border: 1px solid var(--spectrum-global-color-gray-100);
-    max-width: 100%;
-    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+
+    --code-example-border-radius: var(--spectrum-alias-border-radius-regular);
 }
 
 .demo-example {
@@ -26,12 +28,9 @@ governing permissions and limitations under the License.
     overflow: auto;
     flex: 1;
     padding: var(--spectrum-global-dimension-size-400)
-        var(--spectrum-global-dimension-size-500)
-        var(
-            --demo-example-padding-bottom,
-            var(--spectrum-global-dimension-size-400)
-        );
-    border-radius: 6px 6px 0 0;
+        var(--spectrum-global-dimension-size-500);
+    border-radius: var(--code-example-border-radius)
+        var(--code-example-border-radius) 0 0;
     background: var(--spectrum-global-color-gray-100);
 }
 
@@ -74,6 +73,31 @@ pre {
     top: 0;
     grid-template-columns: 100%;
     grid-template-rows: 100%;
+}
+
+pre {
+    font-weight: var(
+        --spectrum-code-xs-text-font-weight,
+        var(--spectrum-alias-code-text-font-weight-regular)
+    );
+    line-height: var(
+        --spectrum-code-xs-text-line-height,
+        var(--spectrum-alias-code-text-line-height)
+    );
+    font-style: var(
+        --spectrum-code-xs-text-font-style,
+        var(--spectrum-global-font-style-regular)
+    );
+    letter-spacing: var(
+        --spectrum-code-xs-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-none)
+    );
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: var(
+        --spectrum-code-xs-text-font-family,
+        var(--spectrum-alias-code-text-font-family)
+    );
 }
 
 .copy {
