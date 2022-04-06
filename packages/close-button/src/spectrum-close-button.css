@@ -247,7 +247,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='black']:not(:disabled):hover) {
     background-color: var(
         --spectrum-closebutton-m-black-background-color-hover,
-        rgba(0, 0, 0, 0.4)
+        rgba(0, 0, 0, 0.25)
     ); /* .spectrum-CloseButton.spectrum-CloseButton--staticBlack:not(:disabled):hover */
 }
 :host([variant='black']:not(:disabled):hover) .icon {
@@ -259,7 +259,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='black']:not(:disabled)[active]) {
     background-color: var(
         --spectrum-closebutton-m-black-background-color-down,
-        rgba(0, 0, 0, 0.55)
+        rgba(0, 0, 0, 0.4)
     ); /* .spectrum-CloseButton.spectrum-CloseButton--staticBlack:not(:disabled):active */
 }
 :host([variant='black']:not(:disabled)[active]) .icon {
@@ -295,7 +295,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='black']:not(:disabled)[focused]) {
     background-color: var(
         --spectrum-closebutton-m-black-background-color-key-focus,
-        rgba(0, 0, 0, 0.4)
+        rgba(0, 0, 0, 0.25)
     ); /* .spectrum-CloseButton.spectrum-CloseButton--staticBlack:not(:disabled).is-keyboardFocused */
 }
 :host([variant='black']:not(:disabled)[focused]) .icon {
@@ -322,7 +322,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='white']:not(:disabled):hover) {
     background-color: var(
         --spectrum-closebutton-m-white-background-color-hover,
-        hsla(0, 0%, 100%, 0.4)
+        hsla(0, 0%, 100%, 0.25)
     ); /* .spectrum-CloseButton.spectrum-CloseButton--staticWhite:not(:disabled):hover */
 }
 :host([variant='white']:not(:disabled):hover) .icon {
@@ -334,7 +334,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='white']:not(:disabled)[active]) {
     background-color: var(
         --spectrum-closebutton-m-white-background-color-down,
-        hsla(0, 0%, 100%, 0.55)
+        hsla(0, 0%, 100%, 0.4)
     ); /* .spectrum-CloseButton.spectrum-CloseButton--staticWhite:not(:disabled):active */
 }
 :host([variant='white']:not(:disabled)[active]) .icon {
@@ -370,7 +370,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='white']:not(:disabled)[focused]) {
     background-color: var(
         --spectrum-closebutton-m-white-background-color-key-focus,
-        hsla(0, 0%, 100%, 0.4)
+        hsla(0, 0%, 100%, 0.25)
     ); /* .spectrum-CloseButton.spectrum-CloseButton--staticWhite:not(:disabled).is-keyboardFocused */
 }
 :host([variant='white']:not(:disabled)[focused]) .icon {

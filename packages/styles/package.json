@@ -72,9 +72,9 @@
         "@spectrum-web-components/base": "^0.5.4"
     },
     "devDependencies": {
-        "@spectrum-css/commons": "^3.0.5",
-        "@spectrum-css/typography": "^4.0.12",
-        "@spectrum-css/vars": "^7.0.0"
+        "@spectrum-css/commons": "3.0.5",
+        "@spectrum-css/typography": "4.0.16",
+        "@spectrum-css/vars": "7.2.0"
     },
     "customElements": "custom-elements.json",
     "sideEffects": [
