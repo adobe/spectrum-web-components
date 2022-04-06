@@ -79,6 +79,7 @@ There are several commands that can be useful in specific scenarios:
 -   `yarn spectrum-vars` to ensure that theme files are up-to-date.
 -   `yarn process-icons` to make sure that the most recent icons are included.
 -   `yarn process-spectrum` to process the spectrum CSS style sources into the individual packages.
+-   `yarn update:spectrum-css` to ensure that the `latest` version of `@spectrum-css` dependencies are being used across the project.
 -   `yarn build` to make sure the available JS has been built from the current TS source.
 
 ## Linting
