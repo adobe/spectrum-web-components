@@ -9,19 +9,18 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-'use strict';
-
 import { join, resolve } from 'path';
 
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import CWP from 'clean-webpack-plugin';
+import BAP from 'webpack-bundle-analyzer';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
+const { CleanWebpackPlugin } = CWP;
+const { BundleAnalyzerPlugin } = BAP;
 const ENV = process.argv.find((arg) => arg.includes('NODE_ENV=production'))
     ? 'production'
     : 'development';

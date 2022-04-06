@@ -10,7 +10,7 @@
     "scripts": {
         "build": "webpack",
         "build:prod": "webpack --env.NODE_ENV=production --optimize-minimize",
-        "serve": "webpack-dev-server"
+        "serve": "webpack serve"
     },
     "dependencies": {
         "@spectrum-web-components/button": "^0.17.2",

@@ -17,9 +17,17 @@ import {
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    queryAsync,
+} from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/theme/sp-theme.js';
-import type { Color, Scale } from '@spectrum-web-components/theme';
+import type {
+    Color,
+    Scale,
+    Theme,
+    ThemeVariant,
+} from '@spectrum-web-components/theme';
 import '@spectrum-web-components/picker/sp-picker.js';
 import type { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/button/sp-button.js';
@@ -42,11 +50,13 @@ import { nothing } from 'lit-html';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
+const SWC_THEME_THEME_KEY = 'swc-docs:theme:theme';
 const SWC_THEME_DIR_KEY = 'swc-docs:theme:dir';
 const COLOR_FALLBACK = matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark'
     : 'light';
-const SCALE_MEDIUM = 'medium';
+const SCALE_FALLBACK = 'medium';
+const THEME_FALLBACK = 'spectrum';
 const DIR_FALLBACK = 'ltr';
 const DEFAULT_COLOR = (
     window.localStorage
@@ -55,9 +65,14 @@ const DEFAULT_COLOR = (
 ) as Color;
 const DEFAULT_SCALE = (
     window.localStorage
-        ? localStorage.getItem(SWC_THEME_SCALE_KEY) || SCALE_MEDIUM
-        : SCALE_MEDIUM
+        ? localStorage.getItem(SWC_THEME_SCALE_KEY) || SCALE_FALLBACK
+        : SCALE_FALLBACK
 ) as Scale;
+const DEFAULT_THEME = (
+    window.localStorage
+        ? localStorage.getItem(SWC_THEME_THEME_KEY) || THEME_FALLBACK
+        : THEME_FALLBACK
+) as ThemeVariant;
 const DEFAULT_DIR = (
     window.localStorage
         ? localStorage.getItem(SWC_THEME_DIR_KEY) || DIR_FALLBACK
@@ -66,8 +81,12 @@ const DEFAULT_DIR = (
 
 const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
 
-const lazyStyleFragment = (name: Color | Scale): void => {
-    switch (name) {
+const lazyStyleFragment = (name: Color | Scale, flavor: ThemeVariant): void => {
+    var fragmentName = `${name}-${flavor}`;
+    if (flavor === 'express') {
+        import('@spectrum-web-components/theme/src/express/core.js');
+    }
+    switch (fragmentName) {
         case 'darkest':
             import('@spectrum-web-components/theme/theme-darkest.js');
             break;
@@ -86,13 +105,35 @@ const lazyStyleFragment = (name: Color | Scale): void => {
         case 'large':
             import('@spectrum-web-components/theme/scale-large.js');
             break;
+        case 'darkest-express':
+            import('@spectrum-web-components/theme/express/theme-darkest.js');
+            break;
+        case 'dark-express':
+            import('@spectrum-web-components/theme/express/theme-dark.js');
+            break;
+        case 'light-express':
+            import('@spectrum-web-components/theme/express/theme-light.js');
+            break;
+        case 'lightest-express':
+            import('@spectrum-web-components/theme/express/theme-lightest.js');
+            break;
+        case 'medium-express':
+            import('@spectrum-web-components/theme/express/scale-medium.js');
+            break;
+        case 'large-express':
+            import('@spectrum-web-components/theme/express/scale-large.js');
+            break;
     }
 };
 
 const loadDefaults = () => {
-    if (DEFAULT_COLOR !== COLOR_FALLBACK || DEFAULT_SCALE !== SCALE_MEDIUM) {
-        lazyStyleFragment(DEFAULT_COLOR);
-        lazyStyleFragment(DEFAULT_SCALE);
+    if (
+        DEFAULT_COLOR !== COLOR_FALLBACK ||
+        DEFAULT_SCALE !== SCALE_FALLBACK ||
+        DEFAULT_THEME !== THEME_FALLBACK
+    ) {
+        lazyStyleFragment(DEFAULT_COLOR, DEFAULT_THEME);
+        lazyStyleFragment(DEFAULT_SCALE, DEFAULT_THEME);
     }
 };
 
@@ -131,6 +172,20 @@ export class LayoutElement extends LitElement {
     @property({ attribute: false })
     public scale: Scale = DEFAULT_SCALE;
 
+    @property({ attribute: false })
+    public theme: ThemeVariant = DEFAULT_THEME;
+
+    @queryAsync('sp-theme')
+    private themeRoot!: Theme;
+
+    public async startManagingContentDirection(el: HTMLElement): Promise<void> {
+        (await this.themeRoot).startManagingContentDirection(el);
+    }
+
+    public async stopManagingContentDirection(el: HTMLElement): Promise<void> {
+        (await this.themeRoot).stopManagingContentDirection(el);
+    }
+
     private _themeTrackers = new Map<HTMLElement, TrackTheme['callback']>();
 
     handleMatchMediaChange = (event: MediaQueryListEvent) => {
@@ -148,6 +203,10 @@ export class LayoutElement extends LitElement {
 
     private updateScale(event: Event) {
         this.scale = (event.target as Picker).value as Scale;
+    }
+
+    private updateTheme(event: Event) {
+        this.theme = (event.target as Picker).value as ThemeVariant;
     }
 
     private updateDirection(event: Event) {
@@ -260,8 +319,29 @@ export class LayoutElement extends LitElement {
                         id="theme-color"
                         placement="bottom"
                         quiet
+                        value=${this.theme}
+                        @change=${this.updateTheme}
+                        placement="bottom-end"
+                    >
+                        <sp-menu-item value="spectrum" selected>
+                            Spectrum
+                        </sp-menu-item>
+                        <sp-menu-item value="express">
+                            Spectrum Express
+                        </sp-menu-item>
+                    </sp-picker>
+                </div>
+                <div class="theme-control">
+                    <sp-field-label for="theme-color">
+                        Color Theme
+                    </sp-field-label>
+                    <sp-picker
+                        id="theme-color"
+                        placement="bottom"
+                        quiet
                         value=${this.color}
                         @change=${this.updateColor}
+                        placement="bottom-end"
                     >
                         <sp-menu-item value="lightest" selected>
                             Lightest
@@ -280,6 +360,7 @@ export class LayoutElement extends LitElement {
                         quiet
                         value=${this.scale}
                         @change=${this.updateScale}
+                        placement="bottom-end"
                     >
                         <sp-menu-item value="medium">Medium</sp-menu-item>
                         <sp-menu-item value="large">Large</sp-menu-item>
@@ -296,6 +377,7 @@ export class LayoutElement extends LitElement {
                         quiet
                         value=${this.dir}
                         @change=${this.updateDirection}
+                        placement="bottom-end"
                     >
                         <sp-menu-item value="ltr">LTR</sp-menu-item>
                         <sp-menu-item value="rtl">RTL</sp-menu-item>
@@ -310,6 +392,7 @@ export class LayoutElement extends LitElement {
             <sp-theme
                 .color=${this.color}
                 .scale=${this.scale}
+                .theme=${this.theme}
                 dir=${this.dir}
                 id="app"
                 @sp-track-theme=${this.handleTrackTheme}
@@ -389,6 +472,14 @@ export class LayoutElement extends LitElement {
                 loadStyleFragments = true;
             }
         }
+        if (changes.has('theme')) {
+            if (window.localStorage) {
+                localStorage.setItem(SWC_THEME_THEME_KEY, this.theme);
+            }
+            if (changes.get('theme')) {
+                loadStyleFragments = true;
+            }
+        }
         if (changes.has('dir') && window.localStorage) {
             localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
         }
@@ -396,8 +487,8 @@ export class LayoutElement extends LitElement {
             this.focus();
         }
         if (loadStyleFragments) {
-            lazyStyleFragment(this.color);
-            lazyStyleFragment(this.scale);
+            lazyStyleFragment(this.color, this.theme);
+            lazyStyleFragment(this.scale, this.theme);
         }
     }
 }
