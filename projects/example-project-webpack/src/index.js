@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 // import our stylesheets
-import './styles.css';
+// import './styles.css';
 
 // import the components we'll use in this page
 import '@spectrum-web-components/button/sp-button';
