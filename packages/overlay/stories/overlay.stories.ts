@@ -343,11 +343,13 @@ export const deepNesting = (): TemplateResult => {
         ${storyStyles}
         <sp-theme
             color=${outter}
+            theme=${window.__swc_hack_knobs__.defaultThemeVariant}
             scale=${window.__swc_hack_knobs__.defaultScale}
             dir=${window.__swc_hack_knobs__.defaultDirection}
         >
             <sp-theme
                 color=${color}
+                theme=${window.__swc_hack_knobs__.defaultThemeVariant}
                 scale=${window.__swc_hack_knobs__.defaultScale}
                 dir=${window.__swc_hack_knobs__.defaultDirection}
             >

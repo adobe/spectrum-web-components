@@ -9,16 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Color, Scale, ThemeVariant } from '@spectrum-web-components/theme';
 
-declare global {
-    interface Window {
-        __swc_hack_knobs__: {
-            defaultThemeVariant: ThemeVariant;
-            defaultColor: Color;
-            defaultScale: Scale;
-            defaultDirection: 'ltr' | 'rtl';
-            defaultReduceMotion: boolean;
-        };
-    }
-}
+import largeStyles from '../src/express/scale-large.css.js';
+import { Theme } from '../src/Theme.js';
+
+Theme.registerThemeFragment('large-express', 'scale', largeStyles);

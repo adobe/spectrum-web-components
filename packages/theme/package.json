@@ -22,6 +22,8 @@
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*",
+        "./express/*": "./express/*",
+        "./src/express/*": "./src/express/*",
         "./package.json": "./package.json",
         "./sp-theme": "./sp-theme.js",
         "./sp-theme.js": "./sp-theme.js",
@@ -66,6 +68,11 @@
         "./sp-*.js",
         "./theme-*.js",
         "./scale-*.js",
-        "./src/themes.js"
+        "./express/theme-*.js",
+        "./express/theme-*.ts",
+        "./express/scale-*.js",
+        "./src/themes.js",
+        "./src/express/core.js",
+        "./src/express/themes.js"
     ]
 }

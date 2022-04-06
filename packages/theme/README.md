@@ -25,10 +25,16 @@ When looking to leverage the `Theme` base class as a type and/or for extension p
 import { Theme } from '@spectrum-web-components/theme';
 ```
 
-The various themes can be imported en masse:
+The various Classic themes can be imported en masse:
 
 ```
 import '@spectrum-web-components/theme/src/themes.js';
+```
+
+The various Express themes can be imported en masse:
+
+```
+import '@spectrum-web-components/theme/src/express/themes.js';
 ```
 
 Or, individually:
@@ -40,6 +46,12 @@ import '@spectrum-web-components/theme/theme-light.js';
 import '@spectrum-web-components/theme/theme-lightest.js';
 import '@spectrum-web-components/theme/scale-medium.js';
 import '@spectrum-web-components/theme/scale-large.js';
+import '@spectrum-web-components/theme/express/theme-darkest.js';
+import '@spectrum-web-components/theme/express/theme-dark.js';
+import '@spectrum-web-components/theme/express/theme-light.js';
+import '@spectrum-web-components/theme/express/theme-lightest.js';
+import '@spectrum-web-components/theme/express/scale-medium.js';
+import '@spectrum-web-components/theme/express/scale-large.js';
 ```
 
 ## Quick start
@@ -55,10 +67,40 @@ The above import will get you started using the `<sp-theme>` wrapper element, an
 
 Once you've moved beyond the prototype phases of an application, it is likely that you will only use one combinatin of `color` and `scale` in your application, and even when you don't you will likely benefit from lazily loading variants that you don't leverage by default. For single combination applications or to power a _default_ theme, the following imports can be used to ensure only the code your application requires is loaded:
 
+### Classic
+
 ```js
-// Power a site using <sp-theme color="darkest" scale="large">
+/**
+ * Power a site using
+ *
+ * <sp-theme
+ *      flavor="classic"
+ *      color="darkest"
+ *      scale="large"
+ * >
+ **/
 import '@spectrum-web-components/theme/theme-darkest.js';
 import '@spectrum-web-components/theme/scale-large.js';
+import '@spectrum-web-components/theme/flavor-classic.js';
+
+import '@spectrum-web-components/theme/sp-theme.js';
+```
+
+### Express
+
+```js
+/**
+ * Power a site using
+ *
+ * <sp-theme
+ *      flavor="express"
+ *      color="light"
+ *      scale="medium"
+ * >
+ **/
+import '@spectrum-web-components/theme/express/theme-light.js';
+import '@spectrum-web-components/theme/express/scale-medium.js';
+import '@spectrum-web-components/theme/express/flavor-express.js';
 
 import '@spectrum-web-components/theme/sp-theme.js';
 ```
@@ -102,25 +144,13 @@ The `<sp-theme>` element provides a language context for its descendents in the 
         margin-top: 2em;
     }
 </style>
-<sp-theme color="light">
-    <div id="example">
-        <div>
-            <sp-slider
-                value="5"
-                step="1"
-                min="1"
-                max="11"
-                label="Volume"
-                id="volume-slider"
-            ></sp-slider>
-        </div>
-        <div><sp-switch>Overdrive</sp-switch></div>
-        <sp-button-group id="buttons">
-            <sp-button variant="primary">Cancel</sp-button>
-            <sp-button variant="cta">Continue</sp-button>
-        </sp-button-group>
-    </div>
+<sp-theme flavor="express" color="light" scale="medium">
+    <hzn-app-stuff></hzn-app-stuff>
 </sp-theme>
+
+<express-app>
+    <hzn-app-stuff></hzn-app-stuff>
+</express-app>
 ```
 
 ## Dark theme
@@ -138,25 +168,13 @@ The `<sp-theme>` element provides a language context for its descendents in the 
         margin-top: 2em;
     }
 </style>
-<sp-theme color="dark">
-    <div id="example">
-        <div>
-            <sp-slider
-                value="5"
-                step="1"
-                min="1"
-                max="11"
-                label="Volume"
-                id="volume-slider"
-            ></sp-slider>
-        </div>
-        <div><sp-switch>Overdrive</sp-switch></div>
-        <sp-button-group id="buttons">
-            <sp-button variant="primary">Cancel</sp-button>
-            <sp-button variant="cta">Continue</sp-button>
-        </sp-button-group>
-    </div>
+<sp-theme flavor="express" color="dark" scale="large">
+    <hzn-app-stuff></hzn-app-stuff>
 </sp-theme>
+
+<express-app>
+    <hzn-app-stuff></hzn-app-stuff>
+</express-app>
 ```
 
 ## Large scale
