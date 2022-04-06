@@ -54,14 +54,14 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 }
 :host([dir='ltr']) #button {
     padding-left: var(
-        --spectrum-picker-textonly-padding-left
+        --spectrum-picker-textonly-padding-left-adjusted
     ); /* [dir=ltr] .spectrum-Picker */
-    padding-right: var(--spectrum-picker-textonly-padding-right);
+    padding-right: var(--spectrum-picker-textonly-padding-right-adjusted);
 }
 :host([dir='rtl']) #button {
-    padding-left: var(--spectrum-picker-textonly-padding-right);
+    padding-left: var(--spectrum-picker-textonly-padding-right-adjusted);
     padding-right: var(
-        --spectrum-picker-textonly-padding-left
+        --spectrum-picker-textonly-padding-left-adjusted
     ); /* [dir=rtl] .spectrum-Picker */
 }
 #button {
@@ -105,13 +105,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     flex-shrink: 0; /* .spectrum-Picker .spectrum-Picker-icon */
 }
 :host([dir='ltr']) #button #label + .icon {
-    margin-left: var(
-        --spectrum-picker-texticon-icon-gap
+    margin-left: calc(
+        (
+                var(--spectrum-picker-textonly-padding-left-adjusted) -
+                    var(--spectrum-picker-padding-left-adjusted)
+            ) * -1
     ); /* [dir=ltr] .spectrum-Picker .spectrum-Picker-label+.spectrum-Picker-icon */
 }
 :host([dir='rtl']) #button #label + .icon {
-    margin-right: var(
-        --spectrum-picker-texticon-icon-gap
+    margin-right: calc(
+        (
+                var(--spectrum-picker-textonly-padding-left-adjusted) -
+                    var(--spectrum-picker-padding-left-adjusted)
+            ) * -1
     ); /* [dir=rtl] .spectrum-Picker .spectrum-Picker-label+.spectrum-Picker-icon */
 }
 :host([size='s']) {
@@ -147,6 +153,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-s-texticon-popover-max-width,
         var(--spectrum-global-dimension-size-1800)
     );
+    --spectrum-picker-texticon-padding-left: var(
+        --spectrum-picker-s-texticon-padding-left,
+        var(--spectrum-global-dimension-size-85)
+    );
     --spectrum-picker-texticon-height: var(
         --spectrum-picker-s-texticon-height,
         var(--spectrum-global-dimension-size-300)
@@ -163,6 +173,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-s-texticon-border-radius,
         var(--spectrum-alias-component-border-radius)
     );
+    --spectrum-picker-textonly-border-size: var(
+        --spectrum-picker-s-textonly-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
     --spectrum-picker-textonly-padding-left: var(
         --spectrum-picker-s-textonly-padding-left,
         var(--spectrum-global-dimension-size-115)
@@ -171,12 +185,19 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-s-textonly-padding-right,
         var(--spectrum-global-dimension-size-115)
     );
+    --spectrum-picker-textonly-border-radius: var(
+        --spectrum-picker-s-textonly-border-radius,
+        var(--spectrum-alias-component-border-radius)
+    );
 }
 :host([size='m']) {
+    --spectrum-picker-texticon-padding-left: var(
+        --spectrum-picker-m-texticon-padding-left
+    ); /* .spectrum-Picker--sizeM */
     --spectrum-picker-texticon-border-size: var(
         --spectrum-picker-m-texticon-border-size,
         var(--spectrum-alias-border-size-thin)
-    ); /* .spectrum-Picker--sizeM */
+    );
     --spectrum-picker-texticon-text-size: var(
         --spectrum-picker-m-texticon-text-size,
         var(--spectrum-global-dimension-font-size-100)
@@ -221,6 +242,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-m-texticon-border-radius,
         var(--spectrum-alias-component-border-radius)
     );
+    --spectrum-picker-textonly-border-size: var(
+        --spectrum-picker-m-textonly-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
     --spectrum-picker-textonly-padding-left: var(
         --spectrum-picker-m-textonly-padding-left,
         var(--spectrum-global-dimension-size-150)
@@ -228,6 +253,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-picker-textonly-padding-right: var(
         --spectrum-picker-m-textonly-padding-right,
         var(--spectrum-global-dimension-size-150)
+    );
+    --spectrum-picker-textonly-border-radius: var(
+        --spectrum-picker-m-textonly-border-radius,
+        var(--spectrum-alias-component-border-radius)
     );
 }
 :host([size='l']) {
@@ -263,6 +292,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-l-texticon-popover-max-width,
         var(--spectrum-global-dimension-size-3000)
     );
+    --spectrum-picker-texticon-padding-left: var(
+        --spectrum-picker-l-texticon-padding-left,
+        var(--spectrum-global-dimension-size-160)
+    );
     --spectrum-picker-texticon-height: var(
         --spectrum-picker-l-texticon-height,
         var(--spectrum-global-dimension-size-500)
@@ -279,6 +312,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-l-texticon-border-radius,
         var(--spectrum-alias-component-border-radius)
     );
+    --spectrum-picker-textonly-border-size: var(
+        --spectrum-picker-l-textonly-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
     --spectrum-picker-textonly-padding-left: var(
         --spectrum-picker-l-textonly-padding-left,
         var(--spectrum-global-dimension-size-185)
@@ -286,6 +323,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-picker-textonly-padding-right: var(
         --spectrum-picker-l-textonly-padding-right,
         var(--spectrum-global-dimension-size-185)
+    );
+    --spectrum-picker-textonly-border-radius: var(
+        --spectrum-picker-l-textonly-border-radius,
+        var(--spectrum-alias-component-border-radius)
     );
 }
 :host([size='xl']) {
@@ -321,6 +362,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-xl-texticon-popover-max-width,
         var(--spectrum-global-dimension-size-3600)
     );
+    --spectrum-picker-texticon-padding-left: var(
+        --spectrum-picker-xl-texticon-padding-left,
+        var(--spectrum-global-dimension-size-185)
+    );
     --spectrum-picker-texticon-height: var(
         --spectrum-picker-xl-texticon-height,
         var(--spectrum-global-dimension-size-600)
@@ -337,6 +382,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-picker-xl-texticon-border-radius,
         var(--spectrum-alias-component-border-radius)
     );
+    --spectrum-picker-textonly-border-size: var(
+        --spectrum-picker-xl-textonly-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
     --spectrum-picker-textonly-padding-left: var(
         --spectrum-picker-xl-textonly-padding-left,
         var(--spectrum-global-dimension-size-225)
@@ -344,6 +393,10 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-picker-textonly-padding-right: var(
         --spectrum-picker-xl-textonly-padding-right,
         var(--spectrum-global-dimension-size-225)
+    );
+    --spectrum-picker-textonly-border-radius: var(
+        --spectrum-picker-xl-textonly-border-radius,
+        var(--spectrum-alias-component-border-radius)
     );
 }
 :host {
@@ -358,6 +411,72 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         --spectrum-global-dimension-size-2400
     );
     --spectrum-picker-texticon-border-size-increase-focus: 1px;
+    --spectrum-picker-padding-left-adjusted: calc(
+        var(--spectrum-picker-texticon-padding-left) -
+            var(--spectrum-picker-texticon-border-size)
+    );
+    --spectrum-picker-textonly-padding-left-adjusted: calc(
+        var(--spectrum-picker-textonly-padding-left) -
+            var(--spectrum-picker-textonly-border-size)
+    );
+    --spectrum-picker-textonly-padding-right-adjusted: calc(
+        var(--spectrum-picker-textonly-padding-right) -
+            var(--spectrum-picker-textonly-border-size)
+    );
+    --spectrum-picker-focus-ring-border-radius-adjusted: calc(
+        var(--spectrum-picker-textonly-border-radius) +
+            var(--spectrum-picker-focus-ring-gap)
+    );
+}
+:host {
+    --spectrum-picker-focus-ring-gap: var(
+        --spectrum-alias-component-focusring-gap,
+        var(--spectrum-global-dimension-static-size-0)
+    ); /* .spectrum-Picker */
+    --spectrum-picker-focus-ring-size: var(
+        --spectrum-alias-component-focusring-size,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-picker-focus-ring-color: var(
+        --spectrum-picker-m-textonly-focusring-border-color-key-focus,
+        var(--spectrum-alias-focus-ring-color)
+    );
+}
+#button {
+    transition: border-color
+        var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out; /* .spectrum-Picker */
+}
+#button:after {
+    border-radius: var(--spectrum-picker-focus-ring-border-radius-adjusted);
+    bottom: 0;
+    content: '';
+    left: 0;
+    margin: calc(
+        (
+                var(--spectrum-picker-focus-ring-gap) +
+                    var(--spectrum-picker-textonly-border-size)
+            ) * -1
+    );
+    pointer-events: none; /* .spectrum-Picker:after */
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+        ease-in-out;
+}
+#button.focus-visible {
+    box-shadow: none !important; /* .spectrum-Picker.focus-ring */
+}
+#button:focus-visible {
+    box-shadow: none !important; /* .spectrum-Picker.focus-ring */
+}
+#button.focus-visible:after {
+    box-shadow: 0 0 0 var(--spectrum-picker-focus-ring-size)
+        var(--spectrum-picker-focus-ring-color); /* .spectrum-Picker.focus-ring:after */
+}
+#button:focus-visible:after {
+    box-shadow: 0 0 0 var(--spectrum-picker-focus-ring-size)
+        var(--spectrum-picker-focus-ring-color); /* .spectrum-Picker.focus-ring:after */
 }
 :host([quiet]) #button {
     --spectrum-picker-texticon-border-size: 0; /* .spectrum-Picker--quiet */
