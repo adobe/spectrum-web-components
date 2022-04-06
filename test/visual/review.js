@@ -19,32 +19,27 @@ import crypto from 'crypto';
 
 const { commit, theme, branch } = yargs(hideBin(process.argv)).argv;
 
-const themes = [];
-// const themes = ['Classic', 'Express']; // prepping for Spectrum Express
+const vrts = [];
+const themes = ['Classic', 'Express'];
 const scales = ['Medium', 'Large'];
 const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
 const directions = ['LTR', 'RTL'];
-// themes.map((theme) =>
-colors.map((color) =>
-    scales.map((scale) =>
-        directions.map((direction) => {
-            // const context = `-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
-            const context = `${branch}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
-            const md5 = crypto.createHash('md5');
-            md5.update(context);
-            const hash = md5.digest('hex');
-            themes.push([
-                `${color} | ${scale} | ${direction}`,
-                `https://${hash}--spectrum-web-components.netlify.app/review/`,
-            ]);
-            // themes.push([
-            //     `${theme} | ${color} | ${scale} | ${direction}`,
-            //     `https://${hash}--spectrum-web-components.netlify.app/review/`
-            // ]);
-        })
+themes.map((theme) =>
+    colors.map((color) =>
+        scales.map((scale) =>
+            directions.map((direction) => {
+                const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
+                const md5 = crypto.createHash('md5');
+                md5.update(context);
+                const hash = md5.digest('hex');
+                vrts.push([
+                    `${theme} | ${color} | ${scale} | ${direction}`,
+                    `https://${hash}--spectrum-web-components.netlify.app/review/`,
+                ]);
+            })
+        )
     )
 );
-// );
 
 function cleanURL(url) {
     return url.replace('test/visual/', '../');
@@ -169,7 +164,7 @@ async function main() {
             branch,
             commit,
             theme,
-            themes,
+            vrts,
         },
         tests,
     });

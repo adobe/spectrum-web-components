@@ -28,6 +28,8 @@ commands:
                   at: /
     run-regressions:
         parameters:
+            regression_theme:
+                type: string
             regression_color:
                 type: string
             regression_scale:
@@ -38,13 +40,18 @@ commands:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_theme >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
                       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
+                      - v2-golden-images-main-<< parameters.regression_theme >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run:
                   name: Count baseline images
                   command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
-            - run: |
-                  yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+            - run:
+                  when: always
+                  name: VRT Run
+                  command: |
+                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-<< parameters.regression_theme >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/
@@ -54,7 +61,7 @@ commands:
                   name: Create review site
                   command: |
                       branch=$(git symbolic-ref --short HEAD)
-                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --theme="<< parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
+                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --theme="<< parameters.regression_theme >> << parameters.regression_color >> << parameters.regression_scale >> << parameters.regression_dir >>"
                       yarn rollup -c test/visual/rollup.config.js
             - run:
                   when: on_fail
@@ -62,7 +69,7 @@ commands:
                   command: |
                       cp projects/documentation/content/favicon.ico test/visual
                       branch=$(git symbolic-ref --short HEAD)
-                      hash=$(echo -n $branch-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
+                      hash=$(echo -n $branch-<< parameters.regression_theme >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >> | md5sum | cut -c 1-32)
                       echo hash
                       yarn netlify deploy --alias=$hash --dir=test/visual
             # move "updated" screenshot into the baseline directory before making the new cache
@@ -88,12 +95,12 @@ commands:
                   name: Build Golden Images Revision Cache
                   paths:
                       - test/visual/screenshots-baseline
-                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_theme >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
                       - test/visual/screenshots-baseline
-                  key: v2-golden-images-{{ .Branch }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+                  key: v2-golden-images-{{ .Branch }}-<< parameters.regression_theme >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
     commitlint:
@@ -140,7 +147,7 @@ jobs:
                   name: Are there changes?
                   command: git diff-files
 
-    docs-preview:
+    preview-docs:
         executor: node
 
         steps:
@@ -156,6 +163,8 @@ jobs:
     visual:
         executor: node
         parameters:
+            theme:
+                type: string
             color:
                 type: string
             scale:
@@ -165,11 +174,12 @@ jobs:
         steps:
             - downstream
             - run-regressions:
+                  regression_theme: << parameters.theme >>
                   regression_color: << parameters.color >>
                   regression_scale: << parameters.scale >>
                   regression_dir: << parameters.dir >>
 
-    docs-publish:
+    publish-docs:
         executor: node
 
         steps:
@@ -189,11 +199,12 @@ workflows:
     build:
         jobs:
             - test
-            - docs-preview
+            - preview-docs
             - visual:
-                  name: visual-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
+                  name: << matrix.theme >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
                   matrix:
                       parameters:
+                          theme: [classic, express]
                           color: [lightest, light, dark, darkest]
                           scale: [medium, large]
                           dir: [ltr, rtl]
@@ -201,7 +212,7 @@ workflows:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - docs-publish:
+            - publish-docs:
                   filters:
                       branches:
                           only:
