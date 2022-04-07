@@ -106,6 +106,7 @@ const lazyStyleFragment = (name: Color | Scale, flavor: ThemeVariant): void => {
             import('@spectrum-web-components/theme/scale-large.js');
             break;
         case 'darkest-express':
+            // TODO: import('@spectrum-web-components/theme/express/theme-darkest.js');
             import('@spectrum-web-components/theme/theme-darkest.js');
             break;
         case 'dark-express':
@@ -115,6 +116,7 @@ const lazyStyleFragment = (name: Color | Scale, flavor: ThemeVariant): void => {
             import('@spectrum-web-components/theme/express/theme-light.js');
             break;
         case 'lightest-express':
+            // TODO: // TODO: import('@spectrum-web-components/theme/express/theme-lightest.js');
             import('@spectrum-web-components/theme/theme-lightest.js');
             break;
         case 'medium-express':
