@@ -18,8 +18,6 @@ import {
 } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/menu/sp-menu.js';
-import '@spectrum-web-components/popover/sp-popover.js';
 import { PickerBase } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
