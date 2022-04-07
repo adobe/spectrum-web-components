@@ -109,10 +109,7 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
             }
         }
 
-        this.addEventListener('change', (event: Event) => {
-            if (event.target === this) {
-                return;
-            }
+        this.shadowRoot.addEventListener('change', (event: Event) => {
             event.stopPropagation();
             const target = event.target as Radio;
             this._setSelected(target.value);

@@ -88,6 +88,9 @@ export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     protected activate(): void {
+        if (this.checked) {
+            return;
+        }
         this.checked = true;
         this.dispatchEvent(
             new Event('change', {
