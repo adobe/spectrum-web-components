@@ -48,7 +48,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@floating-ui/dom": "^0.2.0",
+        "@floating-ui/dom": "^0.4.4",
         "@spectrum-web-components/action-button": "^0.8.2",
         "@spectrum-web-components/base": "^0.5.4",
         "@spectrum-web-components/shared": "^0.13.7",
