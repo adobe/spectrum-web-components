@@ -30,6 +30,7 @@ import {
     sendKeys,
 } from '@web/test-runner-commands';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { spy } from 'sinon';
 
 describe('Radio Group - focus control', () => {
     it('does not accept focus when empty', async () => {
@@ -605,5 +606,27 @@ describe('Radio Group', () => {
             'sp-radio-group#test-integer-value'
         ) as RadioGroup;
         expect(radioGroup.selected).to.equal('5');
+    });
+
+    it('prevents `change` events from radio buttons', async () => {
+        const changeSpy = spy();
+        const onChange = (event: Event & { target: RadioGroup }): void => {
+            changeSpy(event.target.selected);
+        };
+        const el = await fixture(html`
+            <sp-radio-group @change=${onChange}>
+                <sp-radio value="bulbasaur">Bulbasaur</sp-radio>
+                <sp-radio value="squirtle">Squirtle</sp-radio>
+                <sp-radio value="charmander">Charmander</sp-radio>
+            </sp-radio-group>
+        `);
+
+        const bulbasaur = el.querySelector('[value="bulbasaur"]') as Radio;
+        const charmander = el.querySelector('[value="charmander"]') as Radio;
+        bulbasaur.click();
+        bulbasaur.click();
+        charmander.click();
+
+        expect(changeSpy.calledWith(undefined)).to.be.false;
     });
 });
