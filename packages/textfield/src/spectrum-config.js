@@ -74,6 +74,11 @@ const config = {
                     selector: '.is-disabled',
                     name: 'disabled',
                 },
+                {
+                    type: 'boolean',
+                    selector: '.is-readOnly',
+                    name: 'readonly',
+                },
             ],
         },
     ],

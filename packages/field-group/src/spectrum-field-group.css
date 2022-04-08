@@ -14,7 +14,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     --spectrum-fieldgroup-margin: var(
         --spectrum-global-dimension-size-200
     ); /* .spectrum-FieldGroup */
-    --spectrum-fieldgroup-readonly-delineator: '\002c';
+    --spectrum-fieldgroup-readonly-delineator: '\\002c';
 }
 .group {
     display: flex; /* .spectrum-FieldGroup */

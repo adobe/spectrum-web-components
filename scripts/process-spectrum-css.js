@@ -82,8 +82,9 @@ async function processComponent(componentPath) {
             // eslint-disable-next-line no-console
             console.log(chalk.bold.green(`  o ${component.name}`));
 
+            let result = outputCss.css.replace(/\\/g, '\\\\');
             // await fs.writeFile(outputJsonPath, outputJson, { encoding: 'utf8' });
-            return fs.writeFile(outputCssPath, outputCss.css, {
+            return fs.writeFile(outputCssPath, result, {
                 encoding: 'utf8',
             });
         })
