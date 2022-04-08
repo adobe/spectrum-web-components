@@ -25,6 +25,10 @@ governing permissions and limitations under the License.
     resize: both;
 }
 
+:host([multiline][readonly]) {
+    resize: none;
+}
+
 #textfield {
     width: 100%;
 }

@@ -31,6 +31,7 @@ sp-field-button {
 
 :host([readonly]) .buttons {
     pointer-events: none;
+    visibility: hidden;
 }
 
 :host([hide-stepper]:not([quiet])) .input {
@@ -116,4 +117,10 @@ sp-field-button {
 :host([dir='rtl'][quiet]:not([hide-stepper])) .icon-workflow {
     /* [dir=rtl] .spectrum-Textfield--quiet .spectrum-Textfield-icon */
     right: var(--spectrum-stepper-button-width);
+}
+
+:host([readonly]:not([disabled]):not([invalid]):not([focused]):not([keyboard-focused]))
+    #textfield:hover
+    .input {
+    border-color: transparent;
 }

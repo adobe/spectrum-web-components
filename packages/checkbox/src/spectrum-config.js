@@ -58,6 +58,11 @@ const config = {
                         },
                     ],
                 },
+                {
+                    type: 'boolean',
+                    name: 'readonly',
+                    selector: '.is-readOnly',
+                },
             ],
             ids: [
                 {

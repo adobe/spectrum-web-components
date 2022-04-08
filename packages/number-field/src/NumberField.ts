@@ -311,24 +311,24 @@ export class NumberField extends TextfieldBase {
     protected onFocus(): void {
         super.onFocus();
         this._trackingValue = this.inputValue;
-        this.keyboardFocused = true;
+        this.keyboardFocused = !this.readonly && true;
         this.addEventListener('wheel', this.onScroll);
     }
 
     protected onBlur(): void {
         super.onBlur();
-        this.keyboardFocused = false;
+        this.keyboardFocused = !this.readonly && false;
         this.removeEventListener('wheel', this.onScroll);
     }
 
     private handleFocusin(): void {
-        this.focused = true;
-        this.keyboardFocused = true;
+        this.focused = !this.readonly && true;
+        this.keyboardFocused = !this.readonly && true;
     }
 
     private handleFocusout(): void {
-        this.focused = false;
-        this.keyboardFocused = false;
+        this.focused = !this.readonly && false;
+        this.keyboardFocused = !this.readonly && false;
     }
 
     private wasIndeterminate = false;

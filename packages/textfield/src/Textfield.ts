@@ -188,11 +188,11 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
     }
 
     protected onFocus(): void {
-        this.focused = true;
+        this.focused = !this.readonly && true;
     }
 
     protected onBlur(): void {
-        this.focused = false;
+        this.focused = !this.readonly && false;
     }
 
     protected renderStateIcons(): TemplateResult | typeof nothing {
