@@ -51,7 +51,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/checkbox": "3.0.19"
+        "@spectrum-css/checkbox": "^3.1.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

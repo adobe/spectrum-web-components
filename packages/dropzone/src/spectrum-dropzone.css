@@ -69,7 +69,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host(:focus) ::slotted(*) {
     color: var(
         --spectrum-global-color-static-gray-500,
-        #bcbcbc
+        rgb(var(--spectrum-global-color-static-gray-500-rgb))
     ); /* .spectrum-Dropzone:focus .spectrum-IllustratedMessage-illustration */
 }
 :host(:focus.focus-visible) {

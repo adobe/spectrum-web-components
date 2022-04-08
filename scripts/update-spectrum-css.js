@@ -28,9 +28,12 @@ async function update() {
             );
             async function updateDependency(packageName, depType) {
                 if (packageName.startsWith('@spectrum-css')) {
-                    const version = await latestVersion(packageName);
-                    if (packageJSON[depType][packageName] != version) {
-                        packageJSON[depType][packageName] = version;
+                    const targetVersion = await latestVersion(packageName);
+                    const currentVersion = packageJSON[depType][
+                        packageName
+                    ].replace('^', '');
+                    if (currentVersion !== targetVersion) {
+                        packageJSON[depType][packageName] = `^${targetVersion}`;
                         shouldUpdate = true;
                     }
                 }

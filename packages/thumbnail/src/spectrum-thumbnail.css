@@ -254,7 +254,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     background-color: var(
         --spectrum-global-color-static-white,
-        #fff
+        rgb(var(--spectrum-global-color-static-white-rgb))
     ); /* .spectrum-Thumbnail */
     background-image: linear-gradient(
             -45deg,
