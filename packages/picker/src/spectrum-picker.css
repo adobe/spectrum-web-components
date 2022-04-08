@@ -478,7 +478,7 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     box-shadow: 0 0 0 var(--spectrum-picker-focus-ring-size)
         var(--spectrum-picker-focus-ring-color); /* .spectrum-Picker.focus-ring:after */
 }
-:host([quiet]) #button {
+:host([quiet]) {
     --spectrum-picker-texticon-border-size: 0; /* .spectrum-Picker--quiet */
     --spectrum-picker-texticon-border-radius: 0;
     --spectrum-picker-textonly-padding-left: 0;

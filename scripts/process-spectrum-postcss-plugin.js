@@ -663,11 +663,14 @@ class SpectrumProcessor {
         const convertedSelectors = this.convertSelectors(rule);
         if (
             convertedSelectors.length === 1 &&
-            convertedSelectors[0] === this.component.hostShadowSelector &&
-            this.component.hostShadowSelector !== ':host'
+            ((convertedSelectors[0] === this.component.hostShadowSelector &&
+                this.component.hostShadowSelector !== ':host') ||
+                convertedSelectors[0].search(
+                    this.component.hostShadowSelector
+                ) > 0)
         ) {
             // In the case that custom property declarations are destined
-            // for `hostShadowSelector` selected rules, we need to hoise them
+            // for `hostShadowSelector` selected rules, we need to hoist them
             // back up to the :host so that they can be overriden from the outside
             // To do this:
             // - clone the rule
@@ -687,8 +690,11 @@ class SpectrumProcessor {
             if (hasCustomProperties) {
                 // eslint-disable-next-line no-console
                 console.log('Apply new :host rule');
+                const newSelector = convertedSelectors[0].startsWith(':host')
+                    ? convertedSelectors[0].split(' ')[0]
+                    : ':host';
                 this.appendRule(
-                    [':host'],
+                    [newSelector],
                     customPropertyNode.nodes,
                     `${rule.selectors.join(',\n   * ')}`
                 );
