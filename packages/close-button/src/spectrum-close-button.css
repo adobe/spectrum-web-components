@@ -53,6 +53,8 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
     cursor: default; /* .spectrum-CloseButton:disabled */
 }
 :host {
+    --spectrum-global-color-static-black-rgb: 0, 0, 0;
+    --spectrum-global-color-static-white-rgb: 255, 255, 255;
     border-color: transparent;
     border-width: 0;
     color: inherit;
@@ -107,13 +109,13 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([variant='white']) {
     --spectrum-closebutton-focus-ring-color: var(
         --spectrum-global-color-static-white,
-        #fff
+        rgb(var(--spectrum-global-color-static-white-rgb))
     ); /* .spectrum-CloseButton--staticWhite */
 }
 :host([variant='black']) {
     --spectrum-closebutton-focus-ring-color: var(
         --spectrum-global-color-static-black,
-        #000
+        rgb(var(--spectrum-global-color-static-black-rgb))
     ); /* .spectrum-CloseButton--staticBlack */
 }
 :host {

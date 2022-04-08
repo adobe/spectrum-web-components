@@ -51,7 +51,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/toast": "7.0.5"
+        "@spectrum-css/toast": "^7.0.6"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

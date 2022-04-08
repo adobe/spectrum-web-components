@@ -718,6 +718,22 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
    * .spectrum-Textfield.is-disabled:hover .spectrum-Textfield-input::placeholder,
    * .spectrum-Textfield-input :disabled::placeholder */
 }
+#textfield.is-readOnly .input,
+#textfield.is-readOnly:hover .input,
+.input:read-only {
+    -webkit-text-fill-color: var(--spectrum-global-color-gray-800);
+    background-color: var(
+        --spectrum-alias-background-color-transparent,
+        transparent
+    ); /* .spectrum-Textfield.is-readOnly .spectrum-Textfield-input,
+   * .spectrum-Textfield.is-readOnly:hover .spectrum-Textfield-input,
+   * .spectrum-Textfield-input:read-only */
+    border-color: var(
+        --spectrum-alias-background-color-transparent,
+        transparent
+    );
+    color: var(--spectrum-global-color-gray-800);
+}
 :host([quiet]) .input {
     background-color: var(
         --spectrum-textfield-m-quiet-texticon-background-color,

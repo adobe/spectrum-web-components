@@ -487,6 +487,57 @@ THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
         var(--spectrum-alias-component-text-color-down)
     ); /* .spectrum-Checkbox:active .spectrum-Checkbox-label */
 }
+:host(.is-readOnly) {
+    border-color: var(
+        --spectrum-checkbox-m-box-border-color,
+        var(--spectrum-alias-toggle-border-color-default)
+    ); /* .spectrum-Checkbox.is-readOnly */
+}
+:host(.is-readOnly:hover) #box:before {
+    border-color: var(
+        --spectrum-checkbox-m-box-border-color-hover,
+        var(--spectrum-alias-toggle-border-color-hover)
+    ); /* .spectrum-Checkbox.is-readOnly:hover .spectrum-Checkbox-box:before */
+}
+:host(.is-readOnly:hover) #label {
+    color: var(
+        --spectrum-checkbox-m-text-color-hover,
+        var(--spectrum-alias-component-text-color-hover)
+    ); /* .spectrum-Checkbox.is-readOnly:hover .spectrum-Checkbox-label */
+}
+:host(.is-readOnly:active) #box:before {
+    border-color: var(
+        --spectrum-checkbox-m-box-border-color-down,
+        var(--spectrum-alias-toggle-border-color-down)
+    ); /* .spectrum-Checkbox.is-readOnly:active .spectrum-Checkbox-box:before */
+}
+:host(.is-readOnly:active) #label {
+    color: var(
+        --spectrum-checkbox-m-text-color-down,
+        var(--spectrum-alias-component-text-color-down)
+    ); /* .spectrum-Checkbox.is-readOnly:active .spectrum-Checkbox-label */
+}
+:host(.is-readOnly) #input:checked:disabled + #box:before,
+:host(.is-readOnly) #input:disabled + #box:before {
+    background-color: var(
+        --spectrum-checkbox-m-box-background-color,
+        var(--spectrum-global-color-gray-75)
+    );
+    border-color: var(
+        --spectrum-checkbox-m-box-border-color,
+        var(--spectrum-alias-toggle-border-color-default)
+    ); /* .spectrum-Checkbox.is-readOnly .spectrum-Checkbox-input:disabled+.spectrum-Checkbox-box:before,
+   * .spectrum-Checkbox.is-readOnly .spectrum-Checkbox-input:checked:disabled+.spectrum-Checkbox-box:before */
+}
+:host(.is-readOnly) #input:checked:disabled ~ #label,
+:host(.is-readOnly) #input:disabled ~ #label {
+    color: var(
+        --spectrum-checkbox-m-text-color,
+        var(--spectrum-alias-component-text-color-default)
+    );
+    forced-color-adjust: none; /* .spectrum-Checkbox.is-readOnly .spectrum-Checkbox-input:disabled~.spectrum-Checkbox-label,
+   * .spectrum-Checkbox.is-readOnly .spectrum-Checkbox-input:checked:disabled~.spectrum-Checkbox-label */
+}
 #input:disabled + #box:before,
 :host([dir]) #input:checked:disabled + #box:before {
     background-color: var(
