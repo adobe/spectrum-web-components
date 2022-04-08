@@ -19,12 +19,12 @@ governing permissions and limitations under the License.
 
 :host([placement*='top']),
 :host([placement*='bottom']) {
-    max-height: calc(100% - var(--spectrum-overlay-animation-distance));
+    max-height: 100%;
 }
 
 :host([placement*='left']),
 :host([placement*='right']) {
-    max-width: calc(100% - var(--spectrum-overlay-animation-distance));
+    max-width: 100%;
 }
 
 ::slotted(*) {
