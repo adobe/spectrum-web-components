@@ -74,6 +74,17 @@ sp-theme,
     );
     opacity: 1;
     visibility: visible;
+    box-sizing: border-box;
+
+    /**
+     * duplicate --spectrum-overlay-animation-distance, which is out of scope
+     * rather than over write so we continue to get new values from Spectrum CSS
+     * if they are provided in the future.
+     **/
+    --swc-overlay-animation-distance: var(
+        --spectrum-picker-m-texticon-popover-offset-y,
+        var(--spectrum-global-dimension-size-75)
+    );
 }
 
 :host([actual-placement*='top']) #contents {
@@ -81,22 +92,29 @@ sp-theme,
 
     display: inline-flex;
     align-items: flex-end;
+    padding-top: var(--swc-overlay-animation-distance);
 }
 
 :host([actual-placement*='right']) #contents {
     --sp-overlay-from: translateX(
         calc(-1 * var(--spectrum-global-dimension-size-75))
     );
+
+    padding-right: var(--swc-overlay-animation-distance);
 }
 
 :host([actual-placement*='bottom']) #contents {
     --sp-overlay-from: translateY(
         calc(-1 * var(--spectrum-global-dimension-size-75))
     );
+
+    padding-bottom: var(--swc-overlay-animation-distance);
 }
 
 :host([actual-placement*='left']) #contents {
     --sp-overlay-from: translateX(var(--spectrum-global-dimension-size-75));
+
+    padding-left: var(--swc-overlay-animation-distance);
 }
 
 :host([animating]) ::slotted(*) {
