@@ -40,7 +40,7 @@ function label(name: string): string {
 export async function search(value: string): Promise<ResultGroup[]> {
     if (!index) {
         const searchIndexURL = new URL(
-            '../../../searchIndex.json',
+            '../../searchIndex.json',
             import.meta.url
         ).href;
         const searchIndex = await (await fetch(searchIndexURL)).json();
