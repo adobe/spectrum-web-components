@@ -126,7 +126,7 @@ export class SearchComponent extends LitElement {
             'click',
             popover,
             {
-                placement: 'bottom',
+                placement: 'bottom-start',
             }
         );
 
@@ -237,9 +237,8 @@ export class SearchComponent extends LitElement {
                 >
                     <style>
                         #search-results-menu {
-                            width: 368px;
+                            width: 250px;
                             max-height: calc(100vh - 200px);
-                            margin-left: 24px;
                             display: flex;
                             flex-direction: column;
                         }
