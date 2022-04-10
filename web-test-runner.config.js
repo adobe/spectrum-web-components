@@ -27,6 +27,42 @@ import rollupCommonjs from '@rollup/plugin-commonjs';
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);
 
+export const chromium = playwrightLauncher({
+    product: 'chromium',
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+        }),
+});
+
+export const firefox = playwrightLauncher({
+    product: 'firefox',
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+        }),
+    launchOptions: {
+        firefoxUserPrefs: {
+            'toolkit.telemetry.reportingpolicy.firstRun': false,
+            'browser.shell.checkDefaultBrowser': false,
+            'browser.bookmarks.restore_default_bookmarks': false,
+            'dom.disable_open_during_load': false,
+            'dom.max_script_run_time': 0,
+            'dom.min_background_timeout_value': 10,
+            'extensions.autoDisableScopes': 0,
+            'extensions.enabledScopes': 15,
+        },
+    },
+});
+
+export const webkit = playwrightLauncher({
+    product: 'webkit',
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+        }),
+});
+
 export default {
     plugins: [
         commonjs({
@@ -99,40 +135,6 @@ export default {
         }, []),
     ],
     group: 'unit',
-    browsers: [
-        playwrightLauncher({
-            product: 'chromium',
-            createBrowserContext: ({ browser }) =>
-                browser.newContext({
-                    ignoreHTTPSErrors: true,
-                }),
-        }),
-        playwrightLauncher({
-            product: 'webkit',
-            createBrowserContext: ({ browser }) =>
-                browser.newContext({
-                    ignoreHTTPSErrors: true,
-                }),
-        }),
-        playwrightLauncher({
-            product: 'firefox',
-            createBrowserContext: ({ browser }) =>
-                browser.newContext({
-                    ignoreHTTPSErrors: true,
-                }),
-            launchOptions: {
-                firefoxUserPrefs: {
-                    'toolkit.telemetry.reportingpolicy.firstRun': false,
-                    'browser.shell.checkDefaultBrowser': false,
-                    'browser.bookmarks.restore_default_bookmarks': false,
-                    'dom.disable_open_during_load': false,
-                    'dom.max_script_run_time': 0,
-                    'dom.min_background_timeout_value': 10,
-                    'extensions.autoDisableScopes': 0,
-                    'extensions.enabledScopes': 15,
-                },
-            },
-        }),
-    ],
+    browsers: [chromium, firefox, webkit],
     browserLogs: false,
 };
