@@ -27,4 +27,15 @@ describe('HelpText', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('loads negative/icon help-text accessibly', async () => {
+        const el = await fixture<HelpText>(
+            html`
+                <sp-help-text variant="negative" icon></sp-help-text>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
 });

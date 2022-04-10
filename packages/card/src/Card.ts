@@ -305,7 +305,7 @@ export class Card extends LikeAnchor(
                               class="checkbox"
                               @change=${this.handleSelectedChange}
                               ?checked=${this.selected}
-                              tabindex=${this.toggles ? '-1' : '0'}
+                              tabindex="-1"
                           ></sp-checkbox>
                       </sp-quick-actions>
                   `

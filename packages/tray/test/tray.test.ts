@@ -54,6 +54,24 @@ describe('Tray', () => {
 
         expect(document.activeElement).to.equal(anchor);
     });
+    it('focuses "tray"', async () => {
+        const el = await fixture<Tray>(
+            html`
+                <sp-tray open>
+                    <div></div>
+                </sp-tray>
+            `
+        );
+        await elementUpdated(el);
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(document.activeElement).to.equal(el);
+        expect(el.shadowRoot.activeElement).to.equal(
+            (el as unknown as { tray: HTMLDivElement }).tray
+        );
+    });
     it('closes', async () => {
         const test = await fixture<HTMLElement>(
             html`

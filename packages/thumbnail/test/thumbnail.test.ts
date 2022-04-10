@@ -43,4 +43,16 @@ describe('Thumbnail', () => {
 
         expect(el.size).to.equal('xxs');
     });
+    it('accepts `background`', async () => {
+        const el = await fixture<Thumbnail>(
+            html`
+                <sp-thumbnail background="blue">
+                    <img src=${thumbnail} alt="Woman crouching" />
+                </sp-thumbnail>
+            `
+        );
+
+        const background = el.shadowRoot.querySelector('.background');
+        expect(background).to.not.be.null;
+    });
 });
