@@ -127,7 +127,7 @@ jobs:
                   name: Lint commit message
                   command: echo "$COMMIT_MESSAGE" | npx commitlint --config commitlint.config.cjs
 
-    test:
+    test-chromium:
         executor: node
 
         steps:
@@ -138,7 +138,47 @@ jobs:
             - run: yarn analyze
             - run:
                   name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci.js --group unit --coverage
+                  command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group unit --coverage
+            - store_test_results:
+                  path: /root/project/results/
+            - store_artifacts:
+                  path: coverage
+            - run:
+                  name: Are there changes?
+                  command: git diff-files
+
+    test-firefox:
+        executor: node
+
+        steps:
+            - downstream
+            - run:
+                  name: Lint
+                  command: yarn lint
+            - run: yarn analyze
+            - run:
+                  name: Run tests
+                  command: yarn test:ci --config web-test-runner.config.ci-firefox.js --group unit --coverage
+            - store_test_results:
+                  path: /root/project/results/
+            - store_artifacts:
+                  path: coverage
+            - run:
+                  name: Are there changes?
+                  command: git diff-files
+
+    test-webkit:
+        executor: node
+
+        steps:
+            - downstream
+            - run:
+                  name: Lint
+                  command: yarn lint
+            - run: yarn analyze
+            - run:
+                  name: Run tests
+                  command: yarn test:ci --config web-test-runner.config.ci-webkit.js --group unit --coverage
             - store_test_results:
                   path: /root/project/results/
             - store_artifacts:
@@ -198,7 +238,9 @@ workflows:
             - commitlint
     build:
         jobs:
-            - test
+            - test-chromium
+            - test-firefox
+            - test-webkit
             - preview-docs
             - visual:
                   name: << matrix.theme >>-<< matrix.color >>-<< matrix.scale >>-<< matrix.dir >>
@@ -218,4 +260,6 @@ workflows:
                           only:
                               - main
                   requires:
-                      - test
+                      - test-chromium
+                      - test-firefox
+                      - test-webkit
