@@ -27,6 +27,26 @@ describe('Avatar', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('validates `size`', async () => {
+        const el = await fixture<Avatar>(
+            html`
+                <sp-avatar
+                    label="Shantanu Narayen"
+                    src="https://place.dog/500/500"
+                ></sp-avatar>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.size).to.equal(100);
+
+        el.setAttribute('size', '55');
+
+        await elementUpdated(el);
+
+        expect(el.size).to.equal(100);
+    });
     it('loads with everything set', async () => {
         const el = await fixture<Avatar>(
             html`

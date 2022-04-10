@@ -23,7 +23,8 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import avatarStyles from './avatar.css.js';
 
 export type AvatarSize = 50 | 75 | 100 | 200 | 300 | 400 | 500 | 600 | 700;
-const validSizes = [50, 75, 100, 200, 300, 400, 500, 600, 700];
+const validSizes: AvatarSize[] = [50, 75, 100, 200, 300, 400, 500, 600, 700];
+const defaultSize = validSizes[2];
 
 /**
  * @element sp-avatar
@@ -41,11 +42,10 @@ export class Avatar extends SpectrumElement {
 
     @property({ type: Number, reflect: true })
     public get size(): AvatarSize {
-        return this._size || 100;
+        return this._size;
     }
 
     public set size(value: AvatarSize) {
-        const defaultSize = 100;
         const size = value;
         const validSize = (
             validSizes.includes(size) ? size : defaultSize
@@ -61,7 +61,7 @@ export class Avatar extends SpectrumElement {
         this.requestUpdate('size', oldSize);
     }
 
-    private _size: AvatarSize | null = 100;
+    private _size = defaultSize;
 
     protected render(): TemplateResult {
         return html`
