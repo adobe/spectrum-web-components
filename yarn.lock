@@ -4883,10 +4883,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/progresscircle/-/progresscircle-1.0.18.tgz#170c32e46fb9a364cd391169e63e1e13e69d92a4"
   integrity sha512-JSqCVJm5nybwSKLylhnMmc18fKpVliDFTvWQ/1Mn+xGERYDGbkLqv369Ss/uLBZWuOyBBAnCAIpWXZH//k5niQ==
 
-"@spectrum-css/quickaction@3.0.21":
-  version "3.0.21"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/quickaction/-/quickaction-3.0.21.tgz#57a745c0fcb08cd59aa61f42a1664be6dfce2285"
-  integrity sha512-mXeCdQpNivwjQwv1bR4Jben7kQ6/JIemQi962iskOWXn2ewjIS7GN98wSlkepdOiLJGXnL2ujbORyMzGMjYT9g==
+"@spectrum-css/quickaction@3.0.22":
+  version "3.0.22"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/quickaction/-/quickaction-3.0.22.tgz#e756af290520f380f248c83f6eb4bbeeb625f380"
+  integrity sha512-TLVNyrIaHZUzJ7oNu7BF/WjUsMAFD2otOMbETSGceeuL34REzyAnMPWzMVucuJmX6mj2M1RxoBen+qUoelGUag==
 
 "@spectrum-css/radio@3.0.19":
   version "3.0.19"
