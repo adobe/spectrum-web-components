@@ -4823,10 +4823,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/expressvars/-/expressvars-1.0.1.tgz#0fb973180df58cac63ee68c22673182332291a93"
   integrity sha512-HjiFp72aqGheM2z2qaIEWI/OIIFV/oyZ+xRokrYkXo7pcmM/idfhsBsq+PNB2nOCzEoJzLsh0+wYzZVG+WJUZg==
 
-"@spectrum-css/fieldgroup@3.0.19":
-  version "3.0.19"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldgroup/-/fieldgroup-3.0.19.tgz#7235ff669dca925b6efbeb7e951ac448d1f6d135"
-  integrity sha512-bcS4c2FBYxIcj7KsRwWgE7jE2I2vzBOlrR6xDSanqAtitmeqRh8Kp86u0vM2dNi8lbXDwUsEEviYj/cWhQ3XLQ==
+"@spectrum-css/fieldgroup@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldgroup/-/fieldgroup-3.1.0.tgz#0435554bbef0e6a6774a281a4eb1412c194ce31f"
+  integrity sha512-VjCCuzknhTVf3yY+LYAF6a2Z9sbyWtdv29ZTQ1jYwZk4dFix94AXFk5OLioJ6g8RF1DqQ4ofn4BxDSbeZR0RZQ==
 
 "@spectrum-css/fieldlabel@4.0.20":
   version "4.0.20"
