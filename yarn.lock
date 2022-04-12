@@ -4913,10 +4913,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-5.0.8.tgz#27440a240542c3a953526aba395fe9357fb53219"
   integrity sha512-Dq/DL7JwbPNH+oZqGbG88a6uEYPZtrkv/a5wHsuB/nzG3sK1qbIKqBJMcK9g3q6vmVqwwSv1ygE+g5nO7o/ghg==
 
-"@spectrum-css/splitview@3.0.18":
-  version "3.0.18"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/splitview/-/splitview-3.0.18.tgz#ef6b10e9042f9c0ea728c56c1d891beaaa0bd33b"
-  integrity sha512-kLbDUAjMqdgubI9QNURK1ctAsear5/BG2v+yC5oF4jHSlyHxoPTiYXJIi4aCTcfxx4PVlubvJRRuJ9lr/Jr3tA==
+"@spectrum-css/splitview@3.0.19":
+  version "3.0.19"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/splitview/-/splitview-3.0.19.tgz#c5e054c699d3976c9f81c74d4e73ad5f7739a017"
+  integrity sha512-92yVikMQgzFA1e3Fd6GpXI8N8HAwgrJ4o+ww1AmVVcpOzK1feNQhmoL6+DaKlxE8AeykcP5XcWeg1mP4slpCXA==
 
 "@spectrum-css/statuslight@4.0.9":
   version "4.0.9"
