@@ -35,6 +35,12 @@ import type { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay';
 import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-children.js';
 
 /**
+ * Minimum hovering duration over an `<sp-menu-item>` element before opening
+ * the submenu.
+ */
+const POINTERENTER_TIMEOUT = 100;
+
+/**
  * Duration during which a pointing device can leave an `<sp-menu-item>` element
  * and return to it or to the submenu opened from it before closing that submenu.
  **/
@@ -330,18 +336,28 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.openOverlay({ immediate: true });
     }
 
+    protected enterTimeout?: ReturnType<typeof setTimeout>;
+
     protected handlePointerenter(): void {
         if (this.leaveTimeout) {
             clearTimeout(this.leaveTimeout);
             delete this.leaveTimeout;
             return;
         }
-        this.openOverlay();
+        this.enterTimeout = setTimeout(() => {
+            delete this.enterTimeout;
+            this.openOverlay();
+        }, POINTERENTER_TIMEOUT);
     }
 
     protected leaveTimeout?: ReturnType<typeof setTimeout>;
 
     protected handlePointerleave(): void {
+        if (this.enterTimeout) {
+            clearTimeout(this.enterTimeout);
+            delete this.enterTimeout;
+            return;
+        }
         if (this.hasSubmenu && this.open) {
             this.leaveTimeout = setTimeout(() => {
                 delete this.leaveTimeout;

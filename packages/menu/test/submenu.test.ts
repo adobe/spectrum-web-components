@@ -527,6 +527,8 @@ describe('Submenu', () => {
                 },
             ],
         });
+        // Wait at least 100ms (POINTERENTER_TIMEOUT)
+        await new Promise((r) => setTimeout(r, 110));
         await sendMouse({
             steps: [
                 {
