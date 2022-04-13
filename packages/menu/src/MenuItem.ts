@@ -387,7 +387,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
     public async openOverlay({
         immediate,
     }: { immediate?: boolean } = {}): Promise<void> {
-        if (!this.hasSubmenu || this.open) {
+        if (!this.hasSubmenu || this.open || this.disabled) {
             return;
         }
         this.open = true;
