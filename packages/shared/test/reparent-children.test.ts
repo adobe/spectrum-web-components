@@ -107,4 +107,191 @@ describe('Reparent Children', () => {
         restore();
         expect(child.getAttribute('slot')).to.equal('slot');
     });
+
+    it('beforeend - reparents and returns multiple children', async () => {
+        const context = await fixture<HTMLDivElement>(html`
+            <div>
+                <div class="source">
+                    <div class="child">1</div>
+                    <div class="child">2</div>
+                    <div class="child">3</div>
+                    <div class="child">4</div>
+                    <div class="child">5</div>
+                </div>
+                <div class="destination">
+                    <div class="marker"></div>
+                </div>
+            </div>
+        `);
+
+        const source = context.querySelector('.source') as HTMLDivElement;
+        const { children } = source;
+        const destination = context.querySelector(
+            '.destination'
+        ) as HTMLDivElement;
+
+        expect(source.children.length).to.equal(5);
+        expect(destination.children.length).to.equal(1);
+        const restore = reparentChildren(
+            [...children],
+            destination,
+            null,
+            'beforeend'
+        );
+
+        expect(source.children.length).to.equal(0);
+        expect(destination.children.length).to.equal(5 + 1);
+
+        const marker = context.querySelector('.marker') as HTMLDivElement;
+        expect(marker.previousElementSibling).to.be.null;
+        expect(marker.nextElementSibling!.textContent).to.equal('1');
+        expect(destination.lastElementChild!.textContent).to.equal('5');
+
+        restore();
+        expect(source.children.length).to.equal(5);
+        expect(destination.children.length).to.equal(1);
+
+        expect(source.firstElementChild!.textContent).to.equal('1');
+        expect(source.lastElementChild!.textContent).to.equal('5');
+    });
+
+    it('afterbegin - reparents and returns multiple children', async () => {
+        const context = await fixture<HTMLDivElement>(html`
+            <div>
+                <div class="source">
+                    <div class="child">1</div>
+                    <div class="child">2</div>
+                    <div class="child">3</div>
+                    <div class="child">4</div>
+                    <div class="child">5</div>
+                </div>
+                <div class="destination">
+                    <div class="marker"></div>
+                </div>
+            </div>
+        `);
+
+        const source = context.querySelector('.source') as HTMLDivElement;
+        const { children } = source;
+        const destination = context.querySelector(
+            '.destination'
+        ) as HTMLDivElement;
+
+        expect(source.children.length).to.equal(5);
+        expect(destination.children.length).to.equal(1);
+        const restore = reparentChildren(
+            [...children],
+            destination,
+            null,
+            'afterbegin'
+        );
+
+        expect(source.children.length).to.equal(0);
+        expect(destination.children.length).to.equal(5 + 1);
+
+        const marker = context.querySelector('.marker') as HTMLDivElement;
+        expect(marker.nextElementSibling).to.be.null;
+        expect(marker.previousElementSibling!.textContent).to.equal('5');
+        expect(destination.firstElementChild!.textContent).to.equal('1');
+
+        restore();
+        expect(source.children.length).to.equal(5);
+        expect(destination.children.length).to.equal(1);
+
+        expect(source.firstElementChild!.textContent).to.equal('1');
+        expect(source.lastElementChild!.textContent).to.equal('5');
+    });
+
+    it('beforebegin - reparents and returns multiple children', async () => {
+        const context = await fixture<HTMLDivElement>(html`
+            <div>
+                <div class="source">
+                    <div class="child">1</div>
+                    <div class="child">2</div>
+                    <div class="child">3</div>
+                    <div class="child">4</div>
+                    <div class="child">5</div>
+                </div>
+                <div class="marker"></div>
+                <div class="destination"></div>
+            </div>
+        `);
+
+        const source = context.querySelector('.source') as HTMLDivElement;
+        const { children } = source;
+        const destination = context.querySelector(
+            '.destination'
+        ) as HTMLDivElement;
+
+        expect(source.children.length).to.equal(5);
+        const restore = reparentChildren(
+            [...children],
+            destination,
+            null,
+            'beforebegin'
+        );
+
+        expect(source.children.length).to.equal(0);
+        expect(destination.children.length).to.equal(0);
+
+        const marker = context.querySelector('.marker') as HTMLDivElement;
+        expect(marker.previousElementSibling).to.not.be.null;
+        expect(marker.nextElementSibling!.textContent).to.equal('1');
+        expect(destination.previousElementSibling!.textContent).to.equal('5');
+
+        restore();
+        expect(source.children.length).to.equal(5);
+        expect(marker.nextElementSibling).to.equal(destination);
+
+        expect(source.firstElementChild!.textContent).to.equal('1');
+        expect(source.lastElementChild!.textContent).to.equal('5');
+    });
+
+    it('afterend - reparents and returns multiple children', async () => {
+        const context = await fixture<HTMLDivElement>(html`
+            <div>
+                <div class="source">
+                    <div class="child">1</div>
+                    <div class="child">2</div>
+                    <div class="child">3</div>
+                    <div class="child">4</div>
+                    <div class="child">5</div>
+                </div>
+                <div class="destination"></div>
+                <div class="marker"></div>
+            </div>
+        `);
+
+        const source = context.querySelector('.source') as HTMLDivElement;
+        const { children } = source;
+        const destination = context.querySelector(
+            '.destination'
+        ) as HTMLDivElement;
+
+        expect(source.children.length).to.equal(5);
+
+        const marker = context.querySelector('.marker') as HTMLDivElement;
+        expect(marker.previousElementSibling).to.equal(destination);
+        expect(marker.nextElementSibling).to.be.null;
+
+        const restore = reparentChildren(
+            [...children],
+            destination,
+            null,
+            'afterend'
+        );
+
+        expect(source.children.length).to.equal(0);
+        expect(destination.children.length).to.equal(0);
+
+        expect(destination.nextElementSibling!.textContent).to.equal('1');
+        expect(marker.previousElementSibling!.textContent).to.equal('5');
+
+        restore();
+        expect(source.children.length).to.equal(5);
+        expect(marker.previousElementSibling).to.equal(destination);
+
+        expect(source.firstElementChild!.textContent).to.equal('1');
+        expect(source.lastElementChild!.textContent).to.equal('5');
+    });
 });
