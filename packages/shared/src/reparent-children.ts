@@ -33,19 +33,24 @@ function restoreChildren<T extends Element>(
 export const reparentChildren = <T extends Element>(
     srcElements: T[],
     newParent: Element,
-    prepareCallback?: (el: T) => ((el: T) => void) | void
+    prepareCallback?: ((el: T) => ((el: T) => void) | void) | null,
+    position?: InsertPosition
 ): (() => Element[]) => {
     const placeholderItems: Comment[] = [];
     const cleanupCallbacks: ((el: T) => void)[] = [];
+
+    // default is to append
+    position = position || 'beforeend';
+
+    if (position === 'afterbegin' || position === 'afterend') {
+        srcElements.reverse();
+    }
 
     for (let index = 0; index < srcElements.length; ++index) {
         const srcElement = srcElements[index];
         if (prepareCallback) {
             cleanupCallbacks.push(
-                prepareCallback(srcElement) ||
-                    (() => {
-                        return;
-                    })
+                prepareCallback(srcElement) as (el: T) => void
             );
         }
         const placeholderItem: Comment = document.createComment(
@@ -57,7 +62,7 @@ export const reparentChildren = <T extends Element>(
         if (parentElement && parentElement !== srcElement) {
             parentElement.replaceChild(placeholderItem, srcElement);
         }
-        newParent.append(srcElement);
+        newParent.insertAdjacentElement(position, srcElement);
     }
 
     return function (): Element[] {
