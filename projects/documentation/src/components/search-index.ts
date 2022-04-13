@@ -39,10 +39,8 @@ function label(name: string): string {
 
 export async function search(value: string): Promise<ResultGroup[]> {
     if (!index) {
-        const searchIndexURL = new URL(
-            '../../searchIndex.json',
-            import.meta.url
-        ).href;
+        const searchIndexURL = new URL('./searchIndex.json', import.meta.url)
+            .href;
         const searchIndex = await (await fetch(searchIndexURL)).json();
         index = lunr.Index.load(searchIndex);
     }
