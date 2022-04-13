@@ -399,6 +399,51 @@ describe('Submenu', () => {
 
         expect(rootItem.open).to.be.false;
     });
+    it('not opens if disabled', async () => {
+        const el = await styledFixture<Menu>(
+            html`
+                <sp-menu>
+                    <sp-menu-item disabled class="root">
+                        Has submenu
+                        <sp-menu slot="submenu">
+                            <sp-menu-item class="submenu-item-1">
+                                One
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-2">
+                                Two
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-3">
+                                Three
+                            </sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-menu>
+            `
+        );
+
+        await elementUpdated(el);
+        const rootItem = el.querySelector('.root') as MenuItem;
+        const rootItemBoundingRect = rootItem.getBoundingClientRect();
+        expect(rootItem.open).to.be.false;
+
+        sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        rootItemBoundingRect.left +
+                            rootItemBoundingRect.width / 2,
+                        rootItemBoundingRect.top +
+                            rootItemBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+        // wait 200ms for open
+        await new Promise((r) => setTimeout(r, 200));
+
+        expect(rootItem.open).to.be.false;
+    });
     it('stays open when mousing off menu item and back again', async () => {
         const el = await styledFixture<Menu>(
             html`

@@ -19,6 +19,10 @@ governing permissions and limitations under the License.
     display: none;
 }
 
+:host([disabled]) {
+    pointer-events: none;
+}
+
 #button {
     position: absolute;
     inset: 0;
