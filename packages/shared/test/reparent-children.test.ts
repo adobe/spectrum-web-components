@@ -90,17 +90,16 @@ describe('Reparent Children', () => {
         ) as HTMLDivElement;
 
         expect(child.getAttribute('slot')).to.equal('slot');
-        const restore = reparentChildren(
-            [child],
-            destination,
-            (el: Element) => {
+        const restore = reparentChildren([child], destination, {
+            position: 'beforeend',
+            prepareCallback: (el: Element) => {
                 const slotName = el.slot;
                 el.removeAttribute('slot');
                 return (el: Element) => {
                     el.slot = slotName;
                 };
-            }
-        );
+            },
+        });
 
         expect(child.hasAttribute('slot')).to.be.false;
 
@@ -132,12 +131,9 @@ describe('Reparent Children', () => {
 
         expect(source.children.length).to.equal(5);
         expect(destination.children.length).to.equal(1);
-        const restore = reparentChildren(
-            [...children],
-            destination,
-            null,
-            'beforeend'
-        );
+        const restore = reparentChildren([...children], destination, {
+            position: 'beforeend',
+        });
 
         expect(source.children.length).to.equal(0);
         expect(destination.children.length).to.equal(5 + 1);
@@ -179,12 +175,9 @@ describe('Reparent Children', () => {
 
         expect(source.children.length).to.equal(5);
         expect(destination.children.length).to.equal(1);
-        const restore = reparentChildren(
-            [...children],
-            destination,
-            null,
-            'afterbegin'
-        );
+        const restore = reparentChildren([...children], destination, {
+            position: 'afterbegin',
+        });
 
         expect(source.children.length).to.equal(0);
         expect(destination.children.length).to.equal(5 + 1);
@@ -224,12 +217,9 @@ describe('Reparent Children', () => {
         ) as HTMLDivElement;
 
         expect(source.children.length).to.equal(5);
-        const restore = reparentChildren(
-            [...children],
-            destination,
-            null,
-            'beforebegin'
-        );
+        const restore = reparentChildren([...children], destination, {
+            position: 'beforebegin',
+        });
 
         expect(source.children.length).to.equal(0);
         expect(destination.children.length).to.equal(0);
@@ -274,12 +264,9 @@ describe('Reparent Children', () => {
         expect(marker.previousElementSibling).to.equal(destination);
         expect(marker.nextElementSibling).to.be.null;
 
-        const restore = reparentChildren(
-            [...children],
-            destination,
-            null,
-            'afterend'
-        );
+        const restore = reparentChildren([...children], destination, {
+            position: 'afterend',
+        });
 
         expect(source.children.length).to.equal(0);
         expect(destination.children.length).to.equal(0);

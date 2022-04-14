@@ -32,40 +32,54 @@ function restoreChildren<T extends Element>(
 
 export const reparentChildren = <T extends Element>(
     srcElements: T[],
-    newParent: Element,
-    prepareCallback?: ((el: T) => ((el: T) => void) | void) | null,
-    position?: InsertPosition
-): (() => Element[]) => {
-    const placeholderItems: Comment[] = [];
-    const cleanupCallbacks: ((el: T) => void)[] = [];
-
-    // default is to append
-    position = position || 'beforeend';
-
-    if (position === 'afterbegin' || position === 'afterend') {
-        srcElements.reverse();
+    destination: Element,
+    {
+        position,
+        prepareCallback,
+    }: {
+        position: InsertPosition;
+        prepareCallback?: (el: T) => ((el: T) => void) | void;
+    } = { position: 'beforeend' }
+): (() => T[]) => {
+    let length = srcElements.length;
+    if (length === 0) {
+        return () => srcElements;
     }
 
-    for (let index = 0; index < srcElements.length; ++index) {
+    let step = 1;
+    let index = 0;
+
+    if (position === 'afterbegin' || position === 'afterend') {
+        step = -1;
+        index = length - 1;
+    }
+
+    const placeholderItems = new Array<Comment>(length);
+    const cleanupCallbacks = new Array<(el: T) => void>(length);
+    const placeholderTemplate: Comment = document.createComment(
+        'placeholder for reparented element'
+    );
+
+    do {
         const srcElement = srcElements[index];
         if (prepareCallback) {
-            cleanupCallbacks.push(
-                prepareCallback(srcElement) as (el: T) => void
-            );
+            cleanupCallbacks[index] = prepareCallback(srcElement) as (
+                el: T
+            ) => void;
         }
-        const placeholderItem: Comment = document.createComment(
-            'placeholder for reparented element'
-        );
-        placeholderItems.push(placeholderItem);
+        placeholderItems[index] = placeholderTemplate.cloneNode() as Comment;
+
         const parentElement =
             srcElement.parentElement || srcElement.getRootNode();
         if (parentElement && parentElement !== srcElement) {
-            parentElement.replaceChild(placeholderItem, srcElement);
+            parentElement.replaceChild(placeholderItems[index], srcElement);
         }
-        newParent.insertAdjacentElement(position, srcElement);
-    }
+        destination.insertAdjacentElement(position, srcElement);
 
-    return function (): Element[] {
+        index += step;
+    } while (--length > 0);
+
+    return function (): T[] {
         return restoreChildren<T>(
             placeholderItems,
             srcElements,

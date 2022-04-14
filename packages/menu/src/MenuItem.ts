@@ -387,14 +387,17 @@ export class MenuItem extends LikeAnchor(Focusable) {
         );
         submenu.addEventListener('change', this.handleSubmenuChange);
         const popover = document.createElement('sp-popover');
-        const returnSubmenu = reparentChildren([submenu], popover, (el) => {
-            const slotName = el.slot;
-            el.tabIndex = 0;
-            el.removeAttribute('slot');
-            return (el) => {
-                el.tabIndex = -1;
-                el.slot = slotName;
-            };
+        const returnSubmenu = reparentChildren([submenu], popover, {
+            position: 'beforeend',
+            prepareCallback: (el) => {
+                const slotName = el.slot;
+                el.tabIndex = 0;
+                el.removeAttribute('slot');
+                return (el) => {
+                    el.tabIndex = -1;
+                    el.slot = slotName;
+                };
+            },
         });
         const closeOverlay = openOverlay(this, 'click', popover, {
             placement: this.isLTR ? 'right-start' : 'left-start',
