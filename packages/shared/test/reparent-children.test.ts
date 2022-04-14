@@ -140,15 +140,15 @@ describe('Reparent Children', () => {
 
         const marker = context.querySelector('.marker') as HTMLDivElement;
         expect(marker.previousElementSibling).to.be.null;
-        expect(marker.nextElementSibling!.textContent).to.equal('1');
-        expect(destination.lastElementChild!.textContent).to.equal('5');
+        expect(marker.nextElementSibling?.textContent).to.equal('1');
+        expect(destination.lastElementChild?.textContent).to.equal('5');
 
         restore();
         expect(source.children.length).to.equal(5);
         expect(destination.children.length).to.equal(1);
 
-        expect(source.firstElementChild!.textContent).to.equal('1');
-        expect(source.lastElementChild!.textContent).to.equal('5');
+        expect(source.firstElementChild?.textContent).to.equal('1');
+        expect(source.lastElementChild?.textContent).to.equal('5');
     });
 
     it('afterbegin - reparents and returns multiple children', async () => {
@@ -184,15 +184,15 @@ describe('Reparent Children', () => {
 
         const marker = context.querySelector('.marker') as HTMLDivElement;
         expect(marker.nextElementSibling).to.be.null;
-        expect(marker.previousElementSibling!.textContent).to.equal('5');
-        expect(destination.firstElementChild!.textContent).to.equal('1');
+        expect(marker.previousElementSibling?.textContent).to.equal('5');
+        expect(destination.firstElementChild?.textContent).to.equal('1');
 
         restore();
         expect(source.children.length).to.equal(5);
         expect(destination.children.length).to.equal(1);
 
-        expect(source.firstElementChild!.textContent).to.equal('1');
-        expect(source.lastElementChild!.textContent).to.equal('5');
+        expect(source.firstElementChild?.textContent).to.equal('1');
+        expect(source.lastElementChild?.textContent).to.equal('5');
     });
 
     it('beforebegin - reparents and returns multiple children', async () => {
@@ -226,15 +226,15 @@ describe('Reparent Children', () => {
 
         const marker = context.querySelector('.marker') as HTMLDivElement;
         expect(marker.previousElementSibling).to.not.be.null;
-        expect(marker.nextElementSibling!.textContent).to.equal('1');
-        expect(destination.previousElementSibling!.textContent).to.equal('5');
+        expect(marker.nextElementSibling?.textContent).to.equal('1');
+        expect(destination.previousElementSibling?.textContent).to.equal('5');
 
         restore();
         expect(source.children.length).to.equal(5);
         expect(marker.nextElementSibling).to.equal(destination);
 
-        expect(source.firstElementChild!.textContent).to.equal('1');
-        expect(source.lastElementChild!.textContent).to.equal('5');
+        expect(source.firstElementChild?.textContent).to.equal('1');
+        expect(source.lastElementChild?.textContent).to.equal('5');
     });
 
     it('afterend - reparents and returns multiple children', async () => {
@@ -271,14 +271,14 @@ describe('Reparent Children', () => {
         expect(source.children.length).to.equal(0);
         expect(destination.children.length).to.equal(0);
 
-        expect(destination.nextElementSibling!.textContent).to.equal('1');
-        expect(marker.previousElementSibling!.textContent).to.equal('5');
+        expect(destination.nextElementSibling?.textContent).to.equal('1');
+        expect(marker.previousElementSibling?.textContent).to.equal('5');
 
         restore();
         expect(source.children.length).to.equal(5);
         expect(marker.previousElementSibling).to.equal(destination);
 
-        expect(source.firstElementChild!.textContent).to.equal('1');
-        expect(source.lastElementChild!.textContent).to.equal('5');
+        expect(source.firstElementChild?.textContent).to.equal('1');
+        expect(source.lastElementChild?.textContent).to.equal('5');
     });
 });
