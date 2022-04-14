@@ -314,12 +314,15 @@ export class PickerBase extends SizedMixin(Focusable) {
 
         this.restoreChildren = reparentChildren<
             Element & { focused?: boolean }
-        >(reparentableChildren, this.optionsMenu, () => {
-            return (el) => {
-                if (typeof el.focused !== 'undefined') {
-                    el.focused = false;
-                }
-            };
+        >(reparentableChildren, this.optionsMenu, {
+            position: 'beforeend',
+            prepareCallback: () => {
+                return (el) => {
+                    if (typeof el.focused !== 'undefined') {
+                        el.focused = false;
+                    }
+                };
+            },
         });
 
         this.sizePopover(this.popover);

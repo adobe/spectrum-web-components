@@ -358,14 +358,17 @@ export class ActiveOverlay extends SpectrumElement {
         element: HTMLElement & { placement: Placement }
     ): void {
         this.originalPlacement = element.getAttribute('placement') as Placement;
-        this.restoreContent = reparentChildren([element], this, (el) => {
-            const slotName = el.slot;
-            const placement = el.placement;
-            el.removeAttribute('slot');
-            return (el) => {
-                el.slot = slotName;
-                el.placement = placement;
-            };
+        this.restoreContent = reparentChildren([element], this, {
+            position: 'beforeend',
+            prepareCallback: (el) => {
+                const slotName = el.slot;
+                const placement = el.placement;
+                el.removeAttribute('slot');
+                return (el) => {
+                    el.slot = slotName;
+                    el.placement = placement;
+                };
+            },
         });
         this.stealOverlayContentResolver();
     }
