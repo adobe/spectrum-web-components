@@ -136,5 +136,4 @@ export default {
     ],
     group: 'unit',
     browsers: [chromium, firefox, webkit],
-    browserLogs: false,
 };

@@ -60,7 +60,12 @@
     },
     "overrides": [
         {
-            "files": ["*.test.ts", "*.stories.ts", "**/benchmark/*.ts"],
+            "files": [
+                "*.test.ts",
+                "*.stories.ts",
+                "**/benchmark/*.ts",
+                "**/test/*.ts"
+            ],
             "rules": {
                 "spectrum-web-components/document-active-element": ["off"],
                 "lit-a11y/no-autofocus": ["off"],
