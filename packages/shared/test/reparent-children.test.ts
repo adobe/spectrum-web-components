@@ -42,6 +42,32 @@ describe('Reparent Children', () => {
         expect(destination.children.length).to.equal(0);
     });
 
+    it('early exits no children', async () => {
+        const context = await fixture<HTMLDivElement>(html`
+            <div>
+                <div class="source"></div>
+                <div class="destination"></div>
+            </div>
+        `);
+
+        const source = context.querySelector('.source') as HTMLDivElement;
+        const children = [...source.children] as HTMLDivElement[];
+        const destination = context.querySelector(
+            '.destination'
+        ) as HTMLDivElement;
+
+        expect(source.children.length).to.equal(0);
+        expect(destination.children.length).to.equal(0);
+        const restore = reparentChildren(children, destination);
+
+        expect(source.children.length).to.equal(0);
+        expect(destination.children.length).to.equal(0);
+
+        restore();
+        expect(source.children.length).to.equal(0);
+        expect(destination.children.length).to.equal(0);
+    });
+
     it('reparents and returns multiple child', async () => {
         const context = await fixture<HTMLDivElement>(html`
             <div>
