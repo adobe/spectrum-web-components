@@ -115,8 +115,12 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                         (dirParent as unknown as ShadowRoot)
                             .host) as HTMLElement;
                 }
+                const oldDir = this.dir;
                 this.dir =
                     dirParent.dir === 'rtl' ? dirParent.dir : this.dir || 'ltr';
+                if (oldDir === this.dir) {
+                    this.setAttribute('dir', this.dir);
+                }
                 if (dirParent === document.documentElement) {
                     observedForElements.add(this);
                 } else {
