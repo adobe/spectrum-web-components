@@ -300,11 +300,15 @@ export class OverlayStack {
                 if (typeof contentWithLifecycle.open !== 'undefined') {
                     contentWithLifecycle.open = true;
                 }
+                let cb: () => Promise<void> | void = () => {
+                    return;
+                };
                 if (contentWithLifecycle.overlayOpenCallback) {
                     const { trigger } = activeOverlay;
-                    contentWithLifecycle.overlayOpenCallback({ trigger });
+                    const { overlayOpenCallback } = contentWithLifecycle;
+                    cb = async () => await overlayOpenCallback({ trigger });
                 }
-                activeOverlay.openCallback();
+                await activeOverlay.openCallback(cb);
                 return false;
             }
         );
@@ -495,7 +499,7 @@ export class OverlayStack {
         }
         if (contentWithLifecycle.overlayCloseCallback) {
             const { trigger } = overlay;
-            contentWithLifecycle.overlayCloseCallback({ trigger });
+            await contentWithLifecycle.overlayCloseCallback({ trigger });
         }
 
         if (overlay.state != 'dispose') return;

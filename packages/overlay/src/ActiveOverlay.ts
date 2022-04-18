@@ -295,11 +295,15 @@ export class ActiveOverlay extends SpectrumElement {
         this.childrenReady = Promise.all(actions);
     }
 
-    public async openCallback(): Promise<void> {
+    public async openCallback(
+        livecycleCallback: () => Promise<void> | void
+    ): Promise<void> {
         await this.updateComplete;
         if (this.receivesFocus) {
             await this.focus();
         }
+
+        await livecycleCallback();
 
         this.trigger.dispatchEvent(
             new CustomEvent<OverlayOpenCloseDetail>('sp-opened', {
