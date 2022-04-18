@@ -41,7 +41,7 @@ export const reparentChildren = <T extends Element>(
         prepareCallback?: (el: T) => ((el: T) => void) | void;
     } = { position: 'beforeend' }
 ): (() => T[]) => {
-    let length = srcElements.length;
+    let { length } = srcElements;
     if (length === 0) {
         return () => srcElements;
     }
