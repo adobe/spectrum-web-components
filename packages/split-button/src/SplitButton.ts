@@ -186,26 +186,26 @@ export class SplitButton extends SizedMixin(PickerBase) {
         }
     }
 
-    protected manageSelection(): void {
+    protected async manageSelection(): Promise<void> {
         super.manageSelection();
         this.manageSplitButtonItems();
     }
 
     private async manageSplitButtonItems(): Promise<void> {
-        if (this.menuItems.length) {
-            if (this.type === 'more') {
-                this.menuItems[0].hidden = true;
-                this.menuItems.forEach((el) => (el.selected = false));
-                this.selectedItem = this.menuItems[0];
-            } else {
-                this.selectedItem = this.selectedItem || this.menuItems[0];
+        if (!this.menuItems.length) {
+            await this.updateComplete;
+            if (!this.menuItems.length) {
+                return;
             }
-            this.value = this.selectedItem.value;
-            return;
         }
-        await this.updateComplete;
-        if (this.menuItems.length) {
-            this.manageSplitButtonItems();
+
+        if (this.type === 'more') {
+            this.menuItems[0].hidden = true;
+            this.menuItems.forEach((el) => (el.selected = false));
+            this.selectedItem = this.menuItems[0];
+        } else {
+            this.selectedItem = this.selectedItem || this.menuItems[0];
         }
+        this.value = this.selectedItem.value;
     }
 }
