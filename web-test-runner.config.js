@@ -96,6 +96,7 @@ export default {
             'packages/shared/src/focus-visible.*',
             'packages/styles/**',
             'test/**',
+            '**/test/**',
             'tools/*/stories/*',
             '**/node_modules/**',
         ],
