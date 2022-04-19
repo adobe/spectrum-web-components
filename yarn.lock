@@ -3954,9 +3954,9 @@
   integrity sha512-wPgC+Xin8owN0YobpKcVqXf33guXJzRyNTtEWZReoyGUAc+FuAllRkGi1eZ4dRbBnGpUPKTd0c4ZWCSCKwPL+Q==
 
 "@spectrum-css/tag@^3.3.9":
-  version "3.3.9"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tag/-/tag-3.3.9.tgz#6f46c5733da48325e89b9416f3a5e9b54feb46eb"
-  integrity sha512-Eb5PtLkaHPLrhKkIfY0g0hvuJnnSqPYoFaUnmXxY2SdpNZgxlif5VxW3nRpzepdHTbjFVV52RtpabTbLlraNcQ==
+  version "3.3.10"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tag/-/tag-3.3.10.tgz#3710a29767315332078956b93e99408b781eb160"
+  integrity sha512-cwKgpEx4OYyS/WqyNDCvQhSVQUYdHhbjz3nRdg4jABaI96T8UBHcAvK07TR1/OfD5rBo+xBO+rsGqd4aH21zdA==
 
 "@spectrum-css/taggroup@^3.3.9":
   version "3.3.9"
