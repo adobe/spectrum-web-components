@@ -23,9 +23,17 @@ import postcssCustomProperties from 'postcss-custom-properties';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // load our license file
-const license = fs.readFileSync(
-    path.join(__dirname, '..', 'config', 'license.js')
-);
+let license;
+try {
+    license = fs.readFileSync(
+        path.join(__dirname, '../config/license.js'),
+        'utf8'
+    );
+} catch (error) {
+    throw new Error(error);
+}
+
+license = license.replace('<%= YEAR %>', new Date().getFullYear());
 
 const processCSSData = async (data, identifier, from) => {
     /* lit-html is a JS litteral, so `\` escapes by default.

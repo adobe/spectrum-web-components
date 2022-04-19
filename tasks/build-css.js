@@ -21,7 +21,15 @@ import { fileURLToPath } from 'url';
 const { postCSSPlugins, wrapCSSResult } = cssProcessing;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const configPath = path.resolve(path.join(__dirname, '..', 'config'));
-const header = fs.readFileSync(path.join(configPath, 'license.js'), 'utf8');
+
+let header;
+try {
+    header = fs.readFileSync(path.join(configPath, 'license.js'), 'utf8');
+} catch (error) {
+    throw new Error(error);
+}
+
+header = header.replace('<%= YEAR %>', new Date().getFullYear());
 
 export const processCSS = async (cssPath) => {
     let wrappedCSS = header;
