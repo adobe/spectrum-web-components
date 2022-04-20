@@ -20,10 +20,10 @@ jobs:
 
             - uses: actions/checkout@v2
 
-            - name: Setup Node 14
+            - name: Setup Node 16
               uses: actions/setup-node@v2
               with:
-                  node-version: '14'
+                  node-version: '16'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
@@ -73,10 +73,10 @@ jobs:
 
             - uses: actions/checkout@v2
 
-            - name: Setup Node 14
+            - name: Setup Node 16
               uses: actions/setup-node@v2
               with:
-                  node-version: '14'
+                  node-version: '16'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
@@ -112,10 +112,10 @@ jobs:
 
             - uses: actions/checkout@v2
 
-            - name: Setup Node 14
+            - name: Setup Node 16
               uses: actions/setup-node@v2
               with:
-                  node-version: '14'
+                  node-version: '16'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
@@ -152,10 +152,10 @@ jobs:
 
             - uses: actions/checkout@v2
 
-            - name: Setup Node 14
+            - name: Setup Node 16
               uses: actions/setup-node@v2
               with:
-                  node-version: '14'
+                  node-version: '16'
                   cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
