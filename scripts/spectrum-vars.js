@@ -15,25 +15,11 @@ governing permissions and limitations under the License.
 import path from 'path';
 import fs from 'fs-extra';
 import postcss from 'postcss';
-import globby from 'globby';
 import { postCSSPlugins } from './css-processing.cjs';
 import { fileURLToPath } from 'url';
-import postcssCustomProperties from 'postcss-custom-properties';
+// import postcssCustomProperties from 'postcss-custom-properties';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// load our license file
-let license;
-try {
-    license = fs.readFileSync(
-        path.join(__dirname, '../config/license.js'),
-        'utf8'
-    );
-} catch (error) {
-    throw new Error(error);
-}
-
-license = license.replace('<%= YEAR %>', new Date().getFullYear());
 
 const processCSSData = async (data, identifier, from) => {
     /* lit-html is a JS litteral, so `\` escapes by default.
@@ -79,11 +65,6 @@ const processCSSData = async (data, identifier, from) => {
     return result;
 };
 
-const writeProcessedCSSToFile = (dstPath, contents) => {
-    const result = `${license}\n/* stylelint-disable */\n${contents}\n/* stylelint-enable */`;
-    fs.writeFile(dstPath, result, 'utf8');
-};
-
 const processCSS = async (srcPath, dstPath, identifier, from) => {
     fs.readFile(srcPath, 'utf8', async function (error, data) {
         if (error) {
@@ -91,7 +72,7 @@ const processCSS = async (srcPath, dstPath, identifier, from) => {
         }
 
         let result = await processCSSData(data, identifier, from);
-        writeProcessedCSSToFile(dstPath, result);
+        fs.writeFile(dstPath, result, 'utf8');
     });
 };
 
@@ -104,7 +85,7 @@ const processMultiSourceCSS = async (srcPaths, dstPath, identifier) => {
         result = `${result}\n${await processCSSData(data, identifier)}`;
     }
 
-    writeProcessedCSSToFile(dstPath, result);
+    fs.writeFile(dstPath, result, 'utf8');
 };
 
 // where is spectrum-css?

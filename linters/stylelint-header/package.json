@@ -29,6 +29,7 @@
     "devDependencies": {
         "jest": "^27.0.1",
         "jest-preset-stylelint": "^5.0.2",
+        "lodash": "^4.17.21",
         "stylelint": "^14.2.0"
     },
     "jest": {

@@ -38,19 +38,6 @@ const processIcon = (srcPath, fd, scaleWidth, scaleHeight) => {
     );
 };
 
-// load our license file
-let license;
-try {
-    license = fs.readFileSync(
-        path.join(__dirname, '../config/license.js'),
-        'utf8'
-    );
-} catch (error) {
-    throw new Error(error);
-}
-
-license = license.replace('<%= YEAR %>', new Date().getFullYear());
-
 // where is spectrum-css?
 // TODO: use resolve package to find node_modules
 const spectrumIconsPath = path.resolve(
@@ -79,7 +66,6 @@ Object.keys(scales).forEach((scaleKey) => {
     );
     let outputFd = fs.openSync(outputPath, 'w');
 
-    fs.writeSync(outputFd, license);
     fs.writeSync(
         outputFd,
         'import { svg } from \'@spectrum-web-components/base\'; export default svg`<svg xmlns="http://www.w3.org/2000/svg">'
