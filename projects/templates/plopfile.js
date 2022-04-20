@@ -38,14 +38,23 @@ module.exports = function (plop) {
         const capitalized = camel.charAt(0).toUpperCase() + camel.substring(1);
         return capitalized;
     });
+
     plop.setActionType('install deps', function (answers) {
         execSync(
             `cd ../../ && yarn lerna add @spectrum-web-components/base --scope=@spectrum-web-components/${answers.name} --no-bootstrap`
         );
+        if (answers.spectrum)
+            execSync(
+                `cd ../../ && yarn lerna add @spectrum-css/${answers.spectrum} --scope=@spectrum-web-components/${answers.name} --dev --no-bootstrap`
+            );
+    });
+
+    plop.setActionType('format files', function (answers) {
         execSync(
-            `cd ../../ && yarn lerna add @spectrum-css/${answers.spectrum} --scope=@spectrum-web-components/${answers.name} --dev --no-bootstrap`
+            `cd ../../ && yarn prettier --write packages/${answers.name} && eslint --fix -f pretty packages/${answers.name} && stylelint --fix packages/${answers.name}`
         );
     });
+
     plop.setGenerator('component', {
         description: 'application controller logic',
         prompts: [
@@ -136,6 +145,9 @@ module.exports = function (plop) {
             },
             {
                 type: 'install deps',
+            },
+            {
+                type: 'format files',
             },
         ],
     });

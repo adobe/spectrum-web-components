@@ -54,7 +54,7 @@ async function update() {
     }
     if (updated) {
         console.log(
-            '@spectrum-css ependencies are not on latest, installing...'
+            '@spectrum-css dependencies are not on latest, installing...'
         );
         process.exit(1);
     } else {

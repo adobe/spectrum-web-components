@@ -10,40 +10,37 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const { readFileSync, existsSync } = require('fs');
-const {
-    createPlugin,
-    utils: { report, ruleMessages, validateOptions },
-} = require('stylelint');
+const { existsSync, readFileSync } = require('fs');
+const { createPlugin, utils } = require('stylelint');
 const { compareTwoStrings } = require('string-similarity');
+const { template } = require('lodash');
 
 const ruleName = 'header/header';
 
-const messages = ruleMessages(ruleName, {
+const messages = utils.ruleMessages(ruleName, {
     rejected: 'Header not found',
 });
 
-module.exports = createPlugin(
+const rule = createPlugin(
     ruleName,
-    (primaryOption, secondaryOptions, context) => {
-        let header;
-        // Read-in the header file
-        try {
-            header = readFileSync(primaryOption, 'utf8');
-            header = header.replace(/(\/\*|\*\/)/g, '').trim();
-        } catch (error) {
-            throw new Error(error.message);
-        }
+    (pathOrString, options = {}, context = {}) =>
+        (root, result) => {
+            if (typeof pathOrString === 'boolean' && !pathOrString) return;
 
-        header = header.replace('<%= YEAR %>', new Date().getFullYear());
+            let headerTemplate = existsSync(pathOrString)
+                ? readFileSync(pathOrString, 'utf8')
+                : pathOrString;
 
-        // Parse incoming CSS for header
-        return (root, result) => {
-            const validOptions = validateOptions(
+            if (!headerTemplate) return;
+
+            // Trim any comment tags from the string and remove whitespace
+            headerTemplate = headerTemplate.replace(/(\/\*|\*\/)/g, '').trim();
+
+            const validOptions = utils.validateOptions(
                 result,
                 ruleName,
                 {
-                    actual: primaryOption,
+                    actual: pathOrString,
                     possible: [
                         false,
                         (x) => typeof x === 'string' && existsSync(x),
@@ -51,19 +48,25 @@ module.exports = createPlugin(
                 },
                 {
                     optional: true,
-                    actual: secondaryOptions,
+                    actual: options,
                     possible: {
                         nonMatchingTolerance: [
                             (x) => typeof x === 'number' && (x >= 0 || x <= 1),
                         ],
+                        templateInputs: [(x) => typeof x === 'object'],
                     },
                 }
             );
 
             if (!validOptions) return;
 
-            const nonMatchingTolerance =
-                secondaryOptions?.nonMatchingTolerance || 0.98;
+            const getHeader = template(headerTemplate);
+            const header = getHeader({
+                YEAR: new Date().getFullYear(),
+                ...options.templateInputs,
+            });
+
+            const nonMatchingTolerance = options?.nonMatchingTolerance || 0.98;
 
             // Walk comments on root to find if header exists
             let found = false;
@@ -82,29 +85,35 @@ module.exports = createPlugin(
 
             if (found) return;
 
-            if (!context.fix) {
+            if (context.fix) {
+                const lineLength = header.split('\n').length;
+                let raws = {};
+                if (lineLength > 1) {
+                    raws = {
+                        left: context.newline,
+                        right: context.newline,
+                    };
+                }
+                // Add the provided header to the top of the file
+                root.prepend({
+                    text: header,
+                    raws,
+                });
+                // Put a few newlines between the comment and the first property
+                root.nodes[1].raws.before = context.newline + context.newline;
+            } else {
                 // Just report the issue
-                report({
+                utils.report({
                     ruleName: ruleName,
                     result: result,
                     message: messages.rejected,
                     node: root,
                 });
-            } else {
-                // Add the provided header to the top of the file
-                root.prepend({
-                    text: header,
-                    raws: {
-                        left: context.newline,
-                        right: context.newline,
-                    },
-                });
-                // Put a few newlines between the comment and the first property
-                root.nodes[1].raws.before = context.newline + context.newline;
             }
-        };
-    }
+        }
 );
 
-module.exports.ruleName = ruleName;
-module.exports.messages = messages;
+rule.ruleName = ruleName;
+rule.messages = messages;
+
+module.exports = rule;

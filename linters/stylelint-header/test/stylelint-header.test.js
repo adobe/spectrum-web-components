@@ -20,7 +20,15 @@ const testRule = getTestRule({ plugins: ['.'] });
 
 testRule({
     ruleName,
-    config: ['../../config/license.js', { nonMatchingTolerance: 0.8 }],
+    config: [
+        './input.txt',
+        {
+            nonMatchingTolerance: 1,
+            templateVariables: {
+                company: 'Adobe',
+            },
+        },
+    ],
     fix: true,
 
     accept: [
@@ -35,6 +43,34 @@ testRule({
             code: readFileSync('test/fail.css', { encoding: 'utf-8' }),
             fixed: readFileSync('test/fixed.css', { encoding: 'utf-8' }),
             description: 'Auto-fix file missing header',
+            message: messages.rejected,
+        },
+    ],
+});
+
+testRule({
+    ruleName,
+    config: [
+        'Copyright <%= YEAR %> <%= company %>.',
+        {
+            nonMatchingTolerance: 1,
+            templateVariables: {
+                company: 'Adobe',
+            },
+        },
+    ],
+
+    accept: [
+        {
+            code: readFileSync('test/pass.css', { encoding: 'utf-8' }),
+            description: 'Simple CSS with header included',
+        },
+    ],
+
+    reject: [
+        {
+            code: readFileSync('test/fail.css', { encoding: 'utf-8' }),
+            description: 'Error if missing header',
             message: messages.rejected,
         },
     ],
