@@ -19,7 +19,7 @@ const config = {
                 selector: '.spectrum-Search',
                 shadowSelector: '#textfield',
             },
-            focus: '#input',
+            focus: '.input',
             attributes: [
                 {
                     type: 'boolean',
@@ -28,10 +28,6 @@ const config = {
                 },
             ],
             ids: [
-                {
-                    selector: '.spectrum-Search-input',
-                    name: 'input',
-                },
                 {
                     selector: '.spectrum-Search-clearButton',
                     name: 'button',
@@ -42,6 +38,10 @@ const config = {
                 },
             ],
             classes: [
+                {
+                    selector: '.spectrum-Search-input',
+                    name: 'input',
+                },
                 {
                     selector: '.spectrum-Icon',
                     name: 'icon',

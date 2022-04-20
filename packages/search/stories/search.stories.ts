@@ -22,6 +22,10 @@ export const Default = (): TemplateResult => html`
     <sp-search disabled></sp-search>
 `;
 
+export const autofocus = (): TemplateResult => html`
+    <sp-search autofocus></sp-search>
+`;
+
 export const Quiet = (): TemplateResult => html`
     <sp-search quiet></sp-search>
     <sp-search quiet disabled></sp-search>
