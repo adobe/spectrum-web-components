@@ -16,13 +16,6 @@ const postCSSPlugins = (resourcePath, toTS) => {
     if (resourcePath) {
         postCSSImportConfig['root'] = resourcePath;
     }
-    postCSSImportConfig['plugins'] = [
-        require('stylelint')({
-            fix: true,
-            allowEmptyInput: true,
-            quiet: true,
-        }),
-    ];
     return [
         require('postcss-import')(postCSSImportConfig),
         require('postcss-preset-env')({
