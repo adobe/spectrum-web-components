@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import { Dialog } from '@spectrum-web-components/dialog';
@@ -76,5 +77,125 @@ describe('Dialog', () => {
 
         await elementUpdated(el);
         expect(closeSpy.calledOnce).to.be.true;
+    });
+    it('allows hero override', async () => {
+        class Override extends Dialog {
+            renderHero(): TemplateResult {
+                return html`
+                    <div id="hero-container"></div>
+                `;
+            }
+        }
+
+        customElements.define('hero-dialog', Override);
+
+        const el = await fixture<Override>(
+            html`
+                <hero-dialog></hero-dialog>
+            `
+        );
+
+        const container = el.shadowRoot.querySelector('#hero-container');
+        expect(container).to.not.be.null;
+    });
+    it('allows heading override', async () => {
+        class Override extends Dialog {
+            renderHeading(): TemplateResult {
+                return html`
+                    <h2 id="heading-container">Test</h2>
+                `;
+            }
+        }
+
+        customElements.define('heading-dialog', Override);
+
+        const el = await fixture<Override>(
+            html`
+                <heading-dialog></heading-dialog>
+            `
+        );
+
+        const container = el.shadowRoot.querySelector('#heading-container');
+        expect(container).to.not.be.null;
+    });
+    it('allows content override', async () => {
+        class Override extends Dialog {
+            renderContent(): TemplateResult {
+                return html`
+                    <p id="content-container">Test</p>
+                `;
+            }
+        }
+
+        customElements.define('content-dialog', Override);
+
+        const el = await fixture<Override>(
+            html`
+                <content-dialog></content-dialog>
+            `
+        );
+
+        const container = el.shadowRoot.querySelector('#content-container');
+        expect(container).to.not.be.null;
+    });
+    it('allows footer override', async () => {
+        class Override extends Dialog {
+            renderFooter(): TemplateResult {
+                return html`
+                    <p id="footer-container">Test</p>
+                `;
+            }
+        }
+
+        customElements.define('footer-dialog', Override);
+
+        const el = await fixture<Override>(
+            html`
+                <footer-dialog></footer-dialog>
+            `
+        );
+
+        const container = el.shadowRoot.querySelector('#footer-container');
+        expect(container).to.not.be.null;
+    });
+    it('allows button override', async () => {
+        class Override extends Dialog {
+            renderButtons(): TemplateResult {
+                return html`
+                    <p id="button-container">Test</p>
+                `;
+            }
+        }
+
+        customElements.define('button-dialog', Override);
+
+        const el = await fixture<Override>(
+            html`
+                <button-dialog></button-dialog>
+            `
+        );
+
+        const container = el.shadowRoot.querySelector('#button-container');
+        expect(container).to.not.be.null;
+    });
+    it('allows dismiss override', async () => {
+        class Override extends Dialog {
+            renderDismiss(): TemplateResult {
+                return html`
+                    <p id="dismiss-container">Test</p>
+                `;
+            }
+        }
+
+        customElements.define('dismiss-dialog', Override);
+
+        const el = await fixture<Override>(
+            html`
+                <dismiss-dialog></dismiss-dialog>
+            `
+        );
+
+        const container = el.shadowRoot.querySelector('#dismiss-container');
+        expect(container).to.not.be.null;
     });
 });
