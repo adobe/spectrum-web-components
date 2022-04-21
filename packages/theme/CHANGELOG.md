@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.10.2...@spectrum-web-components/theme@0.11.0) (2022-04-21)
+
+### Bug Fixes
+
+-   ensure all theme data is exported and listed for side effects ([14efdc7](https://github.com/adobe/spectrum-web-components/commit/14efdc71a9c1c72030aadb44bdc614cd2610d394))
+
+### Features
+
+-   add support for Spectrum Express ([12bfe99](https://github.com/adobe/spectrum-web-components/commit/12bfe99570122514fa88ce1a4e4a1591bcc5aa70))
+
 ## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.10.1...@spectrum-web-components/theme@0.10.2) (2022-03-30)
 
 **Note:** Version bump only for package @spectrum-web-components/theme

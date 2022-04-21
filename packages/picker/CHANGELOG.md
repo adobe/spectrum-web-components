@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.10.6...@spectrum-web-components/picker@0.11.0) (2022-04-21)
+
+### Bug Fixes
+
+-   allow Picker to be reparented ([39e7309](https://github.com/adobe/spectrum-web-components/commit/39e73094be38888599fb189ed4d613f09476310f))
+-   correct custom property hoisting ([a1d98dc](https://github.com/adobe/spectrum-web-components/commit/a1d98dccadb790afb61d761636754ed337a0d50c))
+-   ensure correct Menu Items are "selected" when passed into the overlay ([46a25db](https://github.com/adobe/spectrum-web-components/commit/46a25db6303adbbcdfe76cb3bf97541adc418367))
+
+### Features
+
+-   conditionally load focus-visible polyfill ([6b5e5cf](https://github.com/adobe/spectrum-web-components/commit/6b5e5cf515f02ef14f072b7aee62feed7a83c281))
+-   reparentChildren - refactored arguments - breaking change ([dea2bc5](https://github.com/adobe/spectrum-web-components/commit/dea2bc5cba1185e790a834db43daf8fc45f4e4f7))
+
 ## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.10.5...@spectrum-web-components/picker@0.10.6) (2022-03-30)
 
 **Note:** Version bump only for package @spectrum-web-components/picker

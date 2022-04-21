@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.9.8...@spectrum-web-components/radio@0.9.9) (2022-04-21)
+
+### Bug Fixes
+
+-   stop propagation of sp-radio "change" events at sp-radio-group boundary ([f618460](https://github.com/adobe/spectrum-web-components/commit/f618460f41c760481b14580eeb73c2202f13d279))
+
 ## [0.9.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.9.7...@spectrum-web-components/radio@0.9.8) (2022-03-30)
 
 **Note:** Version bump only for package @spectrum-web-components/radio

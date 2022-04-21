@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.17.2...@spectrum-web-components/button@0.17.3) (2022-04-21)
+
+### Bug Fixes
+
+-   **button:** add multiple ui icon imports to sp-button ([2f17fa9](https://github.com/adobe/spectrum-web-components/commit/2f17fa984fdf198ee8e2104fa14d0673ce348aa6))
+
 ## [0.17.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.17.1...@spectrum-web-components/button@0.17.2) (2022-03-30)
 
 **Note:** Version bump only for package @spectrum-web-components/button

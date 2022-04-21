@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.5.4...@spectrum-web-components/base@0.5.5) (2022-04-21)
+
+### Bug Fixes
+
+-   allow dir to be managed across multiple connections and disconnections ([6d93170](https://github.com/adobe/spectrum-web-components/commit/6d931708e8af1b3d5b9318f1d2c33bb1210d2145))
+
 ## [0.5.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.5.3...@spectrum-web-components/base@0.5.4) (2022-03-08)
 
 **Note:** Version bump only for package @spectrum-web-components/base

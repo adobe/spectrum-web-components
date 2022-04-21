@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.5.6...@spectrum-web-components/story-decorator@0.6.0) (2022-04-21)
+
+### Features
+
+-   add support for Spectrum Express ([12bfe99](https://github.com/adobe/spectrum-web-components/commit/12bfe99570122514fa88ce1a4e4a1591bcc5aa70))
+
 ## [0.5.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.5.5...@spectrum-web-components/story-decorator@0.5.6) (2022-03-30)
 
 **Note:** Version bump only for package @spectrum-web-components/story-decorator

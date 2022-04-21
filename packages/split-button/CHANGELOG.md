@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.8.3...@spectrum-web-components/split-button@0.8.4) (2022-04-21)
+
+### Bug Fixes
+
+-   allow Picker to be reparented ([39e7309](https://github.com/adobe/spectrum-web-components/commit/39e73094be38888599fb189ed4d613f09476310f))
+
 ## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.8.2...@spectrum-web-components/split-button@0.8.3) (2022-03-30)
 
 **Note:** Version bump only for package @spectrum-web-components/split-button

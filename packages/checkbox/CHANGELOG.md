@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.12.7...@spectrum-web-components/checkbox@0.13.0) (2022-04-21)
+
+### Features
+
+-   conditionally load focus-visible polyfill ([6b5e5cf](https://github.com/adobe/spectrum-web-components/commit/6b5e5cf515f02ef14f072b7aee62feed7a83c281))
+
 ## [0.12.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/checkbox@0.12.6...@spectrum-web-components/checkbox@0.12.7) (2022-03-30)
 
 **Note:** Version bump only for package @spectrum-web-components/checkbox

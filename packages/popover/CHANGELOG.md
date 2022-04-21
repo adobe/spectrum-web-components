@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.11.10...@spectrum-web-components/popover@0.11.11) (2022-04-21)
+
+### Bug Fixes
+
+-   use less restrictive overlay sizing ([f6917aa](https://github.com/adobe/spectrum-web-components/commit/f6917aa4ca22360ba66e40fc933c0e994a04b8c9))
+
 ## [0.11.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.11.9...@spectrum-web-components/popover@0.11.10) (2022-03-30)
 
 **Note:** Version bump only for package @spectrum-web-components/popover

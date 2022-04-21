@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.13.7...@spectrum-web-components/shared@0.14.0) (2022-04-21)
+
+### Features
+
+-   conditionally load focus-visible polyfill ([6b5e5cf](https://github.com/adobe/spectrum-web-components/commit/6b5e5cf515f02ef14f072b7aee62feed7a83c281))
+-   reparentChildren - insertAdjacentElement style API ([07f966f](https://github.com/adobe/spectrum-web-components/commit/07f966f54e4f563d190084933f9dc15fc5316869))
+-   reparentChildren - refactored arguments - breaking change ([dea2bc5](https://github.com/adobe/spectrum-web-components/commit/dea2bc5cba1185e790a834db43daf8fc45f4e4f7))
+
 ## [0.13.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.13.6...@spectrum-web-components/shared@0.13.7) (2022-03-30)
 
 **Note:** Version bump only for package @spectrum-web-components/shared

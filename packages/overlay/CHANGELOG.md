@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.15.3...@spectrum-web-components/overlay@0.16.0) (2022-04-21)
+
+### Bug Fixes
+
+-   allow Picker to be reparented ([39e7309](https://github.com/adobe/spectrum-web-components/commit/39e73094be38888599fb189ed4d613f09476310f))
+-   use less restrictive overlay sizing ([f6917aa](https://github.com/adobe/spectrum-web-components/commit/f6917aa4ca22360ba66e40fc933c0e994a04b8c9))
+
+### Features
+
+-   add support for Spectrum Express ([12bfe99](https://github.com/adobe/spectrum-web-components/commit/12bfe99570122514fa88ce1a4e4a1591bcc5aa70))
+-   reparentChildren - refactored arguments - breaking change ([dea2bc5](https://github.com/adobe/spectrum-web-components/commit/dea2bc5cba1185e790a834db43daf8fc45f4e4f7))
+
 ## [0.15.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.15.2...@spectrum-web-components/overlay@0.15.3) (2022-03-30)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.13.11...@spectrum-web-components/action-menu@0.13.12) (2022-04-21)
+
+### Bug Fixes
+
+-   remove unused dependencies and imports ([fad4c9b](https://github.com/adobe/spectrum-web-components/commit/fad4c9b3316362b9285a240f64517b80b453835b))
+
 ## [0.13.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.13.10...@spectrum-web-components/action-menu@0.13.11) (2022-03-30)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu
