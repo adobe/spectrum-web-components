@@ -187,8 +187,8 @@ export class SplitButton extends SizedMixin(PickerBase) {
     }
 
     protected async manageSelection(): Promise<void> {
-        super.manageSelection();
-        this.manageSplitButtonItems();
+        await this.manageSplitButtonItems();
+        await super.manageSelection();
     }
 
     private async manageSplitButtonItems(): Promise<void> {
