@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    nothing,
     PropertyValues,
     SpectrumElement,
     TemplateResult,
@@ -118,57 +119,86 @@ export class Dialog extends FocusVisiblePolyfillMixin(
         );
     }
 
+    protected renderHero(): TemplateResult {
+        return html`
+            <slot name="hero"></slot>
+        `;
+    }
+
+    protected renderHeading(): TemplateResult {
+        return html`
+            <slot
+                name="heading"
+                class=${ifDefined(this.hasHero ? this.hasHero : undefined)}
+                @slotchange=${this.onHeadingSlotchange}
+            ></slot>
+        `;
+    }
+
+    protected renderContent(): TemplateResult {
+        return html`
+            <div class="content">
+                <slot @slotchange=${this.onContentSlotChange}></slot>
+            </div>
+        `;
+    }
+
+    protected renderFooter(): TemplateResult {
+        if (!this.hasFooter) return html``;
+        return html`
+            <div class="footer">
+                <slot name="footer"></slot>
+            </div>
+        `;
+    }
+
+    protected renderButtons(): TemplateResult {
+        if (!this.hasButtons) return html``;
+        return html`
+            <sp-button-group
+                class="button-group ${this.hasFooter
+                    ? nothing
+                    : 'button-group--noFooter'}"
+            >
+                <slot name="button"></slot>
+            </sp-button-group>
+        `;
+    }
+
+    protected renderDismiss(): TemplateResult {
+        if (!this.dismissable) return html``;
+        return html`
+            <sp-action-button
+                class="close-button"
+                label="Close"
+                quiet
+                size="m"
+                @click=${this.close}
+            >
+                <sp-icon-cross500
+                    class="spectrum-UIIcon-Cross500"
+                    slot="icon"
+                ></sp-icon-cross500>
+            </sp-action-button>
+        `;
+    }
+
     protected override render(): TemplateResult {
         return html`
             <div class="grid">
-                <slot name="hero"></slot>
-                <slot
-                    name="heading"
-                    class=${ifDefined(this.hasHero ? this.hasHero : undefined)}
-                    @slotchange=${this.onHeadingSlotchange}
-                ></slot>
+                ${this.renderHero()} ${this.renderHeading()}
                 ${this.error
                     ? html`
                           <sp-icon-alert class="type-icon"></sp-icon-alert>
                       `
-                    : html``}
+                    : nothing}
                 ${this.noDivider
-                    ? html``
+                    ? nothing
                     : html`
                           <sp-divider size="m" class="divider"></sp-divider>
                       `}
-                <div class="content">
-                    <slot @slotchange=${this.onContentSlotChange}></slot>
-                </div>
-                ${this.hasFooter
-                    ? html`
-                          <div class="footer">
-                              <slot name="footer"></slot>
-                          </div>
-                      `
-                    : html``}
-                ${this.hasButtons
-                    ? html`
-                          <sp-button-group
-                              class="button-group ${this.hasFooter
-                                  ? ''
-                                  : 'button-group--noFooter'}"
-                          >
-                              <slot name="button"></slot>
-                          </sp-button-group>
-                      `
-                    : html``}
-                ${this.dismissable
-                    ? html`
-                          <sp-close-button
-                              class="close-button"
-                              label="Close"
-                              quiet
-                              size="m"
-                              @click=${this.close}
-                          ></sp-close-button>
-                      `
-                    : html``}
+                ${this.renderContent()} ${this.renderFooter()}
+                ${this.renderButtons()} ${this.renderDismiss()}
             </div>
         `;
     }
