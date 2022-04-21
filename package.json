@@ -17,7 +17,7 @@
         "build:compare": "tsc --build projects/vrt-compare/tsconfig.json",
         "build:component-inventory": "node ./tasks/build-component-inventory.js",
         "build:confirm": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,close-button,clear-button,icons-ui,icons-workflow,iconset,modal,shared,styles},documentation,example-project-rollup,example-project-webpack,swc-templates}\" -- test -f src/index.js",
-        "build:css": "node ./tasks/build-css.js",
+        "build:css": "node ./tasks/build-css.js && pretty-quick --fix --pattern \"packages/**/*.css\"",
         "build:decorator": "tsc --build projects/story-decorator/tsconfig.json",
         "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
         "build:ts": "yarn tsc --build tsconfig-all.json",

@@ -145,7 +145,7 @@ jobs:
                   path: coverage
             - run:
                   name: Are there changes?
-                  command: git diff-files
+                  command: git diff --exit-code
 
     test-firefox:
         executor: node
