@@ -11,28 +11,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import path from 'path';
 import fs from 'fs';
 import fg from 'fast-glob';
 import postcss from 'postcss';
 import cssProcessing from '../scripts/css-processing.cjs';
-import { fileURLToPath } from 'url';
 
 const { postCSSPlugins, wrapCSSResult } = cssProcessing;
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const configPath = path.resolve(path.join(__dirname, '..', 'config'));
-
-let header;
-try {
-    header = fs.readFileSync(path.join(configPath, 'license.js'), 'utf8');
-} catch (error) {
-    throw new Error(error);
-}
-
-header = header.replace('<%= YEAR %>', new Date().getFullYear());
 
 export const processCSS = async (cssPath) => {
-    let wrappedCSS = header;
     const originCSS = fs.readFileSync(cssPath, 'utf8');
     const processedCSS = await postcss(postCSSPlugins(cssPath, true))
         .process(originCSS, {
@@ -40,8 +26,11 @@ export const processCSS = async (cssPath) => {
         })
         .then((result) => {
             return result;
+        })
+        .catch((error) => {
+            console.error(error?.message || error);
         });
-    wrappedCSS += wrapCSSResult(processedCSS);
+    const wrappedCSS = wrapCSSResult(processedCSS);
     fs.writeFileSync(cssPath + '.ts', wrappedCSS, 'utf-8');
 };
 
