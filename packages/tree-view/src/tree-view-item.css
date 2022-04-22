@@ -47,3 +47,7 @@ governing permissions and limitations under the License.
     border-radius: var(--spectrum-treeview-item-border-radius);
     border-width: var(--spectrum-treeview-item-border-size);
 }
+
+::slotted([slot='icon']) {
+    z-index: 1;
+}

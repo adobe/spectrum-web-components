@@ -54,6 +54,7 @@
         "@spectrum-css/treeview": "^6.0.18"
     },
     "types": "src/index.d.ts",
+    "customElements": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js"
     ]
