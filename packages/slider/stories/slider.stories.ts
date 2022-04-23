@@ -383,6 +383,23 @@ tick.args = {
     tickStep: 5,
 };
 
+export const tickLabels = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <sp-slider
+            label="Slider Label"
+            tick-labels
+            variant="tick"
+            min="50"
+            max="75"
+            ...=${spreadProps(args)}
+        ></sp-slider>
+    `;
+};
+tickLabels.args = {
+    variant: 'tick',
+    tickStep: 5,
+};
+
 export const Disabled = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
