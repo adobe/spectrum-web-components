@@ -292,7 +292,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                             ${this.tickLabels
                                 ? html`
                                       <div class="tickLabel">
-                                          ${i * tickStep}
+                                          ${i * tickStep + this.min}
                                       </div>
                                   `
                                 : html``}
