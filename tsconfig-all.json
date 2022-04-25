@@ -71,6 +71,7 @@
         { "path": "packages/split-view" },
         { "path": "packages/status-light" },
         { "path": "packages/styles" },
+        { "path": "packages/swatch" },
         { "path": "packages/switch" },
         { "path": "packages/tabs" },
         { "path": "packages/tags" },

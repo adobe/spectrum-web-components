@@ -30,6 +30,15 @@ const componentRoot = path.resolve(__dirname, '../packages');
 async function processComponent(componentPath) {
     const configPath = path.join(componentPath, 'spectrum-config.js');
     const { default: spectrumConfig } = await import(pathToFileURL(configPath));
+    if (Array.isArray(spectrumConfig)) {
+        return Promise.all(
+            spectrumConfig.map((config) => processConfig(config, componentPath))
+        );
+    }
+    return processConfig(spectrumConfig, componentPath);
+}
+
+async function processConfig(spectrumConfig, componentPath) {
     const inputCssPath = `node_modules/@spectrum-css/${spectrumConfig.spectrum}/dist/index-vars.css`;
     let packageCss = false;
     if (fs.existsSync(inputCssPath)) {

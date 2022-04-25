@@ -4036,6 +4036,16 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/stepper/-/stepper-3.0.24.tgz#8ba89f7bd38acf3041e22b5dfa11c3b4fc582de5"
   integrity sha512-f+pHJ3LJbOt8AahldyIUOaG6+fiI4taPNKzPFilmEQAJv/8EwrjUNlJKEj2OmylOy5h8OxhMtSz7Uovr8nJ0GQ==
 
+"@spectrum-css/swatch@^1.1.1":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/swatch/-/swatch-1.1.3.tgz#7a3eb05c756e61ee4d45a8e39b2c4141c8787cb3"
+  integrity sha512-sxvq42+SoKAKUCc55ttuBRMUEeoaYmGW6AE9R8fFKbrJ3kZpHGLoEHijl61UZRckbQ0R1P5MNYXYU9NZaN1l9w==
+
+"@spectrum-css/swatchgroup@^1.1.1":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/swatchgroup/-/swatchgroup-1.1.3.tgz#731d9257565e3d33c99022fdec2619b7a531af0a"
+  integrity sha512-XAW3ka9P2zTOfDITGAYNFzEKpfRsVqxy6wz+Qiq10acyh8pm7ZxpcBtetDQACe2Q0L6yxA26NDKcFszDbpXw1Q==
+
 "@spectrum-css/switch@^1.0.21":
   version "1.0.21"
   resolved "https://registry.yarnpkg.com/@spectrum-css/switch/-/switch-1.0.21.tgz#6ebf92c9bccb8ad9eeecad69c903d4d819d4a274"

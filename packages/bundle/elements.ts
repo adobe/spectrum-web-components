@@ -66,6 +66,8 @@ import '@spectrum-web-components/slider/sp-slider-handle.js';
 import '@spectrum-web-components/split-button/sp-split-button.js';
 import '@spectrum-web-components/split-view/sp-split-view.js';
 import '@spectrum-web-components/status-light/sp-status-light.js';
+import '@spectrum-web-components/swatch/sp-swatch.js';
+import '@spectrum-web-components/swatch/sp-swatch-group.js';
 import '@spectrum-web-components/switch/sp-switch.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
