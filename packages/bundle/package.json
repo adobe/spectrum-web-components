@@ -94,6 +94,7 @@
         "@spectrum-web-components/split-button": "^0.8.7",
         "@spectrum-web-components/split-view": "^0.4.8",
         "@spectrum-web-components/status-light": "^0.10.9",
+        "@spectrum-web-components/swatch": "^0.0.1",
         "@spectrum-web-components/switch": "^0.9.11",
         "@spectrum-web-components/tabs": "^0.8.12",
         "@spectrum-web-components/tags": "^0.8.12",

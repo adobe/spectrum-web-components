@@ -55,6 +55,7 @@
         { "path": "../split-button" },
         { "path": "../split-view" },
         { "path": "../status-light" },
+        { "path": "../swatch" },
         { "path": "../switch" },
         { "path": "../tabs" },
         { "path": "../tags" },

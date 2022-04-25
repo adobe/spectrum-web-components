@@ -54,6 +54,7 @@ export * from '@spectrum-web-components/slider';
 export * from '@spectrum-web-components/split-button';
 export * from '@spectrum-web-components/split-view';
 export * from '@spectrum-web-components/status-light';
+export * from '@spectrum-web-components/swatch';
 export * from '@spectrum-web-components/switch';
 export * from '@spectrum-web-components/tabs';
 export * from '@spectrum-web-components/tags';
