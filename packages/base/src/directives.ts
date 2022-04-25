@@ -17,3 +17,4 @@ export { styleMap } from 'lit/directives/style-map.js';
 export type { StyleInfo } from 'lit/directives/style-map.js';
 export { until } from 'lit/directives/until.js';
 export { live } from 'lit/directives/live.js';
+export { when } from 'lit/directives/when.js';
