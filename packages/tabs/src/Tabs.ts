@@ -61,6 +61,9 @@ export class Tabs extends SizedMixin(Focusable) {
     public direction: 'vertical' | 'vertical-right' | 'horizontal' =
         'horizontal';
 
+    @property({ type: Boolean, reflect: true })
+    public emphasized = false;
+
     @property()
     public label = '';
 

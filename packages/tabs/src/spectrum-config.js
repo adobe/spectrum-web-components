@@ -37,6 +37,10 @@ const config = {
                     ],
                 },
                 {
+                    type: 'boolean',
+                    selector: '.spectrum-Tabs--emphasized',
+                },
+                {
                     type: 'enum',
                     name: 'size',
                     forceOntoHost: true,
@@ -71,12 +75,22 @@ const config = {
                     selector: '.spectrum-Tabs-item',
                     contents: ':not([slot])',
                 },
+                {
+                    selector: '.is-selected',
+                    contents: '[selected]:not([slot])',
+                },
             ],
             complexSelectors: [
                 {
                     replacement: '::slotted(:not([slot]):not(:first-child))',
                     selector:
                         /\.spectrum-Tabs-item\s?\+\s?\*:not\(.spectrum-Tabs-selectionIndicator\)/,
+                },
+                {
+                    replacement:
+                        ':host([emphasized]) ::slotted([selected]:not([slot]))',
+                    selector:
+                        '.spectrum-Tabs--emphasized .spectrum-Tabs-item.is-selected',
                 },
             ],
             exclude: [
@@ -116,13 +130,6 @@ const config = {
                 },
             ],
             exclude: [/.spectrum-Tabs(?!-item)/],
-            complexSelectors: [
-                {
-                    replacement:
-                        ":host(:not([vertical])) ::slotted([slot='icon'])",
-                    selector: '.spectrum-Tabs-item .spectrum-Icon',
-                },
-            ],
         },
     ],
 };
