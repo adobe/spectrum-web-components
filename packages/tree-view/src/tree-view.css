@@ -33,3 +33,11 @@ governing permissions and limitations under the License.
         --spectrum-alias-focus-color
     );
 }
+
+:host([size='s']) {
+    --spectrum-treeview-item-text-padding-bottom: 0px;
+}
+
+:host([size='l']) {
+    --spectrum-treeview-item-text-padding-top: 0px;
+}

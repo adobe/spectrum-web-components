@@ -11,6 +11,9 @@ governing permissions and limitations under the License.
 */
 import { TreeViewHeading } from './src/TreeViewHeading.js';
 
+/**
+ * @element sp-tree-view-heading
+ */
 customElements.define('sp-tree-view-heading', TreeViewHeading);
 
 declare global {

@@ -17,9 +17,7 @@ import {
     SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import {
-    property,
-} from '@spectrum-web-components/base/src/decorators.js';
+import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable, getActiveElement } from '@spectrum-web-components/shared';
 
 import { TreeViewHeading } from './TreeViewHeading';
@@ -30,7 +28,6 @@ import {
 import treeViewStyles from './tree-view.css.js';
 
 /**
- * @element sp-tree-view
  * @slot - The `sp-tree-view-item` elements to manage as a tree.
  * @slot icon - The icon that appears on the left of the label
  * @attr {Boolean} quiet - A treeview with quiet selection.
@@ -67,7 +64,10 @@ export class TreeView extends SizedMixin(Focusable) {
     }
 
     public get isRoot(): boolean {
-        return this.parentElement?.tagName !== 'SP-TREE-VIEW-ITEM';
+        return (
+            !this.parentElement ||
+            this.parentElement.tagName !== 'SP-TREE-VIEW-ITEM'
+        );
     }
 
     public get selected(): NodeListOf<TreeViewItem> {
@@ -81,7 +81,7 @@ export class TreeView extends SizedMixin(Focusable) {
         }
         const items = [...this.querySelectorAll('sp-tree-view-item')];
         let index = 0;
-        while (index < items.length && items[index] && items[index]) {
+        while (index < items.length && items[index] && items[index].disabled) {
             index += 1;
         }
         if (items[index]) {
@@ -96,6 +96,7 @@ export class TreeView extends SizedMixin(Focusable) {
 
     public startListeningToKeyboard(): void {
         const items = this.items;
+        /* c8 ignore next 3 */
         if (items && !items.length) {
             return;
         }
@@ -178,6 +179,7 @@ export class TreeView extends SizedMixin(Focusable) {
 
     private handleKeydown(event: KeyboardEvent): void {
         const { code } = event;
+        /* c8 ignore next 3 */
         if (code !== 'ArrowDown' && code !== 'ArrowUp') {
             return;
         }
@@ -247,7 +249,6 @@ export class TreeView extends SizedMixin(Focusable) {
         }
 
         const { target, detail } = event;
-        if (!target) return;
 
         const targetIndex = [...this.items].indexOf(target);
         if (this.selects === 'single' || !detail.multiselect) {

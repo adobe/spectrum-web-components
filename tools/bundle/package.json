@@ -131,6 +131,7 @@
         "@spectrum-web-components/tooltip": "^0.40.5",
         "@spectrum-web-components/top-nav": "^0.40.5",
         "@spectrum-web-components/tray": "^0.40.5",
+        "@spectrum-web-components/tree-view": "^0.0.1",
         "@spectrum-web-components/underlay": "^0.40.5"
     },
     "types": "./src/index.d.ts",

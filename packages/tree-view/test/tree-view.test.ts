@@ -17,6 +17,7 @@ import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
 import {
     Default,
+    flat,
     sections,
     selectsMultiple,
     selectsSingle,
@@ -59,6 +60,14 @@ describe('TreeView', () => {
 
         it('loads a tree-view with sections', async () => {
             const el = await fixture<TreeView>(sections());
+
+            await elementUpdated(el);
+
+            await expect(el).to.be.accessible();
+        });
+
+        it('loads a tree-view that is flat', async () => {
+            const el = await fixture<TreeView>(flat());
 
             await elementUpdated(el);
 
@@ -159,12 +168,16 @@ describe('TreeView', () => {
         const el = await fixture<TreeView>(
             html`
                 <sp-tree-view>
-                    <sp-tree-view-item>Item 1</sp-tree-view-item>
-                    <sp-tree-view-item open>
+                    <sp-tree-view-item disabled>Item 1</sp-tree-view-item>
+                    <sp-tree-view-item open disabled>
                         Group
                         <sp-tree-view slot="children">
-                            <sp-tree-view-item>Item 2</sp-tree-view-item>
-                            <sp-tree-view-item>Item 3</sp-tree-view-item>
+                            <sp-tree-view-item disabled>
+                                Item 2
+                            </sp-tree-view-item>
+                            <sp-tree-view-item disabled>
+                                Item 3
+                            </sp-tree-view-item>
                         </sp-tree-view>
                     </sp-tree-view-item>
                 </sp-tree-view>
@@ -179,6 +192,64 @@ describe('TreeView', () => {
 
         expect(document.activeElement === el).to.be.false;
         expect(el.matches(':focus-within')).to.be.false;
+    });
+
+    it('focuses the first decendent when non-selected', async () => {
+        const el = await fixture<TreeView>(
+            html`
+                <sp-tree-view>
+                    <sp-tree-view-item>Item 1</sp-tree-view-item>
+                    <sp-tree-view-item open>
+                        Group
+                        <sp-tree-view slot="children">
+                            <sp-tree-view-item>Item 2</sp-tree-view-item>
+                            <sp-tree-view-item>Item 3</sp-tree-view-item>
+                        </sp-tree-view>
+                    </sp-tree-view-item>
+                </sp-tree-view>
+            `
+        );
+
+        const focused = el.querySelector('sp-tree-view-item') as HTMLElement;
+
+        await elementUpdated(el);
+        expect(document.activeElement === el).to.be.false;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(el.matches(':focus-within')).to.be.true;
+        expect(document.activeElement === focused).to.be.true;
+    });
+
+    it('focuses the first [selected] decendent', async () => {
+        const el = await fixture<TreeView>(
+            html`
+                <sp-tree-view>
+                    <sp-tree-view-item>Item 1</sp-tree-view-item>
+                    <sp-tree-view-item open>
+                        Group
+                        <sp-tree-view slot="children">
+                            <sp-tree-view-item>Item 2</sp-tree-view-item>
+                            <sp-tree-view-item selected>
+                                Item 3
+                            </sp-tree-view-item>
+                        </sp-tree-view>
+                    </sp-tree-view-item>
+                </sp-tree-view>
+            `
+        );
+
+        const selected = el.querySelector('[selected]') as HTMLElement;
+
+        await elementUpdated(el);
+        expect(document.activeElement === el).to.be.false;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(el.matches(':focus-within')).to.be.true;
+        expect(document.activeElement === selected).to.be.true;
     });
 
     it('sets tab stop when [manage-tab-index]', async () => {
