@@ -15668,10 +15668,10 @@ node-gyp@^7.1.0:
     tar "^6.0.2"
     which "^2.0.2"
 
-node-plop@^0.30.0:
-  version "0.30.0"
-  resolved "https://registry.yarnpkg.com/node-plop/-/node-plop-0.30.0.tgz#413581d95ff21f043ec4c373fcacb0f1555ae600"
-  integrity sha512-5w9+jWoy9OtMm3qRmHgL2z/3L5VL3RhEegKkKC4tA1IIjG3aXf8Ee/8wdgU9qXyt1yDfPWI9Tan1rHpXAp0ZnA==
+node-plop@^0.30.1:
+  version "0.30.1"
+  resolved "https://registry.yarnpkg.com/node-plop/-/node-plop-0.30.1.tgz#1daf625da72e076a60901d44a9d064833d3b0a14"
+  integrity sha512-+IOrQ1KQuOOeiLaoMzjr6ZmgWyx7gTHuLw/WD6Pqfrb6T9nOpOl76iZwF3M0Dw29Qgk6k17VF7aUULwuQS53Ig==
   dependencies:
     "@types/inquirer" "^8.1.3"
     change-case "^4.1.2"
@@ -17122,16 +17122,16 @@ please-upgrade-node@^3.2.0:
     semver-compare "^1.0.0"
 
 plop@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/plop/-/plop-3.0.5.tgz#09720a3c28547ae3be0876b77313a981d56b6dcb"
-  integrity sha512-bD+/Lr+7NCjNIaYJq1cyHDfxtVCdjwfprgKsNwHwFnwntTiNwZWyxd1NuRDygdQWyPi+rstFMMFAPMek0cYaqA==
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/plop/-/plop-3.0.6.tgz#ff50b30bfb5d172a5abda22631d59a7fdb55b5cb"
+  integrity sha512-8lVAmjQgLDF0clVC20YsRI4mYf5yr8QjvTXUtyVXANZETEAc2+b1vEEE3oSq5sLBblU0p4y/6AA6tAuuqj4n7g==
   dependencies:
     "@types/liftoff" "^4.0.0"
     chalk "^5.0.0"
     interpret "^2.2.0"
     liftoff "^4.0.0"
     minimist "^1.2.5"
-    node-plop "^0.30.0"
+    node-plop "^0.30.1"
     ora "^6.0.1"
     v8flags "^4.0.0"
 
