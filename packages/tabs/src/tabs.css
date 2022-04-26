@@ -26,6 +26,15 @@ governing permissions and limitations under the License.
     grid-template-columns: auto 1fr;
 }
 
+:host([direction='vertical']) {
+    /* prevent WHCM backgrounds from possibly overlapping panel content */
+    gap: var(--spectrum-tabs-textonly-tabitem-focus-ring-size);
+}
+
+#selection-indicator {
+    border-radius: 0;
+}
+
 :host([disabled]) #selection-indicator {
     background-color: var(
         --spectrum-tabs-m-text-color-disabled,

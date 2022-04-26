@@ -891,10 +891,20 @@ governing permissions and limitations under the License.
         --spectrum-tabs-textonly-tabitem-selection-indicator-background-color-selected
     ); /* .spectrum-Tabs-selectionIndicator */
 }
-.spectrum-Tabs--emphasized #selection-indicator {
+:host([emphasized]) #selection-indicator {
     background-color: var(
         --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected
     ); /* .spectrum-Tabs--emphasized .spectrum-Tabs-selectionIndicator */
+}
+:host([emphasized]) ::slotted([selected]:not([slot])) {
+    color: var(
+        --spectrum-tabs-emphasized-texticon-tabitem-text-color-selected
+    ); /* .spectrum-Tabs--emphasized .spectrum-Tabs-item.is-selected */
+}
+:host([emphasized]) ::slotted([selected]:not([slot])) .spectrum-Icon {
+    color: var(
+        --spectrum-tabs-emphasized-texticon-tabitem-icon-color-selected
+    ); /* .spectrum-Tabs--emphasized .spectrum-Tabs-item.is-selected .spectrum-Icon */
 }
 :host([quiet]) #list {
     border-bottom-color: var(
@@ -906,7 +916,7 @@ governing permissions and limitations under the License.
         --spectrum-tabs-quiet-textonly-tabitem-selection-indicator-background-color-selected
     ); /* .spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator */
 }
-:host([quiet]) #list.spectrum-Tabs--emphasized #selection-indicator {
+:host([quiet][emphasized]) #list #selection-indicator {
     background-color: var(
         --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected
     ); /* .spectrum-Tabs--quiet.spectrum-Tabs--emphasized .spectrum-Tabs-selectionIndicator */
@@ -934,19 +944,17 @@ governing permissions and limitations under the License.
     ); /* .spectrum-Tabs--vertical.spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator,
    * .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-selectionIndicator */
 }
-:host([dir='ltr'][direction^='vertical']) .spectrum-Tabs--emphasized {
+:host([dir='ltr'][direction^='vertical'][emphasized]) #list {
     border-left-color: var(
         --spectrum-tabs-emphasized-textonly-divider-background-color
     ); /* [dir=ltr] .spectrum-Tabs--vertical.spectrum-Tabs--emphasized */
 }
-:host([dir='rtl'][direction^='vertical']) .spectrum-Tabs--emphasized {
+:host([dir='rtl'][direction^='vertical'][emphasized]) #list {
     border-right-color: var(
         --spectrum-tabs-emphasized-textonly-divider-background-color
     ); /* [dir=rtl] .spectrum-Tabs--vertical.spectrum-Tabs--emphasized */
 }
-:host([direction^='vertical'])
-    #list.spectrum-Tabs--emphasized
-    #selection-indicator {
+:host([direction^='vertical'][emphasized]) #list #selection-indicator {
     background-color: var(
         --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected
     ); /* .spectrum-Tabs--vertical.spectrum-Tabs--emphasized .spectrum-Tabs-selectionIndicator */
@@ -979,29 +987,21 @@ governing permissions and limitations under the License.
     ::slotted(:not([slot])):before {
         background-color: ButtonFace;
     }
-    #list.spectrum-Tabs--emphasized ::slotted(:not([slot])):before {
-        background-color: ButtonFace;
-    }
-    #list.spectrum-Tabs--emphasized .is-selected,
-    #list.spectrum-Tabs--emphasized .is-selected .spectrum-Icon {
+    ::slotted([selected]:not([slot])) {
         color: HighlightText;
     }
-    #list.spectrum-Tabs--emphasized .is-selected:before {
+    ::slotted([selected]:not([slot])):before {
         background-color: Highlight;
         color: HighlightText;
     }
-    #list.spectrum-Tabs--emphasized .is-selected .spectrum-Tabs-itemLabel {
+    :host([emphasized]) #list ::slotted(:not([slot])):before {
+        background-color: ButtonFace;
+    }
+    :host([emphasized]) #list ::slotted([selected]:not([slot])) {
         color: HighlightText;
     }
-}
-.is-selected,
-.is-selected .spectrum-Icon {
-    color: HighlightText; /* .is-selected .spectrum-Icon */
-}
-.is-selected:before {
-    background-color: Highlight; /* .is-selected:before */
-    color: HighlightText;
-}
-.is-selected .spectrum-Tabs-itemLabel {
-    color: HighlightText; /* .is-selected .spectrum-Tabs-itemLabel */
+    :host([emphasized]) #list ::slotted([selected]:not([slot])):before {
+        background-color: Highlight;
+        color: HighlightText;
+    }
 }

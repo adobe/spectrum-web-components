@@ -56,6 +56,13 @@ governing permissions and limitations under the License.
 :host([vertical]) ::slotted([slot='icon']) {
     margin-top: var(--sp-tab-vertial-margin-y);
     flex-shrink: 0;
+    height: var(
+        --spectrum-icon-tshirt-size-height,
+        var(
+            --spectrum-alias-workflow-icon-size,
+            var(--spectrum-global-dimension-size-225)
+        )
+    );
 }
 
 :host(:not([vertical])) ::slotted([slot='icon']) {
@@ -87,6 +94,7 @@ governing permissions and limitations under the License.
     :host ::slotted([slot='icon']) {
         z-index: 1;
         position: relative;
+        color: inherit;
     }
 
     #item-label {

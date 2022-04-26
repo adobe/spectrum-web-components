@@ -164,6 +164,36 @@ export const disabledTab = (args: Properties): TemplateResult => {
     `;
 };
 
+export const emphasized = (args: Properties): TemplateResult => {
+    return html`
+        <sp-tabs selected="1" emphasized ?auto=${args.auto} label="Demo Tabs">
+            <sp-tab label="Tab 1" value="1"></sp-tab>
+            <sp-tab label="Tab 2" value="2"></sp-tab>
+            <sp-tab label="Tab 3" value="3"></sp-tab>
+            <sp-tab label="Tab 4" value="4"></sp-tab>
+            ${panels()}
+        </sp-tabs>
+    `;
+};
+
+export const emphasizedQuiet = (args: Properties): TemplateResult => {
+    return html`
+        <sp-tabs
+            selected="1"
+            emphasized
+            quiet
+            ?auto=${args.auto}
+            label="Demo Tabs"
+        >
+            <sp-tab label="Tab 1" value="1"></sp-tab>
+            <sp-tab label="Tab 2" value="2"></sp-tab>
+            <sp-tab label="Tab 3" value="3"></sp-tab>
+            <sp-tab label="Tab 4" value="4"></sp-tab>
+            ${panels()}
+        </sp-tabs>
+    `;
+};
+
 export const Vertical = (args: Properties): TemplateResult => {
     return html`
         <sp-tabs

@@ -33,7 +33,7 @@ governing permissions and limitations under the License.
 :host([disabled]) #item-label {
     cursor: default; /* .spectrum-Tabs-item.is-disabled .spectrum-Tabs-itemLabel */
 }
-:host(:not([vertical])) ::slotted([slot='icon']) {
+::slotted([slot='icon']) {
     height: var(
         --spectrum-tabs-quiet-textonly-tabitem-height
     ); /* .spectrum-Tabs-item .spectrum-Icon */
@@ -102,7 +102,7 @@ governing permissions and limitations under the License.
         --spectrum-tabs-textonly-tabitem-text-color
     ); /* .spectrum-Tabs-item */
 }
-:host(:not([vertical])) ::slotted([slot='icon']) {
+::slotted([slot='icon']) {
     color: var(
         --spectrum-tabs-textonly-tabitem-icon-color
     ); /* .spectrum-Tabs-item .spectrum-Icon */
