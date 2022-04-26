@@ -34,6 +34,9 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-save-floppy.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-stopwatch.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-user-activity.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-layers.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-document.js';
 
 declare global {
     interface Window {

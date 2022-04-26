@@ -103,6 +103,7 @@
         "@spectrum-web-components/tooltip": "^0.10.11",
         "@spectrum-web-components/top-nav": "^0.5.9",
         "@spectrum-web-components/tray": "^0.3.6",
+        "@spectrum-web-components/tree-view": "^0.0.1",
         "@spectrum-web-components/underlay": "^0.8.6",
         "tslib": "^2.0.0"
     },

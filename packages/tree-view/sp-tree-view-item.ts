@@ -12,6 +12,9 @@ governing permissions and limitations under the License.
 
 import { TreeViewItem } from './src/TreeViewItem.js';
 
+/**
+ * @element sp-tree-view-item
+ */
 customElements.define('sp-tree-view-item', TreeViewItem);
 
 declare global {

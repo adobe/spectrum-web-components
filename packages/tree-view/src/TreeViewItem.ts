@@ -21,9 +21,7 @@ import {
     query,
     queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
-import {
-    ifDefined,
-} from '@spectrum-web-components/base/src/directives.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import {
     Focusable,
@@ -121,6 +119,7 @@ export class TreeViewItem extends ObserveSlotPresence(
     protected get rootTreeView(): TreeView | undefined {
         if (!this._rootTreeView) {
             let parent = this.parentElement;
+            /* c8 ignore next */
             if (!parent) return;
 
             while (!(parent instanceof TreeView && parent.isRoot)) {
@@ -150,6 +149,9 @@ export class TreeViewItem extends ObserveSlotPresence(
     }
 
     public toggleOpen(event: Event): void {
+        /* c8 ignore next */
+        if (this.disabled) return;
+
         event.preventDefault();
         event.stopPropagation();
         this.open = !this.open;
@@ -168,6 +170,7 @@ export class TreeViewItem extends ObserveSlotPresence(
     }
 
     public toggleSelected(event: MouseEvent | KeyboardEvent): void {
+        /* c8 ignore next */
         if (this.disabled) return;
 
         event.preventDefault();
@@ -270,6 +273,7 @@ export class TreeViewItem extends ObserveSlotPresence(
     }
 
     private onKeyDown(event: KeyboardEvent): void {
+        /* c8 ignore next */
         if (this.disabled) return;
 
         switch (event.code) {
@@ -293,6 +297,7 @@ export class TreeViewItem extends ObserveSlotPresence(
     private focusParent(event: Event): void {
         event.preventDefault();
         event.stopPropagation();
+        /* c8 ignore next */
         if (!this.parent) return;
 
         this.parent.focus();

@@ -26,6 +26,8 @@
         "./package.json": "./package.json",
         "./sp-tree-view": "./sp-tree-view.js",
         "./sp-tree-view.js": "./sp-tree-view.js",
+        "./sp-tree-view-heading": "./sp-tree-view-heading.js",
+        "./sp-tree-view-heading.js": "./sp-tree-view-heading.js",
         "./sp-tree-view-item": "./sp-tree-view-item.js",
         "./sp-tree-view-item.js": "./sp-tree-view-item.js"
     },

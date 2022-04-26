@@ -63,4 +63,5 @@ export * from '@spectrum-web-components/toast';
 export * from '@spectrum-web-components/tooltip';
 export * from '@spectrum-web-components/top-nav';
 export * from '@spectrum-web-components/tray';
+export * from '@spectrum-web-components/tree-view';
 export * from '@spectrum-web-components/underlay';

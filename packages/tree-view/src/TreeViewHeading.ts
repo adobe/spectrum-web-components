@@ -21,7 +21,6 @@ import treeViewHeadingStyles from './tree-view-heading.css.js';
 import treeViewLabelStyles from './tree-view-label.css.js';
 
 /**
- * @slot icon - The icon that appears on the left of the label
  * @slot - The label
  */
 
