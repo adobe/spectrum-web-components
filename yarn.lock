@@ -54,9 +54,9 @@
     slugify "^1.6.5"
 
 "@adobe/spectrum-css-workflow-icons@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-1.2.1.tgz#7e2cb3fcfb5c8b12d7275afafbb6ec44913551b4"
-  integrity sha512-uVgekyBXnOVkxp+CUssjN/gefARtudZC8duEn1vm0lBQFwGRZFlDEzU1QC+aIRWCrD1Z8OgRpmBYlSZ7QS003w==
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-1.5.3.tgz#5e31ce842b7626f4b99f9d5cd0b17599d287b0bf"
+  integrity sha512-lWzRWun9kQWHj46Za7riJsl82LasYI90WpeKpJJ9ibZ7s0VT+sStFaRq/zqmp5IxQBfY3xwD4TsKSI26mHdmCA==
 
 "@ampproject/remapping@^2.1.0":
   version "2.1.2"
