@@ -4041,9 +4041,9 @@
   integrity sha512-t4l496qFzhUXYN8QL50974NnN8+WM9/weMxEHsXVPsD+jxR2imCRd3cPwTDjqLfukNYxyHxqY5W8LAFeLeVpgQ==
 
 "@spectrum-css/stepper@^3.0.22":
-  version "3.0.22"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/stepper/-/stepper-3.0.22.tgz#3bf040d803153abe1ce6e968186bb86f96dbf01f"
-  integrity sha512-zWWqZEDX/dFwl3OJfg9HcNMRIBlMifxe6+U2r+3H0wem1zf+o/clH+TaLIAl+E5Fd+ZB9hlLH8X7i5rjUEZMNQ==
+  version "3.0.23"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/stepper/-/stepper-3.0.23.tgz#cd8ab3484c34242e1f069dc9897332fcab05c10f"
+  integrity sha512-M+q7A55wzJJDvZu/T1q9GhEmIoE/FZA2GMlSIgBtdTDF0RLD5WoSuuYOf1bhIPEMZNQi7x4EcDsLX63MI5y2UA==
 
 "@spectrum-css/switch@^1.0.19":
   version "1.0.19"
