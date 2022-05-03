@@ -3970,10 +3970,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/link/-/link-3.1.20.tgz#73fe6f262910ace4380ed0648e163deb13dba788"
   integrity sha512-3MdfGYZYrhXkwCkrIQhfk/5vCLbpInU6T2xeUKUZcHEM6eGbIgfZ2GUm18Sv1EpOORF2ZHz8kioBhoUw9k7emA==
 
-"@spectrum-css/menu@^3.0.21":
-  version "3.0.21"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/menu/-/menu-3.0.21.tgz#d1f7e6e69d30b5e1edd7ed2c86ea4e08dfd670ab"
-  integrity sha512-G5AIUO26O6IAc6HUGZu4AZgyw0QRyLfSbcKlFGu4oJHzP36cQc1S1uCh8Xp4g5d+n6mU62LxNDLSMpVbwnA00A==
+"@spectrum-css/menu@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/menu/-/menu-4.0.1.tgz#679760118c092d83c0c18a6ea5b4cfa54c585e69"
+  integrity sha512-GzZHSypWHn+HI0RmFh54QTp8GphqrbYf/B5mh3w/gAV9+4OZPTpSFKP7300UAgeNwIOsDpfV9brR4OXo5IlFVw==
 
 "@spectrum-css/modal@^3.0.19":
   version "3.0.19"
