@@ -133,10 +133,6 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Lint
-                  command: yarn lint
-            - run: yarn analyze
-            - run:
                   name: Run tests
                   command: yarn test:ci --config web-test-runner.config.ci-chromium.js --group unit --coverage
             - store_test_results:
@@ -153,16 +149,10 @@ jobs:
         steps:
             - downstream
             - run:
-                  name: Lint
-                  command: yarn lint
-            - run: yarn analyze
-            - run:
                   name: Run tests
                   command: yarn test:ci --config web-test-runner.config.ci-firefox.js --group unit --coverage
             - store_test_results:
                   path: /root/project/results/
-            - store_artifacts:
-                  path: coverage
             - run:
                   name: Are there changes?
                   command: git diff-files
@@ -181,8 +171,6 @@ jobs:
                   command: yarn test:ci --config web-test-runner.config.ci-webkit.js --group unit --coverage
             - store_test_results:
                   path: /root/project/results/
-            - store_artifacts:
-                  path: coverage
             - run:
                   name: Are there changes?
                   command: git diff-files
