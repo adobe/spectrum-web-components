@@ -81,9 +81,8 @@ docs-side-nav:not(:defined) {
 }
 
 .manage-theme {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: auto auto;
     justify-content: flex-end;
 }
 
@@ -101,6 +100,14 @@ docs-side-nav:not(:defined) {
     .manage-theme {
         margin-right: 0;
         margin-left: 0;
+    }
+}
+
+@media screen and (min-width: 458px) {
+    .manage-theme {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
     }
 }
 
@@ -130,12 +137,6 @@ header {
 header svg {
     stroke: transparent;
     height: 100%;
-}
-
-.manage-theme {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
 }
 
 :host([dir='ltr']) .theme-control {
