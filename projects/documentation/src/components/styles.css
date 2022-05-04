@@ -135,7 +135,7 @@ body {
 
 @media screen and (max-width: 458px) {
     docs-page:not(:defined) {
-        padding: 114px var(--spectrum-global-dimension-size-300) 24px;
+        padding: 170px var(--spectrum-global-dimension-size-300) 24px;
     }
 }
 
