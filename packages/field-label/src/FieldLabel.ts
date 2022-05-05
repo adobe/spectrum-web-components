@@ -134,17 +134,16 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
 
     protected firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
+        this.addEventListener('click', this.handleClick);
+    }
+
+    protected willUpdate(changes: PropertyValues): void {
         if (!this.hasAttribute('id')) {
             this.setAttribute(
                 'id',
                 `${this.tagName.toLowerCase()}-${FieldLabel.instanceCount++}`
             );
         }
-        this.addEventListener('click', this.handleClick);
-    }
-
-    protected updated(changes: PropertyValues): void {
-        super.updated(changes);
         if (changes.has('for') || changes.has('id')) {
             this.manageFor();
         }

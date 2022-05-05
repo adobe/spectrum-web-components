@@ -23,8 +23,9 @@
             const params = new URLSearchParams(window.location.search);
             const pack = params.get('package');
             const bench = params.get('bench');
+            const dir = params.get('dir');
             window.tachometerStart = params.get('start');
-            import(`../../packages/${pack}/test/benchmark/${bench}.js`);
+            import(`../../${dir}/${pack}/test/benchmark/${bench}.js`);
         </script>
     </body>
 </html>

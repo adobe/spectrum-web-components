@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { main } from 'tachometer/lib/cli';
 import { ConfigFile } from 'tachometer/lib/configfile';
-import { readdirSync, writeFileSync } from 'fs';
+import { existsSync, readdirSync, writeFileSync } from 'fs';
 import { join as pathjoin } from 'path';
 import * as commandLineArgs from 'command-line-args';
 import * as commandLineUsage from 'command-line-usage';
@@ -163,7 +163,12 @@ $ node test/benchmark/cli -n 20
             benchmarks: [],
         };
 
-        const hasTests = readdirSync(pathjoin('packages', packageName)).find(
+        // Naively assume any change that doesn't exist is "packages" exists in "tools".
+        const monorepoDir = existsSync(pathjoin('packages', packageName))
+            ? 'packages'
+            : 'tools';
+
+        const hasTests = readdirSync(pathjoin(monorepoDir, packageName)).find(
             (dirEntry) => dirEntry === 'test'
         );
 
@@ -172,7 +177,7 @@ $ node test/benchmark/cli -n 20
         }
 
         const hasBenchmarks = readdirSync(
-            pathjoin('packages', packageName, 'test')
+            pathjoin(monorepoDir, packageName, 'test')
         ).find((dirEntry) => dirEntry === 'benchmark');
 
         if (!hasBenchmarks) {
@@ -180,7 +185,7 @@ $ node test/benchmark/cli -n 20
         }
 
         const benchmarks = readdirSync(
-            pathjoin('packages', packageName, 'test', 'benchmark'),
+            pathjoin(monorepoDir, packageName, 'test', 'benchmark'),
             { withFileTypes: true }
         )
             .filter(
@@ -194,7 +199,12 @@ $ node test/benchmark/cli -n 20
              * have yet to be published to NPM and skip.
              **/
             const pjson = await import(
-                pathjoin(process.cwd(), 'packages', packageName, 'package.json')
+                pathjoin(
+                    process.cwd(),
+                    monorepoDir,
+                    packageName,
+                    'package.json'
+                )
             );
             if (pjson.version === '0.0.1' && opts.compare !== 'none') {
                 // eslint-disable-next-line no-console
@@ -207,11 +217,12 @@ $ node test/benchmark/cli -n 20
             if (opts.compare !== 'none') {
                 config.benchmarks.push({
                     name: `${packageName}:${benchmark}`,
-                    url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}&start=${start}`,
+                    url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}&start=${start}&dir=${monorepoDir}`,
                     packageVersions: {
                         label: 'remote',
                         dependencies: {
                             '@spectrum-web-components/bundle': opts.compare,
+                            '@spectrum-web-components/grid': opts.compare,
                             lit: '^2.0.0',
                         },
                     },
@@ -228,7 +239,7 @@ $ node test/benchmark/cli -n 20
             }
             config.benchmarks.push({
                 name: `${packageName}:${benchmark}`,
-                url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}`,
+                url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}&dir=${monorepoDir}`,
                 measurement: 'global',
                 browser: {
                     name: opts.browser,

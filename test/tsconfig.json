@@ -4,6 +4,9 @@
         "outDir": "../",
         "rootDir": "../"
     },
-    "include": ["../packages/*/test/benchmark/**/*.ts"],
+    "include": [
+        "../packages/*/test/benchmark/**/*.ts",
+        "../tools/*/test/benchmark/**/*.ts"
+    ],
     "exclude": ["benchmark/cli.ts"]
 }
