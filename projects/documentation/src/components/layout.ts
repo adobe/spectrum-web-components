@@ -83,26 +83,23 @@ const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
 
 const lazyStyleFragment = (name: Color | Scale, flavor: ThemeVariant): void => {
     var fragmentName = `${name}-${flavor}`;
-    if (flavor === 'express') {
-        import('@spectrum-web-components/theme/src/express/core.js');
-    }
     switch (fragmentName) {
-        case 'darkest':
+        case 'darkest-spectrum':
             import('@spectrum-web-components/theme/theme-darkest.js');
             break;
-        case 'dark':
+        case 'dark-spectrum':
             import('@spectrum-web-components/theme/theme-dark.js');
             break;
-        case 'light':
+        case 'light-spectrum':
             import('@spectrum-web-components/theme/theme-light.js');
             break;
-        case 'lightest':
+        case 'lightest-spectrum':
             import('@spectrum-web-components/theme/theme-lightest.js');
             break;
-        case 'medium':
+        case 'medium-spectrum':
             import('@spectrum-web-components/theme/scale-medium.js');
             break;
-        case 'large':
+        case 'large-spectrum':
             import('@spectrum-web-components/theme/scale-large.js');
             break;
         case 'darkest-express':

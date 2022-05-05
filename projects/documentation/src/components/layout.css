@@ -103,7 +103,7 @@ docs-side-nav:not(:defined) {
     }
 }
 
-@media screen and (min-width: 458px) {
+@media screen and (min-width: 525px) {
     .manage-theme {
         display: flex;
         flex-wrap: wrap;
