@@ -52,6 +52,7 @@
 -   [ ] I have read the **[CONTRIBUTING](<(https://github.com/adobe/spectrum-web-components/blob/main/CONTRIBUTING.md)>)** document.
 -   [ ] I have added tests to cover my changes.
 -   [ ] All new and existing tests passed.
+-   [ ] I have reviewed at the Accessibility Practices for this feature, see: [Aria Practices](https://www.w3.org/TR/wai-aria-practices/)
 
 ## Best practices
 
