@@ -30,6 +30,7 @@ governing permissions and limitations under the License.
     position: relative; /* .spectrum-Thumbnail */
     vertical-align: top;
     width: var(--spectrum-thumbnail-width);
+    z-index: 0;
 }
 :host:before {
     border-radius: var(--spectrum-thumbnail-border-radius);

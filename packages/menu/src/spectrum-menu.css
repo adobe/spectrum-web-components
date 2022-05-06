@@ -65,10 +65,6 @@ governing permissions and limitations under the License.
         --spectrum-listitem-m-texticon-icon-gap,
         var(--spectrum-global-dimension-size-100)
     );
-    --spectrum-listitem-texticon-divider-size: var(
-        --spectrum-listitem-m-texticon-divider-size,
-        var(--spectrum-alias-border-size-thick)
-    );
     --spectrum-listitem-texticon-divider-padding: var(
         --spectrum-listitem-m-texticon-divider-padding,
         var(--spectrum-global-dimension-static-size-40)

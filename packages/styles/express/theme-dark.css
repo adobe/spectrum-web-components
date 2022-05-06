@@ -14,6 +14,26 @@ governing permissions and limitations under the License.
 :root {
     --spectrum-global-color-status: Verified;
     --spectrum-global-color-version: 5.1.0;
+    --spectrum-global-color-opacity-100: 1;
+    --spectrum-global-color-opacity-90: 0.9;
+    --spectrum-global-color-opacity-80: 0.8;
+    --spectrum-global-color-opacity-70: 0.7;
+    --spectrum-global-color-opacity-60: 0.6;
+    --spectrum-global-color-opacity-55: 0.55;
+    --spectrum-global-color-opacity-50: 0.5;
+    --spectrum-global-color-opacity-42: 0.42;
+    --spectrum-global-color-opacity-40: 0.4;
+    --spectrum-global-color-opacity-30: 0.3;
+    --spectrum-global-color-opacity-25: 0.25;
+    --spectrum-global-color-opacity-20: 0.2;
+    --spectrum-global-color-opacity-15: 0.15;
+    --spectrum-global-color-opacity-10: 0.1;
+    --spectrum-global-color-opacity-8: 0.08;
+    --spectrum-global-color-opacity-7: 0.07;
+    --spectrum-global-color-opacity-6: 0.06;
+    --spectrum-global-color-opacity-5: 0.05;
+    --spectrum-global-color-opacity-4: 0.04;
+    --spectrum-global-color-opacity-0: 0;
     --spectrum-global-color-celery-400-rgb: 34, 184, 51;
     --spectrum-global-color-celery-400: rgb(
         var(--spectrum-global-color-celery-400-rgb)
@@ -218,27 +238,27 @@ governing permissions and limitations under the License.
     --spectrum-global-color-gray-100: rgb(
         var(--spectrum-global-color-gray-100-rgb)
     );
-    --spectrum-global-color-gray-200-rgb: 61, 61, 61;
+    --spectrum-global-color-gray-200-rgb: 63, 63, 63;
     --spectrum-global-color-gray-200: rgb(
         var(--spectrum-global-color-gray-200-rgb)
     );
-    --spectrum-global-color-gray-300-rgb: 78, 78, 78;
+    --spectrum-global-color-gray-300-rgb: 84, 84, 84;
     --spectrum-global-color-gray-300: rgb(
         var(--spectrum-global-color-gray-300-rgb)
     );
-    --spectrum-global-color-gray-400-rgb: 103, 103, 103;
+    --spectrum-global-color-gray-400-rgb: 112, 112, 112;
     --spectrum-global-color-gray-400: rgb(
         var(--spectrum-global-color-gray-400-rgb)
     );
-    --spectrum-global-color-gray-500-rgb: 139, 139, 139;
+    --spectrum-global-color-gray-500-rgb: 144, 144, 144;
     --spectrum-global-color-gray-500: rgb(
         var(--spectrum-global-color-gray-500-rgb)
     );
-    --spectrum-global-color-gray-600-rgb: 177, 177, 177;
+    --spectrum-global-color-gray-600-rgb: 178, 178, 178;
     --spectrum-global-color-gray-600: rgb(
         var(--spectrum-global-color-gray-600-rgb)
     );
-    --spectrum-global-color-gray-700-rgb: 211, 211, 211;
+    --spectrum-global-color-gray-700-rgb: 209, 209, 209;
     --spectrum-global-color-gray-700: rgb(
         var(--spectrum-global-color-gray-700-rgb)
     );
@@ -250,26 +270,6 @@ governing permissions and limitations under the License.
     --spectrum-global-color-gray-900: rgb(
         var(--spectrum-global-color-gray-900-rgb)
     );
-    --spectrum-global-color-opacity-100: 1;
-    --spectrum-global-color-opacity-90: 0.9;
-    --spectrum-global-color-opacity-80: 0.8;
-    --spectrum-global-color-opacity-70: 0.7;
-    --spectrum-global-color-opacity-60: 0.6;
-    --spectrum-global-color-opacity-55: 0.55;
-    --spectrum-global-color-opacity-50: 0.5;
-    --spectrum-global-color-opacity-42: 0.42;
-    --spectrum-global-color-opacity-40: 0.4;
-    --spectrum-global-color-opacity-30: 0.3;
-    --spectrum-global-color-opacity-25: 0.25;
-    --spectrum-global-color-opacity-20: 0.2;
-    --spectrum-global-color-opacity-15: 0.15;
-    --spectrum-global-color-opacity-10: 0.1;
-    --spectrum-global-color-opacity-8: 0.08;
-    --spectrum-global-color-opacity-7: 0.07;
-    --spectrum-global-color-opacity-6: 0.06;
-    --spectrum-global-color-opacity-5: 0.05;
-    --spectrum-global-color-opacity-4: 0.04;
-    --spectrum-global-color-opacity-0: 0;
     --spectrum-alias-avatar-border-color-default: hsla(0, 0%, 100%, 0.1);
     --spectrum-alias-avatar-border-color-hover: hsla(0, 0%, 100%, 0.25);
     --spectrum-alias-avatar-border-color-down: hsla(0, 0%, 100%, 0.4);
