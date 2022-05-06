@@ -371,6 +371,77 @@ describe('Slider', () => {
 
         expect(el.value).to.equal(0);
     });
+
+    it('goes [disabled] while dragging', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider></sp-slider>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(10);
+
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+        const handleBoundingRect = handle.getBoundingClientRect();
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        handleBoundingRect.x + handleBoundingRect.width / 2,
+                        handleBoundingRect.y + handleBoundingRect.height / 2,
+                    ],
+                },
+                {
+                    type: 'down',
+                },
+            ],
+        });
+        await elementUpdated(el);
+
+        expect(el.dragging, 'is dragging').to.be.true;
+        expect(el.highlight, 'not highlighted').to.be.false;
+        expect(el.value).to.equal(10);
+
+        const inputEvent = oneEvent(el, 'input');
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        handleBoundingRect.x +
+                            handleBoundingRect.width / 2 +
+                            100,
+                        handleBoundingRect.y + handleBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+        await inputEvent;
+
+        expect(el.value).to.equal(13);
+
+        el.disabled = true;
+        await elementUpdated(el);
+
+        expect(el.dragging, 'is dragging').to.be.false;
+        expect(el.highlight, 'not highlighted').to.be.false;
+
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        0,
+                        handleBoundingRect.top + handleBoundingRect.height / 2,
+                    ],
+                },
+            ],
+        });
+
+        expect(el.value).to.equal(13);
+    });
     it('accepts pointermove events in separate interactions', async () => {
         let pointerId = -1;
         const el = await fixture<Slider>(
