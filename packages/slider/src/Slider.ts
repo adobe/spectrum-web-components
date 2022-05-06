@@ -209,6 +209,9 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
 
     public update(changedProperties: Map<string, boolean>): void {
         this.handleController.hostUpdate();
+        if (changedProperties.has('disabled') && this.disabled) {
+            this.handleController.cancelDrag();
+        }
         super.update(changedProperties);
     }
 

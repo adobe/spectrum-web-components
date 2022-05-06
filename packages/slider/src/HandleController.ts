@@ -357,9 +357,7 @@ export class HandleController implements Controller {
         delete this._activePointerEventData;
         if (!model) return;
         this.host.labelEl.click();
-        model.handle.highlight = false;
-        delete this.draggingHandle;
-        model.handle.dragging = false;
+        this.cancelDrag(model);
         this.requestUpdate();
         this.host.track.releasePointerCapture(event.pointerId);
         this.dispatchChangeEvent(input, model.handle);
@@ -376,6 +374,15 @@ export class HandleController implements Controller {
         input.value = this.calculateHandlePosition(event, model).toString();
         model.handle.value = parseFloat(input.value);
         this.requestUpdate();
+    }
+
+    public cancelDrag(model?: ModelValue): void {
+        model =
+            model || this.model.find((item) => item.name === this.activeHandle);
+        if (!model) return;
+        model.handle.highlight = false;
+        delete this.draggingHandle;
+        model.handle.dragging = false;
     }
 
     /**
