@@ -51,7 +51,7 @@ const config = {
             complexSelectors: [
                 {
                     replacement: '::slotted(sp-menu)',
-                    selector: '.spectrum-Menu .spectrum-Menu',
+                    selector: /.spectrum-Menu .spectrum-Menu(?!-)/,
                 },
                 {
                     replacement:
