@@ -175,8 +175,14 @@ const config = {
         {
             name: 'menu-divider',
             host: {
-                selector: '.spectrum-Menu-divider',
+                selector: '.spectrum-Menu',
             },
+            complexSelectors: [
+                {
+                    replacement: ':host',
+                    selector: '.spectrum-Menu .spectrum-Menu-divider',
+                },
+            ],
             exclude: [/\.spectrum-Menu(?!-divider)/],
         },
     ],

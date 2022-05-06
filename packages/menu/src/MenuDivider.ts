@@ -13,16 +13,18 @@ governing permissions and limitations under the License.
 import { CSSResultArray, SpectrumElement } from '@spectrum-web-components/base';
 
 import menuDividerStyles from './menu-divider.css.js';
+import dividerStyles from '@spectrum-web-components/divider/src/divider.css.js';
 
 /**
  * @element sp-menu-divider
  */
 export class MenuDivider extends SpectrumElement {
     public static get styles(): CSSResultArray {
-        return [menuDividerStyles];
+        return [dividerStyles, menuDividerStyles];
     }
 
     protected firstUpdated(): void {
         this.setAttribute('role', 'separator');
+        this.setAttribute('size', 'm');
     }
 }
