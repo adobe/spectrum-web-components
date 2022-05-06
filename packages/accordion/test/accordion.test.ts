@@ -15,11 +15,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import '../sp-accordion.js';
 import { Default } from '../stories/accordion.stories.js';
 import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
-import {
-    arrowDownEvent,
-    arrowUpEvent,
-    shiftTabEvent,
-} from '../../../test/testing-helpers.js';
+import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 
 describe('Accordion', () => {
@@ -267,28 +263,42 @@ describe('Accordion', () => {
         const secondItem = el.querySelector(
             'sp-accordion-item:nth-of-type(2)'
         ) as AccordionItem;
-        const thirdToLastItem = el.querySelector(
-            'sp-accordion-item:nth-last-of-type(3)'
+        const thirdItem = el.querySelector(
+            'sp-accordion-item:nth-of-type(3)'
         ) as AccordionItem;
-        const secondToLastItem = el.querySelector(
-            'sp-accordion-item:nth-last-of-type(2)'
+        const fourthItem = el.querySelector(
+            'sp-accordion-item:nth-of-type(4)'
         ) as AccordionItem;
+        const isSafari = /^((?!chrome|android).)*safari/i.test(
+            navigator.userAgent
+        );
+        const tab = isSafari ? 'Alt+Tab' : 'Tab';
+        const shiftTab = isSafari ? 'Alt+Shift+Tab' : 'Shift+Tab';
 
         el.focus();
 
         await elementUpdated(el);
         expect(document.activeElement === secondItem).to.be.true;
 
-        el.dispatchEvent(arrowUpEvent());
-        el.dispatchEvent(arrowUpEvent());
+        await sendKeys({
+            press: tab,
+        });
 
-        expect(document.activeElement === thirdToLastItem).to.be.true;
+        expect(document.activeElement === thirdItem).to.be.true;
 
-        el.dispatchEvent(arrowDownEvent());
+        await sendKeys({
+            press: tab,
+        });
 
-        expect(document.activeElement === secondToLastItem).to.be.true;
+        expect(document.activeElement === fourthItem).to.be.true;
 
-        el.dispatchEvent(arrowDownEvent());
+        await sendKeys({
+            press: shiftTab,
+        });
+        await sendKeys({
+            press: shiftTab,
+        });
+
         expect(document.activeElement === secondItem).to.be.true;
 
         document.body.focus();
@@ -296,7 +306,9 @@ describe('Accordion', () => {
         el.focus();
         expect(document.activeElement === secondItem).to.be.true;
 
-        secondItem.dispatchEvent(shiftTabEvent());
+        await sendKeys({
+            press: shiftTab,
+        });
         await elementUpdated(el);
 
         const outsideFocused = document.activeElement as HTMLElement;

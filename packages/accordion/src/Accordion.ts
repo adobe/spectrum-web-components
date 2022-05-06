@@ -20,7 +20,6 @@ import {
     property,
     queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 import { AccordionItem } from './AccordionItem.js';
 
@@ -50,22 +49,13 @@ export class Accordion extends SpectrumElement {
         ) as AccordionItem[];
     }
 
-    rovingTabindexController = new RovingTabindexController<AccordionItem>(
-        this,
-        {
-            focusInIndex: (elements: AccordionItem[]) => {
-                return elements.findIndex((el) => {
-                    return !el.disabled;
-                });
-            },
-            direction: 'vertical',
-            elements: () => this.items,
-            isFocusableElement: (el: AccordionItem) => !el.disabled,
-        }
-    );
-
     public focus(): void {
-        this.rovingTabindexController.focus();
+        const firstActive = this.items.find((el) => {
+            return !el.disabled;
+        });
+        if (firstActive) {
+            firstActive.focus();
+        }
     }
 
     private async onToggle(event: Event): Promise<void> {
@@ -91,16 +81,9 @@ export class Accordion extends SpectrumElement {
         });
     }
 
-    private handleSlotchange(): void {
-        this.rovingTabindexController.clearElementCache();
-    }
-
     protected render(): TemplateResult {
         return html`
-            <slot
-                @sp-accordion-item-toggle=${this.onToggle}
-                @slotchange=${this.handleSlotchange}
-            ></slot>
+            <slot @sp-accordion-item-toggle=${this.onToggle}></slot>
         `;
     }
 }
