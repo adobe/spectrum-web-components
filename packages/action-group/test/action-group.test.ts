@@ -537,6 +537,24 @@ describe('ActionGroup', () => {
         expect(secondButton.selected, 'second button selected').to.be.true;
     });
 
+    it('selects can be updated while [selects="single"]', async () => {
+        const el = await singleSelectedActionGroup(['first']);
+        await elementUpdated(el);
+        expect(el.selected.length).to.equal(1);
+
+        const firstButton = el.querySelector('.first') as ActionButton;
+        const secondButton = el.querySelector('.second') as ActionButton;
+        expect(firstButton.selected, 'first button selected').to.be.true;
+        expect(secondButton.selected, 'second button not selected').to.be.false;
+
+        el.selected = ['second'];
+        await elementUpdated(el);
+
+        expect(el.selected.length).to.equal(1);
+        expect(firstButton.selected, 'first button not selected').to.be.false;
+        expect(secondButton.selected, 'second button selected').to.be.true;
+    });
+
     it('selects user-passed value while [selects="multiple"]', async () => {
         const el = await fixture<ActionGroup>(
             html`
@@ -581,6 +599,55 @@ describe('ActionGroup', () => {
         await elementUpdated(el);
 
         expect(el.selected.length).to.equal(2);
+        expect(firstButton.selected, 'first button not selected').to.be.false;
+        expect(secondButton.selected, 'second button selected').to.be.true;
+        expect(thirdButton.selected, 'third button selected').to.be.true;
+    });
+
+    it('selects can be updated while [selects="multiple"]', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group
+                    label="Selects Multiple Group"
+                    selects="multiple"
+                    .selected=${['first', 'second']}
+                >
+                    <sp-action-button class="first" value="first">
+                        First
+                    </sp-action-button>
+                    <sp-action-button class="second" value="second">
+                        Second
+                    </sp-action-button>
+                    <sp-action-button class="third " value="third">
+                        Third
+                    </sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const firstButton = el.querySelector('.first') as ActionButton;
+        const secondButton = el.querySelector('.second') as ActionButton;
+        const thirdButton = el.querySelector('.third') as ActionButton;
+
+        expect(el.selected.length).to.equal(2);
+        expect(firstButton.selected, 'first button selected').to.be.true;
+        expect(secondButton.selected, 'second button selected').to.be.true;
+        expect(thirdButton.selected, 'third button not selected').to.be.false;
+
+        el.selected = ['first', 'second', 'third'];
+        await elementUpdated(el);
+
+        expect(el.selected.length).to.equal(3);
+        expect(firstButton.selected, 'first button selected').to.be.true;
+        expect(secondButton.selected, 'second button selected').to.be.true;
+        expect(thirdButton.selected, 'third button selected').to.be.true;
+
+        el.selected = ['second', 'third'];
+        await elementUpdated(el);
+
+        expect(el.selected.length, JSON.stringify(el.selected)).to.equal(2);
         expect(firstButton.selected, 'first button not selected').to.be.false;
         expect(secondButton.selected, 'second button selected').to.be.true;
         expect(thirdButton.selected, 'third button selected').to.be.true;
