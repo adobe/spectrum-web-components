@@ -117,12 +117,14 @@ export class TreeView extends SizedMixin(Focusable) {
         const items = [...this.items];
         const parentLevel = (parent.indent || 0) + 1;
         const parentIndex = items.indexOf(parent);
+        /* c8 ignore next */
         if (parentIndex < 0) return;
 
         const children = items.slice(parentIndex + 1);
         for (const child of children) {
             if (!child.indent) break;
 
+            /* c8 ignore next */
             const childLevel = (child.indent || 0) + 1;
             if (childLevel <= parentLevel) break;
 
@@ -196,12 +198,9 @@ export class TreeView extends SizedMixin(Focusable) {
     private getItemByOffset(direction: number): TreeViewItem | undefined {
         const items = [...this.items];
         const focused = items.indexOf(getActiveElement(this) as TreeViewItem);
-        let next = focused;
+        let next = (items.length + focused + direction) % items.length;
         let nextItem = items[next];
-        while (
-            nextItem &&
-            (this.isDisabledChild(nextItem) || next === focused)
-        ) {
+        while (nextItem && this.isDisabledChild(nextItem) && next !== focused) {
             next = (items.length + next + direction) % items.length;
             nextItem = items[next];
         }
