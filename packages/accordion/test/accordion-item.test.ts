@@ -15,7 +15,7 @@ import { spy } from 'sinon';
 
 import '../sp-accordion-item.js';
 import { AccordionItem } from '../src/AccordionItem';
-import { enterEvent, spaceEvent } from '../../../test/testing-helpers.js';
+import { sendKeys } from '@web/test-runner-commands';
 
 describe('Accordion Item', () => {
     it('can exist with no parent accessibly', async () => {
@@ -88,7 +88,10 @@ describe('Accordion Item', () => {
 
         expect(open).to.be.false;
 
-        el.dispatchEvent(enterEvent());
+        el.focus();
+        await sendKeys({
+            press: 'Enter',
+        });
 
         await elementUpdated(el);
 
@@ -97,7 +100,10 @@ describe('Accordion Item', () => {
         el.disabled = false;
         await elementUpdated(el);
 
-        el.dispatchEvent(enterEvent());
+        el.focus();
+        await sendKeys({
+            press: 'Enter',
+        });
 
         await elementUpdated(el);
 
@@ -124,7 +130,10 @@ describe('Accordion Item', () => {
 
         expect(open).to.be.false;
 
-        el.dispatchEvent(spaceEvent());
+        el.focus();
+        await sendKeys({
+            press: 'Space',
+        });
 
         await elementUpdated(el);
 
@@ -133,10 +142,58 @@ describe('Accordion Item', () => {
         el.disabled = false;
         await elementUpdated(el);
 
-        el.dispatchEvent(spaceEvent());
+        el.focus();
+        await sendKeys({
+            press: 'Space',
+        });
 
         await elementUpdated(el);
 
         expect(open).to.be.true;
+    });
+
+    it('does not dispatch toggle events on key events in Item content', async () => {
+        let closed = false;
+        const onAccordionToggle = (): void => {
+            closed = true;
+        };
+        const el = await fixture<AccordionItem>(
+            html`
+                <sp-accordion-item
+                    open
+                    @sp-accordion-item-toggle=${onAccordionToggle}
+                >
+                    <div>
+                        <button>Test Button</button>
+                    </div>
+                </sp-accordion-item>
+            `
+        );
+
+        const button = el.querySelector('button') as HTMLButtonElement;
+        await elementUpdated(el);
+
+        expect(el.open).to.be.true;
+        expect(closed).to.be.false;
+
+        button.focus();
+        await sendKeys({
+            press: 'Space',
+        });
+
+        await elementUpdated(el);
+
+        expect(closed).to.be.false;
+
+        await elementUpdated(el);
+
+        await sendKeys({
+            press: 'Enter',
+        });
+
+        await elementUpdated(el);
+
+        expect(closed).to.be.false;
+        expect(el.open).to.be.true;
     });
 });

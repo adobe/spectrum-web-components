@@ -46,22 +46,6 @@ export class AccordionItem extends Focusable {
         return this.shadowRoot.querySelector('#header') as HTMLElement;
     }
 
-    constructor() {
-        super();
-        this.addEventListener('keydown', this.onKeyDown);
-    }
-
-    private onKeyDown(event: KeyboardEvent): void {
-        /* c8 ignore next 3 */
-        if (this.disabled) {
-            return;
-        }
-        if (event.code === 'Enter' || event.code === 'Space') {
-            event.preventDefault();
-            this.toggle();
-        }
-    }
-
     private onClick(): void {
         /* c8 ignore next 3 */
         if (this.disabled) {
@@ -92,6 +76,7 @@ export class AccordionItem extends Focusable {
                     @click=${this.onClick}
                     aria-expanded=${this.open}
                     aria-controls="content"
+                    ?disabled=${this.disabled}
                 >
                     ${this.label}
                 </button>
