@@ -42,6 +42,7 @@
         "lit-html"
     ],
     "dependencies": {
+        "@lit-labs/observers": "^1.0.1",
         "@spectrum-web-components/base": "^0.5.7",
         "focus-visible": "^5.1.0",
         "tslib": "^2.0.0"

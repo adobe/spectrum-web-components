@@ -96,11 +96,26 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     private static instances: Set<Theme> = new Set();
 
     static get observedAttributes(): string[] {
-        return ['color', 'scale', 'theme', 'lang'];
+        return ['color', 'scale', 'theme', 'lang', 'dir'];
+    }
+
+    _dir: 'ltr' | 'rtl' | '' = '';
+
+    override set dir(dir: 'ltr' | 'rtl' | '') {
+        if (dir === this.dir) return;
+        this.setAttribute('dir', dir);
+        this._dir = dir;
+        this.trackedChildren.forEach((el) => {
+            el.setAttribute('dir', dir === 'rtl' ? dir : 'ltr');
+        });
+    }
+
+    override get dir(): 'ltr' | 'rtl' | '' {
+        return this._dir;
     }
 
     protected attributeChangedCallback(
-        attrName: SettableFragmentTypes | 'lang',
+        attrName: SettableFragmentTypes | 'lang' | 'dir',
         old: string | null,
         value: string | null
     ): void {
@@ -116,6 +131,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this._provideContext();
         } else if (attrName === 'theme') {
             this.theme = value as ThemeVariant;
+        } else if (attrName === 'dir') {
+            this.dir = value as 'ltr' | 'rtl' | '';
         }
     }
 
@@ -304,19 +321,6 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
         // Add `this` to the instances array.
         Theme.instances.add(this);
-        const manageDir = (): void => {
-            const { dir } = this;
-            this.trackedChildren.forEach((el) => {
-                el.setAttribute('dir', dir === 'rtl' ? dir : 'ltr');
-            });
-        };
-        if (!this.observer) {
-            this.observer = new MutationObserver(manageDir);
-        }
-        this.observer.observe(this, {
-            attributes: true,
-            attributeFilter: ['dir'],
-        });
         if (!this.hasAttribute('dir')) {
             let dirParent = ((this as HTMLElement).assignedSlot ||
                 this.parentNode) as HTMLElement | DocumentFragment | ShadowRoot;
@@ -333,16 +337,12 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             }
             this.dir = dirParent.dir === 'rtl' ? dirParent.dir : 'ltr';
         }
-        requestAnimationFrame(() => manageDir());
     }
 
     protected disconnectedCallback(): void {
         // Remove `this` to the instances array.
         Theme.instances.delete(this);
-        this.observer.disconnect();
     }
-
-    private observer!: MutationObserver;
 
     public startManagingContentDirection(el: HTMLElement): void {
         this.trackedChildren.add(el);

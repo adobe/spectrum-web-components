@@ -20,6 +20,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import type { ActionButton } from '@spectrum-web-components/action-button';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
+import { MutationController } from '@lit-labs/observers/mutation_controller.js';
 
 import styles from './action-group.css.js';
 
@@ -49,6 +50,21 @@ export class ActionGroup extends SpectrumElement {
     public _buttons: ActionButton[] = [];
 
     protected _buttonSelector = 'sp-action-button';
+
+    constructor() {
+        super();
+
+        new MutationController(this, {
+            config: {
+                childList: true,
+                subtree: true,
+            },
+            callback: () => {
+                this.manageButtons();
+                return true;
+            },
+        });
+    }
 
     rovingTabindexController = new RovingTabindexController<ActionButton>(
         this,
@@ -354,20 +370,4 @@ export class ActionGroup extends SpectrumElement {
         this.manageChildren();
         this.manageSelects();
     };
-
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        if (!this.observer) {
-            this.observer = new MutationObserver(this.manageButtons);
-            this.manageButtons();
-        }
-        this.observer.observe(this, { childList: true, subtree: true });
-    }
-
-    public override disconnectedCallback(): void {
-        this.observer.disconnect();
-        super.disconnectedCallback();
-    }
-
-    private observer!: MutationObserver;
 }

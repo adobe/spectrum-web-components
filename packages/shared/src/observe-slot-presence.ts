@@ -9,9 +9,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { ReactiveElement } from '@spectrum-web-components/base';
+import { MutationController } from '@lit-labs/observers/mutation_controller.js';
 
-const slotElementObserver = Symbol('slotElementObserver');
-const startObserving = Symbol('startObserving');
 const slotContentIsPresent = Symbol('slotContentIsPresent');
 
 type Constructor<T = Record<string, unknown>> = {
@@ -37,7 +36,23 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
         extends constructor
         implements SlotPresenceObservingInterface
     {
-        private [slotElementObserver]!: MutationObserver;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        constructor(...args: any[]) {
+            super(args);
+
+            new MutationController(this, {
+                config: {
+                    childList: true,
+                    subtree: true,
+                },
+                callback: () => {
+                    this.managePresenceObservedSlot();
+                    return true;
+                },
+            });
+
+            this.managePresenceObservedSlot();
+        }
 
         /**
          *  @private
@@ -61,7 +76,7 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
                 return this[slotContentIsPresent].get(selector) || false;
             }
             throw new Error(
-                `The provided selector \`\` is not being observed.`
+                `The provided selector \`${selector}\` is not being observed.`
             );
         }
 
@@ -74,27 +89,6 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
             });
             this.requestUpdate();
         };
-
-        private [startObserving](): void {
-            const config = { childList: true, subtree: true };
-            if (!this[slotElementObserver]) {
-                this[slotElementObserver] = new MutationObserver(
-                    this.managePresenceObservedSlot
-                );
-            }
-            this[slotElementObserver].observe(this, config);
-            this.managePresenceObservedSlot();
-        }
-
-        public override connectedCallback(): void {
-            super.connectedCallback();
-            this[startObserving]();
-        }
-
-        public override disconnectedCallback(): void {
-            this[slotElementObserver].disconnect();
-            super.disconnectedCallback();
-        }
     }
     return SlotPresenceObservingElement;
 }

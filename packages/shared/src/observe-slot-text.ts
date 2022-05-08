@@ -14,11 +14,9 @@ import {
     property,
     queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { MutationController } from '@lit-labs/observers/mutation_controller.js';
 
-const slotElementObserver = Symbol('slotElementObserver');
-// Fix needed for: https://github.com/lit/lit/issues/1789
 const assignedNodesList = Symbol('assignedNodes');
-const startObserving = Symbol('startObserving');
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,7 +37,25 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
         extends constructor
         implements SlotTextObservingInterface
     {
-        private [slotElementObserver]!: MutationObserver;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        constructor(...args: any[]) {
+            super(args);
+
+            new MutationController(this, {
+                config: {
+                    characterData: true,
+                    subtree: true,
+                },
+                callback: (mutationsList: Array<MutationRecord>): boolean => {
+                    for (const mutation of mutationsList) {
+                        if (mutation.type === 'characterData') {
+                            this.manageTextObservedSlot();
+                        }
+                    }
+                    return true;
+                },
+            });
+        }
 
         @property({ type: Boolean, attribute: false })
         public slotHasContent = false;
@@ -65,35 +81,6 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
         ): void {
             super.firstUpdated(changedProperties);
             this.manageTextObservedSlot();
-        }
-
-        private [startObserving](): void {
-            const config = { characterData: true, subtree: true };
-            if (!this[slotElementObserver]) {
-                const callback = (
-                    mutationsList: Array<MutationRecord>
-                ): void => {
-                    for (const mutation of mutationsList) {
-                        if (mutation.type === 'characterData') {
-                            this.manageTextObservedSlot();
-                        }
-                    }
-                };
-                this[slotElementObserver] = new MutationObserver(callback);
-            }
-            this[slotElementObserver].observe(this, config);
-        }
-
-        public override connectedCallback(): void {
-            super.connectedCallback();
-            this[startObserving]();
-        }
-
-        public override disconnectedCallback(): void {
-            if (this[slotElementObserver]) {
-                this[slotElementObserver].disconnect();
-            }
-            super.disconnectedCallback();
         }
     }
     return SlotTextObservingElement;
