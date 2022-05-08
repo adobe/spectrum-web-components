@@ -114,14 +114,20 @@ export function runPickerTests(): void {
             expect((el.button.textContent || '').trim()).to.equal(
                 'Select Inverse'
             );
-            const itemUpdated = oneEvent(el, 'sp-menu-item-added-or-updated');
-            option2.innerHTML = 'Invert Selection';
+            let itemUpdated = oneEvent(el, 'sp-menu-item-added-or-updated');
+            const newLabel1 = 'Invert Selection';
+            option2.innerHTML = newLabel1;
             await itemUpdated;
             await elementUpdated(el);
             expect(el.value).to.equal('option-2');
-            expect((el.button.textContent || '').trim()).to.equal(
-                'Invert Selection'
-            );
+            expect((el.button.textContent || '').trim()).to.equal(newLabel1);
+            itemUpdated = oneEvent(el, 'sp-menu-item-added-or-updated');
+            const newLabel2 = 'Other option';
+            option2.childNodes[0].textContent = newLabel2;
+            await itemUpdated;
+            await elementUpdated(el);
+            expect(el.value).to.equal('option-2');
+            expect((el.button.textContent || '').trim()).to.equal(newLabel2);
         });
         it('accepts new selected item content when open', async () => {
             const option2 = el.querySelector('[value="option-2"') as MenuItem;

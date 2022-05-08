@@ -50,6 +50,7 @@
         "lit-html"
     ],
     "dependencies": {
+        "@lit-labs/observers": "^1.0.1",
         "@spectrum-web-components/action-button": "^0.8.6",
         "@spectrum-web-components/base": "^0.5.7",
         "@spectrum-web-components/divider": "^0.4.9",

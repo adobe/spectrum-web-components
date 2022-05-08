@@ -33,6 +33,7 @@ import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-che
 import type { Menu } from './Menu.js';
 import type { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay';
 import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-children.js';
+import { MutationController } from '@lit-labs/observers/mutation_controller.js';
 
 /**
  * Duration during which a pointing device can leave an `<sp-menu-item>` element
@@ -209,6 +210,18 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.addEventListener('click', this.handleClickCapture, {
             capture: true,
         });
+
+        new MutationController(this, {
+            config: {
+                characterData: true,
+                childList: true,
+                subtree: true,
+            },
+            callback: (): boolean => {
+                this.breakItemChildrenCache();
+                return true;
+            },
+        });
     }
 
     @property({ type: Boolean })
@@ -255,12 +268,9 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     protected override render(): TemplateResult {
         return html`
-            <slot name="icon" @slotchange=${this.breakItemChildrenCache}></slot>
+            <slot name="icon"></slot>
             <div id="label">
-                <slot
-                    id="slot"
-                    @slotchange=${this.breakItemChildrenCache}
-                ></slot>
+                <slot id="slot"></slot>
             </div>
             <slot name="value"></slot>
             ${this.selected
