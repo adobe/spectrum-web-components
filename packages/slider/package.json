@@ -49,6 +49,7 @@
     ],
     "dependencies": {
         "@internationalized/number": "^3.1.0",
+        "@lit-labs/observers": "^1.0.1",
         "@spectrum-web-components/base": "^0.5.7",
         "@spectrum-web-components/field-label": "^0.7.11",
         "@spectrum-web-components/number-field": "^0.3.12",
