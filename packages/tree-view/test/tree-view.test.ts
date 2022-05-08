@@ -14,6 +14,7 @@ import '../sp-tree-view.js';
 import '../sp-tree-view-item.js';
 import { TreeView, TreeViewItem } from '../';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { sendKeys } from '@web/test-runner-commands';
 
 import {
     Default,
@@ -192,6 +193,37 @@ describe('TreeView', () => {
 
         expect(document.activeElement === el).to.be.false;
         expect(el.matches(':focus-within')).to.be.false;
+    });
+
+    it('does not focus next when [disabled]', async () => {
+        const el = await fixture<TreeView>(
+            html`
+                <sp-tree-view>
+                    <sp-tree-view-item>Item 1</sp-tree-view-item>
+                    <sp-tree-view-item disabled>Item 2</sp-tree-view-item>
+                </sp-tree-view>
+            `
+        );
+
+        const firstItem = el.querySelector('sp-tree-view-item') as TreeViewItem;
+
+        await elementUpdated(el);
+        expect(document.activeElement === el).to.be.false;
+
+        el.focus();
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+        expect(document.activeElement === firstItem).to.be.true;
+
+        el.dispatchEvent(arrowDownEvent());
+        await elementUpdated(el);
+
+        expect(document.activeElement === el).to.be.false;
+        expect(
+            document.activeElement === firstItem,
+            document.activeElement?.localName
+        ).to.be.true;
     });
 
     it('focuses the first decendent when non-selected', async () => {
@@ -519,6 +551,45 @@ describe('TreeView', () => {
         expect(thirdItem.selected).to.be.true;
     });
 
+    it('selects contiguous items when `[selects="multiple"]` and shiftKey used with Arrow*', async () => {
+        const el = await fixture<TreeView>(
+            html`
+                <sp-tree-view selects="multiple">
+                    <sp-tree-view-item class="first">Item 1</sp-tree-view-item>
+                    <sp-tree-view-item class="second">Item 2</sp-tree-view-item>
+                </sp-tree-view>
+            `
+        );
+        const firstItem = el.querySelector('.first') as TreeViewItem;
+        const secondItem = el.querySelector('.second') as TreeViewItem;
+        await elementUpdated(el);
+
+        expect(el.selected.length).to.eq(0);
+        el.focus();
+
+        expect(document.activeElement === firstItem).to.be.true;
+
+        await sendKeys({
+            press: 'Enter',
+        });
+
+        await elementUpdated(el);
+
+        expect(el.selected.length).to.equal(1);
+        expect(firstItem.selected).to.be.true;
+        expect(secondItem.selected).to.be.false;
+
+        await sendKeys({
+            press: 'Shift+ArrowDown',
+        });
+
+        await elementUpdated(el);
+
+        expect(el.selected.length).to.equal(2);
+        expect(firstItem.selected).to.be.true;
+        expect(secondItem.selected).to.be.true;
+    });
+
     it('dispatches a change event when selected items change', async () => {
         let eventSource = null as TreeView | null;
         const onChange = (event: Event): void => {
@@ -646,6 +717,13 @@ describe('TreeView', () => {
                     </sp-tree-view-item>
                     <sp-tree-view-item indent="2" class="third">
                         Item 3
+                    </sp-tree-view-item>
+                    <sp-tree-view-item can-open open indent="1" class="fourth">
+                        Item 2
+                    </sp-tree-view-item>
+                    <sp-tree-view-item can-open>Item 4</sp-tree-view-item>
+                    <sp-tree-view-item can-open indent="1">
+                        Item 5
                     </sp-tree-view-item>
                 </sp-tree-view>
             `
