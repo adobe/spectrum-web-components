@@ -20,6 +20,7 @@ import {
     property,
     queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { FocusGroupController } from '@spectrum-web-components/reactive-controllers/src/FocusGroup.js';
 
 import { AccordionItem } from './AccordionItem.js';
 
@@ -49,13 +50,14 @@ export class Accordion extends SpectrumElement {
         ) as AccordionItem[];
     }
 
+    focusGroupController = new FocusGroupController<AccordionItem>(this, {
+        direction: 'vertical',
+        elements: () => this.items,
+        isFocusableElement: (el: AccordionItem) => !el.disabled,
+    });
+
     public focus(): void {
-        const firstActive = this.items.find((el) => {
-            return !el.disabled;
-        });
-        if (firstActive) {
-            firstActive.focus();
-        }
+        this.focusGroupController.focus();
     }
 
     private async onToggle(event: Event): Promise<void> {
@@ -81,9 +83,16 @@ export class Accordion extends SpectrumElement {
         });
     }
 
+    private handleSlotchange(): void {
+        this.focusGroupController.clearElementCache();
+    }
+
     protected render(): TemplateResult {
         return html`
-            <slot @sp-accordion-item-toggle=${this.onToggle}></slot>
+            <slot
+                @slotchange=${this.handleSlotchange}
+                @sp-accordion-item-toggle=${this.onToggle}
+            ></slot>
         `;
     }
 }
