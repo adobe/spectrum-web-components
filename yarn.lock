@@ -3867,9 +3867,9 @@
   integrity sha512-9o+DiFvdk00et95Ps+5leute0qTT8pzDgGL2BYgqOb3hrdHjdO95GfFXs/YxFdcgIONVvPypJEr5sbR+AP9m5w==
 
 "@spectrum-css/coachmark@^5.0.10":
-  version "5.0.10"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-5.0.10.tgz#b77ec3b09d5a6a72a6f52a8bd597a33aec9c1ea4"
-  integrity sha512-hGrpcHgSjUCQ+VwhzMQ3Q1XNw/XkMbB6w8CbIwxWbEcTJmnrSk6pdn3wFSli4GKMskddSzk6NExwmowsiEn8tg==
+  version "5.0.11"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-5.0.11.tgz#be1bf26085cc48680fc30f68f03943e6de3145b8"
+  integrity sha512-8DZLqXwT4PpQLVR5anCdnaWKzuULBg92SAZt0FAB0pVhbQ6eyoj4EFsDLTltVbZSfwb4P/azIaQgXgU51+xHtw==
 
 "@spectrum-css/colorarea@^1.0.20":
   version "1.0.20"
