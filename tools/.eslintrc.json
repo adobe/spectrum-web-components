@@ -56,6 +56,12 @@
                     "sp-underlay"
                 ]
             }
+        ],
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "argsIgnorePattern": "^_"
+            }
         ]
     },
     "overrides": [
