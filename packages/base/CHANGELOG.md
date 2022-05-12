@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.5.5...@spectrum-web-components/base@0.5.6) (2022-05-12)
+
+### Bug Fixes
+
+-   move property management into update or willUpdate ([f66069f](https://github.com/adobe/spectrum-web-components/commit/f66069f2e38ea89de67d649b3b0bb84cc726ed73))
+
 ## [0.5.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.5.4...@spectrum-web-components/base@0.5.5) (2022-04-21)
 
 ### Bug Fixes

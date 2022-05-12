@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.9...@spectrum-web-components/slider@0.12.10) (2022-05-12)
+
+### Bug Fixes
+
+-   allow tick labels to start counting from "min" ([e7e44e3](https://github.com/adobe/spectrum-web-components/commit/e7e44e31fcb4c77259990777ca24fb22db54c40a))
+-   prevent active pointer events when slider toggles to [disabled] ([ceb4d74](https://github.com/adobe/spectrum-web-components/commit/ceb4d74abdbfb622e4a3cc17fc1e0b248af4df12))
+
 ## [0.12.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.8...@spectrum-web-components/slider@0.12.9) (2022-04-21)
 
 **Note:** Version bump only for package @spectrum-web-components/slider

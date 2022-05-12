@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-label@0.7.8...@spectrum-web-components/field-label@0.7.9) (2022-05-12)
+
+### Bug Fixes
+
+-   move property management into update or willUpdate ([f66069f](https://github.com/adobe/spectrum-web-components/commit/f66069f2e38ea89de67d649b3b0bb84cc726ed73))
+
 ## [0.7.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-label@0.7.7...@spectrum-web-components/field-label@0.7.8) (2022-04-21)
 
 **Note:** Version bump only for package @spectrum-web-components/field-label

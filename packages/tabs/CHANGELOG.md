@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.8.9...@spectrum-web-components/tabs@0.8.10) (2022-05-12)
+
+### Bug Fixes
+
+-   **tabs:** add "emphasized" and correct WHCM delivery ([27940bd](https://github.com/adobe/spectrum-web-components/commit/27940bde2444040910bf772c757514fbabdee85c))
+
 ## [0.8.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.8.8...@spectrum-web-components/tabs@0.8.9) (2022-04-21)
 
 **Note:** Version bump only for package @spectrum-web-components/tabs

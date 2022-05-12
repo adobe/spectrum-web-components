@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.13.0...@spectrum-web-components/menu@0.14.0) (2022-05-12)
+
+### Features
+
+-   update Menu Divider for new Spectrum CSS output ([aca7e2d](https://github.com/adobe/spectrum-web-components/commit/aca7e2dd1b42016d16c5e7a3484e0963ffce4d9a))
+
 # [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.12.5...@spectrum-web-components/menu@0.13.0) (2022-04-21)
 
 ### Features

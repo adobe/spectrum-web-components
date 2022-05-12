@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.8.3...@spectrum-web-components/action-group@0.8.4) (2022-05-12)
+
+### Bug Fixes
+
+-   ensure that "selected" can be set more than once from the outside ([5f1996c](https://github.com/adobe/spectrum-web-components/commit/5f1996cbb5e371719814c47c236a8fc1e2ef78ad))
+
 ## [0.8.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.8.2...@spectrum-web-components/action-group@0.8.3) (2022-04-21)
 
 **Note:** Version bump only for package @spectrum-web-components/action-group

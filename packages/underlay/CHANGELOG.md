@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/underlay@0.8.6...@spectrum-web-components/underlay@0.8.7) (2022-05-12)
+
+**Note:** Version bump only for package @spectrum-web-components/underlay
+
 ## [0.8.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/underlay@0.8.5...@spectrum-web-components/underlay@0.8.6) (2022-04-21)
 
 **Note:** Version bump only for package @spectrum-web-components/underlay

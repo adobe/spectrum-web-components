@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.6.9...@spectrum-web-components/accordion@0.6.10) (2022-05-12)
+
+### Bug Fixes
+
+-   contain activation to header content ([10183ce](https://github.com/adobe/spectrum-web-components/commit/10183ceb08745b544b5f338324ff7eeea1b3589d))
+-   correctly apply tab order to Accordion Items ([fd7a7f9](https://github.com/adobe/spectrum-web-components/commit/fd7a7f91769ab5bf0e22afb4cfab51329f5b198d))
+
 ## [0.6.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.6.8...@spectrum-web-components/accordion@0.6.9) (2022-04-21)
 
 **Note:** Version bump only for package @spectrum-web-components/accordion
