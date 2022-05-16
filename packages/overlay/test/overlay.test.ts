@@ -14,6 +14,7 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import { Dialog } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
+import { setViewport } from '@web/test-runner-commands';
 import { ActiveOverlay, Overlay, OverlayTrigger, Placement } from '../';
 
 import { isVisible, waitForPredicate } from '../../../test/testing-helpers.js';
@@ -536,7 +537,7 @@ describe('Overlay - type="modal"', () => {
         const width = window.innerWidth;
         const height = window.innerHeight;
         let opened = oneEvent(document, 'sp-opened');
-        // Right click to over "context menu" overlay.
+        // Right click to open "context menu" overlay.
         sendMouse({
             steps: [
                 {
@@ -611,6 +612,55 @@ describe('Overlay - type="modal"', () => {
         await closed;
         await nextFrame();
     });
+
+    it('does not open content off of the viewport', async () => {
+        await fixture<HTMLDivElement>(html`
+            ${virtualElement({
+                ...virtualElement.args,
+                offset: 6,
+            })}
+        `);
+
+        await setViewport({ width: 360, height: 640 });
+        // Allow viewport update to propagate.
+        await nextFrame();
+
+        const opened = oneEvent(document, 'sp-opened');
+        // Right click to open "context menu" overlay.
+        sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [270, 10],
+                },
+                {
+                    type: 'click',
+                    options: {
+                        button: 'right',
+                    },
+                    position: [270, 10],
+                },
+            ],
+        });
+        await opened;
+
+        const activeOverlay = document.querySelector(
+            'active-overlay'
+        ) as ActiveOverlay;
+
+        expect(activeOverlay.placement).to.equal('right-start');
+        expect(activeOverlay.getAttribute('actual-placement')).to.equal(
+            'bottom'
+        );
+
+        const closed = oneEvent(document, 'sp-closed');
+        sendKeys({
+            press: 'Escape',
+        });
+        await closed;
+        await nextFrame();
+    });
+
     it('opens children in the modal stack through shadow roots', async () => {
         const el = await fixture<OverlayTrigger>(definedOverlayElement());
         const trigger = el.querySelector(

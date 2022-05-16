@@ -15,15 +15,7 @@ governing permissions and limitations under the License.
     --sp-popover-tip-size: 24px;
 
     min-width: min-content;
-}
-
-:host([placement*='top']),
-:host([placement*='bottom']) {
     max-height: 100%;
-}
-
-:host([placement*='left']),
-:host([placement*='right']) {
     max-width: 100%;
 }
 
