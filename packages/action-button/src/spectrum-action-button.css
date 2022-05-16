@@ -2000,6 +2000,15 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     :host {
+        --spectrum-actionbutton-focus-ring-gap: var(
+            --spectrum-alias-component-focusring-gap-emphasized,
+            var(--spectrum-global-dimension-static-size-25)
+        );
+        --spectrum-actionbutton-focus-ring-size: var(
+            --spectrum-alias-component-focusring-size-emphasized,
+            var(--spectrum-global-dimension-static-size-25)
+        );
+        --spectrum-actionbutton-focus-ring-color: ButtonText;
         --spectrum-actionbutton-m-emphasized-texticon-icon-color-selected: HighlightText;
         --spectrum-actionbutton-m-emphasized-texticon-icon-color-selected-disabled: GrayText;
         --spectrum-actionbutton-m-emphasized-texticon-icon-color-selected-down: HighlightText;
@@ -2020,116 +2029,266 @@ governing permissions and limitations under the License.
         --spectrum-actionbutton-m-emphasized-textonly-text-color-selected-down: HighlightText;
         --spectrum-actionbutton-m-emphasized-textonly-text-color-selected-hover: HighlightText;
         --spectrum-actionbutton-m-emphasized-textonly-text-color-selected-key-focus: HighlightText;
-        --spectrum-actionbutton-m-quiet-textonly-background-color: ButtonFace;
-        --spectrum-actionbutton-m-quiet-textonly-background-color-disabled: ButtonFace;
-        --spectrum-actionbutton-m-quiet-textonly-background-color-down: ButtonFace;
-        --spectrum-actionbutton-m-quiet-textonly-background-color-hover: ButtonFace;
-        --spectrum-actionbutton-m-quiet-textonly-background-color-key-focus: ButtonFace;
         --spectrum-actionbutton-m-quiet-textonly-background-color-selected: Highlight;
         --spectrum-actionbutton-m-quiet-textonly-background-color-selected-disabled: ButtonFace;
         --spectrum-actionbutton-m-quiet-textonly-background-color-selected-down: Highlight;
         --spectrum-actionbutton-m-quiet-textonly-background-color-selected-hover: Highlight;
         --spectrum-actionbutton-m-quiet-textonly-background-color-selected-key-focus: Highlight;
         --spectrum-actionbutton-m-quiet-textonly-border-color: ButtonFace;
-        --spectrum-actionbutton-m-quiet-textonly-border-color-disabled: ButtonFace;
-        --spectrum-actionbutton-m-quiet-textonly-border-color-down: ButtonFace;
-        --spectrum-actionbutton-m-quiet-textonly-border-color-hover: ButtonFace;
-        --spectrum-actionbutton-m-quiet-textonly-border-color-key-focus: Highlight;
+        --spectrum-actionbutton-m-quiet-textonly-border-color-down: Highlight;
+        --spectrum-actionbutton-m-quiet-textonly-border-color-hover: Highlight;
         --spectrum-actionbutton-m-quiet-textonly-border-color-selected: HighlightText;
         --spectrum-actionbutton-m-quiet-textonly-border-color-selected-disabled: GrayText;
         --spectrum-actionbutton-m-quiet-textonly-border-color-selected-down: HighlightText;
         --spectrum-actionbutton-m-quiet-textonly-border-color-selected-hover: HighlightText;
         --spectrum-actionbutton-m-quiet-textonly-border-color-selected-key-focus: HighlightText;
-        --spectrum-actionbutton-m-quiet-textonly-text-color: ButtonText;
-        --spectrum-actionbutton-m-quiet-textonly-text-color-disabled: GrayText;
-        --spectrum-actionbutton-m-quiet-textonly-text-color-down: ButtonText;
-        --spectrum-actionbutton-m-quiet-textonly-text-color-hover: ButtonText;
-        --spectrum-actionbutton-m-quiet-textonly-text-color-key-focus: ButtonText;
         --spectrum-actionbutton-m-quiet-textonly-text-color-selected: HighlightText;
         --spectrum-actionbutton-m-quiet-textonly-text-color-selected-disabled: GrayText;
         --spectrum-actionbutton-m-quiet-textonly-text-color-selected-down: HighlightText;
         --spectrum-actionbutton-m-quiet-textonly-text-color-selected-hover: HighlightText;
         --spectrum-actionbutton-m-quiet-textonly-text-color-selected-key-focus: HighlightText;
-        --spectrum-actionbutton-m-texticon-icon-color: ButtonText;
-        --spectrum-actionbutton-m-texticon-icon-color-disabled: GrayText;
-        --spectrum-actionbutton-m-texticon-icon-color-hover: ButtonText;
-        --spectrum-actionbutton-m-texticon-icon-color-key-focus: ButtonText;
         --spectrum-actionbutton-m-texticon-icon-color-selected: HighlightText;
         --spectrum-actionbutton-m-texticon-icon-color-selected-disabled: GrayText;
         --spectrum-actionbutton-m-texticon-icon-color-selected-down: HighlightText;
         --spectrum-actionbutton-m-texticon-icon-color-selected-hover: HighlightText;
         --spectrum-actionbutton-m-texticon-icon-color-selected-key-focus: HighlightText;
-        --spectrum-actionbutton-m-textonly-background-color: ButtonFace;
-        --spectrum-actionbutton-m-textonly-background-color-disabled: ButtonFace;
-        --spectrum-actionbutton-m-textonly-background-color-down: ButtonFace;
-        --spectrum-actionbutton-m-textonly-background-color-hover: ButtonFace;
-        --spectrum-actionbutton-m-textonly-background-color-key-focus: ButtonFace;
         --spectrum-actionbutton-m-textonly-background-color-selected: Highlight;
         --spectrum-actionbutton-m-textonly-background-color-selected-disabled: ButtonFace;
         --spectrum-actionbutton-m-textonly-background-color-selected-down: Highlight;
         --spectrum-actionbutton-m-textonly-background-color-selected-hover: Highlight;
         --spectrum-actionbutton-m-textonly-background-color-selected-key-focus: Highlight;
-        --spectrum-actionbutton-m-textonly-border-color: ButtonText;
-        --spectrum-actionbutton-m-textonly-border-color-disabled: GrayText;
-        --spectrum-actionbutton-m-textonly-border-color-down: ButtonText;
-        --spectrum-actionbutton-m-textonly-border-color-hover: ButtonText;
-        --spectrum-actionbutton-m-textonly-border-color-key-focus: Highlight;
         --spectrum-actionbutton-m-textonly-border-color-selected: HighlightText;
         --spectrum-actionbutton-m-textonly-border-color-selected-disabled: GrayText;
         --spectrum-actionbutton-m-textonly-border-color-selected-down: HighlightText;
         --spectrum-actionbutton-m-textonly-border-color-selected-hover: HighlightText;
         --spectrum-actionbutton-m-textonly-border-color-selected-key-focus: HighlightText;
-        --spectrum-actionbutton-m-textonly-hold-icon-color: ButtonText;
-        --spectrum-actionbutton-m-textonly-hold-icon-color-disabled: GrayText;
-        --spectrum-actionbutton-m-textonly-hold-icon-color-down: ButtonText;
-        --spectrum-actionbutton-m-textonly-hold-icon-color-hover: ButtonText;
-        --spectrum-actionbutton-m-textonly-hold-icon-color-key-focus: ButtonText;
-        --spectrum-actionbutton-m-textonly-text-color: ButtonText;
-        --spectrum-actionbutton-m-textonly-text-color-disabled: GrayText;
-        --spectrum-actionbutton-m-textonly-text-color-down: ButtonText;
-        --spectrum-actionbutton-m-textonly-text-color-hover: ButtonText;
-        --spectrum-actionbutton-m-textonly-text-color-key-focus: ButtonText;
         --spectrum-actionbutton-m-textonly-text-color-selected: HighlightText;
         --spectrum-actionbutton-m-textonly-text-color-selected-disabled: GrayText;
         --spectrum-actionbutton-m-textonly-text-color-selected-down: HighlightText;
         --spectrum-actionbutton-m-textonly-text-color-selected-hover: HighlightText;
         --spectrum-actionbutton-m-textonly-text-color-selected-key-focus: HighlightText;
+    }
+    :host:after {
         forced-color-adjust: none;
     }
-    :host([quiet][emphasized]:not([disabled]):hover) {
+    :host([selected]:not([disabled])) #label {
+        forced-color-adjust: none;
+    }
+    :host([variant='black'][selected]:not([disabled])),
+    :host([variant='white'][selected]:not([disabled])) {
         background-color: var(
-            --spectrum-actionbutton-m-emphasized-textonly-background-color-selected-hover,
-            var(
-                --spectrum-alias-component-background-color-emphasized-selected-hover
-            )
+            --spectrum-actionbutton-m-quiet-textonly-background-color-selected,
+            var(--spectrum-alias-component-background-color-selected-default)
         );
         border-color: var(
-            --spectrum-actionbutton-m-emphasized-textonly-border-color-selected-hover,
-            var(
-                --spectrum-alias-component-border-color-emphasized-selected-hover
-            )
+            --spectrum-actionbutton-m-quiet-textonly-border-color-selected,
+            var(--spectrum-alias-component-border-color-quiet-selected-default)
         );
         color: var(
-            --spectrum-actionbutton-m-emphasized-textonly-text-color-selected-hover,
-            var(--spectrum-alias-component-text-color-emphasized-selected-hover)
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected,
+            var(--spectrum-alias-component-text-color-selected-default)
         );
     }
-    :host([quiet][emphasized]:not([disabled])[active]) {
+    :host([variant='black'][selected]:not([disabled])) .hold-affordance,
+    :host([variant='white'][selected]:not([disabled])) .hold-affordance {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected,
+            var(--spectrum-alias-component-text-color-selected-default)
+        );
+    }
+    :host([variant='black'][selected]:not([disabled])) #label,
+    :host([variant='white'][selected]:not([disabled])) #label {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected,
+            var(--spectrum-alias-component-text-color-selected-default)
+        ) !important;
+    }
+    :host([variant='black'][selected]:not([disabled])) ::slotted([slot='icon']),
+    :host([variant='white'][selected]:not([disabled]))
+        ::slotted([slot='icon']) {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected,
+            var(--spectrum-alias-component-text-color-selected-default)
+        ) !important;
+    }
+    :host([variant='black'][selected]:not([disabled]).focus-visible),
+    :host([variant='black'][selected]:not([disabled]).is-keyboardFocused),
+    :host([variant='black'][selected]:not([disabled]):hover),
+    :host([variant='black'][selected]:not([disabled])[active]),
+    :host([variant='white'][selected]:not([disabled]).focus-visible),
+    :host([variant='white'][selected]:not([disabled]).is-keyboardFocused),
+    :host([variant='white'][selected]:not([disabled]):hover),
+    :host([variant='white'][selected]:not([disabled])[active]) {
         background-color: var(
-            --spectrum-actionbutton-m-emphasized-textonly-background-color-selected-down,
+            --spectrum-actionbutton-m-quiet-textonly-background-color-selected,
+            var(--spectrum-alias-component-background-color-selected-default)
+        );
+        border-color: var(
+            --spectrum-actionbutton-m-quiet-textonly-border-color-selected,
+            var(--spectrum-alias-component-border-color-quiet-selected-default)
+        );
+    }
+    :host([variant='black'][selected]:not([disabled]).is-keyboardFocused),
+    :host([variant='black'][selected]:not([disabled]):focus-visible),
+    :host([variant='black'][selected]:not([disabled]):hover),
+    :host([variant='black'][selected]:not([disabled])[active]),
+    :host([variant='white'][selected]:not([disabled]).is-keyboardFocused),
+    :host([variant='white'][selected]:not([disabled]):focus-visible),
+    :host([variant='white'][selected]:not([disabled]):hover),
+    :host([variant='white'][selected]:not([disabled])[active]) {
+        background-color: var(
+            --spectrum-actionbutton-m-quiet-textonly-background-color-selected,
+            var(--spectrum-alias-component-background-color-selected-default)
+        );
+        border-color: var(
+            --spectrum-actionbutton-m-quiet-textonly-border-color-selected,
+            var(--spectrum-alias-component-border-color-quiet-selected-default)
+        );
+    }
+    :host([variant='black'][selected]:not([disabled]).focus-visible)
+        .hold-affordance,
+    :host([variant='black'][selected]:not([disabled]).is-keyboardFocused)
+        .hold-affordance,
+    :host([variant='black'][selected]:not([disabled]):hover) .hold-affordance,
+    :host([variant='black'][selected]:not([disabled])[active]) .hold-affordance,
+    :host([variant='white'][selected]:not([disabled]).focus-visible)
+        .hold-affordance,
+    :host([variant='white'][selected]:not([disabled]).is-keyboardFocused)
+        .hold-affordance,
+    :host([variant='white'][selected]:not([disabled]):hover) .hold-affordance,
+    :host([variant='white'][selected]:not([disabled])[active])
+        .hold-affordance {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected,
+            var(--spectrum-alias-component-text-color-selected-default)
+        );
+    }
+    :host([variant='black'][selected]:not([disabled]).is-keyboardFocused)
+        .hold-affordance,
+    :host([variant='black'][selected]:not([disabled]):focus-visible)
+        .hold-affordance,
+    :host([variant='black'][selected]:not([disabled]):hover) .hold-affordance,
+    :host([variant='black'][selected]:not([disabled])[active]) .hold-affordance,
+    :host([variant='white'][selected]:not([disabled]).is-keyboardFocused)
+        .hold-affordance,
+    :host([variant='white'][selected]:not([disabled]):focus-visible)
+        .hold-affordance,
+    :host([variant='white'][selected]:not([disabled]):hover) .hold-affordance,
+    :host([variant='white'][selected]:not([disabled])[active])
+        .hold-affordance {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected,
+            var(--spectrum-alias-component-text-color-selected-default)
+        );
+    }
+    :host([variant='black'][selected]:not([disabled]).focus-visible) #label,
+    :host([variant='black'][selected]:not([disabled]).is-keyboardFocused)
+        #label,
+    :host([variant='black'][selected]:not([disabled]):hover) #label,
+    :host([variant='black'][selected]:not([disabled])[active]) #label,
+    :host([variant='white'][selected]:not([disabled]).focus-visible) #label,
+    :host([variant='white'][selected]:not([disabled]).is-keyboardFocused)
+        #label,
+    :host([variant='white'][selected]:not([disabled]):hover) #label,
+    :host([variant='white'][selected]:not([disabled])[active]) #label {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected,
+            var(--spectrum-alias-component-text-color-selected-default)
+        );
+    }
+    :host([variant='black'][selected]:not([disabled]).is-keyboardFocused)
+        #label,
+    :host([variant='black'][selected]:not([disabled]):focus-visible) #label,
+    :host([variant='black'][selected]:not([disabled]):hover) #label,
+    :host([variant='black'][selected]:not([disabled])[active]) #label,
+    :host([variant='white'][selected]:not([disabled]).is-keyboardFocused)
+        #label,
+    :host([variant='white'][selected]:not([disabled]):focus-visible) #label,
+    :host([variant='white'][selected]:not([disabled]):hover) #label,
+    :host([variant='white'][selected]:not([disabled])[active]) #label {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected,
+            var(--spectrum-alias-component-text-color-selected-default)
+        );
+    }
+    :host([variant='black'][selected]:not([disabled]).focus-visible)
+        ::slotted([slot='icon']),
+    :host([variant='black'][selected]:not([disabled]).is-keyboardFocused)
+        ::slotted([slot='icon']),
+    :host([variant='black'][selected]:not([disabled]):hover)
+        ::slotted([slot='icon']),
+    :host([variant='black'][selected]:not([disabled])[active])
+        ::slotted([slot='icon']),
+    :host([variant='white'][selected]:not([disabled]).focus-visible)
+        ::slotted([slot='icon']),
+    :host([variant='white'][selected]:not([disabled]).is-keyboardFocused)
+        ::slotted([slot='icon']),
+    :host([variant='white'][selected]:not([disabled]):hover)
+        ::slotted([slot='icon']),
+    :host([variant='white'][selected]:not([disabled])[active])
+        ::slotted([slot='icon']) {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected,
+            var(--spectrum-alias-component-text-color-selected-default)
+        );
+    }
+    :host([variant='black'][selected]:not([disabled]).is-keyboardFocused)
+        ::slotted([slot='icon']),
+    :host([variant='black'][selected]:not([disabled]):focus-visible)
+        ::slotted([slot='icon']),
+    :host([variant='black'][selected]:not([disabled]):hover)
+        ::slotted([slot='icon']),
+    :host([variant='black'][selected]:not([disabled])[active])
+        ::slotted([slot='icon']),
+    :host([variant='white'][selected]:not([disabled]).is-keyboardFocused)
+        ::slotted([slot='icon']),
+    :host([variant='white'][selected]:not([disabled]):focus-visible)
+        ::slotted([slot='icon']),
+    :host([variant='white'][selected]:not([disabled]):hover)
+        ::slotted([slot='icon']),
+    :host([variant='white'][selected]:not([disabled])[active])
+        ::slotted([slot='icon']) {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected,
+            var(--spectrum-alias-component-text-color-selected-default)
+        );
+    }
+    :host([variant='black'][selected][disabled]),
+    :host([variant='white'][selected][disabled]) {
+        background-color: var(
+            --spectrum-actionbutton-m-quiet-textonly-background-color-selected-disabled,
             var(
-                --spectrum-alias-component-background-color-emphasized-selected-down
+                --spectrum-alias-component-background-color-quiet-selected-disabled
             )
         );
         border-color: var(
-            --spectrum-actionbutton-m-emphasized-textonly-border-color-selected-down,
-            var(
-                --spectrum-alias-component-border-color-emphasized-selected-down
-            )
+            --spectrum-actionbutton-m-quiet-textonly-border-color-selected-disabled,
+            var(--spectrum-alias-component-border-color-quiet-disabled)
         );
         color: var(
-            --spectrum-actionbutton-m-emphasized-textonly-text-color-selected-down,
-            var(--spectrum-alias-component-text-color-emphasized-selected-down)
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected-disabled,
+            var(--spectrum-alias-component-text-color-disabled)
+        );
+    }
+    :host([variant='black'][selected][disabled]) .hold-affordance,
+    :host([variant='white'][selected][disabled]) .hold-affordance {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected-disabled,
+            var(--spectrum-alias-component-text-color-disabled)
+        );
+    }
+    :host([variant='black'][selected][disabled]) #label,
+    :host([variant='white'][selected][disabled]) #label {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected-disabled,
+            var(--spectrum-alias-component-text-color-disabled)
+        );
+    }
+    :host([variant='black'][selected][disabled]) ::slotted([slot='icon']),
+    :host([variant='white'][selected][disabled]) ::slotted([slot='icon']) {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected-disabled,
+            var(--spectrum-alias-component-text-color-disabled)
         );
     }
 }

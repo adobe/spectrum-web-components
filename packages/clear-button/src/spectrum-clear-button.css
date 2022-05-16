@@ -508,6 +508,36 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     :host {
-        forced-color-adjust: none;
+        --spectrum-alias-icon-color-overbackground: ButtonText;
+        --spectrum-alias-icon-color-overbackground-disabled: GrayText;
+        --spectrum-button-m-primary-outline-white-texticon-background-color: ButtonFace;
+        --spectrum-button-m-primary-outline-white-texticon-background-color-disabled: ButtonFace;
+        --spectrum-button-m-primary-outline-white-texticon-background-color-down: ButtonFace;
+        --spectrum-button-m-primary-outline-white-texticon-background-color-hover: ButtonFace;
+        --spectrum-button-m-primary-outline-white-texticon-border-color: ButtonText;
+        --spectrum-button-m-primary-outline-white-texticon-border-color-disabled: GrayText;
+        --spectrum-button-m-primary-outline-white-texticon-border-color-down: ButtonText;
+        --spectrum-button-m-primary-outline-white-texticon-border-color-hover: ButtonText;
+        --spectrum-button-m-primary-outline-white-texticon-border-color-key-focus: ButtonText;
+        --spectrum-button-m-primary-outline-white-texticon-text-color: ButtonText;
+        --spectrum-button-m-primary-outline-white-texticon-text-color-disabled: GrayText;
+        --spectrum-button-m-primary-outline-white-texticon-text-color-down: Highlight;
+        --spectrum-button-m-primary-outline-white-texticon-text-color-hover: Highlight;
+        --spectrum-clearbutton-fill-background-color: ButtonFace;
+        --spectrum-clearbutton-fill-background-color-disabled: ButtonFace;
+        --spectrum-clearbutton-fill-background-color-down: ButtonFace;
+        --spectrum-clearbutton-fill-background-color-hover: ButtonFace;
+        --spectrum-clearbutton-fill-background-color-key-focus: ButtonFace;
+        --spectrum-clearbutton-fill-uiicon-color: ButtonText;
+        --spectrum-clearbutton-fill-uiicon-color-disabled: GrayText;
+        --spectrum-clearbutton-fill-uiicon-color-down: Highlight;
+        --spectrum-clearbutton-fill-uiicon-color-key-focus: Highlight;
+        --spectrum-clearbutton-m-fill-uiicon-color: ButtonText;
+    }
+    :host(:hover) {
+        color: var(--spectrum-clearbutton-fill-uiicon-color-key-focus);
+    }
+    :host([disabled]) {
+        color: var(--spectrum-clearbutton-fill-uiicon-color-disabled);
     }
 }

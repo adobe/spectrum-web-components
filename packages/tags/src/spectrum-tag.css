@@ -848,3 +848,101 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-tag-text-color-error-key-focus)
     ); /* .spectrum-Tag--removable.is-selected.is-invalid */
 }
+@media (forced-colors: active) {
+    :host {
+        --spectrum-tag-s-removable-texticon-border-color-error-down: Highlight;
+        --spectrum-tag-s-removable-texticon-border-color-error-hover: Highlight;
+        --spectrum-tag-s-removable-texticon-icon-color: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-disabled: GrayText;
+        --spectrum-tag-s-removable-texticon-icon-color-down: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-error: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-error-down: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-error-hover: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-error-selected: HighlightText;
+        --spectrum-tag-s-removable-texticon-icon-color-hover: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-key-focus: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-selected: HighlightText;
+        --spectrum-tag-s-removable-texticon-icon-color-selected-hover: HighlightText;
+        --spectrum-tag-s-removable-texticon-icon-color-selected-key-focus: HighlightText;
+        --spectrum-tag-s-removable-texticon-text-color-down: ButtonText;
+        --spectrum-tag-s-removable-texticon-text-color-error-down: ButtonText;
+        --spectrum-tag-s-removable-texticon-text-color-error-hover: ButtonText;
+        --spectrum-tag-s-removable-texticon-text-color-error-key-focus: ButtonText;
+        --spectrum-tag-s-removable-texticon-text-color-error-selected: HighlightText;
+        --spectrum-tag-s-removable-texticon-text-color-hover: ButtonText;
+        --spectrum-tag-s-removable-texticon-text-color-key-focus: ButtonText;
+        --spectrum-tag-s-removable-texticon-text-color-selected: HighlightText;
+        --spectrum-tag-s-removable-texticon-text-color-selected-key-focus: HighlightText;
+        --spectrum-tag-s-texticon-background-color: ButtonFace;
+        --spectrum-tag-s-texticon-background-color-disabled: ButtonFace;
+        --spectrum-tag-s-texticon-background-color-error-selected: Highlight;
+        --spectrum-tag-s-texticon-background-color-error-selected-hover: Highlight;
+        --spectrum-tag-s-texticon-background-color-hover: ButtonFace;
+        --spectrum-tag-s-texticon-background-color-key-focus: ButtonFace;
+        --spectrum-tag-s-texticon-background-color-selected: Highlight;
+        --spectrum-tag-s-texticon-background-color-selected-hover: Highlight;
+        --spectrum-tag-s-texticon-border-color: ButtonText;
+        --spectrum-tag-s-texticon-border-color-disabled: GrayText;
+        --spectrum-tag-s-texticon-border-color-error: Highlight;
+        --spectrum-tag-s-texticon-border-color-error-hover: Highlight;
+        --spectrum-tag-s-texticon-border-color-error-selected: HighlightText;
+        --spectrum-tag-s-texticon-border-color-error-selected-hover: HighlightText;
+        --spectrum-tag-s-texticon-border-color-error-selected-key-focus: HighlightText;
+        --spectrum-tag-s-texticon-border-color-hover: ButtonText;
+        --spectrum-tag-s-texticon-border-color-key-focus: ButtonText;
+        --spectrum-tag-s-texticon-border-color-selected: HighlightText;
+        --spectrum-tag-s-texticon-focusring-border-color-key-focus: ButtonText;
+        --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus: ButtonText;
+        --spectrum-tag-s-texticon-icon-color-disabled: GrayText;
+        --spectrum-tag-s-texticon-icon-color-error: ButtonText;
+        --spectrum-tag-s-texticon-icon-color-error-hover: ButtonText;
+        --spectrum-tag-s-texticon-icon-color-error-key-focus: ButtonText;
+        --spectrum-tag-s-texticon-icon-color-error-selected-hover: HighlightText;
+        --spectrum-tag-s-texticon-icon-color-selected: HighlightText;
+        --spectrum-tag-s-texticon-text-color: ButtonText;
+        --spectrum-tag-s-texticon-text-color-disabled: GrayText;
+        --spectrum-tag-s-texticon-text-color-hover: ButtonText;
+        --spectrum-tag-s-texticon-text-color-key-focus: ButtonText;
+        --spectrum-tag-s-texticon-text-color-selected: HighlightText;
+        --spectrum-tag-s-texticon-text-color-selected-key-focus: HighlightText;
+        forced-color-adjust: none;
+    }
+    :host([selected][invalid].focus-visible) {
+        box-shadow: 0 0 0
+            var(
+                --spectrum-alias-focus-ring-size,
+                var(--spectrum-global-dimension-static-size-25)
+            )
+            var(
+                --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,
+                var(
+                    --spectrum-alias-tag-focusring-border-color-selected-key-focus
+                )
+            );
+    }
+    :host([selected][invalid]:focus-visible) {
+        box-shadow: 0 0 0
+            var(
+                --spectrum-alias-focus-ring-size,
+                var(--spectrum-global-dimension-static-size-25)
+            )
+            var(
+                --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,
+                var(
+                    --spectrum-alias-tag-focusring-border-color-selected-key-focus
+                )
+            );
+    }
+    :host([selected][invalid].focus-visible) .clear-button {
+        color: var(
+            --spectrum-tag-s-texticon-icon-color-error-selected-hover,
+            var(--spectrum-alias-tag-icon-color-selected)
+        );
+    }
+    :host([selected][invalid]:focus-visible) .clear-button {
+        color: var(
+            --spectrum-tag-s-texticon-icon-color-error-selected-hover,
+            var(--spectrum-alias-tag-icon-color-selected)
+        );
+    }
+}

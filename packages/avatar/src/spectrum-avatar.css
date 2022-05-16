@@ -229,3 +229,9 @@ governing permissions and limitations under the License.
         var(--spectrum-global-color-opacity-30)
     ); /* .spectrum-Avatar.is-disabled */
 }
+@media (forced-colors: active) {
+    :host([disabled]) {
+        opacity: 1;
+        outline: 2px solid GrayText;
+    }
+}

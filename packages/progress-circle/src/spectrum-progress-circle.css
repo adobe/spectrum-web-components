@@ -607,3 +607,8 @@ governing permissions and limitations under the License.
         --spectrum-progresscircle-m-over-background-track-fill-color
     ); /* .spectrum-ProgressCircle--indeterminate.spectrum-ProgressCircle--overBackground .spectrum-ProgressCircle-fill */
 }
+@media (forced-colors: active) {
+    .fill {
+        --spectrum-progresscircle-m-track-fill-color: Highlight;
+    }
+}

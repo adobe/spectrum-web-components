@@ -112,6 +112,61 @@ governing permissions and limitations under the License.
 #label:empty {
     display: none; /* .spectrum-Button-label:empty */
 }
+@media (forced-colors: active) {
+    :host {
+        --spectrum-button-m-accent-fill-texticon-background-color-down: Highlight;
+        --spectrum-button-m-accent-fill-texticon-background-color-hover: Highlight;
+        --spectrum-button-m-accent-fill-texticon-background-color-key-focus: Highlight;
+        --spectrum-button-m-accent-fill-texticon-background-color: ButtonText;
+        --spectrum-button-m-accent-fill-texticon-icon-color: ButtonFace;
+        --spectrum-button-m-accent-fill-texticon-text-color: ButtonFace;
+        --spectrum-button-m-accent-outline-texticon-background-color: ButtonFace;
+        --spectrum-button-m-accent-outline-texticon-background-color-down: ButtonFace;
+        --spectrum-button-m-accent-outline-texticon-background-color-hover: ButtonFace;
+        --spectrum-button-m-accent-outline-texticon-background-color-key-focus: ButtonFace;
+        --spectrum-button-m-accent-outline-texticon-border-color: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-border-color-down: Highlight;
+        --spectrum-button-m-accent-outline-texticon-border-color-hover: Highlight;
+        --spectrum-button-m-accent-outline-texticon-border-color-key-focus: Highlight;
+        --spectrum-button-m-accent-outline-texticon-icon-color: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-icon-color-down: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-icon-color-hover: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-icon-color-key-focus: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-text-color: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-text-color-down: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-text-color-hover: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-text-color-key-focus: ButtonText;
+        --spectrum-button-m-primary-fill-texticon-icon-color-disabled: GrayText;
+        --spectrum-button-m-primary-fill-texticon-text-color-disabled: GrayText;
+        --spectrum-button-m-primary-fill-white-texticon-icon-color-disabled: GrayText;
+        --spectrum-button-m-primary-fill-white-texticon-text-color-disabled: GrayText;
+        --spectrum-button-m-secondary-fill-white-texticon-background-color-disabled: ButtonFace;
+        --spectrum-button-m-secondary-outline-white-texticon-background-color-disabled: ButtonFace;
+        --spectrum-button-m-primary-fill-black-texticon-icon-color-disabled: GrayText;
+        --spectrum-button-m-primary-fill-black-texticon-text-color-disabled: GrayText;
+        --spectrum-button-m-secondary-fill-black-texticon-background-color-disabled: ButtonFace;
+        --spectrum-button-m-secondary-outline-black-texticon-background-color-disabled: ButtonFace;
+        --spectrum-button-m-primary-fill-texticon-background-color-disabled: ButtonFace;
+        --spectrum-button-m-primary-outline-texticon-background-color-disabled: ButtonFace;
+    }
+    :host(.focus-visible):after,
+    :host([focused]):after {
+        box-shadow: 0 0 0
+            var(--spectrum-button-primary-fill-texticon-focus-ring-size)
+            ButtonText;
+        forced-color-adjust: none;
+    }
+    :host(:focus-visible):after,
+    :host([focused]):after {
+        box-shadow: 0 0 0
+            var(--spectrum-button-primary-fill-texticon-focus-ring-size)
+            ButtonText;
+        forced-color-adjust: none;
+    }
+    :host([variant='accent']) #label {
+        forced-color-adjust: none;
+    }
+}
 :host([size='s']) {
     --spectrum-button-primary-fill-textonly-text-padding-bottom: var(
         --spectrum-button-s-primary-fill-textonly-text-padding-bottom
@@ -499,80 +554,6 @@ governing permissions and limitations under the License.
         --spectrum-button-m-primary-fill-black-texticon-focus-ring-color-key-focus,
         var(--spectrum-global-color-static-black)
     ); /* .spectrum-Button--staticBlack */
-}
-@media (forced-colors: active) {
-    :host {
-        --spectrum-button-m-accent-fill-texticon-background-color: ButtonText;
-        --spectrum-button-m-accent-fill-texticon-background-color-down: Highlight;
-        --spectrum-button-m-accent-fill-texticon-background-color-hover: Highlight;
-        --spectrum-button-m-accent-fill-texticon-background-color-key-focus: Highlight;
-        --spectrum-button-m-accent-fill-texticon-text-color: ButtonFace;
-        --spectrum-button-m-negative-outline-texticon-background-color: ButtonFace;
-        --spectrum-button-m-negative-outline-texticon-background-color-down: ButtonFace;
-        --spectrum-button-m-negative-outline-texticon-background-color-hover: ButtonFace;
-        --spectrum-button-m-negative-outline-texticon-background-color-key-focus: ButtonFace;
-        --spectrum-button-m-negative-outline-texticon-border-color: ButtonText;
-        --spectrum-button-m-negative-outline-texticon-border-color-down: Highlight;
-        --spectrum-button-m-negative-outline-texticon-border-color-hover: Highlight;
-        --spectrum-button-m-negative-outline-texticon-border-color-key-focus: Highlight;
-        --spectrum-button-m-negative-outline-texticon-text-color: ButtonText;
-        --spectrum-button-m-negative-outline-texticon-text-color-down: ButtonText;
-        --spectrum-button-m-negative-outline-texticon-text-color-hover: ButtonText;
-        --spectrum-button-m-negative-outline-texticon-text-color-key-focus: ButtonText;
-        --spectrum-button-m-primary-outline-texticon-background-color: ButtonFace;
-        --spectrum-button-m-primary-outline-texticon-background-color-disabled: ButtonFace;
-        --spectrum-button-m-primary-outline-texticon-background-color-down: ButtonFace;
-        --spectrum-button-m-primary-outline-texticon-background-color-hover: ButtonFace;
-        --spectrum-button-m-primary-outline-texticon-background-color-key-focus: ButtonFace;
-        --spectrum-button-m-primary-outline-texticon-border-color: ButtonText;
-        --spectrum-button-m-primary-outline-texticon-border-color-disabled: GrayText;
-        --spectrum-button-m-primary-outline-texticon-border-color-down: Highlight;
-        --spectrum-button-m-primary-outline-texticon-border-color-hover: Highlight;
-        --spectrum-button-m-primary-outline-texticon-border-color-key-focus: Highlight;
-        --spectrum-button-m-primary-outline-texticon-text-color: ButtonText;
-        --spectrum-button-m-primary-outline-texticon-text-color-down: ButtonText;
-        --spectrum-button-m-primary-outline-texticon-text-color-hover: ButtonText;
-        --spectrum-button-m-primary-outline-texticon-text-color-key-focus: ButtonText;
-        --spectrum-button-m-secondary-outline-texticon-background-color: ButtonFace;
-        --spectrum-button-m-secondary-outline-texticon-background-color-down: ButtonFace;
-        --spectrum-button-m-secondary-outline-texticon-background-color-hover: ButtonFace;
-        --spectrum-button-m-secondary-outline-texticon-background-color-key-focus: ButtonFace;
-        --spectrum-button-m-secondary-outline-texticon-border-color: ButtonText;
-        --spectrum-button-m-secondary-outline-texticon-border-color-down: Highlight;
-        --spectrum-button-m-secondary-outline-texticon-border-color-hover: Highlight;
-        --spectrum-button-m-secondary-outline-texticon-border-color-key-focus: Highlight;
-        --spectrum-button-m-secondary-outline-texticon-text-color: ButtonText;
-        --spectrum-button-m-secondary-outline-texticon-text-color-down: ButtonText;
-        --spectrum-button-m-secondary-outline-texticon-text-color-hover: ButtonText;
-        --spectrum-button-m-secondary-outline-texticon-text-color-key-focus: ButtonText;
-    }
-    :host(.focus-visible):after,
-    :host([focused]):after {
-        box-shadow: 0 0 0
-            var(--spectrum-button-primary-fill-texticon-focus-ring-size)
-            Highlight;
-    }
-    :host(:focus-visible):after,
-    :host([focused]):after {
-        box-shadow: 0 0 0
-            var(--spectrum-button-primary-fill-texticon-focus-ring-size)
-            Highlight;
-    }
-    :host {
-        forced-color-adjust: none;
-    }
-    :host([active]) .spectrum-Button--overBackground {
-        color: ButtonText;
-    }
-}
-.spectrum-Button--overBackground:hover {
-    color: ButtonText; /* .spectrum-Button--overBackground:hover */
-}
-.spectrum-Button--overBackground.focus-visible {
-    color: ButtonText; /* .spectrum-Button--overBackground:focus-visible */
-}
-.spectrum-Button--overBackground:focus-visible {
-    color: ButtonText; /* .spectrum-Button--overBackground:focus-visible */
 }
 :host(:not([variant='white']):not([variant='black'])[disabled])
     ::slotted([slot='icon']) {
@@ -1830,4 +1811,59 @@ governing permissions and limitations under the License.
         --spectrum-button-m-primary-outline-texticon-border-color-disabled,
         var(--spectrum-global-color-gray-200)
     ); /* .spectrum-Button.spectrum-Button--outline:not(.spectrum-Button--staticWhite):not(.spectrum-Button--staticBlack):disabled */
+}
+@media (forced-colors: active) {
+    :host {
+        --spectrum-button-m-accent-fill-texticon-background-color-down: Highlight;
+        --spectrum-button-m-accent-fill-texticon-background-color-hover: Highlight;
+        --spectrum-button-m-accent-fill-texticon-background-color-key-focus: Highlight;
+        --spectrum-button-m-accent-fill-texticon-background-color: ButtonText;
+        --spectrum-button-m-accent-fill-texticon-icon-color: ButtonFace;
+        --spectrum-button-m-accent-fill-texticon-text-color: ButtonFace;
+        --spectrum-button-m-accent-outline-texticon-background-color: ButtonFace;
+        --spectrum-button-m-accent-outline-texticon-background-color-down: ButtonFace;
+        --spectrum-button-m-accent-outline-texticon-background-color-hover: ButtonFace;
+        --spectrum-button-m-accent-outline-texticon-background-color-key-focus: ButtonFace;
+        --spectrum-button-m-accent-outline-texticon-border-color: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-border-color-down: Highlight;
+        --spectrum-button-m-accent-outline-texticon-border-color-hover: Highlight;
+        --spectrum-button-m-accent-outline-texticon-border-color-key-focus: Highlight;
+        --spectrum-button-m-accent-outline-texticon-icon-color: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-icon-color-down: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-icon-color-hover: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-icon-color-key-focus: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-text-color: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-text-color-down: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-text-color-hover: ButtonText;
+        --spectrum-button-m-accent-outline-texticon-text-color-key-focus: ButtonText;
+        --spectrum-button-m-primary-fill-texticon-icon-color-disabled: GrayText;
+        --spectrum-button-m-primary-fill-texticon-text-color-disabled: GrayText;
+        --spectrum-button-m-primary-fill-white-texticon-icon-color-disabled: GrayText;
+        --spectrum-button-m-primary-fill-white-texticon-text-color-disabled: GrayText;
+        --spectrum-button-m-secondary-fill-white-texticon-background-color-disabled: ButtonFace;
+        --spectrum-button-m-secondary-outline-white-texticon-background-color-disabled: ButtonFace;
+        --spectrum-button-m-primary-fill-black-texticon-icon-color-disabled: GrayText;
+        --spectrum-button-m-primary-fill-black-texticon-text-color-disabled: GrayText;
+        --spectrum-button-m-secondary-fill-black-texticon-background-color-disabled: ButtonFace;
+        --spectrum-button-m-secondary-outline-black-texticon-background-color-disabled: ButtonFace;
+        --spectrum-button-m-primary-fill-texticon-background-color-disabled: ButtonFace;
+        --spectrum-button-m-primary-outline-texticon-background-color-disabled: ButtonFace;
+    }
+    :host(.focus-visible):after,
+    :host([focused]):after {
+        box-shadow: 0 0 0
+            var(--spectrum-button-primary-fill-texticon-focus-ring-size)
+            ButtonText;
+        forced-color-adjust: none;
+    }
+    :host(:focus-visible):after,
+    :host([focused]):after {
+        box-shadow: 0 0 0
+            var(--spectrum-button-primary-fill-texticon-focus-ring-size)
+            ButtonText;
+        forced-color-adjust: none;
+    }
+    :host([variant='accent']) #label {
+        forced-color-adjust: none;
+    }
 }

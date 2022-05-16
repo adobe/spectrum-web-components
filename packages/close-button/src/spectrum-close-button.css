@@ -53,6 +53,90 @@ governing permissions and limitations under the License.
 :host(:disabled) {
     cursor: default; /* .spectrum-CloseButton:disabled */
 }
+@media (forced-colors: active) {
+    :host {
+        --spectrum-alias-component-icon-color-default: ButtonText;
+        --spectrum-alias-component-icon-color-disabled: GrayText;
+        --spectrum-alias-component-icon-color-down: Highlight;
+        --spectrum-alias-component-icon-color-hover: Highlight;
+        --spectrum-alias-component-icon-color-key-focus: Highlight;
+        --spectrum-alias-component-icon-color-mouse-focus: Highlight;
+        --spectrum-closebutton-m-black-background-color-down: ButtonFace;
+        --spectrum-closebutton-m-black-background-color-hover: ButtonFace;
+        --spectrum-closebutton-m-black-background-color-key-focus: ButtonFace;
+        --spectrum-closebutton-m-black-background-color-mouse-focus: ButtonFace;
+        --spectrum-closebutton-m-black-uiicon-color: ButtonText;
+        --spectrum-closebutton-m-black-uiicon-color-disabled: GrayText;
+        --spectrum-closebutton-m-black-uiicon-color-down: Highlight;
+        --spectrum-closebutton-m-black-uiicon-color-hover: Highlight;
+        --spectrum-closebutton-m-black-uiicon-color-key-focus: Highlight;
+        --spectrum-closebutton-m-black-uiicon-color-mouse-focus: Highlight;
+        --spectrum-closebutton-m-white-background-color-down: ButtonFace;
+        --spectrum-closebutton-m-white-background-color-hover: ButtonFace;
+        --spectrum-closebutton-m-white-background-color-key-focus: ButtonFace;
+        --spectrum-closebutton-m-white-background-color-mouse-focus: ButtonFace;
+        --spectrum-closebutton-m-white-uiicon-color: ButtonText;
+        --spectrum-closebutton-m-white-uiicon-color-disabled: GrayText;
+        --spectrum-closebutton-m-white-uiicon-color-down: Highlight;
+        --spectrum-closebutton-m-white-uiicon-color-hover: Highlight;
+        --spectrum-closebutton-m-white-uiicon-color-key-focus: Highlight;
+        --spectrum-closebutton-m-white-uiicon-color-mouse-focus: Highlight;
+    }
+    :host(.focus-visible):after {
+        border-radius: 100%;
+        bottom: 0;
+        box-shadow: 0 0 0
+            var(
+                --spectrum-alias-focus-ring-size,
+                var(--spectrum-global-dimension-static-size-25)
+            )
+            var(
+                --spectrum-alias-component-icon-color-default,
+                var(--spectrum-alias-icon-color)
+            );
+        content: '';
+        display: block;
+        forced-color-adjust: none;
+        left: 0;
+        margin: var(
+            --spectrum-alias-focus-ring-gap,
+            var(--spectrum-global-dimension-static-size-25)
+        );
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: opacity var(--spectrum-global-animation-duration-100, 0.13s)
+                ease-out,
+            margin var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
+    }
+    :host(:focus-visible):after {
+        border-radius: 100%;
+        bottom: 0;
+        box-shadow: 0 0 0
+            var(
+                --spectrum-alias-focus-ring-size,
+                var(--spectrum-global-dimension-static-size-25)
+            )
+            var(
+                --spectrum-alias-component-icon-color-default,
+                var(--spectrum-alias-icon-color)
+            );
+        content: '';
+        display: block;
+        forced-color-adjust: none;
+        left: 0;
+        margin: var(
+            --spectrum-alias-focus-ring-gap,
+            var(--spectrum-global-dimension-static-size-25)
+        );
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: opacity var(--spectrum-global-animation-duration-100, 0.13s)
+                ease-out,
+            margin var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
+    }
+}
 :host {
     --spectrum-global-color-static-black-rgb: 0, 0, 0;
     --spectrum-global-color-static-white-rgb: 255, 255, 255;
@@ -396,4 +480,88 @@ governing permissions and limitations under the License.
 }
 .icon {
     margin: 0; /* .spectrum-CloseButton-UIIcon */
+}
+@media (forced-colors: active) {
+    :host {
+        --spectrum-alias-component-icon-color-default: ButtonText;
+        --spectrum-alias-component-icon-color-disabled: GrayText;
+        --spectrum-alias-component-icon-color-down: Highlight;
+        --spectrum-alias-component-icon-color-hover: Highlight;
+        --spectrum-alias-component-icon-color-key-focus: Highlight;
+        --spectrum-alias-component-icon-color-mouse-focus: Highlight;
+        --spectrum-closebutton-m-black-background-color-down: ButtonFace;
+        --spectrum-closebutton-m-black-background-color-hover: ButtonFace;
+        --spectrum-closebutton-m-black-background-color-key-focus: ButtonFace;
+        --spectrum-closebutton-m-black-background-color-mouse-focus: ButtonFace;
+        --spectrum-closebutton-m-black-uiicon-color: ButtonText;
+        --spectrum-closebutton-m-black-uiicon-color-disabled: GrayText;
+        --spectrum-closebutton-m-black-uiicon-color-down: Highlight;
+        --spectrum-closebutton-m-black-uiicon-color-hover: Highlight;
+        --spectrum-closebutton-m-black-uiicon-color-key-focus: Highlight;
+        --spectrum-closebutton-m-black-uiicon-color-mouse-focus: Highlight;
+        --spectrum-closebutton-m-white-background-color-down: ButtonFace;
+        --spectrum-closebutton-m-white-background-color-hover: ButtonFace;
+        --spectrum-closebutton-m-white-background-color-key-focus: ButtonFace;
+        --spectrum-closebutton-m-white-background-color-mouse-focus: ButtonFace;
+        --spectrum-closebutton-m-white-uiicon-color: ButtonText;
+        --spectrum-closebutton-m-white-uiicon-color-disabled: GrayText;
+        --spectrum-closebutton-m-white-uiicon-color-down: Highlight;
+        --spectrum-closebutton-m-white-uiicon-color-hover: Highlight;
+        --spectrum-closebutton-m-white-uiicon-color-key-focus: Highlight;
+        --spectrum-closebutton-m-white-uiicon-color-mouse-focus: Highlight;
+    }
+    :host(.focus-visible):after {
+        border-radius: 100%;
+        bottom: 0;
+        box-shadow: 0 0 0
+            var(
+                --spectrum-alias-focus-ring-size,
+                var(--spectrum-global-dimension-static-size-25)
+            )
+            var(
+                --spectrum-alias-component-icon-color-default,
+                var(--spectrum-alias-icon-color)
+            );
+        content: '';
+        display: block;
+        forced-color-adjust: none;
+        left: 0;
+        margin: var(
+            --spectrum-alias-focus-ring-gap,
+            var(--spectrum-global-dimension-static-size-25)
+        );
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: opacity var(--spectrum-global-animation-duration-100, 0.13s)
+                ease-out,
+            margin var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
+    }
+    :host(:focus-visible):after {
+        border-radius: 100%;
+        bottom: 0;
+        box-shadow: 0 0 0
+            var(
+                --spectrum-alias-focus-ring-size,
+                var(--spectrum-global-dimension-static-size-25)
+            )
+            var(
+                --spectrum-alias-component-icon-color-default,
+                var(--spectrum-alias-icon-color)
+            );
+        content: '';
+        display: block;
+        forced-color-adjust: none;
+        left: 0;
+        margin: var(
+            --spectrum-alias-focus-ring-gap,
+            var(--spectrum-global-dimension-static-size-25)
+        );
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: opacity var(--spectrum-global-animation-duration-100, 0.13s)
+                ease-out,
+            margin var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
+    }
 }

@@ -51,7 +51,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/actionbutton": "^1.1.12"
+        "@spectrum-css/actionbutton": "^1.1.13"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

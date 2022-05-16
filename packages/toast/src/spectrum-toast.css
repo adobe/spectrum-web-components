@@ -338,3 +338,8 @@ governing permissions and limitations under the License.
     ); /* .spectrum-Toast--positive .spectrum-Toast-closeButton.focus-ring:not(:active),
    * .spectrum-Toast--success .spectrum-Toast-closeButton.focus-ring:not(:active) */
 }
+@media (forced-colors: active) {
+    :host {
+        border: 1px solid transparent;
+    }
+}

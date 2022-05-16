@@ -320,3 +320,11 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-icon-color-disabled)
     ); /* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader+.spectrum-Accordion-itemIndicator */
 }
+@media (forced-colors: active) {
+    #header.focus-visible {
+        outline: 3px solid CanvasText;
+    }
+    #header:focus-visible {
+        outline: 3px solid CanvasText;
+    }
+}
