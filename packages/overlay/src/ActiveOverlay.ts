@@ -38,6 +38,7 @@ import {
     arrow,
     computePosition,
     flip,
+    Placement as FloatingUIPlacement,
     offset,
     shift,
     size,
@@ -114,6 +115,26 @@ const parentOverlayOf = (el: Element): ActiveOverlay | null => {
         return parentOverlayOf(rootNode.host);
     }
     return null;
+};
+
+const getFallbackPlacements = (
+    placement: FloatingUIPlacement
+): FloatingUIPlacement[] => {
+    const fallbacks: Record<FloatingUIPlacement, FloatingUIPlacement[]> = {
+        left: ['right', 'bottom', 'top'],
+        'left-start': ['right-start', 'bottom', 'top'],
+        'left-end': ['right-end', 'bottom', 'top'],
+        right: ['left', 'bottom', 'top'],
+        'right-start': ['left-start', 'bottom', 'top'],
+        'right-end': ['left-end', 'bottom', 'top'],
+        top: ['bottom', 'left', 'right'],
+        'top-start': ['bottom-start', 'left', 'right'],
+        'top-end': ['bottom-end', 'left', 'right'],
+        bottom: ['top', 'left', 'right'],
+        'bottom-start': ['top-start', 'left', 'right'],
+        'bottom-end': ['top-end', 'left', 'right'],
+    };
+    return fallbacks[placement] ?? [placement];
 };
 
 /**
@@ -412,15 +433,22 @@ export class ActiveOverlay extends SpectrumElement {
         // See: https://github.com/adobe/spectrum-web-components/issues/910
         const MIN_OVERLAY_HEIGHT = 100;
 
+        const flipMiddleware = this.virtualTrigger
+            ? flip({
+                  padding: REQUIRED_DISTANCE_TO_EDGE,
+                  fallbackPlacements: getFallbackPlacements(this.placement),
+              })
+            : flip({
+                  padding: REQUIRED_DISTANCE_TO_EDGE,
+              });
+
         const middleware = [
             offset({
                 mainAxis: this.offset,
                 crossAxis: this.skidding,
             }),
-            flip({
-                fallbackStrategy: 'initialPlacement',
-            }),
             shift({ padding: REQUIRED_DISTANCE_TO_EDGE }),
+            flipMiddleware,
             size({
                 padding: REQUIRED_DISTANCE_TO_EDGE,
                 apply: ({ width, height, floating }) => {
@@ -429,9 +457,10 @@ export class ActiveOverlay extends SpectrumElement {
                         Math.floor(height)
                     );
                     const actualHeight = floating.height;
-                    this.initialHeight = !this.isConstrained
-                        ? actualHeight
-                        : this.initialHeight || actualHeight;
+                    this.initialHeight =
+                        !this.isConstrained && !this.virtualTrigger
+                            ? actualHeight
+                            : this.initialHeight || actualHeight;
                     this.isConstrained =
                         actualHeight < this.initialHeight ||
                         maxHeight <= actualHeight;

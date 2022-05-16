@@ -740,7 +740,7 @@ customElements.define('start-end-contextmenu', StartEndContextmenu);
 export const virtualElement = (args: Properties): TemplateResult => {
     const contextMenuTemplate = (kind = ''): TemplateResult => html`
         <sp-popover
-            style="max-width: 33vw;"
+            style="width:300px;"
             @click=${(event: Event) =>
                 event.target?.dispatchEvent(
                     new Event('close', { bubbles: true })
