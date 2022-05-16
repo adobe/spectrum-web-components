@@ -126,18 +126,24 @@ sp-field-label {
 
 :host([dir='ltr']) .track:before {
     background: var(
-        --spectrum-slider-track-color,
-        var(--spectrum-global-color-gray-300)
+        --spectrum-slider-m-track-color,
+        var(
+            --spectrum-slider-track-color,
+            var(--spectrum-global-color-gray-300)
+        )
     );
 }
 
 :host([dir='rtl']) .track:before {
     /* .spectrum-Slider-track:before */
     background: var(
-        --spectrum-slider-track-color-rtl,
+        --spectrum-slider-m-track-color,
         var(
-            --spectrum-slider-track-color,
-            var(--spectrum-global-color-gray-300)
+            --spectrum-slider-track-color-rtl,
+            var(
+                --spectrum-slider-track-color,
+                var(--spectrum-global-color-gray-300)
+            )
         )
     );
 }

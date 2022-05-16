@@ -81,6 +81,7 @@ const config = {
                     name: 'list',
                 },
             ],
+            exclude: [/\.spectrum-SideNav-item/],
         },
     ],
 };

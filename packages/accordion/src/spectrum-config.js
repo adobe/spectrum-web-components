@@ -57,10 +57,6 @@ const config = {
             ],
             ids: [
                 {
-                    selector: '.spectrum-Accordion-itemIndicator',
-                    name: 'indicator',
-                },
-                {
                     selector: '.spectrum-Accordion-itemHeading',
                     name: 'heading',
                 },
@@ -71,6 +67,12 @@ const config = {
                 {
                     selector: '.spectrum-Accordion-itemContent',
                     name: 'content',
+                },
+            ],
+            classes: [
+                {
+                    selector: '.spectrum-Accordion-itemIndicator',
+                    name: 'indicator',
                 },
             ],
         },

@@ -130,6 +130,37 @@ const config = {
                     selector:
                         '.spectrum-ActionButton.spectrum-ActionButton--staticBlack:disabled.is-selected',
                 },
+                {
+                    replacement:
+                        ':host([size][variant="black"][disabled][selected])',
+                    selector:
+                        '.spectrum-ActionButton.spectrum-ActionButton--staticBlack.is-selected:disabled',
+                },
+                {
+                    replacement:
+                        ':host([size][variant="white"][disabled][selected])',
+                    selector:
+                        '.spectrum-ActionButton.spectrum-ActionButton--staticWhite:disabled.is-selected',
+                },
+                {
+                    replacement:
+                        ':host([size][variant="white"][disabled][selected])',
+                    selector:
+                        '.spectrum-ActionButton.spectrum-ActionButton--staticWhite.is-selected:disabled',
+                },
+
+                {
+                    replacement:
+                        ':host([size][variant="black"][selected]:not([disabled]))',
+                    selector:
+                        '.spectrum-ActionButton.spectrum-ActionButton--staticBlack.is-selected:not(:disabled, .is-disabled)',
+                },
+                {
+                    replacement:
+                        ':host([size][variant="white"][selected]:not([disabled]))',
+                    selector:
+                        '.spectrum-ActionButton.spectrum-ActionButton--staticWhite.is-selected:not(:disabled, .is-disabled)',
+                },
             ],
         },
     ],

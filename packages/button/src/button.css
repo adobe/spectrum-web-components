@@ -71,3 +71,13 @@ governing permissions and limitations under the License.
         --spectrum-alias-ui-icon-cornertriangle-size-300
     );
 }
+
+@media (forced-colors: active) {
+    :host([treatment][disabled]) {
+        border-color: graytext;
+    }
+
+    :host([treatment]:not([disabled]):hover) {
+        border-color: highlight;
+    }
+}
