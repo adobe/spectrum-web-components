@@ -177,13 +177,17 @@ const config = {
             host: {
                 selector: '.spectrum-Menu',
             },
+            exclude: [/\.spectrum-Menu(?!-divider)/],
             complexSelectors: [
                 {
                     replacement: ':host',
                     selector: '.spectrum-Menu .spectrum-Menu-divider',
                 },
+                {
+                    replacement: ':host',
+                    selector: /^\.spectrum-Menu-divider/,
+                },
             ],
-            exclude: [/\.spectrum-Menu(?!-divider)/],
         },
     ],
 };

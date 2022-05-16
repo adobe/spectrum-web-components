@@ -17,7 +17,9 @@ governing permissions and limitations under the License.
     overflow: visible; /* .spectrum-Menu .spectrum-Menu-divider */
     width: auto;
 }
-.spectrum-Menu-divider {
-    background-color: CanvasText; /* .spectrum-Menu-divider */
-    forced-color-adjust: none;
+@media (forced-colors: active) {
+    :host {
+        background-color: CanvasText;
+        forced-color-adjust: none;
+    }
 }

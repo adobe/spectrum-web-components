@@ -81,8 +81,7 @@ export class AccordionItem extends Focusable {
                     ${this.label}
                 </button>
                 <sp-icon-chevron100
-                    id="indicator"
-                    class="spectrum-UIIcon-ChevronRight100"
+                    class="indicator spectrum-UIIcon-ChevronRight100"
                 ></sp-icon-chevron100>
             </h3>
             <div id="content" role="region" aria-labelledby="header">

@@ -86,3 +86,15 @@ governing permissions and limitations under the License.
         var(--spectrum-global-color-static-green-700)
     );
 }
+
+@media (forced-colors: active) {
+    #tip:after {
+        --spectrum-tooltip-background-color: canvastext;
+        --spectrum-tooltip-neutral-background-color: canvastext;
+        --spectrum-tooltip-negative-background-color: canvastext;
+        --spectrum-tooltip-info-background-color: canvastext;
+        --spectrum-tooltip-positive-background-color: canvastext;
+
+        forced-color-adjust: none;
+    }
+}

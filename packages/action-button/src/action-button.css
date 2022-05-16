@@ -121,3 +121,55 @@ governing permissions and limitations under the License.
         --spectrum-alias-ui-icon-cornertriangle-size-300
     );
 }
+
+@media (forced-colors: active) {
+    :host([variant='black']) {
+        --spectrum-actionbutton-focus-ring-color: ButtonText;
+    }
+
+    :host([size][disabled]),
+    :host([size][variant='black'][disabled]),
+    :host([size][variant='white'][disabled]),
+    :host([size][variant='black'][disabled]:not([quiet])),
+    :host([size][variant='white'][disabled]:not([quiet])),
+    :host([size][variant='black'][disabled][emphaized]),
+    :host([size][variant='white'][disabled][emphaized]) {
+        background-color: var(
+            --spectrum-actionbutton-m-quiet-textonly-background-color-selected-disabled,
+            var(
+                --spectrum-alias-component-background-color-quiet-selected-disabled
+            )
+        );
+        border-color: var(
+            --spectrum-actionbutton-m-quiet-textonly-border-color-selected-disabled,
+            var(--spectrum-alias-component-border-color-quiet-disabled)
+        );
+    }
+
+    :host([size][disabled]) #label,
+    :host([size][disabled]) .hold-affordance,
+    :host([size][disabled]) ::slotted(*),
+    :host([size][variant='black'][disabled]) #label,
+    :host([size][variant='white'][disabled]) #label,
+    :host([size][variant='black'][disabled]:not([quiet])) #label,
+    :host([size][variant='white'][disabled]:not([quiet])) #label,
+    :host([size][variant='black'][disabled][emphaized]) #label,
+    :host([size][variant='white'][disabled][emphaized]) #label,
+    :host([size][variant='black'][disabled]) .hold-affordance,
+    :host([size][variant='white'][disabled]) .hold-affordance,
+    :host([size][variant='black'][disabled]:not([quiet])) .hold-affordance,
+    :host([size][variant='white'][disabled]:not([quiet])) .hold-affordance,
+    :host([size][variant='black'][disabled][emphaized]) .hold-affordance,
+    :host([size][variant='white'][disabled][emphaized]) .hold-affordance,
+    :host([size][variant='black'][disabled]) ::slotted(*),
+    :host([size][variant='white'][disabled]) ::slotted(*),
+    :host([size][variant='black'][disabled]:not([quiet])) ::slotted(*),
+    :host([size][variant='white'][disabled]:not([quiet])) ::slotted(*),
+    :host([size][variant='black'][disabled][emphaized]) ::slotted(*),
+    :host([size][variant='white'][disabled][emphaized]) ::slotted(*) {
+        color: var(
+            --spectrum-actionbutton-m-quiet-textonly-text-color-selected-disabled,
+            var(--spectrum-alias-component-text-color-disabled)
+        );
+    }
+}

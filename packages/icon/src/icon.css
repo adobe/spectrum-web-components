@@ -39,4 +39,13 @@ svg,
     height: 100%;
     width: 100%;
     vertical-align: top;
+    color: inherit;
+}
+
+@media (forced-colors: active) {
+    img,
+    svg,
+    ::slotted(*) {
+        forced-color-adjust: auto;
+    }
 }
