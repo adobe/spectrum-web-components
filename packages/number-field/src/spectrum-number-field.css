@@ -604,3 +604,63 @@ governing permissions and limitations under the License.
     ); /* .spectrum-Stepper--quiet.is-keyboardFocused.is-invalid .spectrum-Stepper-stepDown,
    * .spectrum-Stepper--quiet.is-focused.is-invalid .spectrum-Stepper-stepDown */
 }
+@media (forced-colors: active) {
+    #textfield {
+        --spectrum-textfield-m-quiet-texticon-border-color-disabled: GrayText;
+        --spectrum-textfield-m-texticon-border-color-disabled: GrayText;
+        --spectrum-textfield-m-texticon-border-color-hover: Highlight;
+        --spectrum-textfield-m-texticon-border-color-invalid: Highlight;
+        --spectrum-textfield-m-texticon-border-color-invalid-key-focus: Highlight;
+        --spectrum-textfield-m-texticon-border-color-invalid-mouse-focus: Highlight;
+        --spectrum-textfield-m-texticon-border-color-key-focus: Highlight;
+        --spectrum-textfield-m-texticon-border-color-mouse-focus: Highlight;
+        --spectrum-textfield-m-texticon-focus-ring-border-width: 2px;
+    }
+    :host([keyboard-focused]) #textfield {
+        outline: 2px solid
+            var(
+                --spectrum-textfield-m-texticon-border-color-key-focus,
+                var(--spectrum-alias-input-border-color-key-focus)
+            );
+    }
+    :host([keyboard-focused]) #textfield .buttons,
+    :host([keyboard-focused]) #textfield .input {
+        --spectrum-textfield-m-texticon-border-color: ButtonText;
+    }
+    :host([quiet][focused]) #textfield,
+    :host([quiet][keyboard-focused]) #textfield {
+        outline: none;
+    }
+    :host([quiet][focused]) #textfield .buttons,
+    :host([quiet][focused]) #textfield .input,
+    :host([quiet][keyboard-focused]) #textfield .buttons,
+    :host([quiet][keyboard-focused]) #textfield .input {
+        box-shadow: 0
+            var(
+                --spectrum-textfield-m-texticon-focus-ring-border-width,
+                var(--spectrum-alias-component-focusring-size)
+            )
+            0 0
+            var(
+                --spectrum-textfield-m-texticon-border-color-key-focus,
+                var(--spectrum-alias-input-border-color-key-focus)
+            );
+        forced-color-adjust: none;
+    }
+    :host([quiet][focused][invalid]) #textfield .buttons,
+    :host([quiet][focused][invalid]) #textfield .input,
+    :host([quiet][keyboard-focused][invalid]) #textfield .buttons,
+    :host([quiet][keyboard-focused][invalid]) #textfield .input {
+        box-shadow: 0
+            var(
+                --spectrum-textfield-m-texticon-focus-ring-border-width,
+                var(--spectrum-alias-component-focusring-size)
+            )
+            0 0
+            var(
+                --spectrum-textfield-m-texticon-border-color-invalid,
+                var(--spectrum-alias-input-border-color-invalid-default)
+            );
+        forced-color-adjust: none;
+    }
+}

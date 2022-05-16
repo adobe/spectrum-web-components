@@ -314,3 +314,11 @@ governing permissions and limitations under the License.
     ); /* .spectrum-ProgressBar-label,
    * .spectrum-ProgressBar-percentage */
 }
+@media (forced-colors: active) {
+    .track {
+        --spectrum-progressbar-m-track-fill-color: ButtonText;
+        --spectrum-progressbar-m-track-color: ButtonFace;
+        border: 1px solid ButtonText;
+        forced-color-adjust: none;
+    }
+}

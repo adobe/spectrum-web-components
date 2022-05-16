@@ -329,3 +329,15 @@ governing permissions and limitations under the License.
         var(--spectrum-global-color-purple-400)
     ); /* .spectrum-StatusLight--purple:before */
 }
+@media (forced-colors: active) {
+    :host([dir]) {
+        --spectrum-statuslight-m-info-text-color: CanvasText;
+        --spectrum-statuslight-m-neutral-text-color: CanvasText;
+        --spectrum-statuslight-m-info-text-color-disabled: GrayText;
+        --spectrum-statuslight-m-info-dot-color-disabled: GrayText;
+        forced-color-adjust: none;
+    }
+    :host:before {
+        border: 1px solid ButtonText;
+    }
+}

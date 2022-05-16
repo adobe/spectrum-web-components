@@ -321,3 +321,15 @@ p {
     ); /* .spectrum-Tooltip--positive .spectrum-Tooltip-tip,
    * .spectrum-Tooltip--success .spectrum-Tooltip-tip */
 }
+@media (forced-colors: active) {
+    :host {
+        border: 1px solid transparent;
+    }
+    #tip {
+        --spectrum-tooltip-neutral-background-color: CanvasText;
+        --spectrum-tooltip-negative-background-color: CanvasText;
+        --spectrum-tooltip-info-background-color: CanvasText;
+        --spectrum-tooltip-positive-background-color: CanvasText;
+        forced-color-adjust: none;
+    }
+}

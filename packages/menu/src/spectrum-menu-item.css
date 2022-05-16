@@ -248,3 +248,67 @@ slot[name='icon'] + #label {
     );
     cursor: default;
 }
+@media (forced-colors: active) {
+    :host {
+        --spectrum-listheading-text-color: ButtonText;
+        --spectrum-listitem-m-texticon-background-color: ButtonFace;
+        --spectrum-listitem-m-texticon-background-color-disabled: ButtonFace;
+        --spectrum-listitem-m-texticon-background-color-down: ButtonFace;
+        --spectrum-listitem-m-texticon-background-color-hover: Highlight;
+        --spectrum-listitem-m-texticon-background-color-key-focus: Highlight;
+        --spectrum-listitem-m-texticon-focus-indicator-color: Highlight;
+        --spectrum-listitem-m-texticon-text-color: ButtonText;
+        --spectrum-listitem-m-texticon-text-color-disabled: GrayText;
+        --spectrum-listitem-m-texticon-text-color-hover: HighlightText;
+        --spectrum-listitem-m-texticon-text-color-key-focus: HighlightText;
+        --spectrum-listitem-m-texticon-text-color-selected: ButtonText;
+        --spectrum-listitem-m-texticon-ui-icon-color-selected: Highlight;
+        forced-color-adjust: none;
+    }
+    :host(:not([disabled]).focus-visible),
+    :host(:not([disabled]).is-highlighted),
+    :host(:not([disabled]).is-open),
+    :host(:not([disabled]):focus),
+    :host(:not([disabled]):hover),
+    :host(:not([disabled])[focused]) {
+        background-color: var(
+            --spectrum-listitem-m-texticon-background-color-key-focus,
+            var(--spectrum-alias-background-color-hover-overlay)
+        );
+        color: var(
+            --spectrum-listitem-m-texticon-text-color-key-focus,
+            var(--spectrum-alias-component-text-color-key-focus)
+        );
+    }
+    :host(:not([disabled]).is-highlighted),
+    :host(:not([disabled]).is-open),
+    :host(:not([disabled]):focus),
+    :host(:not([disabled]):focus-visible),
+    :host(:not([disabled]):hover),
+    :host(:not([disabled])[focused]) {
+        background-color: var(
+            --spectrum-listitem-m-texticon-background-color-key-focus,
+            var(--spectrum-alias-background-color-hover-overlay)
+        );
+        color: var(
+            --spectrum-listitem-m-texticon-text-color-key-focus,
+            var(--spectrum-alias-component-text-color-key-focus)
+        );
+    }
+    :host(:not([disabled]).focus-visible[selected]) .checkmark,
+    :host(:not([disabled]).is-highlighted[selected]) .checkmark,
+    :host(:not([disabled]).is-open[selected]) .checkmark,
+    :host(:not([disabled]):focus[selected]) .checkmark,
+    :host(:not([disabled]):hover[selected]) .checkmark,
+    :host(:not([disabled])[focused][selected]) .checkmark {
+        color: HighlightText;
+    }
+    :host(:not([disabled]).is-highlighted[selected]) .checkmark,
+    :host(:not([disabled]).is-open[selected]) .checkmark,
+    :host(:not([disabled]):focus-visible[selected]) .checkmark,
+    :host(:not([disabled]):focus[selected]) .checkmark,
+    :host(:not([disabled]):hover[selected]) .checkmark,
+    :host(:not([disabled])[focused][selected]) .checkmark {
+        color: HighlightText;
+    }
+}

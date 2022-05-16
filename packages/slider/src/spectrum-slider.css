@@ -1114,3 +1114,32 @@ governing permissions and limitations under the License.
         var(--spectrum-global-color-gray-300)
     ); /* .spectrum-Slider.is-disabled.spectrum-Slider--range .spectrum-Slider-track:not(:first-of-type):not(:last-of-type):before */
 }
+@media (forced-colors: active) {
+    :host {
+        --spectrum-alias-background-color-default: ButtonFace;
+        --spectrum-alias-focus-color: ButtonText;
+        --spectrum-alias-label-text-color: CanvasText;
+        --spectrum-alias-text-color-disabled: GrayText;
+        --spectrum-slider-m-handle-background-color: ButtonFace;
+        --spectrum-slider-m-handle-border-color: ButtonText;
+        --spectrum-slider-m-handle-border-color-disabled: GrayText;
+        --spectrum-slider-m-handle-border-color-down: Highlight;
+        --spectrum-slider-m-handle-border-color-hover: Highlight;
+        --spectrum-slider-m-handle-border-color-key-focus: Highlight;
+        --spectrum-slider-m-handle-focus-ring-color-key-focus: ButtonText;
+        --spectrum-slider-m-label-text-color: CanvasText;
+        --spectrum-slider-m-label-text-color-disabled: GrayText;
+        --spectrum-slider-m-tick-mark-color: ButtonText;
+        --spectrum-slider-m-track-color: ButtonText;
+        --spectrum-slider-m-track-color-disabled: GrayText;
+        --spectrum-slider-m-track-fill-color: ButtonText;
+        --spectrum-slider-m-track-fill-color-disabled: GrayText;
+        --spectrum-slider-ramp-track-color-disabled: GrayText;
+    }
+    .handle:before {
+        forced-color-adjust: none;
+    }
+    :host([variant='ramp']) .handle {
+        forced-color-adjust: none;
+    }
+}
