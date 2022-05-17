@@ -257,7 +257,9 @@ export class OverlayTrigger extends SpectrumElement {
             offset: this.offset,
             placement: this.placement,
             receivesFocus:
-                this.type && this.type !== 'inline' ? 'auto' : undefined,
+                !this.type || this.type === 'inline' || this.open === 'hover'
+                    ? undefined
+                    : 'auto',
         };
     }
 
