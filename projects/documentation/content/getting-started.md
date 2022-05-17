@@ -63,7 +63,7 @@ When you're ready to look into more advanced usage of the components and themes 
 
 </div>
 
-<sp-link href="components/theme">Read about the full range of style customization provided by `@spectrum-web-components/theme`.</sp-link>
+<sp-link href="../components/theme">Read about the full range of style customization provided by `@spectrum-web-components/theme`.</sp-link>
 
 ### What you can do
 
