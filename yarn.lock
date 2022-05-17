@@ -4064,9 +4064,9 @@
   integrity sha512-uZgyDQlr3BR3De+nO6X1sDzSDnFU/jF2IdqLC+EqVNMw9WeVSBqYkQVhDK6TTJUm+k4yqtDhON5YXBbUuaUzFw==
 
 "@spectrum-css/toast@^7.0.7":
-  version "7.0.7"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-7.0.7.tgz#c449c62e287150949648ca909431bf53dca211fb"
-  integrity sha512-OjAIcmA/RmvmYU6m45OQD2eHhb/ivGY6Amh5W2j3ybn5oL12evQJvDni2DxL3jsUSQWNh+hZhY1pUOHLU7TvYA==
+  version "7.0.8"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-7.0.8.tgz#e1277d1b7bd8eb846ddd4437eef7e7ed6352e51d"
+  integrity sha512-JoXECadMGrRlWy7aoRAHzKfHCgzsnW3L53SBcRWacGEb3yNRz4/BkUWTTEuweMYYDAcaGB028xX11waYjDHq8w==
 
 "@spectrum-css/tooltip@^3.1.15":
   version "3.1.15"
