@@ -10,10 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
     html,
+    oneEvent,
     waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -143,21 +145,18 @@ describe('Overlay Trigger - Hover', () => {
         expect(el.open).to.be.undefined;
 
         const trigger = el.querySelector('[slot="trigger"]') as ActionButton;
-        trigger.dispatchEvent(
-            new Event('mouseenter', {
-                bubbles: true,
-            })
-        );
+        const opened = oneEvent(el, 'sp-opened');
+        trigger.focus();
+        await opened;
 
         await elementUpdated(el);
+        await aTimeout(500);
 
         expect(el.open).to.equal('hover');
 
-        trigger.dispatchEvent(
-            new Event('mouseleave', {
-                bubbles: true,
-            })
-        );
+        const closed = oneEvent(el, 'sp-closed');
+        trigger.blur();
+        await closed;
 
         await elementUpdated(el);
 

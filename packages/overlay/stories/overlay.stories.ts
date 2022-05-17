@@ -16,6 +16,7 @@ import {
     OverlayContentTypes,
     OverlayTrigger,
     Placement,
+    TriggerInteractions,
     VirtualTrigger,
 } from '../';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -109,6 +110,12 @@ export default {
                 ],
             },
         },
+        type: {
+            control: {
+                type: 'inline-radio',
+                options: ['modal', 'replace', 'inline'],
+            },
+        },
         colorStop: {
             control: {
                 type: 'inline-radio',
@@ -127,9 +134,15 @@ interface Properties {
     placement: Placement;
     offset: number;
     open?: OverlayContentTypes;
+    type?: Extract<TriggerInteractions, 'inline' | 'modal' | 'replace'>;
 }
 
-const template = ({ placement, offset, open }: Properties): TemplateResult => {
+const template = ({
+    placement,
+    offset,
+    open,
+    type,
+}: Properties): TemplateResult => {
     return html`
         ${storyStyles}
         <overlay-trigger
@@ -137,6 +150,7 @@ const template = ({ placement, offset, open }: Properties): TemplateResult => {
             placement="${placement}"
             offset="${offset}"
             open=${ifDefined(open)}
+            type=${ifDefined(type)}
         >
             <sp-button variant="primary" slot="trigger">Show Popover</sp-button>
             <sp-popover
