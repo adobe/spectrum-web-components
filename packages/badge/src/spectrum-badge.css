@@ -1,0 +1,392 @@
+/*
+Copyright 2022 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([size='s']) {
+    --spectrum-badge-neutral-textonly-text-padding-bottom: var(
+        --spectrum-badge-s-neutral-textonly-text-padding-bottom
+    ); /* .spectrum-Badge--sizeS */
+    --spectrum-badge-neutral-textonly-text-size: var(
+        --spectrum-badge-s-neutral-textonly-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    --spectrum-badge-neutral-textonly-text-padding-top: var(
+        --spectrum-badge-s-neutral-textonly-text-padding-top,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+    --spectrum-badge-neutral-textonly-text-line-height: var(
+        --spectrum-badge-s-neutral-textonly-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-badge-neutral-textonly-border-top-left-radius: var(
+        --spectrum-badge-s-neutral-textonly-border-top-left-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-border-top-right-radius: var(
+        --spectrum-badge-s-neutral-textonly-border-top-right-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-border-bottom-right-radius: var(
+        --spectrum-badge-s-neutral-textonly-border-bottom-right-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-border-bottom-left-radius: var(
+        --spectrum-badge-s-neutral-textonly-border-bottom-left-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-padding-right: var(
+        --spectrum-badge-s-neutral-textonly-padding-right,
+        var(--spectrum-global-dimension-size-115)
+    );
+    --spectrum-badge-neutral-textonly-padding-left: var(
+        --spectrum-badge-s-neutral-textonly-padding-left,
+        var(--spectrum-global-dimension-size-115)
+    );
+}
+:host([size='m']) {
+    --spectrum-badge-neutral-textonly-text-size: var(
+        --spectrum-badge-m-neutral-textonly-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    ); /* .spectrum-Badge--sizeM */
+    --spectrum-badge-neutral-textonly-text-padding-top: var(
+        --spectrum-badge-m-neutral-textonly-text-padding-top,
+        var(--spectrum-global-dimension-size-75)
+    );
+    --spectrum-badge-neutral-textonly-text-padding-bottom: var(
+        --spectrum-badge-m-neutral-textonly-text-padding-bottom,
+        var(--spectrum-global-dimension-size-115)
+    );
+    --spectrum-badge-neutral-textonly-text-line-height: var(
+        --spectrum-badge-m-neutral-textonly-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-badge-neutral-textonly-border-top-left-radius: var(
+        --spectrum-badge-m-neutral-textonly-border-top-left-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-border-top-right-radius: var(
+        --spectrum-badge-m-neutral-textonly-border-top-right-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-border-bottom-right-radius: var(
+        --spectrum-badge-m-neutral-textonly-border-bottom-right-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-border-bottom-left-radius: var(
+        --spectrum-badge-m-neutral-textonly-border-bottom-left-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-padding-right: var(
+        --spectrum-badge-m-neutral-textonly-padding-right,
+        var(--spectrum-global-dimension-size-150)
+    );
+    --spectrum-badge-neutral-textonly-padding-left: var(
+        --spectrum-badge-m-neutral-textonly-padding-left,
+        var(--spectrum-global-dimension-size-150)
+    );
+}
+:host([size='l']) {
+    --spectrum-badge-neutral-textonly-text-padding-top: var(
+        --spectrum-badge-l-neutral-textonly-text-padding-top
+    ); /* .spectrum-Badge--sizeL */
+    --spectrum-badge-neutral-textonly-text-size: var(
+        --spectrum-badge-l-neutral-textonly-text-size,
+        var(--spectrum-global-dimension-font-size-200)
+    );
+    --spectrum-badge-neutral-textonly-text-padding-bottom: var(
+        --spectrum-badge-l-neutral-textonly-text-padding-bottom,
+        var(--spectrum-global-dimension-size-130)
+    );
+    --spectrum-badge-neutral-textonly-text-line-height: var(
+        --spectrum-badge-l-neutral-textonly-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-badge-neutral-textonly-border-top-left-radius: var(
+        --spectrum-badge-l-neutral-textonly-border-top-left-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-border-top-right-radius: var(
+        --spectrum-badge-l-neutral-textonly-border-top-right-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-border-bottom-right-radius: var(
+        --spectrum-badge-l-neutral-textonly-border-bottom-right-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-border-bottom-left-radius: var(
+        --spectrum-badge-l-neutral-textonly-border-bottom-left-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-padding-right: var(
+        --spectrum-badge-l-neutral-textonly-padding-right,
+        var(--spectrum-global-dimension-size-185)
+    );
+    --spectrum-badge-neutral-textonly-padding-left: var(
+        --spectrum-badge-l-neutral-textonly-padding-left,
+        var(--spectrum-global-dimension-size-185)
+    );
+}
+:host([size='xl']) {
+    --spectrum-badge-neutral-textonly-text-size: var(
+        --spectrum-badge-xl-neutral-textonly-text-size,
+        var(--spectrum-global-dimension-font-size-300)
+    ); /* .spectrum-Badge--sizeXL */
+    --spectrum-badge-neutral-textonly-text-padding-top: var(
+        --spectrum-badge-xl-neutral-textonly-text-padding-top,
+        var(--spectrum-global-dimension-size-150)
+    );
+    --spectrum-badge-neutral-textonly-text-padding-bottom: var(
+        --spectrum-badge-xl-neutral-textonly-text-padding-bottom,
+        var(--spectrum-global-dimension-size-175)
+    );
+    --spectrum-badge-neutral-textonly-text-line-height: var(
+        --spectrum-badge-xl-neutral-textonly-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-badge-neutral-textonly-border-top-left-radius: var(
+        --spectrum-badge-xl-neutral-textonly-border-top-left-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-border-top-right-radius: var(
+        --spectrum-badge-xl-neutral-textonly-border-top-right-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-border-bottom-right-radius: var(
+        --spectrum-badge-xl-neutral-textonly-border-bottom-right-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-border-bottom-left-radius: var(
+        --spectrum-badge-xl-neutral-textonly-border-bottom-left-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-badge-neutral-textonly-padding-right: var(
+        --spectrum-badge-xl-neutral-textonly-padding-right,
+        var(--spectrum-global-dimension-size-225)
+    );
+    --spectrum-badge-neutral-textonly-padding-left: var(
+        --spectrum-badge-xl-neutral-textonly-padding-left,
+        var(--spectrum-global-dimension-size-225)
+    );
+}
+:host([dir='ltr']) {
+    padding-left: var(
+        --spectrum-badge-neutral-textonly-padding-right
+    ); /* [dir=ltr] .spectrum-Badge */
+    padding-right: var(--spectrum-badge-neutral-textonly-padding-left);
+}
+:host([dir='rtl']) {
+    padding-left: var(--spectrum-badge-neutral-textonly-padding-left);
+    padding-right: var(
+        --spectrum-badge-neutral-textonly-padding-right
+    ); /* [dir=rtl] .spectrum-Badge */
+}
+:host {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    font-smoothing: subpixel-antialiased;
+    border-radius: var(--spectrum-badge-neutral-textonly-border-top-left-radius)
+        var(--spectrum-badge-neutral-textonly-border-top-right-radius)
+        var(--spectrum-badge-neutral-textonly-border-bottom-right-radius)
+        var(--spectrum-badge-neutral-textonly-border-bottom-left-radius);
+    cursor: default;
+    display: inline-block; /* .spectrum-Badge */
+    font-size: var(--spectrum-badge-neutral-textonly-text-size);
+    line-height: var(--spectrum-badge-neutral-textonly-text-line-height);
+    padding-bottom: var(--spectrum-badge-neutral-textonly-text-padding-bottom);
+    padding-top: var(--spectrum-badge-neutral-textonly-text-padding-top);
+    position: relative;
+    width: auto;
+}
+:host([variant='neutral']) {
+    --spectrum-badge-m-texticon-text-color: var(
+        --spectrum-badge-m-neutral-texticon-text-color,
+        var(--spectrum-global-color-static-white)
+    ); /* .spectrum-Badge--neutral */
+    --spectrum-badge-m-textonly-background-color: var(
+        --spectrum-badge-m-neutral-textonly-background-color,
+        var(--spectrum-semantic-neutral-background-color-default)
+    );
+    --spectrum-badge-m-textonly-text-color-hover: var(
+        --spectrum-badge-m-neutral-textonly-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-badge-m-textonly-background-color-hover: var(
+        --spectrum-badge-m-neutral-textonly-background-color-hover,
+        var(--spectrum-semantic-neutral-background-color-hover)
+    );
+}
+:host([variant='informative']) {
+    --spectrum-badge-m-texticon-text-color: var(
+        --spectrum-badge-m-informative-texticon-text-color,
+        var(--spectrum-global-color-static-white)
+    ); /* .spectrum-Badge--informative */
+    --spectrum-badge-m-textonly-background-color: var(
+        --spectrum-badge-m-informative-textonly-background-color,
+        var(--spectrum-semantic-informative-background-color-default)
+    );
+    --spectrum-badge-m-textonly-text-color-hover: var(
+        --spectrum-badge-m-informative-textonly-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-badge-m-textonly-background-color-hover: var(
+        --spectrum-badge-m-informative-textonly-background-color-hover,
+        var(--spectrum-semantic-informative-background-color-hover)
+    );
+}
+:host([variant='positive']) {
+    --spectrum-badge-m-texticon-text-color: var(
+        --spectrum-badge-m-positive-texticon-text-color,
+        var(--spectrum-global-color-static-white)
+    ); /* .spectrum-Badge--positive */
+    --spectrum-badge-m-textonly-background-color: var(
+        --spectrum-badge-m-positive-textonly-background-color,
+        var(--spectrum-semantic-positive-background-color-default)
+    );
+    --spectrum-badge-m-textonly-text-color-hover: var(
+        --spectrum-badge-m-positive-textonly-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-badge-m-textonly-background-color-hover: var(
+        --spectrum-badge-m-positive-textonly-background-color-hover,
+        var(--spectrum-semantic-positive-background-color-hover)
+    );
+}
+:host([variant='negative']) {
+    --spectrum-badge-m-texticon-text-color: var(
+        --spectrum-badge-m-negative-texticon-text-color,
+        var(--spectrum-global-color-static-white)
+    ); /* .spectrum-Badge--negative */
+    --spectrum-badge-m-textonly-background-color: var(
+        --spectrum-badge-m-negative-textonly-background-color,
+        var(--spectrum-semantic-negative-background-color-default)
+    );
+    --spectrum-badge-m-textonly-text-color-hover: var(
+        --spectrum-badge-m-negative-textonly-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-badge-m-textonly-background-color-hover: var(
+        --spectrum-badge-m-negative-textonly-background-color-hover,
+        var(--spectrum-semantic-negative-background-color-hover)
+    );
+}
+:host([variant='fuchsia']) {
+    --spectrum-badge-m-texticon-text-color: var(
+        --spectrum-badge-m-fuchsia-texticon-text-color,
+        var(--spectrum-global-color-static-white)
+    ); /* .spectrum-Badge--fuchsia */
+    --spectrum-badge-m-textonly-background-color: var(
+        --spectrum-badge-m-fuchsia-textonly-background-color,
+        var(--spectrum-global-color-static-fuchsia-600)
+    );
+    --spectrum-badge-m-textonly-text-color-hover: var(
+        --spectrum-badge-m-fuchsia-textonly-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-badge-m-textonly-background-color-hover: var(
+        --spectrum-badge-m-fuchsia-textonly-background-color-hover,
+        var(--spectrum-global-color-static-fuchsia-700)
+    );
+}
+:host([variant='indigo']) {
+    --spectrum-badge-m-texticon-text-color: var(
+        --spectrum-badge-m-indigo-texticon-text-color,
+        var(--spectrum-global-color-static-white)
+    ); /* .spectrum-Badge--indigo */
+    --spectrum-badge-m-textonly-background-color: var(
+        --spectrum-badge-m-indigo-textonly-background-color,
+        var(--spectrum-global-color-static-indigo-600)
+    );
+    --spectrum-badge-m-textonly-text-color-hover: var(
+        --spectrum-badge-m-indigo-textonly-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-badge-m-textonly-background-color-hover: var(
+        --spectrum-badge-m-indigo-textonly-background-color-hover,
+        var(--spectrum-global-color-static-indigo-700)
+    );
+}
+:host([variant='magenta']) {
+    --spectrum-badge-m-texticon-text-color: var(
+        --spectrum-badge-m-magenta-texticon-text-color,
+        var(--spectrum-global-color-static-white)
+    ); /* .spectrum-Badge--magenta */
+    --spectrum-badge-m-textonly-background-color: var(
+        --spectrum-badge-m-magenta-textonly-background-color,
+        var(--spectrum-global-color-static-magenta-600)
+    );
+    --spectrum-badge-m-textonly-text-color-hover: var(
+        --spectrum-badge-m-magenta-textonly-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-badge-m-textonly-background-color-hover: var(
+        --spectrum-badge-m-magenta-textonly-background-color-hover,
+        var(--spectrum-global-color-static-magenta-700)
+    );
+}
+:host([variant='purple']) {
+    --spectrum-badge-m-texticon-text-color: var(
+        --spectrum-badge-m-purple-texticon-text-color,
+        var(--spectrum-global-color-static-white)
+    ); /* .spectrum-Badge--purple */
+    --spectrum-badge-m-textonly-background-color: var(
+        --spectrum-badge-m-purple-textonly-background-color,
+        var(--spectrum-global-color-static-purple-600)
+    );
+    --spectrum-badge-m-textonly-text-color-hover: var(
+        --spectrum-badge-m-purple-textonly-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-badge-m-textonly-background-color-hover: var(
+        --spectrum-badge-m-purple-textonly-background-color-hover,
+        var(--spectrum-global-color-static-purple-700)
+    );
+}
+:host([variant='seafoam']) {
+    --spectrum-badge-m-texticon-text-color: var(
+        --spectrum-badge-m-seafoam-texticon-text-color,
+        var(--spectrum-global-color-static-white)
+    ); /* .spectrum-Badge--seafoam */
+    --spectrum-badge-m-textonly-background-color: var(
+        --spectrum-badge-m-seafoam-textonly-background-color,
+        var(--spectrum-global-color-static-seafoam-600)
+    );
+    --spectrum-badge-m-textonly-text-color-hover: var(
+        --spectrum-badge-m-seafoam-textonly-text-color-hover,
+        var(--spectrum-global-color-static-white)
+    );
+    --spectrum-badge-m-textonly-background-color-hover: var(
+        --spectrum-badge-m-seafoam-textonly-background-color-hover,
+        var(--spectrum-global-color-static-seafoam-700)
+    );
+}
+:host([variant='yellow']) {
+    --spectrum-badge-m-texticon-text-color: var(
+        --spectrum-badge-m-yellow-texticon-text-color,
+        var(--spectrum-global-color-static-black)
+    ); /* .spectrum-Badge--yellow */
+    --spectrum-badge-m-textonly-background-color: var(
+        --spectrum-badge-m-yellow-textonly-background-color,
+        var(--spectrum-alias-background-color-yellow-default)
+    );
+    --spectrum-badge-m-textonly-text-color-hover: var(
+        --spectrum-badge-m-yellow-textonly-text-color-hover,
+        var(--spectrum-global-color-static-black)
+    );
+    --spectrum-badge-m-textonly-background-color-hover: var(
+        --spectrum-badge-m-yellow-textonly-background-color-hover,
+        var(--spectrum-alias-background-color-yellow-hover)
+    );
+}
+:host {
+    background-color: var(--spectrum-badge-m-textonly-background-color);
+    color: var(--spectrum-badge-m-texticon-text-color); /* .spectrum-Badge */
+}

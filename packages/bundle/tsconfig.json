@@ -14,6 +14,7 @@
         { "path": "../action-menu" },
         { "path": "../asset" },
         { "path": "../avatar" },
+        { "path": "../badge" },
         { "path": "../banner" },
         { "path": "../button" },
         { "path": "../button-group" },
