@@ -19,7 +19,7 @@
         "copy-docs": "node scripts/copy-component-docs.js",
         "prebuild": "rimraf _site && mkdir -p _site/src/components && rimraf dist && mkdir dist && yarn copy-docs",
         "prewatch": "yarn build",
-        "watch": "run-p 'build:tsc -w' 'build:eleventy --watch' watch:move-css build:postcss 'build:postcss --watch' 'build:rollup --watch' watch:serve",
+        "watch": "WATCH_MODE=true run-p 'build:tsc -w' 'build:eleventy --watch' watch:move-css build:postcss 'build:postcss --watch' 'build:rollup --watch' watch:serve",
         "watch:move-css": "yarn build:move-css && node scripts/watch-css.js",
         "watch:serve": "wds --root-dir=dist --watch"
     },

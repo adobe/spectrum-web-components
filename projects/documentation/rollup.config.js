@@ -196,34 +196,36 @@ module.exports = async () => {
             ],
         })
     );
-    mpaConfig.plugins.push(
-        injectManifest({
-            swSrc: path.join(process.cwd(), '_site', 'serviceWorker.js'),
-            swDest: path.join(process.cwd(), 'dist', 'sw.js'),
-            globDirectory: path.join(process.cwd(), 'dist'),
-            globPatterns: ['**/*.{html,js,css,png,svg,ico,webmanifest}'],
-            globIgnores: [
-                '*nomodule*',
-                // 'components/*/index.html',
-                'components/*/api/index.html',
-                'components/*/content/index.html',
-                'components/*/api-content/index.html',
-                'storybook/**/*',
-                'src/components/*.css',
-            ],
-            additionalManifestEntries: [
-                {
-                    url: 'index.html?homescreen',
-                    revision: '4',
-                },
-                {
-                    url: 'searchIndex.json',
-                    revision: `${Date.now()}`,
-                },
-            ],
-            mode: 'production',
-        })
-    );
+    if (process.env.ROLLUP_WATCH !== 'true') {
+        mpaConfig.plugins.push(
+            injectManifest({
+                swSrc: path.join(process.cwd(), '_site', 'serviceWorker.js'),
+                swDest: path.join(process.cwd(), 'dist', 'sw.js'),
+                globDirectory: path.join(process.cwd(), 'dist'),
+                globPatterns: ['**/*.{html,js,css,png,svg,ico,webmanifest}'],
+                globIgnores: [
+                    '*nomodule*',
+                    // 'components/*/index.html',
+                    'components/*/api/index.html',
+                    'components/*/content/index.html',
+                    'components/*/api-content/index.html',
+                    'storybook/**/*',
+                    'src/components/*.css',
+                ],
+                additionalManifestEntries: [
+                    {
+                        url: 'index.html?homescreen',
+                        revision: '4',
+                    },
+                    {
+                        url: 'searchIndex.json',
+                        revision: `${Date.now()}`,
+                    },
+                ],
+                mode: 'production',
+            })
+        );
+    }
 
     mpaConfig.plugins.push(
         copy({
