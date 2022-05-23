@@ -17,6 +17,7 @@ import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/asset/sp-asset.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
+import '@spectrum-web-components/badge/sp-badge.js';
 import '@spectrum-web-components/banner/sp-banner.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/button/sp-clear-button.js';
