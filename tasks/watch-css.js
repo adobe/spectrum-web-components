@@ -14,14 +14,22 @@ governing permissions and limitations under the License.
 
 import chokidar from 'chokidar';
 import debounce from 'debounce';
-import { processCSS } from './build-css.js';
+import { processCSS } from './css-tools.js';
 
 const debounceProcessCSS = debounce.debounce(processCSS, 200);
 
 // One-liner for current directory
 chokidar
-    .watch(['./packages/*/src/*.css', './tools/*/src/*.css'])
-    .on('change', debounceProcessCSS)
-    .on('add', debounceProcessCSS);
+    .watch(['./packages/*/src/*.css', './tools/*/src/*.css'], {
+        ignoreInitial: true,
+    })
+    .on('change', (path) => {
+        console.log(`Process CSS change in: ${path}`);
+        debounceProcessCSS(path);
+    })
+    .on('add', (path) => {
+        console.log(`Process CSS added at: ${path}`);
+        debounceProcessCSS(path);
+    });
 
 console.log('Listening to CSS...');
