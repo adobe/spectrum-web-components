@@ -11,8 +11,15 @@ governing permissions and limitations under the License.
 */
 
 export default {
-    globs: ['**/*.ts'],
-    exclude: ['**/*.d.ts', '**/stories/**', '**/test/**'],
+    globs: ['**/sp-*.ts', '**/src/[A-Z]*.ts'],
+    exclude: [
+        '**/sp-icon-*.ts',
+        '**/*.d.ts',
+        '**/stories/**',
+        '**/test/**',
+        'node_modules/*',
+        '**/*.dev.*',
+    ],
     outdir: '.',
     litelement: true,
 };
