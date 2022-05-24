@@ -140,7 +140,7 @@
         "express": "^4.16.4",
         "fast-glob": "^3.2.7",
         "fs-extra": "^10.0.0",
-        "gh-pages": "^3.2.3",
+        "gh-pages": "^4.0.0",
         "gunzip-maybe": "^1.4.2",
         "husky": "^8.0.1",
         "latest-version": "^6.0.0",
