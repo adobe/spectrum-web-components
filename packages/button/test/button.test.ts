@@ -514,7 +514,7 @@ describe('Button', () => {
             await elementUpdated(el);
             expect(el.treatment).to.equal('fill');
         });
-        it('upgrades [variant="cta"]', async () => {
+        it('upgrades [variant="cta"] to [variant="accent"]', async () => {
             const el = await fixture<Button>(
                 html`
                     <sp-button variant="cta">Button</sp-button>

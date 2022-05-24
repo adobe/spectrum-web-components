@@ -126,7 +126,7 @@ If you look at an `sp-button` in the Chrome developer tools, you will see a DOM
 structure that looks like this.
 
 ```bash
-▼<sp-button tabindex="0" variant="cta">
+▼<sp-button tabindex="0" variant="accent">
     ▼ #shadow-root (open)
         ▼ <button id="button" tabindex="0">
             ▼ <div id="label>
@@ -266,7 +266,7 @@ attributes/properties on the component. For example, here is a call-to-action
 style button.
 
 ```html
-<sp-button variant="cta">CTA</sp-button>
+<sp-button variant="accent">CTA</sp-button>
 ```
 
 We could conditionally add CSS classes to the elements of the shadow DOM during
