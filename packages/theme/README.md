@@ -207,7 +207,7 @@ The large scale of `<sp-theme>` will switch to using Spectrum's larger mobile [P
         <div><sp-switch>Overdrive</sp-switch></div>
         <sp-button-group id="buttons">
             <sp-button variant="primary">Cancel</sp-button>
-            <sp-button variant="cta">Continue</sp-button>
+            <sp-button variant="accent">Continue</sp-button>
         </sp-button-group>
     </div>
 </sp-theme>
@@ -254,7 +254,7 @@ previewing or editing content that will be displayed in a light theme with a rig
         <div><sp-switch>Overdrive</sp-switch></div>
         <sp-button-group id="buttons">
             <sp-button variant="primary">Cancel</sp-button>
-            <sp-button variant="cta">Continue</sp-button>
+            <sp-button variant="accent">Continue</sp-button>
         </sp-button-group>
         <sp-theme color="light" dir="rtl">
             <div id="inner">
@@ -271,7 +271,7 @@ previewing or editing content that will be displayed in a light theme with a rig
                 <div><sp-switch>Overdrive</sp-switch></div>
                 <sp-button-group id="buttons">
                     <sp-button variant="primary">Cancel</sp-button>
-                    <sp-button variant="cta">Continue</sp-button>
+                    <sp-button variant="accent">Continue</sp-button>
                 </sp-button-group>
             </div>
         </sp-theme>

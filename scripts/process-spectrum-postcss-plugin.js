@@ -267,7 +267,7 @@ class SpectrumProcessor {
         });
 
         // Map classes to attributes
-        // e.g. ".spectrum-Button--cta" -> ":host([variant='cta'])"
+        // e.g. ".spectrum-Button--accent" -> ":host([variant='accent'])"
         astTransforms.push((selector, rule) => {
             const result = selector.clone();
             let attributeFound = false;
@@ -394,7 +394,7 @@ class SpectrumProcessor {
         });
 
         // Map classes to descendent attributes
-        // e.g. ".spectrum-Dialog .spectrum-Button--cta" -> "[variant='cta']"
+        // e.g. ".spectrum-Dialog .spectrum-Button--accent" -> "[variant='accent']"
         astTransforms.push((selector, rule) => {
             const result = selector.clone();
             let attributeFound = false;
@@ -751,8 +751,8 @@ class SpectrumProcessor {
      * Make sure that the first component of the selector is wrapped in
      * a ":host()" declaration
      *
-     * @param {string} selector - Selector to modify (e.g. "[variant='cta'] #button:focus")
-     * @return {string} The modified selector (e.g. ":host([variant='cta']) #button:focus")
+     * @param {string} selector - Selector to modify (e.g. "[variant='accent'] #button:focus")
+     * @return {string} The modified selector (e.g. ":host([variant='accent']) #button:focus")
      */
     addHostToSelector(selector) {
         // We made a replacement, which means that this expression

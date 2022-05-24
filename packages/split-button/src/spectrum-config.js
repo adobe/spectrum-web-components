@@ -24,11 +24,6 @@ const config = {
                     selector: '.spectrum-SplitButton--left',
                     name: 'left',
                 },
-                {
-                    type: 'boolean',
-                    selector: '.spectrum-Button--cta',
-                    name: 'variant="cta"',
-                },
             ],
             ids: [
                 {

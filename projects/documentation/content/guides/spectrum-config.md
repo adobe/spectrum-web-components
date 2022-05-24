@@ -70,12 +70,12 @@ module.exports = {
                     // as it is defined in the implementation of the component
                     name: 'variant',
                     // This is a list of possible values for the attribute. If
-                    // the option is of the form ".spectrum-Button--cta" where
+                    // the option is of the form ".spectrum-Button--accent" where
                     // ".spectrum-Button" is the root CSS class, then we can extract
                     // the enum value name automatically
                     values: [
-                        // This related the enum value <sp-button variant="cta">
-                        '.spectrum-Button--cta',
+                        // This related the enum value <sp-button variant="accent">
+                        '.spectrum-Button--accent',
                         '.spectrum-Button--primary',
                         '.spectrum-Button--secondary',
                         // If for some reason, we need to override the enum

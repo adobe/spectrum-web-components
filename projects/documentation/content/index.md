@@ -60,7 +60,7 @@ title: Spectrum Web Components
 ## Sample element usage
 
 ```html
-<sp-button variant="cta" href="components/button">
+<sp-button variant="accent" href="components/button">
     Use Spectrum Web Component buttons
 </sp-button>
 ```
