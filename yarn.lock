@@ -14389,9 +14389,9 @@ markdown-escapes@^1.0.0:
   integrity sha512-8z4efJYk43E0upd0NbVXwgSTQs6cT3T06etieCMEg7dRbzCbxUCK/GHlX8mhHRDcp+OLlHkPKsvqQTCvsRl2cg==
 
 markdown-it-anchor@^8.4.1:
-  version "8.6.3"
-  resolved "https://registry.yarnpkg.com/markdown-it-anchor/-/markdown-it-anchor-8.6.3.tgz#70418e91dc6fcfbe25b896f7223147225b46abee"
-  integrity sha512-3IiHYh/kJHY2IcuKv5qv+IKNxDwXjVoYQ5FvbBUPywcwCQ4ICLIw5z0QrhYBtcD7h88MfFK3zKAkABTvPMxm7A==
+  version "8.6.4"
+  resolved "https://registry.yarnpkg.com/markdown-it-anchor/-/markdown-it-anchor-8.6.4.tgz#affb8aa0910a504c114e9fcad53ac3a5b907b0e6"
+  integrity sha512-Ul4YVYZNxMJYALpKtu+ZRdrryYt/GlQ5CK+4l1bp/gWXOG2QWElt6AqF3Mih/wfUKdZbNAZVXGR73/n6U/8img==
 
 markdown-it@^12.3.2:
   version "12.3.2"
