@@ -13,6 +13,7 @@ import { playwrightLauncher } from '@web/test-runner-playwright';
 import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 import fs from 'fs';
 import path from 'path';
+import fg from 'fast-glob';
 
 const tools = fs
     .readdirSync('tools')
@@ -149,3 +150,22 @@ export const configuredVisualRegressionPlugin = () =>
             );
         },
     });
+
+export function watchSWC() {
+    return {
+        name: 'watch-swc-plugin',
+        async serverStart({ fileWatcher }) {
+            // register SWC output files to be watched
+            const files = await fg('{packages,projects,tools}/**/*.js', {
+                ignore: ['**/*.map', '**/*.vrt.js', '**/spectrum-config.js'],
+            });
+            for (const file of files) {
+                fileWatcher.add(process.cwd() + file);
+            }
+            // Use the following for reviewing the file changes that are reacted to here...
+            // fileWatcher.on('change', (path) => {
+            //     console.log(`Process change in: ${path}`);
+            // });
+        },
+    };
+}
