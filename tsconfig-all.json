@@ -2,7 +2,8 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "rootDir": "./",
-        "declaration": false
+        "declaration": false,
+        "incremental": true
     },
     "include": [
         "packages/**/*.ts",

@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 import { fromRollup } from '@web/dev-server-rollup';
 import rollupJson from '@rollup/plugin-json';
 import { storybookPlugin } from '@web/dev-server-storybook';
+import { watchSWC } from './web-test-runner.utils.js';
 // import { hmrPlugin, presets } from '@open-wc/dev-server-hmr';
 
 const json = fromRollup(rollupJson);
@@ -29,6 +30,7 @@ export default {
     plugins: [
         json(),
         storybookPlugin({ type: 'web-components' }),
+        watchSWC(),
         // hmrPlugin({
         //     include: ['{packages,projects,tools}/**/*.js'],
         //     presets: [presets.lit],
