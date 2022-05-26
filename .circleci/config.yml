@@ -9,7 +9,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: ee290395f871b22a7174ffdc25bbd0ccf82c2dc0
+        default: d5c1af3d3520f89f9effc18ea5ddee94a1c4678b
 commands:
     downstream:
         steps:
