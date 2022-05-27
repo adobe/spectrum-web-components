@@ -422,3 +422,50 @@ readOnly.args = {
     readonly: true,
     value: '15',
 };
+
+export const ScrollingContainer = (args: StoryArgs = {}): TemplateResult => {
+    const onChange =
+        (args.onChange as (value: number) => void) ||
+        (() => {
+            return;
+        });
+    const onInput =
+        (args.onInput as (value: number) => void) ||
+        (() => {
+            return;
+        });
+    return html`
+        <style>
+            .scroller {
+                height: 140px;
+                width: 200px;
+                overflow-y: scroll;
+                padding: 10px;
+                background: var(--spectrum-global-color-gray-50);
+            }
+
+            .scroller > div {
+                height: 1000px;
+            }
+        </style>
+        <div class="scroller">
+            <div>
+                <sp-field-label for="default">Enter a number</sp-field-label>
+                <sp-number-field
+                    id="default"
+                    ...=${spreadProps(args)}
+                    @input=${(event: Event) =>
+                        onInput((event.target as NumberField).value)}
+                    @change=${(event: Event) =>
+                        onChange((event.target as NumberField).value)}
+                    style="width: 150px"
+                ></sp-number-field>
+                <p>
+                    This box should not scroll when the focus is inside the
+                    number field and field value is changed by using the mouse
+                    wheel.
+                </p>
+            </div>
+        </div>
+    `;
+};
