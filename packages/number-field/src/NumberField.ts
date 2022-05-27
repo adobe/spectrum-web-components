@@ -312,7 +312,7 @@ export class NumberField extends TextfieldBase {
         super.onFocus();
         this._trackingValue = this.inputValue;
         this.keyboardFocused = !this.readonly && true;
-        this.addEventListener('wheel', this.onScroll);
+        this.addEventListener('wheel', this.onScroll, { passive: false });
     }
 
     protected override onBlur(): void {
