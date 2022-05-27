@@ -86,7 +86,7 @@ import { Badge } from '@spectrum-web-components/badge';
 
 ## Variants
 
-The `<sp-badge>` can the customized with either semantic or non-semantic variants.
+The `<sp-badge>` can be customized with either semantic or non-semantic variants.
 
 ### Semantic
 
