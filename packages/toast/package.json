@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/toast",
-    "version": "0.10.9",
+    "version": "0.10.10",
     "publishConfig": {
         "access": "public"
     },
@@ -45,9 +45,9 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.5.6",
-        "@spectrum-web-components/button": "^0.17.4",
-        "@spectrum-web-components/icon": "^0.11.7",
-        "@spectrum-web-components/icons-workflow": "^0.8.7",
+        "@spectrum-web-components/button": "^0.17.5",
+        "@spectrum-web-components/icon": "^0.11.8",
+        "@spectrum-web-components/icons-workflow": "^0.8.8",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

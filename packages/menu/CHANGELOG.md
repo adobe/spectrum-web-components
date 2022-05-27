@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.14.0...@spectrum-web-components/menu@0.14.1) (2022-05-27)
+
+### Bug Fixes
+
+-   update consumption of Spectrum CSS for latest version ([ed2305b](https://github.com/adobe/spectrum-web-components/commit/ed2305b7334c973ea5c8299cbbce33a365896329))
+
 # [0.14.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.13.0...@spectrum-web-components/menu@0.14.0) (2022-05-12)
 
 ### Features

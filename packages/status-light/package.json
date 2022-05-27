@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/status-light",
-    "version": "0.10.7",
+    "version": "0.10.8",
     "publishConfig": {
         "access": "public"
     },
