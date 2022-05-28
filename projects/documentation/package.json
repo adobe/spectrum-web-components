@@ -58,7 +58,7 @@
         "rollup-plugin-styles": "^4.0.0",
         "rollup-plugin-visualizer": "^5.9.2",
         "rollup-plugin-workbox": "^8.1.0",
-        "wireit": "^0.14.1"
+        "wireit": "^0.14.3"
     },
     "sideEffects": [
         "_site/**/*.css",
@@ -102,14 +102,13 @@
             ],
             "files": [
                 "./content/**/*",
-                "./.eleventy.cjs"
+                "./.eleventy.js"
             ],
             "clean": "if-file-deleted",
             "output": [
                 "_site/**/*.html",
                 "_site/favicon.ico",
                 "_site/favicon.svg",
-                "_site/404.html",
                 "_site/serviceWorker.js",
                 "_site/images/**/*",
                 "_site/manifest.webmanifest"
@@ -217,15 +216,25 @@
             "files": [
                 "../../packages/**/*.md",
                 "../../packages/**/*.ts",
+                "../../packages/**/args.js",
+                "../../packages/**/template.js",
                 "../../tools/**/*.md",
                 "../../tools/**/*.ts",
+                "../../tools/**/args.js",
+                "../../tools/**/template.js",
+                "scripts/gather-wcd-urls.js",
+                "scripts/gather-spectrum-urls.js",
                 "scripts/copy-component-docs.js",
                 "scripts/component-template-parts.js"
             ],
             "clean": "if-file-deleted",
             "output": [
-                "content/components/**/*.md",
-                "content/tools/**/*.md"
+                "content/components/*.md",
+                "content/components/*.11tydata.js",
+                "content/tools/*.md",
+                "content/tools/*.11tydata.js",
+                "content/_data/demoURLs.js",
+                "content/_data/spectrumURLs.js"
             ],
             "dependencies": [
                 {

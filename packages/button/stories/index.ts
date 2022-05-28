@@ -20,6 +20,9 @@ import {
     ButtonVariants,
 } from '@spectrum-web-components/button/src/Button.js';
 
+import type { Properties } from './template.js';
+export type { Properties };
+
 export const args = {
     disabled: false,
     variant: 'cta',
@@ -88,20 +91,6 @@ export const argTypes = {
         },
     },
 };
-
-export interface Properties {
-    variant?: ButtonVariants;
-    treatment?: ButtonTreatments;
-    quiet?: boolean;
-    pending?: boolean;
-    content?: TemplateResult;
-    disabled?: boolean;
-    size?: 's' | 'm' | 'l' | 'xl';
-    href?: string;
-    target?: '_blank' | '_parent' | '_self' | '_top';
-    warning?: boolean;
-    iconOnly?: boolean;
-}
 
 export const makeOverBackground =
     (variant?: 'white' | 'black') =>

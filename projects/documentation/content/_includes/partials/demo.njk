@@ -1,0 +1,113 @@
+<section
+    class="demo-placement {% if hasDemoTemplate %}with-demo{% endif %} {% if hasDemoControls %}with-controls{% endif %}"
+>
+    {% if hasDemoTemplate %}<demo-container
+        class="demo-preview"
+    ></demo-container>{% endif %}
+    {% if hasDemoControls %}<sp-field-group
+        class="demo-config"
+        horizontal
+    >{% for demoControl in demoControls %}
+        <div>
+            <sp-field-label for="{{ demoControl.name }}">{{ demoControl.name }}</sp-field-label>
+            <sp-picker class="demo-control" value="{{ demoControl.table.defaultValue.summary }}" id="{{ demoControl.name }}">
+                {% for option in demoControl.control.options %}
+                <sp-menu-item value="{{ option }}">{{ option }}</sp-menu-item>
+                {% endfor %}
+                {% for name, item in demoControl.control.labels %}
+                <sp-menu-item value="{{ name }}">{{ item }}</sp-menu-item>
+                {% endfor %}
+                {% if demoControl.type.name === 'boolean' %}
+                <sp-menu-item>true</sp-menu-item>
+                <sp-menu-item>false</sp-menu-item>
+                {% endif %}
+            </sp-picker>
+        </div>
+    {% endfor %}</sp-field-group>{% endif %}
+    <div
+        class="usage-links"
+    >
+        <sp-card
+            size="s"
+            horizontal
+            href="https://www.npmjs.com/package/@spectrum-web-components/button"
+        >
+            <h2 slot="heading">NPM</h2>
+            <h3 slot="subheading">{% packageVersion componentPackage %}</h3>
+            <sp-icon
+                slot="preview"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="540px" height="210px" viewBox="0 0 18 7">
+<path fill="#CB3837" d="M0,0h18v6H9v1H5V6H0V0z M1,5h2V2h1v3h1V1H1V5z M6,1v5h2V5h2V1H6z M8,2h1v2H8V2z M11,1v4h2V2h1v3h1V2h1v3h1V1H11z"/>
+<polygon fill="#FFFFFF" points="1,5 3,5 3,2 4,2 4,5 5,5 5,1 1,1 "/>
+<path fill="#FFFFFF" d="M6,1v5h2V5h2V1H6z M9,4H8V2h1V4z"/>
+<polygon fill="#FFFFFF" points="11,1 11,5 13,5 13,2 14,2 14,5 15,5 15,2 16,2 16,5 17,5 17,1 "/>
+</svg>
+            </sp-icon>
+        </sp-card>
+        {% if spectrumURLs.urls[componentPackage] %}
+        <sp-card
+            size="s"
+            horizontal
+            href={{ spectrumURLs.urls[componentPackage]}}
+        >
+            <h2 slot="heading">Spectrum</h2>
+            <h3 slot="subheading">View guidelines</h3>
+            <sp-icon
+                slot="preview"
+            >
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 30 26" width="36px" xml:space="preserve" role="img" aria-label="Adobe">
+        <path fill="#FA0F00" d="M19 0h11v26zM11.1 0H0v26zM15 9.6L22.1 26h-4.6l-2.1-5.2h-5.2z"></path>
+    </svg>
+            </sp-icon>
+        </sp-card>
+        {% endif %}
+        {% if demoURLs.urls[componentPackage] %}
+        <sp-card
+            size="s"
+            horizontal
+            href={{ demoURLs.urls[componentPackage]}}
+        >
+            <h2 slot="heading">Try it on</h2>
+            <h3 slot="subheading">webcomponents.dev</h3>
+            <sp-icon
+                slot="preview"
+            >
+                <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><path fill='#469bcf' d='m28 0 8 8v48l-8 8'/><path fill='#9aceed' d='M26 10 5 31h11.3l9.7-9.7'/><path fill='#086ca7' d='m38 10 21 21H47.7L38 21.3'/><path fill='#2686bf' d='m38 54 21-21H47.7L38 42.7'/><path fill='#69b3de' d='M26 54 5 33h11.3l9.7 9.7'/></svg>
+            </sp-icon>
+        </sp-card>
+        {% endif %}
+    </div>
+</section>
+{% if hasDemoTemplate %}
+<script type="module">
+    import { Template } from '@swc-packages-internal/{{ componentPackage }}/stories/template.js';
+    import { render } from 'lit';
+    const demo = document.querySelector('.demo-preview');
+    const config = document.querySelector('.demo-config');
+    function getArgs() {
+        const args = {};
+        if (!config) {
+            return args;
+        }
+        const form = config.querySelectorAll('.demo-control');
+        form.forEach(arg => {
+            args[arg.id] = arg.value === 'false' ? false : arg.value;
+        })
+        return args;
+    }
+    const renderDemo = (args = {}) => {
+        render(Template(args), demo);
+    };
+    if (config) {
+        config.addEventListener('change', () => {
+            renderDemo(getArgs());
+        });
+    }
+    customElements.whenDefined('sp-picker').then(() => {
+        const defaultArgs = getArgs();
+        console.log(defaultArgs);
+        renderDemo(defaultArgs);
+    });
+</script>
+{% endif %}

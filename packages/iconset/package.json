@@ -18,6 +18,7 @@
     },
     "main": "./src/index.js",
     "module": "./src/index.js",
+    "type": "module",
     "exports": {
         ".": {
             "development": "./src/index.dev.js",
