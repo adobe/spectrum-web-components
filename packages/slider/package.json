@@ -48,7 +48,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@internationalized/number": "^3.0.2",
+        "@internationalized/number": "^3.1.0",
         "@spectrum-web-components/base": "^0.5.6",
         "@spectrum-web-components/field-label": "^0.7.10",
         "@spectrum-web-components/number-field": "^0.3.11",
