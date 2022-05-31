@@ -39,7 +39,7 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
         extends constructor
         implements SlotTextObservingInterface
     {
-        private [slotElementObserver]: MutationObserver;
+        private [slotElementObserver]!: MutationObserver;
 
         @property({ type: Boolean, attribute: false })
         public slotHasContent = false;
