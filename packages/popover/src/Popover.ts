@@ -30,7 +30,7 @@ import popoverStyles from './popover.css.js';
  * @slot - content to display within the Popover
  */
 export class Popover extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [popoverStyles];
     }
 
@@ -74,7 +74,7 @@ export class Popover extends SpectrumElement {
         `;
     }
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         this.addEventListener(
             'sp-overlay-query',
@@ -82,7 +82,7 @@ export class Popover extends SpectrumElement {
         );
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         super.disconnectedCallback();
         this.removeEventListener(
             'sp-overlay-query',
@@ -104,7 +104,7 @@ export class Popover extends SpectrumElement {
         }
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot></slot>
             ${this.tip ? this.renderTip() : nothing}

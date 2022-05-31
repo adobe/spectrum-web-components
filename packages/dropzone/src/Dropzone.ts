@@ -39,7 +39,7 @@ export type DropEffects = 'copy' | 'move' | 'link' | 'none';
  * @fires sp-dropzone-drop - Announces when dragged files have been dropped on the UI.
  */
 export class Dropzone extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [dropzoneStyles];
     }
 
@@ -63,7 +63,7 @@ export class Dropzone extends SpectrumElement {
 
     private debouncedDragLeave: number | null = null;
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
 
         this.addEventListener('drop', this.onDrop);
@@ -71,7 +71,7 @@ export class Dropzone extends SpectrumElement {
         this.addEventListener('dragleave', this.onDragLeave);
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         super.disconnectedCallback();
 
         this.removeEventListener('drop', this.onDrop);
@@ -139,7 +139,7 @@ export class Dropzone extends SpectrumElement {
         this.dispatchEvent(dropEvent);
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot></slot>
         `;

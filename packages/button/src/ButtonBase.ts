@@ -50,7 +50,7 @@ export class ButtonBase extends LikeAnchor(
     @query('.anchor')
     private anchorElement!: HTMLButtonElement;
 
-    public get focusElement(): HTMLElement {
+    public override get focusElement(): HTMLElement {
         return this;
     }
 
@@ -82,7 +82,7 @@ export class ButtonBase extends LikeAnchor(
         });
     }
 
-    public click(): void {
+    public override click(): void {
         if (this.disabled) {
             return;
         }
@@ -123,7 +123,7 @@ export class ButtonBase extends LikeAnchor(
         return handled;
     }
 
-    public renderAnchor(): TemplateResult {
+    public override renderAnchor(): TemplateResult {
         return html`
             ${this.buttonContent}
             ${super.renderAnchor({
@@ -140,7 +140,7 @@ export class ButtonBase extends LikeAnchor(
         `;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return this.href && this.href.length > 0
             ? this.renderAnchor()
             : this.renderButton();
@@ -211,7 +211,7 @@ export class ButtonBase extends LikeAnchor(
         }
     }
 
-    protected firstUpdated(changed: PropertyValues): void {
+    protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         if (!this.hasAttribute('tabindex')) {
             this.tabIndex = 0;
@@ -222,7 +222,7 @@ export class ButtonBase extends LikeAnchor(
         this.addEventListener('pointerdown', this.handlePointerdown);
     }
 
-    protected updated(changed: PropertyValues): void {
+    protected override updated(changed: PropertyValues): void {
         super.updated(changed);
         if (changed.has('href')) {
             this.manageAnchor();

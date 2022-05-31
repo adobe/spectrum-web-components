@@ -26,7 +26,7 @@ import panelStyles from './tab-panel.css.js';
  * @slot - content of the Tab Panel
  */
 export class TabPanel extends SpectrumElement {
-    static styles = [panelStyles];
+    static override styles = [panelStyles];
 
     /**
      * @private
@@ -39,13 +39,13 @@ export class TabPanel extends SpectrumElement {
     @property({ type: String, reflect: true })
     public value = '';
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot></slot>
         `;
     }
 
-    protected firstUpdated(): void {
+    protected override firstUpdated(): void {
         this.slot = 'tab-panel';
         this.setAttribute('role', 'tabpanel');
         this.tabIndex = 0;
@@ -54,7 +54,7 @@ export class TabPanel extends SpectrumElement {
         }
     }
 
-    protected updated(changes: PropertyValues<this>): void {
+    protected override updated(changes: PropertyValues<this>): void {
         if (changes.has('selected')) {
             if (this.selected) {
                 this.removeAttribute('aria-hidden');

@@ -35,7 +35,7 @@ import radioStyles from './radio.css.js';
  * @fires change - When the input is interacted with and its state is changed
  */
 export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [radioStyles];
     }
 
@@ -44,7 +44,7 @@ export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
      * @private
      */
     @property({ type: Boolean })
-    public autofocus = false;
+    public override autofocus = false;
 
     @property({ type: String, reflect: true })
     public value = '';
@@ -64,7 +64,7 @@ export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
     @property({ type: Boolean, reflect: true })
     public readonly = false;
 
-    public click(): void {
+    public override click(): void {
         if (this.disabled) {
             return;
         }
@@ -106,7 +106,7 @@ export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <div id="input"></div>
             <span id="button"></span>
@@ -114,7 +114,7 @@ export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('role', 'radio');
         if (!this.hasAttribute('tabindex')) {
@@ -125,7 +125,7 @@ export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
         this.addEventListener('keyup', this.handleKeyup);
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('invalid')) {
             if (this.invalid) {

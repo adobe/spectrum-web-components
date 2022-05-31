@@ -64,14 +64,14 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
         /**
          * @private
          */
-        public shadowRoot!: ShadowRoot;
+        public override shadowRoot!: ShadowRoot;
         private _dirParent?: HTMLElement;
 
         /**
          * @private
          */
         @property({ reflect: true })
-        public dir: 'ltr' | 'rtl' = 'ltr';
+        public override dir: 'ltr' | 'rtl' = 'ltr';
 
         /**
          * @private
@@ -100,7 +100,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             }
         }
 
-        public connectedCallback(): void {
+        public override connectedCallback(): void {
             if (!this.hasAttribute('dir')) {
                 let dirParent = ((this as HTMLElement).assignedSlot ||
                     this.parentNode) as HTMLElement;
@@ -145,7 +145,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             super.connectedCallback();
         }
 
-        public disconnectedCallback(): void {
+        public override disconnectedCallback(): void {
             super.disconnectedCallback();
             if (this._dirParent) {
                 if (this._dirParent === document.documentElement) {

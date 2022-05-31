@@ -41,12 +41,12 @@ import { TinyColor } from '@ctrl/tinycolor';
  * @fires change - An alteration to the value of the Color Wheel has been committed by the user.
  */
 export class ColorWheel extends Focusable {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
     @property({ type: Boolean, reflect: true })
-    public disabled = false;
+    public override disabled = false;
 
     @property({ type: Boolean, reflect: true })
     public focused = false;
@@ -192,7 +192,7 @@ export class ColorWheel extends Focusable {
     @query('input')
     public input!: HTMLInputElement;
 
-    public get focusElement(): HTMLInputElement {
+    public override get focusElement(): HTMLInputElement {
         return this.input;
     }
 
@@ -258,7 +258,7 @@ export class ColorWheel extends Focusable {
         );
     }
 
-    public focus(focusOptions: FocusOptions = {}): void {
+    public override focus(focusOptions: FocusOptions = {}): void {
         super.focus(focusOptions);
         this.forwardFocus();
     }
@@ -365,7 +365,7 @@ export class ColorWheel extends Focusable {
         this.handlePointermove(event);
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         const { width: diameter = 160 } = this.boundingClientRect || {};
 
         const radius = diameter / 2;
@@ -414,7 +414,7 @@ export class ColorWheel extends Focusable {
         `;
     }
 
-    protected firstUpdated(changed: PropertyValues): void {
+    protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
         this.addEventListener('focusin', this.handleFocusin);
@@ -423,7 +423,7 @@ export class ColorWheel extends Focusable {
 
     private observer?: WithSWCResizeObserver['ResizeObserver'];
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         if (
             !this.observer &&
@@ -441,7 +441,7 @@ export class ColorWheel extends Focusable {
         this.observer?.observe(this);
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         this.observer?.unobserve(this);
         super.disconnectedCallback();
     }

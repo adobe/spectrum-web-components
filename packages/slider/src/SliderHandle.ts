@@ -81,7 +81,7 @@ export class SliderHandle extends Focusable {
         return this.name;
     }
 
-    public get focusElement(): HTMLElement {
+    public override get focusElement(): HTMLElement {
         /* c8 ignore next */
         return this.handleController?.inputForHandle(this) ?? this;
     }
@@ -127,14 +127,14 @@ export class SliderHandle extends Focusable {
         return numberFormat.format(value);
     };
 
-    protected update(changes: PropertyValues): void {
+    protected override update(changes: PropertyValues): void {
         if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
             delete this._numberFormatCache;
         }
         super.update(changes);
     }
 
-    protected updated(changedProperties: PropertyValues<this>): void {
+    protected override updated(changedProperties: PropertyValues<this>): void {
         if (changedProperties.has('value')) {
             const oldValue = changedProperties.get('value');
             if (oldValue != null) {
@@ -146,7 +146,9 @@ export class SliderHandle extends Focusable {
         super.updated(changedProperties);
     }
 
-    protected firstUpdated(changedProperties: PropertyValues<this>): void {
+    protected override firstUpdated(
+        changedProperties: PropertyValues<this>
+    ): void {
         super.firstUpdated(changedProperties);
         this.dispatchEvent(new CustomEvent('sp-slider-handle-ready'));
     }
@@ -210,12 +212,12 @@ export class SliderHandle extends Focusable {
         return this.getNumberFormat();
     }
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         this.resolveLanguage();
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         this.resolveLanguage();
         super.disconnectedCallback();
     }

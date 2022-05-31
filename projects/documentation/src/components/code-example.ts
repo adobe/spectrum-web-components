@@ -51,7 +51,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
 
     private prismjsLoaded = false;
 
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [Styles, StylesLight, StylesDark];
     }
 
@@ -117,7 +117,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
         return toHtmlTemplateString(this.liveHTML);
     }
 
-    protected shouldUpdate(): boolean {
+    protected override shouldUpdate(): boolean {
         if (this.preprocessed || this.prismjsLoaded) {
             return true;
         }
@@ -130,7 +130,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
         return false;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         // highlighedCode needs to happen first in case the HTML is live and
         // needs to be placed into the light DOM
         const { highlightedCode, renderedCode } = this;
@@ -174,7 +174,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
         });
     };
 
-    protected updated(): void {
+    protected override updated(): void {
         setTimeout(this.shouldManageTabOrderForScrolling);
     }
 
@@ -194,7 +194,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
         this.dispatchEvent(queryThemeEvent);
     }
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         window.addEventListener(
             'resize',
@@ -203,7 +203,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
         this.trackTheme();
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         window.removeEventListener(
             'resize',
             this.shouldManageTabOrderForScrolling

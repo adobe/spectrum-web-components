@@ -100,11 +100,11 @@ export class Checkbox extends SizedMixin(CheckboxBase) {
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [checkboxStyles, checkmarkSmallStyles, dashSmallStyles];
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             ${super.render()}
             <span id="box">
@@ -115,7 +115,7 @@ export class Checkbox extends SizedMixin(CheckboxBase) {
         `;
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('invalid')) {
             if (this.invalid) {

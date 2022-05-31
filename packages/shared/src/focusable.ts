@@ -34,7 +34,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
      * @private
      */
     @property({ type: Boolean })
-    public autofocus = false;
+    public override autofocus = false;
 
     /**
      * The tab index to apply to this control. See general documentation about
@@ -43,7 +43,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
      * @private
      */
     @property({ type: Number })
-    public get tabIndex(): number {
+    public override get tabIndex(): number {
         if (this.focusElement === this) {
             const tabindex = this.hasAttribute('tabindex')
                 ? Number(this.getAttribute('tabindex'))
@@ -69,7 +69,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         // as the cache for this value.
         return this.focusElement.tabIndex;
     }
-    public set tabIndex(tabIndex: number) {
+    public override set tabIndex(tabIndex: number) {
         // Flipping `manipulatingTabindex` to true before a change
         // allows for that change NOT to effect the cached value of tabindex
         if (this.manipulatingTabindex) {
@@ -148,7 +148,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         throw new Error('Must implement focusElement getter!');
     }
 
-    public focus(options?: FocusOptions): void {
+    public override focus(options?: FocusOptions): void {
         if (this.disabled || !this.focusElement) {
             return;
         }
@@ -160,7 +160,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
-    public blur(): void {
+    public override blur(): void {
         const focusElement = this.focusElement || this;
         if (focusElement !== this) {
             focusElement.blur();
@@ -169,7 +169,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
-    public click(): void {
+    public override click(): void {
         if (this.disabled) {
             return;
         }
@@ -198,7 +198,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         if (
             !this.hasAttribute('tabindex') ||
@@ -208,7 +208,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
-    protected update(changedProperties: PropertyValues): void {
+    protected override update(changedProperties: PropertyValues): void {
         if (changedProperties.has('disabled')) {
             this.handleDisabledChanged(
                 this.disabled,
@@ -219,7 +219,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         super.update(changedProperties);
     }
 
-    protected updated(changedProperties: PropertyValues): void {
+    protected override updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
 
         if (changedProperties.has('disabled') && this.disabled) {
@@ -259,7 +259,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         this.updateComplete.then(() => {
             requestAnimationFrame(() => {

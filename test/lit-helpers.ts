@@ -45,7 +45,7 @@ class SpreadDirective extends AsyncDirective {
     render(_spreadData: { [key: string]: unknown }) {
         return nothing;
     }
-    update(part: Part, [spreadData]: Parameters<this['render']>) {
+    override update(part: Part, [spreadData]: Parameters<this['render']>) {
         if (this.element !== (part as ElementPart).element) {
             this.element = (part as ElementPart).element;
         }
@@ -144,7 +144,7 @@ class SpreadDirective extends AsyncDirective {
         }
     }
 
-    disconnected() {
+    override disconnected() {
         const { prevData, element } = this;
         for (const key in prevData) {
             if (key[0] !== '@') continue;
@@ -158,7 +158,7 @@ class SpreadDirective extends AsyncDirective {
         }
     }
 
-    reconnected() {
+    override reconnected() {
         const { prevData, element } = this;
         for (const key in prevData) {
             if (key[0] !== '@') continue;
@@ -183,7 +183,7 @@ class SpreadPropsDirective extends AsyncDirective {
     render(_spreadData: { [key: string]: unknown }) {
         return nothing;
     }
-    update(part: Part, [spreadData]: Parameters<this['render']>) {
+    override update(part: Part, [spreadData]: Parameters<this['render']>) {
         if (this.element !== (part as ElementPart).element) {
             this.element = (part as ElementPart).element;
         }

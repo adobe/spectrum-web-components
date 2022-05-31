@@ -31,7 +31,7 @@ export class TestFixture extends LitElement {
     @property({ type: Object })
     template: TemplateResult = html``;
 
-    remove(): boolean {
+    override remove(): boolean {
         const parent = this.parentNode;
         if (parent) {
             parent.removeChild(this);
@@ -73,7 +73,7 @@ export class TestFixture extends LitElement {
         }
     }
 
-    render() {
+    override render() {
         return html`
             ${this.shouldAttachContents ? this.template : ''}
         `;

@@ -30,7 +30,7 @@ export class Thumbnail extends SizedMixin(SpectrumElement, {
     validSizes: ['xxs', 'xs', 's', 'm', 'l'],
     defaultSize: 's',
 }) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -40,7 +40,7 @@ export class Thumbnail extends SizedMixin(SpectrumElement, {
     @property({ type: Boolean, reflect: true })
     public cover = false;
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             ${this.background
                 ? html`

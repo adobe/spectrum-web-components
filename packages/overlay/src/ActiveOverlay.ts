@@ -187,7 +187,7 @@ export class ActiveOverlay extends SpectrumElement {
     private originalPlacement?: Placement;
     private restoreContent?: () => Element[];
 
-    public async focus(): Promise<void> {
+    public override async focus(): Promise<void> {
         const firstFocusable = firstFocusableIn(this);
         if (firstFocusable) {
             if ((firstFocusable as SpectrumElement).updateComplete) {
@@ -216,7 +216,7 @@ export class ActiveOverlay extends SpectrumElement {
 
     private timeout?: number;
 
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -274,7 +274,7 @@ export class ActiveOverlay extends SpectrumElement {
         return undefined;
     }
 
-    public async firstUpdated(
+    public override async firstUpdated(
         changedProperties: PropertyValues
     ): Promise<void> {
         super.firstUpdated(changedProperties);
@@ -585,7 +585,7 @@ export class ActiveOverlay extends SpectrumElement {
         `;
     }
 
-    public render(): TemplateResult {
+    public override render(): TemplateResult {
         const content = html`
             <div id="contents">
                 <slot @slotchange=${this.onSlotChange}></slot>
@@ -607,7 +607,7 @@ export class ActiveOverlay extends SpectrumElement {
     private stealOverlayContentPromise = Promise.resolve();
     private stealOverlayContentResolver!: () => void;
 
-    protected async getUpdateComplete(): Promise<boolean> {
+    protected override async getUpdateComplete(): Promise<boolean> {
         const actions: Promise<unknown>[] = [
             super.getUpdateComplete(),
             this.stealOverlayContentPromise,
@@ -619,7 +619,7 @@ export class ActiveOverlay extends SpectrumElement {
         return complete as boolean;
     }
 
-    disconnectedCallback(): void {
+    override disconnectedCallback(): void {
         document.removeEventListener(
             'sp-update-overlays',
             this.updateOverlayPosition

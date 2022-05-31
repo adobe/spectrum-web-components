@@ -24,7 +24,7 @@ import styles from './coachmark.css.js';
  * @element sp-coachmark
  */
 export class Coachmark extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -34,7 +34,7 @@ export class Coachmark extends SpectrumElement {
     @property({ reflect: true })
     public variant: 'dark' | 'light' | '' = '';
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <div class="ring"></div>
             <div class="ring"></div>

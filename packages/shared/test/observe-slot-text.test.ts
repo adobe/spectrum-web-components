@@ -15,7 +15,7 @@ import { LitElement, TemplateResult } from '@spectrum-web-components/base';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 class ObserverTest extends ObserveSlotText(LitElement) {
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot @slotchange=${this.manageTextObservedSlot}></slot>
         `;

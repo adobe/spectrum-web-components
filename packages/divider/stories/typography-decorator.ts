@@ -27,12 +27,12 @@ import styles from '@spectrum-web-components/theme/src/typography.css.js';
  */
 @customElement('typography-decorator')
 export class Typography extends LitElement {
-    static styles: CSSResultArray = [styles];
+    static override styles: CSSResultArray = [styles];
 
     @property({ attribute: false })
     public story?: TemplateResult;
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         if (!this.story) return html``;
         return html`
             <div class="spectrum-Typography">${this.story}</div>

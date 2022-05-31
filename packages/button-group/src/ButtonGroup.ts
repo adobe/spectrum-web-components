@@ -25,14 +25,14 @@ import styles from './button-group.css.js';
  * @slot - the sp-button elements that make up the group
  */
 export class ButtonGroup extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
     @property({ type: Boolean, reflect: true })
     public vertical = false;
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot></slot>
         `;

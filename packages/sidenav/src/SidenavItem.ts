@@ -31,7 +31,7 @@ import sidenavItemStyles from './sidenav-item.css.js';
  * @slot - the Sidenav Items to display as children of this item
  */
 export class SideNavItem extends LikeAnchor(Focusable) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [sidenavItemStyles];
     }
 
@@ -100,22 +100,22 @@ export class SideNavItem extends LikeAnchor(Focusable) {
         this.dispatchEvent(selectionEvent);
     }
 
-    public click(): void {
+    public override click(): void {
         this.handleClick();
     }
 
-    public get focusElement(): HTMLElement {
+    public override get focusElement(): HTMLElement {
         return this.shadowRoot.querySelector('#item-link') as HTMLElement;
     }
 
-    protected update(changes: PropertyValues): void {
+    protected override update(changes: PropertyValues): void {
         if (!this.hasAttribute('slot')) {
             this.slot = 'descendant';
         }
         super.update(changes);
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <a
                 href=${this.href || '#'}
@@ -141,19 +141,19 @@ export class SideNavItem extends LikeAnchor(Focusable) {
         `;
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         if (this.hasChildren && this.expanded && !this.selected) {
             this.focusElement.tabIndex = -1;
         }
         super.updated(changes);
     }
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         this.startTrackingSelection();
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         this.stopTrackingSelection();
         super.disconnectedCallback();
     }

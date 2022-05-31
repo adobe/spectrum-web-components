@@ -30,7 +30,7 @@ import styles from './tags.css.js';
  * @slot - Tag elements to manage as a group
  */
 export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -58,7 +58,7 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
         this.addEventListener('focusin', this.handleFocusin);
     }
 
-    public focus(): void {
+    public override focus(): void {
         this.rovingTabindexController.focus();
     }
 
@@ -104,13 +104,13 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
         this.rovingTabindexController.clearElementCache();
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot @slotchange=${this.handleSlotchange}></slot>
         `;
     }
 
-    protected firstUpdated(): void {
+    protected override firstUpdated(): void {
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'list');
         }

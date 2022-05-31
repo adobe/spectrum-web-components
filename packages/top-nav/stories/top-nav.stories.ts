@@ -87,7 +87,7 @@ export const Selected = (): TemplateResult => {
 };
 
 class WrappedTopNav extends HTMLElement {
-    shadowRoot!: ShadowRoot;
+    override shadowRoot!: ShadowRoot;
 
     constructor() {
         super();

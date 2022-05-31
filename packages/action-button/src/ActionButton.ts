@@ -49,7 +49,7 @@ export type LongpressEvent = {
  * while `altKey===true`.
  */
 export class ActionButton extends SizedMixin(ButtonBase) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [buttonStyles, cornerTriangleStyles];
     }
 
@@ -153,7 +153,7 @@ export class ActionButton extends SizedMixin(ButtonBase) {
     /**
      * @private
      */
-    protected handleKeydown(event: KeyboardEvent): void {
+    protected override handleKeydown(event: KeyboardEvent): void {
         if (!this.holdAffordance) {
             return super.handleKeydown(event);
         }
@@ -169,7 +169,7 @@ export class ActionButton extends SizedMixin(ButtonBase) {
         }
     }
 
-    protected handleKeyup(event: KeyboardEvent): void {
+    protected override handleKeyup(event: KeyboardEvent): void {
         if (!this.holdAffordance) {
             return super.handleKeyup(event);
         }
@@ -189,7 +189,7 @@ export class ActionButton extends SizedMixin(ButtonBase) {
         }
     }
 
-    protected get buttonContent(): TemplateResult[] {
+    protected override get buttonContent(): TemplateResult[] {
         const buttonContent = super.buttonContent;
         if (this.holdAffordance) {
             buttonContent.unshift(html`
@@ -203,7 +203,7 @@ export class ActionButton extends SizedMixin(ButtonBase) {
         return buttonContent;
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         const isButton = this.role === 'button';
         const canBePressed = isButton && (this.selected || this.toggles);

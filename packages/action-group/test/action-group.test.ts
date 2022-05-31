@@ -36,7 +36,7 @@ import { sendKeys } from '@web/test-runner-commands';
 import '../sp-action-group.js';
 
 class QuietActionGroup extends LitElement {
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <sp-action-group quiet>
                 <slot name="first"></slot>
@@ -48,7 +48,7 @@ class QuietActionGroup extends LitElement {
 customElements.define('quiet-action-group', QuietActionGroup);
 
 class EmphasizedActionGroup extends LitElement {
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <sp-action-group emphasized>
                 <slot name="first"></slot>

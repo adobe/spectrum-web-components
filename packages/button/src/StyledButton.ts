@@ -15,7 +15,7 @@ import { ButtonBase } from './ButtonBase.js';
 import buttonStyles from './button-base.css.js';
 
 export class StyledButton extends ButtonBase {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [buttonStyles];
     }
 }

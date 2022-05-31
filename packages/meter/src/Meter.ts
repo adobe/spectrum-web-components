@@ -30,7 +30,7 @@ import styles from './meter.css.js';
  * @slot - text labeling the Meter
  */
 export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -56,7 +56,7 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     // called sideLabel
     public sideLabel = false;
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <sp-field-label size=${this.size} class="label">
                 ${this.slotHasContent ? html`` : this.label}
@@ -74,12 +74,12 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('role', 'progressbar');
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);

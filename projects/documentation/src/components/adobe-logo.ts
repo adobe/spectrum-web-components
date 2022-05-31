@@ -26,11 +26,11 @@ export class SpectrumLogo extends LitElement {
     @property({ type: String })
     public size: string = '36px';
 
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [logoStyles];
     }
 
-    render() {
+    override render() {
         return html`
             <svg
                 version="1.1"

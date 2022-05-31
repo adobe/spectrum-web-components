@@ -49,7 +49,7 @@ const COLLAPSE_THREASHOLD = 50;
  * @slot Two sibling elements to be sized by the element attritubes
  */
 export class SplitView extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -133,12 +133,12 @@ export class SplitView extends SpectrumElement {
         }
     }
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         this.observer?.observe(this);
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         this.observer?.unobserve(this);
         super.disconnectedCallback();
     }
@@ -164,7 +164,7 @@ export class SplitView extends SpectrumElement {
         return this._splitterSize;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         const splitterClasses = {
             'is-resized-start': this.splitterPos === this.minPos,
             'is-resized-end': (this.splitterPos &&
@@ -408,12 +408,12 @@ export class SplitView extends SpectrumElement {
         this.dispatchEvent(changeEvent);
     }
 
-    protected firstUpdated(changed: PropertyValues): void {
+    protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.checkResize();
     }
 
-    protected updated(changed: PropertyValues): void {
+    protected override updated(changed: PropertyValues): void {
         super.updated(changed);
         if (changed.has('primarySize')) {
             this.splitterPos = undefined;

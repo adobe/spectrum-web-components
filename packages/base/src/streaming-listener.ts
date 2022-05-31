@@ -54,7 +54,7 @@ class StreamingListenerDirective extends AsyncDirective {
         return nothing;
     }
 
-    update(
+    override update(
         part: Part,
         [
             {
@@ -150,11 +150,11 @@ class StreamingListenerDirective extends AsyncDirective {
         this.removeListener(this.streamOutside[0], this.handleBetween);
     }
 
-    disconnected(): void {
+    override disconnected(): void {
         this.removeListeners();
     }
 
-    reconnected(): void {
+    override reconnected(): void {
         this.addListeners();
     }
 }

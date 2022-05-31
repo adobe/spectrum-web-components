@@ -27,7 +27,7 @@ export class CheckboxBase extends Focusable {
     @query('#input')
     protected inputElement!: HTMLInputElement;
 
-    public get focusElement(): HTMLElement {
+    public override get focusElement(): HTMLElement {
         return this.inputElement;
     }
 
@@ -50,7 +50,7 @@ export class CheckboxBase extends Focusable {
         this.dispatchEvent(changeEvent);
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <input
                 id="input"

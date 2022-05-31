@@ -31,7 +31,7 @@ import menuGroupStyles from './menu-group.css.js';
  * @slot - menu items to be listed in the group
  */
 export class MenuGroup extends Menu {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [...super.styles, menuGroupStyles];
     }
 
@@ -51,7 +51,7 @@ export class MenuGroup extends Menu {
     @state()
     private headerElement?: HTMLElement;
 
-    protected get ownRole(): string {
+    protected override get ownRole(): string {
         switch (this.selects) {
             case 'multiple':
             case 'single':
@@ -83,7 +83,7 @@ export class MenuGroup extends Menu {
         this.headerElement = headerElement;
     }
 
-    public render(): TemplateResult {
+    public override render(): TemplateResult {
         return html`
             <span
                 class="header"

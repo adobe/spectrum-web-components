@@ -26,7 +26,7 @@ export const actionBarVariants = ['sticky', 'fixed'];
  * @slot - Content to display with the Action Bar
  */
 export class ActionBar extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [actionBarStyles];
     }
 
@@ -68,7 +68,7 @@ export class ActionBar extends SpectrumElement {
 
     private _variant = '';
 
-    public render(): TemplateResult {
+    public override render(): TemplateResult {
         return html`
             <sp-popover ?open=${this.open} id="popover">
                 <slot></slot>

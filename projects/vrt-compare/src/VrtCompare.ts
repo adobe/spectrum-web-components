@@ -211,7 +211,7 @@ export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [
         this._loadingImages = false;
     }
 
-    protected shouldUpdate() {
+    protected override shouldUpdate() {
         if (
             this.view === 'error' ||
             (this.view === 'actual' && !this.hasActual) ||
@@ -227,7 +227,7 @@ export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [
         return true;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         if (this._loadingImages) {
             return html`
                 <sp-progress-circle indeterminate></sp-progress-circle>
@@ -350,7 +350,7 @@ export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [
         `;
     }
 
-    protected updated(changes: PropertyValues) {
+    protected override updated(changes: PropertyValues) {
         if (changes.has('zoom')) {
             let zoom = Math.min(this.zoom, 2);
             zoom = Math.min(zoom, 0.5);
@@ -358,7 +358,7 @@ export class VrtCompare extends ObserveSlotPresence(SpectrumElement, [
         }
     }
 
-    static styles = [
+    static override styles = [
         css`
             :host {
                 display: grid;

@@ -31,7 +31,7 @@ import styles from './field-group.css.js';
 export class FieldGroup extends ManageHelpText(SpectrumElement, {
     mode: 'external',
 }) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -52,7 +52,7 @@ export class FieldGroup extends ManageHelpText(SpectrumElement, {
         return;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <div class="group" role="presentation">
                 <slot @slotchange=${this.handleSlotchange}></slot>
@@ -61,7 +61,7 @@ export class FieldGroup extends ManageHelpText(SpectrumElement, {
         `;
     }
 
-    protected updated(changes: PropertyValues<this>): void {
+    protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (changes.has('label')) {
             if (this.label) {

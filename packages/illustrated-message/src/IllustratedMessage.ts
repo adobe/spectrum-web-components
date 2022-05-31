@@ -32,7 +32,7 @@ import bodyStyles from '@spectrum-web-components/styles/body.js';
 export class IllustratedMessage extends SpectrumElement {
     public static readonly is = 'sp-illustrated-message';
 
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [headingStyles, bodyStyles, messageStyles];
     }
 
@@ -42,7 +42,7 @@ export class IllustratedMessage extends SpectrumElement {
     @property()
     public description = '';
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <div id="illustration"><slot></slot></div>
             <h2

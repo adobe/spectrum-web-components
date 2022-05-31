@@ -33,7 +33,7 @@ import linkStyles from './link.css.js';
 export class Link extends SizedMixin(LikeAnchor(Focusable), {
     noDefaultSize: true,
 }) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [linkStyles];
     }
 
@@ -43,11 +43,11 @@ export class Link extends SizedMixin(LikeAnchor(Focusable), {
     @property({ type: String, reflect: true })
     public variant: 'secondary' | undefined;
 
-    public get focusElement(): HTMLElement {
+    public override get focusElement(): HTMLElement {
         return this.anchorElement;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return this.renderAnchor({ id: 'anchor' });
     }
 }

@@ -728,7 +728,7 @@ export const superComplexModal = (): TemplateResult => {
 };
 
 class StartEndContextmenu extends HTMLElement {
-    shadowRoot!: ShadowRoot;
+    override shadowRoot!: ShadowRoot;
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });

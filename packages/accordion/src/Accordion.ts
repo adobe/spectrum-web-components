@@ -31,7 +31,7 @@ import styles from './accordion.css.js';
  * @slot - The sp-accordion-item children to display.
  */
 export class Accordion extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -56,7 +56,7 @@ export class Accordion extends SpectrumElement {
         isFocusableElement: (el: AccordionItem) => !el.disabled,
     });
 
-    public focus(): void {
+    public override focus(): void {
         this.focusGroupController.focus();
     }
 
@@ -87,7 +87,7 @@ export class Accordion extends SpectrumElement {
         this.focusGroupController.clearElementCache();
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot
                 @slotchange=${this.handleSlotchange}

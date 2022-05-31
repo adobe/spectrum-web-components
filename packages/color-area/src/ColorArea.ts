@@ -42,7 +42,7 @@ import styles from './color-area.css.js';
  * @fires change - An alteration to the value of the Color Area has been committed by the user.
  */
 export class ColorArea extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -241,7 +241,7 @@ export class ColorArea extends SpectrumElement {
 
     private activeKeys = new Set();
 
-    public focus(focusOptions: FocusOptions = {}): void {
+    public override focus(focusOptions: FocusOptions = {}): void {
         super.focus(focusOptions);
         this.forwardFocus();
     }
@@ -452,7 +452,7 @@ export class ColorArea extends SpectrumElement {
         this.handlePointermove(event);
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         const { width = 0, height = 0 } = this.boundingClientRect || {};
 
         return html`
@@ -517,7 +517,7 @@ export class ColorArea extends SpectrumElement {
         `;
     }
 
-    protected firstUpdated(changed: PropertyValues): void {
+    protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
 
@@ -527,7 +527,7 @@ export class ColorArea extends SpectrumElement {
         this.addEventListener('keydown', this.handleKeydown);
     }
 
-    protected updated(changed: PropertyValues): void {
+    protected override updated(changed: PropertyValues): void {
         super.updated(changed);
         if (this.x !== this.inputX.valueAsNumber) {
             this.x = this.inputX.valueAsNumber;
@@ -553,7 +553,7 @@ export class ColorArea extends SpectrumElement {
 
     private observer?: WithSWCResizeObserver['ResizeObserver'];
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         if (
             !this.observer &&
@@ -571,7 +571,7 @@ export class ColorArea extends SpectrumElement {
         this.observer?.observe(this);
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         this.observer?.unobserve(this);
         super.disconnectedCallback();
     }

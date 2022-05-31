@@ -399,7 +399,7 @@ describe('Sidenav', () => {
     });
     it('manage tab index through shadow DOM', async () => {
         class SideNavTestEl extends LitElement {
-            protected render(): TemplateResult {
+            protected override render(): TemplateResult {
                 return manageTabIndex();
             }
         }

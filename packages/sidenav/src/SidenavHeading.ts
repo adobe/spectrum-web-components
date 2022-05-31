@@ -31,18 +31,18 @@ export class SideNavHeading extends SpectrumElement {
     @property({ reflect: true })
     public label = '';
 
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [sidenavItemStyles, sidenavHeadingStyles];
     }
 
-    protected update(changes: PropertyValues): void {
+    protected override update(changes: PropertyValues): void {
         if (!this.hasAttribute('slot')) {
             this.slot = 'descendant';
         }
         super.update(changes);
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <h2 id="heading">${this.label}</h2>
             <div id="list" aria-labelledby="heading">

@@ -30,7 +30,7 @@ const defaultSize = validSizes[2];
  * @element sp-avatar
  */
 export class Avatar extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [avatarStyles];
     }
 
@@ -63,7 +63,7 @@ export class Avatar extends SpectrumElement {
 
     private _size = defaultSize;
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <img
                 class="image"
@@ -73,7 +73,7 @@ export class Avatar extends SpectrumElement {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         if (!this.hasAttribute('size')) {
             this.setAttribute('size', `${this.size}`);

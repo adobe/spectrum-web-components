@@ -40,12 +40,12 @@ import { TinyColor } from '@ctrl/tinycolor';
  * @fires change - An alteration to the value of the Color Slider has been committed by the user.
  */
 export class ColorSlider extends Focusable {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
     @property({ type: Boolean, reflect: true })
-    public disabled = false;
+    public override disabled = false;
 
     @property({ type: Boolean, reflect: true })
     public focused = false;
@@ -203,7 +203,7 @@ export class ColorSlider extends Focusable {
     @query('input')
     public input!: HTMLInputElement;
 
-    public get focusElement(): HTMLInputElement {
+    public override get focusElement(): HTMLInputElement {
         return this.input;
     }
 
@@ -273,7 +273,7 @@ export class ColorSlider extends Focusable {
         );
     }
 
-    public focus(focusOptions: FocusOptions = {}): void {
+    public override focus(focusOptions: FocusOptions = {}): void {
         super.focus(focusOptions);
         this.forwardFocus();
     }
@@ -385,7 +385,7 @@ export class ColorSlider extends Focusable {
         }%`;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <div
                 class="checkerboard"
@@ -431,7 +431,7 @@ export class ColorSlider extends Focusable {
         `;
     }
 
-    protected firstUpdated(changed: PropertyValues): void {
+    protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.boundingClientRect = this.getBoundingClientRect();
         this.addEventListener('focusin', this.handleFocusin);
