@@ -91,7 +91,9 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     private transitionPromise = Promise.resolve();
 
-    private resolveTransitionPromise!: () => void;
+    private resolveTransitionPromise = (): void => {
+        return;
+    };
 
     @property({ type: Boolean })
     public underlay = false;
