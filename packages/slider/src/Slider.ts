@@ -34,6 +34,7 @@ import type { NumberField } from '@spectrum-web-components/number-field';
 import { HandleController, HandleValueDictionary } from './HandleController.js';
 import { SliderHandle } from './SliderHandle.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
+import type { NumberFormatter } from '@internationalized/number';
 
 export const variants = ['filled', 'ramp', 'range', 'tick'];
 
@@ -161,7 +162,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
     @query('#track')
     public track!: HTMLDivElement;
 
-    public get numberFormat(): Intl.NumberFormat {
+    public get numberFormat(): NumberFormatter {
         return this.getNumberFormat();
     }
 
