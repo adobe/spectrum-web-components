@@ -166,7 +166,7 @@ export class SliderHandle extends Focusable {
     protected _numberFormatCache:
         | { numberFormat: NumberFormatter; language: string }
         | undefined;
-    protected getNumberFormat(): Intl.NumberFormat {
+    protected getNumberFormat(): NumberFormatter {
         /* c8 ignore next */
         if (
             !this._numberFormatCache ||
