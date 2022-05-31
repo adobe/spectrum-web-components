@@ -444,7 +444,7 @@ describe('Tabs', () => {
 
     it('accepts keyboard based selection through shadow DOM', async () => {
         class TabTestEl extends LitElement {
-            protected render(): TemplateResult {
+            protected override render(): TemplateResult {
                 return html`
                     <sp-tabs selected="Unknown">
                         <sp-tab label="Tab 1" value="first">

@@ -104,7 +104,7 @@ ActiveOverlay.prototype.renderTheme = function (
 };
 
 export class StoryDecorator extends SpectrumElement {
-    static get styles() {
+    static override get styles() {
         return [
             css`
                 :host(:focus) {
@@ -259,7 +259,7 @@ export class StoryDecorator extends SpectrumElement {
         }
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <sp-theme
                 theme=${this.theme}

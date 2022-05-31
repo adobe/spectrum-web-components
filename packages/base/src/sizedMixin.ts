@@ -73,7 +73,7 @@ export function SizedMixin<T extends Constructor<ReactiveElement>>(
 
         private _size: ElementSize | null = defaultSize;
 
-        protected update(changes: PropertyValues): void {
+        protected override update(changes: PropertyValues): void {
             if (!this.hasAttribute('size') && !noDefaultSize) {
                 this.setAttribute('size', this.size);
             }

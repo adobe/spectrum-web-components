@@ -43,7 +43,7 @@ import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focu
  * @fires close - Announces that the dialog has been closed.
  */
 export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [modalWrapperStyles, modalStyles];
     }
 
@@ -99,7 +99,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
     @query('sp-dialog')
     private dialog!: Dialog;
 
-    public focus(): void {
+    public override focus(): void {
         if (this.shadowRoot) {
             const firstFocusable = firstFocusableIn(this.dialog);
             if (firstFocusable) {
@@ -191,7 +191,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
-    protected update(changes: PropertyValues<this>): void {
+    protected override update(changes: PropertyValues<this>): void {
         if (changes.has('open') && changes.get('open') !== undefined) {
             this.transitionPromise = new Promise(
                 (res) => (this.resolveTransitionPromise = res)
@@ -200,7 +200,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
         super.update(changes);
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             ${this.underlay
                 ? html`
@@ -290,7 +290,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
         `;
     }
 
-    protected updated(changes: PropertyValues<this>): void {
+    protected override updated(changes: PropertyValues<this>): void {
         if (changes.has('open')) {
             if (this.open) {
                 this.dialog.updateComplete.then(() => {
@@ -310,7 +310,7 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
      * while opening the Tray when focusable content is included: e.g. Menu
      * elements whose selected Menu Item is not the first Menu Item.
      */
-    protected async getUpdateComplete(): Promise<boolean> {
+    protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.transitionPromise;
         return complete;

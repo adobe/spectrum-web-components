@@ -36,21 +36,21 @@ export class Icon extends IconBase {
 
     private updateIconPromise?: Promise<void>;
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         window.addEventListener('sp-iconset-added', this.iconsetListener);
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         super.disconnectedCallback();
         window.removeEventListener('sp-iconset-added', this.iconsetListener);
     }
 
-    public firstUpdated(): void {
+    public override firstUpdated(): void {
         this.updateIconPromise = this.updateIcon();
     }
 
-    public attributeChangedCallback(
+    public override attributeChangedCallback(
         name: string,
         old: string,
         value: string
@@ -70,7 +70,7 @@ export class Icon extends IconBase {
         }
     };
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         if (this.name) {
             return html`
                 <div id="container"></div>
@@ -121,7 +121,7 @@ export class Icon extends IconBase {
         return { iconset: iconsetName, icon: iconName };
     }
 
-    protected async getUpdateComplete(): Promise<boolean> {
+    protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.updateIconPromise;
         return complete;

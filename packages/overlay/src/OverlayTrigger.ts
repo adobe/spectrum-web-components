@@ -65,7 +65,7 @@ export class OverlayTrigger extends SpectrumElement {
     private closeLongpressOverlay?: Promise<() => void>;
     private closeHoverOverlay?: Promise<() => void>;
 
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [overlayTriggerStyles];
     }
 
@@ -110,7 +110,7 @@ export class OverlayTrigger extends SpectrumElement {
         this.removeAttribute('open');
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         // Keyboard event availability documented in README.md
         /* eslint-disable lit-a11y/click-events-have-key-events */
         return html`
@@ -145,7 +145,7 @@ export class OverlayTrigger extends SpectrumElement {
         /* eslint-enable lit-a11y/click-events-have-key-events */
     }
 
-    protected updated(changes: PropertyValues<this>): void {
+    protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (this.disabled && changes.has('disabled')) {
             this.closeAllOverlays();
@@ -417,13 +417,13 @@ export class OverlayTrigger extends SpectrumElement {
     private openStatePromise = Promise.resolve();
     private openStateResolver!: () => void;
 
-    protected async getUpdateComplete(): Promise<boolean> {
+    protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.openStatePromise;
         return complete;
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         this.closeAllOverlays();
         super.disconnectedCallback();
     }

@@ -27,7 +27,7 @@ import statusLightStyles from './status-light.css.js';
  * @slot - text label of the Status Light
  */
 export class StatusLight extends SizedMixin(SpectrumElement) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [statusLightStyles];
     }
 
@@ -56,13 +56,13 @@ export class StatusLight extends SizedMixin(SpectrumElement) {
         | 'celery'
         | 'purple' = 'info';
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot></slot>
         `;
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('disabled')) {
             if (this.disabled) {

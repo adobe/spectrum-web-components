@@ -58,7 +58,7 @@ export class Card extends LikeAnchor(
         }
     )
 ) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [headingStyles, detailStyles, cardStyles];
     }
 
@@ -109,7 +109,7 @@ export class Card extends LikeAnchor(
         return this.getSlotContentPresence('[slot="preview"]');
     }
 
-    public click(): void {
+    public override click(): void {
         this.likeAnchor?.click();
     }
 
@@ -256,7 +256,7 @@ export class Card extends LikeAnchor(
         `;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <div class="body">
                 <div class="header">
@@ -323,7 +323,7 @@ export class Card extends LikeAnchor(
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('focusin', this.handleFocusin);

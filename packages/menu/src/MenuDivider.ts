@@ -19,11 +19,11 @@ import dividerStyles from '@spectrum-web-components/divider/src/divider.css.js';
  * @element sp-menu-divider
  */
 export class MenuDivider extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [dividerStyles, menuDividerStyles];
     }
 
-    protected firstUpdated(): void {
+    protected override firstUpdated(): void {
         this.setAttribute('role', 'separator');
         this.setAttribute('size', 'm');
     }

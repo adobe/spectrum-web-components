@@ -94,7 +94,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     }
 
     @property({ type: Boolean, reflect: true })
-    public disabled = false;
+    public override disabled = false;
 
     @property({ type: Boolean, reflect: true })
     public focused = false;
@@ -150,7 +150,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.onKeydown = this.onKeydown.bind(this);
     }
 
-    public get focusElement(): HTMLElement {
+    public override get focusElement(): HTMLElement {
         if (this.open) {
             return this.optionsMenu;
         }
@@ -173,7 +173,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         this.toggle();
     }
 
-    public focus(options?: FocusOptions): void {
+    public override focus(options?: FocusOptions): void {
         super.focus(options);
 
         if (!this.disabled && this.focusElement) {
@@ -408,7 +408,7 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     // a helper to throw focus to the button is needed because Safari
     // won't include buttons in the tab order even with tabindex="0"
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <span
                 id="focus-helper"
@@ -432,7 +432,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         `;
     }
 
-    protected update(changes: PropertyValues<this>): void {
+    protected override update(changes: PropertyValues<this>): void {
         if (this.selects) {
             // Always force `selects` to "single" when set.
             // TODO: Add support functionally and visually for "multiple"
@@ -529,7 +529,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         });
     }
 
-    protected updated(changedProperties: PropertyValues): void {
+    protected override updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
         if (changedProperties.has('disabled') && this.disabled) {
             this.open = false;
@@ -587,7 +587,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     private selectionPromise = Promise.resolve();
     private selectionResolver!: () => void;
 
-    protected async getUpdateComplete(): Promise<boolean> {
+    protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.menuStatePromise;
         await this.itemsUpdated;
@@ -595,7 +595,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         return complete;
     }
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         this.updateMenuItems();
         this.addEventListener(
             'sp-menu-item-added-or-updated',
@@ -605,7 +605,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         super.connectedCallback();
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         this.close();
 
         super.disconnectedCallback();
@@ -613,11 +613,11 @@ export class PickerBase extends SizedMixin(Focusable) {
 }
 
 export class Picker extends PickerBase {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [pickerStyles, chevronStyles];
     }
 
-    protected onKeydown = (event: KeyboardEvent): void => {
+    protected override onKeydown = (event: KeyboardEvent): void => {
         const { code } = event;
         this.focused = true;
         if (!code.startsWith('Arrow') || this.readonly) {

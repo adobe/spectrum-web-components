@@ -66,7 +66,7 @@ const noop = (): void => {
  *   Item children of this Menu will not have their `selected` state managed.
  */
 export class Menu extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [menuStyles];
     }
 
@@ -292,7 +292,7 @@ export class Menu extends SpectrumElement {
         this.addEventListener('focusin', this.handleFocusin);
     }
 
-    public focus({ preventScroll }: FocusOptions = {}): void {
+    public override focus({ preventScroll }: FocusOptions = {}): void {
         if (
             !this.childItems.length ||
             this.childItems.every((childItem) => childItem.disabled)
@@ -677,7 +677,7 @@ export class Menu extends SpectrumElement {
         }
     }
 
-    public render(): TemplateResult {
+    public override render(): TemplateResult {
         return html`
             <slot></slot>
         `;
@@ -685,7 +685,7 @@ export class Menu extends SpectrumElement {
 
     private _notFirstUpdated = false;
 
-    protected firstUpdated(changed: PropertyValues): void {
+    protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         if (!this.hasAttribute('tabindex')) {
             const role = this.getAttribute('role');
@@ -706,7 +706,7 @@ export class Menu extends SpectrumElement {
         this.childItemsUpdated = Promise.all(updates);
     }
 
-    protected updated(changes: PropertyValues<this>): void {
+    protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (changes.has('selects') && this._notFirstUpdated) {
             this.selectsChanged();
@@ -731,7 +731,7 @@ export class Menu extends SpectrumElement {
         this.childItemsUpdated = Promise.all(updates);
     }
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', this.ownRole);
@@ -742,7 +742,7 @@ export class Menu extends SpectrumElement {
     protected childItemsUpdated!: Promise<unknown[]>;
     protected cacheUpdated = Promise.resolve();
 
-    protected async getUpdateComplete(): Promise<boolean> {
+    protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.childItemsUpdated;
         await this.cacheUpdated;

@@ -24,7 +24,7 @@ import styles from './color-loupe.css.js';
  * @element sp-color-loupe
  */
 export class ColorLoupe extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -34,7 +34,7 @@ export class ColorLoupe extends SpectrumElement {
     @property({ type: String })
     public color = 'rgba(255, 0, 0, 0.5)';
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <svg style="--spectrum-picked-color: ${this.color};">
                 <defs>

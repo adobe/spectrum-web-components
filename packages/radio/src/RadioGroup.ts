@@ -58,7 +58,7 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
         isFocusableElement: (el: Radio) => !el.disabled,
     });
 
-    public focus(): void {
+    public override focus(): void {
         this.rovingTabindexController.focus();
     }
 
@@ -90,7 +90,7 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     @property({ reflect: true })
     public selected = '';
 
-    protected firstUpdated(changes: PropertyValues<this>): void {
+    protected override firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
         this.setAttribute('role', 'radiogroup');
         const checkedRadio = this.querySelector('sp-radio[checked]') as Radio;
@@ -116,7 +116,7 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
         });
     }
 
-    protected updated(changes: PropertyValues<this>): void {
+    protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (changes.has('selected')) {
             this.validateRadios();
@@ -134,7 +134,7 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
         }
     }
 
-    protected handleSlotchange(): void {
+    protected override handleSlotchange(): void {
         this.rovingTabindexController.clearElementCache();
     }
 }

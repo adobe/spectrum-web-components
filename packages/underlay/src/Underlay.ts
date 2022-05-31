@@ -24,14 +24,14 @@ import styles from './underlay.css.js';
  * @element sp-underlay
  */
 export class Underlay extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
     @property({ type: Boolean, reflect: true })
     public open = false;
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html``;
     }
 }

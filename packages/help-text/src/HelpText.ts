@@ -29,7 +29,7 @@ type HelpTextVariants = 'neutral' | 'negative';
  * @element sp-help-text
  */
 export class HelpText extends SizedMixin(SpectrumElement) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -42,7 +42,7 @@ export class HelpText extends SizedMixin(SpectrumElement) {
     @property({ reflect: true })
     public variant: HelpTextVariants = 'neutral';
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             ${this.variant === 'negative' && this.icon
                 ? html`

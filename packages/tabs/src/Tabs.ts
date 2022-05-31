@@ -42,7 +42,7 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
  * @fires change - The selected Tab child has changed.
  */
 export class Tabs extends SizedMixin(Focusable) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [tabStyles];
     }
 
@@ -135,11 +135,11 @@ export class Tabs extends SizedMixin(Focusable) {
     /**
      * @private
      */
-    public get focusElement(): Tab | this {
+    public override get focusElement(): Tab | this {
         return this.rovingTabindexController.focusInElement || this;
     }
 
-    protected manageAutoFocus(): void {
+    protected override manageAutoFocus(): void {
         const tabs = [...this.children] as Tab[];
         const tabUpdateCompletes = tabs.map((tab) => {
             if (typeof tab.updateComplete !== 'undefined') {
@@ -165,7 +165,7 @@ export class Tabs extends SizedMixin(Focusable) {
         });
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <div
                 aria-label=${ifDefined(this.label ? this.label : undefined)}
@@ -189,7 +189,7 @@ export class Tabs extends SizedMixin(Focusable) {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         const selectedChild = this.querySelector(':scope > [selected]') as Tab;
         if (selectedChild) {
@@ -197,7 +197,7 @@ export class Tabs extends SizedMixin(Focusable) {
         }
     }
 
-    protected updated(changes: PropertyValues<this>): void {
+    protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (changes.has('selected')) {
             if (changes.get('selected')) {
@@ -356,13 +356,13 @@ export class Tabs extends SizedMixin(Focusable) {
         return;
     };
 
-    protected async getUpdateComplete(): Promise<boolean> {
+    protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.tabChangePromise;
         return complete;
     }
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
@@ -382,7 +382,7 @@ export class Tabs extends SizedMixin(Focusable) {
         }
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
             (

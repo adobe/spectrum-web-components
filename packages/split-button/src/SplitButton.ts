@@ -49,7 +49,7 @@ export type SplitButtonTypes = 'field' | 'more';
  * @slot - menu items to be listed in the Button
  **/
 export class SplitButton extends SizedMixin(PickerBase) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles, chevronStyles];
     }
 
@@ -62,7 +62,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
     @property({ reflect: true })
     public variant: ButtonVariants = 'accent';
 
-    public get target(): HTMLButtonElement | this {
+    public override get target(): HTMLButtonElement | this {
         return this;
     }
 
@@ -72,10 +72,10 @@ export class SplitButton extends SizedMixin(PickerBase) {
     @query('.trigger')
     private trigger!: HTMLButtonElement;
 
-    protected listRole: 'listbox' | 'menu' = 'menu';
-    protected itemRole = 'menuitem';
+    protected override listRole: 'listbox' | 'menu' = 'menu';
+    protected override itemRole = 'menuitem';
 
-    public get focusElement(): HTMLElement {
+    public override get focusElement(): HTMLElement {
         if (this.open) {
             return this.optionsMenu;
         }
@@ -85,7 +85,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
         return this.button;
     }
 
-    protected sizePopover(popover: HTMLElement): void {
+    protected override sizePopover(popover: HTMLElement): void {
         popover.style.setProperty('min-width', `${this.offsetWidth}px`);
     }
 
@@ -99,7 +99,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
         }
     }
 
-    protected get buttonContent(): TemplateResult[] {
+    protected override get buttonContent(): TemplateResult[] {
         return [
             html`
                 <div
@@ -113,7 +113,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
         ];
     }
 
-    protected update(changes: PropertyValues<this>): void {
+    protected override update(changes: PropertyValues<this>): void {
         if (changes.has('type')) {
             if (this.type === 'more') {
                 this.selects = undefined;
@@ -124,7 +124,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
         super.update(changes);
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         const treatment = ['cta', 'accent'].includes(this.variant)
             ? 'fill'
             : 'outline';
@@ -179,14 +179,14 @@ export class SplitButton extends SizedMixin(PickerBase) {
         `;
     }
 
-    protected updated(changedProperties: PropertyValues): void {
+    protected override updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
         if (changedProperties.has('value')) {
             this.manageSplitButtonItems();
         }
     }
 
-    protected async manageSelection(): Promise<void> {
+    protected override async manageSelection(): Promise<void> {
         await this.manageSplitButtonItems();
         await super.manageSelection();
     }

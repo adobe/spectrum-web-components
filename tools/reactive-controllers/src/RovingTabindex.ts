@@ -20,13 +20,13 @@ interface UpdateTabIndexes {
 export class RovingTabindexController<
     T extends HTMLElement
 > extends FocusGroupController<T> {
-    protected set focused(focused: boolean) {
+    protected override set focused(focused: boolean) {
         if (focused === this.focused) return;
         super.focused = focused;
         this.manageTabindexes();
     }
 
-    protected get focused(): boolean {
+    protected override get focused(): boolean {
         return super.focused;
     }
 
@@ -34,7 +34,7 @@ export class RovingTabindexController<
 
     private manageIndexesAnimationFrame = 0;
 
-    clearElementCache(offset = 0): void {
+    override clearElementCache(offset = 0): void {
         cancelAnimationFrame(this.manageIndexesAnimationFrame);
         super.clearElementCache(offset);
         if (!this.managed) return;
@@ -74,13 +74,13 @@ export class RovingTabindexController<
         });
     }
 
-    manage(): void {
+    override manage(): void {
         this.managed = true;
         this.manageTabindexes();
         super.manage();
     }
 
-    unmanage(): void {
+    override unmanage(): void {
         this.managed = false;
         this.updateTabindexes(() => ({ tabIndex: 0 }));
         super.unmanage();

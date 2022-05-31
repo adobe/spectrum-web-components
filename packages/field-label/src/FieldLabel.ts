@@ -36,7 +36,7 @@ type AcceptsFocusVisisble = HTMLElement & { forceFocusVisible?(): void };
  * @slot - text content of the label
  */
 export class FieldLabel extends SizedMixin(SpectrumElement) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles, asteriskIconStyles];
     }
 
@@ -49,7 +49,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
     public disabled = false;
 
     @property({ type: String })
-    public id = '';
+    public override id = '';
 
     @property({ type: String })
     public for = '';
@@ -117,7 +117,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
         return labelText.join(' ');
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <label>
                 <slot @slotchange=${this.manageFor}></slot>
@@ -132,12 +132,12 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('click', this.handleClick);
     }
 
-    protected willUpdate(changes: PropertyValues): void {
+    protected override willUpdate(changes: PropertyValues): void {
         if (!this.hasAttribute('id')) {
             this.setAttribute(
                 'id',

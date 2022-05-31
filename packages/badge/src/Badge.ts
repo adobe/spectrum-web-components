@@ -43,14 +43,14 @@ export type BadgeVariant = typeof BADGE_VARIANTS[number];
  * @slot icon - Optional icon that appears to the left of the label
  */
 export class Badge extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
     @property({ type: String, reflect: true })
     public variant: BadgeVariant = 'informative';
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot name="icon" ?icon-only=${!this.slotHasContent}></slot>
             <div id="label">

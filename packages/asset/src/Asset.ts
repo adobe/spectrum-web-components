@@ -61,7 +61,7 @@ const folder = (label: string): TemplateResult => html`
  * @slot - content to be displayed in the asset when an acceptable value for `file` is not present
  */
 export class Asset extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -71,7 +71,7 @@ export class Asset extends SpectrumElement {
     @property()
     public label = '';
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         if (this.variant === 'file') {
             return file(this.label);
         } else if (this.variant === 'folder') {

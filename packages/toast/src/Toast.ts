@@ -51,7 +51,7 @@ export type ToastVariants =
  */
 
 export class Toast extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [toastStyles];
     }
 
@@ -202,7 +202,7 @@ export class Toast extends SpectrumElement {
         this.open = false;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             ${this.renderIcon(this.variant)}
             <div class="body" role="alert">
@@ -221,7 +221,7 @@ export class Toast extends SpectrumElement {
         `;
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('open')) {
             if (this.open) {

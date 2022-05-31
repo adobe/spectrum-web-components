@@ -78,7 +78,7 @@ import '@spectrum-web-components/icon';
 import { AbcIcon } from '@spectrum-web-components/icons-workflow';
 
 class ElementWithIcon extends LitElement {
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <sp-icon>
                 ${AbcIcon()}

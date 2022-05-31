@@ -32,7 +32,7 @@ const EMPTY_SELECTION: string[] = [];
  * @fires change - Announces that selection state has been changed by user
  */
 export class ActionGroup extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -134,7 +134,7 @@ export class ActionGroup extends SpectrumElement {
         this.dispatchChange(old);
     }
 
-    public focus(options?: FocusOptions): void {
+    public override focus(options?: FocusOptions): void {
         this.rovingTabindexController.focus(options);
     }
 
@@ -283,18 +283,18 @@ export class ActionGroup extends SpectrumElement {
         }
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot role="presentation" @slotchange=${this.manageButtons}></slot>
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.addEventListener('click', this.handleClick);
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('selects')) {
             this.manageSelects();
@@ -355,7 +355,7 @@ export class ActionGroup extends SpectrumElement {
         this.manageSelects();
     };
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         if (!this.observer) {
             this.observer = new MutationObserver(this.manageButtons);
@@ -364,7 +364,7 @@ export class ActionGroup extends SpectrumElement {
         this.observer.observe(this, { childList: true, subtree: true });
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         this.observer.disconnect();
         super.disconnectedCallback();
     }

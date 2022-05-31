@@ -36,11 +36,11 @@ export class Banner extends SpectrumElement {
     @property({ reflect: true, type: Boolean })
     public corner = false;
 
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [bannerStyles];
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <div id="header"><slot name="header"></slot></div>
             <div id="content"><slot name="content"></slot></div>

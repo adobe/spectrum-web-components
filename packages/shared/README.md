@@ -32,14 +32,14 @@ import { Focusable } from '@spectrum-web-components/shared';
 import { html } from 'lit-element';
 
 class FocusableButton extends Focusable {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [...super.styles];
     }
     public get focusElement(): HTMLElement {
         return this.shadowRoot.querySelector('#button') as HTMLElement;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <button
                 id="button"
@@ -75,7 +75,7 @@ class ObserveSlotPresenceElement extends ObserveSlotPresence(LitElement, '[slot=
     protected get hasConditionalSlotContent() {
         return this.slotContentIsPresent;
     }
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <button
                 id="button"
@@ -107,7 +107,7 @@ import { ObserveSlotText } from '@spectrum-web-components/shared';
 import { LitElement, html } from 'lit-element';
 
 class ObserveSlotTextElement extends ObserveSlotText(LitElement, '#observing-slot') {
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <button
                 id="button"

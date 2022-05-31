@@ -125,7 +125,7 @@ export const FocusVisiblePolyfillMixin = <
 
         // Attempt to coordinate with the polyfill when connected to the
         // document:
-        connectedCallback(): void {
+        override connectedCallback(): void {
             super.connectedCallback && super.connectedCallback();
             if (!hasFocusVisible) {
                 requestAnimationFrame(() => {
@@ -137,7 +137,7 @@ export const FocusVisiblePolyfillMixin = <
             }
         }
 
-        disconnectedCallback(): void {
+        override disconnectedCallback(): void {
             super.disconnectedCallback && super.disconnectedCallback();
             // It's important to remove the polyfill event listener when we
             // disconnect, otherwise we will leak the whole element via window:

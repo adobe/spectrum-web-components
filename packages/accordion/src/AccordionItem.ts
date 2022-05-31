@@ -29,7 +29,7 @@ import styles from './accordion-item.css.js';
  * @fires sp-accordion-item-toggle - Announce that an accordion item has been toggled while allowing the event to be cancelled.
  */
 export class AccordionItem extends Focusable {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles, chevronIconStyles];
     }
 
@@ -40,9 +40,9 @@ export class AccordionItem extends Focusable {
     public label = '';
 
     @property({ type: Boolean, reflect: true })
-    public disabled = false;
+    public override disabled = false;
 
-    public get focusElement(): HTMLElement {
+    public override get focusElement(): HTMLElement {
         return this.shadowRoot.querySelector('#header') as HTMLElement;
     }
 
@@ -68,7 +68,7 @@ export class AccordionItem extends Focusable {
         }
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <h3 id="heading">
                 <button
@@ -90,7 +90,7 @@ export class AccordionItem extends Focusable {
         `;
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('disabled')) {
             if (this.disabled) {

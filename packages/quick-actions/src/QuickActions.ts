@@ -26,7 +26,7 @@ import styles from './quick-actions.css.js';
  * @slot - Action Buttons to displayed for quick use
  */
 export class QuickActions extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -42,7 +42,7 @@ export class QuickActions extends SpectrumElement {
     })
     public textOnly = false;
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot></slot>
         `;

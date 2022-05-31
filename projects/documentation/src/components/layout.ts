@@ -140,7 +140,7 @@ export interface TrackTheme {
 
 // @customElement('docs-page')
 export class LayoutElement extends LitElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [layoutStyles];
     }
 
@@ -158,7 +158,7 @@ export class LayoutElement extends LitElement {
     public color: Color = DEFAULT_COLOR;
 
     @property({ reflect: true })
-    public dir: 'ltr' | 'rtl' = DEFAULT_DIR;
+    public override dir: 'ltr' | 'rtl' = DEFAULT_DIR;
 
     @property({ type: Boolean })
     public open = false;
@@ -270,7 +270,7 @@ export class LayoutElement extends LitElement {
         this.requestUpdate();
     }
 
-    public focus() {
+    public override focus() {
         (this.shadowRoot!.querySelector('docs-side-nav')! as SideNav).focus();
     }
 
@@ -384,7 +384,7 @@ export class LayoutElement extends LitElement {
         `;
     }
 
-    render() {
+    override render() {
         return html`
             <sp-theme
                 .color=${this.color}
@@ -434,7 +434,7 @@ export class LayoutElement extends LitElement {
         `;
     }
 
-    protected firstUpdated(): void {
+    protected override firstUpdated(): void {
         loadDefaults();
         isNarrowMediaQuery.addEventListener(
             'change',
@@ -442,7 +442,7 @@ export class LayoutElement extends LitElement {
         );
     }
 
-    updated(changes: PropertyValues) {
+    override updated(changes: PropertyValues) {
         let loadStyleFragments = false;
         if (changes.has('color')) {
             if (window.localStorage) {

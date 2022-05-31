@@ -25,7 +25,7 @@ export class IconsLarge extends IconsetSVG {
         this.name = 'ui'; // default iconset name for these icons
     }
 
-    protected renderDefaultContent(): TemplateResult {
+    protected override renderDefaultContent(): TemplateResult {
         return iconsSVG;
     }
     /**
@@ -33,10 +33,10 @@ export class IconsLarge extends IconsetSVG {
      * @param icon
      * @param size
      */
-    protected getSVGIconName(icon: string): string {
+    protected override getSVGIconName(icon: string): string {
         return `spectrum-icon-${icon}`;
     }
-    protected getSanitizedIconName(icon: string): string {
+    protected override getSanitizedIconName(icon: string): string {
         return icon.replace('spectrum-icon-', '');
     }
 }

@@ -127,7 +127,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         }
     }
 
-    public shadowRoot!: ShadowRootWithAdoptedStyleSheets;
+    public override shadowRoot!: ShadowRootWithAdoptedStyleSheets;
 
     private _theme: ThemeVariant | '' = 'spectrum';
 

@@ -35,7 +35,8 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
         : [lightDomSelector];
     class SlotPresenceObservingElement
         extends constructor
-        implements SlotPresenceObservingInterface {
+        implements SlotPresenceObservingInterface
+    {
         private [slotElementObserver]!: MutationObserver;
 
         /**
@@ -85,12 +86,12 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
             this.managePresenceObservedSlot();
         }
 
-        public connectedCallback(): void {
+        public override connectedCallback(): void {
             super.connectedCallback();
             this[startObserving]();
         }
 
-        public disconnectedCallback(): void {
+        public override disconnectedCallback(): void {
             this[slotElementObserver].disconnect();
             super.disconnectedCallback();
         }

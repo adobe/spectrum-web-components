@@ -34,19 +34,19 @@ export class DelayedReady extends SpectrumElement {
     _delayedReady!: Promise<void>;
     _resolveDelayedReady!: () => void;
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot @slotchange=${this.handleSlotchange}></slot>
         `;
     }
 
-    protected firstUpdated(): void {
+    protected override firstUpdated(): void {
         this._delayedReady = new Promise(
             (res) => (this._resolveDelayedReady = res)
         );
     }
 
-    protected async getUpdateComplete(): Promise<boolean> {
+    protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this._delayedReady;
         return complete;
@@ -90,11 +90,11 @@ export class IconsDemo extends SpectrumElement {
         this.iconset = [];
         this.handleIconSetAdded = this.handleIconSetAdded.bind(this);
     }
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         window.addEventListener('sp-iconset-added', this.handleIconSetAdded);
     }
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         window.removeEventListener('sp-iconset-added', this.handleIconSetAdded);
         super.disconnectedCallback();
     }
@@ -103,7 +103,7 @@ export class IconsDemo extends SpectrumElement {
         this.iconset = iconset.getIconList();
         this.requestUpdate();
     }
-    public static get styles(): CSSResultGroup {
+    public static override get styles(): CSSResultGroup {
         return [
             ...bodyStyles,
             css`
@@ -223,7 +223,7 @@ export class IconsDemo extends SpectrumElement {
             })}
         `;
     }
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             ${this.icons.length
                 ? this.renderSearch()

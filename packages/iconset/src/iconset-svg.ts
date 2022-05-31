@@ -28,7 +28,7 @@ export abstract class IconsetSVG extends Iconset {
     /**
      * First updated handler just ensures we've processed any slotted symbols
      */
-    public updated(changedProperties: PropertyValues): void {
+    public override updated(changedProperties: PropertyValues): void {
         if (!this.slotContainer) {
             return;
         }
@@ -110,7 +110,7 @@ export abstract class IconsetSVG extends Iconset {
         return html``;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot @slotchange=${this.onSlotChange}>
                 ${this.renderDefaultContent()}

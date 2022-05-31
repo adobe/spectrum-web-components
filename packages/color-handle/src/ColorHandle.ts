@@ -44,7 +44,7 @@ export const replaceHueRegExp = /(^hs[v|l]a?\()\d{1,3}/;
  * @element sp-color-handle
  */
 export class ColorHandle extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -72,7 +72,7 @@ export class ColorHandle extends SpectrumElement {
         this.releasePointerCapture(event.pointerId);
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <div class="color" style="background-color: ${this.color}"></div>
             <sp-color-loupe
@@ -82,7 +82,7 @@ export class ColorHandle extends SpectrumElement {
         `;
     }
 
-    protected firstUpdated(changed: PropertyValues): void {
+    protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         this.addEventListener('pointerdown', this.handlePointerdown);
         this.addEventListener('pointerup', this.handlePointerup);

@@ -60,7 +60,9 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
             this.slotHasContent = assignedNodes.length > 0;
         }
 
-        protected firstUpdated(changedProperties: PropertyValues): void {
+        protected override firstUpdated(
+            changedProperties: PropertyValues
+        ): void {
             super.firstUpdated(changedProperties);
             this.manageTextObservedSlot();
         }
@@ -82,12 +84,12 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
             this[slotElementObserver].observe(this, config);
         }
 
-        public connectedCallback(): void {
+        public override connectedCallback(): void {
             super.connectedCallback();
             this[startObserving]();
         }
 
-        public disconnectedCallback(): void {
+        public override disconnectedCallback(): void {
             if (this[slotElementObserver]) {
                 this[slotElementObserver].disconnect();
             }

@@ -21,7 +21,7 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import iconStyles from './icon.css.js';
 
 export class IconBase extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [iconStyles];
     }
 
@@ -31,7 +31,7 @@ export class IconBase extends SpectrumElement {
     @property({ reflect: true })
     public size?: 's' | 'm' | 'l' | 'xl' | 'xxl';
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot></slot>
         `;

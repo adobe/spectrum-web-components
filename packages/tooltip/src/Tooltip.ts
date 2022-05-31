@@ -45,7 +45,7 @@ customElements.define('tooltip-proxy', TooltipProxy);
  */
 
 export class Tooltip extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [tooltipStyles];
     }
 
@@ -235,7 +235,7 @@ export class Tooltip extends SpectrumElement {
         }
     }
 
-    render(): TemplateResult {
+    override render(): TemplateResult {
         return html`
             <slot name="icon"></slot>
             <span id="label"><slot></slot></span>
@@ -243,7 +243,9 @@ export class Tooltip extends SpectrumElement {
         `;
     }
 
-    protected async update(changed: PropertyValues<this>): Promise<void> {
+    protected override async update(
+        changed: PropertyValues<this>
+    ): Promise<void> {
         if (changed.has('open') && this.selfManaged) {
             if (this.open) {
                 this.openOverlay();
@@ -255,7 +257,7 @@ export class Tooltip extends SpectrumElement {
         super.update(changed);
     }
 
-    protected updated(changed: PropertyValues<this>): void {
+    protected override updated(changed: PropertyValues<this>): void {
         super.updated(changed);
         if (changed.has('selfManaged')) {
             this.manageTooltip();

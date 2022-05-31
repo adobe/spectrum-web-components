@@ -78,7 +78,7 @@ import '@spectrum-web-components/icon';
 import { Arrow75Icon } from '@spectrum-web-components/icons-ui';
 
 class ElementWithIcon extends LitElement {
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <sp-icon>
                 ${Arrow75Icon()}

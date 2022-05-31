@@ -35,20 +35,20 @@ import actionMenuStyles from './action-menu.css.js';
  *   its overlay, use `selects="single" to activate this functionality.
  */
 export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [actionMenuStyles];
     }
 
     @property({ type: String })
-    public selects: undefined | 'single' = undefined;
+    public override selects: undefined | 'single' = undefined;
 
-    protected listRole: 'listbox' | 'menu' = 'menu';
-    protected itemRole = 'menuitem';
+    protected override listRole: 'listbox' | 'menu' = 'menu';
+    protected override itemRole = 'menuitem';
     private get hasLabel(): boolean {
         return this.slotHasContent;
     }
 
-    protected get buttonContent(): TemplateResult[] {
+    protected override get buttonContent(): TemplateResult[] {
         return [
             html`
                 <slot name="icon" slot="icon" ?icon-only=${!this.hasLabel}>
@@ -59,7 +59,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         ];
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <sp-action-button
                 quiet
@@ -81,7 +81,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         `;
     }
 
-    protected updated(changedProperties: PropertyValues): void {
+    protected override updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
         if (changedProperties.has('invalid')) {
             this.invalid = false;

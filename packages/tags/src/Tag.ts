@@ -34,7 +34,7 @@ import styles from './tag.css.js';
 export class Tag extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
 }) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -97,7 +97,7 @@ export class Tag extends SizedMixin(SpectrumElement, {
         );
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         const slots: TemplateResult[] = [];
         if (this.hasAvatar) {
             slots.push(
@@ -131,7 +131,7 @@ export class Tag extends SizedMixin(SpectrumElement, {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'listitem');
@@ -146,7 +146,7 @@ export class Tag extends SizedMixin(SpectrumElement, {
         }
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('disabled')) {
             if (this.disabled) {

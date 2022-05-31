@@ -33,7 +33,7 @@ import topNavItemStyles from './top-nav-item.css.js';
  */
 
 export class TopNavItem extends LikeAnchor(Focusable) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [itemStyles, topNavItemStyles];
     }
 
@@ -45,15 +45,15 @@ export class TopNavItem extends LikeAnchor(Focusable) {
 
     public value = '';
 
-    public get focusElement(): HTMLAnchorElement {
+    public override get focusElement(): HTMLAnchorElement {
         return this.anchor;
     }
 
-    public click(): void {
+    public override click(): void {
         this.anchor.click();
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <a
                 id="item-label"
@@ -71,11 +71,11 @@ export class TopNavItem extends LikeAnchor(Focusable) {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         this.value = this.anchor.href;
     }

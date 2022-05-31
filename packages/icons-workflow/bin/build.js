@@ -193,7 +193,7 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
          * @element ${iconElementName}
          */
         export class Icon${ComponentName} extends IconBase {
-            protected render(): TemplateResult {
+            protected override render(): TemplateResult {
                 setCustomTemplateLiteralTag(html);
                 return ${ComponentName}Icon({hidden: !this.label, title: this.label}) as TemplateResult;
             }

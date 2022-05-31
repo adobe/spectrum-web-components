@@ -46,14 +46,14 @@ export class SearchComponent extends LitElement {
     @query('#focus-return')
     private focusReturn!: HTMLSpanElement;
 
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [sideNavSearchMenuStyles];
     }
 
     @property({ type: Array })
     public results: ResultGroup[] = [];
 
-    public focus(): void {
+    public override focus(): void {
         this.searchField.focus();
     }
 
@@ -215,7 +215,7 @@ export class SearchComponent extends LitElement {
         }
     }
 
-    render(): TemplateResult {
+    override render(): TemplateResult {
         return html`
             <div id="search-container" @focusout=${this.onFocusout}>
                 <sp-search

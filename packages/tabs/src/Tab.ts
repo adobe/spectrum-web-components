@@ -35,7 +35,7 @@ import tabItemStyles from './tab.css.js';
 export class Tab extends FocusVisiblePolyfillMixin(
     ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), '')
 ) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [tabItemStyles];
     }
 
@@ -79,7 +79,7 @@ export class Tab extends FocusVisiblePolyfillMixin(
         );
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             ${this.hasIcon
                 ? html`
@@ -93,7 +93,7 @@ export class Tab extends FocusVisiblePolyfillMixin(
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('role', 'tab');
         if (!this.hasAttribute('id')) {
@@ -107,7 +107,7 @@ export class Tab extends FocusVisiblePolyfillMixin(
         );
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (
             changes.has('label') &&

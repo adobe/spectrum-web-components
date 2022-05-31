@@ -34,7 +34,7 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 const MAX_DEPTH = 7;
 
 class OverlayTargetIcon extends LitElement {
-    static get styles(): CSSResultGroup {
+    static override get styles(): CSSResultGroup {
         return css`
             :host {
                 position: absolute;
@@ -48,7 +48,7 @@ class OverlayTargetIcon extends LitElement {
         `;
     }
 
-    public render(): TemplateResult {
+    public override render(): TemplateResult {
         return html`
             <svg
                 aria-hidden="true"
@@ -77,7 +77,7 @@ class OverlayDrag extends LitElement {
 
     private targetElement: HTMLElement | undefined | null;
 
-    static get styles(): CSSResultGroup {
+    static override get styles(): CSSResultGroup {
         return css`
             :host {
                 display: block;
@@ -167,13 +167,13 @@ class OverlayDrag extends LitElement {
         this.top = (parent.offsetHeight - target.offsetHeight) / 2;
     }
 
-    public updated(): void {
+    public override updated(): void {
         if (this.targetElement) {
             this.targetElement.style.transform = `translate(${this.left}px, ${this.top}px)`;
         }
     }
 
-    public render(): TemplateResult {
+    public override render(): TemplateResult {
         return html`
             <slot @slotchange=${this.onSlotChange}></slot>
         `;
@@ -193,9 +193,9 @@ class RecursivePopover extends LitElement {
 
     protected isShiftTabbing = false;
 
-    public shadowRoot!: ShadowRoot;
+    public override shadowRoot!: ShadowRoot;
 
-    public static get styles(): CSSResultGroup {
+    public static override get styles(): CSSResultGroup {
         return [
             css`
                 :host {
@@ -228,7 +228,7 @@ class RecursivePopover extends LitElement {
         this.focus();
     }
 
-    public focus(): void {
+    public override focus(): void {
         if (this.shadowRoot.activeElement !== null) {
             return;
         }
@@ -260,7 +260,7 @@ class RecursivePopover extends LitElement {
         }
     }
 
-    public render(): TemplateResult {
+    public override render(): TemplateResult {
         return html`
             <sp-radio-group
                 horizontal
@@ -313,7 +313,7 @@ export class PopoverContent extends LitElement {
     @query('overlay-trigger')
     public trigger!: OverlayTrigger;
 
-    render(): TemplateResult {
+    override render(): TemplateResult {
         return html`
             <overlay-trigger>
                 <sp-button slot="trigger">Open me</sp-button>

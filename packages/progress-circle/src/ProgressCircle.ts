@@ -29,7 +29,7 @@ import progressCircleStyles from './progress-circle.css.js';
 export class ProgressCircle extends SizedMixin(SpectrumElement, {
     validSizes: ['s', 'm', 'l'],
 }) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [progressCircleStyles];
     }
 
@@ -51,7 +51,7 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
             : `transform: rotate(${rotation}deg);`;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         const styles = [
             this.makeRotation(-180 + (180 / 50) * Math.min(this.progress, 50)),
             this.makeRotation(
@@ -78,14 +78,14 @@ export class ProgressCircle extends SizedMixin(SpectrumElement, {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'progressbar');
         }
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (!this.indeterminate && changes.has('progress')) {
             this.setAttribute('aria-valuenow', '' + this.progress);

@@ -36,7 +36,7 @@ export interface SidenavSelectDetail {
  * This change can be "canceled" via `event.preventDefault()`.
  */
 export class SideNav extends Focusable {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [sidenavStyles];
     }
 
@@ -99,11 +99,11 @@ export class SideNav extends Focusable {
         }
     }
 
-    public focus(): void {
+    public override focus(): void {
         this.rovingTabindexController.focus();
     }
 
-    public blur(): void {
+    public override blur(): void {
         if (this.focusElement === this) {
             return;
         }
@@ -111,7 +111,7 @@ export class SideNav extends Focusable {
         super.blur();
     }
 
-    public click(): void {
+    public override click(): void {
         if (this.focusElement === this) {
             return;
         }
@@ -119,7 +119,7 @@ export class SideNav extends Focusable {
         super.click();
     }
 
-    public get focusElement(): SideNavItem | SideNav {
+    public override get focusElement(): SideNavItem | SideNav {
         return this.rovingTabindexController.focusInElement || this;
     }
 
@@ -153,7 +153,7 @@ export class SideNav extends Focusable {
         }
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <nav @sidenav-select=${this.handleSelect}>
                 <slot
@@ -164,7 +164,7 @@ export class SideNav extends Focusable {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         const selectedChild = this.querySelector('[selected]') as SideNavItem;
         if (selectedChild) {
@@ -172,7 +172,7 @@ export class SideNav extends Focusable {
         }
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('manageTabIndex')) {
             if (this.manageTabIndex) {

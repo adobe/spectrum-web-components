@@ -27,7 +27,7 @@ import legacyStyles from './switch-legacy.css.js';
  * @slot - text label of the Switch
  */
 export class Switch extends CheckboxBase {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         /* c8 ignore next 4 */
         if (window.hasOwnProperty('ShadyDOM')) {
             // Override some styles if we are using the web component polyfill
@@ -39,7 +39,7 @@ export class Switch extends CheckboxBase {
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             ${super.render()}
             <span id="switch"></span>
@@ -47,12 +47,12 @@ export class Switch extends CheckboxBase {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.inputElement.setAttribute('role', 'switch');
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         if (changes.has('checked')) {
             this.inputElement.setAttribute(
                 'aria-checked',

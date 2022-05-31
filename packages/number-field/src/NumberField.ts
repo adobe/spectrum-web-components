@@ -62,7 +62,7 @@ export const remapMultiByteCharacters: Record<string, string> = {
  * @slot negative-help-text - negative help text to associate to your form element when `invalid`
  */
 export class NumberField extends TextfieldBase {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [...super.styles, styles, chevronStyles];
     }
 
@@ -70,7 +70,7 @@ export class NumberField extends TextfieldBase {
     private buttons!: HTMLDivElement;
 
     @property({ type: Boolean, reflect: true })
-    public focused = false;
+    public override focused = false;
 
     _forcedUnit = '';
 
@@ -122,7 +122,7 @@ export class NumberField extends TextfieldBase {
     public stepModifier = 10;
 
     @property({ type: Number })
-    public set value(rawValue: number) {
+    public override set value(rawValue: number) {
         const value = this.validateInput(rawValue);
         if (value === this.value) {
             return;
@@ -132,7 +132,7 @@ export class NumberField extends TextfieldBase {
         this.requestUpdate('value', oldValue);
     }
 
-    public get value(): number {
+    public override get value(): number {
         return this._value;
     }
 
@@ -142,7 +142,7 @@ export class NumberField extends TextfieldBase {
             : this.inputElement.value;
     }
 
-    public _value = NaN;
+    public override _value = NaN;
     private _trackingValue = '';
 
     /**
@@ -308,14 +308,14 @@ export class NumberField extends TextfieldBase {
         }
     }
 
-    protected onFocus(): void {
+    protected override onFocus(): void {
         super.onFocus();
         this._trackingValue = this.inputValue;
         this.keyboardFocused = !this.readonly && true;
         this.addEventListener('wheel', this.onScroll);
     }
 
-    protected onBlur(): void {
+    protected override onBlur(): void {
         super.onBlur();
         this.keyboardFocused = !this.readonly && false;
         this.removeEventListener('wheel', this.onScroll);
@@ -334,7 +334,7 @@ export class NumberField extends TextfieldBase {
     private wasIndeterminate = false;
     private indeterminateValue?: number;
 
-    protected handleChange(): void {
+    protected override handleChange(): void {
         const value = this.convertValueToNumber(this.inputValue);
         if (this.wasIndeterminate) {
             this.wasIndeterminate = false;
@@ -348,7 +348,7 @@ export class NumberField extends TextfieldBase {
         super.handleChange();
     }
 
-    protected handleInput(): void {
+    protected override handleInput(): void {
         if (this.indeterminate) {
             this.wasIndeterminate = true;
             this.indeterminateValue = this.value;
@@ -415,7 +415,7 @@ export class NumberField extends TextfieldBase {
         return value;
     }
 
-    protected get displayValue(): string {
+    protected override get displayValue(): string {
         const indeterminateValue = this.focused ? '' : indeterminatePlaceholder;
         return this.indeterminate ? indeterminateValue : this.formattedValue;
     }
@@ -499,7 +499,7 @@ export class NumberField extends TextfieldBase {
     private _numberParser?: NumberParser;
     private _numberParserFocused?: NumberParser;
 
-    protected renderField(): TemplateResult {
+    protected override renderField(): TemplateResult {
         this.autocomplete = 'off';
         return html`
             ${super.renderField()}
@@ -565,20 +565,20 @@ export class NumberField extends TextfieldBase {
         `;
     }
 
-    protected update(changes: PropertyValues): void {
+    protected override update(changes: PropertyValues): void {
         if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
             this.clearNumberFormatterCache();
         }
         super.update(changes);
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.multiline = false;
         this.addEventListener('keydown', this.handleKeydown);
     }
 
-    protected updated(changes: PropertyValues<this>): void {
+    protected override updated(changes: PropertyValues<this>): void {
         if (
             changes.has('value') ||
             changes.has('max') ||
@@ -619,12 +619,12 @@ export class NumberField extends TextfieldBase {
         }
     }
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         this.resolveLanguage();
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         this.resolveLanguage();
         super.disconnectedCallback();
     }

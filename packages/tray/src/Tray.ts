@@ -36,7 +36,7 @@ import styles from './tray.css.js';
  * @fires close - Announces that the Tray has been closed.
  */
 export class Tray extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [modalStyles, styles];
     }
 
@@ -55,7 +55,7 @@ export class Tray extends SpectrumElement {
     @query('.tray')
     private tray!: HTMLDivElement;
 
-    public focus(): void {
+    public override focus(): void {
         const firstFocusable = firstFocusableIn(this);
         if (firstFocusable) {
             firstFocusable.focus();
@@ -100,7 +100,7 @@ export class Tray extends SpectrumElement {
         }
     }
 
-    protected update(changes: PropertyValues<this>): void {
+    protected override update(changes: PropertyValues<this>): void {
         if (
             changes.has('open') &&
             changes.get('open') !== undefined &&
@@ -113,7 +113,7 @@ export class Tray extends SpectrumElement {
         super.update(changes);
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <sp-underlay
                 ?open=${this.open}
@@ -138,7 +138,7 @@ export class Tray extends SpectrumElement {
      * while opening the Tray when focusable content is included: e.g. Menu
      * elements whose selected Menu Item is not the first Menu Item.
      */
-    protected async getUpdateComplete(): Promise<boolean> {
+    protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.transitionPromise;
         return complete;

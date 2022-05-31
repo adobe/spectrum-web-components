@@ -27,7 +27,7 @@ import styles from './progress-bar.css.js';
  * @element sp-progress-bar
  */
 export class ProgressBar extends SizedMixin(SpectrumElement) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -46,7 +46,7 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
     @property({ type: Number })
     public progress = 0;
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             ${this.label
                 ? html`
@@ -74,14 +74,14 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         if (!this.hasAttribute('role')) {
             this.setAttribute('role', 'progressbar');
         }
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('indeterminate')) {
             if (this.indeterminate) {

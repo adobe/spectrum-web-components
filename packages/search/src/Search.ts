@@ -38,7 +38,7 @@ const stopPropagation = (event: Event): void => event.stopPropagation();
  * @fires submit - The search form has been submitted.
  */
 export class Search extends Textfield {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [...super.styles, searchStyles];
     }
 
@@ -46,13 +46,13 @@ export class Search extends Textfield {
     public action = '';
 
     @property()
-    public label = 'Search';
+    public override label = 'Search';
 
     @property()
     public method?: 'GET' | 'POST' | 'dialog';
 
     @property()
-    public placeholder = 'Search';
+    public override placeholder = 'Search';
 
     @query('#form')
     public form!: HTMLFormElement;
@@ -97,7 +97,7 @@ export class Search extends Textfield {
         );
     }
 
-    protected renderField(): TemplateResult {
+    protected override renderField(): TemplateResult {
         return html`
             <form
                 action=${this.action}
@@ -126,12 +126,12 @@ export class Search extends Textfield {
         `;
     }
 
-    public firstUpdated(changedProperties: PropertyValues): void {
+    public override firstUpdated(changedProperties: PropertyValues): void {
         super.firstUpdated(changedProperties);
         this.inputElement.setAttribute('type', 'search');
     }
 
-    public updated(changedProperties: PropertyValues): void {
+    public override updated(changedProperties: PropertyValues): void {
         super.updated(changedProperties);
         this.multiline = false;
     }

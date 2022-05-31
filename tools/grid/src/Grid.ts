@@ -27,7 +27,7 @@ import { GridController } from './GridController.js';
  * @fires change - Announces that the value of `selected` has changed
  */
 export class Grid extends LitVirtualizer {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
@@ -38,7 +38,7 @@ export class Grid extends LitVirtualizer {
     public gap: `${'0' | `${number}px`}` = '0';
 
     @property({ type: Array })
-    public items: Record<string, unknown>[] = [];
+    public override items: Record<string, unknown>[] = [];
 
     @property({ type: Object })
     public itemSize: {
@@ -50,11 +50,14 @@ export class Grid extends LitVirtualizer {
     };
 
     /* c8 ignore next 3 */
-    get renderItem(): (item: unknown, index: number) => TemplateResult {
+    override get renderItem(): (
+        item: unknown,
+        index: number
+    ) => TemplateResult {
         return super.renderItem;
     }
 
-    set renderItem(
+    override set renderItem(
         fn: (item: unknown, index: number, selected: boolean) => TemplateResult
     ) {
         super.renderItem = (
@@ -93,7 +96,7 @@ export class Grid extends LitVirtualizer {
         this.selected = selected;
     }
 
-    protected update(changes: PropertyValues<this>): void {
+    protected override update(changes: PropertyValues<this>): void {
         if (
             changes.has('itemSize') ||
             changes.has('gap') ||
@@ -123,12 +126,12 @@ export class Grid extends LitVirtualizer {
         super.update(changes);
     }
 
-    connectedCallback(): void {
+    override connectedCallback(): void {
         super.connectedCallback();
         this.addEventListener('change', this.handleChange, { capture: true });
     }
 
-    disconnectedCallback(): void {
+    override disconnectedCallback(): void {
         this.removeEventListener('change', this.handleChange, {
             capture: true,
         });

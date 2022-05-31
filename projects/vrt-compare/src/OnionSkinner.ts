@@ -58,7 +58,7 @@ export class OnionSkinner extends SpectrumElement {
         this.onionLevel = 1;
     }
 
-    render() {
+    override render() {
         return html`
             <slot
                 @slotchange=${this.handleSlotchange}
@@ -101,7 +101,7 @@ export class OnionSkinner extends SpectrumElement {
         `;
     }
 
-    static styles = [
+    static override styles = [
         css`
             :host {
                 display: grid;

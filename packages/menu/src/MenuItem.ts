@@ -107,7 +107,7 @@ const removeEvent = new MenuItemRemovedEvent();
  * @fires sp-menu-item-removed - announces when removed from the DOM so the parent menu can remove ownership and update selected state
  */
 export class MenuItem extends LikeAnchor(Focusable) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [menuItemStyles, checkmarkStyles, chevronStyles];
     }
 
@@ -169,7 +169,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
     @query('.anchor')
     private anchorElement!: HTMLAnchorElement;
 
-    public get focusElement(): HTMLElement {
+    public override get focusElement(): HTMLElement {
         return this;
     }
 
@@ -214,7 +214,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
     @property({ type: Boolean })
     public open = false;
 
-    public click(): void {
+    public override click(): void {
         if (this.disabled) {
             return;
         }
@@ -253,7 +253,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.triggerUpdate();
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <slot name="icon" @slotchange=${this.breakItemChildrenCache}></slot>
             <div id="label">
@@ -315,7 +315,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.active = true;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('tabindex', '-1');
         this.addEventListener('pointerdown', this.handlePointerdown);
@@ -466,7 +466,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.updateAriaSelected();
     }
 
-    protected updated(changes: PropertyValues<this>): void {
+    protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (changes.has('label')) {
             this.setAttribute('aria-label', this.label || '');
@@ -509,7 +509,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         }
     }
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         this.isInSubmenu = !!this.closest('[slot="submenu"]');
         if (this.isInSubmenu) {
@@ -522,7 +522,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     _parentElement!: HTMLElement;
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         removeEvent.reset(this);
         if (!this.isInSubmenu) {
             this._parentElement?.dispatchEvent(removeEvent);

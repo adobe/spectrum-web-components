@@ -17,7 +17,7 @@ class ObserverTest extends ObserveSlotPresence(
     LitElement,
     '[slot="test-slot"]'
 ) {
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             Test Element
         `;

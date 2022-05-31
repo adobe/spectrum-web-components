@@ -43,7 +43,7 @@ export type TextfieldType = typeof textfieldTypes[number];
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
 export class TextfieldBase extends ManageHelpText(Focusable) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [textfieldStyles, checkmarkStyles];
     }
 
@@ -127,7 +127,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
         | HTMLInputElement['autocomplete']
         | HTMLTextAreaElement['autocomplete'];
 
-    public get focusElement(): HTMLInputElement | HTMLTextAreaElement {
+    public override get focusElement(): HTMLInputElement | HTMLTextAreaElement {
         return this.inputElement;
     }
 
@@ -286,14 +286,14 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
         `;
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <div id="textfield">${this.renderField()}</div>
             ${this.renderHelpText(this.invalid)}
         `;
     }
 
-    protected updated(changedProperties: PropertyValues): void {
+    protected override updated(changedProperties: PropertyValues): void {
         if (
             changedProperties.has('value') ||
             (changedProperties.has('required') && this.required)
@@ -327,7 +327,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
  */
 export class Textfield extends TextfieldBase {
     @property({ type: String })
-    public set value(value: string) {
+    public override set value(value: string) {
         if (value === this.value) {
             return;
         }
@@ -336,9 +336,9 @@ export class Textfield extends TextfieldBase {
         this.requestUpdate('value', oldValue);
     }
 
-    public get value(): string {
+    public override get value(): string {
         return this._value;
     }
 
-    protected _value = '';
+    protected override _value = '';
 }

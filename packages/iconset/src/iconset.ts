@@ -19,7 +19,7 @@ export abstract class Iconset extends LitElement {
 
     private _name!: string;
 
-    protected firstUpdated(): void {
+    protected override firstUpdated(): void {
         // force no display for all iconsets
         this.style.display = 'none';
     }
@@ -78,7 +78,7 @@ export abstract class Iconset extends LitElement {
     /**
      * On updated we register the iconset if we're not already registered
      */
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         this.addIconset();
         window.addEventListener('sp-iconset-removed', this.handleRemoved);
@@ -86,7 +86,7 @@ export abstract class Iconset extends LitElement {
     /**
      * On disconnected we remove the iconset
      */
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         super.disconnectedCallback();
         window.removeEventListener('sp-iconset-removed', this.handleRemoved);
         this.removeIconset();

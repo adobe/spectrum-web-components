@@ -29,7 +29,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 @customElement('docs-side-nav')
 export class SideNav extends LitElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [sideNavStyles];
     }
 
@@ -40,7 +40,7 @@ export class SideNav extends LitElement {
         this.open = !this.open;
     }
 
-    public focus() {
+    public override focus() {
         const target = document.querySelector(
             '[slot="logo"]'
         ) as HTMLAnchorElement;
@@ -53,7 +53,7 @@ export class SideNav extends LitElement {
         target.focus();
     }
 
-    render(): TemplateResult {
+    override render(): TemplateResult {
         return html`
             <sp-underlay
                 class="scrim"
@@ -81,7 +81,7 @@ export class SideNav extends LitElement {
         `;
     }
 
-    updated(changes: PropertyValues) {
+    override updated(changes: PropertyValues) {
         if (changes.has('open') && !this.open && changes.get('open')) {
             this.dispatchEvent(new Event('close'));
         }

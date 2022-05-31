@@ -46,7 +46,7 @@ export type ButtonTreatments = 'fill' | 'outline';
  * @slot icon - The icon to use for Button
  */
 export class Button extends SizedMixin(StyledButton) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [...super.styles, buttonStyles];
     }
 
@@ -95,7 +95,7 @@ export class Button extends SizedMixin(StyledButton) {
         this.treatment = quiet ? 'outline' : 'fill';
     }
 
-    protected firstUpdated(changes: PropertyValues<this>): void {
+    protected override firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
         if (!this.hasAttribute('variant')) {
             this.setAttribute('variant', this.variant);

@@ -36,7 +36,7 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
  */
 
 export class TopNav extends SizedMixin(SpectrumElement) {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [tabStyles];
     }
 
@@ -85,7 +85,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         }
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <div @click=${this.onClick} id="list">
                 <slot @slotchange=${this.onSlotChange}></slot>
@@ -100,13 +100,13 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         `;
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         this.setAttribute('direction', 'horizontal');
         this.manageItems();
     }
 
-    protected updated(changes: PropertyValues): void {
+    protected override updated(changes: PropertyValues): void {
         super.updated(changes);
         if (changes.has('dir')) {
             this.updateSelectionIndicator();
@@ -182,7 +182,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         });`;
     };
 
-    public connectedCallback(): void {
+    public override connectedCallback(): void {
         super.connectedCallback();
         window.addEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
@@ -193,7 +193,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
         }
     }
 
-    public disconnectedCallback(): void {
+    public override disconnectedCallback(): void {
         window.removeEventListener('resize', this.updateSelectionIndicator);
         if ('fonts' in document) {
             (
