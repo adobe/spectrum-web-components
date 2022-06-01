@@ -12,12 +12,15 @@ governing permissions and limitations under the License.
 
 import { ActiveOverlay } from './ActiveOverlay.js';
 import type {
-    OverlayCloseReasonDetail,
     OverlayOpenCloseDetail,
     OverlayOpenDetail,
 } from './overlay-types';
 import { OverlayTimer } from './overlay-timer.js';
 import '../active-overlay.js';
+import {
+    findOverlaysRootedInOverlay,
+    parentOverlayOf,
+} from './overlay-utils.js';
 
 function isLeftClick(event: MouseEvent): boolean {
     return event.button === 0;
@@ -268,6 +271,9 @@ export class OverlayStack {
             }
         }
 
+        if (details.root) {
+            this.closeOverlaysForRoot(details.root);
+        }
         if (details.interaction === 'click') {
             this.closeAllHoverOverlays();
         } else if (
@@ -315,13 +321,10 @@ export class OverlayStack {
     }
 
     public addOverlayEventListeners(activeOverlay: ActiveOverlay): void {
-        activeOverlay.addEventListener('close', ((
-            event: CustomEvent<OverlayCloseReasonDetail>
-        ) => {
+        activeOverlay.addEventListener('close', (() => {
             this.hideAndCloseOverlay(
                 activeOverlay,
-                true, // animated?
-                !!event.detail?.reason // clickAway?
+                true // animated?
             );
         }) as EventListener);
         switch (activeOverlay.interaction) {
@@ -390,8 +393,17 @@ export class OverlayStack {
     public closeOverlay(content: HTMLElement): void {
         this.overlayTimer.close(content);
         requestAnimationFrame(() => {
-            const overlay = this.findOverlayForContent(content);
-            this.hideAndCloseOverlay(overlay);
+            const overlayFromContent = this.findOverlayForContent(content);
+            const overlaysToClose = [overlayFromContent];
+            overlaysToClose.push(
+                ...findOverlaysRootedInOverlay(
+                    overlayFromContent,
+                    this.overlays
+                )
+            );
+            overlaysToClose.forEach((overlay) =>
+                this.hideAndCloseOverlay(overlay)
+            );
         });
     }
 
@@ -426,11 +438,29 @@ export class OverlayStack {
         }
     }
 
-    private async manageFocusAfterCloseWhenOverlaysRemain(): Promise<void> {
+    private closeOverlaysForRoot(root: HTMLElement): void {
+        const overlaysToClose: ActiveOverlay[] = [];
+        for (const overlay of this.overlays) {
+            if (overlay.root && overlay.root === root) {
+                overlaysToClose.push(overlay);
+                overlaysToClose.push(
+                    ...findOverlaysRootedInOverlay(overlay, this.overlays)
+                );
+            }
+        }
+        overlaysToClose.forEach((overlay) =>
+            this.hideAndCloseOverlay(overlay, true, true)
+        );
+    }
+
+    private async manageFocusAfterCloseWhenOverlaysRemain(
+        returnBeforeFocus?: boolean
+    ): Promise<void> {
         const topOverlay = this.overlays[this.overlays.length - 1];
         topOverlay.feature();
         // Push focus in the the next remaining overlay as needed when a `type="modal"` overlay exists.
         if (topOverlay.interaction === 'modal' || topOverlay.hasModalRoot) {
+            if (returnBeforeFocus) return;
             await topOverlay.focus();
         } else {
             this.stopTabTrapping();
@@ -478,7 +508,7 @@ export class OverlayStack {
     private async hideAndCloseOverlay(
         overlay?: ActiveOverlay,
         animated?: boolean,
-        clickAway?: boolean
+        returnBeforeFocus?: boolean
     ): Promise<void> {
         if (!overlay) {
             return;
@@ -510,7 +540,9 @@ export class OverlayStack {
         }
 
         if (this.overlays.length) {
-            await this.manageFocusAfterCloseWhenOverlaysRemain();
+            await this.manageFocusAfterCloseWhenOverlaysRemain(
+                returnBeforeFocus
+            );
         } else {
             this.manageFocusAfterCloseWhenLastOverlay(overlay);
         }
@@ -525,14 +557,13 @@ export class OverlayStack {
                 cancelable: true,
                 detail: {
                     interaction: overlay.interaction,
-                    reason: clickAway ? 'external-click' : undefined,
                 },
             })
         );
     }
 
-    private closeTopOverlay(clickAway?: boolean): Promise<void> {
-        return this.hideAndCloseOverlay(this.topOverlay, true, clickAway);
+    private closeTopOverlay(): Promise<void> {
+        return this.hideAndCloseOverlay(this.topOverlay, true);
     }
 
     /**
@@ -550,7 +581,19 @@ export class OverlayStack {
         if (this.preventMouseRootClose || event.defaultPrevented) {
             return;
         }
-        this.closeTopOverlay(true);
+        this.closeTopOverlay();
+        const overlaysToClose = [];
+        let root: HTMLElement | undefined = this.topOverlay?.root;
+        let overlay = parentOverlayOf(root);
+        while (root && overlay) {
+            overlaysToClose.push(overlay);
+            overlay = parentOverlayOf(root);
+            root = overlay?.root;
+        }
+        if (overlay) {
+            overlaysToClose.push(overlay);
+        }
+        overlaysToClose.forEach((overlay) => this.hideAndCloseOverlay(overlay));
     };
 
     private handleKeyUp = (event: KeyboardEvent): void => {

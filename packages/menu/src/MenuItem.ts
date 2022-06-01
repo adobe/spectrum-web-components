@@ -327,7 +327,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
     public closeOverlay?: (leave?: boolean) => Promise<void>;
 
     protected handleSubmenuClick(): void {
-        this.openOverlay({ immediate: true });
+        this.openOverlay();
     }
 
     protected handlePointerenter(): void {
@@ -368,9 +368,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         }
     };
 
-    public async openOverlay({
-        immediate,
-    }: { immediate?: boolean } = {}): Promise<void> {
+    public async openOverlay(): Promise<void> {
         if (!this.hasSubmenu || this.open || this.disabled) {
             return;
         }
@@ -393,60 +391,34 @@ export class MenuItem extends LikeAnchor(Focusable) {
                 const slotName = el.slot;
                 el.tabIndex = 0;
                 el.removeAttribute('slot');
+                el.isSubmenu = true;
                 return (el) => {
                     el.tabIndex = -1;
                     el.slot = slotName;
+                    el.isSubmenu = false;
                 };
             },
         });
         const closeOverlay = openOverlay(this, 'click', popover, {
             placement: this.isLTR ? 'right-start' : 'left-start',
             receivesFocus: 'auto',
-            delayed: !immediate && false,
+            root: this.menuData.focusRoot,
         });
-        let closing = false;
-        const closeSubmenu = async (leave = false): Promise<void> => {
+        const closeSubmenu = async (): Promise<void> => {
             delete this.closeOverlay;
-            if (submenu.hasOpenSubmenu) {
-                await submenu.closeOpenSubmenu(leave);
-            }
-            if (!leave) {
-                closing = true;
-            }
-            this.menuData.focusRoot?.submenuWillCloseOn(this);
             (await closeOverlay)();
         };
         this.closeOverlay = closeSubmenu;
-        if (this.menuData.focusRoot?.hasOpenSubmenu) {
-            this.menuData.focusRoot.closeOpenSubmenu(true);
-        }
-        const setup = (): void => {
-            submenu.setCloseSelfAsSubmenu(closeSubmenu);
-            this.menuData.focusRoot?.setCloseOpenSubmenu(closeSubmenu);
-        };
         const cleanup = (event: CustomEvent<OverlayOpenCloseDetail>): void => {
             event.stopPropagation();
             returnSubmenu();
-            submenu.setCloseSelfAsSubmenu(closeSubmenu);
-            this.menuData.focusRoot?.setCloseOpenSubmenu(closeSubmenu);
             this.open = false;
             this.active = false;
-            if (closing || event.detail.reason === 'external-click') {
-                this.menuData.focusRoot?.dispatchEvent(
-                    new CustomEvent('close', {
-                        bubbles: true,
-                        composed: true,
-                        detail: { reason: 'external-click' },
-                    })
-                );
-            }
         };
-        this.addEventListener('sp-opened', setup as EventListener, {
-            once: true,
-        });
         this.addEventListener('sp-closed', cleanup as EventListener, {
             once: true,
         });
+        popover.addEventListener('change', closeSubmenu);
     }
 
     updateAriaSelected(): void {

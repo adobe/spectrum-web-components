@@ -33,6 +33,7 @@ export interface OverlayOpenDetail {
     receivesFocus?: 'auto';
     virtualTrigger?: VirtualTrigger;
     trigger: HTMLElement;
+    root?: HTMLElement;
     interaction: TriggerInteractions;
     theme: ThemeData;
     notImmediatelyClosable?: boolean;
@@ -61,6 +62,7 @@ export interface OverlayDisplayQueryDetail {
 export type Placement = FloatingUIPlacement | 'none';
 
 export type OverlayOptions = {
+    root?: HTMLElement;
     delayed?: boolean;
     placement?: Placement;
     offset?: number;

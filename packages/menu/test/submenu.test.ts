@@ -28,6 +28,10 @@ import { spy } from 'sinon';
 import { Theme } from '@spectrum-web-components/theme';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { sendKeys } from '@web/test-runner-commands';
+import { ActionMenu } from '@spectrum-web-components/action-menu';
+import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult,
@@ -601,5 +605,247 @@ describe('Submenu', () => {
         await new Promise((r) => setTimeout(r, 200));
 
         expect(rootItem.open).to.be.false;
+    });
+    it('closes all decendent submenus when closing a ancestor menu', async () => {
+        const el = await styledFixture<ActionMenu>(html`
+            <sp-action-menu>
+                <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                <sp-menu-group role="none">
+                    <span slot="header">New York</span>
+                    <sp-menu-item>Bronx</sp-menu-item>
+                    <sp-menu-item id="submenu-item-1">
+                        Brooklyn
+                        <sp-menu slot="submenu">
+                            <sp-menu-item id="submenu-item-2">
+                                Ft. Greene
+                                <sp-menu slot="submenu">
+                                    <sp-menu-item>S. Oxford St</sp-menu-item>
+                                    <sp-menu-item>S. Portland Ave</sp-menu-item>
+                                    <sp-menu-item>S. Elliot Pl</sp-menu-item>
+                                </sp-menu>
+                            </sp-menu-item>
+                            <sp-menu-item disabled>Park Slope</sp-menu-item>
+                            <sp-menu-item>Williamsburg</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                    <sp-menu-item id="submenu-item-3">
+                        Manhattan
+                        <sp-menu slot="submenu">
+                            <sp-menu-item disabled>SoHo</sp-menu-item>
+                            <sp-menu-item>
+                                Union Square
+                                <sp-menu slot="submenu">
+                                    <sp-menu-item>14th St</sp-menu-item>
+                                    <sp-menu-item>Broadway</sp-menu-item>
+                                    <sp-menu-item>Park Ave</sp-menu-item>
+                                </sp-menu>
+                            </sp-menu-item>
+                            <sp-menu-item>Upper East Side</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-menu-group>
+            </sp-action-menu>
+        `);
+
+        const rootMenu1 = el.querySelector('#submenu-item-1') as Menu;
+        const rootMenu2 = el.querySelector('#submenu-item-3') as Menu;
+        const childMenu2 = el.querySelector('#submenu-item-2') as Menu;
+
+        expect(el.open).to.be.false;
+        let opened = oneEvent(el, 'sp-opened');
+        el.click();
+        await opened;
+        expect(el.open).to.be.true;
+
+        let activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(1);
+        opened = oneEvent(rootMenu1, 'sp-opened');
+        rootMenu1.dispatchEvent(
+            new PointerEvent('pointerenter', { bubbles: true })
+        );
+        await opened;
+        activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(2);
+
+        opened = oneEvent(childMenu2, 'sp-opened');
+        childMenu2.dispatchEvent(
+            new PointerEvent('pointerenter', { bubbles: true })
+        );
+        await opened;
+        activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(3);
+
+        const overlaysManaged = Promise.all([
+            oneEvent(childMenu2, 'sp-closed'),
+            oneEvent(rootMenu1, 'sp-closed'),
+            oneEvent(rootMenu2, 'sp-opened'),
+        ]);
+        rootMenu2.dispatchEvent(
+            new PointerEvent('pointerenter', { bubbles: true })
+        );
+        await overlaysManaged;
+        activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(2);
+    });
+
+    it('closes back to the first overlay without a `root` when clicking away', async () => {
+        const el = await styledFixture<ActionMenu>(html`
+            <sp-action-menu>
+                <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                <sp-menu-group role="none">
+                    <span slot="header">New York</span>
+                    <sp-menu-item>Bronx</sp-menu-item>
+                    <sp-menu-item id="submenu-item-1">
+                        Brooklyn
+                        <sp-menu slot="submenu">
+                            <sp-menu-item id="submenu-item-2">
+                                Ft. Greene
+                                <sp-menu slot="submenu">
+                                    <sp-menu-item>S. Oxford St</sp-menu-item>
+                                    <sp-menu-item>S. Portland Ave</sp-menu-item>
+                                    <sp-menu-item>S. Elliot Pl</sp-menu-item>
+                                </sp-menu>
+                            </sp-menu-item>
+                            <sp-menu-item disabled>Park Slope</sp-menu-item>
+                            <sp-menu-item>Williamsburg</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                    <sp-menu-item id="submenu-item-3">
+                        Manhattan
+                        <sp-menu slot="submenu">
+                            <sp-menu-item disabled>SoHo</sp-menu-item>
+                            <sp-menu-item>
+                                Union Square
+                                <sp-menu slot="submenu">
+                                    <sp-menu-item>14th St</sp-menu-item>
+                                    <sp-menu-item>Broadway</sp-menu-item>
+                                    <sp-menu-item>Park Ave</sp-menu-item>
+                                </sp-menu>
+                            </sp-menu-item>
+                            <sp-menu-item>Upper East Side</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-menu-group>
+            </sp-action-menu>
+        `);
+
+        const rootMenu1 = el.querySelector('#submenu-item-1') as Menu;
+        const childMenu2 = el.querySelector('#submenu-item-2') as Menu;
+
+        expect(el.open).to.be.false;
+        let opened = oneEvent(el, 'sp-opened');
+        el.click();
+        await opened;
+        expect(el.open).to.be.true;
+
+        let activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(1);
+        opened = oneEvent(rootMenu1, 'sp-opened');
+        rootMenu1.dispatchEvent(
+            new PointerEvent('pointerenter', { bubbles: true })
+        );
+        await opened;
+        activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(2);
+
+        opened = oneEvent(childMenu2, 'sp-opened');
+        childMenu2.dispatchEvent(
+            new PointerEvent('pointerenter', { bubbles: true })
+        );
+        await opened;
+        activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(3);
+
+        const closed = Promise.all([
+            oneEvent(childMenu2, 'sp-closed'),
+            oneEvent(rootMenu1, 'sp-closed'),
+            oneEvent(el, 'sp-closed'),
+        ]);
+        document.body.click();
+        await closed;
+        activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(0);
+    });
+
+    it('closes decendent menus when Menu Item in ancestor is clicked', async () => {
+        const el = await styledFixture<ActionMenu>(html`
+            <sp-action-menu>
+                <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                <sp-menu-group role="none">
+                    <span slot="header">New York</span>
+                    <sp-menu-item>Bronx</sp-menu-item>
+                    <sp-menu-item id="submenu-item-1">
+                        Brooklyn
+                        <sp-menu slot="submenu">
+                            <sp-menu-item id="submenu-item-2">
+                                Ft. Greene
+                                <sp-menu slot="submenu">
+                                    <sp-menu-item>S. Oxford St</sp-menu-item>
+                                    <sp-menu-item>S. Portland Ave</sp-menu-item>
+                                    <sp-menu-item>S. Elliot Pl</sp-menu-item>
+                                </sp-menu>
+                            </sp-menu-item>
+                            <sp-menu-item disabled>Park Slope</sp-menu-item>
+                            <sp-menu-item id="ancestor-item">
+                                Williamsburg
+                            </sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                    <sp-menu-item id="submenu-item-3">
+                        Manhattan
+                        <sp-menu slot="submenu">
+                            <sp-menu-item disabled>SoHo</sp-menu-item>
+                            <sp-menu-item>
+                                Union Square
+                                <sp-menu slot="submenu">
+                                    <sp-menu-item>14th St</sp-menu-item>
+                                    <sp-menu-item>Broadway</sp-menu-item>
+                                    <sp-menu-item>Park Ave</sp-menu-item>
+                                </sp-menu>
+                            </sp-menu-item>
+                            <sp-menu-item>Upper East Side</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-menu-group>
+            </sp-action-menu>
+        `);
+
+        const rootMenu1 = el.querySelector('#submenu-item-1') as MenuItem;
+        const childMenu2 = el.querySelector('#submenu-item-2') as MenuItem;
+        const ancestorItem = el.querySelector('#ancestor-item') as MenuItem;
+
+        expect(el.open).to.be.false;
+        let opened = oneEvent(el, 'sp-opened');
+        el.click();
+        await opened;
+        expect(el.open).to.be.true;
+
+        let activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(1);
+        opened = oneEvent(rootMenu1, 'sp-opened');
+        rootMenu1.dispatchEvent(
+            new PointerEvent('pointerenter', { bubbles: true })
+        );
+        await opened;
+        activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(2);
+
+        opened = oneEvent(childMenu2, 'sp-opened');
+        childMenu2.dispatchEvent(
+            new PointerEvent('pointerenter', { bubbles: true })
+        );
+        await opened;
+        activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(3);
+
+        const closed = Promise.all([
+            oneEvent(childMenu2, 'sp-closed'),
+            oneEvent(rootMenu1, 'sp-closed'),
+            oneEvent(el, 'sp-closed'),
+        ]);
+        ancestorItem.click();
+        await closed;
+        activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(0);
     });
 });
