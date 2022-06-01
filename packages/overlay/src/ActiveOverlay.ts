@@ -27,6 +27,7 @@ import type {
     ThemeVariant,
 } from '@spectrum-web-components/theme/src/Theme.js';
 import styles from './active-overlay.css.js';
+import { parentOverlayOf } from './overlay-utils.js';
 import {
     OverlayOpenCloseDetail,
     OverlayOpenDetail,
@@ -105,18 +106,6 @@ const stateTransition = (
     return stateMachine.states[state].on[event] || state;
 };
 
-const parentOverlayOf = (el: Element): ActiveOverlay | null => {
-    const closestOverlay = el.closest('active-overlay');
-    if (closestOverlay) {
-        return closestOverlay;
-    }
-    const rootNode = el.getRootNode() as ShadowRoot;
-    if (rootNode.host) {
-        return parentOverlayOf(rootNode.host);
-    }
-    return null;
-};
-
 const getFallbackPlacements = (
     placement: FloatingUIPlacement
 ): FloatingUIPlacement[] => {
@@ -146,6 +135,7 @@ export class ActiveOverlay extends SpectrumElement {
     public overlayContent!: HTMLElement;
     public overlayContentTip?: HTMLElement;
     public trigger!: HTMLElement;
+    public root?: HTMLElement;
     public virtualTrigger?: VirtualTrigger;
 
     protected childrenReady!: Promise<unknown[]>;
@@ -353,6 +343,7 @@ export class ActiveOverlay extends SpectrumElement {
         this.interaction = detail.interaction;
         this.theme = detail.theme;
         this.receivesFocus = detail.receivesFocus;
+        this.root = detail.root;
     }
 
     public dispose(): void {

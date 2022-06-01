@@ -97,6 +97,7 @@ export class Overlay {
         receivesFocus,
         notImmediatelyClosable,
         virtualTrigger,
+        root,
     }: OverlayOptions): Promise<boolean> {
         /* c8 ignore next */
         if (this.isOpen) return true;
@@ -140,6 +141,7 @@ export class Overlay {
             interaction: this.interaction,
             theme: queryThemeDetail,
             receivesFocus,
+            root,
             notImmediatelyClosable,
             virtualTrigger,
             ...overlayDetailQuery,

@@ -47,11 +47,6 @@ function elementIsOrContains(
     return !!isOrContains && (el === isOrContains || el.contains(isOrContains));
 }
 
-/* c8 ignore next 3 */
-const noop = (): void => {
-    return;
-};
-
 /**
  * Spectrum Menu Component
  * @element sp-menu
@@ -70,43 +65,7 @@ export class Menu extends SpectrumElement {
         return [menuStyles];
     }
 
-    public get closeSelfAsSubmenu(): (leave?: boolean) => void {
-        this.isSubmenu = false;
-        return this._closeSelfAsSubmenu;
-    }
-
-    public setCloseSelfAsSubmenu(cb: (leave?: boolean) => void): void {
-        if (cb === this._closeSelfAsSubmenu) {
-            this.isSubmenu = false;
-            this._closeSelfAsSubmenu = noop;
-            return;
-        }
-        this.isSubmenu = true;
-        this._closeSelfAsSubmenu = cb;
-    }
-
-    _closeSelfAsSubmenu = noop;
-
     public isSubmenu = false;
-
-    public get closeOpenSubmenu(): (leave?: boolean) => void {
-        this.hasOpenSubmenu = false;
-        return this._closeOpenSubmenu;
-    }
-
-    public setCloseOpenSubmenu(cb: (leave?: boolean) => void): void {
-        if (cb === this._closeOpenSubmenu) {
-            this.hasOpenSubmenu = false;
-            this._closeOpenSubmenu = noop;
-            return;
-        }
-        this.hasOpenSubmenu = true;
-        this._closeOpenSubmenu = cb;
-    }
-
-    _closeOpenSubmenu = noop;
-
-    public hasOpenSubmenu = false;
 
     @property({ type: String, reflect: true })
     public label = '';
@@ -315,11 +274,6 @@ export class Menu extends SpectrumElement {
         }
     }
 
-    public submenuWillCloseOn(menuItem: MenuItem): void {
-        this.focusedItemIndex = this.childItems.indexOf(menuItem);
-        this.focusInItemIndex = this.focusedItemIndex;
-    }
-
     private onClick(event: Event): void {
         if (event.defaultPrevented) {
             return;
@@ -341,12 +295,6 @@ export class Menu extends SpectrumElement {
             event.preventDefault();
             if (target.hasSubmenu || target.open) {
                 return;
-            }
-            if (this.hasOpenSubmenu) {
-                this.closeOpenSubmenu();
-            }
-            if (this.isSubmenu) {
-                this.closeSelfAsSubmenu();
             }
             this.selectOrToggleItem(target);
         } else {
@@ -514,10 +462,10 @@ export class Menu extends SpectrumElement {
                 // Remove focus while opening overlay from keyboard or the visible focus
                 // will slip back to the first item in the menu.
                 this.blur();
-                lastFocusedItem.openOverlay({ immediate: true });
+                lastFocusedItem.openOverlay();
             }
-        } else if (this.isSubmenu && shouldCloseSelfAsSubmenu) {
-            this.closeSelfAsSubmenu(true);
+        } else if (shouldCloseSelfAsSubmenu && this.isSubmenu) {
+            this.dispatchEvent(new Event('close', { bubbles: true }));
         }
     }
 
@@ -533,7 +481,7 @@ export class Menu extends SpectrumElement {
                 // Remove focus while opening overlay from keyboard or the visible focus
                 // will slip back to the first item in the menu.
                 this.blur();
-                lastFocusedItem.openOverlay({ immediate: true });
+                lastFocusedItem.openOverlay();
                 return;
             }
         }
