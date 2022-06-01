@@ -1883,20 +1883,29 @@
   dependencies:
     "@floating-ui/core" "^0.6.1"
 
-"@formatjs/ecma402-abstract@1.9.3":
-  version "1.9.3"
-  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.9.3.tgz#00892014c805935b5b1345d238246e9bf3a2de50"
-  integrity sha512-DBrRUL65m4SVtfq+T4Qltd8+upAzfb9K1MX0UZ0hqQ0wpBY0PSIti9XJe0ZQ/j2v/KxpwQ0Jw5NLumKVezJFQg==
+"@formatjs/ecma402-abstract@1.11.6":
+  version "1.11.6"
+  resolved "https://registry.yarnpkg.com/@formatjs/ecma402-abstract/-/ecma402-abstract-1.11.6.tgz#0e828ddfed6fb3413ae379e48fb7170fb0795db5"
+  integrity sha512-6TcI+IroIK+GTWXBJ643LBJklmCBsqLt1sUTGWfzdBcI5Y6b1L1iamrJB1B5OAQLnhzWveLbmzPYHYsFEZfeig==
   dependencies:
-    tslib "^2.1.0"
+    "@formatjs/intl-localematcher" "0.2.27"
+    tslib "2.4.0"
 
-"@formatjs/intl-numberformat@7.1.4":
-  version "7.1.4"
-  resolved "https://registry.yarnpkg.com/@formatjs/intl-numberformat/-/intl-numberformat-7.1.4.tgz#67f35b2c1f22d126879c7c7fb048cc627b2f38a3"
-  integrity sha512-rOFMlx1oLaQ7tLUwWWaqMvjQ8n4Z/C7jUlBG0qfM4oSOksluKO4MEyJZZeYjRVuNEMipIj34h12t8KicXj6gKg==
+"@formatjs/intl-localematcher@0.2.27":
+  version "0.2.27"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-localematcher/-/intl-localematcher-0.2.27.tgz#8a837ddca17a55d86e4ab68bcbb25b15f547d61d"
+  integrity sha512-XHYcVas2ebDTh3VtfdluvbTjqyMUHqFHARnuJo5KYF/0MKOTmozVSK7PJGnu1IEHdmRdTWuG6TB+2RnkasaxVw==
   dependencies:
-    "@formatjs/ecma402-abstract" "1.9.3"
-    tslib "^2.1.0"
+    tslib "2.4.0"
+
+"@formatjs/intl-numberformat@8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@formatjs/intl-numberformat/-/intl-numberformat-8.0.1.tgz#f5a9269480c869c3ec35c4689074c32ae6240a10"
+  integrity sha512-g0ce2KBbYFhbArsduHBB/QsGw4iVLEhbIYOT6Ra44/iEMGQ1aFLvSKiGYZatCZF7CgK0DTwmZ1RFy7vrs7w24w==
+  dependencies:
+    "@formatjs/ecma402-abstract" "1.11.6"
+    "@formatjs/intl-localematcher" "0.2.27"
+    tslib "2.4.0"
 
 "@fullhuman/postcss-purgecss@^4.1.3":
   version "4.1.3"
@@ -21454,15 +21463,15 @@ tsconfig-paths@^3.14.1:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
+tslib@2.4.0, tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.2.0, tslib@^2.3.1:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
+  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
+
 tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
-
-tslib@^2.0.0, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.2.0, tslib@^2.3.1:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
-  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
 
 tsscmp@1.0.6:
   version "1.0.6"

@@ -54,7 +54,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@formatjs/intl-numberformat": "7.1.4",
+        "@formatjs/intl-numberformat": "8.0.1",
         "@spectrum-css/stepper": "^3.0.24"
     },
     "types": "./src/index.d.ts",
