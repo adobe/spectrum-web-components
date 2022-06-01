@@ -12,7 +12,6 @@ governing permissions and limitations under the License.
 
 import './router.js';
 import { Overlay } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/bundle/elements.js';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
@@ -34,6 +33,16 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-save-floppy.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-stopwatch.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-user-activity.js';
+
+if ('requestIdleCallback' in window) {
+    requestIdleCallback(
+        () => import('@spectrum-web-components/bundle/elements.js')
+    );
+} else {
+    requestAnimationFrame(
+        () => import('@spectrum-web-components/bundle/elements.js')
+    );
+}
 
 declare global {
     interface Window {
