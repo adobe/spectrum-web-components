@@ -22,4 +22,5 @@ export default {
     ],
     outdir: '.',
     litelement: true,
+    packagejson: false,
 };
