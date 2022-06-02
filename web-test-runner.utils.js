@@ -25,7 +25,7 @@ export const packages = fs
     .concat(tools);
 
 const vrtHTML =
-    ({ themeVariant, color, scale, dir, reduceMotion }) =>
+    ({ themeVariant, color, scale, dir, reduceMotion, hcm }) =>
     (testFramework) =>
         `<!doctype html>
     <html dir=${dir}>
@@ -51,6 +51,7 @@ const vrtHTML =
                 defaultScale: "${scale || ''}",
                 defaultDirection: "${dir || ''}",
                 defaultReduceMotion: ${reduceMotion},
+                hcm: ${!!hcm},
             };
         </script>
         <script type="module" src="${testFramework}"></script>
@@ -117,6 +118,27 @@ vrtGroups = [
         }
         return acc;
     }, []),
+    {
+        name: `vrt-hcm`,
+        files: 'packages/*/test/*.test-vrt.js',
+        testRunnerHtml: vrtHTML({
+            themeVariant: 'spectrum',
+            color: 'dark',
+            scale: 'medium',
+            dir: 'ltr',
+            hcm: true,
+            reduceMotion: true,
+        }),
+        browsers: [
+            playwrightLauncher({
+                product: 'chromium',
+                createBrowserContext: ({ browser }) =>
+                    browser.newContext({
+                        ignoreHTTPSErrors: true,
+                    }),
+            }),
+        ],
+    },
 ];
 
 export const configuredVisualRegressionPlugin = () =>

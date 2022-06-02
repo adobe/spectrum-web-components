@@ -22,7 +22,7 @@ import { Color, Scale } from '@spectrum-web-components/theme';
 import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/StoryDecorator';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { render } from 'lit';
-import { sendKeys } from '@web/test-runner-commands';
+import { emulateMedia, sendKeys } from '@web/test-runner-commands';
 
 const wrap = () => html`
     <sp-story-decorator
@@ -62,11 +62,12 @@ export const test = (
                     ...(testsDefault.args || {}),
                     ...(tests[story].args || {}),
                 };
-                let decoratedStory: (() => TemplateResult) | TemplateResult =
-                    () =>
-                        html`
-                            ${tests[story](args)}
-                        `;
+                let decoratedStory:
+                    | (() => TemplateResult)
+                    | TemplateResult = () =>
+                    html`
+                        ${tests[story](args)}
+                    `;
                 let storyResult = decoratedStory();
                 if (tests[story].decorators && tests[story].decorators.length) {
                     let decoratorCount = tests[story].decorators.length;
@@ -134,10 +135,17 @@ export const regressVisuals = async (name: string, stories: StoriesType) => {
             defaultColor: color,
             defaultScale: scale,
             defaultDirection: dir,
+            hcm,
         } = window.__swc_hack_knobs__;
         before(async () => {
             if (stories.default?.swc_vrt?.preload) {
                 await stories.default.swc_vrt.preload();
+            }
+            if (hcm) {
+                await emulateMedia({
+                    forcedColors: 'active',
+                    colorScheme: 'dark',
+                });
             }
         });
         afterEach(() => {

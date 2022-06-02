@@ -1,4 +1,5 @@
 version: 2.1
+
 executors:
     node:
         docker:
@@ -188,6 +189,76 @@ jobs:
                   branch=$(git symbolic-ref --short HEAD)
                   branch=$(npx slugify-cli $branch)
                   yarn netlify deploy --alias=$branch
+
+    hcm-visual:
+        executor: node
+
+        steps:
+            - downstream
+            - restore_cache:
+                  name: Restore Golden Images Cache
+                  keys:
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-hcm-
+                      - v2-golden-images-main-hcm-
+                      - v2-golden-images-main-classic-lightest-medium-ltr-
+            - run:
+                  name: Count baseline images
+                  command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
+            - run:
+                  when: always
+                  name: VRT Run
+                  command: |
+                      yarn test:ci --config web-test-runner.config.vrt.js --group vrt-hcm
+            # store results and artifacts before rearranging things for the new cache.
+            - store_test_results:
+                  path: /root/project/results/
+            # build diff review site
+            - run:
+                  when: on_fail
+                  name: Create review site
+                  command: |
+                      branch=$(git symbolic-ref --short HEAD)
+                      node test/visual/review.js --branch=$branch --commit=<< pipeline.git.revision >> --theme="hcm"
+                      yarn rollup -c test/visual/rollup.config.js
+            - run:
+                  when: on_fail
+                  name: Publish review site
+                  command: |
+                      cp projects/documentation/content/favicon.ico test/visual
+                      branch=$(git symbolic-ref --short HEAD)
+                      hash=$(echo -n $branch-hcm | md5sum | cut -c 1-32)
+                      echo hash
+                      yarn netlify deploy --alias=$hash --dir=test/visual
+            # move "updated" screenshot into the baseline directory before making the new cache
+            - run:
+                  when: always
+                  command: |
+                      rm -rf test/visual/screenshots-baseline
+                      cp -R test/visual/screenshots-actual/updates test/visual/screenshots-baseline
+            - run:
+                  when: on_success
+                  name: Count current images
+                  command: find test/visual/screenshots-baseline -type f | wc -l > count_end.txt
+            # prevent removing regression tests without requiring a new golden cache
+            - run:
+                  when: on_success
+                  name: Fail if there are a different number of images...
+                  command: |
+                      echo $(cat count_start.txt)
+                      echo $(cat count_end.txt)
+                      if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
+            - save_cache:
+                  when: on_fail
+                  name: Build Golden Images Revision Cache
+                  paths:
+                      - test/visual/screenshots-baseline
+                  key: v2-golden-images-{{ .Revision }}-hcm-{{ epoch }}
+            - save_cache:
+                  name: Build Golden Images Branch Cache
+                  paths:
+                      - test/visual/screenshots-baseline
+                  key: v2-golden-images-{{ .Branch }}-hcm-{{ epoch }}
+
     visual:
         executor: node
         parameters:
@@ -244,6 +315,11 @@ workflows:
             - test-chromium
             - test-firefox
             - test-webkit
+            - hcm-visual:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
             - preview-docs:
                   filters:
                       branches:
