@@ -19,22 +19,33 @@ import crypto from 'crypto';
 
 const { commit, theme, branch } = yargs(hideBin(process.argv)).argv;
 
+const getHash = (context) => {
+    const md5 = crypto.createHash('md5');
+    md5.update(context);
+    return md5.digest('hex');
+};
+
 const vrts = [];
 const themes = ['Classic', 'Express'];
 const scales = ['Medium', 'Large'];
 const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
 const directions = ['LTR', 'RTL'];
+vrts.push([
+    `High Contrast Mode | Medium | LTR`,
+    `https://${getHash(
+        `${branch}-hcm`
+    )}--spectrum-web-components.netlify.app/review/`,
+]);
 themes.map((theme) =>
     colors.map((color) =>
         scales.map((scale) =>
             directions.map((direction) => {
                 const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
-                const md5 = crypto.createHash('md5');
-                md5.update(context);
-                const hash = md5.digest('hex');
                 vrts.push([
                     `${theme} | ${color} | ${scale} | ${direction}`,
-                    `https://${hash}--spectrum-web-components.netlify.app/review/`,
+                    `https://${getHash(
+                        context
+                    )}--spectrum-web-components.netlify.app/review/`,
                 ]);
             })
         )

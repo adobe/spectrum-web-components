@@ -19,6 +19,7 @@ declare global {
             defaultScale: Scale;
             defaultDirection: 'ltr' | 'rtl';
             defaultReduceMotion: boolean;
+            hcm: boolean;
         };
     }
 }

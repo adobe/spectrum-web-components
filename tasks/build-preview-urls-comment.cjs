@@ -43,6 +43,12 @@ const getChangedPackages = () => {
     return packageList;
 };
 
+const getHash = (context) => {
+    const md5 = crypto.createHash('md5');
+    md5.update(context);
+    return md5.digest('hex');
+};
+
 const buildPreviewURLComment = (ref) => {
     const packages = getChangedPackages();
     const branch = ref.replace('refs/heads/', '');
@@ -52,16 +58,20 @@ const buildPreviewURLComment = (ref) => {
     const scales = ['Medium', 'Large'];
     const colors = ['Lightest', 'Light', 'Dark', 'Darkest'];
     const directions = ['LTR', 'RTL'];
+    previewLinks.push(
+        `- [High Contrast Mode | Medium | LTR](https://${getHash(
+            `${branch}-hcm`
+        )}--spectrum-web-components.netlify.app/review/)`
+    );
     themes.map((theme) =>
         colors.map((color) =>
             scales.map((scale) =>
                 directions.map((direction) => {
                     const context = `${branch}-${theme.toLocaleLowerCase()}-${color.toLocaleLowerCase()}-${scale.toLocaleLowerCase()}-${direction.toLocaleLowerCase()}`;
-                    const md5 = crypto.createHash('md5');
-                    md5.update(context);
-                    const hash = md5.digest('hex');
                     previewLinks.push(`
-- [${theme} | ${color} | ${scale} | ${direction}](https://${hash}--spectrum-web-components.netlify.app/review/)`);
+- [${theme} | ${color} | ${scale} | ${direction}](https://${getHash(
+                        context
+                    )}--spectrum-web-components.netlify.app/review/)`);
                 })
             )
         )
