@@ -29,7 +29,7 @@ import { Tray } from '@spectrum-web-components/tray';
 <overlay-trigger type="modal" placement="none">
     <sp-button slot="trigger" variant="secondary">Toggle tray</sp-button>
     <sp-tray slot="click-content">
-        <sp-dialog size="small" dismissable>
+        <sp-dialog size="s" dismissable>
             <h2 slot="heading">New Messages</h2>
             You have 5 new messages.
         </sp-dialog>

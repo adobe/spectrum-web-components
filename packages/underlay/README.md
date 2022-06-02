@@ -55,7 +55,7 @@ When leveraging an `<sp-underlay>` in conjunction with overlay content, place it
 </sp-button>
 
 <sp-underlay></sp-underlay>
-<sp-dialog size="small">
+<sp-dialog size="s">
     <h1 slot="heading">Hello, I'm an overlay!</h1>
     <p>Enjoy your day...</p>
     <sp-button
