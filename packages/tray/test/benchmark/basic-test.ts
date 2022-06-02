@@ -17,7 +17,7 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
     <sp-tray open>
-        <sp-dialog size="small">
+        <sp-dialog size="s">
             <h2 slot="heading">New Messages</h2>
             You have 5 new messages.
         </sp-dialog>

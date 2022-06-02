@@ -98,7 +98,7 @@ This example only delivers content via the "click" interaction and leverages bot
 <overlay-trigger placement="top" type="replace">
     <sp-button slot="trigger">Overlay Trigger</sp-button>
     <sp-popover slot="click-content" open>
-        <sp-dialog size="small">
+        <sp-dialog size="s">
             <h2 slot="heading">Click content</h2>
             An &lt;overlay-trigger&gt; can be used to manage either or both of
             the "click" and "hover" content slots that are made available. Here,
