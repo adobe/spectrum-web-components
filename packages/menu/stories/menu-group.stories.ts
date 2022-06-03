@@ -65,14 +65,13 @@ export const mixed = (): TemplateResult => {
                 decoration = value;
                 break;
         }
-        (document.querySelector(
-            '#output'
-        ) as HTMLElement).textContent = styleRules({
-            style,
-            weight,
-            color,
-            decoration,
-        });
+        (document.querySelector('#output') as HTMLElement).textContent =
+            styleRules({
+                style,
+                weight,
+                color,
+                decoration,
+            });
     };
     return html`
         <style>
@@ -111,7 +110,10 @@ export const mixed = (): TemplateResult => {
                 </sp-menu-group>
             </sp-menu>
         </sp-popover>
-        <pre id="output">
+        <pre
+            id="output"
+            style="font-family: var(--spectrum-alias-body-text-font-family);"
+        >
             ${styleRules({ style, weight, color, decoration })}
         </pre
         >
