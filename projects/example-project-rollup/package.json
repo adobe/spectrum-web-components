@@ -6,6 +6,7 @@
   "license": "Apache-2.0",
   "author": "example-app",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "rimraf dist && yarn build:tsc && rollup -c rollup.config.js",
     "build:tsc": "tsc && cp src/styles.css out-tsc/src",
@@ -15,7 +16,7 @@
     "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore",
     "lint:prettier": "prettier \"**/*.js\" \"**/*.ts\" --check --ignore-path .gitignore",
     "postbuild": "mv dist/*.css dist/styles.css",
-    "start": "concurrently --kill-others --names tsc,wds \"npm run tsc:watch\" \"wds --app-index index.html --node-resolve --open --watch\"",
+    "start": "concurrently --kill-others --names tsc,wds \"npm run tsc:watch\" \"wds --config wds.config.js\"",
     "start:build": "npm run build && wds --root-dir dist --app-index index.html --open --compatibility none",
     "tsc:watch": "tsc --watch"
   },

@@ -21,3 +21,5 @@
 /out-tsc/
 
 stats.html
+
+!wds.config.js
