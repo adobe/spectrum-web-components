@@ -442,10 +442,14 @@ export class ActiveOverlay extends SpectrumElement {
             flipMiddleware,
             size({
                 padding: REQUIRED_DISTANCE_TO_EDGE,
-                apply: ({ width, height, floating }) => {
+                apply: ({
+                    availableWidth,
+                    availableHeight,
+                    rects: { floating },
+                }) => {
                     const maxHeight = Math.max(
                         MIN_OVERLAY_HEIGHT,
-                        Math.floor(height)
+                        Math.floor(availableHeight)
                     );
                     const actualHeight = floating.height;
                     this.initialHeight =
@@ -459,7 +463,7 @@ export class ActiveOverlay extends SpectrumElement {
                         ? `${maxHeight}px`
                         : '';
                     Object.assign(this.style, {
-                        maxWidth: `${Math.floor(width)}px`,
+                        maxWidth: `${Math.floor(availableWidth)}px`,
                         maxHeight: appliedHeight,
                         height: appliedHeight,
                     });
