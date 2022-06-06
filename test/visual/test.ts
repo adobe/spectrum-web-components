@@ -148,6 +148,14 @@ export const regressVisuals = async (name: string, stories: StoriesType) => {
                 });
             }
         });
+        after(async () => {
+            if (hcm) {
+                await emulateMedia({
+                    forcedColors: 'none',
+                    colorScheme: 'no-preference',
+                });
+            }
+        });
         afterEach(() => {
             const overlays = [
                 ...(document.querySelectorAll('active-overlay') || []),
