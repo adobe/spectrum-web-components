@@ -100,7 +100,7 @@ module.exports = async () => {
     mpaConfig.output.dir = 'dist';
     mpaConfig.plugins.unshift(
         nodeResolve({
-            exportConditions: ['import', 'production'],
+            exportConditions: ['browser', 'import', 'production'],
         })
     );
     mpaConfig.plugins.push(
