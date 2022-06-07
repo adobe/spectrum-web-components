@@ -24,6 +24,7 @@
         { "path": "packages/asset" },
         { "path": "packages/avatar" },
         { "path": "packages/banner" },
+        { "path": "packages/badge" },
         { "path": "packages/base" },
         { "path": "packages/bundle" },
         { "path": "packages/button" },
