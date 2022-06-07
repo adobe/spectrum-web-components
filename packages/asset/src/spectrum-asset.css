@@ -10,55 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    align-items: center;
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    width: 100%; /* .spectrum-Asset */
-}
-::slotted(*) {
-    max-height: 100%;
-    max-width: 100%; /* .spectrum-Asset-image */
-    object-fit: contain;
-    transition: opacity var(--spectrum-global-animation-duration-100, 0.13s);
-}
-.file,
-.folder {
-    height: 100%;
-    margin: var(
-        --spectrum-asset-icon-margin,
-        var(--spectrum-global-dimension-size-250)
-    );
-    max-width: var(
-        --spectrum-asset-icon-max-width,
-        var(--spectrum-global-dimension-static-size-1000)
-    );
-    min-width: var(
-        --spectrum-asset-icon-min-width,
-        var(--spectrum-global-dimension-size-600)
-    );
-    width: 100%; /* .spectrum-Asset-folder,
-   * .spectrum-Asset-file */
-}
-.folderBackground {
-    fill: var(
-        --spectrum-asset-folder-background-color,
-        var(--spectrum-global-color-gray-300)
-    ); /* .spectrum-Asset-folderBackground */
-}
-.fileBackground {
-    fill: var(
-        --spectrum-asset-file-background-color,
-        var(--spectrum-global-color-gray-50)
-    ); /* .spectrum-Asset-fileBackground */
-}
-.fileOutline,
-.folderOutline {
-    fill: var(
-        --spectrum-asset-icon-outline-color,
-        var(--spectrum-global-color-gray-500)
-    ); /* .spectrum-Asset-folderOutline,
-   * .spectrum-Asset-fileOutline */
-}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host{align-items:center;display:flex;height:100%;justify-content:center;width:100%/* .spectrum-Asset */}::slotted(*){max-height:100%;max-width:100%;/* .spectrum-Asset-image */object-fit:contain;transition:opacity var(--spectrum-global-animation-duration-100,.13s)}.file,.folder{height:100%;margin:var(--spectrum-asset-icon-margin,var(--spectrum-global-dimension-size-250));max-width:var(--spectrum-asset-icon-max-width,var(--spectrum-global-dimension-static-size-1000));min-width:var(--spectrum-asset-icon-min-width,var(--spectrum-global-dimension-size-600));width:100%/* .spectrum-Asset-folder,
+   * .spectrum-Asset-file */}.folderBackground{fill:var(--spectrum-asset-folder-background-color,var(--spectrum-global-color-gray-300))/* .spectrum-Asset-folderBackground */}.fileBackground{fill:var(--spectrum-asset-file-background-color,var(--spectrum-global-color-gray-50))/* .spectrum-Asset-fileBackground */}.fileOutline,.folderOutline{fill:var(--spectrum-asset-icon-outline-color,var(--spectrum-global-color-gray-500))/* .spectrum-Asset-folderOutline,
+   * .spectrum-Asset-fileOutline */}

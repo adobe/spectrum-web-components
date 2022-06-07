@@ -10,19 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-@media (forced-colors: active) {
-    .spectrum-Icon,
-    .spectrum-UIIcon {
-        forced-color-adjust: auto;
-    }
-}
-.spectrum-UIIcon-SingleGripper100 {
-    height: var(
-        --spectrum-alias-ui-icon-singlegripper-size-100-width,
-        var(--spectrum-global-dimension-size-300)
-    );
-    width: var(
-        --spectrum-alias-ui-icon-singlegripper-size-100-height
-    ); /* .spectrum-UIIcon-SingleGripper100 */
-}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */@media (forced-colors:active){.spectrum-Icon,.spectrum-UIIcon{forced-color-adjust:auto}}.spectrum-UIIcon-SingleGripper100{height:var(--spectrum-alias-ui-icon-singlegripper-size-100-width,var(--spectrum-global-dimension-size-300));width:var(--spectrum-alias-ui-icon-singlegripper-size-100-height)/* .spectrum-UIIcon-SingleGripper100 */}

@@ -10,20 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-#label {
-    flex: 1 1 auto; /* .spectrum-Menu-itemLabel */
-    -webkit-hyphens: auto;
-    hyphens: auto;
-    line-height: var(--spectrum-listitem-texticon-label-line-height);
-    overflow-wrap: break-word;
-    width: calc(
-        100% - var(--spectrum-listitem-texticon-ui-icon-width) -
-            var(--spectrum-listitem-texticon-icon-gap)
-    );
-}
-.spectrum-Menu-itemLabel--wrapping {
-    overflow: hidden;
-    text-overflow: ellipsis; /* .spectrum-Menu-itemLabel--wrapping */
-    white-space: nowrap;
-}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */#label{flex:1 1 auto;/* .spectrum-Menu-itemLabel */-webkit-hyphens:auto;hyphens:auto;line-height:var(--spectrum-listitem-texticon-label-line-height);overflow-wrap:break-word;width:calc(100% - var(--spectrum-listitem-texticon-ui-icon-width) - var(--spectrum-listitem-texticon-icon-gap))}.spectrum-Menu-itemLabel--wrapping{overflow:hidden;text-overflow:ellipsis;/* .spectrum-Menu-itemLabel--wrapping */white-space:nowrap}

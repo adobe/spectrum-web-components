@@ -10,16 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    margin: calc(var(--spectrum-listitem-texticon-divider-padding) / 2)
-        var(--spectrum-listitem-texticon-padding-y);
-    overflow: visible; /* .spectrum-Menu .spectrum-Menu-divider */
-    width: auto;
-}
-@media (forced-colors: active) {
-    :host {
-        background-color: CanvasText;
-        forced-color-adjust: none;
-    }
-}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host{margin:calc(var(--spectrum-listitem-texticon-divider-padding)/2) var(--spectrum-listitem-texticon-padding-y);overflow:visible;/* .spectrum-Menu .spectrum-Menu-divider */width:auto}@media (forced-colors:active){:host{background-color:CanvasText;forced-color-adjust:none}}

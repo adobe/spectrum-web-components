@@ -10,39 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-@media (forced-colors: active) {
-    .spectrum-Icon,
-    .spectrum-UIIcon {
-        forced-color-adjust: auto;
-    }
-}
-.spectrum-UIIcon-Asterisk75 {
-    height: var(--spectrum-alias-ui-icon-asterisk-size-300);
-    width: var(
-        --spectrum-alias-ui-icon-asterisk-size-75,
-        var(--spectrum-global-dimension-static-size-100)
-    ); /* .spectrum-UIIcon-Asterisk75 */
-}
-.spectrum-UIIcon-Asterisk100 {
-    height: var(
-        --spectrum-alias-ui-icon-asterisk-size-100,
-        var(--spectrum-global-dimension-size-100)
-    );
-    width: var(
-        --spectrum-alias-ui-icon-asterisk-size-100,
-        var(--spectrum-global-dimension-size-100)
-    ); /* .spectrum-UIIcon-Asterisk100 */
-}
-.spectrum-UIIcon-Asterisk200 {
-    height: var(--spectrum-alias-ui-icon-asterisk-size-200);
-    width: var(
-        --spectrum-alias-ui-icon-asterisk-size-200
-    ); /* .spectrum-UIIcon-Asterisk200 */
-}
-.spectrum-UIIcon-Asterisk300 {
-    height: var(--spectrum-alias-ui-icon-asterisk-size-300);
-    width: var(
-        --spectrum-alias-ui-icon-asterisk-size-300
-    ); /* .spectrum-UIIcon-Asterisk300 */
-}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */@media (forced-colors:active){.spectrum-Icon,.spectrum-UIIcon{forced-color-adjust:auto}}.spectrum-UIIcon-Asterisk75{height:var(--spectrum-alias-ui-icon-asterisk-size-300);width:var(--spectrum-alias-ui-icon-asterisk-size-75,var(--spectrum-global-dimension-static-size-100))/* .spectrum-UIIcon-Asterisk75 */}.spectrum-UIIcon-Asterisk100{height:var(--spectrum-alias-ui-icon-asterisk-size-100,var(--spectrum-global-dimension-size-100));width:var(--spectrum-alias-ui-icon-asterisk-size-100,var(--spectrum-global-dimension-size-100))/* .spectrum-UIIcon-Asterisk100 */}.spectrum-UIIcon-Asterisk200{height:var(--spectrum-alias-ui-icon-asterisk-size-200);width:var(--spectrum-alias-ui-icon-asterisk-size-200)/* .spectrum-UIIcon-Asterisk200 */}.spectrum-UIIcon-Asterisk300{height:var(--spectrum-alias-ui-icon-asterisk-size-300);width:var(--spectrum-alias-ui-icon-asterisk-size-300)/* .spectrum-UIIcon-Asterisk300 */}

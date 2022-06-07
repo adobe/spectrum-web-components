@@ -10,19 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    --spectrum-accordion-item-title-padding-y: var(
-        --spectrum-global-dimension-size-150
-    ); /* .spectrum-Accordion */
-    --spectrum-accordion-animation-duration: var(
-        --spectrum-global-animation-duration-100,
-        130ms
-    );
-}
-:host {
-    display: block; /* .spectrum-Accordion */
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host{--spectrum-accordion-item-title-padding-y:var(
+    --spectrum-global-dimension-size-150
+  );/* .spectrum-Accordion */--spectrum-accordion-animation-duration:var(--spectrum-global-animation-duration-100,130ms)}:host{display:block;/* .spectrum-Accordion */list-style:none;margin:0;padding:0}

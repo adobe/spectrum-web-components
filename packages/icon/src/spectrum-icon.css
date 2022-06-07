@@ -10,77 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
-    fill: currentColor;
-    color: inherit;
-    display: inline-block; /* .spectrum-Icon,
-   * .spectrum-UIIcon */
-    pointer-events: none;
-}
-:host(:not(:root)) {
-    overflow: hidden; /* .spectrum-Icon:not(:root),
-   * .spectrum-UIIcon:not(:root) */
-}
-@media (forced-colors: active) {
-    .spectrum-UIIcon,
-    :host {
-        forced-color-adjust: auto;
-    }
-}
-:host {
-    --spectrum-icon-size-s: var(
-        --spectrum-alias-workflow-icon-size-s,
-        var(--spectrum-global-dimension-size-200)
-    ); /* .spectrum-Icon */
-    --spectrum-icon-size-m: var(
-        --spectrum-alias-workflow-icon-size-m,
-        var(--spectrum-global-dimension-size-225)
-    );
-    --spectrum-icon-size-l: var(--spectrum-alias-workflow-icon-size-l);
-    --spectrum-icon-size-xl: var(
-        --spectrum-alias-workflow-icon-size-xl,
-        var(--spectrum-global-dimension-size-275)
-    );
-    --spectrum-icon-size-xxl: var(--spectrum-global-dimension-size-400);
-}
-:host([size='s']) {
-    height: var(
-        --spectrum-icon-size-s
-    ); /* .spectrum-Icon--sizeS,
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host{fill:currentColor;color:inherit;display:inline-block;/* .spectrum-Icon,
+   * .spectrum-UIIcon */pointer-events:none}:host(:not(:root)){overflow:hidden/* .spectrum-Icon:not(:root),
+   * .spectrum-UIIcon:not(:root) */}@media (forced-colors:active){.spectrum-UIIcon,:host{forced-color-adjust:auto}}:host{--spectrum-icon-size-s:var(--spectrum-alias-workflow-icon-size-s,var(--spectrum-global-dimension-size-200));/* .spectrum-Icon */--spectrum-icon-size-m:var(--spectrum-alias-workflow-icon-size-m,var(--spectrum-global-dimension-size-225));--spectrum-icon-size-l:var(--spectrum-alias-workflow-icon-size-l);--spectrum-icon-size-xl:var(--spectrum-alias-workflow-icon-size-xl,var(--spectrum-global-dimension-size-275));--spectrum-icon-size-xxl:var(--spectrum-global-dimension-size-400)}:host([size=s]){height:var(--spectrum-icon-size-s);/* .spectrum-Icon--sizeS,
    * .spectrum-Icon--sizeS img,
-   * .spectrum-Icon--sizeS svg */
-    width: var(--spectrum-icon-size-s);
-}
-:host([size='m']) {
-    height: var(
-        --spectrum-icon-size-m
-    ); /* .spectrum-Icon--sizeM,
+   * .spectrum-Icon--sizeS svg */width:var(--spectrum-icon-size-s)}:host([size=m]){height:var(--spectrum-icon-size-m);/* .spectrum-Icon--sizeM,
    * .spectrum-Icon--sizeM img,
-   * .spectrum-Icon--sizeM svg */
-    width: var(--spectrum-icon-size-m);
-}
-:host([size='l']) {
-    height: var(
-        --spectrum-icon-size-l
-    ); /* .spectrum-Icon--sizeL,
+   * .spectrum-Icon--sizeM svg */width:var(--spectrum-icon-size-m)}:host([size=l]){height:var(--spectrum-icon-size-l);/* .spectrum-Icon--sizeL,
    * .spectrum-Icon--sizeL img,
-   * .spectrum-Icon--sizeL svg */
-    width: var(--spectrum-icon-size-l);
-}
-:host([size='xl']) {
-    height: var(
-        --spectrum-icon-size-xl
-    ); /* .spectrum-Icon--sizeXL,
+   * .spectrum-Icon--sizeL svg */width:var(--spectrum-icon-size-l)}:host([size=xl]){height:var(--spectrum-icon-size-xl);/* .spectrum-Icon--sizeXL,
    * .spectrum-Icon--sizeXL img,
-   * .spectrum-Icon--sizeXL svg */
-    width: var(--spectrum-icon-size-xl);
-}
-:host([size='xxl']) {
-    height: var(
-        --spectrum-icon-size-xxl
-    ); /* .spectrum-Icon--sizeXXL,
+   * .spectrum-Icon--sizeXL svg */width:var(--spectrum-icon-size-xl)}:host([size=xxl]){height:var(--spectrum-icon-size-xxl);/* .spectrum-Icon--sizeXXL,
    * .spectrum-Icon--sizeXXL img,
-   * .spectrum-Icon--sizeXXL svg */
-    width: var(--spectrum-icon-size-xxl);
-}
+   * .spectrum-Icon--sizeXXL svg */width:var(--spectrum-icon-size-xxl)}

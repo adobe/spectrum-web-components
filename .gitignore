@@ -12,6 +12,15 @@ tach-results.*
 .gitconfig
 .netlify/plugins
 
+.yarn/**/*
+# !.yarn/cache/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+!.yarn/unplugged
+
 # documentation
 documentation/components/searchIndex.json
 documentation/api-docs

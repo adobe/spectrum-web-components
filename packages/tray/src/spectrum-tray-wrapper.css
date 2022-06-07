@@ -10,23 +10,4 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([dir='ltr']) {
-    left: 0; /* [dir=ltr] .spectrum-Tray-wrapper */
-}
-:host([dir='rtl']) {
-    right: 0; /* [dir=rtl] .spectrum-Tray-wrapper */
-}
-:host {
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    position: fixed; /* .spectrum-Tray-wrapper */
-    width: 100%;
-    z-index: 2;
-}
-@media (max-width: 375px) {
-    .spectrum-Tray {
-        border-radius: var(--spectrum-tray-border-radius, 0);
-    }
-}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host([dir=ltr]){left:0/* [dir=ltr] .spectrum-Tray-wrapper */}:host([dir=rtl]){right:0/* [dir=rtl] .spectrum-Tray-wrapper */}:host{bottom:0;display:flex;justify-content:center;position:fixed;/* .spectrum-Tray-wrapper */width:100%;z-index:2}@media (max-width:375px){.spectrum-Tray{border-radius:var(--spectrum-tray-border-radius,0)}}
