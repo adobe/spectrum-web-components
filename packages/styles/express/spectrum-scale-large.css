@@ -280,9 +280,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-avatar-size-100: 26px;
     --spectrum-alias-avatar-size-400: 36px;
     --spectrum-alias-avatar-size-600: 46px;
-    --spectrum-actionbutton-m-texticon-padding-left: var(
-        --spectrum-global-dimension-static-size-150
-    );
     --spectrum-badge-s-neutral-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-85
     );

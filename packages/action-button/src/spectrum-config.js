@@ -104,15 +104,13 @@ const config = {
             slots: [
                 {
                     name: 'icon',
-                    selector: '.spectrum-Icon',
+                    selector: '.spectrum-ActionButton-icon',
                 },
             ],
             complexSelectors: [
                 {
-                    replacement:
-                        ":host([dir]) slot[icon-only]::slotted([slot='icon']), :host([dir]) slot[icon-only] sp-icon",
-                    selector:
-                        '.spectrum-ActionButton .spectrum-Icon:only-child',
+                    replacement: "slot[icon-only]::slotted([slot='icon'])",
+                    selector: '.spectrum-ActionButton-icon:only-child',
                 },
                 {
                     replacement:

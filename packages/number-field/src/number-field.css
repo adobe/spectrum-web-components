@@ -29,6 +29,12 @@ sp-field-button {
     font-variant-numeric: tabular-nums;
 }
 
+.buttons {
+    --mod-actionbutton-background-color-disabled: var(
+        --spectrum-global-color-gray-200
+    );
+}
+
 :host([readonly]) .buttons {
     pointer-events: none;
     visibility: hidden;

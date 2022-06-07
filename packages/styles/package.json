@@ -48,7 +48,8 @@
         "./heading.js": "./heading.js",
         "./typography": "./typography.js",
         "./typography.js": "./typography.js",
-        "./src/*": "./src/*"
+        "./src/*": "./src/*",
+        "./tokens/*": "./tokens/*"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
@@ -74,6 +75,7 @@
     "devDependencies": {
         "@spectrum-css/commons": "^3.0.5",
         "@spectrum-css/expressvars": "^2.0.0",
+        "@spectrum-css/tokens": "^1.0.1",
         "@spectrum-css/typography": "^4.0.18",
         "@spectrum-css/vars": "^8.0.0"
     },

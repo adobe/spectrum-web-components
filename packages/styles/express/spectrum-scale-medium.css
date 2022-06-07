@@ -284,9 +284,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-avatar-size-100: var(--spectrum-global-dimension-size-250);
     --spectrum-alias-avatar-size-400: var(--spectrum-global-dimension-size-350);
     --spectrum-alias-avatar-size-600: var(--spectrum-global-dimension-size-450);
-    --spectrum-actionbutton-m-texticon-padding-left: var(
-        --spectrum-global-dimension-size-125
-    );
     --spectrum-badge-s-neutral-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-65
     );

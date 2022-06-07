@@ -56,7 +56,7 @@ function renderGroup(properties: Properties): TemplateResult {
     const label = 'Edit';
     const holdAffordance = true;
     const icon = html`
-        <sp-icon-edit hidden slot="icon"></sp-icon-edit>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
     `;
     return html`
         <sp-action-group

@@ -11,3 +11,4 @@ governing permissions and limitations under the License.
 */
 
 @import '@spectrum-web-components/styles/theme-lightest.css';
+@import '@spectrum-web-components/styles/tokens/light-vars.css';

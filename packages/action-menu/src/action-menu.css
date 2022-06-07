@@ -56,14 +56,29 @@ governing permissions and limitations under the License.
 
 :host([dir]) slot[icon-only]::slotted([slot='icon']),
 :host([dir]) slot[icon-only] .icon {
-    /* .spectrum-ActionButton .spectrum-ActionButton-hold+.spectrum-Icon,
-   * .spectrum-ActionButton .spectrum-Icon:only-child */
-    margin-left: calc(
-        -1 * (var(--spectrum-actionbutton-textonly-padding-left-adjusted) -
-                    var(--spectrum-actionbutton-icononly-padding-left-adjusted))
+    margin-inline-end: calc(
+        (
+                var(
+                        --custom-actionbutton-edge-to-text,
+                        var(--spectrum-actionbutton-edge-to-text)
+                    ) -
+                    var(
+                        --custom-actionbutton-edge-to-visual-only,
+                        var(--spectrum-actionbutton-edge-to-visual-only)
+                    )
+            ) * -1
     );
-    margin-right: calc(
-        -1 * (var(--spectrum-actionbutton-textonly-padding-right-adjusted) -
-                    var(--spectrum-actionbutton-icononly-padding-right-adjusted))
-    );
+    margin-inline-start: calc(
+        (
+                var(
+                        --custom-actionbutton-edge-to-text,
+                        var(--spectrum-actionbutton-edge-to-text)
+                    ) -
+                    var(
+                        --custom-actionbutton-edge-to-visual-only,
+                        var(--spectrum-actionbutton-edge-to-visual-only)
+                    )
+            ) * -1
+    ); /* .spectrum-ActionButton-hold+.spectrum-ActionButton-icon,
+   * .spectrum-ActionButton-icon:only-child */
 }

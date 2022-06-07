@@ -94,7 +94,13 @@ export const makeOverBackground =
                 : 'var(--spectrum-global-color-seafoam-600)';
         return html`
             <div
-                style="background-color: ${color}; color: ${color}; padding: var(--spectrum-global-dimension-size-175) var(--spectrum-global-dimension-size-250); display: inline-block;"
+                style="
+                    --mod-actionbutton-static-content-color: ${color};
+                    background-color: ${color};
+                    color: ${color};
+                    padding: var(--spectrum-global-dimension-size-175) var(--spectrum-global-dimension-size-250);
+                    display: inline-block;
+                "
             >
                 ${story()}
             </div>
