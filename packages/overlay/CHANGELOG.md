@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.16.2...@spectrum-web-components/overlay@0.16.3) (2022-06-07)
+
+### Bug Fixes
+
+-   prevent leaving multiple submenus open at a time ([d2bfbb2](https://github.com/adobe/spectrum-web-components/commit/d2bfbb2d8334ae1a6bd21381092d54914b8f708c))
+
 ## [0.16.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.16.1...@spectrum-web-components/overlay@0.16.2) (2022-05-27)
 
 ### Bug Fixes

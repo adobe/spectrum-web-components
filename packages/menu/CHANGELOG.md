@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.14.1...@spectrum-web-components/menu@0.14.2) (2022-06-07)
+
+### Bug Fixes
+
+-   prevent leaving multiple submenus open at a time ([d2bfbb2](https://github.com/adobe/spectrum-web-components/commit/d2bfbb2d8334ae1a6bd21381092d54914b8f708c))
+-   **menu:** disabled menu-item should not open submenu ([33848bc](https://github.com/adobe/spectrum-web-components/commit/33848bc0aa64733e356831a5f4968fcb01476df4))
+
 ## [0.14.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.14.0...@spectrum-web-components/menu@0.14.1) (2022-05-27)
 
 ### Bug Fixes
