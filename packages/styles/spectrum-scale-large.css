@@ -291,9 +291,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-tag-focusring-border-radius: var(
         --spectrum-global-dimension-static-size-75
     );
-    --spectrum-actionbutton-m-texticon-padding-left: var(
-        --spectrum-global-dimension-static-size-150
-    );
     --spectrum-badge-s-neutral-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-85
     );

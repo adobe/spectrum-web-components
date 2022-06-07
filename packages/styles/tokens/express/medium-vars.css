@@ -1,0 +1,48 @@
+/*
+Copyright 2022 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+:host {
+    --spectrum-checkbox-control-size-small: 14px;
+    --spectrum-checkbox-control-size-medium: 16px;
+    --spectrum-checkbox-control-size-large: 18px;
+    --spectrum-checkbox-control-size-extra-large: 20px;
+    --spectrum-checkbox-top-to-control-small: 5px;
+    --spectrum-checkbox-top-to-control-medium: 8px;
+    --spectrum-checkbox-top-to-control-large: 11px;
+    --spectrum-checkbox-top-to-control-extra-large: 14px;
+    --spectrum-radio-button-control-size-small: 14px;
+    --spectrum-radio-button-control-size-medium: 16px;
+    --spectrum-radio-button-control-size-large: 18px;
+    --spectrum-radio-button-control-size-extra-large: 20px;
+    --spectrum-radio-button-top-to-control-small: 5px;
+    --spectrum-radio-button-top-to-control-medium: 8px;
+    --spectrum-radio-button-top-to-control-large: 11px;
+    --spectrum-radio-button-top-to-control-extra-large: 14px;
+    --spectrum-switch-control-width-small: 25px;
+    --spectrum-switch-control-width-medium: 28px;
+    --spectrum-switch-control-width-large: 32px;
+    --spectrum-switch-control-width-extra-large: 35px;
+    --spectrum-switch-control-height-small: 14px;
+    --spectrum-switch-control-height-medium: 16px;
+    --spectrum-switch-control-height-large: 18px;
+    --spectrum-switch-control-height-extra-large: 20px;
+    --spectrum-switch-top-to-control-small: 5px;
+    --spectrum-switch-top-to-control-medium: 8px;
+    --spectrum-switch-top-to-control-large: 11px;
+    --spectrum-switch-top-to-control-extra-large: 14px;
+    --spectrum-corner-radius-75: 3px;
+    --spectrum-corner-radius-100: 6px;
+    --spectrum-corner-radius-200: 12px;
+    --spectrum-drop-shadow-x: 0px;
+    --spectrum-drop-shadow-y: 4px;
+    --spectrum-drop-shadow-blur: 16px;
+}

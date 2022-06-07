@@ -1,0 +1,140 @@
+/*
+Copyright 2022 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+:host {
+    --spectrum-component-pill-edge-to-visual-75: 13px;
+    --spectrum-component-pill-edge-to-visual-100: 17px;
+    --spectrum-component-pill-edge-to-visual-200: 22px;
+    --spectrum-component-pill-edge-to-visual-300: 27px;
+    --spectrum-component-pill-edge-to-visual-only-75: 5px;
+    --spectrum-component-pill-edge-to-visual-only-100: 9px;
+    --spectrum-component-pill-edge-to-visual-only-200: 13px;
+    --spectrum-component-pill-edge-to-visual-only-300: 16px;
+    --spectrum-component-pill-edge-to-text-75: 15px;
+    --spectrum-component-pill-edge-to-text-100: 20px;
+    --spectrum-component-pill-edge-to-text-200: 25px;
+    --spectrum-component-pill-edge-to-text-300: 30px;
+    --spectrum-component-edge-to-visual-50: 7px;
+    --spectrum-component-edge-to-visual-75: 9px;
+    --spectrum-component-edge-to-visual-100: 12px;
+    --spectrum-component-edge-to-visual-200: 16px;
+    --spectrum-component-edge-to-visual-300: 19px;
+    --spectrum-component-edge-to-visual-only-50: 4px;
+    --spectrum-component-edge-to-visual-only-75: 5px;
+    --spectrum-component-edge-to-visual-only-100: 9px;
+    --spectrum-component-edge-to-visual-only-200: 13px;
+    --spectrum-component-edge-to-visual-only-300: 16px;
+    --spectrum-component-edge-to-text-50: 10px;
+    --spectrum-component-edge-to-text-75: 11px;
+    --spectrum-component-edge-to-text-100: 15px;
+    --spectrum-component-edge-to-text-200: 19px;
+    --spectrum-component-edge-to-text-300: 22px;
+    --spectrum-component-height-50: 26px;
+    --spectrum-component-height-75: 30px;
+    --spectrum-component-height-100: 40px;
+    --spectrum-component-height-200: 50px;
+    --spectrum-component-height-300: 60px;
+    --spectrum-component-top-to-workflow-icon-50: 4px;
+    --spectrum-component-top-to-workflow-icon-75: 5px;
+    --spectrum-component-top-to-workflow-icon-100: 9px;
+    --spectrum-component-top-to-workflow-icon-200: 13px;
+    --spectrum-component-top-to-workflow-icon-300: 16px;
+    --spectrum-component-top-to-text-50: 4px;
+    --spectrum-component-top-to-text-75: 5px;
+    --spectrum-component-top-to-text-100: 8px;
+    --spectrum-component-top-to-text-200: 12px;
+    --spectrum-component-top-to-text-300: 15px;
+    --spectrum-component-bottom-to-text-50: 6px;
+    --spectrum-component-bottom-to-text-75: 7px;
+    --spectrum-component-bottom-to-text-100: 11px;
+    --spectrum-component-bottom-to-text-200: 14px;
+    --spectrum-component-bottom-to-text-300: 18px;
+    --spectrum-action-bar-height: 56px;
+    --spectrum-action-bar-top-to-item-counter: 16px;
+    --spectrum-action-button-edge-to-hold-icon-small: 3px;
+    --spectrum-action-button-edge-to-hold-icon-medium: 5px;
+    --spectrum-action-button-edge-to-hold-icon-large: 6px;
+    --spectrum-action-button-edge-to-hold-icon-extra-large: 7px;
+    --spectrum-field-label-text-to-asterisk-small: 5px;
+    --spectrum-field-label-text-to-asterisk-medium: 5px;
+    --spectrum-field-label-text-to-asterisk-large: 6px;
+    --spectrum-field-label-text-to-asterisk-extra-large: 6px;
+    --spectrum-field-label-top-to-asterisk-small: 11px;
+    --spectrum-field-label-top-to-asterisk-medium: 15px;
+    --spectrum-field-label-top-to-asterisk-large: 19px;
+    --spectrum-field-label-top-to-asterisk-extra-large: 24px;
+    --spectrum-field-label-top-margin-small: 0px;
+    --spectrum-field-label-top-margin-medium: 5px;
+    --spectrum-field-label-top-margin-large: 5px;
+    --spectrum-field-label-top-margin-extra-large: 5px;
+    --spectrum-help-text-top-to-workflow-icon-small: 5px;
+    --spectrum-help-text-top-to-workflow-icon-medium: 9px;
+    --spectrum-help-text-top-to-workflow-icon-large: 13px;
+    --spectrum-help-text-top-to-workflow-icon-extra-large: 16px;
+    --spectrum-in-line-alert-minimum-width: 360px;
+    --spectrum-progress-bar-minimum-width: 48px;
+    --spectrum-progress-bar-maximum-width: 768px;
+    --spectrum-progress-bar-thickness-small: 5px;
+    --spectrum-progress-bar-thickness-medium: 8px;
+    --spectrum-progress-bar-thickness-large: 10px;
+    --spectrum-progress-bar-thickness-extra-large: 13px;
+    --spectrum-progress-circle-size-small: 20px;
+    --spectrum-progress-circle-size-medium: 40px;
+    --spectrum-progress-circle-size-large: 80px;
+    --spectrum-progress-circle-thickness-small: 3px;
+    --spectrum-progress-circle-thickness-medium: 4px;
+    --spectrum-progress-circle-thickness-large: 5px;
+    --spectrum-status-light-dot-size-small: 8px;
+    --spectrum-status-light-dot-size-medium: 10px;
+    --spectrum-status-light-dot-size-large: 12px;
+    --spectrum-status-light-dot-size-extra-large: 12px;
+    --spectrum-status-light-top-to-dot-small: 11px;
+    --spectrum-status-light-top-to-dot-medium: 15px;
+    --spectrum-status-light-top-to-dot-large: 19px;
+    --spectrum-status-light-top-to-dot-extra-large: 24px;
+    --spectrum-toast-height: 56px;
+    --spectrum-toast-top-to-workflow-icon: 17px;
+    --spectrum-toast-top-to-text: 16px;
+    --spectrum-toast-bottom-to-text: 19px;
+    --spectrum-tooltip-width: 10px;
+    --spectrum-tooltip-height: 5px;
+    --spectrum-tooltip-maximum-width: 200px;
+    --spectrum-font-size-50: 13px;
+    --spectrum-font-size-75: 15px;
+    --spectrum-font-size-100: 17px;
+    --spectrum-font-size-200: 19px;
+    --spectrum-font-size-300: 22px;
+    --spectrum-font-size-400: 24px;
+    --spectrum-font-size-500: 27px;
+    --spectrum-font-size-600: 31px;
+    --spectrum-font-size-700: 34px;
+    --spectrum-font-size-800: 39px;
+    --spectrum-font-size-900: 44px;
+    --spectrum-font-size-1000: 49px;
+    --spectrum-font-size-1100: 55px;
+    --spectrum-font-size-1200: 62px;
+    --spectrum-font-size-1300: 70px;
+    --spectrum-workflow-icon-size-50: 18px;
+    --spectrum-workflow-icon-size-75: 20px;
+    --spectrum-workflow-icon-size-100: 22px;
+    --spectrum-workflow-icon-size-200: 24px;
+    --spectrum-workflow-icon-size-300: 28px;
+    --spectrum-text-to-visual-50: 8px;
+    --spectrum-text-to-visual-75: 9px;
+    --spectrum-text-to-visual-100: 10px;
+    --spectrum-text-to-visual-200: 11px;
+    --spectrum-text-to-visual-300: 13px;
+    --spectrum-text-to-control-75: 11px;
+    --spectrum-text-to-control-100: 13px;
+    --spectrum-text-to-control-200: 14px;
+    --spectrum-text-to-control-300: 16px;
+}

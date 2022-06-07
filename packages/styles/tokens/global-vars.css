@@ -1,0 +1,161 @@
+/*
+Copyright 2022 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+:host {
+    --spectrum-transparent-white-200: rgba(255, 255, 255, 0.1);
+    --spectrum-transparent-white-300: rgba(255, 255, 255, 0.25);
+    --spectrum-transparent-white-400: rgba(255, 255, 255, 0.4);
+    --spectrum-transparent-white-500: rgba(255, 255, 255, 0.55);
+    --spectrum-transparent-white-600: rgba(255, 255, 255, 0.7);
+    --spectrum-transparent-white-700: rgba(255, 255, 255, 0.8);
+    --spectrum-transparent-white-800: rgba(255, 255, 255, 0.9);
+    --spectrum-transparent-white-900: rgb(255, 255, 255);
+    --spectrum-transparent-black-200: rgba(0, 0, 0, 0.1);
+    --spectrum-transparent-black-300: rgba(0, 0, 0, 0.25);
+    --spectrum-transparent-black-400: rgba(0, 0, 0, 0.4);
+    --spectrum-transparent-black-500: rgba(0, 0, 0, 0.55);
+    --spectrum-transparent-black-600: rgba(0, 0, 0, 0.7);
+    --spectrum-transparent-black-700: rgba(0, 0, 0, 0.8);
+    --spectrum-transparent-black-800: rgba(0, 0, 0, 0.9);
+    --spectrum-transparent-black-900: rgb(0, 0, 0);
+    --spectrum-focus-ring-color: var(--spectrum-blue-800);
+    --spectrum-static-white-focus-ring-color: var(--spectrum-white);
+    --spectrum-static-black-focus-ring-color: var(--spectrum-black);
+    --spectrum-neutral-content-color-default: var(--spectrum-gray-800);
+    --spectrum-neutral-content-color-hover: var(--spectrum-gray-900);
+    --spectrum-neutral-content-color-down: var(--spectrum-gray-900);
+    --spectrum-neutral-content-color-key-focus: var(--spectrum-gray-900);
+    --spectrum-neutral-subdued-content-color-default: var(--spectrum-gray-700);
+    --spectrum-neutral-subdued-content-color-hover: var(--spectrum-gray-800);
+    --spectrum-neutral-subdued-content-color-down: var(--spectrum-gray-900);
+    --spectrum-neutral-subdued-content-color-key-focus: var(
+        --spectrum-gray-800
+    );
+    --spectrum-accent-content-color: var(--spectrum-accent-color-900);
+    --spectrum-accent-content-color-hover: var(--spectrum-accent-color-1000);
+    --spectrum-accent-content-color-down: var(--spectrum-accent-color-1100);
+    --spectrum-accent-content-color-key-focus: var(
+        --spectrum-accent-color-1000
+    );
+    --spectrum-negative-content-color: var(--spectrum-negative-color-900);
+    --spectrum-negative-content-color-hover: var(
+        --spectrum-negative-color-1000
+    );
+    --spectrum-negative-content-color-down: var(--spectrum-negative-color-1100);
+    --spectrum-negative-content-color-key-focus: var(
+        --spectrum-negative-color-1000
+    );
+    --spectrum-disabled-content-color: var(--spectrum-gray-400);
+    --spectrum-disabled-static-white-content-color: var(
+        --spectrum-transparent-white-500
+    );
+    --spectrum-disabled-static-black-content-color: var(
+        --spectrum-transparent-black-500
+    );
+    --spectrum-disabled-background-color: var(--spectrum-gray-200);
+    --spectrum-disabled-static-white-background-color: var(
+        --spectrum-transparent-white-200
+    );
+    --spectrum-disabled-static-black-background-color: var(
+        --spectrum-transparent-black-200
+    );
+    --spectrum-disabled-border-color: var(--spectrum-gray-300);
+    --spectrum-disabled-static-white-border-color: var(
+        --spectrum-transparent-white-300
+    );
+    --spectrum-disabled-static-black-border-color: var(
+        --spectrum-transparent-black-300
+    );
+    --spectrum-informative-color-100: var(--spectrum-blue-100);
+    --spectrum-informative-color-200: var(--spectrum-blue-200);
+    --spectrum-informative-color-300: var(--spectrum-blue-300);
+    --spectrum-informative-color-400: var(--spectrum-blue-400);
+    --spectrum-informative-color-500: var(--spectrum-blue-500);
+    --spectrum-informative-color-600: var(--spectrum-blue-600);
+    --spectrum-informative-color-700: var(--spectrum-blue-700);
+    --spectrum-informative-color-800: var(--spectrum-blue-800);
+    --spectrum-informative-color-900: var(--spectrum-blue-900);
+    --spectrum-informative-color-1000: var(--spectrum-blue-1000);
+    --spectrum-informative-color-1100: var(--spectrum-blue-1100);
+    --spectrum-informative-color-1200: var(--spectrum-blue-1200);
+    --spectrum-informative-color-1300: var(--spectrum-blue-1300);
+    --spectrum-informative-color-1400: var(--spectrum-blue-1400);
+    --spectrum-negative-color-100: var(--spectrum-red-100);
+    --spectrum-negative-color-200: var(--spectrum-red-200);
+    --spectrum-negative-color-300: var(--spectrum-red-300);
+    --spectrum-negative-color-400: var(--spectrum-red-400);
+    --spectrum-negative-color-500: var(--spectrum-red-500);
+    --spectrum-negative-color-600: var(--spectrum-red-600);
+    --spectrum-negative-color-700: var(--spectrum-red-700);
+    --spectrum-negative-color-800: var(--spectrum-red-800);
+    --spectrum-negative-color-900: var(--spectrum-red-900);
+    --spectrum-negative-color-1000: var(--spectrum-red-1000);
+    --spectrum-negative-color-1100: var(--spectrum-red-1100);
+    --spectrum-negative-color-1200: var(--spectrum-red-1200);
+    --spectrum-negative-color-1300: var(--spectrum-red-1300);
+    --spectrum-negative-color-1400: var(--spectrum-red-1400);
+    --spectrum-notice-color-100: var(--spectrum-orange-100);
+    --spectrum-notice-color-200: var(--spectrum-orange-200);
+    --spectrum-notice-color-300: var(--spectrum-orange-300);
+    --spectrum-notice-color-400: var(--spectrum-orange-400);
+    --spectrum-notice-color-500: var(--spectrum-orange-500);
+    --spectrum-notice-color-600: var(--spectrum-orange-600);
+    --spectrum-notice-color-700: var(--spectrum-orange-700);
+    --spectrum-notice-color-800: var(--spectrum-orange-800);
+    --spectrum-notice-color-900: var(--spectrum-orange-900);
+    --spectrum-notice-color-1000: var(--spectrum-orange-1000);
+    --spectrum-notice-color-1100: var(--spectrum-orange-1100);
+    --spectrum-notice-color-1200: var(--spectrum-orange-1200);
+    --spectrum-notice-color-1300: var(--spectrum-orange-1300);
+    --spectrum-notice-color-1400: var(--spectrum-orange-1400);
+    --spectrum-positive-color-100: var(--spectrum-green-100);
+    --spectrum-positive-color-200: var(--spectrum-green-200);
+    --spectrum-positive-color-300: var(--spectrum-green-300);
+    --spectrum-positive-color-400: var(--spectrum-green-400);
+    --spectrum-positive-color-500: var(--spectrum-green-500);
+    --spectrum-positive-color-600: var(--spectrum-green-600);
+    --spectrum-positive-color-700: var(--spectrum-green-700);
+    --spectrum-positive-color-800: var(--spectrum-green-800);
+    --spectrum-positive-color-900: var(--spectrum-green-900);
+    --spectrum-positive-color-1000: var(--spectrum-green-1000);
+    --spectrum-positive-color-1100: var(--spectrum-green-1100);
+    --spectrum-positive-color-1200: var(--spectrum-green-1200);
+    --spectrum-positive-color-1300: var(--spectrum-green-1300);
+    --spectrum-positive-color-1400: var(--spectrum-green-1400);
+    --spectrum-black: rgb(0, 0, 0);
+    --spectrum-white: rgb(255, 255, 255);
+    --spectrum-button-minimum-width-multiplier: 2.25;
+    --spectrum-divider-thickness-small: 1px;
+    --spectrum-divider-thickness-medium: 2px;
+    --spectrum-divider-thickness-large: 4px;
+    --spectrum-radio-button-selection-indicator: 4px;
+    --spectrum-android-elevation: 2dp;
+    --spectrum-spacing-50: 2px;
+    --spectrum-spacing-75: 4px;
+    --spectrum-spacing-100: 8px;
+    --spectrum-spacing-200: 12px;
+    --spectrum-spacing-300: 16px;
+    --spectrum-spacing-400: 24px;
+    --spectrum-spacing-500: 32px;
+    --spectrum-spacing-600: 40px;
+    --spectrum-spacing-700: 48px;
+    --spectrum-spacing-800: 64px;
+    --spectrum-spacing-900: 80px;
+    --spectrum-spacing-1000: 96px;
+    --spectrum-focus-ring-thickness: 2px;
+    --spectrum-focus-ring-gap: 2px;
+    --spectrum-border-width-200: 2px;
+    --spectrum-line-height-100: 1.3;
+    --spectrum-line-height-200: 1.5;
+    --spectrum-CJK-line-height-100: 1.5;
+    --spectrum-CJK-line-height-200: 1.7;
+}

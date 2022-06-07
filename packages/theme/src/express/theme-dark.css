@@ -11,3 +11,4 @@ governing permissions and limitations under the License.
 */
 
 @import '@spectrum-web-components/styles/express/theme-dark.css';
+@import '@spectrum-web-components/styles/tokens/dark-vars.css';

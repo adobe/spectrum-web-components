@@ -11,3 +11,6 @@ governing permissions and limitations under the License.
 */
 
 @import '@spectrum-web-components/styles/scale-large.css';
+@import '@spectrum-web-components/styles/tokens/large-vars.css';
+@import '@spectrum-web-components/styles/tokens/spectrum/custom-large-vars.css';
+@import '@spectrum-web-components/styles/tokens/spectrum/large-vars.css';

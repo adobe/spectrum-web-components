@@ -1,0 +1,41 @@
+/*
+Copyright 2022 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+:host {
+    --spectrum-checkbox-control-size-small: 16px;
+    --spectrum-checkbox-control-size-medium: 18px;
+    --spectrum-checkbox-control-size-large: 20px;
+    --spectrum-checkbox-control-size-extra-large: 22px;
+    --spectrum-checkbox-top-to-control-small: 7px;
+    --spectrum-checkbox-top-to-control-medium: 11px;
+    --spectrum-checkbox-top-to-control-large: 15px;
+    --spectrum-checkbox-top-to-control-extra-large: 19px;
+    --spectrum-radio-button-control-size-small: 16px;
+    --spectrum-switch-control-width-small: 32px;
+    --spectrum-switch-control-width-medium: 36px;
+    --spectrum-switch-control-width-large: 41px;
+    --spectrum-switch-control-width-extra-large: 46px;
+    --spectrum-switch-control-height-small: 16px;
+    --spectrum-switch-control-height-medium: 18px;
+    --spectrum-switch-control-height-large: 20px;
+    --spectrum-switch-control-height-extra-large: 22px;
+    --spectrum-switch-top-to-control-small: 7px;
+    --spectrum-switch-top-to-control-medium: 11px;
+    --spectrum-switch-top-to-control-large: 15px;
+    --spectrum-switch-top-to-control-extra-large: 19px;
+    --spectrum-corner-radius-75: 2px;
+    --spectrum-corner-radius-100: 5px;
+    --spectrum-corner-radius-200: 10px;
+    --spectrum-drop-shadow-x: 0px;
+    --spectrum-drop-shadow-y: 2px;
+    --spectrum-drop-shadow-blur: 6px;
+}
