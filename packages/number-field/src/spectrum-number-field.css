@@ -10,68 +10,657 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host{--spectrum-stepper-width:var(--spectrum-global-dimension-size-900);/* .spectrum-Stepper */--spectrum-stepper-border-size:var(--spectrum-alias-border-size-thin,var(--spectrum-global-dimension-static-size-10));--spectrum-stepper-button-height:calc(var(--spectrum-alias-single-line-height, var(--spectrum-global-dimension-size-400))/2);--spectrum-stepper-button-width:calc(var(--spectrum-global-dimension-size-300) - var(--spectrum-stepper-border-size));--spectrum-stepper-button-padding:calc(var(--spectrum-global-dimension-size-150)/2);--spectrum-stepper-border-radius-reset:0;--spectrum-stepper-border-size-reset:0;--spectrum-stepper-icon-nudge-top:var(--spectrum-global-dimension-size-10);--spectrum-stepper-icon-nudge:var(--spectrum-global-dimension-size-25);--spectrum-stepper-quiet-width:var(--spectrum-global-dimension-size-600);--spectrum-stepper-button-offset:calc(var(--spectrum-stepper-button-width)/2 - var(--spectrum-alias-ui-icon-chevron-size-75)/2);--spectrum-stepper-quiet-button-width:calc(var(--spectrum-stepper-button-width) - var(--spectrum-stepper-button-offset))}#textfield{border-radius:var(--spectrum-alias-border-radius-regular,var(--spectrum-global-dimension-size-50));display:inline-flex;/* .spectrum-Stepper */flex-direction:row;flex-wrap:nowrap;line-height:0;transition:border-color var(--spectrum-global-animation-duration-100,.13s) ease-in-out,box-shadow var(--spectrum-global-animation-duration-100,.13s) ease-in-out;width:var(--spectrum-stepper-width)}#textfield:before{content:""/* .spectrum-Stepper:before */}:host([dir=ltr]) .buttons{border-top-left-radius:0/* [dir=ltr] .spectrum-Stepper-buttons */}:host([dir=rtl]) .buttons{border-top-right-radius:0/* [dir=rtl] .spectrum-Stepper-buttons */}:host([dir=ltr]) .buttons{border-top-right-radius:var(--spectrum-alias-border-radius-regular,var(--spectrum-global-dimension-size-50))/* [dir=ltr] .spectrum-Stepper-buttons */}:host([dir=rtl]) .buttons{border-top-left-radius:var(--spectrum-alias-border-radius-regular,var(--spectrum-global-dimension-size-50))/* [dir=rtl] .spectrum-Stepper-buttons */}:host([dir=ltr]) .buttons{border-bottom-right-radius:var(--spectrum-alias-border-radius-regular,var(--spectrum-global-dimension-size-50))/* [dir=ltr] .spectrum-Stepper-buttons */}:host([dir=rtl]) .buttons{border-bottom-left-radius:var(--spectrum-alias-border-radius-regular,var(--spectrum-global-dimension-size-50))/* [dir=rtl] .spectrum-Stepper-buttons */}:host([dir=ltr]) .buttons{border-bottom-left-radius:0/* [dir=ltr] .spectrum-Stepper-buttons */}:host([dir=rtl]) .buttons{border-bottom-right-radius:0/* [dir=rtl] .spectrum-Stepper-buttons */}.buttons{display:block;/* .spectrum-Stepper-buttons */transition:box-shadow var(--spectrum-global-animation-duration-100,.13s) ease-in-out}:host([dir=ltr]) .stepDown,:host([dir=ltr]) .stepUp{padding-left:var(--spectrum-stepper-button-padding)/* [dir=ltr] .spectrum-Stepper-stepUp,
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-stepper-width: var(
+        --spectrum-global-dimension-size-900
+    ); /* .spectrum-Stepper */
+    --spectrum-stepper-border-size: var(
+        --spectrum-alias-border-size-thin,
+        var(--spectrum-global-dimension-static-size-10)
+    );
+    --spectrum-stepper-button-height: calc(
+        var(
+                --spectrum-alias-single-line-height,
+                var(--spectrum-global-dimension-size-400)
+            ) / 2
+    );
+    --spectrum-stepper-button-width: calc(
+        var(--spectrum-global-dimension-size-300) -
+            var(--spectrum-stepper-border-size)
+    );
+    --spectrum-stepper-button-padding: calc(
+        var(--spectrum-global-dimension-size-150) / 2
+    );
+    --spectrum-stepper-border-radius-reset: 0;
+    --spectrum-stepper-border-size-reset: 0;
+    --spectrum-stepper-icon-nudge-top: var(--spectrum-global-dimension-size-10);
+    --spectrum-stepper-icon-nudge: var(--spectrum-global-dimension-size-25);
+    --spectrum-stepper-quiet-width: var(--spectrum-global-dimension-size-600);
+    --spectrum-stepper-button-offset: calc(
+        var(--spectrum-stepper-button-width) / 2 -
+            var(--spectrum-alias-ui-icon-chevron-size-75) / 2
+    );
+    --spectrum-stepper-quiet-button-width: calc(
+        var(--spectrum-stepper-button-width) -
+            var(--spectrum-stepper-button-offset)
+    );
+}
+#textfield {
+    border-radius: var(
+        --spectrum-alias-border-radius-regular,
+        var(--spectrum-global-dimension-size-50)
+    );
+    display: inline-flex; /* .spectrum-Stepper */
+    flex-direction: row;
+    flex-wrap: nowrap;
+    line-height: 0;
+    transition: border-color
+            var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
+        box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out;
+    width: var(--spectrum-stepper-width);
+}
+#textfield:before {
+    content: ''; /* .spectrum-Stepper:before */
+}
+:host([dir='ltr']) .buttons {
+    border-top-left-radius: 0; /* [dir=ltr] .spectrum-Stepper-buttons */
+}
+:host([dir='rtl']) .buttons {
+    border-top-right-radius: 0; /* [dir=rtl] .spectrum-Stepper-buttons */
+}
+:host([dir='ltr']) .buttons {
+    border-top-right-radius: var(
+        --spectrum-alias-border-radius-regular,
+        var(--spectrum-global-dimension-size-50)
+    ); /* [dir=ltr] .spectrum-Stepper-buttons */
+}
+:host([dir='rtl']) .buttons {
+    border-top-left-radius: var(
+        --spectrum-alias-border-radius-regular,
+        var(--spectrum-global-dimension-size-50)
+    ); /* [dir=rtl] .spectrum-Stepper-buttons */
+}
+:host([dir='ltr']) .buttons {
+    border-bottom-right-radius: var(
+        --spectrum-alias-border-radius-regular,
+        var(--spectrum-global-dimension-size-50)
+    ); /* [dir=ltr] .spectrum-Stepper-buttons */
+}
+:host([dir='rtl']) .buttons {
+    border-bottom-left-radius: var(
+        --spectrum-alias-border-radius-regular,
+        var(--spectrum-global-dimension-size-50)
+    ); /* [dir=rtl] .spectrum-Stepper-buttons */
+}
+:host([dir='ltr']) .buttons {
+    border-bottom-left-radius: 0; /* [dir=ltr] .spectrum-Stepper-buttons */
+}
+:host([dir='rtl']) .buttons {
+    border-bottom-right-radius: 0; /* [dir=rtl] .spectrum-Stepper-buttons */
+}
+.buttons {
+    display: block; /* .spectrum-Stepper-buttons */
+    transition: box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+        ease-in-out;
+}
+:host([dir='ltr']) .stepDown,
+:host([dir='ltr']) .stepUp {
+    padding-left: var(
+        --spectrum-stepper-button-padding
+    ); /* [dir=ltr] .spectrum-Stepper-stepUp,
    * [dir=ltr] 
-.spectrum-Stepper-stepDown */}:host([dir=rtl]) .stepDown,:host([dir=rtl]) .stepUp{padding-right:var(--spectrum-stepper-button-padding)/* [dir=rtl] .spectrum-Stepper-stepUp,
+.spectrum-Stepper-stepDown */
+}
+:host([dir='rtl']) .stepDown,
+:host([dir='rtl']) .stepUp {
+    padding-right: var(
+        --spectrum-stepper-button-padding
+    ); /* [dir=rtl] .spectrum-Stepper-stepUp,
    * [dir=rtl] 
-.spectrum-Stepper-stepDown */}:host([dir=ltr]) .stepDown,:host([dir=ltr]) .stepUp{padding-right:var(--spectrum-stepper-button-padding)/* [dir=ltr] .spectrum-Stepper-stepUp,
+.spectrum-Stepper-stepDown */
+}
+:host([dir='ltr']) .stepDown,
+:host([dir='ltr']) .stepUp {
+    padding-right: var(
+        --spectrum-stepper-button-padding
+    ); /* [dir=ltr] .spectrum-Stepper-stepUp,
    * [dir=ltr] 
-.spectrum-Stepper-stepDown */}:host([dir=rtl]) .stepDown,:host([dir=rtl]) .stepUp{padding-left:var(--spectrum-stepper-button-padding)/* [dir=rtl] .spectrum-Stepper-stepUp,
+.spectrum-Stepper-stepDown */
+}
+:host([dir='rtl']) .stepDown,
+:host([dir='rtl']) .stepUp {
+    padding-left: var(
+        --spectrum-stepper-button-padding
+    ); /* [dir=rtl] .spectrum-Stepper-stepUp,
    * [dir=rtl] 
-.spectrum-Stepper-stepDown */}:host([dir=ltr]) .stepDown,:host([dir=ltr]) .stepUp{border-left-width:var(--spectrum-stepper-border-size-reset)/* [dir=ltr] .spectrum-Stepper-stepUp,
+.spectrum-Stepper-stepDown */
+}
+:host([dir='ltr']) .stepDown,
+:host([dir='ltr']) .stepUp {
+    border-left-width: var(
+        --spectrum-stepper-border-size-reset
+    ); /* [dir=ltr] .spectrum-Stepper-stepUp,
    * [dir=ltr] 
-.spectrum-Stepper-stepDown */}:host([dir=rtl]) .stepDown,:host([dir=rtl]) .stepUp{border-right-width:var(--spectrum-stepper-border-size-reset)/* [dir=rtl] .spectrum-Stepper-stepUp,
+.spectrum-Stepper-stepDown */
+}
+:host([dir='rtl']) .stepDown,
+:host([dir='rtl']) .stepUp {
+    border-right-width: var(
+        --spectrum-stepper-border-size-reset
+    ); /* [dir=rtl] .spectrum-Stepper-stepUp,
    * [dir=rtl] 
-.spectrum-Stepper-stepDown */}:host([dir=ltr]) .stepDown,:host([dir=ltr]) .stepUp{border-top-left-radius:var(--spectrum-stepper-border-radius-reset)/* [dir=ltr] .spectrum-Stepper-stepUp,
+.spectrum-Stepper-stepDown */
+}
+:host([dir='ltr']) .stepDown,
+:host([dir='ltr']) .stepUp {
+    border-top-left-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* [dir=ltr] .spectrum-Stepper-stepUp,
    * [dir=ltr] 
-.spectrum-Stepper-stepDown */}:host([dir=rtl]) .stepDown,:host([dir=rtl]) .stepUp{border-top-right-radius:var(--spectrum-stepper-border-radius-reset)/* [dir=rtl] .spectrum-Stepper-stepUp,
+.spectrum-Stepper-stepDown */
+}
+:host([dir='rtl']) .stepDown,
+:host([dir='rtl']) .stepUp {
+    border-top-right-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* [dir=rtl] .spectrum-Stepper-stepUp,
    * [dir=rtl] 
-.spectrum-Stepper-stepDown */}:host([dir=ltr]) .stepDown,:host([dir=ltr]) .stepUp{border-bottom-left-radius:var(--spectrum-stepper-border-radius-reset)/* [dir=ltr] .spectrum-Stepper-stepUp,
+.spectrum-Stepper-stepDown */
+}
+:host([dir='ltr']) .stepDown,
+:host([dir='ltr']) .stepUp {
+    border-bottom-left-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* [dir=ltr] .spectrum-Stepper-stepUp,
    * [dir=ltr] 
-.spectrum-Stepper-stepDown */}:host([dir=rtl]) .stepDown,:host([dir=rtl]) .stepUp{border-bottom-right-radius:var(--spectrum-stepper-border-radius-reset)/* [dir=rtl] .spectrum-Stepper-stepUp,
+.spectrum-Stepper-stepDown */
+}
+:host([dir='rtl']) .stepDown,
+:host([dir='rtl']) .stepUp {
+    border-bottom-right-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* [dir=rtl] .spectrum-Stepper-stepUp,
    * [dir=rtl] 
-.spectrum-Stepper-stepDown */}.stepDown,.stepUp{border-width:var(--spectrum-stepper-border-size);box-sizing:border-box;display:flex;height:var(--spectrum-stepper-button-height);margin:0!important;min-width:0;position:relative;/* .spectrum-Stepper-stepUp,
-   * .spectrum-Stepper-stepDown */width:var(--spectrum-stepper-button-width)}.stepDown .stepper-icon,.stepUp .stepper-icon{margin:0!important;/* .spectrum-Stepper-stepUp .spectrum-Icon,
-   * .spectrum-Stepper-stepDown .spectrum-Icon */opacity:1}:host([dir=ltr]) .stepUp{border-bottom-right-radius:var(--spectrum-stepper-border-radius-reset)/* [dir=ltr] .spectrum-Stepper-stepUp */}:host([dir=rtl]) .stepUp{border-bottom-left-radius:var(--spectrum-stepper-border-radius-reset)/* [dir=rtl] .spectrum-Stepper-stepUp */}.stepUp{border-bottom:none;/* .spectrum-Stepper-stepUp */padding-top:var(--spectrum-stepper-icon-nudge-top)}:host([dir=ltr]) .stepDown{border-top-right-radius:var(--spectrum-stepper-border-radius-reset)/* [dir=ltr] .spectrum-Stepper-stepDown */}:host([dir=rtl]) .stepDown{border-top-left-radius:var(--spectrum-stepper-border-radius-reset)/* [dir=rtl] .spectrum-Stepper-stepDown */}.stepDown{padding-bottom:var(--spectrum-stepper-icon-nudge)/* .spectrum-Stepper-stepDown */}.textfield{flex:1;/* .spectrum-Stepper-textfield */width:auto}:host([dir=ltr]) .input{border-top-right-radius:var(--spectrum-stepper-border-radius-reset)/* [dir=ltr] .spectrum-Stepper-input */}:host([dir=rtl]) .input{border-top-left-radius:var(--spectrum-stepper-border-radius-reset)/* [dir=rtl] .spectrum-Stepper-input */}:host([dir=ltr]) .input{border-bottom-right-radius:var(--spectrum-stepper-border-radius-reset)/* [dir=ltr] .spectrum-Stepper-input */}:host([dir=rtl]) .input{border-bottom-left-radius:var(--spectrum-stepper-border-radius-reset)/* [dir=rtl] .spectrum-Stepper-input */}.input,.textfield{min-width:0/* .spectrum-Stepper-textfield */}:host([quiet]) #textfield{border-radius:var(--spectrum-stepper-border-radius-reset);/* .spectrum-Stepper--quiet */width:var(--spectrum-stepper-quiet-width)}:host([quiet]) .buttons{border-radius:var(--spectrum-stepper-border-radius-reset)/* .spectrum-Stepper--quiet .spectrum-Stepper-buttons */}:host([dir=ltr][quiet]) .stepDown,:host([dir=ltr][quiet]) .stepUp{border-right-width:var(--spectrum-stepper-border-size-reset)/* [dir=ltr] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
+.spectrum-Stepper-stepDown */
+}
+.stepDown,
+.stepUp {
+    border-width: var(--spectrum-stepper-border-size);
+    box-sizing: border-box;
+    display: flex;
+    height: var(--spectrum-stepper-button-height);
+    margin: 0 !important;
+    min-width: 0;
+    position: relative; /* .spectrum-Stepper-stepUp,
+   * .spectrum-Stepper-stepDown */
+    width: var(--spectrum-stepper-button-width);
+}
+.stepDown .stepper-icon,
+.stepUp .stepper-icon {
+    margin: 0 !important; /* .spectrum-Stepper-stepUp .spectrum-Icon,
+   * .spectrum-Stepper-stepDown .spectrum-Icon */
+    opacity: 1;
+}
+:host([dir='ltr']) .stepUp {
+    border-bottom-right-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* [dir=ltr] .spectrum-Stepper-stepUp */
+}
+:host([dir='rtl']) .stepUp {
+    border-bottom-left-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* [dir=rtl] .spectrum-Stepper-stepUp */
+}
+.stepUp {
+    border-bottom: none; /* .spectrum-Stepper-stepUp */
+    padding-top: var(--spectrum-stepper-icon-nudge-top);
+}
+:host([dir='ltr']) .stepDown {
+    border-top-right-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* [dir=ltr] .spectrum-Stepper-stepDown */
+}
+:host([dir='rtl']) .stepDown {
+    border-top-left-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* [dir=rtl] .spectrum-Stepper-stepDown */
+}
+.stepDown {
+    padding-bottom: var(
+        --spectrum-stepper-icon-nudge
+    ); /* .spectrum-Stepper-stepDown */
+}
+.textfield {
+    flex: 1; /* .spectrum-Stepper-textfield */
+    width: auto;
+}
+:host([dir='ltr']) .input {
+    border-top-right-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* [dir=ltr] .spectrum-Stepper-input */
+}
+:host([dir='rtl']) .input {
+    border-top-left-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* [dir=rtl] .spectrum-Stepper-input */
+}
+:host([dir='ltr']) .input {
+    border-bottom-right-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* [dir=ltr] .spectrum-Stepper-input */
+}
+:host([dir='rtl']) .input {
+    border-bottom-left-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* [dir=rtl] .spectrum-Stepper-input */
+}
+.input,
+.textfield {
+    min-width: 0; /* .spectrum-Stepper-textfield */
+}
+:host([quiet]) #textfield {
+    border-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* .spectrum-Stepper--quiet */
+    width: var(--spectrum-stepper-quiet-width);
+}
+:host([quiet]) .buttons {
+    border-radius: var(
+        --spectrum-stepper-border-radius-reset
+    ); /* .spectrum-Stepper--quiet .spectrum-Stepper-buttons */
+}
+:host([dir='ltr'][quiet]) .stepDown,
+:host([dir='ltr'][quiet]) .stepUp {
+    border-right-width: var(
+        --spectrum-stepper-border-size-reset
+    ); /* [dir=ltr] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
    * [dir=ltr] 
-  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */}:host([dir=rtl][quiet]) .stepDown,:host([dir=rtl][quiet]) .stepUp{border-left-width:var(--spectrum-stepper-border-size-reset)/* [dir=rtl] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
+  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */
+}
+:host([dir='rtl'][quiet]) .stepDown,
+:host([dir='rtl'][quiet]) .stepUp {
+    border-left-width: var(
+        --spectrum-stepper-border-size-reset
+    ); /* [dir=rtl] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
    * [dir=rtl] 
-  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */}:host([dir=ltr][quiet]) .stepDown,:host([dir=ltr][quiet]) .stepUp{border-left:none/* [dir=ltr] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
+  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */
+}
+:host([dir='ltr'][quiet]) .stepDown,
+:host([dir='ltr'][quiet]) .stepUp {
+    border-left: none; /* [dir=ltr] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
    * [dir=ltr] 
-  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */}:host([dir=rtl][quiet]) .stepDown,:host([dir=rtl][quiet]) .stepUp{border-right:none/* [dir=rtl] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
+  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */
+}
+:host([dir='rtl'][quiet]) .stepDown,
+:host([dir='rtl'][quiet]) .stepUp {
+    border-right: none; /* [dir=rtl] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
    * [dir=rtl] 
-  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */}:host([dir=ltr][quiet]) .stepDown,:host([dir=ltr][quiet]) .stepUp{padding-right:0/* [dir=ltr] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
+  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */
+}
+:host([dir='ltr'][quiet]) .stepDown,
+:host([dir='ltr'][quiet]) .stepUp {
+    padding-right: 0; /* [dir=ltr] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
    * [dir=ltr] 
-  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */}:host([dir=rtl][quiet]) .stepDown,:host([dir=rtl][quiet]) .stepUp{padding-left:0/* [dir=rtl] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
+  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */
+}
+:host([dir='rtl'][quiet]) .stepDown,
+:host([dir='rtl'][quiet]) .stepUp {
+    padding-left: 0; /* [dir=rtl] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
    * [dir=rtl] 
-  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */}:host([quiet]) .stepDown,:host([quiet]) .stepUp{border-radius:var(--spectrum-stepper-border-radius-reset);border-top:none;justify-content:flex-end;min-width:0;width:var(--spectrum-stepper-quiet-button-width)/* .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
-   * .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */}:host([dir=ltr][quiet]) .stepDown:after,:host([dir=ltr][quiet]) .stepUp:after{right:calc(var(--spectrum-stepper-button-offset)*-1)/* [dir=ltr] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp:after,
-   * [dir=ltr]  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown:after */}:host([dir=rtl][quiet]) .stepDown:after,:host([dir=rtl][quiet]) .stepUp:after{left:calc(var(--spectrum-stepper-button-offset)*-1)/* [dir=rtl] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp:after,
-   * [dir=rtl]  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown:after */}:host([quiet]) .stepDown:after,:host([quiet]) .stepUp:after{content:"";/* .spectrum-Stepper--quiet .spectrum-Stepper-stepUp:after,
-   * .spectrum-Stepper--quiet .spectrum-Stepper-stepDown:after */height:100%;position:absolute;width:var(--spectrum-stepper-button-offset)}:host(:not([disabled]):not([invalid]):not([focused]):not([keyboard-focused])) #textfield:hover .input,:host(:not([disabled]):not([invalid]):not([focused]):not([keyboard-focused])) #textfield:hover .stepDown,:host(:not([disabled]):not([invalid]):not([focused]):not([keyboard-focused])) #textfield:hover .stepUp{border-color:var(--spectrum-textfield-m-texticon-border-color-hover,var(--spectrum-alias-input-border-color-hover))/* .spectrum-Stepper:hover:not(.is-disabled):not(.is-invalid):not(.is-focused):not(.is-keyboardFocused) .spectrum-Stepper-stepUp,
+  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */
+}
+:host([quiet]) .stepDown,
+:host([quiet]) .stepUp {
+    border-radius: var(--spectrum-stepper-border-radius-reset);
+    border-top: none;
+    justify-content: flex-end;
+    min-width: 0;
+    width: var(
+        --spectrum-stepper-quiet-button-width
+    ); /* .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
+   * .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */
+}
+:host([dir='ltr'][quiet]) .stepDown:after,
+:host([dir='ltr'][quiet]) .stepUp:after {
+    right: calc(
+        var(--spectrum-stepper-button-offset) * -1
+    ); /* [dir=ltr] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp:after,
+   * [dir=ltr]  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown:after */
+}
+:host([dir='rtl'][quiet]) .stepDown:after,
+:host([dir='rtl'][quiet]) .stepUp:after {
+    left: calc(
+        var(--spectrum-stepper-button-offset) * -1
+    ); /* [dir=rtl] .spectrum-Stepper--quiet .spectrum-Stepper-stepUp:after,
+   * [dir=rtl]  .spectrum-Stepper--quiet .spectrum-Stepper-stepDown:after */
+}
+:host([quiet]) .stepDown:after,
+:host([quiet]) .stepUp:after {
+    content: ''; /* .spectrum-Stepper--quiet .spectrum-Stepper-stepUp:after,
+   * .spectrum-Stepper--quiet .spectrum-Stepper-stepDown:after */
+    height: 100%;
+    position: absolute;
+    width: var(--spectrum-stepper-button-offset);
+}
+:host(:not([disabled]):not([invalid]):not([focused]):not([keyboard-focused]))
+    #textfield:hover
+    .input,
+:host(:not([disabled]):not([invalid]):not([focused]):not([keyboard-focused]))
+    #textfield:hover
+    .stepDown,
+:host(:not([disabled]):not([invalid]):not([focused]):not([keyboard-focused]))
+    #textfield:hover
+    .stepUp {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-hover,
+        var(--spectrum-alias-input-border-color-hover)
+    ); /* .spectrum-Stepper:hover:not(.is-disabled):not(.is-invalid):not(.is-focused):not(.is-keyboardFocused) .spectrum-Stepper-stepUp,
    * .spectrum-Stepper:hover:not(.is-disabled):not(.is-invalid):not(.is-focused):not(.is-keyboardFocused) .spectrum-Stepper-stepDown,
-   * .spectrum-Stepper:hover:not(.is-disabled):not(.is-invalid):not(.is-focused):not(.is-keyboardFocused) .spectrum-Stepper-input */}:host([focused]) #textfield{border-color:var(--spectrum-textfield-m-texticon-border-color-mouse-focus,var(--spectrum-alias-input-border-color-mouse-focus))/* .spectrum-Stepper.is-focused */}:host([focused]) #textfield .stepDown,:host([focused]) #textfield .stepUp{border-color:var(--spectrum-textfield-m-texticon-border-color-mouse-focus,var(--spectrum-alias-input-border-color-mouse-focus))/* .spectrum-Stepper.is-focused .spectrum-Stepper-stepUp,
-   * .spectrum-Stepper.is-focused .spectrum-Stepper-stepDown */}:host([focused]) #textfield .input{border-color:var(--spectrum-textfield-m-texticon-border-color-mouse-focus,var(--spectrum-alias-input-border-color-mouse-focus));/* .spectrum-Stepper.is-focused .spectrum-Stepper-input */box-shadow:none}:host([focused][invalid]) #textfield{border-color:var(--spectrum-textfield-m-texticon-border-color-invalid-mouse-focus,var(--spectrum-alias-input-border-color-invalid-mouse-focus))/* .spectrum-Stepper.is-focused.is-invalid */}:host([focused][invalid]) #textfield .stepDown,:host([focused][invalid]) #textfield .stepUp{border-color:var(--spectrum-textfield-m-texticon-border-color-invalid-mouse-focus,var(--spectrum-alias-input-border-color-invalid-mouse-focus))/* .spectrum-Stepper.is-focused.is-invalid .spectrum-Stepper-stepUp,
-   * .spectrum-Stepper.is-focused.is-invalid .spectrum-Stepper-stepDown */}:host([focused][invalid]) #textfield .input{border-color:var(--spectrum-textfield-m-texticon-border-color-invalid-mouse-focus,var(--spectrum-alias-input-border-color-invalid-mouse-focus))/* .spectrum-Stepper.is-focused.is-invalid .spectrum-Stepper-input */}:host([keyboard-focused]) #textfield{box-shadow:0 0 0 1px var(--spectrum-textfield-m-texticon-border-color-key-focus,var(--spectrum-alias-input-border-color-key-focus))/* .spectrum-Stepper.is-keyboardFocused */}:host([keyboard-focused]) #textfield .buttons,:host([keyboard-focused]) #textfield .input{box-shadow:0 0 0 1px var(--spectrum-textfield-m-texticon-border-color-key-focus,var(--spectrum-alias-input-border-color-key-focus))/* .spectrum-Stepper.is-keyboardFocused .spectrum-Stepper-input,
-   * .spectrum-Stepper.is-keyboardFocused .spectrum-Stepper-buttons */}:host([keyboard-focused]) #textfield .input,:host([keyboard-focused]) #textfield .stepDown,:host([keyboard-focused]) #textfield .stepUp{border-color:var(--spectrum-textfield-m-texticon-border-color-key-focus,var(--spectrum-alias-input-border-color-key-focus))/* .spectrum-Stepper.is-keyboardFocused .spectrum-Stepper-input,
+   * .spectrum-Stepper:hover:not(.is-disabled):not(.is-invalid):not(.is-focused):not(.is-keyboardFocused) .spectrum-Stepper-input */
+}
+:host([focused]) #textfield {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-mouse-focus,
+        var(--spectrum-alias-input-border-color-mouse-focus)
+    ); /* .spectrum-Stepper.is-focused */
+}
+:host([focused]) #textfield .stepDown,
+:host([focused]) #textfield .stepUp {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-mouse-focus,
+        var(--spectrum-alias-input-border-color-mouse-focus)
+    ); /* .spectrum-Stepper.is-focused .spectrum-Stepper-stepUp,
+   * .spectrum-Stepper.is-focused .spectrum-Stepper-stepDown */
+}
+:host([focused]) #textfield .input {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-mouse-focus,
+        var(--spectrum-alias-input-border-color-mouse-focus)
+    ); /* .spectrum-Stepper.is-focused .spectrum-Stepper-input */
+    box-shadow: none;
+}
+:host([focused][invalid]) #textfield {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-invalid-mouse-focus,
+        var(--spectrum-alias-input-border-color-invalid-mouse-focus)
+    ); /* .spectrum-Stepper.is-focused.is-invalid */
+}
+:host([focused][invalid]) #textfield .stepDown,
+:host([focused][invalid]) #textfield .stepUp {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-invalid-mouse-focus,
+        var(--spectrum-alias-input-border-color-invalid-mouse-focus)
+    ); /* .spectrum-Stepper.is-focused.is-invalid .spectrum-Stepper-stepUp,
+   * .spectrum-Stepper.is-focused.is-invalid .spectrum-Stepper-stepDown */
+}
+:host([focused][invalid]) #textfield .input {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-invalid-mouse-focus,
+        var(--spectrum-alias-input-border-color-invalid-mouse-focus)
+    ); /* .spectrum-Stepper.is-focused.is-invalid .spectrum-Stepper-input */
+}
+:host([keyboard-focused]) #textfield {
+    box-shadow: 0 0 0 1px
+        var(
+            --spectrum-textfield-m-texticon-border-color-key-focus,
+            var(--spectrum-alias-input-border-color-key-focus)
+        ); /* .spectrum-Stepper.is-keyboardFocused */
+}
+:host([keyboard-focused]) #textfield .buttons,
+:host([keyboard-focused]) #textfield .input {
+    box-shadow: 0 0 0 1px
+        var(
+            --spectrum-textfield-m-texticon-border-color-key-focus,
+            var(--spectrum-alias-input-border-color-key-focus)
+        ); /* .spectrum-Stepper.is-keyboardFocused .spectrum-Stepper-input,
+   * .spectrum-Stepper.is-keyboardFocused .spectrum-Stepper-buttons */
+}
+:host([keyboard-focused]) #textfield .input,
+:host([keyboard-focused]) #textfield .stepDown,
+:host([keyboard-focused]) #textfield .stepUp {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-key-focus,
+        var(--spectrum-alias-input-border-color-key-focus)
+    ); /* .spectrum-Stepper.is-keyboardFocused .spectrum-Stepper-input,
    * .spectrum-Stepper.is-keyboardFocused .spectrum-Stepper-stepUp,
-   * .spectrum-Stepper.is-keyboardFocused .spectrum-Stepper-stepDown */}:host([keyboard-focused][invalid]) #textfield{box-shadow:0 0 0 1px var(--spectrum-textfield-m-texticon-border-color-invalid-key-focus,var(--spectrum-alias-input-border-color-invalid-key-focus))/* .spectrum-Stepper.is-keyboardFocused.is-invalid */}:host([keyboard-focused][invalid]) #textfield .stepDown,:host([keyboard-focused][invalid]) #textfield .stepUp{border-color:var(--spectrum-textfield-m-texticon-border-color-invalid-key-focus,var(--spectrum-alias-input-border-color-invalid-key-focus))/* .spectrum-Stepper.is-keyboardFocused.is-invalid .spectrum-Stepper-stepUp,
-   * .spectrum-Stepper.is-keyboardFocused.is-invalid .spectrum-Stepper-stepDown */}:host([keyboard-focused][invalid]) #textfield .buttons{box-shadow:0 0 0 1px var(--spectrum-textfield-m-texticon-border-color-invalid-key-focus,var(--spectrum-alias-input-border-color-invalid-key-focus))/* .spectrum-Stepper.is-keyboardFocused.is-invalid .spectrum-Stepper-buttons */}:host([invalid]) #textfield .stepDown,:host([invalid]) #textfield .stepUp{border-color:var(--spectrum-textfield-m-texticon-border-color-invalid,var(--spectrum-alias-input-border-color-invalid-default))/* .spectrum-Stepper.is-invalid .spectrum-Stepper-stepUp,
-   * .spectrum-Stepper.is-invalid .spectrum-Stepper-stepDown */}:host([invalid]) #textfield .input{border-color:var(--spectrum-textfield-m-texticon-border-color-invalid,var(--spectrum-alias-input-border-color-invalid-default))/* .spectrum-Stepper.is-invalid .spectrum-Stepper-input */}:host([invalid][keyboard-focused]) #textfield .input{border-color:var(--spectrum-textfield-m-texticon-border-color-invalid-key-focus,var(--spectrum-alias-input-border-color-invalid-key-focus));/* .spectrum-Stepper.is-invalid.is-keyboardFocused .spectrum-Stepper-input */box-shadow:0 0 0 1px var(--spectrum-textfield-m-texticon-border-color-invalid-key-focus,var(--spectrum-alias-input-border-color-invalid-key-focus))}:host([invalid][keyboard-focused]) #textfield .buttons{box-shadow:0 0 0 1px var(--spectrum-textfield-m-texticon-border-color-invalid-key-focus,var(--spectrum-alias-input-border-color-invalid-key-focus))/* .spectrum-Stepper.is-invalid.is-keyboardFocused .spectrum-Stepper-buttons */}:host([disabled]) #textfield .stepDown,:host([disabled]) #textfield .stepUp{border-color:var(--spectrum-textfield-m-texticon-border-color-disabled,var(--spectrum-alias-input-border-color-disabled))/* .spectrum-Stepper.is-disabled .spectrum-Stepper-stepUp,
-   * .spectrum-Stepper.is-disabled .spectrum-Stepper-stepDown */}.stepDown,.stepUp{border-color:var(--spectrum-textfield-m-texticon-border-color,var(--spectrum-alias-input-border-color-default))/* .spectrum-Stepper-stepUp,
-   * .spectrum-Stepper-stepDown */}.stepDown:disabled,.stepUp:disabled{border-color:var(--spectrum-textfield-m-texticon-border-color-disabled,var(--spectrum-alias-input-border-color-disabled))/* .spectrum-Stepper-stepUp:disabled,
-   * .spectrum-Stepper-stepDown:disabled */}:host([quiet][disabled]) #textfield .stepDown,:host([quiet][disabled]) #textfield .stepUp{border-color:var(--spectrum-textfield-m-quiet-texticon-border-color-disabled,var(--spectrum-alias-input-border-color-quiet-disabled))/* .spectrum-Stepper--quiet.is-disabled .spectrum-Stepper-stepUp,
-   * .spectrum-Stepper--quiet.is-disabled .spectrum-Stepper-stepDown */}:host([quiet]) .stepDown,:host([quiet]) .stepUp{border-color:var(--spectrum-textfield-m-quiet-texticon-border-color,var(--spectrum-alias-input-border-color-default))/* .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
-   * .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */}:host([quiet]) .stepDown:disabled,:host([quiet]) .stepUp:disabled{border-color:var(--spectrum-textfield-m-quiet-texticon-border-color-disabled,var(--spectrum-alias-input-border-color-quiet-disabled))/* .spectrum-Stepper--quiet .spectrum-Stepper-stepUp:disabled,
-   * .spectrum-Stepper--quiet .spectrum-Stepper-stepDown:disabled */}:host([quiet]) .input{box-shadow:none/* .spectrum-Stepper--quiet .spectrum-Stepper-input */}:host([quiet][invalid]) #textfield .input{border-color:var(--spectrum-textfield-m-texticon-border-color-invalid,var(--spectrum-alias-input-border-color-invalid-default))/* .spectrum-Stepper--quiet.is-invalid .spectrum-Stepper-input */}:host([quiet][invalid]) #textfield .stepDown{border-color:var(--spectrum-textfield-m-texticon-border-color-invalid,var(--spectrum-alias-input-border-color-invalid-default))/* .spectrum-Stepper--quiet.is-invalid .spectrum-Stepper-stepDown */}:host([quiet][focused]) #textfield,:host([quiet][keyboard-focused]) #textfield{box-shadow:none/* .spectrum-Stepper--quiet.is-keyboardFocused,
-   * .spectrum-Stepper--quiet.is-focused */}:host([quiet][focused]) #textfield .buttons,:host([quiet][focused]) #textfield .input,:host([quiet][keyboard-focused]) #textfield .buttons,:host([quiet][keyboard-focused]) #textfield .input{box-shadow:0 1px 0 0 var(--spectrum-textfield-m-texticon-border-color-key-focus,var(--spectrum-alias-input-border-color-key-focus))/* .spectrum-Stepper--quiet.is-keyboardFocused .spectrum-Stepper-buttons,
+   * .spectrum-Stepper.is-keyboardFocused .spectrum-Stepper-stepDown */
+}
+:host([keyboard-focused][invalid]) #textfield {
+    box-shadow: 0 0 0 1px
+        var(
+            --spectrum-textfield-m-texticon-border-color-invalid-key-focus,
+            var(--spectrum-alias-input-border-color-invalid-key-focus)
+        ); /* .spectrum-Stepper.is-keyboardFocused.is-invalid */
+}
+:host([keyboard-focused][invalid]) #textfield .stepDown,
+:host([keyboard-focused][invalid]) #textfield .stepUp {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-invalid-key-focus,
+        var(--spectrum-alias-input-border-color-invalid-key-focus)
+    ); /* .spectrum-Stepper.is-keyboardFocused.is-invalid .spectrum-Stepper-stepUp,
+   * .spectrum-Stepper.is-keyboardFocused.is-invalid .spectrum-Stepper-stepDown */
+}
+:host([keyboard-focused][invalid]) #textfield .buttons {
+    box-shadow: 0 0 0 1px
+        var(
+            --spectrum-textfield-m-texticon-border-color-invalid-key-focus,
+            var(--spectrum-alias-input-border-color-invalid-key-focus)
+        ); /* .spectrum-Stepper.is-keyboardFocused.is-invalid .spectrum-Stepper-buttons */
+}
+:host([invalid]) #textfield .stepDown,
+:host([invalid]) #textfield .stepUp {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-invalid,
+        var(--spectrum-alias-input-border-color-invalid-default)
+    ); /* .spectrum-Stepper.is-invalid .spectrum-Stepper-stepUp,
+   * .spectrum-Stepper.is-invalid .spectrum-Stepper-stepDown */
+}
+:host([invalid]) #textfield .input {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-invalid,
+        var(--spectrum-alias-input-border-color-invalid-default)
+    ); /* .spectrum-Stepper.is-invalid .spectrum-Stepper-input */
+}
+:host([invalid][keyboard-focused]) #textfield .input {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-invalid-key-focus,
+        var(--spectrum-alias-input-border-color-invalid-key-focus)
+    ); /* .spectrum-Stepper.is-invalid.is-keyboardFocused .spectrum-Stepper-input */
+    box-shadow: 0 0 0 1px
+        var(
+            --spectrum-textfield-m-texticon-border-color-invalid-key-focus,
+            var(--spectrum-alias-input-border-color-invalid-key-focus)
+        );
+}
+:host([invalid][keyboard-focused]) #textfield .buttons {
+    box-shadow: 0 0 0 1px
+        var(
+            --spectrum-textfield-m-texticon-border-color-invalid-key-focus,
+            var(--spectrum-alias-input-border-color-invalid-key-focus)
+        ); /* .spectrum-Stepper.is-invalid.is-keyboardFocused .spectrum-Stepper-buttons */
+}
+:host([disabled]) #textfield .stepDown,
+:host([disabled]) #textfield .stepUp {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-disabled,
+        var(--spectrum-alias-input-border-color-disabled)
+    ); /* .spectrum-Stepper.is-disabled .spectrum-Stepper-stepUp,
+   * .spectrum-Stepper.is-disabled .spectrum-Stepper-stepDown */
+}
+.stepDown,
+.stepUp {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color,
+        var(--spectrum-alias-input-border-color-default)
+    ); /* .spectrum-Stepper-stepUp,
+   * .spectrum-Stepper-stepDown */
+}
+.stepDown:disabled,
+.stepUp:disabled {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-disabled,
+        var(--spectrum-alias-input-border-color-disabled)
+    ); /* .spectrum-Stepper-stepUp:disabled,
+   * .spectrum-Stepper-stepDown:disabled */
+}
+:host([quiet][disabled]) #textfield .stepDown,
+:host([quiet][disabled]) #textfield .stepUp {
+    border-color: var(
+        --spectrum-textfield-m-quiet-texticon-border-color-disabled,
+        var(--spectrum-alias-input-border-color-quiet-disabled)
+    ); /* .spectrum-Stepper--quiet.is-disabled .spectrum-Stepper-stepUp,
+   * .spectrum-Stepper--quiet.is-disabled .spectrum-Stepper-stepDown */
+}
+:host([quiet]) .stepDown,
+:host([quiet]) .stepUp {
+    border-color: var(
+        --spectrum-textfield-m-quiet-texticon-border-color,
+        var(--spectrum-alias-input-border-color-default)
+    ); /* .spectrum-Stepper--quiet .spectrum-Stepper-stepUp,
+   * .spectrum-Stepper--quiet .spectrum-Stepper-stepDown */
+}
+:host([quiet]) .stepDown:disabled,
+:host([quiet]) .stepUp:disabled {
+    border-color: var(
+        --spectrum-textfield-m-quiet-texticon-border-color-disabled,
+        var(--spectrum-alias-input-border-color-quiet-disabled)
+    ); /* .spectrum-Stepper--quiet .spectrum-Stepper-stepUp:disabled,
+   * .spectrum-Stepper--quiet .spectrum-Stepper-stepDown:disabled */
+}
+:host([quiet]) .input {
+    box-shadow: none; /* .spectrum-Stepper--quiet .spectrum-Stepper-input */
+}
+:host([quiet][invalid]) #textfield .input {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-invalid,
+        var(--spectrum-alias-input-border-color-invalid-default)
+    ); /* .spectrum-Stepper--quiet.is-invalid .spectrum-Stepper-input */
+}
+:host([quiet][invalid]) #textfield .stepDown {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-invalid,
+        var(--spectrum-alias-input-border-color-invalid-default)
+    ); /* .spectrum-Stepper--quiet.is-invalid .spectrum-Stepper-stepDown */
+}
+:host([quiet][focused]) #textfield,
+:host([quiet][keyboard-focused]) #textfield {
+    box-shadow: none; /* .spectrum-Stepper--quiet.is-keyboardFocused,
+   * .spectrum-Stepper--quiet.is-focused */
+}
+:host([quiet][focused]) #textfield .buttons,
+:host([quiet][focused]) #textfield .input,
+:host([quiet][keyboard-focused]) #textfield .buttons,
+:host([quiet][keyboard-focused]) #textfield .input {
+    box-shadow: 0 1px 0 0
+        var(
+            --spectrum-textfield-m-texticon-border-color-key-focus,
+            var(--spectrum-alias-input-border-color-key-focus)
+        ); /* .spectrum-Stepper--quiet.is-keyboardFocused .spectrum-Stepper-buttons,
    * .spectrum-Stepper--quiet.is-keyboardFocused .spectrum-Stepper-input,
    * .spectrum-Stepper--quiet.is-focused .spectrum-Stepper-buttons,
-   * .spectrum-Stepper--quiet.is-focused .spectrum-Stepper-input */}:host([quiet][focused]) #textfield .stepDown,:host([quiet][keyboard-focused]) #textfield .stepDown{border-color:var(--spectrum-textfield-m-texticon-border-color-key-focus,var(--spectrum-alias-input-border-color-key-focus))/* .spectrum-Stepper--quiet.is-keyboardFocused .spectrum-Stepper-stepDown,
-   * .spectrum-Stepper--quiet.is-focused .spectrum-Stepper-stepDown */}:host([quiet][focused][invalid]) #textfield,:host([quiet][keyboard-focused][invalid]) #textfield{box-shadow:none/* .spectrum-Stepper--quiet.is-keyboardFocused.is-invalid,
-   * .spectrum-Stepper--quiet.is-focused.is-invalid */}:host([quiet][focused][invalid]) #textfield .buttons,:host([quiet][focused][invalid]) #textfield .input,:host([quiet][keyboard-focused][invalid]) #textfield .buttons,:host([quiet][keyboard-focused][invalid]) #textfield .input{box-shadow:0 1px 0 0 var(--spectrum-textfield-m-texticon-border-color-invalid,var(--spectrum-alias-input-border-color-invalid-default))/* .spectrum-Stepper--quiet.is-keyboardFocused.is-invalid .spectrum-Stepper-input,
+   * .spectrum-Stepper--quiet.is-focused .spectrum-Stepper-input */
+}
+:host([quiet][focused]) #textfield .stepDown,
+:host([quiet][keyboard-focused]) #textfield .stepDown {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-key-focus,
+        var(--spectrum-alias-input-border-color-key-focus)
+    ); /* .spectrum-Stepper--quiet.is-keyboardFocused .spectrum-Stepper-stepDown,
+   * .spectrum-Stepper--quiet.is-focused .spectrum-Stepper-stepDown */
+}
+:host([quiet][focused][invalid]) #textfield,
+:host([quiet][keyboard-focused][invalid]) #textfield {
+    box-shadow: none; /* .spectrum-Stepper--quiet.is-keyboardFocused.is-invalid,
+   * .spectrum-Stepper--quiet.is-focused.is-invalid */
+}
+:host([quiet][focused][invalid]) #textfield .buttons,
+:host([quiet][focused][invalid]) #textfield .input,
+:host([quiet][keyboard-focused][invalid]) #textfield .buttons,
+:host([quiet][keyboard-focused][invalid]) #textfield .input {
+    box-shadow: 0 1px 0 0
+        var(
+            --spectrum-textfield-m-texticon-border-color-invalid,
+            var(--spectrum-alias-input-border-color-invalid-default)
+        ); /* .spectrum-Stepper--quiet.is-keyboardFocused.is-invalid .spectrum-Stepper-input,
    * .spectrum-Stepper--quiet.is-keyboardFocused.is-invalid .spectrum-Stepper-buttons,
    * .spectrum-Stepper--quiet.is-focused.is-invalid .spectrum-Stepper-input,
-   * .spectrum-Stepper--quiet.is-focused.is-invalid .spectrum-Stepper-buttons */}:host([quiet][focused][invalid]) #textfield .input,:host([quiet][keyboard-focused][invalid]) #textfield .input{border-color:var(--spectrum-textfield-m-texticon-border-color-invalid,var(--spectrum-alias-input-border-color-invalid-default))/* .spectrum-Stepper--quiet.is-keyboardFocused.is-invalid .spectrum-Stepper-input,
-   * .spectrum-Stepper--quiet.is-focused.is-invalid .spectrum-Stepper-input */}:host([quiet][focused][invalid]) #textfield .stepDown,:host([quiet][keyboard-focused][invalid]) #textfield .stepDown{border-color:var(--spectrum-textfield-m-texticon-border-color-invalid,var(--spectrum-alias-input-border-color-invalid-default))/* .spectrum-Stepper--quiet.is-keyboardFocused.is-invalid .spectrum-Stepper-stepDown,
-   * .spectrum-Stepper--quiet.is-focused.is-invalid .spectrum-Stepper-stepDown */}@media (forced-colors:active){#textfield{--spectrum-textfield-m-quiet-texticon-border-color-disabled:GrayText;--spectrum-textfield-m-texticon-border-color-disabled:GrayText;--spectrum-textfield-m-texticon-border-color-hover:Highlight;--spectrum-textfield-m-texticon-border-color-invalid:Highlight;--spectrum-textfield-m-texticon-border-color-invalid-key-focus:Highlight;--spectrum-textfield-m-texticon-border-color-invalid-mouse-focus:Highlight;--spectrum-textfield-m-texticon-border-color-key-focus:Highlight;--spectrum-textfield-m-texticon-border-color-mouse-focus:Highlight;--spectrum-textfield-m-texticon-focus-ring-border-width:2px}:host([keyboard-focused]) #textfield{outline:2px solid var(--spectrum-textfield-m-texticon-border-color-key-focus,var(--spectrum-alias-input-border-color-key-focus))}:host([keyboard-focused]) #textfield .buttons,:host([keyboard-focused]) #textfield .input{--spectrum-textfield-m-texticon-border-color:ButtonText}:host([quiet][focused]) #textfield,:host([quiet][keyboard-focused]) #textfield{outline:none}:host([quiet][focused]) #textfield .buttons,:host([quiet][focused]) #textfield .input,:host([quiet][keyboard-focused]) #textfield .buttons,:host([quiet][keyboard-focused]) #textfield .input{box-shadow:0 var(--spectrum-textfield-m-texticon-focus-ring-border-width,var(--spectrum-alias-component-focusring-size)) 0 0 var(--spectrum-textfield-m-texticon-border-color-key-focus,var(--spectrum-alias-input-border-color-key-focus));forced-color-adjust:none}:host([quiet][focused][invalid]) #textfield .buttons,:host([quiet][focused][invalid]) #textfield .input,:host([quiet][keyboard-focused][invalid]) #textfield .buttons,:host([quiet][keyboard-focused][invalid]) #textfield .input{box-shadow:0 var(--spectrum-textfield-m-texticon-focus-ring-border-width,var(--spectrum-alias-component-focusring-size)) 0 0 var(--spectrum-textfield-m-texticon-border-color-invalid,var(--spectrum-alias-input-border-color-invalid-default));forced-color-adjust:none}}
+   * .spectrum-Stepper--quiet.is-focused.is-invalid .spectrum-Stepper-buttons */
+}
+:host([quiet][focused][invalid]) #textfield .input,
+:host([quiet][keyboard-focused][invalid]) #textfield .input {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-invalid,
+        var(--spectrum-alias-input-border-color-invalid-default)
+    ); /* .spectrum-Stepper--quiet.is-keyboardFocused.is-invalid .spectrum-Stepper-input,
+   * .spectrum-Stepper--quiet.is-focused.is-invalid .spectrum-Stepper-input */
+}
+:host([quiet][focused][invalid]) #textfield .stepDown,
+:host([quiet][keyboard-focused][invalid]) #textfield .stepDown {
+    border-color: var(
+        --spectrum-textfield-m-texticon-border-color-invalid,
+        var(--spectrum-alias-input-border-color-invalid-default)
+    ); /* .spectrum-Stepper--quiet.is-keyboardFocused.is-invalid .spectrum-Stepper-stepDown,
+   * .spectrum-Stepper--quiet.is-focused.is-invalid .spectrum-Stepper-stepDown */
+}
+@media (forced-colors: active) {
+    #textfield {
+        --spectrum-textfield-m-quiet-texticon-border-color-disabled: GrayText;
+        --spectrum-textfield-m-texticon-border-color-disabled: GrayText;
+        --spectrum-textfield-m-texticon-border-color-hover: Highlight;
+        --spectrum-textfield-m-texticon-border-color-invalid: Highlight;
+        --spectrum-textfield-m-texticon-border-color-invalid-key-focus: Highlight;
+        --spectrum-textfield-m-texticon-border-color-invalid-mouse-focus: Highlight;
+        --spectrum-textfield-m-texticon-border-color-key-focus: Highlight;
+        --spectrum-textfield-m-texticon-border-color-mouse-focus: Highlight;
+        --spectrum-textfield-m-texticon-focus-ring-border-width: 2px;
+    }
+    :host([keyboard-focused]) #textfield {
+        outline: 2px solid
+            var(
+                --spectrum-textfield-m-texticon-border-color-key-focus,
+                var(--spectrum-alias-input-border-color-key-focus)
+            );
+    }
+    :host([keyboard-focused]) #textfield .buttons,
+    :host([keyboard-focused]) #textfield .input {
+        --spectrum-textfield-m-texticon-border-color: ButtonText;
+    }
+    :host([quiet][focused]) #textfield,
+    :host([quiet][keyboard-focused]) #textfield {
+        outline: none;
+    }
+    :host([quiet][focused]) #textfield .buttons,
+    :host([quiet][focused]) #textfield .input,
+    :host([quiet][keyboard-focused]) #textfield .buttons,
+    :host([quiet][keyboard-focused]) #textfield .input {
+        box-shadow: 0
+            var(
+                --spectrum-textfield-m-texticon-focus-ring-border-width,
+                var(--spectrum-alias-component-focusring-size)
+            )
+            0 0
+            var(
+                --spectrum-textfield-m-texticon-border-color-key-focus,
+                var(--spectrum-alias-input-border-color-key-focus)
+            );
+        forced-color-adjust: none;
+    }
+    :host([quiet][focused][invalid]) #textfield .buttons,
+    :host([quiet][focused][invalid]) #textfield .input,
+    :host([quiet][keyboard-focused][invalid]) #textfield .buttons,
+    :host([quiet][keyboard-focused][invalid]) #textfield .input {
+        box-shadow: 0
+            var(
+                --spectrum-textfield-m-texticon-focus-ring-border-width,
+                var(--spectrum-alias-component-focusring-size)
+            )
+            0 0
+            var(
+                --spectrum-textfield-m-texticon-border-color-invalid,
+                var(--spectrum-alias-input-border-color-invalid-default)
+            );
+        forced-color-adjust: none;
+    }
+}

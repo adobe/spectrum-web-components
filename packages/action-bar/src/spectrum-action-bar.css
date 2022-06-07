@@ -10,4 +10,105 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host{--spectrum-actionbar-height:var(--spectrum-global-dimension-size-600);/* .spectrum-ActionBar */--spectrum-actionbar-padding-left:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-padding-right:calc(var(--spectrum-global-dimension-size-200)/2);--spectrum-actionbar-margin-x:var(--spectrum-global-dimension-size-200);--spectrum-actionbar-min-width:280px;--spectrum-actionbar-max-width:960px}:host{bottom:0;box-sizing:border-box;display:flex;/* .spectrum-ActionBar */height:0;justify-content:center;opacity:0;overflow:hidden;padding:0 var(--spectrum-actionbar-margin-x);pointer-events:none;transition:height var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out;z-index:1}:host([open]){height:calc(var(--spectrum-actionbar-height, var(--spectrum-global-dimension-size-600)) + var(--spectrum-actionbar-margin-x)*2);/* .spectrum-ActionBar.is-open */opacity:1}:host([dir=ltr][variant=sticky]){left:0/* [dir=ltr] .spectrum-ActionBar--sticky */}:host([dir=rtl][variant=sticky]){right:0/* [dir=rtl] .spectrum-ActionBar--sticky */}:host([dir=ltr][variant=sticky]){right:0/* [dir=ltr] .spectrum-ActionBar--sticky */}:host([dir=rtl][variant=sticky]){left:0/* [dir=rtl] .spectrum-ActionBar--sticky */}:host([variant=sticky]){position:sticky/* .spectrum-ActionBar--sticky */}:host([flexible]) #popover{width:auto/* .spectrum-ActionBar--flexible .spectrum-ActionBar-popover */}:host([variant=fixed]){position:fixed/* .spectrum-ActionBar--fixed */}:host([dir=ltr]) #popover{padding-left:var(--spectrum-actionbar-padding-left)/* [dir=ltr] .spectrum-ActionBar-popover */}:host([dir=rtl]) #popover{padding-right:var(--spectrum-actionbar-padding-left)/* [dir=rtl] .spectrum-ActionBar-popover */}:host([dir=ltr]) #popover{padding-right:var(--spectrum-actionbar-padding-right)/* [dir=ltr] .spectrum-ActionBar-popover */}:host([dir=rtl]) #popover{padding-left:var(--spectrum-actionbar-padding-right)/* [dir=rtl] .spectrum-ActionBar-popover */}#popover{align-items:center;box-sizing:border-box;flex-direction:row;height:var(--spectrum-actionbar-height,var(--spectrum-global-dimension-size-600));justify-content:space-between;margin:auto;max-width:var(--spectrum-actionbar-max-width,var(--spectrum-global-dimension-static-size-3500));min-width:var(--spectrum-actionbar-min-width,var(--spectrum-global-dimension-static-size-3500));pointer-events:auto;position:relative;/* .spectrum-ActionBar-popover */width:100%}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-actionbar-height: var(
+        --spectrum-global-dimension-size-600
+    ); /* .spectrum-ActionBar */
+    --spectrum-actionbar-padding-left: var(
+        --spectrum-global-dimension-size-200
+    );
+    --spectrum-actionbar-padding-right: calc(
+        var(--spectrum-global-dimension-size-200) / 2
+    );
+    --spectrum-actionbar-margin-x: var(--spectrum-global-dimension-size-200);
+    --spectrum-actionbar-min-width: 280px;
+    --spectrum-actionbar-max-width: 960px;
+}
+:host {
+    bottom: 0;
+    box-sizing: border-box;
+    display: flex; /* .spectrum-ActionBar */
+    height: 0;
+    justify-content: center;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 var(--spectrum-actionbar-margin-x);
+    pointer-events: none;
+    transition: height var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out,
+        opacity var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out;
+    z-index: 1;
+}
+:host([open]) {
+    height: calc(
+        var(
+                --spectrum-actionbar-height,
+                var(--spectrum-global-dimension-size-600)
+            ) + var(--spectrum-actionbar-margin-x) * 2
+    ); /* .spectrum-ActionBar.is-open */
+    opacity: 1;
+}
+:host([dir='ltr'][variant='sticky']) {
+    left: 0; /* [dir=ltr] .spectrum-ActionBar--sticky */
+}
+:host([dir='rtl'][variant='sticky']) {
+    right: 0; /* [dir=rtl] .spectrum-ActionBar--sticky */
+}
+:host([dir='ltr'][variant='sticky']) {
+    right: 0; /* [dir=ltr] .spectrum-ActionBar--sticky */
+}
+:host([dir='rtl'][variant='sticky']) {
+    left: 0; /* [dir=rtl] .spectrum-ActionBar--sticky */
+}
+:host([variant='sticky']) {
+    position: sticky; /* .spectrum-ActionBar--sticky */
+}
+:host([flexible]) #popover {
+    width: auto; /* .spectrum-ActionBar--flexible .spectrum-ActionBar-popover */
+}
+:host([variant='fixed']) {
+    position: fixed; /* .spectrum-ActionBar--fixed */
+}
+:host([dir='ltr']) #popover {
+    padding-left: var(
+        --spectrum-actionbar-padding-left
+    ); /* [dir=ltr] .spectrum-ActionBar-popover */
+}
+:host([dir='rtl']) #popover {
+    padding-right: var(
+        --spectrum-actionbar-padding-left
+    ); /* [dir=rtl] .spectrum-ActionBar-popover */
+}
+:host([dir='ltr']) #popover {
+    padding-right: var(
+        --spectrum-actionbar-padding-right
+    ); /* [dir=ltr] .spectrum-ActionBar-popover */
+}
+:host([dir='rtl']) #popover {
+    padding-left: var(
+        --spectrum-actionbar-padding-right
+    ); /* [dir=rtl] .spectrum-ActionBar-popover */
+}
+#popover {
+    align-items: center;
+    box-sizing: border-box;
+    flex-direction: row;
+    height: var(
+        --spectrum-actionbar-height,
+        var(--spectrum-global-dimension-size-600)
+    );
+    justify-content: space-between;
+    margin: auto;
+    max-width: var(
+        --spectrum-actionbar-max-width,
+        var(--spectrum-global-dimension-static-size-3500)
+    );
+    min-width: var(
+        --spectrum-actionbar-min-width,
+        var(--spectrum-global-dimension-static-size-3500)
+    );
+    pointer-events: auto;
+    position: relative; /* .spectrum-ActionBar-popover */
+    width: 100%;
+}

@@ -10,28 +10,336 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host{--spectrum-toast-icon-padding-y:var(--spectrum-global-dimension-size-85);/* .spectrum-Toast */--spectrum-toast-neutral-content-padding-top:var(
-    --spectrum-global-dimension-size-65
-  );--spectrum-toast-content-padding-bottom:var(
-    --spectrum-global-dimension-size-65
-  );--spectrum-toast-button-margin-right:var(
-    --spectrum-global-dimension-size-130
-  )}:host([dir=ltr]){padding-right:var(--spectrum-toast-neutral-padding-right,var(--spectrum-global-dimension-size-100))/* [dir=ltr] .spectrum-Toast */}:host([dir=rtl]){padding-left:var(--spectrum-toast-neutral-padding-right,var(--spectrum-global-dimension-size-100))/* [dir=rtl] .spectrum-Toast */}:host([dir=ltr]){padding-left:var(--spectrum-toast-neutral-padding-left,var(--spectrum-global-dimension-size-200))/* [dir=ltr] .spectrum-Toast */}:host([dir=rtl]){padding-right:var(--spectrum-toast-neutral-padding-left,var(--spectrum-global-dimension-size-200))/* [dir=rtl] .spectrum-Toast */}:host{-webkit-font-smoothing:antialiased;align-items:stretch;border-radius:var(--spectrum-toast-neutral-border-radius,var(--spectrum-alias-border-radius-regular));box-sizing:border-box;/* .spectrum-Toast */display:inline-flex;flex-direction:row;font-size:var(--spectrum-toast-neutral-text-size,var(--spectrum-global-dimension-font-size-100));font-weight:var(--spectrum-toast-neutral-text-font-weight,var(--spectrum-alias-body-text-font-weight));padding-bottom:var(--spectrum-toast-neutral-padding-y,var(--spectrum-global-dimension-size-100));padding-top:var(--spectrum-toast-neutral-padding-y,var(--spectrum-global-dimension-size-100))}:host([dir=ltr]) .type{margin-right:var(--spectrum-toast-neutral-icon-padding-right,var(--spectrum-global-dimension-size-150))/* [dir=ltr] .spectrum-Toast-typeIcon */}:host([dir=rtl]) .type{margin-left:var(--spectrum-toast-neutral-icon-padding-right,var(--spectrum-global-dimension-size-150))/* [dir=rtl] .spectrum-Toast-typeIcon */}:host([dir=ltr]) .type{margin-left:0/* [dir=ltr] .spectrum-Toast-typeIcon */}:host([dir=rtl]) .type{margin-right:0/* [dir=rtl] .spectrum-Toast-typeIcon */}.type{flex-grow:0;flex-shrink:0;/* .spectrum-Toast-typeIcon */margin-bottom:var(--spectrum-toast-icon-padding-y);margin-top:var(--spectrum-toast-icon-padding-y)}:host([dir=ltr]) .content{padding-right:var(--spectrum-toast-neutral-content-padding-right,var(--spectrum-global-dimension-size-200))/* [dir=ltr] .spectrum-Toast-content */}:host([dir=rtl]) .content{padding-left:var(--spectrum-toast-neutral-content-padding-right,var(--spectrum-global-dimension-size-200))/* [dir=rtl] .spectrum-Toast-content */}:host([dir=ltr]) .content{padding-left:0/* [dir=ltr] .spectrum-Toast-content */}:host([dir=rtl]) .content{padding-right:0/* [dir=rtl] .spectrum-Toast-content */}:host([dir=ltr]) .content{text-align:left/* [dir=ltr] .spectrum-Toast-content */}:host([dir=rtl]) .content{text-align:right/* [dir=rtl] .spectrum-Toast-content */}.content{box-sizing:border-box;display:inline-block;flex:1 1 auto;/* .spectrum-Toast-content */font-size:var(--spectrum-toast-info-text-size,var(--spectrum-global-dimension-font-size-100));font-weight:var(--spectrum-toast-info-text-font-weight,var(--spectrum-alias-body-text-font-weight));line-height:var(--spectrum-toast-info-text-line-height,var(--spectrum-alias-component-text-line-height));padding-bottom:var(--spectrum-toast-content-padding-bottom);padding-top:var(--spectrum-toast-neutral-content-padding-top,var(--spectrum-global-dimension-size-65))}.buttons{align-items:flex-start;display:flex;/* .spectrum-Toast-buttons */flex:0 0 auto}:host([dir=ltr]) .buttons .spectrum-ClearButton+.spectrum-ClearButton,:host([dir=ltr]) .buttons .spectrum-ClearButton+::slotted([slot=action]),:host([dir=ltr]) .buttons slot[name=action]+.spectrum-ClearButton,:host([dir=ltr]) .buttons slot[name=action]+::slotted([slot=action]){margin-left:var(--spectrum-toast-neutral-button-gap-x,var(--spectrum-global-dimension-size-100))/* [dir=ltr] .spectrum-Toast-buttons .spectrum-Button+.spectrum-Button,
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-toast-icon-padding-y: var(
+        --spectrum-global-dimension-size-85
+    ); /* .spectrum-Toast */
+    --spectrum-toast-neutral-content-padding-top: var(
+        --spectrum-global-dimension-size-65
+    );
+    --spectrum-toast-content-padding-bottom: var(
+        --spectrum-global-dimension-size-65
+    );
+    --spectrum-toast-button-margin-right: var(
+        --spectrum-global-dimension-size-130
+    );
+}
+:host([dir='ltr']) {
+    padding-right: var(
+        --spectrum-toast-neutral-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=ltr] .spectrum-Toast */
+}
+:host([dir='rtl']) {
+    padding-left: var(
+        --spectrum-toast-neutral-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=rtl] .spectrum-Toast */
+}
+:host([dir='ltr']) {
+    padding-left: var(
+        --spectrum-toast-neutral-padding-left,
+        var(--spectrum-global-dimension-size-200)
+    ); /* [dir=ltr] .spectrum-Toast */
+}
+:host([dir='rtl']) {
+    padding-right: var(
+        --spectrum-toast-neutral-padding-left,
+        var(--spectrum-global-dimension-size-200)
+    ); /* [dir=rtl] .spectrum-Toast */
+}
+:host {
+    -webkit-font-smoothing: antialiased;
+    align-items: stretch;
+    border-radius: var(
+        --spectrum-toast-neutral-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    box-sizing: border-box; /* .spectrum-Toast */
+    display: inline-flex;
+    flex-direction: row;
+    font-size: var(
+        --spectrum-toast-neutral-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    font-weight: var(
+        --spectrum-toast-neutral-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    padding-bottom: var(
+        --spectrum-toast-neutral-padding-y,
+        var(--spectrum-global-dimension-size-100)
+    );
+    padding-top: var(
+        --spectrum-toast-neutral-padding-y,
+        var(--spectrum-global-dimension-size-100)
+    );
+}
+:host([dir='ltr']) .type {
+    margin-right: var(
+        --spectrum-toast-neutral-icon-padding-right,
+        var(--spectrum-global-dimension-size-150)
+    ); /* [dir=ltr] .spectrum-Toast-typeIcon */
+}
+:host([dir='rtl']) .type {
+    margin-left: var(
+        --spectrum-toast-neutral-icon-padding-right,
+        var(--spectrum-global-dimension-size-150)
+    ); /* [dir=rtl] .spectrum-Toast-typeIcon */
+}
+:host([dir='ltr']) .type {
+    margin-left: 0; /* [dir=ltr] .spectrum-Toast-typeIcon */
+}
+:host([dir='rtl']) .type {
+    margin-right: 0; /* [dir=rtl] .spectrum-Toast-typeIcon */
+}
+.type {
+    flex-grow: 0;
+    flex-shrink: 0; /* .spectrum-Toast-typeIcon */
+    margin-bottom: var(--spectrum-toast-icon-padding-y);
+    margin-top: var(--spectrum-toast-icon-padding-y);
+}
+:host([dir='ltr']) .content {
+    padding-right: var(
+        --spectrum-toast-neutral-content-padding-right,
+        var(--spectrum-global-dimension-size-200)
+    ); /* [dir=ltr] .spectrum-Toast-content */
+}
+:host([dir='rtl']) .content {
+    padding-left: var(
+        --spectrum-toast-neutral-content-padding-right,
+        var(--spectrum-global-dimension-size-200)
+    ); /* [dir=rtl] .spectrum-Toast-content */
+}
+:host([dir='ltr']) .content {
+    padding-left: 0; /* [dir=ltr] .spectrum-Toast-content */
+}
+:host([dir='rtl']) .content {
+    padding-right: 0; /* [dir=rtl] .spectrum-Toast-content */
+}
+:host([dir='ltr']) .content {
+    text-align: left; /* [dir=ltr] .spectrum-Toast-content */
+}
+:host([dir='rtl']) .content {
+    text-align: right; /* [dir=rtl] .spectrum-Toast-content */
+}
+.content {
+    box-sizing: border-box;
+    display: inline-block;
+    flex: 1 1 auto; /* .spectrum-Toast-content */
+    font-size: var(
+        --spectrum-toast-info-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    font-weight: var(
+        --spectrum-toast-info-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    line-height: var(
+        --spectrum-toast-info-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    padding-bottom: var(--spectrum-toast-content-padding-bottom);
+    padding-top: var(
+        --spectrum-toast-neutral-content-padding-top,
+        var(--spectrum-global-dimension-size-65)
+    );
+}
+.buttons {
+    align-items: flex-start;
+    display: flex; /* .spectrum-Toast-buttons */
+    flex: 0 0 auto;
+}
+:host([dir='ltr']) .buttons .spectrum-ClearButton + .spectrum-ClearButton,
+:host([dir='ltr']) .buttons .spectrum-ClearButton + ::slotted([slot='action']),
+:host([dir='ltr']) .buttons slot[name='action'] + .spectrum-ClearButton,
+:host([dir='ltr']) .buttons slot[name='action'] + ::slotted([slot='action']) {
+    margin-left: var(
+        --spectrum-toast-neutral-button-gap-x,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=ltr] .spectrum-Toast-buttons .spectrum-Button+.spectrum-Button,
    * [dir=ltr] 
     .spectrum-Toast-buttons .spectrum-Button+.spectrum-ClearButton,
    * [dir=ltr] 
     .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-Button,
    * [dir=ltr] 
-    .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-ClearButton */}:host([dir=rtl]) .buttons .spectrum-ClearButton+.spectrum-ClearButton,:host([dir=rtl]) .buttons .spectrum-ClearButton+::slotted([slot=action]),:host([dir=rtl]) .buttons slot[name=action]+.spectrum-ClearButton,:host([dir=rtl]) .buttons slot[name=action]+::slotted([slot=action]){margin-right:var(--spectrum-toast-neutral-button-gap-x,var(--spectrum-global-dimension-size-100))/* [dir=rtl] .spectrum-Toast-buttons .spectrum-Button+.spectrum-Button,
+    .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-ClearButton */
+}
+:host([dir='rtl']) .buttons .spectrum-ClearButton + .spectrum-ClearButton,
+:host([dir='rtl']) .buttons .spectrum-ClearButton + ::slotted([slot='action']),
+:host([dir='rtl']) .buttons slot[name='action'] + .spectrum-ClearButton,
+:host([dir='rtl']) .buttons slot[name='action'] + ::slotted([slot='action']) {
+    margin-right: var(
+        --spectrum-toast-neutral-button-gap-x,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=rtl] .spectrum-Toast-buttons .spectrum-Button+.spectrum-Button,
    * [dir=rtl] 
     .spectrum-Toast-buttons .spectrum-Button+.spectrum-ClearButton,
    * [dir=rtl] 
     .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-Button,
    * [dir=rtl] 
-    .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-ClearButton */}.body{align-self:center;flex:1 1 auto/* .spectrum-Toast-body */}:host([dir=ltr]) .body ::slotted([slot=action]){float:right/* [dir=ltr] .spectrum-Toast-body .spectrum-Button */}:host([dir=rtl]) .body ::slotted([slot=action]){float:left/* [dir=rtl] .spectrum-Toast-body .spectrum-Button */}:host([dir=ltr]) .body ::slotted([slot=action]){margin-right:var(--spectrum-toast-button-margin-right)/* [dir=ltr] .spectrum-Toast-body .spectrum-Button */}:host([dir=rtl]) .body ::slotted([slot=action]){margin-left:var(--spectrum-toast-button-margin-right)/* [dir=rtl] .spectrum-Toast-body .spectrum-Button */}:host([dir=ltr]) .body+.buttons{padding-left:var(--spectrum-toast-neutral-padding-right,var(--spectrum-global-dimension-size-100))/* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */}:host([dir=rtl]) .body+.buttons{padding-right:var(--spectrum-toast-neutral-padding-right,var(--spectrum-global-dimension-size-100))/* [dir=rtl] .spectrum-Toast-body+.spectrum-Toast-buttons */}:host([dir=ltr]) .body+.buttons{border-left-width:1px/* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */}:host([dir=rtl]) .body+.buttons{border-right-width:1px/* [dir=rtl] .spectrum-Toast-body+.spectrum-Toast-buttons */}:host([dir=ltr]) .body+.buttons{border-left-style:solid/* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */}:host([dir=rtl]) .body+.buttons{border-right-style:solid/* [dir=rtl] .spectrum-Toast-body+.spectrum-Toast-buttons */}:host{background-color:var(--spectrum-toast-neutral-background-color,var(--spectrum-semantic-neutral-background-color-default));/* .spectrum-Toast */color:var(--spectrum-toast-neutral-background-color,var(--spectrum-semantic-neutral-background-color-default))}.content{color:var(--spectrum-toast-neutral-text-color,var(--spectrum-global-color-static-white))/* .spectrum-Toast-content */}.type{color:#fff/* .spectrum-Toast-typeIcon */}:host([dir=ltr]) .buttons{border-left-color:hsla(0,0%,100%,.2)/* [dir=ltr] .spectrum-Toast-buttons */}:host([dir=rtl]) .buttons{border-right-color:hsla(0,0%,100%,.2)/* [dir=rtl] .spectrum-Toast-buttons */}:host([variant=error]),:host([variant=negative]){background-color:var(--spectrum-toast-negative-background-color,var(--spectrum-semantic-negative-background-color));/* .spectrum-Toast--negative,
-   * .spectrum-Toast--error */color:var(--spectrum-toast-negative-background-color,var(--spectrum-semantic-negative-background-color))}:host([variant=error]) .closeButton.focus-visible:not(:active),:host([variant=negative]) .closeButton.focus-visible:not(:active){color:var(--spectrum-toast-negative-background-color,var(--spectrum-semantic-negative-background-color))/* .spectrum-Toast--negative .spectrum-Toast-closeButton.focus-ring:not(:active),
-   * .spectrum-Toast--error .spectrum-Toast-closeButton.focus-ring:not(:active) */}:host([variant=error]) .closeButton:focus-visible:not(:active),:host([variant=negative]) .closeButton:focus-visible:not(:active){color:var(--spectrum-toast-negative-background-color,var(--spectrum-semantic-negative-background-color))/* .spectrum-Toast--negative .spectrum-Toast-closeButton.focus-ring:not(:active),
-   * .spectrum-Toast--error .spectrum-Toast-closeButton.focus-ring:not(:active) */}:host([variant=info]){background-color:var(--spectrum-toast-info-background-color,var(--spectrum-semantic-informative-background-color));/* .spectrum-Toast--info */color:var(--spectrum-toast-info-background-color,var(--spectrum-semantic-informative-background-color))}:host([variant=info]) .closeButton.focus-visible:not(:active){color:var(--spectrum-toast-info-background-color,var(--spectrum-semantic-informative-background-color))/* .spectrum-Toast--info .spectrum-Toast-closeButton.focus-ring:not(:active) */}:host([variant=info]) .closeButton:focus-visible:not(:active){color:var(--spectrum-toast-info-background-color,var(--spectrum-semantic-informative-background-color))/* .spectrum-Toast--info .spectrum-Toast-closeButton.focus-ring:not(:active) */}:host([variant=positive]),:host([variant=success]){background-color:var(--spectrum-toast-positive-background-color,var(--spectrum-semantic-positive-background-color));/* .spectrum-Toast--positive,
-   * .spectrum-Toast--success */color:var(--spectrum-toast-positive-background-color,var(--spectrum-semantic-positive-background-color))}:host([variant=positive]) .closeButton.focus-visible:not(:active),:host([variant=success]) .closeButton.focus-visible:not(:active){color:var(--spectrum-toast-positive-background-color,var(--spectrum-semantic-positive-background-color))/* .spectrum-Toast--positive .spectrum-Toast-closeButton.focus-ring:not(:active),
-   * .spectrum-Toast--success .spectrum-Toast-closeButton.focus-ring:not(:active) */}:host([variant=positive]) .closeButton:focus-visible:not(:active),:host([variant=success]) .closeButton:focus-visible:not(:active){color:var(--spectrum-toast-positive-background-color,var(--spectrum-semantic-positive-background-color))/* .spectrum-Toast--positive .spectrum-Toast-closeButton.focus-ring:not(:active),
-   * .spectrum-Toast--success .spectrum-Toast-closeButton.focus-ring:not(:active) */}@media (forced-colors:active){:host{border:1px solid transparent}}
+    .spectrum-Toast-buttons .spectrum-ClearButton+.spectrum-ClearButton */
+}
+.body {
+    align-self: center;
+    flex: 1 1 auto; /* .spectrum-Toast-body */
+}
+:host([dir='ltr']) .body ::slotted([slot='action']) {
+    float: right; /* [dir=ltr] .spectrum-Toast-body .spectrum-Button */
+}
+:host([dir='rtl']) .body ::slotted([slot='action']) {
+    float: left; /* [dir=rtl] .spectrum-Toast-body .spectrum-Button */
+}
+:host([dir='ltr']) .body ::slotted([slot='action']) {
+    margin-right: var(
+        --spectrum-toast-button-margin-right
+    ); /* [dir=ltr] .spectrum-Toast-body .spectrum-Button */
+}
+:host([dir='rtl']) .body ::slotted([slot='action']) {
+    margin-left: var(
+        --spectrum-toast-button-margin-right
+    ); /* [dir=rtl] .spectrum-Toast-body .spectrum-Button */
+}
+:host([dir='ltr']) .body + .buttons {
+    padding-left: var(
+        --spectrum-toast-neutral-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */
+}
+:host([dir='rtl']) .body + .buttons {
+    padding-right: var(
+        --spectrum-toast-neutral-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=rtl] .spectrum-Toast-body+.spectrum-Toast-buttons */
+}
+:host([dir='ltr']) .body + .buttons {
+    border-left-width: 1px; /* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */
+}
+:host([dir='rtl']) .body + .buttons {
+    border-right-width: 1px; /* [dir=rtl] .spectrum-Toast-body+.spectrum-Toast-buttons */
+}
+:host([dir='ltr']) .body + .buttons {
+    border-left-style: solid; /* [dir=ltr] .spectrum-Toast-body+.spectrum-Toast-buttons */
+}
+:host([dir='rtl']) .body + .buttons {
+    border-right-style: solid; /* [dir=rtl] .spectrum-Toast-body+.spectrum-Toast-buttons */
+}
+:host {
+    background-color: var(
+        --spectrum-toast-neutral-background-color,
+        var(--spectrum-semantic-neutral-background-color-default)
+    ); /* .spectrum-Toast */
+    color: var(
+        --spectrum-toast-neutral-background-color,
+        var(--spectrum-semantic-neutral-background-color-default)
+    );
+}
+.content {
+    color: var(
+        --spectrum-toast-neutral-text-color,
+        var(--spectrum-global-color-static-white)
+    ); /* .spectrum-Toast-content */
+}
+.type {
+    color: #fff; /* .spectrum-Toast-typeIcon */
+}
+:host([dir='ltr']) .buttons {
+    border-left-color: hsla(
+        0,
+        0%,
+        100%,
+        0.2
+    ); /* [dir=ltr] .spectrum-Toast-buttons */
+}
+:host([dir='rtl']) .buttons {
+    border-right-color: hsla(
+        0,
+        0%,
+        100%,
+        0.2
+    ); /* [dir=rtl] .spectrum-Toast-buttons */
+}
+:host([variant='error']),
+:host([variant='negative']) {
+    background-color: var(
+        --spectrum-toast-negative-background-color,
+        var(--spectrum-semantic-negative-background-color)
+    ); /* .spectrum-Toast--negative,
+   * .spectrum-Toast--error */
+    color: var(
+        --spectrum-toast-negative-background-color,
+        var(--spectrum-semantic-negative-background-color)
+    );
+}
+:host([variant='error']) .closeButton.focus-visible:not(:active),
+:host([variant='negative']) .closeButton.focus-visible:not(:active) {
+    color: var(
+        --spectrum-toast-negative-background-color,
+        var(--spectrum-semantic-negative-background-color)
+    ); /* .spectrum-Toast--negative .spectrum-Toast-closeButton.focus-ring:not(:active),
+   * .spectrum-Toast--error .spectrum-Toast-closeButton.focus-ring:not(:active) */
+}
+:host([variant='error']) .closeButton:focus-visible:not(:active),
+:host([variant='negative']) .closeButton:focus-visible:not(:active) {
+    color: var(
+        --spectrum-toast-negative-background-color,
+        var(--spectrum-semantic-negative-background-color)
+    ); /* .spectrum-Toast--negative .spectrum-Toast-closeButton.focus-ring:not(:active),
+   * .spectrum-Toast--error .spectrum-Toast-closeButton.focus-ring:not(:active) */
+}
+:host([variant='info']) {
+    background-color: var(
+        --spectrum-toast-info-background-color,
+        var(--spectrum-semantic-informative-background-color)
+    ); /* .spectrum-Toast--info */
+    color: var(
+        --spectrum-toast-info-background-color,
+        var(--spectrum-semantic-informative-background-color)
+    );
+}
+:host([variant='info']) .closeButton.focus-visible:not(:active) {
+    color: var(
+        --spectrum-toast-info-background-color,
+        var(--spectrum-semantic-informative-background-color)
+    ); /* .spectrum-Toast--info .spectrum-Toast-closeButton.focus-ring:not(:active) */
+}
+:host([variant='info']) .closeButton:focus-visible:not(:active) {
+    color: var(
+        --spectrum-toast-info-background-color,
+        var(--spectrum-semantic-informative-background-color)
+    ); /* .spectrum-Toast--info .spectrum-Toast-closeButton.focus-ring:not(:active) */
+}
+:host([variant='positive']),
+:host([variant='success']) {
+    background-color: var(
+        --spectrum-toast-positive-background-color,
+        var(--spectrum-semantic-positive-background-color)
+    ); /* .spectrum-Toast--positive,
+   * .spectrum-Toast--success */
+    color: var(
+        --spectrum-toast-positive-background-color,
+        var(--spectrum-semantic-positive-background-color)
+    );
+}
+:host([variant='positive']) .closeButton.focus-visible:not(:active),
+:host([variant='success']) .closeButton.focus-visible:not(:active) {
+    color: var(
+        --spectrum-toast-positive-background-color,
+        var(--spectrum-semantic-positive-background-color)
+    ); /* .spectrum-Toast--positive .spectrum-Toast-closeButton.focus-ring:not(:active),
+   * .spectrum-Toast--success .spectrum-Toast-closeButton.focus-ring:not(:active) */
+}
+:host([variant='positive']) .closeButton:focus-visible:not(:active),
+:host([variant='success']) .closeButton:focus-visible:not(:active) {
+    color: var(
+        --spectrum-toast-positive-background-color,
+        var(--spectrum-semantic-positive-background-color)
+    ); /* .spectrum-Toast--positive .spectrum-Toast-closeButton.focus-ring:not(:active),
+   * .spectrum-Toast--success .spectrum-Toast-closeButton.focus-ring:not(:active) */
+}
+@media (forced-colors: active) {
+    :host {
+        border: 1px solid transparent;
+    }
+}

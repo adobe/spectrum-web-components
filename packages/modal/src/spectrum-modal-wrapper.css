@@ -10,4 +10,38 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host{align-items:center;box-sizing:border-box;display:flex;height:100vh;height:-webkit-fill-available;height:-moz-available;height:stretch;justify-content:center;left:0;pointer-events:none;position:fixed;/* .spectrum-Modal-wrapper */top:0;transition:visibility 0ms linear var(--spectrum-global-animation-duration-100,.13s);visibility:hidden;width:100vw;z-index:2}:host([open]){visibility:visible/* .spectrum-Modal-wrapper.is-open */}@media only screen and (max-device-height:350px),only screen and (max-device-width:400px){:host([responsive]){border-radius:0;height:100%;max-height:100%;max-width:100%;width:100%}:host([responsive]){margin-top:0}}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    height: 100vh;
+    height: -webkit-fill-available;
+    height: fill-available;
+    justify-content: center;
+    left: 0;
+    pointer-events: none;
+    position: fixed; /* .spectrum-Modal-wrapper */
+    top: 0;
+    transition: visibility 0ms linear
+        var(--spectrum-global-animation-duration-100, 0.13s);
+    visibility: hidden;
+    width: 100vw;
+    z-index: 2;
+}
+:host([open]) {
+    visibility: visible; /* .spectrum-Modal-wrapper.is-open */
+}
+@media only screen and (max-device-height: 350px),
+    only screen and (max-device-width: 400px) {
+    :host([responsive]) {
+        border-radius: 0;
+        height: 100%;
+        max-height: 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+    :host([responsive]) {
+        margin-top: 0;
+    }
+}

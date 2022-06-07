@@ -10,22 +10,939 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host([size=s]){--spectrum-tag-removable-texticon-text-font-weight:var(--spectrum-tag-s-removable-texticon-text-font-weight,var(--spectrum-alias-body-text-font-weight));/* .spectrum-Tag--sizeS */--spectrum-tag-texticon-border-size:var(--spectrum-tag-s-texticon-border-size,var(--spectrum-alias-tag-border-size-default));--spectrum-tag-texticon-icon-gap:var(--spectrum-tag-s-texticon-icon-gap,var(--spectrum-global-dimension-size-85));--spectrum-tag-texticon-text-line-height:var(--spectrum-tag-s-texticon-text-line-height,var(--spectrum-alias-component-text-line-height));--spectrum-tag-texticon-focusring-border-size:var(--spectrum-tag-s-texticon-focusring-border-size,var(--spectrum-alias-tag-focusring-size));--spectrum-tag-texticon-height:var(--spectrum-tag-s-texticon-height,var(--spectrum-alias-tag-height-s));--spectrum-tag-texticon-padding-right:var(--spectrum-tag-s-texticon-padding-right,var(--spectrum-alias-tag-padding-right-s));--spectrum-tag-texticon-border-radius:var(--spectrum-tag-s-texticon-border-radius,var(--spectrum-alias-tag-border-radius));--spectrum-tag-texticon-padding-left:var(--spectrum-tag-s-texticon-padding-left,var(--spectrum-global-dimension-size-85));--spectrum-tag-textonly-padding-right:var(--spectrum-tag-s-textonly-padding-right,var(--spectrum-alias-tag-padding-right-s));--spectrum-tag-textonly-padding-left:var(--spectrum-tag-s-textonly-padding-left,var(--spectrum-global-dimension-size-115));--spectrum-tag-texticon-text-font-size:var(--spectrum-global-dimension-font-size-75)}:host([size=m]){--spectrum-tag-texticon-padding-left:var(--spectrum-tag-m-texticon-padding-left);/* .spectrum-Tag--sizeM */--spectrum-tag-removable-texticon-text-font-weight:var(--spectrum-tag-m-removable-texticon-text-font-weight,var(--spectrum-alias-body-text-font-weight));--spectrum-tag-texticon-border-size:var(--spectrum-tag-m-texticon-border-size,var(--spectrum-alias-tag-border-size-default));--spectrum-tag-texticon-icon-gap:var(--spectrum-tag-m-texticon-icon-gap,var(--spectrum-global-dimension-size-100));--spectrum-tag-texticon-text-line-height:var(--spectrum-tag-m-texticon-text-line-height,var(--spectrum-alias-component-text-line-height));--spectrum-tag-texticon-focusring-border-size:var(--spectrum-tag-m-texticon-focusring-border-size,var(--spectrum-alias-tag-focusring-size));--spectrum-tag-texticon-height:var(--spectrum-tag-m-texticon-height,var(--spectrum-alias-tag-height-m));--spectrum-tag-texticon-padding-right:var(--spectrum-tag-m-texticon-padding-right,var(--spectrum-alias-tag-padding-right-m));--spectrum-tag-texticon-border-radius:var(--spectrum-tag-m-texticon-border-radius,var(--spectrum-alias-tag-border-radius));--spectrum-tag-textonly-padding-right:var(--spectrum-tag-m-textonly-padding-right,var(--spectrum-alias-tag-padding-right-m));--spectrum-tag-textonly-padding-left:var(--spectrum-tag-m-textonly-padding-left,var(--spectrum-global-dimension-size-150));--spectrum-tag-texticon-text-font-size:var(--spectrum-global-dimension-font-size-100)}:host([size=l]){--spectrum-tag-removable-texticon-text-font-weight:var(--spectrum-tag-l-removable-texticon-text-font-weight,var(--spectrum-alias-body-text-font-weight));/* .spectrum-Tag--sizeL */--spectrum-tag-texticon-border-size:var(--spectrum-tag-l-texticon-border-size,var(--spectrum-alias-tag-border-size-default));--spectrum-tag-texticon-icon-gap:var(--spectrum-tag-l-texticon-icon-gap,var(--spectrum-global-dimension-size-115));--spectrum-tag-texticon-text-line-height:var(--spectrum-tag-l-texticon-text-line-height,var(--spectrum-alias-component-text-line-height));--spectrum-tag-texticon-focusring-border-size:var(--spectrum-tag-l-texticon-focusring-border-size,var(--spectrum-alias-tag-focusring-size));--spectrum-tag-texticon-height:var(--spectrum-tag-l-texticon-height,var(--spectrum-alias-tag-height-l));--spectrum-tag-texticon-padding-right:var(--spectrum-tag-l-texticon-padding-right,var(--spectrum-alias-tag-padding-right-l));--spectrum-tag-texticon-border-radius:var(--spectrum-tag-l-texticon-border-radius,var(--spectrum-alias-tag-border-radius));--spectrum-tag-texticon-padding-left:var(--spectrum-tag-l-texticon-padding-left,var(--spectrum-global-dimension-size-160));--spectrum-tag-textonly-padding-right:var(--spectrum-tag-l-textonly-padding-right,var(--spectrum-alias-tag-padding-right-l));--spectrum-tag-textonly-padding-left:var(--spectrum-tag-l-textonly-padding-left,var(--spectrum-global-dimension-size-185));--spectrum-tag-texticon-text-font-size:var(--spectrum-global-dimension-font-size-200)}:host([dir=ltr]){padding-left:var(--spectrum-tag-textonly-padding-right)/* [dir=ltr] .spectrum-Tag */}:host([dir=rtl]){padding-right:var(--spectrum-tag-textonly-padding-right)/* [dir=rtl] .spectrum-Tag */}:host([dir=ltr]){padding-right:var(--spectrum-tag-textonly-padding-right)/* [dir=ltr] .spectrum-Tag */}:host([dir=rtl]){padding-left:var(--spectrum-tag-textonly-padding-right)/* [dir=rtl] .spectrum-Tag */}:host{align-items:center;border-radius:var(--spectrum-tag-texticon-border-radius);border-style:solid;border-width:var(--spectrum-tag-texticon-border-size);box-sizing:border-box;display:inline-flex;/* .spectrum-Tag */max-width:100%;min-height:calc(var(--spectrum-tag-texticon-height) + var(--spectrum-tag-texticon-border-size) + var(--spectrum-tag-texticon-border-size));outline:none;transition:border-color var(--spectrum-global-animation-duration-100,.13s) ease-in-out,color var(--spectrum-global-animation-duration-100,.13s) ease-in-out,box-shadow var(--spectrum-global-animation-duration-100,.13s) ease-in-out,background-color var(--spectrum-global-animation-duration-100,.13s) ease-in-out;-webkit-user-select:none;user-select:none;vertical-align:bottom}:host([disabled]){pointer-events:none/* .spectrum-Tag.is-disabled */}:host([dir=ltr])>::slotted([slot=avatar]),:host([dir=ltr])>::slotted([slot=icon]){padding-right:var(--spectrum-tag-texticon-icon-gap)/* [dir=ltr] .spectrum-Tag>.spectrum-Icon,
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([size='s']) {
+    --spectrum-tag-removable-texticon-text-font-weight: var(
+        --spectrum-tag-s-removable-texticon-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    ); /* .spectrum-Tag--sizeS */
+    --spectrum-tag-texticon-border-size: var(
+        --spectrum-tag-s-texticon-border-size,
+        var(--spectrum-alias-tag-border-size-default)
+    );
+    --spectrum-tag-texticon-icon-gap: var(
+        --spectrum-tag-s-texticon-icon-gap,
+        var(--spectrum-global-dimension-size-85)
+    );
+    --spectrum-tag-texticon-text-line-height: var(
+        --spectrum-tag-s-texticon-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-tag-texticon-focusring-border-size: var(
+        --spectrum-tag-s-texticon-focusring-border-size,
+        var(--spectrum-alias-tag-focusring-size)
+    );
+    --spectrum-tag-texticon-height: var(
+        --spectrum-tag-s-texticon-height,
+        var(--spectrum-alias-tag-height-s)
+    );
+    --spectrum-tag-texticon-padding-right: var(
+        --spectrum-tag-s-texticon-padding-right,
+        var(--spectrum-alias-tag-padding-right-s)
+    );
+    --spectrum-tag-texticon-border-radius: var(
+        --spectrum-tag-s-texticon-border-radius,
+        var(--spectrum-alias-tag-border-radius)
+    );
+    --spectrum-tag-texticon-padding-left: var(
+        --spectrum-tag-s-texticon-padding-left,
+        var(--spectrum-global-dimension-size-85)
+    );
+    --spectrum-tag-textonly-padding-right: var(
+        --spectrum-tag-s-textonly-padding-right,
+        var(--spectrum-alias-tag-padding-right-s)
+    );
+    --spectrum-tag-textonly-padding-left: var(
+        --spectrum-tag-s-textonly-padding-left,
+        var(--spectrum-global-dimension-size-115)
+    );
+    --spectrum-tag-texticon-text-font-size: var(
+        --spectrum-global-dimension-font-size-75
+    );
+}
+:host([size='m']) {
+    --spectrum-tag-texticon-padding-left: var(
+        --spectrum-tag-m-texticon-padding-left
+    ); /* .spectrum-Tag--sizeM */
+    --spectrum-tag-removable-texticon-text-font-weight: var(
+        --spectrum-tag-m-removable-texticon-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-tag-texticon-border-size: var(
+        --spectrum-tag-m-texticon-border-size,
+        var(--spectrum-alias-tag-border-size-default)
+    );
+    --spectrum-tag-texticon-icon-gap: var(
+        --spectrum-tag-m-texticon-icon-gap,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-tag-texticon-text-line-height: var(
+        --spectrum-tag-m-texticon-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-tag-texticon-focusring-border-size: var(
+        --spectrum-tag-m-texticon-focusring-border-size,
+        var(--spectrum-alias-tag-focusring-size)
+    );
+    --spectrum-tag-texticon-height: var(
+        --spectrum-tag-m-texticon-height,
+        var(--spectrum-alias-tag-height-m)
+    );
+    --spectrum-tag-texticon-padding-right: var(
+        --spectrum-tag-m-texticon-padding-right,
+        var(--spectrum-alias-tag-padding-right-m)
+    );
+    --spectrum-tag-texticon-border-radius: var(
+        --spectrum-tag-m-texticon-border-radius,
+        var(--spectrum-alias-tag-border-radius)
+    );
+    --spectrum-tag-textonly-padding-right: var(
+        --spectrum-tag-m-textonly-padding-right,
+        var(--spectrum-alias-tag-padding-right-m)
+    );
+    --spectrum-tag-textonly-padding-left: var(
+        --spectrum-tag-m-textonly-padding-left,
+        var(--spectrum-global-dimension-size-150)
+    );
+    --spectrum-tag-texticon-text-font-size: var(
+        --spectrum-global-dimension-font-size-100
+    );
+}
+:host([size='l']) {
+    --spectrum-tag-removable-texticon-text-font-weight: var(
+        --spectrum-tag-l-removable-texticon-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    ); /* .spectrum-Tag--sizeL */
+    --spectrum-tag-texticon-border-size: var(
+        --spectrum-tag-l-texticon-border-size,
+        var(--spectrum-alias-tag-border-size-default)
+    );
+    --spectrum-tag-texticon-icon-gap: var(
+        --spectrum-tag-l-texticon-icon-gap,
+        var(--spectrum-global-dimension-size-115)
+    );
+    --spectrum-tag-texticon-text-line-height: var(
+        --spectrum-tag-l-texticon-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-tag-texticon-focusring-border-size: var(
+        --spectrum-tag-l-texticon-focusring-border-size,
+        var(--spectrum-alias-tag-focusring-size)
+    );
+    --spectrum-tag-texticon-height: var(
+        --spectrum-tag-l-texticon-height,
+        var(--spectrum-alias-tag-height-l)
+    );
+    --spectrum-tag-texticon-padding-right: var(
+        --spectrum-tag-l-texticon-padding-right,
+        var(--spectrum-alias-tag-padding-right-l)
+    );
+    --spectrum-tag-texticon-border-radius: var(
+        --spectrum-tag-l-texticon-border-radius,
+        var(--spectrum-alias-tag-border-radius)
+    );
+    --spectrum-tag-texticon-padding-left: var(
+        --spectrum-tag-l-texticon-padding-left,
+        var(--spectrum-global-dimension-size-160)
+    );
+    --spectrum-tag-textonly-padding-right: var(
+        --spectrum-tag-l-textonly-padding-right,
+        var(--spectrum-alias-tag-padding-right-l)
+    );
+    --spectrum-tag-textonly-padding-left: var(
+        --spectrum-tag-l-textonly-padding-left,
+        var(--spectrum-global-dimension-size-185)
+    );
+    --spectrum-tag-texticon-text-font-size: var(
+        --spectrum-global-dimension-font-size-200
+    );
+}
+:host([dir='ltr']) {
+    padding-left: var(
+        --spectrum-tag-textonly-padding-right
+    ); /* [dir=ltr] .spectrum-Tag */
+}
+:host([dir='rtl']) {
+    padding-right: var(
+        --spectrum-tag-textonly-padding-right
+    ); /* [dir=rtl] .spectrum-Tag */
+}
+:host([dir='ltr']) {
+    padding-right: var(
+        --spectrum-tag-textonly-padding-right
+    ); /* [dir=ltr] .spectrum-Tag */
+}
+:host([dir='rtl']) {
+    padding-left: var(
+        --spectrum-tag-textonly-padding-right
+    ); /* [dir=rtl] .spectrum-Tag */
+}
+:host {
+    align-items: center;
+    border-radius: var(--spectrum-tag-texticon-border-radius);
+    border-style: solid;
+    border-width: var(--spectrum-tag-texticon-border-size);
+    box-sizing: border-box;
+    display: inline-flex; /* .spectrum-Tag */
+    max-width: 100%;
+    min-height: calc(
+        var(--spectrum-tag-texticon-height) +
+            var(--spectrum-tag-texticon-border-size) +
+            var(--spectrum-tag-texticon-border-size)
+    );
+    outline: none;
+    transition: border-color
+            var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
+        color var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
+        box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out,
+        background-color var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out;
+    -webkit-user-select: none;
+    user-select: none;
+    vertical-align: bottom;
+}
+:host([disabled]) {
+    pointer-events: none; /* .spectrum-Tag.is-disabled */
+}
+:host([dir='ltr']) > ::slotted([slot='avatar']),
+:host([dir='ltr']) > ::slotted([slot='icon']) {
+    padding-right: var(
+        --spectrum-tag-texticon-icon-gap
+    ); /* [dir=ltr] .spectrum-Tag>.spectrum-Icon,
    * [dir=ltr] 
-  .spectrum-Tag>.spectrum-Avatar */}:host([dir=rtl])>::slotted([slot=avatar]),:host([dir=rtl])>::slotted([slot=icon]){padding-left:var(--spectrum-tag-texticon-icon-gap)/* [dir=rtl] .spectrum-Tag>.spectrum-Icon,
+  .spectrum-Tag>.spectrum-Avatar */
+}
+:host([dir='rtl']) > ::slotted([slot='avatar']),
+:host([dir='rtl']) > ::slotted([slot='icon']) {
+    padding-left: var(
+        --spectrum-tag-texticon-icon-gap
+    ); /* [dir=rtl] .spectrum-Tag>.spectrum-Icon,
    * [dir=rtl] 
-  .spectrum-Tag>.spectrum-Avatar */}:host([dir=ltr])>::slotted([slot=avatar]),:host([dir=ltr])>::slotted([slot=icon]){margin-left:calc(var(--spectrum-tag-texticon-padding-left) - var(--spectrum-tag-textonly-padding-left))/* [dir=ltr] .spectrum-Tag>.spectrum-Icon,
+  .spectrum-Tag>.spectrum-Avatar */
+}
+:host([dir='ltr']) > ::slotted([slot='avatar']),
+:host([dir='ltr']) > ::slotted([slot='icon']) {
+    margin-left: calc(
+        var(--spectrum-tag-texticon-padding-left) -
+            var(--spectrum-tag-textonly-padding-left)
+    ); /* [dir=ltr] .spectrum-Tag>.spectrum-Icon,
    * [dir=ltr] 
-  .spectrum-Tag>.spectrum-Avatar */}:host([dir=rtl])>::slotted([slot=avatar]),:host([dir=rtl])>::slotted([slot=icon]){margin-right:calc(var(--spectrum-tag-texticon-padding-left) - var(--spectrum-tag-textonly-padding-left))/* [dir=rtl] .spectrum-Tag>.spectrum-Icon,
+  .spectrum-Tag>.spectrum-Avatar */
+}
+:host([dir='rtl']) > ::slotted([slot='avatar']),
+:host([dir='rtl']) > ::slotted([slot='icon']) {
+    margin-right: calc(
+        var(--spectrum-tag-texticon-padding-left) -
+            var(--spectrum-tag-textonly-padding-left)
+    ); /* [dir=rtl] .spectrum-Tag>.spectrum-Icon,
    * [dir=rtl] 
-  .spectrum-Tag>.spectrum-Avatar */}:host([dir=ltr]) .clear-button{margin-right:calc(var(--spectrum-tag-texticon-padding-right)*-1)/* [dir=ltr] .spectrum-Tag .spectrum-Tag-clearButton */}:host([dir=rtl]) .clear-button{margin-left:calc(var(--spectrum-tag-texticon-padding-right)*-1)/* [dir=rtl] .spectrum-Tag .spectrum-Tag-clearButton */}.clear-button{padding-bottom:0;padding-top:0/* .spectrum-Tag .spectrum-Tag-clearButton */}.spectrum-Tag-label{cursor:default;flex:1 1 auto;font-size:var(--spectrum-tag-texticon-text-font-size);font-weight:var(--spectrum-tag-removable-texticon-text-font-weight);height:100%;/* .spectrum-Tag-label */line-height:var(--spectrum-tag-texticon-text-line-height);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}:host([selected].focus-visible):after,:host([selected].is-focused):after{box-shadow:0 0 0 var(--spectrum-tag-texticon-focusring-border-size) var(--spectrum-tag-m-texticon-focusring-border-color-key-focus,var(--spectrum-alias-tag-focusring-border-color-key-focus))/* .spectrum-Tag.is-selected.focus-ring:after,
-   * .spectrum-Tag.is-selected.is-focused:after */}:host([selected].is-focused):after,:host([selected]:focus-visible):after{box-shadow:0 0 0 var(--spectrum-tag-texticon-focusring-border-size) var(--spectrum-tag-m-texticon-focusring-border-color-key-focus,var(--spectrum-alias-tag-focusring-border-color-key-focus))/* .spectrum-Tag.is-selected.focus-ring:after,
-   * .spectrum-Tag.is-selected.is-focused:after */}:host{background-color:var(--spectrum-tag-s-texticon-background-color,var(--spectrum-alias-tag-background-color-default));border-color:var(--spectrum-tag-s-texticon-border-color,var(--spectrum-alias-tag-border-color-default));color:var(--spectrum-tag-s-texticon-text-color,var(--spectrum-alias-tag-text-color-default))/* .spectrum-Tag */}.clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color,var(--spectrum-alias-tag-icon-color-default))/* .spectrum-Tag .spectrum-Tag-clearButton */}.clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host(:hover){background-color:var(--spectrum-tag-s-texticon-background-color-hover,var(--spectrum-alias-tag-background-color-hover));/* .spectrum-Tag:hover */border-color:var(--spectrum-tag-s-texticon-border-color-hover,var(--spectrum-alias-tag-border-color-hover));color:var(--spectrum-tag-s-texticon-text-color-hover,var(--spectrum-alias-tag-text-color-hover))}:host(:hover) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-hover,var(--spectrum-alias-tag-icon-color-hover))/* .spectrum-Tag:hover .spectrum-Tag-clearButton */}:host(:hover) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host(.focus-visible){background-color:var(--spectrum-tag-s-texticon-background-color-key-focus,var(--spectrum-alias-tag-background-color-key-focus));/* .spectrum-Tag.focus-ring */border-color:var(--spectrum-tag-s-texticon-border-color-key-focus,var(--spectrum-alias-tag-border-color-key-focus));box-shadow:0 0 0 var(--spectrum-tag-s-texticon-focusring-border-width,var(--spectrum-alias-focus-ring-size)) var(--spectrum-tag-s-texticon-focusring-border-color-key-focus,var(--spectrum-alias-tag-focusring-border-color-key-focus));color:var(--spectrum-tag-s-texticon-text-color-key-focus,var(--spectrum-alias-tag-text-color-key-focus))}:host(:focus-visible){background-color:var(--spectrum-tag-s-texticon-background-color-key-focus,var(--spectrum-alias-tag-background-color-key-focus));/* .spectrum-Tag.focus-ring */border-color:var(--spectrum-tag-s-texticon-border-color-key-focus,var(--spectrum-alias-tag-border-color-key-focus));box-shadow:0 0 0 var(--spectrum-tag-s-texticon-focusring-border-width,var(--spectrum-alias-focus-ring-size)) var(--spectrum-tag-s-texticon-focusring-border-color-key-focus,var(--spectrum-alias-tag-focusring-border-color-key-focus));color:var(--spectrum-tag-s-texticon-text-color-key-focus,var(--spectrum-alias-tag-text-color-key-focus))}:host(.focus-visible) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-key-focus,var(--spectrum-alias-tag-icon-color-hover))/* .spectrum-Tag.focus-ring .spectrum-Tag-clearButton */}:host(:focus-visible) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-key-focus,var(--spectrum-alias-tag-icon-color-hover))/* .spectrum-Tag.focus-ring .spectrum-Tag-clearButton */}:host(.focus-visible) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host(:focus-visible) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([selected]){background-color:var(--spectrum-tag-s-texticon-background-color-selected,var(--spectrum-alias-tag-background-color-selected-default));/* .spectrum-Tag.is-selected */border-color:var(--spectrum-tag-s-texticon-border-color-selected,var(--spectrum-alias-tag-background-color-selected-default));color:var(--spectrum-tag-s-texticon-text-color-selected,var(--spectrum-alias-tag-text-color-selected))}:host([selected]) .spectrum-TagIcon{color:var(--spectrum-tag-s-texticon-icon-color-selected,var(--spectrum-alias-tag-icon-color-selected))/* .spectrum-Tag.is-selected .spectrum-TagIcon */}:host([selected]) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-selected,var(--spectrum-alias-tag-icon-color-selected))/* .spectrum-Tag.is-selected .spectrum-Tag-clearButton */}:host([selected]) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag.is-selected .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([selected]:hover){background-color:var(--spectrum-tag-s-texticon-background-color-selected-hover,var(--spectrum-alias-tag-background-color-selected-hover))/* .spectrum-Tag.is-selected:hover */}:host([selected]:hover) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-selected-hover,var(--spectrum-alias-tag-icon-color-selected))/* .spectrum-Tag.is-selected:hover .spectrum-Tag-clearButton */}:host([selected]:hover) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag.is-selected:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([selected].focus-visible){border-color:var(--spectrum-tag-s-texticon-text-color-selected-key-focus,var(--spectrum-alias-tag-text-color-selected));box-shadow:0 0 0 var(--spectrum-alias-focus-ring-size,var(--spectrum-global-dimension-static-size-25)) var(--spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,var(--spectrum-alias-tag-focusring-border-color-selected-key-focus))/* .spectrum-Tag.is-selected.focus-ring */}:host([selected]:focus-visible){border-color:var(--spectrum-tag-s-texticon-text-color-selected-key-focus,var(--spectrum-alias-tag-text-color-selected));box-shadow:0 0 0 var(--spectrum-alias-focus-ring-size,var(--spectrum-global-dimension-static-size-25)) var(--spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,var(--spectrum-alias-tag-focusring-border-color-selected-key-focus))/* .spectrum-Tag.is-selected.focus-ring */}:host([selected].focus-visible) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-selected-key-focus,var(--spectrum-alias-tag-icon-color-selected))/* .spectrum-Tag.is-selected.focus-ring .spectrum-Tag-clearButton */}:host([selected]:focus-visible) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-selected-key-focus,var(--spectrum-alias-tag-icon-color-selected))/* .spectrum-Tag.is-selected.focus-ring .spectrum-Tag-clearButton */}:host([selected].focus-visible) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag.is-selected.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([selected]:focus-visible) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag.is-selected.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([selected][invalid]){background-color:var(--spectrum-tag-s-texticon-background-color-error-selected,var(--spectrum-alias-tag-background-color-error-selected-default));border-color:var(--spectrum-tag-s-texticon-border-color-error-selected,var(--spectrum-alias-tag-border-color-error-selected))/* .spectrum-Tag.is-selected.is-invalid */}:host([selected][invalid]) .spectrum-Tag-label{color:var(--spectrum-tag-s-removable-texticon-text-color-error-selected,var(--spectrum-alias-tag-text-color-selected))/* .spectrum-Tag.is-selected.is-invalid .spectrum-Tag-label */}:host([selected][invalid]) .spectrum-Tag-icon{color:var(--spectrum-tag-s-removable-texticon-icon-color-error-selected,var(--spectrum-alias-tag-icon-color-selected))/* .spectrum-Tag.is-selected.is-invalid .spectrum-Tag-icon */}:host([selected][invalid]) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-error-selected,var(--spectrum-alias-tag-icon-color-selected))/* .spectrum-Tag.is-selected.is-invalid .spectrum-Tag-clearButton */}:host([selected][invalid]) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag.is-selected.is-invalid .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([selected][invalid].focus-visible){border-color:var(--spectrum-tag-s-texticon-text-color-selected-key-focus,var(--spectrum-alias-tag-text-color-selected));box-shadow:0 0 0 var(--spectrum-alias-focus-ring-size,var(--spectrum-global-dimension-static-size-25)) var(--spectrum-tag-s-texticon-border-color-error-selected-key-focus,var(--spectrum-alias-tag-border-color-error-selected))/* .spectrum-Tag.is-selected.is-invalid.focus-ring */}:host([selected][invalid]:focus-visible){border-color:var(--spectrum-tag-s-texticon-text-color-selected-key-focus,var(--spectrum-alias-tag-text-color-selected));box-shadow:0 0 0 var(--spectrum-alias-focus-ring-size,var(--spectrum-global-dimension-static-size-25)) var(--spectrum-tag-s-texticon-border-color-error-selected-key-focus,var(--spectrum-alias-tag-border-color-error-selected))/* .spectrum-Tag.is-selected.is-invalid.focus-ring */}:host([selected][invalid]:hover){background-color:var(--spectrum-tag-s-texticon-background-color-error-selected-hover,var(--spectrum-alias-tag-background-color-error-selected-hover));border-color:var(--spectrum-tag-s-texticon-border-color-error-selected-hover,var(--spectrum-alias-tag-border-color-error-selected))/* .spectrum-Tag.is-selected.is-invalid:hover */}:host([selected][invalid]:hover) .clear-button,:host([selected][invalid]:hover) .spectrum-Tag-icon,:host([selected][invalid]:hover) .spectrum-Tag-label{color:var(--spectrum-tag-s-texticon-icon-color-error-selected-hover,var(--spectrum-alias-tag-icon-color-selected))/* .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-icon,
+  .spectrum-Tag>.spectrum-Avatar */
+}
+:host([dir='ltr']) .clear-button {
+    margin-right: calc(
+        var(--spectrum-tag-texticon-padding-right) * -1
+    ); /* [dir=ltr] .spectrum-Tag .spectrum-Tag-clearButton */
+}
+:host([dir='rtl']) .clear-button {
+    margin-left: calc(
+        var(--spectrum-tag-texticon-padding-right) * -1
+    ); /* [dir=rtl] .spectrum-Tag .spectrum-Tag-clearButton */
+}
+.clear-button {
+    padding-bottom: 0;
+    padding-top: 0; /* .spectrum-Tag .spectrum-Tag-clearButton */
+}
+.spectrum-Tag-label {
+    cursor: default;
+    flex: 1 1 auto;
+    font-size: var(--spectrum-tag-texticon-text-font-size);
+    font-weight: var(--spectrum-tag-removable-texticon-text-font-weight);
+    height: 100%; /* .spectrum-Tag-label */
+    line-height: var(--spectrum-tag-texticon-text-line-height);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+:host([selected].focus-visible):after,
+:host([selected].is-focused):after {
+    box-shadow: 0 0 0 var(--spectrum-tag-texticon-focusring-border-size)
+        var(
+            --spectrum-tag-m-texticon-focusring-border-color-key-focus,
+            var(--spectrum-alias-tag-focusring-border-color-key-focus)
+        ); /* .spectrum-Tag.is-selected.focus-ring:after,
+   * .spectrum-Tag.is-selected.is-focused:after */
+}
+:host([selected].is-focused):after,
+:host([selected]:focus-visible):after {
+    box-shadow: 0 0 0 var(--spectrum-tag-texticon-focusring-border-size)
+        var(
+            --spectrum-tag-m-texticon-focusring-border-color-key-focus,
+            var(--spectrum-alias-tag-focusring-border-color-key-focus)
+        ); /* .spectrum-Tag.is-selected.focus-ring:after,
+   * .spectrum-Tag.is-selected.is-focused:after */
+}
+:host {
+    background-color: var(
+        --spectrum-tag-s-texticon-background-color,
+        var(--spectrum-alias-tag-background-color-default)
+    );
+    border-color: var(
+        --spectrum-tag-s-texticon-border-color,
+        var(--spectrum-alias-tag-border-color-default)
+    );
+    color: var(
+        --spectrum-tag-s-texticon-text-color,
+        var(--spectrum-alias-tag-text-color-default)
+    ); /* .spectrum-Tag */
+}
+.clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color,
+        var(--spectrum-alias-tag-icon-color-default)
+    ); /* .spectrum-Tag .spectrum-Tag-clearButton */
+}
+.clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host(:hover) {
+    background-color: var(
+        --spectrum-tag-s-texticon-background-color-hover,
+        var(--spectrum-alias-tag-background-color-hover)
+    ); /* .spectrum-Tag:hover */
+    border-color: var(
+        --spectrum-tag-s-texticon-border-color-hover,
+        var(--spectrum-alias-tag-border-color-hover)
+    );
+    color: var(
+        --spectrum-tag-s-texticon-text-color-hover,
+        var(--spectrum-alias-tag-text-color-hover)
+    );
+}
+:host(:hover) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-hover,
+        var(--spectrum-alias-tag-icon-color-hover)
+    ); /* .spectrum-Tag:hover .spectrum-Tag-clearButton */
+}
+:host(:hover) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host(.focus-visible) {
+    background-color: var(
+        --spectrum-tag-s-texticon-background-color-key-focus,
+        var(--spectrum-alias-tag-background-color-key-focus)
+    ); /* .spectrum-Tag.focus-ring */
+    border-color: var(
+        --spectrum-tag-s-texticon-border-color-key-focus,
+        var(--spectrum-alias-tag-border-color-key-focus)
+    );
+    box-shadow: 0 0 0
+        var(
+            --spectrum-tag-s-texticon-focusring-border-width,
+            var(--spectrum-alias-focus-ring-size)
+        )
+        var(
+            --spectrum-tag-s-texticon-focusring-border-color-key-focus,
+            var(--spectrum-alias-tag-focusring-border-color-key-focus)
+        );
+    color: var(
+        --spectrum-tag-s-texticon-text-color-key-focus,
+        var(--spectrum-alias-tag-text-color-key-focus)
+    );
+}
+:host(:focus-visible) {
+    background-color: var(
+        --spectrum-tag-s-texticon-background-color-key-focus,
+        var(--spectrum-alias-tag-background-color-key-focus)
+    ); /* .spectrum-Tag.focus-ring */
+    border-color: var(
+        --spectrum-tag-s-texticon-border-color-key-focus,
+        var(--spectrum-alias-tag-border-color-key-focus)
+    );
+    box-shadow: 0 0 0
+        var(
+            --spectrum-tag-s-texticon-focusring-border-width,
+            var(--spectrum-alias-focus-ring-size)
+        )
+        var(
+            --spectrum-tag-s-texticon-focusring-border-color-key-focus,
+            var(--spectrum-alias-tag-focusring-border-color-key-focus)
+        );
+    color: var(
+        --spectrum-tag-s-texticon-text-color-key-focus,
+        var(--spectrum-alias-tag-text-color-key-focus)
+    );
+}
+:host(.focus-visible) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-key-focus,
+        var(--spectrum-alias-tag-icon-color-hover)
+    ); /* .spectrum-Tag.focus-ring .spectrum-Tag-clearButton */
+}
+:host(:focus-visible) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-key-focus,
+        var(--spectrum-alias-tag-icon-color-hover)
+    ); /* .spectrum-Tag.focus-ring .spectrum-Tag-clearButton */
+}
+:host(.focus-visible) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host(:focus-visible) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([selected]) {
+    background-color: var(
+        --spectrum-tag-s-texticon-background-color-selected,
+        var(--spectrum-alias-tag-background-color-selected-default)
+    ); /* .spectrum-Tag.is-selected */
+    border-color: var(
+        --spectrum-tag-s-texticon-border-color-selected,
+        var(--spectrum-alias-tag-background-color-selected-default)
+    );
+    color: var(
+        --spectrum-tag-s-texticon-text-color-selected,
+        var(--spectrum-alias-tag-text-color-selected)
+    );
+}
+:host([selected]) .spectrum-TagIcon {
+    color: var(
+        --spectrum-tag-s-texticon-icon-color-selected,
+        var(--spectrum-alias-tag-icon-color-selected)
+    ); /* .spectrum-Tag.is-selected .spectrum-TagIcon */
+}
+:host([selected]) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-selected,
+        var(--spectrum-alias-tag-icon-color-selected)
+    ); /* .spectrum-Tag.is-selected .spectrum-Tag-clearButton */
+}
+:host([selected]) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag.is-selected .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([selected]:hover) {
+    background-color: var(
+        --spectrum-tag-s-texticon-background-color-selected-hover,
+        var(--spectrum-alias-tag-background-color-selected-hover)
+    ); /* .spectrum-Tag.is-selected:hover */
+}
+:host([selected]:hover) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-selected-hover,
+        var(--spectrum-alias-tag-icon-color-selected)
+    ); /* .spectrum-Tag.is-selected:hover .spectrum-Tag-clearButton */
+}
+:host([selected]:hover) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag.is-selected:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([selected].focus-visible) {
+    border-color: var(
+        --spectrum-tag-s-texticon-text-color-selected-key-focus,
+        var(--spectrum-alias-tag-text-color-selected)
+    );
+    box-shadow: 0 0 0
+        var(
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        var(
+            --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,
+            var(--spectrum-alias-tag-focusring-border-color-selected-key-focus)
+        ); /* .spectrum-Tag.is-selected.focus-ring */
+}
+:host([selected]:focus-visible) {
+    border-color: var(
+        --spectrum-tag-s-texticon-text-color-selected-key-focus,
+        var(--spectrum-alias-tag-text-color-selected)
+    );
+    box-shadow: 0 0 0
+        var(
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        var(
+            --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,
+            var(--spectrum-alias-tag-focusring-border-color-selected-key-focus)
+        ); /* .spectrum-Tag.is-selected.focus-ring */
+}
+:host([selected].focus-visible) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-selected-key-focus,
+        var(--spectrum-alias-tag-icon-color-selected)
+    ); /* .spectrum-Tag.is-selected.focus-ring .spectrum-Tag-clearButton */
+}
+:host([selected]:focus-visible) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-selected-key-focus,
+        var(--spectrum-alias-tag-icon-color-selected)
+    ); /* .spectrum-Tag.is-selected.focus-ring .spectrum-Tag-clearButton */
+}
+:host([selected].focus-visible) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag.is-selected.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([selected]:focus-visible) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag.is-selected.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([selected][invalid]) {
+    background-color: var(
+        --spectrum-tag-s-texticon-background-color-error-selected,
+        var(--spectrum-alias-tag-background-color-error-selected-default)
+    );
+    border-color: var(
+        --spectrum-tag-s-texticon-border-color-error-selected,
+        var(--spectrum-alias-tag-border-color-error-selected)
+    ); /* .spectrum-Tag.is-selected.is-invalid */
+}
+:host([selected][invalid]) .spectrum-Tag-label {
+    color: var(
+        --spectrum-tag-s-removable-texticon-text-color-error-selected,
+        var(--spectrum-alias-tag-text-color-selected)
+    ); /* .spectrum-Tag.is-selected.is-invalid .spectrum-Tag-label */
+}
+:host([selected][invalid]) .spectrum-Tag-icon {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-error-selected,
+        var(--spectrum-alias-tag-icon-color-selected)
+    ); /* .spectrum-Tag.is-selected.is-invalid .spectrum-Tag-icon */
+}
+:host([selected][invalid]) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-error-selected,
+        var(--spectrum-alias-tag-icon-color-selected)
+    ); /* .spectrum-Tag.is-selected.is-invalid .spectrum-Tag-clearButton */
+}
+:host([selected][invalid]) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag.is-selected.is-invalid .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([selected][invalid].focus-visible) {
+    border-color: var(
+        --spectrum-tag-s-texticon-text-color-selected-key-focus,
+        var(--spectrum-alias-tag-text-color-selected)
+    );
+    box-shadow: 0 0 0
+        var(
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        var(
+            --spectrum-tag-s-texticon-border-color-error-selected-key-focus,
+            var(--spectrum-alias-tag-border-color-error-selected)
+        ); /* .spectrum-Tag.is-selected.is-invalid.focus-ring */
+}
+:host([selected][invalid]:focus-visible) {
+    border-color: var(
+        --spectrum-tag-s-texticon-text-color-selected-key-focus,
+        var(--spectrum-alias-tag-text-color-selected)
+    );
+    box-shadow: 0 0 0
+        var(
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        var(
+            --spectrum-tag-s-texticon-border-color-error-selected-key-focus,
+            var(--spectrum-alias-tag-border-color-error-selected)
+        ); /* .spectrum-Tag.is-selected.is-invalid.focus-ring */
+}
+:host([selected][invalid]:hover) {
+    background-color: var(
+        --spectrum-tag-s-texticon-background-color-error-selected-hover,
+        var(--spectrum-alias-tag-background-color-error-selected-hover)
+    );
+    border-color: var(
+        --spectrum-tag-s-texticon-border-color-error-selected-hover,
+        var(--spectrum-alias-tag-border-color-error-selected)
+    ); /* .spectrum-Tag.is-selected.is-invalid:hover */
+}
+:host([selected][invalid]:hover) .clear-button,
+:host([selected][invalid]:hover) .spectrum-Tag-icon,
+:host([selected][invalid]:hover) .spectrum-Tag-label {
+    color: var(
+        --spectrum-tag-s-texticon-icon-color-error-selected-hover,
+        var(--spectrum-alias-tag-icon-color-selected)
+    ); /* .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-icon,
    * .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-label,
-   * .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-clearButton */}:host([selected][invalid]:hover) .clear-button .spectrum-ClearButton-fill,:host([selected][invalid]:hover) .spectrum-Tag-icon .spectrum-ClearButton-fill,:host([selected][invalid]:hover) .spectrum-Tag-label .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-icon .spectrum-ClearButton-fill,
+   * .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-clearButton */
+}
+:host([selected][invalid]:hover) .clear-button .spectrum-ClearButton-fill,
+:host([selected][invalid]:hover) .spectrum-Tag-icon .spectrum-ClearButton-fill,
+:host([selected][invalid]:hover)
+    .spectrum-Tag-label
+    .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-icon .spectrum-ClearButton-fill,
    * .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-label .spectrum-ClearButton-fill,
-   * .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([invalid]){border-color:var(--spectrum-tag-s-texticon-border-color-error,var(--spectrum-alias-tag-border-color-error-default));color:var(--spectrum-tag-s-texticon-icon-color-error,var(--spectrum-global-color-red-600))/* .spectrum-Tag.is-invalid */}:host([invalid]:hover){border-color:var(--spectrum-tag-s-texticon-border-color-error-hover,var(--spectrum-alias-tag-border-color-error-hover));color:var(--spectrum-tag-s-texticon-icon-color-error-hover,var(--spectrum-global-color-red-700))/* .spectrum-Tag.is-invalid:hover */}:host([invalid]:hover) .clear-button,:host([invalid]:hover) .spectrum-Tag-icon{color:var(--spectrum-tag-s-texticon-icon-color-error-hover,var(--spectrum-global-color-red-700))/* .spectrum-Tag.is-invalid:hover .spectrum-Tag-icon,
-   * .spectrum-Tag.is-invalid:hover .spectrum-Tag-clearButton */}:host([invalid]:hover) .clear-button .spectrum-ClearButton-fill,:host([invalid]:hover) .spectrum-Tag-icon .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag.is-invalid:hover .spectrum-Tag-icon .spectrum-ClearButton-fill,
-   * .spectrum-Tag.is-invalid:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([invalid].focus-visible){border-color:var(--spectrum-tag-s-texticon-border-color-key-focus,var(--spectrum-alias-tag-border-color-key-focus));box-shadow:0 0 0 var(--spectrum-alias-focus-ring-size,var(--spectrum-global-dimension-static-size-25)) var(--spectrum-tag-s-texticon-border-color-key-focus,var(--spectrum-alias-tag-border-color-key-focus));color:var(--spectrum-tag-s-texticon-icon-color-error-hover,var(--spectrum-global-color-red-700))/* .spectrum-Tag.is-invalid.focus-ring */}:host([invalid]:focus-visible){border-color:var(--spectrum-tag-s-texticon-border-color-key-focus,var(--spectrum-alias-tag-border-color-key-focus));box-shadow:0 0 0 var(--spectrum-alias-focus-ring-size,var(--spectrum-global-dimension-static-size-25)) var(--spectrum-tag-s-texticon-border-color-key-focus,var(--spectrum-alias-tag-border-color-key-focus));color:var(--spectrum-tag-s-texticon-icon-color-error-hover,var(--spectrum-global-color-red-700))/* .spectrum-Tag.is-invalid.focus-ring */}:host([invalid].focus-visible) .clear-button{color:var(--spectrum-tag-s-texticon-icon-color-error-key-focus,var(--spectrum-global-color-red-700))/* .spectrum-Tag.is-invalid.focus-ring .spectrum-Tag-clearButton */}:host([invalid]:focus-visible) .clear-button{color:var(--spectrum-tag-s-texticon-icon-color-error-key-focus,var(--spectrum-global-color-red-700))/* .spectrum-Tag.is-invalid.focus-ring .spectrum-Tag-clearButton */}:host([invalid]) .clear-button,:host([invalid]) .spectrum-Tag-icon{color:var(--spectrum-tag-s-texticon-icon-color-error,var(--spectrum-global-color-red-600))/* .spectrum-Tag.is-invalid .spectrum-Tag-icon,
-   * .spectrum-Tag.is-invalid .spectrum-Tag-clearButton */}:host([invalid]) .clear-button .spectrum-ClearButton-fill,:host([invalid]) .spectrum-Tag-icon .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag.is-invalid .spectrum-Tag-icon .spectrum-ClearButton-fill,
-   * .spectrum-Tag.is-invalid .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([invalid]) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-error,var(--spectrum-global-color-red-600))/* .spectrum-Tag.is-invalid .spectrum-Tag-clearButton */}:host([invalid]) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag.is-invalid .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([disabled]){background-color:var(--spectrum-tag-s-texticon-background-color-disabled,var(--spectrum-alias-tag-background-color-disabled));border-color:var(--spectrum-tag-s-texticon-border-color-disabled,var(--spectrum-alias-tag-border-color-disabled));color:var(--spectrum-tag-s-texticon-text-color-disabled,var(--spectrum-alias-tag-text-color-disabled))/* .spectrum-Tag.is-disabled */}:host([disabled]) ::slotted([slot=avatar]){opacity:var(--spectrum-avatar-size-100-opacity-disabled,var(--spectrum-global-color-opacity-30))/* .spectrum-Tag.is-disabled .spectrum-Avatar */}:host([disabled]) .spectrum-Tag-icon{color:var(--spectrum-tag-s-texticon-icon-color-disabled,var(--spectrum-alias-tag-icon-color-disabled))/* .spectrum-Tag.is-disabled .spectrum-Tag-icon */}:host([disabled]) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-disabled,var(--spectrum-alias-tag-icon-color-disabled))/* .spectrum-Tag.is-disabled .spectrum-Tag-clearButton */}:host([disabled]) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag.is-disabled .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([deletable]:hover){color:var(--spectrum-tag-s-removable-texticon-text-color-hover,var(--spectrum-alias-tag-text-color-hover))/* .spectrum-Tag--removable:hover */}:host([deletable]:hover) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-hover,var(--spectrum-alias-tag-icon-color-hover))/* .spectrum-Tag--removable:hover .spectrum-Tag-clearButton */}:host([deletable]:hover) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag--removable:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([deletable]:active){color:var(--spectrum-tag-s-removable-texticon-text-color-down,var(--spectrum-alias-tag-text-color-down))/* .spectrum-Tag--removable:active */}:host([deletable]:active) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-down,var(--spectrum-alias-tag-icon-color-down))/* .spectrum-Tag--removable:active .spectrum-Tag-clearButton */}:host([deletable]:active) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag--removable:active .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([deletable][invalid]:hover){border-color:var(--spectrum-tag-s-removable-texticon-border-color-error-hover,var(--spectrum-alias-tag-border-color-error-hover));/* .spectrum-Tag--removable.is-invalid:hover */color:var(--spectrum-tag-s-removable-texticon-text-color-error-hover,var(--spectrum-alias-tag-text-color-error-hover))}:host([deletable][invalid]:hover) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-error-hover,var(--spectrum-global-color-red-700))/* .spectrum-Tag--removable.is-invalid:hover .spectrum-Tag-clearButton */}:host([deletable][invalid]:hover) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag--removable.is-invalid:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([deletable][invalid]:active){border-color:var(--spectrum-tag-s-removable-texticon-border-color-error-down,var(--spectrum-alias-tag-border-color-error-down));/* .spectrum-Tag--removable.is-invalid:active */color:var(--spectrum-tag-s-removable-texticon-text-color-error-down,var(--spectrum-alias-tag-text-color-error-down))}:host([deletable][invalid]:active) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-error-down,var(--spectrum-global-color-red-700))/* .spectrum-Tag--removable.is-invalid:active .spectrum-Tag-clearButton */}:host([deletable][invalid]:active) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag--removable.is-invalid:active .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([deletable].focus-visible){color:var(--spectrum-tag-s-removable-texticon-text-color-key-focus,var(--spectrum-alias-tag-text-color-key-focus))/* .spectrum-Tag--removable.focus-ring */}:host([deletable]:focus-visible){color:var(--spectrum-tag-s-removable-texticon-text-color-key-focus,var(--spectrum-alias-tag-text-color-key-focus))/* .spectrum-Tag--removable.focus-ring */}:host([deletable].focus-visible) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-key-focus,var(--spectrum-alias-tag-icon-color-hover))/* .spectrum-Tag--removable.focus-ring .spectrum-Tag-clearButton */}:host([deletable]:focus-visible) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-key-focus,var(--spectrum-alias-tag-icon-color-hover))/* .spectrum-Tag--removable.focus-ring .spectrum-Tag-clearButton */}:host([deletable].focus-visible) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag--removable.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([deletable]:focus-visible) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag--removable.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([deletable][selected]){color:var(--spectrum-tag-s-removable-texticon-text-color-selected,var(--spectrum-alias-tag-text-color-selected))/* .spectrum-Tag--removable.is-selected */}:host([deletable][selected]) .is-focused{color:var(--spectrum-tag-s-removable-texticon-text-color-selected-key-focus,var(--spectrum-alias-tag-text-color-selected))/* .spectrum-Tag--removable.is-selected.is-focused */}:host([deletable][selected]) .clear-button{color:var(--spectrum-tag-s-removable-texticon-icon-color-selected,var(--spectrum-alias-tag-icon-color-selected))/* .spectrum-Tag--removable.is-selected .spectrum-Tag-clearButton */}:host([deletable][selected]) .clear-button .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag--removable.is-selected .spectrum-Tag-clearButton .spectrum-ClearButton-fill */}:host([deletable][selected]) .clear-button:hover{color:var(--spectrum-tag-s-removable-texticon-icon-color-selected-hover,var(--spectrum-alias-tag-icon-color-selected))/* .spectrum-Tag--removable.is-selected .spectrum-Tag-clearButton:hover */}:host([deletable][selected]) .clear-button:hover .spectrum-ClearButton-fill{background:transparent/* .spectrum-Tag--removable.is-selected .spectrum-Tag-clearButton:hover .spectrum-ClearButton-fill */}:host([deletable][selected][invalid]){color:var(--spectrum-tag-s-removable-texticon-text-color-error-key-focus,var(--spectrum-alias-tag-text-color-error-key-focus))/* .spectrum-Tag--removable.is-selected.is-invalid */}@media (forced-colors:active){:host{--spectrum-tag-s-removable-texticon-border-color-error-down:Highlight;--spectrum-tag-s-removable-texticon-border-color-error-hover:Highlight;--spectrum-tag-s-removable-texticon-icon-color:ButtonText;--spectrum-tag-s-removable-texticon-icon-color-disabled:GrayText;--spectrum-tag-s-removable-texticon-icon-color-down:ButtonText;--spectrum-tag-s-removable-texticon-icon-color-error:ButtonText;--spectrum-tag-s-removable-texticon-icon-color-error-down:ButtonText;--spectrum-tag-s-removable-texticon-icon-color-error-hover:ButtonText;--spectrum-tag-s-removable-texticon-icon-color-error-selected:HighlightText;--spectrum-tag-s-removable-texticon-icon-color-hover:ButtonText;--spectrum-tag-s-removable-texticon-icon-color-key-focus:ButtonText;--spectrum-tag-s-removable-texticon-icon-color-selected:HighlightText;--spectrum-tag-s-removable-texticon-icon-color-selected-hover:HighlightText;--spectrum-tag-s-removable-texticon-icon-color-selected-key-focus:HighlightText;--spectrum-tag-s-removable-texticon-text-color-down:ButtonText;--spectrum-tag-s-removable-texticon-text-color-error-down:ButtonText;--spectrum-tag-s-removable-texticon-text-color-error-hover:ButtonText;--spectrum-tag-s-removable-texticon-text-color-error-key-focus:ButtonText;--spectrum-tag-s-removable-texticon-text-color-error-selected:HighlightText;--spectrum-tag-s-removable-texticon-text-color-hover:ButtonText;--spectrum-tag-s-removable-texticon-text-color-key-focus:ButtonText;--spectrum-tag-s-removable-texticon-text-color-selected:HighlightText;--spectrum-tag-s-removable-texticon-text-color-selected-key-focus:HighlightText;--spectrum-tag-s-texticon-background-color:ButtonFace;--spectrum-tag-s-texticon-background-color-disabled:ButtonFace;--spectrum-tag-s-texticon-background-color-error-selected:Highlight;--spectrum-tag-s-texticon-background-color-error-selected-hover:Highlight;--spectrum-tag-s-texticon-background-color-hover:ButtonFace;--spectrum-tag-s-texticon-background-color-key-focus:ButtonFace;--spectrum-tag-s-texticon-background-color-selected:Highlight;--spectrum-tag-s-texticon-background-color-selected-hover:Highlight;--spectrum-tag-s-texticon-border-color:ButtonText;--spectrum-tag-s-texticon-border-color-disabled:GrayText;--spectrum-tag-s-texticon-border-color-error:Highlight;--spectrum-tag-s-texticon-border-color-error-hover:Highlight;--spectrum-tag-s-texticon-border-color-error-selected:HighlightText;--spectrum-tag-s-texticon-border-color-error-selected-hover:HighlightText;--spectrum-tag-s-texticon-border-color-error-selected-key-focus:HighlightText;--spectrum-tag-s-texticon-border-color-hover:ButtonText;--spectrum-tag-s-texticon-border-color-key-focus:ButtonText;--spectrum-tag-s-texticon-border-color-selected:HighlightText;--spectrum-tag-s-texticon-focusring-border-color-key-focus:ButtonText;--spectrum-tag-s-texticon-focusring-border-color-selected-key-focus:ButtonText;--spectrum-tag-s-texticon-icon-color-disabled:GrayText;--spectrum-tag-s-texticon-icon-color-error:ButtonText;--spectrum-tag-s-texticon-icon-color-error-hover:ButtonText;--spectrum-tag-s-texticon-icon-color-error-key-focus:ButtonText;--spectrum-tag-s-texticon-icon-color-error-selected-hover:HighlightText;--spectrum-tag-s-texticon-icon-color-selected:HighlightText;--spectrum-tag-s-texticon-text-color:ButtonText;--spectrum-tag-s-texticon-text-color-disabled:GrayText;--spectrum-tag-s-texticon-text-color-hover:ButtonText;--spectrum-tag-s-texticon-text-color-key-focus:ButtonText;--spectrum-tag-s-texticon-text-color-selected:HighlightText;--spectrum-tag-s-texticon-text-color-selected-key-focus:HighlightText;forced-color-adjust:none}:host([selected][invalid].focus-visible){box-shadow:0 0 0 var(--spectrum-alias-focus-ring-size,var(--spectrum-global-dimension-static-size-25)) var(--spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,var(--spectrum-alias-tag-focusring-border-color-selected-key-focus))}:host([selected][invalid]:focus-visible){box-shadow:0 0 0 var(--spectrum-alias-focus-ring-size,var(--spectrum-global-dimension-static-size-25)) var(--spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,var(--spectrum-alias-tag-focusring-border-color-selected-key-focus))}:host([selected][invalid].focus-visible) .clear-button{color:var(--spectrum-tag-s-texticon-icon-color-error-selected-hover,var(--spectrum-alias-tag-icon-color-selected))}:host([selected][invalid]:focus-visible) .clear-button{color:var(--spectrum-tag-s-texticon-icon-color-error-selected-hover,var(--spectrum-alias-tag-icon-color-selected))}}
+   * .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([invalid]) {
+    border-color: var(
+        --spectrum-tag-s-texticon-border-color-error,
+        var(--spectrum-alias-tag-border-color-error-default)
+    );
+    color: var(
+        --spectrum-tag-s-texticon-icon-color-error,
+        var(--spectrum-global-color-red-600)
+    ); /* .spectrum-Tag.is-invalid */
+}
+:host([invalid]:hover) {
+    border-color: var(
+        --spectrum-tag-s-texticon-border-color-error-hover,
+        var(--spectrum-alias-tag-border-color-error-hover)
+    );
+    color: var(
+        --spectrum-tag-s-texticon-icon-color-error-hover,
+        var(--spectrum-global-color-red-700)
+    ); /* .spectrum-Tag.is-invalid:hover */
+}
+:host([invalid]:hover) .clear-button,
+:host([invalid]:hover) .spectrum-Tag-icon {
+    color: var(
+        --spectrum-tag-s-texticon-icon-color-error-hover,
+        var(--spectrum-global-color-red-700)
+    ); /* .spectrum-Tag.is-invalid:hover .spectrum-Tag-icon,
+   * .spectrum-Tag.is-invalid:hover .spectrum-Tag-clearButton */
+}
+:host([invalid]:hover) .clear-button .spectrum-ClearButton-fill,
+:host([invalid]:hover) .spectrum-Tag-icon .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag.is-invalid:hover .spectrum-Tag-icon .spectrum-ClearButton-fill,
+   * .spectrum-Tag.is-invalid:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([invalid].focus-visible) {
+    border-color: var(
+        --spectrum-tag-s-texticon-border-color-key-focus,
+        var(--spectrum-alias-tag-border-color-key-focus)
+    );
+    box-shadow: 0 0 0
+        var(
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        var(
+            --spectrum-tag-s-texticon-border-color-key-focus,
+            var(--spectrum-alias-tag-border-color-key-focus)
+        );
+    color: var(
+        --spectrum-tag-s-texticon-icon-color-error-hover,
+        var(--spectrum-global-color-red-700)
+    ); /* .spectrum-Tag.is-invalid.focus-ring */
+}
+:host([invalid]:focus-visible) {
+    border-color: var(
+        --spectrum-tag-s-texticon-border-color-key-focus,
+        var(--spectrum-alias-tag-border-color-key-focus)
+    );
+    box-shadow: 0 0 0
+        var(
+            --spectrum-alias-focus-ring-size,
+            var(--spectrum-global-dimension-static-size-25)
+        )
+        var(
+            --spectrum-tag-s-texticon-border-color-key-focus,
+            var(--spectrum-alias-tag-border-color-key-focus)
+        );
+    color: var(
+        --spectrum-tag-s-texticon-icon-color-error-hover,
+        var(--spectrum-global-color-red-700)
+    ); /* .spectrum-Tag.is-invalid.focus-ring */
+}
+:host([invalid].focus-visible) .clear-button {
+    color: var(
+        --spectrum-tag-s-texticon-icon-color-error-key-focus,
+        var(--spectrum-global-color-red-700)
+    ); /* .spectrum-Tag.is-invalid.focus-ring .spectrum-Tag-clearButton */
+}
+:host([invalid]:focus-visible) .clear-button {
+    color: var(
+        --spectrum-tag-s-texticon-icon-color-error-key-focus,
+        var(--spectrum-global-color-red-700)
+    ); /* .spectrum-Tag.is-invalid.focus-ring .spectrum-Tag-clearButton */
+}
+:host([invalid]) .clear-button,
+:host([invalid]) .spectrum-Tag-icon {
+    color: var(
+        --spectrum-tag-s-texticon-icon-color-error,
+        var(--spectrum-global-color-red-600)
+    ); /* .spectrum-Tag.is-invalid .spectrum-Tag-icon,
+   * .spectrum-Tag.is-invalid .spectrum-Tag-clearButton */
+}
+:host([invalid]) .clear-button .spectrum-ClearButton-fill,
+:host([invalid]) .spectrum-Tag-icon .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag.is-invalid .spectrum-Tag-icon .spectrum-ClearButton-fill,
+   * .spectrum-Tag.is-invalid .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([invalid]) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-error,
+        var(--spectrum-global-color-red-600)
+    ); /* .spectrum-Tag.is-invalid .spectrum-Tag-clearButton */
+}
+:host([invalid]) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag.is-invalid .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([disabled]) {
+    background-color: var(
+        --spectrum-tag-s-texticon-background-color-disabled,
+        var(--spectrum-alias-tag-background-color-disabled)
+    );
+    border-color: var(
+        --spectrum-tag-s-texticon-border-color-disabled,
+        var(--spectrum-alias-tag-border-color-disabled)
+    );
+    color: var(
+        --spectrum-tag-s-texticon-text-color-disabled,
+        var(--spectrum-alias-tag-text-color-disabled)
+    ); /* .spectrum-Tag.is-disabled */
+}
+:host([disabled]) ::slotted([slot='avatar']) {
+    opacity: var(
+        --spectrum-avatar-size-100-opacity-disabled,
+        var(--spectrum-global-color-opacity-30)
+    ); /* .spectrum-Tag.is-disabled .spectrum-Avatar */
+}
+:host([disabled]) .spectrum-Tag-icon {
+    color: var(
+        --spectrum-tag-s-texticon-icon-color-disabled,
+        var(--spectrum-alias-tag-icon-color-disabled)
+    ); /* .spectrum-Tag.is-disabled .spectrum-Tag-icon */
+}
+:host([disabled]) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-disabled,
+        var(--spectrum-alias-tag-icon-color-disabled)
+    ); /* .spectrum-Tag.is-disabled .spectrum-Tag-clearButton */
+}
+:host([disabled]) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag.is-disabled .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([deletable]:hover) {
+    color: var(
+        --spectrum-tag-s-removable-texticon-text-color-hover,
+        var(--spectrum-alias-tag-text-color-hover)
+    ); /* .spectrum-Tag--removable:hover */
+}
+:host([deletable]:hover) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-hover,
+        var(--spectrum-alias-tag-icon-color-hover)
+    ); /* .spectrum-Tag--removable:hover .spectrum-Tag-clearButton */
+}
+:host([deletable]:hover) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag--removable:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([deletable]:active) {
+    color: var(
+        --spectrum-tag-s-removable-texticon-text-color-down,
+        var(--spectrum-alias-tag-text-color-down)
+    ); /* .spectrum-Tag--removable:active */
+}
+:host([deletable]:active) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-down,
+        var(--spectrum-alias-tag-icon-color-down)
+    ); /* .spectrum-Tag--removable:active .spectrum-Tag-clearButton */
+}
+:host([deletable]:active) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag--removable:active .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([deletable][invalid]:hover) {
+    border-color: var(
+        --spectrum-tag-s-removable-texticon-border-color-error-hover,
+        var(--spectrum-alias-tag-border-color-error-hover)
+    ); /* .spectrum-Tag--removable.is-invalid:hover */
+    color: var(
+        --spectrum-tag-s-removable-texticon-text-color-error-hover,
+        var(--spectrum-alias-tag-text-color-error-hover)
+    );
+}
+:host([deletable][invalid]:hover) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-error-hover,
+        var(--spectrum-global-color-red-700)
+    ); /* .spectrum-Tag--removable.is-invalid:hover .spectrum-Tag-clearButton */
+}
+:host([deletable][invalid]:hover) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag--removable.is-invalid:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([deletable][invalid]:active) {
+    border-color: var(
+        --spectrum-tag-s-removable-texticon-border-color-error-down,
+        var(--spectrum-alias-tag-border-color-error-down)
+    ); /* .spectrum-Tag--removable.is-invalid:active */
+    color: var(
+        --spectrum-tag-s-removable-texticon-text-color-error-down,
+        var(--spectrum-alias-tag-text-color-error-down)
+    );
+}
+:host([deletable][invalid]:active) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-error-down,
+        var(--spectrum-global-color-red-700)
+    ); /* .spectrum-Tag--removable.is-invalid:active .spectrum-Tag-clearButton */
+}
+:host([deletable][invalid]:active) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag--removable.is-invalid:active .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([deletable].focus-visible) {
+    color: var(
+        --spectrum-tag-s-removable-texticon-text-color-key-focus,
+        var(--spectrum-alias-tag-text-color-key-focus)
+    ); /* .spectrum-Tag--removable.focus-ring */
+}
+:host([deletable]:focus-visible) {
+    color: var(
+        --spectrum-tag-s-removable-texticon-text-color-key-focus,
+        var(--spectrum-alias-tag-text-color-key-focus)
+    ); /* .spectrum-Tag--removable.focus-ring */
+}
+:host([deletable].focus-visible) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-key-focus,
+        var(--spectrum-alias-tag-icon-color-hover)
+    ); /* .spectrum-Tag--removable.focus-ring .spectrum-Tag-clearButton */
+}
+:host([deletable]:focus-visible) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-key-focus,
+        var(--spectrum-alias-tag-icon-color-hover)
+    ); /* .spectrum-Tag--removable.focus-ring .spectrum-Tag-clearButton */
+}
+:host([deletable].focus-visible) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag--removable.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([deletable]:focus-visible) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag--removable.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([deletable][selected]) {
+    color: var(
+        --spectrum-tag-s-removable-texticon-text-color-selected,
+        var(--spectrum-alias-tag-text-color-selected)
+    ); /* .spectrum-Tag--removable.is-selected */
+}
+:host([deletable][selected]) .is-focused {
+    color: var(
+        --spectrum-tag-s-removable-texticon-text-color-selected-key-focus,
+        var(--spectrum-alias-tag-text-color-selected)
+    ); /* .spectrum-Tag--removable.is-selected.is-focused */
+}
+:host([deletable][selected]) .clear-button {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-selected,
+        var(--spectrum-alias-tag-icon-color-selected)
+    ); /* .spectrum-Tag--removable.is-selected .spectrum-Tag-clearButton */
+}
+:host([deletable][selected]) .clear-button .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag--removable.is-selected .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+}
+:host([deletable][selected]) .clear-button:hover {
+    color: var(
+        --spectrum-tag-s-removable-texticon-icon-color-selected-hover,
+        var(--spectrum-alias-tag-icon-color-selected)
+    ); /* .spectrum-Tag--removable.is-selected .spectrum-Tag-clearButton:hover */
+}
+:host([deletable][selected]) .clear-button:hover .spectrum-ClearButton-fill {
+    background: transparent; /* .spectrum-Tag--removable.is-selected .spectrum-Tag-clearButton:hover .spectrum-ClearButton-fill */
+}
+:host([deletable][selected][invalid]) {
+    color: var(
+        --spectrum-tag-s-removable-texticon-text-color-error-key-focus,
+        var(--spectrum-alias-tag-text-color-error-key-focus)
+    ); /* .spectrum-Tag--removable.is-selected.is-invalid */
+}
+@media (forced-colors: active) {
+    :host {
+        --spectrum-tag-s-removable-texticon-border-color-error-down: Highlight;
+        --spectrum-tag-s-removable-texticon-border-color-error-hover: Highlight;
+        --spectrum-tag-s-removable-texticon-icon-color: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-disabled: GrayText;
+        --spectrum-tag-s-removable-texticon-icon-color-down: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-error: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-error-down: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-error-hover: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-error-selected: HighlightText;
+        --spectrum-tag-s-removable-texticon-icon-color-hover: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-key-focus: ButtonText;
+        --spectrum-tag-s-removable-texticon-icon-color-selected: HighlightText;
+        --spectrum-tag-s-removable-texticon-icon-color-selected-hover: HighlightText;
+        --spectrum-tag-s-removable-texticon-icon-color-selected-key-focus: HighlightText;
+        --spectrum-tag-s-removable-texticon-text-color-down: ButtonText;
+        --spectrum-tag-s-removable-texticon-text-color-error-down: ButtonText;
+        --spectrum-tag-s-removable-texticon-text-color-error-hover: ButtonText;
+        --spectrum-tag-s-removable-texticon-text-color-error-key-focus: ButtonText;
+        --spectrum-tag-s-removable-texticon-text-color-error-selected: HighlightText;
+        --spectrum-tag-s-removable-texticon-text-color-hover: ButtonText;
+        --spectrum-tag-s-removable-texticon-text-color-key-focus: ButtonText;
+        --spectrum-tag-s-removable-texticon-text-color-selected: HighlightText;
+        --spectrum-tag-s-removable-texticon-text-color-selected-key-focus: HighlightText;
+        --spectrum-tag-s-texticon-background-color: ButtonFace;
+        --spectrum-tag-s-texticon-background-color-disabled: ButtonFace;
+        --spectrum-tag-s-texticon-background-color-error-selected: Highlight;
+        --spectrum-tag-s-texticon-background-color-error-selected-hover: Highlight;
+        --spectrum-tag-s-texticon-background-color-hover: ButtonFace;
+        --spectrum-tag-s-texticon-background-color-key-focus: ButtonFace;
+        --spectrum-tag-s-texticon-background-color-selected: Highlight;
+        --spectrum-tag-s-texticon-background-color-selected-hover: Highlight;
+        --spectrum-tag-s-texticon-border-color: ButtonText;
+        --spectrum-tag-s-texticon-border-color-disabled: GrayText;
+        --spectrum-tag-s-texticon-border-color-error: Highlight;
+        --spectrum-tag-s-texticon-border-color-error-hover: Highlight;
+        --spectrum-tag-s-texticon-border-color-error-selected: HighlightText;
+        --spectrum-tag-s-texticon-border-color-error-selected-hover: HighlightText;
+        --spectrum-tag-s-texticon-border-color-error-selected-key-focus: HighlightText;
+        --spectrum-tag-s-texticon-border-color-hover: ButtonText;
+        --spectrum-tag-s-texticon-border-color-key-focus: ButtonText;
+        --spectrum-tag-s-texticon-border-color-selected: HighlightText;
+        --spectrum-tag-s-texticon-focusring-border-color-key-focus: ButtonText;
+        --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus: ButtonText;
+        --spectrum-tag-s-texticon-icon-color-disabled: GrayText;
+        --spectrum-tag-s-texticon-icon-color-error: ButtonText;
+        --spectrum-tag-s-texticon-icon-color-error-hover: ButtonText;
+        --spectrum-tag-s-texticon-icon-color-error-key-focus: ButtonText;
+        --spectrum-tag-s-texticon-icon-color-error-selected-hover: HighlightText;
+        --spectrum-tag-s-texticon-icon-color-selected: HighlightText;
+        --spectrum-tag-s-texticon-text-color: ButtonText;
+        --spectrum-tag-s-texticon-text-color-disabled: GrayText;
+        --spectrum-tag-s-texticon-text-color-hover: ButtonText;
+        --spectrum-tag-s-texticon-text-color-key-focus: ButtonText;
+        --spectrum-tag-s-texticon-text-color-selected: HighlightText;
+        --spectrum-tag-s-texticon-text-color-selected-key-focus: HighlightText;
+        forced-color-adjust: none;
+    }
+    :host([selected][invalid].focus-visible) {
+        box-shadow: 0 0 0
+            var(
+                --spectrum-alias-focus-ring-size,
+                var(--spectrum-global-dimension-static-size-25)
+            )
+            var(
+                --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,
+                var(
+                    --spectrum-alias-tag-focusring-border-color-selected-key-focus
+                )
+            );
+    }
+    :host([selected][invalid]:focus-visible) {
+        box-shadow: 0 0 0
+            var(
+                --spectrum-alias-focus-ring-size,
+                var(--spectrum-global-dimension-static-size-25)
+            )
+            var(
+                --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,
+                var(
+                    --spectrum-alias-tag-focusring-border-color-selected-key-focus
+                )
+            );
+    }
+    :host([selected][invalid].focus-visible) .clear-button {
+        color: var(
+            --spectrum-tag-s-texticon-icon-color-error-selected-hover,
+            var(--spectrum-alias-tag-icon-color-selected)
+        );
+    }
+    :host([selected][invalid]:focus-visible) .clear-button {
+        color: var(
+            --spectrum-tag-s-texticon-icon-color-error-selected-hover,
+            var(--spectrum-alias-tag-icon-color-selected)
+        );
+    }
+}

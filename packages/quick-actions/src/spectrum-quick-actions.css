@@ -10,4 +10,92 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host{--spectrum-overlay-animation-distance:var(--spectrum-picker-m-texticon-popover-offset-y,var(--spectrum-global-dimension-size-75));/* .spectrum-QuickActions */opacity:0;pointer-events:none;transition:transform var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out,visibility 0ms linear var(--spectrum-global-animation-duration-100,.13s);visibility:hidden}:host([opened]){opacity:1;pointer-events:auto;transition-delay:0ms;visibility:visible/* .spectrum-QuickActions.is-open */}:host([enter-from=left][opened]){transform:translateX(var(--spectrum-overlay-animation-distance))/* .spectrum-QuickActions--left.is-open */}:host([enter-from=right][opened]){transform:translateX(calc(var(--spectrum-overlay-animation-distance)*-1))/* .spectrum-QuickActions--right.is-open */}:host{align-items:center;border-radius:var(--spectrum-quickactions-border-radius,var(--spectrum-alias-border-radius-regular));box-sizing:border-box;/* .spectrum-QuickActions */display:inline-flex;height:var(--spectrum-quickactions-height,var(--spectrum-global-dimension-size-500));justify-content:center;padding:var(--spectrum-quickactions-padding-y,var(--spectrum-global-dimension-size-50)) var(--spectrum-quickactions-padding-x,var(--spectrum-global-dimension-size-50))}:host([dir=ltr]) slot[name=action]+::slotted([slot=action]){margin-left:var(--spectrum-quickactions-button-gap-x,var(--spectrum-global-dimension-size-100))/* [dir=ltr] .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */}:host([dir=rtl]) slot[name=action]+::slotted([slot=action]){margin-right:var(--spectrum-quickactions-button-gap-x,var(--spectrum-global-dimension-size-100))/* [dir=rtl] .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */}:host([dir=ltr][text-only]) slot[name=action]+::slotted([slot=action]){margin-left:var(--spectrum-quickactions-text-button-gap-x,var(--spectrum-global-dimension-size-50))/* [dir=ltr] .spectrum-QuickActions--textOnly .spectrum-ActionButton+.spectrum-ActionButton */}:host([dir=rtl][text-only]) slot[name=action]+::slotted([slot=action]){margin-right:var(--spectrum-quickactions-text-button-gap-x,var(--spectrum-global-dimension-size-50))/* [dir=rtl] .spectrum-QuickActions--textOnly .spectrum-ActionButton+.spectrum-ActionButton */}#overlay{background-color:var(--spectrum-quickactions-overlay-color,var(--spectrum-alias-background-color-quickactions-overlay))/* .spectrum-QuickActions-overlay */}:host{background-color:var(--spectrum-quickactions-background-color,var(--spectrum-alias-background-color-quickactions))/* .spectrum-QuickActions */}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-overlay-animation-distance: var(
+        --spectrum-picker-m-texticon-popover-offset-y,
+        var(--spectrum-global-dimension-size-75)
+    ); /* .spectrum-QuickActions */
+    opacity: 0;
+    pointer-events: none;
+    transition: transform var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out,
+        opacity var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
+        visibility 0ms linear
+            var(--spectrum-global-animation-duration-100, 0.13s);
+    visibility: hidden;
+}
+:host([opened]) {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0ms;
+    visibility: visible; /* .spectrum-QuickActions.is-open */
+}
+:host([enter-from='left'][opened]) {
+    transform: translateX(
+        var(--spectrum-overlay-animation-distance)
+    ); /* .spectrum-QuickActions--left.is-open */
+}
+:host([enter-from='right'][opened]) {
+    transform: translateX(
+        calc(var(--spectrum-overlay-animation-distance) * -1)
+    ); /* .spectrum-QuickActions--right.is-open */
+}
+:host {
+    align-items: center;
+    border-radius: var(
+        --spectrum-quickactions-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    box-sizing: border-box; /* .spectrum-QuickActions */
+    display: inline-flex;
+    height: var(
+        --spectrum-quickactions-height,
+        var(--spectrum-global-dimension-size-500)
+    );
+    justify-content: center;
+    padding: var(
+            --spectrum-quickactions-padding-y,
+            var(--spectrum-global-dimension-size-50)
+        )
+        var(
+            --spectrum-quickactions-padding-x,
+            var(--spectrum-global-dimension-size-50)
+        );
+}
+:host([dir='ltr']) slot[name='action'] + ::slotted([slot='action']) {
+    margin-left: var(
+        --spectrum-quickactions-button-gap-x,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=ltr] .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */
+}
+:host([dir='rtl']) slot[name='action'] + ::slotted([slot='action']) {
+    margin-right: var(
+        --spectrum-quickactions-button-gap-x,
+        var(--spectrum-global-dimension-size-100)
+    ); /* [dir=rtl] .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */
+}
+:host([dir='ltr'][text-only]) slot[name='action'] + ::slotted([slot='action']) {
+    margin-left: var(
+        --spectrum-quickactions-text-button-gap-x,
+        var(--spectrum-global-dimension-size-50)
+    ); /* [dir=ltr] .spectrum-QuickActions--textOnly .spectrum-ActionButton+.spectrum-ActionButton */
+}
+:host([dir='rtl'][text-only]) slot[name='action'] + ::slotted([slot='action']) {
+    margin-right: var(
+        --spectrum-quickactions-text-button-gap-x,
+        var(--spectrum-global-dimension-size-50)
+    ); /* [dir=rtl] .spectrum-QuickActions--textOnly .spectrum-ActionButton+.spectrum-ActionButton */
+}
+#overlay {
+    background-color: var(
+        --spectrum-quickactions-overlay-color,
+        var(--spectrum-alias-background-color-quickactions-overlay)
+    ); /* .spectrum-QuickActions-overlay */
+}
+:host {
+    background-color: var(
+        --spectrum-quickactions-background-color,
+        var(--spectrum-alias-background-color-quickactions)
+    ); /* .spectrum-QuickActions */
+}

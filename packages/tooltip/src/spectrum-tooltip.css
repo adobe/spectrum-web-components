@@ -10,12 +10,326 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host{--spectrum-overlay-animation-distance:var(--spectrum-picker-m-texticon-popover-offset-y,var(--spectrum-global-dimension-size-75));/* .spectrum-Tooltip */opacity:0;pointer-events:none;transition:transform var(--spectrum-global-animation-duration-100,.13s) ease-in-out,opacity var(--spectrum-global-animation-duration-100,.13s) ease-in-out,visibility 0ms linear var(--spectrum-global-animation-duration-100,.13s);visibility:hidden}:host([open]){opacity:1;pointer-events:auto;transition-delay:0ms;visibility:visible/* .spectrum-Tooltip.is-open */}:host([placement*=bottom][open]){transform:translateY(var(--spectrum-overlay-animation-distance))/* .spectrum-Tooltip--bottom.is-open */}:host([placement*=top][open]){transform:translateY(calc(var(--spectrum-overlay-animation-distance)*-1))/* .spectrum-Tooltip--top.is-open */}:host([placement*=right][open]){transform:translateX(var(--spectrum-overlay-animation-distance))/* .spectrum-Tooltip--right.is-open */}:host([placement*=left][open]){transform:translateX(calc(var(--spectrum-overlay-animation-distance)*-1))/* .spectrum-Tooltip--left.is-open */}:host{--spectrum-tooltip-neutral-target-offset:3px;/* .spectrum-Tooltip */--spectrum-tooltip-neutral-tip-width:var(--spectrum-tooltip-neutral-tip-height,var(--spectrum-global-dimension-size-50))}:host{-webkit-font-smoothing:antialiased;align-items:center;border-radius:var(--spectrum-tooltip-neutral-border-radius,var(--spectrum-alias-component-border-radius));box-sizing:border-box;display:inline-flex;flex-direction:row;font-size:var(--spectrum-tooltip-neutral-text-size,var(--spectrum-global-dimension-font-size-75));font-weight:var(--spectrum-tooltip-neutral-text-font-weight,var(--spectrum-alias-body-text-font-weight));left:0;line-height:var(--spectrum-tooltip-neutral-text-line-height,var(--spectrum-alias-component-text-line-height));max-width:var(--spectrum-tooltip-neutral-max-width,var(--spectrum-global-dimension-size-2000));min-height:var(--spectrum-tooltip-neutral-min-height,var(--spectrum-global-dimension-size-300));padding:0 var(--spectrum-tooltip-neutral-padding-x,var(--spectrum-global-dimension-size-85));position:relative;/* .spectrum-Tooltip */top:0;vertical-align:top;width:auto;word-break:break-word}:host{cursor:default;/* .spectrum-Tooltip */-webkit-user-select:none;user-select:none}p{margin:0/* .spectrum-Tooltip p */}#tip{border-bottom-color:transparent;border-left-color:transparent;border-right-color:transparent;border-style:solid;border-width:var(--spectrum-tooltip-neutral-tip-width,var(--spectrum-global-dimension-size-100));height:0;position:absolute;/* .spectrum-Tooltip-tip */width:0}:host([placement*=left]) #tip,:host([placement*=right]) #tip{margin-top:calc(var(--spectrum-tooltip-neutral-tip-width, var(--spectrum-global-dimension-size-100))*-1);top:50%/* .spectrum-Tooltip--right .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--left .spectrum-Tooltip-tip */}:host([placement*=right]){margin-left:var(--spectrum-tooltip-neutral-target-offset)/* .spectrum-Tooltip--right */}:host([placement*=right]) #tip{right:100%;/* .spectrum-Tooltip--right .spectrum-Tooltip-tip */transform:rotate(90deg)}:host([placement*=left]){margin-right:var(--spectrum-tooltip-neutral-target-offset)/* .spectrum-Tooltip--left */}:host([placement*=left]) #tip{left:100%;/* .spectrum-Tooltip--left .spectrum-Tooltip-tip */transform:rotate(-90deg)}:host([placement*=top]){margin-bottom:var(--spectrum-tooltip-neutral-target-offset)/* .spectrum-Tooltip--top */}:host([placement*=top]) #tip{top:100%/* .spectrum-Tooltip--top .spectrum-Tooltip-tip */}:host([placement*=bottom]){margin-top:var(--spectrum-tooltip-neutral-target-offset)/* .spectrum-Tooltip--bottom */}:host([placement*=bottom]) #tip{bottom:100%;/* .spectrum-Tooltip--bottom .spectrum-Tooltip-tip */transform:rotate(-180deg)}:host([placement*=bottom]) #tip,:host([placement*=top]) #tip{left:50%;/* .spectrum-Tooltip--bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--top .spectrum-Tooltip-tip */margin-left:calc(var(--spectrum-tooltip-neutral-tip-width, var(--spectrum-global-dimension-size-100))*-1)}:host([dir=ltr]) ::slotted([slot=icon]){margin-left:calc(var(--spectrum-tooltip-neutral-icon-margin-x, var(--spectrum-global-dimension-size-85)) - var(--spectrum-tooltip-neutral-padding-x, var(--spectrum-global-dimension-size-85)))/* [dir=ltr] .spectrum-Tooltip-typeIcon */}:host([dir=rtl]) ::slotted([slot=icon]){margin-right:calc(var(--spectrum-tooltip-neutral-icon-margin-x, var(--spectrum-global-dimension-size-85)) - var(--spectrum-tooltip-neutral-padding-x, var(--spectrum-global-dimension-size-85)))/* [dir=rtl] .spectrum-Tooltip-typeIcon */}:host([dir=ltr]) ::slotted([slot=icon]){margin-right:var(--spectrum-tooltip-neutral-icon-margin-x,var(--spectrum-global-dimension-size-85))/* [dir=ltr] .spectrum-Tooltip-typeIcon */}:host([dir=rtl]) ::slotted([slot=icon]){margin-left:var(--spectrum-tooltip-neutral-icon-margin-x,var(--spectrum-global-dimension-size-85))/* [dir=rtl] .spectrum-Tooltip-typeIcon */}::slotted([slot=icon]){align-self:flex-start;flex-shrink:0;height:var(--spectrum-tooltip-neutral-icon-size,var(--spectrum-global-dimension-size-200));margin-bottom:var(--spectrum-tooltip-neutral-icon-margin-y,var(--spectrum-global-dimension-size-50));margin-top:var(--spectrum-tooltip-neutral-icon-margin-y,var(--spectrum-global-dimension-size-50));/* .spectrum-Tooltip-typeIcon */width:var(--spectrum-tooltip-neutral-icon-size,var(--spectrum-global-dimension-size-200))}#label{line-height:var(--spectrum-tooltip-neutral-text-line-height,var(--spectrum-alias-component-text-line-height));/* .spectrum-Tooltip-label */margin-bottom:var(--spectrum-tooltip-neutral-text-margin-bottom);margin-top:var(--spectrum-tooltip-neutral-text-margin-top,var(--spectrum-global-dimension-static-size-50))}:host{background-color:var(--spectrum-tooltip-neutral-background-color,var(--spectrum-semantic-neutral-background-color-default));/* .spectrum-Tooltip */color:var(--spectrum-tooltip-neutral-text-color,var(--spectrum-global-color-static-white))}#tip{border-top-color:var(--spectrum-tooltip-neutral-background-color,var(--spectrum-semantic-neutral-background-color-default))/* .spectrum-Tooltip-tip */}.spectrum-Tooltip--error,:host([variant=negative]){background-color:var(--spectrum-tooltip-negative-background-color,var(--spectrum-semantic-negative-background-color))/* .spectrum-Tooltip--negative,
-   * .spectrum-Tooltip--error */}.spectrum-Tooltip--error #tip,:host([variant=negative]) #tip{border-top-color:var(--spectrum-tooltip-negative-background-color,var(--spectrum-semantic-negative-background-color))/* .spectrum-Tooltip--negative .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--error .spectrum-Tooltip-tip */}.spectrum-Tooltip--help,:host([variant=info]){background-color:var(--spectrum-tooltip-info-background-color,var(--spectrum-semantic-informative-background-color))/* .spectrum-Tooltip--info,
-   * .spectrum-Tooltip--help */}.spectrum-Tooltip--help #tip,:host([variant=info]) #tip{border-top-color:var(--spectrum-tooltip-info-background-color,var(--spectrum-semantic-informative-background-color))/* .spectrum-Tooltip--info .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--help .spectrum-Tooltip-tip */}.spectrum-Tooltip--success,:host([variant=positive]){background-color:var(--spectrum-tooltip-positive-background-color,var(--spectrum-semantic-positive-background-color))/* .spectrum-Tooltip--positive,
-   * .spectrum-Tooltip--success */}.spectrum-Tooltip--success #tip,:host([variant=positive]) #tip{border-top-color:var(--spectrum-tooltip-positive-background-color,var(--spectrum-semantic-positive-background-color))/* .spectrum-Tooltip--positive .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--success .spectrum-Tooltip-tip */}@media (forced-colors:active){:host{border:1px solid transparent}#tip{--spectrum-tooltip-neutral-background-color:CanvasText;--spectrum-tooltip-negative-background-color:CanvasText;--spectrum-tooltip-info-background-color:CanvasText;--spectrum-tooltip-positive-background-color:CanvasText;forced-color-adjust:none}}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-overlay-animation-distance: var(
+        --spectrum-picker-m-texticon-popover-offset-y,
+        var(--spectrum-global-dimension-size-75)
+    ); /* .spectrum-Tooltip */
+    opacity: 0;
+    pointer-events: none;
+    transition: transform var(--spectrum-global-animation-duration-100, 0.13s)
+            ease-in-out,
+        opacity var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
+        visibility 0ms linear
+            var(--spectrum-global-animation-duration-100, 0.13s);
+    visibility: hidden;
+}
+:host([open]) {
+    opacity: 1;
+    pointer-events: auto;
+    transition-delay: 0ms;
+    visibility: visible; /* .spectrum-Tooltip.is-open */
+}
+:host([placement*='bottom'][open]) {
+    transform: translateY(
+        var(--spectrum-overlay-animation-distance)
+    ); /* .spectrum-Tooltip--bottom.is-open */
+}
+:host([placement*='top'][open]) {
+    transform: translateY(
+        calc(var(--spectrum-overlay-animation-distance) * -1)
+    ); /* .spectrum-Tooltip--top.is-open */
+}
+:host([placement*='right'][open]) {
+    transform: translateX(
+        var(--spectrum-overlay-animation-distance)
+    ); /* .spectrum-Tooltip--right.is-open */
+}
+:host([placement*='left'][open]) {
+    transform: translateX(
+        calc(var(--spectrum-overlay-animation-distance) * -1)
+    ); /* .spectrum-Tooltip--left.is-open */
+}
+:host {
+    --spectrum-tooltip-neutral-target-offset: 3px; /* .spectrum-Tooltip */
+    --spectrum-tooltip-neutral-tip-width: var(
+        --spectrum-tooltip-neutral-tip-height,
+        var(--spectrum-global-dimension-size-50)
+    );
+}
+:host {
+    -webkit-font-smoothing: antialiased;
+    align-items: center;
+    border-radius: var(
+        --spectrum-tooltip-neutral-border-radius,
+        var(--spectrum-alias-component-border-radius)
+    );
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-direction: row;
+    font-size: var(
+        --spectrum-tooltip-neutral-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    font-weight: var(
+        --spectrum-tooltip-neutral-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    left: 0;
+    line-height: var(
+        --spectrum-tooltip-neutral-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    max-width: var(
+        --spectrum-tooltip-neutral-max-width,
+        var(--spectrum-global-dimension-size-2000)
+    );
+    min-height: var(
+        --spectrum-tooltip-neutral-min-height,
+        var(--spectrum-global-dimension-size-300)
+    );
+    padding: 0
+        var(
+            --spectrum-tooltip-neutral-padding-x,
+            var(--spectrum-global-dimension-size-85)
+        );
+    position: relative; /* .spectrum-Tooltip */
+    top: 0;
+    vertical-align: top;
+    width: auto;
+    word-break: break-word;
+}
+:host {
+    cursor: default; /* .spectrum-Tooltip */
+    -webkit-user-select: none;
+    user-select: none;
+}
+p {
+    margin: 0; /* .spectrum-Tooltip p */
+}
+#tip {
+    border-bottom: var(
+            --spectrum-tooltip-neutral-tip-width,
+            var(--spectrum-global-dimension-size-100)
+        )
+        solid transparent;
+    border-left: var(
+            --spectrum-tooltip-neutral-tip-width,
+            var(--spectrum-global-dimension-size-100)
+        )
+        solid transparent;
+    border-right: var(
+            --spectrum-tooltip-neutral-tip-width,
+            var(--spectrum-global-dimension-size-100)
+        )
+        solid transparent;
+    border-top-style: solid;
+    border-top-width: var(
+        --spectrum-tooltip-neutral-tip-width,
+        var(--spectrum-global-dimension-size-100)
+    );
+    height: 0;
+    position: absolute; /* .spectrum-Tooltip-tip */
+    width: 0;
+}
+:host([placement*='left']) #tip,
+:host([placement*='right']) #tip {
+    margin-top: calc(
+        var(
+                --spectrum-tooltip-neutral-tip-width,
+                var(--spectrum-global-dimension-size-100)
+            ) * -1
+    );
+    top: 50%; /* .spectrum-Tooltip--right .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--left .spectrum-Tooltip-tip */
+}
+:host([placement*='right']) {
+    margin-left: var(
+        --spectrum-tooltip-neutral-target-offset
+    ); /* .spectrum-Tooltip--right */
+}
+:host([placement*='right']) #tip {
+    right: 100%; /* .spectrum-Tooltip--right .spectrum-Tooltip-tip */
+    transform: rotate(90deg);
+}
+:host([placement*='left']) {
+    margin-right: var(
+        --spectrum-tooltip-neutral-target-offset
+    ); /* .spectrum-Tooltip--left */
+}
+:host([placement*='left']) #tip {
+    left: 100%; /* .spectrum-Tooltip--left .spectrum-Tooltip-tip */
+    transform: rotate(-90deg);
+}
+:host([placement*='top']) {
+    margin-bottom: var(
+        --spectrum-tooltip-neutral-target-offset
+    ); /* .spectrum-Tooltip--top */
+}
+:host([placement*='top']) #tip {
+    top: 100%; /* .spectrum-Tooltip--top .spectrum-Tooltip-tip */
+}
+:host([placement*='bottom']) {
+    margin-top: var(
+        --spectrum-tooltip-neutral-target-offset
+    ); /* .spectrum-Tooltip--bottom */
+}
+:host([placement*='bottom']) #tip {
+    bottom: 100%; /* .spectrum-Tooltip--bottom .spectrum-Tooltip-tip */
+    transform: rotate(-180deg);
+}
+:host([placement*='bottom']) #tip,
+:host([placement*='top']) #tip {
+    left: 50%; /* .spectrum-Tooltip--bottom .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--top .spectrum-Tooltip-tip */
+    margin-left: calc(
+        var(
+                --spectrum-tooltip-neutral-tip-width,
+                var(--spectrum-global-dimension-size-100)
+            ) * -1
+    );
+}
+:host([dir='ltr']) ::slotted([slot='icon']) {
+    margin-left: calc(
+        var(
+                --spectrum-tooltip-neutral-icon-margin-x,
+                var(--spectrum-global-dimension-size-85)
+            ) -
+            var(
+                --spectrum-tooltip-neutral-padding-x,
+                var(--spectrum-global-dimension-size-85)
+            )
+    ); /* [dir=ltr] .spectrum-Tooltip-typeIcon */
+}
+:host([dir='rtl']) ::slotted([slot='icon']) {
+    margin-right: calc(
+        var(
+                --spectrum-tooltip-neutral-icon-margin-x,
+                var(--spectrum-global-dimension-size-85)
+            ) -
+            var(
+                --spectrum-tooltip-neutral-padding-x,
+                var(--spectrum-global-dimension-size-85)
+            )
+    ); /* [dir=rtl] .spectrum-Tooltip-typeIcon */
+}
+:host([dir='ltr']) ::slotted([slot='icon']) {
+    margin-right: var(
+        --spectrum-tooltip-neutral-icon-margin-x,
+        var(--spectrum-global-dimension-size-85)
+    ); /* [dir=ltr] .spectrum-Tooltip-typeIcon */
+}
+:host([dir='rtl']) ::slotted([slot='icon']) {
+    margin-left: var(
+        --spectrum-tooltip-neutral-icon-margin-x,
+        var(--spectrum-global-dimension-size-85)
+    ); /* [dir=rtl] .spectrum-Tooltip-typeIcon */
+}
+::slotted([slot='icon']) {
+    align-self: flex-start;
+    flex-shrink: 0;
+    height: var(
+        --spectrum-tooltip-neutral-icon-size,
+        var(--spectrum-global-dimension-size-200)
+    );
+    margin-bottom: var(
+        --spectrum-tooltip-neutral-icon-margin-y,
+        var(--spectrum-global-dimension-size-50)
+    );
+    margin-top: var(
+        --spectrum-tooltip-neutral-icon-margin-y,
+        var(--spectrum-global-dimension-size-50)
+    ); /* .spectrum-Tooltip-typeIcon */
+    width: var(
+        --spectrum-tooltip-neutral-icon-size,
+        var(--spectrum-global-dimension-size-200)
+    );
+}
+#label {
+    line-height: var(
+        --spectrum-tooltip-neutral-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    ); /* .spectrum-Tooltip-label */
+    margin-bottom: var(--spectrum-tooltip-neutral-text-margin-bottom);
+    margin-top: var(
+        --spectrum-tooltip-neutral-text-margin-top,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+}
+:host {
+    background-color: var(
+        --spectrum-tooltip-neutral-background-color,
+        var(--spectrum-semantic-neutral-background-color-default)
+    ); /* .spectrum-Tooltip */
+    color: var(
+        --spectrum-tooltip-neutral-text-color,
+        var(--spectrum-global-color-static-white)
+    );
+}
+#tip {
+    border-top-color: var(
+        --spectrum-tooltip-neutral-background-color,
+        var(--spectrum-semantic-neutral-background-color-default)
+    ); /* .spectrum-Tooltip-tip */
+}
+.spectrum-Tooltip--error,
+:host([variant='negative']) {
+    background-color: var(
+        --spectrum-tooltip-negative-background-color,
+        var(--spectrum-semantic-negative-background-color)
+    ); /* .spectrum-Tooltip--negative,
+   * .spectrum-Tooltip--error */
+}
+.spectrum-Tooltip--error #tip,
+:host([variant='negative']) #tip {
+    border-top-color: var(
+        --spectrum-tooltip-negative-background-color,
+        var(--spectrum-semantic-negative-background-color)
+    ); /* .spectrum-Tooltip--negative .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--error .spectrum-Tooltip-tip */
+}
+.spectrum-Tooltip--help,
+:host([variant='info']) {
+    background-color: var(
+        --spectrum-tooltip-info-background-color,
+        var(--spectrum-semantic-informative-background-color)
+    ); /* .spectrum-Tooltip--info,
+   * .spectrum-Tooltip--help */
+}
+.spectrum-Tooltip--help #tip,
+:host([variant='info']) #tip {
+    border-top-color: var(
+        --spectrum-tooltip-info-background-color,
+        var(--spectrum-semantic-informative-background-color)
+    ); /* .spectrum-Tooltip--info .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--help .spectrum-Tooltip-tip */
+}
+.spectrum-Tooltip--success,
+:host([variant='positive']) {
+    background-color: var(
+        --spectrum-tooltip-positive-background-color,
+        var(--spectrum-semantic-positive-background-color)
+    ); /* .spectrum-Tooltip--positive,
+   * .spectrum-Tooltip--success */
+}
+.spectrum-Tooltip--success #tip,
+:host([variant='positive']) #tip {
+    border-top-color: var(
+        --spectrum-tooltip-positive-background-color,
+        var(--spectrum-semantic-positive-background-color)
+    ); /* .spectrum-Tooltip--positive .spectrum-Tooltip-tip,
+   * .spectrum-Tooltip--success .spectrum-Tooltip-tip */
+}
+@media (forced-colors: active) {
+    :host {
+        border: 1px solid transparent;
+    }
+    #tip {
+        --spectrum-tooltip-neutral-background-color: CanvasText;
+        --spectrum-tooltip-negative-background-color: CanvasText;
+        --spectrum-tooltip-info-background-color: CanvasText;
+        --spectrum-tooltip-positive-background-color: CanvasText;
+        forced-color-adjust: none;
+    }
+}

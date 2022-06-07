@@ -10,8 +10,321 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host([dir=ltr]) .indicator{left:var(--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225))/* [dir=ltr] .spectrum-Accordion-itemIndicator */}:host([dir=rtl]) .indicator{right:var(--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225))/* [dir=rtl] .spectrum-Accordion-itemIndicator */}:host([dir=rtl]) .indicator{transform:matrix(-1,0,0,1,0,0)/* [dir=rtl] .spectrum-Accordion-itemIndicator */}.indicator{display:block;/* .spectrum-Accordion-itemIndicator */position:absolute;top:calc(50% - var(--spectrum-accordion-icon-height, var(--spectrum-global-dimension-size-125))/2);transition:transform ease var(--spectrum-accordion-animation-duration)}:host{border-bottom:var(--spectrum-accordion-item-border-size,var(--spectrum-alias-border-size-thin)) solid transparent;display:list-item;margin:0;position:relative;z-index:inherit/* .spectrum-Accordion-item */}:host(:first-of-type){border-top:var(--spectrum-accordion-item-border-size,var(--spectrum-alias-border-size-thin)) solid transparent/* .spectrum-Accordion-item:first-of-type */}#heading{box-sizing:border-box;margin:0;/* .spectrum-Accordion-itemHeading */position:relative}:host([dir=ltr]) #header{padding-left:calc(var(--spectrum-accordion-item-padding-x, var(--spectrum-global-dimension-size-225)) + var(--spectrum-accordion-icon-height, var(--spectrum-global-dimension-size-125)) + var(--spectrum-accordion-icon-gap, var(--spectrum-global-dimension-size-100)) + var(--spectrum-accordion-item-border-left-size, var(--spectrum-alias-border-size-thick)))/* [dir=ltr] .spectrum-Accordion-itemHeader */}:host([dir=rtl]) #header{padding-right:calc(var(--spectrum-accordion-item-padding-x, var(--spectrum-global-dimension-size-225)) + var(--spectrum-accordion-icon-height, var(--spectrum-global-dimension-size-125)) + var(--spectrum-accordion-icon-gap, var(--spectrum-global-dimension-size-100)) + var(--spectrum-accordion-item-border-left-size, var(--spectrum-alias-border-size-thick)))/* [dir=rtl] .spectrum-Accordion-itemHeader */}:host([dir=ltr]) #header{padding-right:var(--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225))/* [dir=ltr] .spectrum-Accordion-itemHeader */}:host([dir=rtl]) #header{padding-left:var(--spectrum-accordion-item-padding-x,var(--spectrum-global-dimension-size-225))/* [dir=rtl] .spectrum-Accordion-itemHeader */}:host([dir=ltr]) #header{text-align:left/* [dir=ltr] .spectrum-Accordion-itemHeader */}:host([dir=rtl]) #header{text-align:right/* [dir=rtl] .spectrum-Accordion-itemHeader */}#header{align-items:center;appearance:none;background-color:inherit;border:0;box-sizing:border-box;cursor:pointer;display:flex;font-family:inherit;font-size:var(--spectrum-accordion-item-title-text-size,var(--spectrum-global-dimension-font-size-50));font-weight:500;justify-content:flex-start;letter-spacing:calc(var(--spectrum-accordion-item-title-tracking, var(--spectrum-global-font-letter-spacing-medium))/100);line-height:var(--spectrum-accordion-text-line-height,var(--spectrum-alias-component-text-line-height));margin:0;min-height:calc(100% - var(--spectrum-accordion-item-border-size, var(--spectrum-alias-border-size-thin)));padding-bottom:var(--spectrum-accordion-item-title-padding-y);padding-top:var(--spectrum-accordion-item-title-padding-y);position:relative;/* .spectrum-Accordion-itemHeader */text-overflow:ellipsis;text-transform:uppercase;width:100%}#header:focus{outline:none/* .spectrum-Accordion-itemHeader:focus */}:host([dir=ltr]) #header:focus:after{left:0/* [dir=ltr] .spectrum-Accordion-itemHeader:focus:after */}:host([dir=rtl]) #header:focus:after{right:0/* [dir=rtl] .spectrum-Accordion-itemHeader:focus:after */}#header:focus:after{bottom:calc(var(--spectrum-accordion-item-border-size, var(--spectrum-alias-border-size-thin))*-1);content:"";/* .spectrum-Accordion-itemHeader:focus:after */position:absolute;top:calc(var(--spectrum-accordion-item-border-size, var(--spectrum-alias-border-size-thin))*-1);width:var(--spectrum-accordion-item-border-left-size,var(--spectrum-alias-border-size-thick))}#content{display:none;padding-bottom:var(--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200));padding-left:var(--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200));padding-right:var(--spectrum-accordion-item-content-padding,var(--spectrum-global-dimension-size-200));padding-top:0/* .spectrum-Accordion-itemContent */}:host([dir=ltr][open])>#heading>.indicator{transform:rotate(90deg)/* [dir=ltr] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeading>.spectrum-Accordion-itemIndicator */}:host([dir=rtl][open])>#heading>.indicator{transform:matrix(-1,0,0,1,0,0) rotate(90deg)/* [dir=rtl] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeading>.spectrum-Accordion-itemIndicator */}:host([dir=ltr][open])>.indicator{transform:rotate(90deg)/* [dir=ltr] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemIndicator */}:host([dir=rtl][open])>.indicator{transform:matrix(-1,0,0,1,0,0) rotate(90deg)/* [dir=rtl] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemIndicator */}:host([open])>#header:after{height:calc(100% - var(--spectrum-accordion-item-border-size, var(--spectrum-alias-border-size-thin)))/* .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeader:after */}:host([open])>#content{display:block/* .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemContent */}:host([disabled]) #header{cursor:default/* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader */}:host{border-color:var(--spectrum-accordion-border-color,var(--spectrum-global-color-gray-300))/* .spectrum-Accordion-item */}.indicator{color:var(--spectrum-accordion-icon-color,var(--spectrum-global-color-gray-600))/* .spectrum-Accordion-itemIndicator */}#header{color:var(--spectrum-accordion-text-color,var(--spectrum-global-color-gray-700))/* .spectrum-Accordion-itemHeader */}#header:hover{background-color:var(--spectrum-accordion-item-background-color-hover,var(--spectrum-global-color-gray-200));color:var(--spectrum-accordion-text-color-hover,var(--spectrum-global-color-gray-900))/* .spectrum-Accordion-itemHeader:hover */}#header:hover+.indicator{color:var(--spectrum-accordion-icon-color-hover,var(--spectrum-alias-icon-color-hover))/* .spectrum-Accordion-itemHeader:hover+.spectrum-Accordion-itemIndicator */}#header.focus-visible:after{background-color:var(--spectrum-accordion-item-border-left-color-key-focus,var(--spectrum-alias-border-color-key-focus))/* .spectrum-Accordion-itemHeader.focus-ring:after */}#header:focus-visible:after{background-color:var(--spectrum-accordion-item-border-left-color-key-focus,var(--spectrum-alias-border-color-key-focus))/* .spectrum-Accordion-itemHeader.focus-ring:after */}:host([open]) #header:hover{background-color:transparent/* .spectrum-Accordion-item.is-open .spectrum-Accordion-itemHeader:hover */}:host([disabled]) #header,:host([disabled]) #header.focus-visible,:host([disabled]) #header:hover{background-color:transparent;color:var(--spectrum-accordion-text-color-disabled,var(--spectrum-global-color-gray-500))/* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader,
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([dir='ltr']) .indicator {
+    left: var(
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
+    ); /* [dir=ltr] .spectrum-Accordion-itemIndicator */
+}
+:host([dir='rtl']) .indicator {
+    right: var(
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
+    ); /* [dir=rtl] .spectrum-Accordion-itemIndicator */
+}
+:host([dir='rtl']) .indicator {
+    transform: matrix(
+        -1,
+        0,
+        0,
+        1,
+        0,
+        0
+    ); /* [dir=rtl] .spectrum-Accordion-itemIndicator */
+}
+.indicator {
+    display: block; /* .spectrum-Accordion-itemIndicator */
+    position: absolute;
+    top: calc(
+        50% -
+            var(
+                --spectrum-accordion-icon-height,
+                var(--spectrum-global-dimension-size-125)
+            ) / 2
+    );
+    transition: transform ease var(--spectrum-accordion-animation-duration);
+}
+:host {
+    border-bottom: var(
+            --spectrum-accordion-item-border-size,
+            var(--spectrum-alias-border-size-thin)
+        )
+        solid transparent;
+    display: list-item;
+    margin: 0;
+    position: relative;
+    z-index: inherit; /* .spectrum-Accordion-item */
+}
+:host(:first-of-type) {
+    border-top: var(
+            --spectrum-accordion-item-border-size,
+            var(--spectrum-alias-border-size-thin)
+        )
+        solid transparent; /* .spectrum-Accordion-item:first-of-type */
+}
+#heading {
+    box-sizing: border-box;
+    margin: 0; /* .spectrum-Accordion-itemHeading */
+    position: relative;
+}
+:host([dir='ltr']) #header {
+    padding-left: calc(
+        var(
+                --spectrum-accordion-item-padding-x,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-accordion-icon-height,
+                var(--spectrum-global-dimension-size-125)
+            ) +
+            var(
+                --spectrum-accordion-icon-gap,
+                var(--spectrum-global-dimension-size-100)
+            ) +
+            var(
+                --spectrum-accordion-item-border-left-size,
+                var(--spectrum-alias-border-size-thick)
+            )
+    ); /* [dir=ltr] .spectrum-Accordion-itemHeader */
+}
+:host([dir='rtl']) #header {
+    padding-right: calc(
+        var(
+                --spectrum-accordion-item-padding-x,
+                var(--spectrum-global-dimension-size-225)
+            ) +
+            var(
+                --spectrum-accordion-icon-height,
+                var(--spectrum-global-dimension-size-125)
+            ) +
+            var(
+                --spectrum-accordion-icon-gap,
+                var(--spectrum-global-dimension-size-100)
+            ) +
+            var(
+                --spectrum-accordion-item-border-left-size,
+                var(--spectrum-alias-border-size-thick)
+            )
+    ); /* [dir=rtl] .spectrum-Accordion-itemHeader */
+}
+:host([dir='ltr']) #header {
+    padding-right: var(
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
+    ); /* [dir=ltr] .spectrum-Accordion-itemHeader */
+}
+:host([dir='rtl']) #header {
+    padding-left: var(
+        --spectrum-accordion-item-padding-x,
+        var(--spectrum-global-dimension-size-225)
+    ); /* [dir=rtl] .spectrum-Accordion-itemHeader */
+}
+:host([dir='ltr']) #header {
+    text-align: left; /* [dir=ltr] .spectrum-Accordion-itemHeader */
+}
+:host([dir='rtl']) #header {
+    text-align: right; /* [dir=rtl] .spectrum-Accordion-itemHeader */
+}
+#header {
+    align-items: center;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: inherit;
+    border: 0;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    font-size: var(
+        --spectrum-accordion-item-title-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    font-weight: 500;
+    justify-content: flex-start;
+    letter-spacing: calc(
+        var(
+                --spectrum-accordion-item-title-tracking,
+                var(--spectrum-global-font-letter-spacing-medium)
+            ) / 100
+    );
+    line-height: var(
+        --spectrum-accordion-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    margin: 0;
+    min-height: calc(
+        100% -
+            var(
+                --spectrum-accordion-item-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    );
+    padding-bottom: var(--spectrum-accordion-item-title-padding-y);
+    padding-top: var(--spectrum-accordion-item-title-padding-y);
+    position: relative; /* .spectrum-Accordion-itemHeader */
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    width: 100%;
+}
+#header:focus {
+    outline: none; /* .spectrum-Accordion-itemHeader:focus */
+}
+:host([dir='ltr']) #header:focus:after {
+    left: 0; /* [dir=ltr] .spectrum-Accordion-itemHeader:focus:after */
+}
+:host([dir='rtl']) #header:focus:after {
+    right: 0; /* [dir=rtl] .spectrum-Accordion-itemHeader:focus:after */
+}
+#header:focus:after {
+    bottom: calc(
+        var(
+                --spectrum-accordion-item-border-size,
+                var(--spectrum-alias-border-size-thin)
+            ) * -1
+    );
+    content: ''; /* .spectrum-Accordion-itemHeader:focus:after */
+    position: absolute;
+    top: calc(
+        var(
+                --spectrum-accordion-item-border-size,
+                var(--spectrum-alias-border-size-thin)
+            ) * -1
+    );
+    width: var(
+        --spectrum-accordion-item-border-left-size,
+        var(--spectrum-alias-border-size-thick)
+    );
+}
+#content {
+    display: none;
+    padding-bottom: var(
+        --spectrum-accordion-item-content-padding,
+        var(--spectrum-global-dimension-size-200)
+    );
+    padding-left: var(
+        --spectrum-accordion-item-content-padding,
+        var(--spectrum-global-dimension-size-200)
+    );
+    padding-right: var(
+        --spectrum-accordion-item-content-padding,
+        var(--spectrum-global-dimension-size-200)
+    );
+    padding-top: 0; /* .spectrum-Accordion-itemContent */
+}
+:host([dir='ltr'][open]) > #heading > .indicator {
+    transform: rotate(
+        90deg
+    ); /* [dir=ltr] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeading>.spectrum-Accordion-itemIndicator */
+}
+:host([dir='rtl'][open]) > #heading > .indicator {
+    transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg); /* [dir=rtl] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeading>.spectrum-Accordion-itemIndicator */
+}
+:host([dir='ltr'][open]) > .indicator {
+    transform: rotate(
+        90deg
+    ); /* [dir=ltr] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemIndicator */
+}
+:host([dir='rtl'][open]) > .indicator {
+    transform: matrix(-1, 0, 0, 1, 0, 0) rotate(90deg); /* [dir=rtl] .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemIndicator */
+}
+:host([open]) > #header:after {
+    height: calc(
+        100% -
+            var(
+                --spectrum-accordion-item-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    ); /* .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemHeader:after */
+}
+:host([open]) > #content {
+    display: block; /* .spectrum-Accordion-item.is-open>.spectrum-Accordion-itemContent */
+}
+:host([disabled]) #header {
+    cursor: default; /* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader */
+}
+:host {
+    border-color: var(
+        --spectrum-accordion-border-color,
+        var(--spectrum-global-color-gray-300)
+    ); /* .spectrum-Accordion-item */
+}
+.indicator {
+    color: var(
+        --spectrum-accordion-icon-color,
+        var(--spectrum-global-color-gray-600)
+    ); /* .spectrum-Accordion-itemIndicator */
+}
+#header {
+    color: var(
+        --spectrum-accordion-text-color,
+        var(--spectrum-global-color-gray-700)
+    ); /* .spectrum-Accordion-itemHeader */
+}
+#header:hover {
+    background-color: var(
+        --spectrum-accordion-item-background-color-hover,
+        var(--spectrum-global-color-gray-200)
+    );
+    color: var(
+        --spectrum-accordion-text-color-hover,
+        var(--spectrum-global-color-gray-900)
+    ); /* .spectrum-Accordion-itemHeader:hover */
+}
+#header:hover + .indicator {
+    color: var(
+        --spectrum-accordion-icon-color-hover,
+        var(--spectrum-alias-icon-color-hover)
+    ); /* .spectrum-Accordion-itemHeader:hover+.spectrum-Accordion-itemIndicator */
+}
+#header.focus-visible:after {
+    background-color: var(
+        --spectrum-accordion-item-border-left-color-key-focus,
+        var(--spectrum-alias-border-color-key-focus)
+    ); /* .spectrum-Accordion-itemHeader.focus-ring:after */
+}
+#header:focus-visible:after {
+    background-color: var(
+        --spectrum-accordion-item-border-left-color-key-focus,
+        var(--spectrum-alias-border-color-key-focus)
+    ); /* .spectrum-Accordion-itemHeader.focus-ring:after */
+}
+:host([open]) #header:hover {
+    background-color: transparent; /* .spectrum-Accordion-item.is-open .spectrum-Accordion-itemHeader:hover */
+}
+:host([disabled]) #header,
+:host([disabled]) #header.focus-visible,
+:host([disabled]) #header:hover {
+    background-color: transparent;
+    color: var(
+        --spectrum-accordion-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
+    ); /* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader,
    * .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader:hover,
-   * .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader.focus-ring */}:host([disabled]) #header,:host([disabled]) #header:focus-visible,:host([disabled]) #header:hover{background-color:transparent;color:var(--spectrum-accordion-text-color-disabled,var(--spectrum-global-color-gray-500))/* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader,
+   * .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader.focus-ring */
+}
+:host([disabled]) #header,
+:host([disabled]) #header:focus-visible,
+:host([disabled]) #header:hover {
+    background-color: transparent;
+    color: var(
+        --spectrum-accordion-text-color-disabled,
+        var(--spectrum-global-color-gray-500)
+    ); /* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader,
    * .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader:hover,
-   * .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader.focus-ring */}:host([disabled]) #header+.indicator{color:var(--spectrum-accordion-icon-color-disabled,var(--spectrum-alias-icon-color-disabled))/* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader+.spectrum-Accordion-itemIndicator */}@media (forced-colors:active){#header.focus-visible{outline:3px solid CanvasText}#header:focus-visible{outline:3px solid CanvasText}}
+   * .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader.focus-ring */
+}
+:host([disabled]) #header + .indicator {
+    color: var(
+        --spectrum-accordion-icon-color-disabled,
+        var(--spectrum-alias-icon-color-disabled)
+    ); /* .spectrum-Accordion-item.is-disabled .spectrum-Accordion-itemHeader+.spectrum-Accordion-itemIndicator */
+}
+@media (forced-colors: active) {
+    #header.focus-visible {
+        outline: 3px solid CanvasText;
+    }
+    #header:focus-visible {
+        outline: 3px solid CanvasText;
+    }
+}

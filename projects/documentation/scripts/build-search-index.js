@@ -18,10 +18,7 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const projectDir = path.resolve(__dirname, '..', '..', '..');
-const indexPath = path.resolve(
-    projectDir,
-    'projects/documentation/dist/searchIndex.json'
-);
+const indexPath = path.resolve(projectDir, 'projects/documentation/dist');
 
 function nameToTitle(name) {
     return name.replace(/((^|\-)(\w))/gm, (match, p1, p2, p3) => {
@@ -83,7 +80,13 @@ async function main() {
         }
     });
 
-    await fs.writeFile(indexPath, JSON.stringify(index));
+    // Test to see if the dist folder exists; if not, create it
+    // Note: dist is not committed and write will fail if dist folder not present
+    await fs.ensureDir(indexPath);
+    await fs.writeFile(
+        path.join(indexPath, 'searchIndex.json'),
+        JSON.stringify(index)
+    );
 }
 
 main();

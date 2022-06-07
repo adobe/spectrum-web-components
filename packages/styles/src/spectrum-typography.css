@@ -10,4 +10,154 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */.spectrum-Typography .spectrum-Heading--sizeXXXL{margin-bottom:var(--spectrum-heading-xxxl-margin-bottom,var(--spectrum-global-dimension-size-125));margin-top:var(--spectrum-heading-xxxl-margin-top,var(--spectrum-alias-heading-xxxl-margin-top))/* .spectrum-Typography .spectrum-Heading--sizeXXXL */}.spectrum-Typography .spectrum-Heading--sizeXXL{margin-bottom:var(--spectrum-heading-xxl-margin-bottom,var(--spectrum-global-dimension-size-115));margin-top:var(--spectrum-heading-xxl-margin-top,var(--spectrum-alias-heading-xxl-margin-top))/* .spectrum-Typography .spectrum-Heading--sizeXXL */}.spectrum-Typography .spectrum-Heading--sizeXL{margin-bottom:var(--spectrum-heading-xl-margin-bottom,var(--spectrum-global-dimension-size-100));margin-top:var(--spectrum-heading-xl-margin-top,var(--spectrum-alias-heading-xl-margin-top))/* .spectrum-Typography .spectrum-Heading--sizeXL */}.spectrum-Typography .spectrum-Heading--sizeL{margin-bottom:var(--spectrum-heading-l-margin-bottom,var(--spectrum-global-dimension-size-85));margin-top:var(--spectrum-heading-l-margin-top,var(--spectrum-alias-heading-l-margin-top))/* .spectrum-Typography .spectrum-Heading--sizeL */}.spectrum-Typography .spectrum-Heading--sizeM{margin-bottom:var(--spectrum-heading-m-margin-bottom,var(--spectrum-global-dimension-size-75));margin-top:var(--spectrum-heading-m-margin-top,var(--spectrum-alias-heading-m-margin-top))/* .spectrum-Typography .spectrum-Heading--sizeM */}.spectrum-Typography .spectrum-Heading--sizeS{margin-bottom:var(--spectrum-heading-s-margin-bottom,var(--spectrum-global-dimension-size-65));margin-top:var(--spectrum-heading-s-margin-top,var(--spectrum-alias-heading-s-margin-top))/* .spectrum-Typography .spectrum-Heading--sizeS */}.spectrum-Typography .spectrum-Heading--sizeXS{margin-bottom:var(--spectrum-heading-xs-margin-bottom,var(--spectrum-global-dimension-size-50));margin-top:var(--spectrum-heading-xs-margin-top,var(--spectrum-alias-heading-xs-margin-top))/* .spectrum-Typography .spectrum-Heading--sizeXS */}.spectrum-Typography .spectrum-Heading--sizeXXS{margin-bottom:var(--spectrum-heading-xxs-margin-bottom,var(--spectrum-global-dimension-size-40));margin-top:var(--spectrum-heading-xxs-margin-top,var(--spectrum-alias-heading-xxs-margin-top))/* .spectrum-Typography .spectrum-Heading--sizeXXS */}.spectrum-Typography .spectrum-Body--sizeXXXL{margin-bottom:var(--spectrum-body-xxxl-margin-bottom,var(--spectrum-global-dimension-size-400));margin-top:var(--spectrum-body-xxxl-margin-top,0)/* .spectrum-Typography .spectrum-Body--sizeXXXL */}.spectrum-Typography .spectrum-Body--sizeXXL{margin-bottom:var(--spectrum-body-xxl-margin-bottom,var(--spectrum-global-dimension-size-300));margin-top:var(--spectrum-body-xxl-margin-top,0)/* .spectrum-Typography .spectrum-Body--sizeXXL */}.spectrum-Typography .spectrum-Body--sizeXL{margin-bottom:var(--spectrum-body-xl-margin-bottom,var(--spectrum-global-dimension-size-200));margin-top:var(--spectrum-body-xl-margin-top,0)/* .spectrum-Typography .spectrum-Body--sizeXL */}.spectrum-Typography .spectrum-Body--sizeL{margin-bottom:var(--spectrum-body-l-margin-bottom,var(--spectrum-global-dimension-size-160));margin-top:var(--spectrum-body-l-margin-top,0)/* .spectrum-Typography .spectrum-Body--sizeL */}.spectrum-Typography .spectrum-Body--sizeM{margin-bottom:var(--spectrum-body-m-margin-bottom,var(--spectrum-global-dimension-size-150));margin-top:var(--spectrum-body-m-margin-top,0)/* .spectrum-Typography .spectrum-Body--sizeM */}.spectrum-Typography .spectrum-Body--sizeS{margin-bottom:var(--spectrum-body-s-margin-bottom,var(--spectrum-global-dimension-size-125));margin-top:var(--spectrum-body-s-margin-top,0)/* .spectrum-Typography .spectrum-Body--sizeS */}.spectrum-Typography .spectrum-Body--sizeXS{margin-bottom:var(--spectrum-body-xs-margin-bottom,var(--spectrum-global-dimension-size-115));margin-top:var(--spectrum-body-xs-margin-top,0)/* .spectrum-Typography .spectrum-Body--sizeXS */}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.spectrum-Typography .spectrum-Heading--sizeXXXL {
+    margin-bottom: var(
+        --spectrum-heading-xxxl-margin-bottom,
+        var(--spectrum-global-dimension-size-125)
+    );
+    margin-top: var(
+        --spectrum-heading-xxxl-margin-top,
+        var(--spectrum-alias-heading-xxxl-margin-top)
+    ); /* .spectrum-Typography .spectrum-Heading--sizeXXXL */
+}
+.spectrum-Typography .spectrum-Heading--sizeXXL {
+    margin-bottom: var(
+        --spectrum-heading-xxl-margin-bottom,
+        var(--spectrum-global-dimension-size-115)
+    );
+    margin-top: var(
+        --spectrum-heading-xxl-margin-top,
+        var(--spectrum-alias-heading-xxl-margin-top)
+    ); /* .spectrum-Typography .spectrum-Heading--sizeXXL */
+}
+.spectrum-Typography .spectrum-Heading--sizeXL {
+    margin-bottom: var(
+        --spectrum-heading-xl-margin-bottom,
+        var(--spectrum-global-dimension-size-100)
+    );
+    margin-top: var(
+        --spectrum-heading-xl-margin-top,
+        var(--spectrum-alias-heading-xl-margin-top)
+    ); /* .spectrum-Typography .spectrum-Heading--sizeXL */
+}
+.spectrum-Typography .spectrum-Heading--sizeL {
+    margin-bottom: var(
+        --spectrum-heading-l-margin-bottom,
+        var(--spectrum-global-dimension-size-85)
+    );
+    margin-top: var(
+        --spectrum-heading-l-margin-top,
+        var(--spectrum-alias-heading-l-margin-top)
+    ); /* .spectrum-Typography .spectrum-Heading--sizeL */
+}
+.spectrum-Typography .spectrum-Heading--sizeM {
+    margin-bottom: var(
+        --spectrum-heading-m-margin-bottom,
+        var(--spectrum-global-dimension-size-75)
+    );
+    margin-top: var(
+        --spectrum-heading-m-margin-top,
+        var(--spectrum-alias-heading-m-margin-top)
+    ); /* .spectrum-Typography .spectrum-Heading--sizeM */
+}
+.spectrum-Typography .spectrum-Heading--sizeS {
+    margin-bottom: var(
+        --spectrum-heading-s-margin-bottom,
+        var(--spectrum-global-dimension-size-65)
+    );
+    margin-top: var(
+        --spectrum-heading-s-margin-top,
+        var(--spectrum-alias-heading-s-margin-top)
+    ); /* .spectrum-Typography .spectrum-Heading--sizeS */
+}
+.spectrum-Typography .spectrum-Heading--sizeXS {
+    margin-bottom: var(
+        --spectrum-heading-xs-margin-bottom,
+        var(--spectrum-global-dimension-size-50)
+    );
+    margin-top: var(
+        --spectrum-heading-xs-margin-top,
+        var(--spectrum-alias-heading-xs-margin-top)
+    ); /* .spectrum-Typography .spectrum-Heading--sizeXS */
+}
+.spectrum-Typography .spectrum-Heading--sizeXXS {
+    margin-bottom: var(
+        --spectrum-heading-xxs-margin-bottom,
+        var(--spectrum-global-dimension-size-40)
+    );
+    margin-top: var(
+        --spectrum-heading-xxs-margin-top,
+        var(--spectrum-alias-heading-xxs-margin-top)
+    ); /* .spectrum-Typography .spectrum-Heading--sizeXXS */
+}
+.spectrum-Typography .spectrum-Body--sizeXXXL {
+    margin-bottom: var(
+        --spectrum-body-xxxl-margin-bottom,
+        var(--spectrum-global-dimension-size-400)
+    );
+    margin-top: var(
+        --spectrum-body-xxxl-margin-top,
+        0
+    ); /* .spectrum-Typography .spectrum-Body--sizeXXXL */
+}
+.spectrum-Typography .spectrum-Body--sizeXXL {
+    margin-bottom: var(
+        --spectrum-body-xxl-margin-bottom,
+        var(--spectrum-global-dimension-size-300)
+    );
+    margin-top: var(
+        --spectrum-body-xxl-margin-top,
+        0
+    ); /* .spectrum-Typography .spectrum-Body--sizeXXL */
+}
+.spectrum-Typography .spectrum-Body--sizeXL {
+    margin-bottom: var(
+        --spectrum-body-xl-margin-bottom,
+        var(--spectrum-global-dimension-size-200)
+    );
+    margin-top: var(
+        --spectrum-body-xl-margin-top,
+        0
+    ); /* .spectrum-Typography .spectrum-Body--sizeXL */
+}
+.spectrum-Typography .spectrum-Body--sizeL {
+    margin-bottom: var(
+        --spectrum-body-l-margin-bottom,
+        var(--spectrum-global-dimension-size-160)
+    );
+    margin-top: var(
+        --spectrum-body-l-margin-top,
+        0
+    ); /* .spectrum-Typography .spectrum-Body--sizeL */
+}
+.spectrum-Typography .spectrum-Body--sizeM {
+    margin-bottom: var(
+        --spectrum-body-m-margin-bottom,
+        var(--spectrum-global-dimension-size-150)
+    );
+    margin-top: var(
+        --spectrum-body-m-margin-top,
+        0
+    ); /* .spectrum-Typography .spectrum-Body--sizeM */
+}
+.spectrum-Typography .spectrum-Body--sizeS {
+    margin-bottom: var(
+        --spectrum-body-s-margin-bottom,
+        var(--spectrum-global-dimension-size-125)
+    );
+    margin-top: var(
+        --spectrum-body-s-margin-top,
+        0
+    ); /* .spectrum-Typography .spectrum-Body--sizeS */
+}
+.spectrum-Typography .spectrum-Body--sizeXS {
+    margin-bottom: var(
+        --spectrum-body-xs-margin-bottom,
+        var(--spectrum-global-dimension-size-115)
+    );
+    margin-top: var(
+        --spectrum-body-xs-margin-top,
+        0
+    ); /* .spectrum-Typography .spectrum-Body--sizeXS */
+}

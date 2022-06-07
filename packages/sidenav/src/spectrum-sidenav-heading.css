@@ -10,4 +10,74 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */#list{--spectrum-sidenav-item-padding-y:var(--spectrum-global-dimension-size-65);/* .spectrum-SideNav *//* .spectrum-SideNav */list-style-type:none;margin:0;padding:0}:host([dir=ltr]) #heading{margin-right:0/* [dir=ltr] .spectrum-SideNav-heading */}:host([dir=rtl]) #heading{margin-left:0/* [dir=rtl] .spectrum-SideNav-heading */}:host([dir=ltr]) #heading{margin-left:0/* [dir=ltr] .spectrum-SideNav-heading */}:host([dir=rtl]) #heading{margin-right:0/* [dir=rtl] .spectrum-SideNav-heading */}#heading{border-radius:var(--spectrum-sidenav-heading-border-radius,var(--spectrum-alias-border-radius-regular));color:var(--spectrum-sidenav-heading-text-color,var(--spectrum-global-color-gray-700));font-size:var(--spectrum-sidenav-heading-text-size,var(--spectrum-global-dimension-font-size-50));font-style:normal;font-weight:var(--spectrum-sidenav-heading-text-font-weight,var(--spectrum-global-font-weight-medium));height:var(--spectrum-sidenav-heading-height,var(--spectrum-alias-single-line-height));/* .spectrum-SideNav-heading */letter-spacing:var(--spectrum-sidenav-heading-text-letter-spacing,var(--spectrum-global-font-letter-spacing-medium));line-height:var(--spectrum-sidenav-heading-height,var(--spectrum-alias-single-line-height));margin-bottom:var(--spectrum-sidenav-heading-gap-bottom,var(--spectrum-global-dimension-size-50));margin-top:var(--spectrum-sidenav-heading-gap-top,var(--spectrum-global-dimension-size-200));padding-bottom:0;padding-left:var(--spectrum-sidenav-heading-padding-x,var(--spectrum-global-dimension-size-150));padding-right:var(--spectrum-sidenav-heading-padding-x,var(--spectrum-global-dimension-size-150));padding-top:0;text-transform:uppercase/* .spectrum-SideNav-heading */}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+#list {
+    --spectrum-sidenav-item-padding-y: var(
+        --spectrum-global-dimension-size-65
+    ); /* .spectrum-SideNav */ /* .spectrum-SideNav */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+:host([dir='ltr']) #heading {
+    margin-right: 0; /* [dir=ltr] .spectrum-SideNav-heading */
+}
+:host([dir='rtl']) #heading {
+    margin-left: 0; /* [dir=rtl] .spectrum-SideNav-heading */
+}
+:host([dir='ltr']) #heading {
+    margin-left: 0; /* [dir=ltr] .spectrum-SideNav-heading */
+}
+:host([dir='rtl']) #heading {
+    margin-right: 0; /* [dir=rtl] .spectrum-SideNav-heading */
+}
+#heading {
+    border-radius: var(
+        --spectrum-sidenav-heading-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    color: var(
+        --spectrum-sidenav-heading-text-color,
+        var(--spectrum-global-color-gray-700)
+    );
+    font-size: var(
+        --spectrum-sidenav-heading-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    font-style: normal;
+    font-weight: var(
+        --spectrum-sidenav-heading-text-font-weight,
+        var(--spectrum-global-font-weight-medium)
+    );
+    height: var(
+        --spectrum-sidenav-heading-height,
+        var(--spectrum-alias-single-line-height)
+    ); /* .spectrum-SideNav-heading */
+    letter-spacing: var(
+        --spectrum-sidenav-heading-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
+    );
+    line-height: var(
+        --spectrum-sidenav-heading-height,
+        var(--spectrum-alias-single-line-height)
+    );
+    margin-bottom: var(
+        --spectrum-sidenav-heading-gap-bottom,
+        var(--spectrum-global-dimension-size-50)
+    );
+    margin-top: var(
+        --spectrum-sidenav-heading-gap-top,
+        var(--spectrum-global-dimension-size-200)
+    );
+    padding-bottom: 0;
+    padding-left: var(
+        --spectrum-sidenav-heading-padding-x,
+        var(--spectrum-global-dimension-size-150)
+    );
+    padding-right: var(
+        --spectrum-sidenav-heading-padding-x,
+        var(--spectrum-global-dimension-size-150)
+    );
+    padding-top: 0;
+    text-transform: uppercase; /* .spectrum-SideNav-heading */
+}

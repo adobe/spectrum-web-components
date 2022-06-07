@@ -10,5 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */.spectrum{color:var(--spectrum-body-m-text-color,var(--spectrum-alias-text-color));font-family:var(--spectrum-alias-body-text-font-family,var(--spectrum-global-font-family-base));/* .spectrum */font-size:var(--spectrum-alias-font-size-default,var(--spectrum-global-dimension-font-size-100))/* .spectrum,
-   * .spectrum-Body */}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+.spectrum {
+    color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
+    font-family: var(
+        --spectrum-alias-body-text-font-family,
+        var(--spectrum-global-font-family-base)
+    ); /* .spectrum */
+    font-size: var(
+        --spectrum-alias-font-size-default,
+        var(--spectrum-global-dimension-font-size-100)
+    ); /* .spectrum,
+   * .spectrum-Body */
+}

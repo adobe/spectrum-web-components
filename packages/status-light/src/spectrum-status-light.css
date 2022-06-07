@@ -10,7 +10,334 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host([size=s]){--spectrum-statuslight-info-text-padding-bottom:var(--spectrum-statuslight-s-info-text-padding-bottom);/* .spectrum-StatusLight--sizeS */--spectrum-statuslight-info-dot-border-radius:var(--spectrum-statuslight-s-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50));--spectrum-statuslight-info-dot-margin-top:var(--spectrum-statuslight-s-info-dot-margin-top,var(--spectrum-global-dimension-size-100));--spectrum-statuslight-info-dot-size:var(--spectrum-statuslight-s-info-dot-size,var(--spectrum-global-dimension-static-size-100));--spectrum-statuslight-info-text-gap:var(--spectrum-statuslight-s-info-text-gap,var(--spectrum-global-dimension-size-115));--spectrum-statuslight-info-text-size:var(--spectrum-statuslight-s-info-text-size,var(--spectrum-global-dimension-font-size-75));--spectrum-statuslight-info-text-padding-top:var(--spectrum-statuslight-s-info-text-padding-top,var(--spectrum-global-dimension-static-size-50));--spectrum-statuslight-info-text-font-weight:var(--spectrum-statuslight-s-info-text-font-weight,var(--spectrum-alias-body-text-font-weight));--spectrum-statuslight-info-text-line-height:var(--spectrum-statuslight-s-info-text-line-height,var(--spectrum-alias-component-text-line-height));--spectrum-statuslight-info-height:var(--spectrum-statuslight-s-info-height,var(--spectrum-global-dimension-size-300))}:host([size=m]){--spectrum-statuslight-info-dot-border-radius:var(--spectrum-statuslight-m-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50));/* .spectrum-StatusLight--sizeM */--spectrum-statuslight-info-dot-margin-top:var(--spectrum-statuslight-m-info-dot-margin-top,var(--spectrum-global-dimension-size-130));--spectrum-statuslight-info-dot-size:var(--spectrum-statuslight-m-info-dot-size,var(--spectrum-global-dimension-size-100));--spectrum-statuslight-info-text-gap:var(--spectrum-statuslight-m-info-text-gap,var(--spectrum-global-dimension-size-125));--spectrum-statuslight-info-text-size:var(--spectrum-statuslight-m-info-text-size,var(--spectrum-global-dimension-font-size-100));--spectrum-statuslight-info-text-padding-top:var(--spectrum-statuslight-m-info-text-padding-top,var(--spectrum-global-dimension-size-75));--spectrum-statuslight-info-text-padding-bottom:var(--spectrum-statuslight-m-info-text-padding-bottom,var(--spectrum-global-dimension-size-115));--spectrum-statuslight-info-text-font-weight:var(--spectrum-statuslight-m-info-text-font-weight,var(--spectrum-alias-body-text-font-weight));--spectrum-statuslight-info-text-line-height:var(--spectrum-statuslight-m-info-text-line-height,var(--spectrum-alias-component-text-line-height));--spectrum-statuslight-info-height:var(--spectrum-statuslight-m-info-height,var(--spectrum-global-dimension-size-400))}:host([size=l]){--spectrum-statuslight-info-dot-size:var(--spectrum-statuslight-l-info-dot-size);/* .spectrum-StatusLight--sizeL */--spectrum-statuslight-info-text-padding-top:var(--spectrum-statuslight-l-info-text-padding-top);--spectrum-statuslight-info-dot-border-radius:var(--spectrum-statuslight-l-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50));--spectrum-statuslight-info-dot-margin-top:var(--spectrum-statuslight-l-info-dot-margin-top,var(--spectrum-global-dimension-size-185));--spectrum-statuslight-info-text-gap:var(--spectrum-statuslight-l-info-text-gap,var(--spectrum-global-dimension-size-130));--spectrum-statuslight-info-text-size:var(--spectrum-statuslight-l-info-text-size,var(--spectrum-global-dimension-font-size-200));--spectrum-statuslight-info-text-padding-bottom:var(--spectrum-statuslight-l-info-text-padding-bottom,var(--spectrum-global-dimension-size-130));--spectrum-statuslight-info-text-font-weight:var(--spectrum-statuslight-l-info-text-font-weight,var(--spectrum-alias-body-text-font-weight));--spectrum-statuslight-info-text-line-height:var(--spectrum-statuslight-l-info-text-line-height,var(--spectrum-alias-component-text-line-height));--spectrum-statuslight-info-height:var(--spectrum-statuslight-l-info-height,var(--spectrum-global-dimension-size-500))}:host([size=xl]){--spectrum-statuslight-info-dot-size:var(--spectrum-statuslight-xl-info-dot-size);/* .spectrum-StatusLight--sizeXL */--spectrum-statuslight-info-dot-border-radius:var(--spectrum-statuslight-xl-info-dot-border-radius,var(--spectrum-global-dimension-static-percent-50));--spectrum-statuslight-info-dot-margin-top:var(--spectrum-statuslight-xl-info-dot-margin-top,var(--spectrum-global-dimension-size-250));--spectrum-statuslight-info-text-gap:var(--spectrum-statuslight-xl-info-text-gap,var(--spectrum-global-dimension-size-160));--spectrum-statuslight-info-text-size:var(--spectrum-statuslight-xl-info-text-size,var(--spectrum-global-dimension-font-size-300));--spectrum-statuslight-info-text-padding-top:var(--spectrum-statuslight-xl-info-text-padding-top,var(--spectrum-global-dimension-size-150));--spectrum-statuslight-info-text-padding-bottom:var(--spectrum-statuslight-xl-info-text-padding-bottom,var(--spectrum-global-dimension-size-175));--spectrum-statuslight-info-text-font-weight:var(--spectrum-statuslight-xl-info-text-font-weight,var(--spectrum-alias-body-text-font-weight));--spectrum-statuslight-info-text-line-height:var(--spectrum-statuslight-xl-info-text-line-height,var(--spectrum-alias-component-text-line-height));--spectrum-statuslight-info-height:var(--spectrum-statuslight-xl-info-height,var(--spectrum-global-dimension-size-600))}:host([dir]){--spectrum-statuslight-info-dot-resolved-margin-top:calc(var(--spectrum-statuslight-info-dot-margin-top) - var(--spectrum-statuslight-info-text-padding-top));/* .spectrum-StatusLight */align-items:flex-start;box-sizing:border-box;display:flex;flex-direction:row;font-size:var(--spectrum-statuslight-info-text-size);font-weight:var(--spectrum-statuslight-info-text-font-weight);line-height:var(--spectrum-statuslight-info-text-line-height);min-height:var(--spectrum-statuslight-info-height);padding-bottom:var(--spectrum-statuslight-info-text-padding-bottom);padding-left:0;padding-right:0;padding-top:var(--spectrum-statuslight-info-text-padding-top)}:host([dir=ltr]):before{margin-left:var(--spectrum-global-dimension-size-0);/* [dir=ltr] .spectrum-StatusLight:before */margin-right:var(--spectrum-statuslight-info-text-gap)}:host([dir=rtl]):before{margin-left:var(--spectrum-statuslight-info-text-gap);margin-right:var(--spectrum-global-dimension-size-0)/* [dir=rtl] .spectrum-StatusLight:before */}:host:before{-ms-high-contrast-adjust:none;border-radius:var(--spectrum-statuslight-info-dot-border-radius);content:"";/* .spectrum-StatusLight:before */display:inline-block;flex-grow:0;flex-shrink:0;forced-color-adjust:none;height:var(--spectrum-statuslight-info-dot-size);margin-bottom:var(--spectrum-global-dimension-size-0);margin-top:var(--spectrum-statuslight-info-dot-resolved-margin-top);width:var(--spectrum-statuslight-info-dot-size)}:host([variant=neutral]){font-style:italic/* .spectrum-StatusLight--neutral */}:host([dir]){color:var(--spectrum-statuslight-m-info-text-color,var(--spectrum-alias-text-color))/* .spectrum-StatusLight */}:host([disabled]),:host([disabled]){color:var(--spectrum-statuslight-m-info-text-color-disabled,var(--spectrum-alias-text-color-disabled))/* .spectrum-StatusLight[disabled],
-   * .spectrum-StatusLight.is-disabled */}:host([disabled]):before,:host([disabled]):before{background-color:var(--spectrum-statuslight-m-info-dot-color-disabled,var(--spectrum-global-color-gray-400))/* .spectrum-StatusLight[disabled]:before,
-   * .spectrum-StatusLight.is-disabled::before */}:host([variant=negative]):before{background-color:var(--spectrum-statuslight-m-negative-dot-color,var(--spectrum-semantic-negative-status-color))/* .spectrum-StatusLight--negative:before */}:host([variant=notice]):before{background-color:var(--spectrum-statuslight-m-notice-dot-color,var(--spectrum-semantic-notice-status-color))/* .spectrum-StatusLight--notice:before */}:host([variant=positive]):before{background-color:var(--spectrum-statuslight-m-positive-dot-color,var(--spectrum-semantic-positive-status-color))/* .spectrum-StatusLight--positive:before */}:host([active]):before,:host([variant=info]):before{background-color:var(--spectrum-statuslight-m-info-dot-color,var(--spectrum-semantic-informative-status-color))/* .spectrum-StatusLight--info:before,
-   * .spectrum-StatusLight--active::before */}:host([variant=neutral]){color:var(--spectrum-statuslight-m-neutral-text-color,var(--spectrum-alias-label-text-color))/* .spectrum-StatusLight--neutral */}:host([variant=neutral]):before{background-color:var(--spectrum-statuslight-m-neutral-dot-color,var(--spectrum-global-color-gray-500))/* .spectrum-StatusLight--neutral:before */}:host([variant=celery]):before{background-color:var(--spectrum-statuslight-m-celery-dot-color,var(--spectrum-global-color-celery-400))/* .spectrum-StatusLight--celery:before */}:host([variant=yellow]):before{background-color:var(--spectrum-statuslight-m-yellow-dot-color,var(--spectrum-global-color-yellow-400))/* .spectrum-StatusLight--yellow:before */}:host([variant=fuchsia]):before{background-color:var(--spectrum-statuslight-m-fuchsia-dot-color,var(--spectrum-global-color-fuchsia-400))/* .spectrum-StatusLight--fuchsia:before */}:host([variant=indigo]):before{background-color:var(--spectrum-statuslight-m-indigo-dot-color,var(--spectrum-global-color-indigo-400))/* .spectrum-StatusLight--indigo:before */}:host([variant=seafoam]):before{background-color:var(--spectrum-statuslight-m-seafoam-dot-color,var(--spectrum-global-color-seafoam-400))/* .spectrum-StatusLight--seafoam:before */}:host([variant=chartreuse]):before{background-color:var(--spectrum-statuslight-m-chartreuse-dot-color,var(--spectrum-global-color-chartreuse-400))/* .spectrum-StatusLight--chartreuse:before */}:host([variant=magenta]):before{background-color:var(--spectrum-statuslight-m-magenta-dot-color,var(--spectrum-global-color-magenta-400))/* .spectrum-StatusLight--magenta:before */}:host([variant=purple]):before{background-color:var(--spectrum-statuslight-m-purple-dot-color,var(--spectrum-global-color-purple-400))/* .spectrum-StatusLight--purple:before */}@media (forced-colors:active){:host([dir]){--spectrum-statuslight-m-info-text-color:CanvasText;--spectrum-statuslight-m-neutral-text-color:CanvasText;--spectrum-statuslight-m-info-text-color-disabled:GrayText;--spectrum-statuslight-m-info-dot-color-disabled:GrayText;forced-color-adjust:none}:host:before{border:1px solid ButtonText}}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([size='s']) {
+    --spectrum-statuslight-info-text-padding-bottom: var(
+        --spectrum-statuslight-s-info-text-padding-bottom
+    ); /* .spectrum-StatusLight--sizeS */
+    --spectrum-statuslight-info-dot-border-radius: var(
+        --spectrum-statuslight-s-info-dot-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    );
+    --spectrum-statuslight-info-dot-margin-top: var(
+        --spectrum-statuslight-s-info-dot-margin-top,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-statuslight-info-dot-size: var(
+        --spectrum-statuslight-s-info-dot-size,
+        var(--spectrum-global-dimension-static-size-100)
+    );
+    --spectrum-statuslight-info-text-gap: var(
+        --spectrum-statuslight-s-info-text-gap,
+        var(--spectrum-global-dimension-size-115)
+    );
+    --spectrum-statuslight-info-text-size: var(
+        --spectrum-statuslight-s-info-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    --spectrum-statuslight-info-text-padding-top: var(
+        --spectrum-statuslight-s-info-text-padding-top,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+    --spectrum-statuslight-info-text-font-weight: var(
+        --spectrum-statuslight-s-info-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-statuslight-info-text-line-height: var(
+        --spectrum-statuslight-s-info-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-statuslight-info-height: var(
+        --spectrum-statuslight-s-info-height,
+        var(--spectrum-global-dimension-size-300)
+    );
+}
+:host([size='m']) {
+    --spectrum-statuslight-info-dot-border-radius: var(
+        --spectrum-statuslight-m-info-dot-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    ); /* .spectrum-StatusLight--sizeM */
+    --spectrum-statuslight-info-dot-margin-top: var(
+        --spectrum-statuslight-m-info-dot-margin-top,
+        var(--spectrum-global-dimension-size-130)
+    );
+    --spectrum-statuslight-info-dot-size: var(
+        --spectrum-statuslight-m-info-dot-size,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-statuslight-info-text-gap: var(
+        --spectrum-statuslight-m-info-text-gap,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-statuslight-info-text-size: var(
+        --spectrum-statuslight-m-info-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-statuslight-info-text-padding-top: var(
+        --spectrum-statuslight-m-info-text-padding-top,
+        var(--spectrum-global-dimension-size-75)
+    );
+    --spectrum-statuslight-info-text-padding-bottom: var(
+        --spectrum-statuslight-m-info-text-padding-bottom,
+        var(--spectrum-global-dimension-size-115)
+    );
+    --spectrum-statuslight-info-text-font-weight: var(
+        --spectrum-statuslight-m-info-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-statuslight-info-text-line-height: var(
+        --spectrum-statuslight-m-info-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-statuslight-info-height: var(
+        --spectrum-statuslight-m-info-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+}
+:host([size='l']) {
+    --spectrum-statuslight-info-dot-size: var(
+        --spectrum-statuslight-l-info-dot-size
+    ); /* .spectrum-StatusLight--sizeL */
+    --spectrum-statuslight-info-text-padding-top: var(
+        --spectrum-statuslight-l-info-text-padding-top
+    );
+    --spectrum-statuslight-info-dot-border-radius: var(
+        --spectrum-statuslight-l-info-dot-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    );
+    --spectrum-statuslight-info-dot-margin-top: var(
+        --spectrum-statuslight-l-info-dot-margin-top,
+        var(--spectrum-global-dimension-size-185)
+    );
+    --spectrum-statuslight-info-text-gap: var(
+        --spectrum-statuslight-l-info-text-gap,
+        var(--spectrum-global-dimension-size-130)
+    );
+    --spectrum-statuslight-info-text-size: var(
+        --spectrum-statuslight-l-info-text-size,
+        var(--spectrum-global-dimension-font-size-200)
+    );
+    --spectrum-statuslight-info-text-padding-bottom: var(
+        --spectrum-statuslight-l-info-text-padding-bottom,
+        var(--spectrum-global-dimension-size-130)
+    );
+    --spectrum-statuslight-info-text-font-weight: var(
+        --spectrum-statuslight-l-info-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-statuslight-info-text-line-height: var(
+        --spectrum-statuslight-l-info-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-statuslight-info-height: var(
+        --spectrum-statuslight-l-info-height,
+        var(--spectrum-global-dimension-size-500)
+    );
+}
+:host([size='xl']) {
+    --spectrum-statuslight-info-dot-size: var(
+        --spectrum-statuslight-xl-info-dot-size
+    ); /* .spectrum-StatusLight--sizeXL */
+    --spectrum-statuslight-info-dot-border-radius: var(
+        --spectrum-statuslight-xl-info-dot-border-radius,
+        var(--spectrum-global-dimension-static-percent-50)
+    );
+    --spectrum-statuslight-info-dot-margin-top: var(
+        --spectrum-statuslight-xl-info-dot-margin-top,
+        var(--spectrum-global-dimension-size-250)
+    );
+    --spectrum-statuslight-info-text-gap: var(
+        --spectrum-statuslight-xl-info-text-gap,
+        var(--spectrum-global-dimension-size-160)
+    );
+    --spectrum-statuslight-info-text-size: var(
+        --spectrum-statuslight-xl-info-text-size,
+        var(--spectrum-global-dimension-font-size-300)
+    );
+    --spectrum-statuslight-info-text-padding-top: var(
+        --spectrum-statuslight-xl-info-text-padding-top,
+        var(--spectrum-global-dimension-size-150)
+    );
+    --spectrum-statuslight-info-text-padding-bottom: var(
+        --spectrum-statuslight-xl-info-text-padding-bottom,
+        var(--spectrum-global-dimension-size-175)
+    );
+    --spectrum-statuslight-info-text-font-weight: var(
+        --spectrum-statuslight-xl-info-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-statuslight-info-text-line-height: var(
+        --spectrum-statuslight-xl-info-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-statuslight-info-height: var(
+        --spectrum-statuslight-xl-info-height,
+        var(--spectrum-global-dimension-size-600)
+    );
+}
+:host([dir]) {
+    --spectrum-statuslight-info-dot-resolved-margin-top: calc(
+        var(--spectrum-statuslight-info-dot-margin-top) -
+            var(--spectrum-statuslight-info-text-padding-top)
+    ); /* .spectrum-StatusLight */
+    align-items: flex-start;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    font-size: var(--spectrum-statuslight-info-text-size);
+    font-weight: var(--spectrum-statuslight-info-text-font-weight);
+    line-height: var(--spectrum-statuslight-info-text-line-height);
+    min-height: var(--spectrum-statuslight-info-height);
+    padding-bottom: var(--spectrum-statuslight-info-text-padding-bottom);
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: var(--spectrum-statuslight-info-text-padding-top);
+}
+:host([dir='ltr']):before {
+    margin-left: var(
+        --spectrum-global-dimension-size-0
+    ); /* [dir=ltr] .spectrum-StatusLight:before */
+    margin-right: var(--spectrum-statuslight-info-text-gap);
+}
+:host([dir='rtl']):before {
+    margin-left: var(--spectrum-statuslight-info-text-gap);
+    margin-right: var(
+        --spectrum-global-dimension-size-0
+    ); /* [dir=rtl] .spectrum-StatusLight:before */
+}
+:host:before {
+    -ms-high-contrast-adjust: none;
+    border-radius: var(--spectrum-statuslight-info-dot-border-radius);
+    content: ''; /* .spectrum-StatusLight:before */
+    display: inline-block;
+    flex-grow: 0;
+    flex-shrink: 0;
+    forced-color-adjust: none;
+    height: var(--spectrum-statuslight-info-dot-size);
+    margin-bottom: var(--spectrum-global-dimension-size-0);
+    margin-top: var(--spectrum-statuslight-info-dot-resolved-margin-top);
+    width: var(--spectrum-statuslight-info-dot-size);
+}
+:host([variant='neutral']) {
+    font-style: italic; /* .spectrum-StatusLight--neutral */
+}
+:host([dir]) {
+    color: var(
+        --spectrum-statuslight-m-info-text-color,
+        var(--spectrum-alias-text-color)
+    ); /* .spectrum-StatusLight */
+}
+:host([disabled]),
+:host([disabled]) {
+    color: var(
+        --spectrum-statuslight-m-info-text-color-disabled,
+        var(--spectrum-alias-text-color-disabled)
+    ); /* .spectrum-StatusLight[disabled],
+   * .spectrum-StatusLight.is-disabled */
+}
+:host([disabled]):before,
+:host([disabled]):before {
+    background-color: var(
+        --spectrum-statuslight-m-info-dot-color-disabled,
+        var(--spectrum-global-color-gray-400)
+    ); /* .spectrum-StatusLight[disabled]:before,
+   * .spectrum-StatusLight.is-disabled::before */
+}
+:host([variant='negative']):before {
+    background-color: var(
+        --spectrum-statuslight-m-negative-dot-color,
+        var(--spectrum-semantic-negative-status-color)
+    ); /* .spectrum-StatusLight--negative:before */
+}
+:host([variant='notice']):before {
+    background-color: var(
+        --spectrum-statuslight-m-notice-dot-color,
+        var(--spectrum-semantic-notice-status-color)
+    ); /* .spectrum-StatusLight--notice:before */
+}
+:host([variant='positive']):before {
+    background-color: var(
+        --spectrum-statuslight-m-positive-dot-color,
+        var(--spectrum-semantic-positive-status-color)
+    ); /* .spectrum-StatusLight--positive:before */
+}
+:host([active]):before,
+:host([variant='info']):before {
+    background-color: var(
+        --spectrum-statuslight-m-info-dot-color,
+        var(--spectrum-semantic-informative-status-color)
+    ); /* .spectrum-StatusLight--info:before,
+   * .spectrum-StatusLight--active::before */
+}
+:host([variant='neutral']) {
+    color: var(
+        --spectrum-statuslight-m-neutral-text-color,
+        var(--spectrum-alias-label-text-color)
+    ); /* .spectrum-StatusLight--neutral */
+}
+:host([variant='neutral']):before {
+    background-color: var(
+        --spectrum-statuslight-m-neutral-dot-color,
+        var(--spectrum-global-color-gray-500)
+    ); /* .spectrum-StatusLight--neutral:before */
+}
+:host([variant='celery']):before {
+    background-color: var(
+        --spectrum-statuslight-m-celery-dot-color,
+        var(--spectrum-global-color-celery-400)
+    ); /* .spectrum-StatusLight--celery:before */
+}
+:host([variant='yellow']):before {
+    background-color: var(
+        --spectrum-statuslight-m-yellow-dot-color,
+        var(--spectrum-global-color-yellow-400)
+    ); /* .spectrum-StatusLight--yellow:before */
+}
+:host([variant='fuchsia']):before {
+    background-color: var(
+        --spectrum-statuslight-m-fuchsia-dot-color,
+        var(--spectrum-global-color-fuchsia-400)
+    ); /* .spectrum-StatusLight--fuchsia:before */
+}
+:host([variant='indigo']):before {
+    background-color: var(
+        --spectrum-statuslight-m-indigo-dot-color,
+        var(--spectrum-global-color-indigo-400)
+    ); /* .spectrum-StatusLight--indigo:before */
+}
+:host([variant='seafoam']):before {
+    background-color: var(
+        --spectrum-statuslight-m-seafoam-dot-color,
+        var(--spectrum-global-color-seafoam-400)
+    ); /* .spectrum-StatusLight--seafoam:before */
+}
+:host([variant='chartreuse']):before {
+    background-color: var(
+        --spectrum-statuslight-m-chartreuse-dot-color,
+        var(--spectrum-global-color-chartreuse-400)
+    ); /* .spectrum-StatusLight--chartreuse:before */
+}
+:host([variant='magenta']):before {
+    background-color: var(
+        --spectrum-statuslight-m-magenta-dot-color,
+        var(--spectrum-global-color-magenta-400)
+    ); /* .spectrum-StatusLight--magenta:before */
+}
+:host([variant='purple']):before {
+    background-color: var(
+        --spectrum-statuslight-m-purple-dot-color,
+        var(--spectrum-global-color-purple-400)
+    ); /* .spectrum-StatusLight--purple:before */
+}
+@media (forced-colors: active) {
+    :host([dir]) {
+        --spectrum-statuslight-m-info-text-color: CanvasText;
+        --spectrum-statuslight-m-neutral-text-color: CanvasText;
+        --spectrum-statuslight-m-info-text-color-disabled: GrayText;
+        --spectrum-statuslight-m-info-dot-color-disabled: GrayText;
+        forced-color-adjust: none;
+    }
+    :host:before {
+        border: 1px solid ButtonText;
+    }
+}

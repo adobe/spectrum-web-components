@@ -17,6 +17,12 @@
             "rules": {
                 "header/header": ["config/license.js", {}]
             }
+        },
+        {
+            "files": ["packages/**/src/*.css"],
+            "rules": {
+                "value-keyword-case": null
+            }
         }
     ]
 }

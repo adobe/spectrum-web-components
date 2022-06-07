@@ -10,18 +10,354 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */:host{--spectrum-splitview-vertical-width:100%;/* .spectrum-SplitView */--spectrum-splitview-vertical-gripper-width:50%;--spectrum-splitview-vertical-gripper-outer-width:100%;--spectrum-splitview-vertical-gripper-reset:0}:host{display:flex;/* .spectrum-SplitView */overflow:hidden}::slotted(*){height:100%/* .spectrum-SplitView-pane */}:host([dir=ltr]) #gripper{left:calc((var(--spectrum-dragbar-gripper-width, var(--spectrum-global-dimension-static-size-50)) + 2*var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) - var(--spectrum-dragbar-handle-width, var(--spectrum-global-dimension-static-size-25)))/2*-1)/* [dir=ltr] .spectrum-SplitView-gripper */}:host([dir=rtl]) #gripper{right:calc((var(--spectrum-dragbar-gripper-width, var(--spectrum-global-dimension-static-size-50)) + 2*var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) - var(--spectrum-dragbar-handle-width, var(--spectrum-global-dimension-static-size-25)))/2*-1)/* [dir=rtl] .spectrum-SplitView-gripper */}#gripper{border-radius:var(--spectrum-dragbar-gripper-border-radius,var(--spectrum-alias-border-radius-small));border-style:solid;border-width:var(--spectrum-dragbar-gripper-border-width-vertical,4px) var(--spectrum-dragbar-gripper-border-width-horizontal,3px);content:"";/* .spectrum-SplitView-gripper */display:block;height:var(--spectrum-dragbar-gripper-height,var(--spectrum-global-dimension-static-size-200));position:absolute;top:50%;transform:translateY(-50%);width:var(--spectrum-dragbar-gripper-width,var(--spectrum-global-dimension-static-size-50))}#splitter{height:100%;position:relative;/* .spectrum-SplitView-splitter */-webkit-user-select:none;user-select:none;width:var(--spectrum-dragbar-handle-width,var(--spectrum-global-dimension-static-size-25));z-index:1}:host([dir=ltr]) #splitter.is-collapsed-end #gripper:before,:host([dir=ltr]) #splitter.is-collapsed-start #gripper:before{left:calc(50% - var(--spectrum-dragbar-handle-width, var(--spectrum-global-dimension-static-size-25))/2)/* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
-   * [dir=ltr]  .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */}:host([dir=rtl]) #splitter.is-collapsed-end #gripper:before,:host([dir=rtl]) #splitter.is-collapsed-start #gripper:before{right:calc(50% - var(--spectrum-dragbar-handle-width, var(--spectrum-global-dimension-static-size-25))/2)/* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
-   * [dir=rtl]  .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */}#splitter.is-collapsed-end #gripper:before,#splitter.is-collapsed-start #gripper:before{content:"";/* .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
-   * .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */height:100%;position:absolute;top:0;width:var(--spectrum-dragbar-handle-width,var(--spectrum-global-dimension-static-size-25))}:host([dir=ltr]) #splitter.is-collapsed-start #gripper{left:0/* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */}:host([dir=rtl]) #splitter.is-collapsed-start #gripper{right:0/* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */}:host([dir=ltr]) #splitter.is-collapsed-end #gripper{right:0/* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */}:host([dir=rtl]) #splitter.is-collapsed-end #gripper{left:0/* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */}:host([dir=ltr]) #splitter.is-collapsed-end #gripper{left:auto/* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */}:host([dir=rtl]) #splitter.is-collapsed-end #gripper{right:auto/* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */}:host([vertical]){flex-direction:column/* .spectrum-SplitView--vertical */}:host([vertical]) ::slotted(*){height:auto;/* .spectrum-SplitView--vertical .spectrum-SplitView-pane */width:var(--spectrum-splitview-vertical-width)}:host([dir=ltr][vertical]) #gripper{left:var(--spectrum-splitview-vertical-gripper-width)/* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-gripper */}:host([dir=rtl][vertical]) #gripper{right:var(--spectrum-splitview-vertical-gripper-width)/* [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-gripper */}:host([vertical]) #gripper{border-width:var(--spectrum-dragbar-gripper-border-width-horizontal,3px) var(--spectrum-dragbar-gripper-border-width-vertical,4px);height:var(--spectrum-dragbar-gripper-width,var(--spectrum-global-dimension-static-size-50));top:calc((var(--spectrum-dragbar-gripper-width, var(--spectrum-global-dimension-static-size-50)) + 2*var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) - var(--spectrum-dragbar-handle-width, var(--spectrum-global-dimension-static-size-25)))/2*-1);/* .spectrum-SplitView--vertical .spectrum-SplitView-gripper */transform:translate(calc(var(--spectrum-splitview-vertical-gripper-width)*-1));width:var(--spectrum-dragbar-gripper-height,var(--spectrum-global-dimension-static-size-200))}:host([vertical]) #splitter{height:var(--spectrum-dragbar-handle-width,var(--spectrum-global-dimension-static-size-25));width:var(--spectrum-splitview-vertical-width)/* .spectrum-SplitView--vertical .spectrum-SplitView-splitter */}:host([dir=ltr][vertical]) #splitter.is-collapsed-end #gripper,:host([dir=ltr][vertical]) #splitter.is-collapsed-start #gripper{left:var(--spectrum-splitview-vertical-gripper-width)/* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper,
-   * [dir=ltr]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */}:host([dir=rtl][vertical]) #splitter.is-collapsed-end #gripper,:host([dir=rtl][vertical]) #splitter.is-collapsed-start #gripper{right:var(--spectrum-splitview-vertical-gripper-width)/* [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper,
-   * [dir=rtl]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */}:host([dir=ltr][vertical]) #splitter.is-collapsed-end #gripper:before,:host([dir=ltr][vertical]) #splitter.is-collapsed-start #gripper:before{left:var(--spectrum-splitview-vertical-gripper-reset)/* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
-   * [dir=ltr]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */}:host([dir=rtl][vertical]) #splitter.is-collapsed-end #gripper:before,:host([dir=rtl][vertical]) #splitter.is-collapsed-start #gripper:before{right:var(--spectrum-splitview-vertical-gripper-reset)/* [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
-   * [dir=rtl]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */}:host([vertical]) #splitter.is-collapsed-end #gripper:before,:host([vertical]) #splitter.is-collapsed-start #gripper:before{height:var(--spectrum-dragbar-handle-width,var(--spectrum-global-dimension-static-size-25));top:calc(var(--spectrum-splitview-vertical-gripper-width) - var(--spectrum-dragbar-handle-width, var(--spectrum-global-dimension-static-size-25))/2);/* .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
-   * .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */width:var(--spectrum-splitview-vertical-gripper-outer-width)}:host([vertical]) #splitter.is-collapsed-start #gripper{top:var(--spectrum-splitview-vertical-gripper-reset)/* .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */}:host([vertical]) #splitter.is-collapsed-end #gripper{bottom:var(--spectrum-splitview-vertical-gripper-reset);top:auto/* .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */}::slotted(*){background-color:var(--spectrum-panel-s-background-color,var(--spectrum-alias-toolbar-background-color))/* .spectrum-SplitView-pane */}#splitter{background-color:var(--spectrum-dragbar-handle-background-color,var(--spectrum-global-color-gray-300))/* .spectrum-SplitView-splitter */}#gripper{border-color:var(--spectrum-dragbar-handle-background-color,var(--spectrum-global-color-gray-300))/* .spectrum-SplitView-gripper */}#gripper:before{background-color:var(--spectrum-dragbar-handle-background-color,var(--spectrum-global-color-gray-300))/* .spectrum-SplitView-gripper:before */}:host([resizable]) #splitter.is-hovered,:host([resizable]) #splitter:hover{background-color:var(--spectrum-dragbar-handle-background-color-hover,var(--spectrum-global-color-gray-400))/* .spectrum-SplitView-splitter.is-draggable:hover,
-   * .spectrum-SplitView-splitter.is-draggable.is-hovered */}:host([resizable]) #splitter.is-hovered #gripper,:host([resizable]) #splitter:hover #gripper{border-color:var(--spectrum-dragbar-handle-background-color-hover,var(--spectrum-global-color-gray-400))/* .spectrum-SplitView-splitter.is-draggable:hover .spectrum-SplitView-gripper,
-   * .spectrum-SplitView-splitter.is-draggable.is-hovered .spectrum-SplitView-gripper */}:host([resizable]) #splitter.is-hovered #gripper:before,:host([resizable]) #splitter:hover #gripper:before{background-color:var(--spectrum-dragbar-handle-background-color-hover,var(--spectrum-global-color-gray-400))/* .spectrum-SplitView-splitter.is-draggable:hover .spectrum-SplitView-gripper:before,
-   * .spectrum-SplitView-splitter.is-draggable.is-hovered .spectrum-SplitView-gripper:before */}:host([resizable]) #splitter.is-active,:host([resizable]) #splitter:active{background-color:var(--spectrum-dragbar-handle-background-color-down,var(--spectrum-global-color-gray-800))/* .spectrum-SplitView-splitter.is-draggable:active,
-   * .spectrum-SplitView-splitter.is-draggable.is-active */}:host([resizable]) #splitter.is-active #gripper,:host([resizable]) #splitter:active #gripper{border-color:var(--spectrum-dragbar-handle-background-color-down,var(--spectrum-global-color-gray-800))/* .spectrum-SplitView-splitter.is-draggable:active .spectrum-SplitView-gripper,
-   * .spectrum-SplitView-splitter.is-draggable.is-active .spectrum-SplitView-gripper */}:host([resizable]) #splitter.is-active #gripper:before,:host([resizable]) #splitter:active #gripper:before{background-color:var(--spectrum-dragbar-handle-background-color-down,var(--spectrum-global-color-gray-800))/* .spectrum-SplitView-splitter.is-draggable:active .spectrum-SplitView-gripper:before,
-   * .spectrum-SplitView-splitter.is-draggable.is-active .spectrum-SplitView-gripper:before */}:host([resizable]) #splitter:focus{outline:none/* .spectrum-SplitView-splitter.is-draggable:focus */}:host([resizable]) #splitter.focus-visible{background-color:var(--spectrum-alias-focus-color,var(--spectrum-global-color-blue-400))/* .spectrum-SplitView-splitter.is-draggable.focus-ring */}:host([resizable]) #splitter:focus-visible{background-color:var(--spectrum-alias-focus-color,var(--spectrum-global-color-blue-400))/* .spectrum-SplitView-splitter.is-draggable.focus-ring */}:host([resizable]) #splitter.focus-visible #gripper{border-color:var(--spectrum-alias-focus-color,var(--spectrum-global-color-blue-400));/* .spectrum-SplitView-splitter.is-draggable.focus-ring .spectrum-SplitView-gripper */box-shadow:0 0 0 1px var(--spectrum-alias-focus-color,var(--spectrum-global-color-blue-400))}:host([resizable]) #splitter:focus-visible #gripper{border-color:var(--spectrum-alias-focus-color,var(--spectrum-global-color-blue-400));/* .spectrum-SplitView-splitter.is-draggable.focus-ring .spectrum-SplitView-gripper */box-shadow:0 0 0 1px var(--spectrum-alias-focus-color,var(--spectrum-global-color-blue-400))}:host([resizable]) #splitter.focus-visible #gripper:before{background-color:var(--spectrum-alias-focus-color,var(--spectrum-global-color-blue-400))/* .spectrum-SplitView-splitter.is-draggable.focus-ring .spectrum-SplitView-gripper:before */}:host([resizable]) #splitter:focus-visible #gripper:before{background-color:var(--spectrum-alias-focus-color,var(--spectrum-global-color-blue-400))/* .spectrum-SplitView-splitter.is-draggable.focus-ring .spectrum-SplitView-gripper:before */}
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-splitview-vertical-width: 100%; /* .spectrum-SplitView */
+    --spectrum-splitview-vertical-gripper-width: 50%;
+    --spectrum-splitview-vertical-gripper-outer-width: 100%;
+    --spectrum-splitview-vertical-gripper-reset: 0;
+}
+:host {
+    display: flex; /* .spectrum-SplitView */
+    overflow: hidden;
+}
+::slotted(*) {
+    height: 100%; /* .spectrum-SplitView-pane */
+}
+:host([dir='ltr']) #gripper {
+    left: calc(
+        (
+                var(
+                        --spectrum-dragbar-gripper-width,
+                        var(--spectrum-global-dimension-static-size-50)
+                    ) + 2 *
+                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
+                    var(
+                        --spectrum-dragbar-handle-width,
+                        var(--spectrum-global-dimension-static-size-25)
+                    )
+            ) / 2 * -1
+    ); /* [dir=ltr] .spectrum-SplitView-gripper */
+}
+:host([dir='rtl']) #gripper {
+    right: calc(
+        (
+                var(
+                        --spectrum-dragbar-gripper-width,
+                        var(--spectrum-global-dimension-static-size-50)
+                    ) + 2 *
+                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
+                    var(
+                        --spectrum-dragbar-handle-width,
+                        var(--spectrum-global-dimension-static-size-25)
+                    )
+            ) / 2 * -1
+    ); /* [dir=rtl] .spectrum-SplitView-gripper */
+}
+#gripper {
+    border-radius: var(
+        --spectrum-dragbar-gripper-border-radius,
+        var(--spectrum-alias-border-radius-small)
+    );
+    border-style: solid;
+    border-width: var(--spectrum-dragbar-gripper-border-width-vertical, 4px)
+        var(--spectrum-dragbar-gripper-border-width-horizontal, 3px);
+    content: ''; /* .spectrum-SplitView-gripper */
+    display: block;
+    height: var(
+        --spectrum-dragbar-gripper-height,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(
+        --spectrum-dragbar-gripper-width,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+}
+#splitter {
+    height: 100%;
+    position: relative; /* .spectrum-SplitView-splitter */
+    -webkit-user-select: none;
+    user-select: none;
+    width: var(
+        --spectrum-dragbar-handle-width,
+        var(--spectrum-global-dimension-static-size-25)
+    );
+    z-index: 1;
+}
+:host([dir='ltr']) #splitter.is-collapsed-end #gripper:before,
+:host([dir='ltr']) #splitter.is-collapsed-start #gripper:before {
+    left: calc(
+        50% -
+            var(
+                --spectrum-dragbar-handle-width,
+                var(--spectrum-global-dimension-static-size-25)
+            ) / 2
+    ); /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
+   * [dir=ltr]  .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */
+}
+:host([dir='rtl']) #splitter.is-collapsed-end #gripper:before,
+:host([dir='rtl']) #splitter.is-collapsed-start #gripper:before {
+    right: calc(
+        50% -
+            var(
+                --spectrum-dragbar-handle-width,
+                var(--spectrum-global-dimension-static-size-25)
+            ) / 2
+    ); /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
+   * [dir=rtl]  .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */
+}
+#splitter.is-collapsed-end #gripper:before,
+#splitter.is-collapsed-start #gripper:before {
+    content: ''; /* .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
+   * .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: var(
+        --spectrum-dragbar-handle-width,
+        var(--spectrum-global-dimension-static-size-25)
+    );
+}
+:host([dir='ltr']) #splitter.is-collapsed-start #gripper {
+    left: 0; /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
+}
+:host([dir='rtl']) #splitter.is-collapsed-start #gripper {
+    right: 0; /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
+}
+:host([dir='ltr']) #splitter.is-collapsed-end #gripper {
+    right: 0; /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
+:host([dir='rtl']) #splitter.is-collapsed-end #gripper {
+    left: 0; /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
+:host([dir='ltr']) #splitter.is-collapsed-end #gripper {
+    left: auto; /* [dir=ltr] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
+:host([dir='rtl']) #splitter.is-collapsed-end #gripper {
+    right: auto; /* [dir=rtl] .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
+:host([vertical]) {
+    flex-direction: column; /* .spectrum-SplitView--vertical */
+}
+:host([vertical]) ::slotted(*) {
+    height: auto; /* .spectrum-SplitView--vertical .spectrum-SplitView-pane */
+    width: var(--spectrum-splitview-vertical-width);
+}
+:host([dir='ltr'][vertical]) #gripper {
+    left: var(
+        --spectrum-splitview-vertical-gripper-width
+    ); /* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-gripper */
+}
+:host([dir='rtl'][vertical]) #gripper {
+    right: var(
+        --spectrum-splitview-vertical-gripper-width
+    ); /* [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-gripper */
+}
+:host([vertical]) #gripper {
+    border-width: var(--spectrum-dragbar-gripper-border-width-horizontal, 3px)
+        var(--spectrum-dragbar-gripper-border-width-vertical, 4px);
+    height: var(
+        --spectrum-dragbar-gripper-width,
+        var(--spectrum-global-dimension-static-size-50)
+    );
+    top: calc(
+        (
+                var(
+                        --spectrum-dragbar-gripper-width,
+                        var(--spectrum-global-dimension-static-size-50)
+                    ) + 2 *
+                    var(--spectrum-dragbar-gripper-border-width-horizontal, 3px) -
+                    var(
+                        --spectrum-dragbar-handle-width,
+                        var(--spectrum-global-dimension-static-size-25)
+                    )
+            ) / 2 * -1
+    ); /* .spectrum-SplitView--vertical .spectrum-SplitView-gripper */
+    transform: translate(
+        calc(var(--spectrum-splitview-vertical-gripper-width) * -1)
+    );
+    width: var(
+        --spectrum-dragbar-gripper-height,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+}
+:host([vertical]) #splitter {
+    height: var(
+        --spectrum-dragbar-handle-width,
+        var(--spectrum-global-dimension-static-size-25)
+    );
+    width: var(
+        --spectrum-splitview-vertical-width
+    ); /* .spectrum-SplitView--vertical .spectrum-SplitView-splitter */
+}
+:host([dir='ltr'][vertical]) #splitter.is-collapsed-end #gripper,
+:host([dir='ltr'][vertical]) #splitter.is-collapsed-start #gripper {
+    left: var(
+        --spectrum-splitview-vertical-gripper-width
+    ); /* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper,
+   * [dir=ltr]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
+:host([dir='rtl'][vertical]) #splitter.is-collapsed-end #gripper,
+:host([dir='rtl'][vertical]) #splitter.is-collapsed-start #gripper {
+    right: var(
+        --spectrum-splitview-vertical-gripper-width
+    ); /* [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper,
+   * [dir=rtl]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
+:host([dir='ltr'][vertical]) #splitter.is-collapsed-end #gripper:before,
+:host([dir='ltr'][vertical]) #splitter.is-collapsed-start #gripper:before {
+    left: var(
+        --spectrum-splitview-vertical-gripper-reset
+    ); /* [dir=ltr] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
+   * [dir=ltr]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */
+}
+:host([dir='rtl'][vertical]) #splitter.is-collapsed-end #gripper:before,
+:host([dir='rtl'][vertical]) #splitter.is-collapsed-start #gripper:before {
+    right: var(
+        --spectrum-splitview-vertical-gripper-reset
+    ); /* [dir=rtl] .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
+   * [dir=rtl]  .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */
+}
+:host([vertical]) #splitter.is-collapsed-end #gripper:before,
+:host([vertical]) #splitter.is-collapsed-start #gripper:before {
+    height: var(
+        --spectrum-dragbar-handle-width,
+        var(--spectrum-global-dimension-static-size-25)
+    );
+    top: calc(
+        var(--spectrum-splitview-vertical-gripper-width) -
+            var(
+                --spectrum-dragbar-handle-width,
+                var(--spectrum-global-dimension-static-size-25)
+            ) / 2
+    ); /* .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper:before,
+   * .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper:before */
+    width: var(--spectrum-splitview-vertical-gripper-outer-width);
+}
+:host([vertical]) #splitter.is-collapsed-start #gripper {
+    top: var(
+        --spectrum-splitview-vertical-gripper-reset
+    ); /* .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-start .spectrum-SplitView-gripper */
+}
+:host([vertical]) #splitter.is-collapsed-end #gripper {
+    bottom: var(--spectrum-splitview-vertical-gripper-reset);
+    top: auto; /* .spectrum-SplitView--vertical .spectrum-SplitView-splitter.is-collapsed-end .spectrum-SplitView-gripper */
+}
+::slotted(*) {
+    background-color: var(
+        --spectrum-panel-s-background-color,
+        var(--spectrum-alias-toolbar-background-color)
+    ); /* .spectrum-SplitView-pane */
+}
+#splitter {
+    background-color: var(
+        --spectrum-dragbar-handle-background-color,
+        var(--spectrum-global-color-gray-300)
+    ); /* .spectrum-SplitView-splitter */
+}
+#gripper {
+    border-color: var(
+        --spectrum-dragbar-handle-background-color,
+        var(--spectrum-global-color-gray-300)
+    ); /* .spectrum-SplitView-gripper */
+}
+#gripper:before {
+    background-color: var(
+        --spectrum-dragbar-handle-background-color,
+        var(--spectrum-global-color-gray-300)
+    ); /* .spectrum-SplitView-gripper:before */
+}
+:host([resizable]) #splitter.is-hovered,
+:host([resizable]) #splitter:hover {
+    background-color: var(
+        --spectrum-dragbar-handle-background-color-hover,
+        var(--spectrum-global-color-gray-400)
+    ); /* .spectrum-SplitView-splitter.is-draggable:hover,
+   * .spectrum-SplitView-splitter.is-draggable.is-hovered */
+}
+:host([resizable]) #splitter.is-hovered #gripper,
+:host([resizable]) #splitter:hover #gripper {
+    border-color: var(
+        --spectrum-dragbar-handle-background-color-hover,
+        var(--spectrum-global-color-gray-400)
+    ); /* .spectrum-SplitView-splitter.is-draggable:hover .spectrum-SplitView-gripper,
+   * .spectrum-SplitView-splitter.is-draggable.is-hovered .spectrum-SplitView-gripper */
+}
+:host([resizable]) #splitter.is-hovered #gripper:before,
+:host([resizable]) #splitter:hover #gripper:before {
+    background-color: var(
+        --spectrum-dragbar-handle-background-color-hover,
+        var(--spectrum-global-color-gray-400)
+    ); /* .spectrum-SplitView-splitter.is-draggable:hover .spectrum-SplitView-gripper:before,
+   * .spectrum-SplitView-splitter.is-draggable.is-hovered .spectrum-SplitView-gripper:before */
+}
+:host([resizable]) #splitter.is-active,
+:host([resizable]) #splitter:active {
+    background-color: var(
+        --spectrum-dragbar-handle-background-color-down,
+        var(--spectrum-global-color-gray-800)
+    ); /* .spectrum-SplitView-splitter.is-draggable:active,
+   * .spectrum-SplitView-splitter.is-draggable.is-active */
+}
+:host([resizable]) #splitter.is-active #gripper,
+:host([resizable]) #splitter:active #gripper {
+    border-color: var(
+        --spectrum-dragbar-handle-background-color-down,
+        var(--spectrum-global-color-gray-800)
+    ); /* .spectrum-SplitView-splitter.is-draggable:active .spectrum-SplitView-gripper,
+   * .spectrum-SplitView-splitter.is-draggable.is-active .spectrum-SplitView-gripper */
+}
+:host([resizable]) #splitter.is-active #gripper:before,
+:host([resizable]) #splitter:active #gripper:before {
+    background-color: var(
+        --spectrum-dragbar-handle-background-color-down,
+        var(--spectrum-global-color-gray-800)
+    ); /* .spectrum-SplitView-splitter.is-draggable:active .spectrum-SplitView-gripper:before,
+   * .spectrum-SplitView-splitter.is-draggable.is-active .spectrum-SplitView-gripper:before */
+}
+:host([resizable]) #splitter:focus {
+    outline: none; /* .spectrum-SplitView-splitter.is-draggable:focus */
+}
+:host([resizable]) #splitter.focus-visible {
+    background-color: var(
+        --spectrum-alias-focus-color,
+        var(--spectrum-global-color-blue-400)
+    ); /* .spectrum-SplitView-splitter.is-draggable.focus-ring */
+}
+:host([resizable]) #splitter:focus-visible {
+    background-color: var(
+        --spectrum-alias-focus-color,
+        var(--spectrum-global-color-blue-400)
+    ); /* .spectrum-SplitView-splitter.is-draggable.focus-ring */
+}
+:host([resizable]) #splitter.focus-visible #gripper {
+    border-color: var(
+        --spectrum-alias-focus-color,
+        var(--spectrum-global-color-blue-400)
+    ); /* .spectrum-SplitView-splitter.is-draggable.focus-ring .spectrum-SplitView-gripper */
+    box-shadow: 0 0 0 1px
+        var(--spectrum-alias-focus-color, var(--spectrum-global-color-blue-400));
+}
+:host([resizable]) #splitter:focus-visible #gripper {
+    border-color: var(
+        --spectrum-alias-focus-color,
+        var(--spectrum-global-color-blue-400)
+    ); /* .spectrum-SplitView-splitter.is-draggable.focus-ring .spectrum-SplitView-gripper */
+    box-shadow: 0 0 0 1px
+        var(--spectrum-alias-focus-color, var(--spectrum-global-color-blue-400));
+}
+:host([resizable]) #splitter.focus-visible #gripper:before {
+    background-color: var(
+        --spectrum-alias-focus-color,
+        var(--spectrum-global-color-blue-400)
+    ); /* .spectrum-SplitView-splitter.is-draggable.focus-ring .spectrum-SplitView-gripper:before */
+}
+:host([resizable]) #splitter:focus-visible #gripper:before {
+    background-color: var(
+        --spectrum-alias-focus-color,
+        var(--spectrum-global-color-blue-400)
+    ); /* .spectrum-SplitView-splitter.is-draggable.focus-ring .spectrum-SplitView-gripper:before */
+}
