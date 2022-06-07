@@ -278,33 +278,6 @@ jobs:
                   regression_scale: << parameters.scale >>
                   regression_dir: << parameters.dir >>
 
-    site-build:
-        executor: node
-
-        steps:
-            - downstream
-            - run:
-                  name: Generate Docs
-                  command: yarn docs:ci
-            - run: touch projects/documentation/dist/.nojekyll
-            - save_cache:
-                  name: Cache docs site
-                  paths:
-                      - projects/documentation/dist
-                  key: v1-docs-site-{{ .Revision }}
-
-    site-publish:
-        executor: node
-
-        steps:
-            - checkout
-            - restore_cache:
-                  name: Restore docs site cache
-                  keys:
-                      - v1-docs-site-{{ .Revision }}
-            - run: git config --global user.email "circleci@adobe.com" && git config --global user.name "CircleCI"
-            - run: npx gh-pages -d projects/documentation/dist -m "[skip ci] update demonstration site" -t
-
 workflows:
     version: 2
     commitlint:
@@ -337,15 +310,3 @@ workflows:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - site-build:
-                  filters:
-                      branches:
-                          only:
-                              - main
-            - site-approve:
-                  type: approval
-                  requires:
-                      - site-build
-            - site-publish:
-                  requires:
-                      - site-approve

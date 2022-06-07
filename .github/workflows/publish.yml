@@ -1,0 +1,33 @@
+name: Site publish
+
+on:
+    check_suite:
+        types: [completed]
+    workflow_dispatch:
+jobs:
+    site-build:
+        name: Build & publish site
+        runs-on: ubuntu-latest
+        # Run the job if manually triggered or if the commit message includes '#publish' & the check suite has passed
+        if: github.event_name == "workflow_dispatch" || (contains(github.event.head_commit.message, '#publish') && github.event.check_suite.conclusion == "success")
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: '16'
+                  cache: 'yarn'
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Install dependencies
+              run: yarn --frozen-lockfile
+
+            - name: Generate Docs
+              run: yarn docs:ci
+
+            - name: Deploy to GitHub Pages
+              run: |
+                  git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+                  touch projects/documentation/dist/.nojekyll
+                  npx gh-pages -d projects/documentation/dist -m "[skip ci] update demonstration site" -t -u "github-actions-bot <support+actions@github.com>"
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

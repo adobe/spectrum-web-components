@@ -1,22 +1,28 @@
-# Releasing a new version of SWC
+# Releasing a new version of Spectrum Web Components
 
-Users with permissions against the `@spectrum-web-components` organization on NPM can follow the following steps to create and publish a new version of the SWC library.
+Users with permissions in the `@spectrum-web-components` organization on NPM can follow the following steps to create and publish a new version.
 
-1. merge outstanding PRs and wait for `main` show that it has completed the required CI jobs
-2. `git checkout main`
-3. `git pull`
-4. `rm -rf node_modules packages projects tools`
-5. `git checkout packages`
-6. `git checkout projects`
-7. `git checkout tools`
-8. `yarn`
-9. `npm whoami` ensure that you are logged in with the user account for the public NPM registry
-10. `yarn lerna-publish`
-11. scan the version summary for any unexpected changes
+1. Merge all pull requests to be included in the release and wait for the `main` branch to show that it has completed the required CI jobs.
+2. `git checkout main && git fetch && git pull && git clean -dfX`
+3. `rm -rf node_modules packages projects tools`
+4. `git checkout packages projects tools`
+5. `yarn install`
+6. `npm whoami` ensure that you are logged in with the user account for the public NPM registry
+7. `yarn lerna-publish`
+8. Scan the version summary for any unexpected changes.
+    - Changes to the _major_ versions number are likely to point to undesired version numbers.
+    - Changes to the _minor_ or _feature_ version number should be confirmed as correct against the changes that have been made since the last release.
+9. `Y` to confirm.
+10. Enter 2-factor authentication for npm.
 
--   changes to the _major_ versions number are likely to point to undesired version numbers
--   changes to the _minor_ or _feature_ version number should be confirmed as correct against the changes that have been made since the last release
+The docs site will publish automatically if the `#publish` string is included in the commit message and the check suite runs successfully.
 
-12. `Y` to confirm
-13. enter npm’s 2-factor auth
-14. Go to [CircleCI](https://app.circleci.com/pipelines/github/adobe) and once the commit to `main` with the new versions is ready, press the 👍🏼 button on the "site-approve" job to publish a new version of the documentation site
+## Publishing the docs site manually
+
+Navigate to SWC's [Actions](https://github.com/adobe/spectrum-web-components/actions) and click the `Build & publish site` link under the _Workflows_ heading.
+
+At the top of the table you will see a `Run workflow` dropdown; click that and run it from the `main` branch.
+
+[Running manual workflows](https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow), GitHub documentation
+
+If you have the [GitHub CLI](https://cli.github.com) installed, you can alternatively run `gh workflow run publish.yml --ref main` from the command line.
