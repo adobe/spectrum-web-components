@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture, oneEvent } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    nextFrame,
+    oneEvent,
+} from '@open-wc/testing';
 import { spy } from 'sinon';
 
 import '@spectrum-web-components/theme/sp-theme.js';
@@ -74,8 +80,10 @@ describe('Dialog Wrapper', () => {
         await expect(el).to.be.accessible();
     });
     it('opens and closes', async () => {
+        const closeSpy = spy();
         const test = await styledFixture<OverlayTrigger>(longContent());
         const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
+        el.addEventListener('close', () => closeSpy());
 
         await elementUpdated(el);
 
@@ -88,8 +96,10 @@ describe('Dialog Wrapper', () => {
         const closed = oneEvent(test, 'sp-closed');
         test.open = undefined;
         await closed;
+        await nextFrame();
 
         expect(el.open).to.be.false;
+        expect(closeSpy.callCount).to.equal(1);
     });
     it('dismisses via clicking the underlay when [dismissable]', async () => {
         const test = await styledFixture<DialogWrapper>(

@@ -177,8 +177,8 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
         );
     }
 
-    protected handleUnderlayTransitionend(): void {
-        if (!this.open) {
+    protected handleUnderlayTransitionend(event: TransitionEvent): void {
+        if (!this.open && event.propertyName === 'visibility') {
             this.dispatchClosed();
             this.resolveTransitionPromise();
         }
