@@ -27,7 +27,9 @@ import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { ColorSlider } from '@spectrum-web-components/color-slider';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 import { sendKeys } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy } from 'sinon';
+import { ColorHandle } from '@spectrum-web-components/color-handle';
 
 describe('ColorSlider', () => {
     testForLitDevWarnings(
@@ -222,7 +224,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(3.9999999999999996);
+        expect(el.sliderHandlePosition).to.equal(4);
 
         input.dispatchEvent(arrowDownEvent());
         input.dispatchEvent(arrowDownKeyupEvent());
@@ -231,7 +233,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.sliderHandlePosition).to.equal(1.9999999999999998);
+        expect(el.sliderHandlePosition).to.equal(2);
 
         input.dispatchEvent(arrowLeftEvent());
         input.dispatchEvent(arrowLeftKeyupEvent());
@@ -358,7 +360,7 @@ describe('ColorSlider', () => {
             html`
                 <sp-color-slider
                     .color=${color}
-                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-default-height: 24px; --spectrum-colorslider-default-height: 24px;"
+                    style="--spectrum-colorslider-default-length: 192px; --spectrum-colorslider-height: 24px;"
                 ></sp-color-slider>
             `
         );
@@ -457,6 +459,72 @@ describe('ColorSlider', () => {
         expect(el.sliderHandlePosition).to.equal(53.125);
         expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
         expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
+    });
+    it('can have `change` events prevented', async () => {
+        const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
+        const el = await fixture<ColorSlider>(
+            html`
+                <sp-color-slider
+                    .color=${color}
+                    @change=${(event: Event) => {
+                        event.preventDefault();
+                    }}
+                    style="
+                        --spectrum-colorslider-default-length: 192px;
+                        --spectrum-colorslider-height: 24px;
+                        --spectrum-colorhandle-size: 5px;
+                    "
+                ></sp-color-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(0);
+
+        const handle = el.shadowRoot.querySelector(
+            'sp-color-handle'
+        ) as ColorHandle;
+        const boundingClientRect = handle.getBoundingClientRect();
+        const handleLocation: [number, number] = [
+            boundingClientRect.left + boundingClientRect.width / 2,
+            boundingClientRect.top + boundingClientRect.height / 2,
+        ];
+        const targetLocation: [number, number] = [
+            handleLocation[0] + 100,
+            handleLocation[1],
+        ];
+
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: handleLocation,
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'move',
+                    position: targetLocation,
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+
+        expect(el.value).to.be.within(187.4, 188.5);
+
+        await sendMouse({
+            steps: [
+                {
+                    type: 'up',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+        expect(el.value).to.equal(0);
     });
     it('accepts pointer events while [vertical]', async () => {
         const el = await fixture<ColorSlider>(

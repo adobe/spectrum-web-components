@@ -27,6 +27,7 @@ import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
 import { ColorWheel } from '@spectrum-web-components/color-wheel';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 import { sendKeys } from '@web/test-runner-commands';
+import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy } from 'sinon';
 
 describe('ColorWheel', () => {
@@ -459,6 +460,53 @@ describe('ColorWheel', () => {
         expect(el.value).to.equal(96.34019174590992);
         expect((el.color as HSLA).s).to.be.within(0.19, 0.21);
         expect((el.color as HSLA).l).to.be.within(0.69, 0.71);
+    });
+    it('can have `change` events prevented', async () => {
+        const color = new TinyColor({ h: '0', s: '20%', l: '70%' });
+        const el = await fixture<ColorWheel>(
+            html`
+                <sp-color-wheel
+                    .color=${color}
+                    @change=${(event: Event) => {
+                        event?.preventDefault();
+                    }}
+                    style="--spectrum-global-dimension-size-125: 10px;"
+                ></sp-color-wheel>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(0);
+
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [80, 15],
+                },
+                {
+                    type: 'down',
+                },
+                {
+                    type: 'move',
+                    position: [80, 160],
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+
+        await sendMouse({
+            steps: [
+                {
+                    type: 'up',
+                },
+            ],
+        });
+
+        await elementUpdated(el);
+        expect(el.value).to.equal(0);
     });
     const colorFormats: {
         name: string;

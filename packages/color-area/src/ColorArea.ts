@@ -24,14 +24,12 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { SWCResizeObserverEntry, WithSWCResizeObserver } from './types';
-import {
-    ColorHandle,
-    ColorValue,
-    extractHueAndSaturationRegExp,
-    replaceHueRegExp,
-} from '@spectrum-web-components/color-handle';
+import type { ColorHandle } from '@spectrum-web-components/color-handle';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
-import { TinyColor } from '@ctrl/tinycolor';
+import {
+    ColorController,
+    ColorValue,
+} from '@spectrum-web-components/reactive-controllers/src/Color.js';
 
 import styles from './color-area.css.js';
 
@@ -64,122 +62,40 @@ export class ColorArea extends SpectrumElement {
     @query('.handle')
     private handle!: ColorHandle;
 
+    private colorController = new ColorController(this, {
+        extractColorFromState: () => ({
+            h: this.hue,
+            s: this.x,
+            v: 1 - this.y,
+        }),
+        applyColorToState: ({ s, v }) => {
+            this.x = s;
+            this.y = 1 - v;
+        },
+    });
+
     @property({ type: Number })
     public get hue(): number {
-        return this._hue;
+        return this.colorController.hue;
     }
 
     public set hue(value: number) {
-        const hue = Math.min(360, Math.max(0, value));
-        if (hue === this.hue) {
-            return;
-        }
-        const oldValue = this.hue;
-        const { s, v } = this._color.toHsv();
-        this._color = new TinyColor({ h: hue, s, v });
-        this._hue = hue;
-        this.requestUpdate('hue', oldValue);
+        this.colorController.hue = value;
     }
-
-    private _hue = 0;
 
     @property({ type: String })
     public get value(): ColorValue {
-        return this.color;
+        return this.colorController.color;
     }
 
     @property({ type: String })
     public get color(): ColorValue {
-        switch (this._format.format) {
-            case 'rgb':
-                return this._format.isString
-                    ? this._color.toRgbString()
-                    : this._color.toRgb();
-            case 'prgb':
-                return this._format.isString
-                    ? this._color.toPercentageRgbString()
-                    : this._color.toPercentageRgb();
-            case 'hex8':
-                return this._format.isString
-                    ? this._color.toHex8String()
-                    : this._color.toHex8();
-            case 'name':
-                return this._color.toName() || this._color.toRgbString();
-            case 'hsl':
-                if (this._format.isString) {
-                    const hslString = this._color.toHslString();
-                    return hslString.replace(replaceHueRegExp, `$1${this.hue}`);
-                } else {
-                    const { s, l, a } = this._color.toHsl();
-                    return { h: this.hue, s, l, a };
-                }
-            case 'hsv':
-                if (this._format.isString) {
-                    const hsvString = this._color.toHsvString();
-                    return hsvString.replace(replaceHueRegExp, `$1${this.hue}`);
-                } else {
-                    const { s, v, a } = this._color.toHsv();
-                    return { h: this.hue, s, v, a };
-                }
-            case 'hex':
-            case 'hex3':
-            case 'hex4':
-            case 'hex6':
-            default:
-                return this._format.isString
-                    ? this._color.toHexString()
-                    : this._color.toHex();
-        }
+        return this.colorController.color;
     }
 
     public set color(color: ColorValue) {
-        if (color === this.color) {
-            return;
-        }
-        const oldValue = this._color;
-        this._color = new TinyColor(color);
-        const format = this._color.format;
-        let isString = typeof color === 'string' || color instanceof String;
-
-        if (format.startsWith('hex')) {
-            isString = (color as string).startsWith('#');
-        }
-
-        this._format = {
-            format,
-            isString,
-        };
-
-        const { h, s, v } = this._color.toHsv();
-        let originalHue: number | undefined = undefined;
-
-        if (isString && format.startsWith('hs')) {
-            const values = extractHueAndSaturationRegExp.exec(color as string);
-
-            if (values !== null) {
-                const [, h] = values;
-                originalHue = Number(h);
-            }
-        } else if (!isString && format.startsWith('hs')) {
-            const colorInput = this._color.originalInput;
-            const colorValues = Object.values(colorInput);
-            originalHue = colorValues[0];
-        }
-
-        this.hue = originalHue || h;
-        this.x = s;
-        this.y = 1 - v;
-        this.requestUpdate('color', oldValue);
+        this.colorController.color = color;
     }
-
-    private _color = new TinyColor({ h: 0, s: 1, v: 1 });
-
-    private _previousColor = new TinyColor({ h: 0, s: 1, v: 1 });
-
-    private _format: { format: string; isString: boolean } = {
-        format: '',
-        isString: false,
-    };
 
     @property({ attribute: false })
     private activeAxis = 'x';
@@ -313,8 +229,8 @@ export class ColorArea extends SpectrumElement {
         this.x = Math.min(1, Math.max(this.x + deltaX, 0));
         this.y = Math.min(1, Math.max(this.y + deltaY, 0));
 
-        this._previousColor = this._color.clone();
-        this._color = new TinyColor({ h: this.hue, s: this.x, v: 1 - this.y });
+        this.colorController.savePreviousColor();
+        this.colorController.applyColorFromState();
 
         if (deltaX != 0 || deltaY != 0) {
             this.dispatchEvent(
@@ -331,7 +247,7 @@ export class ColorArea extends SpectrumElement {
                 })
             );
             if (!applyDefault) {
-                this._color = this._previousColor;
+                this.colorController.restorePreviousColor();
             }
         }
     }
@@ -346,7 +262,7 @@ export class ColorArea extends SpectrumElement {
         const { valueAsNumber, name } = event.target;
 
         this[name as 'x' | 'y'] = valueAsNumber;
-        this._color = new TinyColor({ h: this.hue, s: this.x, v: 1 - this.y });
+        this.colorController.applyColorFromState();
     }
 
     private handleChange(event: Event & { target: HTMLInputElement }): void {
@@ -369,7 +285,7 @@ export class ColorArea extends SpectrumElement {
             return;
         }
         this._pointerDown = true;
-        this._previousColor = this._color.clone();
+        this.colorController.savePreviousColor();
         this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
         if (event.pointerType === 'mouse') {
@@ -379,10 +295,10 @@ export class ColorArea extends SpectrumElement {
 
     private handlePointermove(event: PointerEvent): void {
         const [x, y] = this.calculateHandlePosition(event);
-        this._color = new TinyColor({ h: this.hue, s: x, v: 1 - y });
 
         this.x = x;
         this.y = y;
+        this.colorController.applyColorFromState();
         this.dispatchEvent(
             new Event('input', {
                 bubbles: true,
@@ -408,7 +324,7 @@ export class ColorArea extends SpectrumElement {
             this.focused = false;
         }
         if (!applyDefault) {
-            this._color = this._previousColor;
+            this.colorController.restorePreviousColor();
         }
     }
 
@@ -473,7 +389,7 @@ export class ColorArea extends SpectrumElement {
                 @focus=${this.forwardFocus}
                 ?focused=${this.focused}
                 class="handle"
-                color=${this._color.toHslString()}
+                color=${this.colorController.getHslString()}
                 ?disabled=${this.disabled}
                 style="transform: translate(${this.x * width}px, ${this.y *
                 height}px);"
