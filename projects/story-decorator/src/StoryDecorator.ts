@@ -14,6 +14,7 @@ import {
     css,
     html,
     nothing,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -131,7 +132,6 @@ export class StoryDecorator extends SpectrumElement {
                 }
                 :host([screenshot]) sp-theme {
                     padding: var(--spectrum-global-dimension-size-100);
-                    --swc-test-caret-color: transparent;
                 }
                 :host([reduce-motion]) sp-theme {
                     ${reduceMotionProperties}
@@ -384,5 +384,20 @@ export class StoryDecorator extends SpectrumElement {
                 Reduce Motion
             </sp-switch>
         `;
+    }
+
+    protected override willUpdate(changes: PropertyValues<this>): void {
+        if (changes.has('screenshot') && this.screenshot) {
+            Theme.registerThemeFragment(
+                'app',
+                'app',
+                css`
+                    :host {
+                        --swc-test-caret-color: transparent;
+                        --swc-test-forced-color-adjust: none;
+                    }
+                `
+            );
+        }
     }
 }

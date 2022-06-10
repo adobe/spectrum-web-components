@@ -40,7 +40,11 @@ textarea {
 
 .input {
     min-width: var(--spectrum-textfield-texticon-min-width);
+}
+
+:host([focused]) .input {
     caret-color: var(--swc-test-caret-color);
+    forced-color-adjust: var(--swc-test-forced-color-adjust);
 }
 
 :host([grows]) .input {
