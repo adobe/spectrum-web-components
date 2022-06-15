@@ -530,10 +530,10 @@ export class ColorArea extends SpectrumElement {
     protected override updated(changed: PropertyValues): void {
         super.updated(changed);
         if (this.x !== this.inputX.valueAsNumber) {
-            this.x = this.inputX.valueAsNumber;
+            this._x = this.inputX.valueAsNumber;
         }
         if (this.y !== this.inputY.valueAsNumber) {
-            this.y = this.inputY.valueAsNumber;
+            this._y = this.inputY.valueAsNumber;
         }
         if (changed.has('focused') && this.focused) {
             // Lazily bind the `input[type="range"]` elements in shadow roots
