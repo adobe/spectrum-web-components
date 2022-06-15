@@ -3952,9 +3952,9 @@
   integrity sha512-UMe692d2RqCjOZKUWwMOdMl6VtUVFNMxrif4kD23pFNz8DYcNaxwmsDxcvsBZKztMg9CYej10JPC9+NKZDVlFA==
 
 "@spectrum-css/icon@^3.0.21":
-  version "3.0.21"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-3.0.21.tgz#086d30fd659975bc932e847140531dcae9a57ffd"
-  integrity sha512-GlpqVotZ2c6nsMfQOBzBb855aZ6L1mtbAcgcwhKzACJhJxw0MKUD5euA8mUzMtCnlLZ0XCgoJbU+PLNrx/yz0A==
+  version "3.0.22"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-3.0.22.tgz#1dd77e2460121951c60c583edb470d0ba52e6822"
+  integrity sha512-ilrPlHDRGzn7kXVVAwUhoSaMfS6sGlb21ix2gn8IRLBAjDOV8BBV1wJJtjGNw+kzCXMhnVnVOekTdht17Oe9bw==
 
 "@spectrum-css/illustratedmessage@^4.0.4":
   version "4.0.4"
