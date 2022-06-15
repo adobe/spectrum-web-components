@@ -31,7 +31,7 @@ export interface SlotTextObservingInterface {
 
 export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
     constructor: T,
-    slotSelector?: string
+    slotName?: string
 ): T & Constructor<SlotTextObservingInterface> {
     class SlotTextObservingElement
         extends constructor
@@ -60,7 +60,7 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
         @property({ type: Boolean, attribute: false })
         public slotHasContent = false;
 
-        @queryAssignedNodes(slotSelector, true)
+        @queryAssignedNodes(slotName, true)
         private [assignedNodesList]!: NodeListOf<HTMLElement>;
 
         public manageTextObservedSlot(): void {
@@ -74,6 +74,23 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
                 }
             );
             this.slotHasContent = assignedNodes.length > 0;
+        }
+
+        protected override update(changedProperties: PropertyValues): void {
+            if (!this.hasUpdated) {
+                const { childNodes } = this;
+                const textNodes = [...childNodes].filter((node) => {
+                    if ((node as HTMLElement).tagName) {
+                        return slotName
+                            ? (node as HTMLElement).getAttribute('slot') !==
+                                  slotName
+                            : !(node as HTMLElement).hasAttribute('slot');
+                    }
+                    return node.textContent ? node.textContent.trim() : false;
+                });
+                this.slotHasContent = textNodes.length > 0;
+            }
+            super.update(changedProperties);
         }
 
         protected override firstUpdated(
