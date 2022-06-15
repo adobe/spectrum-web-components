@@ -189,15 +189,16 @@ export class Tabs extends SizedMixin(Focusable) {
         `;
     }
 
-    protected override firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
-        const selectedChild = this.querySelector(':scope > [selected]') as Tab;
-        if (selectedChild) {
-            this.selectTarget(selectedChild);
+    protected override willUpdate(changes: PropertyValues): void {
+        if (!this.hasUpdated) {
+            const selectedChild = this.querySelector(
+                ':scope > [selected]'
+            ) as Tab;
+            if (selectedChild) {
+                this.selectTarget(selectedChild);
+            }
         }
-    }
 
-    protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (changes.has('selected')) {
             if (changes.get('selected')) {
