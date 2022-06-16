@@ -22,7 +22,7 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { classMap } from '@spectrum-web-components/base/src/directives.js';
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 
 import '@spectrum-web-components/divider/sp-divider.js';
@@ -127,11 +127,7 @@ export class Dialog extends FocusVisiblePolyfillMixin(
 
     protected renderHeading(): TemplateResult {
         return html`
-            <slot
-                name="heading"
-                class=${ifDefined(this.hasHero ? this.hasHero : undefined)}
-                @slotchange=${this.onHeadingSlotchange}
-            ></slot>
+            <slot name="heading" @slotchange=${this.onHeadingSlotchange}></slot>
         `;
     }
 
@@ -144,7 +140,6 @@ export class Dialog extends FocusVisiblePolyfillMixin(
     }
 
     protected renderFooter(): TemplateResult {
-        if (!this.hasFooter) return html``;
         return html`
             <div class="footer">
                 <slot name="footer"></slot>
@@ -153,33 +148,26 @@ export class Dialog extends FocusVisiblePolyfillMixin(
     }
 
     protected renderButtons(): TemplateResult {
-        if (!this.hasButtons) return html``;
+        const classes = {
+            'button-group': true,
+            'button-group--noFooter': !this.hasFooter,
+        };
         return html`
-            <sp-button-group
-                class="button-group ${this.hasFooter
-                    ? nothing
-                    : 'button-group--noFooter'}"
-            >
+            <sp-button-group class=${classMap(classes)}>
                 <slot name="button"></slot>
             </sp-button-group>
         `;
     }
 
     protected renderDismiss(): TemplateResult {
-        if (!this.dismissable) return html``;
         return html`
-            <sp-action-button
+            <sp-close-button
                 class="close-button"
                 label="Close"
                 quiet
                 size="m"
                 @click=${this.close}
-            >
-                <sp-icon-cross500
-                    class="spectrum-UIIcon-Cross500"
-                    slot="icon"
-                ></sp-icon-cross500>
-            </sp-action-button>
+            ></sp-close-button>
         `;
     }
 
@@ -197,8 +185,10 @@ export class Dialog extends FocusVisiblePolyfillMixin(
                     : html`
                           <sp-divider size="m" class="divider"></sp-divider>
                       `}
-                ${this.renderContent()} ${this.renderFooter()}
-                ${this.renderButtons()} ${this.renderDismiss()}
+                ${this.renderContent()}
+                ${this.hasFooter ? this.renderFooter() : nothing}
+                ${this.hasButtons ? this.renderButtons() : nothing}
+                ${this.dismissable ? this.renderDismiss() : nothing}
             </div>
         `;
     }
