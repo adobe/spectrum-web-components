@@ -13,7 +13,6 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
-    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -264,10 +263,8 @@ export class ActiveOverlay extends SpectrumElement {
         return undefined;
     }
 
-    public override async firstUpdated(
-        changedProperties: PropertyValues
-    ): Promise<void> {
-        super.firstUpdated(changedProperties);
+    public override async willUpdate(): Promise<void> {
+        if (this.hasUpdated) return;
 
         /* c8 ignore next */
         if (!this.overlayContent || !this.trigger) return;
