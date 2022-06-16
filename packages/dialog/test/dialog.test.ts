@@ -80,7 +80,10 @@ describe('Dialog', () => {
     });
     it('allows hero override', async () => {
         class Override extends Dialog {
-            renderHero(): TemplateResult {
+            protected override get hasHero(): boolean {
+                return true;
+            }
+            protected override renderHero(): TemplateResult {
                 return html`
                     <div id="hero-container"></div>
                 `;
@@ -100,7 +103,7 @@ describe('Dialog', () => {
     });
     it('allows heading override', async () => {
         class Override extends Dialog {
-            renderHeading(): TemplateResult {
+            protected override renderHeading(): TemplateResult {
                 return html`
                     <h2 id="heading-container">Test</h2>
                 `;
@@ -120,7 +123,7 @@ describe('Dialog', () => {
     });
     it('allows content override', async () => {
         class Override extends Dialog {
-            renderContent(): TemplateResult {
+            protected override renderContent(): TemplateResult {
                 return html`
                     <p id="content-container">Test</p>
                 `;
@@ -140,7 +143,10 @@ describe('Dialog', () => {
     });
     it('allows footer override', async () => {
         class Override extends Dialog {
-            renderFooter(): TemplateResult {
+            protected override get hasFooter(): boolean {
+                return true;
+            }
+            protected override renderFooter(): TemplateResult {
                 return html`
                     <p id="footer-container">Test</p>
                 `;
@@ -160,7 +166,10 @@ describe('Dialog', () => {
     });
     it('allows button override', async () => {
         class Override extends Dialog {
-            renderButtons(): TemplateResult {
+            protected override get hasButtons(): boolean {
+                return true;
+            }
+            protected override renderButtons(): TemplateResult {
                 return html`
                     <p id="button-container">Test</p>
                 `;
@@ -180,7 +189,7 @@ describe('Dialog', () => {
     });
     it('allows dismiss override', async () => {
         class Override extends Dialog {
-            renderDismiss(): TemplateResult {
+            protected override renderDismiss(): TemplateResult {
                 return html`
                     <p id="dismiss-container">Test</p>
                 `;
@@ -191,7 +200,7 @@ describe('Dialog', () => {
 
         const el = await fixture<Override>(
             html`
-                <dismiss-dialog></dismiss-dialog>
+                <dismiss-dialog dismissable></dismiss-dialog>
             `
         );
 
