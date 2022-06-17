@@ -130,12 +130,20 @@ export const measureFixtureCreation = async (
     const start = window.tachometerStart === 'page' ? 0 : performance.now();
     render(templates, renderContainer);
     const children = renderContainer.querySelectorAll('*');
-    const updates = [...children].filter((el) => 'updateComplete' in el);
+    let updates = [...children].filter((el) => 'updateComplete' in el);
 
     if (updates.length) {
-        await Promise.all(
-            updates.map((el) => (el as LitElement).updateComplete)
-        );
+        while (updates.length) {
+            const results = await Promise.all(
+                updates.map((el) => (el as LitElement).updateComplete)
+            );
+            updates = results.reduce((acc, result, index) => {
+                if (!result) {
+                    acc.push(updates[index]);
+                }
+                return acc;
+            }, [] as Element[]);
+        }
         document.body.offsetWidth;
     } else {
         await new Promise((res) => requestAnimationFrame(res));
