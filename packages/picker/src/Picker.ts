@@ -438,6 +438,25 @@ export class PickerBase extends SizedMixin(Focusable) {
             // TODO: Add support functionally and visually for "multiple"
             this.selects = 'single';
         }
+        if (changes.has('disabled') && this.disabled) {
+            this.open = false;
+        }
+        if (
+            changes.has('open') &&
+            (this.open || typeof changes.get('open') !== 'undefined')
+        ) {
+            this.menuStatePromise = new Promise(
+                (res) => (this.menuStateResolver = res)
+            );
+            if (this.open) {
+                this.openMenu();
+            } else {
+                this.closeMenu();
+            }
+        }
+        if (changes.has('value') && !changes.has('selectedItem')) {
+            this.updateMenuItems();
+        }
         super.update(changes);
     }
 
@@ -527,32 +546,6 @@ export class PickerBase extends SizedMixin(Focusable) {
             resolve();
             this._willUpdateItems = false;
         });
-    }
-
-    protected override updated(changedProperties: PropertyValues): void {
-        super.updated(changedProperties);
-        if (changedProperties.has('disabled') && this.disabled) {
-            this.open = false;
-        }
-        if (
-            changedProperties.has('open') &&
-            (this.open || typeof changedProperties.get('open') !== 'undefined')
-        ) {
-            this.menuStatePromise = new Promise(
-                (res) => (this.menuStateResolver = res)
-            );
-            if (this.open) {
-                this.openMenu();
-            } else {
-                this.closeMenu();
-            }
-        }
-        if (
-            changedProperties.has('value') &&
-            !changedProperties.has('selectedItem')
-        ) {
-            this.updateMenuItems();
-        }
     }
 
     protected async manageSelection(): Promise<void> {
