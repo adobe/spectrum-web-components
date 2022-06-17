@@ -81,11 +81,11 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         `;
     }
 
-    protected override updated(changedProperties: PropertyValues): void {
-        super.updated(changedProperties);
+    protected override update(changedProperties: PropertyValues<this>): void {
         if (changedProperties.has('invalid')) {
             this.invalid = false;
         }
         this.quiet = true;
+        super.update(changedProperties);
     }
 }
