@@ -82,7 +82,7 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
                 const textNodes = [...childNodes].filter((node) => {
                     if ((node as HTMLElement).tagName) {
                         return slotName
-                            ? (node as HTMLElement).getAttribute('slot') !==
+                            ? (node as HTMLElement).getAttribute('slot') ===
                                   slotName
                             : !(node as HTMLElement).hasAttribute('slot');
                     }

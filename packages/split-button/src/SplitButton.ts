@@ -121,6 +121,9 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 this.selects = 'single';
             }
         }
+        if (changes.has('value')) {
+            this.manageSplitButtonItems();
+        }
         super.update(changes);
     }
 
@@ -177,13 +180,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
         return html`
             ${buttons}
         `;
-    }
-
-    protected override updated(changedProperties: PropertyValues): void {
-        super.updated(changedProperties);
-        if (changedProperties.has('value')) {
-            this.manageSplitButtonItems();
-        }
     }
 
     protected override async manageSelection(): Promise<void> {
