@@ -90,41 +90,46 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     @property({ reflect: true })
     public selected = '';
 
-    protected override firstUpdated(changes: PropertyValues<this>): void {
-        super.firstUpdated(changes);
-        this.setAttribute('role', 'radiogroup');
-        const checkedRadio = this.querySelector('sp-radio[checked]') as Radio;
-        const checkedRadioValue = checkedRadio ? checkedRadio.value : '';
-        // Prefer the checked item over the selected value
-        this.selected = checkedRadioValue || this.selected;
-        // Validate the selected value is actual a radio option
-        if (this.selected && this.selected !== checkedRadioValue) {
-            const selectedRadio = this.querySelector(
-                `sp-radio[value="${this.selected}"]`
+    protected override willUpdate(changes: PropertyValues<this>): void {
+        if (!this.hasUpdated) {
+            this.setAttribute('role', 'radiogroup');
+            const checkedRadio = this.querySelector(
+                'sp-radio[checked]'
             ) as Radio;
-            if (!selectedRadio) {
-                this.selected = '';
-            } else {
-                selectedRadio.checked = true;
+            const checkedRadioValue = checkedRadio ? checkedRadio.value : '';
+            // Prefer the checked item over the selected value
+            this.selected = checkedRadioValue || this.selected;
+            // Validate the selected value is actual a radio option
+            if (this.selected && this.selected !== checkedRadioValue) {
+                const selectedRadio = this.querySelector(
+                    `sp-radio[value="${this.selected}"]`
+                ) as Radio;
+                if (!selectedRadio) {
+                    this.selected = '';
+                } else {
+                    selectedRadio.checked = true;
+                }
             }
+
+            this.shadowRoot.addEventListener('change', (event: Event) => {
+                event.stopPropagation();
+                const target = event.target as Radio;
+                this._setSelected(target.value);
+            });
         }
 
-        this.shadowRoot.addEventListener('change', (event: Event) => {
-            event.stopPropagation();
-            const target = event.target as Radio;
-            this._setSelected(target.value);
-        });
-    }
-
-    protected override updated(changes: PropertyValues<this>): void {
-        super.updated(changes);
         if (changes.has('selected')) {
             this.validateRadios();
         }
     }
 
-    private validateRadios(): void {
+    private async validateRadios(): Promise<void> {
         let validSelection = false;
+        if (!this.hasUpdated) {
+            // Initial validation has to happen after the initial render to allow
+            // the buttons to be queries from the rendered <slot> element
+            await this.updateComplete;
+        }
         this.buttons.map((button) => {
             button.checked = this.selected === button.value;
             validSelection = validSelection || button.checked;
