@@ -25,10 +25,8 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 
 import '@spectrum-web-components/divider/sp-divider.js';
-import '@spectrum-web-components/action-button/sp-action-button.js';
+import '@spectrum-web-components/button/sp-close-button.js';
 import '@spectrum-web-components/button-group/sp-button-group.js';
-import crossStyles from '@spectrum-web-components/icon/src/spectrum-icon-cross.css.js';
-import '@spectrum-web-components/icons-ui/icons/sp-icon-cross500.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import {
     FocusVisiblePolyfillMixin,
@@ -36,7 +34,7 @@ import {
 } from '@spectrum-web-components/shared';
 
 import styles from './dialog.css.js';
-import type { ActionButton } from '@spectrum-web-components/action-button';
+import type { CloseButton } from '@spectrum-web-components/button';
 
 function gatherAppliedIdsFromSlottedChildren(
     slot: HTMLSlotElement,
@@ -74,11 +72,11 @@ export class Dialog extends FocusVisiblePolyfillMixin(
     ])
 ) {
     public static override get styles(): CSSResultArray {
-        return [styles, crossStyles];
+        return [styles];
     }
 
     @query('.close-button')
-    closeButton?: ActionButton;
+    closeButton?: CloseButton;
 
     @query('.content')
     private contentElement!: HTMLDivElement;
@@ -162,18 +160,13 @@ export class Dialog extends FocusVisiblePolyfillMixin(
                     : html``}
                 ${this.dismissable
                     ? html`
-                          <sp-action-button
+                          <sp-close-button
                               class="close-button"
                               label="Close"
                               quiet
                               size="m"
                               @click=${this.close}
-                          >
-                              <sp-icon-cross500
-                                  class="spectrum-UIIcon-Cross500"
-                                  slot="icon"
-                              ></sp-icon-cross500>
-                          </sp-action-button>
+                          ></sp-close-button>
                       `
                     : html``}
             </div>

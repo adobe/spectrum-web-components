@@ -46,13 +46,10 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.8.6",
         "@spectrum-web-components/base": "^0.5.7",
         "@spectrum-web-components/button": "^0.17.6",
         "@spectrum-web-components/button-group": "^0.8.9",
         "@spectrum-web-components/divider": "^0.4.9",
-        "@spectrum-web-components/icon": "^0.11.9",
-        "@spectrum-web-components/icons-ui": "^0.8.9",
         "@spectrum-web-components/icons-workflow": "^0.8.9",
         "@spectrum-web-components/modal": "^0.6.7",
         "@spectrum-web-components/shared": "^0.14.2",
