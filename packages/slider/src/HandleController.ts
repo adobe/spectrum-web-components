@@ -457,15 +457,16 @@ export class HandleController implements Controller {
         const offset = event.clientX;
         const size = rect.width;
 
-        const normalized = (offset - minOffset) / size;
-        const value = model.normalization.fromNormalized(
+        const directionalOffset = this.host.isLTR
+            ? offset - minOffset
+            : size - (offset - minOffset);
+        const normalized = directionalOffset / size;
+
+        return model.normalization.fromNormalized(
             normalized,
             model.range.min,
             model.range.max
         );
-
-        /* c8 ignore next */
-        return this.host.isLTR ? value : model.range.max - value;
     }
 
     public renderHandle(
