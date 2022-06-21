@@ -767,6 +767,65 @@ describe('Submenu', () => {
         expect(activeOverlays.length).to.equal(0);
     });
 
+    it('closes decendent menus when Menu Item in ancestor without a submenu is pointerentered', async () => {
+        const el = await styledFixture<ActionMenu>(html`
+            <sp-action-menu>
+                <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
+                <sp-menu-group role="none">
+                    <span slot="header">New York</span>
+                    <sp-menu-item id="no-submenu">Bronx</sp-menu-item>
+                    <sp-menu-item id="submenu-item-1">
+                        Brooklyn
+                        <sp-menu slot="submenu">
+                            <sp-menu-item id="submenu-item-2">
+                                Ft. Greene
+                            </sp-menu-item>
+                            <sp-menu-item disabled>Park Slope</sp-menu-item>
+                            <sp-menu-item id="ancestor-item">
+                                Williamsburg
+                            </sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                    <sp-menu-item id="submenu-item-3">
+                        Manhattan
+                        <sp-menu slot="submenu">
+                            <sp-menu-item disabled>SoHo</sp-menu-item>
+                            <sp-menu-item>Union Square</sp-menu-item>
+                            <sp-menu-item>Upper East Side</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-menu-group>
+            </sp-action-menu>
+        `);
+
+        const rootMenu = el.querySelector('#submenu-item-1') as MenuItem;
+        const noSubmenu = el.querySelector('#no-submenu') as MenuItem;
+
+        expect(el.open).to.be.false;
+        let opened = oneEvent(el, 'sp-opened');
+        el.click();
+        await opened;
+        expect(el.open).to.be.true;
+
+        let activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(1);
+        opened = oneEvent(rootMenu, 'sp-opened');
+        rootMenu.dispatchEvent(
+            new PointerEvent('pointerenter', { bubbles: true })
+        );
+        await opened;
+        activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(2);
+
+        const closed = oneEvent(rootMenu, 'sp-closed');
+        noSubmenu.dispatchEvent(
+            new PointerEvent('pointerenter', { bubbles: true })
+        );
+        await closed;
+        activeOverlays = document.querySelectorAll('active-overlay');
+        expect(activeOverlays.length).to.equal(1);
+    });
+
     it('closes decendent menus when Menu Item in ancestor is clicked', async () => {
         const el = await styledFixture<ActionMenu>(html`
             <sp-action-menu>

@@ -27,6 +27,7 @@ import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import { openOverlay } from '@spectrum-web-components/overlay/src/loader.js';
+import { OverlayCloseEvent } from '@spectrum-web-components/overlay/src/overlay-events.js';
 
 import menuItemStyles from './menu-item.css.js';
 import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-checkmark.css.js';
@@ -331,9 +332,18 @@ export class MenuItem extends LikeAnchor(Focusable) {
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${MenuItem.instanceCount++}`;
         }
+        this.addEventListener('pointerenter', this.closeOverlaysForRoot);
     }
 
-    public closeOverlay?: (leave?: boolean) => Promise<void>;
+    protected closeOverlaysForRoot(): void {
+        if (this.open) return;
+        const overalyCloseEvent = new OverlayCloseEvent({
+            root: this.menuData.focusRoot,
+        });
+        this.dispatchEvent(overalyCloseEvent);
+    }
+
+    public closeOverlay?: () => Promise<void>;
 
     protected handleSubmenuClick(): void {
         this.openOverlay();
@@ -354,7 +364,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         if (this.hasSubmenu && this.open) {
             this.leaveTimeout = setTimeout(() => {
                 delete this.leaveTimeout;
-                if (this.closeOverlay) this.closeOverlay(true);
+                if (this.closeOverlay) this.closeOverlay();
             }, POINTERLEAVE_TIMEOUT);
         }
     }
@@ -420,6 +430,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.closeOverlay = closeSubmenu;
         const cleanup = (event: CustomEvent<OverlayOpenCloseDetail>): void => {
             event.stopPropagation();
+            delete this.closeOverlay;
             returnSubmenu();
             this.open = false;
             this.active = false;
