@@ -372,6 +372,46 @@ describe('Slider', () => {
         expect(el.value).to.equal(0);
     });
 
+    it('manages RTL when min != 0', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider min="1" max="11" dir="rtl"></sp-slider>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(10);
+
+        const handle = el.shadowRoot.querySelector('.handle') as HTMLDivElement;
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [9, 30],
+                },
+                {
+                    type: 'down',
+                },
+            ],
+        });
+        await elementUpdated(el);
+
+        expect(el.dragging, 'is dragging').to.be.true;
+        expect(el.highlight, 'not highlighted').to.be.false;
+
+        handle.dispatchEvent(
+            new PointerEvent('pointermove', {
+                clientX: 0,
+                cancelable: true,
+                bubbles: true,
+                composed: true,
+            })
+        );
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(11);
+    });
+
     it('goes [disabled] while dragging', async () => {
         const el = await fixture<Slider>(
             html`
