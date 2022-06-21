@@ -217,9 +217,8 @@ export class MenuItem extends LikeAnchor(Focusable) {
                 childList: true,
                 subtree: true,
             },
-            callback: (): boolean => {
+            callback: () => {
                 this.breakItemChildrenCache();
-                return true;
             },
         });
     }

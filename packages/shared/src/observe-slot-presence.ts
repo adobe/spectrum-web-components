@@ -47,7 +47,6 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
                 },
                 callback: () => {
                     this.managePresenceObservedSlot();
-                    return true;
                 },
             });
 

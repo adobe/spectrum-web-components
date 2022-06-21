@@ -46,13 +46,13 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
                     characterData: true,
                     subtree: true,
                 },
-                callback: (mutationsList: Array<MutationRecord>): boolean => {
+                callback: (mutationsList: Array<MutationRecord>) => {
                     for (const mutation of mutationsList) {
                         if (mutation.type === 'characterData') {
                             this.manageTextObservedSlot();
+                            return;
                         }
                     }
-                    return true;
                 },
             });
         }

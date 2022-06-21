@@ -79,7 +79,6 @@ export class HandleController implements Controller {
             },
             callback: () => {
                 this.extractModelFromLightDom();
-                return true;
             },
         });
 
