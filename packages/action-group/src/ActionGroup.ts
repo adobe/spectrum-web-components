@@ -61,7 +61,6 @@ export class ActionGroup extends SpectrumElement {
             },
             callback: () => {
                 this.manageButtons();
-                return true;
             },
         });
     }

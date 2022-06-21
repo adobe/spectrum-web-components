@@ -105,8 +105,9 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         if (dir === this.dir) return;
         this.setAttribute('dir', dir);
         this._dir = dir;
+        const targetDir = dir === 'rtl' ? dir : 'ltr';
         this.trackedChildren.forEach((el) => {
-            el.setAttribute('dir', dir === 'rtl' ? dir : 'ltr');
+            el.setAttribute('dir', targetDir);
         });
     }
 
