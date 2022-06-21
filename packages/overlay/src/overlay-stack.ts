@@ -21,6 +21,7 @@ import {
     findOverlaysRootedInOverlay,
     parentOverlayOf,
 } from './overlay-utils.js';
+import { OverlayCloseEvent } from './overlay-events.js';
 
 function isLeftClick(event: MouseEvent): boolean {
     return event.button === 0;
@@ -223,8 +224,18 @@ export class OverlayStack {
         this.document.addEventListener('click', this.handleMouseCapture, true);
         this.document.addEventListener('click', this.handleMouse);
         this.document.addEventListener('keyup', this.handleKeyUp);
+        this.document.addEventListener(
+            'sp-overlay-close',
+            this.handleOverlayClose as EventListener
+        );
         window.addEventListener('resize', this.handleResize);
     }
+
+    handleOverlayClose = (event: OverlayCloseEvent): void => {
+        const { root } = event;
+        if (!root) return;
+        this.closeOverlaysForRoot(root);
+    };
 
     private isClickOverlayActiveForTrigger(trigger: HTMLElement): boolean {
         return this.overlays.some(
