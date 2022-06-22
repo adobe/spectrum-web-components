@@ -80,13 +80,18 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
         }
 
         public managePresenceObservedSlot = (): void => {
+            let changes = false;
             lightDomSelectors.forEach((selector) => {
+                const nextValue = !!this.querySelector(selector);
+                const previousValue =
+                    this[slotContentIsPresent].get(selector) || false;
+                changes = changes || previousValue !== nextValue;
                 this[slotContentIsPresent].set(
                     selector,
                     !!this.querySelector(selector)
                 );
             });
-            this.requestUpdate();
+            if (changes) this.requestUpdate();
         };
     }
     return SlotPresenceObservingElement;
