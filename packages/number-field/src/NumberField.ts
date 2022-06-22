@@ -572,9 +572,12 @@ export class NumberField extends TextfieldBase {
         super.update(changes);
     }
 
+    public override willUpdate(): void {
+        this.multiline = false;
+    }
+
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
-        this.multiline = false;
         this.addEventListener('keydown', this.handleKeydown);
     }
 
