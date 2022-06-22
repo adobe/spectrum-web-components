@@ -131,8 +131,7 @@ export class Search extends Textfield {
         this.inputElement.setAttribute('type', 'search');
     }
 
-    public override updated(changedProperties: PropertyValues): void {
-        super.updated(changedProperties);
+    public override willUpdate(): void {
         this.multiline = false;
     }
 }

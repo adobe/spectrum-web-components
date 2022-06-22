@@ -293,13 +293,16 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
         `;
     }
 
-    protected override updated(changedProperties: PropertyValues): void {
+    protected override update(changedProperties: PropertyValues): void {
         if (
             changedProperties.has('value') ||
             (changedProperties.has('required') && this.required)
         ) {
-            this.checkValidity();
+            this.updateComplete.then(() => {
+                this.checkValidity();
+            });
         }
+        super.update(changedProperties);
     }
 
     public checkValidity(): boolean {
