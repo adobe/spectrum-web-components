@@ -131,19 +131,16 @@ export class SliderHandle extends Focusable {
         if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
             delete this._numberFormatCache;
         }
-        super.update(changes);
-    }
-
-    protected override updated(changedProperties: PropertyValues<this>): void {
-        if (changedProperties.has('value')) {
-            const oldValue = changedProperties.get('value');
+        if (changes.has('value')) {
+            const oldValue = changes.get('value');
             if (oldValue != null) {
-                this.handleController /* c8 ignore next */
-                    ?.setValueFromHandle(this);
+                this.updateComplete.then(() => {
+                    this.handleController?.setValueFromHandle(this);
+                });
             }
         }
         this.handleController?.handleHasChanged(this);
-        super.updated(changedProperties);
+        super.update(changes);
     }
 
     protected override firstUpdated(
