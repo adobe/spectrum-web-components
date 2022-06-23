@@ -23,6 +23,10 @@ import {
 } from '@spectrum-web-components/shared';
 ```
 
+### getDeepElementFromPoint
+
+The `getDeepElementFromPoint` method allows you to obtain the deepest possible element at a given coordinates on the current page. The method will step into any available `shadowRoot`s until it reaches the first element with no `shadowRoot` or no children available at the given coordinates.
+
 ### Focusable
 
 The `Focusable` subclass of `LitElement` adds some helpers method and lifecycle coverage in order to support passing focus to a container element inside of a custom element. The Focusable base class handles tabindex setting into shadowed elements automatically and is based heavily on the [aybolit delegate-focus-mixin](https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js).
