@@ -53,10 +53,10 @@
     semver "^7.3.5"
     slugify "^1.6.5"
 
-"@adobe/spectrum-css-workflow-icons@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-1.2.1.tgz#7e2cb3fcfb5c8b12d7275afafbb6ec44913551b4"
-  integrity sha512-uVgekyBXnOVkxp+CUssjN/gefARtudZC8duEn1vm0lBQFwGRZFlDEzU1QC+aIRWCrD1Z8OgRpmBYlSZ7QS003w==
+"@adobe/spectrum-css-workflow-icons@^1.5.4":
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-1.5.4.tgz#0e09ff519c36139176c3ba3ce617a995c9032f67"
+  integrity sha512-sZ19YOLGw5xTZzCEkVXPjf53lXVzo063KmDTJjpSjy/XLVsF+RaX0b436SfSM4hsIUZ7n27+UsbOvzFaFjcYXw==
 
 "@ampproject/remapping@^2.1.0":
   version "2.1.2"
@@ -3945,6 +3945,11 @@
   version "3.0.21"
   resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-3.0.21.tgz#086d30fd659975bc932e847140531dcae9a57ffd"
   integrity sha512-GlpqVotZ2c6nsMfQOBzBb855aZ6L1mtbAcgcwhKzACJhJxw0MKUD5euA8mUzMtCnlLZ0XCgoJbU+PLNrx/yz0A==
+
+"@spectrum-css/icon@^3.0.23":
+  version "3.0.23"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/icon/-/icon-3.0.23.tgz#95a5e1aa7fa0eace579449b3aaa7ec87c8c77f7f"
+  integrity sha512-HtH8M1+b2KxcOJjdaqqemp/Yx7TUBosHhlzuZcDxoG2OpSrg7LtkJfDyv+0qFELzB934k9JbiE4xVlHRzTcrZA==
 
 "@spectrum-css/illustratedmessage@^4.0.4":
   version "4.0.4"
