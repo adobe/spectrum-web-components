@@ -30,5 +30,5 @@ module.exports = {
     shortDesc:
         'Spectrum Web Components provide interface components as custom elements to help teams work more efficiently and to make applications more consistent.',
     url,
-    WATCH_MODE: process.env.WATCH_MODE === 'true',
+    WATCH_MODE: process.env.WATCH_MODE,
 };

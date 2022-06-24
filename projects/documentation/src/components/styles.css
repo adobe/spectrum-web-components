@@ -11,10 +11,16 @@ governing permissions and limitations under the License.
 */
 
 @import '@spectrum-web-components/styles/core-global.css';
-@import '@spectrum-web-components/styles/scale-medium.css';
 @import '@spectrum-web-components/styles/fonts.css';
 @import '@spectrum-web-components/styles/typography.css';
 @import '@spectrum-css/table/dist/index-vars.css';
+
+@import '@spectrum-web-components/styles/scale-medium.css' screen and
+        (min-width: 701px) and (min-height: 701px),
+    not (hover: none), not (pointer: coarse);
+@import '@spectrum-web-components/styles/scale-large.css' screen and
+        (max-width: 700px) and (hover: none) and (pointer: coarse),
+    (max-height: 700px) and (hover: none) and (pointer: coarse);
 
 @import '@spectrum-web-components/styles/theme-dark.css' screen and
     (prefers-color-scheme: dark);
@@ -135,7 +141,7 @@ body {
 
 @media screen and (max-width: 458px) {
     docs-page:not(:defined) {
-        padding: 170px var(--spectrum-global-dimension-size-300) 24px;
+        padding: 212px var(--spectrum-global-dimension-size-300) 24px;
     }
 }
 

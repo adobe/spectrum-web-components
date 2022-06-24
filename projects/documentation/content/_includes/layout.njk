@@ -13,7 +13,7 @@
     {% block content %}
       {{ content | safe }}
     {% endblock %}
-    {% if site.WATCH_MODE !== true %}
+    {% if site.WATCH_MODE !== 'true' %}
     <script async defer>
         if ('serviceWorker' in navigator) {
           window.addEventListener('load', () => {
