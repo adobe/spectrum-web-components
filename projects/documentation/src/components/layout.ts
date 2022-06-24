@@ -47,15 +47,17 @@ import { copyText } from './copy-to-clipboard.js';
 
 import layoutStyles from './layout.css';
 import { nothing } from 'lit-html';
+import {
+    DARK_MODE,
+    IS_MOBILE,
+} from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
 const SWC_THEME_THEME_KEY = 'swc-docs:theme:theme';
 const SWC_THEME_DIR_KEY = 'swc-docs:theme:dir';
-const COLOR_FALLBACK = matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light';
-const SCALE_FALLBACK = 'medium';
+const COLOR_FALLBACK = matchMedia(DARK_MODE).matches ? 'dark' : 'light';
+const SCALE_FALLBACK = matchMedia(IS_MOBILE).matches ? 'large' : 'medium';
 const THEME_FALLBACK = 'spectrum';
 const DIR_FALLBACK = 'ltr';
 const DEFAULT_COLOR = (
@@ -311,10 +313,9 @@ export class LayoutElement extends LitElement {
         return html`
             <div class="manage-theme">
                 <div class="theme-control">
-                    <sp-field-label for="theme-color">Theme</sp-field-label>
+                    <sp-field-label for="theme-theme">Theme</sp-field-label>
                     <sp-picker
-                        id="theme-color"
-                        placement="bottom"
+                        id="theme-theme"
                         quiet
                         value=${this.theme}
                         @change=${this.updateTheme}
@@ -334,7 +335,6 @@ export class LayoutElement extends LitElement {
                     </sp-field-label>
                     <sp-picker
                         id="theme-color"
-                        placement="bottom"
                         quiet
                         value=${this.color}
                         @change=${this.updateColor}
@@ -353,7 +353,6 @@ export class LayoutElement extends LitElement {
                     <sp-picker
                         id="theme-scale"
                         label="Scale"
-                        placement="bottom"
                         quiet
                         value=${this.scale}
                         @change=${this.updateScale}
@@ -370,7 +369,6 @@ export class LayoutElement extends LitElement {
                     <sp-picker
                         id="theme-direction"
                         label="Direction"
-                        placement="bottom"
                         quiet
                         value=${this.dir}
                         @change=${this.updateDirection}
