@@ -138,7 +138,7 @@ describe('Swatch Group', () => {
         expect(el.selected).to.deep.equal([]);
         expect(selectedChild.selected).to.be.false;
     });
-    it('dispatches `change` events as [selects="single"]', async () => {
+    it('dispatches `change` events as [selects="multiple"]', async () => {
         el.selects = 'multiple';
         const selectedChild0 = el.querySelector(
             ':scope > sp-swatch:nth-child(1)'
@@ -168,6 +168,50 @@ describe('Swatch Group', () => {
             selectedChild1.value,
             selectedChild2.value,
         ]);
+    });
+    it('filters `selected` when a selected Swatch is removed from the DOM', async () => {
+        el.selects = 'multiple';
+        const selectedChild0 = el.querySelector(
+            ':scope > sp-swatch:nth-child(1)'
+        ) as Swatch;
+        const selectedChild1 = el.querySelector(
+            ':scope > sp-swatch:nth-child(4)'
+        ) as Swatch;
+        const selectedChild2 = el.querySelector(
+            ':scope > sp-swatch:nth-child(6)'
+        ) as Swatch;
+
+        await elementUpdated(selectedChild0);
+
+        expect(el.selected).to.deep.equal([]);
+
+        selectedChild0.click();
+        selectedChild1.click();
+        selectedChild2.click();
+
+        expect(el.selected).to.deep.equal([
+            selectedChild0.value,
+            selectedChild1.value,
+            selectedChild2.value,
+        ]);
+
+        selectedChild0.remove();
+        await elementUpdated(el);
+
+        expect(el.selected).to.deep.equal([
+            selectedChild1.value,
+            selectedChild2.value,
+        ]);
+
+        selectedChild2.remove();
+        await elementUpdated(el);
+
+        expect(el.selected).to.deep.equal([selectedChild1.value]);
+
+        selectedChild1.remove();
+        await elementUpdated(el);
+
+        expect(el.selected).to.deep.equal([]);
     });
     it('maintains a single tab stop', async () => {
         const inputBefore = document.createElement('input');
