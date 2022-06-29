@@ -113,8 +113,8 @@ export class Swatch extends SizedMixin(Focusable, {
         return this;
     }
 
-    public toggle(destination?: boolean): void {
-        this.selected = destination || !this.selected;
+    public toggle(force?: boolean): void {
+        this.selected = force ?? !this.selected;
     }
 
     private handleClick(): void {

@@ -115,8 +115,10 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         if (!this.selects) {
             event.preventDefault();
             return;
-        } else if (this.selects === 'single') {
+        }
+        if (this.selects === 'single') {
             const { target } = event;
+            target.tabIndex = 0;
             this.selectedSet.clear();
             this.selectedSet.add(target.value);
             this.rovingTabindexController.elements.forEach((child) => {
@@ -145,26 +147,26 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
     }
 
     private manageChange = (): void => {
+        const presentSet = new Set();
         this.selectedSet = new Set(this.selected);
         const swatches = [...this.children] as Swatch[];
         swatches.forEach((swatch) => {
+            presentSet.add(swatch.value);
             if (swatch.selected) {
                 this.selectedSet.add(swatch.value);
+            }
+        });
+        this.selectedSet.forEach((value) => {
+            if (!presentSet.has(value)) {
+                this.selectedSet.delete(value);
             }
         });
         this._selected = [...this.selectedSet];
     };
 
-    protected override render(): TemplateResult {
-        return html`
-            <slot
-                @change=${this.handleChange}
-                @slotchange=${this.manageChange}
-            ></slot>
-        `;
-    }
-
-    protected override willUpdate(changes: PropertyValues<this>): void {
+    private getPassthroughSwatchActions(
+        changes: PropertyValues
+    ): ((swatch: Swatch) => void)[] {
         const targetValues: {
             border?: SwatchBorder;
             rounding?: SwatchRounding;
@@ -195,9 +197,9 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         ) {
             targetValues.shape = this.shape;
         }
-        const swatchActions: ((swatch: Swatch) => void)[] = [];
+        const passThroughSwatchActions: ((swatch: Swatch) => void)[] = [];
         if (Object.keys(targetValues).length) {
-            swatchActions.push((swatch) => {
+            passThroughSwatchActions.push((swatch) => {
                 if ('border' in targetValues)
                     swatch.border = targetValues.border;
                 if ('rounding' in targetValues)
@@ -207,6 +209,49 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
                     swatch.size = targetValues.size as SwatchGroupSizes;
             });
         }
+        return passThroughSwatchActions;
+    }
+
+    private getSelectionSwatchActions(
+        changes: PropertyValues
+    ): ((swatch: Swatch) => void)[] {
+        const selectionSwatchActions: ((swatch: Swatch) => void)[] = [];
+        if (!changes.has('selects')) return selectionSwatchActions;
+        if (this.selects) {
+            this.setAttribute(
+                'role',
+                this.selects === 'single' ? 'radiogroup' : 'group'
+            );
+        } else {
+            this.removeAttribute('role');
+        }
+        const swatchRoles = {
+            single: 'radio',
+            multiple: 'checkbox',
+        };
+        const swatchRole = this.selects ? swatchRoles[this.selects] : 'button';
+        selectionSwatchActions.push((swatch) => {
+            swatch.setAttribute('role', swatchRole);
+        });
+        return selectionSwatchActions;
+    }
+
+    protected override render(): TemplateResult {
+        return html`
+            <slot
+                @change=${this.handleChange}
+                @slotchange=${this.manageChange}
+            ></slot>
+        `;
+    }
+
+    protected override willUpdate(changes: PropertyValues<this>): void {
+        const swatchActions = [
+            ...this.getPassthroughSwatchActions(changes),
+            ...this.getSelectionSwatchActions(changes),
+        ];
+
+        // Create Swatch actions that build state to be applied later.
         const nextSelected = new Set(this.selected);
         const currentValues = new Set();
         if (changes.has('selected')) {
@@ -219,31 +264,15 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
                 }
             });
         }
-        if (changes.has('selects')) {
-            if (this.selects) {
-                this.setAttribute(
-                    'role',
-                    this.selects === 'single' ? 'radiogroup' : 'group'
-                );
-            } else {
-                this.removeAttribute('role');
-            }
-            const swatchRoles = {
-                single: 'radio',
-                multiple: 'checkbox',
-            };
-            const swatchRole = this.selects
-                ? swatchRoles[this.selects]
-                : 'button';
-            swatchActions.push((swatch) => {
-                swatch.setAttribute('role', swatchRole);
-            });
-        }
+
+        // Do Swatch actions to each Swach in the collection.
         this.rovingTabindexController.elements.forEach((swatch) => {
             swatchActions.forEach((action) => {
                 action(swatch);
             });
         });
+
+        // Apply state built in actions back to the Swatch Group
         if (changes.has('selected')) {
             this.selected = [...nextSelected].filter((selectedValue) =>
                 currentValues.has(selectedValue)
