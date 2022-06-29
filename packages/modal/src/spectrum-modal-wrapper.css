@@ -17,7 +17,8 @@ governing permissions and limitations under the License.
     display: flex;
     height: 100vh;
     height: -webkit-fill-available;
-    height: fill-available;
+    height: -moz-available;
+    height: stretch;
     justify-content: center;
     left: 0;
     pointer-events: none;

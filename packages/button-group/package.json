@@ -48,7 +48,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/buttongroup": "^5.0.11"
+        "@spectrum-css/buttongroup": "^5.0.13"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

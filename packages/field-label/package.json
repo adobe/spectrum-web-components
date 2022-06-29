@@ -51,7 +51,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/fieldlabel": "^4.0.24"
+        "@spectrum-css/fieldlabel": "^4.0.28"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

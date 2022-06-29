@@ -178,10 +178,10 @@ governing permissions and limitations under the License.
         ease-in-out;
 }
 :host(.focus-visible) {
-    box-shadow: none !important; /* .spectrum-CloseButton.focus-ring */
+    box-shadow: none; /* .spectrum-CloseButton.focus-ring */
 }
 :host(:focus-visible) {
-    box-shadow: none !important; /* .spectrum-CloseButton.focus-ring */
+    box-shadow: none; /* .spectrum-CloseButton.focus-ring */
 }
 :host(.focus-visible):after {
     box-shadow: 0 0 0 var(--spectrum-closebutton-focus-ring-size)

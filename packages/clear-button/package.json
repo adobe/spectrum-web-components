@@ -46,7 +46,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/clearbutton": "^1.2.10"
+        "@spectrum-css/clearbutton": "^1.2.12"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

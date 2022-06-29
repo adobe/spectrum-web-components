@@ -519,10 +519,10 @@ slot[icon-only]::slotted([slot='icon']) {
         ease-in-out;
 }
 :host(.focus-visible) {
-    box-shadow: none !important; /* .spectrum-ActionButton.focus-ring */
+    box-shadow: none; /* .spectrum-ActionButton.focus-ring */
 }
 :host(:focus-visible) {
-    box-shadow: none !important; /* .spectrum-ActionButton.focus-ring */
+    box-shadow: none; /* .spectrum-ActionButton.focus-ring */
 }
 :host(.focus-visible):after {
     box-shadow: 0 0 0
