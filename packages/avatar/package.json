@@ -48,7 +48,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/avatar": "^5.0.17"
+        "@spectrum-css/avatar": "^5.0.19"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

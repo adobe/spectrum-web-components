@@ -54,7 +54,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/card": "^4.0.21"
+        "@spectrum-css/card": "^5.0.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

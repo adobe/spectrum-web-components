@@ -50,7 +50,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/colorarea": "^1.0.20"
+        "@spectrum-css/colorarea": "^1.0.22"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
