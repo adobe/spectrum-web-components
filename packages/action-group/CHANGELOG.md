@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.8.6...@spectrum-web-components/action-group@0.9.0) (2022-06-29)
+
+### Features
+
+-   **theme:** filter css variables ([1761f3a](https://github.com/adobe/spectrum-web-components/commit/1761f3af1594e3c395dee98e7e9b1d616a74a1a1))
+
 ## [0.8.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.8.5...@spectrum-web-components/action-group@0.8.6) (2022-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/action-group

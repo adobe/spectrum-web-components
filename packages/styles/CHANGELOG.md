@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.13.2...@spectrum-web-components/styles@0.14.0) (2022-06-29)
+
+### Features
+
+-   **theme:** filter css variables ([1761f3a](https://github.com/adobe/spectrum-web-components/commit/1761f3af1594e3c395dee98e7e9b1d616a74a1a1))
+
 ## [0.13.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.13.1...@spectrum-web-components/styles@0.13.2) (2022-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/styles

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.12...@spectrum-web-components/slider@0.12.13) (2022-06-29)
+
+### Bug Fixes
+
+-   correct slider math in RTL contexts ([4d73fa9](https://github.com/adobe/spectrum-web-components/commit/4d73fa9716293fdf415943586a01d96ede251032))
+
 ## [0.12.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.11...@spectrum-web-components/slider@0.12.12) (2022-06-07)
 
 ### Bug Fixes

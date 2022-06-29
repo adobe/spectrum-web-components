@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/story-decorator",
-    "version": "0.6.3",
+    "version": "0.6.4",
     "publishConfig": {
         "access": "public"
     },
@@ -45,13 +45,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.5.7",
-        "@spectrum-web-components/field-label": "^0.7.11",
-        "@spectrum-web-components/menu": "^0.14.2",
-        "@spectrum-web-components/overlay": "^0.16.3",
-        "@spectrum-web-components/picker": "^0.11.3",
-        "@spectrum-web-components/switch": "^0.9.11",
-        "@spectrum-web-components/theme": "^0.11.2",
+        "@spectrum-web-components/base": "^0.5.8",
+        "@spectrum-web-components/field-label": "^0.7.12",
+        "@spectrum-web-components/menu": "^0.14.3",
+        "@spectrum-web-components/overlay": "^0.16.4",
+        "@spectrum-web-components/picker": "^0.11.4",
+        "@spectrum-web-components/switch": "^0.9.12",
+        "@spectrum-web-components/theme": "^0.11.3",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

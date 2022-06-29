@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.3.12...@spectrum-web-components/number-field@0.3.13) (2022-06-29)
+
+### Bug Fixes
+
+-   explicitly setting NumberField wheel event handler as not passive ([fad1496](https://github.com/adobe/spectrum-web-components/commit/fad1496b0cfab5c35b2de7447f2f0bee5325dfc2))
+
 ## [0.3.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.3.11...@spectrum-web-components/number-field@0.3.12) (2022-06-07)
 
 **Note:** Version bump only for package @spectrum-web-components/number-field

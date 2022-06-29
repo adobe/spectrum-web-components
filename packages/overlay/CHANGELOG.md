@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.16.3...@spectrum-web-components/overlay@0.16.4) (2022-06-29)
+
+### Bug Fixes
+
+-   ensure that entering an ancestor Menu Item without a submen closes related submenus ([efe5fa1](https://github.com/adobe/spectrum-web-components/commit/efe5fa1ff50c45487f370847444b940e1d6d8a4e))
+
 ## [0.16.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.16.2...@spectrum-web-components/overlay@0.16.3) (2022-06-07)
 
 ### Bug Fixes

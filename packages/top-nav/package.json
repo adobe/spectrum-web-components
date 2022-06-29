@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/top-nav",
-    "version": "0.5.12",
+    "version": "0.5.13",
     "publishConfig": {
         "access": "public"
     },
@@ -46,9 +46,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.5.7",
-        "@spectrum-web-components/shared": "^0.14.2",
-        "@spectrum-web-components/tabs": "^0.8.12",
+        "@spectrum-web-components/base": "^0.5.8",
+        "@spectrum-web-components/shared": "^0.14.3",
+        "@spectrum-web-components/tabs": "^0.8.13",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",

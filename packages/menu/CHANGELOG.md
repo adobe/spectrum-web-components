@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.14.2...@spectrum-web-components/menu@0.14.3) (2022-06-29)
+
+### Bug Fixes
+
+-   ensure that entering an ancestor Menu Item without a submen closes related submenus ([efe5fa1](https://github.com/adobe/spectrum-web-components/commit/efe5fa1ff50c45487f370847444b940e1d6d8a4e))
+-   update Picker label via MutationObserver instead of "slotchange" ([196998e](https://github.com/adobe/spectrum-web-components/commit/196998e9433dc938d86bfbe77db9e3accd6d9bbc))
+
 ## [0.14.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.14.1...@spectrum-web-components/menu@0.14.2) (2022-06-07)
 
 ### Bug Fixes

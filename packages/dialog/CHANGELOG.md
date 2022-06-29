@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.10.6...@spectrum-web-components/dialog@0.10.7) (2022-06-29)
+
+### Bug Fixes
+
+-   prevent Dialog Wrapper from dispatching two "close" events ([be6d23b](https://github.com/adobe/spectrum-web-components/commit/be6d23b472e1e7ac0dcba5140d9f8a0bd1ce8bdc))
+
 ## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.10.5...@spectrum-web-components/dialog@0.10.6) (2022-06-07)
 
 ### Bug Fixes

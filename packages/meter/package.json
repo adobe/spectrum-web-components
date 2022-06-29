@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/meter",
-    "version": "0.6.11",
+    "version": "0.6.12",
     "publishConfig": {
         "access": "public"
     },
@@ -44,9 +44,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.5.7",
-        "@spectrum-web-components/field-label": "^0.7.11",
-        "@spectrum-web-components/shared": "^0.14.2",
+        "@spectrum-web-components/base": "^0.5.8",
+        "@spectrum-web-components/field-label": "^0.7.12",
+        "@spectrum-web-components/shared": "^0.14.3",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
