@@ -11,7 +11,6 @@ yarn analyze:quick
 
 [[ $STAGED_CSS_TO_LINT ]] && yarn stylelint --fix $STAGED_CSS_TO_LINT
 
-# yarn analyze:quick
 yarn pretty-quick --staged --fix
 
 [[ $ALL_STAGED ]] && git add $ALL_STAGED
