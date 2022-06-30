@@ -23,6 +23,11 @@ export type TriggerInteractions =
     | 'inline'
     | 'modal';
 
+export type OverlayTriggerInteractions = Extract<
+    TriggerInteractions,
+    'inline' | 'modal' | 'replace'
+>;
+
 export interface OverlayOpenDetail {
     content: HTMLElement;
     contentTip?: HTMLElement;
