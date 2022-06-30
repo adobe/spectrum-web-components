@@ -86,6 +86,7 @@ export interface ProvideLang {
 
 /**
  * @element sp-theme
+ * @attr {string} [lang=""] - The language of the content scoped to this `sp-theme` element, see: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang" target="_blank">MDN reference</a>.
  *
  * @slot - Content on which to apply the CSS Custom Properties defined by the current theme configuration
  */
@@ -111,6 +112,11 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         });
     }
 
+    /**
+     * Reading direction of the content scoped to this `sp-theme` element.
+     * @type {"ltr" | "rtl" | ""}
+     * @attr
+     */
     override get dir(): 'ltr' | 'rtl' | '' {
         return this._dir;
     }
@@ -149,6 +155,13 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
     private _theme: ThemeVariant | '' = 'spectrum';
 
+    /**
+     * The Spectrum theme that is applied to the content scoped to this `sp-theme` element.
+     *
+     * A value is requried.
+     * @type {"spectrum" | "express" | ""}
+     * @attr
+     */
     get theme(): ThemeVariant | '' {
         const themeFragments = Theme.themeFragmentsByKind.get('theme');
         const { name } =
@@ -175,6 +188,13 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
     private _color: Color | '' = '';
 
+    /**
+     * The Spectrum color stops to apply to content scoped by this `sp-theme` element.
+     *
+     * A value is requried.
+     * @type {"lightest" | "light" | "dark" | "darkest" | ""}
+     * @attr
+     */
     get color(): Color | '' {
         const themeFragments = Theme.themeFragmentsByKind.get('color');
         const { name } =
@@ -201,6 +221,13 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
 
     private _scale: Scale | '' = '';
 
+    /**
+     * The Spectrum platform scale to apply to content scoped by this `sp-theme` element.
+     *
+     * A value is requried.
+     * @type {"medium" | "large" | ""}
+     * @attr
+     */
     get scale(): Scale | '' {
         const themeFragments = Theme.themeFragmentsByKind.get('scale');
         const { name } =
