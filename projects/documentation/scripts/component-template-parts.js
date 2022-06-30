@@ -121,7 +121,7 @@ ${
               tag.attributes,
               ['Property', 'Attribute', 'Type', 'Default', 'Description'],
               [
-                  (attribute) => `<code>${attribute.fieldName}</code>`,
+                  (attribute) => `<code>${attribute.fieldName || ''}</code>`,
                   (attribute) => `<code>${attribute.name || ''}</code>`,
                   (attribute) => `<code>${attribute.type?.text || ''}</code>`,
                   (attribute) => `<code>${attribute.default || ''}</code>`,
