@@ -2060,6 +2060,236 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/action-bar/src/ActionBar.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "actionBarVariants",
+          "type": {
+            "text": "array"
+          },
+          "default": "['sticky', 'fixed']"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ActionBar",
+          "slots": [
+            {
+              "description": "Content to display with the Action Bar",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "flexible",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
+              "parameters": [
+                {
+                  "name": "flexible",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "attribute": "flexible",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "privacy": "public",
+              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "String"
+                  }
+                }
+              ],
+              "type": {
+                "text": "string"
+              },
+              "attribute": "variant",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "_variant",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "flexible",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
+              "parameters": [
+                {
+                  "name": "flexible",
+                  "type": {
+                    "text": "Boolean"
+                  }
+                }
+              ],
+              "fieldName": "flexible"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "open"
+            },
+            {
+              "name": "variant",
+              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
+              "parameters": [
+                {
+                  "name": "variant",
+                  "type": {
+                    "text": "String"
+                  }
+                }
+              ],
+              "type": {
+                "text": "string"
+              },
+              "fieldName": "variant"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-action-bar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "actionBarVariants",
+          "declaration": {
+            "name": "actionBarVariants",
+            "module": "packages/action-bar/src/ActionBar.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ActionBar",
+          "declaration": {
+            "name": "ActionBar",
+            "module": "packages/action-bar/src/ActionBar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/accordion/src/Accordion.ts",
       "declarations": [
         {
@@ -2703,236 +2933,6 @@
           "declaration": {
             "name": "AccordionItem",
             "module": "packages/accordion/src/AccordionItem.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/action-bar/src/ActionBar.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "actionBarVariants",
-          "type": {
-            "text": "array"
-          },
-          "default": "['sticky', 'fixed']"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ActionBar",
-          "slots": [
-            {
-              "description": "Content to display with the Action Bar",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "flexible",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
-              "parameters": [
-                {
-                  "name": "flexible",
-                  "type": {
-                    "text": "Boolean"
-                  }
-                }
-              ],
-              "attribute": "flexible",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "open",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "variant",
-              "privacy": "public",
-              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
-              "parameters": [
-                {
-                  "name": "variant",
-                  "type": {
-                    "text": "String"
-                  }
-                }
-              ],
-              "type": {
-                "text": "string"
-              },
-              "attribute": "variant",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "_variant",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "private",
-              "default": "''"
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "flexible",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "When `flexible` the action bar sizes itself to its content\nrather than a specific width.",
-              "parameters": [
-                {
-                  "name": "flexible",
-                  "type": {
-                    "text": "Boolean"
-                  }
-                }
-              ],
-              "fieldName": "flexible"
-            },
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "open"
-            },
-            {
-              "name": "variant",
-              "description": "The variant applies specific styling when set to `sticky` or `fixed`.\n`variant` attribute is removed when not matching one of the above.",
-              "parameters": [
-                {
-                  "name": "variant",
-                  "type": {
-                    "text": "String"
-                  }
-                }
-              ],
-              "type": {
-                "text": "string"
-              },
-              "fieldName": "variant"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-action-bar",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "actionBarVariants",
-          "declaration": {
-            "name": "actionBarVariants",
-            "module": "packages/action-bar/src/ActionBar.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ActionBar",
-          "declaration": {
-            "name": "ActionBar",
-            "module": "packages/action-bar/src/ActionBar.ts"
           }
         }
       ]
@@ -6604,164 +6604,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/banner/src/Banner.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Banner",
-          "slots": [
-            {
-              "description": "Primary message of the banner.",
-              "name": "header"
-            },
-            {
-              "description": "Secondary message of the banner. Used to provide a description.",
-              "name": "content"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "type",
-              "type": {
-                "text": "'info' | 'warning' | 'error'"
-              },
-              "privacy": "public",
-              "default": "'info'",
-              "attribute": "type",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "corner",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "corner",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "description": "Determines the style, can be \"info\", \"warning\", or \"error\". Default is \"info\"",
-              "name": "type",
-              "type": {
-                "text": "'info' | 'warning' | 'error'"
-              },
-              "default": "'info'",
-              "fieldName": "type"
-            },
-            {
-              "description": "Determines if banner sets position at upper right corner or not.",
-              "name": "corner",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "corner"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-banner",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Banner",
-          "declaration": {
-            "name": "Banner",
-            "module": "packages/banner/src/Banner.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/base/src/Base.ts",
       "declarations": [
         {
@@ -6947,6 +6789,164 @@
           "declaration": {
             "name": "SpectrumElement",
             "module": "packages/base/src/Base.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/banner/src/Banner.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Banner",
+          "slots": [
+            {
+              "description": "Primary message of the banner.",
+              "name": "header"
+            },
+            {
+              "description": "Secondary message of the banner. Used to provide a description.",
+              "name": "content"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "'info' | 'warning' | 'error'"
+              },
+              "privacy": "public",
+              "default": "'info'",
+              "attribute": "type",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "corner",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "corner",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "description": "Determines the style, can be \"info\", \"warning\", or \"error\". Default is \"info\"",
+              "name": "type",
+              "type": {
+                "text": "'info' | 'warning' | 'error'"
+              },
+              "default": "'info'",
+              "fieldName": "type"
+            },
+            {
+              "description": "Determines if banner sets position at upper right corner or not.",
+              "name": "corner",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "corner"
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-banner",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Banner",
+          "declaration": {
+            "name": "Banner",
+            "module": "packages/banner/src/Banner.ts"
           }
         }
       ]
@@ -20453,6 +20453,383 @@
     },
     {
       "kind": "javascript-module",
+      "path": "packages/meter/src/Meter.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "Meter",
+          "slots": [
+            {
+              "description": "text labeling the Meter",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "progress",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "0",
+              "attribute": "progress"
+            },
+            {
+              "kind": "field",
+              "name": "overBackground",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "over-background",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "notice",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "notice",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "negative",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "negative",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "positive",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "positive",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "attribute": "label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "sideLabel",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "side-label",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "privacy": "public",
+              "attribute": "size",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_size",
+              "type": {
+                "text": "ElementSize | null"
+              },
+              "privacy": "private",
+              "default": "defaultSize",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "update",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changes",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "slotHasContent",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "[assignedNodesList]",
+              "type": {
+                "text": "NodeListOf<HTMLElement>"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "manageTextObservedSlot",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changedProperties",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ObserveSlotText",
+                "module": "packages/shared/src/observe-slot-text.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "shadowRoot",
+              "type": {
+                "text": "ShadowRoot"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_dirParent",
+              "type": {
+                "text": "HTMLElement | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "default": "'ltr'",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "isLTR",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hasVisibleFocusInTree",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "progress",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "progress"
+            },
+            {
+              "name": "over-background",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "overBackground"
+            },
+            {
+              "name": "notice",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "notice"
+            },
+            {
+              "name": "negative",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "negative"
+            },
+            {
+              "name": "positive",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "positive"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "label"
+            },
+            {
+              "name": "side-label",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "sideLabel"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "ElementSize"
+              },
+              "fieldName": "size",
+              "inheritedFrom": {
+                "name": "SizedMixin",
+                "module": "packages/base/src/sizedMixin.ts"
+              }
+            },
+            {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "default": "'ltr'",
+              "fieldName": "dir",
+              "inheritedFrom": {
+                "name": "SpectrumElement",
+                "module": "packages/base/src/Base.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "SizedMixin",
+              "package": "@spectrum-web-components/base"
+            },
+            {
+              "name": "ObserveSlotText",
+              "package": "@spectrum-web-components/shared/src/observe-slot-text.js"
+            }
+          ],
+          "superclass": {
+            "name": "SpectrumElement",
+            "package": "@spectrum-web-components/base"
+          },
+          "tagName": "sp-meter",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "Meter",
+          "declaration": {
+            "name": "Meter",
+            "module": "packages/meter/src/Meter.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "packages/menu/src/Menu.ts",
       "declarations": [
         {
@@ -23279,383 +23656,6 @@
           "declaration": {
             "name": "MenuItem",
             "module": "packages/menu/src/MenuItem.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/meter/src/Meter.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "Meter",
-          "slots": [
-            {
-              "description": "text labeling the Meter",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "progress",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "0",
-              "attribute": "progress"
-            },
-            {
-              "kind": "field",
-              "name": "overBackground",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "over-background",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "notice",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "notice",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "negative",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "negative",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "positive",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "positive",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "attribute": "label",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "sideLabel",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "attribute": "side-label",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "privacy": "public",
-              "attribute": "size",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_size",
-              "type": {
-                "text": "ElementSize | null"
-              },
-              "privacy": "private",
-              "default": "defaultSize",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "update",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "changes",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "slotHasContent",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "[assignedNodesList]",
-              "type": {
-                "text": "NodeListOf<HTMLElement>"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "manageTextObservedSlot",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "firstUpdated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "changedProperties",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ],
-              "inheritedFrom": {
-                "name": "ObserveSlotText",
-                "module": "packages/shared/src/observe-slot-text.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "shadowRoot",
-              "type": {
-                "text": "ShadowRoot"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_dirParent",
-              "type": {
-                "text": "HTMLElement | undefined"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "isLTR",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "hasVisibleFocusInTree",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "boolean"
-                }
-              },
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "progress",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "fieldName": "progress"
-            },
-            {
-              "name": "over-background",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "overBackground"
-            },
-            {
-              "name": "notice",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "notice"
-            },
-            {
-              "name": "negative",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "negative"
-            },
-            {
-              "name": "positive",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "positive"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "fieldName": "label"
-            },
-            {
-              "name": "side-label",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "fieldName": "sideLabel"
-            },
-            {
-              "name": "size",
-              "type": {
-                "text": "ElementSize"
-              },
-              "fieldName": "size",
-              "inheritedFrom": {
-                "name": "SizedMixin",
-                "module": "packages/base/src/sizedMixin.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumElement",
-                "module": "packages/base/src/Base.ts"
-              }
-            }
-          ],
-          "mixins": [
-            {
-              "name": "SizedMixin",
-              "package": "@spectrum-web-components/base"
-            },
-            {
-              "name": "ObserveSlotText",
-              "package": "@spectrum-web-components/shared/src/observe-slot-text.js"
-            }
-          ],
-          "superclass": {
-            "name": "SpectrumElement",
-            "package": "@spectrum-web-components/base"
-          },
-          "tagName": "sp-meter",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "Meter",
-          "declaration": {
-            "name": "Meter",
-            "module": "packages/meter/src/Meter.ts"
           }
         }
       ]
@@ -43906,8 +43906,10 @@
               "kind": "field",
               "name": "dir",
               "type": {
-                "text": "'ltr' | 'rtl' | ''"
-              }
+                "text": "\"ltr\" | \"rtl\" | \"\""
+              },
+              "description": "Reading direction of the content scoped to this `sp-theme` element.",
+              "attribute": "dir"
             },
             {
               "kind": "field",
@@ -43930,8 +43932,10 @@
               "kind": "field",
               "name": "theme",
               "type": {
-                "text": "ThemeVariant | ''"
-              }
+                "text": "\"spectrum\" | \"express\" | \"\""
+              },
+              "description": "The Spectrum theme that is applied to the content scoped to this `sp-theme` element.\n\nA value is requried.",
+              "attribute": "theme"
             },
             {
               "kind": "field",
@@ -43946,8 +43950,10 @@
               "kind": "field",
               "name": "color",
               "type": {
-                "text": "Color | ''"
-              }
+                "text": "\"lightest\" | \"light\" | \"dark\" | \"darkest\" | \"\""
+              },
+              "description": "The Spectrum color stops to apply to content scoped by this `sp-theme` element.\n\nA value is requried.",
+              "attribute": "color"
             },
             {
               "kind": "field",
@@ -43962,8 +43968,10 @@
               "kind": "field",
               "name": "scale",
               "type": {
-                "text": "Scale | ''"
-              }
+                "text": "\"medium\" | \"large\" | \"\""
+              },
+              "description": "The Spectrum platform scale to apply to content scoped by this `sp-theme` element.\n\nA value is requried.",
+              "attribute": "scale"
             },
             {
               "kind": "field",
@@ -44159,19 +44167,44 @@
           ],
           "attributes": [
             {
-              "name": "color"
+              "name": "color",
+              "type": {
+                "text": "\"lightest\" | \"light\" | \"dark\" | \"darkest\" | \"\""
+              },
+              "description": "The Spectrum color stops to apply to content scoped by this `sp-theme` element.\n\nA value is requried.",
+              "fieldName": "color"
             },
             {
-              "name": "scale"
+              "name": "scale",
+              "type": {
+                "text": "\"medium\" | \"large\" | \"\""
+              },
+              "description": "The Spectrum platform scale to apply to content scoped by this `sp-theme` element.\n\nA value is requried.",
+              "fieldName": "scale"
             },
             {
-              "name": "theme"
+              "name": "theme",
+              "type": {
+                "text": "\"spectrum\" | \"express\" | \"\""
+              },
+              "description": "The Spectrum theme that is applied to the content scoped to this `sp-theme` element.\n\nA value is requried.",
+              "fieldName": "theme"
             },
             {
-              "name": "lang"
+              "name": "lang",
+              "type": {
+                "text": "string"
+              },
+              "description": "The language of the content scoped to this `sp-theme` element, see: <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang\" target=\"_blank\">MDN reference</a>.",
+              "default": "\"\""
             },
             {
-              "name": "dir"
+              "name": "dir",
+              "type": {
+                "text": "\"ltr\" | \"rtl\" | \"\""
+              },
+              "description": "Reading direction of the content scoped to this `sp-theme` element.",
+              "fieldName": "dir"
             }
           ],
           "superclass": {
@@ -48088,63 +48121,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/avatar/src/avatar.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=\"50\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-50-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-50-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-50-width,var(--spectrum-alias-avatar-size-50)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-50-height,var(--spectrum-alias-avatar-size-50)\n)}:host([size=\"75\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-75-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-75-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-75-width,var(--spectrum-alias-avatar-size-75)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-75-height,var(--spectrum-alias-avatar-size-75)\n)}:host([size=\"100\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-100-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-100-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-100-width,var(--spectrum-alias-avatar-size-100)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-100-height,var(--spectrum-alias-avatar-size-100)\n)}:host([size=\"200\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-200-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-200-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-200-width,var(--spectrum-alias-avatar-size-200)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-200-height,var(--spectrum-alias-avatar-size-200)\n)}:host([size=\"300\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-300-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-300-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-300-width,var(--spectrum-alias-avatar-size-300)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-300-height,var(--spectrum-alias-avatar-size-300)\n)}:host([size=\"400\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-400-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-400-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-400-width,var(--spectrum-alias-avatar-size-400)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-400-height,var(--spectrum-alias-avatar-size-400)\n)}:host([size=\"500\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-500-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-500-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-500-width,var(--spectrum-alias-avatar-size-500)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-500-height,var(--spectrum-alias-avatar-size-500)\n)}:host([size=\"600\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-600-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-600-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-600-width,var(--spectrum-alias-avatar-size-600)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-600-height,var(--spectrum-alias-avatar-size-600)\n)}:host([size=\"700\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-700-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-700-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-700-width,var(--spectrum-alias-avatar-size-700)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-700-height,var(--spectrum-alias-avatar-size-700)\n)}:host{-webkit-user-drag:none;border-radius:var(--spectrum-avatar-border-radius);border-width:0;display:inline-block;height:var(--spectrum-avatar-height);position:relative;-webkit-user-select:none;user-select:none;width:var(--spectrum-avatar-width)}:host([dir=ltr]):after{left:0}:host([dir=rtl]):after{right:0}:host([dir=ltr]):after{right:0}:host([dir=rtl]):after{left:0}:host:after{border-radius:var(--spectrum-avatar-border-radius);border-style:solid;border-width:var(--spectrum-avatar-border-size);bottom:0;box-sizing:border-box;content:\"\";position:absolute;top:0}.image{height:var(--spectrum-avatar-height);width:var(--spectrum-avatar-width)}:host{opacity:var(\n--spectrum-avatar-size-100-opacity,var(--spectrum-global-color-opacity-100)\n)}:host:after{border-color:var(\n--spectrum-avatar-size-100-border-color,var(--spectrum-alias-avatar-border-color-default)\n)}:host([disabled]){opacity:var(\n--spectrum-avatar-size-100-opacity-disabled,var(--spectrum-global-color-opacity-30)\n)}@media (forced-colors:active){:host([disabled]){opacity:1;outline:2px solid GrayText}}:host{overflow:hidden}img{vertical-align:top}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/avatar/src/avatar.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/avatar/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./Avatar.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/avatar/src/spectrum-avatar.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host([size=\"50\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-50-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-50-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-50-width,var(--spectrum-alias-avatar-size-50)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-50-height,var(--spectrum-alias-avatar-size-50)\n)}:host([size=\"75\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-75-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-75-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-75-width,var(--spectrum-alias-avatar-size-75)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-75-height,var(--spectrum-alias-avatar-size-75)\n)}:host([size=\"100\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-100-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-100-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-100-width,var(--spectrum-alias-avatar-size-100)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-100-height,var(--spectrum-alias-avatar-size-100)\n)}:host([size=\"200\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-200-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-200-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-200-width,var(--spectrum-alias-avatar-size-200)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-200-height,var(--spectrum-alias-avatar-size-200)\n)}:host([size=\"300\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-300-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-300-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-300-width,var(--spectrum-alias-avatar-size-300)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-300-height,var(--spectrum-alias-avatar-size-300)\n)}:host([size=\"400\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-400-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-400-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-400-width,var(--spectrum-alias-avatar-size-400)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-400-height,var(--spectrum-alias-avatar-size-400)\n)}:host([size=\"500\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-500-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-500-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-500-width,var(--spectrum-alias-avatar-size-500)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-500-height,var(--spectrum-alias-avatar-size-500)\n)}:host([size=\"600\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-600-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-600-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-600-width,var(--spectrum-alias-avatar-size-600)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-600-height,var(--spectrum-alias-avatar-size-600)\n)}:host([size=\"700\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-700-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-700-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-700-width,var(--spectrum-alias-avatar-size-700)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-700-height,var(--spectrum-alias-avatar-size-700)\n)}:host{-webkit-user-drag:none;border-radius:var(--spectrum-avatar-border-radius);border-width:0;display:inline-block;height:var(--spectrum-avatar-height);overflow:hidden;position:relative;-webkit-user-select:none;user-select:none;width:var(--spectrum-avatar-width)}:host([dir=ltr]):after{left:0}:host([dir=rtl]):after{right:0}:host([dir=ltr]):after{right:0}:host([dir=rtl]):after{left:0}:host:after{border-radius:var(--spectrum-avatar-border-radius);border-style:solid;border-width:var(--spectrum-avatar-border-size);bottom:0;box-sizing:border-box;content:\"\";position:absolute;top:0}.image{height:var(--spectrum-avatar-height);width:var(--spectrum-avatar-width)}:host{opacity:var(\n--spectrum-avatar-size-100-opacity,var(--spectrum-global-color-opacity-100)\n)}:host:after{border-color:var(\n--spectrum-avatar-size-100-border-color,var(--spectrum-alias-avatar-border-color-default)\n)}:host([disabled]){opacity:var(\n--spectrum-avatar-size-100-opacity-disabled,var(--spectrum-global-color-opacity-30)\n)}@media (forced-colors:active){:host([disabled]){opacity:1;outline:2px solid GrayText}}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/avatar/src/spectrum-avatar.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/badge/src/badge.css.ts",
       "declarations": [
         {
@@ -48202,12 +48178,12 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/banner/src/banner.css.ts",
+      "path": "packages/avatar/src/avatar.css.ts",
       "declarations": [
         {
           "kind": "variable",
           "name": "styles",
-          "default": "css`\n:host{border-radius:var(\n--spectrum-banner-border-radius,var(--spectrum-global-dimension-static-size-100)\n);display:inline-block;font-size:var(\n--spectrum-banner-text-size,var(--spectrum-global-dimension-font-size-75)\n);line-height:var(\n--spectrum-banner-text-line-height,var(--spectrum-alias-heading-text-line-height)\n);padding:var(\n--spectrum-banner-padding-y,var(--spectrum-global-dimension-static-size-50)\n) var(\n--spectrum-banner-padding-x,var(--spectrum-global-dimension-static-size-100)\n)}#header{font-weight:700}:host([dir=ltr][corner]){right:-10px}:host([dir=rtl][corner]){left:-10px}:host([corner]){position:absolute;top:-10px}:host{color:var(\n--spectrum-banner-text-color,var(--spectrum-global-color-static-white)\n)}:host([type=info]){background-color:var(\n--spectrum-banner-info-background-color,var(--spectrum-semantic-informative-color-default)\n)}:host([type=warning]){background-color:var(\n--spectrum-banner-warning-background-color,var(--spectrum-semantic-notice-color-default)\n)}:host([type=error]){background-color:var(\n--spectrum-banner-error-background-color,var(--spectrum-semantic-negative-color-default)\n)}\n`"
+          "default": "css`\n:host([size=\"50\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-50-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-50-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-50-width,var(--spectrum-alias-avatar-size-50)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-50-height,var(--spectrum-alias-avatar-size-50)\n)}:host([size=\"75\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-75-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-75-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-75-width,var(--spectrum-alias-avatar-size-75)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-75-height,var(--spectrum-alias-avatar-size-75)\n)}:host([size=\"100\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-100-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-100-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-100-width,var(--spectrum-alias-avatar-size-100)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-100-height,var(--spectrum-alias-avatar-size-100)\n)}:host([size=\"200\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-200-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-200-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-200-width,var(--spectrum-alias-avatar-size-200)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-200-height,var(--spectrum-alias-avatar-size-200)\n)}:host([size=\"300\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-300-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-300-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-300-width,var(--spectrum-alias-avatar-size-300)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-300-height,var(--spectrum-alias-avatar-size-300)\n)}:host([size=\"400\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-400-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-400-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-400-width,var(--spectrum-alias-avatar-size-400)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-400-height,var(--spectrum-alias-avatar-size-400)\n)}:host([size=\"500\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-500-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-500-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-500-width,var(--spectrum-alias-avatar-size-500)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-500-height,var(--spectrum-alias-avatar-size-500)\n)}:host([size=\"600\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-600-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-600-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-600-width,var(--spectrum-alias-avatar-size-600)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-600-height,var(--spectrum-alias-avatar-size-600)\n)}:host([size=\"700\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-700-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-700-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-700-width,var(--spectrum-alias-avatar-size-700)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-700-height,var(--spectrum-alias-avatar-size-700)\n)}:host{-webkit-user-drag:none;border-radius:var(--spectrum-avatar-border-radius);border-width:0;display:inline-block;height:var(--spectrum-avatar-height);position:relative;-webkit-user-select:none;user-select:none;width:var(--spectrum-avatar-width)}:host([dir=ltr]):after{left:0}:host([dir=rtl]):after{right:0}:host([dir=ltr]):after{right:0}:host([dir=rtl]):after{left:0}:host:after{border-radius:var(--spectrum-avatar-border-radius);border-style:solid;border-width:var(--spectrum-avatar-border-size);bottom:0;box-sizing:border-box;content:\"\";position:absolute;top:0}.image{height:var(--spectrum-avatar-height);width:var(--spectrum-avatar-width)}:host{opacity:var(\n--spectrum-avatar-size-100-opacity,var(--spectrum-global-color-opacity-100)\n)}:host:after{border-color:var(\n--spectrum-avatar-size-100-border-color,var(--spectrum-alias-avatar-border-color-default)\n)}:host([disabled]){opacity:var(\n--spectrum-avatar-size-100-opacity-disabled,var(--spectrum-global-color-opacity-30)\n)}@media (forced-colors:active){:host([disabled]){opacity:1;outline:2px solid GrayText}}:host{overflow:hidden}img{vertical-align:top}\n`"
         }
       ],
       "exports": [
@@ -48216,14 +48192,14 @@
           "name": "default",
           "declaration": {
             "name": "styles",
-            "module": "packages/banner/src/banner.css.ts"
+            "module": "packages/avatar/src/avatar.css.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "packages/banner/src/index.ts",
+      "path": "packages/avatar/src/index.ts",
       "declarations": [],
       "exports": [
         {
@@ -48231,19 +48207,19 @@
           "name": "*",
           "declaration": {
             "name": "*",
-            "package": "./Banner.js"
+            "package": "./Avatar.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "packages/banner/src/spectrum-banner.css.ts",
+      "path": "packages/avatar/src/spectrum-avatar.css.ts",
       "declarations": [
         {
           "kind": "variable",
           "name": "styles",
-          "default": "css`\n:host{border-radius:var(\n--spectrum-banner-border-radius,var(--spectrum-global-dimension-static-size-100)\n);display:inline-block;font-size:var(\n--spectrum-banner-text-size,var(--spectrum-global-dimension-font-size-75)\n);line-height:var(\n--spectrum-banner-text-line-height,var(--spectrum-alias-heading-text-line-height)\n);padding:var(\n--spectrum-banner-padding-y,var(--spectrum-global-dimension-static-size-50)\n) var(\n--spectrum-banner-padding-x,var(--spectrum-global-dimension-static-size-100)\n)}#header{font-weight:700}:host([dir=ltr][corner]){right:-10px}:host([dir=rtl][corner]){left:-10px}:host([corner]){position:absolute;top:-10px}:host{color:var(\n--spectrum-banner-text-color,var(--spectrum-global-color-static-white)\n)}:host([type=info]){background-color:var(\n--spectrum-banner-info-background-color,var(--spectrum-semantic-informative-color-default)\n)}:host([type=warning]){background-color:var(\n--spectrum-banner-warning-background-color,var(--spectrum-semantic-notice-color-default)\n)}:host([type=error]){background-color:var(\n--spectrum-banner-error-background-color,var(--spectrum-semantic-negative-color-default)\n)}\n`"
+          "default": "css`\n:host([size=\"50\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-50-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-50-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-50-width,var(--spectrum-alias-avatar-size-50)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-50-height,var(--spectrum-alias-avatar-size-50)\n)}:host([size=\"75\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-75-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-75-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-75-width,var(--spectrum-alias-avatar-size-75)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-75-height,var(--spectrum-alias-avatar-size-75)\n)}:host([size=\"100\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-100-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-100-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-100-width,var(--spectrum-alias-avatar-size-100)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-100-height,var(--spectrum-alias-avatar-size-100)\n)}:host([size=\"200\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-200-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-200-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-200-width,var(--spectrum-alias-avatar-size-200)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-200-height,var(--spectrum-alias-avatar-size-200)\n)}:host([size=\"300\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-300-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-300-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-300-width,var(--spectrum-alias-avatar-size-300)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-300-height,var(--spectrum-alias-avatar-size-300)\n)}:host([size=\"400\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-400-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-400-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-400-width,var(--spectrum-alias-avatar-size-400)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-400-height,var(--spectrum-alias-avatar-size-400)\n)}:host([size=\"500\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-500-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-500-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-500-width,var(--spectrum-alias-avatar-size-500)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-500-height,var(--spectrum-alias-avatar-size-500)\n)}:host([size=\"600\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-600-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-600-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-600-width,var(--spectrum-alias-avatar-size-600)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-600-height,var(--spectrum-alias-avatar-size-600)\n)}:host([size=\"700\"]){--spectrum-avatar-border-radius:var(\n--spectrum-avatar-size-700-border-radius,var(--spectrum-global-dimension-static-percent-50)\n);--spectrum-avatar-border-size:var(\n--spectrum-avatar-size-700-border-size,var(--spectrum-alias-avatar-border-size)\n);--spectrum-avatar-width:var(\n--spectrum-avatar-size-700-width,var(--spectrum-alias-avatar-size-700)\n);--spectrum-avatar-height:var(\n--spectrum-avatar-size-700-height,var(--spectrum-alias-avatar-size-700)\n)}:host{-webkit-user-drag:none;border-radius:var(--spectrum-avatar-border-radius);border-width:0;display:inline-block;height:var(--spectrum-avatar-height);overflow:hidden;position:relative;-webkit-user-select:none;user-select:none;width:var(--spectrum-avatar-width)}:host([dir=ltr]):after{left:0}:host([dir=rtl]):after{right:0}:host([dir=ltr]):after{right:0}:host([dir=rtl]):after{left:0}:host:after{border-radius:var(--spectrum-avatar-border-radius);border-style:solid;border-width:var(--spectrum-avatar-border-size);bottom:0;box-sizing:border-box;content:\"\";position:absolute;top:0}.image{height:var(--spectrum-avatar-height);width:var(--spectrum-avatar-width)}:host{opacity:var(\n--spectrum-avatar-size-100-opacity,var(--spectrum-global-color-opacity-100)\n)}:host:after{border-color:var(\n--spectrum-avatar-size-100-border-color,var(--spectrum-alias-avatar-border-color-default)\n)}:host([disabled]){opacity:var(\n--spectrum-avatar-size-100-opacity-disabled,var(--spectrum-global-color-opacity-30)\n)}@media (forced-colors:active){:host([disabled]){opacity:1;outline:2px solid GrayText}}\n`"
         }
       ],
       "exports": [
@@ -48252,7 +48228,7 @@
           "name": "default",
           "declaration": {
             "name": "styles",
-            "module": "packages/banner/src/spectrum-banner.css.ts"
+            "module": "packages/avatar/src/spectrum-avatar.css.ts"
           }
         }
       ]
@@ -48801,6 +48777,63 @@
           "declaration": {
             "name": "StreamingListenerDirective",
             "module": "packages/base/src/streaming-listener.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/banner/src/banner.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{border-radius:var(\n--spectrum-banner-border-radius,var(--spectrum-global-dimension-static-size-100)\n);display:inline-block;font-size:var(\n--spectrum-banner-text-size,var(--spectrum-global-dimension-font-size-75)\n);line-height:var(\n--spectrum-banner-text-line-height,var(--spectrum-alias-heading-text-line-height)\n);padding:var(\n--spectrum-banner-padding-y,var(--spectrum-global-dimension-static-size-50)\n) var(\n--spectrum-banner-padding-x,var(--spectrum-global-dimension-static-size-100)\n)}#header{font-weight:700}:host([dir=ltr][corner]){right:-10px}:host([dir=rtl][corner]){left:-10px}:host([corner]){position:absolute;top:-10px}:host{color:var(\n--spectrum-banner-text-color,var(--spectrum-global-color-static-white)\n)}:host([type=info]){background-color:var(\n--spectrum-banner-info-background-color,var(--spectrum-semantic-informative-color-default)\n)}:host([type=warning]){background-color:var(\n--spectrum-banner-warning-background-color,var(--spectrum-semantic-notice-color-default)\n)}:host([type=error]){background-color:var(\n--spectrum-banner-error-background-color,var(--spectrum-semantic-negative-color-default)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/banner/src/banner.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/banner/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./Banner.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/banner/src/spectrum-banner.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{border-radius:var(\n--spectrum-banner-border-radius,var(--spectrum-global-dimension-static-size-100)\n);display:inline-block;font-size:var(\n--spectrum-banner-text-size,var(--spectrum-global-dimension-font-size-75)\n);line-height:var(\n--spectrum-banner-text-line-height,var(--spectrum-alias-heading-text-line-height)\n);padding:var(\n--spectrum-banner-padding-y,var(--spectrum-global-dimension-static-size-50)\n) var(\n--spectrum-banner-padding-x,var(--spectrum-global-dimension-static-size-100)\n)}#header{font-weight:700}:host([dir=ltr][corner]){right:-10px}:host([dir=rtl][corner]){left:-10px}:host([corner]){position:absolute;top:-10px}:host{color:var(\n--spectrum-banner-text-color,var(--spectrum-global-color-static-white)\n)}:host([type=info]){background-color:var(\n--spectrum-banner-info-background-color,var(--spectrum-semantic-informative-color-default)\n)}:host([type=warning]){background-color:var(\n--spectrum-banner-warning-background-color,var(--spectrum-semantic-notice-color-default)\n)}:host([type=error]){background-color:var(\n--spectrum-banner-error-background-color,var(--spectrum-semantic-negative-color-default)\n)}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/banner/src/spectrum-banner.css.ts"
           }
         }
       ]
@@ -49736,63 +49769,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "packages/color-handle/src/color-handle.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-colorhandle-checkerboard-size:var(\n--spectrum-global-dimension-static-size-100,8px\n);--spectrum-colorhandle-animation-duration:var(\n--spectrum-global-animation-duration-100,130ms\n);--spectrum-colorhandle-animation-easing:ease-in-out;--spectrum-colorhandle-hitarea-size:var(\n--spectrum-global-dimension-size-300\n)}:host(.focus-visible),:host([focused]){height:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);width:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2)}:host(:focus-visible),:host([focused]){height:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);width:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2)}:host{background-position:var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n) var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n),var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n) calc(var(--spectrum-colorhandle-checkerboard-size) + var(\n--spectrum-colorhandle-background-offset,\ncalc(-1 * var(--spectrum-global-dimension-static-size-25))\n)),calc(var(--spectrum-colorhandle-checkerboard-size) + var(\n--spectrum-colorhandle-background-offset,\ncalc(-1 * var(--spectrum-global-dimension-static-size-25))\n)) calc(-1 * var(--spectrum-colorhandle-checkerboard-size) + var(--spectrum-colorhandle-background-offset, calc(-1 * var(\n--spectrum-global-dimension-static-size-25\n)))),calc(-1 * var(--spectrum-colorhandle-checkerboard-size) + var(--spectrum-colorhandle-background-offset, calc(-1 * var(\n--spectrum-global-dimension-static-size-25\n)))) var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n);background-size:var(--spectrum-global-dimension-static-size-200,16px) var(--spectrum-global-dimension-static-size-200,16px);border-style:solid;border-width:var(\n--spectrum-colorhandle-inner-border-size,var(--spectrum-global-dimension-static-size-25)\n);box-sizing:border-box;display:block;height:var(\n--spectrum-colorhandle-size,var(--spectrum-global-dimension-size-200)\n);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1/2);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1/2);position:absolute;transition:width var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),height var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),border-width var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),margin-left var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),margin-top var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing);width:var(\n--spectrum-colorhandle-size,var(--spectrum-global-dimension-size-200)\n);z-index:1}:host,:host:after{border-radius:100%}:host:after{content:\"\";display:block;height:var(--spectrum-colorhandle-hitarea-size);left:calc(50% - var(--spectrum-colorhandle-hitarea-size)/2);position:absolute;top:calc(50% - var(--spectrum-colorhandle-hitarea-size)/2);width:var(--spectrum-colorhandle-hitarea-size)}:host([disabled]){pointer-events:none}.color{border-radius:100%;height:100%;width:100%}:host{background-color:var(\n--spectrum-colorcontrol-checkerboard-light-color,var(--spectrum-global-color-static-white)\n);background-image:linear-gradient(-45deg,transparent 75.5%,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 75.5%),linear-gradient(45deg,transparent 75.5%,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 75.5%),linear-gradient(-45deg,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 25.5%,transparent 25.5%),linear-gradient(45deg,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 25.5%,transparent 25.5%);border-color:var(\n--spectrum-colorhandle-inner-border-color,var(--spectrum-global-color-static-white)\n);box-shadow:0 0 var(--spectrum-colorhandle-outer-shadow-blur,0) var(\n--spectrum-colorhandle-outer-shadow-spread,var(--spectrum-alias-border-size-thin)\n) var(--spectrum-colorhandle-outer-shadow-color,rgba(0,0,0,.42))}:host([disabled]){background:var(\n--spectrum-colorhandle-fill-color-disabled,var(--spectrum-alias-track-color-disabled)\n);border-color:var(\n--spectrum-colorhandle-inner-border-color-disabled,var(--spectrum-global-color-gray-400)\n);box-shadow:none}:host([disabled]) .color{display:none}.color{background-color:var(--spectrum-picked-color);box-shadow:inset 0 0 0 var(\n--spectrum-colorhandle-outer-border-size,var(--spectrum-alias-border-size-thin)\n) var(\n--spectrum-colorhandle-inner-shadow-color,var(--spectrum-colorhandle-outer-shadow-color)\n)}@media (forced-colors:active){:host{--spectrum-colorhandle-inner-border-color-disabled:GrayText;--spectrum-colorhandle-fill-color-disabled:Canvas;--spectrum-colorhandle-inner-border-color:CanvasText}:host([disabled]){forced-color-adjust:none}}:host{touch-action:none}:host(:focus){outline:none}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/color-handle/src/color-handle.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/color-handle/src/index.ts",
-      "declarations": [],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "*",
-          "declaration": {
-            "name": "*",
-            "package": "./ColorHandle.js"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "packages/color-handle/src/spectrum-color-handle.css.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "styles",
-          "default": "css`\n:host{--spectrum-colorhandle-checkerboard-size:var(\n--spectrum-global-dimension-static-size-100,8px\n);--spectrum-colorhandle-animation-duration:var(\n--spectrum-global-animation-duration-100,130ms\n);--spectrum-colorhandle-animation-easing:ease-in-out;--spectrum-colorhandle-hitarea-size:var(\n--spectrum-global-dimension-size-300\n)}:host(.focus-visible),:host([focused]){height:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);width:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2)}:host(:focus-visible),:host([focused]){height:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);width:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2)}:host{background-position:var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n) var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n),var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n) calc(var(--spectrum-colorhandle-checkerboard-size) + var(\n--spectrum-colorhandle-background-offset,\ncalc(-1 * var(--spectrum-global-dimension-static-size-25))\n)),calc(var(--spectrum-colorhandle-checkerboard-size) + var(\n--spectrum-colorhandle-background-offset,\ncalc(-1 * var(--spectrum-global-dimension-static-size-25))\n)) calc(-1 * var(--spectrum-colorhandle-checkerboard-size) + var(--spectrum-colorhandle-background-offset, calc(-1 * var(\n--spectrum-global-dimension-static-size-25\n)))),calc(-1 * var(--spectrum-colorhandle-checkerboard-size) + var(--spectrum-colorhandle-background-offset, calc(-1 * var(\n--spectrum-global-dimension-static-size-25\n)))) var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n);background-size:var(--spectrum-global-dimension-static-size-200,16px) var(--spectrum-global-dimension-static-size-200,16px);border-style:solid;border-width:var(\n--spectrum-colorhandle-inner-border-size,var(--spectrum-global-dimension-static-size-25)\n);box-sizing:border-box;display:block;height:var(\n--spectrum-colorhandle-size,var(--spectrum-global-dimension-size-200)\n);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1/2);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1/2);position:absolute;transition:width var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),height var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),border-width var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),margin-left var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),margin-top var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing);width:var(\n--spectrum-colorhandle-size,var(--spectrum-global-dimension-size-200)\n);z-index:1}:host,:host:after{border-radius:100%}:host:after{content:\"\";display:block;height:var(--spectrum-colorhandle-hitarea-size);left:calc(50% - var(--spectrum-colorhandle-hitarea-size)/2);position:absolute;top:calc(50% - var(--spectrum-colorhandle-hitarea-size)/2);width:var(--spectrum-colorhandle-hitarea-size)}:host([disabled]){pointer-events:none}.color{border-radius:100%;height:100%;width:100%}:host{background-color:var(\n--spectrum-colorcontrol-checkerboard-light-color,var(--spectrum-global-color-static-white)\n);background-image:linear-gradient(-45deg,transparent 75.5%,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 75.5%),linear-gradient(45deg,transparent 75.5%,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 75.5%),linear-gradient(-45deg,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 25.5%,transparent 25.5%),linear-gradient(45deg,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 25.5%,transparent 25.5%);border-color:var(\n--spectrum-colorhandle-inner-border-color,var(--spectrum-global-color-static-white)\n);box-shadow:0 0 var(--spectrum-colorhandle-outer-shadow-blur,0) var(\n--spectrum-colorhandle-outer-shadow-spread,var(--spectrum-alias-border-size-thin)\n) var(--spectrum-colorhandle-outer-shadow-color,rgba(0,0,0,.42))}:host([disabled]){background:var(\n--spectrum-colorhandle-fill-color-disabled,var(--spectrum-alias-track-color-disabled)\n);border-color:var(\n--spectrum-colorhandle-inner-border-color-disabled,var(--spectrum-global-color-gray-400)\n);box-shadow:none}:host([disabled]) .color{display:none}.color{background-color:var(--spectrum-picked-color);box-shadow:inset 0 0 0 var(\n--spectrum-colorhandle-outer-border-size,var(--spectrum-alias-border-size-thin)\n) var(\n--spectrum-colorhandle-inner-shadow-color,var(--spectrum-colorhandle-outer-shadow-color)\n)}@media (forced-colors:active){:host{--spectrum-colorhandle-inner-border-color-disabled:GrayText;--spectrum-colorhandle-fill-color-disabled:Canvas;--spectrum-colorhandle-inner-border-color:CanvasText}:host([disabled]){forced-color-adjust:none}}\n`"
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "default",
-          "declaration": {
-            "name": "styles",
-            "module": "packages/color-handle/src/spectrum-color-handle.css.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "packages/color-area/src/color-area.css.ts",
       "declarations": [
         {
@@ -49853,6 +49829,63 @@
       "path": "packages/color-area/src/types.ts",
       "declarations": [],
       "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/color-handle/src/color-handle.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-colorhandle-checkerboard-size:var(\n--spectrum-global-dimension-static-size-100,8px\n);--spectrum-colorhandle-animation-duration:var(\n--spectrum-global-animation-duration-100,130ms\n);--spectrum-colorhandle-animation-easing:ease-in-out;--spectrum-colorhandle-hitarea-size:var(\n--spectrum-global-dimension-size-300\n)}:host(.focus-visible),:host([focused]){height:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);width:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2)}:host(:focus-visible),:host([focused]){height:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);width:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2)}:host{background-position:var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n) var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n),var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n) calc(var(--spectrum-colorhandle-checkerboard-size) + var(\n--spectrum-colorhandle-background-offset,\ncalc(-1 * var(--spectrum-global-dimension-static-size-25))\n)),calc(var(--spectrum-colorhandle-checkerboard-size) + var(\n--spectrum-colorhandle-background-offset,\ncalc(-1 * var(--spectrum-global-dimension-static-size-25))\n)) calc(-1 * var(--spectrum-colorhandle-checkerboard-size) + var(--spectrum-colorhandle-background-offset, calc(-1 * var(\n--spectrum-global-dimension-static-size-25\n)))),calc(-1 * var(--spectrum-colorhandle-checkerboard-size) + var(--spectrum-colorhandle-background-offset, calc(-1 * var(\n--spectrum-global-dimension-static-size-25\n)))) var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n);background-size:var(--spectrum-global-dimension-static-size-200,16px) var(--spectrum-global-dimension-static-size-200,16px);border-style:solid;border-width:var(\n--spectrum-colorhandle-inner-border-size,var(--spectrum-global-dimension-static-size-25)\n);box-sizing:border-box;display:block;height:var(\n--spectrum-colorhandle-size,var(--spectrum-global-dimension-size-200)\n);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1/2);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1/2);position:absolute;transition:width var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),height var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),border-width var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),margin-left var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),margin-top var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing);width:var(\n--spectrum-colorhandle-size,var(--spectrum-global-dimension-size-200)\n);z-index:1}:host,:host:after{border-radius:100%}:host:after{content:\"\";display:block;height:var(--spectrum-colorhandle-hitarea-size);left:calc(50% - var(--spectrum-colorhandle-hitarea-size)/2);position:absolute;top:calc(50% - var(--spectrum-colorhandle-hitarea-size)/2);width:var(--spectrum-colorhandle-hitarea-size)}:host([disabled]){pointer-events:none}.color{border-radius:100%;height:100%;width:100%}:host{background-color:var(\n--spectrum-colorcontrol-checkerboard-light-color,var(--spectrum-global-color-static-white)\n);background-image:linear-gradient(-45deg,transparent 75.5%,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 75.5%),linear-gradient(45deg,transparent 75.5%,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 75.5%),linear-gradient(-45deg,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 25.5%,transparent 25.5%),linear-gradient(45deg,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 25.5%,transparent 25.5%);border-color:var(\n--spectrum-colorhandle-inner-border-color,var(--spectrum-global-color-static-white)\n);box-shadow:0 0 var(--spectrum-colorhandle-outer-shadow-blur,0) var(\n--spectrum-colorhandle-outer-shadow-spread,var(--spectrum-alias-border-size-thin)\n) var(--spectrum-colorhandle-outer-shadow-color,rgba(0,0,0,.42))}:host([disabled]){background:var(\n--spectrum-colorhandle-fill-color-disabled,var(--spectrum-alias-track-color-disabled)\n);border-color:var(\n--spectrum-colorhandle-inner-border-color-disabled,var(--spectrum-global-color-gray-400)\n);box-shadow:none}:host([disabled]) .color{display:none}.color{background-color:var(--spectrum-picked-color);box-shadow:inset 0 0 0 var(\n--spectrum-colorhandle-outer-border-size,var(--spectrum-alias-border-size-thin)\n) var(\n--spectrum-colorhandle-inner-shadow-color,var(--spectrum-colorhandle-outer-shadow-color)\n)}@media (forced-colors:active){:host{--spectrum-colorhandle-inner-border-color-disabled:GrayText;--spectrum-colorhandle-fill-color-disabled:Canvas;--spectrum-colorhandle-inner-border-color:CanvasText}:host([disabled]){forced-color-adjust:none}}:host{touch-action:none}:host(:focus){outline:none}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/color-handle/src/color-handle.css.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/color-handle/src/index.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./ColorHandle.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "packages/color-handle/src/spectrum-color-handle.css.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "styles",
+          "default": "css`\n:host{--spectrum-colorhandle-checkerboard-size:var(\n--spectrum-global-dimension-static-size-100,8px\n);--spectrum-colorhandle-animation-duration:var(\n--spectrum-global-animation-duration-100,130ms\n);--spectrum-colorhandle-animation-easing:ease-in-out;--spectrum-colorhandle-hitarea-size:var(\n--spectrum-global-dimension-size-300\n)}:host(.focus-visible),:host([focused]){height:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);width:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2)}:host(:focus-visible),:host([focused]){height:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1);width:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*2)}:host{background-position:var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n) var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n),var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n) calc(var(--spectrum-colorhandle-checkerboard-size) + var(\n--spectrum-colorhandle-background-offset,\ncalc(-1 * var(--spectrum-global-dimension-static-size-25))\n)),calc(var(--spectrum-colorhandle-checkerboard-size) + var(\n--spectrum-colorhandle-background-offset,\ncalc(-1 * var(--spectrum-global-dimension-static-size-25))\n)) calc(-1 * var(--spectrum-colorhandle-checkerboard-size) + var(--spectrum-colorhandle-background-offset, calc(-1 * var(\n--spectrum-global-dimension-static-size-25\n)))),calc(-1 * var(--spectrum-colorhandle-checkerboard-size) + var(--spectrum-colorhandle-background-offset, calc(-1 * var(\n--spectrum-global-dimension-static-size-25\n)))) var(\n--spectrum-colorhandle-background-offset,calc(-1 * var(--spectrum-global-dimension-static-size-25))\n);background-size:var(--spectrum-global-dimension-static-size-200,16px) var(--spectrum-global-dimension-static-size-200,16px);border-style:solid;border-width:var(\n--spectrum-colorhandle-inner-border-size,var(--spectrum-global-dimension-static-size-25)\n);box-sizing:border-box;display:block;height:var(\n--spectrum-colorhandle-size,var(--spectrum-global-dimension-size-200)\n);margin-left:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1/2);margin-top:calc(var(\n--spectrum-colorhandle-size,\nvar(--spectrum-global-dimension-size-200)\n)*-1/2);position:absolute;transition:width var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),height var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),border-width var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),margin-left var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing),margin-top var(--spectrum-colorhandle-animation-duration) var(--spectrum-colorhandle-animation-easing);width:var(\n--spectrum-colorhandle-size,var(--spectrum-global-dimension-size-200)\n);z-index:1}:host,:host:after{border-radius:100%}:host:after{content:\"\";display:block;height:var(--spectrum-colorhandle-hitarea-size);left:calc(50% - var(--spectrum-colorhandle-hitarea-size)/2);position:absolute;top:calc(50% - var(--spectrum-colorhandle-hitarea-size)/2);width:var(--spectrum-colorhandle-hitarea-size)}:host([disabled]){pointer-events:none}.color{border-radius:100%;height:100%;width:100%}:host{background-color:var(\n--spectrum-colorcontrol-checkerboard-light-color,var(--spectrum-global-color-static-white)\n);background-image:linear-gradient(-45deg,transparent 75.5%,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 75.5%),linear-gradient(45deg,transparent 75.5%,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 75.5%),linear-gradient(-45deg,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 25.5%,transparent 25.5%),linear-gradient(45deg,var(\n--spectrum-colorcontrol-checkerboard-dark-color,var(--spectrum-global-color-static-gray-300)\n) 25.5%,transparent 25.5%);border-color:var(\n--spectrum-colorhandle-inner-border-color,var(--spectrum-global-color-static-white)\n);box-shadow:0 0 var(--spectrum-colorhandle-outer-shadow-blur,0) var(\n--spectrum-colorhandle-outer-shadow-spread,var(--spectrum-alias-border-size-thin)\n) var(--spectrum-colorhandle-outer-shadow-color,rgba(0,0,0,.42))}:host([disabled]){background:var(\n--spectrum-colorhandle-fill-color-disabled,var(--spectrum-alias-track-color-disabled)\n);border-color:var(\n--spectrum-colorhandle-inner-border-color-disabled,var(--spectrum-global-color-gray-400)\n);box-shadow:none}:host([disabled]) .color{display:none}.color{background-color:var(--spectrum-picked-color);box-shadow:inset 0 0 0 var(\n--spectrum-colorhandle-outer-border-size,var(--spectrum-alias-border-size-thin)\n) var(\n--spectrum-colorhandle-inner-shadow-color,var(--spectrum-colorhandle-outer-shadow-color)\n)}@media (forced-colors:active){:host{--spectrum-colorhandle-inner-border-color-disabled:GrayText;--spectrum-colorhandle-fill-color-disabled:Canvas;--spectrum-colorhandle-inner-border-color:CanvasText}:host([disabled]){forced-color-adjust:none}}\n`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "styles",
+            "module": "packages/color-handle/src/spectrum-color-handle.css.ts"
+          }
+        }
+      ]
     },
     {
       "kind": "javascript-module",
