@@ -4072,9 +4072,9 @@
   integrity sha512-gYspJo5D7SMb7hzLADlEYnjwxo2Qi6aND5bqJ7lNg1TUWHvWUpaXFfu52poaV5U8745yPUd0L2PUo8S4GX/+Gg==
 
 "@spectrum-css/textfield@^3.2.2":
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-3.2.2.tgz#007cd2216ab5c6c792ca758a7bb50ba07afdf5c2"
-  integrity sha512-1RDJ4hlxQAW2SGcRPNgOnr7XoJlfs5wsfRr0rAxuG09+i3IwOBNkcldncCQAC+hPDSz1fhaJxiskvX03tBmUqQ==
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-3.2.4.tgz#46570e7c1ef5bc0de592757ca4731980456ccf4f"
+  integrity sha512-Af4Otlm2JFjn9tiGcWurE2C73ZC34Xwh6GL/UC4Vq8EQRJsWe6RA9WEVpsafZTZlm/0oEokEstFBkL4nVpbWGw==
 
 "@spectrum-css/thumbnail@^2.0.15":
   version "2.0.15"
