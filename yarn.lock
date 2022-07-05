@@ -5141,6 +5141,30 @@
     picomatch "^2.2.2"
     ws "^7.4.2"
 
+"@web/dev-server-core@^0.3.18":
+  version "0.3.18"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.18.tgz#3a5d8497ece5947bb01cea5cc1488dfe7fbe6878"
+  integrity sha512-o8EBGKXlBjAaQZiYNE1RZsNZJFQHjjr9FwuJyP2fsN+dkdZRhOjp4/E46hl2rB17Qgq4AizFmds8enmF/hU5dw==
+  dependencies:
+    "@types/koa" "^2.11.6"
+    "@types/ws" "^7.4.0"
+    "@web/parse5-utils" "^1.2.0"
+    chokidar "^3.4.3"
+    clone "^2.1.2"
+    es-module-lexer "^0.9.0"
+    get-stream "^6.0.0"
+    is-stream "^2.0.0"
+    isbinaryfile "^4.0.6"
+    koa "^2.13.0"
+    koa-etag "^4.0.0"
+    koa-send "^5.0.1"
+    koa-static "^5.0.0"
+    lru-cache "^6.0.0"
+    mime-types "^2.1.27"
+    parse5 "^6.0.1"
+    picomatch "^2.2.2"
+    ws "^7.4.2"
+
 "@web/dev-server-hmr@^0.1.6":
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/@web/dev-server-hmr/-/dev-server-hmr-0.1.8.tgz#f7272fce38e5188ca29dfb1ebca3326d9d55d9d2"
@@ -5318,26 +5342,18 @@
     "@web/test-runner-core" "^0.10.20"
     mkdirp "^1.0.4"
 
-"@web/test-runner-commands@^0.6.0":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.6.1.tgz#2df5d98430d4b61161bab778e0929dbc467610c0"
-  integrity sha512-P4aQqp0duumeGdGxQ8TwLnplkrXzpLqb47eSEEqBRS//C1H7s6VskaqEng+k0dbk+cSpEa4RuZGY/G5k8aTjTw==
+"@web/test-runner-commands@^0.6.0", "@web/test-runner-commands@^0.6.2":
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.6.3.tgz#a34689c519a9b5bc57cfba54d32328385f4ff4d4"
+  integrity sha512-+tMjOgBh1z77rM3Kt3rUrl+gzyUOdcHr2EbAWeMVU2v0AV/c+DTFQNZTi7iw8j5v/bVSlR8p4lFR6xe5mGVYvw==
   dependencies:
-    "@web/test-runner-core" "^0.10.20"
+    "@web/test-runner-core" "^0.10.27"
     mkdirp "^1.0.4"
 
-"@web/test-runner-commands@^0.6.2":
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.6.2.tgz#8c877dd21788c4e9595cd8dc30ded7d01eba8185"
-  integrity sha512-rS3QLT1IKvrE1B9lTsSqjbbGIOt0HlZGpLDJkNEJBGA3u8DPJnrr7Twc0qxCG/yr/bey68iJhpH/W23+SV/sQg==
-  dependencies:
-    "@web/test-runner-core" "^0.10.20"
-    mkdirp "^1.0.4"
-
-"@web/test-runner-core@^0.10.20", "@web/test-runner-core@^0.10.23":
-  version "0.10.25"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.25.tgz#b6abca8f5d7bb5ca172b7d170f74d027241bb8fe"
-  integrity sha512-gH8VXyZbwf+sqPiH4cnXYf86SqwBLtou+0LFFCLaDQRbMlrfi5byAISt39fNX2ejd46bF1cZn6DK+mzb/Xjccw==
+"@web/test-runner-core@^0.10.20", "@web/test-runner-core@^0.10.23", "@web/test-runner-core@^0.10.26", "@web/test-runner-core@^0.10.27":
+  version "0.10.27"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.27.tgz#8d1430f2364fb36b3ac15b9b43034fae9d94e177"
+  integrity sha512-ClV/hSxs4wDm/ANFfQOdRRFb/c0sYywC1QfUXG/nS4vTp3nnt7x7mjydtMGGLmvK9f6Zkubkc1aa+7ryfmVwNA==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@types/babel__code-frame" "^7.0.2"
@@ -5347,39 +5363,7 @@
     "@types/istanbul-lib-coverage" "^2.0.3"
     "@types/istanbul-reports" "^3.0.0"
     "@web/browser-logs" "^0.2.1"
-    "@web/dev-server-core" "^0.3.16"
-    chokidar "^3.4.3"
-    cli-cursor "^3.1.0"
-    co-body "^6.1.0"
-    convert-source-map "^1.7.0"
-    debounce "^1.2.0"
-    dependency-graph "^0.11.0"
-    globby "^11.0.1"
-    ip "^1.1.5"
-    istanbul-lib-coverage "^3.0.0"
-    istanbul-lib-report "^3.0.0"
-    istanbul-reports "^3.0.2"
-    log-update "^4.0.0"
-    nanocolors "^0.2.1"
-    nanoid "^3.1.25"
-    open "^8.0.2"
-    picomatch "^2.2.2"
-    source-map "^0.7.3"
-
-"@web/test-runner-core@^0.10.26":
-  version "0.10.26"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-core/-/test-runner-core-0.10.26.tgz#3ff3546d61426fa0b7e3854941eeea5b16433316"
-  integrity sha512-HqfweznsH1LVdebAaqn7aMaIUwKeVdBW59f03MsURd/CNV25l0i7kIxkFF+6OTGhjiGJW5pTTzMPHND4oS6YgA==
-  dependencies:
-    "@babel/code-frame" "^7.12.11"
-    "@types/babel__code-frame" "^7.0.2"
-    "@types/co-body" "^6.1.0"
-    "@types/convert-source-map" "^1.5.1"
-    "@types/debounce" "^1.2.0"
-    "@types/istanbul-lib-coverage" "^2.0.3"
-    "@types/istanbul-reports" "^3.0.0"
-    "@web/browser-logs" "^0.2.1"
-    "@web/dev-server-core" "^0.3.16"
+    "@web/dev-server-core" "^0.3.18"
     chokidar "^3.4.3"
     cli-cursor "^3.1.0"
     co-body "^6.1.0"
