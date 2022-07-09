@@ -26,6 +26,7 @@ const rootDir = process.cwd();
 
 const iconsPath = process.argv.slice(2)[0];
 const keepColors = process.argv.slice(2)[1];
+const verbose = false;
 
 const paths = {
     spIcons: join(rootDir, 'src/icons'),
@@ -54,14 +55,15 @@ export async function getIconList(path = iconsPath) {
     if (!Array.isArray(icons) || icons.length === 0)
         Promise.reject(new Error(`No icons found at ${printPath(iconsPath)}.`));
 
-    // if (!Number.isNaN(Number(ComponentName[0])))
-
     return Promise.resolve(
         icons.map((filename) => {
-            const id = cleanID(filename);
+            let id = cleanID(filename);
             const ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
-            if (!Number.isNaN(Number(ComponentName[0])))
-                console.log(`${ComponentName} is not a valid component name.`);
+
+            if (!Number.isNaN(Number(id[0]))) {
+                console.log(`${id} was not a valid id; updated to sp${id}.`);
+                id = `sp${id}`;
+            }
 
             const iconElementName = `sp-icon-${Case.kebab(ComponentName)}`;
 
@@ -194,7 +196,7 @@ function cleanID(iconName) {
 
 async function processIcon(iconData) {
     let { id, ComponentName, iconElementName } = iconData;
-    if (!Number.isNaN(Number(ComponentName[0]))) return Promise.resolve();
+    // if (!Number.isNaN(Number(ComponentName[0]))) return Promise.resolve();
 
     const writeAssets = [];
 
@@ -203,20 +205,16 @@ async function processIcon(iconData) {
     writeAssets.push(writeElement(iconData));
     writeAssets.push(writeIconRegistry(iconData));
 
-    return Promise.all(writeAssets)
-        .then(() => {
-            return {
-                manifestImport: `import '../icons/${iconElementName}.js';`,
-                manifestExport: `export {${ComponentName}Icon} from './icons/${id}.js';`,
-                manifestListing: `{
-                name: '${Case.sentence(ComponentName)}',
-                tag: '<${iconElementName}>',
-                story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`
-            },`,
-            };
-        })
-        .catch();
-    // TODO ^
+    return {
+        promises: writeAssets,
+        manifestImport: `import '../icons/${iconElementName}.js';`,
+        manifestExport: `export {${ComponentName}Icon} from './icons/${id}.js';`,
+        manifestListing: `{
+    name: '${Case.sentence(ComponentName)}',
+    tag: '<${iconElementName}>',
+    story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`
+},`,
+    };
 }
 
 async function main() {
@@ -225,12 +223,11 @@ async function main() {
     const iconList = await getIconList();
     const processes = iconList.map((iconData) => processIcon(iconData));
     const results = await Promise.all(processes)
-        .then((results) =>
-            results.filter((item) => item !== undefined && item !== null)
-        )
+        .then((r) => r.filter((i) => i !== undefined && i !== null))
         .catch();
     // TODO ^
 
+    const assetPromises = results.map((obj) => obj.promises).flat();
     const imports = results.map((obj) => obj.manifestImport);
     const exports = results.map((obj) => obj.manifestExport);
     const listings = results.map((obj) => obj.manifestListing);
@@ -253,7 +250,11 @@ export const iconManifest = [${listings.join('\n')}]`,
         'utf-8'
     );
 
-    console.log(`Successfully processed ${results.length} icons.`);
+    // Don't exit until all assets are done writing
+    await Promise.all(assetPromises).catch();
+    // TODO ^
+
+    console.log(`Successfully processed ${iconList.length} icons.`);
     if (verbose)
         iconList.forEach(({ iconElementName }) =>
             console.log(`${chalk.green(`✓`)} ${iconElementName}`)
