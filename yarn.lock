@@ -4111,6 +4111,15 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-8.0.0.tgz#b88a3b1165b63de50ab01f20ccafb42115d67443"
   integrity sha512-cClQgNyH1VdNu6zdiZ5M7kbQDZS4/wPAclk5IPO5+nMhSzqTesUL/zfiaPB95MTCKFyVJrFpOeJ37HmUifWJ3A==
 
+"@spectrum-web-components/icons-workflow@^0.8.10":
+  version "0.8.10"
+  resolved "https://registry.yarnpkg.com/@spectrum-web-components/icons-workflow/-/icons-workflow-0.8.10.tgz#00cc6f628ae0b3020555153749e7ea2a7cc4e125"
+  integrity sha512-mrsIDz+6coqcuMus6Ek1NqOYLTxhD5ckYUgmyl/pw/DgHjnYYAAAVi2upBekrMFz9uqPb9oxiq7HqrXUaMtx9w==
+  dependencies:
+    "@spectrum-web-components/base" "^0.5.8"
+    "@spectrum-web-components/icon" "^0.11.10"
+    tslib "^2.0.0"
+
 "@storybook/csf-tools@^6.4.9":
   version "6.4.19"
   resolved "https://registry.yarnpkg.com/@storybook/csf-tools/-/csf-tools-6.4.19.tgz#28bdea11da17501a8bc4e761b821d7721880eaf6"

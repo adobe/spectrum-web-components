@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icons-workflow",
-    "version": "0.8.10",
+    "version": "0.8.9",
     "publishConfig": {
         "access": "public"
     },
@@ -26,7 +26,7 @@
         "./package.json": "./package.json"
     },
     "scripts": {
-        "build": "node ./bin/build @adobe/spectrum-css-workflow-icons/dist/18"
+        "build": "node ./bin/build @adobe/spectrum-css-workflow-icons"
     },
     "files": [
         "**/*.d.ts",
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.5.8",
-        "@spectrum-web-components/icon": "^0.11.10",
+        "@spectrum-web-components/base": "^0.5.7",
+        "@spectrum-web-components/icon": "^0.11.9",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
