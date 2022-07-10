@@ -9,8 +9,8 @@
     "plugins": ["@typescript-eslint", "notice", "spectrum-web-components"],
     "extends": [
         "plugin:@typescript-eslint/recommended",
-        "prettier",
-        "plugin:lit-a11y/recommended"
+        "plugin:lit-a11y/recommended",
+        "plugin:prettier/recommended"
     ],
     "rules": {
         "no-debugger": 2,
