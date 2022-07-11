@@ -68,6 +68,42 @@ describe('Slider', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('loads - [variant="quiet"]', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    label="Ticked Slider"
+                    min="-100"
+                    max="100"
+                    value="0"
+                    quiet
+                    variant="tick"
+                ></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('loads - [variant="indeterminate"]', async () => {
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider
+                    label="Ticked Slider"
+                    min="-100"
+                    max="100"
+                    value="0"
+                    indeterminate
+                    variant="tick"
+                ></sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
     it('receives value from the outside', async () => {
         const el = await fixture<Slider>(
             html`
