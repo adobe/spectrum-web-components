@@ -61,6 +61,24 @@ describe('Slider - editable', () => {
         el.remove();
     });
 
+    it('loads - [indeterminate]', async () => {
+        const el = document.createElement('sp-slider');
+        el.editable = true;
+        el.indeterminate = true;
+        el.label = 'Indeterminate, editable, slider';
+
+        try {
+            document.body.append(el);
+        } catch (error) {
+            expect(true).to.be.false;
+        }
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+        el.remove();
+    });
+
     it('focuses `<sp-number-field>` directly', async () => {
         const el = await sliderFromFixture(editable);
 
