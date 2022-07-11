@@ -155,6 +155,12 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
+    @property({ type: Boolean, reflect: true })
+    public quiet = false;
+
+    @property({ type: Boolean, reflect: true })
+    public indeterminate = false;
+
     @query('#label')
     public labelEl!: HTMLLabelElement;
 
@@ -193,6 +199,8 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                           value=${this.value}
                           ?hide-stepper=${this.hideStepper}
                           ?disabled=${this.disabled}
+                          ?quiet=${this.quiet}
+                          ?indeterminate=${this.indeterminate}
                           @input=${this.handleNumberInput}
                           @change=${this.handleNumberChange}
                       ></sp-number-field>
