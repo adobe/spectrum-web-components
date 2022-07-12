@@ -3804,10 +3804,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-3.0.27.tgz#bea5a29972f7f7f6e79a5fd953f0ff41a5605c7d"
   integrity sha512-xb+1wA1a49n1rzVzw3KMrXYFN3Ki+FgSDY7lDzgPyLSNnBEbnrdr7b8ip4gnqTDVOKoVrmmDoHvSWAB3bz0fqQ==
 
-"@spectrum-css/actionbutton@^1.1.13":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-1.1.13.tgz#2150079c16465dba2fc8c9ea6c1e5c6ab6c9cea3"
-  integrity sha512-s0i7gcXLdf3UNL5RDsqHkJLbEkdC1SRbfLUHDxmra6Y5wfgcSxzk7sSGYblOOJW/RYH14YbnUbKl1npGV/UCsQ==
+"@spectrum-css/actionbutton@^2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbutton/-/actionbutton-2.0.3.tgz#826b0f0cd6a4fcaedd9eba0df4a40a449d96df6e"
+  integrity sha512-gW5XtOBvFagxroWyj8Cyoir5DKPN69gNu9n2yIohfhPMU8lV4E+gDkGew7DBdYL7j6C3F23Bs4iIKSrlt/mMxg==
 
 "@spectrum-css/actiongroup@^1.0.25":
   version "1.0.25"
