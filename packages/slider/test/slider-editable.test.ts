@@ -12,7 +12,12 @@ governing permissions and limitations under the License.
 
 import '../sp-slider.js';
 import { Slider } from '../';
-import { editable, hideStepper, StoryArgs } from '../stories/slider.stories.js';
+import {
+    editable,
+    hideStepper,
+    Indeterminate,
+    StoryArgs,
+} from '../stories/slider.stories.js';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { sendKeys } from '@web/test-runner-commands';
@@ -61,22 +66,24 @@ describe('Slider - editable', () => {
         el.remove();
     });
 
-    it('loads - [indeterminate]', async () => {
-        const el = document.createElement('sp-slider');
-        el.editable = true;
-        el.indeterminate = true;
-        el.label = 'Indeterminate, editable, slider';
-
-        try {
-            document.body.append(el);
-        } catch (error) {
-            expect(true).to.be.false;
-        }
+    it('toggles indeterminate when edited via the `<sp-number-field>`', async () => {
+        const el = await sliderFromFixture(Indeterminate);
 
         await elementUpdated(el);
 
-        await expect(el).to.be.accessible();
-        el.remove();
+        el.focus();
+
+        await elementUpdated(el);
+
+        await sendKeys({ press: 'Backspace' });
+        await sendKeys({ press: 'Backspace' });
+        await sendKeys({ type: '15' });
+        await sendKeys({ press: 'Enter' });
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(15);
+        expect(el.indeterminate).to.be.false;
     });
 
     it('focuses `<sp-number-field>` directly', async () => {

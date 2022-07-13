@@ -155,10 +155,10 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean })
     public quiet = false;
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean })
     public indeterminate = false;
 
     @query('#label')
