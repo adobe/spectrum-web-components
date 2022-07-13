@@ -378,6 +378,7 @@ export class HandleController implements Controller {
         }
         event.stopPropagation();
         input.value = this.calculateHandlePosition(event, model).toString();
+        input.indeterminate = false;
         model.handle.value = parseFloat(input.value);
         this.requestUpdate();
     }
