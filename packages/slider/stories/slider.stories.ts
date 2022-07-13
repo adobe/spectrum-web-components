@@ -445,6 +445,8 @@ export const Indeterminate = (args: StoryArgs = {}): TemplateResult => {
                 min="0"
                 max="20"
                 label="Intensity"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
                 ...=${spreadProps(args)}
             ></sp-slider>
         </div>
