@@ -119,14 +119,14 @@ An `<sp-slider>` element can be paired with an `<sp-number-field>` element via t
 ></sp-slider>
 ```
 
-### Quiet
+#### Quiet
 
 ```html
 <sp-slider quiet editable></sp-slider>
 <sp-slider quiet disabled editable></sp-slider>
 ```
 
-### Indeterminate
+#### Indeterminate
 
 ```html
 <sp-slider indeterminate editable></sp-slider>
