@@ -29,7 +29,7 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 The default of `<overlay-trigger>` will load dependencies in `@spectrum-web-components/overlay` asynchronously via a dynamic import. In the case that you would like to import those tranverse dependencies statically, import the side effectful registration of `<overlay-trigger>` as follows:
 
 ```
-import '@spectrum-web-components/overlay-trigger/sync/overlay-trigger.js';
+import '@spectrum-web-components/overlay/sync/overlay-trigger.js';
 ```
 
 When looking to leverage the `OverlayTrigger` base class as a type and/or for extension purposes, do so via:
