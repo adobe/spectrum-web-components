@@ -155,6 +155,18 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
+    /**
+     * Applies `quiet` to the underlying `sp-number-field` when `editable === true`.
+     */
+    @property({ type: Boolean })
+    public quiet = false;
+
+    /**
+     * Applies `indeterminate` to the underlying `sp-number-field` when `editable === true`. Is removed on the next `change` event.
+     */
+    @property({ type: Boolean })
+    public indeterminate = false;
+
     @query('#label')
     public labelEl!: HTMLLabelElement;
 
@@ -193,6 +205,8 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                           value=${this.value}
                           ?hide-stepper=${this.hideStepper}
                           ?disabled=${this.disabled}
+                          ?quiet=${this.quiet}
+                          ?indeterminate=${this.indeterminate}
                           @input=${this.handleNumberInput}
                           @change=${this.handleNumberChange}
                       ></sp-number-field>
@@ -393,6 +407,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                 this.dispatchInputEvent();
             }
         }
+        this.indeterminate = false;
     }
 
     private trackSegmentStyles(start: number, end: number): StyleInfo {

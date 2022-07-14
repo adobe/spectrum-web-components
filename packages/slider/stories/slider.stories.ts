@@ -416,6 +416,43 @@ export const Disabled = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
+export const Quiet = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                hide-stepper
+                quiet
+                value="5"
+                step="0.5"
+                min="0"
+                max="20"
+                label="Intensity"
+                ...=${spreadProps(args)}
+            ></sp-slider>
+        </div>
+    `;
+};
+
+export const Indeterminate = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 500px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                indeterminate
+                value="5"
+                step="0.5"
+                min="0"
+                max="20"
+                label="Intensity"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                ...=${spreadProps(args)}
+            ></sp-slider>
+        </div>
+    `;
+};
+
 export const ExplicitHandle = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
