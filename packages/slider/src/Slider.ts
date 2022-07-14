@@ -407,6 +407,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                 this.dispatchInputEvent();
             }
         }
+        this.indeterminate = false;
     }
 
     private trackSegmentStyles(start: number, end: number): StyleInfo {
