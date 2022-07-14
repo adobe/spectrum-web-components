@@ -71,6 +71,9 @@ describe('Slider - editable', () => {
 
         await elementUpdated(el);
 
+        expect(el.value).to.equal(15);
+        expect(el.indeterminate).to.be.false;
+
         el.focus();
 
         await elementUpdated(el);
