@@ -155,9 +155,15 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
     @property({ type: Boolean, reflect: true })
     public override disabled = false;
 
+    /**
+     * Applies `quiet` to the underlying `sp-number-field` when `editable === true`.
+     */
     @property({ type: Boolean })
     public quiet = false;
 
+    /**
+     * Applies `indeterminate` to the underlying `sp-number-field` when `editable === true`. Is removed on the next `change` event.
+     */
     @property({ type: Boolean })
     public indeterminate = false;
 
