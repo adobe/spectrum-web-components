@@ -119,6 +119,22 @@ An `<sp-slider>` element can be paired with an `<sp-number-field>` element via t
 ></sp-slider>
 ```
 
+#### Quiet
+
+```html
+<sp-slider quiet editable></sp-slider>
+<sp-slider quiet disabled editable></sp-slider>
+```
+
+#### Indeterminate
+
+The indeterminate attribute will be passed to the internal `<sp-number-field>` element and alter its visual delivery until a change has been made to the `<sp-slider>` element at which point the change event that is dispatched can be understood as always removing the indeterminate attribute from the `<sp-slider>`.
+
+```html
+<sp-slider indeterminate editable></sp-slider>
+<sp-slider indeterminate disabled editable></sp-slider>
+```
+
 ## Advanced normalization
 
 By default, `sp-slider` assumes a linear scale between the `min` and `max` values.

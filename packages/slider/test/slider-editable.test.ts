@@ -12,7 +12,12 @@ governing permissions and limitations under the License.
 
 import '../sp-slider.js';
 import { Slider } from '../';
-import { editable, hideStepper, StoryArgs } from '../stories/slider.stories.js';
+import {
+    editable,
+    hideStepper,
+    Indeterminate,
+    StoryArgs,
+} from '../stories/slider.stories.js';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { sendKeys } from '@web/test-runner-commands';
@@ -59,6 +64,29 @@ describe('Slider - editable', () => {
 
         await expect(el).to.be.accessible();
         el.remove();
+    });
+
+    it('toggles indeterminate when edited via the `<sp-number-field>`', async () => {
+        const el = await sliderFromFixture(Indeterminate);
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(5);
+        expect(el.indeterminate).to.be.true;
+
+        el.focus();
+
+        await elementUpdated(el);
+
+        await sendKeys({ press: 'Backspace' });
+        await sendKeys({ press: 'Backspace' });
+        await sendKeys({ type: '15' });
+        await sendKeys({ press: 'Enter' });
+
+        await elementUpdated(el);
+
+        expect(el.value).to.equal(15);
+        expect(el.indeterminate).to.be.false;
     });
 
     it('focuses `<sp-number-field>` directly', async () => {
