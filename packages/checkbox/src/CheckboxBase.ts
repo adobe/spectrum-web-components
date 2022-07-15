@@ -46,6 +46,7 @@ export class CheckboxBase extends Focusable {
             },
             bubbles: event.bubbles,
             cancelable: event.cancelable,
+            composed: event.composed,
         });
         this.dispatchEvent(changeEvent);
     }
