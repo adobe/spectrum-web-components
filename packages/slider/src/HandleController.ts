@@ -107,7 +107,9 @@ export class HandleController implements Controller {
     }
 
     public requestUpdate(): void {
-        this.host.requestUpdate();
+        if (this.host.hasUpdated) {
+            this.host.requestUpdate();
+        }
     }
 
     /**
@@ -129,7 +131,6 @@ export class HandleController implements Controller {
             }
         } else {
             input.valueAsNumber = handle.value;
-            handle.value = input.valueAsNumber;
             this.requestUpdate();
         }
         handle.value = input.valueAsNumber;
