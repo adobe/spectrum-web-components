@@ -128,7 +128,7 @@ An `<sp-slider>` element can be paired with an `<sp-number-field>` element via t
 
 #### Indeterminate
 
-The indeterminate attribute will be passed to the internal `<sp-number-field>` element and alter its visual delivery until a change has been made to the `<sp-slider>` element at which point the change event that is dispatched can be understood as always removing the indeterminate attribute from the `<sp-slider>`.
+The indeterminate attribute will be passed to the internal `<sp-number-field>` element and alter its visual delivery until a change has been made to the `<sp-slider>` element at which point the `change` event that is dispatched can be understood as always removing the indeterminate attribute from the `<sp-slider>`.
 
 ```html
 <sp-slider indeterminate editable></sp-slider>
