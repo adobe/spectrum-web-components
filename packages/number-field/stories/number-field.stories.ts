@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 
 import '../sp-number-field.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -207,7 +208,7 @@ export const Default = (args: StoryArgs = {}): TemplateResult => {
                 onInput((event.target as NumberField).value)}
             @change=${(event: Event) =>
                 onChange((event.target as NumberField).value)}
-            style="width: 150px"
+            style=${ifDefined(args.quiet ? undefined : 'width: 150px')}
         ></sp-number-field>
     `;
 };
