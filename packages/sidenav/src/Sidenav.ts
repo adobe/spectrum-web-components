@@ -164,11 +164,14 @@ export class SideNav extends Focusable {
         `;
     }
 
-    protected override firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
-        const selectedChild = this.querySelector('[selected]') as SideNavItem;
-        if (selectedChild) {
-            this.value = selectedChild.value;
+    protected override willUpdate(): void {
+        if (!this.hasUpdated) {
+            const selectedChild = this.querySelector(
+                '[selected]'
+            ) as SideNavItem;
+            if (selectedChild) {
+                this.value = selectedChild.value;
+            }
         }
     }
 
