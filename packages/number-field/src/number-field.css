@@ -16,7 +16,12 @@ governing permissions and limitations under the License.
     width: var(--spectrum-stepper-width);
 }
 
-#textfield {
+:host([quiet]) {
+    width: var(--spectrum-stepper-quiet-width);
+}
+
+#textfield,
+:host([quiet]) #textfield {
     width: 100%;
 }
 
