@@ -97,7 +97,9 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
             changedProperties: PropertyValues
         ): void {
             super.firstUpdated(changedProperties);
-            this.manageTextObservedSlot();
+            this.updateComplete.then(() => {
+                this.manageTextObservedSlot();
+            });
         }
     }
     return SlotTextObservingElement;
