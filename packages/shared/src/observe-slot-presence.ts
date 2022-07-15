@@ -91,7 +91,11 @@ export function ObserveSlotPresence<T extends Constructor<ReactiveElement>>(
                     !!this.querySelector(selector)
                 );
             });
-            if (changes) this.requestUpdate();
+            if (changes) {
+                this.updateComplete.then(() => {
+                    this.requestUpdate();
+                });
+            }
         };
     }
     return SlotPresenceObservingElement;
