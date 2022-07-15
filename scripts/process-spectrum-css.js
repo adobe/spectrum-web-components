@@ -52,14 +52,6 @@ async function processConfig(spectrumConfig, componentPath) {
         process.exit(1);
     }
     const inputCss = await fs.readFile(inputCssPath);
-    // let inputCustomProperties = await fs.readFile(
-    //     `node_modules/@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`,
-    //     'utf8'
-    // );
-    // inputCustomProperties = inputCustomProperties.replace(
-    //     /(.|\n)*\{/,
-    //     ':root {'
-    // );
     // eslint-disable-next-line no-console
     console.log(chalk.bold.green(`- ${spectrumConfig.spectrum}`));
     return Promise.all(
@@ -80,16 +72,6 @@ async function processConfig(spectrumConfig, componentPath) {
                 from: inputCssPath,
                 to: outputCssPath,
             });
-            // const srcPath = `node_modules/@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`;
-            // if (fs.existsSync(srcPath)) {
-            //     await postcss([
-            //         postcssCustomProperties({
-            //             exportTo: [outputJsonPath],
-            //         }),
-            //     ]).process(inputCustomProperties, {
-            //         from: srcPath,
-            //     });
-            // }
             // eslint-disable-next-line no-console
             console.log(chalk.bold.green(`  o ${component.name}`));
 
