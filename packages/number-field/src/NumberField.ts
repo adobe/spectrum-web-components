@@ -569,6 +569,12 @@ export class NumberField extends TextfieldBase {
         if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
             this.clearNumberFormatterCache();
         }
+        if (changes.has('value') || changes.has('max') || changes.has('min')) {
+            const value = this.numberParser.parse(
+                this.formattedValue.replace(this._forcedUnit, '')
+            );
+            this.value = value;
+        }
         super.update(changes);
     }
 
@@ -582,17 +588,6 @@ export class NumberField extends TextfieldBase {
     }
 
     protected override updated(changes: PropertyValues<this>): void {
-        if (
-            changes.has('value') ||
-            changes.has('max') ||
-            changes.has('min') ||
-            changes.has('min')
-        ) {
-            const value = this.numberParser.parse(
-                this.inputValue.replace(this._forcedUnit, '')
-            );
-            this.value = value;
-        }
         if (changes.has('min') || changes.has('formatOptions')) {
             let inputMode = 'numeric';
             const hasNegative = typeof this.min !== 'undefined' && this.min < 0;
