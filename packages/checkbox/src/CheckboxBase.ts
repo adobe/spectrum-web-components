@@ -38,17 +38,20 @@ export class CheckboxBase extends Focusable {
         }
         this.checked = this.inputElement.checked;
 
-        // Change events from the shadow DOM are not transmitted into
-        // the parent light DOM
         const changeEvent = new CustomEvent('change', {
             detail: {
                 sourceEvent: event,
             },
-            bubbles: event.bubbles,
-            cancelable: event.cancelable,
-            composed: event.composed,
+            bubbles: true,
+            cancelable: true,
+            composed: true,
         });
-        this.dispatchEvent(changeEvent);
+        const applyDefault = this.dispatchEvent(changeEvent);
+
+        if (!applyDefault) {
+            this.checked = !this.inputElement.checked;
+            this.inputElement.checked = this.checked;
+        }
     }
 
     protected override render(): TemplateResult {
