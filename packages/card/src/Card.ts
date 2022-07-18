@@ -146,10 +146,9 @@ export class Card extends LikeAnchor(
         }
     }
 
-    private handleSelectedChange({
-        target: { checked },
-    }: Event & { target: Checkbox }): void {
-        this.selected = checked;
+    private handleSelectedChange(event: Event & { target: Checkbox }): void {
+        event.stopPropagation();
+        this.selected = event.target.checked;
         this.announceChange();
     }
 
