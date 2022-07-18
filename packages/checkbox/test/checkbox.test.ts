@@ -167,6 +167,23 @@ describe('Checkbox', () => {
         expect(el.checked).to.be.false;
     });
 
+    it('can have `change` events cancelled', async () => {
+        const el = testFixture.querySelector('#checkbox0') as Checkbox;
+        await elementUpdated(el);
+        expect(el.checked).to.be.false;
+
+        inputForCheckbox(el).click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.true;
+
+        el.addEventListener('change', (event: Event) => event.preventDefault());
+        inputForCheckbox(el).click();
+        await elementUpdated(el);
+
+        expect(el.checked).to.be.true;
+    });
+
     it('maintains its value when [readonly]', async () => {
         const el = await fixture<Checkbox>(html`
             <sp-checkbox id="checkbox0" checked readonly>Component</sp-checkbox>
