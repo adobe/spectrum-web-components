@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.8.8...@spectrum-web-components/split-button@0.8.9) (2022-07-18)
+
+**Note:** Version bump only for package @spectrum-web-components/split-button
+
 ## [0.8.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.8.7...@spectrum-web-components/split-button@0.8.8) (2022-06-29)
 
 **Note:** Version bump only for package @spectrum-web-components/split-button

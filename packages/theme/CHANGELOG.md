@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.11.3...@spectrum-web-components/theme@0.12.0) (2022-07-18)
+
+### Features
+
+-   support Spectrum Token consumption and update Action Button to use them ([743ab16](https://github.com/adobe/spectrum-web-components/commit/743ab16d8f05335d320440effbdcb8cd4bffc97d))
+
 ## [0.11.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.11.2...@spectrum-web-components/theme@0.11.3) (2022-06-29)
 
 **Note:** Version bump only for package @spectrum-web-components/theme

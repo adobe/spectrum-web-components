@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/checkbox",
-    "version": "0.13.4",
+    "version": "0.13.5",
     "publishConfig": {
         "access": "public"
     },
@@ -45,9 +45,9 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.5.8",
-        "@spectrum-web-components/icon": "^0.11.10",
-        "@spectrum-web-components/icons-ui": "^0.8.10",
-        "@spectrum-web-components/shared": "^0.14.3",
+        "@spectrum-web-components/icon": "^0.11.11",
+        "@spectrum-web-components/icons-ui": "^0.8.11",
+        "@spectrum-web-components/shared": "^0.14.4",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

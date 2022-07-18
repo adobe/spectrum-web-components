@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/divider",
-    "version": "0.4.10",
+    "version": "0.4.11",
     "publishConfig": {
         "access": "public"
     },

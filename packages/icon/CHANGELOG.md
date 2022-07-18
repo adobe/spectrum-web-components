@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.11.10...@spectrum-web-components/icon@0.11.11) (2022-07-18)
+
+**Note:** Version bump only for package @spectrum-web-components/icon
+
 ## [0.11.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/icon@0.11.9...@spectrum-web-components/icon@0.11.10) (2022-06-29)
 
 **Note:** Version bump only for package @spectrum-web-components/icon

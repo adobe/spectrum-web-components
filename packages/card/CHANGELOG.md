@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.10.12...@spectrum-web-components/card@0.10.13) (2022-07-18)
+
+### Bug Fixes
+
+-   **card:** stop event propogation on handleselectedchange ([0ef95e5](https://github.com/adobe/spectrum-web-components/commit/0ef95e5a933295d7484015273812c3e3374c57ff))
+
 ## [0.10.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.10.11...@spectrum-web-components/card@0.10.12) (2022-06-29)
 
 **Note:** Version bump only for package @spectrum-web-components/card

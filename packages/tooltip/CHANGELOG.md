@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tooltip@0.10.15...@spectrum-web-components/tooltip@0.10.16) (2022-07-18)
+
+**Note:** Version bump only for package @spectrum-web-components/tooltip
+
 ## [0.10.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tooltip@0.10.14...@spectrum-web-components/tooltip@0.10.15) (2022-06-29)
 
 **Note:** Version bump only for package @spectrum-web-components/tooltip

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/badge",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "publishConfig": {
         "access": "public"
     },
@@ -45,7 +45,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.5.8",
-        "@spectrum-web-components/shared": "^0.14.3",
+        "@spectrum-web-components/shared": "^0.14.4",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

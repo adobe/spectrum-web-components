@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.14.3...@spectrum-web-components/shared@0.14.4) (2022-07-18)
+
+**Note:** Version bump only for package @spectrum-web-components/shared
+
 ## [0.14.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.14.2...@spectrum-web-components/shared@0.14.3) (2022-06-29)
 
 **Note:** Version bump only for package @spectrum-web-components/shared

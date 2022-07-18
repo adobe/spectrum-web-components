@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-loupe",
-    "version": "0.3.9",
+    "version": "0.3.10",
     "publishConfig": {
         "access": "public"
     },

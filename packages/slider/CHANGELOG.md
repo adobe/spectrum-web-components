@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.13...@spectrum-web-components/slider@0.12.14) (2022-07-18)
+
+### Bug Fixes
+
+-   **slider:** add quiet and indeterminate ([8990573](https://github.com/adobe/spectrum-web-components/commit/8990573a4d946920b97117e87f8776c0e7214b04))
+
 ## [0.12.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.12...@spectrum-web-components/slider@0.12.13) (2022-06-29)
 
 ### Bug Fixes

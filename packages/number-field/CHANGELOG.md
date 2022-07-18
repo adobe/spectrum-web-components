@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.3.13...@spectrum-web-components/number-field@0.4.0) (2022-07-18)
+
+### Bug Fixes
+
+-   **number-field:** ensure "quiet" Number Field is sized correctly in the DOM ([3ea2c8f](https://github.com/adobe/spectrum-web-components/commit/3ea2c8f9f336e9199d184b48c521dd30f833145d))
+
+### Features
+
+-   support Spectrum Token consumption and update Action Button to use them ([743ab16](https://github.com/adobe/spectrum-web-components/commit/743ab16d8f05335d320440effbdcb8cd4bffc97d))
+
 ## [0.3.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.3.12...@spectrum-web-components/number-field@0.3.13) (2022-06-29)
 
 ### Bug Fixes

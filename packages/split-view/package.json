@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/split-view",
-    "version": "0.4.9",
+    "version": "0.4.10",
     "publishConfig": {
         "access": "public"
     },
