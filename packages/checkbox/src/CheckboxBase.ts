@@ -31,7 +31,7 @@ export class CheckboxBase extends Focusable {
         return this.inputElement;
     }
 
-    public handleChange(event: Event): void {
+    public handleChange(): void {
         if (this.readonly) {
             this.inputElement.checked = this.checked;
             return;
@@ -39,9 +39,6 @@ export class CheckboxBase extends Focusable {
         this.checked = this.inputElement.checked;
 
         const changeEvent = new CustomEvent('change', {
-            detail: {
-                sourceEvent: event,
-            },
             bubbles: true,
             cancelable: true,
             composed: true,
