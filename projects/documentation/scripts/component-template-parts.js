@@ -48,45 +48,49 @@ function buildTable(title, rowData, headings, cells, copyData) {
 ### ${title}
 
 <div class="table-container">
-<table class="spectrum-Table spectrum-Table--sizeM">
-<thead class="spectrum-Table-head">
-<tr>
+<sp-table size="m" class="${title.toLowerCase()}">
+<sp-table-head>
 ${headings
     .map(
         (heading) => `
-<th class="spectrum-Table-headCell">
+${
+    heading === 'Description'
+        ? `<sp-table-head-cell class="${title} description">`
+        : `<sp-table-head-cell>`
+}
 ${heading}
-</th>
+</sp-table-head-cell>
 `
     )
     .join('')}
-</tr>
-</thead>
-<tbody class="spectrum-Table-body">
+</sp-table-head>
+<sp-table-body>
 ${rowData
     .sort(sortByName)
     .map(
         (property) => `
-<tr class="spectrum-Table-row" id="${title.toLowerCase()}_${
-            property.name
-        }" data-name="${copyData.name}" data-value="${copyData.value(
-            property
-        )}">
+<sp-table-row id="${title.toLowerCase()}_${property.name}" data-name="${
+            copyData.name
+        }" data-value="${copyData.value(property)}">
 ${cells
     .map(
-        (cell) => `
-<td class="spectrum-Table-cell">
+        (cell, index) => `
+${
+    headings[index] === 'Description'
+        ? `<sp-table-cell class="${title} description">`
+        : `<sp-table-cell>`
+}
 ${encodeCodeWrappedHTML(cell(property))}
-</td>
+</sp-table-cell>
 `
     )
     .join('')}
-</tr>
+</sp-table-row>
 `
     )
     .join('')}
-</tbody>
-</table>
+</sp-table-body>
+</sp-table>
 </div>
     `;
 }

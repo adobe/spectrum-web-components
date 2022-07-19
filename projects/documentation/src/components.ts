@@ -34,6 +34,13 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-save-floppy.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-stopwatch.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-user-activity.js';
+import '@spectrum-web-components/table/sp-table.js';
+import '@spectrum-web-components/table/sp-table-body.js';
+import '@spectrum-web-components/table/sp-table-cell.js';
+import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
+import '@spectrum-web-components/table/sp-table-head.js';
+import '@spectrum-web-components/table/sp-table-head-cell.js';
+import '@spectrum-web-components/table/sp-table-row.js';
 
 if ('requestIdleCallback' in window) {
     requestIdleCallback(() => {
@@ -81,7 +88,9 @@ document
     ?.addEventListener('click', (event: Event) => {
         const path = event.composedPath();
         const row = path.find(
-            (el) => (el as Element).localName === 'tr' && (el as Element).id
+            (el) =>
+                (el as Element).localName === 'sp-table-row' &&
+                (el as Element).id
         ) as HTMLElement;
         if (row) {
             location.hash = row.id;
