@@ -105,7 +105,21 @@ module.exports = function (eleventyConfig) {
         return [...collection.getFilteredByGlob('./content/migrations/*.md')];
     });
 
-    eleventyConfig.addCollection('component-examples', function (collection) {
+    eleventyConfig.addCollection('component-root', function (collection) {
+        return collection
+            .getFilteredByTags('component-examples', 'root')
+            .sort(function (a, b) {
+                if (a.data.displayName < b.data.displayName) {
+                    return -1;
+                }
+                if (b.data.displayName < a.data.displayName) {
+                    return 1;
+                }
+                return 0;
+            });
+    });
+
+    eleventyConfig.addCollection('component-all', function (collection) {
         return collection
             .getFilteredByTag('component-examples')
             .sort(function (a, b) {

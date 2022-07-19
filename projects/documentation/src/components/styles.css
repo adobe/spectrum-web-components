@@ -367,6 +367,23 @@ sp-sidenav > sp-sidenav-item:not(:defined) > a {
     );
 }
 
+sp-sidenav-item[expanded] > sp-sidenav-item[expanded] > sp-sidenav-item:not(:defined) > a {
+    padding-left: calc(
+        var(
+                --spectrum-sidenav-multilevel-item-indentation-level2,
+                var(--spectrum-global-dimension-size-300)
+            ) +
+            var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            )
+    );
+}
+
+sp-sidenav-item:not([expanded], :defined) > sp-sidenav-item {
+    display: none;
+}
+
 sp-sidenav-item:not(:defined) a {
     padding-left: calc(
         var(
