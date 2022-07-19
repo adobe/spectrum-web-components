@@ -16,3 +16,7 @@ governing permissions and limitations under the License.
     display: flex;
     width: 100%;
 }
+
+:host(:last-of-type) {
+    border-bottom: none;
+}

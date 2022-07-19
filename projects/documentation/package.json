@@ -22,7 +22,6 @@
         "watch": "yarn serve --watch"
     },
     "dependencies": {
-        "@spectrum-css/table": "^4.0.26",
         "@spectrum-web-components/bundle": "^0.29.2",
         "@spectrum-web-components/custom-vars-viewer": "^0.0.1"
     },
@@ -195,7 +194,8 @@
             "files": [
                 "../../packages/**/*.md",
                 "../../tools/**/*.md",
-                "scripts/copy-component-docs.js"
+                "scripts/copy-component-docs.js",
+                "scripts/component-template-parts.js"
             ],
             "clean": "if-file-deleted",
             "output": [
