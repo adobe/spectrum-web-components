@@ -61,10 +61,13 @@ export async function processREADME(mdPath) {
     if (fileName === 'CHANGELOG.md' || /node_modules/.test(mdPath)) {
         return;
     }
+    const packageName = extractPackageNameRegExp.exec(mdPath)[1];
     let componentName =
         fileName !== 'README.md'
             ? fileName.replace('.md', '')
             : extractPackageNameRegExp.exec(mdPath)[1];
+    const parent =
+        fileName === 'README.md' ? 'root' : packageName + '-children';
     let componentHeading = componentName;
     let tag = findDeclaration(
         customElements,
@@ -142,7 +145,9 @@ export async function processREADME(mdPath) {
     const body = fs.readFileSync(mdPath);
     fs.writeFileSync(
         exampleDestinationFile,
-        exampleDestinationTemplate(componentName, componentHeading, tagType)
+        exampleDestinationTemplate(componentName, componentHeading, tagType, 
+            parent,
+            packageName)
     );
     fs.writeFileSync(
         examplePartialFile,

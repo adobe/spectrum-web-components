@@ -207,7 +207,9 @@ ${
 export function exampleDestinationTemplate(
     componentName,
     componentHeading,
-    tagType
+    tagType,
+    parent,
+    packageName
 ) {
     return `---
 layout: examples.njk
@@ -215,8 +217,10 @@ title: '${nameToTitle(componentName)}: Spectrum Web Components'
 displayName: ${nameToTitle(componentName)}
 componentName: ${componentName}
 componentHeading: ${componentHeading}
+componentPackage: ${packageName}
 tags:
 - ${tagType}
+- ${parent}
 ---`;
 }
 

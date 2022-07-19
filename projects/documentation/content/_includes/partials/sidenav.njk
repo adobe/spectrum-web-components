@@ -23,13 +23,23 @@
         multiLevel
     >
         <span slot="no-js">Components</span>
-        {% for component in collections['component-examples'] %}
+        {% for componentRoot in collections['component-root'] %}
             <sp-sidenav-item
-                label="{{ component.data.displayName }}"
-                href="{{ component.url }}"
-                value="{{ component.data.componentName }}"
+                label="{{ componentRoot.data.displayName }}"
+                href="{{ componentRoot.url }}"
+                value="{{ componentRoot.data.componentName }}"
+                {% if componentPackage === componentRoot.data.componentName %}expanded{% endif %}
             >
-                <a href="{{ component.url }}" slot="no-js">{{ component.data.displayName }}</a>
+                <a href="{{ componentRoot.url }}" slot="no-js">{{ componentRoot.data.displayName }}</a>
+                {% for componentChild in collections[componentRoot.data.componentName + '-children'] %}
+                    <sp-sidenav-item
+                        label="{{ componentChild.data.displayName }}"
+                        href="{{ componentChild.url }}"
+                        value="{{ componentChild.data.componentName }}"
+                    >
+                        <a href="{{ componentChild.url }}" slot="no-js">{{ componentChild.data.displayName }}</a>
+                    </sp-sidenav-item>
+                {% endfor %}
             </sp-sidenav-item>
         {% endfor %}
     </sp-sidenav-item>
