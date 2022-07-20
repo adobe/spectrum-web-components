@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/swatch@0.1.1...@spectrum-web-components/swatch@0.1.2) (2022-07-20)
+
+### Bug Fixes
+
+-   include all dependencies ([c80d244](https://github.com/adobe/spectrum-web-components/commit/c80d24483b440c634ebc0add27f35ae84c4d6260))
+
 ## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/swatch@0.1.0...@spectrum-web-components/swatch@0.1.1) (2022-07-18)
 
 **Note:** Version bump only for package @spectrum-web-components/swatch
