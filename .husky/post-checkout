@@ -1,0 +1,18 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# If this is a file checkout (== 0) exit.
+if [ "$3" == "0" ]; then exit; fi
+
+# If this is a branch checkout (== 1) continue...
+
+# For each element, check for a node_modules dir without a corresponding
+# package.json.  That indicates the element does not exist in this branch.
+for e in {packages,projects,tools}/*; do
+  if [[ -d $e/node_modules && !( -f $e/package.json ) ]]; then
+    # Safe to delete this folder
+    rm -rf $e
+  fi
+done
+
+exit 0
