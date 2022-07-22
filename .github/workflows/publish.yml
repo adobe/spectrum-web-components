@@ -1,15 +1,15 @@
 name: Site publish
 
 on:
+    workflow_dispatch:
     check_suite:
         types: [completed]
-    workflow_dispatch:
 jobs:
     site-build:
         name: Build & publish site
         runs-on: ubuntu-latest
         # Run the job if manually triggered or if the commit message includes '#publish' & the check suite has passed
-        if: github.event_name == "workflow_dispatch" || (contains(github.event.head_commit.message, '#publish') && github.event.check_suite.conclusion == "success")
+        if: github.event_name == 'workflow_dispatch' || (contains(github.event.head_commit.message, '#publish') && github.event.check_suite.conclusion == 'success')
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v2
