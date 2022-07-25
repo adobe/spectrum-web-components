@@ -17,6 +17,7 @@ import { Swatch, SwatchGroup } from '../';
 import { Default } from '../stories/swatch-group.stories.js';
 import { spy } from 'sinon';
 import { html } from '@spectrum-web-components/base';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Swatch Group', () => {
     let el: SwatchGroup;
@@ -25,6 +26,9 @@ describe('Swatch Group', () => {
 
         await elementUpdated(el);
     });
+    testForLitDevWarnings(
+        async () => await fixture<SwatchGroup>(Default(Default.args))
+    );
     it('loads default swatch accessibly', async () => {
         await expect(el).to.be.accessible();
     });

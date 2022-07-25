@@ -15,8 +15,19 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import '../sp-thumbnail.js';
 import { Thumbnail } from '..';
 import { thumbnail } from '../stories/images.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Thumbnail', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Thumbnail>(
+                html`
+                    <sp-thumbnail>
+                        <img src=${thumbnail} alt="Woman crouching" />
+                    </sp-thumbnail>
+                `
+            )
+    );
     it('loads default thumbnail accessibly', async () => {
         const el = await fixture<Thumbnail>(
             html`

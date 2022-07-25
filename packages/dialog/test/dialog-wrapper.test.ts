@@ -38,6 +38,7 @@ import {
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { Theme } from '@spectrum-web-components/theme';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -51,6 +52,9 @@ async function styledFixture<T extends Element>(
 }
 
 describe('Dialog Wrapper', () => {
+    testForLitDevWarnings(
+        async () => await styledFixture<DialogWrapper>(wrapperDismissable())
+    );
     it('loads wrapped dialog accessibly', async () => {
         const el = await styledFixture<DialogWrapper>(wrapperDismissable());
 

@@ -15,8 +15,10 @@ import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import '../sp-button-group.js';
 import { ButtonGroup } from '..';
 import { buttons, buttonsVertical } from '../stories/button-group.stories.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Buttongroup', () => {
+    testForLitDevWarnings(async () => await fixture<ButtonGroup>(buttons()));
     it('loads default button-group accessibly with sp-button', async () => {
         const el = await fixture<ButtonGroup>(buttons());
 

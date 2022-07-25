@@ -24,8 +24,17 @@ import '../sp-color-area.js';
 import { ColorArea } from '..';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ColorArea', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<ColorArea>(
+                html`
+                    <sp-color-area></sp-color-area>
+                `
+            )
+    );
     it('loads default color-area accessibly', async () => {
         const el = await fixture<ColorArea>(
             html`

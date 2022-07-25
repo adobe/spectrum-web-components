@@ -25,6 +25,7 @@ import {
     arrowDownEvent,
     arrowUpEvent,
     tabEvent,
+    testForLitDevWarnings,
     tEvent,
 } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
@@ -134,6 +135,19 @@ describe('Menu', () => {
         expect(inTabindexElement).to.be.null;
         await expect(el).to.be.accessible();
     });
+
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Menu>(
+                html`
+                    <sp-menu selects="single">
+                        <sp-menu-item>Not Selected</sp-menu-item>
+                        <sp-menu-item selected>Selected</sp-menu-item>
+                        <sp-menu-item>Other</sp-menu-item>
+                    </sp-menu>
+                `
+            )
+    );
 
     it('renders w/ selected', async () => {
         const el = await fixture<Menu>(

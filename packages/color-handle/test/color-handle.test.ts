@@ -14,8 +14,17 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-color-handle.js';
 import { ColorHandle } from '..';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ColorHandle', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<ColorHandle>(
+                html`
+                    <sp-color-handle></sp-color-handle>
+                `
+            )
+    );
     it('loads default color-handle accessibly', async () => {
         const el = await fixture<ColorHandle>(
             html`

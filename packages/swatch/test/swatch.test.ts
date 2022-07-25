@@ -16,6 +16,7 @@ import { sendKeys } from '@web/test-runner-commands';
 import '../sp-swatch.js';
 import { Swatch } from '../src/Swatch.js';
 import { ElementSize } from '@spectrum-web-components/base';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Swatch', () => {
     let el: Swatch;
@@ -28,6 +29,14 @@ describe('Swatch', () => {
 
         await elementUpdated(el);
     });
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Swatch>(
+                html`
+                    <sp-swatch color="red" label="Red"></sp-swatch>
+                `
+            )
+    );
     it(`loads default swatch accessibly`, async () => {
         await expect(el).to.be.accessible();
     });

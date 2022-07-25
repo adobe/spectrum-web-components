@@ -22,8 +22,17 @@ import {
 } from '@open-wc/testing';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Tooltip', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Tooltip>(
+                html`
+                    <sp-tooltip>Help text.</sp-tooltip>
+                `
+            )
+    );
     it('loads', async () => {
         const el = await fixture<Tooltip>(
             html`

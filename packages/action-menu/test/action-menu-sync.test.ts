@@ -16,7 +16,14 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
-import { elementUpdated, expect, fixture, html, oneEvent } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    oneEvent,
+} from '@open-wc/testing';
+import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
 const deprecatedActionMenuFixture = async (): Promise<ActionMenu> =>
     await fixture<ActionMenu>(
@@ -51,6 +58,7 @@ const actionMenuFixture = async (): Promise<ActionMenu> =>
     );
 
 describe('Action menu', () => {
+    testForLitDevWarnings(async () => await actionMenuFixture());
     it('loads', async () => {
         const el = await actionMenuFixture();
         await elementUpdated(el);

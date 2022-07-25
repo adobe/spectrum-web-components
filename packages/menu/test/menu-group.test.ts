@@ -22,6 +22,7 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 const managedItems = (menu: Menu | MenuGroup): MenuItem[] => {
     return menu.childItems.filter(
@@ -30,6 +31,27 @@ const managedItems = (menu: Menu | MenuGroup): MenuItem[] => {
 };
 
 describe('Menu group', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Menu>(
+                html`
+                    <sp-menu selects="single">
+                        <sp-menu-group selects="inherit">
+                            <span slot="header">Section Heading</span>
+                            <sp-menu-item>Action 1</sp-menu-item>
+                            <sp-menu-item>Action 2</sp-menu-item>
+                            <sp-menu-item>Action 3</sp-menu-item>
+                        </sp-menu-group>
+                        <sp-menu-divider></sp-menu-divider>
+                        <sp-menu-group selects="inherit">
+                            <span slot="header">Section Heading</span>
+                            <sp-menu-item>Save</sp-menu-item>
+                            <sp-menu-item disabled>Download</sp-menu-item>
+                        </sp-menu-group>
+                    </sp-menu>
+                `
+            )
+    );
     it('renders', async () => {
         const el = await fixture<Menu>(
             html`

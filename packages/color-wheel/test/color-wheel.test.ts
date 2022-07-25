@@ -20,6 +20,7 @@ import {
     arrowRightKeyupEvent,
     arrowUpEvent,
     arrowUpKeyupEvent,
+    testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
 import '../sp-color-wheel.js';
@@ -29,6 +30,14 @@ import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 
 describe('ColorWheel', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<ColorWheel>(
+                html`
+                    <sp-color-wheel></sp-color-wheel>
+                `
+            )
+    );
     it('loads default color-wheel accessibly', async () => {
         const el = await fixture<ColorWheel>(
             html`

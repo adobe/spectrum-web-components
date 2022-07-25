@@ -19,7 +19,10 @@ import {
     html,
     waitUntil,
 } from '@open-wc/testing';
-import { shiftTabEvent } from '../../../test/testing-helpers.js';
+import {
+    shiftTabEvent,
+    testForLitDevWarnings,
+} from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 
 type TestableButtonType = {
@@ -27,6 +30,14 @@ type TestableButtonType = {
 };
 
 describe('Button', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Button>(
+                html`
+                    <sp-button tabindex="0">Button</sp-button>
+                `
+            )
+    );
     it('loads default', async () => {
         const el = await fixture<Button>(
             html`

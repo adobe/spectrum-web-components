@@ -11,8 +11,20 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/avatar/sp-avatar.js';
 import { Avatar } from '@spectrum-web-components/avatar';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
 describe('Avatar', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Avatar>(
+                html`
+                    <sp-avatar
+                        label="Shantanu Narayen"
+                        src="https://place.dog/500/500"
+                    ></sp-avatar>
+                `
+            )
+    );
     it('loads accessibly', async () => {
         const el = await fixture<Avatar>(
             html`

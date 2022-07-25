@@ -21,8 +21,10 @@ import {
     small,
 } from '../stories/dialog.stories.js';
 import { spy } from 'sinon';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Dialog', () => {
+    testForLitDevWarnings(async () => await fixture<Dialog>(small()));
     it('loads `[size=small]` dialog accessibly', async () => {
         const el = await fixture<Dialog>(small());
 

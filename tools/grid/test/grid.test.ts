@@ -18,8 +18,17 @@ import '../sp-grid.js';
 import { Grid } from '..';
 import { Default } from '../stories/grid.stories.js';
 import { sendKeys } from '@web/test-runner-commands';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Grid', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<HTMLDivElement>(
+                html`
+                    <div>${Default()}</div>
+                `
+            )
+    );
     it('loads default grid accessibly', async () => {
         const test = await fixture<HTMLDivElement>(
             html`

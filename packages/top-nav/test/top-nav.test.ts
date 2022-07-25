@@ -15,8 +15,10 @@ import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { TopNav, TopNavItem } from '..';
 import { Default, Selected } from '../stories/top-nav.stories.js';
 import { spy } from 'sinon';
+import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
 describe('TopNav', () => {
+    testForLitDevWarnings(async () => await fixture<TopNav>(Default()));
     it('loads default top-nav accessibly', async () => {
         const el = await fixture<TopNav>(Default());
 

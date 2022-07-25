@@ -14,8 +14,17 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-quick-actions.js';
 import { QuickActions } from '..';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('QuickActions', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<QuickActions>(
+                html`
+                    <sp-quick-actions></sp-quick-actions>
+                `
+            )
+    );
     it('loads default quick-actions accessibly', async () => {
         const el = await fixture<QuickActions>(
             html`

@@ -21,6 +21,7 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/shared/src/focus-visible.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
@@ -74,6 +75,14 @@ describe('Checkbox', () => {
         const content = (textNode.textContent || '').trim();
         expect(content).to.equal('Component');
     });
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Checkbox>(
+                html`
+                    <sp-checkbox>Not Checked</sp-checkbox>
+                `
+            )
+    );
 
     it('loads default checkbox accessibly', async () => {
         const el = await fixture<Checkbox>(

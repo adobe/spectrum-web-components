@@ -13,8 +13,17 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/button/sp-close-button.js';
 import { CloseButton } from '@spectrum-web-components/button';
 import { expect, fixture, html } from '@open-wc/testing';
+import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
 describe('Close Button', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<CloseButton>(
+                html`
+                    <sp-close-button size="m" label="Close"></sp-close-button>
+                `
+            )
+    );
     (
         ['s', 'm', 'l', 'xl'] as (
             | 'xxs'

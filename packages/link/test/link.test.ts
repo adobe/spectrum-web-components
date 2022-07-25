@@ -13,8 +13,17 @@ governing permissions and limitations under the License.
 import '../sp-link.js';
 import { Link } from '../';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Link', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Link>(
+                html`
+                    <sp-link href="test_url">Default Link</sp-link>
+                `
+            )
+    );
     it('loads', async () => {
         const el = await fixture<Link>(
             html`
