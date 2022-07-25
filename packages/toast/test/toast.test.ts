@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-toast.js';
-import { Toast, toastVariants } from '../';
+import '@spectrum-web-components/toast/sp-toast.js';
+import { Toast, toastVariants } from '@spectrum-web-components/toast';
 import {
     elementUpdated,
     expect,

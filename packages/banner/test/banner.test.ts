@@ -8,8 +8,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../sp-banner.js';
-import { Banner } from '../';
+import '@spectrum-web-components/banner/sp-banner.js';
+import { Banner } from '@spectrum-web-components/banner';
 import { expect, fixture, html } from '@open-wc/testing';
 
 describe('banner', () => {

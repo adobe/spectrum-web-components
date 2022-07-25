@@ -9,9 +9,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../sp-tabs.js';
-import '../sp-tab.js';
-import { Tab, Tabs } from '../';
+import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/tabs/sp-tab.js';
+import { Tab, Tabs } from '@spectrum-web-components/tabs';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';

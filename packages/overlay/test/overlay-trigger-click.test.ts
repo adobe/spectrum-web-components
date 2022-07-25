@@ -20,7 +20,7 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import { OverlayTrigger } from '..';
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { spy } from 'sinon';
 import { ActionButton } from '@spectrum-web-components/action-button';

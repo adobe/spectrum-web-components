@@ -15,7 +15,7 @@ import '@spectrum-web-components/icons/sp-icons-medium.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import { IconsMedium } from '@spectrum-web-components/icons';
 import { Icon } from '@spectrum-web-components/icon';
-import { IconsetRegistry } from '../src/iconset-registry.js';
+import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('Iconset', () => {

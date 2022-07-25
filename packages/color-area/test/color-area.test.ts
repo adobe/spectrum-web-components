@@ -20,8 +20,8 @@ import {
 } from '@open-wc/testing';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 
-import '../sp-color-area.js';
-import { ColorArea } from '..';
+import '@spectrum-web-components/color-area/sp-color-area.js';
+import { ColorArea } from '@spectrum-web-components/color-area';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';

@@ -19,8 +19,8 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 
-import '../sp-tray.js';
-import { Tray } from '..';
+import '@spectrum-web-components/tray/sp-tray.js';
+import { Tray } from '@spectrum-web-components/tray';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';

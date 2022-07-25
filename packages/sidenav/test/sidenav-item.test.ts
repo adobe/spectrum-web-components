@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-sidenav.js';
-import '../sp-sidenav-item.js';
-import { SideNavItem } from '../';
+import '@spectrum-web-components/sidenav/sp-sidenav.js';
+import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
+import { SideNavItem } from '@spectrum-web-components/sidenav';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('Sidenav Item', () => {

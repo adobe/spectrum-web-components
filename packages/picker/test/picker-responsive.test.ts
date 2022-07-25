@@ -10,9 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sync/sp-picker.js';
+import '@spectrum-web-components/picker/sync/sp-picker.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import { Picker } from '..';
+import { Picker } from '@spectrum-web-components/picker';
 import {
     elementUpdated,
     expect,

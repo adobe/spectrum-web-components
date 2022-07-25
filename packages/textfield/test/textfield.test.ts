@@ -16,7 +16,7 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import { HelpText } from '@spectrum-web-components/help-text';
 import '@spectrum-web-components/help-text/sp-help-text.js';
-import '../sp-textfield.js';
+import '@spectrum-web-components/textfield/sp-textfield.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Textfield', () => {

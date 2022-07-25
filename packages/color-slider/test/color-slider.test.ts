@@ -23,8 +23,8 @@ import {
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
-import '../sp-color-slider.js';
-import { ColorSlider } from '../';
+import '@spectrum-web-components/color-slider/sp-color-slider.js';
+import { ColorSlider } from '@spectrum-web-components/color-slider';
 import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';

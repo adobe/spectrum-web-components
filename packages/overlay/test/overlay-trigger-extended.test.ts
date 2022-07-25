@@ -19,8 +19,11 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 
-import '../overlay-trigger.js';
-import { ActiveOverlay, OverlayTrigger } from '../';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import {
+    ActiveOverlay,
+    OverlayTrigger,
+} from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';

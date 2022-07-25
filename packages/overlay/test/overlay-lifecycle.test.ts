@@ -19,7 +19,7 @@ import {
 } from '@open-wc/testing';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import { OverlayTrigger } from '..';
+import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 import { Tooltip } from '@spectrum-web-components/tooltip';

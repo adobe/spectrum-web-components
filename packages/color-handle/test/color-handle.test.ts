@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-color-handle.js';
-import { ColorHandle } from '..';
+import '@spectrum-web-components/color-handle/sp-color-handle.js';
+import { ColorHandle } from '@spectrum-web-components/color-handle';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ColorHandle', () => {

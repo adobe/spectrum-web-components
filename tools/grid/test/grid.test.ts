@@ -14,8 +14,8 @@ import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 import { html } from '@spectrum-web-components/base';
 import { Card } from '@spectrum-web-components/card';
 
-import '../sp-grid.js';
-import { Grid } from '..';
+import '@spectrum-web-components/grid/sp-grid.js';
+import { Grid } from '@spectrum-web-components/grid';
 import { Default } from '../stories/grid.stories.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';

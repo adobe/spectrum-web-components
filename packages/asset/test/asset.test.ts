@@ -12,8 +12,7 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
-import '..';
-import { Asset } from '..';
+import { Asset } from '@spectrum-web-components/asset';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
 import { Default, File, Folder } from '../stories/asset.stories.js';
 

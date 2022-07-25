@@ -14,9 +14,9 @@ import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
 import { spy } from 'sinon';
 
-import '../sp-tag.js';
-import '../sp-tags.js';
-import { Tag } from '..';
+import '@spectrum-web-components/tags/sp-tag.js';
+import '@spectrum-web-components/tags/sp-tags.js';
+import { Tag } from '@spectrum-web-components/tags';
 import { ClearButton } from '@spectrum-web-components/button';
 import {
     backspaceEvent,

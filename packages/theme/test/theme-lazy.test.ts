@@ -10,15 +10,15 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-theme.js';
-import { Theme, ThemeFragmentMap } from '../';
-import coreStyles from '../src/theme.css.js';
-import lightStyles from '../src/theme-light.css.js';
-import lightestStyles from '../src/theme-lightest.css.js';
-import darkStyles from '../src/theme-dark.css.js';
-import darkestStyles from '../src/theme-darkest.css.js';
-import largeStyles from '../src/scale-large.css.js';
-import mediumStyles from '../src/scale-medium.css.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+import { Theme, ThemeFragmentMap } from '@spectrum-web-components/theme';
+import coreStyles from '@spectrum-web-components/theme/src/theme.css.js';
+import lightStyles from '@spectrum-web-components/theme/src/theme-light.css.js';
+import lightestStyles from '@spectrum-web-components/theme/src/theme-lightest.css.js';
+import darkStyles from '@spectrum-web-components/theme/src/theme-dark.css.js';
+import darkestStyles from '@spectrum-web-components/theme/src/theme-darkest.css.js';
+import largeStyles from '@spectrum-web-components/theme/src/scale-large.css.js';
+import mediumStyles from '@spectrum-web-components/theme/src/scale-medium.css.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 type TestableThemeConstructor = {

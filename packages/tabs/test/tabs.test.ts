@@ -9,10 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../sp-tabs.js';
-import '../sp-tab.js';
-import '../sp-tab-panel.js';
-import { Tab, TabPanel, Tabs } from '../';
+import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/tabs/sp-tab.js';
+import '@spectrum-web-components/tabs/sp-tab-panel.js';
+import { Tab, TabPanel, Tabs } from '@spectrum-web-components/tabs';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import {
     elementUpdated,

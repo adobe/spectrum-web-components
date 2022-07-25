@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
-import { TopNav, TopNavItem } from '..';
+import { TopNav, TopNavItem } from '@spectrum-web-components/top-nav';
 import { Default, Selected } from '../stories/top-nav.stories.js';
 import { spy } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';

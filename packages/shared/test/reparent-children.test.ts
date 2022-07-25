@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { expect, fixture, html } from '@open-wc/testing';
-import { reparentChildren } from '../src/reparent-children.js';
+import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-children.js';
 
 describe('Reparent Children', () => {
     it('reparents and returns a single child', async () => {

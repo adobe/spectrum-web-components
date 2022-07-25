@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-color-loupe.js';
-import { ColorLoupe } from '..';
+import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
+import { ColorLoupe } from '@spectrum-web-components/color-loupe';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ColorLoupe', () => {

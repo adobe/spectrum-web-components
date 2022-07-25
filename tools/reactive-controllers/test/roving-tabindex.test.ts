@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { LitElement } from 'lit';
 import { expect } from '@open-wc/testing';
-import { RovingTabindexController } from '../src';
+import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 describe('RovingTabindex', () => {
     it('constructs with defaults', async () => {

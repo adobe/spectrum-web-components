@@ -15,8 +15,8 @@ import { elementUpdated, expect } from '@open-wc/testing';
 import { createLanguageContext, getElFrom } from './helpers.js';
 import polyfillCheck from '@formatjs/intl-numberformat/should-polyfill.js';
 
-import '../sp-number-field.js';
-import { remapMultiByteCharacters } from '../';
+import '@spectrum-web-components/number-field/sp-number-field.js';
+import { remapMultiByteCharacters } from '@spectrum-web-components/number-field';
 import {
     currency,
     decimals,

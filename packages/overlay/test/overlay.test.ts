@@ -15,7 +15,12 @@ import { Dialog } from '@spectrum-web-components/dialog';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { setViewport } from '@web/test-runner-commands';
-import { ActiveOverlay, Overlay, OverlayTrigger, Placement } from '../';
+import {
+    ActiveOverlay,
+    Overlay,
+    OverlayTrigger,
+    Placement,
+} from '@spectrum-web-components/overlay';
 
 import { isVisible, waitForPredicate } from '../../../test/testing-helpers.js';
 import {

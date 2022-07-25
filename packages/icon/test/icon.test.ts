@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-icon.js';
-import { Icon } from '../';
+import '@spectrum-web-components/icon/sp-icon.js';
+import { Icon } from '@spectrum-web-components/icon';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';

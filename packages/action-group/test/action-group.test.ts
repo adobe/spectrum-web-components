@@ -23,7 +23,7 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import { LitElement, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
-import { ActionGroup } from '..';
+import { ActionGroup } from '@spectrum-web-components/action-group';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -34,7 +34,7 @@ import {
     testForLitDevWarnings,
 } from '../../../test/testing-helpers';
 import { sendKeys } from '@web/test-runner-commands';
-import '../sp-action-group.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
 
 class QuietActionGroup extends LitElement {
     protected override render(): TemplateResult {
