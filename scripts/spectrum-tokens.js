@@ -29,7 +29,7 @@ const tokensRoot = path.join(
     '*.css'
 );
 
-const tokenPackages = ['actionbutton'];
+const tokenPackages = ['actionbutton', 'helptext'];
 
 const packagePaths = tokenPackages.map((packageName) => {
     return path.join(

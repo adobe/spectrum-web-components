@@ -307,15 +307,6 @@ governing permissions and limitations under the License.
     --spectrum-dialog-confirm-padding: var(
         --spectrum-global-dimension-static-size-300
     );
-    --spectrum-helptext-s-neutral-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-85
-    );
-    --spectrum-helptext-m-neutral-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-85
-    );
-    --spectrum-helptext-xl-neutral-textonly-text-padding-top: var(
-        --spectrum-global-dimension-static-size-150
-    );
     --spectrum-listitem-m-texticon-padding-left: var(
         --spectrum-global-dimension-static-size-150
     );
