@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-tag.js';
-import '../sp-tags.js';
+import '@spectrum-web-components/tags/sp-tag.js';
+import '@spectrum-web-components/tags/sp-tags.js';
 import '@spectrum-web-components/avatar/sp-avatar.js';
 import { avatar } from '../../avatar/stories/images';
 import '@spectrum-web-components/icon/sp-icon.js';

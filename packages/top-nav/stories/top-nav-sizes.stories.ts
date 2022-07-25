@@ -14,8 +14,8 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-down.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
-import '../sp-top-nav.js';
-import '../sp-top-nav-item.js';
+import '@spectrum-web-components/top-nav/sp-top-nav.js';
+import '@spectrum-web-components/top-nav/sp-top-nav-item.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 export default {

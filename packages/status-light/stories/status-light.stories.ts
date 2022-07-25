@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-status-light.js';
+import '@spectrum-web-components/status-light/sp-status-light.js';
 
 export default {
     component: 'sp-status-light',
@@ -83,11 +83,7 @@ export const XL = (): TemplateResult => html`
 `;
 
 export const disabledTrue = (): TemplateResult => html`
-    <sp-status-light variant="positive" disabled>
-        positive
-    </sp-status-light>
+    <sp-status-light variant="positive" disabled>positive</sp-status-light>
 `;
 
-disabledTrue.story = {
-    name: 'disabled: true',
-};
+disabledTrue.storyName = 'disabled: true';

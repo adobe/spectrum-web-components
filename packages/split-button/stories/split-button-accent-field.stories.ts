@@ -14,9 +14,9 @@ import { ElementSizes, TemplateResult } from '@spectrum-web-components/base';
 import { args, argTypes, renderSplitButtonSet, splitbutton } from './index.js';
 import type { Properties } from './index.js';
 
-import '../sp-split-button.js';
+import '@spectrum-web-components/split-button/sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
-import { SplitButtonTypes } from '../src/SplitButton.js';
+import { SplitButtonTypes } from '@spectrum-web-components/split-button/src/SplitButton.js';
 import { ButtonVariants } from '@spectrum-web-components/button';
 
 const variant = 'accent' as ButtonVariants;

@@ -16,7 +16,7 @@ import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
-import '../sp-tray.js';
+import '@spectrum-web-components/tray/sp-tray.js';
 
 export default {
     title: 'Tray',

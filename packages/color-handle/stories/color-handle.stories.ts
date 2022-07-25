@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-color-handle.js';
+import '@spectrum-web-components/color-handle/sp-color-handle.js';
 
 export default {
     title: 'Color/Handle',

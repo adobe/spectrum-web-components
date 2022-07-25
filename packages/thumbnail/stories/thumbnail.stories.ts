@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-thumbnail.js';
+import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 import {
     landscape as landscapeImage,
     portrait as portraitImage,

@@ -16,7 +16,7 @@ import type { Properties } from './index.js';
 import { openSplitButtonDecorator } from './helpers.js';
 import './helpers.js';
 
-import '../sp-split-button.js';
+import '@spectrum-web-components/split-button/sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 
 const variant = 'secondary';

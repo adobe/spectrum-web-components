@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-checkbox.js';
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
 
 export default {
     component: 'sp-checkbox',

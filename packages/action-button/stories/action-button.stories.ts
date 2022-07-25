@@ -15,8 +15,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import type { Properties } from './index.js';
 import { renderButton } from './index.js';
 
-import '../src';
-import '../sp-action-button.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 
 export default {
     component: 'sp-action-button',

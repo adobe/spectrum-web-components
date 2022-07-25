@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-avatar.js';
-import { AvatarSize } from '..';
+import '@spectrum-web-components/avatar/sp-avatar.js';
+import { AvatarSize } from '@spectrum-web-components/avatar';
 import { avatar } from './images';
 
 export default {

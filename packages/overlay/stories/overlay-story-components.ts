@@ -21,7 +21,11 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 
-import { Overlay, OverlayTrigger, Placement } from '../';
+import {
+    Overlay,
+    OverlayTrigger,
+    Placement,
+} from '@spectrum-web-components/overlay';
 import { RadioGroup } from '@spectrum-web-components/radio';
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
