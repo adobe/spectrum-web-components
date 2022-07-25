@@ -14,7 +14,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/picker/sp-picker.js';
 
-import '../sp-field-label.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 
 export default {
     title: 'Field Label',

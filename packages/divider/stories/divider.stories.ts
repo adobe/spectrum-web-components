@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-divider.js';
+import '@spectrum-web-components/divider/sp-divider.js';
 import './typography-decorator.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icon/sp-icon.js';

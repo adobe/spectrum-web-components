@@ -14,9 +14,9 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-close.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-down.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-help.js';
-import '../sp-tabs.js';
-import '../sp-tab.js';
-import '../sp-tab-panel.js';
+import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/tabs/sp-tab.js';
+import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 export default {
@@ -369,9 +369,7 @@ export const iconsIi = (args: Properties): TemplateResult => {
 iconsIi.args = {
     direction: 'vertical',
 };
-iconsIi.story = {
-    name: 'Icons II',
-};
+iconsIi.storyName = 'Icons II';
 
 export const iconsIii = (args: Properties): TemplateResult => {
     return html`
@@ -400,9 +398,7 @@ export const iconsIii = (args: Properties): TemplateResult => {
 iconsIii.args = {
     direction: 'vertical',
 };
-iconsIii.story = {
-    name: 'Icons III',
-};
+iconsIii.storyName = 'Icons III';
 
 export const Quiet = ({ direction, auto }: Properties): TemplateResult => {
     return html`
@@ -449,6 +445,4 @@ export const quietCompact = ({
     `;
 };
 
-quietCompact.story = {
-    name: 'Quiet Compact',
-};
+quietCompact.storyName = 'Quiet Compact';

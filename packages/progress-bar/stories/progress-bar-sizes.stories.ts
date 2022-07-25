@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-progress-bar.js';
+import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
 
 export default {
     title: 'Progress Bar/Sizes',

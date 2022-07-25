@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-link.js';
+import '@spectrum-web-components/link/sp-link.js';
 
 export default {
     component: 'sp-link',
@@ -87,6 +87,4 @@ export const Download = (): TemplateResult => {
     `;
 };
 
-overBackground.story = {
-    name: 'Over Background',
-};
+overBackground.storyName = 'Over Background';

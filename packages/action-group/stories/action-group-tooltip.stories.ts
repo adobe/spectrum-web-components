@@ -13,14 +13,14 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
-import '../sp-action-group.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-properties.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-view-all-tags.js';
-import { ActionGroup } from '../src/ActionGroup.js';
+import { ActionGroup } from '@spectrum-web-components/action-group/src/ActionGroup.js';
 
 export default {
     title: 'Action Group/Tooltips',

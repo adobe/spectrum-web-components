@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-accordion.js';
-import '../sp-accordion-item.js';
+import '@spectrum-web-components/accordion/sp-accordion.js';
+import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '@spectrum-web-components/link/sp-link.js';
 
 export default {

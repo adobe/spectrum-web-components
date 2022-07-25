@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-dropzone.js';
+import '@spectrum-web-components/dropzone/sp-dropzone.js';
 import { illustration } from '../test/test-svg';
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 import '@spectrum-web-components/link/sp-link.js';

@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-color-loupe.js';
+import '@spectrum-web-components/color-loupe/sp-color-loupe.js';
 
 export default {
     title: 'Color/Loupe',

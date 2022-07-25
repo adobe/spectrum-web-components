@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import { spreadProps } from '../../../test/lit-helpers.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-banner.js';
+import '@spectrum-web-components/banner/sp-banner.js';
 
 export default {
     component: 'sp-banner',

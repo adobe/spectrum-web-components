@@ -16,8 +16,7 @@ import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 
-import '../src';
-import '../sp-action-button.js';
+import '@spectrum-web-components/action-button/sp-action-button.js';
 
 export interface Properties {
     active?: boolean;

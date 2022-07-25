@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-icon.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 import { back } from './images';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import '@spectrum-web-components/icons/sp-icons-large.js';
@@ -55,9 +55,7 @@ export const imageIcon = (): TemplateResult => {
     `;
 };
 
-imageIcon.story = {
-    name: 'Image Icon',
-};
+imageIcon.storyName = 'Image Icon';
 
 export const svgIcon = (): TemplateResult => {
     return html`
@@ -82,6 +80,4 @@ export const svgIcon = (): TemplateResult => {
     `;
 };
 
-svgIcon.story = {
-    name: 'SVG Icon',
-};
+svgIcon.storyName = 'SVG Icon';

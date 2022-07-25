@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-grid.js';
+import '@spectrum-web-components/grid/sp-grid.js';
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import '@spectrum-web-components/card/sp-card.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
@@ -21,7 +21,7 @@ import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import type { ActionBar } from '@spectrum-web-components/action-bar';
-import type { Grid } from '..';
+import type { Grid } from '@spectrum-web-components/grid';
 
 export default {
     title: 'Grid',

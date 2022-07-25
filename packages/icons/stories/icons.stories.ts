@@ -9,8 +9,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../sp-icons-large.js';
-import '../sp-icons-medium.js';
+import '@spectrum-web-components/icons/sp-icons-large.js';
+import '@spectrum-web-components/icons/sp-icons-medium.js';
 import '../../iconset/stories/icons-demo.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
@@ -34,9 +34,7 @@ export const listMedium = ({ color }: Properties): TemplateResult => html`
     </icons-demo>
 `;
 
-listMedium.story = {
-    name: 'UI Icons - Medium',
-};
+listMedium.storyName = 'UI Icons - Medium';
 
 export const listLarge = ({ color }: Properties): TemplateResult => html`
     <icons-demo style="color: ${color}">
@@ -44,6 +42,4 @@ export const listLarge = ({ color }: Properties): TemplateResult => html`
     </icons-demo>
 `;
 
-listLarge.story = {
-    name: 'UI Icons - Large',
-};
+listLarge.storyName = 'UI Icons - Large';

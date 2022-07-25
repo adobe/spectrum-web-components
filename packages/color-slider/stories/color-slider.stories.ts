@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-color-slider.js';
+import '@spectrum-web-components/color-slider/sp-color-slider.js';
 import { gradient } from './images.js';
 export default {
     title: 'Color/Slider',

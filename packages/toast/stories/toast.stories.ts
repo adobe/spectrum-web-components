@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-toast.js';
+import '@spectrum-web-components/toast/sp-toast.js';
 import '@spectrum-web-components/button/sp-button.js';
 
 const toast = ({

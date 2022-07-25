@@ -50,19 +50,13 @@ export const iconSizeOverridden = (): TemplateResult =>
 export const minWidthButton = (props: Properties): TemplateResult =>
     renderMinWidthButton(props);
 
-minWidthButton.story = {
-    name: 'min-width',
-};
+minWidthButton.storyName = 'min-width';
 
 export const link = (props: Properties): TemplateResult => renderLink(props);
 
-link.story = {
-    name: 'href',
-};
+link.storyName = 'href';
 
 export const linkWithTarget = (props: Properties): TemplateResult =>
     renderLinkWithTarget(props);
 
-linkWithTarget.story = {
-    name: 'href with target="_blank"',
-};
+linkWithTarget.storyName = 'href with target="_blank"';

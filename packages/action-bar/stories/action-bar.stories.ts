@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-action-bar.js';
+import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';

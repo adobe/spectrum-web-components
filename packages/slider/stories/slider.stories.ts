@@ -11,9 +11,13 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-slider.js';
-import '../sp-slider-handle.js';
-import { Slider, SliderHandle, variants } from '../';
+import '@spectrum-web-components/slider/sp-slider.js';
+import '@spectrum-web-components/slider/sp-slider-handle.js';
+import {
+    Slider,
+    SliderHandle,
+    variants,
+} from '@spectrum-web-components/slider';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {

@@ -11,8 +11,8 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-radio.js';
-import '../sp-radio-group.js';
+import '@spectrum-web-components/radio/sp-radio.js';
+import '@spectrum-web-components/radio/sp-radio-group.js';
 import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
@@ -127,9 +127,7 @@ export const labelBelow = (args: StoryArgs): TemplateResult => {
         <sp-radio label-below ${spreadProps(args)}>Radio</sp-radio>
     `;
 };
-labelBelow.story = {
-    name: 'Label below',
-};
+labelBelow.storyName = 'Label below';
 
 const values = {
     first: 1,
@@ -199,6 +197,4 @@ export const horizontalTabIndexExample = (): TemplateResult => {
     `;
 };
 
-tabIndexExample.story = {
-    name: 'Tab index example',
-};
+tabIndexExample.storyName = 'Tab index example';

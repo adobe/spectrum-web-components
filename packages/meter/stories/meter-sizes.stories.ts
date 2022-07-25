@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-meter.js';
+import '@spectrum-web-components/meter/sp-meter.js';
 
 export default {
     title: 'Meter/Sizes',

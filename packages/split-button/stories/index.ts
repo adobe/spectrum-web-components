@@ -13,10 +13,10 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import type { ElementSize } from '@spectrum-web-components/base';
 
-import '../sp-split-button.js';
+import '@spectrum-web-components/split-button/sp-split-button.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import type { ButtonVariants } from '@spectrum-web-components/button';
-import type { SplitButtonTypes } from '../src/SplitButton.js';
+import type { SplitButtonTypes } from '@spectrum-web-components/split-button/src/SplitButton.js';
 
 export interface SplitButtonMenuOptions {
     firstItemHandler?: (event?: Event) => void;

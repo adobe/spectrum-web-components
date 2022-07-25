@@ -19,7 +19,7 @@ import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 
-import '../sp-dialog-wrapper.js';
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { landscape } from './images.js';
 
 export default {

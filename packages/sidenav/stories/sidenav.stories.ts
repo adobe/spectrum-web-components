@@ -11,9 +11,9 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-sidenav.js';
-import '../sp-sidenav-item.js';
-import '../sp-sidenav-heading.js';
+import '@spectrum-web-components/sidenav/sp-sidenav.js';
+import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
+import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
 
 export default {
     component: 'sp-sidenav',
@@ -82,9 +82,7 @@ export const Multilevel = ({
     `;
 };
 
-Multilevel.story = {
-    name: 'Multi-level',
-};
+Multilevel.storyName = 'Multi-level';
 
 export const levelsAndDisabled = (): TemplateResult => {
     return html`

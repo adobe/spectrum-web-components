@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-picker.js';
-import { Picker } from '../';
+import '@spectrum-web-components/picker/sp-picker.js';
+import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';

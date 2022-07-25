@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-color-wheel.js';
+import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
 
 export default {
     title: 'Color/Wheel',

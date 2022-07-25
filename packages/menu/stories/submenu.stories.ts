@@ -21,7 +21,7 @@ import type { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
 import type { ActionMenu } from '@spectrum-web-components/action-menu';
-import type { Menu, MenuItem } from '..';
+import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 
 export default {
     component: 'sp-menu',

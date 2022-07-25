@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-coachmark.js';
+import '@spectrum-web-components/coachmark/sp-coachmark.js';
 
 export default {
     title: 'Coachmark',

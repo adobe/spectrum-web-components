@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import { SplitButton } from '..';
+import { SplitButton } from '@spectrum-web-components/split-button';
 
 function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));

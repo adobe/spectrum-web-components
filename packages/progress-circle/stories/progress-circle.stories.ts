@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
-import '../sp-progress-circle.js';
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 
 export default {
     title: 'Progress Circle',
@@ -94,6 +94,4 @@ overBackground.args = {
     indeterminate: false,
 };
 
-overBackground.story = {
-    name: 'Over background',
-};
+overBackground.storyName = 'Over background';
