@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-accordion.js';
+import '@spectrum-web-components/accordion/sp-accordion.js';
 import { Default } from '../stories/accordion.stories.js';
 import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
 import { sendKeys } from '@web/test-runner-commands';

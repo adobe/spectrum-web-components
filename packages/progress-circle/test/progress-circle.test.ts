@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-progress-circle.js';
-import { ProgressCircle } from '..';
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+import { ProgressCircle } from '@spectrum-web-components/progress-circle';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ProgressCircle', () => {
@@ -48,7 +48,10 @@ describe('ProgressCircle', () => {
     });
     it('accepts user `role`', async () => {
         const el = await fixture<ProgressCircle>(html`
-            <sp-progress-circle role="progressbar"></sp-progress-circle>
+            <sp-progress-circle
+                role="progressbar"
+                label="With user role"
+            ></sp-progress-circle>
         `);
 
         await elementUpdated(el);
@@ -57,7 +60,10 @@ describe('ProgressCircle', () => {
     });
     it('returns to indeterminate', async () => {
         const el = await fixture<ProgressCircle>(html`
-            <sp-progress-circle progress="50"></sp-progress-circle>
+            <sp-progress-circle
+                progress="50"
+                label="Will be indeterminate"
+            ></sp-progress-circle>
         `);
 
         await elementUpdated(el);

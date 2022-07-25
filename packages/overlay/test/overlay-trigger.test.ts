@@ -21,14 +21,18 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 
-import '../overlay-trigger.js';
-import { ActiveOverlay, OverlayTrigger, TriggerInteractions } from '../';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
+import {
+    ActiveOverlay,
+    OverlayTrigger,
+    TriggerInteractions,
+} from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/theme/sp-theme.js';
-import { Theme } from '@spectrum-web-components/theme/src/Theme.js';
+import { Theme } from '@spectrum-web-components/theme';
 
 function pressKey(code: string): void {
     const up = new KeyboardEvent('keyup', {

@@ -8,7 +8,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { SpectrumElement } from '../';
+import { SpectrumElement } from '@spectrum-web-components/base';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 class DirElement extends SpectrumElement {}

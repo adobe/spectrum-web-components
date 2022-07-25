@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-picker.js';
+import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
-import { Picker } from '../';
+import { Picker } from '@spectrum-web-components/picker';
 import { MenuItem } from '@spectrum-web-components/menu';
 import {
     elementUpdated,

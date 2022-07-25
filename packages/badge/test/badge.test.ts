@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-badge.js';
-import '../../icons-workflow/icons/sp-icon-checkmark-circle.js';
+import '@spectrum-web-components/badge/sp-badge.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
 import { Badge } from '../src/Badge.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 

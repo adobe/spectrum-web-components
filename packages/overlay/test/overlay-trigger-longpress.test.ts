@@ -24,11 +24,13 @@ import '@spectrum-web-components/action-group/sp-action-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
-import { LONGPRESS_INSTRUCTIONS, OverlayTrigger } from '..';
+import {
+    LONGPRESS_INSTRUCTIONS,
+    OverlayTrigger,
+} from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import '@spectrum-web-components/base';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 

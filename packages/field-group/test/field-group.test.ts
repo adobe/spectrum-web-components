@@ -13,10 +13,10 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import { HelpText } from '@spectrum-web-components/help-text';
-import { FieldGroup } from '..';
+import { FieldGroup } from '@spectrum-web-components/field-group';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
-import '../sp-field-group.js';
+import '@spectrum-web-components/field-group/sp-field-group.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('FieldGroup', () => {

@@ -10,10 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-sidenav.js';
-import '../sp-sidenav-item.js';
-import '../sp-sidenav-heading.js';
-import { SideNav, SideNavItem } from '../';
+import '@spectrum-web-components/sidenav/sp-sidenav.js';
+import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
+import '@spectrum-web-components/sidenav/sp-sidenav-heading.js';
+import { SideNav, SideNavItem } from '@spectrum-web-components/sidenav';
 import { manageTabIndex } from '../stories/sidenav.stories.js';
 import {
     arrowDownEvent,

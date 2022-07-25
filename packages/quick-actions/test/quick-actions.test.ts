@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-quick-actions.js';
-import { QuickActions } from '..';
+import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
+import { QuickActions } from '@spectrum-web-components/quick-actions';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('QuickActions', () => {

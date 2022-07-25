@@ -21,8 +21,8 @@ import { spy } from 'sinon';
 
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import '../sp-dialog-wrapper.js';
-import { Dialog, DialogWrapper } from '../';
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
+import { Dialog, DialogWrapper } from '@spectrum-web-components/dialog';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import { Button } from '@spectrum-web-components/button';
 import { Underlay } from '@spectrum-web-components/underlay';

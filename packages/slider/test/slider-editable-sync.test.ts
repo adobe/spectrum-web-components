@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sync/sp-slider.js';
-import { Slider } from '../';
+import '@spectrum-web-components/slider/sync/sp-slider.js';
+import { Slider } from '@spectrum-web-components/slider';
 import { editable, hideStepper } from '../stories/slider.stories.js';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { TemplateResult } from '@spectrum-web-components/base';

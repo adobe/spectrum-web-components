@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../sp-illustrated-message.js';
+import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 import { IllustratedMessage } from '../';
 import { expect, fixture, html } from '@open-wc/testing';
 

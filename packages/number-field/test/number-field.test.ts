@@ -23,8 +23,12 @@ import {
     pixels,
     units,
 } from '../stories/number-field.stories.js';
-import '../sp-number-field.js';
-import { FRAMES_PER_CHANGE, indeterminatePlaceholder, NumberField } from '..';
+import '@spectrum-web-components/number-field/sp-number-field.js';
+import {
+    FRAMES_PER_CHANGE,
+    indeterminatePlaceholder,
+    NumberField,
+} from '@spectrum-web-components/number-field';
 import { sendKeys, setUserAgent } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import {

@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-radio.js';
-import { Radio } from '../';
+import '@spectrum-web-components/radio/sp-radio.js';
+import { Radio } from '@spectrum-web-components/radio';
 import {
     elementUpdated,
     expect,

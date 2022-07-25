@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
-import '../sp-dialog.js';
-import { Dialog } from '..';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+import { Dialog } from '@spectrum-web-components/dialog';
 import {
     alertError,
     dismissable,

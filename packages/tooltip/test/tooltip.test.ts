@@ -10,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-tooltip.js';
-import { Tooltip } from '../';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import { Tooltip } from '@spectrum-web-components/tooltip';
 import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';
 import {
     elementUpdated,

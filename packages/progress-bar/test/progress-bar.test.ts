@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-progress-bar.js';
-import { ProgressBar } from '..';
+import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
+import { ProgressBar } from '@spectrum-web-components/progress-bar';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ProgressBar', () => {
@@ -74,7 +74,10 @@ describe('ProgressBar', () => {
     });
     it('accepts user `role`', async () => {
         const el = await fixture<ProgressBar>(html`
-            <sp-progress-bar role="progressbar"></sp-progress-bar>
+            <sp-progress-bar
+                role="progressbar"
+                label="With user role"
+            ></sp-progress-bar>
         `);
 
         await elementUpdated(el);

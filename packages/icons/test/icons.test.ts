@@ -8,8 +8,8 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../sp-icons-large.js';
-import '../sp-icons-medium.js';
+import '@spectrum-web-components/icons/sp-icons-large.js';
+import '@spectrum-web-components/icons/sp-icons-medium.js';
 import { IconsLarge, IconsMedium } from '../';
 import IconsetSVG from '../src/icons-large.svg.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';

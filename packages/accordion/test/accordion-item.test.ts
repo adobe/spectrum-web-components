@@ -13,8 +13,8 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { spy } from 'sinon';
 
-import '../sp-accordion-item.js';
-import { AccordionItem } from '../src/AccordionItem';
+import '@spectrum-web-components/accordion/sp-accordion-item.js';
+import { AccordionItem } from '@spectrum-web-components/accordion/src/AccordionItem.js';
 import { sendKeys } from '@web/test-runner-commands';
 
 describe('Accordion Item', () => {

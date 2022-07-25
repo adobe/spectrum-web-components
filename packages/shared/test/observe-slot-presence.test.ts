@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ObserveSlotPresence } from '../src/observe-slot-presence.js';
+import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { LitElement, TemplateResult } from '@spectrum-web-components/base';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 

@@ -9,10 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import '../sp-menu.js';
-import '../sp-menu-group.js';
-import '../sp-menu-item.js';
-import { Menu, MenuGroup, MenuItem } from '../';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import { Menu, MenuGroup, MenuItem } from '@spectrum-web-components/menu';
 import {
     elementUpdated,
     expect,

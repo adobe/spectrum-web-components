@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-checkbox.js';
+import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import { Checkbox } from '../';
 import {
     elementUpdated,

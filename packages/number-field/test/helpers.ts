@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { elementUpdated, fixture, nextFrame } from '@open-wc/testing';
 import { ProvideLang } from '@spectrum-web-components/theme';
-import { NumberField } from '../';
+import { NumberField } from '@spectrum-web-components/number-field';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
 export async function getElFrom(test: TemplateResult): Promise<NumberField> {

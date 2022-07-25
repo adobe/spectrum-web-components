@@ -10,11 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import '../sp-menu.js';
-import '../sp-menu-item.js';
-import { MenuItem } from '../';
-import '@spectrum-web-components/menu';
-import { Menu } from '@spectrum-web-components/menu';
+import '@spectrum-web-components/menu/sp-menu.js';
+import '@spectrum-web-components/menu/sp-menu-item.js';
+import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
     elementUpdated,
     expect,
@@ -34,7 +32,6 @@ describe('Menu item', () => {
                 </sp-menu>
             `
         );
-
         await waitUntil(
             () => el.childItems.length == 1,
             'expected menu group to manage 1 child'

@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-split-view.js';
-import { SplitView } from '../';
+import '@spectrum-web-components/split-view/sp-split-view.js';
+import { SplitView } from '@spectrum-web-components/split-view';
 import {
     arrowDownEvent,
     arrowLeftEvent,
