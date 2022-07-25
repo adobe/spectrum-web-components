@@ -396,3 +396,22 @@ governing permissions and limitations under the License.
         height var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out;
     width: 100%;
 }
+@media (forced-colors: active) {
+    .fill {
+        forced-color-adjust: none;
+    }
+    :host {
+        --spectrum-swatch-disabled-icon-color: grayText;
+        --spectrum-alias-focus-ring-color: ButtonText;
+        --spectrum-swatch-selection-indicator-border-color: Highlight;
+        --spectrum-swatch-fill-border-color: ButtonText;
+        --spectrum-swatch-fill-border-color-light: ButtonText;
+        --spectrum-swatch-background-color-selected: ButtonFace;
+    }
+    :host([disabled]) .fill {
+        forced-color-adjust: auto;
+    }
+    :host([nothing]) .fill:after {
+        background: ButtonText;
+    }
+}

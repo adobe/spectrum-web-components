@@ -62,7 +62,7 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/picker": "^1.2.11"
+        "@spectrum-css/picker": "^1.2.12"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

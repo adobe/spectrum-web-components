@@ -959,3 +959,46 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-component-text-color-disabled)
     );
 }
+@media (forced-colors: active) {
+    #button {
+        --spectrum-picker-focus-ring-color: Highlight;
+        --spectrum-picker-m-quiet-texticon-border-color-down: ButtonText;
+        --spectrum-picker-m-quiet-texticon-border-color: ButtonText;
+        --spectrum-picker-m-quiet-texticon-placeholder-text-color-key-focus: GrayText;
+        --spectrum-picker-m-texticon-border-color-error-key-focus: Highlight;
+        --spectrum-picker-m-texticon-placeholder-text-color-disabled: GrayText;
+        --spectrum-picker-m-texticon-placeholder-text-color-down: GrayText;
+        --spectrum-picker-m-texticon-placeholder-text-color-hover: GrayText;
+        --spectrum-picker-m-texticon-placeholder-text-color-key-focus: GrayText;
+        --spectrum-picker-m-texticon-placeholder-text-color-mouse-focus: GrayText;
+        --spectrum-picker-m-texticon-placeholder-text-color: GrayText;
+        --spectrum-picker-m-texticon-text-color-disabled: GrayText;
+        --spectrum-picker-m-texticon-text-color-key-focus: ButtonText;
+        --spectrum-picker-m-texticon-text-color: ButtonText;
+        --spectrum-picker-m-textonly-focusring-border-color-key-focus: Highlight;
+        --spectrum-picker-quiet-border-color-key-focus: Highlight;
+    }
+    #button.focus-visible {
+        outline: 2px solid Highlight;
+    }
+    #button:focus-visible {
+        outline: 2px solid Highlight;
+    }
+    #button:disabled,
+    :host([disabled]) #button {
+        border-color: GrayText;
+        border-width: var(--spectrum-picker-texticon-border-size);
+    }
+    :host([quiet]) #button.focus-visible,
+    :host([quiet][focused]) #button {
+        box-shadow: 0 1px 0 0 var(--spectrum-picker-focus-ring-color);
+        forced-color-adjust: none;
+        outline: 0;
+    }
+    :host([quiet]) #button:focus-visible,
+    :host([quiet][focused]) #button {
+        box-shadow: 0 1px 0 0 var(--spectrum-picker-focus-ring-color);
+        forced-color-adjust: none;
+        outline: 0;
+    }
+}

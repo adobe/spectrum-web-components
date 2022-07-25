@@ -60,6 +60,7 @@ governing permissions and limitations under the License.
     --spectrum-component-bottom-to-text-300: 14px;
     --spectrum-action-bar-height: 48px;
     --spectrum-action-bar-top-to-item-counter: 14px;
+    --spectrum-action-button-edge-to-hold-icon-extra-small: 3px;
     --spectrum-action-button-edge-to-hold-icon-small: 3px;
     --spectrum-action-button-edge-to-hold-icon-medium: 4px;
     --spectrum-action-button-edge-to-hold-icon-large: 5px;
@@ -77,9 +78,9 @@ governing permissions and limitations under the License.
     --spectrum-field-label-top-margin-large: 4px;
     --spectrum-field-label-top-margin-extra-large: 4px;
     --spectrum-help-text-top-to-workflow-icon-small: 4px;
-    --spectrum-help-text-top-to-workflow-icon-medium: 7px;
-    --spectrum-help-text-top-to-workflow-icon-large: 10px;
-    --spectrum-help-text-top-to-workflow-icon-extra-large: 13px;
+    --spectrum-help-text-top-to-workflow-icon-medium: 3px;
+    --spectrum-help-text-top-to-workflow-icon-large: 6px;
+    --spectrum-help-text-top-to-workflow-icon-extra-large: 9px;
     --spectrum-in-line-alert-minimum-width: 320px;
     --spectrum-progress-bar-minimum-width: 48px;
     --spectrum-progress-bar-maximum-width: 768px;
@@ -108,6 +109,13 @@ governing permissions and limitations under the License.
     --spectrum-tooltip-width: 8px;
     --spectrum-tooltip-height: 4px;
     --spectrum-tooltip-maximum-width: 160px;
+    --spectrum-tag-top-to-avatar-small: 4px;
+    --spectrum-tag-top-to-avatar-medium: 6px;
+    --spectrum-tag-top-to-avatar-large: 9px;
+    --spectrum-tag-top-to-cross-icon-small: 8px;
+    --spectrum-tag-top-to-cross-icon-medium: 12px;
+    --spectrum-tag-top-to-cross-icon-large: 15px;
+    --spectrum-popover-top-to-content-area: 4px;
     --spectrum-font-size-50: 11px;
     --spectrum-font-size-75: 12px;
     --spectrum-font-size-100: 14px;
