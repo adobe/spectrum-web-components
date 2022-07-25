@@ -138,6 +138,8 @@ governing permissions and limitations under the License.
     --spectrum-divider-thickness-medium: 2px;
     --spectrum-divider-thickness-large: 4px;
     --spectrum-radio-button-selection-indicator: 4px;
+    --spectrum-popover-tip-width: 16px;
+    --spectrum-popover-tip-height: 8px;
     --spectrum-android-elevation: 2dp;
     --spectrum-spacing-50: 2px;
     --spectrum-spacing-75: 4px;
