@@ -10,6 +10,23 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { elementUpdated, expect } from '@open-wc/testing';
+import { stub } from 'sinon';
+
+export async function testForLitDevWarnings(
+    fixture: () => Promise<HTMLElement>
+): Promise<void> {
+    it('does not emit Lit Dev Mode warnings', async () => {
+        const consoleWarnStub = stub(console, 'warn');
+        const el = await fixture();
+
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.false;
+        consoleWarnStub.restore();
+    });
+}
+
 export function waitForPredicate(
     predicateFn: () => boolean | undefined,
     timeout: number = 250

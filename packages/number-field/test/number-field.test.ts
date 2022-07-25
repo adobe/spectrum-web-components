@@ -33,6 +33,7 @@ import {
     getElFrom,
 } from './helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('NumberField', () => {
     before(async () => {
@@ -46,6 +47,7 @@ describe('NumberField', () => {
             await import('@formatjs/intl-numberformat/locale-data/fr.js');
         }
     });
+    testForLitDevWarnings(async () => await getElFrom(Default({})));
     it('loads default number-field accessibly', async () => {
         const el = await getElFrom(Default({}));
         await elementUpdated(el);

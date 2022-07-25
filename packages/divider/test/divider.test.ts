@@ -14,8 +14,17 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-divider.js';
 import { Divider } from '..';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Divider', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Divider>(
+                html`
+                    <sp-divider></sp-divider>
+                `
+            )
+    );
     it('loads default divider accessibly', async () => {
         const el = await fixture<Divider>(
             html`

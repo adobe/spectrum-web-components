@@ -14,8 +14,17 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-meter.js';
 import { Meter } from '..';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Meter', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Meter>(
+                html`
+                    <sp-meter label="Loading"></sp-meter>
+                `
+            )
+    );
     it('loads default meter accessibly', async () => {
         const el = await fixture<Meter>(
             html`

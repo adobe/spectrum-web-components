@@ -31,6 +31,7 @@ import {
     arrowUpEvent,
     endEvent,
     homeEvent,
+    testForLitDevWarnings,
 } from '../../../test/testing-helpers';
 import { sendKeys } from '@web/test-runner-commands';
 import '../sp-action-group.js';
@@ -115,6 +116,18 @@ describe('ActionGroup', () => {
 
         await expect(el).to.be.accessible();
     });
+    testForLitDevWarnings(
+        async () =>
+            await fixture<ActionGroup>(
+                html`
+                    <sp-action-group aria-label="Default Group">
+                        <sp-action-button>First</sp-action-button>
+                        <sp-action-button>Second</sp-action-button>
+                        <sp-action-button>Third</sp-action-button>
+                    </sp-action-group>
+                `
+            )
+    );
     it('loads default action-group accessibly', async () => {
         const el = await fixture<ActionGroup>(
             html`

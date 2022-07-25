@@ -17,8 +17,17 @@ import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import { HelpText } from '@spectrum-web-components/help-text';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '../sp-textfield.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Textfield', () => {
+    testForLitDevWarnings(
+        async () =>
+            await litFixture<Textfield>(
+                html`
+                    <sp-textfield label="Enter Your Name"></sp-textfield>
+                `
+            )
+    );
     it('loads default textfield accessibly', async () => {
         const el = await litFixture<Textfield>(
             html`

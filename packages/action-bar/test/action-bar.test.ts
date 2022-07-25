@@ -15,8 +15,10 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import '../sp-action-bar.js';
 import { ActionBar } from '..';
 import { Default } from '../stories/action-bar.stories.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ActionBar', () => {
+    testForLitDevWarnings(async () => await fixture<ActionBar>(Default()));
     it('loads', async () => {
         const el = await fixture<ActionBar>(Default());
 

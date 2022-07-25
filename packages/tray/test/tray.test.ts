@@ -23,8 +23,17 @@ import '../sp-tray.js';
 import { Tray } from '..';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Tray', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Tray>(
+                html`
+                    <sp-tray></sp-tray>
+                `
+            )
+    );
     it('loads default tray accessibly', async () => {
         const el = await fixture<Tray>(
             html`

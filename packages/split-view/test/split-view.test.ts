@@ -24,10 +24,22 @@ import {
     pageDownEvent,
     pageUpEvent,
     shiftTabEvent,
+    testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 
 describe('SplitView', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<SplitView>(
+                html`
+                    <sp-split-view primary-size="100">
+                        <div>First panel</div>
+                        <div>Second panel</div>
+                    </sp-split-view>
+                `
+            )
+    );
     it('loads default (horizontal) split-view accessibly', async () => {
         const el = await fixture<SplitView>(
             html`

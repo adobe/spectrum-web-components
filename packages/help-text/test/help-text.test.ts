@@ -14,12 +14,21 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-help-text.js';
 import { HelpText } from '..';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('HelpText', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<HelpText>(
+                html`
+                    <sp-help-text>This is help text.</sp-help-text>
+                `
+            )
+    );
     it('loads default help-text accessibly', async () => {
         const el = await fixture<HelpText>(
             html`
-                <sp-help-text></sp-help-text>
+                <sp-help-text>This is help text.</sp-help-text>
             `
         );
 
@@ -30,7 +39,9 @@ describe('HelpText', () => {
     it('loads negative/icon help-text accessibly', async () => {
         const el = await fixture<HelpText>(
             html`
-                <sp-help-text variant="negative" icon></sp-help-text>
+                <sp-help-text variant="negative" icon>
+                    This is negative help text.
+                </sp-help-text>
             `
         );
 

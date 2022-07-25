@@ -15,8 +15,22 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import '../sp-badge.js';
 import '../../icons-workflow/icons/sp-icon-checkmark-circle.js';
 import { Badge } from '../src/Badge.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Badge', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Badge>(
+                html`
+                    <sp-badge>
+                        <sp-icon-checkmark-circle
+                            slot="icon"
+                        ></sp-icon-checkmark-circle>
+                        Icon and label
+                    </sp-badge>
+                `
+            )
+    );
     it('loads default badge accessibly', async () => {
         const el = await fixture<Badge>(
             html`

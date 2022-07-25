@@ -2,8 +2,14 @@ import { fixture, elementUpdated, expect, html } from '@open-wc/testing';
 
 import '../{{> tagnamePartial }}.js';
 import { {{className name}} } from '..';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('{{className name}}', () => {
+    testForLitDevWarnings(async () => await fixture<{{className name}}>(
+        html`
+            <{{> tagnamePartial}}></{{> tagnamePartial}}>
+        `
+    ));
     it('loads default {{name}} accessibly', async () => {
         const el = await fixture<{{className name}}>(
             html`

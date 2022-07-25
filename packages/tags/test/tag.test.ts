@@ -23,9 +23,23 @@ import {
     deleteEvent,
     enterEvent,
     spaceEvent,
+    testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
 describe('Tag', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Tag>(
+                html`
+                    <sp-tags>
+                        <sp-tag>Tag 1</sp-tag>
+                        <sp-tag invalid>Tag 2</sp-tag>
+                        <sp-tag disabled>Tag 3</sp-tag>
+                        <sp-tag deletable>Tag 4</sp-tag>
+                    </sp-tags>
+                `
+            )
+    );
     it('loads default tags accessibly', async () => {
         const el = await fixture<Tag>(
             html`

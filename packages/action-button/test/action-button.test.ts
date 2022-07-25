@@ -21,8 +21,16 @@ import {
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { m as BlackActionButton } from '../stories/action-button-black.stories.js';
 
 describe('ActionButton', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<ActionButton>(
+                BlackActionButton(BlackActionButton.args)
+            )
+    );
     it('loads default', async () => {
         const el = await fixture<ActionButton>(
             html`

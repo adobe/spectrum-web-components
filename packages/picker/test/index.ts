@@ -30,6 +30,7 @@ import {
     arrowLeftEvent,
     arrowRightEvent,
     arrowUpEvent,
+    testForLitDevWarnings,
     tEvent,
 } from '../../../test/testing-helpers.js';
 import {
@@ -1043,6 +1044,7 @@ export function runPickerTests(): void {
             expect(el.value).to.equal('option-2');
         });
     });
+    testForLitDevWarnings(async () => await pickerFixture());
     it('manages its "name" value in the accessibility tree when [icons-only]', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>${iconsOnly({})}</div>

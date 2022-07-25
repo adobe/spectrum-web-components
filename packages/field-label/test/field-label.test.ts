@@ -22,8 +22,20 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 
 import '../sp-field-label.js';
 import { FieldLabel } from '..';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('FieldLabel', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<FieldLabel>(
+                html`
+                    <div>
+                        <sp-field-label for="test">Input label</sp-field-label>
+                        <input id="test" />
+                    </div>
+                `
+            )
+    );
     it('loads default field-label accessibly', async () => {
         const el = await fixture<FieldLabel>(
             html`

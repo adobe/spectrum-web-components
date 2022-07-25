@@ -26,8 +26,17 @@ import {
 import { sendKeys } from '@web/test-runner-commands';
 import { ProvideLang } from '@spectrum-web-components/theme';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Slider', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Slider>(
+                html`
+                    <sp-slider label="Slider"></sp-slider>
+                `
+            )
+    );
     it('loads', async () => {
         const el = await fixture<Slider>(
             html`

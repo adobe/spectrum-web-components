@@ -14,8 +14,17 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-underlay.js';
 import { Underlay } from '../';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Underlay', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Underlay>(
+                html`
+                    <sp-underlay></sp-underlay>
+                `
+            )
+    );
     it('loads default underlay accessibly', async () => {
         const el = await fixture<Underlay>(
             html`

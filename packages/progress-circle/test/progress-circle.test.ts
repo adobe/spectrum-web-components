@@ -14,8 +14,15 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-progress-circle.js';
 import { ProgressCircle } from '..';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ProgressCircle', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<ProgressCircle>(html`
+                <sp-progress-circle label="Loading"></sp-progress-circle>
+            `)
+    );
     it('loads', async () => {
         const el = await fixture<ProgressCircle>(html`
             <sp-progress-circle label="Loading"></sp-progress-circle>

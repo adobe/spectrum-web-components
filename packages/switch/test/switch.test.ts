@@ -13,8 +13,17 @@ governing permissions and limitations under the License.
 import '../sp-switch.js';
 import { Switch } from '../';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Switch', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Switch>(
+                html`
+                    <sp-switch>Not Checked</sp-switch>
+                `
+            )
+    );
     it('loads default switch accessibly', async () => {
         const el = await fixture<Switch>(
             html`

@@ -14,9 +14,11 @@ import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
 import '..';
 import { Asset } from '..';
+import { testForLitDevWarnings } from '../../../test/testing-helpers';
 import { Default, File, Folder } from '../stories/asset.stories.js';
 
 describe('Asset', () => {
+    testForLitDevWarnings(async () => await fixture<Asset>(Default()));
     it('loads default asset accessibly', async () => {
         const el = await fixture<Asset>(Default());
 

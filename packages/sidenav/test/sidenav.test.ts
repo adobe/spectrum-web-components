@@ -30,8 +30,28 @@ import {
 import { LitElement, TemplateResult } from '@spectrum-web-components/base';
 import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Sidenav', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<SideNav>(
+                html`
+                    <sp-sidenav>
+                        <sp-sidenav-heading label="CATEGORY 1">
+                            <sp-sidenav-item
+                                value="Section 1"
+                                label="Section 1"
+                            ></sp-sidenav-item>
+                            <sp-sidenav-item
+                                value="Section 2"
+                                label="Section 2"
+                            ></sp-sidenav-item>
+                        </sp-sidenav-heading>
+                    </sp-sidenav>
+                `
+            )
+    );
     it('loads', async () => {
         const el = await fixture<SideNav>(
             html`

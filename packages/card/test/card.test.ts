@@ -28,8 +28,24 @@ import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import { spy } from 'sinon';
 import { spaceEvent } from '../../../test/testing-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('card', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Card>(
+                html`
+                    <sp-card heading="Card Heading" subheading="JPG">
+                        <img
+                            slot="preview"
+                            src="https://picsum.photos/532/192"
+                            alt="Slotted Preview"
+                        />
+                        <div slot="footer">Footer</div>
+                    </sp-card>
+                `
+            )
+    );
     it('loads', async () => {
         const el = await fixture<Card>(
             html`

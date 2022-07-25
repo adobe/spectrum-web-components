@@ -14,8 +14,17 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-progress-bar.js';
 import { ProgressBar } from '..';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ProgressBar', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<ProgressBar>(
+                html`
+                    <sp-progress-bar label="Loading"></sp-progress-bar>
+                `
+            )
+    );
     it('loads default progress-bar accessibly', async () => {
         const el = await fixture<ProgressBar>(
             html`

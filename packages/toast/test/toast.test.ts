@@ -21,7 +21,10 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { CloseButton } from '@spectrum-web-components/button';
-import { waitForPredicate } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    waitForPredicate,
+} from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 
 interface TestableToast {
@@ -30,6 +33,14 @@ interface TestableToast {
 }
 
 describe('Toast', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Toast>(
+                html`
+                    <sp-toast open>Help text.</sp-toast>
+                `
+            )
+    );
     it('loads', async () => {
         const el = await fixture<Toast>(
             html`

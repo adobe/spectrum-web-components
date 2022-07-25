@@ -22,6 +22,7 @@ import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 async function sliderFromFixture(
     sliderFixture: (args: StoryArgs) => TemplateResult
@@ -32,6 +33,7 @@ async function sliderFromFixture(
 }
 
 describe('Slider - editable', () => {
+    testForLitDevWarnings(async () => await sliderFromFixture(editable));
     it('loads', async () => {
         const el = await sliderFromFixture(editable);
 

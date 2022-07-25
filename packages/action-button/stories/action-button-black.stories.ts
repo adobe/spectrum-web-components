@@ -32,7 +32,7 @@ export const m = (args: Properties): TemplateResult => renderButtons(args);
 m.args = {
     size: 'm',
     variant,
-};
+} as Properties;
 
 export const l = (args: Properties): TemplateResult => renderButtons(args);
 l.args = {

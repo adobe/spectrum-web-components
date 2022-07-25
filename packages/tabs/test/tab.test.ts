@@ -14,8 +14,19 @@ import '../sp-tab.js';
 import { Tab, Tabs } from '../';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Tab', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Tabs>(
+                html`
+                    <sp-tabs>
+                        <sp-tab label="Tab 1" value="first"></sp-tab>
+                    </sp-tabs>
+                `
+            )
+    );
     it('loads default tab accessibly', async () => {
         const el = await fixture<Tabs>(
             html`

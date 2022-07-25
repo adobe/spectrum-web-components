@@ -20,6 +20,7 @@ import {
     arrowRightKeyupEvent,
     arrowUpEvent,
     arrowUpKeyupEvent,
+    testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
 import '../sp-color-slider.js';
@@ -29,6 +30,14 @@ import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 
 describe('ColorSlider', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<ColorSlider>(
+                html`
+                    <sp-color-slider></sp-color-slider>
+                `
+            )
+    );
     it('loads default color-slider accessibly', async () => {
         const el = await fixture<ColorSlider>(
             html`

@@ -26,10 +26,23 @@ import {
     homeEvent,
     pageDownEvent,
     pageUpEvent,
+    testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 import { executeServerCommand } from '@web/test-runner-commands';
 
 describe('Tags', () => {
+    testForLitDevWarnings(
+        async () =>
+            await fixture<Tags>(
+                html`
+                    <sp-tags>
+                        <sp-tag>Tag 1</sp-tag>
+                        <sp-tag invalid>Tag 2</sp-tag>
+                        <sp-tag disabled>Tag 3</sp-tag>
+                    </sp-tags>
+                `
+            )
+    );
     it('loads default tags accessibly', async () => {
         const el = await fixture<Tags>(
             html`
