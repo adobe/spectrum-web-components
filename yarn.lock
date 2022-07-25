@@ -3984,10 +3984,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/fieldlabel/-/fieldlabel-4.0.29.tgz#c09de2495b041a308b0cf110b1185cbb77c188fe"
   integrity sha512-MRputoPSSiIC0PoPOaX5zeDHyVcHdbfib7lCBk9di8R/eed3UzHvQeBwclAvCxkVHuyfIIzgaK3mlIt4flAvlw==
 
-"@spectrum-css/helptext@^1.0.20":
-  version "1.0.20"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/helptext/-/helptext-1.0.20.tgz#c0339735ebd2fee4caeba0aa9a2c39909720b6d8"
-  integrity sha512-qyqQ+1ffwvj31xxrKwfSH8jb0NFyIUroc5tBGsvFWQ8Dct8+OOkc5MCO0ZX6D5OxPXUyXMZOuwqNzlUQI067MA==
+"@spectrum-css/helptext@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/helptext/-/helptext-2.0.0.tgz#262cb489867e4f55e238c7a0c85c46fafda747a6"
+  integrity sha512-Yv2Ci5n28IY4cG5VU62FOMWtyS3JmQC2hrC4YyUdojP6mq4H9KHzEcXcHS/oDFQEaivp/lObxAXIbTfjT5P/+A==
 
 "@spectrum-css/icon@^3.0.23":
   version "3.0.23"
