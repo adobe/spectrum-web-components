@@ -124,6 +124,7 @@
         "@web/test-runner-visual-regression": "^0.6.5",
         "@webcomponents/webcomponentsjs": "^2.6.0",
         "alex": "^9.0.1",
+        "cem-plugin-module-file-extensions": "^0.0.5",
         "chalk": "^5.0.1",
         "chromedriver": "^103.0.0",
         "common-tags": "^1.8.2",
