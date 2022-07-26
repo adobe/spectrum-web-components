@@ -24,6 +24,25 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import { render } from 'lit';
 import { emulateMedia, sendKeys } from '@web/test-runner-commands';
 
+let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
+before(function () {
+    // Save Mocha's handler.
+    (
+        Mocha as unknown as { process: { removeListener(name: string): void } }
+    ).process.removeListener('uncaughtException');
+    globalErrorHandler = window.onerror;
+    addEventListener('error', (error) => {
+        if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
+            return;
+        } else {
+            globalErrorHandler?.(error);
+        }
+    });
+});
+after(function () {
+    window.onerror = globalErrorHandler as OnErrorEventHandler;
+});
+
 const wrap = () => html`
     <sp-story-decorator
         reduce-motion

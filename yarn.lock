@@ -2718,7 +2718,7 @@
   dependencies:
     "@lit/reactive-element" "^1.1.0"
 
-"@lit-labs/virtualizer@0.7.1":
+"@lit-labs/virtualizer@0.7.1", "@lit-labs/virtualizer@^0.7.1":
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@lit-labs/virtualizer/-/virtualizer-0.7.1.tgz#05a5152e8120f26744961db3b94b122c3461cce6"
   integrity sha512-wdXKWkhkUbalH2b2CVMcj6V+/0lgTrS2h7JP5mCrBwSsdrNok1ZqTNSvaVtVwXoS/rynLVkVIp7kbfcnWc30og==
