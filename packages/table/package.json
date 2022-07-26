@@ -1,0 +1,67 @@
+{
+    "name": "@spectrum-web-components/table",
+    "version": "0.0.1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "Web component implementation of a Spectrum design Table",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/table"
+    },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/table",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "type": "module",
+    "exports": {
+        ".": "./src/index.js",
+        "./src/*": "./src/*.js",
+        "./package.json": "./package.json",
+        "./sp-table-body.js": "./sp-table-body.js",
+        "./sp-table-cell.js": "./sp-table-cell.js",
+        "./sp-table-checkbox-cell.js": "./sp-table-checkbox-cell.js",
+        "./sp-table-head.js": "./sp-table-head.js",
+        "./sp-table-head-cell.js": "./sp-table-head-cell.js",
+        "./sp-table-row.js": "./sp-table-row.js",
+        "./sp-table.js": "./sp-table.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@lit-labs/virtualizer": "^0.7.1",
+        "@spectrum-web-components/base": "^0.5.8",
+        "@spectrum-web-components/checkbox": "^0.13.5",
+        "@spectrum-web-components/icon": "^0.11.11",
+        "@spectrum-web-components/icons-ui": "^0.8.11",
+        "tslib": "^2.0.0"
+    },
+    "devDependencies": {
+        "@spectrum-css/table": "^4.0.17"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js"
+    ]
+}

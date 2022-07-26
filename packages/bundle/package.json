@@ -96,6 +96,7 @@
         "@spectrum-web-components/status-light": "^0.10.11",
         "@spectrum-web-components/swatch": "^0.1.2",
         "@spectrum-web-components/switch": "^0.9.13",
+        "@spectrum-web-components/table": "^0.0.1",
         "@spectrum-web-components/tabs": "^0.8.14",
         "@spectrum-web-components/tags": "^0.8.14",
         "@spectrum-web-components/textfield": "^0.11.10",
