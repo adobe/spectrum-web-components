@@ -60,11 +60,10 @@ export class Grid extends LitVirtualizer {
     override set renderItem(
         fn: (item: unknown, index: number, selected: boolean) => TemplateResult
     ) {
-        super.renderItem = (
-            item: Record<string, unknown>,
-            index: number
-        ): TemplateResult => {
-            const selected = this.selected.includes(item);
+        super.renderItem = (item, index: number): TemplateResult => {
+            const selected = this.selected.includes(
+                item as Record<string, unknown>
+            );
             return fn(item, index, selected);
         };
     }
