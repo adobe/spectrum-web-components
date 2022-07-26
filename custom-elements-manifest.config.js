@@ -10,6 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
+
 export default {
     globs: ['**/sp-*.ts', '**/src/[A-Z]*.ts'],
     exclude: [
@@ -23,4 +25,5 @@ export default {
     outdir: '.',
     litelement: true,
     packagejson: false,
+    plugins: [moduleFileExtensionsPlugin()],
 };
