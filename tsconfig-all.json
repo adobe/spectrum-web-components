@@ -73,6 +73,7 @@
         { "path": "packages/styles" },
         { "path": "packages/swatch" },
         { "path": "packages/switch" },
+        { "path": "packages/table" },
         { "path": "packages/tabs" },
         { "path": "packages/tags" },
         { "path": "packages/textfield" },
