@@ -45,7 +45,7 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^1.0.1",
-        "@lit-labs/virtualizer": "0.7.0-pre.3",
+        "@lit-labs/virtualizer": "0.7.1",
         "@spectrum-web-components/base": "^0.5.8",
         "@spectrum-web-components/reactive-controllers": "^0.2.4",
         "tslib": "^2.0.0"
