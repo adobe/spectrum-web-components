@@ -1,0 +1,209 @@
+/*
+Copyright 2022 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host([align='center']) {
+    text-align: center; /* .spectrum-Table-cell--alignCenter */
+}
+:host([dir='ltr'][align='end']) {
+    text-align: right; /* [dir=ltr] .spectrum-Table-cell--alignRight */
+}
+:host([dir='rtl'][align='end']) {
+    text-align: left; /* [dir=rtl] .spectrum-Table-cell--alignRight */
+}
+:host([dir='ltr']) {
+    padding-left: var(
+        --spectrum-table-regular-cell-padding-left
+    ); /* [dir=ltr] .spectrum-Table-cell */
+    padding-right: var(--spectrum-table-regular-cell-padding-right);
+}
+:host([dir='rtl']) {
+    padding-left: var(--spectrum-table-regular-cell-padding-right);
+    padding-right: var(
+        --spectrum-table-regular-cell-padding-left
+    ); /* [dir=rtl] .spectrum-Table-cell */
+}
+:host {
+    box-sizing: border-box; /* .spectrum-Table-cell */
+    font-size: var(--spectrum-table-regular-cell-text-size);
+    font-weight: var(--spectrum-table-regular-cell-text-font-weight);
+    line-height: var(--spectrum-table-regular-cell-text-line-height);
+    min-height: calc(
+        var(--spectrum-table-regular-cell-min-height) -
+            var(--spectrum-table-regular-cell-padding-top) -
+            var(--spectrum-table-regular-cell-padding-bottom)
+    );
+    padding-bottom: var(--spectrum-table-regular-cell-padding-bottom);
+    padding-top: var(--spectrum-table-regular-cell-padding-top);
+}
+:host {
+    position: relative; /* .spectrum-Table-cell,
+   * .spectrum-Table-headCell */
+}
+:host(.focus-visible),
+:host(.is-focused) {
+    outline: none; /* .spectrum-Table-cell.focus-ring,
+   * .spectrum-Table-cell.is-focused,
+   * .spectrum-Table-headCell.focus-ring,
+   * .spectrum-Table-headCell.is-focused */
+}
+:host(.is-focused),
+:host(:focus-visible) {
+    outline: none; /* .spectrum-Table-cell.focus-ring,
+   * .spectrum-Table-cell.is-focused,
+   * .spectrum-Table-headCell.focus-ring,
+   * .spectrum-Table-headCell.is-focused */
+}
+:host([dir='ltr']) .spectrum-Table-cell.is-focused:before,
+:host([dir='ltr'].focus-visible):before {
+    right: 0; /* [dir=ltr] .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='ltr']) .spectrum-Table-cell.is-focused:before,
+:host([dir='ltr']:focus-visible):before {
+    right: 0; /* [dir=ltr] .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl']) .spectrum-Table-cell.is-focused:before,
+:host([dir='rtl'].focus-visible):before {
+    left: 0; /* [dir=rtl] .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl']) .spectrum-Table-cell.is-focused:before,
+:host([dir='rtl']:focus-visible):before {
+    left: 0; /* [dir=rtl] .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='ltr']) .spectrum-Table-cell.is-focused:before,
+:host([dir='ltr'].focus-visible):before {
+    left: 0; /* [dir=ltr] .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='ltr']) .spectrum-Table-cell.is-focused:before,
+:host([dir='ltr']:focus-visible):before {
+    left: 0; /* [dir=ltr] .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl']) .spectrum-Table-cell.is-focused:before,
+:host([dir='rtl'].focus-visible):before {
+    right: 0; /* [dir=rtl] .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl']) .spectrum-Table-cell.is-focused:before,
+:host([dir='rtl']:focus-visible):before {
+    right: 0; /* [dir=rtl] .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table-headCell.is-focused::before */
+}
+:host(.focus-visible):before,
+:host(.is-focused):before {
+    border-radius: calc(
+        var(--spectrum-table-regular-cell-border-radius-key-focus) - 1px
+    );
+    bottom: 0;
+    content: ''; /* .spectrum-Table-cell.focus-ring:before,
+   * .spectrum-Table-cell.is-focused::before,
+   * .spectrum-Table-headCell.focus-ring::before,
+   * .spectrum-Table-headCell.is-focused::before */
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+:host(.is-focused):before,
+:host(:focus-visible):before {
+    border-radius: calc(
+        var(--spectrum-table-regular-cell-border-radius-key-focus) - 1px
+    );
+    bottom: 0;
+    content: ''; /* .spectrum-Table-cell.focus-ring:before,
+   * .spectrum-Table-cell.is-focused::before,
+   * .spectrum-Table-headCell.focus-ring::before,
+   * .spectrum-Table-headCell.is-focused::before */
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+:host([dir='ltr']) .divider {
+    border-right-width: var(
+        --spectrum-table-regular-divider-border-size
+    ); /* [dir=ltr] .spectrum-Table-cell--divider */
+}
+:host([dir='rtl']) .divider {
+    border-left-width: var(
+        --spectrum-table-regular-divider-border-size
+    ); /* [dir=rtl] .spectrum-Table-cell--divider */
+}
+:host(.focus-visible):before,
+:host(.is-focused):before {
+    box-shadow: inset 0 0 0 2px
+        var(
+            --spectrum-table-m-regular-cell-border-color-key-focus,
+            var(--spectrum-alias-border-color-key-focus)
+        ); /* .spectrum-Table-cell.focus-ring:before,
+   * .spectrum-Table-cell.is-focused::before,
+   * .spectrum-Table-headCell.focus-ring::before,
+   * .spectrum-Table-headCell.is-focused::before */
+}
+:host(.is-focused):before,
+:host(:focus-visible):before {
+    box-shadow: inset 0 0 0 2px
+        var(
+            --spectrum-table-m-regular-cell-border-color-key-focus,
+            var(--spectrum-alias-border-color-key-focus)
+        ); /* .spectrum-Table-cell.focus-ring:before,
+   * .spectrum-Table-cell.is-focused::before,
+   * .spectrum-Table-headCell.focus-ring::before,
+   * .spectrum-Table-headCell.is-focused::before */
+}
+:host {
+    background-color: var(
+        --spectrum-table-m-regular-cell-background-color,
+        var(--spectrum-alias-background-color-transparent)
+    );
+    color: var(
+        --spectrum-table-m-regular-cell-text-color,
+        var(--spectrum-alias-text-color)
+    ); /* .spectrum-Table-cell */
+}
+:host([dir='ltr']) .divider {
+    border-right-style: solid; /* [dir=ltr] .spectrum-Table-cell--divider */
+}
+:host([dir='rtl']) .divider {
+    border-left-style: solid; /* [dir=rtl] .spectrum-Table-cell--divider */
+}
+:host([dir='ltr']) .divider {
+    border-right-color: var(
+        --spectrum-table-m-regular-divider-border-color,
+        var(--spectrum-alias-border-color-mid)
+    ); /* [dir=ltr] .spectrum-Table-cell--divider */
+}
+:host([dir='rtl']) .divider {
+    border-left-color: var(
+        --spectrum-table-m-regular-divider-border-color,
+        var(--spectrum-alias-border-color-mid)
+    ); /* [dir=rtl] .spectrum-Table-cell--divider */
+}
