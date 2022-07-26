@@ -57,6 +57,7 @@
         { "path": "../status-light" },
         { "path": "../swatch" },
         { "path": "../switch" },
+        { "path": "../table" },
         { "path": "../tabs" },
         { "path": "../tags" },
         { "path": "../textfield" },
