@@ -1,0 +1,2176 @@
+/*
+Copyright 2022 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    border-collapse: separate; /* .spectrum-Table */
+    border-spacing: 0;
+}
+:host([size='s']) {
+    --spectrum-table-compact-quiet-border-radius: var(
+        --spectrum-table-s-compact-quiet-border-radius,
+        var(--spectrum-global-dimension-static-size-0)
+    ); /* .spectrum-Table--sizeS */
+    --spectrum-table-compact-header-border-radius: var(
+        --spectrum-table-s-compact-header-border-radius,
+        var(--spectrum-global-dimension-static-size-0)
+    );
+    --spectrum-table-compact-cell-border-radius-key-focus: var(
+        --spectrum-table-s-compact-cell-border-radius-key-focus,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-table-compact-divider-border-size: var(
+        --spectrum-table-s-compact-divider-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-table-compact-header-text-size: var(
+        --spectrum-table-s-compact-header-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    --spectrum-table-compact-header-text-font-weight: var(
+        --spectrum-table-s-compact-header-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
+    );
+    --spectrum-table-compact-header-text-letter-spacing: var(
+        --spectrum-table-s-compact-header-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
+    );
+    --spectrum-table-compact-header-text-line-height: var(
+        --spectrum-table-s-compact-header-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    --spectrum-table-compact-header-sort-icon-gap: var(
+        --spectrum-table-s-compact-header-sort-icon-gap,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-table-compact-header-min-height: var(
+        --spectrum-table-s-compact-header-min-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-table-compact-header-padding-top: var(
+        --spectrum-table-s-compact-header-padding-top,
+        var(--spectrum-global-dimension-static-size-125)
+    );
+    --spectrum-table-compact-header-padding-bottom: var(
+        --spectrum-table-s-compact-header-padding-bottom,
+        var(--spectrum-global-dimension-static-size-125)
+    );
+    --spectrum-table-compact-header-padding-left: var(
+        --spectrum-table-s-compact-header-padding-left,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-compact-header-padding-right: var(
+        --spectrum-table-s-compact-header-padding-right,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-compact-cell-text-size: var(
+        --spectrum-table-s-compact-cell-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    --spectrum-table-compact-cell-text-font-weight: var(
+        --spectrum-table-s-compact-cell-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-table-compact-cell-text-line-height: var(
+        --spectrum-table-s-compact-cell-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-table-compact-cell-checkbox-padding-right: var(
+        --spectrum-table-s-compact-cell-checkbox-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-table-compact-cell-checkbox-vertical-alignment: var(
+        --spectrum-table-s-compact-cell-checkbox-vertical-alignment,
+        middle
+    );
+    --spectrum-table-compact-cell-min-height: var(
+        --spectrum-table-s-compact-cell-min-height,
+        var(--spectrum-global-dimension-size-300)
+    );
+    --spectrum-table-compact-cell-padding-top: var(
+        --spectrum-table-s-compact-cell-padding-top,
+        var(--spectrum-global-dimension-size-50)
+    );
+    --spectrum-table-compact-cell-padding-bottom: var(
+        --spectrum-table-s-compact-cell-padding-bottom,
+        var(--spectrum-global-dimension-size-50)
+    );
+    --spectrum-table-compact-cell-padding-left: var(
+        --spectrum-table-s-compact-cell-padding-left,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-compact-cell-padding-right: var(
+        --spectrum-table-s-compact-cell-padding-right,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-compact-cell-vertical-alignment: var(
+        --spectrum-table-s-compact-cell-vertical-alignment,
+        top
+    );
+    --spectrum-table-compact-border-radius: var(
+        --spectrum-table-s-compact-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-table-compact-border-size: var(
+        --spectrum-table-s-compact-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-table-regular-quiet-border-radius: var(
+        --spectrum-table-s-regular-quiet-border-radius,
+        var(--spectrum-global-dimension-static-size-0)
+    );
+    --spectrum-table-regular-header-border-radius: var(
+        --spectrum-table-s-regular-header-border-radius,
+        var(--spectrum-global-dimension-static-size-0)
+    );
+    --spectrum-table-regular-cell-border-radius-key-focus: var(
+        --spectrum-table-s-regular-cell-border-radius-key-focus,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-table-regular-divider-border-size: var(
+        --spectrum-table-s-regular-divider-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-table-regular-header-text-size: var(
+        --spectrum-table-s-regular-header-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    --spectrum-table-regular-header-text-font-weight: var(
+        --spectrum-table-s-regular-header-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
+    );
+    --spectrum-table-regular-header-text-letter-spacing: var(
+        --spectrum-table-s-regular-header-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
+    );
+    --spectrum-table-regular-header-text-line-height: var(
+        --spectrum-table-s-regular-header-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    --spectrum-table-regular-header-sort-icon-gap: var(
+        --spectrum-table-s-regular-header-sort-icon-gap,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-table-regular-header-min-height: var(
+        --spectrum-table-s-regular-header-min-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-table-regular-header-padding-top: var(
+        --spectrum-table-s-regular-header-padding-top,
+        var(--spectrum-global-dimension-static-size-125)
+    );
+    --spectrum-table-regular-header-padding-bottom: var(
+        --spectrum-table-s-regular-header-padding-bottom,
+        var(--spectrum-global-dimension-static-size-125)
+    );
+    --spectrum-table-regular-header-padding-left: var(
+        --spectrum-table-s-regular-header-padding-left,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-regular-header-padding-right: var(
+        --spectrum-table-s-regular-header-padding-right,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-regular-cell-text-size: var(
+        --spectrum-table-s-regular-cell-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    --spectrum-table-regular-cell-text-font-weight: var(
+        --spectrum-table-s-regular-cell-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-table-regular-cell-text-line-height: var(
+        --spectrum-table-s-regular-cell-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-table-regular-cell-checkbox-padding-right: var(
+        --spectrum-table-s-regular-cell-checkbox-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-table-regular-cell-checkbox-vertical-alignment: var(
+        --spectrum-table-s-regular-cell-checkbox-vertical-alignment,
+        middle
+    );
+    --spectrum-table-regular-cell-min-height: var(
+        --spectrum-table-s-regular-cell-min-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-table-regular-cell-padding-top: var(
+        --spectrum-table-s-regular-cell-padding-top,
+        var(--spectrum-global-dimension-size-85)
+    );
+    --spectrum-table-regular-cell-padding-bottom: var(
+        --spectrum-table-s-regular-cell-padding-bottom,
+        var(--spectrum-global-dimension-size-85)
+    );
+    --spectrum-table-regular-cell-padding-left: var(
+        --spectrum-table-s-regular-cell-padding-left,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-regular-cell-padding-right: var(
+        --spectrum-table-s-regular-cell-padding-right,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-regular-cell-vertical-alignment: var(
+        --spectrum-table-s-regular-cell-vertical-alignment,
+        top
+    );
+    --spectrum-table-regular-border-radius: var(
+        --spectrum-table-s-regular-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-table-regular-border-size: var(
+        --spectrum-table-s-regular-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-table-spacious-quiet-border-radius: var(
+        --spectrum-table-s-spacious-quiet-border-radius,
+        var(--spectrum-global-dimension-static-size-0)
+    );
+    --spectrum-table-spacious-header-border-radius: var(
+        --spectrum-table-s-spacious-header-border-radius,
+        var(--spectrum-global-dimension-static-size-0)
+    );
+    --spectrum-table-spacious-cell-border-radius-key-focus: var(
+        --spectrum-table-s-spacious-cell-border-radius-key-focus,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-table-spacious-divider-border-size: var(
+        --spectrum-table-s-spacious-divider-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-table-spacious-header-text-size: var(
+        --spectrum-table-s-spacious-header-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    --spectrum-table-spacious-header-text-font-weight: var(
+        --spectrum-table-s-spacious-header-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
+    );
+    --spectrum-table-spacious-header-text-letter-spacing: var(
+        --spectrum-table-s-spacious-header-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
+    );
+    --spectrum-table-spacious-header-text-line-height: var(
+        --spectrum-table-s-spacious-header-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    --spectrum-table-spacious-header-sort-icon-gap: var(
+        --spectrum-table-s-spacious-header-sort-icon-gap,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-table-spacious-header-min-height: var(
+        --spectrum-table-s-spacious-header-min-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-table-spacious-header-padding-top: var(
+        --spectrum-table-s-spacious-header-padding-top,
+        var(--spectrum-global-dimension-static-size-125)
+    );
+    --spectrum-table-spacious-header-padding-bottom: var(
+        --spectrum-table-s-spacious-header-padding-bottom,
+        var(--spectrum-global-dimension-static-size-125)
+    );
+    --spectrum-table-spacious-header-padding-left: var(
+        --spectrum-table-s-spacious-header-padding-left,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-spacious-header-padding-right: var(
+        --spectrum-table-s-spacious-header-padding-right,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-spacious-cell-text-size: var(
+        --spectrum-table-s-spacious-cell-text-size,
+        var(--spectrum-global-dimension-font-size-75)
+    );
+    --spectrum-table-spacious-cell-text-font-weight: var(
+        --spectrum-table-s-spacious-cell-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-table-spacious-cell-text-line-height: var(
+        --spectrum-table-s-spacious-cell-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-table-spacious-cell-checkbox-padding-right: var(
+        --spectrum-table-s-spacious-cell-checkbox-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-table-spacious-cell-checkbox-vertical-alignment: var(
+        --spectrum-table-s-spacious-cell-checkbox-vertical-alignment,
+        middle
+    );
+    --spectrum-table-spacious-cell-min-height: var(
+        --spectrum-table-s-spacious-cell-min-height,
+        var(--spectrum-global-dimension-size-500)
+    );
+    --spectrum-table-spacious-cell-padding-top: var(
+        --spectrum-table-s-spacious-cell-padding-top,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-table-spacious-cell-padding-bottom: var(
+        --spectrum-table-s-spacious-cell-padding-bottom,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-table-spacious-cell-padding-left: var(
+        --spectrum-table-s-spacious-cell-padding-left,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-spacious-cell-padding-right: var(
+        --spectrum-table-s-spacious-cell-padding-right,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-spacious-cell-vertical-alignment: var(
+        --spectrum-table-s-spacious-cell-vertical-alignment,
+        top
+    );
+    --spectrum-table-spacious-border-radius: var(
+        --spectrum-table-s-spacious-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-table-spacious-border-size: var(
+        --spectrum-table-s-spacious-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+}
+:host([size='m']) {
+    --spectrum-table-compact-quiet-border-radius: var(
+        --spectrum-table-m-compact-quiet-border-radius,
+        var(--spectrum-global-dimension-static-size-0)
+    ); /* .spectrum-Table--sizeM */
+    --spectrum-table-compact-header-border-radius: var(
+        --spectrum-table-m-compact-header-border-radius,
+        var(--spectrum-global-dimension-static-size-0)
+    );
+    --spectrum-table-compact-cell-border-radius-key-focus: var(
+        --spectrum-table-m-compact-cell-border-radius-key-focus,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-table-compact-divider-border-size: var(
+        --spectrum-table-m-compact-divider-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-table-compact-header-text-size: var(
+        --spectrum-table-m-compact-header-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    --spectrum-table-compact-header-text-font-weight: var(
+        --spectrum-table-m-compact-header-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
+    );
+    --spectrum-table-compact-header-text-letter-spacing: var(
+        --spectrum-table-m-compact-header-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
+    );
+    --spectrum-table-compact-header-text-line-height: var(
+        --spectrum-table-m-compact-header-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    --spectrum-table-compact-header-sort-icon-gap: var(
+        --spectrum-table-m-compact-header-sort-icon-gap,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-table-compact-header-min-height: var(
+        --spectrum-table-m-compact-header-min-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-table-compact-header-padding-top: var(
+        --spectrum-table-m-compact-header-padding-top,
+        var(--spectrum-global-dimension-static-size-125)
+    );
+    --spectrum-table-compact-header-padding-bottom: var(
+        --spectrum-table-m-compact-header-padding-bottom,
+        var(--spectrum-global-dimension-static-size-125)
+    );
+    --spectrum-table-compact-header-padding-left: var(
+        --spectrum-table-m-compact-header-padding-left,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-compact-header-padding-right: var(
+        --spectrum-table-m-compact-header-padding-right,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-compact-cell-text-size: var(
+        --spectrum-table-m-compact-cell-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-table-compact-cell-text-font-weight: var(
+        --spectrum-table-m-compact-cell-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-table-compact-cell-text-line-height: var(
+        --spectrum-table-m-compact-cell-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-table-compact-cell-checkbox-padding-right: var(
+        --spectrum-table-m-compact-cell-checkbox-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-table-compact-cell-checkbox-vertical-alignment: var(
+        --spectrum-table-m-compact-cell-checkbox-vertical-alignment,
+        middle
+    );
+    --spectrum-table-compact-cell-min-height: var(
+        --spectrum-table-m-compact-cell-min-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-table-compact-cell-padding-top: var(
+        --spectrum-table-m-compact-cell-padding-top,
+        var(--spectrum-global-dimension-size-85)
+    );
+    --spectrum-table-compact-cell-padding-bottom: var(
+        --spectrum-table-m-compact-cell-padding-bottom,
+        var(--spectrum-global-dimension-size-85)
+    );
+    --spectrum-table-compact-cell-padding-left: var(
+        --spectrum-table-m-compact-cell-padding-left,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-compact-cell-padding-right: var(
+        --spectrum-table-m-compact-cell-padding-right,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-compact-cell-vertical-alignment: var(
+        --spectrum-table-m-compact-cell-vertical-alignment,
+        top
+    );
+    --spectrum-table-compact-border-radius: var(
+        --spectrum-table-m-compact-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-table-compact-border-size: var(
+        --spectrum-table-m-compact-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-table-regular-quiet-border-radius: var(
+        --spectrum-table-m-regular-quiet-border-radius,
+        var(--spectrum-global-dimension-static-size-0)
+    );
+    --spectrum-table-regular-header-border-radius: var(
+        --spectrum-table-m-regular-header-border-radius,
+        var(--spectrum-global-dimension-static-size-0)
+    );
+    --spectrum-table-regular-cell-border-radius-key-focus: var(
+        --spectrum-table-m-regular-cell-border-radius-key-focus,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-table-regular-divider-border-size: var(
+        --spectrum-table-m-regular-divider-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-table-regular-header-text-size: var(
+        --spectrum-table-m-regular-header-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    --spectrum-table-regular-header-text-font-weight: var(
+        --spectrum-table-m-regular-header-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
+    );
+    --spectrum-table-regular-header-text-letter-spacing: var(
+        --spectrum-table-m-regular-header-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
+    );
+    --spectrum-table-regular-header-text-line-height: var(
+        --spectrum-table-m-regular-header-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    --spectrum-table-regular-header-sort-icon-gap: var(
+        --spectrum-table-m-regular-header-sort-icon-gap,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-table-regular-header-min-height: var(
+        --spectrum-table-m-regular-header-min-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-table-regular-header-padding-top: var(
+        --spectrum-table-m-regular-header-padding-top,
+        var(--spectrum-global-dimension-static-size-125)
+    );
+    --spectrum-table-regular-header-padding-bottom: var(
+        --spectrum-table-m-regular-header-padding-bottom,
+        var(--spectrum-global-dimension-static-size-125)
+    );
+    --spectrum-table-regular-header-padding-left: var(
+        --spectrum-table-m-regular-header-padding-left,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-regular-header-padding-right: var(
+        --spectrum-table-m-regular-header-padding-right,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-regular-cell-text-size: var(
+        --spectrum-table-m-regular-cell-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-table-regular-cell-text-font-weight: var(
+        --spectrum-table-m-regular-cell-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-table-regular-cell-text-line-height: var(
+        --spectrum-table-m-regular-cell-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-table-regular-cell-checkbox-padding-right: var(
+        --spectrum-table-m-regular-cell-checkbox-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-table-regular-cell-checkbox-vertical-alignment: var(
+        --spectrum-table-m-regular-cell-checkbox-vertical-alignment,
+        middle
+    );
+    --spectrum-table-regular-cell-min-height: var(
+        --spectrum-table-m-regular-cell-min-height,
+        var(--spectrum-global-dimension-size-500)
+    );
+    --spectrum-table-regular-cell-padding-top: var(
+        --spectrum-table-m-regular-cell-padding-top,
+        var(--spectrum-global-dimension-size-130)
+    );
+    --spectrum-table-regular-cell-padding-bottom: var(
+        --spectrum-table-m-regular-cell-padding-bottom,
+        var(--spectrum-global-dimension-size-130)
+    );
+    --spectrum-table-regular-cell-padding-left: var(
+        --spectrum-table-m-regular-cell-padding-left,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-regular-cell-padding-right: var(
+        --spectrum-table-m-regular-cell-padding-right,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-regular-cell-vertical-alignment: var(
+        --spectrum-table-m-regular-cell-vertical-alignment,
+        top
+    );
+    --spectrum-table-regular-border-radius: var(
+        --spectrum-table-m-regular-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-table-regular-border-size: var(
+        --spectrum-table-m-regular-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-table-spacious-quiet-border-radius: var(
+        --spectrum-table-m-spacious-quiet-border-radius,
+        var(--spectrum-global-dimension-static-size-0)
+    );
+    --spectrum-table-spacious-header-border-radius: var(
+        --spectrum-table-m-spacious-header-border-radius,
+        var(--spectrum-global-dimension-static-size-0)
+    );
+    --spectrum-table-spacious-cell-border-radius-key-focus: var(
+        --spectrum-table-m-spacious-cell-border-radius-key-focus,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-table-spacious-divider-border-size: var(
+        --spectrum-table-m-spacious-divider-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+    --spectrum-table-spacious-header-text-size: var(
+        --spectrum-table-m-spacious-header-text-size,
+        var(--spectrum-global-dimension-font-size-50)
+    );
+    --spectrum-table-spacious-header-text-font-weight: var(
+        --spectrum-table-m-spacious-header-text-font-weight,
+        var(--spectrum-alias-detail-text-font-weight-regular)
+    );
+    --spectrum-table-spacious-header-text-letter-spacing: var(
+        --spectrum-table-m-spacious-header-text-letter-spacing,
+        var(--spectrum-global-font-letter-spacing-medium)
+    );
+    --spectrum-table-spacious-header-text-line-height: var(
+        --spectrum-table-m-spacious-header-text-line-height,
+        var(--spectrum-alias-heading-text-line-height)
+    );
+    --spectrum-table-spacious-header-sort-icon-gap: var(
+        --spectrum-table-m-spacious-header-sort-icon-gap,
+        var(--spectrum-global-dimension-size-125)
+    );
+    --spectrum-table-spacious-header-min-height: var(
+        --spectrum-table-m-spacious-header-min-height,
+        var(--spectrum-global-dimension-size-400)
+    );
+    --spectrum-table-spacious-header-padding-top: var(
+        --spectrum-table-m-spacious-header-padding-top,
+        var(--spectrum-global-dimension-static-size-125)
+    );
+    --spectrum-table-spacious-header-padding-bottom: var(
+        --spectrum-table-m-spacious-header-padding-bottom,
+        var(--spectrum-global-dimension-static-size-125)
+    );
+    --spectrum-table-spacious-header-padding-left: var(
+        --spectrum-table-m-spacious-header-padding-left,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-spacious-header-padding-right: var(
+        --spectrum-table-m-spacious-header-padding-right,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-spacious-cell-text-size: var(
+        --spectrum-table-m-spacious-cell-text-size,
+        var(--spectrum-global-dimension-font-size-100)
+    );
+    --spectrum-table-spacious-cell-text-font-weight: var(
+        --spectrum-table-m-spacious-cell-text-font-weight,
+        var(--spectrum-alias-body-text-font-weight)
+    );
+    --spectrum-table-spacious-cell-text-line-height: var(
+        --spectrum-table-m-spacious-cell-text-line-height,
+        var(--spectrum-alias-component-text-line-height)
+    );
+    --spectrum-table-spacious-cell-checkbox-padding-right: var(
+        --spectrum-table-m-spacious-cell-checkbox-padding-right,
+        var(--spectrum-global-dimension-size-100)
+    );
+    --spectrum-table-spacious-cell-checkbox-vertical-alignment: var(
+        --spectrum-table-m-spacious-cell-checkbox-vertical-alignment,
+        middle
+    );
+    --spectrum-table-spacious-cell-min-height: var(
+        --spectrum-table-m-spacious-cell-min-height,
+        var(--spectrum-global-dimension-size-600)
+    );
+    --spectrum-table-spacious-cell-padding-top: var(
+        --spectrum-table-m-spacious-cell-padding-top,
+        var(--spectrum-global-dimension-size-185)
+    );
+    --spectrum-table-spacious-cell-padding-bottom: var(
+        --spectrum-table-m-spacious-cell-padding-bottom,
+        var(--spectrum-global-dimension-size-185)
+    );
+    --spectrum-table-spacious-cell-padding-left: var(
+        --spectrum-table-m-spacious-cell-padding-left,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-spacious-cell-padding-right: var(
+        --spectrum-table-m-spacious-cell-padding-right,
+        var(--spectrum-global-dimension-static-size-200)
+    );
+    --spectrum-table-spacious-cell-vertical-alignment: var(
+        --spectrum-table-m-spacious-cell-vertical-alignment,
+        top
+    );
+    --spectrum-table-spacious-border-radius: var(
+        --spectrum-table-m-spacious-border-radius,
+        var(--spectrum-alias-border-radius-regular)
+    );
+    --spectrum-table-spacious-border-size: var(
+        --spectrum-table-m-spacious-border-size,
+        var(--spectrum-alias-border-size-thin)
+    );
+}
+.spectrum-Table-cell--alignCenter {
+    text-align: center; /* .spectrum-Table-cell--alignCenter */
+}
+:host([dir='ltr']) .spectrum-Table-cell--alignRight {
+    text-align: right; /* [dir=ltr] .spectrum-Table-cell--alignRight */
+}
+:host([dir='rtl']) .spectrum-Table-cell--alignRight {
+    text-align: left; /* [dir=rtl] .spectrum-Table-cell--alignRight */
+}
+:host([dir='ltr']) .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr']) .spectrum-Table-row.is-drop-target:before,
+:host([dir='ltr'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='compact']) .spectrum-Table-row.is-drop-target:before,
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    left: 0; /* [dir=ltr] .spectrum-Table-body.is-drop-target:before,
+   * [dir=ltr] 
+.spectrum-Table-row.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+}
+:host([dir='rtl']) .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl']) .spectrum-Table-row.is-drop-target:before,
+:host([dir='rtl'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='compact']) .spectrum-Table-row.is-drop-target:before,
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    right: 0; /* [dir=rtl] .spectrum-Table-body.is-drop-target:before,
+   * [dir=rtl] 
+.spectrum-Table-row.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+}
+:host([dir='ltr']) .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr']) .spectrum-Table-row.is-drop-target:before,
+:host([dir='ltr'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='compact']) .spectrum-Table-row.is-drop-target:before,
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    right: 0; /* [dir=ltr] .spectrum-Table-body.is-drop-target:before,
+   * [dir=ltr] 
+.spectrum-Table-row.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+}
+:host([dir='rtl']) .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl']) .spectrum-Table-row.is-drop-target:before,
+:host([dir='rtl'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='compact']) .spectrum-Table-row.is-drop-target:before,
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    left: 0; /* [dir=rtl] .spectrum-Table-body.is-drop-target:before,
+   * [dir=rtl] 
+.spectrum-Table-row.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+}
+.spectrum-Table-body.is-drop-target:before,
+.spectrum-Table-row.is-drop-target:before,
+:host([density='compact']) .spectrum-Table-body.is-drop-target:before,
+:host([density='compact']) .spectrum-Table-row.is-drop-target:before,
+:host([density='spacious']) .spectrum-Table-body.is-drop-target:before,
+:host([density='spacious']) .spectrum-Table-row.is-drop-target:before {
+    bottom: 0;
+    content: ''; /* .spectrum-Table-body.is-drop-target:before,
+   * .spectrum-Table-row.is-drop-target::before,
+   * .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+.spectrum-Table-body {
+    border-radius: var(--spectrum-table-regular-border-radius);
+    border-width: var(--spectrum-table-regular-border-size);
+    overflow: auto;
+    position: relative; /* .spectrum-Table-body */
+    vertical-align: var(--spectrum-table-regular-cell-vertical-alignment);
+}
+:host(:not(.spectrum-Table--quiet)) tbody.spectrum-Table-body {
+    border-radius: var(--spectrum-table-regular-border-radius);
+    border-width: var(
+        --spectrum-table-regular-border-size
+    ); /* .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body */
+}
+:host([dir='ltr']:not(.spectrum-Table--quiet))
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:first-child
+    .spectrum-Table-cell:first-child {
+    border-top-left-radius: var(
+        --spectrum-table-regular-border-radius
+    ); /* [dir=ltr] .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:first-child .spectrum-Table-cell:first-child */
+}
+:host([dir='rtl']:not(.spectrum-Table--quiet))
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:first-child
+    .spectrum-Table-cell:first-child {
+    border-top-right-radius: var(
+        --spectrum-table-regular-border-radius
+    ); /* [dir=rtl] .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:first-child .spectrum-Table-cell:first-child */
+}
+:host([dir='ltr']:not(.spectrum-Table--quiet))
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:first-child
+    .spectrum-Table-cell:last-child {
+    border-top-right-radius: var(
+        --spectrum-table-regular-border-radius
+    ); /* [dir=ltr] .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:first-child .spectrum-Table-cell:last-child */
+}
+:host([dir='rtl']:not(.spectrum-Table--quiet))
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:first-child
+    .spectrum-Table-cell:last-child {
+    border-top-left-radius: var(
+        --spectrum-table-regular-border-radius
+    ); /* [dir=rtl] .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:first-child .spectrum-Table-cell:last-child */
+}
+:host([dir='ltr']:not(.spectrum-Table--quiet))
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:last-child
+    .spectrum-Table-cell:first-child {
+    border-bottom-left-radius: var(
+        --spectrum-table-regular-border-radius
+    ); /* [dir=ltr] .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:last-child .spectrum-Table-cell:first-child */
+}
+:host([dir='rtl']:not(.spectrum-Table--quiet))
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:last-child
+    .spectrum-Table-cell:first-child {
+    border-bottom-right-radius: var(
+        --spectrum-table-regular-border-radius
+    ); /* [dir=rtl] .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:last-child .spectrum-Table-cell:first-child */
+}
+:host([dir='ltr']:not(.spectrum-Table--quiet))
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:last-child
+    .spectrum-Table-cell:last-child {
+    border-bottom-right-radius: var(
+        --spectrum-table-regular-border-radius
+    ); /* [dir=ltr] .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:last-child .spectrum-Table-cell:last-child */
+}
+:host([dir='rtl']:not(.spectrum-Table--quiet))
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:last-child
+    .spectrum-Table-cell:last-child {
+    border-bottom-left-radius: var(
+        --spectrum-table-regular-border-radius
+    ); /* [dir=rtl] .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:last-child .spectrum-Table-cell:last-child */
+}
+:host([dir='ltr']) .spectrum-Table-cell {
+    padding-left: var(
+        --spectrum-table-regular-cell-padding-left
+    ); /* [dir=ltr] .spectrum-Table-cell */
+    padding-right: var(--spectrum-table-regular-cell-padding-right);
+}
+:host([dir='rtl']) .spectrum-Table-cell {
+    padding-left: var(--spectrum-table-regular-cell-padding-right);
+    padding-right: var(
+        --spectrum-table-regular-cell-padding-left
+    ); /* [dir=rtl] .spectrum-Table-cell */
+}
+.spectrum-Table-cell {
+    box-sizing: border-box; /* .spectrum-Table-cell */
+    font-size: var(--spectrum-table-regular-cell-text-size);
+    font-weight: var(--spectrum-table-regular-cell-text-font-weight);
+    line-height: var(--spectrum-table-regular-cell-text-line-height);
+    min-height: calc(
+        var(--spectrum-table-regular-cell-min-height) -
+            var(--spectrum-table-regular-cell-padding-top) -
+            var(--spectrum-table-regular-cell-padding-bottom)
+    ); /* .spectrum-Table-cell,
+   * .spectrum-Table-headCell */
+    padding-bottom: var(--spectrum-table-regular-cell-padding-bottom);
+    padding-top: var(--spectrum-table-regular-cell-padding-top);
+    position: relative;
+}
+.spectrum-Table-cell.focus-visible,
+.spectrum-Table-cell.is-focused {
+    outline: none; /* .spectrum-Table-cell.focus-ring,
+   * .spectrum-Table-cell.is-focused,
+   * .spectrum-Table-headCell.focus-ring,
+   * .spectrum-Table-headCell.is-focused */
+}
+.spectrum-Table-cell.is-focused,
+.spectrum-Table-cell:focus-visible {
+    outline: none; /* .spectrum-Table-cell.focus-ring,
+   * .spectrum-Table-cell.is-focused,
+   * .spectrum-Table-headCell.focus-ring,
+   * .spectrum-Table-headCell.is-focused */
+}
+:host([dir='ltr']) .spectrum-Table-cell.focus-visible:before,
+:host([dir='ltr']) .spectrum-Table-cell.is-focused:before {
+    right: 0; /* [dir=ltr] .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='ltr']) .spectrum-Table-cell.is-focused:before,
+:host([dir='ltr']) .spectrum-Table-cell:focus-visible:before {
+    right: 0; /* [dir=ltr] .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl']) .spectrum-Table-cell.focus-visible:before,
+:host([dir='rtl']) .spectrum-Table-cell.is-focused:before {
+    left: 0; /* [dir=rtl] .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl']) .spectrum-Table-cell.is-focused:before,
+:host([dir='rtl']) .spectrum-Table-cell:focus-visible:before {
+    left: 0; /* [dir=rtl] .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='ltr']) .spectrum-Table-cell.focus-visible:before,
+:host([dir='ltr']) .spectrum-Table-cell.is-focused:before {
+    left: 0; /* [dir=ltr] .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='ltr']) .spectrum-Table-cell.is-focused:before,
+:host([dir='ltr']) .spectrum-Table-cell:focus-visible:before {
+    left: 0; /* [dir=ltr] .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl']) .spectrum-Table-cell.focus-visible:before,
+:host([dir='rtl']) .spectrum-Table-cell.is-focused:before {
+    right: 0; /* [dir=rtl] .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl']) .spectrum-Table-cell.is-focused:before,
+:host([dir='rtl']) .spectrum-Table-cell:focus-visible:before {
+    right: 0; /* [dir=rtl] .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table-headCell.is-focused::before */
+}
+.spectrum-Table-cell.focus-visible:before,
+.spectrum-Table-cell.is-focused:before {
+    border-radius: calc(
+        var(--spectrum-table-regular-cell-border-radius-key-focus) - 1px
+    );
+    bottom: 0;
+    content: ''; /* .spectrum-Table-cell.focus-ring:before,
+   * .spectrum-Table-cell.is-focused::before,
+   * .spectrum-Table-headCell.focus-ring::before,
+   * .spectrum-Table-headCell.is-focused::before */
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+.spectrum-Table-cell.is-focused:before,
+.spectrum-Table-cell:focus-visible:before {
+    border-radius: calc(
+        var(--spectrum-table-regular-cell-border-radius-key-focus) - 1px
+    );
+    bottom: 0;
+    content: ''; /* .spectrum-Table-cell.focus-ring:before,
+   * .spectrum-Table-cell.is-focused::before,
+   * .spectrum-Table-headCell.focus-ring::before,
+   * .spectrum-Table-headCell.is-focused::before */
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+:host([dir='ltr']) .spectrum-Table-cell--divider {
+    border-right-width: var(
+        --spectrum-table-regular-divider-border-size
+    ); /* [dir=ltr] .spectrum-Table-cell--divider */
+}
+:host([dir='rtl']) .spectrum-Table-cell--divider {
+    border-left-width: var(
+        --spectrum-table-regular-divider-border-size
+    ); /* [dir=rtl] .spectrum-Table-cell--divider */
+}
+.spectrum-Table-row {
+    cursor: pointer;
+    position: relative; /* .spectrum-Table-row */
+    transition: background-color
+        var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out;
+}
+.spectrum-Table-row:focus {
+    outline: 0; /* .spectrum-Table-row:focus */
+}
+:host > .spectrum-Table-body > .spectrum-Table-row:last-of-type {
+    border-bottom-style: none; /* .spectrum-Table>.spectrum-Table-body>.spectrum-Table-row:last-of-type */
+}
+.spectrum-Table--quiet .spectrum-Table-body {
+    border-radius: var(
+        --spectrum-table-regular-quiet-border-radius
+    ); /* .spectrum-Table--quiet .spectrum-Table-body */
+}
+.spectrum-Table--quiet .spectrum-Table-body.is-drop-target:before,
+.spectrum-Table--quiet .spectrum-Table-row.is-drop-target:before {
+    border-radius: var(
+        --spectrum-alias-border-radius-regular,
+        var(--spectrum-global-dimension-size-50)
+    ); /* .spectrum-Table--quiet .spectrum-Table-body.is-drop-target:before,
+   * .spectrum-Table--quiet .spectrum-Table-row.is-drop-target::before */
+}
+:host([dir='ltr']) .spectrum-Table-checkboxCell {
+    padding-right: var(
+        --spectrum-table-regular-cell-checkbox-padding-right
+    ); /* [dir=ltr] .spectrum-Table-checkboxCell */
+}
+:host([dir='rtl']) .spectrum-Table-checkboxCell {
+    padding-left: var(
+        --spectrum-table-regular-cell-checkbox-padding-right
+    ); /* [dir=rtl] .spectrum-Table-checkboxCell */
+}
+.spectrum-Table-checkboxCell {
+    padding-bottom: 0;
+    padding-top: 0; /* .spectrum-Table-checkboxCell */
+    vertical-align: var(
+        --spectrum-table-regular-cell-checkbox-vertical-alignment
+    );
+}
+.spectrum-Table-checkbox {
+    vertical-align: super; /* .spectrum-Table-checkbox */
+}
+:host([density='compact']) .spectrum-Table-cell--alignCenter {
+    text-align: center; /* .spectrum-Table--compact .spectrum-Table-cell--alignCenter */
+}
+:host([dir='ltr'][density='compact']) .spectrum-Table-cell--alignRight {
+    text-align: right; /* [dir=ltr] .spectrum-Table--compact .spectrum-Table-cell--alignRight */
+}
+:host([dir='rtl'][density='compact']) .spectrum-Table-cell--alignRight {
+    text-align: left; /* [dir=rtl] .spectrum-Table--compact .spectrum-Table-cell--alignRight */
+}
+:host([dir='ltr'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='compact']) .spectrum-Table-row.is-drop-target:before,
+:host([dir='ltr'][density='compact'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='compact'][density='compact'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([dir='ltr'][density='compact'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='compact'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    left: 0; /* [dir=ltr] .spectrum-Table--compact .spectrum-Table-body.is-drop-target:before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+}
+:host([dir='rtl'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='compact']) .spectrum-Table-row.is-drop-target:before,
+:host([dir='rtl'][density='compact'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='compact'][density='compact'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([dir='rtl'][density='compact'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='compact'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    right: 0; /* [dir=rtl] .spectrum-Table--compact .spectrum-Table-body.is-drop-target:before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+}
+:host([dir='ltr'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='compact']) .spectrum-Table-row.is-drop-target:before,
+:host([dir='ltr'][density='compact'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='compact'][density='compact'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([dir='ltr'][density='compact'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='compact'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    right: 0; /* [dir=ltr] .spectrum-Table--compact .spectrum-Table-body.is-drop-target:before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--compact .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+}
+:host([dir='rtl'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='compact']) .spectrum-Table-row.is-drop-target:before,
+:host([dir='rtl'][density='compact'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='compact'][density='compact'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([dir='rtl'][density='compact'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='compact'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    left: 0; /* [dir=rtl] .spectrum-Table--compact .spectrum-Table-body.is-drop-target:before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--compact .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+}
+:host([density='compact']) .spectrum-Table-body.is-drop-target:before,
+:host([density='compact']) .spectrum-Table-row.is-drop-target:before,
+:host([density='compact'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([density='compact'][density='compact'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([density='compact'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([density='compact'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    bottom: 0;
+    content: ''; /* .spectrum-Table--compact .spectrum-Table-body.is-drop-target:before,
+   * .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * .spectrum-Table--compact .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * .spectrum-Table--compact .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * .spectrum-Table--compact .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * .spectrum-Table--compact .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+:host([density='compact']) .spectrum-Table-body {
+    border-radius: var(--spectrum-table-compact-border-radius);
+    border-width: var(--spectrum-table-compact-border-size);
+    overflow: auto;
+    position: relative; /* .spectrum-Table--compact .spectrum-Table-body */
+    vertical-align: var(--spectrum-table-compact-cell-vertical-alignment);
+}
+:host([density='compact'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body {
+    border-radius: var(--spectrum-table-compact-border-radius);
+    border-width: var(
+        --spectrum-table-compact-border-size
+    ); /* .spectrum-Table--compact .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body */
+}
+:host([dir='ltr'][density='compact'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:first-child
+    .spectrum-Table-cell:first-child {
+    border-top-left-radius: var(
+        --spectrum-table-compact-border-radius
+    ); /* [dir=ltr] .spectrum-Table--compact .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:first-child .spectrum-Table-cell:first-child */
+}
+:host([dir='rtl'][density='compact'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:first-child
+    .spectrum-Table-cell:first-child {
+    border-top-right-radius: var(
+        --spectrum-table-compact-border-radius
+    ); /* [dir=rtl] .spectrum-Table--compact .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:first-child .spectrum-Table-cell:first-child */
+}
+:host([dir='ltr'][density='compact'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:first-child
+    .spectrum-Table-cell:last-child {
+    border-top-right-radius: var(
+        --spectrum-table-compact-border-radius
+    ); /* [dir=ltr] .spectrum-Table--compact .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:first-child .spectrum-Table-cell:last-child */
+}
+:host([dir='rtl'][density='compact'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:first-child
+    .spectrum-Table-cell:last-child {
+    border-top-left-radius: var(
+        --spectrum-table-compact-border-radius
+    ); /* [dir=rtl] .spectrum-Table--compact .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:first-child .spectrum-Table-cell:last-child */
+}
+:host([dir='ltr'][density='compact'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:last-child
+    .spectrum-Table-cell:first-child {
+    border-bottom-left-radius: var(
+        --spectrum-table-compact-border-radius
+    ); /* [dir=ltr] .spectrum-Table--compact .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:last-child .spectrum-Table-cell:first-child */
+}
+:host([dir='rtl'][density='compact'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:last-child
+    .spectrum-Table-cell:first-child {
+    border-bottom-right-radius: var(
+        --spectrum-table-compact-border-radius
+    ); /* [dir=rtl] .spectrum-Table--compact .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:last-child .spectrum-Table-cell:first-child */
+}
+:host([dir='ltr'][density='compact'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:last-child
+    .spectrum-Table-cell:last-child {
+    border-bottom-right-radius: var(
+        --spectrum-table-compact-border-radius
+    ); /* [dir=ltr] .spectrum-Table--compact .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:last-child .spectrum-Table-cell:last-child */
+}
+:host([dir='rtl'][density='compact'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:last-child
+    .spectrum-Table-cell:last-child {
+    border-bottom-left-radius: var(
+        --spectrum-table-compact-border-radius
+    ); /* [dir=rtl] .spectrum-Table--compact .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:last-child .spectrum-Table-cell:last-child */
+}
+:host([dir='ltr'][density='compact']) .spectrum-Table-cell {
+    padding-left: var(
+        --spectrum-table-compact-cell-padding-left
+    ); /* [dir=ltr] .spectrum-Table--compact .spectrum-Table-cell */
+    padding-right: var(--spectrum-table-compact-cell-padding-right);
+}
+:host([dir='rtl'][density='compact']) .spectrum-Table-cell {
+    padding-left: var(--spectrum-table-compact-cell-padding-right);
+    padding-right: var(
+        --spectrum-table-compact-cell-padding-left
+    ); /* [dir=rtl] .spectrum-Table--compact .spectrum-Table-cell */
+}
+:host([density='compact']) .spectrum-Table-cell {
+    box-sizing: border-box; /* .spectrum-Table--compact .spectrum-Table-cell */
+    font-size: var(--spectrum-table-compact-cell-text-size);
+    font-weight: var(--spectrum-table-compact-cell-text-font-weight);
+    line-height: var(--spectrum-table-compact-cell-text-line-height);
+    min-height: calc(
+        var(--spectrum-table-compact-cell-min-height) -
+            var(--spectrum-table-compact-cell-padding-top) -
+            var(--spectrum-table-compact-cell-padding-bottom)
+    );
+    padding-bottom: var(--spectrum-table-compact-cell-padding-bottom);
+    padding-top: var(--spectrum-table-compact-cell-padding-top);
+}
+:host([density='compact']) .spectrum-Table-cell {
+    position: relative; /* .spectrum-Table--compact .spectrum-Table-cell,
+   * .spectrum-Table--compact .spectrum-Table-headCell */
+}
+:host([density='compact']) .spectrum-Table-cell.focus-visible,
+:host([density='compact']) .spectrum-Table-cell.is-focused {
+    outline: none; /* .spectrum-Table--compact .spectrum-Table-cell.focus-ring,
+   * .spectrum-Table--compact .spectrum-Table-cell.is-focused,
+   * .spectrum-Table--compact .spectrum-Table-headCell.focus-ring,
+   * .spectrum-Table--compact .spectrum-Table-headCell.is-focused */
+}
+:host([density='compact']) .spectrum-Table-cell.is-focused,
+:host([density='compact']) .spectrum-Table-cell:focus-visible {
+    outline: none; /* .spectrum-Table--compact .spectrum-Table-cell.focus-ring,
+   * .spectrum-Table--compact .spectrum-Table-cell.is-focused,
+   * .spectrum-Table--compact .spectrum-Table-headCell.focus-ring,
+   * .spectrum-Table--compact .spectrum-Table-headCell.is-focused */
+}
+:host([dir='ltr'][density='compact']) .spectrum-Table-cell.focus-visible:before,
+:host([dir='ltr'][density='compact']) .spectrum-Table-cell.is-focused:before {
+    right: 0; /* [dir=ltr] .spectrum-Table--compact .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table--compact .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table--compact .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table--compact .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='ltr'][density='compact']) .spectrum-Table-cell.is-focused:before,
+:host([dir='ltr'][density='compact'])
+    .spectrum-Table-cell:focus-visible:before {
+    right: 0; /* [dir=ltr] .spectrum-Table--compact .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table--compact .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table--compact .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table--compact .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl'][density='compact']) .spectrum-Table-cell.focus-visible:before,
+:host([dir='rtl'][density='compact']) .spectrum-Table-cell.is-focused:before {
+    left: 0; /* [dir=rtl] .spectrum-Table--compact .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table--compact .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table--compact .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table--compact .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl'][density='compact']) .spectrum-Table-cell.is-focused:before,
+:host([dir='rtl'][density='compact'])
+    .spectrum-Table-cell:focus-visible:before {
+    left: 0; /* [dir=rtl] .spectrum-Table--compact .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table--compact .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table--compact .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table--compact .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='ltr'][density='compact']) .spectrum-Table-cell.focus-visible:before,
+:host([dir='ltr'][density='compact']) .spectrum-Table-cell.is-focused:before {
+    left: 0; /* [dir=ltr] .spectrum-Table--compact .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table--compact .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table--compact .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table--compact .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='ltr'][density='compact']) .spectrum-Table-cell.is-focused:before,
+:host([dir='ltr'][density='compact'])
+    .spectrum-Table-cell:focus-visible:before {
+    left: 0; /* [dir=ltr] .spectrum-Table--compact .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table--compact .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table--compact .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table--compact .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl'][density='compact']) .spectrum-Table-cell.focus-visible:before,
+:host([dir='rtl'][density='compact']) .spectrum-Table-cell.is-focused:before {
+    right: 0; /* [dir=rtl] .spectrum-Table--compact .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table--compact .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table--compact .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table--compact .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl'][density='compact']) .spectrum-Table-cell.is-focused:before,
+:host([dir='rtl'][density='compact'])
+    .spectrum-Table-cell:focus-visible:before {
+    right: 0; /* [dir=rtl] .spectrum-Table--compact .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table--compact .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table--compact .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table--compact .spectrum-Table-headCell.is-focused::before */
+}
+:host([density='compact']) .spectrum-Table-cell.focus-visible:before,
+:host([density='compact']) .spectrum-Table-cell.is-focused:before {
+    border-radius: calc(
+        var(--spectrum-table-compact-cell-border-radius-key-focus) - 1px
+    );
+    bottom: 0;
+    content: ''; /* .spectrum-Table--compact .spectrum-Table-cell.focus-ring:before,
+   * .spectrum-Table--compact .spectrum-Table-cell.is-focused::before,
+   * .spectrum-Table--compact .spectrum-Table-headCell.focus-ring::before,
+   * .spectrum-Table--compact .spectrum-Table-headCell.is-focused::before */
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+:host([density='compact']) .spectrum-Table-cell.is-focused:before,
+:host([density='compact']) .spectrum-Table-cell:focus-visible:before {
+    border-radius: calc(
+        var(--spectrum-table-compact-cell-border-radius-key-focus) - 1px
+    );
+    bottom: 0;
+    content: ''; /* .spectrum-Table--compact .spectrum-Table-cell.focus-ring:before,
+   * .spectrum-Table--compact .spectrum-Table-cell.is-focused::before,
+   * .spectrum-Table--compact .spectrum-Table-headCell.focus-ring::before,
+   * .spectrum-Table--compact .spectrum-Table-headCell.is-focused::before */
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+:host([dir='ltr'][density='compact']) .spectrum-Table-cell--divider {
+    border-right-width: var(
+        --spectrum-table-compact-divider-border-size
+    ); /* [dir=ltr] .spectrum-Table--compact .spectrum-Table-cell--divider */
+}
+:host([dir='rtl'][density='compact']) .spectrum-Table-cell--divider {
+    border-left-width: var(
+        --spectrum-table-compact-divider-border-size
+    ); /* [dir=rtl] .spectrum-Table--compact .spectrum-Table-cell--divider */
+}
+:host([density='compact']) .spectrum-Table-row {
+    cursor: pointer;
+    position: relative; /* .spectrum-Table--compact .spectrum-Table-row */
+    transition: background-color
+        var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out;
+}
+:host([density='compact']) .spectrum-Table-row:focus {
+    outline: 0; /* .spectrum-Table--compact .spectrum-Table-row:focus */
+}
+:host([density='compact'])
+    .spectrum-Table
+    > .spectrum-Table-body
+    > .spectrum-Table-row:last-of-type {
+    border-bottom-style: none; /* .spectrum-Table--compact .spectrum-Table>.spectrum-Table-body>.spectrum-Table-row:last-of-type */
+}
+:host([density='compact']) .spectrum-Table--quiet .spectrum-Table-body {
+    border-radius: var(
+        --spectrum-table-compact-quiet-border-radius
+    ); /* .spectrum-Table--compact .spectrum-Table--quiet .spectrum-Table-body */
+}
+:host([density='compact'])
+    .spectrum-Table--quiet
+    .spectrum-Table-body.is-drop-target:before,
+:host([density='compact'])
+    .spectrum-Table--quiet
+    .spectrum-Table-row.is-drop-target:before {
+    border-radius: var(
+        --spectrum-alias-border-radius-regular,
+        var(--spectrum-global-dimension-size-50)
+    ); /* .spectrum-Table--compact .spectrum-Table--quiet .spectrum-Table-body.is-drop-target:before,
+   * .spectrum-Table--compact .spectrum-Table--quiet .spectrum-Table-row.is-drop-target::before */
+}
+:host([dir='ltr'][density='compact']) .spectrum-Table-checkboxCell {
+    padding-right: var(
+        --spectrum-table-compact-cell-checkbox-padding-right
+    ); /* [dir=ltr] .spectrum-Table--compact .spectrum-Table-checkboxCell */
+}
+:host([dir='rtl'][density='compact']) .spectrum-Table-checkboxCell {
+    padding-left: var(
+        --spectrum-table-compact-cell-checkbox-padding-right
+    ); /* [dir=rtl] .spectrum-Table--compact .spectrum-Table-checkboxCell */
+}
+:host([density='compact']) .spectrum-Table-checkboxCell {
+    padding-bottom: 0;
+    padding-top: 0; /* .spectrum-Table--compact .spectrum-Table-checkboxCell */
+    vertical-align: var(
+        --spectrum-table-compact-cell-checkbox-vertical-alignment
+    );
+}
+:host([density='compact']) .spectrum-Table-checkbox {
+    vertical-align: super; /* .spectrum-Table--compact .spectrum-Table-checkbox */
+}
+:host([density='spacious']) .spectrum-Table-cell--alignCenter {
+    text-align: center; /* .spectrum-Table--spacious .spectrum-Table-cell--alignCenter */
+}
+:host([dir='ltr'][density='spacious']) .spectrum-Table-cell--alignRight {
+    text-align: right; /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table-cell--alignRight */
+}
+:host([dir='rtl'][density='spacious']) .spectrum-Table-cell--alignRight {
+    text-align: left; /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table-cell--alignRight */
+}
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([dir='ltr'][density='spacious'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='spacious'][density='compact'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([dir='ltr'][density='spacious'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='spacious'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    left: 0; /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table-body.is-drop-target:before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+}
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([dir='rtl'][density='spacious'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='spacious'][density='compact'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([dir='rtl'][density='spacious'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='spacious'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    right: 0; /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table-body.is-drop-target:before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+}
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([dir='ltr'][density='spacious'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='spacious'][density='compact'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([dir='ltr'][density='spacious'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='ltr'][density='spacious'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    right: 0; /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table-body.is-drop-target:before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * [dir=ltr] 
+.spectrum-Table--spacious .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+}
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([dir='rtl'][density='spacious'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='spacious'][density='compact'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([dir='rtl'][density='spacious'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([dir='rtl'][density='spacious'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    left: 0; /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table-body.is-drop-target:before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * [dir=rtl] 
+.spectrum-Table--spacious .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+}
+:host([density='spacious']) .spectrum-Table-body.is-drop-target:before,
+:host([density='spacious']) .spectrum-Table-row.is-drop-target:before,
+:host([density='spacious'][density='compact'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([density='spacious'][density='compact'])
+    .spectrum-Table-row.is-drop-target:before,
+:host([density='spacious'][density='spacious'])
+    .spectrum-Table-body.is-drop-target:before,
+:host([density='spacious'][density='spacious'])
+    .spectrum-Table-row.is-drop-target:before {
+    bottom: 0;
+    content: ''; /* .spectrum-Table--spacious .spectrum-Table-body.is-drop-target:before,
+   * .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before,
+   * .spectrum-Table--spacious .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
+   * .spectrum-Table--spacious .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
+   * .spectrum-Table--spacious .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
+   * .spectrum-Table--spacious .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+:host([density='spacious']) .spectrum-Table-body {
+    border-radius: var(--spectrum-table-spacious-border-radius);
+    border-width: var(--spectrum-table-spacious-border-size);
+    overflow: auto;
+    position: relative; /* .spectrum-Table--spacious .spectrum-Table-body */
+    vertical-align: var(--spectrum-table-spacious-cell-vertical-alignment);
+}
+:host([density='spacious'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body {
+    border-radius: var(--spectrum-table-spacious-border-radius);
+    border-width: var(
+        --spectrum-table-spacious-border-size
+    ); /* .spectrum-Table--spacious .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body */
+}
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:first-child
+    .spectrum-Table-cell:first-child {
+    border-top-left-radius: var(
+        --spectrum-table-spacious-border-radius
+    ); /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:first-child .spectrum-Table-cell:first-child */
+}
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:first-child
+    .spectrum-Table-cell:first-child {
+    border-top-right-radius: var(
+        --spectrum-table-spacious-border-radius
+    ); /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:first-child .spectrum-Table-cell:first-child */
+}
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:first-child
+    .spectrum-Table-cell:last-child {
+    border-top-right-radius: var(
+        --spectrum-table-spacious-border-radius
+    ); /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:first-child .spectrum-Table-cell:last-child */
+}
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:first-child
+    .spectrum-Table-cell:last-child {
+    border-top-left-radius: var(
+        --spectrum-table-spacious-border-radius
+    ); /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:first-child .spectrum-Table-cell:last-child */
+}
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:last-child
+    .spectrum-Table-cell:first-child {
+    border-bottom-left-radius: var(
+        --spectrum-table-spacious-border-radius
+    ); /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:last-child .spectrum-Table-cell:first-child */
+}
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:last-child
+    .spectrum-Table-cell:first-child {
+    border-bottom-right-radius: var(
+        --spectrum-table-spacious-border-radius
+    ); /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:last-child .spectrum-Table-cell:first-child */
+}
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:last-child
+    .spectrum-Table-cell:last-child {
+    border-bottom-right-radius: var(
+        --spectrum-table-spacious-border-radius
+    ); /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:last-child .spectrum-Table-cell:last-child */
+}
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table:not(.spectrum-Table--quiet)
+    tbody.spectrum-Table-body
+    .spectrum-Table-row:last-child
+    .spectrum-Table-cell:last-child {
+    border-bottom-left-radius: var(
+        --spectrum-table-spacious-border-radius
+    ); /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table:not(.spectrum-Table--quiet) tbody.spectrum-Table-body .spectrum-Table-row:last-child .spectrum-Table-cell:last-child */
+}
+:host([dir='ltr'][density='spacious']) .spectrum-Table-cell {
+    padding-left: var(
+        --spectrum-table-spacious-cell-padding-left
+    ); /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table-cell */
+    padding-right: var(--spectrum-table-spacious-cell-padding-right);
+}
+:host([dir='rtl'][density='spacious']) .spectrum-Table-cell {
+    padding-left: var(--spectrum-table-spacious-cell-padding-right);
+    padding-right: var(
+        --spectrum-table-spacious-cell-padding-left
+    ); /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table-cell */
+}
+:host([density='spacious']) .spectrum-Table-cell {
+    box-sizing: border-box; /* .spectrum-Table--spacious .spectrum-Table-cell */
+    font-size: var(--spectrum-table-spacious-cell-text-size);
+    font-weight: var(--spectrum-table-spacious-cell-text-font-weight);
+    line-height: var(--spectrum-table-spacious-cell-text-line-height);
+    min-height: calc(
+        var(--spectrum-table-spacious-cell-min-height) -
+            var(--spectrum-table-spacious-cell-padding-top) -
+            var(--spectrum-table-spacious-cell-padding-bottom)
+    );
+    padding-bottom: var(--spectrum-table-spacious-cell-padding-bottom);
+    padding-top: var(--spectrum-table-spacious-cell-padding-top);
+}
+:host([density='spacious']) .spectrum-Table-cell {
+    position: relative; /* .spectrum-Table--spacious .spectrum-Table-cell,
+   * .spectrum-Table--spacious .spectrum-Table-headCell */
+}
+:host([density='spacious']) .spectrum-Table-cell.focus-visible,
+:host([density='spacious']) .spectrum-Table-cell.is-focused {
+    outline: none; /* .spectrum-Table--spacious .spectrum-Table-cell.focus-ring,
+   * .spectrum-Table--spacious .spectrum-Table-cell.is-focused,
+   * .spectrum-Table--spacious .spectrum-Table-headCell.focus-ring,
+   * .spectrum-Table--spacious .spectrum-Table-headCell.is-focused */
+}
+:host([density='spacious']) .spectrum-Table-cell.is-focused,
+:host([density='spacious']) .spectrum-Table-cell:focus-visible {
+    outline: none; /* .spectrum-Table--spacious .spectrum-Table-cell.focus-ring,
+   * .spectrum-Table--spacious .spectrum-Table-cell.is-focused,
+   * .spectrum-Table--spacious .spectrum-Table-headCell.focus-ring,
+   * .spectrum-Table--spacious .spectrum-Table-headCell.is-focused */
+}
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table-cell.focus-visible:before,
+:host([dir='ltr'][density='spacious']) .spectrum-Table-cell.is-focused:before {
+    right: 0; /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table--spacious .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table--spacious .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table--spacious .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='ltr'][density='spacious']) .spectrum-Table-cell.is-focused:before,
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table-cell:focus-visible:before {
+    right: 0; /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table--spacious .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table--spacious .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table--spacious .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table-cell.focus-visible:before,
+:host([dir='rtl'][density='spacious']) .spectrum-Table-cell.is-focused:before {
+    left: 0; /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table--spacious .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table--spacious .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table--spacious .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl'][density='spacious']) .spectrum-Table-cell.is-focused:before,
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table-cell:focus-visible:before {
+    left: 0; /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table--spacious .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table--spacious .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table--spacious .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table-cell.focus-visible:before,
+:host([dir='ltr'][density='spacious']) .spectrum-Table-cell.is-focused:before {
+    left: 0; /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table--spacious .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table--spacious .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table--spacious .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='ltr'][density='spacious']) .spectrum-Table-cell.is-focused:before,
+:host([dir='ltr'][density='spacious'])
+    .spectrum-Table-cell:focus-visible:before {
+    left: 0; /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table-cell.focus-ring:before,
+   * [dir=ltr]  .spectrum-Table--spacious .spectrum-Table-cell.is-focused::before,
+   * [dir=ltr]  .spectrum-Table--spacious .spectrum-Table-headCell.focus-ring::before,
+   * [dir=ltr]  .spectrum-Table--spacious .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table-cell.focus-visible:before,
+:host([dir='rtl'][density='spacious']) .spectrum-Table-cell.is-focused:before {
+    right: 0; /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table--spacious .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table--spacious .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table--spacious .spectrum-Table-headCell.is-focused::before */
+}
+:host([dir='rtl'][density='spacious']) .spectrum-Table-cell.is-focused:before,
+:host([dir='rtl'][density='spacious'])
+    .spectrum-Table-cell:focus-visible:before {
+    right: 0; /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table-cell.focus-ring:before,
+   * [dir=rtl]  .spectrum-Table--spacious .spectrum-Table-cell.is-focused::before,
+   * [dir=rtl]  .spectrum-Table--spacious .spectrum-Table-headCell.focus-ring::before,
+   * [dir=rtl]  .spectrum-Table--spacious .spectrum-Table-headCell.is-focused::before */
+}
+:host([density='spacious']) .spectrum-Table-cell.focus-visible:before,
+:host([density='spacious']) .spectrum-Table-cell.is-focused:before {
+    border-radius: calc(
+        var(--spectrum-table-spacious-cell-border-radius-key-focus) - 1px
+    );
+    bottom: 0;
+    content: ''; /* .spectrum-Table--spacious .spectrum-Table-cell.focus-ring:before,
+   * .spectrum-Table--spacious .spectrum-Table-cell.is-focused::before,
+   * .spectrum-Table--spacious .spectrum-Table-headCell.focus-ring::before,
+   * .spectrum-Table--spacious .spectrum-Table-headCell.is-focused::before */
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+:host([density='spacious']) .spectrum-Table-cell.is-focused:before,
+:host([density='spacious']) .spectrum-Table-cell:focus-visible:before {
+    border-radius: calc(
+        var(--spectrum-table-spacious-cell-border-radius-key-focus) - 1px
+    );
+    bottom: 0;
+    content: ''; /* .spectrum-Table--spacious .spectrum-Table-cell.focus-ring:before,
+   * .spectrum-Table--spacious .spectrum-Table-cell.is-focused::before,
+   * .spectrum-Table--spacious .spectrum-Table-headCell.focus-ring::before,
+   * .spectrum-Table--spacious .spectrum-Table-headCell.is-focused::before */
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+:host([dir='ltr'][density='spacious']) .spectrum-Table-cell--divider {
+    border-right-width: var(
+        --spectrum-table-spacious-divider-border-size
+    ); /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table-cell--divider */
+}
+:host([dir='rtl'][density='spacious']) .spectrum-Table-cell--divider {
+    border-left-width: var(
+        --spectrum-table-spacious-divider-border-size
+    ); /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table-cell--divider */
+}
+:host([density='spacious']) .spectrum-Table-row {
+    cursor: pointer;
+    position: relative; /* .spectrum-Table--spacious .spectrum-Table-row */
+    transition: background-color
+        var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out;
+}
+:host([density='spacious']) .spectrum-Table-row:focus {
+    outline: 0; /* .spectrum-Table--spacious .spectrum-Table-row:focus */
+}
+:host([density='spacious'])
+    .spectrum-Table
+    > .spectrum-Table-body
+    > .spectrum-Table-row:last-of-type {
+    border-bottom-style: none; /* .spectrum-Table--spacious .spectrum-Table>.spectrum-Table-body>.spectrum-Table-row:last-of-type */
+}
+:host([density='spacious']) .spectrum-Table--quiet .spectrum-Table-body {
+    border-radius: var(
+        --spectrum-table-spacious-quiet-border-radius
+    ); /* .spectrum-Table--spacious .spectrum-Table--quiet .spectrum-Table-body */
+}
+:host([density='spacious'])
+    .spectrum-Table--quiet
+    .spectrum-Table-body.is-drop-target:before,
+:host([density='spacious'])
+    .spectrum-Table--quiet
+    .spectrum-Table-row.is-drop-target:before {
+    border-radius: var(
+        --spectrum-alias-border-radius-regular,
+        var(--spectrum-global-dimension-size-50)
+    ); /* .spectrum-Table--spacious .spectrum-Table--quiet .spectrum-Table-body.is-drop-target:before,
+   * .spectrum-Table--spacious .spectrum-Table--quiet .spectrum-Table-row.is-drop-target::before */
+}
+:host([dir='ltr'][density='spacious']) .spectrum-Table-checkboxCell {
+    padding-right: var(
+        --spectrum-table-spacious-cell-checkbox-padding-right
+    ); /* [dir=ltr] .spectrum-Table--spacious .spectrum-Table-checkboxCell */
+}
+:host([dir='rtl'][density='spacious']) .spectrum-Table-checkboxCell {
+    padding-left: var(
+        --spectrum-table-spacious-cell-checkbox-padding-right
+    ); /* [dir=rtl] .spectrum-Table--spacious .spectrum-Table-checkboxCell */
+}
+:host([density='spacious']) .spectrum-Table-checkboxCell {
+    padding-bottom: 0;
+    padding-top: 0; /* .spectrum-Table--spacious .spectrum-Table-checkboxCell */
+    vertical-align: var(
+        --spectrum-table-spacious-cell-checkbox-vertical-alignment
+    );
+}
+:host([density='spacious']) .spectrum-Table-checkbox {
+    vertical-align: super; /* .spectrum-Table--spacious .spectrum-Table-checkbox */
+}
+.spectrum-Table-cell.focus-visible:before,
+.spectrum-Table-cell.is-focused:before {
+    box-shadow: inset 0 0 0 2px
+        var(
+            --spectrum-table-m-regular-cell-border-color-key-focus,
+            var(--spectrum-alias-border-color-key-focus)
+        ); /* .spectrum-Table-cell.focus-ring:before,
+   * .spectrum-Table-cell.is-focused::before,
+   * .spectrum-Table-headCell.focus-ring::before,
+   * .spectrum-Table-headCell.is-focused::before */
+}
+.spectrum-Table-cell.is-focused:before,
+.spectrum-Table-cell:focus-visible:before {
+    box-shadow: inset 0 0 0 2px
+        var(
+            --spectrum-table-m-regular-cell-border-color-key-focus,
+            var(--spectrum-alias-border-color-key-focus)
+        ); /* .spectrum-Table-cell.focus-ring:before,
+   * .spectrum-Table-cell.is-focused::before,
+   * .spectrum-Table-headCell.focus-ring::before,
+   * .spectrum-Table-headCell.is-focused::before */
+}
+.spectrum-Table-body {
+    background-color: var(
+        --spectrum-table-m-regular-background-color,
+        var(--spectrum-global-color-gray-50)
+    );
+    border-color: var(
+        --spectrum-table-m-regular-border-color,
+        var(--spectrum-alias-border-color-mid)
+    );
+    border-style: solid; /* .spectrum-Table-body */
+}
+.spectrum-Table-body.is-drop-target {
+    border-color: var(
+        --spectrum-alias-border-color-key-focus,
+        var(--spectrum-global-color-blue-400)
+    ); /* .spectrum-Table-body.is-drop-target */
+    box-shadow: 0 0 0 1px
+        var(
+            --spectrum-alias-border-color-key-focus,
+            var(--spectrum-global-color-blue-400)
+        );
+}
+.spectrum-Table-body.is-drop-target:before {
+    background-color: var(
+        --spectrum-alias-highlight-selected
+    ); /* .spectrum-Table-body.is-drop-target:before */
+}
+:host([dir='ltr'])
+    tbody.spectrum-Table-body
+    .spectrum-Table-row
+    .spectrum-Table-cell:first-child {
+    border-left: 1px solid
+        var(
+            --spectrum-table-m-regular-border-color,
+            var(--spectrum-alias-border-color-mid)
+        ); /* [dir=ltr] tbody.spectrum-Table-body .spectrum-Table-row .spectrum-Table-cell:first-child */
+}
+:host([dir='rtl'])
+    tbody.spectrum-Table-body
+    .spectrum-Table-row
+    .spectrum-Table-cell:first-child {
+    border-right: 1px solid
+        var(
+            --spectrum-table-m-regular-border-color,
+            var(--spectrum-alias-border-color-mid)
+        ); /* [dir=rtl] tbody.spectrum-Table-body .spectrum-Table-row .spectrum-Table-cell:first-child */
+}
+:host([dir='ltr'])
+    tbody.spectrum-Table-body
+    .spectrum-Table-row
+    .spectrum-Table-cell:last-child {
+    border-right: 1px solid
+        var(
+            --spectrum-table-m-regular-border-color,
+            var(--spectrum-alias-border-color-mid)
+        ); /* [dir=ltr] tbody.spectrum-Table-body .spectrum-Table-row .spectrum-Table-cell:last-child */
+}
+:host([dir='rtl'])
+    tbody.spectrum-Table-body
+    .spectrum-Table-row
+    .spectrum-Table-cell:last-child {
+    border-left: 1px solid
+        var(
+            --spectrum-table-m-regular-border-color,
+            var(--spectrum-alias-border-color-mid)
+        ); /* [dir=rtl] tbody.spectrum-Table-body .spectrum-Table-row .spectrum-Table-cell:last-child */
+}
+.spectrum-Table-row {
+    background-color: var(
+        --spectrum-table-m-regular-row-background-color,
+        var(--spectrum-alias-background-color-transparent)
+    );
+    border-bottom: 1px solid
+        var(
+            --spectrum-table-m-regular-border-color,
+            var(--spectrum-alias-border-color-mid)
+        ); /* .spectrum-Table-row */
+}
+.spectrum-Table-row:hover {
+    background-color: var(
+        --spectrum-table-m-regular-row-background-color-hover,
+        var(--spectrum-alias-highlight-hover)
+    ); /* .spectrum-Table-row:hover */
+}
+.spectrum-Table-row.focus-visible,
+.spectrum-Table-row.is-focused {
+    background-color: var(
+        --spectrum-table-m-regular-row-background-color-hover,
+        var(--spectrum-alias-highlight-hover)
+    ); /* .spectrum-Table-row.focus-ring,
+   * .spectrum-Table-row.is-focused */
+}
+.spectrum-Table-row.is-focused,
+.spectrum-Table-row:focus-visible {
+    background-color: var(
+        --spectrum-table-m-regular-row-background-color-hover,
+        var(--spectrum-alias-highlight-hover)
+    ); /* .spectrum-Table-row.focus-ring,
+   * .spectrum-Table-row.is-focused */
+}
+.spectrum-Table-row:active {
+    background-color: var(
+        --spectrum-table-m-regular-row-background-color-down,
+        var(--spectrum-alias-highlight-down)
+    ); /* .spectrum-Table-row:active */
+}
+.spectrum-Table-row.is-selected {
+    background-color: var(
+        --spectrum-table-m-regular-row-background-color-selected,
+        var(--spectrum-alias-highlight-selected)
+    ); /* .spectrum-Table-row.is-selected */
+}
+.spectrum-Table-row.is-selected:hover {
+    background-color: var(
+        --spectrum-table-m-regular-row-background-color-selected-hover,
+        var(--spectrum-alias-highlight-selected-hover)
+    ); /* .spectrum-Table-row.is-selected:hover */
+}
+.spectrum-Table-row.is-selected.focus-visible,
+.spectrum-Table-row.is-selected.is-focused {
+    background-color: var(
+        --spectrum-table-m-regular-row-background-color-selected-key-focus,
+        var(--spectrum-alias-highlight-selected-hover)
+    ); /* .spectrum-Table-row.is-selected.focus-ring,
+   * .spectrum-Table-row.is-selected.is-focused */
+}
+.spectrum-Table-row.is-selected.is-focused,
+.spectrum-Table-row.is-selected:focus-visible {
+    background-color: var(
+        --spectrum-table-m-regular-row-background-color-selected-key-focus,
+        var(--spectrum-alias-highlight-selected-hover)
+    ); /* .spectrum-Table-row.is-selected.focus-ring,
+   * .spectrum-Table-row.is-selected.is-focused */
+}
+.spectrum-Table-row.is-drop-target:before {
+    background-color: var(--spectrum-alias-highlight-selected);
+    box-shadow: inset 0 0 0 2px
+        var(
+            --spectrum-alias-border-color-key-focus,
+            var(--spectrum-global-color-blue-400)
+        ); /* .spectrum-Table-row.is-drop-target:before */
+}
+.spectrum-Table-cell {
+    background-color: var(
+        --spectrum-table-m-regular-cell-background-color,
+        var(--spectrum-alias-background-color-transparent)
+    );
+    color: var(
+        --spectrum-table-m-regular-cell-text-color,
+        var(--spectrum-alias-text-color)
+    ); /* .spectrum-Table-cell */
+}
+:host([dir='ltr']) .spectrum-Table-cell--divider {
+    border-right-style: solid; /* [dir=ltr] .spectrum-Table-cell--divider */
+}
+:host([dir='rtl']) .spectrum-Table-cell--divider {
+    border-left-style: solid; /* [dir=rtl] .spectrum-Table-cell--divider */
+}
+:host([dir='ltr']) .spectrum-Table-cell--divider {
+    border-right-color: var(
+        --spectrum-table-m-regular-divider-border-color,
+        var(--spectrum-alias-border-color-mid)
+    ); /* [dir=ltr] .spectrum-Table-cell--divider */
+}
+:host([dir='rtl']) .spectrum-Table-cell--divider {
+    border-left-color: var(
+        --spectrum-table-m-regular-divider-border-color,
+        var(--spectrum-alias-border-color-mid)
+    ); /* [dir=rtl] .spectrum-Table-cell--divider */
+}
+.spectrum-Table--quiet .spectrum-Table-body {
+    background-color: var(
+        --spectrum-table-m-regular-quiet-cell-background-color,
+        var(--spectrum-alias-background-color-transparent)
+    );
+    border-width: 1px 0; /* .spectrum-Table--quiet .spectrum-Table-body */
+}
+.spectrum-Table--quiet .spectrum-Table-body.is-drop-target {
+    border-color: transparent;
+    box-shadow: none; /* .spectrum-Table--quiet .spectrum-Table-body.is-drop-target */
+}
+.spectrum-Table--quiet .spectrum-Table-body.is-drop-target:before {
+    box-shadow: inset 0 0 0 2px
+        var(
+            --spectrum-alias-border-color-key-focus,
+            var(--spectrum-global-color-blue-400)
+        ); /* .spectrum-Table--quiet .spectrum-Table-body.is-drop-target:before */
+}
+.spectrum-Table--quiet .spectrum-Table-row {
+    background-color: var(
+        --spectrum-table-m-regular-quiet-row-background-color,
+        var(--spectrum-alias-background-color-transparent)
+    ); /* .spectrum-Table--quiet .spectrum-Table-row */
+}
+.spectrum-Table--quiet .spectrum-Table-row:hover {
+    background-color: var(
+        --spectrum-table-m-regular-quiet-row-background-color-hover,
+        var(--spectrum-alias-highlight-hover)
+    ); /* .spectrum-Table--quiet .spectrum-Table-row:hover */
+}
+.spectrum-Table--quiet .spectrum-Table-row.focus-visible,
+.spectrum-Table--quiet .spectrum-Table-row.is-focused {
+    background-color: var(
+        --spectrum-table-m-regular-quiet-row-background-color-hover,
+        var(--spectrum-alias-highlight-hover)
+    ); /* .spectrum-Table--quiet .spectrum-Table-row.focus-ring,
+   * .spectrum-Table--quiet .spectrum-Table-row.is-focused */
+}
+.spectrum-Table--quiet .spectrum-Table-row.is-focused,
+.spectrum-Table--quiet .spectrum-Table-row:focus-visible {
+    background-color: var(
+        --spectrum-table-m-regular-quiet-row-background-color-hover,
+        var(--spectrum-alias-highlight-hover)
+    ); /* .spectrum-Table--quiet .spectrum-Table-row.focus-ring,
+   * .spectrum-Table--quiet .spectrum-Table-row.is-focused */
+}
+.spectrum-Table--quiet .spectrum-Table-row:active {
+    background-color: var(
+        --spectrum-table-m-regular-quiet-row-background-color-down,
+        var(--spectrum-alias-highlight-down)
+    ); /* .spectrum-Table--quiet .spectrum-Table-row:active */
+}
+.spectrum-Table--quiet .spectrum-Table-row.is-selected {
+    background-color: var(
+        --spectrum-table-m-regular-quiet-row-background-color-selected,
+        var(--spectrum-alias-highlight-selected)
+    ); /* .spectrum-Table--quiet .spectrum-Table-row.is-selected */
+}
+.spectrum-Table--quiet .spectrum-Table-row.is-selected:hover {
+    background-color: var(
+        --spectrum-table-m-regular-quiet-row-background-color-selected-hover,
+        var(--spectrum-alias-highlight-selected-hover)
+    ); /* .spectrum-Table--quiet .spectrum-Table-row.is-selected:hover */
+}
+.spectrum-Table--quiet .spectrum-Table-row.is-selected.focus-visible,
+.spectrum-Table--quiet .spectrum-Table-row.is-selected.is-focused {
+    background-color: var(
+        --spectrum-table-m-regular-quiet-row-background-color-selected-key-focus,
+        var(--spectrum-alias-highlight-selected-hover)
+    ); /* .spectrum-Table--quiet .spectrum-Table-row.is-selected.focus-ring,
+   * .spectrum-Table--quiet .spectrum-Table-row.is-selected.is-focused */
+}
+.spectrum-Table--quiet .spectrum-Table-row.is-selected.is-focused,
+.spectrum-Table--quiet .spectrum-Table-row.is-selected:focus-visible {
+    background-color: var(
+        --spectrum-table-m-regular-quiet-row-background-color-selected-key-focus,
+        var(--spectrum-alias-highlight-selected-hover)
+    ); /* .spectrum-Table--quiet .spectrum-Table-row.is-selected.focus-ring,
+   * .spectrum-Table--quiet .spectrum-Table-row.is-selected.is-focused */
+}
+:host([dir='ltr'])
+    .spectrum-Table--quiet
+    tbody.spectrum-Table-body
+    .spectrum-Table-row
+    .spectrum-Table-cell:first-child,
+:host([dir='ltr'])
+    .spectrum-Table--quiet
+    tbody.spectrum-Table-body
+    .spectrum-Table-row
+    .spectrum-Table-cell:last-child {
+    border-left: none; /* [dir=ltr] .spectrum-Table--quiet tbody.spectrum-Table-body .spectrum-Table-row .spectrum-Table-cell:first-child,
+   * [dir=ltr] 
+    .spectrum-Table--quiet tbody.spectrum-Table-body .spectrum-Table-row .spectrum-Table-cell:last-child */
+}
+:host([dir='rtl'])
+    .spectrum-Table--quiet
+    tbody.spectrum-Table-body
+    .spectrum-Table-row
+    .spectrum-Table-cell:first-child,
+:host([dir='rtl'])
+    .spectrum-Table--quiet
+    tbody.spectrum-Table-body
+    .spectrum-Table-row
+    .spectrum-Table-cell:last-child {
+    border-right: none; /* [dir=rtl] .spectrum-Table--quiet tbody.spectrum-Table-body .spectrum-Table-row .spectrum-Table-cell:first-child,
+   * [dir=rtl] 
+    .spectrum-Table--quiet tbody.spectrum-Table-body .spectrum-Table-row .spectrum-Table-cell:last-child */
+}
+:host([dir='ltr'])
+    .spectrum-Table--quiet
+    tbody.spectrum-Table-body
+    .spectrum-Table-row
+    .spectrum-Table-cell:first-child,
+:host([dir='ltr'])
+    .spectrum-Table--quiet
+    tbody.spectrum-Table-body
+    .spectrum-Table-row
+    .spectrum-Table-cell:last-child {
+    border-right: none; /* [dir=ltr] .spectrum-Table--quiet tbody.spectrum-Table-body .spectrum-Table-row .spectrum-Table-cell:first-child,
+   * [dir=ltr] 
+    .spectrum-Table--quiet tbody.spectrum-Table-body .spectrum-Table-row .spectrum-Table-cell:last-child */
+}
+:host([dir='rtl'])
+    .spectrum-Table--quiet
+    tbody.spectrum-Table-body
+    .spectrum-Table-row
+    .spectrum-Table-cell:first-child,
+:host([dir='rtl'])
+    .spectrum-Table--quiet
+    tbody.spectrum-Table-body
+    .spectrum-Table-row
+    .spectrum-Table-cell:last-child {
+    border-left: none; /* [dir=rtl] .spectrum-Table--quiet tbody.spectrum-Table-body .spectrum-Table-row .spectrum-Table-cell:first-child,
+   * [dir=rtl] 
+    .spectrum-Table--quiet tbody.spectrum-Table-body .spectrum-Table-row .spectrum-Table-cell:last-child */
+}
