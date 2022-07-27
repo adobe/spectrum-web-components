@@ -3532,17 +3532,17 @@
     "@web/dev-server-hmr" "^0.1.6"
     picomatch "^2.2.2"
 
-"@open-wc/eslint-config@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@open-wc/eslint-config/-/eslint-config-4.3.0.tgz#0c5c569dc45170cdcc862d773fa787ffa0eb0cf1"
-  integrity sha512-kCxFWQ1AR4meTmWJGnK36LJYqDJeFGjlj6n4vLjAW3/c1VUyYQKL90vrNKy/OHS9kTjc9dcH5D64myAbNx6r1w==
+"@open-wc/eslint-config@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@open-wc/eslint-config/-/eslint-config-7.0.0.tgz#ba5b7fa985688f35a2ca1f97c3185b4bd96af13f"
+  integrity sha512-iuWgs5XSPqb9zhdHIeKDSzepnjRyhoYSoS6RI+vyLMfVFRxZoqt0Yv4Q8xJ8yByXbJyakmvpukTyEKbcuIQ7Uw==
   dependencies:
     eslint "^7.6.0"
     eslint-config-airbnb-base "^14.0.0"
     eslint-plugin-html "^6.0.0"
     eslint-plugin-import "^2.18.2"
     eslint-plugin-lit "^1.2.0"
-    eslint-plugin-lit-a11y "^1.0.1"
+    eslint-plugin-lit-a11y "^2.1.0"
     eslint-plugin-no-only-tests "^2.4.0"
     eslint-plugin-wc "^1.2.0"
 
@@ -6356,7 +6356,7 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.11.0.tgz#d61f46d83b2519250e2784daf5b09479a8b41c59"
   integrity sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
 
-axe-core@^4.0.2, axe-core@^4.3.3:
+axe-core@^4.3.3:
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.4.3.tgz#11c74d23d5013c0fa5d183796729bc3482bd2f6f"
   integrity sha512-32+ub6kkdhhWick/UjvEwRchgoetXqTK14INLqbGm5U2TzBkBNF3nQtLYm8ovxSkQWArjEQvftCKryjZaATu3w==
@@ -9338,7 +9338,7 @@ emoji-regex@^8.0.0:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
   integrity sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==
 
-emoji-regex@^9.0.0, emoji-regex@^9.2.0, emoji-regex@^9.2.2:
+emoji-regex@^9.2.0, emoji-regex@^9.2.2:
   version "9.2.2"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.2.2.tgz#840c8803b0d8047f4ff0cf963176b32d4ef3ed72"
   integrity sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==
@@ -9689,27 +9689,10 @@ eslint-plugin-import@^2.18.2, eslint-plugin-import@^2.25.3:
     resolve "^1.22.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-lit-a11y@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-lit-a11y/-/eslint-plugin-lit-a11y-1.0.1.tgz#0454d2b4df972d5d064d31473388e2a6968c782c"
-  integrity sha512-c+GgGSXb9HMgbzJGp0yl+msHk2rBXcA7KwbobbLonSXdHm6ln7zRwAEj4i7527FOaCKkhxiN6RXfOJcZT1/Bow==
-  dependencies:
-    aria-query "^4.2.2"
-    axe-core "^4.0.2"
-    axobject-query "^2.2.0"
-    dom5 "^3.0.1"
-    emoji-regex "^9.0.0"
-    eslint "^7.6.0"
-    eslint-rule-extender "0.0.1"
-    intl-list-format "^1.0.3"
-    parse5 "^5.1.1"
-    parse5-htmlparser2-tree-adapter "^6.0.0"
-    requireindex "~1.1.0"
-
-eslint-plugin-lit-a11y@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-lit-a11y/-/eslint-plugin-lit-a11y-2.2.0.tgz#9158b76a34c2dde8454ed2b4aa05bd6e6100dee3"
-  integrity sha512-1Vy9mR7UGigPnOHj5qJMU3uEK+Qul7dQOg9I6YKEYrw3C3HUx1FS/FbICjZI+n/v+2qvvJhw+5Tghuld2QWUJw==
+eslint-plugin-lit-a11y@^2.1.0, eslint-plugin-lit-a11y@^2.2.0:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-lit-a11y/-/eslint-plugin-lit-a11y-2.2.1.tgz#d73273132258ac23f0a17df18b8e8345a3376b55"
+  integrity sha512-Ao2MP3NjMGON8x8sdwGgmVW79MiQ4nOB7OQzodLPk4sljGAvdyXulyGVNY6PGWfIPVee+3X262z4Aq2poXO+LA==
   dependencies:
     aria-query "^4.2.2"
     axe-core "^4.3.3"
@@ -9723,16 +9706,7 @@ eslint-plugin-lit-a11y@^2.2.0:
     parse5-htmlparser2-tree-adapter "^6.0.1"
     requireindex "~1.2.0"
 
-eslint-plugin-lit@^1.2.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-lit/-/eslint-plugin-lit-1.3.0.tgz#9971743d8d4f469bdf70b120908dcbc6ce958f2e"
-  integrity sha512-fy6Lr5vYI3kvCYaDXA20lwyKAp1keS9UjR5ntj8U2TeV+1yUta3S7xxXe+rABKRPbcNzi1ZvQLE1LmNKc9yr4Q==
-  dependencies:
-    parse5 "^6.0.1"
-    parse5-htmlparser2-tree-adapter "^6.0.1"
-    requireindex "^1.2.0"
-
-eslint-plugin-lit@^1.6.0:
+eslint-plugin-lit@^1.2.0, eslint-plugin-lit@^1.6.0:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-lit/-/eslint-plugin-lit-1.6.1.tgz#e1f51fe9e580d4095b58cc4bc4dc6b44409af6b0"
   integrity sha512-BpPoWVhf8dQ/Sz5Pi9NlqbGoH5BcMcVyXhi2XTx2XGMAO9U2lS+GTSsqJjI5hL3OuxCicNiUEWXazAwi9cAGxQ==
@@ -12493,11 +12467,6 @@ intersection-observer@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.12.0.tgz#6c84628f67ce8698e5f9ccf857d97718745837aa"
   integrity sha512-2Vkz8z46Dv401zTWudDGwO7KiGHNDkMv417T5ItcNYfmvHR/1qCTVBO9vwH8zZmQ0WkA/1ARwpysR9bsnop4NQ==
-
-intl-list-format@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/intl-list-format/-/intl-list-format-1.0.3.tgz#f9b3c3d69b4647d63218f49aae5d3816c6e55b5b"
-  integrity sha512-VNF1Mh0K1xALXkz/5QsK1gfKRvEQO/jWaniTGAzQvbzGr5uyGDskQrRjnf6Qnbc9/JRbNE8BQtTg6iWuFrZorw==
 
 into-stream@^3.1.0:
   version "3.1.0"
@@ -16883,7 +16852,7 @@ parse-url@^5.0.0:
     parse-path "^4.0.0"
     protocols "^1.4.0"
 
-parse5-htmlparser2-tree-adapter@^6.0.0, parse5-htmlparser2-tree-adapter@^6.0.1:
+parse5-htmlparser2-tree-adapter@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/parse5-htmlparser2-tree-adapter/-/parse5-htmlparser2-tree-adapter-6.0.1.tgz#2cdf9ad823321140370d4dbf5d3e92c7c8ddc6e6"
   integrity sha512-qPuWvbLgvDGilKc5BoicRovlT4MtYT6JfJyBOMDsKoiT+GiuP5qyrPCnR9HcPECIJJmZh5jRndyNThnhhb/vlA==
@@ -19158,11 +19127,6 @@ requireindex@^1.2.0, requireindex@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/requireindex/-/requireindex-1.2.0.tgz#3463cdb22ee151902635aa6c9535d4de9c2ef1ef"
   integrity sha512-L9jEkOi3ASd9PYit2cwRfyppc9NoABujTP8/5gFcbERmo5jUoAKovIC3fsF17pkTnGsrByysqX+Kxd2OTNI1ww==
-
-requireindex@~1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/requireindex/-/requireindex-1.1.0.tgz#e5404b81557ef75db6e49c5a72004893fe03e162"
-  integrity sha1-5UBLgVV+91225JxacgBIk/4D4WI=
 
 requires-port@^1.0.0:
   version "1.0.0"
