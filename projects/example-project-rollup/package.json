@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^2.0.1",
-    "@open-wc/eslint-config": "^4.3.0",
+    "@open-wc/eslint-config": "^7.0.0",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@types/node": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
