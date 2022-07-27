@@ -70,7 +70,7 @@ governing permissions and limitations under the License.
    * .spectrum-Radio:lang(zh),
    * .spectrum-Radio:lang(ko) */
 }
-.spectrum-Radio--sizeS {
+:host([size='s']) {
     --spectrum-radio-height: var(
         --spectrum-component-height-75
     ); /* .spectrum-Radio--sizeS */
@@ -89,7 +89,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-radio-font-size: var(--spectrum-font-size-75);
 }
-.spectrum-Radio--sizeM {
+:host([size='m']) {
     --spectrum-radio-height: var(
         --spectrum-component-height-100
     ); /* .spectrum-Radio--sizeM */
@@ -108,7 +108,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-radio-font-size: var(--spectrum-font-size-100);
 }
-.spectrum-Radio--sizeL {
+:host([size='l']) {
     --spectrum-radio-height: var(
         --spectrum-component-height-200
     ); /* .spectrum-Radio--sizeL */
@@ -127,7 +127,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-radio-font-size: var(--spectrum-font-size-200);
 }
-.spectrum-Radio--sizeXL {
+:host([size='xl']) {
     --spectrum-radio-height: var(
         --spectrum-component-height-300
     ); /* .spectrum-Radio--sizeXL */

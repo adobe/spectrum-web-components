@@ -4129,10 +4129,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/toast/-/toast-7.0.11.tgz#8cc637e84af2b5511996922eaa4e2a0c1238df39"
   integrity sha512-AtW7y/R+jLv9Wc93pBhL3hu7PAFAweAxUYUqtv9epSiRcnD2OHWrzH+4IrXHOWq/X9ehGvFQWkEZmglL4nIRKw==
 
-"@spectrum-css/tokens@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-1.0.2.tgz#142f4a37e6872d25b4b1304fd582d571826aec8f"
-  integrity sha512-web9iCEQtytWQSECuflG7ICbPIOZUsjMnf7/iLkiEZYIn+D+24pkaxk0eWTdXLOqQJ5VsY6gZvob+o40yYwTjw==
+"@spectrum-css/tokens@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-1.0.3.tgz#6b446a4fec9c5b98d8f98498537e6c4e07be5cd9"
+  integrity sha512-4hohdMuMn7dLIMZrM40+XRa/pwbvKNJvVWbkJjHCbOgsvkLiS/uhSLDW/781MD3KPTA4ELIuJ3v9KaLz19klFQ==
 
 "@spectrum-css/tooltip@^3.1.18":
   version "3.1.18"

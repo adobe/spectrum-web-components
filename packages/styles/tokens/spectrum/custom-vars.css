@@ -28,4 +28,14 @@ governing permissions and limitations under the License.
     --spectrum-line-height-large: 1.7;
     --spectrum-line-height-medium: 1.5;
     --spectrum-line-height-small: 1.3;
+
+    --spectrum-font-weight-thin: 100;
+    --spectrum-font-weight-ultra-light: 200;
+    --spectrum-font-weight-light: 300;
+    --spectrum-font-weight-regular: 400;
+    --spectrum-font-weight-medium: 500;
+    --spectrum-font-weight-semi-bold: 600;
+    --spectrum-font-weight-bold: 700;
+    --spectrum-font-weight-extra-bold: 800;
+    --spectrum-font-weight-black: 900;
 }
