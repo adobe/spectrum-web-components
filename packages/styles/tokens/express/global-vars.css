@@ -266,3 +266,36 @@ governing permissions and limitations under the License.
     );
     --system-spectrum-actionbutton-staticwhite-selected-border-color-disabled: transparent;
 }
+
+:host {
+    --system-spectrum-radio-button-border-color-default: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-radio-button-border-color-hover: var(--spectrum-gray-900);
+    --system-spectrum-radio-button-border-color-down: var(--spectrum-gray-900);
+    --system-spectrum-radio-button-border-color-focus: var(--spectrum-gray-900);
+    --system-spectrum-radio-button-checked-border-color-default: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-radio-button-checked-border-color-hover: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-radio-button-checked-border-color-down: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-radio-button-checked-border-color-focus: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-radio-emphasized-button-checked-border-color-default: var(
+        --spectrum-accent-color-900
+    );
+    --system-spectrum-radio-emphasized-button-checked-border-color-hover: var(
+        --spectrum-accent-color-1000
+    );
+    --system-spectrum-radio-emphasized-button-checked-border-color-down: var(
+        --spectrum-accent-color-1100
+    );
+    --system-spectrum-radio-emphasized-button-checked-border-color-focus: var(
+        --spectrum-accent-color-1000
+    );
+}

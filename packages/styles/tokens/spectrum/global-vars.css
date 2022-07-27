@@ -25,20 +25,6 @@ governing permissions and limitations under the License.
     --spectrum-accent-color-1200: var(--spectrum-blue-1200);
     --spectrum-accent-color-1300: var(--spectrum-blue-1300);
     --spectrum-accent-color-1400: var(--spectrum-blue-1400);
-    --spectrum-radio-button-control-size-medium-desktop: 14px;
-    --spectrum-radio-button-control-size-medium-mobile: 18px;
-    --spectrum-radio-button-control-size-large-desktop: 16px;
-    --spectrum-radio-button-control-size-large-mobile: 20px;
-    --spectrum-radio-button-control-size-extra-large-desktop: 18px;
-    --spectrum-radio-button-control-size-extra-large-mobile: 22px;
-    --spectrum-radio-button-top-to-control-small-desktop: 6px;
-    --spectrum-radio-button-top-to-control-small-mobile: 7px;
-    --spectrum-radio-button-top-to-control-medium-desktop: 9px;
-    --spectrum-radio-button-top-to-control-medium-mobile: 11px;
-    --spectrum-radio-button-top-to-control-large-desktop: 12px;
-    --spectrum-radio-button-top-to-control-large-mobile: 15px;
-    --spectrum-radio-button-top-to-control-extra-large-desktop: 15px;
-    --spectrum-radio-button-top-to-control-extra-large-mobile: 19px;
     --spectrum-border-width-100: 1px;
 }
 :host {
@@ -293,4 +279,37 @@ governing permissions and limitations under the License.
         --spectrum-disabled-static-white-background-color
     );
     --system-spectrum-actionbutton-staticwhite-selected-border-color-disabled: transparent;
+}
+
+:host {
+    --system-spectrum-radio-button-border-color-default: var(
+        --spectrum-gray-600
+    );
+    --system-spectrum-radio-button-border-color-hover: var(--spectrum-gray-700);
+    --system-spectrum-radio-button-border-color-down: var(--spectrum-gray-800);
+    --system-spectrum-radio-button-border-color-focus: var(--spectrum-gray-700);
+    --system-spectrum-radio-button-checked-border-color-default: var(
+        --spectrum-gray-700
+    );
+    --system-spectrum-radio-button-checked-border-color-hover: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-radio-button-checked-border-color-down: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-radio-button-checked-border-color-focus: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-radio-emphasized-button-checked-border-color-default: var(
+        --spectrum-accent-color-900
+    );
+    --system-spectrum-radio-emphasized-button-checked-border-color-hover: var(
+        --spectrum-accent-color-1000
+    );
+    --system-spectrum-radio-emphasized-button-checked-border-color-down: var(
+        --spectrum-accent-color-1100
+    );
+    --system-spectrum-radio-emphasized-button-checked-border-color-focus: var(
+        --spectrum-accent-color-1000
+    );
 }
