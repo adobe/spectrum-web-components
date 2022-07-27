@@ -74,12 +74,13 @@ export default {
     },
 };
 
-interface StoryArgs {
+export interface StoryArgs {
     checked?: boolean;
     disabled?: boolean;
     emphasized?: boolean;
     invalid?: boolean;
     readonly?: boolean;
+    size?: 's' | 'm' | 'l' | 'xl';
     [prop: string]: unknown;
 }
 
