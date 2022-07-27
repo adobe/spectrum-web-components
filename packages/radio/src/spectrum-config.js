@@ -43,6 +43,29 @@ const config = {
                     name: 'emphasized',
                     selector: '.spectrum-Radio--emphasized',
                 },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-Radio--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Radio--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Radio--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-Radio--sizeXL',
+                        },
+                    ],
+                },
             ],
             ids: [
                 {
@@ -61,7 +84,8 @@ const config = {
             complexSelectors: [
                 {
                     replacement: ':host(:focus-visible) .spectrum-Radio-input',
-                    selector: /^.spectrum-Radio .spectrum-Radio-input.focus-ring/,
+                    selector:
+                        /^.spectrum-Radio .spectrum-Radio-input.focus-ring/,
                 },
                 {
                     replacement: ':focus-visible .spectrum-Radio-input',

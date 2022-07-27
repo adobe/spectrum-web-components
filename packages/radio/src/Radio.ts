@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     PropertyValues,
+    SizedMixin,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -34,7 +35,9 @@ import radioStyles from './radio.css.js';
  *
  * @fires change - When the input is interacted with and its state is changed
  */
-export class Radio extends FocusVisiblePolyfillMixin(SpectrumElement) {
+export class Radio extends SizedMixin(
+    FocusVisiblePolyfillMixin(SpectrumElement)
+) {
     public static override get styles(): CSSResultArray {
         return [radioStyles];
     }
