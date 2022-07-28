@@ -128,7 +128,6 @@ governing permissions and limitations under the License.
 }
 #header {
     align-items: center;
-    -webkit-appearance: none;
     appearance: none;
     background-color: inherit;
     border: 0;

@@ -156,7 +156,7 @@ sp-field-label {
     background-position: 100%;
 }
 
-.track:not(:first-of-type):not(:last-of-type) {
+.track:not(:first-of-type, :last-of-type) {
     padding-left: calc(
         var(--spectrum-slider-handle-width) / 2 +
             var(--spectrum-slider-track-handleoffset)
@@ -167,11 +167,11 @@ sp-field-label {
     ) !important;
 }
 
-:host([dir='ltr']) .track:not(:first-of-type):not(:last-of-type) {
+:host([dir='ltr']) .track:not(:first-of-type, :last-of-type) {
     left: var(--spectrum-slider-track-segment-position);
 }
 
-:host([dir='rtl']) .track:not(:first-of-type):not(:last-of-type) {
+:host([dir='rtl']) .track:not(:first-of-type, :last-of-type) {
     right: var(--spectrum-slider-track-segment-position);
 }
 
