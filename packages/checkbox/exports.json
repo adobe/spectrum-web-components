@@ -1,0 +1,4 @@
+{
+    "./src/*": "./src/*",
+    "./sp-checkbox.js": "./sp-checkbox.js"
+}

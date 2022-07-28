@@ -1,0 +1,8 @@
+{
+    "./src/*": "./src/*",
+    "./condition-attribute-with-id.js": "./src/condition-attribute-with-id.js",
+    "./decorators.js": "./src/decorators.js",
+    "./directives.js": "./src/directives.js",
+    "./html.js": "./src/html.js",
+    "./streaming-listener.js": "./src/streaming-listener.js"
+}

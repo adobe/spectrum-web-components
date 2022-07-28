@@ -20,15 +20,42 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-tabs": "./sp-tabs.js",
-        "./sp-tabs.js": "./sp-tabs.js",
-        "./sp-tab": "./sp-tab.js",
-        "./sp-tab.js": "./sp-tab.js",
-        "./sp-tab-panel": "./sp-tab-panel.js",
-        "./sp-tab-panel.js": "./sp-tab-panel.js"
+        "./src/Tab.js": {
+            "development": "./src/Tab.dev.js",
+            "default": "./src/Tab.js"
+        },
+        "./src/TabPanel.js": {
+            "development": "./src/TabPanel.dev.js",
+            "default": "./src/TabPanel.js"
+        },
+        "./src/Tabs.js": {
+            "development": "./src/Tabs.dev.js",
+            "default": "./src/Tabs.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/tab-panel.css.js": "./src/tab-panel.css.js",
+        "./src/tab.css.js": "./src/tab.css.js",
+        "./src/tabs.css.js": "./src/tabs.css.js",
+        "./sp-tabs.js": {
+            "development": "./sp-tabs.dev.js",
+            "default": "./sp-tabs.js"
+        },
+        "./sp-tab.js": {
+            "development": "./sp-tab.dev.js",
+            "default": "./sp-tab.js"
+        },
+        "./sp-tab-panel.js": {
+            "development": "./sp-tab-panel.dev.js",
+            "default": "./sp-tab-panel.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

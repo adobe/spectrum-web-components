@@ -20,11 +20,38 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-icon": "./sp-icon.js",
-        "./sp-icon.js": "./sp-icon.js"
+        "./src/Icon.js": {
+            "development": "./src/Icon.dev.js",
+            "default": "./src/Icon.js"
+        },
+        "./src/IconBase.js": {
+            "development": "./src/IconBase.dev.js",
+            "default": "./src/IconBase.js"
+        },
+        "./src/icon.css.js": "./src/icon.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/spectrum-icon-arrow.css.js": "./src/spectrum-icon-arrow.css.js",
+        "./src/spectrum-icon-asterisk.css.js": "./src/spectrum-icon-asterisk.css.js",
+        "./src/spectrum-icon-checkmark.css.js": "./src/spectrum-icon-checkmark.css.js",
+        "./src/spectrum-icon-chevron.css.js": "./src/spectrum-icon-chevron.css.js",
+        "./src/spectrum-icon-corner-triangle.css.js": "./src/spectrum-icon-corner-triangle.css.js",
+        "./src/spectrum-icon-cross.css.js": "./src/spectrum-icon-cross.css.js",
+        "./src/spectrum-icon-dash.css.js": "./src/spectrum-icon-dash.css.js",
+        "./src/spectrum-icon-double-gripper.css.js": "./src/spectrum-icon-double-gripper.css.js",
+        "./src/spectrum-icon-single-gripper.css.js": "./src/spectrum-icon-single-gripper.css.js",
+        "./src/spectrum-icon-triple-gripper.css.js": "./src/spectrum-icon-triple-gripper.css.js",
+        "./sp-icon.js": {
+            "development": "./sp-icon.dev.js",
+            "default": "./sp-icon.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

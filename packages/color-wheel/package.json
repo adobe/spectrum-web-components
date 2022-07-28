@@ -20,11 +20,28 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-color-wheel": "./sp-color-wheel.js",
-        "./sp-color-wheel.js": "./sp-color-wheel.js"
+        "./src/ColorWheel.js": {
+            "development": "./src/ColorWheel.dev.js",
+            "default": "./src/ColorWheel.js"
+        },
+        "./src/color-wheel.css.js": "./src/color-wheel.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/types.js": {
+            "development": "./src/types.dev.js",
+            "default": "./src/types.js"
+        },
+        "./sp-color-wheel.js": {
+            "development": "./sp-color-wheel.dev.js",
+            "default": "./sp-color-wheel.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

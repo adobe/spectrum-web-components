@@ -20,11 +20,24 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*.js",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-number-field": "./sp-number-field.js",
-        "./sp-number-field.js": "./sp-number-field.js"
+        "./src/NumberField.js": {
+            "development": "./src/NumberField.dev.js",
+            "default": "./src/NumberField.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/number-field.css.js": "./src/number-field.css.js",
+        "./sp-number-field.js": {
+            "development": "./sp-number-field.dev.js",
+            "default": "./sp-number-field.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

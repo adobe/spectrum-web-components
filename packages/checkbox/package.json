@@ -20,11 +20,28 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-checkbox": "./sp-checkbox.js",
-        "./sp-checkbox.js": "./sp-checkbox.js"
+        "./src/Checkbox.js": {
+            "development": "./src/Checkbox.dev.js",
+            "default": "./src/Checkbox.js"
+        },
+        "./src/CheckboxBase.js": {
+            "development": "./src/CheckboxBase.dev.js",
+            "default": "./src/CheckboxBase.js"
+        },
+        "./src/checkbox.css.js": "./src/checkbox.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-checkbox.js": {
+            "development": "./sp-checkbox.dev.js",
+            "default": "./sp-checkbox.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

@@ -20,27 +20,100 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
-        "./express/*": "./express/*",
-        "./src/express/*": "./src/express/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./core": "./core.js",
-        "./core.js": "./core.js",
-        "./sp-theme": "./sp-theme.js",
-        "./sp-theme.js": "./sp-theme.js",
-        "./scale-medium": "./scale-medium.js",
-        "./scale-medium.js": "./scale-medium.js",
-        "./scale-large": "./scale-large.js",
-        "./scale-large.js": "./scale-large.js",
-        "./theme-lightest": "./theme-lightest.js",
-        "./theme-lightest.js": "./theme-lightest.js",
-        "./theme-light": "./theme-light.js",
-        "./theme-light.js": "./theme-light.js",
-        "./theme-dark": "./theme-dark.js",
-        "./theme-dark.js": "./theme-dark.js",
-        "./theme-darkest": "./theme-darkest.js",
-        "./theme-darkest.js": "./theme-darkest.js"
+        "./src/Theme.js": {
+            "development": "./src/Theme.dev.js",
+            "default": "./src/Theme.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/scale-large.css.js": "./src/scale-large.css.js",
+        "./src/scale-medium.css.js": "./src/scale-medium.css.js",
+        "./src/theme-dark.css.js": "./src/theme-dark.css.js",
+        "./src/theme-darkest.css.js": "./src/theme-darkest.css.js",
+        "./src/theme-light.css.js": "./src/theme-light.css.js",
+        "./src/theme-lightest.css.js": "./src/theme-lightest.css.js",
+        "./src/theme.css.js": "./src/theme.css.js",
+        "./src/themes.js": {
+            "development": "./src/themes.dev.js",
+            "default": "./src/themes.js"
+        },
+        "./src/typography.css.js": "./src/typography.css.js",
+        "./express/scale-large.js": {
+            "development": "./express/scale-large.dev.js",
+            "default": "./express/scale-large.js"
+        },
+        "./express/scale-medium.js": {
+            "development": "./express/scale-medium.dev.js",
+            "default": "./express/scale-medium.js"
+        },
+        "./express/theme-dark.js": {
+            "development": "./express/theme-dark.dev.js",
+            "default": "./express/theme-dark.js"
+        },
+        "./express/theme-darkest.js": {
+            "development": "./express/theme-darkest.dev.js",
+            "default": "./express/theme-darkest.js"
+        },
+        "./express/theme-light.js": {
+            "development": "./express/theme-light.dev.js",
+            "default": "./express/theme-light.js"
+        },
+        "./express/theme-lightest.js": {
+            "development": "./express/theme-lightest.dev.js",
+            "default": "./express/theme-lightest.js"
+        },
+        "./src/express/core.js": {
+            "development": "./src/express/core.dev.js",
+            "default": "./src/express/core.js"
+        },
+        "./src/express/scale-large.css.js": "./src/express/scale-large.css.js",
+        "./src/express/scale-medium.css.js": "./src/express/scale-medium.css.js",
+        "./src/express/theme-dark.css.js": "./src/express/theme-dark.css.js",
+        "./src/express/theme-light.css.js": "./src/express/theme-light.css.js",
+        "./src/express/theme.css.js": "./src/express/theme.css.js",
+        "./src/express/themes.js": {
+            "development": "./src/express/themes.dev.js",
+            "default": "./src/express/themes.js"
+        },
+        "./core.js": {
+            "development": "./core.dev.js",
+            "default": "./core.js"
+        },
+        "./sp-theme.js": {
+            "development": "./sp-theme.dev.js",
+            "default": "./sp-theme.js"
+        },
+        "./scale-medium.js": {
+            "development": "./scale-medium.dev.js",
+            "default": "./scale-medium.js"
+        },
+        "./scale-large.js": {
+            "development": "./scale-large.dev.js",
+            "default": "./scale-large.js"
+        },
+        "./theme-lightest.js": {
+            "development": "./theme-lightest.dev.js",
+            "default": "./theme-lightest.js"
+        },
+        "./theme-light.js": {
+            "development": "./theme-light.dev.js",
+            "default": "./theme-light.js"
+        },
+        "./theme-dark.js": {
+            "development": "./theme-dark.dev.js",
+            "default": "./theme-dark.js"
+        },
+        "./theme-darkest.js": {
+            "development": "./theme-darkest.dev.js",
+            "default": "./theme-darkest.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

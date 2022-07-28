@@ -1,0 +1,7 @@
+{
+    ".": "./src/index.js",
+    "./src/*.js": "./src/*.js",
+    "./package.json": "./package.json",
+    "./sp-accordion.js": "./sp-accordion.js",
+    "./sp-accordion-item.js": "./sp-accordion-item.js"
+}

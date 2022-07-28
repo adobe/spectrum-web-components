@@ -20,11 +20,24 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-action-bar": "./sp-action-bar.js",
-        "./sp-action-bar.js": "./sp-action-bar.js"
+        "./src/ActionBar.js": {
+            "development": "./src/ActionBar.dev.js",
+            "default": "./src/ActionBar.js"
+        },
+        "./src/action-bar.css.js": "./src/action-bar.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-action-bar.js": {
+            "development": "./sp-action-bar.dev.js",
+            "default": "./sp-action-bar.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

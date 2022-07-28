@@ -20,13 +20,28 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-split-button": "./sp-split-button.js",
-        "./sp-split-button.js": "./sp-split-button.js",
-        "./sync/sp-split-button": "./sync/sp-split-button.js",
-        "./sync/sp-split-button.js": "./sync/sp-split-button.js"
+        "./src/SplitButton.js": {
+            "development": "./src/SplitButton.dev.js",
+            "default": "./src/SplitButton.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/split-button.css.js": "./src/split-button.css.js",
+        "./sp-split-button.js": {
+            "development": "./sp-split-button.dev.js",
+            "default": "./sp-split-button.js"
+        },
+        "./sync/sp-split-button.js": {
+            "development": "./sync/sp-split-button.dev.js",
+            "default": "./sync/sp-split-button.js"
+        }
     },
     "scripts": {
         "test": "karma start --coverage"

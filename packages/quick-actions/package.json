@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-quick-actions": "./sp-quick-actions.js",
-        "./sp-quick-actions.js": "./sp-quick-actions.js"
+        "./src/QuickActions.js": {
+            "development": "./src/QuickActions.dev.js",
+            "default": "./src/QuickActions.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/quick-actions.css.js": "./src/quick-actions.css.js",
+        "./sp-quick-actions.js": {
+            "development": "./sp-quick-actions.dev.js",
+            "default": "./sp-quick-actions.js"
+        }
     },
     "scripts": {
         "test": "karma start --coverage"

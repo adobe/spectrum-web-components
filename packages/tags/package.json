@@ -20,13 +20,33 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-tags": "./sp-tags.js",
-        "./sp-tags.js": "./sp-tags.js",
-        "./sp-tag": "./sp-tag.js",
-        "./sp-tag.js": "./sp-tag.js"
+        "./src/Tag.js": {
+            "development": "./src/Tag.dev.js",
+            "default": "./src/Tag.js"
+        },
+        "./src/Tags.js": {
+            "development": "./src/Tags.dev.js",
+            "default": "./src/Tags.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/tag.css.js": "./src/tag.css.js",
+        "./src/tags.css.js": "./src/tags.css.js",
+        "./sp-tags.js": {
+            "development": "./sp-tags.dev.js",
+            "default": "./sp-tags.js"
+        },
+        "./sp-tag.js": {
+            "development": "./sp-tag.dev.js",
+            "default": "./sp-tag.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

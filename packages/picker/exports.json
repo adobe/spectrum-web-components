@@ -1,0 +1,5 @@
+{
+    "./src/*": "./src/*",
+    "./sync/*": "./sync/*",
+    "./sp-picker.js": "./sp-picker.js"
+}

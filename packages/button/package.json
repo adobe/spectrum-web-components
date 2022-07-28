@@ -20,15 +20,49 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-button": "./sp-button.js",
-        "./sp-button.js": "./sp-button.js",
-        "./sp-clear-button": "./sp-clear-button.js",
-        "./sp-clear-button.js": "./sp-clear-button.js",
-        "./sp-close-button": "./sp-close-button.js",
-        "./sp-close-button.js": "./sp-close-button.js"
+        "./src/Button.js": {
+            "development": "./src/Button.dev.js",
+            "default": "./src/Button.js"
+        },
+        "./src/ButtonBase.js": {
+            "development": "./src/ButtonBase.dev.js",
+            "default": "./src/ButtonBase.js"
+        },
+        "./src/ClearButton.js": {
+            "development": "./src/ClearButton.dev.js",
+            "default": "./src/ClearButton.js"
+        },
+        "./src/CloseButton.js": {
+            "development": "./src/CloseButton.dev.js",
+            "default": "./src/CloseButton.js"
+        },
+        "./src/StyledButton.js": {
+            "development": "./src/StyledButton.dev.js",
+            "default": "./src/StyledButton.js"
+        },
+        "./src/button-base.css.js": "./src/button-base.css.js",
+        "./src/button.css.js": "./src/button.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-button.js": {
+            "development": "./sp-button.dev.js",
+            "default": "./sp-button.js"
+        },
+        "./sp-clear-button.js": {
+            "development": "./sp-clear-button.dev.js",
+            "default": "./sp-clear-button.js"
+        },
+        "./sp-close-button.js": {
+            "development": "./sp-close-button.dev.js",
+            "default": "./sp-close-button.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

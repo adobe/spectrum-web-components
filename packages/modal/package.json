@@ -20,9 +20,10 @@
     "module": "src/modal.css.js",
     "type": "module",
     "exports": {
-        ".": "./src/modal.css.js",
-        "./src/*": "./src/*",
-        "./package.json": "./package.json"
+        ".": "./src/modal-wrapper.css.js",
+        "./package.json": "./package.json",
+        "./src/modal-wrapper.css.js": "./src/modal-wrapper.css.js",
+        "./src/modal.css.js": "./src/modal.css.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

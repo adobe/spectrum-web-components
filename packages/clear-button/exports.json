@@ -1,0 +1,4 @@
+{
+    ".": "./src/clear-button.css.js",
+    "./src/*": "./src/*"
+}

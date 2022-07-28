@@ -20,11 +20,28 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-split-view": "./sp-split-view.js",
-        "./sp-split-view.js": "./sp-split-view.js"
+        "./src/SplitView.js": {
+            "development": "./src/SplitView.dev.js",
+            "default": "./src/SplitView.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/split-view.css.js": "./src/split-view.css.js",
+        "./src/types.js": {
+            "development": "./src/types.dev.js",
+            "default": "./src/types.js"
+        },
+        "./sp-split-view.js": {
+            "development": "./sp-split-view.dev.js",
+            "default": "./sp-split-view.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

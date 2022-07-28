@@ -21,8 +21,8 @@
     "type": "module",
     "exports": {
         ".": "./src/close-button.css.js",
-        "./src/*": "./src/*",
-        "./package.json": "./package.json"
+        "./package.json": "./package.json",
+        "./src/close-button.css.js": "./src/close-button.css.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

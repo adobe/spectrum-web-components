@@ -20,12 +20,33 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        "./src/*": "./src/*.js",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
+        "./src/StoryDecorator.js": {
+            "development": "./src/StoryDecorator.dev.js",
+            "default": "./src/StoryDecorator.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/types.js": {
+            "development": "./src/types.dev.js",
+            "default": "./src/types.js"
+        },
         "./decorator": "./decorator.js",
-        "./decorator.js": "./decorator.js",
+        "./decorator.js": {
+            "development": "./decorator.dev.js",
+            "default": "./decorator.js"
+        },
         "./sp-story-decorator": "./sp-story-decorator.js",
-        "./sp-story-decorator.js": "./sp-story-decorator.js"
+        "./sp-story-decorator.js": {
+            "development": "./sp-story-decorator.dev.js",
+            "default": "./sp-story-decorator.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

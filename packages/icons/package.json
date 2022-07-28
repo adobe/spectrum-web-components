@@ -20,13 +20,39 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-icons-large": "./sp-icons-large.js",
-        "./sp-icons-large.js": "./sp-icons-large.js",
-        "./sp-icons-medium": "./sp-icons-medium.js",
-        "./sp-icons-medium.js": "./sp-icons-medium.js"
+        "./src/IconsLarge.js": {
+            "development": "./src/IconsLarge.dev.js",
+            "default": "./src/IconsLarge.js"
+        },
+        "./src/IconsMedium.js": {
+            "development": "./src/IconsMedium.dev.js",
+            "default": "./src/IconsMedium.js"
+        },
+        "./src/icons-large.svg.js": {
+            "development": "./src/icons-large.svg.dev.js",
+            "default": "./src/icons-large.svg.js"
+        },
+        "./src/icons-medium.svg.js": {
+            "development": "./src/icons-medium.svg.dev.js",
+            "default": "./src/icons-medium.svg.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-icons-large.js": {
+            "development": "./sp-icons-large.dev.js",
+            "default": "./sp-icons-large.js"
+        },
+        "./sp-icons-medium.js": {
+            "development": "./sp-icons-medium.dev.js",
+            "default": "./sp-icons-medium.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

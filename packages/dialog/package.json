@@ -20,13 +20,32 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-dialog": "./sp-dialog.js",
-        "./sp-dialog.js": "./sp-dialog.js",
-        "./sp-dialog-wrapper": "./sp-dialog-wrapper.js",
-        "./sp-dialog-wrapper.js": "./sp-dialog-wrapper.js"
+        "./src/Dialog.js": {
+            "development": "./src/Dialog.dev.js",
+            "default": "./src/Dialog.js"
+        },
+        "./src/DialogWrapper.js": {
+            "development": "./src/DialogWrapper.dev.js",
+            "default": "./src/DialogWrapper.js"
+        },
+        "./src/dialog.css.js": "./src/dialog.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-dialog.js": {
+            "development": "./sp-dialog.dev.js",
+            "default": "./sp-dialog.js"
+        },
+        "./sp-dialog-wrapper.js": {
+            "development": "./sp-dialog-wrapper.dev.js",
+            "default": "./sp-dialog-wrapper.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

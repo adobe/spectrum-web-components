@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-underlay": "./sp-underlay.js",
-        "./sp-underlay.js": "./sp-underlay.js"
+        "./src/Underlay.js": {
+            "development": "./src/Underlay.dev.js",
+            "default": "./src/Underlay.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/underlay.css.js": "./src/underlay.css.js",
+        "./sp-underlay.js": {
+            "development": "./sp-underlay.dev.js",
+            "default": "./sp-underlay.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

@@ -1,0 +1,13 @@
+{
+    "./src/*": "./src/*",
+    "./express/*": "./express/*",
+    "./src/express/*": "./src/express/*",
+    "./core.js": "./core.js",
+    "./sp-theme.js": "./sp-theme.js",
+    "./scale-medium.js": "./scale-medium.js",
+    "./scale-large.js": "./scale-large.js",
+    "./theme-lightest.js": "./theme-lightest.js",
+    "./theme-light.js": "./theme-light.js",
+    "./theme-dark.js": "./theme-dark.js",
+    "./theme-darkest.js": "./theme-darkest.js"
+}

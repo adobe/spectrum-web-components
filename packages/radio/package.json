@@ -20,13 +20,32 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-radio": "./sp-radio.js",
-        "./sp-radio.js": "./sp-radio.js",
-        "./sp-radio-group": "./sp-radio-group.js",
-        "./sp-radio-group.js": "./sp-radio-group.js"
+        "./src/Radio.js": {
+            "development": "./src/Radio.dev.js",
+            "default": "./src/Radio.js"
+        },
+        "./src/RadioGroup.js": {
+            "development": "./src/RadioGroup.dev.js",
+            "default": "./src/RadioGroup.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/radio.css.js": "./src/radio.css.js",
+        "./sp-radio.js": {
+            "development": "./sp-radio.dev.js",
+            "default": "./sp-radio.js"
+        },
+        "./sp-radio-group.js": {
+            "development": "./sp-radio-group.dev.js",
+            "default": "./sp-radio-group.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

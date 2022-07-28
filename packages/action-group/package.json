@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-action-group": "./sp-action-group.js",
-        "./sp-action-group.js": "./sp-action-group.js"
+        "./src/ActionGroup.js": {
+            "development": "./src/ActionGroup.dev.js",
+            "default": "./src/ActionGroup.js"
+        },
+        "./src/action-group.css.js": "./src/action-group.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-action-group.js": {
+            "development": "./sp-action-group.dev.js",
+            "default": "./sp-action-group.js"
+        }
     },
     "scripts": {
         "test": "karma start --coverage"

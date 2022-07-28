@@ -1,0 +1,6 @@
+{
+    "./src/*": "./src/*",
+    "./sp-slider.js": "./sp-slider.js",
+    "./sp-slider-handle.js": "./sp-slider-handle.js",
+    "./sync/sp-slider.js": "./sync/sp-slider.js"
+}

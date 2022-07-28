@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-button-group": "./sp-button-group.js",
-        "./sp-button-group.js": "./sp-button-group.js"
+        "./src/ButtonGroup.js": {
+            "development": "./src/ButtonGroup.dev.js",
+            "default": "./src/ButtonGroup.js"
+        },
+        "./src/button-group.css.js": "./src/button-group.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-button-group.js": {
+            "development": "./sp-button-group.dev.js",
+            "default": "./sp-button-group.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

@@ -20,11 +20,25 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-switch": "./sp-switch.js",
-        "./sp-switch.js": "./sp-switch.js"
+        "./src/Switch.js": {
+            "development": "./src/Switch.dev.js",
+            "default": "./src/Switch.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/switch-legacy.css.js": "./src/switch-legacy.css.js",
+        "./src/switch.css.js": "./src/switch.css.js",
+        "./sp-switch.js": {
+            "development": "./sp-switch.dev.js",
+            "default": "./sp-switch.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

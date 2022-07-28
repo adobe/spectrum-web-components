@@ -1,0 +1,7 @@
+{
+    "./src/*": "./src/*.js",
+    "./decorator": "./decorator.js",
+    "./decorator.js": "./decorator.js",
+    "./sp-story-decorator": "./sp-story-decorator.js",
+    "./sp-story-decorator.js": "./sp-story-decorator.js"
+}

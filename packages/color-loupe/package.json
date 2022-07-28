@@ -20,11 +20,24 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-color-loupe": "./sp-color-loupe.js",
-        "./sp-color-loupe.js": "./sp-color-loupe.js"
+        "./src/ColorLoupe.js": {
+            "development": "./src/ColorLoupe.dev.js",
+            "default": "./src/ColorLoupe.js"
+        },
+        "./src/color-loupe.css.js": "./src/color-loupe.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-color-loupe.js": {
+            "development": "./sp-color-loupe.dev.js",
+            "default": "./sp-color-loupe.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

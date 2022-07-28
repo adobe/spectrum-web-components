@@ -20,11 +20,24 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-meter": "./sp-meter.js",
-        "./sp-meter.js": "./sp-meter.js"
+        "./src/Meter.js": {
+            "development": "./src/Meter.dev.js",
+            "default": "./src/Meter.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/meter.css.js": "./src/meter.css.js",
+        "./sp-meter.js": {
+            "development": "./sp-meter.dev.js",
+            "default": "./sp-meter.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

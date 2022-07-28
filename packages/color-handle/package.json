@@ -20,11 +20,24 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-color-handle": "./sp-color-handle.js",
-        "./sp-color-handle.js": "./sp-color-handle.js"
+        "./src/ColorHandle.js": {
+            "development": "./src/ColorHandle.dev.js",
+            "default": "./src/ColorHandle.js"
+        },
+        "./src/color-handle.css.js": "./src/color-handle.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-color-handle.js": {
+            "development": "./sp-color-handle.dev.js",
+            "default": "./sp-color-handle.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

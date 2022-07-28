@@ -20,19 +20,63 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
-        "./condition-attribute-with-id": "./src/condition-attribute-with-id.js",
-        "./condition-attribute-with-id.js": "./src/condition-attribute-with-id.js",
-        "./decorators": "./src/decorators.js",
-        "./decorators.js": "./src/decorators.js",
-        "./directives": "./src/directives.js",
-        "./directives.js": "./src/directives.js",
-        "./html": "./src/html.js",
-        "./html.js": "./src/html.js",
-        "./streaming-listener": "./src/streaming-listener.js",
-        "./streaming-listener.js": "./src/streaming-listener.js",
-        "./package.json": "./package.json"
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/Base.js": {
+            "development": "./src/Base.dev.js",
+            "default": "./src/Base.js"
+        },
+        "./src/condition-attribute-with-id.js": {
+            "development": "./src/condition-attribute-with-id.dev.js",
+            "default": "./src/condition-attribute-with-id.js"
+        },
+        "./src/decorators.js": {
+            "development": "./src/decorators.dev.js",
+            "default": "./src/decorators.js"
+        },
+        "./src/directives.js": {
+            "development": "./src/directives.dev.js",
+            "default": "./src/directives.js"
+        },
+        "./src/html.js": {
+            "development": "./src/html.dev.js",
+            "default": "./src/html.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/sizedMixin.js": {
+            "development": "./src/sizedMixin.dev.js",
+            "default": "./src/sizedMixin.js"
+        },
+        "./src/streaming-listener.js": {
+            "development": "./src/streaming-listener.dev.js",
+            "default": "./src/streaming-listener.js"
+        },
+        "./condition-attribute-with-id.js": {
+            "development": "./condition-attribute-with-id.dev.js",
+            "default": "./condition-attribute-with-id.js"
+        },
+        "./decorators.js": {
+            "development": "./decorators.dev.js",
+            "default": "./decorators.js"
+        },
+        "./directives.js": {
+            "development": "./directives.dev.js",
+            "default": "./directives.js"
+        },
+        "./html.js": {
+            "development": "./html.dev.js",
+            "default": "./html.js"
+        },
+        "./streaming-listener.js": {
+            "development": "./streaming-listener.dev.js",
+            "default": "./streaming-listener.js"
+        }
     },
     "scripts": {
         "test": "karma start --coverage"
@@ -52,7 +96,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "lit": "^2.1.2",
+        "lit": "^2.2.0",
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
