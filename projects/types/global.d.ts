@@ -14,7 +14,7 @@ type ElementLocalName = string;
 
 type WarningType = 'default' | 'accessibility' | 'api';
 
-type WarningLevel = 'default' | 'low' | 'medium' | 'heigh' | 'deprecation';
+type WarningLevel = 'default' | 'low' | 'medium' | 'high' | 'deprecation';
 
 type SWCWarningOptions = {
     type?: WarningType;

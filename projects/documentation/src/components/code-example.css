@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 
 :host {
     display: flex;
-    margin: 1rem 0 2rem 0;
+    margin: 1rem 0 2rem;
     flex-direction: column;
     border-radius: var(--code-example-border-radius);
     border: 1px solid var(--spectrum-global-color-gray-100);
@@ -60,6 +60,7 @@ governing permissions and limitations under the License.
 
 pre {
     grid-area: 1/1/1/1;
+    padding-bottom: calc(0.75rem + var(--spectrum-global-dimension-size-400));
 }
 
 .copy-holder {

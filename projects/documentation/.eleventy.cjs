@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight');
 
 module.exports = function (eleventyConfig) {
+    eleventyConfig.addNunjucksGlobal('WATCH_MODE', process.env.WATCH_MODE);
     eleventyConfig.setUseGitIgnore(false);
     eleventyConfig.addPassthroughCopy('content/favicon.ico');
     eleventyConfig.addPassthroughCopy('content/favicon.svg');
