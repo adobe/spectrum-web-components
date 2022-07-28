@@ -1,0 +1,4 @@
+{
+    "./src/*": "./src/*",
+    "./sp-action-group.js": "./sp-action-group.js"
+}

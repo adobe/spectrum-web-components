@@ -20,13 +20,32 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-top-nav": "./sp-top-nav.js",
-        "./sp-top-nav.js": "./sp-top-nav.js",
-        "./sp-top-nav-item": "./sp-top-nav-item.js",
-        "./sp-top-nav-item.js": "./sp-top-nav-item.js"
+        "./src/TopNav.js": {
+            "development": "./src/TopNav.dev.js",
+            "default": "./src/TopNav.js"
+        },
+        "./src/TopNavItem.js": {
+            "development": "./src/TopNavItem.dev.js",
+            "default": "./src/TopNavItem.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/top-nav-item.css.js": "./src/top-nav-item.css.js",
+        "./sp-top-nav.js": {
+            "development": "./sp-top-nav.dev.js",
+            "default": "./sp-top-nav.js"
+        },
+        "./sp-top-nav-item.js": {
+            "development": "./sp-top-nav-item.dev.js",
+            "default": "./sp-top-nav-item.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

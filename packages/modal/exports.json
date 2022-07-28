@@ -1,0 +1,4 @@
+{
+    ".": "./src/modal-wrapper.css.js",
+    "./src/*": "./src/*"
+}

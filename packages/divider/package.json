@@ -20,11 +20,24 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-divider": "./sp-divider.js",
-        "./sp-divider.js": "./sp-divider.js"
+        "./src/Divider.js": {
+            "development": "./src/Divider.dev.js",
+            "default": "./src/Divider.js"
+        },
+        "./src/divider.css.js": "./src/divider.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-divider.js": {
+            "development": "./sp-divider.dev.js",
+            "default": "./sp-divider.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

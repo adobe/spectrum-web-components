@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-avatar": "./sp-avatar.js",
-        "./sp-avatar.js": "./sp-avatar.js"
+        "./src/Avatar.js": {
+            "development": "./src/Avatar.dev.js",
+            "default": "./src/Avatar.js"
+        },
+        "./src/avatar.css.js": "./src/avatar.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-avatar.js": {
+            "development": "./sp-avatar.dev.js",
+            "default": "./sp-avatar.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

@@ -20,11 +20,28 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-color-slider": "./sp-color-slider.js",
-        "./sp-color-slider.js": "./sp-color-slider.js"
+        "./src/ColorSlider.js": {
+            "development": "./src/ColorSlider.dev.js",
+            "default": "./src/ColorSlider.js"
+        },
+        "./src/color-slider.css.js": "./src/color-slider.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/types.js": {
+            "development": "./src/types.dev.js",
+            "default": "./src/types.js"
+        },
+        "./sp-color-slider.js": {
+            "development": "./sp-color-slider.dev.js",
+            "default": "./sp-color-slider.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

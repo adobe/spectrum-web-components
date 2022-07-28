@@ -20,17 +20,51 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-menu": "./sp-menu.js",
-        "./sp-menu.js": "./sp-menu.js",
-        "./sp-menu-divider": "./sp-menu-divider.js",
-        "./sp-menu-divider.js": "./sp-menu-divider.js",
-        "./sp-menu-group": "./sp-menu-group.js",
-        "./sp-menu-group.js": "./sp-menu-group.js",
-        "./sp-menu-item": "./sp-menu-item.js",
-        "./sp-menu-item.js": "./sp-menu-item.js"
+        "./src/Menu.js": {
+            "development": "./src/Menu.dev.js",
+            "default": "./src/Menu.js"
+        },
+        "./src/MenuDivider.js": {
+            "development": "./src/MenuDivider.dev.js",
+            "default": "./src/MenuDivider.js"
+        },
+        "./src/MenuGroup.js": {
+            "development": "./src/MenuGroup.dev.js",
+            "default": "./src/MenuGroup.js"
+        },
+        "./src/MenuItem.js": {
+            "development": "./src/MenuItem.dev.js",
+            "default": "./src/MenuItem.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/menu-divider.css.js": "./src/menu-divider.css.js",
+        "./src/menu-group.css.js": "./src/menu-group.css.js",
+        "./src/menu-item.css.js": "./src/menu-item.css.js",
+        "./src/menu.css.js": "./src/menu.css.js",
+        "./sp-menu.js": {
+            "development": "./sp-menu.dev.js",
+            "default": "./sp-menu.js"
+        },
+        "./sp-menu-divider.js": {
+            "development": "./sp-menu-divider.dev.js",
+            "default": "./sp-menu-divider.js"
+        },
+        "./sp-menu-group.js": {
+            "development": "./sp-menu-group.dev.js",
+            "default": "./sp-menu-group.js"
+        },
+        "./sp-menu-item.js": {
+            "development": "./sp-menu-item.dev.js",
+            "default": "./sp-menu-item.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

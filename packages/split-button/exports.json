@@ -1,0 +1,5 @@
+{
+    "./src/*": "./src/*",
+    "./sp-split-button.js": "./sp-split-button.js",
+    "./sync/sp-split-button.js": "./sync/sp-split-button.js"
+}

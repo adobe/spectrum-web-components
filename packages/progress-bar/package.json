@@ -20,11 +20,24 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-progress-bar": "./sp-progress-bar.js",
-        "./sp-progress-bar.js": "./sp-progress-bar.js"
+        "./src/ProgressBar.js": {
+            "development": "./src/ProgressBar.dev.js",
+            "default": "./src/ProgressBar.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/progress-bar.css.js": "./src/progress-bar.css.js",
+        "./sp-progress-bar.js": {
+            "development": "./sp-progress-bar.dev.js",
+            "default": "./sp-progress-bar.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

@@ -20,13 +20,33 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-accordion": "./sp-accordion.js",
-        "./sp-accordion.js": "./sp-accordion.js",
-        "./sp-accordion-item": "./sp-accordion-item.js",
-        "./sp-accordion-item.js": "./sp-accordion-item.js"
+        "./src/Accordion.js": {
+            "development": "./src/Accordion.dev.js",
+            "default": "./src/Accordion.js"
+        },
+        "./src/AccordionItem.js": {
+            "development": "./src/AccordionItem.dev.js",
+            "default": "./src/AccordionItem.js"
+        },
+        "./src/accordion-item.css.js": "./src/accordion-item.css.js",
+        "./src/accordion.css.js": "./src/accordion.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-accordion.js": {
+            "development": "./sp-accordion.dev.js",
+            "default": "./sp-accordion.js"
+        },
+        "./sp-accordion-item.js": {
+            "development": "./sp-accordion-item.dev.js",
+            "default": "./sp-accordion-item.js"
+        }
     },
     "scripts": {
         "test": "karma start --coverage"

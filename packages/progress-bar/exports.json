@@ -1,0 +1,6 @@
+{
+    ".": "./src/index.js",
+    "./src/*.js": "./src/*.js",
+    "./package.json": "./package.json",
+    "./sp-progress-bar.js": "./sp-progress-bar.js"
+}

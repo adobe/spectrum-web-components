@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-status-light": "./sp-status-light.js",
-        "./sp-status-light.js": "./sp-status-light.js"
+        "./src/StatusLight.js": {
+            "development": "./src/StatusLight.dev.js",
+            "default": "./src/StatusLight.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/status-light.css.js": "./src/status-light.css.js",
+        "./sp-status-light.js": {
+            "development": "./sp-status-light.dev.js",
+            "default": "./sp-status-light.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

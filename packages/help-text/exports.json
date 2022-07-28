@@ -1,0 +1,6 @@
+{
+    "./src/*": "./src/*",
+    "./help-text-manager.js": "./src/help-text-manager.js",
+    "./HelpTextManager.js": "./src/HelpTextManager.js",
+    "./sp-help-text.js": "./sp-help-text.js"
+}

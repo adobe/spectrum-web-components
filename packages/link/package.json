@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-link": "./sp-link.js",
-        "./sp-link.js": "./sp-link.js"
+        "./src/Link.js": {
+            "development": "./src/Link.dev.js",
+            "default": "./src/Link.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/link.css.js": "./src/link.css.js",
+        "./sp-link.js": {
+            "development": "./sp-link.dev.js",
+            "default": "./sp-link.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

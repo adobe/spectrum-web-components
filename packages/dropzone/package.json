@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-dropzone": "./sp-dropzone.js",
-        "./sp-dropzone.js": "./sp-dropzone.js"
+        "./src/Dropzone.js": {
+            "development": "./src/Dropzone.dev.js",
+            "default": "./src/Dropzone.js"
+        },
+        "./src/dropzone.css.js": "./src/dropzone.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-dropzone.js": {
+            "development": "./sp-dropzone.dev.js",
+            "default": "./sp-dropzone.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

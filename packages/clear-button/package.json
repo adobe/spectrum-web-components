@@ -21,8 +21,8 @@
     "type": "module",
     "exports": {
         ".": "./src/clear-button.css.js",
-        "./src/*": "./src/*",
-        "./package.json": "./package.json"
+        "./package.json": "./package.json",
+        "./src/clear-button.css.js": "./src/clear-button.css.js"
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

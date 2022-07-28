@@ -3,6 +3,7 @@
     "compilerOptions": {
         "outDir": "../",
         "types": ["mocha", "chai", "sinon", "webpack-env", "node"],
+        "emitDeclarationOnly": false,
         "declaration": false
     },
     "include": [

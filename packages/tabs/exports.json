@@ -1,0 +1,6 @@
+{
+    "./src/*": "./src/*",
+    "./sp-tabs.js": "./sp-tabs.js",
+    "./sp-tab.js": "./sp-tab.js",
+    "./sp-tab-panel.js": "./sp-tab-panel.js"
+}

@@ -20,13 +20,33 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-swatch": "./sp-swatch.js",
-        "./sp-swatch.js": "./sp-swatch.js",
-        "./sp-swatch-group": "./sp-swatch-group.js",
-        "./sp-swatch-group.js": "./sp-swatch-group.js"
+        "./src/Swatch.js": {
+            "development": "./src/Swatch.dev.js",
+            "default": "./src/Swatch.js"
+        },
+        "./src/SwatchGroup.js": {
+            "development": "./src/SwatchGroup.dev.js",
+            "default": "./src/SwatchGroup.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/swatch-group.css.js": "./src/swatch-group.css.js",
+        "./src/swatch.css.js": "./src/swatch.css.js",
+        "./sp-swatch.js": {
+            "development": "./sp-swatch.dev.js",
+            "default": "./sp-swatch.js"
+        },
+        "./sp-swatch-group.js": {
+            "development": "./sp-swatch-group.dev.js",
+            "default": "./sp-swatch-group.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

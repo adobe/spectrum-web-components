@@ -20,15 +20,32 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-picker": "./sp-picker.js",
-        "./sp-picker.js": "./sp-picker.js",
-        "./sync": "./sync/index.js",
-        "./sync/index.js": "./sync/index.js",
-        "./sync/sp-picker": "./sync/sp-picker.js",
-        "./sync/sp-picker.js": "./sync/sp-picker.js"
+        "./src/Picker.js": {
+            "development": "./src/Picker.dev.js",
+            "default": "./src/Picker.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/picker.css.js": "./src/picker.css.js",
+        "./sync/index.js": {
+            "development": "./sync/index.dev.js",
+            "default": "./sync/index.js"
+        },
+        "./sync/sp-picker.js": {
+            "development": "./sync/sp-picker.dev.js",
+            "default": "./sync/sp-picker.js"
+        },
+        "./sp-picker.js": {
+            "development": "./sp-picker.dev.js",
+            "default": "./sp-picker.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

@@ -20,11 +20,24 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-thumbnail": "./sp-thumbnail.js",
-        "./sp-thumbnail.js": "./sp-thumbnail.js"
+        "./src/Thumbnail.js": {
+            "development": "./src/Thumbnail.dev.js",
+            "default": "./src/Thumbnail.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/thumbnail.css.js": "./src/thumbnail.css.js",
+        "./sp-thumbnail.js": {
+            "development": "./sp-thumbnail.dev.js",
+            "default": "./sp-thumbnail.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

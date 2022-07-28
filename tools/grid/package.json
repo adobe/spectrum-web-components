@@ -20,11 +20,29 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*.js",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
+        "./src/Grid.js": {
+            "development": "./src/Grid.dev.js",
+            "default": "./src/Grid.js"
+        },
+        "./src/GridController.js": {
+            "development": "./src/GridController.dev.js",
+            "default": "./src/GridController.js"
+        },
+        "./src/grid.css.js": "./src/grid.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./sp-grid": "./sp-grid.js",
-        "./sp-grid.js": "./sp-grid.js"
+        "./sp-grid.js": {
+            "development": "./sp-grid.dev.js",
+            "default": "./sp-grid.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

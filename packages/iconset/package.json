@@ -19,9 +19,27 @@
     "main": "./src/index.js",
     "module": "./src/index.js",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
-        "./package.json": "./package.json"
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/iconset-registry.js": {
+            "development": "./src/iconset-registry.dev.js",
+            "default": "./src/iconset-registry.js"
+        },
+        "./src/iconset-svg.js": {
+            "development": "./src/iconset-svg.dev.js",
+            "default": "./src/iconset-svg.js"
+        },
+        "./src/iconset.js": {
+            "development": "./src/iconset.dev.js",
+            "default": "./src/iconset.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

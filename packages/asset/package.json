@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-asset": "./sp-asset.js",
-        "./sp-asset.js": "./sp-asset.js"
+        "./src/Asset.js": {
+            "development": "./src/Asset.dev.js",
+            "default": "./src/Asset.js"
+        },
+        "./src/asset.css.js": "./src/asset.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-asset.js": {
+            "development": "./sp-asset.dev.js",
+            "default": "./sp-asset.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

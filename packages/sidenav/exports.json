@@ -1,0 +1,6 @@
+{
+    "./src/*": "./src/*",
+    "./sp-sidenav.js": "./sp-sidenav.js",
+    "./sp-sidenav-heading.js": "./sp-sidenav-heading.js",
+    "./sp-sidenav-item.js": "./sp-sidenav-item.js"
+}

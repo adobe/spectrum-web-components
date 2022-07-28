@@ -20,11 +20,24 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*.js",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-tray": "./sp-tray.js",
-        "./sp-tray.js": "./sp-tray.js"
+        "./src/Tray.js": {
+            "development": "./src/Tray.dev.js",
+            "default": "./src/Tray.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/tray.css.js": "./src/tray.css.js",
+        "./sp-tray.js": {
+            "development": "./sp-tray.dev.js",
+            "default": "./sp-tray.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

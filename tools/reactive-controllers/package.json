@@ -20,9 +20,27 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
-        "./package.json": "./package.json"
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/FocusGroup.js": {
+            "development": "./src/FocusGroup.dev.js",
+            "default": "./src/FocusGroup.js"
+        },
+        "./src/MatchMedia.js": {
+            "development": "./src/MatchMedia.dev.js",
+            "default": "./src/MatchMedia.js"
+        },
+        "./src/RovingTabindex.js": {
+            "development": "./src/RovingTabindex.dev.js",
+            "default": "./src/RovingTabindex.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

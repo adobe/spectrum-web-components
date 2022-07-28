@@ -20,15 +20,44 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
-        "./help-text-manager": "./src/help-text-manager.js",
-        "./help-text-manager.js": "./src/help-text-manager.js",
-        "./HelpTextManager": "./src/HelpTextManager.js",
-        "./HelpTextManager.js": "./src/HelpTextManager.js",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-help-text": "./sp-help-text.js",
-        "./sp-help-text.js": "./sp-help-text.js"
+        "./src/HelpText.js": {
+            "development": "./src/HelpText.dev.js",
+            "default": "./src/HelpText.js"
+        },
+        "./src/HelpTextManagedElement.js": {
+            "development": "./src/HelpTextManagedElement.dev.js",
+            "default": "./src/HelpTextManagedElement.js"
+        },
+        "./src/HelpTextManager.js": {
+            "development": "./src/HelpTextManager.dev.js",
+            "default": "./src/HelpTextManager.js"
+        },
+        "./src/help-text.css.js": "./src/help-text.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/manage-help-text.js": {
+            "development": "./src/manage-help-text.dev.js",
+            "default": "./src/manage-help-text.js"
+        },
+        "./help-text-manager.js": {
+            "development": "./help-text-manager.dev.js",
+            "default": "./help-text-manager.js"
+        },
+        "./HelpTextManager.js": {
+            "development": "./HelpTextManager.dev.js",
+            "default": "./HelpTextManager.js"
+        },
+        "./sp-help-text.js": {
+            "development": "./sp-help-text.dev.js",
+            "default": "./sp-help-text.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

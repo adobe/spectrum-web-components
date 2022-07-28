@@ -20,15 +20,40 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-slider": "./sp-slider.js",
-        "./sp-slider.js": "./sp-slider.js",
-        "./sp-slider-handle": "./sp-slider-handle.js",
-        "./sp-slider-handle.js": "./sp-slider-handle.js",
-        "./sync/sp-slider": "./sync/sp-slider.js",
-        "./sync/sp-slider.js": "./sync/sp-slider.js"
+        "./src/HandleController.js": {
+            "development": "./src/HandleController.dev.js",
+            "default": "./src/HandleController.js"
+        },
+        "./src/Slider.js": {
+            "development": "./src/Slider.dev.js",
+            "default": "./src/Slider.js"
+        },
+        "./src/SliderHandle.js": {
+            "development": "./src/SliderHandle.dev.js",
+            "default": "./src/SliderHandle.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/slider.css.js": "./src/slider.css.js",
+        "./sp-slider.js": {
+            "development": "./sp-slider.dev.js",
+            "default": "./sp-slider.js"
+        },
+        "./sp-slider-handle.js": {
+            "development": "./sp-slider-handle.dev.js",
+            "default": "./sp-slider-handle.js"
+        },
+        "./sync/sp-slider.js": {
+            "development": "./sync/sp-slider.dev.js",
+            "default": "./sync/sp-slider.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

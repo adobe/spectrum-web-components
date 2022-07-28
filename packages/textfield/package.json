@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-textfield": "./sp-textfield.js",
-        "./sp-textfield.js": "./sp-textfield.js"
+        "./src/Textfield.js": {
+            "development": "./src/Textfield.dev.js",
+            "default": "./src/Textfield.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/textfield.css.js": "./src/textfield.css.js",
+        "./sp-textfield.js": {
+            "development": "./sp-textfield.dev.js",
+            "default": "./sp-textfield.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

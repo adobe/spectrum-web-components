@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-tooltip": "./sp-tooltip.js",
-        "./sp-tooltip.js": "./sp-tooltip.js"
+        "./src/Tooltip.js": {
+            "development": "./src/Tooltip.dev.js",
+            "default": "./src/Tooltip.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/tooltip.css.js": "./src/tooltip.css.js",
+        "./sp-tooltip.js": {
+            "development": "./sp-tooltip.dev.js",
+            "default": "./sp-tooltip.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

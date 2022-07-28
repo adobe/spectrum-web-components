@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-toast": "./sp-toast.js",
-        "./sp-toast.js": "./sp-toast.js"
+        "./src/Toast.js": {
+            "development": "./src/Toast.dev.js",
+            "default": "./src/Toast.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/toast.css.js": "./src/toast.css.js",
+        "./sp-toast.js": {
+            "development": "./sp-toast.dev.js",
+            "default": "./sp-toast.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

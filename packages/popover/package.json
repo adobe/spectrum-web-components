@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-popover": "./sp-popover.js",
-        "./sp-popover.js": "./sp-popover.js"
+        "./src/Popover.js": {
+            "development": "./src/Popover.dev.js",
+            "default": "./src/Popover.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/popover.css.js": "./src/popover.css.js",
+        "./sp-popover.js": {
+            "development": "./sp-popover.dev.js",
+            "default": "./sp-popover.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

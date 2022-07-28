@@ -1,0 +1,6 @@
+{
+    "./src/*": "./src/*",
+    "./active-overlay.js": "./active-overlay.js",
+    "./overlay-trigger.js": "./overlay-trigger.js",
+    "./sync/overlay-trigger.js": "./sync/overlay-trigger.js"
+}

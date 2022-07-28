@@ -20,11 +20,24 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-field-group": "./sp-field-group.js",
-        "./sp-field-group.js": "./sp-field-group.js"
+        "./src/FieldGroup.js": {
+            "development": "./src/FieldGroup.dev.js",
+            "default": "./src/FieldGroup.js"
+        },
+        "./src/field-group.css.js": "./src/field-group.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-field-group.js": {
+            "development": "./sp-field-group.dev.js",
+            "default": "./sp-field-group.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

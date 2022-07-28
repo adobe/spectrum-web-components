@@ -20,11 +20,28 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-color-area": "./sp-color-area.js",
-        "./sp-color-area.js": "./sp-color-area.js"
+        "./src/ColorArea.js": {
+            "development": "./src/ColorArea.dev.js",
+            "default": "./src/ColorArea.js"
+        },
+        "./src/color-area.css.js": "./src/color-area.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/types.js": {
+            "development": "./src/types.dev.js",
+            "default": "./src/types.js"
+        },
+        "./sp-color-area.js": {
+            "development": "./sp-color-area.dev.js",
+            "default": "./sp-color-area.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

@@ -20,13 +20,27 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./elements": "./elements.js",
-        "./elements.js": "./elements.js",
-        "./icons": "./src/icons.js",
-        "./icons.js": "./src/icons.js"
+        "./src/icons.js": {
+            "development": "./src/icons.dev.js",
+            "default": "./src/icons.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./elements.js": {
+            "development": "./elements.dev.js",
+            "default": "./elements.js"
+        },
+        "./icons.js": {
+            "development": "./icons.dev.js",
+            "default": "./icons.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

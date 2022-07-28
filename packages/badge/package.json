@@ -20,11 +20,24 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*.js",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-badge": "./sp-badge.js",
-        "./sp-badge.js": "./sp-badge.js"
+        "./src/Badge.js": {
+            "development": "./src/Badge.dev.js",
+            "default": "./src/Badge.js"
+        },
+        "./src/badge.css.js": "./src/badge.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-badge.js": {
+            "development": "./sp-badge.dev.js",
+            "default": "./sp-badge.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

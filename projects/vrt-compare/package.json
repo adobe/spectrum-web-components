@@ -20,11 +20,28 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*.js",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
+        "./src/OnionSkinner.js": {
+            "development": "./src/OnionSkinner.dev.js",
+            "default": "./src/OnionSkinner.js"
+        },
+        "./src/VrtCompare.js": {
+            "development": "./src/VrtCompare.dev.js",
+            "default": "./src/VrtCompare.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./vrt-compare": "./vrt-compare.js",
-        "./vrt-compare.js": "./vrt-compare.js"
+        "./vrt-compare.js": {
+            "development": "./vrt-compare.dev.js",
+            "default": "./vrt-compare.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

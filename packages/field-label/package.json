@@ -20,11 +20,24 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-field-label": "./sp-field-label.js",
-        "./sp-field-label.js": "./sp-field-label.js"
+        "./src/FieldLabel.js": {
+            "development": "./src/FieldLabel.dev.js",
+            "default": "./src/FieldLabel.js"
+        },
+        "./src/field-label.css.js": "./src/field-label.css.js",
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./sp-field-label.js": {
+            "development": "./sp-field-label.dev.js",
+            "default": "./sp-field-label.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

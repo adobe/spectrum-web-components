@@ -1,0 +1,7 @@
+{
+    "./src/*": "./src/*",
+    "./sp-menu.js": "./sp-menu.js",
+    "./sp-menu-divider.js": "./sp-menu-divider.js",
+    "./sp-menu-group.js": "./sp-menu-group.js",
+    "./sp-menu-item.js": "./sp-menu-item.js"
+}

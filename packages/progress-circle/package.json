@@ -20,11 +20,24 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-progress-circle": "./sp-progress-circle.js",
-        "./sp-progress-circle.js": "./sp-progress-circle.js"
+        "./src/ProgressCircle.js": {
+            "development": "./src/ProgressCircle.dev.js",
+            "default": "./src/ProgressCircle.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/progress-circle.css.js": "./src/progress-circle.css.js",
+        "./sp-progress-circle.js": {
+            "development": "./sp-progress-circle.dev.js",
+            "default": "./sp-progress-circle.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

@@ -1,0 +1,5 @@
+{
+    "./src/*": "./src/*",
+    "./elements.js": "./elements.js",
+    "./icons.js": "./src/icons.js"
+}

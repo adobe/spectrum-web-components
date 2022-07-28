@@ -20,15 +20,42 @@
     "module": "./src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-sidenav": "./sp-sidenav.js",
-        "./sp-sidenav.js": "./sp-sidenav.js",
-        "./sp-sidenav-heading": "./sp-sidenav-heading.js",
-        "./sp-sidenav-heading.js": "./sp-sidenav-heading.js",
-        "./sp-sidenav-item": "./sp-sidenav-item.js",
-        "./sp-sidenav-item.js": "./sp-sidenav-item.js"
+        "./src/Sidenav.js": {
+            "development": "./src/Sidenav.dev.js",
+            "default": "./src/Sidenav.js"
+        },
+        "./src/SidenavHeading.js": {
+            "development": "./src/SidenavHeading.dev.js",
+            "default": "./src/SidenavHeading.js"
+        },
+        "./src/SidenavItem.js": {
+            "development": "./src/SidenavItem.dev.js",
+            "default": "./src/SidenavItem.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/sidenav-heading.css.js": "./src/sidenav-heading.css.js",
+        "./src/sidenav-item.css.js": "./src/sidenav-item.css.js",
+        "./src/sidenav.css.js": "./src/sidenav.css.js",
+        "./sp-sidenav.js": {
+            "development": "./sp-sidenav.dev.js",
+            "default": "./sp-sidenav.js"
+        },
+        "./sp-sidenav-heading.js": {
+            "development": "./sp-sidenav-heading.dev.js",
+            "default": "./sp-sidenav-heading.js"
+        },
+        "./sp-sidenav-item.js": {
+            "development": "./sp-sidenav-item.dev.js",
+            "default": "./sp-sidenav-item.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"

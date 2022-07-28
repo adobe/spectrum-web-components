@@ -1,0 +1,6 @@
+{
+    "./src/*": "./src/*",
+    "./sp-button.js": "./sp-button.js",
+    "./sp-clear-button.js": "./sp-clear-button.js",
+    "./sp-close-button.js": "./sp-close-button.js"
+}

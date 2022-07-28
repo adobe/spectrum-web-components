@@ -1,0 +1,4 @@
+{
+    "./src/*": "./src/*",
+    "./sp-dropzone.js": "./sp-dropzone.js"
+}
