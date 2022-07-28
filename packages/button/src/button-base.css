@@ -41,8 +41,8 @@ governing permissions and limitations under the License.
 
 slot[name='icon']::slotted(svg),
 slot[name='icon']::slotted(img) {
-    fill: currentColor;
-    stroke: currentColor;
+    fill: currentcolor;
+    stroke: currentcolor;
     height: var(
         --spectrum-alias-workflow-icon-size-m,
         var(--spectrum-global-dimension-size-225)

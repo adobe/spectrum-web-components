@@ -130,7 +130,7 @@ sp-field-button {
     right: var(--spectrum-stepper-button-width);
 }
 
-:host([readonly]:not([disabled]):not([invalid]):not([focused]):not([keyboard-focused]))
+:host([readonly]:not([disabled], [invalid], [focused], [keyboard-focused]))
     #textfield:hover
     .input {
     border-color: transparent;
