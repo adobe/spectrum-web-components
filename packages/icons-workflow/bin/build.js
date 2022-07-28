@@ -262,7 +262,7 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
             iconRegistrationFile,
             'utf-8'
         );
-        const importStatement = `\r\nimport '../icons/${iconElementName}.js';`;
+        const importStatement = `\r\nimport '@spectrum-web-components/icons-workflow/icons/${iconElementName}.js';`;
         const metadata = `{name: '${Case.sentence(
             ComponentName
         )}', tag: '<${iconElementName}>', story: (size: string): TemplateResult => html\`<${iconElementName} size=\$\{size\}></${iconElementName}>\`},\r\n`;

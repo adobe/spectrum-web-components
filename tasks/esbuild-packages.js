@@ -11,11 +11,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { buildSearchIndex, webpackDevServer } from './documentation.js';
+import { buildTSFiles } from './ts-tools.js';
 
-function buildProduction() {
-    buildSearchIndex();
-    webpackDevServer();
-}
-
-buildProduction();
+buildTSFiles();

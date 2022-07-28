@@ -4,6 +4,7 @@
         "packages/*/src/spectrum-vars.json": true,
         "**/*.js.map": true,
         "**/*.js": { "when": "$(basename).ts" },
+        "**/*.dev.js": { "when": "$(basename).js" },
         "**/*.d.ts": { "when": "$(basename).ts" },
         "**/*.test-vrt.ts": true
     }
