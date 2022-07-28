@@ -18,6 +18,8 @@ export const openOverlay = async (
     content: HTMLElement,
     options: OverlayOptions
 ): Promise<() => void> => {
-    const { Overlay } = await import('./overlay.js');
+    const { Overlay } = await import(
+        '@spectrum-web-components/overlay/src/overlay.js'
+    );
     return Overlay.open(target, interaction, content, options);
 };

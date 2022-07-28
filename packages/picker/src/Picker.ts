@@ -278,19 +278,13 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     private popoverFragment!: DocumentFragment;
 
-    private async generatePopover(deprecatedMenu: Menu | null): Promise<void> {
+    private async generatePopover(): Promise<void> {
         if (!this.popoverFragment) {
             this.popoverFragment = document.createDocumentFragment();
         }
         render(this.renderPopover, this.popoverFragment, { host: this });
         this.popover = this.popoverFragment.children[0] as Popover;
         this.optionsMenu = this.popover.children[1] as Menu;
-
-        if (deprecatedMenu) {
-            console.warn(
-                `Deprecation Notice: You no longer need to provide an sp-menu child to ${this.tagName.toLowerCase()}. Any styling or attributes on the sp-menu will be ignored.`
-            );
-        }
     }
 
     private async openMenu(): Promise<void> {
@@ -298,7 +292,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         let reparentableChildren: Element[] = [];
         const deprecatedMenu = this.querySelector(':scope > sp-menu') as Menu;
 
-        await this.generatePopover(deprecatedMenu);
+        await this.generatePopover();
         if (deprecatedMenu) {
             reparentableChildren = Array.from(deprecatedMenu.children);
         } else {
@@ -456,6 +450,17 @@ export class PickerBase extends SizedMixin(Focusable) {
         }
         if (changes.has('value') && !changes.has('selectedItem')) {
             this.updateMenuItems();
+        }
+        if (window.__swc.DEBUG) {
+            if (!this.hasUpdated && this.querySelector('sp-menu')) {
+                const { localName } = this;
+                window.__swc.warn(
+                    this,
+                    `You no longer need to provide an <sp-menu> child to ${localName}. Any styling or attributes on the <sp-menu> will be ignored.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/picker/#sizes',
+                    { level: 'deprecation' },
+                );
+            }
         }
         super.update(changes);
     }

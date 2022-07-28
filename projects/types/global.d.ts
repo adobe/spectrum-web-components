@@ -10,14 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+type ElementLocalName = string;
+
 type WarningType = 'default' | 'accessibility' | 'api';
 
 type WarningLevel = 'default' | 'low' | 'medium' | 'heigh' | 'deprecation';
 
-type SWCWarningData = {
-    localName: string;
-    type: WarningType;
-    level: WarningLevel;
+type SWCWarningOptions = {
+    type?: WarningType;
+    level?: WarningLevel;
+    issues?: string[];
 };
 
 type BrandedSWCWarningID = `${ElementLocalName}:${WarningType}:${WarningLevel}`;
@@ -33,12 +35,11 @@ interface Window {
          * @param url {string} - a URL at which more infromation, or the standard documentation, can be found
          * @param issues {string[]} - an optional array of issues to format into the message
          */
-        issueWarning(
+        warn(
             element: HTMLElement | undefined,
-            warningData: SWCWarningData,
-            warning: string,
+            message: string,
             url: string,
-            issues?: string[]
+            options?: SWCWarningOptions
         ): void;
         issuedWarnings: Set<BrandedSWCWarningID>;
         ignoreWarningTypes: Record<WarningType, boolean>;

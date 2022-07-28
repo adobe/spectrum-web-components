@@ -22,8 +22,8 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 
-import {
-    MenuItem,
+import { MenuItem } from './MenuItem.js';
+import type {
     MenuItemAddedOrUpdatedEvent,
     MenuItemRemovedEvent,
 } from './MenuItem.js';

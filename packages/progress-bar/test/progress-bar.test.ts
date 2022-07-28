@@ -14,6 +14,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
 import { ProgressBar } from '@spectrum-web-components/progress-bar';
+import { stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ProgressBar', () => {
@@ -102,5 +103,28 @@ describe('ProgressBar', () => {
         await elementUpdated(el);
 
         expect(el.hasAttribute('aria-valuenow')).to.be.false;
+    });
+    it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+        const consoleWarnStub = stub(console, 'warn');
+        const el = await fixture<ProgressBar>(html`
+            <sp-progress-bar progress="50"></sp-progress-bar>
+        `);
+
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        const spyCall = consoleWarnStub.getCall(0);
+        expect(
+            spyCall.args.at(0).includes('accessible'),
+            'confirm accessibility-centric message'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-progress-bar',
+                type: 'accessibility',
+                level: 'default',
+            },
+        });
+        consoleWarnStub.restore();
     });
 });

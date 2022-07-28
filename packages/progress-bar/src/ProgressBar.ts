@@ -100,5 +100,27 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
         if (this.label && changes.has('label')) {
             this.setAttribute('aria-label', this.label);
         }
+
+        if (window.__swc.DEBUG) {
+            if (
+                !this.label &&
+                !this.getAttribute('aria-label') &&
+                !this.getAttribute('aria-labelledby')
+            ) {
+                window.__swc.warn(
+                    this,
+                    '<sp-progress-bar> elements will not be accessible to screen readers without one of the following:',
+                    'https://opensource.adobe.com/spectrum-web-components/components/progress-bar/#accessibility',
+                    {
+                        type: 'accessibility',
+                        issues: [
+                            'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
+                            'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
+                            'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
+                        ]
+                    },
+                );
+            }
+        }
     }
 }

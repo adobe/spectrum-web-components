@@ -163,3 +163,52 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 }
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {}
+
+if (window.__swc.DEBUG) {
+    window.__swc = {
+        ...window.__swc,
+        issuedWarnings: new Set(),
+        warn: (element, message, url, { type = 'api', level = 'default', issues } = {}): void => {
+            const { localName = 'base' } = element || {};
+            const id = `${localName}:${type}:${level}` as BrandedSWCWarningID;
+            if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id))
+                return;
+            window.__swc.issuedWarnings.add(id);
+            if (window.__swc.ignoreWarningLocalNames?.[localName]) return;
+            if (window.__swc.ignoreWarningTypes?.[type]) return;
+            if (window.__swc.ignoreWarningLevels?.[level]) return;
+            let listedIssues = '';
+            if (issues && issues.length) {
+                issues.unshift('');
+                listedIssues = issues.join('\n    - ') + '\n';
+            }
+            const intro = level === 'deprecation' ? 'DEPRECATION NOTICE: ' : '';
+            const inspectElement = element
+                ? '\nInspect this issue in the follow element:'
+                : '';
+            const displayURL = (element ? '\n\n' : '\n') + url + '\n';
+            const messages: unknown[] = [];
+            messages.push(
+                intro + message + '\n' + listedIssues + inspectElement
+            );
+            if (element) {
+                messages.push(element);
+            }
+            messages.push(displayURL, {
+                data: {
+                    localName,
+                    type,
+                    level,
+                }
+            });
+            console.warn(...messages);
+        },
+    };
+
+    window.__swc.warn(
+        undefined,
+        'Spectrum Web Components is in dev mode. Not recommended for production!',
+        'https://opensource.adobe.com/spectrum-web-components/dev-mode/',
+        { type: 'default' },
+    );
+}
