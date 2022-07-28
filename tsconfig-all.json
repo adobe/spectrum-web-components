@@ -2,15 +2,14 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "rootDir": "./",
-        "declaration": false,
-        "incremental": true
+        "noEmit": true,
+        "emitDeclarationOnly": false
     },
     "include": [
         "packages/**/*.ts",
         "tools/**/*.ts",
         "projects/story-decorator/**/*.ts",
-        "projects/vrt-compare/**/*.ts",
-        "test/lit-helpers.ts"
+        "projects/vrt-compare/**/*.ts"
     ],
     "exclude": [
         "packages/*/node_modules/**/*.ts",
@@ -26,6 +25,7 @@
         { "path": "packages/banner" },
         { "path": "packages/badge" },
         { "path": "packages/base" },
+        { "path": "packages/badge" },
         { "path": "packages/bundle" },
         { "path": "packages/button" },
         { "path": "packages/button-group" },
