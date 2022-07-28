@@ -289,6 +289,49 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             }
             return acc;
         }, [] as CSSResultGroup[]);
+        if (window.__swc.DEBUG) {
+            const issues: string[] = [];
+            const checkForAttribute = (
+                name: FragmentType,
+                resolvedValue?: string,
+                actualValue?: string
+            ): void => {
+                const themeModifier =
+                    this.theme && this.theme !== 'spectrum'
+                        ? `-${this.theme}`
+                        : '';
+                if (!resolvedValue) {
+                    issues.push(
+                        `You have not explicitly set the "${name}" attribute and there is no default value on which to fallback.`
+                    );
+                } else if (!actualValue) {
+                    issues.push(
+                        `You have not explicitly set the "${name}" attribute, the default value ("${resolvedValue}") is being used as a fallback.`
+                    );
+                } else if (
+                    !Theme.themeFragmentsByKind
+                        .get(name)
+                        ?.get(resolvedValue + themeModifier)
+                ) {
+                    issues.push(
+                        `You have set "${name}='${resolvedValue}'" but the associated theme fragment has not been loaded.`
+                    );
+                }
+            };
+            checkForAttribute('theme', this.theme, this._theme);
+            checkForAttribute('color', this.color, this._color);
+            checkForAttribute('scale', this.scale, this._scale);
+            if (issues.length) {
+                window.__swc.warn(
+                    this,
+                    'You are leveraging an <sp-theme> element and the following issues may disrupt your theme delivery:',
+                    'https://opensource.adobe.com/spectrum-web-components/components/theme/#example',
+                    {
+                        issues
+                    },
+                );
+            }
+        }
         return [...styles];
     }
 

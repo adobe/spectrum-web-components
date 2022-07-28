@@ -26,6 +26,7 @@ import {
 import { sendKeys } from '@web/test-runner-commands';
 import { ProvideLang } from '@spectrum-web-components/theme';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Slider', () => {
@@ -1072,6 +1073,104 @@ describe('Slider', () => {
         lastHandle.value = 7;
         await elementUpdated(el);
         expect(el.values).to.deep.equal({ a: 10, b: 10, c: 10 });
+    });
+    it('warns in Dev Mode when `min="previous"` is leveraged on first handle', async () => {
+        const consoleWarnStub = stub(console, 'warn');
+        window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider min="0" max="100">
+                    <sp-slider-handle
+                        id="first-handle"
+                        min="previous"
+                        max="next"
+                        slot="handle"
+                        name="a"
+                        value="10"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="middle-handle"
+                        min="previous"
+                        max="next"
+                        slot="handle"
+                        name="b"
+                        value="20"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="last-handle"
+                        min="previous"
+                        slot="handle"
+                        name="c"
+                        value="30"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        const spyCall = consoleWarnStub.getCall(0);
+        expect(
+            spyCall.args.at(0).includes('previous'),
+            'confirm "previous" in message'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-slider',
+                type: 'api',
+                level: 'default',
+            },
+        });
+        consoleWarnStub.restore();
+    });
+    it('warns in Dev Mode when `max="next"` is leveraged on last handle', async () => {
+        const consoleWarnStub = stub(console, 'warn');
+        window.__swc.issuedWarnings = new Set<BrandedSWCWarningID>();
+        const el = await fixture<Slider>(
+            html`
+                <sp-slider min="0" max="100">
+                    <sp-slider-handle
+                        id="first-handle"
+                        max="next"
+                        slot="handle"
+                        name="a"
+                        value="10"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="middle-handle"
+                        min="previous"
+                        max="next"
+                        slot="handle"
+                        name="b"
+                        value="20"
+                    ></sp-slider-handle>
+                    <sp-slider-handle
+                        id="last-handle"
+                        min="previous"
+                        max="next"
+                        slot="handle"
+                        name="c"
+                        value="30"
+                    ></sp-slider-handle>
+                </sp-slider>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        const spyCall = consoleWarnStub.getCall(0);
+        expect(spyCall.args.at(0).includes('next'), 'confirm "next" in message')
+            .to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-slider',
+                type: 'api',
+                level: 'default',
+            },
+        });
+        consoleWarnStub.restore();
     });
     it('builds both handles from a <template>', async () => {
         const template = document.createElement('template');

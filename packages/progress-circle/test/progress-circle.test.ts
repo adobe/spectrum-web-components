@@ -14,6 +14,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import { ProgressCircle } from '@spectrum-web-components/progress-circle';
+import { stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ProgressCircle', () => {
@@ -76,5 +77,28 @@ describe('ProgressCircle', () => {
         await elementUpdated(el);
 
         expect(el.hasAttribute('aria-valuenow')).to.be.false;
+    });
+    it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+        const consoleWarnStub = stub(console, 'warn');
+        const el = await fixture<ProgressCircle>(html`
+            <sp-progress-circle progress="50"></sp-progress-circle>
+        `);
+
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        const spyCall = consoleWarnStub.getCall(0);
+        expect(
+            spyCall.args.at(0).includes('accessible'),
+            'confirm accessibility-centric message'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-progress-circle',
+                type: 'accessibility',
+                level: 'default',
+            },
+        });
+        consoleWarnStub.restore();
     });
 });

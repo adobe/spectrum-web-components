@@ -54,6 +54,23 @@ import '@spectrum-web-components/theme/express/scale-medium.js';
 import '@spectrum-web-components/theme/express/scale-large.js';
 ```
 
+## Example
+
+An `<sp-theme>` element expects a value for each of its `theme`, `color`, and `scale` attributes to be provided on the element.
+
+```html
+<sp-theme
+    theme="spectrum"
+    color="light"
+    scale="medium"
+    style="background-color: var(--spectrum-global-color-gray-100)"
+>
+    <sp-button onclick="spAlert(this, 'Themed <sp-button> clicked!')">
+        Click me!
+    </sp-button>
+</sp-theme>
+```
+
 ## Quick start
 
 ```

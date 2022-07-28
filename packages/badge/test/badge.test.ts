@@ -14,6 +14,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/badge/sp-badge.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
+import { stub } from 'sinon';
 import { Badge } from '../src/Badge.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
@@ -32,6 +33,7 @@ describe('Badge', () => {
             )
     );
     it('loads default badge accessibly', async () => {
+        const consoleWarnStub = stub(console, 'warn');
         const el = await fixture<Badge>(
             html`
                 <sp-badge>
@@ -46,5 +48,37 @@ describe('Badge', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+        expect(consoleWarnStub.called).to.be.false;
+        consoleWarnStub.restore();
+    });
+    it('warns in Dev Mode when sent an incorrect `variant`', async () => {
+        const consoleWarnStub = stub(console, 'warn');
+        const el = await fixture<Badge>(
+            html`
+                <sp-badge variant="other">
+                    <sp-icon-checkmark-circle
+                        slot="icon"
+                    ></sp-icon-checkmark-circle>
+                    Icon and label
+                </sp-badge>
+            `
+        );
+
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        const spyCall = consoleWarnStub.getCall(0);
+        expect(
+            spyCall.args.at(0).includes('"variant"'),
+            'confirm variant-centric message'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-badge',
+                type: 'api',
+                level: 'default',
+            },
+        });
+        consoleWarnStub.restore();
     });
 });

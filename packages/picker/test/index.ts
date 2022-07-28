@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import type { Picker } from '..';
+import type { Picker } from '@spectrum-web-components/picker';
 
 import type { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay';
 import type { MenuItem } from '@spectrum-web-components/menu';
@@ -24,7 +24,7 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/shared/src/focus-visible.js';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -1047,38 +1047,79 @@ export function runPickerTests(): void {
 
             return test.querySelector('sp-picker') as Picker;
         };
-        beforeEach(async () => {
-            el = await pickerFixture();
-            await elementUpdated(el);
+        describe('Dev mode', () => {
+            it('warns in Dev Mode of deprecated `<sp-menu>` usage', async () => {
+                const consoleWarnStub = stub(console, 'warn');
+                el = await pickerFixture();
+                await elementUpdated(el);
+
+                expect(consoleWarnStub.called).to.be.true;
+                const spyCall = consoleWarnStub.getCall(0);
+                expect(
+                    spyCall.args.at(0).includes('<sp-menu>'),
+                    'confirm <sp-menu>-centric message'
+                ).to.be.true;
+                expect(
+                    spyCall.args.at(-1),
+                    'confirm `data` shape'
+                ).to.deep.equal({
+                    data: {
+                        localName: 'sp-picker',
+                        type: 'api',
+                        level: 'deprecation',
+                    },
+                });
+                consoleWarnStub.restore();
+                if (el.open) {
+                    const closed = oneEvent(el, 'sp-closed');
+                    el.open = false;
+                    await closed;
+                }
+            });
         });
-        afterEach(async () => {
-            if (el.open) {
+        describe('Dev mode ignored', () => {
+            const { ignoreWarningLocalNames } = window.__swc;
+            before(() => {
+                window.__swc.ignoreWarningLocalNames = {
+                    'sp-picker': true,
+                };
+            });
+            before(() => {
+                window.__swc.ignoreWarningLocalNames = ignoreWarningLocalNames;
+            });
+            beforeEach(async () => {
+                el = await pickerFixture();
+                await elementUpdated(el);
+            });
+            afterEach(async () => {
+                if (el.open) {
+                    const closed = oneEvent(el, 'sp-closed');
+                    el.open = false;
+                    await closed;
+                }
+            });
+            it('selects with deprecated syntax', async () => {
+                const secondItem = el.querySelector(
+                    'sp-menu-item:nth-of-type(2)'
+                ) as MenuItem;
+
+                const opened = oneEvent(el, 'sp-opened');
+                el.button.click();
+                await opened;
+                await elementUpdated(el);
+
+                expect(el.open).to.be.true;
+                expect(el.selectedItem?.itemText).to.be.undefined;
+                expect(el.value).to.equal('');
+
                 const closed = oneEvent(el, 'sp-closed');
-                el.open = false;
+                secondItem.click();
                 await closed;
-            }
-        });
-        it('selects with deprecated syntax', async () => {
-            const secondItem = el.querySelector(
-                'sp-menu-item:nth-of-type(2)'
-            ) as MenuItem;
 
-            const opened = oneEvent(el, 'sp-opened');
-            el.button.click();
-            await opened;
-            await elementUpdated(el);
-
-            expect(el.open).to.be.true;
-            expect(el.selectedItem?.itemText).to.be.undefined;
-            expect(el.value).to.equal('');
-
-            const closed = oneEvent(el, 'sp-closed');
-            secondItem.click();
-            await closed;
-
-            expect(el.open).to.be.false;
-            expect(el.selectedItem?.itemText).to.equal('Select Inverse');
-            expect(el.value).to.equal('option-2');
+                expect(el.open).to.be.false;
+                expect(el.selectedItem?.itemText).to.equal('Select Inverse');
+                expect(el.value).to.equal('option-2');
+            });
         });
     });
     testForLitDevWarnings(async () => await pickerFixture());
