@@ -98,9 +98,12 @@ module.exports = async () => {
     });
 
     mpaConfig.output.dir = 'dist';
+
+    const mode =
+        process.env.ROLLUP_WATCH !== 'true' ? 'production' : 'development';
     mpaConfig.plugins.unshift(
         nodeResolve({
-            exportConditions: ['browser', 'import', 'production'],
+            exportConditions: ['browser', 'import', mode],
         })
     );
     mpaConfig.plugins.push(

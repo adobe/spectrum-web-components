@@ -321,9 +321,7 @@ export class LayoutElement extends LitElement {
                         @change=${this.updateTheme}
                         placement="bottom-end"
                     >
-                        <sp-menu-item value="spectrum" selected>
-                            Spectrum
-                        </sp-menu-item>
+                        <sp-menu-item value="spectrum">Spectrum</sp-menu-item>
                         <sp-menu-item value="express">
                             Spectrum Express
                         </sp-menu-item>
@@ -340,9 +338,7 @@ export class LayoutElement extends LitElement {
                         @change=${this.updateColor}
                         placement="bottom-end"
                     >
-                        <sp-menu-item value="lightest" selected>
-                            Lightest
-                        </sp-menu-item>
+                        <sp-menu-item value="lightest">Lightest</sp-menu-item>
                         <sp-menu-item value="light">Light</sp-menu-item>
                         <sp-menu-item value="dark">Dark</sp-menu-item>
                         <sp-menu-item value="darkest">Darkest</sp-menu-item>
