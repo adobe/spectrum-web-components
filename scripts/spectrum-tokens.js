@@ -119,7 +119,10 @@ const processPackages = async (srcPath, index) => {
         `\\s*--spectrum-alias-${packageName}[^;]*;`,
         'g'
     );
-    for (const varsPath of await fg([varsPaths])) {
+    const varsWithoutTokens = await fg([varsPaths], {
+        ignore: ['**/tokens/**/*.css'],
+    });
+    for (const varsPath of varsWithoutTokens) {
         let css = fs.readFileSync(varsPath, 'utf8');
         css = css.replaceAll(varsRegExp, '');
         css = css.replaceAll(aliasRegExp, '');
