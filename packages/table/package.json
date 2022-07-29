@@ -125,6 +125,7 @@
     "customElements": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",
+        "./elements.js",
         "./**/*.dev.js"
     ]
 }
