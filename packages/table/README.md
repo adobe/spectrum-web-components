@@ -14,6 +14,12 @@ yarn add @spectrum-web-components/table
 Import the side effectful registration of `<sp-table>`, `<sp-table-body>`, `<sp-table-cell>`, `<sp-table-checkbox-cell>`, `<sp-table-head>`, `<sp-table-head-cell>`. and `<sp-table-row>` via:
 
 ```
+import '@spectrum-web-components/table/elements.js';
+```
+
+Or individually via:
+
+```
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
@@ -82,44 +88,9 @@ To ensure that the table scrolls, make sure to add a `style` attribute to `<sp-t
 
 To manage selection on an `<sp-table>`, utilise the `selects` attribute on `<sp-table>`. Each `<sp-table-row>` has a `value` attribute which, by default, corresponds to its index in the table, and these `value`s tell `<sp-table>` which `<sp-table-row>`s are selected. The selected items can be manually fed in through the `.selected` attribute on the table.
 
-```html
-<sp-table size="m">
-    <sp-table-head>
-        <sp-table-head-cell sortable sort>Column Title</sp-table-head-cell>
-        <sp-table-head-cell>Column Title</sp-table-head-cell>
-        <sp-table-head-cell>Column Title</sp-table-head-cell>
-    </sp-table-head>
-    <sp-table-body>
-        <sp-table-row>
-            <sp-table-cell>Row Item Alpha</sp-table-cell>
-            <sp-table-cell>Row Item Alpha</sp-table-cell>
-            <sp-table-cell>Row Item Alpha</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Row Item Bravo</sp-table-cell>
-            <sp-table-cell>Row Item Bravo</sp-table-cell>
-            <sp-table-cell>Row Item Bravo</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Row Item Charlie</sp-table-cell>
-            <sp-table-cell>Row Item Charlie</sp-table-cell>
-            <sp-table-cell>Row Item Charlie</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Row Item Delta</sp-table-cell>
-            <sp-table-cell>Row Item Delta</sp-table-cell>
-            <sp-table-cell>Row Item Delta</sp-table-cell>
-        </sp-table-row>
-        <sp-table-row>
-            <sp-table-cell>Row Item Echo</sp-table-cell>
-            <sp-table-cell>Row Item Echo</sp-table-cell>
-            <sp-table-cell>Row Item Echo</sp-table-cell>
-        </sp-table-row>
-    </sp-table-body>
-</sp-table>
-```
-
 ### `selects="single"`
+
+When `selects="single"` the `<sp-table>` will manage a _single_ selection in the array value of `selected`.
 
 ```html
 <sp-table
@@ -166,7 +137,7 @@ To manage selection on an `<sp-table>`, utilise the `selects` attribute on `<sp-
 
 ### `selects="multiple"`
 
-When `selects` is set to "multiple", the `<sp-table-checkbox-cell>` in `<sp-table-head>` acts as the select/deselect all button.
+When `selects="multiple"` the `<sp-table>` will manage a selection in the array value of `selected` in via a presence toggle. Further, an `<sp-table-checkbox-cell>` will be made available in the `<sp-table-head>` in order to select/deselect all items in the `<sp-table>`.
 
 ```html
 <sp-table
@@ -249,7 +220,7 @@ For large amounts of data, the `<sp-table>` can be virtualised to easily add tab
             const cell1 = document.createElement('sp-table-cell');
             const cell2 = document.createElement('sp-table-cell');
             const cell3 = document.createElement('sp-table-cell');
-            cell1.textContent = `Row Item Alpha ${item.value}`;
+            cell1.textContent = `Row Item Alpha ${item.name}`;
             cell2.textContent = `Row Item Alpha ${index}`;
             cell3.textContent = `Last Thing`;
             return [cell1, cell2, cell3];
@@ -283,7 +254,7 @@ For large amounts of data, the `<sp-table>` can be virtualised to easily add tab
             const cell1 = document.createElement('sp-table-cell');
             const cell2 = document.createElement('sp-table-cell');
             const cell3 = document.createElement('sp-table-cell');
-            cell1.textContent = `Row Item Alpha ${item.value}`;
+            cell1.textContent = `Row Item Alpha ${item.name}`;
             cell2.textContent = `Row Item Alpha ${index}`;
             cell3.textContent = `Last Thing`;
             return [cell1, cell2, cell3];
@@ -328,6 +299,207 @@ const renderItem = (item: Item, index: number): TemplateResult => {
 ```
 
 Please note that there is a bug when attempting to select all virtualised elements. The items are selected programatically, it's just not reflected visually.
+
+### Selection
+
+When making a selection on a virtualized table, it can sometimes be useful to track that selection as something other than an array of indexes. To make this possible the `itemValue` property will accept a method who argument is an item object, return a computed string value to track selection with this value rather than the item's index:
+
+```html-live
+<sp-table
+    size="m"
+    id="table-item-value-demo"
+    style="height: 200px"
+    scroller="true"
+    selects="multiple"
+>
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+</sp-table>
+<div class="selection">Selected: [ ]</div>
+<script type="module">
+    const initItems = (count) => {
+        const total = count;
+        const items = [];
+        while (count) {
+            count--;
+            items.push({
+                id: crypto.randomUUID(),
+                name: String(total - count),
+                date: count,
+            });
+        }
+        return items;
+    };
+    const initTable = () => {
+        const table = document.querySelector('#table-item-value-demo');
+        table.items = initItems(50);
+
+        table.renderItem = (item, index) => {
+            const cell1 = document.createElement('sp-table-cell');
+            const cell2 = document.createElement('sp-table-cell');
+            const cell3 = document.createElement('sp-table-cell');
+            cell1.textContent = `Row Item Alpha ${item.name}`;
+            cell2.textContent = `Row Item Alpha ${index}`;
+            cell3.textContent = `Last Thing`;
+            return [cell1, cell2, cell3];
+        };
+
+        table.addEventListener('change', (event) => {
+            const selected = event.target.nextElementSibling;
+            selected.textContent = `Selected: ${JSON.stringify(event.target.selected, null, ' ')}`;
+        });
+    };
+    customElements.whenDefined('sp-table').then(() => {
+        initTable();
+    });
+</script>
+```
+
+<script type="module">
+    const initItems = (count) => {
+        const total = count;
+        const items = [];
+        while (count) {
+            count--;
+            items.push({
+                id: crypto.randomUUID(),
+                name: String(total - count),
+                date: count,
+            });
+        }
+        return items;
+    }
+
+    const initTable = () => {
+        const table = document.querySelector('#table-item-value-demo');
+        table.items = initItems(50);
+        table.itemValue = (item) => item.id;
+
+        table.renderItem = (item, index) => { 
+            const cell1 = document.createElement('sp-table-cell');
+            const cell2 = document.createElement('sp-table-cell');
+            const cell3 = document.createElement('sp-table-cell');
+            cell1.textContent = `Row Item Alpha ${item.name}`;
+            cell2.textContent = `Row Item Alpha ${index}`;
+            cell3.textContent = `Last Thing`;
+            return [cell1, cell2, cell3];
+        };
+
+        table.addEventListener('change', (event) => {
+            const selected = event.target.nextElementSibling;
+            selected.textContent = `Selected: ${JSON.stringify(event.target.selected, null, ' ')}`;
+        });
+    };
+    customElements.whenDefined('sp-table').then(() => {
+        initTable();
+    });
+</script>
+
+### Row Types
+
+All values in the item array are assumed to be homogenous by default. This means all of the rendered rows are either delivered as provided, or, in the case you are leveraging `selects`, rendered with an `<sp-table-checkbox-cell>`. However, when virtualizing a table with selection it can sometimes be useful to surface rows with additional interactions, e.g. "Load more data" links. To support that you can optionally include the `_$rowType$` brand in your item. The values for this are outlined by the `RowType` enum and include `ITEM` (0) and `INFORMATION` (1). When `_$rowType$: RowType.INFORMATION` is provided it informs the `<sp-table>` element not to deliver an `<sp-table-checkbox-cell>` with that row.
+
+```html-live
+<sp-table
+    size="m"
+    id="table-row-type-demo"
+    style="height: 200px"
+    scroller="true"
+    selects="single"
+>
+    <sp-table-head>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+        <sp-table-head-cell>Column Title</sp-table-head-cell>
+    </sp-table-head>
+</sp-table>
+<script type="module">
+    const initItems = (count) => {
+        const total = count;
+        const items = [];
+        while (count) {
+            count--;
+            items.push({
+                name: String(total - count),
+                date: count,
+            });
+        }
+        return items;
+    };
+    const initTable = () => {
+        const table = document.querySelector('#table-row-type-demo');
+        const items = initItems(50);
+        items.splice(3, 0, {
+            _$rowType$: 1,
+        });
+        table.items = items;
+
+        table.renderItem = (item, index) => {
+            if (item._$rowType$ === 1) {
+                const infoCell = document.createElement('sp-table-cell');
+                infoCell.textContent = 'Use this row type for non-selectable content.';
+                return [infoCell];
+            }
+            const cell1 = document.createElement('sp-table-cell');
+            const cell2 = document.createElement('sp-table-cell');
+            const cell3 = document.createElement('sp-table-cell');
+            cell1.textContent = `Row Item Alpha ${item.name}`;
+            cell2.textContent = `Row Item Alpha ${index}`;
+            cell3.textContent = `Last Thing`;
+            return [cell1, cell2, cell3];
+        };
+    };
+    customElements.whenDefined('sp-table').then(() => {
+        initTable();
+    });
+</script>
+```
+
+<script type="module">
+    const initItems = (count) => {
+        const total = count;
+        const items = [];
+        while (count) {
+            count--;
+            items.push({
+                name: String(total - count),
+                date: count,
+            });
+        }
+        return items;
+    }
+
+    const initTable = () => {
+        const table = document.querySelector('#table-row-type-demo');
+        const items = initItems(50);
+        items.splice(3, 0, {
+            _$rowType$: 1,
+        });
+        table.items = items;
+
+
+        table.renderItem = (item, index) => { 
+            if (item._$rowType$ === 1) {
+                const infoCell = document.createElement('sp-table-cell');
+                infoCell.textContent = 'Use this row type for non-selectable content.';
+                return [infoCell];
+            }
+            const cell1 = document.createElement('sp-table-cell');
+            const cell2 = document.createElement('sp-table-cell');
+            const cell3 = document.createElement('sp-table-cell');
+            cell1.textContent = `Row Item Alpha ${item.name}`;
+            cell2.textContent = `Row Item Alpha ${index}`;
+            cell3.textContent = `Last Thing`;
+            return [cell1, cell2, cell3];
+        };
+    };
+    customElements.whenDefined('sp-table').then(() => {
+        initTable();
+    });
+</script>
 
 ### The `scroller` property
 
