@@ -209,6 +209,11 @@ describe('Virtualized Table Selects', () => {
         await elementUpdated(el);
 
         expect(el.selected).to.deep.equal(['2']);
+
+        rowTwo.click();
+        await elementUpdated(el);
+
+        expect(el.selected).to.deep.equal(['1']);
     });
 
     it('surfaces [selects="multiple"] selection on Virtualized Table', async () => {
