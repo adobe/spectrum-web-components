@@ -42,6 +42,9 @@ export class TableRow extends SpectrumElement {
     @property({ reflect: true })
     public role = 'row';
 
+    @property({ type: Boolean })
+    public selectable = false;
+
     @property({ type: Boolean, reflect: true })
     public selected = false;
 
@@ -60,21 +63,55 @@ export class TableRow extends SpectrumElement {
         }
     }
 
+    protected handleSlotchange({
+        target,
+    }: Event & { target: HTMLSlotElement }): void {
+        const assignedElements = target.assignedElements();
+        this.selectable = !!assignedElements.find(
+            (el) => el.localName === 'sp-table-checkbox-cell'
+        );
+    }
+
     protected manageSelected(): void {
         const [checkboxCell] = this.checkboxCells;
         if (!checkboxCell) return;
         checkboxCell.checked = this.selected;
     }
 
+    protected handleClick(event: Event): void {
+        if (
+            event
+                .composedPath()
+                .find(
+                    (node) => (node as HTMLElement).localName === 'sp-checkbox'
+                )
+        ) {
+            return;
+        }
+        const [checkboxCell] = this.checkboxCells;
+        if (!checkboxCell) return;
+        checkboxCell.click();
+    }
+
     protected override render(): TemplateResult {
         return html`
-            <slot @change=${this.handleChange}></slot>
+            <slot
+                @change=${this.handleChange}
+                @slotchange=${this.handleSlotchange}
+            ></slot>
         `;
     }
 
     protected override willUpdate(changed: PropertyValues<this>): void {
         if (changed.has('selected')) {
             this.manageSelected();
+        }
+        if (changed.has('selectable')) {
+            if (this.selectable) {
+                this.addEventListener('click', this.handleClick);
+            } else {
+                this.removeEventListener('click', this.handleClick);
+            }
         }
     }
 }
