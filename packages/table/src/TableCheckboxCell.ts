@@ -52,6 +52,10 @@ export class TableCheckboxCell extends SpectrumElement {
     @property({ type: Boolean, reflect: true, attribute: 'selects-single' })
     public selectsSingle = false;
 
+    public override click(): void {
+        this.checkbox.click();
+    }
+
     protected override render(): TemplateResult {
         return html`
             <sp-checkbox
