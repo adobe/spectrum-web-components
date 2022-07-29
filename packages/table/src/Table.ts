@@ -41,7 +41,7 @@ interface Range {
 
 export enum RowType {
     ITEM = 0,
-    INFORMATION,
+    INFORMATION = 1,
 }
 
 export interface TableItem extends Record<string, unknown> {
