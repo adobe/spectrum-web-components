@@ -170,6 +170,12 @@ describe('Table Selects', () => {
         expect(rowThreeCheckbox.checkbox.checked).to.be.true;
         expect(rowTwoCheckbox.checkbox.checked).to.be.false;
         expect(el.selected.length).to.equal(1);
+
+        rowTwo.click();
+        await elementUpdated(el);
+
+        expect(rowTwoCheckbox.checked).to.be.true;
+        expect(el.selected).to.deep.equal(['row2']);
     });
 
     it('surfaces [selects="multiple"] selection', async () => {
