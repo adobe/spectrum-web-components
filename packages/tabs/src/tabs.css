@@ -14,12 +14,11 @@ governing permissions and limitations under the License.
 
 :host {
     display: grid;
+    grid-template-columns: 100%;
+}
 
-    --spectrum-tabs-emphasized-textonly-divider-background-color: transparent;
-    --spectrum-tabs-quiet-textonly-divider-background-color: transparent;
-    --spectrum-tabs-textonly-divider-background-color: transparent;
-    --spectrum-tabs-vertical-quiet-textonly-divider-background-color: transparent;
-    --spectrum-tabs-vertical-textonly-divider-background-color: transparent;
+:host(:not([direction^='vertical'])) {
+    grid-template-rows: auto 1fr;
 }
 
 :host([direction^='vertical']) {
@@ -33,6 +32,27 @@ governing permissions and limitations under the License.
 
 #selection-indicator {
     border-radius: 0;
+    z-index: 1;
+}
+
+:host([dir='rtl']) #selection-indicator {
+    left: 0;
+    right: auto;
+}
+
+:host(:not([direction^='vertical'])) #selection-indicator {
+    bottom: 0;
+}
+
+:host([dir='ltr'][direction='vertical']) #selection-indicator,
+:host([dir='rtl'][direction='vertical-right']) #selection-indicator {
+    left: 0;
+}
+
+:host([dir='ltr'][direction='vertical-right']) #selection-indicator,
+:host([dir='rtl'][direction='vertical']) #selection-indicator {
+    left: auto;
+    right: 0;
 }
 
 :host([disabled]) #selection-indicator {
@@ -51,6 +71,53 @@ governing permissions and limitations under the License.
 
 #list {
     justify-content: var(--swc-tabs-list-justify-content);
+    border: none !important;
+    background: linear-gradient(
+        to var(--sp-tabs-list-background-direction),
+        var(--sp-tabs-list-background-color) 0,
+        var(--sp-tabs-list-background-color)
+            var(--spectrum-tabs-quiet-textonly-divider-size),
+        transparent var(--spectrum-tabs-quiet-textonly-divider-size)
+    );
+
+    --sp-tabs-list-background-direction: top;
+    --sp-tabs-list-background-color: transparent;
+}
+
+:host(:not([direction^='vertical'])) #list {
+    padding-bottom: var(--spectrum-tabs-quiet-textonly-divider-size);
+}
+
+:host(:not([quiet])) #list {
+    --sp-tabs-list-background-color: var(
+        --spectrum-tabs-textonly-divider-background-color
+    );
+}
+
+:host([empasized]) #list {
+    --sp-tabs-list-background-color: var(
+        --spectrum-tabs-emphasized-textonly-divider-background-color
+    );
+}
+
+:host([direction^='vertical']) #list {
+    --sp-tabs-list-background-color: var(
+        --spectrum-tabs-vertical-textonly-divider-background-color
+    );
+}
+
+:host([dir='ltr'][direction='vertical']) #list,
+:host([dir='rtl'][direction='vertical-right']) #list {
+    padding-left: var(--spectrum-tabs-quiet-textonly-divider-size);
+
+    --sp-tabs-list-background-direction: right;
+}
+
+:host([dir='rtl'][direction='vertical']) #list,
+:host([dir='ltr'][direction='vertical-right']) #list {
+    padding-right: var(--spectrum-tabs-quiet-textonly-divider-size);
+
+    --sp-tabs-list-background-direction: left;
 }
 
 :host([disabled]) #list {
@@ -130,22 +197,26 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([dir='ltr'][direction='vertical-right']) #selection-indicator {
-    /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
-    left: auto;
-    right: calc(
-        -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
-    );
-}
-
 :host([dir='rtl'][direction='vertical-right']) #selection-indicator {
     /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
     right: auto;
-    left: calc(
-        -1 * var(--spectrum-tabs-vertical-rule-width, var(--spectrum-alias-border-size-thick))
-    );
+    left: 0;
 }
 
 #selection-indicator.first-position {
     transition: none;
+}
+
+:host([dir='ltr'][direction='vertical-right']) ::slotted(:not([slot])) {
+    margin-left: 0;
+    margin-right: calc(
+        var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2
+    ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item */
+}
+
+:host([dir='rtl'][direction='vertical-right']) ::slotted(:not([slot])) {
+    margin-right: 0;
+    margin-left: calc(
+        var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2
+    ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item */
 }

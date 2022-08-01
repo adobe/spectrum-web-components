@@ -38,6 +38,7 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
  * @slot tab-panel - Tab Panel elements related to the listed Tab elements
  * @attr {Boolean} quiet - The tabs border is a lot smaller
  * @attr {Boolean} compact - The collection of tabs take up less space
+ * @csspart tablist - Container element for the slotted sp-tab elements
  *
  * @fires change - The selected Tab child has changed.
  */
@@ -174,6 +175,7 @@ export class Tabs extends SizedMixin(Focusable) {
                 @sp-tab-contentchange=${this.updateSelectionIndicator}
                 id="list"
                 role="tablist"
+                part="tablist"
             >
                 <slot @slotchange=${this.onSlotChange}></slot>
                 <div
@@ -330,23 +332,15 @@ export class Tabs extends SizedMixin(Focusable) {
             document.fonts ? document.fonts.ready : Promise.resolve(),
         ]);
         const tabBoundingClientRect = selectedElement.getBoundingClientRect();
-        const parentBoundingClientRect = this.getBoundingClientRect();
 
         if (this.direction === 'horizontal') {
             const width = tabBoundingClientRect.width;
-            const offset =
-                this.dir === 'ltr'
-                    ? tabBoundingClientRect.left - parentBoundingClientRect.left
-                    : tabBoundingClientRect.right -
-                      parentBoundingClientRect.right;
+            const offset = selectedElement.offsetLeft;
 
-            this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${
-                this.dir === 'ltr' ? width : -1 * width
-            });`;
+            this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${width});`;
         } else {
             const height = tabBoundingClientRect.height;
-            const offset =
-                tabBoundingClientRect.top - parentBoundingClientRect.top;
+            const offset = selectedElement.offsetTop;
 
             this.selectionIndicatorStyle = `transform: translateY(${offset}px) scaleY(${height});`;
         }
