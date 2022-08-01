@@ -66,41 +66,12 @@ import { Button, ClearButton, CloseButton } from '@spectrum-web-components/butto
 </sp-tab-panel>
 </sp-tabs>
 
-## Variants
-
-There are many button variants to choose from in Spectrum. The `variant`
-attribute controls the main variant of the button, and a few other boolean
-attributes can be combined to apply sub-variants, e.g. `quiet`.
-
-### Normal
-
-```html
-<sp-button-group>
-    <sp-button variant="cta">CTA</sp-button>
-    <sp-button variant="primary">Primary</sp-button>
-    <sp-button variant="secondary">Secondary</sp-button>
-    <sp-button variant="negative">Negative</sp-button>
-</sp-button-group>
-```
-
-### Quiet
-
-```html
-<sp-button-group>
-    <sp-button quiet variant="primary">Quiet Primary</sp-button>
-    <sp-button quiet variant="secondary">Quiet Secondary</sp-button>
-    <sp-button quiet variant="negative">Quiet Negative</sp-button>
-</sp-button-group>
-```
-
 ## Content
 
-`<sp-buttons>` can have a label, or a label with an icon. An icon is provided by
-placing an icon component to the `icon` slot. The icon may be an `sp-icon` or an
-SVG.
+`<sp-button>` elements can be provided a visible label, a label with an icon, or just an icon (a non-visible label can be prived via the `label` attribute on an `<sp-button>` or on an `<sp-icon*>` element child to appropriately fulfill the accessibility contract of the button). An icon is provided by
+placing an icon element to the `icon` slot.
 
 ```html
-<sp-icons-medium></sp-icons-medium>
 <sp-button-group>
     <sp-button variant="primary">Label only</sp-button>
     <sp-button variant="primary">
@@ -121,14 +92,202 @@ SVG.
         </svg>
         SVG Icon + Label
     </sp-button>
+    <sp-button variant="primary" label="Icon only">
+        <sp-icon-help slot="icon"></sp-icon-help>
+    </sp-button>
 </sp-button-group>
 ```
 
+## Variants
+
+There are many button variants to choose from in Spectrum. The `variant`
+attribute defaults to `accent` but also accepts the following value: `accent`, `primary`, `secondary`, `negative`, `white`, and `black`. They display as follows:
+
+<sp-tabs selected="accent" auto label="Variant Attribute Options">
+<sp-tab value="accent">Accent</sp-tab>
+<sp-tab-panel value="accent">
+
+```html demo
+<sp-button-group style="min-width: max-content">
+    <sp-button variant="accent">Label only</sp-button>
+    <sp-button variant="accent">
+        <sp-icon-help slot="icon"></sp-icon-help>
+        Icon + Label
+    </sp-button>
+    <sp-button variant="accent" label="Icon only">
+        <sp-icon-help slot="icon"></sp-icon-help>
+    </sp-button>
+</sp-button-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="primary">Primary</sp-tab>
+<sp-tab-panel value="primary">
+
+```html demo
+<sp-button-group style="min-width: max-content">
+    <sp-button variant="primary">Label only</sp-button>
+    <sp-button variant="primary">
+        <sp-icon-help slot="icon"></sp-icon-help>
+        Icon + Label
+    </sp-button>
+    <sp-button variant="primary" label="Icon only">
+        <sp-icon-help slot="icon"></sp-icon-help>
+    </sp-button>
+</sp-button-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="secondary">Seconday</sp-tab>
+<sp-tab-panel value="secondary">
+
+```html demo
+<sp-button-group style="min-width: max-content">
+    <sp-button variant="secondary">Label only</sp-button>
+    <sp-button variant="secondary">
+        <sp-icon-help slot="icon"></sp-icon-help>
+        Icon + Label
+    </sp-button>
+    <sp-button variant="secondary" label="Icon only">
+        <sp-icon-help slot="icon"></sp-icon-help>
+    </sp-button>
+</sp-button-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="negative">Negative</sp-tab>
+<sp-tab-panel value="negative">
+
+```html demo
+<sp-button-group style="min-width: max-content">
+    <sp-button variant="negative">Label only</sp-button>
+    <sp-button variant="negative">
+        <sp-icon-help slot="icon"></sp-icon-help>
+        Icon + Label
+    </sp-button>
+    <sp-button variant="negative" label="Icon only">
+        <sp-icon-help slot="icon"></sp-icon-help>
+    </sp-button>
+</sp-button-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="black">Black</sp-tab>
+<sp-tab-panel value="black">
+
+```html demo
+<sp-button-group style="min-width: max-content">
+    <sp-button variant="black">Label only</sp-button>
+    <sp-button variant="black">
+        <sp-icon-help slot="icon"></sp-icon-help>
+        Icon + Label
+    </sp-button>
+    <sp-button variant="black" label="Icon only">
+        <sp-icon-help slot="icon"></sp-icon-help>
+    </sp-button>
+</sp-button-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="white">White</sp-tab>
+<sp-tab-panel value="white">
+
+```html demo
+<sp-button-group style="min-width: max-content">
+    <sp-button variant="white">Label only</sp-button>
+    <sp-button variant="white">
+        <sp-icon-help slot="icon"></sp-icon-help>
+        Icon + Label
+    </sp-button>
+    <sp-button variant="white" label="Icon only">
+        <sp-icon-help slot="icon"></sp-icon-help>
+    </sp-button>
+</sp-button-group>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+### Treatment
+
+The `treatment` attribute accepts `fill` and `outline` as values, and defaults to `fill`. These display as follows:
+
+<sp-tabs selected="fill" auto label="Treatment Attribute Options">
+<sp-tab value="fill">Fill</sp-tab>
+<sp-tab-panel value="fill">
+
+```html demo
+<sp-button-group style="min-width: max-content">
+    <sp-button treatment="fill" variant="primary">Primary, Fill</sp-button>
+    <sp-button treatment="fill" variant="secondary">Secondary, Fill</sp-button>
+    <sp-button treatment="fill" variant="negative">Negative, Fill</sp-button>
+</sp-button-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="outline">Outline</sp-tab>
+<sp-tab-panel value="outline">
+
+```html demo
+<sp-button-group style="min-width: max-content">
+    <sp-button treatment="outline" variant="primary">
+        Primary, Outline
+    </sp-button>
+    <sp-button treatment="outline" variant="secondary">
+        Secondary, Outline
+    </sp-button>
+    <sp-button treatment="outline" variant="negative">
+        Negative, Outline
+    </sp-button>
+</sp-button-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="outline-black">Outline, black</sp-tab>
+<sp-tab-panel value="outline-black">
+
+```html demo
+<sp-button-group
+    style="background: var(--spectrum-global-color-seafoam-600); padding: 0.5em; min-width: max-content"
+>
+    <sp-button treatment="outline" variant="black">Label only</sp-button>
+    <sp-button treatment="outline" variant="black">
+        <sp-icon-help slot="icon"></sp-icon-help>
+        Icon + Label
+    </sp-button>
+    <sp-button treatment="outline" variant="black" label="Icon only">
+        <sp-icon-help slot="icon"></sp-icon-help>
+    </sp-button>
+</sp-button-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="outline-white">Outline, white</sp-tab>
+<sp-tab-panel value="outline-white">
+
+```html demo
+<sp-button-group
+    style="background: var(--spectrum-global-color-seafoam-600); padding: 0.5em; min-width: max-content"
+>
+    <sp-button treatment="outline" variant="white">Label only</sp-button>
+    <sp-button treatment="outline" variant="white">
+        <sp-icon-help slot="icon"></sp-icon-help>
+        Icon + Label
+    </sp-button>
+    <sp-button treatment="outline" variant="white" label="Icon only">
+        <sp-icon-help slot="icon"></sp-icon-help>
+    </sp-button>
+</sp-button-group>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
 ## States
 
-In addition to the variant, `<sp-buttons>` have a disabled state visual state
-which can be applied by adding the attribute `disabled`. All spectrum-button
-variants support the In addition to affectng the visual state, the `disabled`
+In addition to the variant, `<sp-button>` elements have a disabled state visual state
+which can be applied by adding the attribute `disabled`. All `<sp-button>`
+variants support this. In addition to affectng the visual state, the `disabled`
 attribute prevents focus and disallows `click` events.
 
 ```html

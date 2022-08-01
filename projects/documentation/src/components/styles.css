@@ -694,6 +694,10 @@ sp-tabs[selected='api'] sp-tab-panel[value='api'] {
     margin: 1.2em 0 1.5em;
 }
 
+sp-tabs::part(tablist) {
+    overflow: auto visible;
+}
+
 main > sp-tabs > sp-tab:only-of-type {
     visibility: hidden;
     width: 0;
