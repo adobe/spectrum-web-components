@@ -169,17 +169,11 @@ export class TopNav extends SizedMixin(SpectrumElement) {
             document.fonts ? document.fonts.ready : Promise.resolve(),
         ]);
         const itemBoundingClientRect = selectedItem.getBoundingClientRect();
-        const parentBoundingClientRect = this.getBoundingClientRect();
 
         const width = itemBoundingClientRect.width;
-        const offset =
-            this.dir === 'ltr'
-                ? itemBoundingClientRect.left - parentBoundingClientRect.left
-                : itemBoundingClientRect.right - parentBoundingClientRect.right;
+        const offset = selectedItem.offsetLeft;
 
-        this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${
-            this.dir === 'ltr' ? width : -1 * width
-        });`;
+        this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${width});`;
     };
 
     public override connectedCallback(): void {
