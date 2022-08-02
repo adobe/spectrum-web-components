@@ -76,6 +76,31 @@ governing permissions and limitations under the License.
             var(--spectrum-actionbutton-focus-ring-gap)
     );
 }
+.spectrum-ActionButton--sizeXS {
+    --spectrum-actionbutton-min-width: calc(
+        var(--spectrum-component-edge-to-visual-only-75) * 2 +
+            var(--spectrum-workflow-icon-size-75)
+    ); /* .spectrum-ActionButton--sizeXS */
+    --spectrum-actionbutton-height: var(--spectrum-component-height-50);
+    --spectrum-actionbutton-icon-size: var(--spectrum-workflow-icon-size-50);
+    --spectrum-actionbutton-font-size: var(--spectrum-font-size-50);
+    --spectrum-actionbutton-text-to-visual: var(--spectrum-text-to-visual-50);
+    --spectrum-actionbutton-edge-to-hold-icon: var(
+        --spectrum-action-button-edge-to-hold-icon-extra-small
+    );
+    --spectrum-actionbutton-edge-to-visual: calc(
+        var(--spectrum-component-edge-to-visual-50) -
+            var(--spectrum-actionbutton-border-width)
+    );
+    --spectrum-actionbutton-edge-to-text: calc(
+        var(--spectrum-component-edge-to-text-50) -
+            var(--spectrum-actionbutton-border-width)
+    );
+    --spectrum-actionbutton-edge-to-visual-only: calc(
+        var(--spectrum-component-edge-to-visual-only-50) -
+            var(--spectrum-actionbutton-border-width)
+    );
+}
 :host([size='s']) {
     --spectrum-actionbutton-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-75) * 2 +
