@@ -3945,10 +3945,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/clearbutton/-/clearbutton-1.2.12.tgz#325b6625f53dcb6a699a5b9e5bca07eb80316eac"
   integrity sha512-GFrSv43d6nzXg/MqcN2YCZKG9lBS8amD2X7k6o9vKxUzK0nffWBlm380Fbjk0Q3FYojertgujAFoUSZuUqS3aQ==
 
-"@spectrum-css/closebutton@^1.2.13":
-  version "1.2.13"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/closebutton/-/closebutton-1.2.13.tgz#a02a33e211349138bcde0988cd4317749a7618e4"
-  integrity sha512-V/P/XVWPh/TR2Qo66vn6o+vi5/utDbrMIdNV+zuF1dbl1wxH5QMOdCQrQOtzHrzcwulJRu3+Sk759VRPojLYCA==
+"@spectrum-css/closebutton@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/closebutton/-/closebutton-2.0.0.tgz#5497082f80fa91a709b80122aaf78b61bb349636"
+  integrity sha512-4v6c8auOcPIXGtKkySABEmtVEyG+MoyhDqiUcrwgkY9wjvMjrzhMWNLPFli8PwinyBIrcjwb+duBAF6JzwF5Mw==
 
 "@spectrum-css/coachmark@^5.0.13":
   version "5.0.13"
