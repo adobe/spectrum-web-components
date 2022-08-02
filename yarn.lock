@@ -5314,31 +5314,7 @@
   dependencies:
     semver "^7.3.4"
 
-"@web/dev-server-core@^0.3.0", "@web/dev-server-core@^0.3.10", "@web/dev-server-core@^0.3.16", "@web/dev-server-core@^0.3.17":
-  version "0.3.17"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.17.tgz#95e87681b63644a955e29e13ffc6b48fd2c51264"
-  integrity sha512-vN1dwQ8yDHGiAvCeUo9xFfjo+pFl8TW+pON7k9kfhbegrrB8CKhJDUxmHbZsyQUmjf/iX57/LhuWj1xGhRL8AA==
-  dependencies:
-    "@types/koa" "^2.11.6"
-    "@types/ws" "^7.4.0"
-    "@web/parse5-utils" "^1.2.0"
-    chokidar "^3.4.3"
-    clone "^2.1.2"
-    es-module-lexer "^0.9.0"
-    get-stream "^6.0.0"
-    is-stream "^2.0.0"
-    isbinaryfile "^4.0.6"
-    koa "^2.13.0"
-    koa-etag "^4.0.0"
-    koa-send "^5.0.1"
-    koa-static "^5.0.0"
-    lru-cache "^6.0.0"
-    mime-types "^2.1.27"
-    parse5 "^6.0.1"
-    picomatch "^2.2.2"
-    ws "^7.4.2"
-
-"@web/dev-server-core@^0.3.18":
+"@web/dev-server-core@^0.3.0", "@web/dev-server-core@^0.3.10", "@web/dev-server-core@^0.3.17", "@web/dev-server-core@^0.3.18":
   version "0.3.18"
   resolved "https://registry.yarnpkg.com/@web/dev-server-core/-/dev-server-core-0.3.18.tgz#3a5d8497ece5947bb01cea5cc1488dfe7fbe6878"
   integrity sha512-o8EBGKXlBjAaQZiYNE1RZsNZJFQHjjr9FwuJyP2fsN+dkdZRhOjp4/E46hl2rB17Qgq4AizFmds8enmF/hU5dw==
@@ -5369,28 +5345,16 @@
   dependencies:
     "@web/dev-server-core" "^0.3.0"
 
-"@web/dev-server-rollup@^0.3.13":
-  version "0.3.13"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.3.13.tgz#097307fd229f25755b46fc6abef8cf727d8647e6"
-  integrity sha512-QaxEtsdL6+fktIa1ZL8VEtq4U7WB7ikKEnxkbhUpFknB+WSvwx6DUrvyBDuPckunpczCnljXBFPugu+2W6N8Fg==
-  dependencies:
-    "@rollup/plugin-node-resolve" "^11.0.1"
-    "@web/dev-server-core" "^0.3.16"
-    nanocolors "^0.2.1"
-    parse5 "^6.0.1"
-    rollup "^2.58.0"
-    whatwg-url "^11.0.0"
-
-"@web/dev-server-rollup@^0.3.16", "@web/dev-server-rollup@^0.3.17":
-  version "0.3.17"
-  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.3.17.tgz#d64249ca3ac8c71b04a716546f547067b4f5bc02"
-  integrity sha512-Fp8d3QmOi6ctJGAndf93pmcyPBEE7TmsIJ9xd+W+LjXzTVmH4YyOOjZAIXqf9GWjXd0CwquL/OddTZvMzC8jiQ==
+"@web/dev-server-rollup@^0.3.13", "@web/dev-server-rollup@^0.3.16", "@web/dev-server-rollup@^0.3.17":
+  version "0.3.18"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.3.18.tgz#16cf4e63101db25eee1994dfcdfc1f9d03ced706"
+  integrity sha512-NrZnrYw0IsnLFtTIynOrUsYpcFYV0wdy6Co8TrUIlcdtgAAjcRX9/0nJeWhm6NDjcSZMZM9NT6UhqFduq7196Q==
   dependencies:
     "@rollup/plugin-node-resolve" "^13.0.4"
-    "@web/dev-server-core" "^0.3.16"
+    "@web/dev-server-core" "^0.3.18"
     nanocolors "^0.2.1"
     parse5 "^6.0.1"
-    rollup "^2.66.1"
+    rollup "^2.67.0"
     whatwg-url "^11.0.0"
 
 "@web/dev-server-storybook@^0.5.1":
@@ -20309,7 +20273,7 @@ rollup-pluginutils@^2.8.2:
   dependencies:
     estree-walker "^0.6.1"
 
-rollup@^2.43.1, rollup@^2.58.0, rollup@^2.66.1, rollup@^2.68.0:
+rollup@^2.43.1, rollup@^2.66.1, rollup@^2.67.0, rollup@^2.68.0:
   version "2.77.2"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.77.2.tgz#6b6075c55f9cc2040a5912e6e062151e42e2c4e3"
   integrity sha512-m/4YzYgLcpMQbxX3NmAqDvwLATZzxt8bIegO78FZLl+lAgKJBd1DRAOeEiZcKOIOPjxE6ewHWHNgGEalFXuz1g==
