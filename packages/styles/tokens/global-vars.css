@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host {
+:host,
+:root {
     --spectrum-transparent-white-200: rgba(255, 255, 255, 0.1);
     --spectrum-transparent-white-300: rgba(255, 255, 255, 0.25);
     --spectrum-transparent-white-400: rgba(255, 255, 255, 0.4);

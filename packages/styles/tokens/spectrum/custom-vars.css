@@ -11,11 +11,13 @@ governing permissions and limitations under the License.
 */
 
 /* This file contains overrides and additions to core tokens */
-:host {
+:host,
+:root {
     --system: spectrum;
 }
 
-:host {
+:host,
+:root {
     --spectrum-animation-duration-100: 130ms;
 
     --spectrum-font-family-base: adobe-clean, 'Source Sans Pro', -apple-system,

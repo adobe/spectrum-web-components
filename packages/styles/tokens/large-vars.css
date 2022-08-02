@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host {
+:host,
+:root {
     --spectrum-component-pill-edge-to-visual-75: 13px;
     --spectrum-component-pill-edge-to-visual-100: 17px;
     --spectrum-component-pill-edge-to-visual-200: 22px;

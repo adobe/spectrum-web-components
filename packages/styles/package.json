@@ -81,7 +81,7 @@
     },
     "customElements": "custom-elements.json",
     "sideEffects": [
-        "./*.css"
+        "./**/*.css"
     ],
     "style": "all-medium-lightest.css"
 }

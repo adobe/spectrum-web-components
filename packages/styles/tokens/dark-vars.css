@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host {
+:host,
+:root {
     --spectrum-neutral-background-color-default: var(--spectrum-gray-400);
     --spectrum-neutral-background-color-hover: var(--spectrum-gray-300);
     --spectrum-neutral-background-color-down: var(--spectrum-gray-200);

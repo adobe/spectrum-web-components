@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host {
+:host,
+:root {
     --spectrum-accent-color-100: var(--spectrum-blue-100);
     --spectrum-accent-color-200: var(--spectrum-blue-200);
     --spectrum-accent-color-300: var(--spectrum-blue-300);
@@ -41,7 +42,8 @@ governing permissions and limitations under the License.
     --spectrum-radio-button-top-to-control-extra-large-mobile: 19px;
     --spectrum-border-width-100: 1px;
 }
-:host {
+:host,
+:root {
     --system-spectrum-actionbutton-background-color-default: var(
         --spectrum-gray-75
     );
