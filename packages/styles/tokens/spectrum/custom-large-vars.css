@@ -19,4 +19,29 @@ governing permissions and limitations under the License.
     --spectrum-edge-to-visual-only-100: 9px;
     --spectrum-edge-to-visual-only-200: 13px;
     --spectrum-edge-to-visual-only-300: 16px;
+
+    /* tokens for button control size medium, large, extra large are available only as -desktop and -mobile */
+    --spectrum-radio-button-control-size-medium: var(
+        --spectrum-radio-button-control-size-medium-mobile
+    );
+    --spectrum-radio-button-control-size-large: var(
+        --spectrum-radio-button-control-size-large-mobile
+    );
+    --spectrum-radio-button-control-size-extra-large: var(
+        --spectrum-radio-button-control-size-extra-large-mobile
+    );
+
+    /* tokens for button top to control are available only as -desktop and -mobile */
+    --spectrum-radio-button-top-to-control-small: var(
+        --spectrum-radio-button-top-to-control-small-mobile
+    );
+    --spectrum-radio-button-top-to-control-medium: var(
+        --spectrum-radio-button-top-to-control-medium-mobile
+    );
+    --spectrum-radio-button-top-to-control-large: var(
+        --spectrum-radio-button-top-to-control-large-mobile
+    );
+    --spectrum-radio-button-top-to-control-extra-large: var(
+        --spectrum-radio-button-top-to-control-extra-large-mobile
+    );
 }

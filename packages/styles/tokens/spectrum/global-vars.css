@@ -26,20 +26,6 @@ governing permissions and limitations under the License.
     --spectrum-accent-color-1200: var(--spectrum-blue-1200);
     --spectrum-accent-color-1300: var(--spectrum-blue-1300);
     --spectrum-accent-color-1400: var(--spectrum-blue-1400);
-    --spectrum-radio-button-control-size-medium-desktop: 14px;
-    --spectrum-radio-button-control-size-medium-mobile: 18px;
-    --spectrum-radio-button-control-size-large-desktop: 16px;
-    --spectrum-radio-button-control-size-large-mobile: 20px;
-    --spectrum-radio-button-control-size-extra-large-desktop: 18px;
-    --spectrum-radio-button-control-size-extra-large-mobile: 22px;
-    --spectrum-radio-button-top-to-control-small-desktop: 6px;
-    --spectrum-radio-button-top-to-control-small-mobile: 7px;
-    --spectrum-radio-button-top-to-control-medium-desktop: 9px;
-    --spectrum-radio-button-top-to-control-medium-mobile: 11px;
-    --spectrum-radio-button-top-to-control-large-desktop: 12px;
-    --spectrum-radio-button-top-to-control-large-mobile: 15px;
-    --spectrum-radio-button-top-to-control-extra-large-desktop: 15px;
-    --spectrum-radio-button-top-to-control-extra-large-mobile: 19px;
     --spectrum-border-width-100: 1px;
 }
 :host,

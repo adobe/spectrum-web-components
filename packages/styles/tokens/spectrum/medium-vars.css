@@ -21,6 +21,13 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-top-to-control-large: 12px;
     --spectrum-checkbox-top-to-control-extra-large: 15px;
     --spectrum-radio-button-control-size-small: 12px;
+    --spectrum-radio-button-control-size-medium: 14px;
+    --spectrum-radio-button-control-size-large: 16px;
+    --spectrum-radio-button-control-size-extra-large: 18px;
+    --spectrum-radio-button-top-to-control-small: 6px;
+    --spectrum-radio-button-top-to-control-medium: 9px;
+    --spectrum-radio-button-top-to-control-large: 12px;
+    --spectrum-radio-button-top-to-control-extra-large: 15px;
     --spectrum-switch-control-width-small: 23px;
     --spectrum-switch-control-width-medium: 26px;
     --spectrum-switch-control-width-large: 29px;
