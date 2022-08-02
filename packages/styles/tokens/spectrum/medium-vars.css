@@ -10,7 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-:host {
+:host,
+:root {
     --spectrum-checkbox-control-size-small: 12px;
     --spectrum-checkbox-control-size-medium: 14px;
     --spectrum-checkbox-control-size-large: 16px;

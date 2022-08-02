@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 /* This file contains overrides and additions to core tokens */
 
-:host {
+:host,
+:root {
     /* edge-to-visual-only is used for icon-only buttons */
     --spectrum-edge-to-visual-only-75: 4px;
     --spectrum-edge-to-visual-only-100: 7px;

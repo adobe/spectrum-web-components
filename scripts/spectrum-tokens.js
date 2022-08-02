@@ -44,19 +44,25 @@ const packagePaths = tokenPackages.map((packageName) => {
 });
 
 const targetHost = (css) => {
-    css = css.replaceAll(/.spectrum {/g, ':host {');
-    css = css.replaceAll(/.spectrum--express {/g, ':host {');
+    css = css.replaceAll(/.spectrum {/g, ':host, :root {');
+    css = css.replaceAll(/.spectrum--express {/g, ':host, :root {');
     css = css.replaceAll(
         /^.spectrum--light, .spectrum--lightest {/g,
-        ':host {'
+        ':host, :root {'
     );
-    css = css.replaceAll(/.spectrum--dark {/g, ':host {');
-    css = css.replaceAll(/.spectrum--darkest {/g, ':host {');
-    css = css.replaceAll(/.spectrum--darkest {/g, ':host {');
-    css = css.replaceAll(/.spectrum--express.spectrum--medium {/g, ':host {');
-    css = css.replaceAll(/.spectrum--express.spectrum--large {/g, ':host {');
-    css = css.replaceAll(/.spectrum--medium {/g, ':host {');
-    css = css.replaceAll(/.spectrum--large {/g, ':host {');
+    css = css.replaceAll(/.spectrum--dark {/g, ':host, :root {');
+    css = css.replaceAll(/.spectrum--darkest {/g, ':host, :root {');
+    css = css.replaceAll(/.spectrum--darkest {/g, ':host, :root {');
+    css = css.replaceAll(
+        /.spectrum--express.spectrum--medium {/g,
+        ':host, :root {'
+    );
+    css = css.replaceAll(
+        /.spectrum--express.spectrum--large {/g,
+        ':host, :root {'
+    );
+    css = css.replaceAll(/.spectrum--medium {/g, ':host, :root {');
+    css = css.replaceAll(/.spectrum--large {/g, ':host, :root {');
 
     return css;
 };
