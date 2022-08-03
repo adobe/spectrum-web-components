@@ -151,7 +151,7 @@ jobs:
             - downstream
             - run:
                   name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-firefox.js --group unit --coverage
+                  command: yarn test:ci --config web-test-runner.config.ci-firefox.js --group unit
             - store_test_results:
                   path: /root/project/results/
             - run:
@@ -169,7 +169,7 @@ jobs:
             - run: yarn analyze
             - run:
                   name: Run tests
-                  command: yarn test:ci --config web-test-runner.config.ci-webkit.js --group unit --coverage
+                  command: yarn test:ci --config web-test-runner.config.ci-webkit.js --group unit
             - store_test_results:
                   path: /root/project/results/
             - run:
