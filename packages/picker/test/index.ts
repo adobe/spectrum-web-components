@@ -933,6 +933,43 @@ export function runPickerTests(): void {
             expect(getParentOffset(firstItem)).to.be.greaterThan(-1);
         });
     });
+    describe('grouped', async () => {
+        const groupedFixture = async (): Promise<Picker> => {
+            return fixture<Picker>(
+                html`
+                    <sp-picker
+                        quiet
+                        label="I would like to use Spectrum Web Components"
+                        value="0"
+                    >
+                        <sp-menu-group>
+                            <span slot="header">Timeline</span>
+                            <sp-menu-item value="0" id="should-be-selected">
+                                Immediately
+                            </sp-menu-item>
+                            <sp-menu-item value="1">
+                                I'm already using them
+                            </sp-menu-item>
+                            <sp-menu-divider></sp-menu-divider>
+                            <sp-menu-item value="2">Soon</sp-menu-item>
+                            <sp-menu-item value="3">
+                                As part of my next project
+                            </sp-menu-item>
+                            <sp-menu-item value="4">In the future</sp-menu-item>
+                        </sp-menu-group>
+                    </sp-picker>
+                `
+            );
+        };
+        beforeEach(async () => {
+            el = await groupedFixture();
+            await elementUpdated(el);
+        });
+        it('selects the item with a matching value in a group', async () => {
+            const item = el.querySelector('#should-be-selected') as MenuItem;
+            expect(item.selected).to.be.true;
+        });
+    });
     describe('slotted label', () => {
         const pickerFixture = async (): Promise<Picker> => {
             const test = await fixture<Picker>(
