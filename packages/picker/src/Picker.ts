@@ -540,7 +540,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             } else {
                 this.menuItems = [
                     ...this.querySelectorAll(
-                        ':scope > sp-menu-item, sp-menu:not([slot="submenu"]) sp-menu-item'
+                        'sp-menu-item:not([slot="submenu"] *)'
                     ),
                 ] as MenuItem[];
             }
