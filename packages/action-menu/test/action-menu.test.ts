@@ -24,6 +24,8 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import type { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
+import type { Menu } from '@spectrum-web-components/menu';
 
 const deprecatedActionMenuFixture = async (): Promise<ActionMenu> =>
     await fixture<ActionMenu>(
@@ -53,6 +55,26 @@ const actionMenuFixture = async (): Promise<ActionMenu> =>
                 <sp-menu-divider></sp-menu-divider>
                 <sp-menu-item>Save Selection</sp-menu-item>
                 <sp-menu-item disabled>Make Work Path</sp-menu-item>
+            </sp-action-menu>
+        `
+    );
+
+const actionSubmenuFixture = async (): Promise<ActionMenu> =>
+    await fixture<ActionMenu>(
+        html`
+            <sp-action-menu label="More Actions">
+                <sp-menu-item>One</sp-menu-item>
+                <sp-menu-item>Two</sp-menu-item>
+                <sp-menu-item id="item-with-submenu">
+                    B should be selected
+                    <sp-menu slot="submenu">
+                        <sp-menu-item>A</sp-menu-item>
+                        <sp-menu-item selected id="selected-item">
+                            B
+                        </sp-menu-item>
+                        <sp-menu-item>C</sp-menu-item>
+                    </sp-menu>
+                </sp-menu-item>
             </sp-action-menu>
         `
     );
@@ -212,5 +234,37 @@ describe('Action menu', () => {
         expect(el.open).to.be.false;
         items = el.querySelectorAll('sp-menu-item');
         expect(items.length).to.equal(count);
+    });
+    it('allows submenu items to be selected', async () => {
+        const root = await actionSubmenuFixture();
+        const menuItem = root.querySelector('#item-with-submenu') as Menu;
+        const submenu = menuItem.querySelector(
+            'sp-menu[slot="submenu"]'
+        ) as Menu;
+        const selectedItem = submenu.querySelector(
+            '#selected-item'
+        ) as MenuItem;
+
+        expect(selectedItem.selected, 'item is not initially selected').to.be
+            .true;
+
+        let opened = oneEvent(root, 'sp-opened');
+        root.click();
+        await opened;
+        expect(root.open).to.be.true;
+
+        opened = oneEvent(menuItem, 'sp-opened');
+        menuItem.dispatchEvent(
+            new PointerEvent('pointerenter', { bubbles: true })
+        );
+        await opened;
+        const overlays = document.querySelectorAll('active-overlay');
+        expect(overlays.length).to.equal(2);
+
+        await elementUpdated(submenu);
+        expect(
+            selectedItem.selected,
+            'initially selected item is no longer selected'
+        ).to.be.true;
     });
 });

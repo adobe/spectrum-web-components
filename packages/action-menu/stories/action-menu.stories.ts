@@ -99,3 +99,20 @@ customIcon.args = {
     `,
     visibleLabel: '',
 };
+
+export const submenu = (): TemplateResult => {
+    return html`
+        <sp-action-menu label="More Actions">
+            <sp-menu-item>One</sp-menu-item>
+            <sp-menu-item>Two</sp-menu-item>
+            <sp-menu-item>
+                Select some items
+                <sp-menu slot="submenu" selects="multiple">
+                    <sp-menu-item>A</sp-menu-item>
+                    <sp-menu-item selected>B</sp-menu-item>
+                    <sp-menu-item>C</sp-menu-item>
+                </sp-menu>
+            </sp-menu-item>
+        </sp-action-menu>
+    `;
+};
