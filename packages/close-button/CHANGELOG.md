@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/close-button@0.1.7...@spectrum-web-components/close-button@0.2.0) (2022-08-04)
+
+### Features
+
+-   **close-button:** use core tokens ([e6a4efe](https://github.com/adobe/spectrum-web-components/commit/e6a4efe3a278ae4586a6274571b9e59638725fb7))
+
 ## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/close-button@0.1.6...@spectrum-web-components/close-button@0.1.7) (2022-07-18)
 
 **Note:** Version bump only for package @spectrum-web-components/close-button

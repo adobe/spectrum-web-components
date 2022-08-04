@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.3.12...@spectrum-web-components/color-wheel@0.3.13) (2022-08-04)
+
+**Note:** Version bump only for package @spectrum-web-components/color-wheel
+
 ## [0.3.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.3.11...@spectrum-web-components/color-wheel@0.3.12) (2022-07-18)
 
 **Note:** Version bump only for package @spectrum-web-components/color-wheel

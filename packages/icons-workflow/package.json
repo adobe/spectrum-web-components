@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/icons-workflow",
-    "version": "0.8.11",
+    "version": "0.8.12",
     "publishConfig": {
         "access": "public"
     },
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.5.8",
-        "@spectrum-web-components/icon": "^0.11.11",
+        "@spectrum-web-components/base": "^0.6.0",
+        "@spectrum-web-components/icon": "^0.11.12",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/meter@0.6.13...@spectrum-web-components/meter@0.6.14) (2022-08-04)
+
+**Note:** Version bump only for package @spectrum-web-components/meter
+
 ## [0.6.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/meter@0.6.12...@spectrum-web-components/meter@0.6.13) (2022-07-18)
 
 **Note:** Version bump only for package @spectrum-web-components/meter

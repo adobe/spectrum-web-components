@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.16.5...@spectrum-web-components/overlay@0.17.0) (2022-08-04)
+
+### Bug Fixes
+
+-   **overlay:** export OverlayTriggerInteractions type ([4caec7f](https://github.com/adobe/spectrum-web-components/commit/4caec7f33ec97ba7b21239c0be739b56885dac0a))
+
+### Features
+
+-   delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
+
 ## [0.16.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.16.4...@spectrum-web-components/overlay@0.16.5) (2022-07-18)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

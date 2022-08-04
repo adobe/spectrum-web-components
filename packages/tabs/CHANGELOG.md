@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.8.14...@spectrum-web-components/tabs@0.8.15) (2022-08-04)
+
+### Bug Fixes
+
+-   **tabs:** add "tablist" part to manage list styles ([bbf8074](https://github.com/adobe/spectrum-web-components/commit/bbf8074b177f51929ec3bddbffcd2c22ad1971b5))
+
 ## [0.8.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.8.13...@spectrum-web-components/tabs@0.8.14) (2022-07-18)
 
 **Note:** Version bump only for package @spectrum-web-components/tabs

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.18](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.4.17...example-project-webpack@1.4.18) (2022-08-04)
+
+**Note:** Version bump only for package example-project-webpack
+
 ## [1.4.17](https://github.com/adobe/spectrum-web-components/compare/example-project-webpack@1.4.16...example-project-webpack@1.4.17) (2022-07-18)
 
 **Note:** Version bump only for package example-project-webpack

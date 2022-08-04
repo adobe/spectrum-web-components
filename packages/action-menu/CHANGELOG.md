@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.14.0...@spectrum-web-components/action-menu@0.14.1) (2022-08-04)
+
+### Bug Fixes
+
+-   **action-menu:** stop stripping selected state from submenu items ([968d1f2](https://github.com/adobe/spectrum-web-components/commit/968d1f26e4f075ad20dbaba07baf73d5a0c4d55c))
+
 # [0.14.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.13.16...@spectrum-web-components/action-menu@0.14.0) (2022-07-18)
 
 ### Features

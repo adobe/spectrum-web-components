@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.11.5...@spectrum-web-components/picker@0.12.0) (2022-08-04)
+
+### Bug Fixes
+
+-   **action-menu:** stop stripping selected state from submenu items ([968d1f2](https://github.com/adobe/spectrum-web-components/commit/968d1f26e4f075ad20dbaba07baf73d5a0c4d55c))
+-   **picker:** query less strictly to support automatically selecting values ([969f966](https://github.com/adobe/spectrum-web-components/commit/969f966585256c3a496eddb4cb84c0142aa7ae9c))
+
+### Features
+
+-   delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
+
 ## [0.11.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.11.4...@spectrum-web-components/picker@0.11.5) (2022-07-18)
 
 **Note:** Version bump only for package @spectrum-web-components/picker

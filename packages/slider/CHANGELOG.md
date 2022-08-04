@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.14...@spectrum-web-components/slider@0.13.0) (2022-08-04)
+
+### Features
+
+-   delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
+
 ## [0.12.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.12.13...@spectrum-web-components/slider@0.12.14) (2022-07-18)
 
 ### Bug Fixes
