@@ -64,5 +64,8 @@
         "tslib": "^2.0.0"
     },
     "types": "./src/index.d.ts",
-    "customElements": "custom-elements.json"
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./**/*.dev.js"
+    ]
 }

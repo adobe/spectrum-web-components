@@ -19,13 +19,7 @@
     "main": "src/index.js",
     "module": "src/index.js",
     "type": "module",
-    "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*.js",
-        "./package.json": "./package.json",
-        "./{{> tagnamePartial }}": "./{{> tagnamePartial }}.js",
-        "./{{> tagnamePartial }}.js": "./{{> tagnamePartial }}.js"
-    },
+    "exports": {},
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
     },
@@ -49,6 +43,8 @@
     },
     "types": "./src/index.d.ts",
     "sideEffects": [
-        "./sp-*.js"
+        "./sp-*.js",
+        "./**/*.dev.js",
+        "./**/*.dev.js"
     ]
 }

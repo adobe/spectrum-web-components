@@ -81,6 +81,7 @@
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js"
+        "./sp-*.js",
+        "./**/*.dev.js"
     ]
 }

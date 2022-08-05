@@ -115,6 +115,7 @@
         "./active-overlay.js",
         "./overlay-trigger.js",
         "./sync/overlay-trigger.js",
-        "./stories/overlay-story-components.js"
+        "./stories/overlay-story-components.js",
+        "./**/*.dev.js"
     ]
 }

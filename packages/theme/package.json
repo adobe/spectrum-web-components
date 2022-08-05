@@ -141,6 +141,7 @@
     "customElements": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",
+        "./**/*.dev.js",
         "./core.js",
         "./theme-*.js",
         "./scale-*.js",

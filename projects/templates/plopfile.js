@@ -43,6 +43,9 @@ module.exports = function (plop) {
         execSync(
             `cd ../../ && yarn lerna add @spectrum-web-components/base --scope=@spectrum-web-components/${answers.name} --no-bootstrap`
         );
+        execSync(
+            `cd ../../ && yarn lerna add @spectrum-web-components/${answers.name} --scope=@spectrum-web-components/bundle --no-bootstrap`
+        );
         if (answers.spectrum)
             execSync(
                 `cd ../../ && yarn lerna add @spectrum-css/${answers.spectrum} --scope=@spectrum-web-components/${answers.name} --dev --no-bootstrap`
@@ -137,6 +140,11 @@ module.exports = function (plop) {
                 type: 'add',
                 path: '../../packages/{{name}}/package.json',
                 templateFile: 'plop-templates/package.json.hbs',
+            },
+            {
+                type: 'add',
+                path: '../../packages/{{name}}/exports.json',
+                templateFile: 'plop-templates/exports.json.hbs',
             },
             {
                 type: 'add',
