@@ -19,13 +19,17 @@ import {
     oneEvent,
 } from '@open-wc/testing';
 
-import '../sp-table.js';
-import '../sp-table-head.js';
-import '../sp-table-head-cell.js';
-import '../sp-table-body.js';
-import '../sp-table-row.js';
-import '../sp-table-cell.js';
-import { Table } from '../';
+import '@spectrum-web-components/table/sp-table.js';
+import '@spectrum-web-components/table/sp-table-head.js';
+import '@spectrum-web-components/table/sp-table-head-cell.js';
+import '@spectrum-web-components/table/sp-table-body.js';
+import '@spectrum-web-components/table/sp-table-row.js';
+import '@spectrum-web-components/table/sp-table-cell.js';
+import type {
+    Table,
+    TableCheckboxCell,
+    TableRow,
+} from '@spectrum-web-components/table';
 import {
     virtualized,
     virtualizedCustomRow,
@@ -34,8 +38,6 @@ import {
     virtualizedSingle,
 } from '../stories/table-virtualized.stories.js';
 import { makeItems, Properties, renderItem } from '../stories/index.js';
-import { TableRow } from '../src/TableRow.js';
-import { TableCheckboxCell } from '../src/TableCheckboxCell.js';
 
 let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
 before(function () {
