@@ -308,9 +308,6 @@ governing permissions and limitations under the License.
     --spectrum-button-m-primary-outline-texticon-padding-left: var(
         --spectrum-global-dimension-size-175
     );
-    --spectrum-checkbox-l-text-padding-top: var(
-        --spectrum-global-dimension-size-115
-    );
     --spectrum-dialog-confirm-title-text-size: var(
         --spectrum-alias-heading-s-text-size
     );

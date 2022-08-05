@@ -3962,10 +3962,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-5.0.1.tgz#24c7c24c0f76196ba030f097cd1afdd21731db20"
   integrity sha512-I7CNJg/BkC8FrvSo7slRIIx1nNkyKXYHxMuqW5Nv/1FeJNFlA72+0jEWoFZdCY0ybjeINpfkqxhaszDnWU6+3w==
 
-"@spectrum-css/checkbox@^3.1.3":
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-3.1.3.tgz#584cdea28a4e7e203314bfeccf69d6d1ab3799af"
-  integrity sha512-c1l8jQCj/CniHNNvZR/wr/PM8C/EuwhFyWXwzfr2npkgnWqdbcooIa0QfDRYtVy9U5/N8MM2IDLiZ8kPf7LKqQ==
+"@spectrum-css/checkbox@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-4.0.2.tgz#35dc05705767dc8ccec9b449ee2b15178a6b158c"
+  integrity sha512-dlv/SP3I7vZbXQ0m0o8kTsDqs5pwSfOvomK0g1UNARH4UlUIK+SwMEs+SymPq/tJ9OV+9rp/gSi5KSBnz4mdGg==
 
 "@spectrum-css/clearbutton@^1.2.12":
   version "1.2.12"
