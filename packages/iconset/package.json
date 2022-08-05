@@ -66,6 +66,7 @@
     "customElements": "custom-elements.json",
     "sideEffects": [
         "./src/index.js",
-        "./stories/icons-demo.js"
+        "./stories/icons-demo.js",
+        "./**/*.dev.js"
     ]
 }

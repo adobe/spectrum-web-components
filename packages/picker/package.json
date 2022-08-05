@@ -85,6 +85,7 @@
     "customElements": "custom-elements.json",
     "sideEffects": [
         "./sp-*.js",
+        "./**/*.dev.js",
         "./sync/index.js",
         "./sync/sp-*.js"
     ]

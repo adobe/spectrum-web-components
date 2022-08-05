@@ -101,5 +101,7 @@
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
-    "sideEffects": false
+    "sideEffects": [
+        "./**/*.dev.js"
+    ]
 }
