@@ -12,10 +12,6 @@ governing permissions and limitations under the License.
 
 @import './spectrum-toast.css';
 
-.content {
-    line-height: 1.5;
-}
-
 :host(:not([open])) {
     display: none;
 }
