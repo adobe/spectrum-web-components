@@ -110,6 +110,7 @@ export default {
     testFramework: {
         config: {
             timeout: 5000,
+            retries: 2,
         },
     },
     groups: [
