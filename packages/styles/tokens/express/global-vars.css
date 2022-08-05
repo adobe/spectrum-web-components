@@ -355,3 +355,10 @@ governing permissions and limitations under the License.
         --spectrum-gray-900
     );
 }
+
+:host,
+:root {
+    --system-spectrum-toast-background-color-default: var(
+        --spectrum-neutral-background-color-default
+    );
+}

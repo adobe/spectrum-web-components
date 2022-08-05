@@ -36,6 +36,7 @@ const tokenPackages = [
     'radio',
     'switch',
     'statuslight',
+    'toast',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
