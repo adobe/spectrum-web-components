@@ -255,18 +255,6 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
                               <div slot="footer">${this.footer}</div>
                           `
                         : html``}
-                    ${this.secondaryLabel
-                        ? html`
-                              <sp-button
-                                  variant="primary"
-                                  treatment="outline"
-                                  slot="button"
-                                  @click=${this.clickSecondary}
-                              >
-                                  ${this.secondaryLabel}
-                              </sp-button>
-                          `
-                        : html``}
                     ${this.cancelLabel
                         ? html`
                               <sp-button
@@ -276,6 +264,18 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
                                   @click=${this.clickCancel}
                               >
                                   ${this.cancelLabel}
+                              </sp-button>
+                          `
+                        : html``}
+                    ${this.secondaryLabel
+                        ? html`
+                              <sp-button
+                                  variant="primary"
+                                  treatment="outline"
+                                  slot="button"
+                                  @click=${this.clickSecondary}
+                              >
+                                  ${this.secondaryLabel}
                               </sp-button>
                           `
                         : html``}
