@@ -443,6 +443,9 @@ export class Table extends SizedMixin(SpectrumElement, {
     }
 
     protected renderVirtualizedItems(index?: number): void {
+        // Rendering updates into the table while disconnected can
+        // cause runaway event binding in ancestor elements.
+        if (!this.isConnected) return;
         if (!this.tableBody) {
             this.tableBody = this.querySelector('sp-table-body') as TableBody;
             if (!this.tableBody) {
@@ -477,5 +480,12 @@ export class Table extends SizedMixin(SpectrumElement, {
             `,
             this.tableBody
         );
+    }
+
+    public override disconnectedCallback(): void {
+        if (this.tableBody) {
+            render(html``, this.tableBody);
+        }
+        super.disconnectedCallback();
     }
 }
