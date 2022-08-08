@@ -418,17 +418,6 @@ export const wrapperDismissableUnderlayError = (
     const open = context.viewMode === 'docs' ? false : true;
     return html`
         <div>
-            <sp-button
-                onClick="
-                    this.previousElementSibling.open = !this.previousElementSibling.open;
-                    if (this.previousElementSibling.open) {
-                        this.previousElementSibling.focus();
-                    }
-                "
-                variant="primary"
-            >
-                Toggle Dialog
-            </sp-button>
             <sp-dialog-wrapper
                 ?open=${open}
                 hero=${landscape}
@@ -441,6 +430,17 @@ export const wrapperDismissableUnderlayError = (
             >
                 Content of the dialog
             </sp-dialog-wrapper>
+            <sp-button
+                onClick="
+                    this.previousElementSibling.open = !this.previousElementSibling.open;
+                    if (this.previousElementSibling.open) {
+                        this.previousElementSibling.focus();
+                    }
+                "
+                variant="primary"
+            >
+                Toggle Dialog
+            </sp-button>
         </div>
     `;
 };
