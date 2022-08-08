@@ -96,7 +96,7 @@ type OverlayOptions = {
 
 `receivesFocus` tells the overlay stack to throw focus into the overlay after it has opened.
 
-`notImmediatelyClosable` prevents immediate clicks from closing the overlay. For example, since `focus` events are dispatched before `click` events, set `notImmediatelyClosable: true` when triggering an overlay via `focus`.
+`notImmediatelyClosable` prevents immediate clicks from closing the overlay. If you find that a trigger event is immediately overridden with a subsequent click (for instance, a `focus` trigger that should be closed on `click`), set `notImmediatelyClosable: true` to disregard clicks that coincide with the opening trigger.
 
 ### Events
 
