@@ -84,6 +84,7 @@ type OverlayOptions = {
     placement?: Placement;
     offset?: number;
     receivesFocus?: 'auto';
+    notImmediatelyClosable?: boolean;
 }
 ```
 
@@ -94,6 +95,8 @@ type OverlayOptions = {
 `offset` defines the distance of the overlay content from the trigger, measured in pixels.
 
 `receivesFocus` tells the overlay stack to throw focus into the overlay after it has opened.
+
+`notImmediatelyClosable` prevents immediate clicks from closing the ovleray. For example, since `focus` events are dispatched before `click` events, set `notImmediatelyClosable: true` when triggering an overlay via `focus` events.
 
 ### Events
 
