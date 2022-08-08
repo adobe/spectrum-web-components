@@ -86,6 +86,9 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
     @property()
     public headline = '';
 
+    /**
+     * When set to true, fills screens smaller than 350px high and 400px wide with the full dialog.
+     */
     @property({ type: Boolean })
     public responsive = false;
 
