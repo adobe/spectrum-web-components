@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-label@0.7.14...@spectrum-web-components/field-label@0.8.0) (2022-08-09)
+
+### Features
+
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+
 ## [0.7.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-label@0.7.13...@spectrum-web-components/field-label@0.7.14) (2022-08-04)
 
 **Note:** Version bump only for package @spectrum-web-components/field-label
