@@ -105,6 +105,29 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.false;
         expect(closeSpy.callCount).to.equal(1);
     });
+    xit('opens and closes', async () => {
+        // There is an `sp-dialog-base` recyling issue in Chromium and Firefox
+        const closeSpy = spy();
+        const test = await styledFixture<OverlayTrigger>(longContent());
+        const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
+        el.addEventListener('close', () => closeSpy());
+
+        await elementUpdated(el);
+
+        const opened = oneEvent(test, 'sp-opened');
+        test.open = 'click';
+        await opened;
+
+        expect(el.open).to.be.true;
+
+        const closed = oneEvent(test, 'sp-closed');
+        test.open = undefined;
+        await closed;
+        await nextFrame();
+
+        expect(el.open).to.be.false;
+        expect(closeSpy.callCount).to.equal(1);
+    });
     it('dismisses via clicking the underlay when [dismissable]', async () => {
         const test = await styledFixture<DialogWrapper>(
             wrapperDismissableUnderlayError()

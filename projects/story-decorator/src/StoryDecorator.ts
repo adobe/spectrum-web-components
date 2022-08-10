@@ -293,7 +293,9 @@ export class StoryDecorator extends SpectrumElement {
             setTimeout(res);
         }).then(async () => {
             await (document.fonts ? document.fonts.ready : Promise.resolve());
-            setTimeout(() => (this.ready = true));
+            setTimeout(() => {
+                this.ready = true;
+            });
         });
     }
 

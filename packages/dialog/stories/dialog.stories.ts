@@ -138,7 +138,7 @@ export const hero = (): TemplateResult => {
 
 export const alertConfirmation = (): TemplateResult => {
     return html`
-        <sp-dialog size="alert">
+        <sp-dialog>
             <h2 slot="heading">Enable Smart Filters?</h2>
             Smart filters are nondestructive and will preserve your original
             images.
@@ -152,7 +152,7 @@ export const alertConfirmation = (): TemplateResult => {
 
 export const alertInformation = (): TemplateResult => {
     return html`
-        <sp-dialog size="alert">
+        <sp-dialog>
             <h2 slot="heading">Enable Smart Filters?</h2>
             Smart filters are nondestructive and will preserve your original
             images.
@@ -168,7 +168,7 @@ export const alertInformation = (): TemplateResult => {
 
 export const alertDestructive = (): TemplateResult => {
     return html`
-        <sp-dialog size="alert">
+        <sp-dialog>
             <h2 slot="heading">Enable Smart Filters?</h2>
             Smart filters are nondestructive and will preserve your original
             images.
@@ -182,7 +182,7 @@ export const alertDestructive = (): TemplateResult => {
 
 export const alertError = (): TemplateResult => {
     return html`
-        <sp-dialog size="alert" error>
+        <sp-dialog error>
             <h2 slot="heading">Enable Smart Filters?</h2>
             Smart filters are nondestructive and will preserve your original
             images.
@@ -198,7 +198,7 @@ export const alertError = (): TemplateResult => {
 
 export const alertErrorWithLongTitle = (): TemplateResult => {
     return html`
-        <sp-dialog size="alert" error>
+        <sp-dialog error>
             <h2 slot="heading">Unable to Share Project to Behance Community</h2>
             Smart filters are nondestructive and will preserve your original
             images.

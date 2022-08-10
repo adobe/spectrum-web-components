@@ -1,5 +1,6 @@
 {
     "./src/*": "./src/*",
     "./sp-dialog.js": "./sp-dialog.js",
+    "./sp-dialog-base.js": "./sp-dialog-base.js",
     "./sp-dialog-wrapper.js": "./sp-dialog-wrapper.js"
 }

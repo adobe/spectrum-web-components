@@ -17,4 +17,6 @@ governing permissions and limitations under the License.
     --spectrum-dialog-confirm-entry-animation-duration: var(
         --swc-test-duration
     );
+
+    height: 100dvh;
 }
