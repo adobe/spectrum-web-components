@@ -127,32 +127,43 @@ export const test = (
                         await visualDiff(test, testName);
                         passed = true;
                     } catch (error) {
-                        test.remove();
-                        /**
-                         * _Sometimes_ the browser will fail on weird renderings of rounded edges.
-                         * This retry allows it another change to render the test from scratch before
-                         * actually failing on this story.
-                         **/
-                        test = await fixture<StoryDecorator>(wrap());
-                        await elementUpdated(test);
-                        render(storyResult, test);
-                        await waitUntil(
-                            () => test.ready,
-                            'Wait for decorator to become ready...',
-                            { timeout: 20000 }
-                        );
-                        await nextFrame();
-                        if (!retries) {
-                            try {
-                                await visualDiff(test, testName);
-                            } catch (error) {
-                                // eslint-disable-next-line no-console
-                                console.log(
-                                    `Tried ${
-                                        allowedRetries - retries
-                                    } times. ${testName}`
-                                );
-                                throw error;
+                        if (
+                            (error as { message: string }).message &&
+                            (error as { message: string }).message.search(
+                                'There was no baseline image to compare against.'
+                            ) > -1
+                        ) {
+                            // Don't retry "no baseline iamge" errors.
+                            throw error;
+                            retries = 0;
+                        } else {
+                            test.remove();
+                            /**
+                             * _Sometimes_ the browser will fail on weird renderings of rounded edges.
+                             * This retry allows it another change to render the test from scratch before
+                             * actually failing on this story.
+                             **/
+                            test = await fixture<StoryDecorator>(wrap());
+                            await elementUpdated(test);
+                            render(storyResult, test);
+                            await waitUntil(
+                                () => test.ready,
+                                'Wait for decorator to become ready...',
+                                { timeout: 20000 }
+                            );
+                            await nextFrame();
+                            if (!retries) {
+                                try {
+                                    await visualDiff(test, testName);
+                                } catch (error) {
+                                    // eslint-disable-next-line no-console
+                                    console.log(
+                                        `Tried ${
+                                            allowedRetries - retries
+                                        } times. ${testName}`
+                                    );
+                                    throw error;
+                                }
                             }
                         }
                     }

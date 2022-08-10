@@ -29,6 +29,10 @@
             "development": "./src/Dialog.dev.js",
             "default": "./src/Dialog.js"
         },
+        "./src/DialogBase.js": {
+            "development": "./src/DialogBase.dev.js",
+            "default": "./src/DialogBase.js"
+        },
         "./src/DialogWrapper.js": {
             "development": "./src/DialogWrapper.dev.js",
             "default": "./src/DialogWrapper.js"
@@ -41,6 +45,10 @@
         "./sp-dialog.js": {
             "development": "./sp-dialog.dev.js",
             "default": "./sp-dialog.js"
+        },
+        "./sp-dialog-base.js": {
+            "development": "./sp-dialog-base.dev.js",
+            "default": "./sp-dialog-base.js"
         },
         "./sp-dialog-wrapper.js": {
             "development": "./sp-dialog-wrapper.dev.js",

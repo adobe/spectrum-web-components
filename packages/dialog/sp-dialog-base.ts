@@ -9,6 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './Dialog.js';
-export * from './DialogBase.js';
-export * from './DialogWrapper.js';
+import { DialogBase } from './src/DialogBase.js';
+
+customElements.define('sp-dialog-base', DialogBase);
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-dialog-base': DialogBase;
+    }
+}
