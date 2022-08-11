@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { Table, TableItem } from '../';
+import type { Table, TableItem } from '@spectrum-web-components/table';
 
 export type Properties = {
     selected?: string[] | undefined;
