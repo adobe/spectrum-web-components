@@ -1,0 +1,10 @@
+{
+    "./src/*": "./src/*.js",
+    "./sp-table-body.js": "./sp-table-body.js",
+    "./sp-table-cell.js": "./sp-table-cell.js",
+    "./sp-table-checkbox-cell.js": "./sp-table-checkbox-cell.js",
+    "./sp-table-head.js": "./sp-table-head.js",
+    "./sp-table-head-cell.js": "./sp-table-head-cell.js",
+    "./sp-table-row.js": "./sp-table-row.js",
+    "./sp-table.js": "./sp-table.js"
+}

@@ -84,8 +84,6 @@ export const buildPackage = async (paths) => {
                 outdir: '.',
                 outbase: '.',
                 sourcemap: true,
-                minify: true,
-                target: ['es2018'],
                 define: { 'window.__swc.DEBUG': false },
                 plugins: paths.length === 1 ? [] : prodPlugins,
             }).catch(() => process.exit(1))
