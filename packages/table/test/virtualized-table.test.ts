@@ -59,6 +59,9 @@ describe('Virtualized Table', () => {
 
     it('loads virtualized table accessibly', async () => {
         const el = await fixture<Table>(virtualized());
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
         await expect(el).to.be.accessible();
     });
 
