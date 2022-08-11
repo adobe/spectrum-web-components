@@ -15,18 +15,47 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/button/sp-button.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
+import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { spy } from 'sinon';
 import { ActionButton } from '@spectrum-web-components/action-button';
+import { sendKeys } from '@web/test-runner-commands';
+import { Button } from '@spectrum-web-components/button';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+import { TemplateResult } from '@spectrum-web-components/base';
+import { Theme } from '@spectrum-web-components/theme';
+
+async function styledFixture<T extends Element>(
+    story: TemplateResult
+): Promise<T> {
+    const test = await fixture<Theme>(html`
+        <sp-theme theme="spectrum" scale="medium" color="light">
+            ${story}
+        </sp-theme>
+    `);
+    return test.children[0] as T;
+}
 
 describe('Overlay Trigger - Hover', () => {
+    afterEach(async () => {
+        const el = document.querySelector('overlay-trigger') as OverlayTrigger;
+        if (el.open) {
+            const closed = oneEvent(el, 'sp-closed');
+            el.open = undefined;
+            await closed;
+        }
+    });
     it('displays `hover` declaratively', async () => {
         const openedSpy = spy();
         const closedSpy = spy();
@@ -161,5 +190,62 @@ describe('Overlay Trigger - Hover', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.null;
+    });
+    it.only('will not return focus to a "modal" parent', async () => {
+        const el = await styledFixture<OverlayTrigger>(html`
+            <overlay-trigger type="modal" placement="none">
+                <sp-button slot="trigger">Toggle Dialog</sp-button>
+                <sp-dialog-wrapper
+                    slot="click-content"
+                    headline="Dialog title"
+                    size="s"
+                >
+                    ${[1, 2, 3, 4].map(
+                        (index) => html`
+                            <overlay-trigger>
+                                <sp-button slot="trigger" id="button-${index}">
+                                    Button with Tooltip ${index}
+                                </sp-button>
+                                <sp-tooltip slot="hover-content">
+                                    Tooltip ${index}
+                                </sp-tooltip>
+                            </overlay-trigger>
+                        `
+                    )}
+                </sp-dialog-wrapper>
+            </overlay-trigger>
+        `);
+        await elementUpdated(el);
+
+        const button = el.querySelector('sp-button') as Button;
+        const dialog = el.querySelector('sp-dialog-wrapper') as HTMLElement;
+        await elementUpdated(button);
+        await elementUpdated(dialog);
+
+        let opened = oneEvent(button, 'sp-opened');
+        button.dispatchEvent(new Event('click', { bubbles: true }));
+        await opened;
+        const button1 = dialog.querySelector('#button-1') as Button;
+        const button2 = dialog.querySelector('#button-2') as Button;
+
+        opened = oneEvent(button1, 'sp-opened');
+        sendKeys({
+            press: 'Tab',
+        });
+        await opened;
+
+        await nextFrame();
+
+        expect(button1 === document.activeElement).to.be.true;
+
+        opened = oneEvent(button2, 'sp-opened');
+        sendKeys({
+            press: 'Tab',
+        });
+        await opened;
+
+        await nextFrame();
+
+        expect(button2 === document.activeElement).to.be.true;
     });
 });

@@ -109,9 +109,9 @@ export class DialogWrapper extends FocusVisiblePolyfillMixin(SpectrumElement) {
             const firstFocusable = firstFocusableIn(this.dialog);
             if (firstFocusable) {
                 if (firstFocusable.updateComplete) {
-                    firstFocusable.updateComplete.then(() =>
-                        firstFocusable.focus()
-                    );
+                    firstFocusable.updateComplete.then(() => {
+                        firstFocusable.focus();
+                    });
                     /* c8 ignore next 3 */
                 } else {
                     firstFocusable.focus();

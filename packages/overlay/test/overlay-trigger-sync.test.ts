@@ -413,7 +413,7 @@ describe('Overlay Trigger - sync', () => {
             );
 
             expect(
-                document.activeElement === outerClickContent,
+                document.activeElement === innerButton,
                 'outer popover recieved focus'
             ).to.be.true;
         });

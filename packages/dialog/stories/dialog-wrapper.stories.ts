@@ -17,6 +17,7 @@ import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
+import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
@@ -516,3 +517,44 @@ export const wrapperFullscreen = (
         </sp-dialog-wrapper>
     `;
 };
+
+export const tooltips = (
+    args: StoryArgs = {},
+    context: { viewMode?: string } = {}
+): TemplateResult => {
+    const open = context.viewMode === 'docs' ? undefined : 'click';
+    return html`
+        <overlay-trigger
+            type="modal"
+            placement="none"
+            @close=${handleClose(args)}
+            open=${ifDefined(open)}
+        >
+            <sp-button slot="trigger" variant="primary">
+                Toggle Dialog
+            </sp-button>
+            <sp-dialog-wrapper
+                slot="click-content"
+                headline="Dialog title"
+                dismissable
+                underlay
+                size="s"
+            >
+                ${[1, 2, 3, 4].map(
+                    (index) => html`
+                        <overlay-trigger>
+                            <sp-button slot="trigger">
+                                Button with Tooltip ${index}
+                            </sp-button>
+                            <sp-tooltip slot="hover-content">
+                                Tooltip ${index}
+                            </sp-tooltip>
+                        </overlay-trigger>
+                    `
+                )}
+            </sp-dialog-wrapper>
+        </overlay-trigger>
+    `;
+};
+
+tooltips.decorators = [overlayTriggerDecorator];
