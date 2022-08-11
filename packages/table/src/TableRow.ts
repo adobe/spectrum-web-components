@@ -58,7 +58,7 @@ export class TableRow extends SpectrumElement {
 
         await 0;
 
-        if (event?.defaultPrevented) {
+        if (event.defaultPrevented) {
             this.selected = !this.selected;
         }
     }
@@ -89,7 +89,7 @@ export class TableRow extends SpectrumElement {
             return;
         }
         const [checkboxCell] = this.checkboxCells;
-        if (!checkboxCell) return;
+        if (!checkboxCell) /* c8 ignore next */ return;
         checkboxCell.click();
     }
 
