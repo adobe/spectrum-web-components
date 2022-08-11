@@ -218,7 +218,6 @@ export const virtualizedMultiple = (args: Properties): TemplateResult => {
                 const nextNext = next.nextElementSibling as HTMLDivElement;
                 nextNext.textContent = `Selected Count: ${target.selected.length}`;
             }}
-            scroller?="false"
             .items=${virtualItems}
             .renderItem=${renderItem}
         >
