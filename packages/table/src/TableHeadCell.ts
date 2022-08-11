@@ -95,7 +95,7 @@ export class TableHeadCell extends SpectrumElement {
     }
 
     protected override update(changes: PropertyValues): void {
-        if (changes.has('sorted')) {
+        if (changes.has('sortDirection')) {
             this.setAttribute('aria-sort', ariaSortValue(this.sortDirection));
         }
         if (changes.has('sortable')) {

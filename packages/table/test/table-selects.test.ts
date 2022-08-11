@@ -206,7 +206,7 @@ describe('Table Selects', () => {
         expect(rowFourCheckbox.checked).to.be.true;
         expect(el.selected).to.deep.equal(['row1', 'row2', 'row4']);
 
-        tableHeadCheckboxCell.checkbox.click();
+        tableHeadCheckboxCell.click();
         await elementUpdated(el);
 
         expect(el.selected).to.deep.equal([

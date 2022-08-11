@@ -103,9 +103,14 @@ describe('Virtualized Table Selects', () => {
         expect(el.selected).to.deep.equal(['applied-47']);
 
         el.selected = ['0'];
+        await elementUpdated(el);
 
-        const rowOne = el.querySelector('[value="0"]') as TableRow;
-        expect(rowOne).to.be.null;
+        expect(el.selected).to.deep.equal([]);
+
+        el.selected = ['applied-1'];
+        await elementUpdated(el);
+
+        expect(el.selected).to.deep.equal(['applied-1']);
     });
 
     it('can prevent selection', async () => {
@@ -205,7 +210,7 @@ describe('Virtualized Table Selects', () => {
 
         expect(el.selected).to.deep.equal(['1']);
 
-        rowThreeCheckbox.checkbox.click();
+        rowThreeCheckbox.click();
         await elementUpdated(el);
 
         expect(el.selected).to.deep.equal(['2']);
@@ -383,6 +388,18 @@ describe('Virtualized Table Selects', () => {
         expect(rowOneCheckboxCell.checkbox.checked).to.be.true;
         expect(rowTwoCheckboxCell.checkbox.checked).to.be.true;
         expect(tableHeadCheckboxCell.indeterminate).to.be.true;
+
+        el.removeAttribute('selects');
+        await elementUpdated(el);
+
+        expect(el.selects).to.be.null;
+        expect(tableHeadCheckboxCell.indeterminate).to.be.true;
+
+        const checkboxes = el.querySelectorAll(
+            'sp-table-checkbox-cell'
+        ) as NodeListOf<TableCheckboxCell>;
+
+        expect(checkboxes.length).to.equal(0);
     });
 
     it('selects a user-passed value for .selected array with no [selects] specified on Virtualized `<sp-table>`, but does not allow interaction afterwards', async () => {
