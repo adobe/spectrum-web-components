@@ -59,35 +59,55 @@ export const buildPackage = async (paths) => {
             path.search('/stories/') === -1 &&
             path.search('packages/icons-') === -1
     );
+    const prodPath = paths.filter(
+        (path) =>
+            path.search('/test/') === -1 && path.search('/stories/') === -1
+    );
+    const toolPaths = paths.filter(
+        (path) => path.search('/test/') > -1 || path.search('/stories/') > -1
+    );
     const devPlugins = [makeDev];
     const prodPlugins = [makeExports];
     const builds = [];
+    const config = {
+        bundle: false,
+        outdir: '.',
+        outbase: '.',
+        sourcemap: true,
+    };
     if (devPaths.length) {
         builds.push(
             build({
+                ...config,
                 entryPoints: devPaths,
-                bundle: false,
-                outdir: '.',
-                outbase: '.',
-                sourcemap: true,
                 define: { 'window.__swc.DEBUG': true },
                 outExtension: { '.js': '.dev.js' },
                 plugins: devPlugins,
             }).catch(() => process.exit(1))
         );
     }
-    if (paths.length) {
+    const prodConfig = {
+        ...config,
+        define: { 'window.__swc.DEBUG': false },
+        plugins: paths.length === 1 ? [] : prodPlugins,
+    };
+    if (prodPath.length) {
         builds.push(
             build({
-                entryPoints: paths,
-                bundle: false,
-                outdir: '.',
-                outbase: '.',
-                sourcemap: true,
+                ...prodConfig,
+                entryPoints: prodPath,
                 minify: true,
                 target: ['es2018'],
-                define: { 'window.__swc.DEBUG': false },
-                plugins: paths.length === 1 ? [] : prodPlugins,
+            }).catch(() => process.exit(1))
+        );
+    }
+    // Do not minify tools files, especially stories as it messes up the exports
+    // when processed with es-module-lexer.
+    if (toolPaths.length) {
+        builds.push(
+            build({
+                ...prodConfig,
+                entryPoints: toolPaths,
             }).catch(() => process.exit(1))
         );
     }
