@@ -16,16 +16,19 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
-import '../sp-table.js';
-import '../sp-table-checkbox-cell.js';
-import '../sp-table-head.js';
-import '../sp-table-head-cell.js';
-import '../sp-table-body.js';
-import '../sp-table-row.js';
-import '../sp-table-cell.js';
+import '@spectrum-web-components/table/sp-table.js';
+import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
+import '@spectrum-web-components/table/sp-table-head.js';
+import '@spectrum-web-components/table/sp-table-head-cell.js';
+import '@spectrum-web-components/table/sp-table-body.js';
+import '@spectrum-web-components/table/sp-table-row.js';
+import '@spectrum-web-components/table/sp-table-cell.js';
 import { Item, makeItems, Properties, renderItem } from './index.js';
-import type { SortedEventDetails } from '../src/TableHeadCell.js';
-import { RangeChangedEvent, Table } from '../src/Table.js';
+import type {
+    RangeChangedEvent,
+    SortedEventDetails,
+    Table,
+} from '@spectrum-web-components/table';
 
 export default {
     title: 'Table/Virtualized',

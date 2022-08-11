@@ -20,16 +20,78 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*.js",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-table-body.js": "./sp-table-body.js",
-        "./sp-table-cell.js": "./sp-table-cell.js",
-        "./sp-table-checkbox-cell.js": "./sp-table-checkbox-cell.js",
-        "./sp-table-head.js": "./sp-table-head.js",
-        "./sp-table-head-cell.js": "./sp-table-head-cell.js",
-        "./sp-table-row.js": "./sp-table-row.js",
-        "./sp-table.js": "./sp-table.js"
+        "./src/Table.js": {
+            "development": "./src/Table.dev.js",
+            "default": "./src/Table.js"
+        },
+        "./src/TableBody.js": {
+            "development": "./src/TableBody.dev.js",
+            "default": "./src/TableBody.js"
+        },
+        "./src/TableCell.js": {
+            "development": "./src/TableCell.dev.js",
+            "default": "./src/TableCell.js"
+        },
+        "./src/TableCheckboxCell.js": {
+            "development": "./src/TableCheckboxCell.dev.js",
+            "default": "./src/TableCheckboxCell.js"
+        },
+        "./src/TableHead.js": {
+            "development": "./src/TableHead.dev.js",
+            "default": "./src/TableHead.js"
+        },
+        "./src/TableHeadCell.js": {
+            "development": "./src/TableHeadCell.dev.js",
+            "default": "./src/TableHeadCell.js"
+        },
+        "./src/TableRow.js": {
+            "development": "./src/TableRow.dev.js",
+            "default": "./src/TableRow.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/table-body.css.js": "./src/table-body.css.js",
+        "./src/table-cell.css.js": "./src/table-cell.css.js",
+        "./src/table-checkbox-cell.css.js": "./src/table-checkbox-cell.css.js",
+        "./src/table-head-cell.css.js": "./src/table-head-cell.css.js",
+        "./src/table-head.css.js": "./src/table-head.css.js",
+        "./src/table-row.css.js": "./src/table-row.css.js",
+        "./src/table.css.js": "./src/table.css.js",
+        "./sp-table-body.js": {
+            "development": "./sp-table-body.dev.js",
+            "default": "./sp-table-body.js"
+        },
+        "./sp-table-cell.js": {
+            "development": "./sp-table-cell.dev.js",
+            "default": "./sp-table-cell.js"
+        },
+        "./sp-table-checkbox-cell.js": {
+            "development": "./sp-table-checkbox-cell.dev.js",
+            "default": "./sp-table-checkbox-cell.js"
+        },
+        "./sp-table-head.js": {
+            "development": "./sp-table-head.dev.js",
+            "default": "./sp-table-head.js"
+        },
+        "./sp-table-head-cell.js": {
+            "development": "./sp-table-head-cell.dev.js",
+            "default": "./sp-table-head-cell.js"
+        },
+        "./sp-table-row.js": {
+            "development": "./sp-table-row.dev.js",
+            "default": "./sp-table-row.js"
+        },
+        "./sp-table.js": {
+            "development": "./sp-table.dev.js",
+            "default": "./sp-table.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
@@ -62,6 +124,7 @@
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js"
+        "./sp-*.js",
+        "./**/*.dev.js"
     ]
 }
