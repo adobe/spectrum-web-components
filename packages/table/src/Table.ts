@@ -453,7 +453,7 @@ export class Table extends SizedMixin(SpectrumElement, {
             this.tableBody = this.querySelector('sp-table-body') as TableBody;
             if (!this.tableBody) {
                 this.tableBody = document.createElement('sp-table-body');
-                this.tableBody.tabIndex = 0;
+                if (this.scroller) this.tableBody.tabIndex = 0;
                 this.append(this.tableBody);
             }
             this.tableBody.addEventListener(
