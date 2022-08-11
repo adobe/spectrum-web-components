@@ -413,7 +413,7 @@ describe('Overlay Trigger', () => {
             );
 
             expect(
-                document.activeElement === outerClickContent,
+                document.activeElement === innerButton,
                 'outer popover recieved focus'
             ).to.be.true;
         });
