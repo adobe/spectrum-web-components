@@ -116,7 +116,7 @@ export class Table extends SizedMixin(SpectrumElement, {
     private _renderItem: (
         item: Record<string, unknown>,
         index: number
-    ) => TemplateResult = () => html``;
+    ) => TemplateResult = /* c8 ignore next */ () => html``;
 
     @property({ reflect: true })
     public role = 'grid';
@@ -190,16 +190,15 @@ export class Table extends SizedMixin(SpectrumElement, {
                     this.selectedSet.add(this.itemValue(item, index));
                 }
             });
-            this.selected = [...this.selectedSet];
         } else {
             this.tableRows.forEach((row) => {
                 row.selected = true; // Visually
                 this.selectedSet.add(row.value); // Prepares table state
             });
-            this.selected = [...this.selectedSet];
         }
+        this.selected = [...this.selectedSet];
 
-        if (!this.tableHeadCheckboxCell) return;
+        if (!this.tableHeadCheckboxCell) /* c8 ignore next */ return;
         this.tableHeadCheckboxCell.checked = true;
         this.tableHeadCheckboxCell.indeterminate = false;
     }
@@ -218,7 +217,7 @@ export class Table extends SizedMixin(SpectrumElement, {
             });
         }
 
-        if (!this.tableHeadCheckboxCell) return;
+        if (!this.tableHeadCheckboxCell) /* c8 ignore next */ return;
         this.tableHeadCheckboxCell.checked = false;
         this.tableHeadCheckboxCell.indeterminate = false;
     }
@@ -263,8 +262,39 @@ export class Table extends SizedMixin(SpectrumElement, {
         }
     }
 
-    protected manageSelected(): void {
+    protected validateSelected(): void {
+        const rowValues = new Set<string>();
+
+        if (this.isVirtualized) {
+            this.items.forEach((item, index) => {
+                const value = this.itemValue(item, index);
+                rowValues.add(value);
+            });
+        } else {
+            this.tableRows.forEach((row) => {
+                rowValues.add(row.value);
+            });
+        }
+
+        const oldSelectedCount = this.selected.length;
+
+        this.selected = this.selected.filter((selectedItem) =>
+            rowValues.has(selectedItem)
+        );
+        if (oldSelectedCount !== this.selected.length) {
+            this.dispatchEvent(
+                new Event('change', {
+                    cancelable: true,
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+        }
         this.selectedSet = new Set(this.selected);
+    }
+
+    protected manageSelected(): void {
+        this.validateSelected();
 
         if (this.isVirtualized) return;
 
@@ -311,7 +341,7 @@ export class Table extends SizedMixin(SpectrumElement, {
     }
 
     protected manageHeadCheckbox(allSelected: boolean): void {
-        if (!this.tableHeadCheckboxCell) return;
+        if (!this.tableHeadCheckboxCell) /* c8 ignore next */ return;
 
         this.tableHeadCheckboxCell.selectsSingle = this.selects === 'single';
         this.tableHeadCheckboxCell.checked = allSelected;
@@ -357,7 +387,8 @@ export class Table extends SizedMixin(SpectrumElement, {
                     const allSelected =
                         this.selected.length === this.tableRows.length;
 
-                    if (!this.tableHeadCheckboxCell) return;
+                    if (!this.tableHeadCheckboxCell)
+                        /* c8 ignore next */ return;
                     this.tableHeadCheckboxCell.checked = allSelected;
                     this.tableHeadCheckboxCell.indeterminate =
                         this.selected.length > 0 && !allSelected;
@@ -396,35 +427,7 @@ export class Table extends SizedMixin(SpectrumElement, {
 
     protected override willUpdate(changed: PropertyValues<this>): void {
         if (!this.hasUpdated) {
-            const rowValues = new Set<string>();
-
-            if (this.isVirtualized) {
-                this.items.forEach((item, index) => {
-                    const value = this.itemValue(item, index);
-                    rowValues.add(value);
-                });
-            } else {
-                this.tableRows.forEach((row) => {
-                    rowValues.add(row.value);
-                });
-            }
-
-            const oldSelectedCount = this.selected.length;
-
-            this.selected = this.selected.filter((selectedItem) =>
-                rowValues.has(selectedItem)
-            );
-            if (oldSelectedCount !== this.selected.length) {
-                this.dispatchEvent(
-                    new Event('change', {
-                        cancelable: true,
-                        bubbles: true,
-                        composed: true,
-                    })
-                );
-            }
-            this.selectedSet = new Set(this.selected);
-
+            this.validateSelected();
             this.manageCheckboxes();
         }
         if (changed.has('selects')) {
