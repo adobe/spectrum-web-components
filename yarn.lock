@@ -4109,7 +4109,7 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/switch/-/switch-1.0.23.tgz#c523c2f528ca16feca57f01b0e703e14f38c0919"
   integrity sha512-6ym5p672xPCzfIBn8vtCtswGZ77cXb9BZEMSqwqu9O2MCi1QRPk3ot82SRXqjT2i5yeDgQR2dyBWrjzOh97mJg==
 
-"@spectrum-css/table@^4.0.17", "@spectrum-css/table@^4.0.19":
+"@spectrum-css/table@^4.0.19":
   version "4.0.19"
   resolved "https://registry.yarnpkg.com/@spectrum-css/table/-/table-4.0.19.tgz#3ef7076b632a1d3bfeaa38ccad32faf1dc540e52"
   integrity sha512-7bsUrpHcn1ulx3ZJt5WX7QUQv45qlW1n8TX83z3VeNciXgryrgpVM5BXw3fUxoFXVILmlqQ43dfw7L5GJNMoZg==
@@ -4173,14 +4173,6 @@
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-8.0.0.tgz#b88a3b1165b63de50ab01f20ccafb42115d67443"
   integrity sha512-cClQgNyH1VdNu6zdiZ5M7kbQDZS4/wPAclk5IPO5+nMhSzqTesUL/zfiaPB95MTCKFyVJrFpOeJ37HmUifWJ3A==
-
-"@spectrum-web-components/base@^0.5.8":
-  version "0.5.8"
-  resolved "https://registry.yarnpkg.com/@spectrum-web-components/base/-/base-0.5.8.tgz#bbb07721b66d76bee6e7571fda60452f442cedeb"
-  integrity sha512-dlx887I4tHyqHjsEAfysNu+zrxSEleZR14tVcJM5c6Dw0K1BjcjiqpNRxbjnabJqOuJ5a91E87DgBwgrOBYrug==
-  dependencies:
-    lit "^2.1.2"
-    tslib "^2.0.0"
 
 "@storybook/csf-tools@^6.4.9":
   version "6.4.19"
@@ -9841,7 +9833,7 @@ esbuild-windows-arm64@0.14.54:
   resolved "https://registry.yarnpkg.com/esbuild-windows-arm64/-/esbuild-windows-arm64-0.14.54.tgz#937d15675a15e4b0e4fafdbaa3a01a776a2be982"
   integrity sha512-M0kuUvXhot1zOISQGXwWn6YtS+Y/1RT9WrVIOywZnJHo3jCDyewAc79aKNQWFCQm+xNHVTq9h8dZKvygoXQQRg==
 
-esbuild@^0.14.25:
+esbuild@^0.14.54:
   version "0.14.54"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.14.54.tgz#8b44dcf2b0f1a66fc22459943dccf477535e9aa2"
   integrity sha512-Cy9llcy8DvET5uznocPyqL3BFRrFXSVqbgpMJ9Wz8oVjZlh/zUSNbPRbov0VX7VxN2JH1Oa0uNxZ7eLRb62pJA==
