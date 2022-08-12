@@ -86,11 +86,11 @@ To ensure that the table scrolls, make sure to add a `style` attribute to `<sp-t
 
 ## Selection
 
-To manage selection on an `<sp-table>`, utilise the `selects` attribute on `<sp-table>`. Each `<sp-table-row>` has a `value` attribute which, by default, corresponds to its index in the table, and these `value`s tell `<sp-table>` which `<sp-table-row>`s are selected. The selected items can be manually fed in through the `.selected` attribute on the table.
+To manage selection on an `<sp-table>`, utilise the `selects` attribute on `<sp-table>`. Each `<sp-table-row>` has a `value` attribute which, by default, corresponds to its index in the table, and these `value`s tell `<sp-table>` which `<sp-table-row>`s are selected. The selected items can be manually applied via the `selected` property on the table.
 
 ### `selects="single"`
 
-When `selects="single"` the `<sp-table>` will manage a _single_ selection in the array value of `selected`.
+When `selects="single"`, the `<sp-table>` will manage a _single_ selection in the array value of `selected`.
 
 ```html
 <sp-table
@@ -137,7 +137,7 @@ When `selects="single"` the `<sp-table>` will manage a _single_ selection in the
 
 ### `selects="multiple"`
 
-When `selects="multiple"` the `<sp-table>` will manage a selection in the array value of `selected` in via a presence toggle. Further, an `<sp-table-checkbox-cell>` will be made available in the `<sp-table-head>` in order to select/deselect all items in the `<sp-table>`.
+When `selects="multiple"`, the `<sp-table>` will manage a selection in the array value of `selected` in via a presence toggle. Additionally, an `<sp-table-checkbox-cell>` will be made available in the `<sp-table-head>` in order to select/deselect all items in the `<sp-table>`.
 
 ```html
 <sp-table
@@ -302,7 +302,7 @@ Please note that there is a bug when attempting to select all virtualised elemen
 
 ### Selection
 
-When making a selection on a virtualized table, it can sometimes be useful to track that selection as something other than an array of indexes. To make this possible the `itemValue` property will accept a method who argument is an item object, return a computed string value to track selection with this value rather than the item's index:
+By default the `selected` property will surface an array of item indexes that are currently selected. However, when making a selection on a virtualized table, it can be useful to track selection as something other than indexes. To do so, set a custom method for the `itemValue` property. The `itemValue` method accepts an item and its index as arguments and should return the value you would like to track in the `selected` property.
 
 ```html-live
 <sp-table
@@ -400,7 +400,7 @@ When making a selection on a virtualized table, it can sometimes be useful to tr
 
 ### Row Types
 
-All values in the item array are assumed to be homogenous by default. This means all of the rendered rows are either delivered as provided, or, in the case you are leveraging `selects`, rendered with an `<sp-table-checkbox-cell>`. However, when virtualizing a table with selection it can sometimes be useful to surface rows with additional interactions, e.g. "Load more data" links. To support that you can optionally include the `_$rowType$` brand in your item. The values for this are outlined by the `RowType` enum and include `ITEM` (0) and `INFORMATION` (1). When `_$rowType$: RowType.INFORMATION` is provided it informs the `<sp-table>` element not to deliver an `<sp-table-checkbox-cell>` with that row.
+All values in the item array are assumed to be homogenous by default. This means all of the rendered rows are either delivered as provided, or, in the case you are leveraging `selects`, rendered with an `<sp-table-checkbox-cell>`. However, when virtualizing a table with selection, it can sometimes be useful to surface rows with additional interactions, e.g. "Load more data" links. To support that, you can optionally include the `_$rowType$` brand in your item. The values for this are outlined by the `RowType` enum and include `ITEM` (0) and `INFORMATION` (1). When `_$rowType$: RowType.INFORMATION` is provided, it instructs the `<sp-table>` not to deliver an `<sp-table-checkbox-cell>` in that row.
 
 ```html-live
 <sp-table
