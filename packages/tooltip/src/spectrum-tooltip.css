@@ -109,23 +109,11 @@ p {
     margin: 0; /* .spectrum-Tooltip p */
 }
 #tip {
-    border-bottom: var(
-            --spectrum-tooltip-neutral-tip-width,
-            var(--spectrum-global-dimension-size-100)
-        )
-        solid transparent;
-    border-left: var(
-            --spectrum-tooltip-neutral-tip-width,
-            var(--spectrum-global-dimension-size-100)
-        )
-        solid transparent;
-    border-right: var(
-            --spectrum-tooltip-neutral-tip-width,
-            var(--spectrum-global-dimension-size-100)
-        )
-        solid transparent;
-    border-top-style: solid;
-    border-top-width: var(
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-style: solid;
+    border-width: var(
         --spectrum-tooltip-neutral-tip-width,
         var(--spectrum-global-dimension-size-100)
     );

@@ -57,9 +57,9 @@ governing permissions and limitations under the License.
     --spectrum-divider-vertical-height: 100%; /* .spectrum-Divider */
 }
 :host {
-    border-width: medium;
-    border: var(--spectrum-divider-height);
+    border: none;
     border-radius: var(--spectrum-divider-height);
+    border-width: var(--spectrum-divider-height);
     height: var(--spectrum-divider-height);
     overflow: visible;
     width: 100%; /* .spectrum-Divider */
