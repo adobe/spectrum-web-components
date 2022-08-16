@@ -17,6 +17,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import styles from './table-body.css.js';
+import { ResizeController } from '@lit-labs/observers/resize_controller.js';
 
 /**
  * @element sp-table
@@ -24,6 +25,20 @@ import styles from './table-body.css.js';
 export class TableBody extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [styles];
+    }
+
+    constructor() {
+        super();
+        new ResizeController(this, {
+            callback: (entries) => {
+                if (!entries.length) return;
+                if (entries[0].contentRect.height < this.scrollHeight) {
+                    this.tabIndex = 0;
+                } else {
+                    this.removeAttribute('tabindex');
+                }
+            },
+        });
     }
 
     @property({ reflect: true })
