@@ -1915,10 +1915,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@esm-bundle/chai@^4.3.4":
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/@esm-bundle/chai/-/chai-4.3.4.tgz#74ed4a0794b3a9f9517ff235744ac6f4be0d34dc"
-  integrity sha512-6Tx35wWiNw7X0nLY9RMx8v3EL8SacCFW+eEZOE9Hc+XxmU5HFE2AFEg+GehUZpiyDGwVvPH75ckGlqC7coIPnA==
+"@esm-bundle/chai@^4.3.4-fix.0":
+  version "4.3.4-fix.0"
+  resolved "https://registry.yarnpkg.com/@esm-bundle/chai/-/chai-4.3.4-fix.0.tgz#3084cff7eb46d741749f47f3a48dbbdcbaf30a92"
+  integrity sha512-26SKdM4uvDWlY8/OOOxSB1AqQWeBosCX3wRYUZO7enTAj03CtVxIiCimYVG2WpULcyV51qapK4qTovwkUr5Mlw==
   dependencies:
     "@types/chai" "^4.2.12"
 
@@ -3599,13 +3599,13 @@
   resolved "https://registry.yarnpkg.com/@open-wc/semantic-dom-diff/-/semantic-dom-diff-0.13.21.tgz#718b9ec5f9a98935fc775e577ad094ae8d8b7dea"
   integrity sha512-BONpjHcGX2zFa9mfnwBCLEmlDsOHzT+j6Qt1yfK3MzFXFtAykfzFjAgaxPetu0YbBlCfXuMlfxI4vlRGCGMvFg==
 
-"@open-wc/semantic-dom-diff@^0.19.5":
-  version "0.19.5"
-  resolved "https://registry.yarnpkg.com/@open-wc/semantic-dom-diff/-/semantic-dom-diff-0.19.5.tgz#8d3d7f69140b9ba477a4adf8099c79e0efe18955"
-  integrity sha512-Wi0Fuj3dzqlWClU0y+J4k/nqTcH0uwgOWxZXPyeyG3DdvuyyjgiT4L4I/s6iVShWQvvEsyXnj7yVvixAo3CZvg==
+"@open-wc/semantic-dom-diff@^0.19.7":
+  version "0.19.7"
+  resolved "https://registry.yarnpkg.com/@open-wc/semantic-dom-diff/-/semantic-dom-diff-0.19.7.tgz#92361f0d2dcb54a8d5cf11d5ea40b8e7ffa58eb4"
+  integrity sha512-ahwHb7arQXXnkIGCrOsM895FJQrU47VWZryCsSSzl5nB3tJKcJ8yjzQ3D/yqZn6v8atqOz61vaY05aNsqoz3oA==
   dependencies:
-    "@types/chai" "^4.2.11"
-    "@web/test-runner-commands" "^0.5.7"
+    "@types/chai" "^4.3.1"
+    "@web/test-runner-commands" "^0.6.1"
 
 "@open-wc/testing-helpers@^2.1.2":
   version "2.1.2"
@@ -3617,16 +3617,16 @@
     lit-html "^2.0.0"
 
 "@open-wc/testing@^3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@open-wc/testing/-/testing-3.1.2.tgz#03cd8ccd9992bb0915f614ae55c103bb027c5740"
-  integrity sha512-2KjEszLItrIEZwCLFjWOSy4rnLzLOpgckrKfZjNA39PpFR3xD9bqYU30TTnLRHBk2B/0ZUbHglyca3iwcF964w==
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/@open-wc/testing/-/testing-3.1.6.tgz#89f71710e5530d74f0c478b0a9239d68dcdb9f5e"
+  integrity sha512-MIf9cBtac4/UBE5a+R5cXiRhOGfzetsV+ZPFc188AfkPDPbmffHqjrRoCyk4B/qS6fLEulSBMLSaQ+6ze971gQ==
   dependencies:
-    "@esm-bundle/chai" "^4.3.4"
+    "@esm-bundle/chai" "^4.3.4-fix.0"
     "@open-wc/chai-dom-equals" "^0.12.36"
-    "@open-wc/semantic-dom-diff" "^0.19.5"
+    "@open-wc/semantic-dom-diff" "^0.19.7"
     "@open-wc/testing-helpers" "^2.1.2"
     "@types/chai" "^4.2.11"
-    "@types/chai-dom" "^0.0.9"
+    "@types/chai-dom" "^0.0.12"
     "@types/sinon-chai" "^3.2.3"
     chai-a11y-axe "^1.3.2"
 
@@ -4360,17 +4360,17 @@
     "@types/node" "*"
     "@types/responselike" "*"
 
-"@types/chai-dom@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@types/chai-dom/-/chai-dom-0.0.9.tgz#77379354efec2568284ca355fff6a4f85f5a66f4"
-  integrity sha512-jj4F2NJog2/GBYsyJ8+NvhnWUBbPY4MUAKLdPJE6+568rw12GGXvj0ycUuP5nndVrnJgozmJAoMTvxvjJATXWw==
+"@types/chai-dom@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@types/chai-dom/-/chai-dom-0.0.12.tgz#fdd7a52bed4dd235ed1c94d3d2d31d4e7db1d03a"
+  integrity sha512-4rE7sDw713cV61TYzQbMrPjC4DjNk3x4vk9nAVRNXcSD4p0/5lEEfm0OgoCz5eNuWUXNKA0YiKiH/JDTuKivkA==
   dependencies:
     "@types/chai" "*"
 
-"@types/chai@*", "@types/chai@^4.1.7", "@types/chai@^4.2.11", "@types/chai@^4.2.12":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.0.tgz#23509ebc1fa32f1b4d50d6a66c4032d5b8eaabdc"
-  integrity sha512-/ceqdqeRraGolFTcfoXNiqjyQhZzbINDngeoAq9GoHa8PPK1yNzTaxWjA6BFWp5Ua9JpXEMSS4s5i9tS0hOJtw==
+"@types/chai@*", "@types/chai@^4.1.7", "@types/chai@^4.2.11", "@types/chai@^4.2.12", "@types/chai@^4.3.1":
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.3.tgz#3c90752792660c4b562ad73b3fbd68bf3bc7ae07"
+  integrity sha512-hC7OMnszpxhZPduX+m+nrx+uFoLkWOMiR4oa/AZF3MuSETYTZmFfJAHqZEM8MVlvfG7BEUcgvtwoCTxBp6hm3g==
 
 "@types/clean-css@*":
   version "4.2.3"
@@ -5506,15 +5506,7 @@
     chrome-launcher "^0.15.0"
     puppeteer-core "^13.1.3"
 
-"@web/test-runner-commands@^0.5.7":
-  version "0.5.12"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.5.12.tgz#1a5940505994acfa05585ad7ecd8ad8f6e91c725"
-  integrity sha512-W5ajWzO7+d3u1R0/FPBU8q3d4y5faOQVIWnOruFNvXu3Qjfg2VCWFOtARegA7ATNCE18H0dGRuF4KGxHDmMe3g==
-  dependencies:
-    "@web/test-runner-core" "^0.10.20"
-    mkdirp "^1.0.4"
-
-"@web/test-runner-commands@^0.6.3", "@web/test-runner-commands@^0.6.4":
+"@web/test-runner-commands@^0.6.1", "@web/test-runner-commands@^0.6.3", "@web/test-runner-commands@^0.6.4":
   version "0.6.4"
   resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.6.4.tgz#61c8e1d71d30567b8e2845274426d209dbe77c7e"
   integrity sha512-opSfIVHj4PsIA/Ah582DKgnmdfY+Xn35FnnYeJ+aBYrM+setOP63McvrY4PuwasictwswHVSzq86qZzmxvXkHw==
