@@ -337,18 +337,6 @@ governing permissions and limitations under the License.
         --spectrum-global-dimension-static-size-25
     );
     --spectrum-progresscircle-m-border-size: 3px;
-    --spectrum-statuslight-s-info-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-statuslight-l-info-dot-size: var(
-        --spectrum-global-dimension-size-125
-    );
-    --spectrum-statuslight-l-info-text-padding-top: var(
-        --spectrum-global-dimension-size-115
-    );
-    --spectrum-statuslight-xl-info-dot-size: var(
-        --spectrum-global-dimension-size-125
-    );
     --spectrum-tag-m-texticon-padding-left: var(
         --spectrum-global-dimension-size-125
     );
