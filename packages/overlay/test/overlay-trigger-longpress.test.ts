@@ -104,7 +104,7 @@ describe('Overlay Trigger - Longpress', () => {
         await elementUpdated(el);
 
         open = oneEvent(el, 'sp-opened');
-        trigger.dispatchEvent(new Event('pointerdown'));
+        trigger.dispatchEvent(new PointerEvent('pointerdown', { button: 0 }));
         await open;
         expect(content.open, 'opens for `pointerdown`').to.be.true;
         closed = oneEvent(el, 'sp-closed');

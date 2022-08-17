@@ -31,7 +31,7 @@ const holdAffordanceClass = {
     xl: 'spectrum-UIIcon-CornerTriangle300',
 };
 
-const LONGPRESS_DURATION = 300;
+export const LONGPRESS_DURATION = 300;
 let LONGPRESS_TIMEOUT: ReturnType<typeof setTimeout>;
 
 export type LongpressEvent = {
@@ -128,7 +128,8 @@ export class ActionButton extends SizedMixin(ButtonBase) {
         }
     };
 
-    private onPointerdown(): void {
+    private onPointerdown(event: PointerEvent): void {
+        if (event.button !== 0) return;
         this.addEventListener('pointerup', this.onPointerup);
         this.addEventListener('pointercancel', this.onPointerup);
         LONGPRESS_TIMEOUT = setTimeout(() => {
