@@ -9,7 +9,13 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    nextFrame,
+} from '@open-wc/testing';
 
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-head.js';
@@ -42,6 +48,9 @@ after(function () {
 describe('Table', () => {
     it('loads default table accessibly', async () => {
         const el = await fixture<Table>(elements());
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
         await expect(el).to.be.accessible();
     });
 
