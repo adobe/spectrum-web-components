@@ -11,8 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import { ActionButton } from '@spectrum-web-components/action-button';
 import {
+    ActionButton,
+    LONGPRESS_DURATION,
+} from '@spectrum-web-components/action-button';
+import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
@@ -96,10 +100,31 @@ describe('ActionButton', () => {
         });
 
         expect(longpressSpy.callCount).to.equal(2);
-        el.dispatchEvent(new Event('pointerdown'));
-        el.dispatchEvent(new Event('pointerup'));
-        el.dispatchEvent(new Event('pointerdown'));
+        el.dispatchEvent(new PointerEvent('pointerdown', { button: 0 }));
+        el.dispatchEvent(new PointerEvent('pointerup'));
+        el.dispatchEvent(new PointerEvent('pointerdown', { button: 0 }));
         await waitUntil(() => longpressSpy.callCount === 3);
+    });
+    it('does not dispatch `longpress` events when "right click"ed', async () => {
+        const longpressSpy = spy();
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button
+                    hold-affordance
+                    @longpress=${() => longpressSpy()}
+                >
+                    Button
+                </sp-action-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(longpressSpy.callCount).to.equal(0);
+
+        el.focus();
+        el.dispatchEvent(new PointerEvent('pointerdown', { button: 1 }));
+        await aTimeout(2 * LONGPRESS_DURATION);
+        expect(longpressSpy.callCount).to.equal(0);
     });
     it(':not([toggles])', async () => {
         const el = await fixture<ActionButton>(
