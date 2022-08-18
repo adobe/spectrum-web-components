@@ -11,8 +11,12 @@ governing permissions and limitations under the License.
 */
 
 import {
+    adoptStyles,
     CSSResultArray,
+    html,
     PropertyValues,
+    ReactiveElement,
+    render,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -95,6 +99,25 @@ export class Grid extends LitVirtualizer {
         this.selected = selected;
     }
 
+    public override createRenderRoot(): this {
+        const renderRoot =
+            this.shadowRoot ??
+            this.attachShadow(
+                (this.constructor as typeof ReactiveElement).shadowRootOptions
+            );
+        adoptStyles(
+            renderRoot,
+            (this.constructor as typeof ReactiveElement).elementStyles
+        );
+        return renderRoot as unknown as this;
+    }
+
+    public override render(): TemplateResult {
+        return html`
+            <slot></slot>
+        `;
+    }
+
     protected override update(changes: PropertyValues<this>): void {
         if (
             changes.has('itemSize') ||
@@ -122,6 +145,9 @@ export class Grid extends LitVirtualizer {
             });
         }
 
+        if (this.isConnected) {
+            render(super.render(), this);
+        }
         super.update(changes);
     }
 
