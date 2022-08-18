@@ -30,16 +30,62 @@ import {
 } from '@spectrum-web-components/radio';
 ```
 
-### Example
+## Sizes
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
 
 ```html
 <sp-radio-group selected="first" name="example">
-    <sp-radio value="first">Option 1</sp-radio>
-    <sp-radio value="second">Option 2</sp-radio>
-    <sp-radio value="third">Option 3</sp-radio>
-    <sp-radio value="fourth">Option 4</sp-radio>
+    <sp-radio value="first" size="s">Option 1</sp-radio>
+    <sp-radio value="second" size="s">Option 2</sp-radio>
+    <sp-radio value="third" size="s">Option 3</sp-radio>
+    <sp-radio value="fourth" size="s">Option 4</sp-radio>
 </sp-radio-group>
 ```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-radio-group selected="first" name="example">
+    <sp-radio value="first" size="m">Option 1</sp-radio>
+    <sp-radio value="second" size="m">Option 2</sp-radio>
+    <sp-radio value="third" size="m">Option 3</sp-radio>
+    <sp-radio value="fourth" size="m">Option 4</sp-radio>
+</sp-radio-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-radio-group selected="first" name="example">
+    <sp-radio value="first" size="l">Option 1</sp-radio>
+    <sp-radio value="second" size="l">Option 2</sp-radio>
+    <sp-radio value="third" size="l">Option 3</sp-radio>
+    <sp-radio value="fourth" size="l">Option 4</sp-radio>
+</sp-radio-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-radio-group selected="first" name="example">
+    <sp-radio value="first" size="xl">Option 1</sp-radio>
+    <sp-radio value="second" size="xl">Option 2</sp-radio>
+    <sp-radio value="third" size="xl">Option 3</sp-radio>
+    <sp-radio value="fourth" size="xl">Option 4</sp-radio>
+</sp-radio-group>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Standard radio buttons
 
