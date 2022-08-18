@@ -244,18 +244,18 @@ governing permissions and limitations under the License.
     ); /* .spectrum-Radio:focus .spectrum-Radio-button:before */
 }
 :host(:focus) #button:after {
-    border: var(
-            --mod-radio-focus-ring-thickness,
-            var(--spectrum-radio-focus-ring-thickness)
-        )
-        solid
+    border-color: var(
+        --highcontrast-radio-focus-ring-color,
         var(
-            --highcontrast-radio-focus-ring-color,
-            var(
-                --mod-radio-focus-ring-color,
-                var(--spectrum-radio-focus-ring-color)
-            )
-        ); /* .spectrum-Radio:focus .spectrum-Radio-button:after */
+            --mod-radio-focus-ring-color,
+            var(--spectrum-radio-focus-ring-color)
+        )
+    );
+    border-style: solid; /* .spectrum-Radio:focus .spectrum-Radio-button:after */
+    border-width: var(
+        --mod-radio-focus-ring-thickness,
+        var(--spectrum-radio-focus-ring-thickness)
+    );
     height: calc(
         var(--spectrum-radio-button-control-size) +
             var(--spectrum-radio-focus-ring-gap) * 2
@@ -492,16 +492,19 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-button-background-color)
         )
     );
-    border: var(--mod-radio-border-width, var(--spectrum-radio-border-width))
-        solid
+    border-color: var(
+        --highcontrast-radio-button-border-color-default,
         var(
-            --highcontrast-radio-button-border-color-default,
-            var(
-                --mod-radio-button-border-color-default,
-                var(--spectrum-radio-button-border-color-default)
-            )
-        );
+            --mod-radio-button-border-color-default,
+            var(--spectrum-radio-button-border-color-default)
+        )
+    );
     border-radius: 50%;
+    border-style: solid;
+    border-width: var(
+        --mod-radio-border-width,
+        var(--spectrum-radio-border-width)
+    );
     box-sizing: border-box;
     content: '';
     display: block; /* .spectrum-Radio-button:before */

@@ -83,6 +83,10 @@ governing permissions and limitations under the License.
     --spectrum-help-text-top-to-workflow-icon-large: 6px;
     --spectrum-help-text-top-to-workflow-icon-extra-large: 9px;
     --spectrum-in-line-alert-minimum-width: 320px;
+    --spectrum-swatch-size-extra-small: 16px;
+    --spectrum-swatch-size-small: 24px;
+    --spectrum-swatch-size-medium: 32px;
+    --spectrum-swatch-size-large: 40px;
     --spectrum-progress-bar-minimum-width: 48px;
     --spectrum-progress-bar-maximum-width: 768px;
     --spectrum-progress-bar-thickness-small: 4px;

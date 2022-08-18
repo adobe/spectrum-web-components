@@ -138,6 +138,11 @@ governing permissions and limitations under the License.
     --spectrum-divider-thickness-small: 1px;
     --spectrum-divider-thickness-medium: 2px;
     --spectrum-divider-thickness-large: 4px;
+    --spectrum-swatch-rectangle-width-multiplier: 2;
+    --spectrum-swatch-slash-thickness-extra-small: 2px;
+    --spectrum-swatch-slash-thickness-small: 3px;
+    --spectrum-swatch-slash-thickness-medium: 4px;
+    --spectrum-swatch-slash-thickness-large: 5px;
     --spectrum-radio-button-selection-indicator: 4px;
     --spectrum-popover-tip-width: 16px;
     --spectrum-popover-tip-height: 8px;
