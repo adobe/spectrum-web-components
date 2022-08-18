@@ -14,10 +14,13 @@ import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 import { html } from '@spectrum-web-components/base';
 import { Card } from '@spectrum-web-components/card';
 
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/scale-medium.js';
+import '@spectrum-web-components/theme/theme-light.js';
 import '@spectrum-web-components/grid/sp-grid.js';
 import { Grid } from '@spectrum-web-components/grid';
 import { Default } from '../stories/grid.stories.js';
-import { sendKeys } from '@web/test-runner-commands';
+import { sendKeys, sendMouse } from '@web/test-runner-commands';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Grid', () => {
@@ -61,6 +64,44 @@ describe('Grid', () => {
         expect(
             el.querySelector(el.focusableSelector) === document.activeElement
         ).to.be.true;
+    });
+    it('does not focus when clicking grid', async () => {
+        const test = await fixture<HTMLDivElement>(
+            html`
+                <sp-theme color="light" scale="medium">${Default()}</sp-theme>
+            `
+        );
+        const el = test.querySelector('sp-grid') as Grid;
+
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(0);
+
+        el.focus();
+
+        await nextFrame();
+        await nextFrame();
+
+        const firstItem = el.querySelector(el.focusableSelector) as HTMLElement;
+
+        expect(firstItem === document.activeElement).to.be.true;
+
+        const firstRect = firstItem?.getBoundingClientRect();
+        const position = [
+            Math.round(firstRect.x + firstRect.width + 2),
+            Math.round(firstRect.y + 2),
+        ] as [number, number];
+        await sendMouse({
+            type: 'click',
+            position,
+        });
+
+        await nextFrame();
+        await nextFrame();
+
+        expect(
+            el.querySelector(el.focusableSelector) === document.activeElement
+        ).to.be.false;
     });
     it('allows to tab in and out', async () => {
         const test = await fixture<HTMLDivElement>(

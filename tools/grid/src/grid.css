@@ -14,4 +14,9 @@ governing permissions and limitations under the License.
     display: block;
     position: relative;
     contain: strict;
+    pointer-events: none;
+}
+
+::slotted(*) {
+    pointer-events: all;
 }
