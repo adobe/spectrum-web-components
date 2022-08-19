@@ -242,6 +242,7 @@ export const decimals = (args: StoryArgs): TemplateResult => {
             style="width: 200px"
             ...=${spreadProps(args)}
             @change=${args.onChange}
+            @input=${args.onInput}
             .formatOptions=${{
                 signDisplay: 'exceptZero',
                 minimumFractionDigits: 1,
