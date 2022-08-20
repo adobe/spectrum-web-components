@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture } from '@open-wc/testing';
+import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 
 import { TopNav, TopNavItem } from '@spectrum-web-components/top-nav';
 import { Default, Selected } from '../stories/top-nav.stories.js';
@@ -32,6 +32,28 @@ describe('TopNav', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+    it('updates indicator size when Nav Item conten changes', async () => {
+        const el = await fixture<TopNav>(Selected());
+
+        await elementUpdated(el);
+
+        const indicator = el.shadowRoot.querySelector(
+            '#selection-indicator'
+        ) as HTMLDivElement;
+        const { width: widthStart } = indicator.getBoundingClientRect();
+
+        const selectedItem = el.querySelector(
+            `[href="${el.selected}"]`
+        ) as TopNavItem;
+        selectedItem.innerHTML = '0';
+
+        // Wait for slotchange time before continuing the test.
+        await nextFrame();
+
+        const { width: widthEnd } = indicator.getBoundingClientRect();
+
+        expect(widthStart).to.be.greaterThan(widthEnd);
     });
 });
 
