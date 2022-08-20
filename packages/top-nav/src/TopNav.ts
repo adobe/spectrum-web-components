@@ -87,7 +87,11 @@ export class TopNav extends SizedMixin(SpectrumElement) {
 
     protected override render(): TemplateResult {
         return html`
-            <div @click=${this.onClick} id="list">
+            <div
+                @click=${this.onClick}
+                id="list"
+                @sp-top-nav-item-contentchange=${this.updateSelectionIndicator}
+            >
                 <slot @slotchange=${this.onSlotChange}></slot>
                 <div
                     id="selection-indicator"
