@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2022 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -20,10 +20,9 @@ import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-properties.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-view-all-tags.js';
-import { ActionGroup } from '@spectrum-web-components/action-group/src/ActionGroup.js';
 
 export default {
-    title: 'Action Group/Tooltips',
+    title: 'Action Group/Sizes',
     component: 'sp-action-group',
     args: {
         compact: false,
@@ -31,7 +30,6 @@ export default {
         justified: false,
         quiet: false,
         vertical: false,
-        selects: 'none',
         size: 'm',
     },
     argTypes: {
@@ -95,18 +93,6 @@ export default {
                 type: 'boolean',
             },
         },
-        selects: {
-            name: 'selects',
-            description:
-                'Whether the elements selects its children and how many it can select at a time.',
-            table: {
-                defaultValue: { summary: '' },
-            },
-            control: {
-                type: 'inline-radio',
-                options: ['none', 'single', 'multiple'],
-            },
-        },
         size: {
             name: 'size',
             description: 'The size at which to display the action group.',
@@ -129,91 +115,65 @@ interface Properties {
     justified?: boolean;
     quiet?: boolean;
     vertical?: boolean;
-    selects?: 'none' | 'single' | 'multiple';
     size?: 's' | 'm' | 'l' | 'xl';
     [prop: string]: unknown;
 }
 
-const template = (args: Properties): TemplateResult => {
-    requestAnimationFrame(() => {
-        const group = document.querySelector('sp-action-group') as ActionGroup;
-        const selectedDiv = group.nextElementSibling;
-        if (selectedDiv) {
-            selectedDiv.textContent = `Selected: ${JSON.stringify(
-                group.selected
-            )}`;
-        }
-    });
+function renderButtons(args: Properties): TemplateResult {
     return html`
-        <sp-action-group
-            label="Favorite Color"
-            ...=${spreadProps(args)}
-            @change=${({ target }: Event & { target: ActionGroup }) => {
-                const next = target.nextElementSibling as HTMLDivElement;
-                next.textContent = `Selected: ${JSON.stringify(
-                    target.selected
-                )}`;
-            }}
-        >
-            <overlay-trigger>
-                <sp-action-button slot="trigger">Red</sp-action-button>
-                <sp-tooltip slot="hover-content">
-                    This is a cool color.
-                </sp-tooltip>
-            </overlay-trigger>
-            <overlay-trigger>
-                <sp-action-button slot="trigger">Green</sp-action-button>
-                <sp-tooltip slot="hover-content">
-                    You wouldn't be wrong.
-                </sp-tooltip>
-            </overlay-trigger>
-            <overlay-trigger>
-                <sp-action-button slot="trigger" value="blue" selected>
-                    Blue
-                </sp-action-button>
-                <sp-tooltip slot="hover-content">The sky in spring.</sp-tooltip>
-            </overlay-trigger>
-            <overlay-trigger>
-                <sp-action-button slot="trigger">Yellow</sp-action-button>
-                <sp-tooltip slot="hover-content">The sun at noon.</sp-tooltip>
-            </overlay-trigger>
+        <sp-action-group ${spreadProps(args)}>
+            <sp-action-button>Button 1</sp-action-button>
+            <sp-action-button>Longer Button 2</sp-action-button>
+            <sp-action-button>Short 3</sp-action-button>
         </sp-action-group>
-        ${!!args.selects
-            ? html`
-                  <div>Selected:</div>
-              `
-            : html``}
     `;
-};
+}
 
-export const selectsSingle = (args: Properties): TemplateResult =>
-    template(args);
-selectsSingle.args = {
-    compact: true,
-    emphasized: true,
-    selects: 'single',
-};
+export const XS = (args: Properties): TemplateResult => renderButtons(args);
+XS.args = { size: 'xs' };
 
-export const selectsMultiple = (args: Properties): TemplateResult =>
-    template(args);
-selectsMultiple.args = {
-    compact: true,
-    emphasized: true,
-    selects: 'multiple',
-};
+export const s = (args: Properties): TemplateResult => renderButtons(args);
+s.args = { size: 's' };
 
-export const justified = (args: Properties): TemplateResult => template(args);
-justified.args = {
-    compact: true,
-    emphasized: true,
-    justified: true,
-    selects: undefined,
-};
+export const m = (args: Properties): TemplateResult => renderButtons(args);
+m.args = { size: 'm' };
 
-export const vertical = (args: Properties): TemplateResult => template(args);
-vertical.args = {
-    compact: true,
-    emphasized: true,
+export const l = (args: Properties): TemplateResult => renderButtons(args);
+l.args = { size: 'l' };
+
+export const XL = (args: Properties): TemplateResult => renderButtons(args);
+XL.args = { size: 'xl' };
+
+export const XSVertical = (args: Properties): TemplateResult =>
+    renderButtons(args);
+XSVertical.args = {
     vertical: true,
-    selects: undefined,
+    size: 'xs',
+};
+export const sVertical = (args: Properties): TemplateResult =>
+    renderButtons(args);
+sVertical.args = {
+    vertical: true,
+    size: 's',
+};
+
+export const mVertical = (args: Properties): TemplateResult =>
+    renderButtons(args);
+mVertical.args = {
+    vertical: true,
+    size: 'm',
+};
+
+export const lVertical = (args: Properties): TemplateResult =>
+    renderButtons(args);
+lVertical.args = {
+    vertical: true,
+    size: 'l',
+};
+
+export const XLVertical = (args: Properties): TemplateResult =>
+    renderButtons(args);
+XLVertical.args = {
+    vertical: true,
+    size: 'xl',
 };

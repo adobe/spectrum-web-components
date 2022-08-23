@@ -31,6 +31,7 @@ export default {
         justified: false,
         quiet: false,
         vertical: false,
+        size: 'm',
     },
     argTypes: {
         compact: {
@@ -93,6 +94,19 @@ export default {
                 type: 'boolean',
             },
         },
+        size: {
+            name: 'size',
+            description: 'The size at which to display the action group.',
+            type: { name: 'string', required: true },
+            table: {
+                type: { summary: '"s" | "m" | "l" | "xl"' },
+                defaultValue: { summary: 'm' },
+            },
+            control: {
+                type: 'select',
+                options: ['s', 'm', 'l', 'xl'],
+            },
+        },
     },
 };
 
@@ -102,6 +116,7 @@ interface Properties {
     justified?: boolean;
     quiet?: boolean;
     vertical?: boolean;
+    size?: 's' | 'm' | 'l' | 'xl';
     [prop: string]: unknown;
 }
 
@@ -150,6 +165,7 @@ export const selectsSingle = (args: Properties): TemplateResult => {
             ?quiet=${args.quiet}
             ?justified=${args.justified}
             ?vertical=${args.vertical}
+            size=${args.size}
             label="Favorite Color"
             selects="single"
             @change=${({ target }: Event & { target: ActionGroup }) => {
@@ -175,6 +191,7 @@ export const selectsMultiple = (args: Properties): TemplateResult => {
             ${spreadProps(args)}
             label="Favorite Colors"
             selects="multiple"
+            size=${args.size}
             @change=${({ target }: Event & { target: ActionGroup }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
                 next.textContent = `Selected: ${JSON.stringify(
@@ -199,6 +216,7 @@ export const selectsMultipleWithTooltips = (
             ${spreadProps(args)}
             label="Favorite Color"
             selects="multiple"
+            size=${args.size}
             @change=${({ target }: Event & { target: ActionGroup }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
                 next.textContent = `Selected: ${JSON.stringify(
@@ -239,6 +257,7 @@ export const selectsMultipleControlled = (args: Properties): TemplateResult => {
             selects="multiple"
             .selected=${['donuts', 'crepecakes']}
             label="Favorite Dessert"
+            size=${args.size}
             @change=${({ target }: Event & { target: ActionGroup }) => {
                 const next = target.nextElementSibling as HTMLDivElement;
                 next.textContent = `Selected: ${JSON.stringify(

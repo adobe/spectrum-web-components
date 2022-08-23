@@ -1671,18 +1671,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-thumbnail-border-radius-small: var(
         --spectrum-global-dimension-size-25
     );
-    --spectrum-alias-actiongroup-button-gap: var(
-        --spectrum-global-dimension-size-100
-    );
-    --spectrum-alias-actiongroup-button-gap-compact: var(
-        --spectrum-global-dimension-size-0
-    );
-    --spectrum-alias-actiongroup-button-gap-quiet: var(
-        --spectrum-global-dimension-size-100
-    );
-    --spectrum-alias-actiongroup-button-gap-quiet-compact: var(
-        --spectrum-global-dimension-size-25
-    );
     --spectrum-alias-search-padding-left-s: var(
         --spectrum-global-dimension-size-85
     );
