@@ -40,6 +40,7 @@ const tokenPackages = [
     'toast',
     'actiongroup',
     'divider',
+    'fieldlabel',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
