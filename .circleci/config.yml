@@ -10,7 +10,7 @@ executors:
 parameters:
     current_golden_images_hash:
         type: string
-        default: 6dc6af331a25eb51bf40892702e95ea3e84eb3fe
+        default: 6fdb9a517f43b792128ff75e11ff1cc92a1a5bd2
 commands:
     downstream:
         steps:
@@ -92,7 +92,7 @@ commands:
                       echo $(cat count_end.txt)
                       if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             - save_cache:
-                  when: on_fail
+                  when: always
                   name: Build Golden Images Revision Cache
                   paths:
                       - test/visual/screenshots-baseline
@@ -248,7 +248,7 @@ jobs:
                       echo $(cat count_end.txt)
                       if [[ $(cat count_start.txt) -eq $(cat count_end.txt) ]]; then exit 0; else exit 1; fi
             - save_cache:
-                  when: on_fail
+                  when: always
                   name: Build Golden Images Revision Cache
                   paths:
                       - test/visual/screenshots-baseline
