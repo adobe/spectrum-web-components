@@ -18,7 +18,7 @@ import {
     elementUpdated,
     expect,
     fixture,
-    oneEvent,
+    nextFrame,
     waitUntil,
 } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
@@ -586,20 +586,17 @@ describe('Tabs', () => {
             el.selectionIndicatorStyle
         ) as unknown as [string, string];
         const initialWidth = parseFloat(initialExec[1]);
-        let contentchanged = oneEvent(el, 'sp-tab-contentchange');
         selected.textContent = 'WWWWWWWWWWWWWWWWWWWWWWWWW';
-        await contentchanged;
-        await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
 
         const longerExec = extractScaleX.exec(
             el.selectionIndicatorStyle
         ) as unknown as [string, string];
         const longerWidth = parseFloat(longerExec[1]);
         expect(initialWidth).to.be.lessThan(longerWidth);
-        contentchanged = oneEvent(el, 'sp-tab-contentchange');
         selected.textContent = 'W';
-        await contentchanged;
-        await elementUpdated(el);
+        await nextFrame();
 
         const shorterExec = extractScaleX.exec(
             el.selectionIndicatorStyle

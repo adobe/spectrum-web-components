@@ -28,6 +28,7 @@ import {
     ifDefined,
 } from '@spectrum-web-components/base/src/directives.js';
 import { IntersectionController } from '@lit-labs/observers/intersection_controller.js';
+import { ResizeController } from '@lit-labs/observers/resize_controller.js';
 import { Tab } from './Tab.js';
 import { Focusable } from '@spectrum-web-components/shared';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
@@ -119,30 +120,23 @@ export class Tabs extends SizedMixin(Focusable) {
     @property({ attribute: false })
     public shouldAnimate = false;
 
+    @query('slot')
+    private slotEl!: HTMLSlotElement;
+
     @query('#list')
     private tabList!: HTMLDivElement;
 
     @property({ reflect: true })
-    public get selected(): string {
-        return this._selected;
-    }
-
-    public set selected(value: string) {
-        const oldValue = this.selected;
-
-        if (value === oldValue) {
-            return;
-        }
-
-        this._selected = value;
-        this.shouldUpdateCheckedState();
-        this.requestUpdate('selected', oldValue);
-    }
-
-    private _selected = '';
+    selected = '';
 
     private set tabs(tabs: Tab[]) {
         if (tabs === this.tabs) return;
+        this._tabs.forEach((tab) => {
+            this.resizeController.unobserve(tab);
+        });
+        tabs.forEach((tab) => {
+            this.resizeController.observe(tab);
+        });
         this._tabs = tabs;
         this.rovingTabindexController.clearElementCache();
     }
@@ -166,6 +160,12 @@ export class Tabs extends SizedMixin(Focusable) {
             },
         });
     }
+
+    protected resizeController = new ResizeController(this, {
+        callback: () => {
+            this.updateSelectionIndicator();
+        },
+    });
 
     rovingTabindexController = new RovingTabindexController<Tab>(this, {
         focusInIndex: (elements) => {
@@ -255,7 +255,6 @@ export class Tabs extends SizedMixin(Focusable) {
                 aria-label=${ifDefined(this.label ? this.label : undefined)}
                 @click=${this.onClick}
                 @keydown=${this.onKeyDown}
-                @sp-tab-contentchange=${this.updateSelectionIndicator}
                 @scroll=${this.onTabsScroll}
                 id="list"
                 role="tablist"
@@ -285,8 +284,11 @@ export class Tabs extends SizedMixin(Focusable) {
             }
         }
 
-        super.updated(changes);
+        super.willUpdate(changes);
         if (changes.has('selected')) {
+            if (this.tabs.length) {
+                this.updateCheckedState();
+            }
             if (changes.get('selected')) {
                 const previous = this.querySelector(
                     `[role="tabpanel"][value="${changes.get('selected')}"]`
@@ -373,22 +375,13 @@ export class Tabs extends SizedMixin(Focusable) {
     }
 
     private onSlotChange(): void {
-        this.tabs = [...this.querySelectorAll('[role="tab"]')] as Tab[];
-        this.shouldUpdateCheckedState();
-    }
-
-    private shouldUpdateCheckedState(): void {
-        this.tabChangeResolver();
-        this.tabChangePromise = new Promise(
-            (res) => (this.tabChangeResolver = res)
-        );
-        setTimeout(this.updateCheckedState);
+        this.tabs = this.slotEl
+            .assignedElements()
+            .filter((el) => el.getAttribute('role') === 'tab') as Tab[];
+        this.updateCheckedState();
     }
 
     private updateCheckedState = (): void => {
-        if (!this.tabs.length) {
-            this.tabs = [...this.querySelectorAll('[role="tab"]')] as Tab[];
-        }
         this.tabs.forEach((element) => {
             element.removeAttribute('selected');
         });
@@ -411,7 +404,6 @@ export class Tabs extends SizedMixin(Focusable) {
         }
 
         this.updateSelectionIndicator();
-        this.tabChangeResolver();
     };
 
     private updateSelectionIndicator = async (): Promise<void> => {
@@ -431,17 +423,6 @@ export class Tabs extends SizedMixin(Focusable) {
                 ? ScaledIndicator.transformX(selectedElement.offsetLeft, width)
                 : ScaledIndicator.transformY(selectedElement.offsetTop, height);
     };
-
-    private tabChangePromise = Promise.resolve();
-    private tabChangeResolver: () => void = function () {
-        return;
-    };
-
-    protected override async getUpdateComplete(): Promise<boolean> {
-        const complete = (await super.getUpdateComplete()) as boolean;
-        await this.tabChangePromise;
-        return complete;
-    }
 
     public override connectedCallback(): void {
         super.connectedCallback();
