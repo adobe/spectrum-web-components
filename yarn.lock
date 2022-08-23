@@ -9978,24 +9978,7 @@ eslint-plugin-import@^2.25.3, eslint-plugin-import@^2.26.0:
     resolve "^1.22.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-lit-a11y@^2.2.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-lit-a11y/-/eslint-plugin-lit-a11y-2.2.1.tgz#d73273132258ac23f0a17df18b8e8345a3376b55"
-  integrity sha512-Ao2MP3NjMGON8x8sdwGgmVW79MiQ4nOB7OQzodLPk4sljGAvdyXulyGVNY6PGWfIPVee+3X262z4Aq2poXO+LA==
-  dependencies:
-    aria-query "^4.2.2"
-    axe-core "^4.3.3"
-    axobject-query "^2.2.0"
-    dom5 "^3.0.1"
-    emoji-regex "^9.2.0"
-    eslint-plugin-lit "^1.6.0"
-    eslint-rule-extender "0.0.1"
-    language-tags "^1.0.5"
-    parse5 "^5.1.1"
-    parse5-htmlparser2-tree-adapter "^6.0.1"
-    requireindex "~1.2.0"
-
-eslint-plugin-lit-a11y@^2.2.2:
+eslint-plugin-lit-a11y@^2.2.0, eslint-plugin-lit-a11y@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-lit-a11y/-/eslint-plugin-lit-a11y-2.2.2.tgz#e3f14f207e6c07ef2e40c93ea8e9e15b3dae8a79"
   integrity sha512-9dJfnwPOOA6x7Ow/+GFoOt1hr4mSNrF6KBWQ2OFFAY/9aBYtyBX4fRbpxqS2y3ld66/bjWru2+LGWgNVr5GxzQ==
