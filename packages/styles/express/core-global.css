@@ -3291,15 +3291,6 @@ governing permissions and limitations under the License.
     --spectrum-slider-label-text-size: var(
         --spectrum-global-dimension-font-size-100
     );
-    --spectrum-fieldlabel-s-text-size: var(
-        --spectrum-global-dimension-font-size-100
-    );
-    --spectrum-fieldlabel-m-text-size: var(
-        --spectrum-global-dimension-font-size-100
-    );
-    --spectrum-fieldlabel-l-text-size: var(
-        --spectrum-global-dimension-font-size-200
-    );
     --spectrum-fieldlabel-xl-text-size: var(
         --spectrum-global-dimension-font-size-300
     );

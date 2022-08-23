@@ -4037,10 +4037,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/fieldgroup/-/fieldgroup-3.1.4.tgz#aede57bda56c41310d262774a8805eefc89ddf74"
   integrity sha512-ynqkD1OWicCEW7hgYQWzJUrUih+guJHjDtPbTKYhCbnxPqi6aifKmLstBehCgs4iG4+YfGDdZTppW64A3o5foQ==
 
-"@spectrum-css/fieldlabel@^4.0.29":
-  version "4.0.29"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldlabel/-/fieldlabel-4.0.29.tgz#c09de2495b041a308b0cf110b1185cbb77c188fe"
-  integrity sha512-MRputoPSSiIC0PoPOaX5zeDHyVcHdbfib7lCBk9di8R/eed3UzHvQeBwclAvCxkVHuyfIIzgaK3mlIt4flAvlw==
+"@spectrum-css/fieldlabel@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldlabel/-/fieldlabel-5.0.2.tgz#f977dea5dfddb0c255817de6bb0b65b583327f6a"
+  integrity sha512-xA3JfdD2ZT8W4wjkj8vef5P3Pv3DEgnS84JwBce23fg0KXsJ0P2qKBq79IIztYBSg1DFsnlDN2JQD4S404XRNg==
 
 "@spectrum-css/helptext@^2.0.9":
   version "2.0.9"

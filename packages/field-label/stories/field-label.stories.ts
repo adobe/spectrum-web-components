@@ -81,12 +81,7 @@ export const required = (): TemplateResult => {
         ></sp-textfield>
         <br />
         <br />
-        <sp-field-label
-            for="lifestory-3"
-            side-aligned="start"
-            style="width: 80px;"
-            required
-        >
+        <sp-field-label for="lifestory-3" side-aligned="start" required>
             Life Story
         </sp-field-label>
         <sp-textfield
@@ -95,12 +90,7 @@ export const required = (): TemplateResult => {
         ></sp-textfield>
         <br />
         <br />
-        <sp-field-label
-            for="lifestory-4"
-            side-aligned="end"
-            style="width: 80px;"
-            required
-        >
+        <sp-field-label for="lifestory-4" side-aligned="end" required>
             Life Story
         </sp-field-label>
         <sp-textfield
