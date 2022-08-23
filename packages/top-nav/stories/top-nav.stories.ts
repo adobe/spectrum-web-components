@@ -61,6 +61,11 @@ export const Default = (): TemplateResult => {
 
 export const Selected = (): TemplateResult => {
     const { href } = location;
+    /**
+     * The location's `href` is leveraged as the value of "Page 3" here
+     * so that within the default Storybook UI there can be a `href` attribute
+     * driven "selection" that ensures the delivery of a visible selection.
+     */
     return html`
         <sp-top-nav>
             <sp-top-nav-item href="#">Site Name</sp-top-nav-item>

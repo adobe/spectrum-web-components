@@ -45,18 +45,6 @@ export class TopNavItem extends LikeAnchor(Focusable) {
 
     public value = '';
 
-    protected handleContentChange(): void {
-        /**
-         * When the content in a tab has changed, JS powered layout related to that content may also need to be changed.
-         */
-        this.dispatchEvent(
-            new Event('sp-top-nav-item-contentchange', {
-                bubbles: true,
-                composed: true,
-            })
-        );
-    }
-
     public override get focusElement(): HTMLAnchorElement {
         return this.anchor;
     }
@@ -83,24 +71,8 @@ export class TopNavItem extends LikeAnchor(Focusable) {
         `;
     }
 
-    protected override firstUpdated(changes: PropertyValues): void {
-        super.firstUpdated(changes);
-        // @TODO - refactor this as a ResizeObserver up to `sp-tabs` so that it can be more
-        // resiliant to Tab content changes, as well as other content slotted into the "tablist".
-        this.shadowRoot.addEventListener(
-            'slotchange',
-            this.handleContentChange
-        );
-    }
-
     protected override updated(changes: PropertyValues): void {
         super.updated(changes);
-        if (
-            changes.has('label') &&
-            typeof changes.get('label') !== 'undefined'
-        ) {
-            this.handleContentChange();
-        }
         this.value = this.anchor.href;
     }
 }
