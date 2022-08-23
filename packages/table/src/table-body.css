@@ -16,8 +16,6 @@ governing permissions and limitations under the License.
     display: block;
 }
 
-:host:not([scroller]) {
+:host(:not([tabindex])) {
     overflow: visible;
-    flex-grow: 1;
-    box-sizing: border-box;
 }

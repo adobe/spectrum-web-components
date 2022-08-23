@@ -17,7 +17,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import styles from './table-body.css.js';
-import { ResizeController } from '@lit-labs/observers/resize_controller.js';
+import { MutationController } from '@lit-labs/observers/mutation_controller.js';
 
 /**
  * @element sp-table
@@ -29,10 +29,13 @@ export class TableBody extends SpectrumElement {
 
     constructor() {
         super();
-        new ResizeController(this, {
-            callback: (entries) => {
-                if (!entries.length) return;
-                if (entries[0].contentRect.height < this.scrollHeight) {
+        new MutationController(this, {
+            config: {
+                childList: true,
+                subtree: true,
+            },
+            callback: () => {
+                if (this.offsetHeight < this.scrollHeight) {
                     this.tabIndex = 0;
                 } else {
                     this.removeAttribute('tabindex');

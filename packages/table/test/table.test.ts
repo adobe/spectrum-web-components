@@ -17,6 +17,10 @@ import {
     nextFrame,
 } from '@open-wc/testing';
 
+import { TemplateResult } from '@spectrum-web-components/base';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+import type { Theme } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/table/sp-table.js';
 import '@spectrum-web-components/table/sp-table-head.js';
 import '@spectrum-web-components/table/sp-table-head-cell.js';
@@ -45,9 +49,24 @@ before(function () {
 after(function () {
     window.onerror = globalErrorHandler as OnErrorEventHandler;
 });
+
+async function styledFixture<T extends Element>(
+    story: TemplateResult
+): Promise<T> {
+    const test = await fixture<Theme>(html`
+        <sp-theme theme="classic" scale="medium" color="light">
+            ${story}
+        </sp-theme>
+    `);
+    return test.children[0] as T;
+}
+
 describe('Table', () => {
     it('loads default table accessibly', async () => {
-        const el = await fixture<Table>(elements());
+        const el = await styledFixture<Table>(elements());
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
         await nextFrame();
         await nextFrame();
         await nextFrame();

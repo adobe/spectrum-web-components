@@ -486,9 +486,6 @@ export class Table extends SizedMixin(SpectrumElement, {
     }
 
     public override disconnectedCallback(): void {
-        if (this.tableBody) {
-            render(html``, this.tableBody);
-        }
         super.disconnectedCallback();
     }
 }

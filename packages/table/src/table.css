@@ -16,8 +16,3 @@ governing permissions and limitations under the License.
     display: flex;
     flex-direction: column;
 }
-
-:host([scroller]) sp-table-body {
-    overflow: visible;
-    min-height: max-content;
-}
