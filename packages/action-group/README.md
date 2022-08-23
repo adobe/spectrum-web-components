@@ -24,24 +24,65 @@ When looking to leverage the `ActionGroup` base class as a type and/or for exten
 import { ActionGroup } from '@spectrum-web-components/action-group';
 ```
 
-## Example
+## Sizes
 
-```html
-<sp-action-group>
-    <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-        Button 1
-    </sp-action-button>
-    <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-        Longer Button 2
-    </sp-action-button>
-    <sp-action-button>
-        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-        Short 3
-    </sp-action-button>
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="xs">Extra Small</sp-tab>
+<sp-tab-panel value="xs">
+
+```html demo
+<sp-action-group size="xs">
+    <sp-action-button>Extra Small 1</sp-action-button>
+    <sp-action-button>Extra Small 2</sp-action-button>
 </sp-action-group>
 ```
+
+</sp-tab-panel>
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html demo
+<sp-action-group size="s">
+    <sp-action-button>Small 1</sp-action-button>
+    <sp-action-button>Small 2</sp-action-button>
+</sp-action-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html demo
+<sp-action-group size="m">
+    <sp-action-button>Medium 1</sp-action-button>
+    <sp-action-button>Medium 2</sp-action-button>
+</sp-action-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html demo
+<sp-action-group size="l">
+    <sp-action-button>Large 1</sp-action-button>
+    <sp-action-button>Large 2</sp-action-button>
+</sp-action-group>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html demo
+<sp-action-group size="xl">
+    <sp-action-button>Extra Large 1</sp-action-button>
+    <sp-action-button>Extra Large 2</sp-action-button>
+</sp-action-group>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ## Selects
 

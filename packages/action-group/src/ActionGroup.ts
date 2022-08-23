@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     PropertyValues,
+    SizedMixin,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -32,7 +33,9 @@ const EMPTY_SELECTION: string[] = [];
  *
  * @fires change - Announces that selection state has been changed by user
  */
-export class ActionGroup extends SpectrumElement {
+export class ActionGroup extends SizedMixin(SpectrumElement, {
+    validSizes: ['xs', 's', 'm', 'l', 'xl'],
+}) {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
@@ -317,7 +320,8 @@ export class ActionGroup extends SpectrumElement {
         }
         if (
             (changes.has('quiet') && this.quiet) ||
-            (changes.has('emphasized') && this.emphasized)
+            (changes.has('emphasized') && this.emphasized) ||
+            (changes.has('size') && this.size)
         ) {
             this.manageChildren();
         }
@@ -339,6 +343,7 @@ export class ActionGroup extends SpectrumElement {
             button.quiet = this.quiet;
             button.emphasized = this.emphasized;
             button.selected = this.selected.includes(button.value);
+            button.size = this.size;
         });
     }
 

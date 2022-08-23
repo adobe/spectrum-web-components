@@ -889,6 +889,24 @@ describe('ActionGroup', () => {
         expect(secondElement.selected, 'second child not selected').to.be.false;
     });
 
+    it('maintains a `size` attribute', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group>
+                    <sp-action-button>Button</sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.size).to.equal('m');
+        expect(el.getAttribute('size')).to.equal('m');
+        el.removeAttribute('size');
+        await elementUpdated(el);
+        expect(el.size).to.equal('m');
+        expect(el.getAttribute('size')).to.equal('m');
+    });
+
     it('will accept selected as a JSON string', async () => {
         const el = await fixture<ActionGroup>(
             html`
