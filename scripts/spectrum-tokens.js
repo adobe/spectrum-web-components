@@ -39,6 +39,7 @@ const tokenPackages = [
     'statuslight',
     'toast',
     'actiongroup',
+    'divider',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
