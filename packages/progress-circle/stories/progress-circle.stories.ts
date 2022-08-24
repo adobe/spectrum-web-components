@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+import '@spectrum-web-components/button/sp-button.js';
 
 export default {
     title: 'Progress Circle',
@@ -46,15 +47,18 @@ export const Default = ({ indeterminate }: StoryArgs = {}): TemplateResult => {
                 progress="27"
                 size="s"
                 ?indeterminate=${indeterminate}
+                label="Loading progess demo"
             ></sp-progress-circle>
             <sp-progress-circle
                 progress="27"
                 ?indeterminate=${indeterminate}
+                label="Loading progess demo"
             ></sp-progress-circle>
             <sp-progress-circle
                 progress="27"
                 size="l"
                 ?indeterminate=${indeterminate}
+                label="Loading progess demo"
             ></sp-progress-circle>
         </div>
     `;
@@ -63,7 +67,7 @@ Default.args = {
     indeterminate: false,
 };
 
-export const overBackground = ({
+export const staticWhite = ({
     indeterminate,
 }: StoryArgs = {}): TemplateResult => {
     return html`
@@ -72,26 +76,43 @@ export const overBackground = ({
         >
             <sp-progress-circle
                 progress="53"
-                over-background
+                static="white"
                 size="s"
                 ?indeterminate=${indeterminate}
+                label="Loading progess demo"
             ></sp-progress-circle>
             <sp-progress-circle
                 progress="53"
-                over-background
+                static="white"
                 ?indeterminate=${indeterminate}
+                label="Loading progess demo"
             ></sp-progress-circle>
             <sp-progress-circle
                 progress="53"
-                over-background
+                static="white"
                 size="l"
                 ?indeterminate=${indeterminate}
+                label="Loading progess demo"
             ></sp-progress-circle>
         </div>
     `;
 };
-overBackground.args = {
+staticWhite.args = {
     indeterminate: false,
 };
 
-overBackground.storyName = 'Over background';
+export const inButton = ({
+    indeterminate,
+}: StoryArgs = {}): TemplateResult => html`
+    <sp-button variant="black" style="color: white">
+        <sp-progress-circle
+            progress="53"
+            static="white"
+            size="s"
+            ?indeterminate=${indeterminate}
+            slot="icon"
+            label="Processing"
+        ></sp-progress-circle>
+        Processing...
+    </sp-button>
+`;

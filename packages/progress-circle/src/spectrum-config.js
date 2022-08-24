@@ -39,9 +39,14 @@ const config = {
                     ],
                 },
                 {
-                    type: 'boolean',
-                    name: 'over-background',
-                    selector: '.spectrum-ProgressCircle--overBackground',
+                    type: 'enum',
+                    name: 'static',
+                    values: [
+                        {
+                            selector: '.spectrum-ProgressCircle--staticWhite',
+                            name: 'white',
+                        },
+                    ],
                 },
             ],
             classes: [

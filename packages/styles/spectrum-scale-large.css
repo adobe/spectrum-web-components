@@ -333,10 +333,6 @@ governing permissions and limitations under the License.
     --spectrum-progressbar-xl-border-radius: var(
         --spectrum-global-dimension-static-size-75
     );
-    --spectrum-progresscircle-s-border-size: 3px;
-    --spectrum-progresscircle-m-border-size: var(
-        --spectrum-global-dimension-static-size-50
-    );
     --spectrum-tag-m-texticon-padding-left: var(
         --spectrum-global-dimension-static-size-150
     );

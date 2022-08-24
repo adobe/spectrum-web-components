@@ -4092,10 +4092,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-1.0.33.tgz#0fbf815355e3b352ab0965a0d1ff9424c145204e"
   integrity sha512-DLNkEd9XsyxSYRyLsV2cy9clByDoHy+GpKGOu7q6STtYYl7Y2hjBvNk9DNaLc78PBCXDf4MJ/j59vl5VmfRctA==
 
-"@spectrum-css/progresscircle@^1.0.23":
-  version "1.0.23"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/progresscircle/-/progresscircle-1.0.23.tgz#b8872716d2f54bf4bb20d571527f8ee4b04f5c10"
-  integrity sha512-J6IYhospCebEZ/+82vxBAckl5XATuNPQ5n0QSUFnRxql824x4B/mFhLt/PPLJtPBxEty6OA3GQ4evxAYutqEqQ==
+"@spectrum-css/progresscircle@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/progresscircle/-/progresscircle-2.0.1.tgz#e6cf46a6f46d0446a48fdf4677ff7000f289a0af"
+  integrity sha512-pSYV+T1ryDSpgVjHXviWbnUqbRA43lTEpAB/zhs8ptbQbCxsrYDuUiyDSv9ozmLwyY1kPvsuMArPRZQPTCjozg==
 
 "@spectrum-css/quickaction@^3.0.26":
   version "3.0.26"

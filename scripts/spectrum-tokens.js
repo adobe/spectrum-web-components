@@ -41,6 +41,7 @@ const tokenPackages = [
     'actiongroup',
     'divider',
     'fieldlabel',
+    'progresscircle',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
