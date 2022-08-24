@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.6.0...@spectrum-web-components/field-group@0.7.0) (2022-08-24)
+
+### Features
+
+-   add t-shirt sizing to the Radio pattern ([fc49343](https://github.com/adobe/spectrum-web-components/commit/fc49343311d4ff95699b455c451514cb7fc62a45))
+
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-group@0.5.12...@spectrum-web-components/field-group@0.6.0) (2022-08-09)
 
 ### Features

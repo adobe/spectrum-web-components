@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.18.0...@spectrum-web-components/overlay@0.18.1) (2022-08-24)
+
+### Bug Fixes
+
+-   prevent "hover" overlays from returning focus to the root of a parent modal ([ceb8fa7](https://github.com/adobe/spectrum-web-components/commit/ceb8fa73d23f6c9ccb6f2a00c18708d496975473))
+-   prevent longpress when interacting with context menu ([f8b0732](https://github.com/adobe/spectrum-web-components/commit/f8b07321741ee44515fced9923167b96561cdd48))
+
 # [0.18.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.17.0...@spectrum-web-components/overlay@0.18.0) (2022-08-09)
 
 ### Features

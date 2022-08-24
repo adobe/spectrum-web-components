@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/slider",
-    "version": "0.14.0",
+    "version": "0.14.1",
     "publishConfig": {
         "access": "public"
     },
@@ -77,9 +77,9 @@
         "@lit-labs/observers": "^1.0.1",
         "@spectrum-web-components/base": "^0.7.0",
         "@spectrum-web-components/field-label": "^0.8.0",
-        "@spectrum-web-components/number-field": "^0.5.0",
+        "@spectrum-web-components/number-field": "^0.5.1",
         "@spectrum-web-components/shared": "^0.15.0",
-        "@spectrum-web-components/theme": "^0.14.0",
+        "@spectrum-web-components/theme": "^0.14.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

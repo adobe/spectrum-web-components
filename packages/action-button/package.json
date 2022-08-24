@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-button",
-    "version": "0.10.0",
+    "version": "0.10.1",
     "publishConfig": {
         "access": "public"
     },
@@ -58,7 +58,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.0",
-        "@spectrum-web-components/button": "^0.19.0",
+        "@spectrum-web-components/button": "^0.19.1",
         "@spectrum-web-components/icon": "^0.12.0",
         "@spectrum-web-components/icons-ui": "^0.9.0",
         "tslib": "^2.0.0"

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.11.0...@spectrum-web-components/dialog@0.11.1) (2022-08-24)
+
+### Bug Fixes
+
+-   prevent "hover" overlays from returning focus to the root of a parent modal ([ceb8fa7](https://github.com/adobe/spectrum-web-components/commit/ceb8fa73d23f6c9ccb6f2a00c18708d496975473))
+-   **dialog:** swap secondary and cancel button order ([3df1705](https://github.com/adobe/spectrum-web-components/commit/3df1705e7d1dad1d0336a6f9e3b2011e4c16283d))
+
 # [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.10.9...@spectrum-web-components/dialog@0.11.0) (2022-08-09)
 
 ### Features

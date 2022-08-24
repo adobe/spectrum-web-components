@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.10.0...@spectrum-web-components/action-button@0.10.1) (2022-08-24)
+
+### Bug Fixes
+
+-   prevent longpress when interacting with context menu ([f8b0732](https://github.com/adobe/spectrum-web-components/commit/f8b07321741ee44515fced9923167b96561cdd48))
+
 # [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.9.1...@spectrum-web-components/action-button@0.10.0) (2022-08-09)
 
 ### Features

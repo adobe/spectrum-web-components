@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/grid@0.1.0...@spectrum-web-components/grid@0.1.1) (2022-08-24)
+
+### Bug Fixes
+
+-   prevent Grid clicks from throwing focus unexpectedly ([872e9fd](https://github.com/adobe/spectrum-web-components/commit/872e9fd6c83cbd223430c9c9f7706fe359932038))
+
 # [0.1.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/grid@0.0.9...@spectrum-web-components/grid@0.1.0) (2022-08-09)
 
 ### Features
