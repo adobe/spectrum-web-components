@@ -4017,12 +4017,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/dialog/-/dialog-6.0.15.tgz#b8d21305c34b29a1bd9e0e68bb02058aa732cede"
   integrity sha512-M1NNVPZLs6OUGvCi34YAZACurL1VDKIJqjkIsjEE+eVChfQSSnDfxjp3GBWSVr7VP+0F7Tlf+cbCYU9y8R9h5g==
 
-"@spectrum-css/divider@^1.0.27":
-  version "1.0.27"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-1.0.27.tgz#435bf738a65b4eb15c899edf5c536bea22f2d679"
-  integrity sha512-hWKPHOEo9lkOGN5zecpVVwVxE3x0SJHQJKDNx1g0xs/P/AthAboK+L1c9Rq29czNfcQ2kUjumi4igzQzcqABMQ==
-  dependencies:
-    "@spectrum-css/vars" "^8.0.0"
+"@spectrum-css/divider@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-2.0.0.tgz#6f4f5e54db99491cc1ef770c61fbb3388e3462d8"
+  integrity sha512-+qMsLMoVSZMIMAV5f7m1XNovyUOiLjtPSP2uEgMENfWQqNH9uXKMb06G3KNwh4fMmUQxxv3QR0L4iQP8T5TSzg==
 
 "@spectrum-css/dropzone@^3.0.25":
   version "3.0.25"
