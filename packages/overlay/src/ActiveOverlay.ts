@@ -223,7 +223,10 @@ export class ActiveOverlay extends SpectrumElement {
     }
 
     public feature(): void {
-        this.tabIndex = -1;
+        // eslint-disable-next-line spectrum-web-components/document-active-element
+        if (!this.contains(document.activeElement)) {
+            this.tabIndex = -1;
+        }
         const parentOverlay = parentOverlayOf(this.trigger);
         const parentIsModal = parentOverlay && parentOverlay.slot === 'open';
         if (parentIsModal) {

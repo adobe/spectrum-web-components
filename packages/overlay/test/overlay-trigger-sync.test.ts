@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { isVisible } from '../../../test/testing-helpers.js';
+import { escapeEvent, isVisible } from '../../../test/testing-helpers.js';
 import {
     aTimeout,
     elementUpdated,
@@ -44,7 +44,10 @@ function pressKey(code: string): void {
     document.dispatchEvent(up);
 }
 
-const pressEscape = (): void => pressKey('Escape');
+const pressEscape = (): void => {
+    document.dispatchEvent(escapeEvent());
+};
+
 const pressSpace = (): void => pressKey('Space');
 
 describe('Overlay Trigger - sync', () => {
