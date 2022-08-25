@@ -214,7 +214,7 @@ export class OverlayStack {
         this._eventsAreBound = true;
         this.document.addEventListener('click', this.handleMouseCapture, true);
         this.document.addEventListener('click', this.handleMouse);
-        this.document.addEventListener('keyup', this.handleKeyUp);
+        this.document.addEventListener('keydown', this.handleKeydown);
         this.document.addEventListener(
             'sp-overlay-close',
             this.handleOverlayClose as EventListener
@@ -600,7 +600,7 @@ export class OverlayStack {
         overlaysToClose.forEach((overlay) => this.hideAndCloseOverlay(overlay));
     };
 
-    private handleKeyUp = (event: KeyboardEvent): void => {
+    private handleKeydown = (event: KeyboardEvent): void => {
         if (event.code === 'Escape') {
             this.closeTopOverlay();
         }

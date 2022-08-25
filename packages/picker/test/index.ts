@@ -30,6 +30,7 @@ import {
     arrowLeftEvent,
     arrowRightEvent,
     arrowUpEvent,
+    escapeEvent,
     testForLitDevWarnings,
     tEvent,
 } from '../../../test/testing-helpers.js';
@@ -555,15 +556,7 @@ export function runPickerTests(): void {
                 'an active-overlay has been inserted on the page'
             );
 
-            button.dispatchEvent(
-                new KeyboardEvent('keyup', {
-                    bubbles: true,
-                    composed: true,
-                    cancelable: true,
-                    key: 'Escape',
-                    code: 'Escape',
-                })
-            );
+            button.dispatchEvent(escapeEvent());
             await elementUpdated(el);
             await waitUntil(() => el.open === false, 'closed by Escape');
             await waitUntil(
