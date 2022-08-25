@@ -593,7 +593,7 @@ export class OverlayStack {
         if (this.preventMouseRootClose || event.defaultPrevented) {
             return;
         }
-        if (this.topOverlay.interaction === 'hover') {
+        if (this.topOverlay?.interaction === 'hover') {
             // Don't close the top overlay on click if it comes from a hover, it will be closed when the mouse is moved out
             // But do close everything that came from a click since we just clicked elsewhere!
             this.closeAllClickOverlays();
