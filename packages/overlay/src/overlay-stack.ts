@@ -432,6 +432,14 @@ export class OverlayStack {
         }
     };
 
+    private closeAllClickOverlays(): void {
+        for (const overlay of this.overlays) {
+            if (overlay.interaction === 'click') {
+                this.hideAndCloseOverlay(overlay, false);
+            }
+        }
+    }
+
     private closeAllHoverOverlays(): void {
         for (const overlay of this.overlays) {
             if (overlay.interaction === 'hover') {
@@ -585,19 +593,27 @@ export class OverlayStack {
         if (this.preventMouseRootClose || event.defaultPrevented) {
             return;
         }
-        this.closeTopOverlay();
-        const overlaysToClose = [];
-        let root: HTMLElement | undefined = this.topOverlay?.root;
-        let overlay = parentOverlayOf(root);
-        while (root && overlay) {
-            overlaysToClose.push(overlay);
-            overlay = parentOverlayOf(root);
-            root = overlay?.root;
+        if (this.topOverlay.interaction === 'hover') {
+            // Don't close the top overlay on click if it comes from a hover, it will be closed when the mouse is moved out
+            // But do close everything that came from a click since we just clicked elsewhere!
+            this.closeAllClickOverlays();
         }
-        if (overlay) {
-            overlaysToClose.push(overlay);
+        else {
+            this.closeTopOverlay();
+
+            const overlaysToClose = [];
+            let root: HTMLElement | undefined = this.topOverlay?.root;
+            let overlay = parentOverlayOf(root);
+            while (root && overlay) {
+                overlaysToClose.push(overlay);
+                overlay = parentOverlayOf(root);
+                root = overlay?.root;
+            }
+            if (overlay) {
+                overlaysToClose.push(overlay);
+            }
+            overlaysToClose.forEach((overlay) => this.hideAndCloseOverlay(overlay));
         }
-        overlaysToClose.forEach((overlay) => this.hideAndCloseOverlay(overlay));
     };
 
     private handleKeyUp = (event: KeyboardEvent): void => {

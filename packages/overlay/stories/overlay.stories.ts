@@ -573,6 +573,34 @@ export const longpress = (): TemplateResult => {
     `;
 };
 
+export const clickAndHoverTargets = (): TemplateResult => {
+    return html`
+        ${storyStyles}
+        <style>
+            .friendly-target {
+                padding: 4px;
+                margin: 6px;
+                border: 2px solid black;
+                border-radius: 6px;
+                cursor: default;
+            }
+       </style>
+        <overlay-trigger placement="right">
+            <div class="friendly-target" slot="trigger">Click me</div>
+            <sp-tooltip slot="click-content" tip="right">
+                Ok, now hover the other trigger
+            </sp-tooltip>
+        </overlay-trigger>
+        <overlay-trigger placement="left">
+            <div class="friendly-target" slot="trigger">Then hover me</div>
+            <sp-tooltip slot="hover-content" delayed tip="right">
+                Now click my trigger -- I should stay open, but the other overlay should close
+            </sp-tooltip>
+        </overlay-trigger>
+    `;
+};
+
+
 function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }
