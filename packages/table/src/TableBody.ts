@@ -35,13 +35,19 @@ export class TableBody extends SpectrumElement {
                 subtree: true,
             },
             callback: () => {
-                if (this.offsetHeight < this.scrollHeight) {
-                    this.tabIndex = 0;
-                } else {
-                    this.removeAttribute('tabindex');
-                }
+                requestAnimationFrame(() => {
+                    this.shouldHaveTabIndex();
+                });
             },
         });
+    }
+
+    protected shouldHaveTabIndex(): void {
+        if (this.offsetHeight < this.scrollHeight) {
+            this.tabIndex = 0;
+        } else {
+            this.removeAttribute('tabindex');
+        }
     }
 
     @property({ reflect: true })
