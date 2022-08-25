@@ -432,9 +432,9 @@ export class OverlayStack {
         }
     };
 
-    private closeAllClickOverlays(): void {
+    private closeAllNonHoverOverlays(): void {
         for (const overlay of this.overlays) {
-            if (overlay.interaction === 'click') {
+            if (overlay.interaction != 'hover') {
                 this.hideAndCloseOverlay(overlay, false);
             }
         }
@@ -595,8 +595,8 @@ export class OverlayStack {
         }
         if (this.topOverlay?.interaction === 'hover') {
             // Don't close the top overlay on click if it comes from a hover, it will be closed when the mouse is moved out
-            // But do close everything that came from a click since we just clicked elsewhere!
-            this.closeAllClickOverlays();
+            // But do close all non-hover overlays since we just clicked elsewhere!
+            this.closeAllNonHoverOverlays();
         }
         else {
             this.closeTopOverlay();
