@@ -31,6 +31,7 @@ governing permissions and limitations under the License.
     --spectrum-focus-ring-color: var(--spectrum-blue-800);
     --spectrum-static-white-focus-ring-color: var(--spectrum-white);
     --spectrum-static-black-focus-ring-color: var(--spectrum-black);
+    --spectrum-overlay-color: var(--spectrum-black);
     --spectrum-neutral-content-color-default: var(--spectrum-gray-800);
     --spectrum-neutral-content-color-hover: var(--spectrum-gray-900);
     --spectrum-neutral-content-color-down: var(--spectrum-gray-900);
