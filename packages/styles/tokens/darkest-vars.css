@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 :host,
 :root {
+    --spectrum-overlay-opacity: 0.6;
     --spectrum-neutral-background-color-default: var(--spectrum-gray-400);
     --spectrum-neutral-background-color-hover: var(--spectrum-gray-300);
     --spectrum-neutral-background-color-down: var(--spectrum-gray-200);
@@ -68,6 +69,26 @@ governing permissions and limitations under the License.
     --spectrum-positive-background-color-key-focus: var(
         --spectrum-positive-color-500
     );
+    --spectrum-neutral-visual-color: var(--spectrum-gray-600);
+    --spectrum-accent-visual-color: var(--spectrum-accent-color-900);
+    --spectrum-informative-visual-color: var(--spectrum-informative-color-900);
+    --spectrum-negative-visual-color: var(--spectrum-negative-color-700);
+    --spectrum-notice-visual-color: var(--spectrum-notice-color-900);
+    --spectrum-positive-visual-color: var(--spectrum-positive-color-800);
+    --spectrum-gray-visual-color: var(--spectrum-gray-600);
+    --spectrum-red-visual-color: var(--spectrum-red-700);
+    --spectrum-orange-visual-color: var(--spectrum-orange-900);
+    --spectrum-yellow-visual-color: var(--spectrum-yellow-1100);
+    --spectrum-chartreuse-visual-color: var(--spectrum-chartreuse-900);
+    --spectrum-celery-visual-color: var(--spectrum-celery-800);
+    --spectrum-green-visual-color: var(--spectrum-green-800);
+    --spectrum-seafoam-visual-color: var(--spectrum-seafoam-800);
+    --spectrum-cyan-visual-color: var(--spectrum-cyan-900);
+    --spectrum-blue-visual-color: var(--spectrum-blue-900);
+    --spectrum-indigo-visual-color: var(--spectrum-indigo-900);
+    --spectrum-purple-visual-color: var(--spectrum-purple-900);
+    --spectrum-fuchsia-visual-color: var(--spectrum-fuchsia-900);
+    --spectrum-magenta-visual-color: var(--spectrum-magenta-900);
     --spectrum-drop-shadow-color: rgba(0, 0, 0, 0.8);
     --spectrum-background-base-color: var(--spectrum-gray-50);
     --spectrum-background-layer-1-color: var(--spectrum-gray-75);

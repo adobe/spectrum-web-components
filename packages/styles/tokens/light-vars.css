@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 :host,
 :root {
+    --spectrum-overlay-opacity: 0.4;
     --spectrum-neutral-background-color-default: var(--spectrum-gray-800);
     --spectrum-neutral-background-color-hover: var(--spectrum-gray-900);
     --spectrum-neutral-background-color-down: var(--spectrum-gray-900);
@@ -68,6 +69,26 @@ governing permissions and limitations under the License.
     --spectrum-positive-background-color-key-focus: var(
         --spectrum-positive-color-1000
     );
+    --spectrum-neutral-visual-color: var(--spectrum-gray-500);
+    --spectrum-accent-visual-color: var(--spectrum-accent-color-800);
+    --spectrum-informative-visual-color: var(--spectrum-informative-color-800);
+    --spectrum-negative-visual-color: var(--spectrum-negative-color-800);
+    --spectrum-notice-visual-color: var(--spectrum-notice-color-600);
+    --spectrum-positive-visual-color: var(--spectrum-positive-color-700);
+    --spectrum-gray-visual-color: var(--spectrum-gray-500);
+    --spectrum-red-visual-color: var(--spectrum-red-800);
+    --spectrum-orange-visual-color: var(--spectrum-orange-600);
+    --spectrum-yellow-visual-color: var(--spectrum-yellow-600);
+    --spectrum-chartreuse-visual-color: var(--spectrum-chartreuse-600);
+    --spectrum-celery-visual-color: var(--spectrum-celery-700);
+    --spectrum-green-visual-color: var(--spectrum-green-700);
+    --spectrum-seafoam-visual-color: var(--spectrum-seafoam-700);
+    --spectrum-cyan-visual-color: var(--spectrum-cyan-600);
+    --spectrum-blue-visual-color: var(--spectrum-blue-800);
+    --spectrum-indigo-visual-color: var(--spectrum-indigo-800);
+    --spectrum-purple-visual-color: var(--spectrum-purple-800);
+    --spectrum-fuchsia-visual-color: var(--spectrum-fuchsia-800);
+    --spectrum-magenta-visual-color: var(--spectrum-magenta-800);
     --spectrum-drop-shadow-color: rgba(0, 0, 0, 0.15);
     --spectrum-background-base-color: var(--spectrum-gray-200);
     --spectrum-background-layer-1-color: var(--spectrum-gray-100);
