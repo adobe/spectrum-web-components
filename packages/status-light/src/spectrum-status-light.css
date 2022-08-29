@@ -40,43 +40,65 @@ governing permissions and limitations under the License.
     --spectrum-statuslight-subdued-content-color-default: var(
         --spectrum-neutral-subdued-content-color-default
     );
-    --spectrum-statuslight-semantic-gray-color: var(--spectrum-gray-500);
+    --spectrum-statuslight-semantic-neutral-color: var(
+        --spectrum-neutral-visual-color
+    );
     --spectrum-statuslight-semantic-accent-color: var(
-        --spectrum-accent-color-800
+        --spectrum-accent-visual-color
     );
     --spectrum-statuslight-semantic-negative-color: var(
-        --spectrum-negative-color-800
+        --spectrum-negative-visual-color
     );
     --spectrum-statuslight-semantic-info-color: var(
-        --spectrum-informative-color-800
+        --spectrum-informative-visual-color
     );
     --spectrum-statuslight-semantic-notice-color: var(
-        --spectrum-notice-color-600
+        --spectrum-notice-visual-color
     );
     --spectrum-statuslight-semantic-positive-color: var(
-        --spectrum-positive-color-700
+        --spectrum-positive-visual-color
     );
-    --spectrum-statuslight-nonsemantic-gray-color: var(--spectrum-gray-500);
-    --spectrum-statuslight-nonsemantic-red-color: var(--spectrum-red-800);
-    --spectrum-statuslight-nonsemantic-orange-color: var(--spectrum-orange-600);
-    --spectrum-statuslight-nonsemantic-yellow-color: var(--spectrum-yellow-600);
+    --spectrum-statuslight-nonsemantic-gray-color: var(
+        --spectrum-gray-visual-color
+    );
+    --spectrum-statuslight-nonsemantic-red-color: var(
+        --spectrum-red-visual-color
+    );
+    --spectrum-statuslight-nonsemantic-orange-color: var(
+        --spectrum-orange-visual-color
+    );
+    --spectrum-statuslight-nonsemantic-yellow-color: var(
+        --spectrum-yellow-visual-color
+    );
     --spectrum-statuslight-nonsemantic-chartreuse-color: var(
-        --spectrum-chartreuse-600
+        --spectrum-chartreuse-visual-color
     );
-    --spectrum-statuslight-nonsemantic-celery-color: var(--spectrum-celery-700);
-    --spectrum-statuslight-nonsemantic-green-color: var(--spectrum-green-700);
+    --spectrum-statuslight-nonsemantic-celery-color: var(
+        --spectrum-celery-visual-color
+    );
+    --spectrum-statuslight-nonsemantic-green-color: var(
+        --spectrum-green-visual-color
+    );
     --spectrum-statuslight-nonsemantic-seafoam-color: var(
-        --spectrum-seafoam-700
+        --spectrum-seafoam-visual-color
     );
-    --spectrum-statuslight-nonsemantic-cyan-color: var(--spectrum-cyan-600);
-    --spectrum-statuslight-nonsemantic-blue-color: var(--spectrum-blue-800);
-    --spectrum-statuslight-nonsemantic-indigo-color: var(--spectrum-indigo-800);
-    --spectrum-statuslight-nonsemantic-purple-color: var(--spectrum-purple-800);
+    --spectrum-statuslight-nonsemantic-cyan-color: var(
+        --spectrum-cyan-visual-color
+    );
+    --spectrum-statuslight-nonsemantic-blue-color: var(
+        --spectrum-blue-visual-color
+    );
+    --spectrum-statuslight-nonsemantic-indigo-color: var(
+        --spectrum-indigo-visual-color
+    );
+    --spectrum-statuslight-nonsemantic-purple-color: var(
+        --spectrum-purple-visual-color
+    );
     --spectrum-statuslight-nonsemantic-fuchsia-color: var(
-        --spectrum-fuchsia-800
+        --spectrum-fuchsia-visual-color
     );
     --spectrum-statuslight-nonsemantic-magenta-color: var(
-        --spectrum-magenta-800
+        --spectrum-magenta-visual-color
     );
 }
 :host([size='s']) {
@@ -277,8 +299,8 @@ governing permissions and limitations under the License.
 }
 :host([variant='neutral']):before {
     background-color: var(
-        --mod-statuslight-semantic-gray-color,
-        var(--spectrum-statuslight-semantic-gray-color)
+        --mod-statuslight-semantic-neutral-color,
+        var(--spectrum-statuslight-semantic-neutral-color)
     ); /* .spectrum-StatusLight--neutral:before */
 }
 .spectrum-StatusLight--accent:before {
