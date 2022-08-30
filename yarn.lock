@@ -2686,9 +2686,9 @@
     lit "^2.0.2"
 
 "@lit-labs/observers@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@lit-labs/observers/-/observers-1.0.1.tgz#d278958c68ff5f47b27ccac42a7f9a39d0c2cef9"
-  integrity sha512-BOIxrjH87JmWGPUM2w/i0wN7tewsmU2Z+KYbzLymxPkBZWwOe0k+EJRNY+tJDcdioFROvnccXZlyrbA6i7gQoA==
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@lit-labs/observers/-/observers-1.0.2.tgz#1fb80baaca8d80fd03982618fa4266072dae9ea9"
+  integrity sha512-fon270tAbBzGcKEb073vEdj1NxId5GtcgREogZb83Zx/6HZZcAR47AvzI4YZnXpktspZRvK5WveIMtMjCR+lDw==
   dependencies:
     "@lit/reactive-element" "^1.1.0"
 
