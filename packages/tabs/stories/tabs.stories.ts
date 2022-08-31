@@ -49,7 +49,7 @@ export default {
 };
 
 interface Properties {
-    direction?: 'vertical' | 'vertical-right' | 'horizontal';
+    direction: 'vertical' | 'vertical-right' | 'horizontal';
     verticalTabs?: boolean;
     verticalTab?: boolean;
     auto?: boolean;
@@ -211,6 +211,92 @@ export const Vertical = (args: Properties): TemplateResult => {
     `;
 };
 Vertical.args = {
+    direction: 'vertical',
+};
+
+export const verticalQuiet = (args: Properties): TemplateResult => {
+    return html`
+        <sp-tabs
+            selected="1"
+            direction=${args.direction}
+            ?auto=${args.auto}
+            label="Demo Tabs"
+            quiet
+        >
+            <sp-tab label="Tab 1" value="1"></sp-tab>
+            <sp-tab label="Tab 2" value="2"></sp-tab>
+            <sp-tab label="Tab 3" value="3"></sp-tab>
+            <sp-tab label="Tab 4" value="4"></sp-tab>
+            ${panels()}
+        </sp-tabs>
+    `;
+};
+verticalQuiet.args = {
+    direction: 'vertical',
+};
+
+export const verticalEmphasizedQuiet = (args: Properties): TemplateResult => {
+    return html`
+        <sp-tabs
+            selected="1"
+            direction=${args.direction}
+            ?auto=${args.auto}
+            label="Demo Tabs"
+            quiet
+            emphasized
+        >
+            <sp-tab label="Tab 1" value="1"></sp-tab>
+            <sp-tab label="Tab 2" value="2"></sp-tab>
+            <sp-tab label="Tab 3" value="3"></sp-tab>
+            <sp-tab label="Tab 4" value="4"></sp-tab>
+            ${panels()}
+        </sp-tabs>
+    `;
+};
+verticalEmphasizedQuiet.args = {
+    direction: 'vertical',
+};
+
+export const verticalCompact = (args: Properties): TemplateResult => {
+    return html`
+        <sp-tabs
+            selected="1"
+            direction=${args.direction}
+            ?auto=${args.auto}
+            label="Demo Tabs"
+            compact
+        >
+            <sp-tab label="Tab 1" value="1"></sp-tab>
+            <sp-tab label="Tab 2" value="2"></sp-tab>
+            <sp-tab label="Tab 3" value="3"></sp-tab>
+            <sp-tab label="Tab 4" value="4"></sp-tab>
+            ${panels()}
+        </sp-tabs>
+    `;
+};
+verticalCompact.args = {
+    direction: 'vertical',
+};
+
+export const verticalQuietCompact = (args: Properties): TemplateResult => {
+    return html`
+        <sp-tabs
+            selected="1"
+            direction=${args.direction}
+            ?auto=${args.auto}
+            label="Demo Tabs"
+            quiet
+            compact
+        >
+            <sp-tab label="Tab 1" value="1"></sp-tab>
+            <sp-tab label="Tab 2" value="2"></sp-tab>
+            <sp-tab label="Tab 3" value="3"></sp-tab>
+            <sp-tab label="Tab 4" value="4"></sp-tab>
+            ${panels()}
+        </sp-tabs>
+    `;
+};
+verticalQuietCompact.args = {
     direction: 'vertical',
 };
 

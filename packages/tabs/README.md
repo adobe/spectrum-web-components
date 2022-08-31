@@ -103,58 +103,17 @@ import {
 </sp-tab-panel>
 </sp-tabs>
 
-### Disabled
+## Horizontal Tabs
 
-When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` children will be disabled as well, preventing a visitor from changing the selected tab. By default, `<sp-tab-panel>` children will not be addressed and the available content of the currently selected tab will be fully visible.
+An `<sp-tabs>` element will display horizontally by default. It can be modified with states like `compact`, `disabled`, and `quiet`, or with content like icons, etc.
 
-```html
-<sp-tabs selected="2" disabled>
-    <sp-tab label="Tab 1" value="1"></sp-tab>
-    <sp-tab label="Tab 2" value="2"></sp-tab>
-    <sp-tab label="Tab 3" value="3"></sp-tab>
-    <sp-tab label="Tab 4" value="4"></sp-tab>
-    <sp-tab-panel value="1">Content for Tab 1 is not selectable</sp-tab-panel>
-    <sp-tab-panel value="2">Content for Tab 2 is selected</sp-tab-panel>
-    <sp-tab-panel value="3">Content for Tab 3 is not selectable</sp-tab-panel>
-    <sp-tab-panel value="4">Content for Tab 4 is not selectable</sp-tab-panel>
-</sp-tabs>
-```
+<sp-tabs selected="compact" auto label="Horizontal Tabs variants">
+<sp-tab value="compact">Compact</sp-tab>
+<sp-tab-panel value="compact">
 
-### Vertical
+Compact tabs should never be used without the quiet variation. Please use Quiet + Compact Tabs instead.
 
-```html
-<sp-tabs selected="1" direction="vertical">
-    <sp-tab label="Tab 1" value="1"></sp-tab>
-    <sp-tab label="Tab 2" value="2"></sp-tab>
-    <sp-tab label="Tab 3" value="3"></sp-tab>
-    <sp-tab label="Tab 4" value="4"></sp-tab>
-    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
-    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
-    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
-    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
-</sp-tabs>
-```
-
-## Variants
-
-### Quiet
-
-```html
-<sp-tabs selected="1" quiet>
-    <sp-tab label="Tab 1" value="1"></sp-tab>
-    <sp-tab label="Tab 2" value="2"></sp-tab>
-    <sp-tab label="Tab 3" value="3"></sp-tab>
-    <sp-tab label="Tab 4" value="4"></sp-tab>
-    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
-    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
-    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
-    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
-</sp-tabs>
-```
-
-### Compact
-
-```html
+```html demo
 <sp-tabs selected="1" compact>
     <sp-tab label="Tab 1" value="1"></sp-tab>
     <sp-tab label="Tab 2" value="2"></sp-tab>
@@ -167,31 +126,190 @@ When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` chi
 </sp-tabs>
 ```
 
-## With icons
+</sp-tab-panel>
+<sp-tab value="disabled">Disabled</sp-tab>
+<sp-tab-panel value="disabled">
 
-```html
-<div>
-    <sp-icons-medium></sp-icons-medium>
-    <sp-tabs selected="1" direction="horizontal">
-        <sp-tab label="Tab 1" value="1">
-            <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
-        </sp-tab>
-        <sp-tab label="Tab 2" value="2">
-            <sp-icon-close slot="icon"></sp-icon-close>
-        </sp-tab>
-        <sp-tab label="Tab 3" value="3">
-            <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
-        </sp-tab>
-        <sp-tab label="Tab 4" value="4">
-            <sp-icon-help slot="icon"></sp-icon-help>
-        </sp-tab>
-        <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
-        <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
-        <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
-        <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
-    </sp-tabs>
-</div>
+When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` children will be disabled as well, preventing a visitor from changing the selected tab. By default, `<sp-tab-panel>` children will not be addressed and the available content of the currently selected tab will be fully visible.
+
+```html demo
+<sp-tabs selected="2" disabled>
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1 is not selectable</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2 is selected</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3 is not selectable</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4 is not selectable</sp-tab-panel>
+</sp-tabs>
 ```
+
+</sp-tab-panel>
+<sp-tab value="icons">Icons</sp-tab>
+<sp-tab-panel value="icons">
+
+```html demo
+<sp-tabs selected="1">
+    <sp-tab label="Tab 1" value="1">
+        <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+    </sp-tab>
+    <sp-tab label="Tab 2" value="2">
+        <sp-icon-close slot="icon"></sp-icon-close>
+    </sp-tab>
+    <sp-tab label="Tab 3" value="3">
+        <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
+    </sp-tab>
+    <sp-tab label="Tab 4" value="4">
+        <sp-icon-help slot="icon"></sp-icon-help>
+    </sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
+</sp-tabs>
+```
+
+</sp-tab-panel>
+<sp-tab value="quiet">Quiet</sp-tab>
+<sp-tab-panel value="quiet">
+
+```html demo
+<sp-tabs selected="1" quiet>
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
+</sp-tabs>
+```
+
+</sp-tab-panel>
+<sp-tab value="quiet+compact">Quiet + Compact</sp-tab>
+<sp-tab-panel value="quiet+compact">
+
+```html demo
+<sp-tabs selected="1" quiet compact>
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
+</sp-tabs>
+```
+
+</sp-tab-panel>
+</sp-tabs>
+
+## Vertical Tabs
+
+An `<sp-tabs>` element will display horizontally by default. It can be modified with states like `compact`, `disabled`, and `quiet`, or with content like icons, etc.
+
+<sp-tabs selected="compact" auto label="Horizontal Tabs variants">
+<sp-tab value="compact">Compact</sp-tab>
+<sp-tab-panel value="compact">
+
+Compact tabs should never be used without the quiet variation. Please use Quiet + Compact Tabs instead.
+
+```html demo
+<sp-tabs selected="1" compact direction="vertical">
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
+</sp-tabs>
+```
+
+</sp-tab-panel>
+<sp-tab value="disabled">Disabled</sp-tab>
+<sp-tab-panel value="disabled">
+
+When an `<sp-tabs>` element is given the `disabled` attribute its `<sp-tab>` children will be disabled as well, preventing a visitor from changing the selected tab. By default, `<sp-tab-panel>` children will not be addressed and the available content of the currently selected tab will be fully visible.
+
+```html demo
+<sp-tabs selected="2" disabled direction="vertical">
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1 is not selectable</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2 is selected</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3 is not selectable</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4 is not selectable</sp-tab-panel>
+</sp-tabs>
+```
+
+</sp-tab-panel>
+<sp-tab value="icons">Icons</sp-tab>
+<sp-tab-panel value="icons">
+
+```html demo
+<sp-tabs selected="1" direction="vertical">
+    <sp-tab label="Tab 1" value="1">
+        <sp-icon-checkmark slot="icon"></sp-icon-checkmark>
+    </sp-tab>
+    <sp-tab label="Tab 2" value="2">
+        <sp-icon-close slot="icon"></sp-icon-close>
+    </sp-tab>
+    <sp-tab label="Tab 3" value="3">
+        <sp-icon-chevron-down slot="icon"></sp-icon-chevron-down>
+    </sp-tab>
+    <sp-tab label="Tab 4" value="4">
+        <sp-icon-help slot="icon"></sp-icon-help>
+    </sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
+</sp-tabs>
+```
+
+</sp-tab-panel>
+<sp-tab value="quiet">Quiet</sp-tab>
+<sp-tab-panel value="quiet">
+
+```html demo
+<sp-tabs selected="1" quiet direction="vertical">
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
+</sp-tabs>
+```
+
+</sp-tab-panel>
+<sp-tab value="quiet+compact">Quiet + Compact</sp-tab>
+<sp-tab-panel value="quiet+compact">
+
+```html demo
+<sp-tabs selected="1" quiet compact direction="vertical">
+    <sp-tab label="Tab 1" value="1"></sp-tab>
+    <sp-tab label="Tab 2" value="2"></sp-tab>
+    <sp-tab label="Tab 3" value="3"></sp-tab>
+    <sp-tab label="Tab 4" value="4"></sp-tab>
+    <sp-tab-panel value="1">Content for Tab 1</sp-tab-panel>
+    <sp-tab-panel value="2">Content for Tab 2</sp-tab-panel>
+    <sp-tab-panel value="3">Content for Tab 3</sp-tab-panel>
+    <sp-tab-panel value="4">Content for Tab 4</sp-tab-panel>
+</sp-tabs>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ## Accessibility
 
