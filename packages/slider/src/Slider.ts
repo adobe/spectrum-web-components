@@ -385,12 +385,12 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
 
     private handleNumberInput(event: Event & { target: NumberField }): void {
         const { value } = event.target;
-        if (event.target?.stepperActive && !isNaN(value)) {
+        if (event.target?.managedInput && !isNaN(value)) {
             this.value = value;
             return;
         }
         // Do not apply uncommited values to the parent element unless interacting with the stepper UI.
-        // Stop uncommited input from being annoucned to the parent application.
+        // Stop uncommited input from being annouced to the parent application.
         event.stopPropagation();
     }
 
@@ -401,7 +401,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
             event.stopPropagation();
         } else {
             this.value = value;
-            if (!event.target?.stepperActive) {
+            if (!event.target?.managedInput) {
                 // When stepper is not active, sythesize an `input` event so that the
                 // `change` event isn't surprising.
                 this.dispatchInputEvent();

@@ -141,6 +141,46 @@ describe('Slider - editable', () => {
         expect(el.value).to.equal(45);
         expect(inputSpy.callCount, 'still one input').to.equal(1);
         expect(changeSpy.callCount, 'still one change').to.equal(1);
+
+        el.shadowRoot.activeElement?.dispatchEvent(
+            new WheelEvent('wheel', { deltaY: 1 })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.shadowRoot.activeElement).to.equal(el.numberField);
+        expect(el.value).to.equal(46);
+        expect(inputSpy.callCount, 'still one input').to.equal(2);
+
+        el.shadowRoot.activeElement?.dispatchEvent(
+            new WheelEvent('wheel', { deltaY: -1 })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.shadowRoot.activeElement).to.equal(el.numberField);
+        expect(el.value).to.equal(45);
+        expect(inputSpy.callCount, 'still one input').to.equal(3);
+
+        el.shadowRoot.activeElement?.dispatchEvent(
+            new WheelEvent('wheel', { deltaX: 1, shiftKey: true })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.shadowRoot.activeElement).to.equal(el.numberField);
+        expect(el.value).to.equal(55);
+        expect(inputSpy.callCount, 'still one input').to.equal(4);
+
+        el.shadowRoot.activeElement?.dispatchEvent(
+            new WheelEvent('wheel', { deltaX: -1, shiftKey: true })
+        );
+
+        await elementUpdated(el);
+
+        expect(el.shadowRoot.activeElement).to.equal(el.numberField);
+        expect(el.value).to.equal(45);
+        expect(inputSpy.callCount, 'still one input').to.equal(5);
     });
 
     it('focuses `<input>` after pointer interactions', async () => {
