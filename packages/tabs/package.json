@@ -75,6 +75,7 @@
         "lit-html"
     ],
     "dependencies": {
+        "@lit-labs/observers": "^1.0.1",
         "@spectrum-web-components/base": "^0.7.0",
         "@spectrum-web-components/reactive-controllers": "^0.3.0",
         "@spectrum-web-components/shared": "^0.15.0",

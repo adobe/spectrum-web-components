@@ -22,6 +22,7 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { IntersectionController } from '@lit-labs/observers/intersection_controller.js';
 import { Tab } from './Tab.js';
 import { Focusable } from '@spectrum-web-components/shared';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
@@ -36,8 +37,6 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
  *
  * @slot - Tab elements to manage as a group
  * @slot tab-panel - Tab Panel elements related to the listed Tab elements
- * @attr {Boolean} quiet - The tabs border is a lot smaller
- * @attr {Boolean} compact - The collection of tabs take up less space
  * @csspart tablist - Container element for the slotted sp-tab elements
  *
  * @fires change - The selected Tab child has changed.
@@ -58,6 +57,12 @@ export class Tabs extends SizedMixin(Focusable) {
     @property({ type: Boolean })
     public auto = false;
 
+    /**
+     * The tab items are displayed closer together.
+     */
+    @property({ type: Boolean, reflect: true })
+    public compact = false;
+
     @property({ reflect: true })
     public direction: 'vertical' | 'vertical-right' | 'horizontal' =
         'horizontal';
@@ -67,6 +72,12 @@ export class Tabs extends SizedMixin(Focusable) {
 
     @property()
     public label = '';
+
+    /**
+     * The tab list is displayed without a border.
+     */
+    @property({ type: Boolean, reflect: true })
+    public quiet = false;
 
     @property({ attribute: false })
     public selectionIndicatorStyle = noSelectionStyle;
@@ -107,6 +118,20 @@ export class Tabs extends SizedMixin(Focusable) {
     }
 
     private _tabs: Tab[] = [];
+
+    constructor() {
+        super();
+        new IntersectionController(this, {
+            config: {
+                root: null,
+                rootMargin: "0px",
+                threshold: [0, 1]
+            },
+            callback: () => {
+                this.updateSelectionIndicator();
+            }
+        });
+    }
 
     rovingTabindexController = new RovingTabindexController<Tab>(this, {
         focusInIndex: (elements) => {

@@ -698,6 +698,10 @@ sp-tabs::part(tablist) {
     overflow: auto visible;
 }
 
+.spectrum-Typography sp-tab-panel .spectrum-Body--sizeM:first-child {
+    margin-top: var(--spectrum-global-dimension-size-300);
+}
+
 main > sp-tabs > sp-tab:only-of-type {
     visibility: hidden;
     width: 0;
