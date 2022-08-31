@@ -116,7 +116,7 @@ export class NumberField extends TextfieldBase {
     @property({ type: Number })
     public step?: number;
 
-    public stepperActive = false;
+    public managedInput = false;
 
     @property({ type: Number, reflect: true, attribute: 'step-modifier' })
     public stepModifier = 10;
@@ -189,7 +189,7 @@ export class NumberField extends TextfieldBase {
             event.preventDefault();
             return;
         }
-        this.stepperActive = true;
+        this.managedInput = true;
         this.buttons.setPointerCapture(event.pointerId);
         const stepUpRect = this.buttons.children[0].getBoundingClientRect();
         const stepDownRect = this.buttons.children[1].getBoundingClientRect();
@@ -239,7 +239,7 @@ export class NumberField extends TextfieldBase {
         this.dispatchEvent(
             new Event('change', { bubbles: true, composed: true })
         );
-        this.stepperActive = false;
+        this.managedInput = false;
     }
 
     private doNextChange(event: PointerEvent): number {
@@ -300,12 +300,14 @@ export class NumberField extends TextfieldBase {
 
     protected onScroll(event: WheelEvent): void {
         event.preventDefault();
+        this.managedInput = true;
         const direction = event.shiftKey
             ? event.deltaX / Math.abs(event.deltaX)
             : event.deltaY / Math.abs(event.deltaY);
         if (direction !== 0 && !isNaN(direction)) {
             this.stepBy(direction * (event.shiftKey ? this.stepModifier : 1));
         }
+        this.managedInput = false;
     }
 
     protected override onFocus(): void {
