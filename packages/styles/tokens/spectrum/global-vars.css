@@ -329,3 +329,40 @@ governing permissions and limitations under the License.
         --spectrum-accent-color-1000
     );
 }
+:host,
+:root {
+    --system-spectrum-switch-background-color-selected-default: var(
+        --spectrum-gray-700
+    );
+    --system-spectrum-switch-background-color-selected-hover: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-switch-background-color-selected-down: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-switch-background-color-selected-focus: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-switch-handle-border-color-default: var(
+        --spectrum-gray-600
+    );
+    --system-spectrum-switch-handle-border-color-hover: var(
+        --spectrum-gray-700
+    );
+    --system-spectrum-switch-handle-border-color-down: var(--spectrum-gray-800);
+    --system-spectrum-switch-handle-border-color-focus: var(
+        --spectrum-gray-700
+    );
+    --system-spectrum-switch-handle-border-color-selected-default: var(
+        --spectrum-gray-700
+    );
+    --system-spectrum-switch-handle-border-color-selected-hover: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-switch-handle-border-color-selected-down: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-switch-handle-border-color-selected-focus: var(
+        --spectrum-gray-800
+    );
+}

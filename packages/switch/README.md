@@ -32,7 +32,7 @@ import { Switch } from '@spectrum-web-components/switch';
 </sp-switch>
 ```
 
-### Standard radio buttons
+### Standard switch buttons
 
 Standard switches are the default style for switches. They are optimal for
 application panels where all visual elements are monochrome in order to direct
@@ -57,6 +57,43 @@ focus to the content.
     </div>
 </div>
 ```
+
+## Sizes
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
+
+```html
+<sp-switch size="s">Small</sp-switch>
+```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-switch size="m">Medium</sp-switch>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-switch size="l">Large</sp-switch>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-switch size="xl">Extra Large</sp-switch>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Emphasized radio buttons
 
