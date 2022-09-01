@@ -390,7 +390,7 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
             return;
         }
         // Do not apply uncommited values to the parent element unless interacting with the stepper UI.
-        // Stop uncommited input from being annouced to the parent application.
+        // Stop uncommitted input from being announced to the parent application.
         event.stopPropagation();
     }
 
