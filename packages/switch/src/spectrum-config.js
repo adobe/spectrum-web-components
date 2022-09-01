@@ -19,6 +19,29 @@ const config = {
             focus: '#input',
             attributes: [
                 {
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-Switch--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-Switch--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-Switch--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-Switch--sizeXL',
+                        },
+                    ],
+                },
+                {
                     type: 'boolean',
                     selector: ':disabled',
                 },

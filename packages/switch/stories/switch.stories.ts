@@ -11,21 +11,64 @@ governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/switch/sp-switch.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import { spreadProps } from '../../../test/lit-helpers.js';
 
 export default {
     component: 'sp-switch',
     title: 'Switch',
+
+    argTypes: {
+        size: {
+            name: 'size',
+            type: { name: 'string', required: false },
+            description: 'The size at which to display the Switch element',
+            table: {
+                type: { summary: '"s" | "m" | "l" | "xl"' },
+                defaultValue: { summary: 'm' },
+            },
+            control: {
+                type: 'text',
+            },
+        },
+    },
+    args: {
+        size: 'm',
+    },
 };
 
-export const Default = (): TemplateResult => {
+export interface StoryArgs {
+    Autofocus?: boolean;
+    checked?: boolean;
+    Disabled?: boolean;
+    disabledChecked?: boolean;
+    emphasized?: boolean;
+    readonly?: boolean;
+    size?: 's' | 'm' | 'l' | 'xl';
+    [prop: string]: unknown;
+}
+
+function renderSwitch(args: StoryArgs): TemplateResult {
     return html`
-        <sp-switch>Switch</sp-switch>
+        <sp-switch ${spreadProps(args)}>Switch</sp-switch>
     `;
-};
+}
+
+export const Default = (args: StoryArgs): TemplateResult => renderSwitch(args);
 
 export const Checked = (): TemplateResult => {
     return html`
         <sp-switch checked>Switch</sp-switch>
+    `;
+};
+
+export const Sizes = (): TemplateResult => {
+    return html`
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <sp-switch size="s">Small</sp-switch>
+            <sp-switch size="m">Medium</sp-switch>
+            <sp-switch size="l">Large</sp-switch>
+            <sp-switch size="xl">Extra-Large</sp-switch>
+        </div>
     `;
 };
 

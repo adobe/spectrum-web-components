@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     PropertyValues,
+    SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
@@ -26,7 +27,7 @@ import legacyStyles from './switch-legacy.css.js';
  *
  * @slot - text label of the Switch
  */
-export class Switch extends CheckboxBase {
+export class Switch extends SizedMixin(CheckboxBase) {
     public static override get styles(): CSSResultArray {
         /* c8 ignore next 4 */
         if (window.hasOwnProperty('ShadyDOM')) {
