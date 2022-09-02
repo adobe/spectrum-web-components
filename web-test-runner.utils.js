@@ -115,6 +115,26 @@ vrtGroups = [
                     }),
                 ],
             });
+            acc.push({
+                name: `vrt-${pkg}-single`,
+                files: `packages/${pkg}/test/*.test-vrt.js`,
+                testRunnerHtml: vrtHTML({
+                    themeVariant: 'spectrum',
+                    color: 'light',
+                    scale: 'medium',
+                    dir: 'ltr',
+                    reduceMotion: true,
+                }),
+                browsers: [
+                    playwrightLauncher({
+                        product: 'chromium',
+                        createBrowserContext: ({ browser }) =>
+                            browser.newContext({
+                                ignoreHTTPSErrors: true,
+                            }),
+                    }),
+                ],
+            });
         }
         return acc;
     }, []),
