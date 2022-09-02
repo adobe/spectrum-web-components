@@ -23,6 +23,7 @@ import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/Sto
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { render } from 'lit';
 import { emulateMedia, sendKeys } from '@web/test-runner-commands';
+import { sendMouse } from '../plugins/browser.js';
 
 let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
 before(function () {
@@ -81,36 +82,26 @@ export const test = (
                     ...(testsDefault.args || {}),
                     ...(tests[story].args || {}),
                 };
-                let decoratedStory:
-                    | (() => TemplateResult)
-                    | TemplateResult = () =>
+                const decorators = [
+                    ...(tests[story].decorators || []),
+                    ...(testsDefault.decorators || []),
+                ];
+                let decoratedStory: () => TemplateResult = () =>
                     html`
                         ${tests[story](args)}
                     `;
-                let storyResult = decoratedStory();
-                if (tests[story].decorators && tests[story].decorators.length) {
-                    let decoratorCount = tests[story].decorators.length;
-                    while (decoratorCount) {
-                        decoratorCount -= 1;
-                        decoratedStory =
-                            tests[story].decorators[decoratorCount](
-                                decoratedStory
-                            );
-                    }
-                    storyResult = decoratedStory as TemplateResult;
+                const decorate = (
+                    story: () => TemplateResult,
+                    decorator: (story: () => TemplateResult) => TemplateResult
+                ) => {
+                    return () => decorator(story);
+                };
+
+                while (decorators.length) {
+                    const decorator = decorators.shift();
+                    decoratedStory = decorate(decoratedStory, decorator);
                 }
-                if (testsDefault.decorators && testsDefault.decorators.length) {
-                    let decoratorCount = testsDefault.decorators.length;
-                    while (decoratorCount) {
-                        decoratorCount -= 1;
-                        decoratedStory =
-                            testsDefault.decorators[decoratorCount](
-                                decoratedStory
-                            );
-                    }
-                    storyResult = decoratedStory as TemplateResult;
-                }
-                render(storyResult, test);
+                render(decoratedStory(), test);
                 await waitUntil(
                     () => test.ready,
                     'Wait for decorator to become ready...',
@@ -133,9 +124,9 @@ export const test = (
                                 'There was no baseline image to compare against.'
                             ) > -1
                         ) {
+                            retries = 0;
                             // Don't retry "no baseline iamge" errors.
                             throw error;
-                            retries = 0;
                         } else {
                             test.remove();
                             /**
@@ -145,7 +136,7 @@ export const test = (
                              **/
                             test = await fixture<StoryDecorator>(wrap());
                             await elementUpdated(test);
-                            render(storyResult, test);
+                            render(decoratedStory(), test);
                             await waitUntil(
                                 () => test.ready,
                                 'Wait for decorator to become ready...',
@@ -203,6 +194,17 @@ export const regressVisuals = async (name: string, stories: StoriesType) => {
                     colorScheme: 'no-preference',
                 });
             }
+        });
+        beforeEach(async () => {
+            // Something about this prevents Chromium from swallowing the CSS transitions in specific contexts.
+            await sendMouse({
+                steps: [
+                    {
+                        type: 'move',
+                        position: [0, 0],
+                    },
+                ],
+            });
         });
         afterEach(() => {
             const overlays = [
