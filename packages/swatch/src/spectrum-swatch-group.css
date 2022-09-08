@@ -12,20 +12,34 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-swatchgroup-spacing-compact: var(
+        --spectrum-spacing-50
+    ); /* .spectrum-SwatchGroup */
+    --spectrum-swatchgroup-spacing-regular: var(--spectrum-spacing-75);
+    --spectrum-swatchgroup-spacing-spacious: var(--spectrum-spacing-100);
+}
+:host {
     align-items: flex-start;
     display: inline-flex; /* .spectrum-SwatchGroup */
     flex-direction: row;
     flex-wrap: wrap;
-    gap: var(--spectrum-global-dimension-size-50);
     justify-content: flex-start;
+}
+:host {
+    gap: var(
+        --mod-swatchgroup-spacing-regular,
+        var(--spectrum-swatchgroup-spacing-regular)
+    ); /* .spectrum-SwatchGroup */
 }
 :host([density='compact']) {
     gap: var(
-        --spectrum-global-dimension-size-25
+        --mod-swatchgroup-spacing-compact,
+        var(--spectrum-swatchgroup-spacing-compact)
     ); /* .spectrum-SwatchGroup--compact */
 }
 :host([density='spacious']) {
     gap: var(
-        --spectrum-global-dimension-size-100
+        --mod-swatchgroup-spacing-spacious,
+        var(--spectrum-swatchgroup-spacing-spacious)
     ); /* .spectrum-SwatchGroup--spacious */
 }
