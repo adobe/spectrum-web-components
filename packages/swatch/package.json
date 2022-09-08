@@ -75,8 +75,8 @@
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/swatch": "^1.1.4",
-        "@spectrum-css/swatchgroup": "^1.1.4"
+        "@spectrum-css/swatch": "^2.0.0",
+        "@spectrum-css/swatchgroup": "^2.0.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
