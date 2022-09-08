@@ -46,6 +46,7 @@ const config = {
                     name: 'variant',
                     values: [
                         // semantic
+                        '.spectrum-Badge--accent',
                         '.spectrum-Badge--positive',
                         '.spectrum-Badge--informative',
                         '.spectrum-Badge--negative',
@@ -59,9 +60,49 @@ const config = {
                         '.spectrum-Badge--yellow',
                     ],
                 },
+                {
+                    type: 'enum',
+                    name: 'fixed',
+                    values: [
+                        {
+                            name: 'inline-start',
+                            selector: '.spectrum-Badge--fixed-inline-start',
+                        },
+                        {
+                            name: 'inline-end',
+                            selector: '.spectrum-Badge--fixed-inline-end',
+                        },
+                        {
+                            name: 'block-start',
+                            selector: '.spectrum-Badge--fixed-block-start',
+                        },
+                        {
+                            name: 'block-end',
+                            selector: '.spectrum-Badge--fixed-block-end',
+                        },
+                    ],
+                },
+            ],
+            classes: [
+                {
+                    name: 'label',
+                    selector: '.spectrum-Badge-label',
+                },
+            ],
+            slots: [
+                {
+                    name: 'icon',
+                    selector: '.spectrum-Badge-icon',
+                },
             ],
             /* disable :hover until Spectrum CSS disables hover upstream */
             exclude: [/\:hover/],
+            complexSelectors: [
+                {
+                    selector: '.spectrum-Badge-icon--no-label',
+                    replacement: '[icon-only]::slotted(*)',
+                },
+            ],
         },
     ],
 };

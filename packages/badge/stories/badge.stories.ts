@@ -80,6 +80,7 @@ export const Sizes = (): TemplateResult => {
 
 export const Semantic = (): TemplateResult => {
     return html`
+        <sp-badge variant="accent">Accent</sp-badge>
         <sp-badge variant="positive">Positive</sp-badge>
         <sp-badge variant="informative">Informative</sp-badge>
         <sp-badge variant="negative">Negative</sp-badge>
@@ -89,12 +90,42 @@ export const Semantic = (): TemplateResult => {
 
 export const NonSemantic = (): TemplateResult => {
     return html`
-        <sp-badge variant="seafoam">Seafoam</sp-badge>
-        <sp-badge variant="indigo">Indigo</sp-badge>
-        <sp-badge variant="purple">Purple</sp-badge>
-        <sp-badge variant="fuchsia">Fuchsia</sp-badge>
-        <sp-badge variant="magenta">Magenta</sp-badge>
-        <sp-badge variant="yellow">Yellow</sp-badge>
+        <sp-badge
+            variant="seafoam"
+            style="--mod-badge-background-color-default: var(--spectrum-global-color-static-seafoam-600)"
+        >
+            Seafoam
+        </sp-badge>
+        <sp-badge
+            variant="indigo"
+            style="--mod-badge-background-color-default: var(--spectrum-global-color-static-indigo-600)"
+        >
+            Indigo
+        </sp-badge>
+        <sp-badge
+            variant="purple"
+            style="--mod-badge-background-color-default: var(--spectrum-global-color-static-purple-600)"
+        >
+            Purple
+        </sp-badge>
+        <sp-badge
+            variant="fuchsia"
+            style="--mod-badge-background-color-default: var(--spectrum-global-color-static-fuchsia-600)"
+        >
+            Fuchsia
+        </sp-badge>
+        <sp-badge
+            variant="magenta"
+            style="--mod-badge-background-color-default: var(--spectrum-global-color-static-magenta-600)"
+        >
+            Magenta
+        </sp-badge>
+        <sp-badge
+            variant="yellow"
+            style="--mod-badge-background-color-default: var(--spectrum-alias-background-color-yellow-default); --mod-badge-label-icon-color-white: var(--spectrum-global-color-static-black);"
+        >
+            Yellow
+        </sp-badge>
     `;
 };
 
@@ -103,11 +134,11 @@ export const Inline = (): TemplateResult => {
         Badge is a simple
         <sp-badge variant="positive" size="s">inline</sp-badge>
         element that should
-        <sp-badge variant="magenta" size="s">flow</sp-badge>
+        <sp-badge variant="neutral" size="s">flow</sp-badge>
         with the rest of the page:
         <sp-badge variant="negative">Missing</sp-badge>
         <sp-badge variant="positive">Successful</sp-badge>
-        <sp-badge variant="purple">Purple</sp-badge>
+        <sp-badge variant="accent">Accent</sp-badge>
     `;
 };
 
@@ -118,28 +149,28 @@ export const Fixed = (): TemplateResult => {
         >
             <sp-badge>None</sp-badge>
             <sp-badge
-                fixed="top"
+                fixed="block-start"
                 style="position: absolute; top: 0; left: 200px;"
             >
-                Top
+                block-start
             </sp-badge>
             <sp-badge
-                fixed="right"
+                fixed="inline-end"
                 style="position: absolute; right: 0; top: 100px;"
             >
-                Right
+                inline-end
             </sp-badge>
             <sp-badge
-                fixed="bottom"
+                fixed="block-end"
                 style="position: absolute; bottom: 0; left: 200px;"
             >
-                Bottom
+                block-end
             </sp-badge>
             <sp-badge
-                fixed="left"
+                fixed="inline-start"
                 style="position: absolute; left: 0; top: 100px;"
             >
-                Left
+                inline-start
             </sp-badge>
         </div>
     `;

@@ -11,382 +11,337 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-badge-corner-radius: var(
+        --spectrum-corner-radius-100
+    ); /* .spectrum-Badge */
+    --spectrum-badge-line-height: var(--spectrum-line-height-100);
+    --spectrum-badge-cjk-line-height: var(--spectrum-cjk-line-height-100);
+    --spectrum-badge-label-icon-color-white: var(--spectrum-white);
+    --spectrum-badge-label-icon-color-black: var(--spectrum-black);
+    --spectrum-badge-background-color-default: var(
+        --spectrum-neutral-subdued-background-color-default
+    );
+    --spectrum-badge-background-color-accent: var(
+        --spectrum-accent-background-color-default
+    );
+    --spectrum-badge-background-color-informative: var(
+        --spectrum-informative-background-color-default
+    );
+    --spectrum-badge-background-color-negative: var(
+        --spectrum-negative-background-color-default
+    );
+    --spectrum-badge-background-color-positive: var(
+        --spectrum-positive-background-color-default
+    );
+    --spectrum-badge-height: var(--spectrum-component-height-100);
+    --spectrum-badge-font-size: var(--spectrum-font-size-100);
+    --spectrum-badge-label-spacing-vertical-top: var(
+        --spectrum-component-top-to-text-100
+    );
+    --spectrum-badge-label-spacing-vertical-bottom: var(
+        --spectrum-component-bottom-to-text-100
+    );
+    --spectrum-badge-label-spacing-horizontal: var(
+        --spectrum-component-edge-to-text-100
+    );
+    --spectrum-badge-workflow-icon-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-badge-icon-text-spacing: var(--spectrum-text-to-visual-100);
+    --spectrum-badge-icon-spacing-horizontal: var(
+        --spectrum-component-edge-to-visual-100
+    );
+    --spectrum-badge-icon-spacing-vertical-top: var(
+        --spectrum-component-top-to-workflow-icon-100
+    );
+    --spectrum-badge-icon-only-spacing-horizontal: var(
+        --spectrum-component-edge-to-visual-only-100
+    );
+}
 :host([size='s']) {
-    --spectrum-badge-neutral-textonly-text-padding-bottom: var(
-        --spectrum-badge-s-neutral-textonly-text-padding-bottom
+    --spectrum-badge-height: var(
+        --spectrum-component-height-75
     ); /* .spectrum-Badge--sizeS */
-    --spectrum-badge-neutral-textonly-text-size: var(
-        --spectrum-badge-s-neutral-textonly-text-size,
-        var(--spectrum-global-dimension-font-size-75)
+    --spectrum-badge-font-size: var(--spectrum-font-size-75);
+    --spectrum-badge-label-spacing-vertical-top: var(
+        --spectrum-component-top-to-text-75
     );
-    --spectrum-badge-neutral-textonly-text-padding-top: var(
-        --spectrum-badge-s-neutral-textonly-text-padding-top,
-        var(--spectrum-global-dimension-static-size-50)
+    --spectrum-badge-label-spacing-vertical-bottom: var(
+        --spectrum-component-bottom-to-text-75
     );
-    --spectrum-badge-neutral-textonly-text-line-height: var(
-        --spectrum-badge-s-neutral-textonly-text-line-height,
-        var(--spectrum-alias-component-text-line-height)
+    --spectrum-badge-label-spacing-horizontal: var(
+        --spectrum-component-edge-to-text-75
     );
-    --spectrum-badge-neutral-textonly-border-top-left-radius: var(
-        --spectrum-badge-s-neutral-textonly-border-top-left-radius,
-        var(--spectrum-alias-border-radius-regular)
+    --spectrum-badge-workflow-icon-size: var(--spectrum-workflow-icon-size-75);
+    --spectrum-badge-icon-text-spacing: var(--spectrum-text-to-visual-75);
+    --spectrum-badge-icon-spacing-horizontal: var(
+        --spectrum-component-edge-to-visual-75
     );
-    --spectrum-badge-neutral-textonly-border-top-right-radius: var(
-        --spectrum-badge-s-neutral-textonly-border-top-right-radius,
-        var(--spectrum-alias-border-radius-regular)
+    --spectrum-badge-icon-spacing-vertical-top: var(
+        --spectrum-component-top-to-workflow-icon-75
     );
-    --spectrum-badge-neutral-textonly-border-bottom-right-radius: var(
-        --spectrum-badge-s-neutral-textonly-border-bottom-right-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    --spectrum-badge-neutral-textonly-border-bottom-left-radius: var(
-        --spectrum-badge-s-neutral-textonly-border-bottom-left-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    --spectrum-badge-neutral-textonly-padding-right: var(
-        --spectrum-badge-s-neutral-textonly-padding-right,
-        var(--spectrum-global-dimension-size-115)
-    );
-    --spectrum-badge-neutral-textonly-padding-left: var(
-        --spectrum-badge-s-neutral-textonly-padding-left,
-        var(--spectrum-global-dimension-size-115)
+    --spectrum-badge-icon-only-spacing-horizontal: var(
+        --spectrum-component-edge-to-visual-only-75
     );
 }
 :host([size='m']) {
-    --spectrum-badge-neutral-textonly-text-size: var(
-        --spectrum-badge-m-neutral-textonly-text-size,
-        var(--spectrum-global-dimension-font-size-100)
+    --spectrum-badge-height: var(
+        --spectrum-component-height-100
     ); /* .spectrum-Badge--sizeM */
-    --spectrum-badge-neutral-textonly-text-padding-top: var(
-        --spectrum-badge-m-neutral-textonly-text-padding-top,
-        var(--spectrum-global-dimension-size-75)
+    --spectrum-badge-font-size: var(--spectrum-font-size-100);
+    --spectrum-badge-label-spacing-vertical-top: var(
+        --spectrum-component-top-to-text-100
     );
-    --spectrum-badge-neutral-textonly-text-padding-bottom: var(
-        --spectrum-badge-m-neutral-textonly-text-padding-bottom,
-        var(--spectrum-global-dimension-size-115)
+    --spectrum-badge-label-spacing-vertical-bottom: var(
+        --spectrum-component-bottom-to-text-100
     );
-    --spectrum-badge-neutral-textonly-text-line-height: var(
-        --spectrum-badge-m-neutral-textonly-text-line-height,
-        var(--spectrum-alias-component-text-line-height)
+    --spectrum-badge-label-spacing-horizontal: var(
+        --spectrum-component-edge-to-text-100
     );
-    --spectrum-badge-neutral-textonly-border-top-left-radius: var(
-        --spectrum-badge-m-neutral-textonly-border-top-left-radius,
-        var(--spectrum-alias-border-radius-regular)
+    --spectrum-badge-workflow-icon-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-badge-icon-text-spacing: var(--spectrum-text-to-visual-100);
+    --spectrum-badge-icon-spacing-horizontal: var(
+        --spectrum-component-edge-to-visual-100
     );
-    --spectrum-badge-neutral-textonly-border-top-right-radius: var(
-        --spectrum-badge-m-neutral-textonly-border-top-right-radius,
-        var(--spectrum-alias-border-radius-regular)
+    --spectrum-badge-icon-spacing-vertical-top: var(
+        --spectrum-component-top-to-workflow-icon-100
     );
-    --spectrum-badge-neutral-textonly-border-bottom-right-radius: var(
-        --spectrum-badge-m-neutral-textonly-border-bottom-right-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    --spectrum-badge-neutral-textonly-border-bottom-left-radius: var(
-        --spectrum-badge-m-neutral-textonly-border-bottom-left-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    --spectrum-badge-neutral-textonly-padding-right: var(
-        --spectrum-badge-m-neutral-textonly-padding-right,
-        var(--spectrum-global-dimension-size-150)
-    );
-    --spectrum-badge-neutral-textonly-padding-left: var(
-        --spectrum-badge-m-neutral-textonly-padding-left,
-        var(--spectrum-global-dimension-size-150)
+    --spectrum-badge-icon-only-spacing-horizontal: var(
+        --spectrum-component-edge-to-visual-only-100
     );
 }
 :host([size='l']) {
-    --spectrum-badge-neutral-textonly-text-padding-top: var(
-        --spectrum-badge-l-neutral-textonly-text-padding-top
+    --spectrum-badge-height: var(
+        --spectrum-component-height-100
     ); /* .spectrum-Badge--sizeL */
-    --spectrum-badge-neutral-textonly-text-size: var(
-        --spectrum-badge-l-neutral-textonly-text-size,
-        var(--spectrum-global-dimension-font-size-200)
+    --spectrum-badge-font-size: var(--spectrum-font-size-200);
+    --spectrum-badge-label-spacing-vertical-top: var(
+        --spectrum-component-top-to-text-200
     );
-    --spectrum-badge-neutral-textonly-text-padding-bottom: var(
-        --spectrum-badge-l-neutral-textonly-text-padding-bottom,
-        var(--spectrum-global-dimension-size-130)
+    --spectrum-badge-label-spacing-vertical-bottom: var(
+        --spectrum-component-bottom-to-text-200
     );
-    --spectrum-badge-neutral-textonly-text-line-height: var(
-        --spectrum-badge-l-neutral-textonly-text-line-height,
-        var(--spectrum-alias-component-text-line-height)
+    --spectrum-badge-label-spacing-horizontal: var(
+        --spectrum-component-edge-to-text-200
     );
-    --spectrum-badge-neutral-textonly-border-top-left-radius: var(
-        --spectrum-badge-l-neutral-textonly-border-top-left-radius,
-        var(--spectrum-alias-border-radius-regular)
+    --spectrum-badge-workflow-icon-size: var(--spectrum-workflow-icon-size-200);
+    --spectrum-badge-icon-text-spacing: var(--spectrum-text-to-visual-200);
+    --spectrum-badge-icon-spacing-horizontal: var(
+        --spectrum-component-edge-to-visual-200
     );
-    --spectrum-badge-neutral-textonly-border-top-right-radius: var(
-        --spectrum-badge-l-neutral-textonly-border-top-right-radius,
-        var(--spectrum-alias-border-radius-regular)
+    --spectrum-badge-icon-spacing-vertical-top: var(
+        --spectrum-component-top-to-workflow-icon-200
     );
-    --spectrum-badge-neutral-textonly-border-bottom-right-radius: var(
-        --spectrum-badge-l-neutral-textonly-border-bottom-right-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    --spectrum-badge-neutral-textonly-border-bottom-left-radius: var(
-        --spectrum-badge-l-neutral-textonly-border-bottom-left-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    --spectrum-badge-neutral-textonly-padding-right: var(
-        --spectrum-badge-l-neutral-textonly-padding-right,
-        var(--spectrum-global-dimension-size-185)
-    );
-    --spectrum-badge-neutral-textonly-padding-left: var(
-        --spectrum-badge-l-neutral-textonly-padding-left,
-        var(--spectrum-global-dimension-size-185)
+    --spectrum-badge-icon-only-spacing-horizontal: var(
+        --spectrum-component-edge-to-visual-only-200
     );
 }
 :host([size='xl']) {
-    --spectrum-badge-neutral-textonly-text-size: var(
-        --spectrum-badge-xl-neutral-textonly-text-size,
-        var(--spectrum-global-dimension-font-size-300)
+    --spectrum-badge-height: var(
+        --spectrum-component-height-100
     ); /* .spectrum-Badge--sizeXL */
-    --spectrum-badge-neutral-textonly-text-padding-top: var(
-        --spectrum-badge-xl-neutral-textonly-text-padding-top,
-        var(--spectrum-global-dimension-size-150)
+    --spectrum-badge-font-size: var(--spectrum-font-size-300);
+    --spectrum-badge-label-spacing-vertical-top: var(
+        --spectrum-component-top-to-text-300
     );
-    --spectrum-badge-neutral-textonly-text-padding-bottom: var(
-        --spectrum-badge-xl-neutral-textonly-text-padding-bottom,
-        var(--spectrum-global-dimension-size-175)
+    --spectrum-badge-label-spacing-vertical-bottom: var(
+        --spectrum-component-bottom-to-text-300
     );
-    --spectrum-badge-neutral-textonly-text-line-height: var(
-        --spectrum-badge-xl-neutral-textonly-text-line-height,
-        var(--spectrum-alias-component-text-line-height)
+    --spectrum-badge-label-spacing-horizontal: var(
+        --spectrum-component-edge-to-text-300
     );
-    --spectrum-badge-neutral-textonly-border-top-left-radius: var(
-        --spectrum-badge-xl-neutral-textonly-border-top-left-radius,
-        var(--spectrum-alias-border-radius-regular)
+    --spectrum-badge-workflow-icon-size: var(--spectrum-workflow-icon-size-300);
+    --spectrum-badge-icon-text-spacing: var(--spectrum-text-to-visual-300);
+    --spectrum-badge-icon-spacing-horizontal: var(
+        --spectrum-component-edge-to-visual-300
     );
-    --spectrum-badge-neutral-textonly-border-top-right-radius: var(
-        --spectrum-badge-xl-neutral-textonly-border-top-right-radius,
-        var(--spectrum-alias-border-radius-regular)
+    --spectrum-badge-icon-spacing-vertical-top: var(
+        --spectrum-component-top-to-workflow-icon-300
     );
-    --spectrum-badge-neutral-textonly-border-bottom-right-radius: var(
-        --spectrum-badge-xl-neutral-textonly-border-bottom-right-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    --spectrum-badge-neutral-textonly-border-bottom-left-radius: var(
-        --spectrum-badge-xl-neutral-textonly-border-bottom-left-radius,
-        var(--spectrum-alias-border-radius-regular)
-    );
-    --spectrum-badge-neutral-textonly-padding-right: var(
-        --spectrum-badge-xl-neutral-textonly-padding-right,
-        var(--spectrum-global-dimension-size-225)
-    );
-    --spectrum-badge-neutral-textonly-padding-left: var(
-        --spectrum-badge-xl-neutral-textonly-padding-left,
-        var(--spectrum-global-dimension-size-225)
+    --spectrum-badge-icon-only-spacing-horizontal: var(
+        --spectrum-component-edge-to-visual-only-300
     );
 }
-:host([dir='ltr']) {
-    padding-left: var(
-        --spectrum-badge-neutral-textonly-padding-right
-    ); /* [dir=ltr] .spectrum-Badge */
-    padding-right: var(--spectrum-badge-neutral-textonly-padding-left);
-}
-:host([dir='rtl']) {
-    padding-left: var(--spectrum-badge-neutral-textonly-padding-left);
-    padding-right: var(
-        --spectrum-badge-neutral-textonly-padding-right
-    ); /* [dir=rtl] .spectrum-Badge */
+@media (forced-colors: active) {
+    :host {
+        border-color: CanvasText;
+    }
 }
 :host {
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     font-smoothing: subpixel-antialiased;
-    border-radius: var(--spectrum-badge-neutral-textonly-border-top-left-radius)
-        var(--spectrum-badge-neutral-textonly-border-top-right-radius)
-        var(--spectrum-badge-neutral-textonly-border-bottom-right-radius)
-        var(--spectrum-badge-neutral-textonly-border-bottom-left-radius);
+    background: var(
+        --mod-badge-background-color-default,
+        var(--spectrum-badge-background-color-default)
+    );
+    border: 1px solid transparent;
+    border-radius: var(
+        --mod-badge-corner-radius,
+        var(--spectrum-badge-corner-radius)
+    );
+    color: var(
+        --mod-badge-label-icon-color-white,
+        var(--spectrum-badge-label-icon-color-white)
+    );
     cursor: default;
-    display: inline-block; /* .spectrum-Badge */
-    font-size: var(--spectrum-badge-neutral-textonly-text-size);
-    line-height: var(--spectrum-badge-neutral-textonly-text-line-height);
-    padding-bottom: var(--spectrum-badge-neutral-textonly-text-padding-bottom);
-    padding-top: var(--spectrum-badge-neutral-textonly-text-padding-top);
+    display: inline-flex;
+    inline-size: auto;
+    min-block-size: var(
+        --mod-badge-height,
+        var(--spectrum-badge-height)
+    ); /* .spectrum-Badge */
     position: relative;
-    width: auto;
+    vertical-align: middle;
+}
+.spectrum-Badge--black-text {
+    color: var(
+        --mod-badge-label-icon-color-black,
+        var(--spectrum-badge-label-icon-color-black)
+    ); /* .spectrum-Badge--black-text */
 }
 :host([variant='neutral']) {
-    --spectrum-badge-m-texticon-text-color: var(
-        --spectrum-badge-m-neutral-texticon-text-color,
-        var(--spectrum-global-color-static-white)
+    background: var(
+        --mod-badge-background-color-default,
+        var(--spectrum-badge-background-color-default)
     ); /* .spectrum-Badge--neutral */
-    --spectrum-badge-m-textonly-background-color: var(
-        --spectrum-badge-m-neutral-textonly-background-color,
-        var(--spectrum-semantic-neutral-background-color-default)
-    );
-    --spectrum-badge-m-textonly-text-color-hover: var(
-        --spectrum-badge-m-neutral-textonly-text-color-hover,
-        var(--spectrum-global-color-static-white)
-    );
-    --spectrum-badge-m-textonly-background-color-hover: var(
-        --spectrum-badge-m-neutral-textonly-background-color-hover,
-        var(--spectrum-semantic-neutral-background-color-hover)
-    );
+}
+:host([variant='accent']) {
+    background: var(
+        --mod-badge-background-color-accent,
+        var(--spectrum-badge-background-color-accent)
+    ); /* .spectrum-Badge--accent */
 }
 :host([variant='informative']) {
-    --spectrum-badge-m-texticon-text-color: var(
-        --spectrum-badge-m-informative-texticon-text-color,
-        var(--spectrum-global-color-static-white)
+    background: var(
+        --mod-badge-background-color-informative,
+        var(--spectrum-badge-background-color-informative)
     ); /* .spectrum-Badge--informative */
-    --spectrum-badge-m-textonly-background-color: var(
-        --spectrum-badge-m-informative-textonly-background-color,
-        var(--spectrum-semantic-informative-background-color-default)
-    );
-    --spectrum-badge-m-textonly-text-color-hover: var(
-        --spectrum-badge-m-informative-textonly-text-color-hover,
-        var(--spectrum-global-color-static-white)
-    );
-    --spectrum-badge-m-textonly-background-color-hover: var(
-        --spectrum-badge-m-informative-textonly-background-color-hover,
-        var(--spectrum-semantic-informative-background-color-hover)
-    );
-}
-:host([variant='positive']) {
-    --spectrum-badge-m-texticon-text-color: var(
-        --spectrum-badge-m-positive-texticon-text-color,
-        var(--spectrum-global-color-static-white)
-    ); /* .spectrum-Badge--positive */
-    --spectrum-badge-m-textonly-background-color: var(
-        --spectrum-badge-m-positive-textonly-background-color,
-        var(--spectrum-semantic-positive-background-color-default)
-    );
-    --spectrum-badge-m-textonly-text-color-hover: var(
-        --spectrum-badge-m-positive-textonly-text-color-hover,
-        var(--spectrum-global-color-static-white)
-    );
-    --spectrum-badge-m-textonly-background-color-hover: var(
-        --spectrum-badge-m-positive-textonly-background-color-hover,
-        var(--spectrum-semantic-positive-background-color-hover)
-    );
 }
 :host([variant='negative']) {
-    --spectrum-badge-m-texticon-text-color: var(
-        --spectrum-badge-m-negative-texticon-text-color,
-        var(--spectrum-global-color-static-white)
+    background: var(
+        --mod-badge-background-color-negative,
+        var(--spectrum-badge-background-color-negative)
     ); /* .spectrum-Badge--negative */
-    --spectrum-badge-m-textonly-background-color: var(
-        --spectrum-badge-m-negative-textonly-background-color,
-        var(--spectrum-semantic-negative-background-color-default)
+}
+:host([variant='positive']) {
+    background: var(
+        --mod-badge-background-color-positive,
+        var(--spectrum-badge-background-color-positive)
+    ); /* .spectrum-Badge--positive */
+}
+:host([fixed='inline-start']) {
+    border-end-start-radius: 0;
+    border-start-start-radius: 0; /* .spectrum-Badge--fixed-inline-start */
+}
+:host([fixed='inline-end']) {
+    border-end-end-radius: 0;
+    border-start-end-radius: 0; /* .spectrum-Badge--fixed-inline-end */
+}
+:host([fixed='block-start']) {
+    border-start-end-radius: 0;
+    border-start-start-radius: 0; /* .spectrum-Badge--fixed-block-start */
+}
+:host([fixed='block-end']) {
+    border-end-end-radius: 0;
+    border-end-start-radius: 0; /* .spectrum-Badge--fixed-block-end */
+}
+.label {
+    color: var(
+        --mod-badge-label-icon-color-white,
+        var(--spectrum-badge-label-icon-color-white)
     );
-    --spectrum-badge-m-textonly-text-color-hover: var(
-        --spectrum-badge-m-negative-textonly-text-color-hover,
-        var(--spectrum-global-color-static-white)
+    font-size: var(
+        --mod-badge-font-size,
+        var(--spectrum-badge-font-size)
+    ); /* .spectrum-Badge-label */
+    line-height: var(
+        --mod-badge-line-height,
+        var(--spectrum-badge-line-height)
     );
-    --spectrum-badge-m-textonly-background-color-hover: var(
-        --spectrum-badge-m-negative-textonly-background-color-hover,
-        var(--spectrum-semantic-negative-background-color-hover)
+    padding-block-end: var(
+        --mod-badge-label-spacing-vertical-bottom,
+        var(--spectrum-badge-label-spacing-vertical-bottom)
+    );
+    padding-block-start: var(
+        --mod-badge-label-spacing-vertical-top,
+        var(--spectrum-badge-label-spacing-vertical-top)
+    );
+    padding-inline-end: var(
+        --mod-badge-label-spacing-horizontal,
+        var(--spectrum-badge-label-spacing-horizontal)
+    );
+    padding-inline-start: var(
+        --mod-badge-label-spacing-horizontal,
+        var(--spectrum-badge-label-spacing-horizontal)
     );
 }
-:host([variant='fuchsia']) {
-    --spectrum-badge-m-texticon-text-color: var(
-        --spectrum-badge-m-fuchsia-texticon-text-color,
-        var(--spectrum-global-color-static-white)
-    ); /* .spectrum-Badge--fuchsia */
-    --spectrum-badge-m-textonly-background-color: var(
-        --spectrum-badge-m-fuchsia-textonly-background-color,
-        var(--spectrum-global-color-static-fuchsia-600)
+.spectrum-Badge--black-text .label {
+    color: var(
+        --mod-badge-label-icon-color-black,
+        var(--spectrum-badge-label-icon-color-black)
+    ); /* .spectrum-Badge--black-text .spectrum-Badge-label */
+}
+.label:lang(ja),
+.label:lang(ko),
+.label:lang(zh) {
+    line-height: var(
+        --mod-badge-cjk-line-height,
+        var(--spectrum-badge-cjk-line-height)
+    ); /* .spectrum-Badge-label:lang(ja),
+   * .spectrum-Badge-label:lang(zh),
+   * .spectrum-Badge-label:lang(ko) */
+}
+slot[name='icon'] + .label {
+    padding-inline-start: 0; /* .spectrum-Badge-icon+.spectrum-Badge-label */
+}
+::slotted([slot='icon']) {
+    block-size: var(
+        --mod-badge-workflow-icon-size,
+        var(--spectrum-badge-workflow-icon-size)
+    ); /* .spectrum-Badge-icon */
+    color: var(
+        --mod-badge-label-icon-color-white,
+        var(--spectrum-badge-label-icon-color-white)
     );
-    --spectrum-badge-m-textonly-text-color-hover: var(
-        --spectrum-badge-m-fuchsia-textonly-text-color-hover,
-        var(--spectrum-global-color-static-white)
+    flex: 0 0
+        var(
+            --mod-badge-workflow-icon-size,
+            var(--spectrum-badge-workflow-icon-size)
+        );
+    inline-size: var(
+        --mod-badge-workflow-icon-size,
+        var(--spectrum-badge-workflow-icon-size)
     );
-    --spectrum-badge-m-textonly-background-color-hover: var(
-        --spectrum-badge-m-fuchsia-textonly-background-color-hover,
-        var(--spectrum-global-color-static-fuchsia-700)
+    padding-block-end: var(
+        --mod-badge-icon-spacing-vertical-top,
+        var(--spectrum-badge-icon-spacing-vertical-top)
+    );
+    padding-block-start: var(
+        --mod-badge-icon-spacing-vertical-top,
+        var(--spectrum-badge-icon-spacing-vertical-top)
+    );
+    padding-inline-end: var(
+        --mod-badge-icon-text-spacing,
+        var(--spectrum-badge-icon-text-spacing)
+    );
+    padding-inline-start: var(
+        --mod-badge-icon-spacing-horizontal,
+        var(--spectrum-badge-icon-spacing-horizontal)
     );
 }
-:host([variant='indigo']) {
-    --spectrum-badge-m-texticon-text-color: var(
-        --spectrum-badge-m-indigo-texticon-text-color,
-        var(--spectrum-global-color-static-white)
-    ); /* .spectrum-Badge--indigo */
-    --spectrum-badge-m-textonly-background-color: var(
-        --spectrum-badge-m-indigo-textonly-background-color,
-        var(--spectrum-global-color-static-indigo-600)
+[icon-only]::slotted(*) {
+    padding-inline-end: var(
+        --mod-badge-icon-only-spacing-horizontal,
+        var(--spectrum-badge-icon-only-spacing-horizontal)
     );
-    --spectrum-badge-m-textonly-text-color-hover: var(
-        --spectrum-badge-m-indigo-textonly-text-color-hover,
-        var(--spectrum-global-color-static-white)
-    );
-    --spectrum-badge-m-textonly-background-color-hover: var(
-        --spectrum-badge-m-indigo-textonly-background-color-hover,
-        var(--spectrum-global-color-static-indigo-700)
-    );
+    padding-inline-start: var(
+        --mod-badge-icon-only-spacing-horizontal,
+        var(--spectrum-badge-icon-only-spacing-horizontal)
+    ); /* .spectrum-Badge-icon--no-label */
 }
-:host([variant='magenta']) {
-    --spectrum-badge-m-texticon-text-color: var(
-        --spectrum-badge-m-magenta-texticon-text-color,
-        var(--spectrum-global-color-static-white)
-    ); /* .spectrum-Badge--magenta */
-    --spectrum-badge-m-textonly-background-color: var(
-        --spectrum-badge-m-magenta-textonly-background-color,
-        var(--spectrum-global-color-static-magenta-600)
-    );
-    --spectrum-badge-m-textonly-text-color-hover: var(
-        --spectrum-badge-m-magenta-textonly-text-color-hover,
-        var(--spectrum-global-color-static-white)
-    );
-    --spectrum-badge-m-textonly-background-color-hover: var(
-        --spectrum-badge-m-magenta-textonly-background-color-hover,
-        var(--spectrum-global-color-static-magenta-700)
-    );
-}
-:host([variant='purple']) {
-    --spectrum-badge-m-texticon-text-color: var(
-        --spectrum-badge-m-purple-texticon-text-color,
-        var(--spectrum-global-color-static-white)
-    ); /* .spectrum-Badge--purple */
-    --spectrum-badge-m-textonly-background-color: var(
-        --spectrum-badge-m-purple-textonly-background-color,
-        var(--spectrum-global-color-static-purple-600)
-    );
-    --spectrum-badge-m-textonly-text-color-hover: var(
-        --spectrum-badge-m-purple-textonly-text-color-hover,
-        var(--spectrum-global-color-static-white)
-    );
-    --spectrum-badge-m-textonly-background-color-hover: var(
-        --spectrum-badge-m-purple-textonly-background-color-hover,
-        var(--spectrum-global-color-static-purple-700)
-    );
-}
-:host([variant='seafoam']) {
-    --spectrum-badge-m-texticon-text-color: var(
-        --spectrum-badge-m-seafoam-texticon-text-color,
-        var(--spectrum-global-color-static-white)
-    ); /* .spectrum-Badge--seafoam */
-    --spectrum-badge-m-textonly-background-color: var(
-        --spectrum-badge-m-seafoam-textonly-background-color,
-        var(--spectrum-global-color-static-seafoam-600)
-    );
-    --spectrum-badge-m-textonly-text-color-hover: var(
-        --spectrum-badge-m-seafoam-textonly-text-color-hover,
-        var(--spectrum-global-color-static-white)
-    );
-    --spectrum-badge-m-textonly-background-color-hover: var(
-        --spectrum-badge-m-seafoam-textonly-background-color-hover,
-        var(--spectrum-global-color-static-seafoam-700)
-    );
-}
-:host([variant='yellow']) {
-    --spectrum-badge-m-texticon-text-color: var(
-        --spectrum-badge-m-yellow-texticon-text-color,
-        var(--spectrum-global-color-static-black)
-    ); /* .spectrum-Badge--yellow */
-    --spectrum-badge-m-textonly-background-color: var(
-        --spectrum-badge-m-yellow-textonly-background-color,
-        var(--spectrum-alias-background-color-yellow-default)
-    );
-    --spectrum-badge-m-textonly-text-color-hover: var(
-        --spectrum-badge-m-yellow-textonly-text-color-hover,
-        var(--spectrum-global-color-static-black)
-    );
-    --spectrum-badge-m-textonly-background-color-hover: var(
-        --spectrum-badge-m-yellow-textonly-background-color-hover,
-        var(--spectrum-alias-background-color-yellow-hover)
-    );
-}
-:host {
-    background-color: var(--spectrum-badge-m-textonly-background-color);
-    color: var(--spectrum-badge-m-texticon-text-color); /* .spectrum-Badge */
+.spectrum-Badge--black-text ::slotted([slot='icon']) {
+    color: var(
+        --mod-badge-label-icon-color-black,
+        var(--spectrum-badge-label-icon-color-black)
+    ); /* .spectrum-Badge--black-text .spectrum-Badge-icon */
 }

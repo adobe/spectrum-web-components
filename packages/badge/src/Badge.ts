@@ -20,9 +20,11 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import styles from './badge.css.js';
 
 export const BADGE_VARIANTS = [
+    'accent',
     'neutral',
     'informative',
     'positive',
@@ -35,6 +37,16 @@ export const BADGE_VARIANTS = [
     'yellow',
 ] as const;
 export type BadgeVariant = typeof BADGE_VARIANTS[number];
+export const FIXED_VALUES_DEPRECATED = ['top', 'bottom', 'left', 'right'];
+export const FIXED_VALUES = [
+    'inline-start',
+    'inline-end',
+    'block-start',
+    'block-end',
+] as const;
+export type FixedValues =
+    | typeof FIXED_VALUES[number]
+    | typeof FIXED_VALUES_DEPRECATED[number];
 
 /**
  * @element sp-badge
@@ -42,13 +54,50 @@ export type BadgeVariant = typeof BADGE_VARIANTS[number];
  * @slot - Text label of the badge
  * @slot icon - Optional icon that appears to the left of the label
  */
-export class Badge extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
+export class Badge extends SizedMixin(
+    ObserveSlotText(ObserveSlotPresence(SpectrumElement, '[slot="icon"]'), '')
+) {
     public static override get styles(): CSSResultArray {
         return [styles];
     }
 
+    @property({ reflect: true })
+    public get fixed(): FixedValues | undefined {
+        return this._fixed;
+    }
+
+    public set fixed(fixed: FixedValues | undefined) {
+        if (fixed === this.fixed) return;
+        const oldValue = this.fixed;
+        if (window.__swc.DEBUG) {
+            if (fixed && FIXED_VALUES_DEPRECATED.includes(fixed)) {
+                window.__swc.warn(
+                    this,
+                    `The following values for "fixed" in <${this.localName}> have been deprecated. They will be removed in a future release.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/badge/#fixed',
+                    {
+                        issues: [...FIXED_VALUES_DEPRECATED],
+                    }
+                );
+            }
+        }
+        this._fixed = fixed;
+        if (fixed) {
+            this.setAttribute('fixed', fixed);
+        } else {
+            this.removeAttribute('fixed');
+        }
+        this.requestUpdate('fixed', oldValue);
+    }
+
+    private _fixed?: FixedValues;
+
     @property({ type: String, reflect: true })
     public variant: BadgeVariant = 'informative';
+
+    protected get hasIcon(): boolean {
+        return this.slotContentIsPresent;
+    }
 
     protected override render(): TemplateResult {
         if (window.__swc.DEBUG) {
@@ -58,14 +107,21 @@ export class Badge extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
                     `<${this.localName}> element expect the "variant" attribute to be one of the following:`,
                     'https://opensource.adobe.com/spectrum-web-components/components/badge/#variants',
                     {
-                        issues: [...BADGE_VARIANTS]
-                    },
+                        issues: [...BADGE_VARIANTS],
+                    }
                 );
             }
         }
         return html`
-            <slot name="icon" ?icon-only=${!this.slotHasContent}></slot>
-            <div id="label">
+            ${this.hasIcon
+                ? html`
+                      <slot
+                          name="icon"
+                          ?icon-only=${!this.slotHasContent}
+                      ></slot>
+                  `
+                : html``}
+            <div class="label">
                 <slot></slot>
             </div>
         `;

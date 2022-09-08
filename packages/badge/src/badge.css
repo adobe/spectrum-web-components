@@ -15,30 +15,29 @@ governing permissions and limitations under the License.
 /* center align icons and text */
 
 :host {
-    display: inline-flex;
     align-items: center;
 }
 
-/* implement fixed placement styling until Spectrum CSS adds it upstream */
+/* Marked as deprecated, remove in a future release */
 
-:host([fixed='top']) {
-    --spectrum-badge-neutral-textonly-border-top-left-radius: 0;
-    --spectrum-badge-neutral-textonly-border-top-right-radius: 0;
+:host([fixed='left']) {
+    border-end-start-radius: 0;
+    border-start-start-radius: 0; /* .spectrum-Badge--fixed-inline-start */
 }
 
 :host([fixed='right']) {
-    --spectrum-badge-neutral-textonly-border-top-right-radius: 0;
-    --spectrum-badge-neutral-textonly-border-bottom-right-radius: 0;
+    border-end-end-radius: 0;
+    border-start-end-radius: 0; /* .spectrum-Badge--fixed-inline-end */
+}
+
+:host([fixed='top']) {
+    border-start-end-radius: 0;
+    border-start-start-radius: 0; /* .spectrum-Badge--fixed-block-start */
 }
 
 :host([fixed='bottom']) {
-    --spectrum-badge-neutral-textonly-border-bottom-left-radius: 0;
-    --spectrum-badge-neutral-textonly-border-bottom-right-radius: 0;
-}
-
-:host([fixed='left']) {
-    --spectrum-badge-neutral-textonly-border-top-left-radius: 0;
-    --spectrum-badge-neutral-textonly-border-bottom-left-radius: 0;
+    border-end-end-radius: 0;
+    border-end-start-radius: 0; /* .spectrum-Badge--fixed-block-end */
 }
 
 /* cascade badge's size to its icon */
@@ -107,26 +106,18 @@ governing permissions and limitations under the License.
 
 ::slotted([slot='icon']) {
     flex-shrink: 0;
-    margin-right: calc(var(--spectrum-badge-neutral-textonly-padding-left) / 2);
-}
-
-slot[icon-only]::slotted([slot='icon']) {
-    margin-right: calc(
-        var(--spectrum-badge-neutral-textonly-text-padding-bottom) -
-            var(--spectrum-badge-neutral-textonly-padding-left)
-    );
-    margin-left: calc(
-        var(--spectrum-badge-neutral-textonly-text-padding-bottom) -
-            var(--spectrum-badge-neutral-textonly-padding-left)
-    );
 }
 
 /* limit badge size to two lines */
 
-#label {
+.label slot {
+    display: block;
     max-height: calc(
-        var(--spectrum-badge-neutral-textonly-text-line-height) *
-            var(--spectrum-badge-neutral-textonly-text-size) * 2
+        var(--spectrum-badge-line-height) * var(--spectrum-badge-font-size) * 2
     );
     overflow: hidden;
+}
+
+[icon-only] + .label {
+    display: none;
 }

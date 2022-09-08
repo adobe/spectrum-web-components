@@ -45,6 +45,7 @@ const tokenPackages = [
     'buttongroup',
     'swatch',
     'swatchgroup',
+    'badge',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
