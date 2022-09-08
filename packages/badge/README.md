@@ -102,13 +102,81 @@ The `<sp-badge>` can be customized with either semantic or non-semantic variants
 
 ### Non-Semantic
 
+Non-semantic badge colors are no longer supported directly by Spectrum and Spectrum Web Components. You can mimic their delivery via the following CSS Custom Properties. These values for the `variant` attribute/property have not been marked as deprecated, but will no longer achieve the results you may have relied on in the past.
+
 ```html demo
 <div style="display: flex; gap: var(--spectrum-global-dimension-size-50);">
-    <sp-badge variant="fuchsia">Fuchsia</sp-badge>
-    <sp-badge variant="indigo">Indigo</sp-badge>
-    <sp-badge variant="magenta">Magenta</sp-badge>
-    <sp-badge variant="purple">Purple</sp-badge>
-    <sp-badge variant="seafoam">Seafoam</sp-badge>
-    <sp-badge variant="yellow">Yellow</sp-badge>
+    <sp-badge
+        variant="seafoam"
+        style="--mod-badge-background-color-default: var(--spectrum-global-color-static-seafoam-600)"
+    >
+        Seafoam
+    </sp-badge>
+    <sp-badge
+        variant="indigo"
+        style="--mod-badge-background-color-default: var(--spectrum-global-color-static-indigo-600)"
+    >
+        Indigo
+    </sp-badge>
+    <sp-badge
+        variant="purple"
+        style="--mod-badge-background-color-default: var(--spectrum-global-color-static-purple-600)"
+    >
+        Purple
+    </sp-badge>
+    <sp-badge
+        variant="fuchsia"
+        style="--mod-badge-background-color-default: var(--spectrum-global-color-static-fuchsia-600)"
+    >
+        Fuchsia
+    </sp-badge>
+    <sp-badge
+        variant="magenta"
+        style="--mod-badge-background-color-default: var(--spectrum-global-color-static-magenta-600)"
+    >
+        Magenta
+    </sp-badge>
+    <sp-badge
+        variant="yellow"
+        style="--mod-badge-background-color-default: var(--spectrum-alias-background-color-yellow-default); --mod-badge-label-icon-color-white: var(--spectrum-global-color-static-black);"
+    >
+        Yellow
+    </sp-badge>
+</div>
+```
+
+## Fixed
+
+When you'd like to have the `<sp-badge>` display as if "fixed" to the edge of a UI, the `fixed` attribute/property can be leveraged to alter the border rounding based on the position you would like to achieve:
+
+```html
+<div
+    style="position: relative; width: 400px; height: 200px; background: #eee; max-width: 100%"
+>
+    <sp-badge>None</sp-badge>
+    <sp-badge
+        fixed="block-start"
+        style="position: absolute; top: 0; left: 200px;"
+    >
+        block-start
+    </sp-badge>
+    <sp-badge
+        fixed="inline-end"
+        style="position: absolute; right: 0; top: 100px;"
+    >
+        inline-end
+    </sp-badge>
+    <sp-badge
+        fixed="block-end"
+        style="position: absolute; bottom: 0; left: 200px;"
+    >
+        block-end
+    </sp-badge>
+    <sp-badge
+        fixed="inline-start"
+        style="position: absolute; left: 0; top: 100px;"
+    >
+        inline-start
+    </sp-badge>
 </div>
 ```

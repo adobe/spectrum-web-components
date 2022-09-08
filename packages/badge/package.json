@@ -61,7 +61,7 @@
         "@spectrum-web-components/shared": "^0.15.1"
     },
     "devDependencies": {
-        "@spectrum-css/badge": "^1.0.20"
+        "@spectrum-css/badge": "^2.0.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
