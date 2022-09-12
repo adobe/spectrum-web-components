@@ -30,7 +30,7 @@ import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 
 /**
- * @element sp-dialog-wrapper
+ * @element sp-dialog-base
  *
  * @slot - A Dialog element to display.
  * @fires close - Announces that the dialog has been closed.
@@ -65,9 +65,19 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public underlay = false;
 
     protected get dialog(): Dialog {
-        return (
+        const dialog = (
             this.shadowRoot.querySelector('slot') as HTMLSlotElement
         ).assignedElements()[0] as Dialog;
+        if (window.__swc.DEBUG) {
+            if (!dialog) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> expects to be provided dialog content via its default slot.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/dialog-base/#dialog'
+                );
+            }
+        }
+        return dialog || this;
     }
 
     public override focus(): void {
