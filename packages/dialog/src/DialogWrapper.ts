@@ -103,8 +103,8 @@ export class DialogWrapper extends DialogBase {
                 ?dismissable=${this.dismissable}
                 ?no-divider=${this.noDivider}
                 ?error=${this.error}
-                mode=${ifDefined(this.mode ? this.mode : undefined)}
-                size=${ifDefined(this.size ? this.size : undefined)}
+                mode=${ifDefined(this.mode)}
+                size=${ifDefined(this.size)}
             >
                 ${this.hero
                     ? html`
