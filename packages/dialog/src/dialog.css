@@ -31,3 +31,14 @@ governing permissions and limitations under the License.
     width: 100%;
     height: auto;
 }
+
+.grid {
+    grid-template-areas:
+        'hero hero    hero    hero        hero        hero'
+        '.    .       .       .           .           .'
+        '.    heading heading heading     typeIcon    .'
+        '.    divider divider divider     divider     .'
+        '.    content content content     content     .'
+        '.    footer  footer  buttonGroup buttonGroup .'
+        '.    .       .       .           .           .';
+}
