@@ -10,7 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    nextFrame,
+} from '@open-wc/testing';
 import { TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/dialog/sp-dialog.js';
@@ -56,6 +62,31 @@ describe('Dialog', () => {
     });
     it('loads dialog without footer accessibly', async () => {
         const el = await fixture<Dialog>(small());
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+    });
+    it('does not recycle applied content ids', async () => {
+        const el = await fixture<Dialog>(html`
+            <sp-dialog size="s">
+                <h2 slot="heading">Disclaimer</h2>
+                <p>Initial paragraph.</p>
+            </sp-dialog>
+        `);
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+
+        const paragraph = document.createElement('p');
+        paragraph.textContent = 'Added paragraph.';
+
+        const target = el.querySelector('p') as HTMLParagraphElement;
+        target.insertAdjacentElement('beforebegin', paragraph);
+
+        // Slotchange time exists outside of the standard update lifecycle
+        await nextFrame();
 
         await elementUpdated(el);
 
