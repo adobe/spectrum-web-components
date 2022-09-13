@@ -57,6 +57,15 @@ export class GridController<T extends HTMLElement>
         return undefined;
     }
 
+    get padding(): string | undefined {
+        return this._padding();
+    }
+
+    /* c8 ignore next 3 */
+    private _padding(): string | undefined {
+        return undefined;
+    }
+
     // Last visible element
     _last = 0;
 
@@ -66,15 +75,17 @@ export class GridController<T extends HTMLElement>
             elements,
             itemSize,
             gap,
+            padding,
         }: {
             elements: () => T[];
             itemSize: ItemSize | (() => ItemSize);
             gap?: string | (() => string);
+            padding?: string | (() => string);
         }
     ) {
         this.host = host;
         this.host.addController(this);
-        this.applyLayout(itemSize, gap);
+        this.applyLayout(itemSize, gap, padding);
         this.resizeController = new ResizeController(this.host, {
             callback: (entries: ResizeObserverEntry[]): void => {
                 entries.forEach((entry) => {
@@ -102,7 +113,8 @@ export class GridController<T extends HTMLElement>
 
     protected applyLayout(
         itemSize: ItemSize | (() => ItemSize),
-        gap?: string | (() => string)
+        gap?: string | (() => string),
+        padding?: string | (() => string)
     ): void {
         /* c8 ignore next 2 */
         if (typeof itemSize === 'object') {
@@ -119,28 +131,43 @@ export class GridController<T extends HTMLElement>
         } else if (typeof gap === 'function') {
             this._gap = gap;
         }
+        /* c8 ignore next 2 */
+        if (typeof padding === 'string') {
+            this._padding = () => padding;
+        } else if (typeof padding === 'function') {
+            this._padding = padding;
+        }
     }
 
     public update({
         elements,
         itemSize,
         gap,
+        padding,
     }: {
         elements: () => T[];
         itemSize: ItemSize | (() => ItemSize);
         gap?: string | (() => string);
+        padding?: string | (() => string);
     }): void {
         this.rovingTabindexController.update({ elements });
-        this.applyLayout(itemSize, gap);
+        this.applyLayout(itemSize, gap, padding);
         const contentRect = this.host.getBoundingClientRect();
         this.measureDirectionLength(contentRect);
     }
 
     protected measureDirectionLength(contentRect: DOMRect): void {
         const gap = this.gap ? parseFloat(this.gap) : 0;
-        this.rovingTabindexController.directionLength = Math.floor(
-            (contentRect.width - gap) / (this.itemSize.width + gap)
-        );
+        const padding = this.padding ? parseFloat(this.padding) : 0;
+        const contentBoxWidth = contentRect.width - padding * 2;
+        // There is always one less gap per row than items.
+        const directionLength =
+            Math.floor(
+                (contentBoxWidth - this.itemSize.width) /
+                    (gap + this.itemSize.width)
+            ) + 1;
+        this.rovingTabindexController.directionLength =
+            Math.floor(directionLength);
     }
 
     protected handleFocusin = (event: FocusEvent): void => {
