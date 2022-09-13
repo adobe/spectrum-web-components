@@ -10,11 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    CSSResultArray,
-    SizedMixin,
-    TemplateResult,
-} from '@spectrum-web-components/base';
+import { CSSResultArray, TemplateResult } from '@spectrum-web-components/base';
 import {
     property,
     query,
@@ -30,9 +26,7 @@ import linkStyles from './link.css.js';
  * @attr quiet - uses quiet styles or not
  * @attr over-background - uses over background styles or not
  */
-export class Link extends SizedMixin(LikeAnchor(Focusable), {
-    noDefaultSize: true,
-}) {
+export class Link extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
         return [linkStyles];
     }
@@ -42,6 +36,9 @@ export class Link extends SizedMixin(LikeAnchor(Focusable), {
 
     @property({ type: String, reflect: true })
     public variant: 'secondary' | undefined;
+
+    @property({ type: String, reflect: true })
+    public static: 'black' | 'white' | undefined;
 
     public override get focusElement(): HTMLElement {
         return this.anchorElement;

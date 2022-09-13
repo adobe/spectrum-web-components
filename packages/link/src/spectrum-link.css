@@ -11,51 +11,140 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([size='s']) {
-    --spectrum-link-primary-text-size: var(
-        --spectrum-link-s-primary-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    ); /* .spectrum-Link--sizeS */
+:host {
+    --spectrum-link-animation-duration: var(
+        --spectrum-animation-duration-100
+    ); /* .spectrum-Link */
+    --spectrum-link-text-color-primary-default: var(
+        --spectrum-accent-content-color-default
+    );
+    --spectrum-link-text-color-primary-hover: var(
+        --spectrum-accent-content-color-hover
+    );
+    --spectrum-link-text-color-primary-active: var(
+        --spectrum-accent-content-color-down
+    );
+    --spectrum-link-text-color-primary-focus: var(
+        --spectrum-accent-content-color-key-focus
+    );
+    --spectrum-link-text-color-secondary-default: var(
+        --spectrum-neutral-content-color-default
+    );
+    --spectrum-link-text-color-secondary-hover: var(
+        --spectrum-neutral-content-color-hover
+    );
+    --spectrum-link-text-color-secondary-active: var(
+        --spectrum-neutral-content-color-down
+    );
+    --spectrum-link-text-color-secondary-focus: var(
+        --spectrum-neutral-content-color-key-focus
+    );
+    --spectrum-link-text-color-white: var(--spectrum-white);
+    --spectrum-link-text-color-black: var(--spectrum-black);
 }
-:host([size='m']) {
-    --spectrum-link-primary-text-size: var(
-        --spectrum-link-m-primary-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    ); /* .spectrum-Link--sizeM */
-}
-:host([size='l']) {
-    --spectrum-link-primary-text-size: var(
-        --spectrum-link-l-primary-text-size,
-        var(--spectrum-global-dimension-font-size-200)
-    ); /* .spectrum-Link--sizeL */
-}
-:host([size='xl']) {
-    --spectrum-link-primary-text-size: var(
-        --spectrum-link-xl-primary-text-size,
-        var(--spectrum-global-dimension-font-size-300)
-    ); /* .spectrum-Link--sizeXL */
+@media (forced-colors: active) {
+    a {
+        --highcontrast-link-focus-color: CanvasText;
+    }
+    :host([variant='secondary']) a {
+        color: LinkText;
+    }
+    :host([variant='secondary']) a:hover {
+        color: LinkText;
+    }
+    :host([variant='secondary']) a:active {
+        color: LinkText;
+    }
+    :host([variant='secondary']) a:focus {
+        color: LinkText;
+    }
+    &--staticBlack {
+        --highcontrast-link-text-color-black: ButtonText;
+    }
+    &--staticWhite {
+        --highcontrast-link-text-color-white: ButtonText;
+    }
 }
 a {
     -webkit-text-decoration-skip: objects;
-    background-color: transparent;
+    background-color: transparent; /* .spectrum-Link */
+    color: var(
+        --mod-link-text-color-primary-default,
+        var(--spectrum-link-text-color-primary-default)
+    );
     cursor: pointer;
-    font-size: var(--spectrum-link-primary-text-size); /* .spectrum-Link */
     outline: none;
-    transition: color var(--spectrum-global-animation-duration-100, 0.13s)
+    text-decoration: underline;
+    transition: color
+        var(
+            --mod-link-animation-duration,
+            var(--spectrum-link-animation-duration)
+        )
         ease-in-out;
 }
-a,
-a.focus-visible {
-    text-decoration: underline;
+a:hover {
+    color: var(
+        --mod-link-text-color-primary-hover,
+        var(--spectrum-link-text-color-primary-hover)
+    ); /* .spectrum-Link:hover */
+}
+a:active {
+    color: var(
+        --mod-link-text-color-primary-active,
+        var(--spectrum-link-text-color-primary-active)
+    ); /* .spectrum-Link:active */
 }
 a.focus-visible {
-    -webkit-text-decoration-style: double; /* .spectrum-Link.focus-ring */
+    color: var(
+        --mod-link-text-color-primary-focus,
+        var(--spectrum-link-text-color-primary-focus)
+    ); /* .spectrum-Link:focus-visible */
+    text-decoration: underline;
+    -webkit-text-decoration-color: var(
+        --highcontrast-link-focus-color,
+        inherit
+    );
+    text-decoration-color: var(--highcontrast-link-focus-color, inherit);
+    -webkit-text-decoration-style: double;
     text-decoration-style: double;
 }
 a:focus-visible {
-    text-decoration: underline; /* .spectrum-Link.focus-ring */
+    color: var(
+        --mod-link-text-color-primary-focus,
+        var(--spectrum-link-text-color-primary-focus)
+    ); /* .spectrum-Link:focus-visible */
+    text-decoration: underline;
+    -webkit-text-decoration-color: var(
+        --highcontrast-link-focus-color,
+        inherit
+    );
+    text-decoration-color: var(--highcontrast-link-focus-color, inherit);
     -webkit-text-decoration-style: double;
     text-decoration-style: double;
+}
+:host([variant='secondary']) a {
+    color: var(
+        --mod-link-text-color-secondary-default,
+        var(--spectrum-link-text-color-secondary-default)
+    ); /* .spectrum-Link--secondary */
+}
+:host([variant='secondary']) a:hover {
+    color: var(
+        --mod-link-text-color-secondary-hover,
+        var(--spectrum-link-text-color-secondary-hover)
+    ); /* .spectrum-Link--secondary:hover */
+}
+:host([variant='secondary']) a:active {
+    color: var(
+        --mod-link-text-color-secondary-active,
+        var(--spectrum-link-text-color-secondary-active)
+    ); /* .spectrum-Link--secondary:active */
+}
+:host([variant='secondary']) a:focus {
+    color: var(
+        --mod-link-text-color-secondary-focus,
+        var(--spectrum-link-text-color-secondary-focus)
+    ); /* .spectrum-Link--secondary:focus */
 }
 :host([quiet]) a {
     text-decoration: none; /* .spectrum-Link--quiet */
@@ -63,83 +152,35 @@ a:focus-visible {
 :host([quiet]) a:hover {
     text-decoration: underline; /* .spectrum-Link--quiet:hover */
 }
-a {
+:host([static='white']) a {
     color: var(
-        --spectrum-link-m-primary-text-color,
-        var(--spectrum-alias-link-primary-text-color-default)
-    ); /* .spectrum-Link */
+        --highcontrast-link-text-color-white,
+        var(--mod-link-text-color-white, var(--spectrum-link-text-color-white))
+    ); /* .spectrum-Link--staticWhite */
 }
-a:hover {
+:host([static='white']) a:active,
+:host([static='white']) a:focus,
+:host([static='white']) a:hover {
     color: var(
-        --spectrum-link-m-primary-text-color-hover,
-        var(--spectrum-alias-link-primary-text-color-hover)
-    ); /* .spectrum-Link:hover */
+        --highcontrast-link-text-color-white,
+        var(--mod-link-text-color-white, var(--spectrum-link-text-color-white))
+    ); /* .spectrum-Link--staticWhite:hover,
+   * .spectrum-Link--staticWhite:active,
+   * .spectrum-Link--staticWhite:focus */
 }
-a:active {
+:host([static='black']) a {
     color: var(
-        --spectrum-link-m-primary-text-color-down,
-        var(--spectrum-alias-link-primary-text-color-down)
-    ); /* .spectrum-Link:active */
+        --highcontrast-link-text-color-black,
+        var(--mod-link-text-color-black, var(--spectrum-link-text-color-black))
+    ); /* .spectrum-Link--staticBlack */
 }
-a.focus-visible {
+:host([static='black']) a:active,
+:host([static='black']) a:focus,
+:host([static='black']) a:hover {
     color: var(
-        --spectrum-link-m-primary-text-color-key-focus,
-        var(--spectrum-alias-link-primary-text-color-key-focus)
-    ); /* .spectrum-Link.focus-ring */
-}
-a:focus-visible {
-    color: var(
-        --spectrum-link-m-primary-text-color-key-focus,
-        var(--spectrum-alias-link-primary-text-color-key-focus)
-    ); /* .spectrum-Link.focus-ring */
-}
-:host([variant='secondary']) a {
-    color: inherit; /* .spectrum-Link--secondary */
-}
-:host([variant='secondary']) a:hover {
-    color: inherit; /* .spectrum-Link--secondary:hover */
-}
-:host([variant='secondary']) a:active {
-    color: inherit; /* .spectrum-Link--secondary:active */
-}
-:host([variant='secondary']) a:focus {
-    color: inherit; /* .spectrum-Link--secondary:focus */
-}
-:host([over-background]) a {
-    color: var(
-        --spectrum-link-m-primary-overbackground-text-color,
-        var(--spectrum-alias-text-color-overbackground)
-    ); /* .spectrum-Link--overBackground */
-}
-:host([over-background]) a:hover {
-    color: var(
-        --spectrum-link-m-primary-overbackground-text-color-hover,
-        var(--spectrum-alias-text-color-overbackground)
-    ); /* .spectrum-Link--overBackground:hover */
-}
-:host([over-background]) a:active {
-    color: var(
-        --spectrum-link-m-primary-overbackground-text-color-down,
-        var(--spectrum-alias-text-color-overbackground)
-    ); /* .spectrum-Link--overBackground:active */
-}
-:host([over-background]) a:focus {
-    color: var(
-        --spectrum-link-m-primary-overbackground-text-color-key-focus,
-        var(--spectrum-alias-text-color-overbackground)
-    ); /* .spectrum-Link--overBackground:focus */
-}
-@media (forced-colors: active) {
-    :host([variant='secondary']) a {
-        color: linktext;
-    }
-    :host([variant='secondary']) a:hover {
-        color: linktext;
-    }
-    :host([variant='secondary']) a:active {
-        color: linktext;
-    }
-    :host([variant='secondary']) a:focus {
-        color: linktext;
-    }
+        --highcontrast-link-text-color-black,
+        var(--mod-link-text-color-black, var(--spectrum-link-text-color-black))
+    ); /* .spectrum-Link--staticBlack:hover,
+   * .spectrum-Link--staticBlack:active,
+   * .spectrum-Link--staticBlack:focus */
 }

@@ -46,28 +46,56 @@ export const secondaryQuiet = (): TemplateResult => {
     `;
 };
 
-export const overBackground = (): TemplateResult => {
+export const staticWhite = (): TemplateResult => {
     return html`
         <div
             style="background-color: rgb(15, 121, 125); padding: 15px 20px; display: inline-block;"
         >
             <p style="color: rgb(240, 240, 240);">
                 This
-                <sp-link over-background href="#">link</sp-link>
+                <sp-link static="white" href="#">link</sp-link>
                 has a background.
             </p>
         </div>
     `;
 };
 
-export const overBackgroundQuiet = (): TemplateResult => {
+export const staticBlack = (): TemplateResult => {
+    return html`
+        <div
+            style="background-color: rgb(181, 209, 211); padding: 15px 20px; display: inline-block;"
+        >
+            <p style="color: rgb(15, 15, 15);">
+                This
+                <sp-link static="black" href="#">link</sp-link>
+                has a background.
+            </p>
+        </div>
+    `;
+};
+
+export const staticWhiteQuiet = (): TemplateResult => {
     return html`
         <div
             style="background-color: rgb(15, 121, 125); padding: 15px 20px; display: inline-block;"
         >
             <p style="color: rgb(240, 240, 240);">
                 This
-                <sp-link over-background quiet href="#">link</sp-link>
+                <sp-link static="white" quiet href="#">link</sp-link>
+                has a background.
+            </p>
+        </div>
+    `;
+};
+
+export const staticBlackQuiet = (): TemplateResult => {
+    return html`
+        <div
+            style="background-color: rgb(181, 209, 211); padding: 15px 20px; display: inline-block;"
+        >
+            <p style="color: rgb(15, 15, 15);">
+                This
+                <sp-link static="black" quiet href="#">link</sp-link>
                 has a background.
             </p>
         </div>
@@ -86,5 +114,3 @@ export const Download = (): TemplateResult => {
         for you to click on.
     `;
 };
-
-overBackground.storyName = 'Over Background';

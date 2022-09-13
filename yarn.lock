@@ -4542,10 +4542,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/illustratedmessage/-/illustratedmessage-4.0.6.tgz#30a2b8dfb8ad8e4710dffe7a2096c824a3a888e1"
   integrity sha512-z+aaiBisU4FAo0ZAEFcXc6riN0YDZne+2rirl1DKDWEmqxG5+9DYkviJ7erczxvasxH7r/0l1FEugJmkOK9Apw==
 
-"@spectrum-css/link@^3.1.23":
-  version "3.1.23"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/link/-/link-3.1.23.tgz#9d9ff64c41366edbfdb19d04a5deec88bf2ea8fd"
-  integrity sha512-CAJQGnGTrTtR4tF1L94ou9Y+c4vnx9d5rWhb3AMzKb2Focqz02xSkTyaCCH7OM/3CwD8TCLOMANon8LcRpGAjA==
+"@spectrum-css/link@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/link/-/link-4.0.0.tgz#10f49daad68f9615725bf117f4c7638a3ab338e2"
+  integrity sha512-QGGxh+SlO1/jDEJyYxfx6U17KjpHMUj4PX8qMLHXWxe1YDr2FnvdWFrHQKxBq14eEntTzFgYy4vh6PonHphpPA==
 
 "@spectrum-css/menu@^4.0.4":
   version "4.0.4"
