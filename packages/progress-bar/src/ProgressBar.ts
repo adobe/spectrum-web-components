@@ -46,6 +46,9 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
     @property({ type: Number })
     public progress = 0;
 
+    @property({ type: String, reflect: true })
+    public static: 'white' | undefined;
+
     protected override render(): TemplateResult {
         return html`
             ${this.label
@@ -117,8 +120,8 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
                             'value supplied to the "label" attribute, which will be displayed visually as part of the element, or',
                             'value supplied to the "aria-label" attribute, which will only be provided to screen readers, or',
                             'an element ID reference supplied to the "aria-labelledby" attribute, which will be provided by screen readers and will need to be managed manually by the parent application.',
-                        ]
-                    },
+                        ],
+                    }
                 );
             }
         }

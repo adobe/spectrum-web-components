@@ -56,6 +56,9 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     // called sideLabel
     public sideLabel = false;
 
+    @property({ type: String, reflect: true })
+    public static: 'white' | undefined;
+
     protected override render(): TemplateResult {
         return html`
             <sp-field-label size=${this.size} class="label">
