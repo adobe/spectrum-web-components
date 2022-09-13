@@ -13,34 +13,41 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
     --spectrum-fieldgroup-margin: var(
-        --spectrum-global-dimension-size-200
+        --spectrum-spacing-300
     ); /* .spectrum-FieldGroup */
-    --spectrum-fieldgroup-readonly-delineator: '\\002c';
+    --spectrum-fieldgroup-readonly-delimiter: '\\002c';
+}
+.spectrum-FieldGroup--toplabel {
+    flex-direction: column; /* .spectrum-FieldGroup--toplabel */
+}
+.spectrum-FieldGroup--sidelabel {
+    flex-direction: row; /* .spectrum-FieldGroup--sidelabel */
 }
 .group {
-    display: flex; /* .spectrum-FieldGroup */
+    align-items: top;
+    display: flex; /* .spectrum-FieldGroupInputLayout */
+    flex-direction: column;
     flex-wrap: wrap;
-    vertical-align: top;
+}
+:host([vertical]) .group {
+    flex-direction: column; /* .spectrum-FieldGroup--vertical .spectrum-FieldGroupInputLayout */
+}
+:host([horizontal]) .group {
+    flex-direction: row; /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroupInputLayout */
+}
+:host([horizontal]) .group slot:not([name])::slotted(:not(:last-child)) {
+    margin-inline-end: var(
+        --spectrum-fieldgroup-margin
+    ); /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroupInputLayout .spectrum-FieldGroup-item:not(:last-child) */
+}
+:host([horizontal]) .group .spectrum-HelpText {
+    flex-basis: 100%; /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroupInputLayout .spectrum-HelpText */
 }
 .spectrum-Checkbox.is-readOnly .spectrum-Checkbox-box {
     display: none; /* .spectrum-FieldGroup .spectrum-Checkbox.is-readOnly .spectrum-Checkbox-box */
 }
 .spectrum-Checkbox.is-readOnly:not(:last-child) .spectrum-Checkbox-label:after {
     content: var(
-        --spectrum-fieldgroup-readonly-delineator
+        --spectrum-fieldgroup-readonly-delimiter
     ); /* .spectrum-FieldGroup .spectrum-Checkbox.is-readOnly:not(:last-child) .spectrum-Checkbox-label:after */
-}
-:host([dir='ltr'][horizontal]) slot:not([name])::slotted(:not(:last-child)) {
-    margin-right: var(
-        --spectrum-fieldgroup-margin
-    ); /* [dir=ltr] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
-}
-:host([dir='rtl'][horizontal]) slot:not([name])::slotted(:not(:last-child)) {
-    margin-left: var(
-        --spectrum-fieldgroup-margin
-    ); /* [dir=rtl] .spectrum-FieldGroup--horizontal .spectrum-FieldGroup-item:not(:last-child) */
-}
-:host([vertical]) .group {
-    display: inline-flex; /* .spectrum-FieldGroup--vertical */
-    flex-direction: column;
 }

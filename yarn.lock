@@ -4509,10 +4509,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/expressvars/-/expressvars-2.0.0.tgz#462c1679df96d515780b3ee7fea2b8bccbd901bc"
   integrity sha512-K8hwoWOHcZTwLo6P3Itvl/ggZ+GChFyNoj5Rvlgj8R9/p62Eb9Vp9UDx2Mcg1zCJN2sBZAiqhYRQM+WawRtx5w==
 
-"@spectrum-css/fieldgroup@^3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldgroup/-/fieldgroup-3.1.4.tgz#aede57bda56c41310d262774a8805eefc89ddf74"
-  integrity sha512-ynqkD1OWicCEW7hgYQWzJUrUih+guJHjDtPbTKYhCbnxPqi6aifKmLstBehCgs4iG4+YfGDdZTppW64A3o5foQ==
+"@spectrum-css/fieldgroup@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/fieldgroup/-/fieldgroup-4.0.2.tgz#388ba21ef4291f79111e586c161cda40d050e957"
+  integrity sha512-xcCWL5/ZlQzsc6L7Wi8Z1m/dqYmmq+EUQQ0W+k4b4XsuuruPLzG+VHGNVdPNxa37iFuMHtehGiVB4HU/T0+XzA==
 
 "@spectrum-css/fieldlabel@^5.0.4":
   version "5.0.4"
