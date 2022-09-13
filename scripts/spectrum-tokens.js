@@ -52,6 +52,7 @@ const tokenPackages = [
     'tag',
     'tooltip',
     'tray',
+    'progressbar',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {

@@ -93,6 +93,20 @@ const config = {
                         },
                     ],
                 },
+                {
+                    type: 'enum',
+                    name: 'static',
+                    values: [
+                        {
+                            name: 'black',
+                            selector: '.spectrum-ProgressBar--staticBlack',
+                        },
+                        {
+                            name: 'white',
+                            selector: '.spectrum-ProgressBar--staticWhite',
+                        },
+                    ],
+                },
             ],
         },
     ],

@@ -59,49 +59,49 @@ const makeOverBackground = (story: TemplateResult): TemplateResult => html`
     </div>
 `;
 
-export const overBackground = (): TemplateResult => {
+export const staticWhite = (): TemplateResult => {
     return makeOverBackground(html`
-        <sp-progress-bar progress="50" over-background></sp-progress-bar>
+        <sp-progress-bar progress="50" static="white"></sp-progress-bar>
     `);
 };
 
-export const overBackgroundLabel = (): TemplateResult => {
+export const staticWhiteLabel = (): TemplateResult => {
     return makeOverBackground(html`
         <sp-progress-bar
             label="Loading"
             progress="50"
-            over-background
+            static="white"
         ></sp-progress-bar>
     `);
 };
 
-export const overBackgroundIndeterminate = (): TemplateResult => {
+export const staticWhiteIndeterminate = (): TemplateResult => {
     return makeOverBackground(html`
         <sp-progress-bar
             label="Loading"
             indeterminate
-            over-background
+            static="white"
         ></sp-progress-bar>
     `);
 };
 
-export const overBackgroundSideLabel = (): TemplateResult => {
+export const staticWhiteSideLabel = (): TemplateResult => {
     return makeOverBackground(html`
         <sp-progress-bar
             label="Loading"
             progress="50"
-            over-background
+            static="white"
             side-label
         ></sp-progress-bar>
     `);
 };
 
-export const overBackgroundSideLabelIndeterminate = (): TemplateResult => {
+export const staticWhiteSideLabelIndeterminate = (): TemplateResult => {
     return makeOverBackground(html`
         <sp-progress-bar
             label="Loading"
             indeterminate
-            over-background
+            static="white"
             side-label
         ></sp-progress-bar>
     `);

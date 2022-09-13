@@ -48,6 +48,20 @@ const config = {
                     ],
                 },
                 {
+                    type: 'enum',
+                    name: 'static',
+                    values: [
+                        {
+                            name: 'black',
+                            selector: '.spectrum-ProgressBar--staticBlack',
+                        },
+                        {
+                            name: 'white',
+                            selector: '.spectrum-ProgressBar--staticWhite',
+                        },
+                    ],
+                },
+                {
                     type: 'boolean',
                     selector: '.spectrum-ProgressBar--indeterminate',
                     name: 'indeterminate',

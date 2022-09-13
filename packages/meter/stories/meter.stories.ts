@@ -51,10 +51,10 @@ export const positive = (): TemplateResult => {
     `;
 };
 
-export const overBackground = (): TemplateResult => {
+export const staticWhite = (): TemplateResult => {
     return makeOverBackground(
         html`
-            <sp-meter over-background progress="50">Storage Space</sp-meter>
+            <sp-meter static="white" progress="50">Storage Space</sp-meter>
         `
     );
 };

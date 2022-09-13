@@ -296,13 +296,4 @@ governing permissions and limitations under the License.
     --spectrum-picker-m-texticon-padding-left: var(
         --spectrum-global-dimension-size-125
     );
-    --spectrum-progressbar-s-border-radius: var(
-        --spectrum-global-dimension-static-size-25
-    );
-    --spectrum-progressbar-m-border-radius: var(
-        --spectrum-global-dimension-static-size-40
-    );
-    --spectrum-progressbar-xl-border-radius: var(
-        --spectrum-global-dimension-static-size-65
-    );
 }

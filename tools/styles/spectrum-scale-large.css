@@ -303,13 +303,4 @@ governing permissions and limitations under the License.
     --spectrum-picker-m-texticon-padding-left: var(
         --spectrum-global-dimension-static-size-150
     );
-    --spectrum-progressbar-s-border-radius: var(
-        --spectrum-global-dimension-static-size-40
-    );
-    --spectrum-progressbar-m-border-radius: var(
-        --spectrum-global-dimension-static-size-50
-    );
-    --spectrum-progressbar-xl-border-radius: var(
-        --spectrum-global-dimension-static-size-75
-    );
 }
