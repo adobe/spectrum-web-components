@@ -32,30 +32,19 @@ const config = {
                 {
                     type: 'enum',
                     name: 'variant',
-                    values: [
-                        '.spectrum-Link--secondary',
-                    ],
+                    values: ['.spectrum-Link--secondary'],
                 },
                 {
                     type: 'enum',
-                    name: 'size',
-                    forceOntoHost: true,
+                    name: 'static',
                     values: [
                         {
-                            name: 's',
-                            selector: '.spectrum-Link--sizeS',
+                            name: 'black',
+                            selector: '.spectrum-Link--staticBlack',
                         },
                         {
-                            name: 'm',
-                            selector: '.spectrum-Link--sizeM',
-                        },
-                        {
-                            name: 'l',
-                            selector: '.spectrum-Link--sizeL',
-                        },
-                        {
-                            name: 'xl',
-                            selector: '.spectrum-Link--sizeXL',
+                            name: 'white',
+                            selector: '.spectrum-Link--staticWhite',
                         },
                     ],
                 },
