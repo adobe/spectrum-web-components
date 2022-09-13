@@ -41,6 +41,9 @@ export class Grid extends LitVirtualizer {
     @property({ type: String })
     public gap: `${'0' | `${number}px`}` = '0';
 
+    @property({ type: String })
+    public padding: `${'0' | `${number}px`}` | undefined;
+
     @property({ type: Array })
     public override items: Record<string, unknown>[] = [];
 
@@ -78,8 +81,9 @@ export class Grid extends LitVirtualizer {
     gridController = new GridController<HTMLElement>(this, {
         elements: () => [],
         itemSize: () => this.itemSize,
-        /* c8 ignore next 1 */
+        /* c8 ignore next 2 */
         gap: () => this.gap,
+        padding: () => this.padding || this.gap,
     });
 
     protected handleChange(event: Event): void {
@@ -122,6 +126,7 @@ export class Grid extends LitVirtualizer {
         if (
             changes.has('itemSize') ||
             changes.has('gap') ||
+            changes.has('padding') ||
             changes.has('focusableSelector')
         ) {
             this.updateComplete.then(() => {
@@ -133,6 +138,7 @@ export class Grid extends LitVirtualizer {
                     ],
                     itemSize: () => this.itemSize,
                     gap: () => this.gap,
+                    padding: () => this.padding || this.gap,
                 });
             });
 
@@ -142,6 +148,7 @@ export class Grid extends LitVirtualizer {
                     height: `${this.itemSize.height}px`,
                 },
                 gap: this.gap,
+                padding: this.padding || this.gap,
             });
         }
 
