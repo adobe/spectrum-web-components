@@ -8689,10 +8689,15 @@ cuss@^2.0.0:
   resolved "https://registry.yarnpkg.com/cuss/-/cuss-2.0.0.tgz#7f88210a9dfe3cd60834f1d82af97b62be44f89f"
   integrity sha512-EHbh7F4GHvgyuakXeic9wtfeEYves17MxLpgIsljCbaDil6auJVsTTLV/qwkZ58+Gu+NKmMHVQm81J3BcEqwUg==
 
-custom-elements-manifest@1.0.0, custom-elements-manifest@^1.0.0:
+custom-elements-manifest@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/custom-elements-manifest/-/custom-elements-manifest-1.0.0.tgz#b35c2129076a1dc9f95d720c6f7b5b71a857274b"
   integrity sha512-j59k0ExGCKA8T6Mzaq+7axc+KVHwpEphEERU7VZ99260npu/p/9kd+Db+I3cGKxHkM5y6q5gnlXn00mzRQkX2A==
+
+custom-elements-manifest@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/custom-elements-manifest/-/custom-elements-manifest-2.0.0.tgz#6b234f7a57c68ecda291ea70882555729617de6d"
+  integrity sha512-1MmhBRszwnNYqn56nkMeHXn/Zlh998+6Yal3wedbXI7NzKPG02GDgjspdN1NiuDtt2yb5n94JvFwPOF7Prnocg==
 
 cyclist@^1.0.1:
   version "1.0.1"
