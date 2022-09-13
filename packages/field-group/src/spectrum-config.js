@@ -31,6 +31,12 @@ const config = {
                     name: 'vertical',
                 },
             ],
+            classes: [
+                {
+                    selector: '.spectrum-FieldGroupInputLayout',
+                    name: 'group',
+                },
+            ],
             complexSelectors: [
                 {
                     replacement: 'slot:not([name])::slotted(:not(:last-child))',
