@@ -130,7 +130,7 @@
         "chromedriver": "^105.0.0",
         "common-tags": "^1.8.2",
         "cssnano": "^5.0.15",
-        "custom-elements-manifest": "^1.0.0",
+        "custom-elements-manifest": "^2.0.0",
         "debounce": "^1.2.1",
         "deepmerge": "^4.2.2",
         "esbuild": "^0.15.7",
