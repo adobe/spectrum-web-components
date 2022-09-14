@@ -231,9 +231,9 @@ export class PickerBase extends SizedMixin(Focusable) {
             if (menuChangeEvent) {
                 menuChangeEvent.preventDefault();
             }
-            this.selectedItem.selected = false;
+            this.setSelected(this.selectedItem, false);
             if (oldSelectedItem) {
-                oldSelectedItem.selected = true;
+                this.setSelected(oldSelectedItem, true);
             }
             this.selectedItem = oldSelectedItem;
             this.value = oldValue;
@@ -241,9 +241,15 @@ export class PickerBase extends SizedMixin(Focusable) {
             return;
         }
         if (oldSelectedItem) {
-            oldSelectedItem.selected = false;
+            this.setSelected(oldSelectedItem, false);
         }
-        item.selected = !!this.selects;
+        this.setSelected(item, !!this.selects);
+    }
+
+    protected setSelected(item: MenuItem, value: boolean): void {
+        // matches null | undefined
+        if (this.selects == null) return;
+        item.selected = value;
     }
 
     public toggle(target?: boolean): void {
@@ -319,8 +325,8 @@ export class PickerBase extends SizedMixin(Focusable) {
                     selected?: boolean;
                 }
             ) => {
-                if (this.selects != null && this.value === el.value) {
-                    el.selected = true;
+                if (this.value === el.value) {
+                    this.setSelected(el as MenuItem, true);
                 }
                 return (el) => {
                     if (typeof el.focused !== 'undefined') {

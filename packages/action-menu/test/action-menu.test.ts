@@ -271,9 +271,11 @@ describe('Action menu', () => {
         const root = await actionSubmenuFixture();
         const unselectedItem = root.querySelector('sp-menu-item') as MenuItem;
         const selectedItem = root.querySelector('.selected-item') as MenuItem;
+        let selected = true;
 
         selectedItem.addEventListener('click', () => {
-            selectedItem.selected = false;
+            selected = !selected;
+            selectedItem.selected = selected;
         });
 
         expect(unselectedItem.innerHTML).to.equal('One');
@@ -309,5 +311,20 @@ describe('Action menu', () => {
         expect(unselectedItem.selected).to.be.false;
         expect(selectedItem.innerHTML).to.equal('Two');
         expect(selectedItem.selected).to.be.false;
+
+        // close by clicking selected
+        // (with event listener: should set selected = false)
+        closed = oneEvent(root, 'sp-closed');
+        selectedItem.click();
+        await closed;
+
+        opened = oneEvent(root, 'sp-opened');
+        root.click();
+        await opened;
+
+        expect(unselectedItem.innerHTML).to.equal('One');
+        expect(unselectedItem.selected).to.be.false;
+        expect(selectedItem.innerHTML).to.equal('Two');
+        expect(selectedItem.selected).to.be.true;
     });
 });
