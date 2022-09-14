@@ -1,0 +1,2 @@
+const e=()=>{const e=document.querySelector("#table-virtualized-demo");e.items=(e=>{const t=e,n=[];for(;e;)e--,n.push({name:String(t-e),date:e});return n})(50),e.renderItem=(e,t)=>{const n=document.createElement("sp-table-cell"),l=document.createElement("sp-table-cell"),o=document.createElement("sp-table-cell");return n.textContent=`Row Item Alpha ${e.name}`,l.textContent=`Row Item Alpha ${t}`,o.textContent="Last Thing",[n,l,o]}};customElements.whenDefined("sp-table").then((()=>{e()}));
+//# sourceMappingURL=eed6600b2.js.map
