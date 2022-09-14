@@ -1,6 +1,6 @@
 ## Description
 
-`sp-dialog-base` accepts slotted dialog content (often an `<sp-dialog>`) and presents that content in a container that is animated into place when toggling the `open` attribute. In concert with the [Overlay API](../overlay) or [Overlay Trigger](../overlay-trigger), the provided dialog content will be displayed on over the rest of the page. Leverage the `interaction = modal` and `receivesFocus = 'auto'` setting in the Overlay API to ensure that focus is thrown into the dialog content when opened and that the tab order will be trapped with in that content while open.
+`sp-dialog-base` accepts slotted dialog content (often an `<sp-dialog>`) and presents that content in a container that is animated into place when toggling the `open` attribute. In concert with the [Overlay API](../overlay) or [Overlay Trigger](../overlay-trigger), the provided dialog content will be displayed over the rest of the page. Leverage the `interaction = modal` and `receivesFocus = 'auto'` settings in the Overlay API to ensure that focus is thrown into the dialog content when opened and that the tab order will be trapped within it while open.
 
 ### Usage
 
