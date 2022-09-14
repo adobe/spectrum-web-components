@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.11.1...@spectrum-web-components/dialog@0.11.2) (2022-09-14)
+
+### Bug Fixes
+
+-   add docs and address PR comments ([568062a](https://github.com/adobe/spectrum-web-components/commit/568062a7e5106f2a8f570f3650342bab09dd158e))
+-   add grid areas workaround locally until available in Spectrum CSS ([4c5ed9d](https://github.com/adobe/spectrum-web-components/commit/4c5ed9dab27e96edae57ab8912fe598cd5cfc85e))
+
 ## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.11.0...@spectrum-web-components/dialog@0.11.1) (2022-08-24)
 
 ### Bug Fixes

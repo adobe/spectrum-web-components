@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.14.1...@spectrum-web-components/slider@0.14.2) (2022-09-14)
+
+### Bug Fixes
+
+-   update spelling ([283d10a](https://github.com/adobe/spectrum-web-components/commit/283d10acf09f1c3a2575d5dd263559d0c63a69fa))
+-   **slider:** renamed flag from stepperActive to managed input to allow verified (scroll) input event ([89d6ac5](https://github.com/adobe/spectrum-web-components/commit/89d6ac5a197c55ff8dae9932996fbb8c953bcfb2))
+
 ## [0.14.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.14.0...@spectrum-web-components/slider@0.14.1) (2022-08-24)
 
 **Note:** Version bump only for package @spectrum-web-components/slider

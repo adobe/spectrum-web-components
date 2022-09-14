@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/documentation@0.3.1...documentation@0.3.2) (2022-09-14)
+
+### Bug Fixes
+
+-   **tabs:** add "quiet", "compact", and "emphasized" "direction=vertical" ([26fff53](https://github.com/adobe/spectrum-web-components/commit/26fff53d8d64c508be66406d00e6e45e48c15278))
+
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/documentation@0.3.0...documentation@0.3.1) (2022-08-24)
 
 **Note:** Version bump only for package documentation

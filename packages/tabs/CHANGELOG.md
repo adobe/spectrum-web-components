@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.9.0...@spectrum-web-components/tabs@0.9.1) (2022-09-14)
+
+### Bug Fixes
+
+-   **tabs:** add "quiet", "compact", and "emphasized" "direction=vertical" ([26fff53](https://github.com/adobe/spectrum-web-components/commit/26fff53d8d64c508be66406d00e6e45e48c15278))
+
 # [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.8.15...@spectrum-web-components/tabs@0.9.0) (2022-08-09)
 
 ### Features

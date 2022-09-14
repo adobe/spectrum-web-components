@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/button",
-    "version": "0.19.1",
+    "version": "0.19.2",
     "publishConfig": {
         "access": "public"
     },
@@ -84,7 +84,7 @@
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.0",
         "@spectrum-web-components/clear-button": "^0.2.0",
-        "@spectrum-web-components/close-button": "^0.3.1",
+        "@spectrum-web-components/close-button": "^0.3.2",
         "@spectrum-web-components/icon": "^0.12.0",
         "@spectrum-web-components/icons-ui": "^0.9.0",
         "@spectrum-web-components/shared": "^0.15.0",

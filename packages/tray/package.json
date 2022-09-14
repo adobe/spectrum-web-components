@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/tray",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "publishConfig": {
         "access": "public"
     },
@@ -58,7 +58,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.0",
-        "@spectrum-web-components/modal": "^0.7.0",
+        "@spectrum-web-components/modal": "^0.7.1",
         "@spectrum-web-components/reactive-controllers": "^0.3.0",
         "@spectrum-web-components/shared": "^0.15.0",
         "@spectrum-web-components/underlay": "^0.9.0",

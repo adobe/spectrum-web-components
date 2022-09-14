@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.14.1...@spectrum-web-components/theme@0.14.2) (2022-09-14)
+
+### Bug Fixes
+
+-   add docs and address PR comments ([568062a](https://github.com/adobe/spectrum-web-components/commit/568062a7e5106f2a8f570f3650342bab09dd158e))
+
 ## [0.14.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.14.0...@spectrum-web-components/theme@0.14.1) (2022-08-24)
 
 **Note:** Version bump only for package @spectrum-web-components/theme

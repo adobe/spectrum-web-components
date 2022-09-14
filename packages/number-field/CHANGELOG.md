@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.5.1...@spectrum-web-components/number-field@0.5.2) (2022-09-14)
+
+### Bug Fixes
+
+-   **number-field:** added flag to scroll event to allow slider component to update on scroll ([4199eb0](https://github.com/adobe/spectrum-web-components/commit/4199eb0084dcaa9da77f3ff3880dd93f24f72b1d))
+
 ## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.5.0...@spectrum-web-components/number-field@0.5.1) (2022-08-24)
 
 **Note:** Version bump only for package @spectrum-web-components/number-field

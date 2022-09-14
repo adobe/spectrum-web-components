@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.12.1...@spectrum-web-components/card@0.12.2) (2022-09-14)
+
+**Note:** Version bump only for package @spectrum-web-components/card
+
 ## [0.12.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.12.0...@spectrum-web-components/card@0.12.1) (2022-08-24)
 
 **Note:** Version bump only for package @spectrum-web-components/card
