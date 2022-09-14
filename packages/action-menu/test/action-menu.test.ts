@@ -64,12 +64,14 @@ const actionSubmenuFixture = async (): Promise<ActionMenu> =>
         html`
             <sp-action-menu label="More Actions">
                 <sp-menu-item>One</sp-menu-item>
-                <sp-menu-item selected class="selected-item">Two</sp-menu-item>
+                <sp-menu-item selected id="root-selected-item">
+                    Two
+                </sp-menu-item>
                 <sp-menu-item id="item-with-submenu">
                     B should be selected
                     <sp-menu slot="submenu">
                         <sp-menu-item>A</sp-menu-item>
-                        <sp-menu-item selected class="selected-item">
+                        <sp-menu-item selected id="sub-selected-item">
                             B
                         </sp-menu-item>
                         <sp-menu-item>C</sp-menu-item>
@@ -242,7 +244,7 @@ describe('Action menu', () => {
             'sp-menu[slot="submenu"]'
         ) as Menu;
         const selectedItem = submenu.querySelector(
-            '.selected-item'
+            '#sub-selected-item'
         ) as MenuItem;
 
         expect(selectedItem.selected, 'item should be initially selected').to.be
@@ -270,7 +272,9 @@ describe('Action menu', () => {
     it('allows top-level selection state to change', async () => {
         const root = await actionSubmenuFixture();
         const unselectedItem = root.querySelector('sp-menu-item') as MenuItem;
-        const selectedItem = root.querySelector('.selected-item') as MenuItem;
+        const selectedItem = root.querySelector(
+            '#root-selected-item'
+        ) as MenuItem;
         let selected = true;
 
         selectedItem.addEventListener('click', () => {
@@ -278,9 +282,9 @@ describe('Action menu', () => {
             selectedItem.selected = selected;
         });
 
-        expect(unselectedItem.innerHTML).to.equal('One');
+        expect(unselectedItem.textContent).to.include('One');
         expect(unselectedItem.selected).to.be.false;
-        expect(selectedItem.innerHTML).to.equal('Two');
+        expect(selectedItem.textContent).to.include('Two');
         expect(selectedItem.selected).to.be.true;
 
         let opened = oneEvent(root, 'sp-opened');
@@ -307,9 +311,9 @@ describe('Action menu', () => {
         root.click();
         await opened;
 
-        expect(unselectedItem.innerHTML).to.equal('One');
+        expect(unselectedItem.textContent).to.include('One');
         expect(unselectedItem.selected).to.be.false;
-        expect(selectedItem.innerHTML).to.equal('Two');
+        expect(selectedItem.textContent).to.include('Two');
         expect(selectedItem.selected).to.be.false;
 
         // close by clicking selected
@@ -322,9 +326,9 @@ describe('Action menu', () => {
         root.click();
         await opened;
 
-        expect(unselectedItem.innerHTML).to.equal('One');
+        expect(unselectedItem.textContent).to.include('One');
         expect(unselectedItem.selected).to.be.false;
-        expect(selectedItem.innerHTML).to.equal('Two');
+        expect(selectedItem.textContent).to.include('Two');
         expect(selectedItem.selected).to.be.true;
     });
 });
