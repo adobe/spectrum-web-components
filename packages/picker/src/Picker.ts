@@ -319,7 +319,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                     selected?: boolean;
                 }
             ) => {
-                if (this.value === el.value) {
+                if (this.selects != null && this.value === el.value) {
                     el.selected = true;
                 }
                 return (el) => {
@@ -458,7 +458,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                     this,
                     `You no longer need to provide an <sp-menu> child to ${localName}. Any styling or attributes on the <sp-menu> will be ignored.`,
                     'https://opensource.adobe.com/spectrum-web-components/components/picker/#sizes',
-                    { level: 'deprecation' },
+                    { level: 'deprecation' }
                 );
             }
         }
@@ -556,6 +556,8 @@ export class PickerBase extends SizedMixin(Focusable) {
     }
 
     protected async manageSelection(): Promise<void> {
+        if (this.selects == null) return;
+
         await this.menuStatePromise;
         this.selectionPromise = new Promise(
             (res) => (this.selectionResolver = res)

@@ -84,7 +84,7 @@ export default {
     protocol: 'https:',
     concurrency: 4,
     concurrentBrowsers: 1,
-    testsFinishTimeout: 30000,
+    testsFinishTimeout: 60000,
     coverageConfig: {
         report: true,
         reportDir: 'coverage',
@@ -109,7 +109,7 @@ export default {
     },
     testFramework: {
         config: {
-            timeout: 5000,
+            timeout: 3000,
             retries: 1,
         },
     },

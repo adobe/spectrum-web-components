@@ -16,6 +16,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import { ActionMenuMarkup } from './';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
+import { MenuItem } from '@spectrum-web-components/menu/src/MenuItem.js';
 
 export default {
     component: 'sp-action-menu',
@@ -114,5 +115,54 @@ export const submenu = (): TemplateResult => {
                 </sp-menu>
             </sp-menu-item>
         </sp-action-menu>
+    `;
+};
+
+export const controlled = (): TemplateResult => {
+    const state = {
+        snap: true,
+        grid: false,
+        guides: true,
+    };
+    function toggle(prop: keyof typeof state) {
+        return (event: Event): void => {
+            const item = event.target as MenuItem;
+            state[prop] = !state[prop];
+            // in Lit-based usage, this would be handled via render():
+            // <sp-menu-item ?selected=${this.isSomethingSelected}>
+            item.selected = state[prop];
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            document.getElementById(
+                'state-json'
+            )!.textContent = `application state: ${JSON.stringify(state)}`;
+        };
+    }
+    return html`
+        <sp-action-menu label="View">
+            <sp-menu-item @click=${() => alert('action')}>
+                Non-selectable action
+            </sp-menu-item>
+            <sp-menu-item ?selected=${state.snap} @click=${toggle('snap')}>
+                Snap
+            </sp-menu-item>
+            <sp-menu-item>
+                Show
+                <sp-menu slot="submenu">
+                    <sp-menu-item
+                        ?selected=${state.grid}
+                        @click=${toggle('grid')}
+                    >
+                        Grid
+                    </sp-menu-item>
+                    <sp-menu-item
+                        ?selected=${state.guides}
+                        @click=${toggle('guides')}
+                    >
+                        Guides
+                    </sp-menu-item>
+                </sp-menu>
+            </sp-menu-item>
+        </sp-action-menu>
+        <span id="state-json"></span>
     `;
 };
