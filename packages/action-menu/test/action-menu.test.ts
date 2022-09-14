@@ -267,7 +267,7 @@ describe('Action menu', () => {
             'initially selected item should maintain selection'
         ).to.be.true;
     });
-    it.only('allows top-level selection state to change', async () => {
+    it('allows top-level selection state to change', async () => {
         const root = await actionSubmenuFixture();
         const unselectedItem = root.querySelector('sp-menu-item') as MenuItem;
         const selectedItem = root.querySelector('.selected-item') as MenuItem;
