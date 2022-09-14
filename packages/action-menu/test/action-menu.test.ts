@@ -64,12 +64,12 @@ const actionSubmenuFixture = async (): Promise<ActionMenu> =>
         html`
             <sp-action-menu label="More Actions">
                 <sp-menu-item>One</sp-menu-item>
-                <sp-menu-item>Two</sp-menu-item>
+                <sp-menu-item selected class="selected-item">Two</sp-menu-item>
                 <sp-menu-item id="item-with-submenu">
                     B should be selected
                     <sp-menu slot="submenu">
                         <sp-menu-item>A</sp-menu-item>
-                        <sp-menu-item selected id="selected-item">
+                        <sp-menu-item selected class="selected-item">
                             B
                         </sp-menu-item>
                         <sp-menu-item>C</sp-menu-item>
@@ -242,10 +242,10 @@ describe('Action menu', () => {
             'sp-menu[slot="submenu"]'
         ) as Menu;
         const selectedItem = submenu.querySelector(
-            '#selected-item'
+            '.selected-item'
         ) as MenuItem;
 
-        expect(selectedItem.selected, 'item is not initially selected').to.be
+        expect(selectedItem.selected, 'item should be initially selected').to.be
             .true;
 
         let opened = oneEvent(root, 'sp-opened');
@@ -264,7 +264,50 @@ describe('Action menu', () => {
         await elementUpdated(submenu);
         expect(
             selectedItem.selected,
-            'initially selected item is no longer selected'
+            'initially selected item should maintain selection'
         ).to.be.true;
+    });
+    it.only('allows top-level selection state to change', async () => {
+        const root = await actionSubmenuFixture();
+        const unselectedItem = root.querySelector('sp-menu-item') as MenuItem;
+        const selectedItem = root.querySelector('.selected-item') as MenuItem;
+
+        selectedItem.addEventListener('click', () => {
+            selectedItem.selected = false;
+        });
+
+        expect(unselectedItem.innerHTML).to.equal('One');
+        expect(unselectedItem.selected).to.be.false;
+        expect(selectedItem.innerHTML).to.equal('Two');
+        expect(selectedItem.selected).to.be.true;
+
+        let opened = oneEvent(root, 'sp-opened');
+        root.click();
+        await opened;
+
+        // close by clicking selected
+        // (with event listener: should set selected = false)
+        let closed = oneEvent(root, 'sp-closed');
+        selectedItem.click();
+        await closed;
+
+        opened = oneEvent(root, 'sp-opened');
+        root.click();
+        await opened;
+
+        // close by clicking unselected
+        // (no event listener: should remain selected = false)
+        closed = oneEvent(root, 'sp-closed');
+        unselectedItem.click();
+        await closed;
+
+        opened = oneEvent(root, 'sp-opened');
+        root.click();
+        await opened;
+
+        expect(unselectedItem.innerHTML).to.equal('One');
+        expect(unselectedItem.selected).to.be.false;
+        expect(selectedItem.innerHTML).to.equal('Two');
+        expect(selectedItem.selected).to.be.false;
     });
 });
