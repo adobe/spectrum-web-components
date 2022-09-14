@@ -199,7 +199,26 @@ export class Tooltip extends SpectrumElement {
         });
     };
 
-    private closeOverlay = async (): Promise<void> => {
+    private closeOverlay = async (
+        event?: PointerEvent | FocusEvent | Event
+    ): Promise<void> => {
+        if (
+            event &&
+            event.type === 'pointerleave' &&
+            (event as PointerEvent).relatedTarget === this
+        ) {
+            this.addEventListener(
+                'pointerleave',
+                (event: PointerEvent) => {
+                    if (event.relatedTarget === this.parentElement) {
+                        return;
+                    }
+                    this.closeOverlay(event);
+                },
+                { once: true }
+            );
+            return;
+        }
         if (this.abortOverlay) this.abortOverlay(true);
         if (!this.closeOverlayCallback) return;
         (await this.closeOverlayCallback)();

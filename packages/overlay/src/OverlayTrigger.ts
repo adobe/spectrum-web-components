@@ -98,6 +98,7 @@ export class OverlayTrigger extends SpectrumElement {
     private longpressContent?: HTMLElement;
     private hoverContent?: HTMLElement;
     private targetContent?: HTMLElement;
+    private overlaidContent?: HTMLElement;
 
     private _longpressId = `longpress-describedby-descriptor`;
 
@@ -209,6 +210,7 @@ export class OverlayTrigger extends SpectrumElement {
             delete this[name];
             (await canClose)();
         });
+        this.overlaidContent = undefined;
     }
 
     private manageOpen(): void {
@@ -237,6 +239,7 @@ export class OverlayTrigger extends SpectrumElement {
             },
             { once: true }
         );
+        this.overlaidContent = content;
         return OverlayTrigger.openOverlay(
             target,
             interaction,
@@ -266,6 +269,26 @@ export class OverlayTrigger extends SpectrumElement {
     }
 
     private onTrigger(event: CustomEvent<LongpressEvent>): void {
+        if (
+            event.type === 'mouseleave' &&
+            this.open === 'hover' &&
+            (event as unknown as MouseEvent).relatedTarget ===
+                this.overlaidContent
+        ) {
+            this.overlaidContent.addEventListener(
+                'mouseleave',
+                (event: MouseEvent) => {
+                    if (event.relatedTarget === this.targetContent) {
+                        return;
+                    }
+                    this.onTrigger(
+                        event as unknown as CustomEvent<LongpressEvent>
+                    );
+                },
+                { once: true }
+            );
+            return;
+        }
         if (this.disabled) return;
 
         switch (event.type) {
