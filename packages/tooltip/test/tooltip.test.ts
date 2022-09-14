@@ -74,6 +74,62 @@ describe('Tooltip', () => {
 
         expect(el.open).to.be.false;
     });
+    it('allows pointer to enter the "tooltip" without closing the "tooltip"', async () => {
+        const button = await fixture<Button>(
+            html`
+                <sp-button>
+                    This is a button.
+                    <sp-tooltip self-managed placement="bottom">
+                        Help text.
+                    </sp-tooltip>
+                </sp-button>
+            `
+        );
+
+        const el = button.querySelector('sp-tooltip') as Tooltip;
+
+        await elementUpdated(el);
+        await expect(button).to.be.accessible();
+        let opened = oneEvent(button, 'sp-opened');
+        button.dispatchEvent(new PointerEvent('pointerenter'));
+        button.dispatchEvent(
+            new PointerEvent('pointerleave', {
+                relatedTarget: el,
+            })
+        );
+        el.dispatchEvent(
+            new PointerEvent('pointerleave', {
+                relatedTarget: button,
+            })
+        );
+        await opened;
+        await elementUpdated(el);
+
+        expect(el.open).to.be.true;
+        await expect(button).to.be.accessible();
+
+        let closed = oneEvent(button, 'sp-closed');
+        button.dispatchEvent(new PointerEvent('pointerleave'));
+        await closed;
+        await elementUpdated(el);
+
+        expect(el.open).to.be.false;
+
+        opened = oneEvent(button, 'sp-opened');
+        button.dispatchEvent(new PointerEvent('pointerenter'));
+        button.dispatchEvent(
+            new PointerEvent('pointerleave', {
+                relatedTarget: el,
+            })
+        );
+        await opened;
+        await elementUpdated(el);
+
+        closed = oneEvent(button, 'sp-closed');
+        el.dispatchEvent(new PointerEvent('pointerleave'));
+        await closed;
+        await elementUpdated(el);
+    });
     it('cleans up when self manages', async () => {
         const button = await fixture<Button>(
             html`
