@@ -17,6 +17,12 @@ Users with permissions in the `@spectrum-web-components` organization on NPM can
 
 The docs site will publish automatically if the `#publish` string is included in the commit message and the check suite runs successfully.
 
+In the case of a publishing error, `yarn lerna-publish` will no longer work. Instead, you'll need to run:
+
+```
+yarn lerna-publish from-package
+```
+
 ## Publishing the docs site manually
 
 Navigate to SWC's [Actions](https://github.com/adobe/spectrum-web-components/actions) and click the `Build & publish site` link under the _Workflows_ heading.
