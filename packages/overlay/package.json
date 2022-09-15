@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/overlay",
-    "version": "0.18.2",
+    "version": "0.18.3",
     "publishConfig": {
         "access": "public"
     },

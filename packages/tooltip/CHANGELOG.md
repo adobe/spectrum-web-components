@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tooltip@0.11.2...@spectrum-web-components/tooltip@0.11.3) (2022-09-15)
+
+### Bug Fixes
+
+-   special case the possibility of leaving an overlay trigger by entering its overlay content ([c32a075](https://github.com/adobe/spectrum-web-components/commit/c32a075e0e80d89e9c71dea4a9529971691c1098))
+
 ## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tooltip@0.11.1...@spectrum-web-components/tooltip@0.11.2) (2022-09-14)
 
 **Note:** Version bump only for package @spectrum-web-components/tooltip
