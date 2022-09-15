@@ -202,15 +202,17 @@ export class Tooltip extends SpectrumElement {
     private closeOverlay = async (
         event?: PointerEvent | FocusEvent | Event
     ): Promise<void> => {
-        if (
+        const pointerIsEnteringTooltip =
             event &&
             event.type === 'pointerleave' &&
-            (event as PointerEvent).relatedTarget === this
-        ) {
+            (event as PointerEvent).relatedTarget === this;
+        if (pointerIsEnteringTooltip) {
             this.addEventListener(
                 'pointerleave',
                 (event: PointerEvent) => {
-                    if (event.relatedTarget === this.parentElement) {
+                    const pointerIsEnteringParnet =
+                        event.relatedTarget === this.parentElement;
+                    if (pointerIsEnteringParnet) {
                         return;
                     }
                     this.closeOverlay(event);
