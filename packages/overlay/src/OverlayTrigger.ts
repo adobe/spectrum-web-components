@@ -269,16 +269,18 @@ export class OverlayTrigger extends SpectrumElement {
     }
 
     private onTrigger(event: CustomEvent<LongpressEvent>): void {
-        if (
+        const mouseIsEnteringHoverContent =
             event.type === 'mouseleave' &&
             this.open === 'hover' &&
             (event as unknown as MouseEvent).relatedTarget ===
-                this.overlaidContent
-        ) {
+                this.overlaidContent;
+        if (mouseIsEnteringHoverContent && this.overlaidContent) {
             this.overlaidContent.addEventListener(
                 'mouseleave',
                 (event: MouseEvent) => {
-                    if (event.relatedTarget === this.targetContent) {
+                    const mouseIsEnteringTrigger =
+                        event.relatedTarget === this.targetContent;
+                    if (mouseIsEnteringTrigger) {
                         return;
                     }
                     this.onTrigger(
