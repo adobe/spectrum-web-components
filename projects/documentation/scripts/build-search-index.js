@@ -37,7 +37,9 @@ async function main() {
     const documents = [];
 
     // Components
-    for await (const path of globby.stream(`${projectDir}/packages/**/*.md`)) {
+    for await (const path of globby.stream(`${projectDir}/packages/**/*.md`, {
+        ignore: ['**/node_modules/**'],
+    })) {
         let componentName = /([^/]+)\/([a-zA-Z-]+)\.md$/.exec(path)[1];
         const fileName = /([a-zA-Z-]+)\.md$/.exec(path)[0];
         if (fileName === 'CHANGELOG.md') {
@@ -59,7 +61,10 @@ async function main() {
 
     // Guides
     for await (const path of globby.stream(
-        `${projectDir}/documentation/guides/*.md`
+        `${projectDir}/documentation/guides/*.md`,
+        {
+            ignore: ['**/node_modules/**'],
+        }
     )) {
         const guideName = /\/([^/]+).md$/.exec(path)[1];
         const content = await fs.readFile(path, { encoding: 'utf8' });
