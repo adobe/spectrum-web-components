@@ -286,7 +286,7 @@ describe('Overlay Trigger - Hover', () => {
     });
     it('will not return focus to a "modal" parent', async () => {
         const el = await styledFixture<OverlayTrigger>(html`
-            <overlay-trigger type="modal" placement="none">
+            <overlay-trigger type="modal">
                 <sp-button slot="trigger">Toggle Dialog</sp-button>
                 <sp-dialog-wrapper
                     slot="click-content"

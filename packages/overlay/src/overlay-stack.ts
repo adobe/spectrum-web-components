@@ -62,6 +62,10 @@ export class OverlayStack {
     private overlayHolder!: HTMLElement;
     private _eventsAreBound = false;
 
+    constructor() {
+        this.initTabTrapping();
+    }
+
     private initTabTrapping(): void {
         if (this.trappingInited) return;
         this.trappingInited = true;
@@ -153,7 +157,6 @@ export class OverlayStack {
     }
 
     private startTabTrapping(): void {
-        this.initTabTrapping();
         /* c8 ignore next 3 */
         if (!this.canTabTrap) {
             return;
