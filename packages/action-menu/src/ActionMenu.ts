@@ -16,10 +16,12 @@ import {
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
+import { state } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { PickerBase } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/action-button/sp-action-button.js';
+import { ObserveSlotPresence } from '@spectrum-web-components/shared/src/observe-slot-presence.js';
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-more.js';
 import actionMenuStyles from './action-menu.css.js';
@@ -35,7 +37,10 @@ import actionMenuStyles from './action-menu.css.js';
  *   you'd like for a selection to be held by the `sp-menu` that it presents in
  *   its overlay, use `selects="single" to activate this functionality.
  */
-export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
+export class ActionMenu extends ObserveSlotPresence(
+    ObserveSlotText(PickerBase, 'label'),
+    '[slot="label-only"]'
+) {
     public static override get styles(): CSSResultArray {
         return [actionMenuStyles];
     }
@@ -52,13 +57,28 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         return this.slotHasContent;
     }
 
+    @state()
+    private get labelOnly(): boolean {
+        return this.slotContentIsPresent;
+    }
+
     protected override get buttonContent(): TemplateResult[] {
         return [
             html`
-                <slot name="icon" slot="icon" ?icon-only=${!this.hasLabel}>
-                    <sp-icon-more class="icon"></sp-icon-more>
-                </slot>
+                ${this.labelOnly
+                    ? html``
+                    : html`
+                          <slot
+                              name="icon"
+                              slot="icon"
+                              ?icon-only=${!this.hasLabel}
+                              ?hidden=${this.labelOnly}
+                          >
+                              <sp-icon-more class="icon"></sp-icon-more>
+                          </slot>
+                      `}
                 <slot name="label" ?hidden=${!this.hasLabel}></slot>
+                <slot name="label-only"></slot>
                 <slot name="tooltip"></slot>
             `,
         ];
