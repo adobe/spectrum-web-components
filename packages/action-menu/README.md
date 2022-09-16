@@ -157,6 +157,36 @@ import { ActionMenu } from '@spectrum-web-components/action-menu';
 
 ## Variants
 
+### No icon
+
+In order to deliver an `<sp-action-menu>` without an icon, use the `label-only` slot. This will supress any icon from being displayed, both the default ellipsis icon or any icon the user might provide to the element.
+
+<!-- prettier-ignore -->
+```html
+<sp-action-menu>
+    <span slot="label-only">More Actions</span>
+    <sp-menu-item>
+        Deselect
+    </sp-menu-item>
+    <sp-menu-item>
+        Select inverse
+    </sp-menu-item>
+    <sp-menu-item>
+        Feather...
+    </sp-menu-item>
+    <sp-menu-item>
+        Select and mask...
+    </sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>
+        Save selection
+    </sp-menu-item>
+    <sp-menu-item disabled>
+        Make work path
+    </sp-menu-item>
+</sp-action-menu>
+```
+
 ### No visible label
 
 The visible label that is be provided via the default `<slot>` interface can be ommitted in preference of an icon only interface. In this context be sure that the `<sp-action-menu>` continued to be accessible to screen readers by applying the `label` attribute. This will apply an `aria-label` attribute of the same value to the `<button>` element that toggles the menu list.
