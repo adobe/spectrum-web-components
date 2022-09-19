@@ -17,11 +17,34 @@ import { IconsMedium } from '@spectrum-web-components/icons';
 import { Icon } from '@spectrum-web-components/icon';
 import { IconsetRegistry } from '@spectrum-web-components/iconset/src/iconset-registry.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { stub } from 'sinon';
 
 describe('Iconset', () => {
     after(() => {
         const sets = [...document.querySelectorAll('sp-icons-medium')];
         sets.map((set) => set.remove());
+    });
+    it('warns in Dev Mode of deprecation', async () => {
+        const consoleWarnStub = stub(console, 'warn');
+        const el = document.createElement('sp-icons-medium');
+        document.body.append(el);
+
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        const spyCall = consoleWarnStub.getCall(0);
+        expect(
+            spyCall.args.at(0).includes('deprecated'),
+            'confirm deprecation message'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-icons-medium',
+                type: 'api',
+                level: 'deprecation',
+            },
+        });
+        consoleWarnStub.restore();
     });
 
     it('will re-register with new name', async () => {

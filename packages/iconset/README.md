@@ -28,3 +28,7 @@ export class IconsLarge extends IconsetSVG {
     }
 }
 ```
+
+### Deprecated
+
+Iconsets have been deprecated and will be removed from the project in an upcoming version. Using a technique that ensures only the icons actually leveraged in your application are present in your build, like UI Icons (../icons-ui/) or Workflow Icons (../icons-workflow/), will ensure smaller bundles and higher performance for you visitor. For non-Spectrum icons, you can still slot SVG and image content into an [`sp-icon` element](../icon/) or sanitize the SVG to a template literal so that it can be returned from the `render()` method in an extension of `IconBase` to create your own named icon element.
