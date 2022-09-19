@@ -467,10 +467,15 @@ export class MenuItem extends LikeAnchor(Focusable) {
             if (this.active) {
                 this.addEventListener('pointerup', this.handleRemoveActive);
                 this.addEventListener('pointerleave', this.handleRemoveActive);
+                this.addEventListener('pointercancel', this.handleRemoveActive);
             } else {
                 this.removeEventListener('pointerup', this.handleRemoveActive);
                 this.removeEventListener(
                     'pointerleave',
+                    this.handleRemoveActive
+                );
+                this.removeEventListener(
+                    'pointercancel',
                     this.handleRemoveActive
                 );
             }
