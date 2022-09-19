@@ -57,6 +57,63 @@ describe('Overlay Trigger - Hover', () => {
             await closed;
         }
     });
+    it('will not return focus to a "modal" parent', async () => {
+        const el = await styledFixture<OverlayTrigger>(html`
+            <overlay-trigger type="modal" placement="none">
+                <sp-button slot="trigger">Toggle Dialog</sp-button>
+                <sp-dialog-wrapper
+                    slot="click-content"
+                    headline="Dialog title"
+                    size="s"
+                >
+                    ${[1, 2, 3, 4].map(
+                        (index) => html`
+                            <overlay-trigger>
+                                <sp-button slot="trigger" id="button-${index}">
+                                    Button with Tooltip ${index}
+                                </sp-button>
+                                <sp-tooltip slot="hover-content">
+                                    Tooltip ${index}
+                                </sp-tooltip>
+                            </overlay-trigger>
+                        `
+                    )}
+                </sp-dialog-wrapper>
+            </overlay-trigger>
+        `);
+        await elementUpdated(el);
+
+        const button = el.querySelector('sp-button') as Button;
+        const dialog = el.querySelector('sp-dialog-wrapper') as HTMLElement;
+        await elementUpdated(button);
+        await elementUpdated(dialog);
+
+        let opened = oneEvent(button, 'sp-opened');
+        button.dispatchEvent(new Event('click', { bubbles: true }));
+        await opened;
+        const button1 = dialog.querySelector('#button-1') as Button;
+        const button2 = dialog.querySelector('#button-2') as Button;
+
+        opened = oneEvent(button1, 'sp-opened');
+        sendKeys({
+            press: 'Tab',
+        });
+        await opened;
+
+        await nextFrame();
+
+        expect(button1 === document.activeElement).to.be.true;
+
+        opened = oneEvent(button2, 'sp-opened');
+        sendKeys({
+            press: 'Tab',
+        });
+        await opened;
+
+        await nextFrame();
+
+        expect(button2 === document.activeElement).to.be.true;
+    });
     it('displays `hover` declaratively', async () => {
         const openedSpy = spy();
         const closedSpy = spy();
@@ -283,62 +340,5 @@ describe('Overlay Trigger - Hover', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.null;
-    });
-    it('will not return focus to a "modal" parent', async () => {
-        const el = await styledFixture<OverlayTrigger>(html`
-            <overlay-trigger type="modal">
-                <sp-button slot="trigger">Toggle Dialog</sp-button>
-                <sp-dialog-wrapper
-                    slot="click-content"
-                    headline="Dialog title"
-                    size="s"
-                >
-                    ${[1, 2, 3, 4].map(
-                        (index) => html`
-                            <overlay-trigger>
-                                <sp-button slot="trigger" id="button-${index}">
-                                    Button with Tooltip ${index}
-                                </sp-button>
-                                <sp-tooltip slot="hover-content">
-                                    Tooltip ${index}
-                                </sp-tooltip>
-                            </overlay-trigger>
-                        `
-                    )}
-                </sp-dialog-wrapper>
-            </overlay-trigger>
-        `);
-        await elementUpdated(el);
-
-        const button = el.querySelector('sp-button') as Button;
-        const dialog = el.querySelector('sp-dialog-wrapper') as HTMLElement;
-        await elementUpdated(button);
-        await elementUpdated(dialog);
-
-        let opened = oneEvent(button, 'sp-opened');
-        button.dispatchEvent(new Event('click', { bubbles: true }));
-        await opened;
-        const button1 = dialog.querySelector('#button-1') as Button;
-        const button2 = dialog.querySelector('#button-2') as Button;
-
-        opened = oneEvent(button1, 'sp-opened');
-        sendKeys({
-            press: 'Tab',
-        });
-        await opened;
-
-        await nextFrame();
-
-        expect(button1 === document.activeElement).to.be.true;
-
-        opened = oneEvent(button2, 'sp-opened');
-        sendKeys({
-            press: 'Tab',
-        });
-        await opened;
-
-        await nextFrame();
-
-        expect(button2 === document.activeElement).to.be.true;
     });
 });
