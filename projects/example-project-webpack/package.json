@@ -28,7 +28,7 @@
         "http-server": "^14.0.0",
         "mini-css-extract-plugin": "^2.4.4",
         "postcss-import": "^14.1.0",
-        "postcss-loader": "^6.2.0",
+        "postcss-loader": "^7.0.1",
         "postcss-preset-env": "^7.7.2",
         "style-loader": "^3.3.1",
         "webpack": "^5.64.1",
