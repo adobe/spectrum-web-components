@@ -66,6 +66,16 @@ export class OverlayStack {
     }
 
     private initTabTrapping(): void {
+        /* c8 ignore next 5 */
+        if (document.readyState === 'loading') {
+            document.addEventListener(
+                'readystatechange',
+                () => {
+                    this.initTabTrapping();
+                },
+                { once: true }
+            );
+        }
         /* c8 ignore next 4 */
         if (this.document.body.shadowRoot) {
             this.canTabTrap = false;
