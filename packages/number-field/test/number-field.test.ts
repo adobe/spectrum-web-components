@@ -31,11 +31,8 @@ import {
 } from '@spectrum-web-components/number-field';
 import { sendKeys, setUserAgent } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import {
-    clickBySelector,
-    createLanguageContext,
-    getElFrom,
-} from './helpers.js';
+import { clickBySelector, getElFrom } from './helpers.js';
+import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
@@ -74,7 +71,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(13377331);
         });
         it('with language context', async () => {
-            const languageContext = createLanguageContext('fr');
+            const [languageContext] = createLanguageContext('fr');
             const el = await getElFrom(html`
                 <div @sp-language-context=${languageContext}>
                     ${Default({ value: 1337 })}

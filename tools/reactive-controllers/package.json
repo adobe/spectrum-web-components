@@ -33,6 +33,10 @@
             "development": "./src/FocusGroup.dev.js",
             "default": "./src/FocusGroup.js"
         },
+        "./src/LanguageResolution.js": {
+            "development": "./src/LanguageResolution.dev.js",
+            "default": "./src/LanguageResolution.js"
+        },
         "./src/MatchMedia.js": {
             "development": "./src/MatchMedia.dev.js",
             "default": "./src/MatchMedia.js"
