@@ -57,7 +57,6 @@ export class OverlayStack {
     private overlayTimer = new OverlayTimer();
 
     private canTabTrap = true;
-    private trappingInited = false;
     private tabTrapper!: HTMLElement;
     private overlayHolder!: HTMLElement;
     private _eventsAreBound = false;
@@ -67,8 +66,6 @@ export class OverlayStack {
     }
 
     private initTabTrapping(): void {
-        if (this.trappingInited) return;
-        this.trappingInited = true;
         /* c8 ignore next 4 */
         if (this.document.body.shadowRoot) {
             this.canTabTrap = false;
@@ -167,7 +164,7 @@ export class OverlayStack {
 
     private stopTabTrapping(): void {
         /* c8 ignore next 3 */
-        if (!this.canTabTrap || !this.trappingInited) {
+        if (!this.canTabTrap) {
             return;
         }
         this.tabTrapper.removeAttribute('tabindex');
@@ -179,7 +176,6 @@ export class OverlayStack {
     ): Promise<void> => {
         const topOverlay = this.overlays[this.overlays.length - 1];
         if (
-            !this.trappingInited ||
             topOverlay.interaction !== 'modal' ||
             event.target !== this.overlayHolder
         ) {
