@@ -24,9 +24,9 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
-import { ProvideLang } from '@spectrum-web-components/theme';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { stub } from 'sinon';
+import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Slider', () => {
@@ -832,15 +832,7 @@ describe('Slider', () => {
         expect(input.getAttribute('aria-valuetext')).to.equal('100%');
     });
     it('obeys language property', async () => {
-        let lang = 'de';
-        const langResolvers: ProvideLang['callback'][] = [];
-        const createLangResolver = (event: CustomEvent<ProvideLang>): void => {
-            langResolvers.push(event.detail.callback);
-            resolveLanguage();
-        };
-        const resolveLanguage = (): void => {
-            langResolvers.forEach((resolver) => resolver(lang));
-        };
+        const [languageContext, updateLanguage] = createLanguageContext('de');
         let el = await fixture<Slider>(
             html`
                 <sp-slider
@@ -848,7 +840,7 @@ describe('Slider', () => {
                     min="0"
                     max="10"
                     step="0.01"
-                    @sp-language-context=${createLangResolver}
+                    @sp-language-context=${languageContext}
                     .formatOptions=${{ maximumFractionDigits: 2 }}
                 ></sp-slider>
             `
@@ -862,8 +854,7 @@ describe('Slider', () => {
             'First German number'
         ).to.equal('2,44');
 
-        lang = 'en';
-        resolveLanguage();
+        updateLanguage('en');
         await elementUpdated(el);
 
         expect(
@@ -871,21 +862,20 @@ describe('Slider', () => {
             'First English number'
         ).to.equal('2.44');
 
-        lang = 'de';
-        resolveLanguage();
+        updateLanguage('de');
         el = await fixture<Slider>(
             html`
                 <sp-slider
                     min="0"
                     max="10"
-                    @sp-language-context=${createLangResolver}
+                    @sp-language-context=${languageContext}
                 >
                     <sp-slider-handle
                         slot="handle"
                         step="0.01"
                         value="2.44"
                         .formatOptions=${{ maximumFractionDigits: 2 }}
-                        @sp-language-context=${createLangResolver}
+                        @sp-language-context=${languageContext}
                     ></sp-slider-handle>
                 </sp-slider>
             `
@@ -899,8 +889,7 @@ describe('Slider', () => {
             'Second German number'
         ).to.equal('2,44');
 
-        lang = 'en';
-        resolveLanguage();
+        updateLanguage('en');
         await elementUpdated(el);
 
         expect(

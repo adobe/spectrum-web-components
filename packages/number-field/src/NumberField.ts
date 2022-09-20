@@ -20,7 +20,7 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { ProvideLang } from '@spectrum-web-components/theme';
+import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { NumberFormatter, NumberParser } from '@internationalized/number';
 
@@ -103,10 +103,6 @@ export class NumberField extends TextfieldBase {
     @property({ type: Number })
     public min?: number;
 
-    @property({ attribute: false })
-    private resolvedLanguage =
-        document.documentElement.lang || navigator.language;
-
     /**
      * The distance by which to alter the value of the element when taking a "step".
      *
@@ -183,6 +179,7 @@ export class NumberField extends TextfieldBase {
     private findChange!: (event: PointerEvent) => void;
     private change!: (event: PointerEvent) => void;
     private safty!: number;
+    private languageResolver = new LanguageResolutionController(this);
 
     private handlePointerdown(event: PointerEvent): void {
         if (event.button !== 0) {
@@ -440,12 +437,12 @@ export class NumberField extends TextfieldBase {
                 (formatOptionsNoUnit as Intl.NumberFormatOptions).style = style;
             }
             this._numberFormatterFocused = new NumberFormatter(
-                this.resolvedLanguage,
+                this.languageResolver.language,
                 formatOptionsNoUnit
             );
             try {
                 this._numberFormatter = new NumberFormatter(
-                    this.resolvedLanguage,
+                    this.languageResolver.language,
                     this.formatOptions
                 );
                 this._forcedUnit = '';
@@ -478,12 +475,12 @@ export class NumberField extends TextfieldBase {
                 (formatOptionsNoUnit as Intl.NumberFormatOptions).style = style;
             }
             this._numberParserFocused = new NumberParser(
-                this.resolvedLanguage,
+                this.languageResolver.language,
                 formatOptionsNoUnit
             );
             try {
                 this._numberParser = new NumberParser(
-                    this.resolvedLanguage,
+                    this.languageResolver.language,
                     this.formatOptions
                 );
                 this._forcedUnit = '';
@@ -617,32 +614,5 @@ export class NumberField extends TextfieldBase {
             }
             this.inputElement.inputMode = inputMode;
         }
-    }
-
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        this.resolveLanguage();
-    }
-
-    public override disconnectedCallback(): void {
-        this.resolveLanguage();
-        super.disconnectedCallback();
-    }
-
-    private resolveLanguage(): void {
-        const queryThemeEvent = new CustomEvent<ProvideLang>(
-            'sp-language-context',
-            {
-                bubbles: true,
-                composed: true,
-                detail: {
-                    callback: (lang: string) => {
-                        this.resolvedLanguage = lang;
-                    },
-                },
-                cancelable: true,
-            }
-        );
-        this.dispatchEvent(queryThemeEvent);
     }
 }
