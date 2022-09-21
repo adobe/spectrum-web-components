@@ -65,7 +65,7 @@ governing permissions and limitations under the License.
 :host(:lang(ko)),
 :host(:lang(zh)) {
     --spectrum-radio-cjk-line-height: var(
-        --spectrum-CJK-line-height-100
+        --spectrum-cjk-line-height-100
     ); /* .spectrum-Radio:lang(ja),
    * .spectrum-Radio:lang(zh),
    * .spectrum-Radio:lang(ko) */

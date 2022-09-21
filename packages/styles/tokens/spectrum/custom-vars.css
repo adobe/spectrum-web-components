@@ -19,6 +19,7 @@ governing permissions and limitations under the License.
 :host,
 :root {
     --spectrum-animation-duration-100: 130ms;
+    --spectrum-animation-duration-200: 160ms;
 
     --spectrum-font-family-base: adobe-clean, 'Source Sans Pro', -apple-system,
         BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
@@ -40,4 +41,8 @@ governing permissions and limitations under the License.
     --spectrum-font-weight-bold: 700;
     --spectrum-font-weight-extra-bold: 800;
     --spectrum-font-weight-black: 900;
+
+    /* static white / black background color for docs containers */
+    --spectrum-docs-static-white-background-color: rgb(15, 121, 125);
+    --spectrum-docs-static-black-background-color: rgb(206, 247, 243);
 }

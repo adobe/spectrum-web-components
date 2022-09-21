@@ -13,6 +13,22 @@ governing permissions and limitations under the License.
 :host,
 :root {
     --spectrum-overlay-opacity: 0.4;
+    --spectrum-gray-background-color-default: var(--spectrum-gray-700);
+    --spectrum-red-background-color-default: var(--spectrum-red-600);
+    --spectrum-orange-background-color-default: var(--spectrum-orange-600);
+    --spectrum-yellow-background-color-default: var(--spectrum-yellow-400);
+    --spectrum-chartreuse-background-color-default: var(
+        --spectrum-chartreuse-500
+    );
+    --spectrum-celery-background-color-default: var(--spectrum-celery-600);
+    --spectrum-green-background-color-default: var(--spectrum-green-900);
+    --spectrum-seafoam-background-color-default: var(--spectrum-seafoam-900);
+    --spectrum-cyan-background-color-default: var(--spectrum-cyan-900);
+    --spectrum-blue-background-color-default: var(--spectrum-blue-900);
+    --spectrum-indigo-background-color-default: var(--spectrum-indigo-900);
+    --spectrum-purple-background-color-default: var(--spectrum-purple-900);
+    --spectrum-fuchsia-background-color-default: var(--spectrum-fuchsia-900);
+    --spectrum-magenta-background-color-default: var(--spectrum-magenta-900);
     --spectrum-neutral-background-color-default: var(--spectrum-gray-800);
     --spectrum-neutral-background-color-hover: var(--spectrum-gray-900);
     --spectrum-neutral-background-color-down: var(--spectrum-gray-900);
