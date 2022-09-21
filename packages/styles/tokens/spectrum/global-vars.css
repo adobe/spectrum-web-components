@@ -26,6 +26,9 @@ governing permissions and limitations under the License.
     --spectrum-accent-color-1200: var(--spectrum-blue-1200);
     --spectrum-accent-color-1300: var(--spectrum-blue-1300);
     --spectrum-accent-color-1400: var(--spectrum-blue-1400);
+    --spectrum-heading: var(--spectrum-font-bold-default);
+    --spectrum-heading-emphasized: var(--spectrum-font-bold-italic-default);
+    --spectrum-cjk-heading: var(--spectrum-font-extra-bold-cjk);
     --spectrum-border-width-100: 1px;
 }
 :host,
