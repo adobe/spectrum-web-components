@@ -248,8 +248,8 @@ export class OverlayStack {
 
         const contentWithLifecycle =
             details.content as unknown as ManagedOverlayContent;
+        const { trigger } = details;
         if (contentWithLifecycle.overlayWillOpenCallback) {
-            const { trigger } = details;
             contentWithLifecycle.overlayWillOpenCallback({ trigger });
         }
 
@@ -264,7 +264,6 @@ export class OverlayStack {
             const cancelled = await Promise.race(promises);
             if (cancelled) {
                 if (contentWithLifecycle.overlayOpenCancelledCallback) {
-                    const { trigger } = details;
                     contentWithLifecycle.overlayOpenCancelledCallback({
                         trigger,
                     });
@@ -585,8 +584,20 @@ export class OverlayStack {
         if (this.preventMouseRootClose || event.defaultPrevented) {
             return;
         }
-        this.closeTopOverlay();
         const overlaysToClose = [];
+        // Find the top most overlay that is not triggered by an
+        // element on the path of the current click event.
+        let index = this.overlays.length;
+        while (index && overlaysToClose.length === 0) {
+            index -= 1;
+            const overlay = this.overlays[index];
+            if (
+                !event.composedPath().includes(overlay.trigger) ||
+                overlay.interaction !== 'hover'
+            ) {
+                overlaysToClose.push(overlay);
+            }
+        }
         let root: HTMLElement | undefined = this.topOverlay?.root;
         let overlay = parentOverlayOf(root);
         while (root && overlay) {
