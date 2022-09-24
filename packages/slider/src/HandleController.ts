@@ -346,7 +346,9 @@ export class HandleController implements Controller {
         }
         this.host.track.setPointerCapture(event.pointerId);
         this.updateBoundingRect();
-        this.host.labelEl.click();
+        if (event.pointerType === 'mouse') {
+            this.host.labelEl.click();
+        }
         this.draggingHandle = model.handle;
         model.handle.dragging = true;
         this.activateHandle(model.name);
@@ -363,7 +365,9 @@ export class HandleController implements Controller {
         const { input, model } = this.extractDataFromEvent(event);
         delete this._activePointerEventData;
         if (!model) return;
-        this.host.labelEl.click();
+        if (event.pointerType === 'mouse') {
+            this.host.labelEl.click();
+        }
         this.cancelDrag(model);
         this.requestUpdate();
         this.host.track.releasePointerCapture(event.pointerId);
