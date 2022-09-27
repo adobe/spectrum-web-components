@@ -44,7 +44,7 @@
         "alex": "^10.0.0",
         "lunr": "^2.3.9",
         "markdown-it-anchor": "^8.4.1",
-        "postcss-cli": "^9.1.0",
+        "postcss-cli": "^10.0.0",
         "posthtml": "^0.16.5",
         "posthtml-attrs-parser": "^0.1.1",
         "posthtml-match-helper": "^1.0.1",
