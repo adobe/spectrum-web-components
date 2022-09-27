@@ -4129,10 +4129,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/splitview/-/splitview-3.0.22.tgz#d875ab462c4459f82bdbe4cd6c09bd2a732d0029"
   integrity sha512-16O4y/luqaWuAKmeOXJX1TnDXu5Xn4VKVh/cCPnWKITX/PDKrgx1XxIniWpkSh6TdgLoi8aaf7CUwu8KRBTp+A==
 
-"@spectrum-css/statuslight@^5.0.0-beta.1":
-  version "5.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/statuslight/-/statuslight-5.0.0-beta.1.tgz#df187022c6453e7b6d680e927797cacbc6600648"
-  integrity sha512-IroDWwudZfXNp8oSki9RhhdCQ1vGWCI42sYTouYApYpHfdL6u7WFL2kbuYsbSczmiGNcmHujbhGkfxi7zLKBag==
+"@spectrum-css/statuslight@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/statuslight/-/statuslight-5.0.0.tgz#77dd8fc43105945ba165b55a46e037316e8301ab"
+  integrity sha512-ZHDtKaRL3fpVTeMVFy4bdsYjt7pSrwS3OF4UkWwCqYhe4TZ00Trv8jhI0oMd786XAlzJ4w//6muYsjPGJCkqDA==
 
 "@spectrum-css/stepper@^3.0.26":
   version "3.0.26"
