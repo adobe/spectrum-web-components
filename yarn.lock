@@ -18741,9 +18741,9 @@ posthtml-attrs-parser@^0.1.1:
     object-assign "^4.0.1"
 
 posthtml-match-helper@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/posthtml-match-helper/-/posthtml-match-helper-1.0.1.tgz#451253de8e5844a348e963ad5edd7769eb129513"
-  integrity sha1-RRJT3o5YRKNI6WOtXt13aesSlRM=
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/posthtml-match-helper/-/posthtml-match-helper-1.0.3.tgz#9308f0bdc66398735f7117441feca64f131956d5"
+  integrity sha512-aeRAPvok2Fs6uzSm85665jdAk5UOd8US2QCkWtGU6yLPlKSwzWTSgZZuABc3UeNy3K1lVk/HV9bRkWJYN05Ymw==
 
 posthtml-parser@^0.11.0:
   version "0.11.0"
