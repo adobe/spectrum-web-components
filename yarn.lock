@@ -4079,6 +4079,11 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/picker/-/picker-1.2.12.tgz#1d60daabb0b6e09a26b4f2380b80cb1baa3b8bc0"
   integrity sha512-WdV16JVgdQp3XJ0ymfbbB4A1emXZAX2Z9cqDf+UsaFNg7wOkNrhXl5paj9J7wOdALHU6uJN1EfNRhWMrTZQxGw==
 
+"@spectrum-css/pickerbutton@^1.1.22":
+  version "1.1.22"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/pickerbutton/-/pickerbutton-1.1.22.tgz#0b39cc6cc280996a517647f6eddfc5c52d80adea"
+  integrity sha512-xa0Oo86z16iILCeUWEHTFZXp+Dv7Ae9KcOAAiibzJrmjsPTqrYD8Pijiq0GV7BWb5dY04+zQT+Zm//2CJDu9UQ==
+
 "@spectrum-css/popover@^5.0.18":
   version "5.0.18"
   resolved "https://registry.yarnpkg.com/@spectrum-css/popover/-/popover-5.0.18.tgz#4e8d1b15b0f96ff3c19a6642ebae7937e99723a4"

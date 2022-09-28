@@ -11,11 +11,11 @@ import styles from './{{ name }}.css.js';
  * @element {{> tagnamePartial }}
  */
 export class {{className name}} extends SpectrumElement {
-    public static get styles(): CSSResultArray {
+    public static override get styles(): CSSResultArray {
         return [styles];
     }
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             Markup goes here
         `;
