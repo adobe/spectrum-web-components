@@ -102,6 +102,7 @@
         "@spectrum-web-components/number-field": "^0.5.2",
         "@spectrum-web-components/overlay": "^0.18.3",
         "@spectrum-web-components/picker": "^0.13.3",
+        "@spectrum-web-components/picker-button": "^0.0.1",
         "@spectrum-web-components/popover": "^0.12.3",
         "@spectrum-web-components/progress-bar": "^0.7.0",
         "@spectrum-web-components/progress-circle": "^0.6.0",

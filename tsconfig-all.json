@@ -58,6 +58,7 @@
         { "path": "packages/number-field" },
         { "path": "packages/overlay" },
         { "path": "packages/picker" },
+        { "path": "packages/picker-button" },
         { "path": "packages/popover" },
         { "path": "packages/progress-bar" },
         { "path": "packages/progress-circle" },

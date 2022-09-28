@@ -43,6 +43,7 @@
         { "path": "../meter" },
         { "path": "../number-field" },
         { "path": "../picker" },
+        { "path": "../picker-button" },
         { "path": "../popover" },
         { "path": "../progress-bar" },
         { "path": "../progress-circle" },
