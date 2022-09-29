@@ -311,7 +311,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 } else if (
                     !Theme.themeFragmentsByKind
                         .get(name)
-                        ?.get(resolvedValue + themeModifier)
+                        ?.get(
+                            resolvedValue +
+                                (name === 'theme' ? '' : themeModifier)
+                        )
                 ) {
                     issues.push(
                         `You have set "${name}='${resolvedValue}'" but the associated theme fragment has not been loaded.`
@@ -327,8 +330,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                     'You are leveraging an <sp-theme> element and the following issues may disrupt your theme delivery:',
                     'https://opensource.adobe.com/spectrum-web-components/components/theme/#example',
                     {
-                        issues
-                    },
+                        issues,
+                    }
                 );
             }
         }
