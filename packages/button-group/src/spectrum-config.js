@@ -24,6 +24,28 @@ const config = {
                     selector: '.spectrum-ButtonGroup--vertical',
                     name: 'vertical',
                 },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    values: [
+                        {
+                            selector: '.spectrum-ButtonGroup--sizeS',
+                            name: 's',
+                        },
+                        {
+                            selector: '.spectrum-ButtonGroup--sizeM',
+                            name: 'm',
+                        },
+                        {
+                            selector: '.spectrum-ButtonGroup--sizeL',
+                            name: 'l',
+                        },
+                        {
+                            selector: '.spectrum-ButtonGroup--sizeXL',
+                            name: 'xl',
+                        },
+                    ],
+                },
             ],
             slots: [
                 {
