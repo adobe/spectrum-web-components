@@ -77,7 +77,8 @@ export class SideNavItem extends LikeAnchor(Focusable) {
         if (!this.href && event) {
             event.preventDefault();
         }
-        if (!this.disabled) {
+        // With an `href` this click will change the page contents, not toggle its children or become "selected".
+        if (!this.disabled && (!this.href || event?.defaultPrevented)) {
             if (this.hasChildren) {
                 this.expanded = !this.expanded;
             } else if (this.value) {
