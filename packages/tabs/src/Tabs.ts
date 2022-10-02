@@ -124,12 +124,12 @@ export class Tabs extends SizedMixin(Focusable) {
         new IntersectionController(this, {
             config: {
                 root: null,
-                rootMargin: "0px",
-                threshold: [0, 1]
+                rootMargin: '0px',
+                threshold: [0, 1],
             },
             callback: () => {
                 this.updateSelectionIndicator();
-            }
+            },
         });
     }
 
@@ -357,15 +357,16 @@ export class Tabs extends SizedMixin(Focusable) {
             document.fonts ? document.fonts.ready : Promise.resolve(),
         ]);
         const tabBoundingClientRect = selectedElement.getBoundingClientRect();
+        const tabPanelClientRect = this.getBoundingClientRect();
 
         if (this.direction === 'horizontal') {
             const width = tabBoundingClientRect.width;
-            const offset = selectedElement.offsetLeft;
+            const offset = tabBoundingClientRect.left - tabPanelClientRect.left;
 
             this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${width});`;
         } else {
             const height = tabBoundingClientRect.height;
-            const offset = selectedElement.offsetTop;
+            const offset = tabBoundingClientRect.top - tabPanelClientRect.top;
 
             this.selectionIndicatorStyle = `transform: translateY(${offset}px) scaleY(${height});`;
         }
