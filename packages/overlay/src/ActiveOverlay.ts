@@ -277,6 +277,8 @@ export class ActiveOverlay extends SpectrumElement {
         );
 
         this.state = 'active';
+        // force paint
+        this.offsetWidth;
         this.feature();
         if (this.placement === 'none') {
             this.style.setProperty(
