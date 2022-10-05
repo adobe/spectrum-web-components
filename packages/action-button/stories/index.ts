@@ -38,7 +38,7 @@ export function renderButton(properties: Properties): TemplateResult {
         <sp-action-button
             ?quiet="${!!properties.quiet}"
             ?emphasized="${!!properties.emphasized}"
-            variant="${ifDefined(properties.variant)}"
+            static="${ifDefined(properties.variant)}"
             ?disabled=${!!properties.disabled}
             ?selected=${!!properties.selected}
             ?toggles=${!!properties.toggles}

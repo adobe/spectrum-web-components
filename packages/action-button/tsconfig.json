@@ -10,6 +10,7 @@
         { "path": "../../tools/base" },
         { "path": "../button" },
         { "path": "../icon" },
-        { "path": "../icons-ui" }
+        { "path": "../icons-ui" },
+        { "path": "../../tools/shared" }
     ]
 }

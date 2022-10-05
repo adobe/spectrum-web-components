@@ -23,7 +23,10 @@ export async function testForLitDevWarnings(
 
         await elementUpdated(el);
 
-        expect(consoleWarnStub.called).to.be.false;
+        expect(
+            consoleWarnStub.called,
+            consoleWarnStub.getCall(0)?.args.join(', ')
+        ).to.be.false;
         consoleWarnStub.restore();
     });
 }

@@ -13,6 +13,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -26,10 +27,21 @@ export class IconBase extends SpectrumElement {
     }
 
     @property()
-    public label?: string;
+    public label = '';
 
     @property({ reflect: true })
     public size?: 's' | 'm' | 'l' | 'xl' | 'xxl';
+
+    protected override update(changes: PropertyValues): void {
+        if (changes.has('label')) {
+            if (this.label) {
+                this.removeAttribute('aria-hidden');
+            } else {
+                this.setAttribute('aria-hidden', 'true');
+            }
+        }
+        super.update(changes);
+    }
 
     protected override render(): TemplateResult {
         return html`
