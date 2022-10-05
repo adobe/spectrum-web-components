@@ -106,6 +106,9 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
     @property({ type: String })
     public selects: undefined | 'single' | 'multiple';
 
+    @property({ reflect: true })
+    public static?: 'white' | 'black';
+
     @property({ type: Boolean, reflect: true })
     public vertical = false;
 
@@ -329,11 +332,12 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
             this.manageChildren();
         }
         if (
-            (changes.has('quiet') && this.quiet) ||
-            (changes.has('emphasized') && this.emphasized) ||
-            (changes.has('size') && this.size)
+            changes.has('quiet') ||
+            changes.has('emphasized') ||
+            changes.has('size') ||
+            changes.has('static')
         ) {
-            this.manageChildren();
+            this.manageChildren(changes);
         }
         // Update `aria-label` when `label` available or not first `updated`
         if (
@@ -348,12 +352,21 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         }
     }
 
-    private manageChildren(): void {
+    private manageChildren(changes?: PropertyValues): void {
         this.buttons.forEach((button) => {
-            button.quiet = this.quiet;
-            button.emphasized = this.emphasized;
+            if (this.quiet || changes?.get('quiet')) {
+                button.quiet = this.quiet;
+            }
+            if (this.emphasized || changes?.get('emphasized')) {
+                button.emphasized = this.emphasized;
+            }
+            if (this.static || changes?.get('static')) {
+                button.static = this.static;
+            }
             button.selected = this.selected.includes(button.value);
-            button.size = this.size;
+            if (this.size) {
+                button.size = this.size;
+            }
         });
     }
 

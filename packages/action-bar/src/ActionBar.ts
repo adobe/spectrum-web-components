@@ -18,7 +18,11 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/action-group/sp-action-group.js';
+import '@spectrum-web-components/button/sp-close-button.js';
+import '@spectrum-web-components/field-label/sp-field-label.js';
 import actionBarStyles from './action-bar.css.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 export const actionBarVariants = ['sticky', 'fixed'];
 
 /**
@@ -29,6 +33,12 @@ export class ActionBar extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [actionBarStyles];
     }
+
+    /**
+     * Deliver the Action Bar with additional visual emphasis.
+     */
+    @property({ type: Boolean, reflect: true })
+    public emphasized = false;
 
     /**
      * When `flexible` the action bar sizes itself to its content
@@ -68,10 +78,45 @@ export class ActionBar extends SpectrumElement {
 
     private _variant = '';
 
+    private handleClick(): void {
+        this.open = false;
+
+        const applyDefault = this.dispatchEvent(
+            new Event('close', {
+                bubbles: true,
+            })
+        );
+
+        if (!applyDefault) {
+            this.open = true;
+        }
+    }
+
     public override render(): TemplateResult {
         return html`
             <sp-popover ?open=${this.open} id="popover">
-                <slot></slot>
+                <slot name="override">
+                    <sp-close-button
+                        static=${ifDefined(
+                            this.emphasized ? 'white' : undefined
+                        )}
+                        class="close-button"
+                        label="Clear selection"
+                        @click=${this.handleClick}
+                    ></sp-close-button>
+                    <sp-field-label class="field-label">
+                        <slot></slot>
+                    </sp-field-label>
+                    <sp-action-group
+                        class="action-group"
+                        quiet
+                        static=${ifDefined(
+                            this.emphasized ? 'white' : undefined
+                        )}
+                    >
+                        <slot name="buttons"></slot>
+                    </sp-action-group>
+                </slot>
             </sp-popover>
         `;
     }

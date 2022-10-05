@@ -19,6 +19,7 @@
         { "path": "packages/accordion" },
         { "path": "packages/action-bar" },
         { "path": "packages/action-button" },
+        { "path": "packages/action-group" },
         { "path": "packages/action-menu" },
         { "path": "packages/asset" },
         { "path": "packages/avatar" },

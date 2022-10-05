@@ -70,6 +70,7 @@ const tokenPackages = [
     'textfield',
     'search',
     'tabs',
+    'actionbar',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {

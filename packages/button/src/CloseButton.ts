@@ -70,6 +70,9 @@ export class CloseButton extends SizedMixin(StyledButton) {
     @property({ reflect: true })
     public variant: ButtonStatics | '' = '';
 
+    @property({ type: String, reflect: true })
+    public static: 'black' | 'white' | undefined;
+
     protected override get buttonContent(): TemplateResult[] {
         return [crossIcon[this.size]()];
     }

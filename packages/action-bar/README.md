@@ -28,15 +28,29 @@ import { ActionBar } from '@spectrum-web-components/action-bar';
 
 ```html
 <sp-action-bar open>
-    <sp-checkbox indeterminate>228 Selected</sp-checkbox>
-    <sp-action-group quiet>
-        <sp-action-button label="Edit">
-            <sp-icon-edit slot="icon"></sp-icon-edit>
-        </sp-action-button>
-        <sp-action-button label="More">
-            <sp-icon-more slot="icon"></sp-icon-more>
-        </sp-action-button>
-    </sp-action-group>
+    2 selected
+    <sp-action-button slot="buttons" label="Edit">
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+    </sp-action-button>
+    <sp-action-button slot="buttons" label="More">
+        <sp-icon-more slot="icon"></sp-icon-more>
+    </sp-action-button>
+</sp-action-bar>
+```
+
+## Emphasized
+
+Use the `emphasized` attribute to add priority to the information that is delivered within your `<sp-action-bar>` element:
+
+```html
+<sp-action-bar emphasized open>
+    2 selected
+    <sp-action-button slot="buttons" label="Edit">
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+    </sp-action-button>
+    <sp-action-button slot="buttons" label="More">
+        <sp-icon-more slot="icon"></sp-icon-more>
+    </sp-action-button>
 </sp-action-bar>
 ```
 
@@ -48,14 +62,12 @@ When using `[variant="fixed"]`, the `<sp-action-bar>` will display by default at
 
 ```html
 <h4>Look down and to the left when toggling.</h4>
-<sp-action-bar variant="fixed">
-    <sp-checkbox indeterminate>228 Selected</sp-checkbox>
-</sp-action-bar>
 <sp-button
-    onclick="javascript:this.previousElementSibling.open = !this.previousElementSibling.open;"
+    onclick="javascript:this.nextElementSibling.open = !this.nextElementSibling.open;"
 >
     Toggle fixed action bar
 </sp-button>
+<sp-action-bar variant="fixed">2 selected</sp-action-bar>
 ```
 
 ### Sticky
@@ -65,9 +77,6 @@ When using `[variant="sticky"]`, be sure you've spent some time touching up on [
 ```html
 <section style="position: relative; max-height: 6em; overflow: auto;">
     <h4>Scroll down for toggle button</h4>
-    <sp-action-bar variant="sticky" style="top: 0;">
-        <sp-checkbox indeterminate>228 Selected</sp-checkbox>
-    </sp-action-bar>
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -78,9 +87,18 @@ When using `[variant="sticky"]`, be sure you've spent some time touching up on [
         mollit anim id est laborum.
     </p>
     <sp-button
-        onclick="javascript:this.previousElementSibling.previousElementSibling.open = !this.previousElementSibling.previousElementSibling.open;"
+        onclick="javascript:this.nextElementSibling.open = !this.nextElementSibling.open;"
     >
         Toggle sticky action bar
     </sp-button>
+    <sp-action-bar variant="sticky" style="inset-block: 0px">
+        2 selected
+        <sp-action-button slot="buttons" label="Edit">
+            <sp-icon-edit slot="icon"></sp-icon-edit>
+        </sp-action-button>
+        <sp-action-button slot="buttons" label="More">
+            <sp-icon-more slot="icon"></sp-icon-more>
+        </sp-action-button>
+    </sp-action-bar>
 </section>
 ```

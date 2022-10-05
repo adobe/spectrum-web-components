@@ -709,7 +709,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-selected-emphasized-background-color-focus
     );
 }
-:host([variant='black'][quiet]) {
+:host([static='black'][quiet]) {
     --spectrum-actionbutton-border-color-default: var(
         --system-spectrum-actionbutton-staticblack-quiet-border-color-default
     );
@@ -726,7 +726,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-staticblack-quiet-border-color-disabled
     );
 }
-:host([variant='white'][quiet]) {
+:host([static='white'][quiet]) {
     --spectrum-actionbutton-border-color-default: var(
         --system-spectrum-actionbutton-staticwhite-quiet-border-color-default
     );
@@ -743,7 +743,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-staticwhite-quiet-border-color-disabled
     );
 }
-:host([variant='black']) {
+:host([static='black']) {
     --spectrum-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-staticblack-background-color-default
     );
@@ -793,7 +793,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-staticblack-content-color-disabled
     );
 }
-:host([variant='black'][selected]) {
+:host([static='black'][selected]) {
     --spectrum-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-staticblack-selected-background-color-default
     );
@@ -837,7 +837,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-staticblack-selected-background-color-disabled
     );
 }
-:host([variant='white']) {
+:host([static='white']) {
     --spectrum-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-staticwhite-background-color-default
     );
@@ -887,7 +887,7 @@ governing permissions and limitations under the License.
         --system-spectrum-actionbutton-staticwhite-content-color-disabled
     );
 }
-:host([variant='white'][selected]) {
+:host([static='white'][selected]) {
     --spectrum-actionbutton-background-color-default: var(
         --system-spectrum-actionbutton-staticwhite-selected-background-color-default
     );
