@@ -62,7 +62,22 @@ export class OverlayStack {
     private overlayHolder!: HTMLElement;
     private _eventsAreBound = false;
 
+    constructor() {
+        this.initTabTrapping();
+    }
+
     private initTabTrapping(): void {
+        /* c8 ignore next 10 */
+        if (document.readyState === 'loading') {
+            document.addEventListener(
+                'readystatechange',
+                () => {
+                    this.initTabTrapping();
+                },
+                { once: true }
+            );
+            return;
+        }
         if (this.trappingInited) return;
         this.trappingInited = true;
         /* c8 ignore next 4 */
