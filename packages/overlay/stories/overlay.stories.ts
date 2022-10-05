@@ -961,3 +961,23 @@ export const definedOverlayElement = (): TemplateResult => {
 };
 
 definedOverlayElement.decorators = [definedOverlayDecorator];
+
+export const modalWithinNonModal = (): TemplateResult => {
+    return html`
+        <overlay-trigger type="inline">
+            <sp-button variant="primary" slot="trigger">
+                Open inline overlay
+            </sp-button>
+            <sp-popover slot="click-content" dialog>
+                <overlay-trigger type="modal">
+                    <sp-button variant="primary" slot="trigger">
+                        Open modal overlay
+                    </sp-button>
+                    <sp-popover slot="click-content" dialog>
+                        Modal overlay
+                    </sp-popover>
+                </overlay-trigger>
+            </sp-popover>
+        </overlay-trigger>
+    `;
+};
