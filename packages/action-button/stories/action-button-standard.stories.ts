@@ -18,6 +18,11 @@ export default {
     title: 'Action Button/Standard',
 };
 
+export const XS = (args: Properties): TemplateResult => renderButtons(args);
+XS.args = {
+    size: 'xs',
+};
+
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
     size: 's',

@@ -44,6 +44,25 @@ governing permissions and limitations under the License.
     text-align: var(--spectrum-actionbutton-label-text-align);
 }
 
+:host([size='xs']) {
+    /* Work around non-square icon only Action Buttons in Spectrum CSS */
+    min-width: var(--spectrum-actionbutton-height, 0);
+
+    /* Pass t-shirt sizing to icons within the XS-sized Action Button */
+    --spectrum-icon-tshirt-size-height: var(
+        --spectrum-alias-workflow-icon-size-xs
+    );
+    --spectrum-icon-tshirt-size-width: var(
+        --spectrum-alias-workflow-icon-size-xs
+    );
+    --spectrum-ui-icon-tshirt-size-height: var(
+        --spectrum-alias-ui-icon-cornertriangle-size-75
+    );
+    --spectrum-ui-icon-tshirt-size-width: var(
+        --spectrum-alias-ui-icon-cornertriangle-size-75
+    );
+}
+
 :host([size='s']) {
     --spectrum-icon-tshirt-size-height: var(
         --spectrum-alias-workflow-icon-size-s
