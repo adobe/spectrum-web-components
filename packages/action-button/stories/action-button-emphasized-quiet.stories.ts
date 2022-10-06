@@ -21,6 +21,13 @@ export default {
 const emphasized = true;
 const quiet = true;
 
+export const XS = (args: Properties): TemplateResult => renderButtons(args);
+XS.args = {
+    emphasized,
+    size: 'xs',
+    quiet,
+};
+
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
     emphasized,

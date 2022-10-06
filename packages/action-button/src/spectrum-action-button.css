@@ -76,7 +76,7 @@ governing permissions and limitations under the License.
             var(--spectrum-actionbutton-focus-ring-gap)
     );
 }
-.spectrum-ActionButton--sizeXS {
+:host([size='xs']) {
     --spectrum-actionbutton-min-width: calc(
         var(--spectrum-component-edge-to-visual-only-75) * 2 +
             var(--spectrum-workflow-icon-size-75)

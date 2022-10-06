@@ -23,6 +23,13 @@ export default {
 const variant = 'black';
 const quiet = true;
 
+export const XS = (args: Properties): TemplateResult => renderButtons(args);
+XS.args = {
+    size: 'xs',
+    quiet,
+    variant,
+};
+
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
     size: 's',

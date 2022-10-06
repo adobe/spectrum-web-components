@@ -27,6 +27,26 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 ## Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="xs">Extra Small</sp-tab>
+<sp-tab-panel value="xs">
+
+```html demo
+<sp-action-group>
+    <sp-action-button size="xs">Edit</sp-action-button>
+    <sp-action-button size="xs">
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+    </sp-action-button>
+    <sp-action-button size="xs">
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+    </sp-action-button>
+    <sp-action-button size="xs" hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+    </sp-action-button>
+</sp-action-group>
+```
+
+</sp-tab-panel>
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
