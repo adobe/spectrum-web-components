@@ -16,6 +16,8 @@ import { readFileSync, writeFileSync } from 'fs';
 import latestVersion from 'latest-version';
 import fg from 'fast-glob';
 
+const useLatest = process.argv[2] === '--latest';
+
 async function update() {
     let updated = false;
     try {
@@ -28,12 +30,16 @@ async function update() {
             );
             async function updateDependency(packageName, depType) {
                 if (packageName.startsWith('@spectrum-css')) {
-                    const targetVersion = await latestVersion(packageName);
-                    const currentVersion = packageJSON[depType][
-                        packageName
-                    ].replace('^', '');
-                    if (currentVersion !== targetVersion) {
-                        packageJSON[depType][packageName] = `^${targetVersion}`;
+                    const currentVersion = packageJSON[depType][packageName];
+                    const targetVersion = await latestVersion(packageName, {
+                        version: useLatest ? 'latest' : currentVersion,
+                    });
+                    const targetRange = `^${targetVersion}`;
+                    if (currentVersion.replace('^', '') !== targetVersion) {
+                        console.log(
+                            `updating ${packageName} from ${currentVersion} to ${targetRange}`
+                        );
+                        packageJSON[depType][packageName] = targetRange;
                         shouldUpdate = true;
                     }
                 }

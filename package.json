@@ -82,8 +82,9 @@
         "test:visual:clean:current": "rimraf test/visual/screenshots-current",
         "test:watch": "yarn test:watch:focus unit",
         "test:watch:focus": "yarn build && run-p watch:css build:watch \"test:start --watch --group {1}\" --",
-        "update:spectrum-css": "node ./scripts/update-spectrum-css.js || yarn update:spectrum-css:cleanup",
+        "update:spectrum-css": "node ./scripts/update-spectrum-css.js --latest || yarn update:spectrum-css:cleanup",
         "update:spectrum-css:cleanup": "yarn lint:packagejson && yarn --ignore-scripts && yarn process-spectrum",
+        "update:spectrum-css:nonbreaking": "node ./scripts/update-spectrum-css.js || yarn update:spectrum-css:cleanup",
         "vrt:quick-link": "yarn netlify deploy --alias=vrt --dir=projects/vrt-quick-link",
         "watch:css": "node ./tasks/watch-css.js"
     },
