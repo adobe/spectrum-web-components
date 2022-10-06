@@ -144,17 +144,9 @@ governing permissions and limitations under the License.
         --spectrum-tabs-s-textonly-divider-border-radius,
         var(--spectrum-global-dimension-static-size-10)
     );
-    --spectrum-tabs-vertical-quiet-textonly-divider-background-color: var(
-        --spectrum-tabs-s-vertical-quiet-textonly-divider-background-color,
-        var(--spectrum-alias-tabs-divider-background-color-quiet)
-    );
     --spectrum-tabs-vertical-textonly-tabitem-selection-indicator-background-color-selected: var(
         --spectrum-tabs-s-vertical-textonly-tabitem-selection-indicator-background-color-selected,
         var(--spectrum-alias-tabitem-text-color-selected-default)
-    );
-    --spectrum-tabs-vertical-textonly-divider-background-color: var(
-        --spectrum-tabs-s-vertical-textonly-divider-background-color,
-        var(--spectrum-alias-tabs-divider-background-color-default)
     );
     --spectrum-tabs-vertical-textonly-tabitem-height: var(
         --spectrum-tabs-s-vertical-textonly-tabitem-height,
@@ -314,17 +306,9 @@ governing permissions and limitations under the License.
         --spectrum-tabs-m-textonly-divider-border-radius,
         var(--spectrum-global-dimension-static-size-10)
     );
-    --spectrum-tabs-vertical-quiet-textonly-divider-background-color: var(
-        --spectrum-tabs-m-vertical-quiet-textonly-divider-background-color,
-        var(--spectrum-alias-tabs-divider-background-color-quiet)
-    );
     --spectrum-tabs-vertical-textonly-tabitem-selection-indicator-background-color-selected: var(
         --spectrum-tabs-m-vertical-textonly-tabitem-selection-indicator-background-color-selected,
         var(--spectrum-alias-tabitem-text-color-selected-default)
-    );
-    --spectrum-tabs-vertical-textonly-divider-background-color: var(
-        --spectrum-tabs-m-vertical-textonly-divider-background-color,
-        var(--spectrum-alias-tabs-divider-background-color-default)
     );
     --spectrum-tabs-vertical-textonly-tabitem-height: var(
         --spectrum-tabs-m-vertical-textonly-tabitem-height,
@@ -484,17 +468,9 @@ governing permissions and limitations under the License.
         --spectrum-tabs-l-textonly-divider-border-radius,
         var(--spectrum-global-dimension-static-size-10)
     );
-    --spectrum-tabs-vertical-quiet-textonly-divider-background-color: var(
-        --spectrum-tabs-l-vertical-quiet-textonly-divider-background-color,
-        var(--spectrum-alias-tabs-divider-background-color-quiet)
-    );
     --spectrum-tabs-vertical-textonly-tabitem-selection-indicator-background-color-selected: var(
         --spectrum-tabs-l-vertical-textonly-tabitem-selection-indicator-background-color-selected,
         var(--spectrum-alias-tabitem-text-color-selected-default)
-    );
-    --spectrum-tabs-vertical-textonly-divider-background-color: var(
-        --spectrum-tabs-l-vertical-textonly-divider-background-color,
-        var(--spectrum-alias-tabs-divider-background-color-default)
     );
     --spectrum-tabs-vertical-textonly-tabitem-height: var(
         --spectrum-tabs-l-vertical-textonly-tabitem-height,
@@ -654,17 +630,9 @@ governing permissions and limitations under the License.
         --spectrum-tabs-xl-textonly-divider-border-radius,
         var(--spectrum-global-dimension-static-size-10)
     );
-    --spectrum-tabs-vertical-quiet-textonly-divider-background-color: var(
-        --spectrum-tabs-xl-vertical-quiet-textonly-divider-background-color,
-        var(--spectrum-alias-tabs-divider-background-color-quiet)
-    );
     --spectrum-tabs-vertical-textonly-tabitem-selection-indicator-background-color-selected: var(
         --spectrum-tabs-xl-vertical-textonly-tabitem-selection-indicator-background-color-selected,
         var(--spectrum-alias-tabitem-text-color-selected-default)
-    );
-    --spectrum-tabs-vertical-textonly-divider-background-color: var(
-        --spectrum-tabs-xl-vertical-textonly-divider-background-color,
-        var(--spectrum-alias-tabs-divider-background-color-default)
     );
     --spectrum-tabs-vertical-textonly-tabitem-height: var(
         --spectrum-tabs-xl-vertical-textonly-tabitem-height,
@@ -751,7 +719,6 @@ governing permissions and limitations under the License.
 }
 :host([direction^='horizontal']) #list {
     align-items: center; /* .spectrum-Tabs--horizontal */
-    border-bottom: var(--spectrum-tabs-quiet-textonly-divider-size) solid;
 }
 :host([direction^='horizontal']) ::slotted(:not([slot])) {
     vertical-align: top; /* .spectrum-Tabs--horizontal .spectrum-Tabs-item */
@@ -770,7 +737,6 @@ governing permissions and limitations under the License.
 }
 :host([direction^='horizontal']) #selection-indicator {
     bottom: 0;
-    bottom: calc(var(--spectrum-tabs-quiet-textonly-divider-size) * -1);
     height: var(--spectrum-tabs-quiet-textonly-divider-size);
     position: absolute; /* .spectrum-Tabs--horizontal .spectrum-Tabs-selectionIndicator */
 }
@@ -781,12 +747,6 @@ governing permissions and limitations under the License.
 }
 :host([quiet]) #list {
     display: inline-flex; /* .spectrum-Tabs--quiet */
-}
-:host([dir='ltr'][direction^='vertical']) #list {
-    border-left: var(--spectrum-tabs-quiet-textonly-divider-size) solid; /* [dir=ltr] .spectrum-Tabs--vertical */
-}
-:host([dir='rtl'][direction^='vertical']) #list {
-    border-right: var(--spectrum-tabs-quiet-textonly-divider-size) solid; /* [dir=rtl] .spectrum-Tabs--vertical */
 }
 :host([direction^='vertical']) #list {
     display: inline-flex; /* .spectrum-Tabs--vertical */
@@ -857,34 +817,37 @@ governing permissions and limitations under the License.
 :host([dir='rtl'][direction^='vertical']) #selection-indicator {
     right: 0; /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
 }
-:host([dir='ltr'][direction^='vertical']) #selection-indicator {
-    left: calc(
-        var(--spectrum-tabs-quiet-textonly-divider-size) * -1
-    ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
-}
-:host([dir='rtl'][direction^='vertical']) #selection-indicator {
-    right: calc(
-        var(--spectrum-tabs-quiet-textonly-divider-size) * -1
-    ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
-}
 :host([direction^='vertical']) #selection-indicator {
     position: absolute; /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
     width: var(--spectrum-tabs-quiet-textonly-divider-size);
 }
+:host {
+    --spectrum-tabs-list-background-direction: top; /* .spectrum-Tabs */
+}
 #list {
-    border-bottom-color: var(
-        --spectrum-tabs-textonly-divider-background-color
+    background: linear-gradient(
+        to var(--spectrum-tabs-list-background-direction),
+        var(--spectrum-tabs-textonly-divider-background-color) 0
+            var(--spectrum-tabs-quiet-textonly-divider-size),
+        transparent var(--spectrum-tabs-quiet-textonly-divider-size)
     ); /* .spectrum-Tabs */
 }
-:host([dir='ltr'][direction^='vertical']) #list {
-    border-left-color: var(
-        --spectrum-tabs-vertical-textonly-divider-background-color
-    ); /* [dir=ltr] .spectrum-Tabs--vertical */
+:host([direction^='vertical']) {
+    --spectrum-tabs-list-background-direction: right; /* .spectrum-Tabs--vertical */
 }
-:host([dir='rtl'][direction^='vertical']) #list {
-    border-right-color: var(
-        --spectrum-tabs-vertical-textonly-divider-background-color
-    ); /* [dir=rtl] .spectrum-Tabs--vertical */
+:host([direction^='vertical'][compact]) #list,
+:host([quiet]) #list,
+:host([quiet][compact]) #list {
+    --spectrum-tabs-textonly-divider-background-color: var(
+        --spectrum-tabs-quiet-textonly-divider-background-color
+    ); /* .spectrum-Tabs--quiet,
+   * .spectrum-Tabs--quiet.spectrum-Tabs--compact,
+   * .spectrum-Tabs--vertical.spectrum-Tabs--compact */
+}
+:host([direction^='vertical'][emphasized]) {
+    --spectrum-tabs-textonly-divider-background-color: var(
+        --spectrum-tabs-emphasized-textonly-divider-background-color
+    ); /* .spectrum-Tabs--vertical.spectrum-Tabs--emphasized */
 }
 #selection-indicator {
     background-color: var(
@@ -921,38 +884,12 @@ governing permissions and limitations under the License.
         --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected
     ); /* .spectrum-Tabs--quiet.spectrum-Tabs--emphasized .spectrum-Tabs-selectionIndicator */
 }
-:host([dir='ltr'][direction^='vertical'][compact]) #list,
-:host([dir='ltr'][direction^='vertical'][quiet]) #list {
-    border-left-color: var(
-        --spectrum-tabs-vertical-quiet-textonly-divider-background-color
-    ); /* [dir=ltr] .spectrum-Tabs--vertical.spectrum-Tabs--quiet,
-   * [dir=ltr] 
-  .spectrum-Tabs--vertical.spectrum-Tabs--compact */
-}
-:host([dir='rtl'][direction^='vertical'][compact]) #list,
-:host([dir='rtl'][direction^='vertical'][quiet]) #list {
-    border-right-color: var(
-        --spectrum-tabs-vertical-quiet-textonly-divider-background-color
-    ); /* [dir=rtl] .spectrum-Tabs--vertical.spectrum-Tabs--quiet,
-   * [dir=rtl] 
-  .spectrum-Tabs--vertical.spectrum-Tabs--compact */
-}
 :host([direction^='vertical'][compact]) #list #selection-indicator,
 :host([direction^='vertical'][quiet]) #list #selection-indicator {
     background-color: var(
         --spectrum-tabs-vertical-textonly-tabitem-selection-indicator-background-color-selected
     ); /* .spectrum-Tabs--vertical.spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator,
    * .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-selectionIndicator */
-}
-:host([dir='ltr'][direction^='vertical'][emphasized]) #list {
-    border-left-color: var(
-        --spectrum-tabs-emphasized-textonly-divider-background-color
-    ); /* [dir=ltr] .spectrum-Tabs--vertical.spectrum-Tabs--emphasized */
-}
-:host([dir='rtl'][direction^='vertical'][emphasized]) #list {
-    border-right-color: var(
-        --spectrum-tabs-emphasized-textonly-divider-background-color
-    ); /* [dir=rtl] .spectrum-Tabs--vertical.spectrum-Tabs--emphasized */
 }
 :host([direction^='vertical'][emphasized]) #list #selection-indicator {
     background-color: var(
@@ -979,8 +916,6 @@ governing permissions and limitations under the License.
         --spectrum-tabs-textonly-tabitem-text-color-selected-key-focus: ButtonText;
         --spectrum-tabs-textonly-tabitem-text-color-selected: HighlightText;
         --spectrum-tabs-textonly-tabitem-text-color: ButtonText;
-        --spectrum-tabs-vertical-quiet-textonly-divider-background-color: transparent;
-        --spectrum-tabs-vertical-textonly-divider-background-color: transparent;
         --spectrum-tabs-vertical-textonly-tabitem-selection-indicator-background-color-selected: Highlight;
         forced-color-adjust: none;
     }
