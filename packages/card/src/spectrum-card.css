@@ -364,8 +364,8 @@ governing permissions and limitations under the License.
 }
 .content {
     display: flex; /* .spectrum-Card-content */
-    height: var(--spectrum-card-body-content-min-height);
     margin-top: var(--spectrum-card-body-content-margin-top);
+    min-height: var(--spectrum-card-body-content-min-height);
 }
 :host([dir='ltr']) .title {
     padding-right: var(
