@@ -71,6 +71,16 @@ In the case that you'd like to serve and test a static build of the documentatio
 yarn docs:build
 ```
 
+# Updating Spectrum CSS
+
+There are two mechanisms for broadly updating SWC's Spectrum CSS dependencies:
+
+-   `yarn update:spectrum-css` brings all Spectrum CSS dependencies to 'latest'
+-   `yarn update:spectrum-css:nonbreaking` brings them to the latest minor or patch version
+
+We aim to keep Spectrum CSS as current as possible, to track the Spectrum design system closely.
+The `:nonbreaking` variant lets us release patch updates quickly in cases where more work is required to be compatible with 'latest.'
+
 # Advanced development
 
 There are several commands that can be useful in specific scenarios:
@@ -79,7 +89,6 @@ There are several commands that can be useful in specific scenarios:
 -   `yarn spectrum-vars` to ensure that theme files are up-to-date.
 -   `yarn process-icons` to make sure that the most recent icons are included.
 -   `yarn process-spectrum` to process the spectrum CSS style sources into the individual packages.
--   `yarn update:spectrum-css` to ensure that the `latest` version of `@spectrum-css` dependencies are being used across the project.
 -   `yarn build` to make sure the available JS has been built from the current TS source.
 
 ## Linting
