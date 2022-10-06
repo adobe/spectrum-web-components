@@ -15,6 +15,7 @@ governing permissions and limitations under the License.
 :host {
     display: grid;
     grid-template-columns: 100%;
+    position: relative;
 }
 
 :host(:not([direction^='vertical'])) {

@@ -357,16 +357,15 @@ export class Tabs extends SizedMixin(Focusable) {
             document.fonts ? document.fonts.ready : Promise.resolve(),
         ]);
         const tabBoundingClientRect = selectedElement.getBoundingClientRect();
-        const tabPanelClientRect = this.getBoundingClientRect();
 
         if (this.direction === 'horizontal') {
             const width = tabBoundingClientRect.width;
-            const offset = tabBoundingClientRect.left - tabPanelClientRect.left;
+            const offset = selectedElement.offsetLeft;
 
             this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${width});`;
         } else {
             const height = tabBoundingClientRect.height;
-            const offset = tabBoundingClientRect.top - tabPanelClientRect.top;
+            const offset = selectedElement.offsetTop;
 
             this.selectionIndicatorStyle = `transform: translateY(${offset}px) scaleY(${height});`;
         }
