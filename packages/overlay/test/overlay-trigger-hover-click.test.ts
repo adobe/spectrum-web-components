@@ -28,6 +28,9 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { clickAndHoverTargets } from '../stories/overlay.stories.js';
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+
+ignoreResizeObserverLoopError(before, after);
 
 describe('Overlay Trigger - Hover and Click', () => {
     it('toggles open and closed on click', async () => {
