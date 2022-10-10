@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/search@0.12.2...@spectrum-web-components/search@0.12.3) (2022-10-10)
+
+### Bug Fixes
+
+-   **search:** prevent overflow content from going behind clear button ([956f947](https://github.com/adobe/spectrum-web-components/commit/956f947533fa37cdbd9852ad5ae8eb984e9965f6))
+
 ## [0.12.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/search@0.12.1...@spectrum-web-components/search@0.12.2) (2022-09-14)
 
 **Note:** Version bump only for package @spectrum-web-components/search

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/iconset@0.7.0...@spectrum-web-components/iconset@0.7.1) (2022-10-10)
+
+**Note:** Version bump only for package @spectrum-web-components/iconset
+
 # [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/iconset@0.6.9...@spectrum-web-components/iconset@0.7.0) (2022-08-09)
 
 ### Features

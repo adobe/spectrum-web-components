@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.19.2...@spectrum-web-components/button@0.19.3) (2022-10-10)
+
+### Bug Fixes
+
+-   match "pointerup" listeners with "pointercancel" for full coverage ([7f2ce92](https://github.com/adobe/spectrum-web-components/commit/7f2ce924ce03fb0881505e6f144184bd3d25355d))
+
 ## [0.19.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.19.1...@spectrum-web-components/button@0.19.2) (2022-09-14)
 
 **Note:** Version bump only for package @spectrum-web-components/button

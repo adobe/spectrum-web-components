@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.11.2...@spectrum-web-components/dialog@0.11.3) (2022-10-10)
+
+### Bug Fixes
+
+-   prevent reuse of applied IDs when associating Dialogs to their content ([962c3e8](https://github.com/adobe/spectrum-web-components/commit/962c3e8b42a761da0a860a2ec4b9265c847ac536))
+
 ## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.11.1...@spectrum-web-components/dialog@0.11.2) (2022-09-14)
 
 ### Bug Fixes

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.9.1...@spectrum-web-components/tabs@0.9.2) (2022-10-10)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
 ## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.9.0...@spectrum-web-components/tabs@0.9.1) (2022-09-14)
 
 ### Bug Fixes

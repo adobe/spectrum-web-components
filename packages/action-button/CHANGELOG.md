@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.10.2...@spectrum-web-components/action-button@0.10.3) (2022-10-10)
+
+### Bug Fixes
+
+-   **action-button:** add support for XS t-shirt size ([75440ce](https://github.com/adobe/spectrum-web-components/commit/75440ced6f5cc5dbcd2c3bbfe650ca8c78514467))
+
 ## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.10.1...@spectrum-web-components/action-button@0.10.2) (2022-09-14)
 
 **Note:** Version bump only for package @spectrum-web-components/action-button

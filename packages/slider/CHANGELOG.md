@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.14.2...@spectrum-web-components/slider@0.14.3) (2022-10-10)
+
+### Bug Fixes
+
+-   convert the langage resolution workflow to a Reactive Controller ([b7781db](https://github.com/adobe/spectrum-web-components/commit/b7781db820620688f97a40225fb17a10e7881178))
+-   prevent mobile interactions from triggering the virtual keyboard ([d06ad17](https://github.com/adobe/spectrum-web-components/commit/d06ad17f12b77f791c8710567ae9bf2d4b26278f))
+
 ## [0.14.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.14.1...@spectrum-web-components/slider@0.14.2) (2022-09-14)
 
 ### Bug Fixes
