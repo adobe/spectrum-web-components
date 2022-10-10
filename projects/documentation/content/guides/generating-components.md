@@ -37,11 +37,11 @@ In response to the prompt above, the package name should be the kebab case versi
    package.json
 ```
 
-From here, peek into the `package.json` file and ensure the "devDependency" of `@spectrum-css/spectrumpattern` listed there is of the most current version.
+From here, peek into the `package.json` file and ensure the "devDependency" of `@spectrum-css/spectrumpattern` (replacing "spectrumpattern" with the pattern you're implementing, such as "badge" or "tooltip") listed there is of the most current version.
 
 Outside of your new package, you will need to manually add information about your new package to both the `tsconfig-all.json` file and the `bundle` package:
 
-Open `tsconfig-all.json`, find "references", and add an entry for your package (`{ "path": "packages/component-you-are-adding" }`) alphabetically. The `tsconfig-all.json` config is used to build types for the project in parallel with the JS build that is handled outside of `tsc`. This will ensure that the types for your new package are available throughout the library, include at demonstration and test time.
+Open `tsconfig-all.json`, find "references", and add an entry for your package (`{ "path": "packages/spectrum-pattern" }`) alphabetically (replacing "spectrum-pattern" with the pattern you're implementing, such as "action-button" or "progress-bar"). The `tsconfig-all.json` config is used to build types for the project in parallel with the JS build that is handled outside of `tsc`. This will ensure that the types for your new package are available throughout the library, include at demonstration and test time.
 
 Include a listing for your package in `bundle/elements.ts` and `bundle/src/index.js`. Then, confirm that your new package is already listed in `packages/bundle/package.json`. The `bundle` package makes it possible to build demo projects with _all_ of the components from the library registered in a single place, and is also leveraged for ease of component consumption in the documentation site build.
 
