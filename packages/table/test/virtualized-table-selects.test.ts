@@ -38,25 +38,9 @@ import {
     virtualizedSingle,
 } from '../stories/table-virtualized.stories.js';
 import { makeItems, Properties, renderItem } from '../stories/index.js';
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
 
-let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
-before(function () {
-    // Save Mocha's handler.
-    (
-        Mocha as unknown as { process: { removeListener(name: string): void } }
-    ).process.removeListener('uncaughtException');
-    globalErrorHandler = window.onerror;
-    addEventListener('error', (error) => {
-        if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
-            return;
-        } else {
-            globalErrorHandler?.(error);
-        }
-    });
-});
-after(function () {
-    window.onerror = globalErrorHandler as OnErrorEventHandler;
-});
+ignoreResizeObserverLoopError(before, after);
 
 describe('Virtualized Table Selects', () => {
     it('selects and deselects all checkboxes in Virtualized Table when clicking the TableHeadCheckboxCell', async () => {
