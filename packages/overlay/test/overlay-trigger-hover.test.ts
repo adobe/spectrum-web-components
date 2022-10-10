@@ -37,6 +37,9 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import { Theme } from '@spectrum-web-components/theme';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+
+ignoreResizeObserverLoopError(before, after);
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
