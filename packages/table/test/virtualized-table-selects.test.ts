@@ -25,8 +25,11 @@ import '@spectrum-web-components/table/sp-table-head-cell.js';
 import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
 import type {
     Table,
+    TableBody,
     TableCheckboxCell,
     TableRow,
 } from '@spectrum-web-components/table';
@@ -138,9 +141,9 @@ describe('Virtualized Table Selects', () => {
     it('surfaces [selects="single"] selection on Virtualized Table', async () => {
         const test = await fixture<Table>(
             html`
-                <div>
+                <sp-theme theme="spectrum" scale="medium" color="light">
                     ${virtualizedSingle(virtualizedSingle.args as Properties)}
-                </div>
+                </sp-theme>
             `
         );
         const el = test.querySelector('sp-table') as Table;
@@ -150,11 +153,13 @@ describe('Virtualized Table Selects', () => {
 
         expect(el.selected, "'Row 50 selected").to.deep.equal(['49']);
 
-        el.scrollTop = el.scrollHeight;
+        const body = el.querySelector('sp-table-body') as TableBody;
+        body.scrollTop = body.scrollHeight;
 
         await nextFrame();
         await nextFrame();
         await elementUpdated(el);
+        await elementUpdated(body);
 
         const lastRow = el.querySelector('[value="49"]') as TableRow;
         const lastRowCheckboxCell = lastRow.querySelector(
@@ -167,9 +172,9 @@ describe('Virtualized Table Selects', () => {
     it('selects via `click` while [selects="single"]', async () => {
         const test = await fixture<Table>(
             html`
-                <div>
+                <sp-theme theme="spectrum" scale="medium" color="light">
                     ${virtualizedSingle(virtualizedSingle.args as Properties)}
-                </div>
+                </sp-theme>
             `
         );
         const el = test.querySelector('sp-table') as Table;
@@ -208,11 +213,11 @@ describe('Virtualized Table Selects', () => {
     it('surfaces [selects="multiple"] selection on Virtualized Table', async () => {
         const test = await fixture<Table>(
             html`
-                <div>
+                <sp-theme theme="spectrum" scale="medium" color="light">
                     ${virtualizedMultiple(
                         virtualizedMultiple.args as Properties
                     )}
-                </div>
+                </sp-theme>
             `
         );
         const el = test.querySelector('sp-table') as Table;
@@ -222,11 +227,13 @@ describe('Virtualized Table Selects', () => {
 
         expect(el.selected).to.deep.equal(['0', '48']);
 
-        el.scrollTop = el.scrollHeight;
+        const body = el.querySelector('sp-table-body') as TableBody;
+        body.scrollTop = body.scrollHeight;
 
         await nextFrame();
         await nextFrame();
         await elementUpdated(el);
+        await elementUpdated(body);
 
         const unseenRow = el.querySelector('[value="48"]') as TableRow;
         expect(unseenRow).to.not.be.null;
@@ -408,11 +415,11 @@ describe('Virtualized Table Selects', () => {
     it('ensures that virtualized elements with values in .selected are visually selected when brought into view using scrollTop', async () => {
         const test = await fixture<Table>(
             html`
-                <div>
+                <sp-theme theme="spectrum" scale="medium" color="light">
                     ${virtualizedMultiple(
                         virtualizedMultiple.args as Properties
                     )}
-                </div>
+                </sp-theme>
             `
         );
         const el = test.querySelector('sp-table') as Table;
@@ -429,11 +436,13 @@ describe('Virtualized Table Selects', () => {
         expect(rowOne.selected).to.be.true;
         expect(rowOneCheckboxCell.checkbox.checked).to.be.true;
 
-        el.scrollTop = el.scrollHeight;
+        const body = el.querySelector('sp-table-body') as TableBody;
+        body.scrollTop = body.scrollHeight;
 
         await nextFrame();
         await nextFrame();
         await elementUpdated(el);
+        await elementUpdated(body);
 
         const unseenRow = el.querySelector('[value="48"]') as TableRow;
         const unseenRowCheckboxCell = unseenRow.querySelector(
