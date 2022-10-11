@@ -61,6 +61,7 @@ function renderGroup(properties: Properties): TemplateResult {
         <sp-action-group
             ?quiet="${!!properties.quiet}"
             ?emphasized="${!!properties.emphasized}"
+            size=${properties.size || 'm'}
         >
             ${renderButton({
                 ...properties,
