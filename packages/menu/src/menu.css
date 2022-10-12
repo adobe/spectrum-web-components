@@ -14,6 +14,12 @@ governing permissions and limitations under the License.
 
 :host {
     /**
+     * Remove when Spectrum CSS supports this correctly
+     */
+    display: inline-flex;
+    flex-direction: column;
+
+    /**
      * TODO: remove the following when https://github.com/adobe/spectrum-css/issues/1130
      is correct
      */
@@ -34,5 +40,10 @@ governing permissions and limitations under the License.
 }
 
 ::slotted(*) {
+    /**
+     * Remove when Spectrum CSS supports this correctly
+     */
+    flex-shrink: 0;
+
     --swc-menu-width: 100%;
 }
