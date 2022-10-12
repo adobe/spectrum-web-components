@@ -606,6 +606,9 @@ export const clickAndHoverTargets = (): TemplateResult => {
         </div>
     `;
 };
+clickAndHoverTargets.swc_vrt = {
+    skip: true,
+};
 
 function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));

@@ -42,8 +42,9 @@ governing permissions and limitations under the License.
 
 import * as stories from '../stories/${stories}.stories.js';
 import { regressVisuals } from '../../../test/visual/test.js';
+import type { TestsType } from '../../../test/visual/test.js';
 
-regressVisuals('${name}', stories);
+regressVisuals('${name}', stories as unknown as TestsType);
 `;
         const directory = path.join('packages', packageName, 'test');
         fs.mkdirSync(directory, { recursive: true });
