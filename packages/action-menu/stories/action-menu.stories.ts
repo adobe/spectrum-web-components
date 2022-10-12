@@ -13,6 +13,8 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
+import '@spectrum-web-components/menu/sp-menu-divider.js';
 import { ActionMenuMarkup } from './';
 
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
@@ -179,3 +181,31 @@ export const controlled = (): TemplateResult => {
         <span id="state-json"></span>
     `;
 };
+
+export const groups = (): TemplateResult => html`
+    <sp-action-menu open>
+        <sp-menu-group id="cms">
+            <span slot="header">cms</span>
+            <sp-menu-item value="updateAllSiteContent">
+                Update All Content
+            </sp-menu-item>
+            <sp-menu-item value="refreshAllXDs">Refresh All XDs</sp-menu-item>
+        </sp-menu-group>
+        <sp-menu-group id="ssg">
+            <span slot="header">ssg</span>
+            <sp-menu-item value="clearCache">Clear Cache</sp-menu-item>
+        </sp-menu-group>
+        <sp-menu-group id="vrt">
+            <span slot="header">vrt</span>
+            <sp-menu-item value="vrt-contributions">Contributions</sp-menu-item>
+            <sp-menu-item value="vrt-internal">Internal</sp-menu-item>
+            <sp-menu-item value="vrt-public">Public</sp-menu-item>
+            <sp-menu-item value="vrt-patterns">Patterns</sp-menu-item>
+            <sp-menu-item value="vrt">All</sp-menu-item>
+        </sp-menu-group>
+        <sp-menu-divider></sp-menu-divider>
+        <sp-menu-group id="misc">
+            <sp-menu-item value="logout">Logout</sp-menu-item>
+        </sp-menu-group>
+    </sp-action-menu>
+`;
