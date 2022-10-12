@@ -52,25 +52,38 @@ const wrap = () => html`
     ></sp-story-decorator>
 `;
 
+interface Story<T> {
+    (args: T): TemplateResult;
+    args?: Partial<T>;
+    argTypes?: Record<string, unknown>;
+    decorators?: (() => TemplateResult)[];
+    swc_vrt?: {
+        skip: Boolean;
+    };
+}
+
 type StoriesType = {
+    [name: string]: Story<{}>;
+};
+
+export type TestsType = StoriesType & {
     default: {
         title: string;
         swc_vrt?: {
             preload?: () => void;
         };
     };
-    [name: string]: (() => TemplateResult) | any;
 };
 
 export const test = (
-    tests: StoriesType,
+    tests: TestsType,
     name: string,
     color: Color,
     scale: Scale,
     dir: 'ltr' | 'rtl'
 ) => {
     Object.keys(tests).map((story) => {
-        if (story !== 'default') {
+        if (story !== 'default' && !tests[story].swc_vrt?.skip) {
             it(story, async () => {
                 let test = await fixture<StoryDecorator>(wrap());
                 await elementUpdated(test);
@@ -168,7 +181,7 @@ export const test = (
     });
 };
 
-export const regressVisuals = async (name: string, stories: StoriesType) => {
+export const regressVisuals = async (name: string, stories: TestsType) => {
     describe(`${name} Visual Regressions`, () => {
         const {
             defaultColor: color,
