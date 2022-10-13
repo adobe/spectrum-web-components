@@ -36,7 +36,6 @@ import '@spectrum-web-components/theme/src/themes.js';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { Theme } from '@spectrum-web-components/theme';
 import { Tooltip } from '@spectrum-web-components/tooltip';
-import { sendMouse } from '../../../test/plugins/browser.js';
 import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
 
 ignoreResizeObserverLoopError(before, after);
@@ -53,32 +52,6 @@ async function styledFixture<T extends Element>(
 }
 
 describe('Overlay Trigger - Hover', () => {
-    afterEach(async () => {
-        const triggers = [
-            ...document.querySelectorAll('overlay-trigger'),
-        ] as OverlayTrigger[];
-        const promises = triggers.map((trigger) => {
-            if (trigger.open) {
-                const closed = oneEvent(trigger, 'sp-closed');
-                trigger.open = undefined;
-                return closed;
-            }
-            return Promise.resolve();
-        });
-        await Promise.all(promises);
-    });
-    beforeEach(async () => {
-        // Something about this prevents Chromium from swallowing the CSS transitions
-        // to "open" so that test timing can be properly acquired below.
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [0, 0],
-                },
-            ],
-        });
-    });
     it('displays `hover` declaratively', async () => {
         const openedSpy = spy();
         const closedSpy = spy();

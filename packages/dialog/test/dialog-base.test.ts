@@ -29,7 +29,6 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { alertDestructive } from '../stories/dialog.stories.js';
 import { Button } from '@spectrum-web-components/button/src/Button.js';
 import { DialogBase } from '@spectrum-web-components/dialog';
-import { sendMouse } from '../../../test/plugins/browser.js';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -50,18 +49,6 @@ const overlayTrigger = (story: () => TemplateResult): TemplateResult => html`
 `;
 
 describe('dialog base', () => {
-    beforeEach(async () => {
-        // Something about this prevents Chromium from swallowing the CSS transitions
-        // to "open" so that test timing can be properly acquired below.
-        await sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [0, 0],
-                },
-            ],
-        });
-    });
     it('does not close by default with interacting with buttons', async () => {
         const el = await styledFixture<OverlayTrigger>(
             overlayTrigger(
@@ -115,10 +102,6 @@ describe('dialog base', () => {
         expect(dialog.parentElement?.localName).to.equal('overlay-trigger');
     });
     it('does not close by default with interacting with buttons when recycled', async () => {
-        // There is an `sp-dialog-base` recyling issue in Firefox
-        if (/Firefox/.test(window.navigator.userAgent)) {
-            return;
-        }
         const el = await styledFixture<OverlayTrigger>(
             overlayTrigger(
                 () => html`
