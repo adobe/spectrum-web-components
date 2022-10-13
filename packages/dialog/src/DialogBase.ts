@@ -80,18 +80,14 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         return dialog || this;
     }
 
-    public override focus(): void {
+    public override async focus(): Promise<void> {
         if (this.shadowRoot) {
             const firstFocusable = firstFocusableIn(this.dialog);
             if (firstFocusable) {
-                if (firstFocusable.updateComplete) {
-                    firstFocusable.updateComplete.then(() =>
-                        firstFocusable.focus()
-                    );
-                    /* c8 ignore next 3 */
-                } else {
-                    firstFocusable.focus();
+                if ((firstFocusable as SpectrumElement).updateComplete) {
+                    await firstFocusable.updateComplete;
                 }
+                firstFocusable.focus();
                 this.removeAttribute('tabindex');
             } else {
                 this.dialog.focus();
@@ -102,8 +98,10 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
+    private animating = false;
+
     public overlayWillCloseCallback(): boolean {
-        if (!this.open) return false;
+        if (!this.open) return this.animating;
         this.close();
         return true;
     }
@@ -134,8 +132,8 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     protected handleUnderlayTransitionend(event: TransitionEvent): void {
         if (!this.open && event.propertyName === 'visibility') {
-            this.dispatchClosed();
             this.resolveTransitionPromise();
+            this.dispatchClosed();
         }
     }
 
@@ -150,9 +148,13 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     protected override update(changes: PropertyValues<this>): void {
         if (changes.has('open') && changes.get('open') !== undefined) {
-            this.transitionPromise = new Promise(
-                (res) => (this.resolveTransitionPromise = res)
-            );
+            this.animating = true;
+            this.transitionPromise = new Promise((res) => {
+                this.resolveTransitionPromise = () => {
+                    this.animating = false;
+                    res();
+                };
+            });
         }
         super.update(changes);
     }

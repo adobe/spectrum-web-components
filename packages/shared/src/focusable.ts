@@ -16,6 +16,10 @@ import { FocusVisiblePolyfillMixin } from './focus-visible.js';
 
 type DisableableElement = HTMLElement & { disabled?: boolean };
 
+function nextFrame(): Promise<void> {
+    return new Promise((res) => requestAnimationFrame(() => res()));
+}
+
 /**
  * Focusable base class handles tabindex setting into shadowed elements automatically.
  *
@@ -259,12 +263,31 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
     }
 
+    protected override async getUpdateComplete(): Promise<boolean> {
+        const complete = (await super.getUpdateComplete()) as boolean;
+        if (this._recentlyConnected) {
+            this._recentlyConnected = false;
+            // If at connect time the [autofocus] content is placed within
+            // content that needs to be "hidden" by default, it would need to wait
+            // two rAFs for animations to be triggered on that content in
+            // order for the [autofocus] to become "visisble" and have its
+            // focus() capabilities enabled.
+            //
+            // Await this with `getUpdateComplete` so that the element cannot
+            // become "ready" until `manageFocus` has occured.
+            await nextFrame();
+            await nextFrame();
+        }
+        return complete;
+    }
+
+    private _recentlyConnected = false;
+
     public override connectedCallback(): void {
         super.connectedCallback();
+        this._recentlyConnected = true;
         this.updateComplete.then(() => {
-            requestAnimationFrame(() => {
-                this.manageAutoFocus();
-            });
+            this.manageAutoFocus();
         });
     }
 }

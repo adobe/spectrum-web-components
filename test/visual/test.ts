@@ -23,26 +23,9 @@ import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/Sto
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { render } from 'lit';
 import { emulateMedia, sendKeys } from '@web/test-runner-commands';
-import { sendMouse } from '../plugins/browser.js';
+import { ignoreResizeObserverLoopError } from '../testing-helpers.js';
 
-let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
-before(function () {
-    // Save Mocha's handler.
-    (
-        Mocha as unknown as { process: { removeListener(name: string): void } }
-    ).process.removeListener('uncaughtException');
-    globalErrorHandler = window.onerror;
-    addEventListener('error', (error) => {
-        if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
-            return;
-        } else {
-            globalErrorHandler?.(error);
-        }
-    });
-});
-after(function () {
-    window.onerror = globalErrorHandler as OnErrorEventHandler;
-});
+ignoreResizeObserverLoopError(before, after);
 
 const wrap = () => html`
     <sp-story-decorator
@@ -207,17 +190,6 @@ export const regressVisuals = async (name: string, stories: TestsType) => {
                     colorScheme: 'no-preference',
                 });
             }
-        });
-        beforeEach(async () => {
-            // Something about this prevents Chromium from swallowing the CSS transitions in specific contexts.
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [0, 0],
-                    },
-                ],
-            });
         });
         afterEach(() => {
             const overlays = [
