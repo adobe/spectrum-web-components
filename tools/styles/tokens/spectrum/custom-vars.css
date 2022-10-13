@@ -37,26 +37,20 @@ governing permissions and limitations under the License.
     --spectrum-animation-ease-out: cubic-bezier(0, 0, 0.4, 1);
     --spectrum-animation-ease-linear: cubic-bezier(0, 0, 1, 1);
 
-    --spectrum-font-family-base: adobe-clean, 'Source Sans Pro', -apple-system,
-        BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS',
-        'Lucida Grande', sans-serif;
-    --spectrum-font-family-serif: adobe-clean-serif, 'Source Serif Pro', Georgia,
-        serif;
-    --spectrum-font-family-code: 'Source Code Pro', Monaco, monospace;
+    --spectrum-sans-serif-font: var(--spectrum-sans-serif-font-family);
+    --spectrum-sans-font-family-stack: var(--spectrum-sans-serif-font),
+        adobe-clean, 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+        'Segoe UI', Roboto, Ubuntu, 'Trebuchet MS', 'Lucida Grande', sans-serif;
 
-    --spectrum-line-height-large: 1.7;
-    --spectrum-line-height-medium: 1.5;
-    --spectrum-line-height-small: 1.3;
+    --spectrum-serif-font: var(--spectrum-serif-font-family);
+    --spectrum-serif-font-family-stack: var(--spectrum-serif-font),
+        adobe-clean-serif, 'Source Serif Pro', Georgia, serif;
 
-    --spectrum-font-weight-thin: 100;
-    --spectrum-font-weight-ultra-light: 200;
-    --spectrum-font-weight-light: 300;
-    --spectrum-font-weight-regular: 400;
-    --spectrum-font-weight-medium: 500;
-    --spectrum-font-weight-semi-bold: 600;
-    --spectrum-font-weight-bold: 700;
-    --spectrum-font-weight-extra-bold: 800;
-    --spectrum-font-weight-black: 900;
+    --spectrum-code-font-family-stack: 'Source Code Pro', Monaco, monospace;
+
+    --spectrum-cjk-font: var(--spectrum-cjk-font-family);
+    --spectrum-cjk-font-family-stack: var(--spectrum-cjk-font),
+        adobe-clean-han-japanese, sans-serif;
 
     /* static white / black background color for docs containers */
     --spectrum-docs-static-white-background-color: rgb(15, 121, 125);
