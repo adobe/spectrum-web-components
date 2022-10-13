@@ -278,19 +278,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-avatar-size-100: var(--spectrum-global-dimension-size-250);
     --spectrum-alias-avatar-size-400: var(--spectrum-global-dimension-size-350);
     --spectrum-alias-avatar-size-600: var(--spectrum-global-dimension-size-450);
-    --spectrum-button-s-primary-fill-textonly-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
-    --spectrum-button-m-primary-fill-texticon-padding-left: var(
-        --spectrum-global-dimension-size-175
-    );
-    --spectrum-button-l-primary-fill-textonly-text-padding-top: var(
-        --spectrum-global-dimension-size-115
-    );
-    --spectrum-button-xl-primary-fill-texticon-padding-left: 21px;
-    --spectrum-button-m-primary-outline-texticon-padding-left: var(
-        --spectrum-global-dimension-size-175
-    );
     --spectrum-dialog-confirm-title-text-size: var(
         --spectrum-alias-heading-s-text-size
     );

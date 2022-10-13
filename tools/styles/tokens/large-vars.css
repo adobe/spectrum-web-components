@@ -22,8 +22,8 @@ governing permissions and limitations under the License.
     --spectrum-field-label-top-to-asterisk-extra-large: 24px;
     --spectrum-field-label-top-margin-small: 0px;
     --spectrum-field-label-top-margin-medium: 5px;
-    --spectrum-field-label-top-margin-large: 5px;
-    --spectrum-field-label-top-margin-extra-large: 5px;
+    --spectrum-field-label-top-margin-large: 6px;
+    --spectrum-field-label-top-margin-extra-large: 6px;
     --spectrum-field-label-to-component-quiet-small: -10px;
     --spectrum-field-label-to-component-quiet-medium: -10px;
     --spectrum-field-label-to-component-quiet-large: -15px;
@@ -147,6 +147,11 @@ governing permissions and limitations under the License.
     --spectrum-color-area-minimum-height: 80px;
     --spectrum-color-wheel-minimum-width: 240px;
     --spectrum-color-slider-length: 240px;
+    --spectrum-illustrated-message-title-size: var(--spectrum-heading-size-s);
+    --spectrum-illustrated-message-cjk-title-size: var(
+        --spectrum-heading-cjk-size-s
+    );
+    --spectrum-illustrated-message-body-size: var(--spectrum-body-size-xs);
     --spectrum-workflow-icon-size-50: 18px;
     --spectrum-workflow-icon-size-75: 20px;
     --spectrum-workflow-icon-size-100: 22px;
@@ -244,6 +249,7 @@ governing permissions and limitations under the License.
     --spectrum-field-text-to-validation-icon-medium: 15px;
     --spectrum-field-text-to-validation-icon-large: 19px;
     --spectrum-field-text-to-validation-icon-extra-large: 22px;
+    --spectrum-field-width: 240px;
     --spectrum-character-count-to-field-quiet-small: -4px;
     --spectrum-character-count-to-field-quiet-medium: -4px;
     --spectrum-character-count-to-field-quiet-large: -4px;
@@ -251,8 +257,8 @@ governing permissions and limitations under the License.
     --spectrum-side-label-character-count-to-field: 15px;
     --spectrum-side-label-character-count-top-margin-small: 5px;
     --spectrum-side-label-character-count-top-margin-medium: 10px;
-    --spectrum-side-label-character-count-top-margin-large: 13px;
-    --spectrum-side-label-character-count-top-margin-extra-large: 17px;
+    --spectrum-side-label-character-count-top-margin-large: 14px;
+    --spectrum-side-label-character-count-top-margin-extra-large: 18px;
     --spectrum-disclosure-indicator-top-to-disclosure-icon-small: 9px;
     --spectrum-disclosure-indicator-top-to-disclosure-icon-medium: 13px;
     --spectrum-disclosure-indicator-top-to-disclosure-icon-large: 17px;
