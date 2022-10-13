@@ -41,6 +41,10 @@ governing permissions and limitations under the License.
     max-width: 100%;
 }
 
+#icon:not([hidden]) {
+    display: inline-flex;
+}
+
 :host([readonly]) #button {
     user-select: inherit;
 }
