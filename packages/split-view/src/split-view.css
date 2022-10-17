@@ -41,6 +41,10 @@ governing permissions and limitations under the License.
     display: none;
 }
 
+#gripper {
+    touch-action: none;
+}
+
 #splitter {
     order: 2;
     height: auto; /* for horizontal splitviews without proper outter height value */
