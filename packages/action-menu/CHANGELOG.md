@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.15.4...@spectrum-web-components/action-menu@0.15.5) (2022-10-17)
+
+### Bug Fixes
+
+-   **menu:** ensure that Groups in Action Menus are rendered with the correct width ([a996a10](https://github.com/adobe/spectrum-web-components/commit/a996a1078bd3a00d3025f0eeadb39330bafdc26d))
+
 ## [0.15.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.15.3...@spectrum-web-components/action-menu@0.15.4) (2022-10-10)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/tabs",
-    "version": "0.9.2",
+    "version": "0.10.0",
     "publishConfig": {
         "access": "public"
     },
@@ -78,7 +78,7 @@
         "@lit-labs/observers": "^1.0.1",
         "@spectrum-web-components/base": "^0.7.0",
         "@spectrum-web-components/reactive-controllers": "^0.3.1",
-        "@spectrum-web-components/shared": "^0.15.0",
+        "@spectrum-web-components/shared": "^0.15.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

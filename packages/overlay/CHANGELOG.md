@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.18.4...@spectrum-web-components/overlay@0.18.5) (2022-10-17)
+
+### Bug Fixes
+
+-   correct the relationship between overlayWillCloseCallback and phased animations ([c63db8d](https://github.com/adobe/spectrum-web-components/commit/c63db8d2ea4c942fbd52c6d5239ddd3f1ccea5b0))
+-   **overlay:** init tab trapping on OverlayStack construction ([a3121e3](https://github.com/adobe/spectrum-web-components/commit/a3121e38df47fb528f8366cdb68e83417d78dc95))
+
 ## [0.18.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.18.3...@spectrum-web-components/overlay@0.18.4) (2022-10-10)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

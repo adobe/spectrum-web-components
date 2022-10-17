@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/popover",
-    "version": "0.12.4",
+    "version": "0.12.5",
     "publishConfig": {
         "access": "public"
     },
@@ -58,7 +58,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.0",
-        "@spectrum-web-components/overlay": "^0.18.4",
+        "@spectrum-web-components/overlay": "^0.18.5",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

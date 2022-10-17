@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.13.4...@spectrum-web-components/picker@0.13.5) (2022-10-17)
+
+### Bug Fixes
+
+-   style icons in Picker correctly ([0bbdf84](https://github.com/adobe/spectrum-web-components/commit/0bbdf84df595a573b355721698262b1c5a1f3b01))
+
 ## [0.13.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.13.3...@spectrum-web-components/picker@0.13.4) (2022-10-10)
 
 **Note:** Version bump only for package @spectrum-web-components/picker

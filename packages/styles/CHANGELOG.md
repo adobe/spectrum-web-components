@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.18.0...@spectrum-web-components/styles@0.19.0) (2022-10-17)
+
+### Features
+
+-   **action-group:** use core tokens ([73f3b51](https://github.com/adobe/spectrum-web-components/commit/73f3b51becf3c20c387bdf00b4cd54b8839a12da))
+
 # [0.18.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.17.1...@spectrum-web-components/styles@0.18.0) (2022-10-10)
 
 ### Features

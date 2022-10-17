@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.4.2...@spectrum-web-components/tray@0.4.3) (2022-10-17)
+
+### Bug Fixes
+
+-   correct the relationship between overlayWillCloseCallback and phased animations ([c63db8d](https://github.com/adobe/spectrum-web-components/commit/c63db8d2ea4c942fbd52c6d5239ddd3f1ccea5b0))
+
 ## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.4.1...@spectrum-web-components/tray@0.4.2) (2022-10-10)
 
 **Note:** Version bump only for package @spectrum-web-components/tray
