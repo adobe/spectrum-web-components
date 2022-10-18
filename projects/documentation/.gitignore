@@ -24,3 +24,6 @@ src/custom-elements.json
 dist/
 !web-dev-server.config.js
 stats.html
+
+!src/components/*.css.ts
+!**/*.css

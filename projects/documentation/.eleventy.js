@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import syntaxHighlight from '@11ty/eleventy-plugin-syntaxhighlight';
 import markdownIt from 'markdown-it';
 import markdownItAnchors from 'markdown-it-anchor';
+import litPlugin from '@lit-labs/eleventy-plugin-lit';
 
 const packageVersion = async function (packageName) {
     let packageJSON = {};
@@ -39,14 +40,14 @@ export default function (eleventyConfig) {
     eleventyConfig.addShortcode('packageVersion', packageVersion);
     eleventyConfig.addNunjucksGlobal('WATCH_MODE', process.env.WATCH_MODE);
     eleventyConfig.setUseGitIgnore(false);
-    eleventyConfig.addPassthroughCopy('./content/favicon.ico');
-    eleventyConfig.addPassthroughCopy('./content/typekit/*.woff2');
-    eleventyConfig.addPassthroughCopy('./content/favicon.svg');
-    eleventyConfig.addPassthroughCopy('./content/404.html');
-    eleventyConfig.addPassthroughCopy('./content/serviceWorker.js');
-    eleventyConfig.addPassthroughCopy('./content/images/**/*');
-    eleventyConfig.addPassthroughCopy('./content/manifest.webmanifest');
-    eleventyConfig.addPassthroughCopy('../src/**/*.css');
+    eleventyConfig.addPassthroughCopy('content/favicon.ico');
+    eleventyConfig.addPassthroughCopy('content/typekit/*.woff2');
+    eleventyConfig.addPassthroughCopy('content/favicon.svg');
+    eleventyConfig.addPassthroughCopy('content/404.html');
+    eleventyConfig.addPassthroughCopy('content/serviceWorker.js');
+    eleventyConfig.addPassthroughCopy('content/images/**/*');
+    eleventyConfig.addPassthroughCopy('content/manifest.webmanifest');
+    eleventyConfig.addPassthroughCopy('src/**/*.css');
     eleventyConfig.addPlugin(syntaxHighlight, {
         init: function ({ Prism }) {
             Prism.languages['html-live'] = Prism.languages.html;
@@ -183,6 +184,11 @@ export default function (eleventyConfig) {
                 }
                 return 0;
             });
+    });
+
+    eleventyConfig.addPlugin(litPlugin, {
+        mode: 'vm',
+        componentModules: ['_site/src/components/layout-element.js'],
     });
 
     return {

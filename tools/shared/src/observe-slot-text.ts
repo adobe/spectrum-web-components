@@ -46,20 +46,22 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
         constructor(...args: any[]) {
             super(args);
 
-            new MutationController(this, {
-                config: {
-                    characterData: true,
-                    subtree: true,
-                },
-                callback: (mutationsList: Array<MutationRecord>) => {
-                    for (const mutation of mutationsList) {
-                        if (mutation.type === 'characterData') {
-                            this.manageTextObservedSlot();
-                            return;
+            if ('MutationObserver' in globalThis) {
+                new MutationController(this, {
+                    config: {
+                        characterData: true,
+                        subtree: true,
+                    },
+                    callback: (mutationsList: Array<MutationRecord>) => {
+                        for (const mutation of mutationsList) {
+                            if (mutation.type === 'characterData') {
+                                this.manageTextObservedSlot();
+                                return;
+                            }
                         }
-                    }
-                },
-            });
+                    },
+                });
+            }
         }
 
         @property({ type: Boolean, attribute: false })

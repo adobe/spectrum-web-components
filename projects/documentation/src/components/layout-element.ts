@@ -14,7 +14,6 @@ import {
     CSSResultArray,
     html,
     LitElement,
-    nothing,
     PropertyValues,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -23,7 +22,6 @@ import {
     queryAsync,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-import '@spectrum-web-components/theme/sp-theme.js';
 import type {
     Color,
     Scale,
@@ -44,7 +42,6 @@ import {
 
 import './adobe-logo.js';
 import type { CodeExample } from './code-example.js';
-import './code-example.js';
 import { copyText } from './copy-to-clipboard.js';
 
 import layoutStyles from './layout.css';
@@ -58,34 +55,40 @@ const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
 const SWC_THEME_THEME_KEY = 'swc-docs:theme:theme';
 const SWC_THEME_SYSTEM_KEY = 'swc-docs:theme:system';
 const SWC_THEME_DIR_KEY = 'swc-docs:theme:dir';
-const COLOR_FALLBACK = matchMedia(DARK_MODE).matches ? 'dark' : 'light';
-const SCALE_FALLBACK = matchMedia(IS_MOBILE).matches ? 'large' : 'medium';
+const COLOR_FALLBACK = globalThis.matchMedia?.(DARK_MODE).matches
+    ? 'dark'
+    : 'light';
+const SCALE_FALLBACK = globalThis.matchMedia?.(IS_MOBILE).matches
+    ? 'large'
+    : 'medium';
 const SYSTEM_FALLBACK = 'spectrum';
 const DIR_FALLBACK = 'ltr';
 const DEFAULT_COLOR = (
-    window.localStorage
+    globalThis.localStorage
         ? localStorage.getItem(SWC_THEME_COLOR_KEY) || COLOR_FALLBACK
         : COLOR_FALLBACK
 ) as Color;
 const DEFAULT_SCALE = (
-    window.localStorage
+    globalThis.localStorage
         ? localStorage.getItem(SWC_THEME_SCALE_KEY) || SCALE_FALLBACK
         : SCALE_FALLBACK
 ) as Scale;
 const DEFAULT_SYSTEM = (
-    window.localStorage
+    globalThis.localStorage
         ? localStorage.getItem(SWC_THEME_THEME_KEY) ||
           localStorage.getItem(SWC_THEME_SYSTEM_KEY) ||
           SYSTEM_FALLBACK
         : SYSTEM_FALLBACK
 ) as SystemVariant;
 const DEFAULT_DIR = (
-    window.localStorage
+    globalThis.localStorage
         ? localStorage.getItem(SWC_THEME_DIR_KEY) || DIR_FALLBACK
         : DIR_FALLBACK
 ) as 'ltr' | 'rtl';
 
-const isNarrowMediaQuery = matchMedia('screen and (max-width: 960px)');
+const isNarrowMediaQuery = globalThis.matchMedia?.(
+    'screen and (max-width: 960px)'
+);
 
 const lazyStyleFragment = (
     name: Color | Scale,
@@ -147,7 +150,6 @@ export interface TrackTheme {
     callback: (color: Color) => void;
 }
 
-// @customElement('docs-page')
 export class LayoutElement extends LitElement {
     public static override get styles(): CSSResultArray {
         return [layoutStyles];
@@ -173,7 +175,7 @@ export class LayoutElement extends LitElement {
     public open = false;
 
     @state()
-    private isNarrow = isNarrowMediaQuery.matches;
+    private isNarrow = isNarrowMediaQuery?.matches ?? true;
 
     @property({ attribute: false })
     public theme: SystemVariant = DEFAULT_SYSTEM;
@@ -439,7 +441,12 @@ export class LayoutElement extends LitElement {
             >
                 ${this.isNarrow ? this.header : html``}
                 <div id="body">
-                    ${this.isNarrow ? html`` : this.sideNav}
+                    ${this.isNarrow
+                        ? html`
+                              <slot name="logo" class="desktop-only"></slot>
+                              <slot name="side-nav" class="desktop-only"></slot>
+                          `
+                        : this.sideNav}
                     <div
                         id="page"
                         @alert=${this.addAlert}
@@ -473,7 +480,7 @@ export class LayoutElement extends LitElement {
     override updated(changes: PropertyValues) {
         let loadStyleFragments = false;
         if (changes.has('color')) {
-            if (window.localStorage) {
+            if (globalThis.localStorage) {
                 localStorage.setItem(SWC_THEME_COLOR_KEY, this.color);
             }
             if (changes.get('color')) {
@@ -496,7 +503,7 @@ export class LayoutElement extends LitElement {
                     : 'light';
         }
         if (changes.has('scale')) {
-            if (window.localStorage) {
+            if (globalThis.localStorage) {
                 localStorage.setItem(SWC_THEME_SCALE_KEY, this.scale);
             }
             if (changes.get('scale')) {
@@ -511,7 +518,7 @@ export class LayoutElement extends LitElement {
                 loadStyleFragments = true;
             }
         }
-        if (changes.has('dir') && window.localStorage) {
+        if (changes.has('dir') && globalThis.localStorage) {
             localStorage.setItem(SWC_THEME_DIR_KEY, this.dir);
         }
         if (loadStyleFragments) {

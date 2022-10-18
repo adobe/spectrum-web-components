@@ -29,7 +29,7 @@ import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-copy.js';
 import { copyNode } from './copy-to-clipboard.js';
-import { TrackTheme } from './layout.js';
+import { TrackTheme } from './layout-element.js';
 import { Color } from '@spectrum-web-components/theme';
 
 @customElement('code-example')
