@@ -128,7 +128,7 @@ export class FocusGroupController<T extends HTMLElement>
         if (typeof listenerScope === 'object') {
             this._listenerScope = () => listenerScope;
         } else if (typeof listenerScope === 'function') {
-            this._listenerScope = listenerScope;
+            this._listenerScope = listenerScope as () => HTMLElement;
         }
     }
 

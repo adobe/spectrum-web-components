@@ -98,7 +98,7 @@ export class SliderHandle extends Focusable {
     public highlight = false;
 
     @property({ type: String })
-    public name = '';
+    public override name = '';
 
     @property({ reflect: true, converter: MinConverter })
     public min?: number | 'previous';

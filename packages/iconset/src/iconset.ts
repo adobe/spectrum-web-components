@@ -37,7 +37,7 @@ export abstract class Iconset extends LitElement {
      * to consuming icons.
      */
     @property()
-    public set name(value: string) {
+    public override set name(value: string) {
         // if we're already registered in the iconset registry
         // we'll need to update our registration
         if (this.registered) {
@@ -53,7 +53,7 @@ export abstract class Iconset extends LitElement {
         }
         this._name = value;
     }
-    public get name(): string {
+    public override get name(): string {
         return this._name;
     }
 
