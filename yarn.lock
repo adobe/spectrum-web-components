@@ -5538,18 +5538,10 @@
     chrome-launcher "^0.15.0"
     puppeteer-core "^13.1.3"
 
-"@web/test-runner-commands@^0.6.1", "@web/test-runner-commands@^0.6.3":
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.6.3.tgz#a34689c519a9b5bc57cfba54d32328385f4ff4d4"
-  integrity sha512-+tMjOgBh1z77rM3Kt3rUrl+gzyUOdcHr2EbAWeMVU2v0AV/c+DTFQNZTi7iw8j5v/bVSlR8p4lFR6xe5mGVYvw==
-  dependencies:
-    "@web/test-runner-core" "^0.10.27"
-    mkdirp "^1.0.4"
-
-"@web/test-runner-commands@^0.6.4":
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.6.4.tgz#61c8e1d71d30567b8e2845274426d209dbe77c7e"
-  integrity sha512-opSfIVHj4PsIA/Ah582DKgnmdfY+Xn35FnnYeJ+aBYrM+setOP63McvrY4PuwasictwswHVSzq86qZzmxvXkHw==
+"@web/test-runner-commands@^0.6.1", "@web/test-runner-commands@^0.6.3", "@web/test-runner-commands@^0.6.4":
+  version "0.6.5"
+  resolved "https://registry.yarnpkg.com/@web/test-runner-commands/-/test-runner-commands-0.6.5.tgz#69a2a06b52fd9d329f9cf1e172cd8fb1d5ffc521"
+  integrity sha512-W+wLg10jEAJY9N6tNWqG1daKmAzxGmTbO/H9fFfcgOgdxdn+hHiR4r2/x1iylKbFLujHUQlnjNQeu2d6eDPFqg==
   dependencies:
     "@web/test-runner-core" "^0.10.27"
     mkdirp "^1.0.4"
