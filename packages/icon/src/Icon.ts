@@ -29,7 +29,7 @@ export class Icon extends IconBase {
     public src?: string;
 
     @property()
-    public name?: string;
+    public override name?: string;
 
     @query('#container')
     private iconContainer?: HTMLElement;
