@@ -205,7 +205,7 @@ export const form = (
                 <style>
                     #form-fields div {
                         display: grid;
-                        gap: var(--spectrum-global-dimension-size-150);
+                        row-gap: var(--spectrum-global-dimension-size-150);
                         grid-template-columns: auto auto;
 
                         --spectrum-fieldlabel-m-side-padding-right: 0;
