@@ -78,8 +78,7 @@
         "@lit-labs/observers": "^1.0.1",
         "@spectrum-web-components/base": "^0.7.0",
         "@spectrum-web-components/reactive-controllers": "^0.3.2",
-        "@spectrum-web-components/shared": "^0.15.1",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/shared": "^0.15.1"
     },
     "devDependencies": {
         "@spectrum-css/tabs": "^3.2.20"

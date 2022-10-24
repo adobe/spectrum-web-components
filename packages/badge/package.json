@@ -58,8 +58,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.0",
-        "@spectrum-web-components/shared": "^0.15.1",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/shared": "^0.15.1"
     },
     "devDependencies": {
         "@spectrum-css/badge": "^1.0.20"

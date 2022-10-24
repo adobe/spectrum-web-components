@@ -59,8 +59,7 @@
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.0",
         "@spectrum-web-components/field-label": "^0.10.0",
-        "@spectrum-web-components/shared": "^0.15.1",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/shared": "^0.15.1"
     },
     "devDependencies": {
         "@spectrum-css/progressbar": "^1.0.33"

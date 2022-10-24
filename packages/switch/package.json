@@ -59,8 +59,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.0",
-        "@spectrum-web-components/checkbox": "^0.14.3",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/checkbox": "^0.14.3"
     },
     "devDependencies": {
         "@spectrum-css/switch": "^2.0.0"

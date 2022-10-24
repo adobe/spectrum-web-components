@@ -58,8 +58,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.0",
-        "@spectrum-web-components/popover": "^0.12.6",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/popover": "^0.12.6"
     },
     "devDependencies": {
         "@spectrum-css/actionbar": "^4.0.1"

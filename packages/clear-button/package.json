@@ -42,8 +42,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.0",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/base": "^0.7.0"
     },
     "devDependencies": {
         "@spectrum-css/clearbutton": "^1.2.12"

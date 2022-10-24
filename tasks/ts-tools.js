@@ -123,7 +123,6 @@ export const watchFiles = async () => {
         './test/lit-helpers.ts',
         './test/testing-helpers.ts',
         './test/testing-helpers-a11y.ts',
-        './test/testing-helpers.ts',
         './test/visual/test.ts',
     ]);
     return files;

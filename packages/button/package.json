@@ -87,8 +87,7 @@
         "@spectrum-web-components/close-button": "^0.3.3",
         "@spectrum-web-components/icon": "^0.12.2",
         "@spectrum-web-components/icons-ui": "^0.9.2",
-        "@spectrum-web-components/shared": "^0.15.1",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/shared": "^0.15.1"
     },
     "devDependencies": {
         "@spectrum-css/button": "^6.0.13"

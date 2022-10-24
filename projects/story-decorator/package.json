@@ -72,8 +72,7 @@
         "@spectrum-web-components/overlay": "^0.18.6",
         "@spectrum-web-components/picker": "^0.13.6",
         "@spectrum-web-components/switch": "^0.11.2",
-        "@spectrum-web-components/theme": "^0.14.5",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/theme": "^0.14.5"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
