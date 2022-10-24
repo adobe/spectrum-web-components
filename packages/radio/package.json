@@ -69,8 +69,7 @@
         "@spectrum-web-components/field-group": "^0.7.3",
         "@spectrum-web-components/help-text": "^0.2.4",
         "@spectrum-web-components/reactive-controllers": "^0.3.2",
-        "@spectrum-web-components/shared": "^0.15.1",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/shared": "^0.15.1"
     },
     "devDependencies": {
         "@spectrum-css/radio": "^4.0.5"

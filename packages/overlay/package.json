@@ -106,8 +106,7 @@
         "@spectrum-web-components/action-button": "^0.10.5",
         "@spectrum-web-components/base": "^0.7.0",
         "@spectrum-web-components/shared": "^0.15.1",
-        "@spectrum-web-components/theme": "^0.14.5",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/theme": "^0.14.5"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

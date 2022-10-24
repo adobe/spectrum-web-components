@@ -65,8 +65,7 @@
         "@lit-labs/observers": "^1.0.1",
         "@lit-labs/virtualizer": "0.7.2",
         "@spectrum-web-components/base": "^0.7.0",
-        "@spectrum-web-components/reactive-controllers": "^0.3.2",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/reactive-controllers": "^0.3.2"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

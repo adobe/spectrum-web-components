@@ -58,8 +58,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.0",
-        "@spectrum-web-components/color-loupe": "^0.4.0",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/color-loupe": "^0.4.0"
     },
     "devDependencies": {
         "@spectrum-css/colorhandle": "^2.0.8"

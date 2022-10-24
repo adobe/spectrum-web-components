@@ -75,8 +75,7 @@
         "@spectrum-web-components/popover": "^0.12.6",
         "@spectrum-web-components/reactive-controllers": "^0.3.2",
         "@spectrum-web-components/shared": "^0.15.1",
-        "@spectrum-web-components/tray": "^0.4.4",
-        "tslib": "^2.0.0"
+        "@spectrum-web-components/tray": "^0.4.4"
     },
     "devDependencies": {
         "@spectrum-css/picker": "^1.2.12"

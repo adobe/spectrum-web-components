@@ -68,8 +68,7 @@
         "reactive controllers"
     ],
     "dependencies": {
-        "lit": "^2.1.2",
-        "tslib": "^2.0.0"
+        "lit": "^2.1.2"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
