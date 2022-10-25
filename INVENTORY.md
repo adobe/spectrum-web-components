@@ -3,13 +3,13 @@
 Availability of [Spectrum](https://spectrum.adobe.com) components in [Spectrum CSS](https://opensource.adobe.com/spectrum-css/)
 and [Spectrum Web Components](https://opensource.adobe.com/spectrum-web-components/).
 
-| Component           | Design tokens (86) | CSS (76)                                                                | Web Components (58)                                                                       |
+| Component           | Design tokens (86) | CSS (76)                                                                | Web Components (59)                                                                       |
 | ------------------- | ------------------ | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | accordion           | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/accordion.html)          | [📄](https://opensource.adobe.com/spectrum-web-components/components/accordion)           |
 | actionbar           | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/actionbar.html)          | [📄](https://opensource.adobe.com/spectrum-web-components/components/action-bar)          |
 | actionbutton        | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/actionbutton.html)       | [📄](https://opensource.adobe.com/spectrum-web-components/components/action-button)       |
 | actiongroup         | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/actiongroup.html)        | [📄](https://opensource.adobe.com/spectrum-web-components/components/action-group)        |
-| actionmenu          |                    | [📄](https://opensource.adobe.com/spectrum-css/actionmenu.html)         | ❌                                                                                        |
+| actionmenu          |                    | [📄](https://opensource.adobe.com/spectrum-css/actionmenu.html)         | [📄](https://opensource.adobe.com/spectrum-web-components/components/action-menu)         |
 | alertbanner         | ✅                 |                                                                         |                                                                                           |
 | artboard            | ✅                 |                                                                         |                                                                                           |
 | asset               | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/asset.html)              | [📄](https://opensource.adobe.com/spectrum-web-components/components/asset)               |
