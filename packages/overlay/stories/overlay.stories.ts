@@ -215,6 +215,80 @@ export const openClickContent = (args: Properties): TemplateResult =>
         open: 'click',
     });
 
+class ScrollForcer extends HTMLElement {
+    ready!: (value: boolean | PromiseLike<boolean>) => void;
+
+    constructor() {
+        super();
+        this.readyPromise = new Promise((res) => {
+            this.ready = res;
+        });
+        this.setup();
+    }
+
+    async setup(): Promise<void> {
+        await nextFrame();
+        await nextFrame();
+
+        this.previousElementSibling?.addEventListener(
+            'sp-opened',
+            () => {
+                this.doScroll();
+            },
+            { once: true }
+        );
+    }
+
+    async doScroll(): Promise<void> {
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        if (document.scrollingElement) {
+            document.scrollingElement.scrollTop = 100;
+        }
+
+        await nextFrame();
+        await nextFrame();
+        this.ready(true);
+    }
+
+    private readyPromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.readyPromise;
+    }
+}
+
+customElements.define('scroll-forcer', ScrollForcer);
+
+export const clickContentClosedOnScroll = (
+    args: Properties
+): TemplateResult => html`
+    <div style="margin: 50vh 0 100vh;">
+        ${template({
+            ...args,
+            open: 'click',
+        })}
+    </div>
+`;
+clickContentClosedOnScroll.decorators = [
+    (story: () => TemplateResult): TemplateResult => html`
+        <style>
+            html,
+            body,
+            #root,
+            #root-inner,
+            sp-story-decorator {
+                height: auto !important;
+            }
+        </style>
+        ${story()}
+        <scroll-forcer></scroll-forcer>
+    `,
+];
+
 export const customizedClickContent = (
     args: Properties
 ): TemplateResult => html`
