@@ -9991,9 +9991,9 @@ eslint-plugin-import@^2.26.0:
     tsconfig-paths "^3.14.1"
 
 eslint-plugin-lit-a11y@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-lit-a11y/-/eslint-plugin-lit-a11y-2.2.2.tgz#e3f14f207e6c07ef2e40c93ea8e9e15b3dae8a79"
-  integrity sha512-9dJfnwPOOA6x7Ow/+GFoOt1hr4mSNrF6KBWQ2OFFAY/9aBYtyBX4fRbpxqS2y3ld66/bjWru2+LGWgNVr5GxzQ==
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-lit-a11y/-/eslint-plugin-lit-a11y-2.2.3.tgz#2a6fc5fb09403baa942c4c605f5e7a9de032a9a7"
+  integrity sha512-vlD3+7a/hiw/Cw1thZTX1dpi6pOEsRwtEgUFvbl+MQmiu8E8S8CxcXcSkzPkkkeir3W4NqH/MY8lS1or3ml8Ng==
   dependencies:
     aria-query "^4.2.2"
     axe-core "^4.3.3"
