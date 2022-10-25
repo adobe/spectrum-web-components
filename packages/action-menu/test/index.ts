@@ -23,6 +23,9 @@ import { spy } from 'sinon';
 
 import type { ActionMenu } from '@spectrum-web-components/action-menu';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+
+ignoreResizeObserverLoopError(before, after);
 
 const deprecatedActionMenuFixture = async (): Promise<ActionMenu> =>
     await fixture<ActionMenu>(

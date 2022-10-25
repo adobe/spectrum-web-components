@@ -36,6 +36,7 @@ import {
 import type { VirtualTrigger } from './VirtualTrigger.js';
 import {
     arrow,
+    autoUpdate,
     computePosition,
     flip,
     Placement as FloatingUIPlacement,
@@ -136,6 +137,7 @@ export class ActiveOverlay extends SpectrumElement {
     public trigger!: HTMLElement;
     public root?: HTMLElement;
     public virtualTrigger?: VirtualTrigger;
+    private cleanup?: () => void;
 
     protected childrenReady!: Promise<unknown[]>;
 
@@ -295,7 +297,6 @@ export class ActiveOverlay extends SpectrumElement {
                 'sp-update-overlays',
                 this.updateOverlayPosition
             );
-            window.addEventListener('scroll', this.updateOverlayPosition);
         }
         const actions: Promise<unknown>[] = [];
         if (this.placement && this.placement !== 'none') {
@@ -374,6 +375,10 @@ export class ActiveOverlay extends SpectrumElement {
             this.overlayContent.dispatchEvent(new Event('sp-overlay-closed'));
             this.willNotifyClosed = false;
         }
+
+        if (this.cleanup) {
+            this.cleanup();
+        }
     }
 
     private stealOverlayContent(
@@ -414,8 +419,24 @@ export class ActiveOverlay extends SpectrumElement {
     private initialHeight!: number;
     private isConstrained = false;
 
+    public async placeOverlay(): Promise<void> {
+        if (!this.placement || this.placement === 'none') {
+            return;
+        }
+
+        this.cleanup = autoUpdate(
+            this.virtualTrigger || this.trigger,
+            this,
+            this.updateOverlayPosition
+        );
+    }
+
     public updateOverlayPosition = async (): Promise<void> => {
         if (!this.placement || this.placement === 'none') {
+            return;
+        }
+        if (this.interaction !== 'modal' && this.cleanup) {
+            this.dispatchEvent(new Event('close'));
             return;
         }
         await (document.fonts ? document.fonts.ready : Promise.resolve());
@@ -522,9 +543,13 @@ export class ActiveOverlay extends SpectrumElement {
     private schedulePositionUpdate(): void {
         // Edge needs a little time to update the DOM before computing the layout
         cancelAnimationFrame(this.positionAnimationFrame);
-        this.positionAnimationFrame = requestAnimationFrame(() =>
-            this.updateOverlayPosition()
-        );
+        this.positionAnimationFrame = requestAnimationFrame(() => {
+            if (this.cleanup) {
+                this.updateOverlayPosition();
+            } else {
+                this.placeOverlay();
+            }
+        });
     }
 
     private onSlotChange(): void {
@@ -625,7 +650,6 @@ export class ActiveOverlay extends SpectrumElement {
             'sp-update-overlays',
             this.updateOverlayPosition
         );
-        window.removeEventListener('scroll', this.updateOverlayPosition);
         super.disconnectedCallback();
     }
 }
