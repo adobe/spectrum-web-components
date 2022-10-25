@@ -42,6 +42,9 @@ import {
 import { iconsOnly } from '../stories/picker.stories.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import type { Popover } from '@spectrum-web-components/popover';
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+
+ignoreResizeObserverLoopError(before, after);
 
 const isMenuActiveElement = function (): boolean {
     return document.activeElement?.localName === 'sp-menu';
