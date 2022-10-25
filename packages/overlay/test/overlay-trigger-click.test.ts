@@ -14,13 +14,17 @@ import {
     expect,
     fixture,
     html,
+    oneEvent,
     waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import '@spectrum-web-components/popover/sp-popover.js';
-import { OverlayTrigger } from '@spectrum-web-components/overlay';
+import {
+    OverlayTrigger,
+    TriggerInteractions,
+} from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { spy } from 'sinon';
 import { ActionButton } from '@spectrum-web-components/action-button';
@@ -58,6 +62,49 @@ describe('Overlay Trigger - Click', () => {
         await waitUntil(() => closedSpy.calledOnce, 'click content returned', {
             timeout: 2000,
         });
+    });
+    describe('closes on scroll', () => {
+        afterEach(() => {
+            if (document.scrollingElement) {
+                document.scrollingElement.scrollTop = 0;
+            }
+        });
+        (['click', 'replace', 'inline'] as TriggerInteractions[]).map(
+            (interaction) => {
+                it(`closes "${interaction}" overlay on scroll`, async () => {
+                    const el = await fixture<OverlayTrigger>(html`
+                        <overlay-trigger
+                            placement="right-start"
+                            type=${interaction}
+                        >
+                            <sp-action-button
+                                slot="trigger"
+                                style="margin: 50vh 0 100vh;"
+                            >
+                                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                            </sp-action-button>
+                            <sp-popover slot="click-content" tip></sp-popover>
+                        </overlay-trigger>
+                    `);
+                    expect(el.open).to.be.undefined;
+
+                    await elementUpdated(el);
+                    const opened = oneEvent(el, 'sp-opened');
+                    el.open = 'click';
+                    await opened;
+
+                    expect(el.open).to.equal('click');
+
+                    const closed = oneEvent(el, 'sp-closed');
+                    if (document.scrollingElement) {
+                        document.scrollingElement.scrollTop = 100;
+                    }
+                    await closed;
+
+                    expect(el.open).to.be.null;
+                });
+            }
+        );
     });
     it('opens a second time', async () => {
         const openedSpy = spy();
