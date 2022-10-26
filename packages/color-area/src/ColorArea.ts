@@ -371,6 +371,17 @@ export class ColorArea extends SpectrumElement {
     protected override render(): TemplateResult {
         const { width = 0, height = 0 } = this.boundingClientRect || {};
 
+        if (window.__swc.DEBUG) {
+            if (this.label) {
+                window.__swc.warn(
+                    this,
+                    `The "label" property in <${this.localName}> has been deprecated and will be removed in a future release. Please leverage "labelX" and "labelY" instead.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/color-area/#labels',
+                    { level: 'deprecation' }
+                );
+            }
+        }
+
         return html`
             <div
                 @pointerdown=${this.handleAreaPointerdown}
