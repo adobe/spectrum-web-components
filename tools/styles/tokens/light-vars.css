@@ -89,11 +89,11 @@ governing permissions and limitations under the License.
     --spectrum-accent-visual-color: var(--spectrum-accent-color-800);
     --spectrum-informative-visual-color: var(--spectrum-informative-color-800);
     --spectrum-negative-visual-color: var(--spectrum-negative-color-800);
-    --spectrum-notice-visual-color: var(--spectrum-notice-color-600);
+    --spectrum-notice-visual-color: var(--spectrum-notice-color-700);
     --spectrum-positive-visual-color: var(--spectrum-positive-color-700);
     --spectrum-gray-visual-color: var(--spectrum-gray-500);
     --spectrum-red-visual-color: var(--spectrum-red-800);
-    --spectrum-orange-visual-color: var(--spectrum-orange-600);
+    --spectrum-orange-visual-color: var(--spectrum-orange-700);
     --spectrum-yellow-visual-color: var(--spectrum-yellow-600);
     --spectrum-chartreuse-visual-color: var(--spectrum-chartreuse-600);
     --spectrum-celery-visual-color: var(--spectrum-celery-700);

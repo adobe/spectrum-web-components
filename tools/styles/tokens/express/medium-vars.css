@@ -40,6 +40,30 @@ governing permissions and limitations under the License.
     --spectrum-switch-top-to-control-medium: 8px;
     --spectrum-switch-top-to-control-large: 11px;
     --spectrum-switch-top-to-control-extra-large: 14px;
+    --spectrum-slider-control-height-small: 18px;
+    --spectrum-slider-control-height-medium: 20px;
+    --spectrum-slider-control-height-large: 22px;
+    --spectrum-slider-control-height-extra-large: 24px;
+    --spectrum-slider-handle-size-small: 18px;
+    --spectrum-slider-handle-size-medium: 20px;
+    --spectrum-slider-handle-size-large: 22px;
+    --spectrum-slider-handle-size-extra-large: 24px;
+    --spectrum-slider-handle-border-width-down-small: var(
+        --spectrum-border-width-200
+    );
+    --spectrum-slider-handle-border-width-down-medium: var(
+        --spectrum-border-width-200
+    );
+    --spectrum-slider-handle-border-width-down-large: var(
+        --spectrum-border-width-200
+    );
+    --spectrum-slider-handle-border-width-down-extra-large: var(
+        --spectrum-border-width-200
+    );
+    --spectrum-slider-bottom-to-handle-small: 3px;
+    --spectrum-slider-bottom-to-handle-medium: 6px;
+    --spectrum-slider-bottom-to-handle-large: 9px;
+    --spectrum-slider-bottom-to-handle-extra-large: 12px;
     --spectrum-corner-radius-75: 3px;
     --spectrum-corner-radius-100: 6px;
     --spectrum-corner-radius-200: 12px;

@@ -32,11 +32,13 @@ governing permissions and limitations under the License.
     --spectrum-switch-background-color-selected-disabled: var(
         --spectrum-gray-400
     );
-    --spectrum-switch-focus-ring-thickness: var(
-        --mod-focus-ring-thickness,
-        var(--spectrum-focus-ring-thickness)
+    --spectrum-switch-focus-indicator-thickness: var(
+        --mod-focus-indicator-thickness,
+        var(--spectrum-focus-indicator-thickness)
     );
-    --spectrum-switch-focus-ring-color: var(--spectrum-focus-ring-color);
+    --spectrum-switch-focus-indicator-color: var(
+        --spectrum-focus-indicator-color
+    );
     --spectrum-switch-handle-background-color: var(--spectrum-gray-75);
     --spectrum-switch-handle-border-color-disabled: var(--spectrum-gray-400);
 }
@@ -199,12 +201,12 @@ governing permissions and limitations under the License.
 }
 #input.focus-visible + #switch:after {
     margin: calc(
-        var(--mod-focus-ring-gap, var(--spectrum-focus-ring-gap)) * -1
+        var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) * -1
     ); /* .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
 }
 #input:focus-visible + #switch:after {
     margin: calc(
-        var(--mod-focus-ring-gap, var(--spectrum-focus-ring-gap)) * -1
+        var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap)) * -1
     ); /* .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
 }
 #label {
@@ -330,7 +332,7 @@ governing permissions and limitations under the License.
 #switch:after {
     border-radius: calc(
         var(--mod-switch-control-height, var(--spectrum-switch-control-height)) +
-            var(--mod-focus-ring-gap, var(--spectrum-focus-ring-gap))
+            var(--mod-focus-indicator-gap, var(--spectrum-focus-indicator-gap))
     ); /* .spectrum-Switch-switch:after */
     content: '';
     display: block;
@@ -521,14 +523,14 @@ governing permissions and limitations under the License.
 :host(:hover) #input.focus-visible + #switch:after {
     box-shadow: 0 0 0
         var(
-            --mod-switch-focus-ring-thickness,
-            var(--spectrum-switch-focus-ring-thickness)
+            --mod-switch-focus-indicator-thickness,
+            var(--spectrum-switch-focus-indicator-thickness)
         )
         var(
-            --highcontrast-switch-focus-ring-color,
+            --highcontrast-switch-focus-indicator-color,
             var(
-                --mod-switch-focus-ring-color,
-                var(--spectrum-switch-focus-ring-color)
+                --mod-switch-focus-indicator-color,
+                var(--spectrum-switch-focus-indicator-color)
             )
         ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
@@ -537,14 +539,14 @@ governing permissions and limitations under the License.
 :host(:hover) #input:focus-visible + #switch:after {
     box-shadow: 0 0 0
         var(
-            --mod-switch-focus-ring-thickness,
-            var(--spectrum-switch-focus-ring-thickness)
+            --mod-switch-focus-indicator-thickness,
+            var(--spectrum-switch-focus-indicator-thickness)
         )
         var(
-            --highcontrast-switch-focus-ring-color,
+            --highcontrast-switch-focus-indicator-color,
             var(
-                --mod-switch-focus-ring-color,
-                var(--spectrum-switch-focus-ring-color)
+                --mod-switch-focus-indicator-color,
+                var(--spectrum-switch-focus-indicator-color)
             )
         ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
@@ -744,7 +746,7 @@ governing permissions and limitations under the License.
         --highcontrast-switch-background-color-selected-disabled: Highlight;
         --highcontrast-switch-handle-border-color-hover: Highlight;
         --highcontrast-switch-handle-border-color-down: Highlight;
-        --highcontrast-switch-focus-ring-color: ButtonText;
+        --highcontrast-switch-focus-indicator-color: ButtonText;
         forced-color-adjust: none;
     }
     #input:not([checked]) + #switch {

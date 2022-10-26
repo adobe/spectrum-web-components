@@ -29,6 +29,8 @@ governing permissions and limitations under the License.
     --spectrum-heading: var(--spectrum-font-bold-default);
     --spectrum-heading-emphasized: var(--spectrum-font-bold-italic-default);
     --spectrum-cjk-heading: var(--spectrum-font-extra-bold-cjk);
+    --spectrum-slider-track-thickness: 2px;
+    --spectrum-slider-handle-gap: 4px;
     --spectrum-border-width-100: 1px;
 }
 :host,
@@ -174,8 +176,8 @@ governing permissions and limitations under the License.
     --system-spectrum-actionbutton-staticblack-content-color-focus: var(
         --spectrum-black
     );
-    --system-spectrum-actionbutton-staticblack-focus-ring-color: var(
-        --spectrum-static-black-focus-ring-color
+    --system-spectrum-actionbutton-staticblack-focus-indicator-color: var(
+        --spectrum-static-black-focus-indicator-color
     );
     --system-spectrum-actionbutton-staticblack-background-color-disabled: transparent;
     --system-spectrum-actionbutton-staticblack-border-color-disabled: var(
@@ -246,8 +248,8 @@ governing permissions and limitations under the License.
     --system-spectrum-actionbutton-staticwhite-content-color-focus: var(
         --spectrum-white
     );
-    --system-spectrum-actionbutton-staticwhite-focus-ring-color: var(
-        --spectrum-static-white-focus-ring-color
+    --system-spectrum-actionbutton-staticwhite-focus-indicator-color: var(
+        --spectrum-static-white-focus-indicator-color
     );
     --system-spectrum-actionbutton-staticwhite-background-color-disabled: transparent;
     --system-spectrum-actionbutton-staticwhite-border-color-disabled: var(
