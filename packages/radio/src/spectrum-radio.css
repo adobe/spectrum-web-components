@@ -24,9 +24,13 @@ governing permissions and limitations under the License.
     --spectrum-radio-neutral-content-color-focus: var(
         --spectrum-neutral-content-color-key-focus
     );
-    --spectrum-radio-focus-ring-thickness: var(--spectrum-focus-ring-thickness);
-    --spectrum-radio-focus-ring-gap: var(--spectrum-focus-ring-gap);
-    --spectrum-radio-focus-ring-color: var(--spectrum-focus-ring-color);
+    --spectrum-radio-focus-indicator-thickness: var(
+        --spectrum-focus-indicator-thickness
+    );
+    --spectrum-radio-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
+    --spectrum-radio-focus-indicator-color: var(
+        --spectrum-focus-indicator-color
+    );
     --spectrum-radio-disabled-content-color: var(
         --spectrum-disabled-content-color
     );
@@ -166,7 +170,7 @@ governing permissions and limitations under the License.
         --highcontrast-radio-button-checked-border-color-focus: Highlight;
         --highcontrast-radio-disabled-content-color: GrayText;
         --highcontrast-radio-disabled-border-color: GrayText;
-        --highcontrast-radio-focus-ring-color: CanvasText;
+        --highcontrast-radio-focus-indicator-color: CanvasText;
     }
     #button:after {
         forced-color-adjust: none;
@@ -245,24 +249,24 @@ governing permissions and limitations under the License.
 }
 :host(:focus) #button:after {
     border-color: var(
-        --highcontrast-radio-focus-ring-color,
+        --highcontrast-radio-focus-indicator-color,
         var(
-            --mod-radio-focus-ring-color,
-            var(--spectrum-radio-focus-ring-color)
+            --mod-radio-focus-indicator-color,
+            var(--spectrum-radio-focus-indicator-color)
         )
     );
     border-style: solid; /* .spectrum-Radio:focus .spectrum-Radio-button:after */
     border-width: var(
-        --mod-radio-focus-ring-thickness,
-        var(--spectrum-radio-focus-ring-thickness)
+        --mod-radio-focus-indicator-thickness,
+        var(--spectrum-radio-focus-indicator-thickness)
     );
     height: calc(
         var(--spectrum-radio-button-control-size) +
-            var(--spectrum-radio-focus-ring-gap) * 2
+            var(--spectrum-radio-focus-indicator-gap) * 2
     );
     width: calc(
         var(--spectrum-radio-button-control-size) +
-            var(--spectrum-radio-focus-ring-gap) * 2
+            var(--spectrum-radio-focus-indicator-gap) * 2
     );
 }
 :host(:focus[checked]) #input + #button:before {
@@ -404,31 +408,53 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-button-selection-indicator) / 2
     ); /* .spectrum-Radio-input:checked+.spectrum-Radio-button:before */
 }
+#input.focus-visible + #button:after,
 :host(.focus-visible) #input + #button:after {
     border-color: var(
-        --highcontrast-radio-focus-ring-color,
+        --highcontrast-radio-focus-indicator-color,
         var(
-            --mod-radio-focus-ring-color,
-            var(--spectrum-radio-focus-ring-color)
+            --mod-radio-focus-indicator-color,
+            var(--spectrum-radio-focus-indicator-color)
         )
     );
+    border-style: solid;
     border-width: var(
-        --mod-radio-focus-ring-thickness,
-        var(--spectrum-radio-focus-ring-thickness)
-    ); /* .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
+        --mod-radio-focus-indicator-thickness,
+        var(--spectrum-radio-focus-indicator-thickness)
+    ); /* .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
+   * .spectrum-Radio-input:focus-visible+.spectrum-Radio-button:after */
+    height: calc(
+        var(--spectrum-radio-button-control-size) +
+            var(--spectrum-radio-focus-indicator-gap) * 2
+    );
+    width: calc(
+        var(--spectrum-radio-button-control-size) +
+            var(--spectrum-radio-focus-indicator-gap) * 2
+    );
 }
+#input:focus-visible + #button:after,
 :host(:focus-visible) #input + #button:after {
     border-color: var(
-        --highcontrast-radio-focus-ring-color,
+        --highcontrast-radio-focus-indicator-color,
         var(
-            --mod-radio-focus-ring-color,
-            var(--spectrum-radio-focus-ring-color)
+            --mod-radio-focus-indicator-color,
+            var(--spectrum-radio-focus-indicator-color)
         )
     );
+    border-style: solid;
     border-width: var(
-        --mod-radio-focus-ring-thickness,
-        var(--spectrum-radio-focus-ring-thickness)
-    ); /* .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after */
+        --mod-radio-focus-indicator-thickness,
+        var(--spectrum-radio-focus-indicator-thickness)
+    ); /* .spectrum-Radio-input.focus-ring+.spectrum-Radio-button:after,
+   * .spectrum-Radio-input:focus-visible+.spectrum-Radio-button:after */
+    height: calc(
+        var(--spectrum-radio-button-control-size) +
+            var(--spectrum-radio-focus-indicator-gap) * 2
+    );
+    width: calc(
+        var(--spectrum-radio-button-control-size) +
+            var(--spectrum-radio-focus-indicator-gap) * 2
+    );
 }
 #label {
     color: var(

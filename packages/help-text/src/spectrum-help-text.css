@@ -35,11 +35,9 @@ governing permissions and limitations under the License.
 }
 :host([variant='negative']) {
     --spectrum-helptext-content-color-default: var(
-        --spectrum-negative-content-color
+        --spectrum-negative-color-900
     ); /* .spectrum-HelpText.spectrum-HelpText--negative */
-    --spectrum-helptext-icon-color-default: var(
-        --spectrum-negative-content-color
-    );
+    --spectrum-helptext-icon-color-default: var(--spectrum-negative-color-900);
 }
 :host([disabled]) {
     --spectrum-helptext-content-color-default: var(

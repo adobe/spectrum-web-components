@@ -66,14 +66,18 @@ governing permissions and limitations under the License.
     ); /* .spectrum-ActionButton */
     --spectrum-actionbutton-border-radius: var(--spectrum-corner-radius-100);
     --spectrum-actionbutton-border-width: var(--spectrum-border-width-100);
-    --spectrum-actionbutton-focus-ring-gap: var(--spectrum-focus-ring-gap);
-    --spectrum-actionbutton-focus-ring-thickness: var(
-        --spectrum-focus-ring-thickness
+    --spectrum-actionbutton-focus-indicator-gap: var(
+        --spectrum-focus-indicator-gap
     );
-    --spectrum-actionbutton-focus-ring-color: var(--spectrum-focus-ring-color);
-    --spectrum-actionbutton-focus-ring-border-radius: calc(
+    --spectrum-actionbutton-focus-indicator-thickness: var(
+        --spectrum-focus-indicator-thickness
+    );
+    --spectrum-actionbutton-focus-indicator-color: var(
+        --spectrum-focus-indicator-color
+    );
+    --spectrum-actionbutton-focus-indicator-border-radius: calc(
         var(--spectrum-actionbutton-border-radius) +
-            var(--spectrum-actionbutton-focus-ring-gap)
+            var(--spectrum-actionbutton-focus-indicator-gap)
     );
 }
 :host([size='xs']) {
@@ -203,7 +207,7 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     :host {
-        --highcontrast-actionbutton-focus-ring-color: ButtonText;
+        --highcontrast-actionbutton-focus-indicator-color: ButtonText;
     }
     :host:after {
         forced-color-adjust: none;
@@ -517,16 +521,16 @@ slot[icon-only]::slotted([slot='icon']) {
 }
 :host:after {
     border-radius: var(
-        --mod-actionbutton-focus-ring-border-radius,
-        var(--spectrum-actionbutton-focus-ring-border-radius)
+        --mod-actionbutton-focus-indicator-border-radius,
+        var(--spectrum-actionbutton-focus-indicator-border-radius)
     );
     content: '';
     inset: 0;
     margin: calc(
         (
                 var(
-                        --mod-actionbutton-focus-ring-gap,
-                        var(--spectrum-actionbutton-focus-ring-gap)
+                        --mod-actionbutton-focus-indicator-gap,
+                        var(--spectrum-actionbutton-focus-indicator-gap)
                     ) +
                     var(
                         --mod-actionbutton-border-width,
@@ -552,28 +556,28 @@ slot[icon-only]::slotted([slot='icon']) {
 :host(.focus-visible):after {
     box-shadow: 0 0 0
         var(
-            --mod-actionbutton-focus-ring-thickness,
-            var(--spectrum-actionbutton-focus-ring-thickness)
+            --mod-actionbutton-focus-indicator-thickness,
+            var(--spectrum-actionbutton-focus-indicator-thickness)
         )
         var(
-            --highcontrast-actionbutton-focus-ring-color,
+            --highcontrast-actionbutton-focus-indicator-color,
             var(
-                --mod-actionbutton-focus-ring-color,
-                var(--spectrum-actionbutton-focus-ring-color)
+                --mod-actionbutton-focus-indicator-color,
+                var(--spectrum-actionbutton-focus-indicator-color)
             )
         ); /* .spectrum-ActionButton.focus-ring:after */
 }
 :host(:focus-visible):after {
     box-shadow: 0 0 0
         var(
-            --mod-actionbutton-focus-ring-thickness,
-            var(--spectrum-actionbutton-focus-ring-thickness)
+            --mod-actionbutton-focus-indicator-thickness,
+            var(--spectrum-actionbutton-focus-indicator-thickness)
         )
         var(
-            --highcontrast-actionbutton-focus-ring-color,
+            --highcontrast-actionbutton-focus-indicator-color,
             var(
-                --mod-actionbutton-focus-ring-color,
-                var(--spectrum-actionbutton-focus-ring-color)
+                --mod-actionbutton-focus-indicator-color,
+                var(--spectrum-actionbutton-focus-indicator-color)
             )
         ); /* .spectrum-ActionButton.focus-ring:after */
 }
@@ -785,8 +789,8 @@ slot[icon-only]::slotted([slot='icon']) {
     --spectrum-actionbutton-content-color-focus: var(
         --system-spectrum-actionbutton-staticblack-content-color-focus
     );
-    --spectrum-actionbutton-focus-ring-color: var(
-        --system-spectrum-actionbutton-staticblack-focus-ring-color
+    --spectrum-actionbutton-focus-indicator-color: var(
+        --system-spectrum-actionbutton-staticblack-focus-indicator-color
     );
     --spectrum-actionbutton-background-color-disabled: var(
         --system-spectrum-actionbutton-staticblack-background-color-disabled
@@ -879,8 +883,8 @@ slot[icon-only]::slotted([slot='icon']) {
     --spectrum-actionbutton-content-color-focus: var(
         --system-spectrum-actionbutton-staticwhite-content-color-focus
     );
-    --spectrum-actionbutton-focus-ring-color: var(
-        --system-spectrum-actionbutton-staticwhite-focus-ring-color
+    --spectrum-actionbutton-focus-indicator-color: var(
+        --system-spectrum-actionbutton-staticwhite-focus-indicator-color
     );
     --spectrum-actionbutton-background-color-disabled: var(
         --system-spectrum-actionbutton-staticwhite-background-color-disabled

@@ -65,11 +65,15 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-icon-color-disabled: var(
         --spectrum-disabled-content-color
     );
-    --spectrum-closebutton-focus-ring-thickness: var(
-        --spectrum-focus-ring-thickness
+    --spectrum-closebutton-focus-indicator-thickness: var(
+        --spectrum-focus-indicator-thickness
     );
-    --spectrum-closebutton-focus-ring-gap: var(--spectrum-focus-ring-gap);
-    --spectrum-closebutton-focus-ring-color: var(--spectrum-focus-ring-color);
+    --spectrum-closebutton-focus-indicator-gap: var(
+        --spectrum-focus-indicator-gap
+    );
+    --spectrum-closebutton-focus-indicator-color: var(
+        --spectrum-focus-indicator-color
+    );
     --spectrum-closebutton-height: var(--spectrum-component-height-100);
     --spectrum-closebutton-width: var(--spectrum-closebutton-height);
     --spectrum-closebutton-size: var(--spectrum-closebutton-size-400);
@@ -93,8 +97,8 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-icon-color-disabled: var(
         --spectrum-disabled-static-white-content-color
     );
-    --spectrum-closebutton-focus-ring-color: var(
-        --spectrum-static-white-focus-ring-color
+    --spectrum-closebutton-focus-indicator-color: var(
+        --spectrum-static-white-focus-indicator-color
     );
 }
 :host([variant='black']) {
@@ -112,8 +116,8 @@ governing permissions and limitations under the License.
     --spectrum-closebutton-icon-color-disabled: var(
         --spectrum-disabled-static-black-content-color
     );
-    --spectrum-closebutton-focus-ring-color: var(
-        --spectrum-static-black-focus-ring-color
+    --spectrum-closebutton-focus-indicator-color: var(
+        --spectrum-static-black-focus-indicator-color
     );
 }
 @media (forced-colors: active) {
@@ -123,21 +127,21 @@ governing permissions and limitations under the License.
         --highcontrast-closebutton-icon-color-hover: Highlight;
         --highcontrast-closebutton-icon-color-focus: Highlight;
         --highcontrast-closebutton-background-color-default: ButtonFace;
-        --highcontrast-closebutton-focus-ring-color: ButtonText;
+        --highcontrast-closebutton-focus-indicator-color: ButtonText;
     }
     :host(.focus-visible):after {
         border-radius: 100%;
         bottom: 0;
         box-shadow: 0 0 0
             var(
-                --mod-closebutton-focus-ring-thickness,
-                var(--spectrum-closebutton-focus-ring-thickness)
+                --mod-closebutton-focus-indicator-thickness,
+                var(--spectrum-closebutton-focus-indicator-thickness)
             )
             var(
-                --highcontrast-closebutton-focus-ring-color,
+                --highcontrast-closebutton-focus-indicator-color,
                 var(
-                    --mod-closebutton-focus-ring-color,
-                    var(--spectrum-closebutton-focus-ring-color)
+                    --mod-closebutton-focus-indicator-color,
+                    var(--spectrum-closebutton-focus-indicator-color)
                 )
             );
         content: '';
@@ -145,8 +149,8 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
         left: 0;
         margin: var(
-            --mod-closebutton-focus-ring-gap,
-            var(--spectrum-closebutton-focus-ring-gap)
+            --mod-closebutton-focus-indicator-gap,
+            var(--spectrum-closebutton-focus-indicator-gap)
         );
         position: absolute;
         right: 0;
@@ -169,14 +173,14 @@ governing permissions and limitations under the License.
         bottom: 0;
         box-shadow: 0 0 0
             var(
-                --mod-closebutton-focus-ring-thickness,
-                var(--spectrum-closebutton-focus-ring-thickness)
+                --mod-closebutton-focus-indicator-thickness,
+                var(--spectrum-closebutton-focus-indicator-thickness)
             )
             var(
-                --highcontrast-closebutton-focus-ring-color,
+                --highcontrast-closebutton-focus-indicator-color,
                 var(
-                    --mod-closebutton-focus-ring-color,
-                    var(--spectrum-closebutton-focus-ring-color)
+                    --mod-closebutton-focus-indicator-color,
+                    var(--spectrum-closebutton-focus-indicator-color)
                 )
             );
         content: '';
@@ -184,8 +188,8 @@ governing permissions and limitations under the License.
         forced-color-adjust: none;
         left: 0;
         margin: var(
-            --mod-closebutton-focus-ring-gap,
-            var(--spectrum-closebutton-focus-ring-gap)
+            --mod-closebutton-focus-indicator-gap,
+            var(--spectrum-closebutton-focus-indicator-gap)
         );
         position: absolute;
         right: 0;
@@ -244,8 +248,8 @@ governing permissions and limitations under the License.
     border-radius: calc(
         var(--mod-closebutton-size, var(--spectrum-closebutton-size)) +
             var(
-                --mod-closebutton-focus-ring-gap,
-                var(--spectrum-closebutton-focus-ring-gap)
+                --mod-closebutton-focus-indicator-gap,
+                var(--spectrum-closebutton-focus-indicator-gap)
             )
     );
     bottom: 0;
@@ -253,8 +257,8 @@ governing permissions and limitations under the License.
     left: 0;
     margin: calc(
         var(
-                --mod-closebutton-focus-ring-gap,
-                var(--spectrum-closebutton-focus-ring-gap)
+                --mod-closebutton-focus-indicator-gap,
+                var(--spectrum-closebutton-focus-indicator-gap)
             ) * -1
     );
     pointer-events: none; /* .spectrum-CloseButton:after */
@@ -277,28 +281,28 @@ governing permissions and limitations under the License.
 :host(.focus-visible):after {
     box-shadow: 0 0 0
         var(
-            --mod-closebutton-focus-ring-thickness,
-            var(--spectrum-closebutton-focus-ring-thickness)
+            --mod-closebutton-focus-indicator-thickness,
+            var(--spectrum-closebutton-focus-indicator-thickness)
         )
         var(
-            --highcontrast-closebutton-focus-ring-color,
+            --highcontrast-closebutton-focus-indicator-color,
             var(
-                --mod-closebutton-focus-ring-color,
-                var(--spectrum-closebutton-focus-ring-color)
+                --mod-closebutton-focus-indicator-color,
+                var(--spectrum-closebutton-focus-indicator-color)
             )
         ); /* .spectrum-CloseButton.focus-ring:after */
 }
 :host(:focus-visible):after {
     box-shadow: 0 0 0
         var(
-            --mod-closebutton-focus-ring-thickness,
-            var(--spectrum-closebutton-focus-ring-thickness)
+            --mod-closebutton-focus-indicator-thickness,
+            var(--spectrum-closebutton-focus-indicator-thickness)
         )
         var(
-            --highcontrast-closebutton-focus-ring-color,
+            --highcontrast-closebutton-focus-indicator-color,
             var(
-                --mod-closebutton-focus-ring-color,
-                var(--spectrum-closebutton-focus-ring-color)
+                --mod-closebutton-focus-indicator-color,
+                var(--spectrum-closebutton-focus-indicator-color)
             )
         ); /* .spectrum-CloseButton.focus-ring:after */
 }

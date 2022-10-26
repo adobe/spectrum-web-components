@@ -24,7 +24,9 @@ governing permissions and limitations under the License.
     --spectrum-checkbox-content-color-focus: var(
         --spectrum-neutral-content-color-key-focus
     );
-    --spectrum-checkbox-focus-ring-color: var(--spectrum-focus-ring-color);
+    --spectrum-checkbox-focus-indicator-color: var(
+        --spectrum-focus-indicator-color
+    );
     --spectrum-checkbox-content-color-disabled: var(
         --spectrum-disabled-content-color
     );
@@ -60,9 +62,11 @@ governing permissions and limitations under the License.
         --spectrum-checkbox-control-size-medium
     );
     --spectrum-checkbox-control-corner-radius: var(--spectrum-corner-radius-75);
-    --spectrum-checkbox-focus-ring-gap: var(--spectrum-focus-ring-gap);
-    --spectrum-checkbox-focus-ring-thickness: var(
-        --spectrum-focus-ring-thickness
+    --spectrum-checkbox-focus-indicator-gap: var(
+        --spectrum-focus-indicator-gap
+    );
+    --spectrum-checkbox-focus-indicator-thickness: var(
+        --spectrum-focus-indicator-thickness
     );
     --spectrum-checkbox-border-width: var(--spectrum-border-width-200);
     --spectrum-checkbox-selected-border-width: calc(
@@ -592,42 +596,42 @@ governing permissions and limitations under the License.
 #input.focus-visible + #box:after {
     box-shadow: 0 0 0
         var(
-            --mod-checkbox-focus-ring-thinkness,
-            var(--spectrum-checkbox-focus-ring-thickness)
+            --mod-checkbox-focus-indicator-thinkness,
+            var(--spectrum-checkbox-focus-indicator-thickness)
         )
         var(
-            --highcontrast-checkbox-focus-ring-color,
+            --highcontrast-checkbox-focus-indicator-color,
             var(
-                --mod-checkbox-focus-ring-color,
-                var(--spectrum-checkbox-focus-ring-color)
+                --mod-checkbox-focus-indicator-color,
+                var(--spectrum-checkbox-focus-indicator-color)
             )
         );
     forced-color-adjust: none; /* .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:after */
     margin: calc(
         var(
-                --mod-checkbox-focus-ring-gap,
-                var(--spectrum-checkbox-focus-ring-gap)
+                --mod-checkbox-focus-indicator-gap,
+                var(--spectrum-checkbox-focus-indicator-gap)
             ) * -1
     );
 }
 #input:focus-visible + #box:after {
     box-shadow: 0 0 0
         var(
-            --mod-checkbox-focus-ring-thinkness,
-            var(--spectrum-checkbox-focus-ring-thickness)
+            --mod-checkbox-focus-indicator-thinkness,
+            var(--spectrum-checkbox-focus-indicator-thickness)
         )
         var(
-            --highcontrast-checkbox-focus-ring-color,
+            --highcontrast-checkbox-focus-indicator-color,
             var(
-                --mod-checkbox-focus-ring-color,
-                var(--spectrum-checkbox-focus-ring-color)
+                --mod-checkbox-focus-indicator-color,
+                var(--spectrum-checkbox-focus-indicator-color)
             )
         );
     forced-color-adjust: none; /* .spectrum-Checkbox-input.focus-ring+.spectrum-Checkbox-box:after */
     margin: calc(
         var(
-                --mod-checkbox-focus-ring-gap,
-                var(--spectrum-checkbox-focus-ring-gap)
+                --mod-checkbox-focus-indicator-gap,
+                var(--spectrum-checkbox-focus-indicator-gap)
             ) * -1
     );
 }
@@ -717,15 +721,15 @@ governing permissions and limitations under the License.
 #box:after {
     border-radius: calc(
         var(--spectrum-checkbox-control-corner-radius) +
-            var(--spectrum-checkbox-focus-ring-gap)
+            var(--spectrum-checkbox-focus-indicator-gap)
     ); /* .spectrum-Checkbox-box:after */
     bottom: 0;
     content: '';
     display: block;
     left: 0;
     margin: var(
-        --mod-checkbox-focus-ring-gap,
-        var(--spectrum-checkbox-focus-ring-gap)
+        --mod-checkbox-focus-indicator-gap,
+        var(--spectrum-checkbox-focus-indicator-gap)
     );
     position: absolute;
     right: 0;
@@ -806,64 +810,64 @@ governing permissions and limitations under the License.
     #input.focus-visible + #box {
         forced-color-adjust: none;
         outline-color: var(
-            --highcontrast-checkbox-focus-ring-color,
+            --highcontrast-checkbox-focus-indicator-color,
             var(
-                --mod-checkbox-focus-ring-color,
-                var(--spectrum-checkbox-focus-ring-color)
+                --mod-checkbox-focus-indicator-color,
+                var(--spectrum-checkbox-focus-indicator-color)
             )
         );
         outline-offset: var(
-            --highcontrast-checkbox-focus-ring-gap,
+            --highcontrast-checkbox-focus-indicator-gap,
             var(
-                --mod-checkbox-focus-ring-gap,
-                var(--spectrum-checkbox-focus-ring-gap)
+                --mod-checkbox-focus-indicator-gap,
+                var(--spectrum-checkbox-focus-indicator-gap)
             )
         );
         outline-style: auto;
         outline-width: var(
-            --mod-focus-ring-thickness,
-            var(--spectrum-focus-ring-thickness)
+            --mod-focus-indicator-thickness,
+            var(--spectrum-focus-indicator-thickness)
         );
     }
     #input:focus-visible + #box {
         forced-color-adjust: none;
         outline-color: var(
-            --highcontrast-checkbox-focus-ring-color,
+            --highcontrast-checkbox-focus-indicator-color,
             var(
-                --mod-checkbox-focus-ring-color,
-                var(--spectrum-checkbox-focus-ring-color)
+                --mod-checkbox-focus-indicator-color,
+                var(--spectrum-checkbox-focus-indicator-color)
             )
         );
         outline-offset: var(
-            --highcontrast-checkbox-focus-ring-gap,
+            --highcontrast-checkbox-focus-indicator-gap,
             var(
-                --mod-checkbox-focus-ring-gap,
-                var(--spectrum-checkbox-focus-ring-gap)
+                --mod-checkbox-focus-indicator-gap,
+                var(--spectrum-checkbox-focus-indicator-gap)
             )
         );
         outline-style: auto;
         outline-width: var(
-            --mod-focus-ring-thickness,
-            var(--spectrum-focus-ring-thickness)
+            --mod-focus-indicator-thickness,
+            var(--spectrum-focus-indicator-thickness)
         );
     }
     #input.focus-visible + #box:after {
         box-shadow: 0 0 0 0
             var(
-                --highcontrast-checkbox-focus-ring-color,
+                --highcontrast-checkbox-focus-indicator-color,
                 var(
-                    --mod-checkbox-focus-ring-color,
-                    var(--spectrum-checkbox-focus-ring-color)
+                    --mod-checkbox-focus-indicator-color,
+                    var(--spectrum-checkbox-focus-indicator-color)
                 )
             );
     }
     #input:focus-visible + #box:after {
         box-shadow: 0 0 0 0
             var(
-                --highcontrast-checkbox-focus-ring-color,
+                --highcontrast-checkbox-focus-indicator-color,
                 var(
-                    --mod-checkbox-focus-ring-color,
-                    var(--spectrum-checkbox-focus-ring-color)
+                    --mod-checkbox-focus-indicator-color,
+                    var(--spectrum-checkbox-focus-indicator-color)
                 )
             );
     }
@@ -880,7 +884,7 @@ governing permissions and limitations under the License.
         --highcontrast-checkbox-highlight-color-down: Highlight;
         --highcontrast-checkbox-disabled-color-default: GrayText;
         --highcontrast-checkbox-highlight-color-focus: Highlight;
-        --highcontrast-checkbox-focus-ring-color: FieldText;
+        --highcontrast-checkbox-focus-indicator-color: FieldText;
         --highcontrast-checkbox-color-focus: FieldText;
     }
 }
