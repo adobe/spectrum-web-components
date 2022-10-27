@@ -605,16 +605,28 @@ export class OverlayStack {
             return;
         }
         const overlaysToClose = [];
-        // Find the top most overlay that is not triggered by an
-        // element on the path of the current click event.
+        /**
+         * Find the first overlay that should be closed by this and include it in the
+         * array of overlays for closure.
+         *
+         * Event path dictates closure while the click event:
+         * - did not occur within the overlay content of the overlay
+         * AND was
+         * - not triggered by something in the click event's composed path
+         * OR
+         * - not a "hover" overlay
+         * Select the overlay for closure
+         */
         let index = this.overlays.length;
         while (index && overlaysToClose.length === 0) {
             index -= 1;
             const overlay = this.overlays[index];
-            if (
-                !event.composedPath().includes(overlay.trigger) ||
-                overlay.interaction !== 'hover'
-            ) {
+            const path = event.composedPath();
+            const eventPathDictatesClosure =
+                (!path.includes(overlay.trigger) ||
+                    overlay.interaction !== 'hover') &&
+                !path.includes(overlay.overlayContent);
+            if (eventPathDictatesClosure) {
                 overlaysToClose.push(overlay);
             }
         }
