@@ -353,6 +353,41 @@ export const replace = (): TemplateResult => {
     `;
 };
 
+export const deep = (): TemplateResult => html`
+    <overlay-trigger>
+        <sp-button variant="primary" slot="trigger">
+            Open popover 1 with buttons + selfmanaged Tooltips
+        </sp-button>
+        <sp-popover dialog slot="click-content" direction="bottom" tip open>
+            <sp-action-button>
+                <sp-tooltip self-managed placement="bottom" offset="0">
+                    My Tooltip 1
+                </sp-tooltip>
+                A
+            </sp-action-button>
+            <sp-action-button>
+                <sp-tooltip self-managed placement="bottom" offset="0">
+                    My Tooltip 1
+                </sp-tooltip>
+                B
+            </sp-action-button>
+        </sp-popover>
+    </overlay-trigger>
+
+    <overlay-trigger>
+        <sp-button variant="primary" slot="trigger">
+            Open popover 2 with buttons without ToolTips
+        </sp-button>
+        <sp-popover dialog slot="click-content" direction="bottom" tip open>
+            <sp-action-button>X</sp-action-button>
+            <sp-action-button>Y</sp-action-button>
+        </sp-popover>
+    </overlay-trigger>
+`;
+deep.swc_vrt = {
+    skip: true,
+};
+
 export const modalLoose = (): TemplateResult => {
     const closeEvent = new Event('close', { bubbles: true, composed: true });
     return html`

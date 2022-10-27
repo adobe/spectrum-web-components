@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
@@ -27,8 +28,9 @@ import { TriggerInteractions } from '@spectrum-web-components/overlay/src/overla
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import { clickAndHoverTargets } from '../stories/overlay.stories.js';
+import { clickAndHoverTargets, deep } from '../stories/overlay.stories.js';
 import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+import { Tooltip } from '@spectrum-web-components/tooltip/src/Tooltip.js';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -197,5 +199,49 @@ describe('Overlay Trigger - Hover and Click', () => {
 
         expect(overlayTrigger1.open).to.be.null;
         expect(overlayTrigger2.open).to.equal('hover');
+    });
+    it('does not close ancestor "click" overlays on `click`', async () => {
+        const test = await fixture<HTMLDivElement>(html`
+            <div>${deep()}</div>
+        `);
+        const el = test.querySelector('overlay-trigger') as OverlayTrigger;
+        const button = el.querySelector('sp-action-button') as ActionButton;
+        const tooltip = button.querySelector('sp-tooltip') as Tooltip;
+
+        expect(el.open).to.be.undefined;
+        expect(tooltip.open).to.be.false;
+
+        let opened = oneEvent(el, 'sp-opened');
+        el.open = 'click';
+        await opened;
+
+        expect(el.open).to.equal('click');
+
+        opened = oneEvent(button, 'sp-opened');
+        button.focus();
+        await opened;
+
+        expect(tooltip.open).to.be.true;
+
+        button.click();
+
+        await aTimeout(200);
+
+        expect(el.open).to.equal('click');
+        expect(tooltip.open).to.be.true;
+
+        let closed = oneEvent(button, 'sp-closed');
+        button.blur();
+        await closed;
+
+        expect(el.open).to.equal('click');
+        expect(tooltip.open).to.be.false;
+
+        closed = oneEvent(el, 'sp-closed');
+        document.body.click();
+        await closed;
+
+        expect(el.open).to.be.null;
+        expect(tooltip.open).to.be.false;
     });
 });
