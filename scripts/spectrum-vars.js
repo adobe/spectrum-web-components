@@ -263,7 +263,7 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
                 '..',
                 'packages',
                 ...packageDir,
-                `core-${core}.css`
+                `spectrum-core-${core}.css`
             )
         );
         console.log(`processing core ${srcPath}`);
