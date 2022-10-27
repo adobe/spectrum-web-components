@@ -573,6 +573,43 @@ export const longpress = (): TemplateResult => {
     `;
 };
 
+export const clickAndHoverTargets = (): TemplateResult => {
+    return html`
+        <div>
+            ${storyStyles}
+            <style>
+                .friendly-target {
+                    padding: 4px;
+                    margin: 6px;
+                    border: 2px solid black;
+                    border-radius: 6px;
+                    cursor: default;
+                }
+            </style>
+            <overlay-trigger placement="right">
+                <div class="friendly-target" slot="trigger" tabindex="0">
+                    Click me
+                </div>
+                <sp-tooltip slot="click-content" tip="right">
+                    Ok, now hover the other trigger
+                </sp-tooltip>
+            </overlay-trigger>
+            <overlay-trigger placement="left">
+                <div class="friendly-target" slot="trigger" tabindex="0">
+                    Then hover me
+                </div>
+                <sp-tooltip slot="hover-content" tip="right">
+                    Now click my trigger -- I should stay open, but the other
+                    overlay should close
+                </sp-tooltip>
+            </overlay-trigger>
+        </div>
+    `;
+};
+clickAndHoverTargets.swc_vrt = {
+    skip: true,
+};
+
 function nextFrame(): Promise<void> {
     return new Promise((res) => requestAnimationFrame(() => res()));
 }
@@ -927,3 +964,23 @@ export const definedOverlayElement = (): TemplateResult => {
 };
 
 definedOverlayElement.decorators = [definedOverlayDecorator];
+
+export const modalWithinNonModal = (): TemplateResult => {
+    return html`
+        <overlay-trigger type="inline">
+            <sp-button variant="primary" slot="trigger">
+                Open inline overlay
+            </sp-button>
+            <sp-popover slot="click-content" dialog>
+                <overlay-trigger type="modal">
+                    <sp-button variant="primary" slot="trigger">
+                        Open modal overlay
+                    </sp-button>
+                    <sp-popover slot="click-content" dialog>
+                        Modal overlay
+                    </sp-popover>
+                </overlay-trigger>
+            </sp-popover>
+        </overlay-trigger>
+    `;
+};

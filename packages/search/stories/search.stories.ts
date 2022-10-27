@@ -26,6 +26,12 @@ export const autofocus = (): TemplateResult => html`
     <sp-search autofocus></sp-search>
 `;
 
+export const focusedOverflowing = (): TemplateResult => html`
+    <sp-search
+        value="this is a really long search term that overflows the available space"
+    ></sp-search>
+`;
+
 export const Quiet = (): TemplateResult => html`
     <sp-search quiet></sp-search>
     <sp-search quiet disabled></sp-search>

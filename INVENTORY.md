@@ -3,20 +3,20 @@
 Availability of [Spectrum](https://spectrum.adobe.com) components in [Spectrum CSS](https://opensource.adobe.com/spectrum-css/)
 and [Spectrum Web Components](https://opensource.adobe.com/spectrum-web-components/).
 
-| Component           | Design tokens (86) | CSS (74)                                                                | Web Components (53)                                                                       |
+| Component           | Design tokens (86) | CSS (76)                                                                | Web Components (59)                                                                       |
 | ------------------- | ------------------ | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | accordion           | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/accordion.html)          | [📄](https://opensource.adobe.com/spectrum-web-components/components/accordion)           |
 | actionbar           | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/actionbar.html)          | [📄](https://opensource.adobe.com/spectrum-web-components/components/action-bar)          |
 | actionbutton        | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/actionbutton.html)       | [📄](https://opensource.adobe.com/spectrum-web-components/components/action-button)       |
 | actiongroup         | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/actiongroup.html)        | [📄](https://opensource.adobe.com/spectrum-web-components/components/action-group)        |
-| actionmenu          |                    | [📄](https://opensource.adobe.com/spectrum-css/actionmenu.html)         | ❌                                                                                        |
+| actionmenu          |                    | [📄](https://opensource.adobe.com/spectrum-css/actionmenu.html)         | [📄](https://opensource.adobe.com/spectrum-web-components/components/action-menu)         |
 | alertbanner         | ✅                 |                                                                         |                                                                                           |
 | artboard            | ✅                 |                                                                         |                                                                                           |
 | asset               | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/asset.html)              | [📄](https://opensource.adobe.com/spectrum-web-components/components/asset)               |
 | assetcard           |                    | [📄](https://opensource.adobe.com/spectrum-css/assetcard.html)          | ❌                                                                                        |
 | assetlist           | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/assetlist.html)          | ❌                                                                                        |
 | avatar              | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/avatar.html)             | [📄](https://opensource.adobe.com/spectrum-web-components/components/avatar)              |
-| badge               | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/badge.html)              | ❌                                                                                        |
+| badge               | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/badge.html)              | [📄](https://opensource.adobe.com/spectrum-web-components/components/badge)               |
 | banner              |                    |                                                                         | [📄](https://opensource.adobe.com/spectrum-web-components/components/banner)              |
 | body                | ✅                 |                                                                         |                                                                                           |
 | bottomnavigation    | ✅                 |                                                                         |                                                                                           |
@@ -70,7 +70,7 @@ and [Spectrum Web Components](https://opensource.adobe.com/spectrum-web-componen
 | pagination          | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/pagination-listing.html) | ❌                                                                                        |
 | panel               | ✅                 |                                                                         |                                                                                           |
 | picker              | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/picker.html)             | [📄](https://opensource.adobe.com/spectrum-web-components/components/picker)              |
-| pickerbutton        | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/pickerbutton.html)       | ❌                                                                                        |
+| pickerbutton        | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/pickerbutton.html)       | [📄](https://opensource.adobe.com/spectrum-web-components/components/picker-button)       |
 | popover             | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/popover.html)            | [📄](https://opensource.adobe.com/spectrum-web-components/components/popover)             |
 | progressbar         | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/progressbar.html)        | [📄](https://opensource.adobe.com/spectrum-web-components/components/progress-bar)        |
 | progresscircle      | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/progresscircle.html)     | [📄](https://opensource.adobe.com/spectrum-web-components/components/progress-circle)     |
@@ -90,9 +90,11 @@ and [Spectrum Web Components](https://opensource.adobe.com/spectrum-web-componen
 | steplist            | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/steplist.html)           | ❌                                                                                        |
 | stepper             |                    | [📄](https://opensource.adobe.com/spectrum-css/stepper.html)            | [📄](https://opensource.adobe.com/spectrum-web-components/components/number-field)        |
 | stepperbutton       | ✅                 |                                                                         |                                                                                           |
+| swatch              |                    | [📄](https://opensource.adobe.com/spectrum-css/swatch.html)             | [📄](https://opensource.adobe.com/spectrum-web-components/components/swatch)              |
+| swatchgroup         |                    | [📄](https://opensource.adobe.com/spectrum-css/swatchgroup.html)        | [📄](https://opensource.adobe.com/spectrum-web-components/components/swatch)              |
 | switch              | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/switch.html)             | [📄](https://opensource.adobe.com/spectrum-web-components/components/switch)              |
 | tabbar              | ✅                 |                                                                         |                                                                                           |
-| table               | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/table.html)              | ❌                                                                                        |
+| table               | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/table.html)              | [📄](https://opensource.adobe.com/spectrum-web-components/components/table)               |
 | tabs                | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/tabs.html)               | [📄](https://opensource.adobe.com/spectrum-web-components/components/tabs)                |
 | tag                 | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/tag.html)                | [📄](https://opensource.adobe.com/spectrum-web-components/components/tags)                |
 | taggroup            | ✅                 | [📄](https://opensource.adobe.com/spectrum-css/taggroup.html)           | ❌                                                                                        |

@@ -22,6 +22,14 @@ export abstract class Iconset extends LitElement {
     protected override firstUpdated(): void {
         // force no display for all iconsets
         this.style.display = 'none';
+        if (window.__swc.DEBUG) {
+            window.__swc.warn(
+                this,
+                'Iconsets have been deprecated and will be removed from the project in an upcoming version. For default Spectrum Icons, learn more about leveraging UI Icons (https://opensource.adobe.com/spectrum-web-components/components/icons-ui/) or Workflow Icons (https://opensource.adobe.com/spectrum-web-components/components/icons-workflow/) as an alternative.',
+                'https://opensource.adobe.com/spectrum-web-components/components/iconset/#deprecated',
+                { level: 'deprecation' }
+            );
+        }
     }
 
     /**
@@ -29,7 +37,7 @@ export abstract class Iconset extends LitElement {
      * to consuming icons.
      */
     @property()
-    public set name(value: string) {
+    public override set name(value: string) {
         // if we're already registered in the iconset registry
         // we'll need to update our registration
         if (this.registered) {
@@ -45,7 +53,7 @@ export abstract class Iconset extends LitElement {
         }
         this._name = value;
     }
-    public get name(): string {
+    public override get name(): string {
         return this._name;
     }
 

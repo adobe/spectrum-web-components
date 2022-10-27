@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.11.0...@spectrum-web-components/switch@0.11.1) (2022-10-17)
+
+**Note:** Version bump only for package @spectrum-web-components/switch
+
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.10.0...@spectrum-web-components/switch@0.11.0) (2022-10-10)
+
+### Features
+
+-   **switch:** use core tokens ([8011ead](https://github.com/adobe/spectrum-web-components/commit/8011ead4377b8e8fb5647a7b2984e8f1695bfbf7))
+
 # [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/switch@0.9.14...@spectrum-web-components/switch@0.10.0) (2022-08-09)
 
 ### Features

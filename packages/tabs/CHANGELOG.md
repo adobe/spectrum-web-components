@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.9.2...@spectrum-web-components/tabs@0.10.0) (2022-10-17)
+
+### Bug Fixes
+
+-   **tabs:** update css workarounds ([c2a17e0](https://github.com/adobe/spectrum-web-components/commit/c2a17e02ac019dc7a28411bdc2f666f8c27c26b8))
+
+### Features
+
+-   update card and tabs to latest spectrum-css ([55b8d67](https://github.com/adobe/spectrum-web-components/commit/55b8d67c03349183c3aebb52bbc54f5c58b3fdb4))
+
+## [0.9.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.9.1...@spectrum-web-components/tabs@0.9.2) (2022-10-10)
+
+**Note:** Version bump only for package @spectrum-web-components/tabs
+
 ## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.9.0...@spectrum-web-components/tabs@0.9.1) (2022-09-14)
 
 ### Bug Fixes

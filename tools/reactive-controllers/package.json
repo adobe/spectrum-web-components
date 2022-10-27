@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/reactive-controllers",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "publishConfig": {
         "access": "public"
     },
@@ -25,9 +25,17 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
+        "./src/Color.js": {
+            "development": "./src/Color.dev.js",
+            "default": "./src/Color.js"
+        },
         "./src/FocusGroup.js": {
             "development": "./src/FocusGroup.dev.js",
             "default": "./src/FocusGroup.js"
+        },
+        "./src/LanguageResolution.js": {
+            "development": "./src/LanguageResolution.dev.js",
+            "default": "./src/LanguageResolution.js"
         },
         "./src/MatchMedia.js": {
             "development": "./src/MatchMedia.dev.js",

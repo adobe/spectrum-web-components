@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.4.0...@spectrum-web-components/color-handle@0.4.1) (2022-10-10)
+
+### Bug Fixes
+
+-   leverage Color Controller to unify color interface across packages ([fb71690](https://github.com/adobe/spectrum-web-components/commit/fb7169066fd4f15aee594c463cc4cdbf7f550a5e))
+
 # [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.3.11...@spectrum-web-components/color-handle@0.4.0) (2022-08-09)
 
 ### Features

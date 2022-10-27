@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/grid@0.1.1...@spectrum-web-components/grid@0.1.2) (2022-10-10)
+
+### Bug Fixes
+
+-   add support for "padding" attribute ([e43078f](https://github.com/adobe/spectrum-web-components/commit/e43078f0e14a909fb5e38428222a05d8c4754288))
+
 ## [0.1.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/grid@0.1.0...@spectrum-web-components/grid@0.1.1) (2022-08-24)
 
 ### Bug Fixes

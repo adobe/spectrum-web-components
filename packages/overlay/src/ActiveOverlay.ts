@@ -277,6 +277,12 @@ export class ActiveOverlay extends SpectrumElement {
         );
 
         this.state = 'active';
+
+        // force paint
+        // this prevents a timing issue that can show up in tests as
+        // 'Error: Timeout: Wait for decorator to become ready...'
+        this.offsetWidth;
+
         this.feature();
         if (this.placement === 'none') {
             this.style.setProperty(

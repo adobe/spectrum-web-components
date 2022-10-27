@@ -27,20 +27,40 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 ## Sizes
 
 <sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="xs">Extra Small</sp-tab>
+<sp-tab-panel value="xs">
+
+```html demo
+<sp-action-group size="xs">
+    <sp-action-button>Edit</sp-action-button>
+    <sp-action-button>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        Edit
+    </sp-action-button>
+    <sp-action-button>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+    </sp-action-button>
+    <sp-action-button hold-affordance>
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+    </sp-action-button>
+</sp-action-group>
+```
+
+</sp-tab-panel>
 <sp-tab value="s">Small</sp-tab>
 <sp-tab-panel value="s">
 
 ```html demo
-<sp-action-group>
-    <sp-action-button size="s">Edit</sp-action-button>
-    <sp-action-button size="s">
+<sp-action-group size="s">
+    <sp-action-button>Edit</sp-action-button>
+    <sp-action-button>
         <sp-icon-edit slot="icon"></sp-icon-edit>
         Edit
     </sp-action-button>
-    <sp-action-button size="s">
+    <sp-action-button>
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
-    <sp-action-button size="s" hold-affordance>
+    <sp-action-button hold-affordance>
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
 </sp-action-group>
@@ -51,16 +71,16 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 <sp-tab-panel value="m">
 
 ```html demo
-<sp-action-group>
-    <sp-action-button size="m">Edit</sp-action-button>
-    <sp-action-button size="m">
+<sp-action-group size="m">
+    <sp-action-button>Edit</sp-action-button>
+    <sp-action-button>
         <sp-icon-edit slot="icon"></sp-icon-edit>
         Edit
     </sp-action-button>
-    <sp-action-button size="m">
+    <sp-action-button>
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
-    <sp-action-button size="m" hold-affordance>
+    <sp-action-button hold-affordance>
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
 </sp-action-group>
@@ -71,16 +91,16 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 <sp-tab-panel value="l">
 
 ```html demo
-<sp-action-group>
-    <sp-action-button size="l">Edit</sp-action-button>
-    <sp-action-button size="l">
+<sp-action-group size="l">
+    <sp-action-button>Edit</sp-action-button>
+    <sp-action-button>
         <sp-icon-edit slot="icon"></sp-icon-edit>
         Edit
     </sp-action-button>
-    <sp-action-button size="l">
+    <sp-action-button>
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
-    <sp-action-button size="l" hold-affordance>
+    <sp-action-button hold-affordance>
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
 </sp-action-group>
@@ -91,16 +111,16 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 <sp-tab-panel value="xl">
 
 ```html demo
-<sp-action-group>
-    <sp-action-button size="xl">Edit</sp-action-button>
-    <sp-action-button size="xl">
+<sp-action-group size="xl">
+    <sp-action-button>Edit</sp-action-button>
+    <sp-action-button>
         <sp-icon-edit slot="icon"></sp-icon-edit>
         Edit
     </sp-action-button>
-    <sp-action-button size="xl">
+    <sp-action-button>
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
-    <sp-action-button size="xl" hold-affordance>
+    <sp-action-button hold-affordance>
         <sp-icon-edit slot="icon"></sp-icon-edit>
     </sp-action-button>
 </sp-action-group>

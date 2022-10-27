@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/sidenav",
-    "version": "0.13.0",
+    "version": "0.13.2",
     "publishConfig": {
         "access": "public"
     },
@@ -76,8 +76,8 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.0",
-        "@spectrum-web-components/reactive-controllers": "^0.3.0",
-        "@spectrum-web-components/shared": "^0.15.0",
+        "@spectrum-web-components/reactive-controllers": "^0.3.1",
+        "@spectrum-web-components/shared": "^0.15.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

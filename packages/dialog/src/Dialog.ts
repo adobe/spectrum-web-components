@@ -37,17 +37,19 @@ import {
 import styles from './dialog.css.js';
 import type { CloseButton } from '@spectrum-web-components/button';
 
+let appliedIds = 0;
+
 function gatherAppliedIdsFromSlottedChildren(
     slot: HTMLSlotElement,
     idBase: string
 ): string[] {
     const assignedElements = slot.assignedElements();
     const ids: string[] = [];
-    assignedElements.forEach((el, i) => {
+    assignedElements.forEach((el) => {
         if (el.id) {
             ids.push(el.id);
         } else {
-            const id = idBase + `-${i}`;
+            const id = idBase + `-${appliedIds++}`;
             el.id = id;
             ids.push(id);
         }

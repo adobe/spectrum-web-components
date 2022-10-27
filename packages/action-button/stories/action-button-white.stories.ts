@@ -22,6 +22,12 @@ export default {
 
 const variant = 'white';
 
+export const XS = (args: Properties): TemplateResult => renderButtons(args);
+XS.args = {
+    size: 'xs',
+    variant,
+};
+
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
     size: 's',

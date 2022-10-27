@@ -25,6 +25,7 @@ import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-ico
 import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
 
 const holdAffordanceClass = {
+    xs: 'spectrum-UIIcon-CornerTriangle75',
     s: 'spectrum-UIIcon-CornerTriangle75',
     m: 'spectrum-UIIcon-CornerTriangle100',
     l: 'spectrum-UIIcon-CornerTriangle200',
@@ -48,7 +49,9 @@ export type LongpressEvent = {
  * `pointerdown` event that is >=300ms or a keyboard event wher code is `Space` or code is `ArrowDown`
  * while `altKey===true`.
  */
-export class ActionButton extends SizedMixin(ButtonBase) {
+export class ActionButton extends SizedMixin(ButtonBase, {
+    validSizes: ['xs', 's', 'm', 'l', 'xl'],
+}) {
     public static override get styles(): CSSResultArray {
         return [buttonStyles, cornerTriangleStyles];
     }

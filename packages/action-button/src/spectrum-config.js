@@ -72,6 +72,10 @@ const config = {
                     name: 'size',
                     values: [
                         {
+                            name: 'xs',
+                            selector: '.spectrum-ActionButton--sizeXS',
+                        },
+                        {
                             name: 's',
                             selector: '.spectrum-ActionButton--sizeS',
                         },

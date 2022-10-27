@@ -195,10 +195,16 @@ export class PickerBase extends SizedMixin(Focusable) {
     }
 
     public handleChange(event: Event): void {
-        event.stopPropagation();
         const target = event.target as Menu;
         const [selected] = target.selectedItems;
-        this.setValueFromItem(selected, event);
+        if (event.cancelable) {
+            event.stopPropagation();
+            this.setValueFromItem(selected, event);
+        } else {
+            // Non-cancelable "change" events announce a selection with no value
+            // change that should close the Picker element.
+            this.open = false;
+        }
     }
 
     protected onKeydown = (event: KeyboardEvent): void => {

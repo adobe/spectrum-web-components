@@ -12,91 +12,184 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-switch-handle-size: var(
-        --spectrum-switch-m-handle-size,
-        var(--spectrum-alias-control-two-size-m)
+    --spectrum-switch-label-color-default: var(
+        --spectrum-neutral-content-color-default
     ); /* .spectrum-Switch */
-    --spectrum-switch-handle-border-size: var(
-        --spectrum-switch-m-handle-border-size,
-        var(--spectrum-alias-border-size-thick)
+    --spectrum-switch-label-color-hover: var(
+        --spectrum-neutral-content-color-hover
     );
-    --spectrum-switch-handle-border-radius: var(
-        --spectrum-switch-m-handle-border-radius,
-        var(--spectrum-alias-control-two-border-radius-m)
+    --spectrum-switch-label-color-down: var(
+        --spectrum-neutral-content-color-down
     );
-    --spectrum-switch-text-gap: var(
-        --spectrum-switch-m-text-gap,
-        var(--spectrum-global-dimension-size-125)
+    --spectrum-switch-label-color-focus: var(
+        --spectrum-neutral-content-color-key-focus
     );
-    --spectrum-switch-text-size: var(
-        --spectrum-switch-m-text-size,
-        var(--spectrum-global-dimension-font-size-100)
+    --spectrum-switch-label-color-disabled: var(
+        --spectrum-disabled-content-color
     );
-    --spectrum-switch-track-height: var(
-        --spectrum-switch-m-track-height,
-        var(--spectrum-alias-control-three-height-m)
+    --spectrum-switch-background-color: var(--spectrum-gray-300);
+    --spectrum-switch-background-color-disabled: var(--spectrum-gray-300);
+    --spectrum-switch-background-color-selected-disabled: var(
+        --spectrum-gray-400
     );
-    --spectrum-switch-track-width: var(
-        --spectrum-switch-m-track-width,
-        var(--spectrum-alias-control-three-width-m)
+    --spectrum-switch-focus-ring-thickness: var(
+        --mod-focus-ring-thickness,
+        var(--spectrum-focus-ring-thickness)
     );
-    --spectrum-switch-cursor-hit-x: var(
-        --spectrum-switch-m-cursor-hit-x,
-        var(--spectrum-global-dimension-size-100)
-    );
-    --spectrum-switch-height: var(
-        --spectrum-switch-m-height,
-        var(--spectrum-global-dimension-size-400)
-    );
-    --spectrum-switch-label-margin-top: var(
-        --spectrum-global-dimension-size-65
-    );
-    --spectrum-switch-label-line-height: 1.49;
+    --spectrum-switch-focus-ring-color: var(--spectrum-focus-ring-color);
+    --spectrum-switch-handle-background-color: var(--spectrum-gray-75);
+    --spectrum-switch-handle-border-color-disabled: var(--spectrum-gray-400);
 }
-:host([dir='ltr']) {
-    margin-right: calc(
-        var(--spectrum-switch-cursor-hit-x) * 2
-    ); /* [dir=ltr] .spectrum-Switch */
+.spectrum-Switch--disabled {
+    --spectrum-switch-label-color-default: var(
+        --spectrum-disabled-content-color
+    ); /* .spectrum-Switch--disabled */
 }
-:host([dir='rtl']) {
-    margin-left: calc(
-        var(--spectrum-switch-cursor-hit-x) * 2
-    ); /* [dir=rtl] .spectrum-Switch */
+:host([emphasized]) {
+    --spectrum-switch-background-color-selected-default: var(
+        --spectrum-accent-color-900
+    ); /* .spectrum-Switch.spectrum-Switch--emphasized */
+    --spectrum-switch-background-color-selected-hover: var(
+        --spectrum-accent-color-1000
+    );
+    --spectrum-switch-background-color-selected-down: var(
+        --spectrum-accent-color-1100
+    );
+    --spectrum-switch-background-color-selected-focus: var(
+        --spectrum-accent-color-1000
+    );
+    --spectrum-switch-handle-border-color-selected-default: var(
+        --spectrum-accent-color-900
+    );
+    --spectrum-switch-handle-border-color-selected-hover: var(
+        --spectrum-accent-color-1000
+    );
+    --spectrum-switch-handle-border-color-selected-down: var(
+        --spectrum-accent-color-1100
+    );
+    --spectrum-switch-handle-border-color-selected-focus: var(
+        --spectrum-accent-color-1000
+    );
+}
+:host([size='s']) {
+    --spectrum-switch-min-height: var(
+        --spectrum-component-height-75
+    ); /* .spectrum-Switch--sizeS */
+    --spectrum-switch-control-width: var(--spectrum-switch-control-width-small);
+    --spectrum-switch-control-height: var(
+        --spectrum-switch-control-height-small
+    );
+    --spectrum-switch-control-label-spacing: var(--spectrum-text-to-control-75);
+    --spectrum-switch-spacing-top-to-control: var(
+        --spectrum-switch-top-to-control-small
+    );
+    --spectrum-switch-spacing-top-to-label: var(
+        --spectrum-component-top-to-text-75
+    );
+    --spectrum-switch-font-size: var(--spectrum-font-size-75);
+}
+:host([size='m']) {
+    --spectrum-switch-min-height: var(
+        --spectrum-component-height-100
+    ); /* .spectrum-Switch--sizeM */
+    --spectrum-switch-control-width: var(
+        --spectrum-switch-control-width-medium
+    );
+    --spectrum-switch-control-height: var(
+        --spectrum-switch-control-height-medium
+    );
+    --spectrum-switch-control-label-spacing: var(
+        --spectrum-text-to-control-100
+    );
+    --spectrum-switch-spacing-top-to-control: var(
+        --spectrum-switch-top-to-control-medium
+    );
+    --spectrum-switch-spacing-top-to-label: var(
+        --spectrum-component-top-to-text-100
+    );
+    --spectrum-switch-font-size: var(--spectrum-font-size-100);
+}
+:host([size='l']) {
+    --spectrum-switch-min-height: var(
+        --spectrum-component-height-200
+    ); /* .spectrum-Switch--sizeL */
+    --spectrum-switch-control-width: var(--spectrum-switch-control-width-large);
+    --spectrum-switch-control-height: var(
+        --spectrum-switch-control-height-large
+    );
+    --spectrum-switch-control-label-spacing: var(
+        --spectrum-text-to-control-200
+    );
+    --spectrum-switch-spacing-top-to-control: var(
+        --spectrum-switch-top-to-control-large
+    );
+    --spectrum-switch-spacing-top-to-label: var(
+        --spectrum-component-top-to-text-200
+    );
+    --spectrum-switch-font-size: var(--spectrum-font-size-200);
+}
+:host([size='xl']) {
+    --spectrum-switch-min-height: var(
+        --spectrum-component-height-300
+    ); /* .spectrum-Switch--sizeXL */
+    --spectrum-switch-control-width: var(
+        --spectrum-switch-control-width-extra-large
+    );
+    --spectrum-switch-control-height: var(
+        --spectrum-switch-control-height-extra-large
+    );
+    --spectrum-switch-control-label-spacing: var(
+        --spectrum-text-to-control-300
+    );
+    --spectrum-switch-spacing-top-to-control: var(
+        --spectrum-switch-top-to-control-extra-large
+    );
+    --spectrum-switch-spacing-top-to-label: var(
+        --spectrum-component-top-to-text-300
+    );
+    --spectrum-switch-font-size: var(--spectrum-font-size-300);
 }
 :host {
     align-items: flex-start;
     display: inline-flex; /* .spectrum-Switch */
-    max-width: 100%;
-    min-height: var(--spectrum-switch-height);
+    max-inline-size: 100%;
+    min-block-size: var(--mod-switch-height, var(--spectrum-switch-min-height));
     position: relative;
     vertical-align: top;
 }
-:host([dir='ltr']) #input {
-    left: 0; /* [dir=ltr] .spectrum-Switch-input */
-}
-:host([dir='rtl']) #input {
-    right: 0; /* [dir=rtl] .spectrum-Switch-input */
-}
 #input {
+    block-size: 100%;
     box-sizing: border-box;
     cursor: pointer;
-    height: 100%;
+    inline-size: 100%;
+    inset-block-start: 0;
+    inset-inline-start: 0;
     margin: 0; /* .spectrum-Switch-input */
     opacity: 0;
     padding: 0;
     position: absolute;
-    top: 0;
-    width: 100%;
     z-index: 1;
 }
 :host([dir='ltr'][checked]) #input + #switch:before {
     transform: translateX(
-        calc(var(--spectrum-switch-track-width) - 100%)
+        calc(
+            var(
+                    --mod-switch-control-width,
+                    var(--spectrum-switch-control-width)
+                ) - 100%
+        )
     ); /* [dir=ltr] .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
 }
 :host([dir='rtl'][checked]) #input + #switch:before {
     transform: translateX(
-        calc((var(--spectrum-switch-track-width) - 100%) * -1)
+        calc(
+            (
+                    var(
+                            --mod-switch-control-width,
+                            var(--spectrum-switch-control-width)
+                        ) - 100%
+                ) * -1
+        )
     ); /* [dir=rtl] .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
 }
 #input[disabled],
@@ -106,65 +199,85 @@ governing permissions and limitations under the License.
 }
 #input.focus-visible + #switch:after {
     margin: calc(
-        var(
-                --spectrum-alias-focus-ring-gap,
-                var(--spectrum-global-dimension-static-size-25)
-            ) * -1
+        var(--mod-focus-ring-gap, var(--spectrum-focus-ring-gap)) * -1
     ); /* .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
 }
 #input:focus-visible + #switch:after {
     margin: calc(
-        var(
-                --spectrum-alias-focus-ring-gap,
-                var(--spectrum-global-dimension-static-size-25)
-            ) * -1
+        var(--mod-focus-ring-gap, var(--spectrum-focus-ring-gap)) * -1
     ); /* .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
 }
 #label {
-    font-size: var(--spectrum-switch-text-size);
-    line-height: var(--spectrum-switch-label-line-height);
-    margin-bottom: 0;
-    margin-left: var(--spectrum-switch-text-gap); /* .spectrum-Switch-label */
-    margin-right: var(--spectrum-switch-text-gap);
-    margin-top: var(--spectrum-switch-label-margin-top);
-    transition: color var(--spectrum-global-animation-duration-200, 0.16s)
+    color: var(
+        --highcontrast-switch-label-color-default,
+        var(
+            --mod-switch-label-color-default,
+            var(--spectrum-switch-label-color-default)
+        )
+    ); /* .spectrum-Switch-label */
+    font-size: var(--mod-switch-font-size, var(--spectrum-switch-font-size));
+    line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
+    margin-block-end: 0;
+    margin-block-start: var(
+        --mod-switch-spacing-top-to-label,
+        var(--spectrum-switch-spacing-top-to-label)
+    );
+    margin-inline: var(
+        --mod-switch-control-label-spacing,
+        var(--spectrum-switch-control-label-spacing)
+    );
+    transition: color
+        var(
+            --mod-animation-duration-200,
+            var(--spectrum-animation-duration-200)
+        )
         ease-in-out;
 }
-:host([dir='ltr']) #switch {
-    left: 0; /* [dir=ltr] .spectrum-Switch-switch */
-}
-:host([dir='rtl']) #switch {
-    right: 0; /* [dir=rtl] .spectrum-Switch-switch */
-}
-:host([dir='ltr']) #switch {
-    right: 0; /* [dir=ltr] .spectrum-Switch-switch */
-}
-:host([dir='rtl']) #switch {
-    left: 0; /* [dir=rtl] .spectrum-Switch-switch */
-}
 #switch {
-    border-radius: calc(var(--spectrum-switch-track-height) / 2);
+    block-size: var(
+        --mod-switch-control-height,
+        var(--spectrum-switch-control-height)
+    );
+    border-radius: calc(
+        var(--mod-switch-control-height, var(--spectrum-switch-control-height)) /
+            2
+    );
     box-sizing: border-box;
     display: inline-block; /* .spectrum-Switch-switch */
     flex-grow: 0;
     flex-shrink: 0;
-    height: var(--spectrum-switch-track-height);
-    margin-bottom: calc(
-        (var(--spectrum-switch-height) - var(--spectrum-switch-track-height)) /
-            2
+    inline-size: var(
+        --mod-switch-control-width,
+        var(--spectrum-switch-control-width)
     );
-    margin-left: 0;
-    margin-right: 0;
-    margin-top: calc(
-        (var(--spectrum-switch-height) - var(--spectrum-switch-track-height)) /
-            2
+    inset-inline-end: 0;
+    inset-inline-start: 0;
+    margin-block: calc(
+        var(--mod-switch-height, var(--spectrum-switch-min-height)) -
+            var(
+                --mod-switch-control-height,
+                var(--spectrum-switch-control-height)
+            ) -
+            var(
+                --mod-switch-spacing-top-to-control,
+                var(--spectrum-switch-spacing-top-to-control)
+            )
     );
+    margin-inline: 0;
     position: relative;
-    transition: background var(--spectrum-global-animation-duration-100, 0.13s)
+    transition: background
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
             ease-in-out,
-        border var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out;
+        border
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
+            ease-in-out;
     vertical-align: middle;
-    width: var(--spectrum-switch-track-width);
 }
 #switch:before {
     box-sizing: border-box;
@@ -172,226 +285,251 @@ governing permissions and limitations under the License.
     display: block; /* .spectrum-Switch-switch:before */
     position: absolute;
 }
-:host([dir='ltr']) #switch:before {
-    left: 0; /* [dir=ltr] .spectrum-Switch-switch:before */
-}
-:host([dir='rtl']) #switch:before {
-    right: 0; /* [dir=rtl] .spectrum-Switch-switch:before */
-}
 #switch:before {
-    border-radius: var(--spectrum-switch-handle-border-radius);
+    block-size: var(
+        --mod-switch-control-height,
+        var(--spectrum-switch-control-height)
+    );
+    border-radius: calc(
+        var(--mod-switch-control-height, var(--spectrum-switch-control-height)) /
+            2
+    );
     border-style: solid;
-    border-width: var(--spectrum-switch-handle-border-size);
-    height: var(--spectrum-switch-handle-size);
-    top: 0;
-    transition: background var(--spectrum-global-animation-duration-100, 0.13s)
+    border-width: var(--mod-border-width-200, var(--spectrum-border-width-200));
+    inline-size: var(
+        --mod-switch-control-height,
+        var(--spectrum-switch-control-height)
+    );
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    transition: background
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
             ease-in-out,
-        border var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
-        transform var(--spectrum-global-animation-duration-100, 0.13s)
+        border
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
             ease-in-out,
-        box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+        transform
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
+            ease-in-out,
+        box-shadow
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
             ease-in-out; /* .spectrum-Switch-switch:before */
-    width: var(--spectrum-switch-handle-size);
-}
-:host([dir='ltr']) #switch:after {
-    left: 0; /* [dir=ltr] .spectrum-Switch-switch:after */
-}
-:host([dir='rtl']) #switch:after {
-    right: 0; /* [dir=rtl] .spectrum-Switch-switch:after */
-}
-:host([dir='ltr']) #switch:after {
-    right: 0; /* [dir=ltr] .spectrum-Switch-switch:after */
-}
-:host([dir='rtl']) #switch:after {
-    left: 0; /* [dir=rtl] .spectrum-Switch-switch:after */
 }
 #switch:after {
     border-radius: calc(
-        var(--spectrum-switch-track-height) +
-            var(
-                --spectrum-alias-focus-ring-gap,
-                var(--spectrum-global-dimension-static-size-25)
-            )
+        var(--mod-switch-control-height, var(--spectrum-switch-control-height)) +
+            var(--mod-focus-ring-gap, var(--spectrum-focus-ring-gap))
     ); /* .spectrum-Switch-switch:after */
-    bottom: 0;
     content: '';
     display: block;
+    inset-block-end: 0;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    inset-inline-start: 0;
     margin: 0;
     position: absolute;
-    top: 0;
-    transition: opacity var(--spectrum-global-animation-duration-100, 0.13s)
+    transition: opacity
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
             ease-out,
-        margin var(--spectrum-global-animation-duration-100, 0.13s) ease-out;
+        margin
+            var(
+                --spectrum-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
+            ease-out;
 }
 #switch {
     background-color: var(
-        --spectrum-switch-m-track-color,
-        var(--spectrum-global-color-gray-300)
-    ); /* .spectrum-Switch-switch */
+        --highcontrast-switch-background-color,
+        var(
+            --mod-switch-background-color,
+            var(--spectrum-switch-background-color)
+        )
+    ); /* .spectrum-Switch .spectrum-Switch-switch */
 }
 #switch:before {
     background-color: var(
-        --spectrum-switch-m-handle-background-color,
-        var(--spectrum-global-color-gray-75)
-    ); /* .spectrum-Switch-switch:before */
+        --highcontrast-switch-handle-background-color,
+        var(
+            --mod-switch-handle-background-color,
+            var(--spectrum-switch-handle-background-color)
+        )
+    ); /* .spectrum-Switch .spectrum-Switch-switch:before */
     border-color: var(
-        --spectrum-switch-m-handle-border-color,
-        var(--spectrum-alias-toggle-border-color-default)
+        --highcontrast-switch-handle-border-color-default,
+        var(
+            --mod-switch-handle-border-color-default,
+            var(--spectrum-switch-handle-border-color-default)
+        )
     );
-}
-#input ~ #label {
-    color: var(
-        --spectrum-switch-m-text-color,
-        var(--spectrum-alias-component-text-color-default)
-    ); /* .spectrum-Switch-input~.spectrum-Switch-label */
-}
-:host([checked]) #input + #switch {
-    background-color: var(
-        --spectrum-switch-m-track-color-selected,
-        var(--spectrum-alias-toggle-background-color-default)
-    ); /* .spectrum-Switch-input:checked+.spectrum-Switch-switch */
-}
-:host([checked]) #input + #switch:before {
-    border-color: var(
-        --spectrum-switch-m-handle-border-color-selected,
-        var(--spectrum-alias-toggle-background-color-default)
-    ); /* .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
 }
 :host(:hover) #input + #switch:before {
     border-color: var(
-        --spectrum-switch-m-handle-border-color-hover,
-        var(--spectrum-alias-toggle-border-color-hover)
+        --highcontrast-switch-handle-border-color-hover,
+        var(
+            --mod-switch-handle-border-color-hover,
+            var(--spectrum-switch-handle-border-color-hover)
+        )
     ); /* .spectrum-Switch:hover .spectrum-Switch-input+.spectrum-Switch-switch:before */
     box-shadow: none;
 }
 :host(:hover) #input ~ #label {
     color: var(
-        --spectrum-switch-m-text-color-hover,
-        var(--spectrum-alias-component-text-color-hover)
+        --highcontrast-switch-label-color-hover,
+        var(
+            --mod-switch-label-color-hover,
+            var(--spectrum-switch-label-color-hover)
+        )
     ); /* .spectrum-Switch:hover .spectrum-Switch-input~.spectrum-Switch-label */
 }
 :host(:hover[checked]) #input:enabled + #switch {
     background-color: var(
-        --spectrum-switch-m-track-color-selected-hover,
-        var(--spectrum-alias-toggle-background-color-hover)
+        --highcontrast-switch-background-color-selected-hover,
+        var(
+            --mod-switch-background-color-selected-hover,
+            var(--spectrum-switch-background-color-selected-hover)
+        )
     ); /* .spectrum-Switch:hover .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch */
 }
 :host(:hover[checked]) #input:enabled + #switch:before {
     border-color: var(
-        --spectrum-switch-m-handle-border-color-selected-hover,
-        var(--spectrum-alias-toggle-background-color-hover)
+        --highcontrast-switch-handle-border-color-selected-hover,
+        var(
+            --mod-switch-handle-border-color-selected-hover,
+            var(--spectrum-switch-handle-border-color-selected-hover)
+        )
     ); /* .spectrum-Switch:hover .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
+}
+:host(:hover) #input[disabled] + #switch,
+:host(:hover[disabled]) #input + #switch {
+    background-color: var(
+        --highcontrast-switch-background-color-disabled,
+        var(
+            --mod-switch-background-color-disabled,
+            var(--spectrum-switch-background-color-disabled)
+        )
+    ); /* .spectrum-Switch:hover .spectrum-Switch-input:disabled+.spectrum-Switch-switch,
+   * .spectrum-Switch:hover .spectrum-Switch-input[disabled]+.spectrum-Switch-switch */
+}
+:host(:hover) #input[disabled] + #switch:before,
+:host(:hover[disabled]) #input + #switch:before {
+    border-color: var(
+        --highcontrast-switch-handle-border-color-disabled,
+        var(
+            --mod-switch-handle-border-color-disabled,
+            var(--spectrum-switch-handle-border-color-disabled)
+        )
+    ); /* .spectrum-Switch:hover .spectrum-Switch-input:disabled+.spectrum-Switch-switch:before,
+   * .spectrum-Switch:hover .spectrum-Switch-input[disabled]+.spectrum-Switch-switch:before */
+}
+:host(:hover) #input[disabled] ~ #label,
+:host(:hover[disabled]) #input ~ #label {
+    color: var(
+        --highcontrast-switch-label-color-disabled,
+        var(
+            --mod-switch-label-color-disabled,
+            var(--spectrum-switch-label-color-disabled)
+        )
+    ); /* .spectrum-Switch:hover .spectrum-Switch-input:disabled~.spectrum-Switch-label,
+   * .spectrum-Switch:hover .spectrum-Switch-input[disabled]~.spectrum-Switch-label */
+}
+:host(:hover[checked]) #input[disabled] + #switch,
+:host(:hover[disabled][checked]) #input + #switch {
+    background-color: var(
+        --highcontrast-switch-background-color-selected-disabled,
+        var(
+            --mod-switch-background-color-selected-disabled,
+            var(--spectrum-switch-background-color-selected-disabled)
+        )
+    ); /* .spectrum-Switch:hover .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch,
+   * .spectrum-Switch:hover .spectrum-Switch-input[disabled]:checked+.spectrum-Switch-switch */
+}
+:host(:hover[checked]) #input[disabled] + #switch:before,
+:host(:hover[disabled][checked]) #input + #switch:before {
+    border-color: var(
+        --highcontrast-switch-handle-border-color-disabled,
+        var(
+            --mod-switch-handle-border-color-disabled,
+            var(--spectrum-switch-handle-border-color-disabled)
+        )
+    ); /* .spectrum-Switch:hover .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch:before,
+   * .spectrum-Switch:hover .spectrum-Switch-input[disabled]:checked+.spectrum-Switch-switch:before */
+}
+:host(:hover[checked]) #input[disabled] ~ #label,
+:host(:hover[disabled][checked]) #input ~ #label {
+    color: var(
+        --highcontrast-switch-label-color-disabled,
+        var(
+            --mod-switch-label-color-disabled,
+            var(--spectrum-switch-label-color-disabled)
+        )
+    ); /* .spectrum-Switch:hover .spectrum-Switch-input:disabled:checked~.spectrum-Switch-label,
+   * .spectrum-Switch:hover .spectrum-Switch-input[disabled]:checked~.spectrum-Switch-label */
 }
 :host(:active) #input + #switch:before {
     border-color: var(
-        --spectrum-switch-m-handle-border-color-down,
-        var(--spectrum-alias-toggle-border-color-down)
+        --highcontrast-switch-handle-border-color-down,
+        var(
+            --mod-switch-handle-border-color-down,
+            var(--spectrum-switch-handle-border-color-down)
+        )
     ); /* .spectrum-Switch:active .spectrum-Switch-input+.spectrum-Switch-switch:before */
 }
 :host(:active) #input ~ #label {
     color: var(
-        --spectrum-switch-m-text-color-down,
-        var(--spectrum-alias-component-text-color-down)
+        --highcontrast-switch-label-color-down,
+        var(
+            --mod-switch-label-color-down,
+            var(--spectrum-switch-label-color-down)
+        )
     ); /* .spectrum-Switch:active .spectrum-Switch-input~.spectrum-Switch-label */
 }
 :host(:active[checked]) #input:enabled + #switch {
     background-color: var(
-        --spectrum-switch-m-track-color-selected-down,
-        var(--spectrum-alias-toggle-background-color-down)
+        --highcontrast-switch-background-color-selected-down,
+        var(
+            --mod-switch-background-color-selected-down,
+            var(--spectrum-switch-background-color-selected-down)
+        )
     ); /* .spectrum-Switch:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch */
 }
 :host(:active[checked]) #input:enabled + #switch:before {
     border-color: var(
-        --spectrum-switch-m-handle-border-color-selected-down,
-        var(--spectrum-alias-toggle-background-color-down)
+        --highcontrast-switch-handle-border-color-selected-down,
+        var(
+            --mod-switch-handle-border-color-selected-down,
+            var(--spectrum-switch-handle-border-color-selected-down)
+        )
     ); /* .spectrum-Switch:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
-}
-:host([disabled]) #input + #switch {
-    background-color: var(
-        --spectrum-switch-m-track-color-disabled,
-        var(--spectrum-global-color-gray-300)
-    ); /* .spectrum-Switch .spectrum-Switch-input:disabled+.spectrum-Switch-switch */
-}
-:host([disabled]) #input + #switch:before {
-    border-color: var(
-        --spectrum-switch-m-handle-border-color-disabled,
-        var(--spectrum-global-color-gray-400)
-    ); /* .spectrum-Switch .spectrum-Switch-input:disabled+.spectrum-Switch-switch:before */
-}
-:host([disabled]) #input ~ #label {
-    color: var(
-        --spectrum-switch-m-text-color-disabled,
-        var(--spectrum-alias-component-text-color-disabled)
-    ); /* .spectrum-Switch .spectrum-Switch-input:disabled~.spectrum-Switch-label */
-}
-:host([disabled][checked][dir]) #input + #switch {
-    background-color: var(
-        --spectrum-switch-m-track-color-selected-disabled,
-        var(--spectrum-global-color-gray-400)
-    ); /* .spectrum-Switch .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch */
-}
-:host([disabled][checked][dir]) #input + #switch:before {
-    border-color: var(
-        --spectrum-switch-m-handle-border-color-selected-disabled,
-        var(--spectrum-global-color-gray-400)
-    ); /* .spectrum-Switch .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch:before */
-}
-:host([disabled][checked][dir]) #input ~ #label {
-    color: var(
-        --spectrum-switch-m-text-color-selected-disabled,
-        var(--spectrum-alias-component-text-color-disabled)
-    ); /* .spectrum-Switch .spectrum-Switch-input:disabled:checked~.spectrum-Switch-label */
-}
-:host([emphasized][checked]) #input + #switch {
-    background-color: var(
-        --spectrum-switch-m-emphasized-track-color-selected,
-        var(
-            --spectrum-alias-toggle-background-color-emphasized-selected-default
-        )
-    ); /* .spectrum-Switch--emphasized .spectrum-Switch-input:checked+.spectrum-Switch-switch */
-}
-:host([emphasized][checked]) #input + #switch:before {
-    border-color: var(
-        --spectrum-switch-m-emphasized-handle-border-color-selected,
-        var(
-            --spectrum-alias-toggle-background-color-emphasized-selected-default
-        )
-    ); /* .spectrum-Switch--emphasized .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
-}
-:host([emphasized][checked]:hover) #input:enabled + #switch {
-    background-color: var(
-        --spectrum-switch-m-emphasized-track-color-selected-hover,
-        var(--spectrum-alias-toggle-background-color-emphasized-selected-hover)
-    ); /* .spectrum-Switch--emphasized:hover .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch */
-}
-:host([emphasized][checked]:hover) #input:enabled + #switch:before {
-    border-color: var(
-        --spectrum-switch-m-emphasized-handle-border-color-selected-hover,
-        var(--spectrum-alias-toggle-background-color-emphasized-selected-hover)
-    ); /* .spectrum-Switch--emphasized:hover .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
-}
-:host([emphasized]:active[checked]) #input:enabled + #switch {
-    background-color: var(
-        --spectrum-switch-m-emphasized-track-color-selected-down,
-        var(--spectrum-alias-toggle-background-color-emphasized-selected-down)
-    ); /* .spectrum-Switch.spectrum-Switch--emphasized:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch */
-}
-:host([emphasized]:active[checked]) #input:enabled + #switch:before {
-    border-color: var(
-        --spectrum-switch-m-emphasized-handle-border-color-selected-down,
-        var(--spectrum-alias-toggle-background-color-emphasized-selected-down)
-    ); /* .spectrum-Switch.spectrum-Switch--emphasized:active .spectrum-Switch-input:checked:enabled+.spectrum-Switch-switch:before */
 }
 #input.focus-visible + #switch:after,
 :host(:hover) #input.focus-visible + #switch:after {
     box-shadow: 0 0 0
         var(
-            --spectrum-switch-m-focus-ring-size,
-            var(--spectrum-alias-focus-ring-size)
+            --mod-switch-focus-ring-thickness,
+            var(--spectrum-switch-focus-ring-thickness)
         )
         var(
-            --spectrum-switch-m-focus-ring-color-key-focus,
-            var(--spectrum-alias-focus-ring-color)
+            --highcontrast-switch-focus-ring-color,
+            var(
+                --mod-switch-focus-ring-color,
+                var(--spectrum-switch-focus-ring-color)
+            )
         ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
 }
@@ -399,165 +537,292 @@ governing permissions and limitations under the License.
 :host(:hover) #input:focus-visible + #switch:after {
     box-shadow: 0 0 0
         var(
-            --spectrum-switch-m-focus-ring-size,
-            var(--spectrum-alias-focus-ring-size)
+            --mod-switch-focus-ring-thickness,
+            var(--spectrum-switch-focus-ring-thickness)
         )
         var(
-            --spectrum-switch-m-focus-ring-color-key-focus,
-            var(--spectrum-alias-focus-ring-color)
+            --highcontrast-switch-focus-ring-color,
+            var(
+                --mod-switch-focus-ring-color,
+                var(--spectrum-switch-focus-ring-color)
+            )
         ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:after */
 }
 #input.focus-visible + #switch:before,
 :host(:hover) #input.focus-visible + #switch:before {
     border-color: var(
-        --spectrum-switch-m-handle-border-color-key-focus,
-        var(--spectrum-alias-toggle-border-color-key-focus)
+        --highcontrast-switch-handle-border-color-focus,
+        var(
+            --mod-switch-handle-border-color-focus,
+            var(--spectrum-switch-handle-border-color-focus)
+        )
     ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before */
 }
 #input:focus-visible + #switch:before,
 :host(:hover) #input:focus-visible + #switch:before {
     border-color: var(
-        --spectrum-switch-m-handle-border-color-key-focus,
-        var(--spectrum-alias-toggle-border-color-key-focus)
+        --highcontrast-switch-handle-border-color-focus,
+        var(
+            --mod-switch-handle-border-color-focus,
+            var(--spectrum-switch-handle-border-color-focus)
+        )
     ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring+.spectrum-Switch-switch:before */
 }
 :host(:hover[checked]) #input.focus-visible + #switch,
 :host([checked]) #input.focus-visible + #switch {
     background-color: var(
-        --spectrum-switch-m-track-color-selected-key-focus,
-        var(--spectrum-alias-toggle-background-color-key-focus)
+        --highcontrast-switch-background-color-selected-focus,
+        var(
+            --mod-switch-background-color-selected-focus,
+            var(--spectrum-switch-background-color-selected-focus)
+        )
     ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch */
 }
 :host(:hover[checked]) #input:focus-visible + #switch,
 :host([checked]) #input:focus-visible + #switch {
     background-color: var(
-        --spectrum-switch-m-track-color-selected-key-focus,
-        var(--spectrum-alias-toggle-background-color-key-focus)
+        --highcontrast-switch-background-color-selected-focus,
+        var(
+            --mod-switch-background-color-selected-focus,
+            var(--spectrum-switch-background-color-selected-focus)
+        )
     ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch */
 }
 :host(:hover[checked]) #input.focus-visible + #switch:before,
 :host([checked]) #input.focus-visible + #switch:before {
     border-color: var(
-        --spectrum-switch-m-handle-border-color-selected-key-focus,
-        var(--spectrum-alias-toggle-background-color-key-focus)
+        --highcontrast-switch-handle-border-color-selected-focus,
+        var(
+            --mod-switch-handle-border-color-selected-focus,
+            var(--spectrum-switch-handle-border-color-selected-focus)
+        )
     ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before */
 }
 :host(:hover[checked]) #input:focus-visible + #switch:before,
 :host([checked]) #input:focus-visible + #switch:before {
     border-color: var(
-        --spectrum-switch-m-handle-border-color-selected-key-focus,
-        var(--spectrum-alias-toggle-background-color-key-focus)
+        --highcontrast-switch-handle-border-color-selected-focus,
+        var(
+            --mod-switch-handle-border-color-selected-focus,
+            var(--spectrum-switch-handle-border-color-selected-focus)
+        )
     ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before,
    * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before */
 }
-:host([emphasized][checked]) #input.focus-visible + #switch,
-:host([emphasized][checked]:hover) #input.focus-visible + #switch {
+#input.focus-visible ~ #label,
+:host(:hover) #input.focus-visible ~ #label {
+    color: var(
+        --highcontrast-switch-label-color-focus,
+        var(
+            --mod-switch-label-color-focus,
+            var(--spectrum-switch-label-color-focus)
+        )
+    ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring~.spectrum-Switch-label,
+   * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring~.spectrum-Switch-label */
+}
+#input:focus-visible ~ #label,
+:host(:hover) #input:focus-visible ~ #label {
+    color: var(
+        --highcontrast-switch-label-color-focus,
+        var(
+            --mod-switch-label-color-focus,
+            var(--spectrum-switch-label-color-focus)
+        )
+    ); /* .spectrum-Switch .spectrum-Switch-input.focus-ring~.spectrum-Switch-label,
+   * .spectrum-Switch:hover .spectrum-Switch-input.focus-ring~.spectrum-Switch-label */
+}
+:host([checked]) #input + #switch {
     background-color: var(
-        --spectrum-switch-m-emphasized-track-color-selected-key-focus,
+        --highcontrast-switch-background-color-selected-default,
         var(
-            --spectrum-alias-toggle-background-color-emphasized-selected-key-focus
+            --mod-switch-background-color-selected-default,
+            var(--spectrum-switch-background-color-selected-default)
         )
-    ); /* .spectrum-Switch--emphasized .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch,
-   * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch */
+    ); /* .spectrum-Switch-input:checked+.spectrum-Switch-switch */
 }
-:host([emphasized][checked]) #input:focus-visible + #switch,
-:host([emphasized][checked]:hover) #input:focus-visible + #switch {
+:host([checked]) #input + #switch:before {
+    border-color: var(
+        --highcontrast-switch-handle-border-color-selected-default,
+        var(
+            --mod-switch-handle-border-color-selected-default,
+            var(--spectrum-switch-handle-border-color-selected-default)
+        )
+    ); /* .spectrum-Switch-input:checked+.spectrum-Switch-switch:before */
+}
+#input[disabled] + #switch,
+:host([disabled]) #input + #switch {
     background-color: var(
-        --spectrum-switch-m-emphasized-track-color-selected-key-focus,
+        --highcontrast-switch-background-color-disabled,
         var(
-            --spectrum-alias-toggle-background-color-emphasized-selected-key-focus
+            --mod-switch-background-color-disabled,
+            var(--spectrum-switch-background-color-disabled)
         )
-    ); /* .spectrum-Switch--emphasized .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch,
-   * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch */
+    ); /* .spectrum-Switch-input:disabled+.spectrum-Switch-switch,
+   * .spectrum-Switch-input[disabled]+.spectrum-Switch-switch */
 }
-:host([emphasized][checked]) #input.focus-visible + #switch:before,
-:host([emphasized][checked]:hover) #input.focus-visible + #switch:before {
+#input[disabled] + #switch:before,
+:host([disabled]) #input + #switch:before {
     border-color: var(
-        --spectrum-switch-m-emphasized-handle-border-color-selected-key-focus,
+        --highcontrast-switch-handle-border-color-disabled,
         var(
-            --spectrum-alias-toggle-background-color-emphasized-selected-key-focus
+            --mod-switch-handle-border-color-disabled,
+            var(--spectrum-switch-handle-border-color-disabled)
         )
-    ); /* .spectrum-Switch--emphasized .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before,
-   * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before */
+    ); /* .spectrum-Switch-input:disabled+.spectrum-Switch-switch:before,
+   * .spectrum-Switch-input[disabled]+.spectrum-Switch-switch:before */
 }
-:host([emphasized][checked]) #input:focus-visible + #switch:before,
-:host([emphasized][checked]:hover) #input:focus-visible + #switch:before {
-    border-color: var(
-        --spectrum-switch-m-emphasized-handle-border-color-selected-key-focus,
+#input[disabled] ~ #label,
+:host([disabled]) #input ~ #label {
+    color: var(
+        --highcontrast-switch-label-color-disabled,
         var(
-            --spectrum-alias-toggle-background-color-emphasized-selected-key-focus
+            --mod-switch-label-color-disabled,
+            var(--spectrum-switch-label-color-disabled)
         )
-    ); /* .spectrum-Switch--emphasized .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before,
-   * .spectrum-Switch--emphasized:hover .spectrum-Switch-input.focus-ring:checked+.spectrum-Switch-switch:before */
+    ); /* .spectrum-Switch-input:disabled~.spectrum-Switch-label,
+   * .spectrum-Switch-input[disabled]~.spectrum-Switch-label */
+}
+:host([checked]) #input[disabled] + #switch,
+:host([disabled][checked]) #input + #switch {
+    background-color: var(
+        --highcontrast-switch-background-color-selected-disabled,
+        var(
+            --mod-switch-background-color-selected-disabled,
+            var(--spectrum-switch-background-color-selected-disabled)
+        )
+    ); /* .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch,
+   * .spectrum-Switch-input[disabled]:checked+.spectrum-Switch-switch */
+}
+:host([checked]) #input[disabled] + #switch:before,
+:host([disabled][checked]) #input + #switch:before {
+    border-color: var(
+        --highcontrast-switch-handle-border-color-disabled,
+        var(
+            --mod-switch-handle-border-color-disabled,
+            var(--spectrum-switch-handle-border-color-disabled)
+        )
+    ); /* .spectrum-Switch-input:disabled:checked+.spectrum-Switch-switch:before,
+   * .spectrum-Switch-input[disabled]:checked+.spectrum-Switch-switch:before */
+}
+:host([checked]) #input[disabled] ~ #label,
+:host([disabled][checked]) #input ~ #label {
+    color: var(
+        --highcontrast-switch-label-color-disabled,
+        var(
+            --mod-switch-label-color-disabled,
+            var(--spectrum-switch-label-color-disabled)
+        )
+    ); /* .spectrum-Switch-input:disabled:checked~.spectrum-Switch-label,
+   * .spectrum-Switch-input[disabled]:checked~.spectrum-Switch-label */
 }
 @media (forced-colors: active) {
     :host {
-        --spectrum-switch-m-emphasized-handle-border-color-selected: Highlight;
-        --spectrum-switch-m-emphasized-handle-border-color-selected-down: Highlight;
-        --spectrum-switch-m-emphasized-handle-border-color-selected-hover: Highlight;
-        --spectrum-switch-m-emphasized-handle-border-color-selected-key-focus: Highlight;
-        --spectrum-switch-m-emphasized-track-color-selected: Highlight;
-        --spectrum-switch-m-emphasized-track-color-selected-down: Highlight;
-        --spectrum-switch-m-emphasized-track-color-selected-hover: Highlight;
-        --spectrum-switch-m-emphasized-track-color-selected-key-focus: Highlight;
-        --spectrum-switch-m-focus-ring-color-key-focus: ButtonText;
-        --spectrum-switch-m-handle-background-color: ButtonFace;
-        --spectrum-switch-m-handle-border-color: ButtonText;
-        --spectrum-switch-m-handle-border-color-disabled: GrayText;
-        --spectrum-switch-m-handle-border-color-down: Highlight;
-        --spectrum-switch-m-handle-border-color-hover: Highlight;
-        --spectrum-switch-m-handle-border-color-key-focus: ButtonText;
-        --spectrum-switch-m-handle-border-color-selected: Highlight;
-        --spectrum-switch-m-handle-border-color-selected-disabled: GrayText;
-        --spectrum-switch-m-handle-border-color-selected-down: Highlight;
-        --spectrum-switch-m-handle-border-color-selected-hover: Highlight;
-        --spectrum-switch-m-handle-border-color-selected-key-focus: Highlight;
-        --spectrum-switch-m-text-color: CanvasText;
-        --spectrum-switch-m-text-color-disabled: GrayText;
-        --spectrum-switch-m-text-color-down: CanvasText;
-        --spectrum-switch-m-text-color-hover: CanvasText;
-        --spectrum-switch-m-text-color-selected-disabled: GrayText;
-        --spectrum-switch-m-track-color: ButtonFace;
-        --spectrum-switch-m-track-color-disabled: ButtonFace;
-        --spectrum-switch-m-track-color-selected: Highlight;
-        --spectrum-switch-m-track-color-selected-disabled: GrayText;
-        --spectrum-switch-m-track-color-selected-down: Highlight;
-        --spectrum-switch-m-track-color-selected-hover: Highlight;
-        --spectrum-switch-m-track-color-selected-key-focus: Highlight;
+        --highcontrast-switch-label-color-default: ButtonText;
+        --highcontrast-switch-label-color-hover: ButtonText;
+        --highcontrast-switch-label-color-down: ButtonText;
+        --highcontrast-switch-label-color-focus: ButtonText;
+        --highcontrast-switch-label-color-disabled: GrayText;
+        --highcontrast-switch-handle-background-color: ButtonFace;
+        --highcontrast-switch-handle-border-color-default: ButtonText;
+        --highcontrast-switch-handle-border-color-focus: Highlight;
+        --highcontrast-switch-handle-border-color-disabled: Highlight;
+        --highcontrast-switch-handle-border-color-selected-default: Highlight;
+        --highcontrast-switch-handle-border-color-selected-hover: Highlight;
+        --highcontrast-switch-handle-border-color-selected-down: Highlight;
+        --highcontrast-switch-handle-border-color-selected-focus: Highlight;
+        --highcontrast-switch-background-color: ButtonFace;
+        --highcontrast-switch-background-color-selected-default: Highlight;
+        --highcontrast-switch-background-color-selected-hover: Highlight;
+        --highcontrast-switch-background-color-selected-down: Highlight;
+        --highcontrast-switch-background-color-selected-focus: Highlight;
+        --highcontrast-switch-background-color-selected-disabled: Highlight;
+        --highcontrast-switch-handle-border-color-hover: Highlight;
+        --highcontrast-switch-handle-border-color-down: Highlight;
+        --highcontrast-switch-focus-ring-color: ButtonText;
         forced-color-adjust: none;
     }
     #input:not([checked]) + #switch {
-        box-shadow: inset 0 0 0 1px
-            var(
-                --spectrum-switch-m-handle-border-color,
-                var(--spectrum-alias-toggle-border-color-default)
-            );
+        box-shadow: inset 0 0 0 1px ButtonText;
     }
     :host(:hover) #input:not([checked]) + #switch {
-        box-shadow: inset 0 0 0 1px
-            var(
-                --spectrum-switch-m-handle-border-color-hover,
-                var(--spectrum-alias-toggle-border-color-hover)
-            );
+        box-shadow: inset 0 0 0 1px Highlight;
     }
-    :host([disabled]) #input + #switch {
-        box-shadow: inset 0 0 0 1px
-            var(
-                --spectrum-switch-m-handle-border-color-disabled,
-                var(--spectrum-global-color-gray-400)
-            );
+    :host(:hover[checked]) #input[disabled] + #switch,
+    :host(:hover[disabled][checked]) #input + #switch {
+        background-color: GrayText;
+        box-shadow: inset 0 0 0 1px GrayText;
     }
-    :host(:hover[disabled]) #input + #switch {
-        box-shadow: inset 0 0 0 1px
-            var(
-                --spectrum-switch-m-handle-border-color-disabled,
-                var(--spectrum-global-color-gray-400)
-            );
+    :host(:hover[checked]) #input[disabled] + #switch:before,
+    :host(:hover[disabled][checked]) #input + #switch:before {
+        background-color: ButtonFace;
+        border-color: GrayText;
     }
+    #input[disabled]:not([checked]) + #switch,
+    :host([disabled]) #input:not([checked]) + #switch {
+        background-color: ButtonFace;
+        box-shadow: inset 0 0 0 1px GrayText;
+    }
+    #input[disabled]:not([checked]) + #switch:before,
+    :host([disabled]) #input:not([checked]) + #switch:before {
+        background-color: ButtonFace;
+        border-color: GrayText;
+    }
+    :host([checked]) #input[disabled] + #switch,
+    :host([disabled][checked][dir]) #input + #switch {
+        background-color: GrayText;
+        box-shadow: inset 0 0 0 1px GrayText;
+    }
+    :host([checked]) #input[disabled] + #switch:before,
+    :host([disabled][checked][dir]) #input + #switch:before {
+        background-color: ButtonFace;
+        border-color: GrayText;
+    }
+    #input[disabled] ~ #label,
+    :host([disabled]) #input ~ #label {
+        color: GrayText;
+    }
+}
+:host {
+    --spectrum-switch-background-color-selected-default: var(
+        --system-spectrum-switch-background-color-selected-default
+    ); /* .spectrum-Switch */
+    --spectrum-switch-background-color-selected-hover: var(
+        --system-spectrum-switch-background-color-selected-hover
+    );
+    --spectrum-switch-background-color-selected-down: var(
+        --system-spectrum-switch-background-color-selected-down
+    );
+    --spectrum-switch-background-color-selected-focus: var(
+        --system-spectrum-switch-background-color-selected-focus
+    );
+    --spectrum-switch-handle-border-color-default: var(
+        --system-spectrum-switch-handle-border-color-default
+    );
+    --spectrum-switch-handle-border-color-hover: var(
+        --system-spectrum-switch-handle-border-color-hover
+    );
+    --spectrum-switch-handle-border-color-down: var(
+        --system-spectrum-switch-handle-border-color-down
+    );
+    --spectrum-switch-handle-border-color-focus: var(
+        --system-spectrum-switch-handle-border-color-focus
+    );
+    --spectrum-switch-handle-border-color-selected-default: var(
+        --system-spectrum-switch-handle-border-color-selected-default
+    );
+    --spectrum-switch-handle-border-color-selected-hover: var(
+        --system-spectrum-switch-handle-border-color-selected-hover
+    );
+    --spectrum-switch-handle-border-color-selected-down: var(
+        --system-spectrum-switch-handle-border-color-selected-down
+    );
+    --spectrum-switch-handle-border-color-selected-focus: var(
+        --system-spectrum-switch-handle-border-color-selected-focus
+    );
 }

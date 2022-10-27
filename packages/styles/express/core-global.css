@@ -1722,18 +1722,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-avatar-border-size: var(
         --spectrum-global-dimension-static-size-25
     );
-    --spectrum-alias-actiongroup-button-gap: var(
-        --spectrum-global-dimension-size-100
-    );
-    --spectrum-alias-actiongroup-button-gap-compact: var(
-        --spectrum-global-dimension-size-25
-    );
-    --spectrum-alias-actiongroup-button-gap-quiet: var(
-        --spectrum-global-dimension-size-100
-    );
-    --spectrum-alias-actiongroup-button-gap-quiet-compact: var(
-        --spectrum-global-dimension-size-25
-    );
     --spectrum-alias-search-padding-left-s: var(
         --spectrum-global-dimension-size-125
     );
@@ -3302,15 +3290,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-slider-label-text-size: var(
         --spectrum-global-dimension-font-size-100
-    );
-    --spectrum-fieldlabel-s-text-size: var(
-        --spectrum-global-dimension-font-size-100
-    );
-    --spectrum-fieldlabel-m-text-size: var(
-        --spectrum-global-dimension-font-size-100
-    );
-    --spectrum-fieldlabel-l-text-size: var(
-        --spectrum-global-dimension-font-size-200
     );
     --spectrum-fieldlabel-xl-text-size: var(
         --spectrum-global-dimension-font-size-300

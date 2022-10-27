@@ -23,26 +23,9 @@ import { StoryDecorator } from '@spectrum-web-components/story-decorator/src/Sto
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { render } from 'lit';
 import { emulateMedia, sendKeys } from '@web/test-runner-commands';
-import { sendMouse } from '../plugins/browser.js';
+import { ignoreResizeObserverLoopError } from '../testing-helpers.js';
 
-let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
-before(function () {
-    // Save Mocha's handler.
-    (
-        Mocha as unknown as { process: { removeListener(name: string): void } }
-    ).process.removeListener('uncaughtException');
-    globalErrorHandler = window.onerror;
-    addEventListener('error', (error) => {
-        if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
-            return;
-        } else {
-            globalErrorHandler?.(error);
-        }
-    });
-});
-after(function () {
-    window.onerror = globalErrorHandler as OnErrorEventHandler;
-});
+ignoreResizeObserverLoopError(before, after);
 
 const wrap = () => html`
     <sp-story-decorator
@@ -52,25 +35,38 @@ const wrap = () => html`
     ></sp-story-decorator>
 `;
 
+interface Story<T> {
+    (args: T): TemplateResult;
+    args?: Partial<T>;
+    argTypes?: Record<string, unknown>;
+    decorators?: (() => TemplateResult)[];
+    swc_vrt?: {
+        skip: Boolean;
+    };
+}
+
 type StoriesType = {
+    [name: string]: Story<{}>;
+};
+
+export type TestsType = StoriesType & {
     default: {
         title: string;
         swc_vrt?: {
             preload?: () => void;
         };
     };
-    [name: string]: (() => TemplateResult) | any;
 };
 
 export const test = (
-    tests: StoriesType,
+    tests: TestsType,
     name: string,
     color: Color,
     scale: Scale,
     dir: 'ltr' | 'rtl'
 ) => {
     Object.keys(tests).map((story) => {
-        if (story !== 'default') {
+        if (story !== 'default' && !tests[story].swc_vrt?.skip) {
             it(story, async () => {
                 let test = await fixture<StoryDecorator>(wrap());
                 await elementUpdated(test);
@@ -168,7 +164,7 @@ export const test = (
     });
 };
 
-export const regressVisuals = async (name: string, stories: StoriesType) => {
+export const regressVisuals = async (name: string, stories: TestsType) => {
     describe(`${name} Visual Regressions`, () => {
         const {
             defaultColor: color,
@@ -194,17 +190,6 @@ export const regressVisuals = async (name: string, stories: StoriesType) => {
                     colorScheme: 'no-preference',
                 });
             }
-        });
-        beforeEach(async () => {
-            // Something about this prevents Chromium from swallowing the CSS transitions in specific contexts.
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [0, 0],
-                    },
-                ],
-            });
         });
         afterEach(() => {
             const overlays = [

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.11.3...@spectrum-web-components/action-group@0.12.0) (2022-10-17)
+
+### Features
+
+-   **action-group:** use core tokens ([73f3b51](https://github.com/adobe/spectrum-web-components/commit/73f3b51becf3c20c387bdf00b4cd54b8839a12da))
+
+## [0.11.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.11.2...@spectrum-web-components/action-group@0.11.3) (2022-10-10)
+
+**Note:** Version bump only for package @spectrum-web-components/action-group
+
 ## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.11.1...@spectrum-web-components/action-group@0.11.2) (2022-09-14)
 
 **Note:** Version bump only for package @spectrum-web-components/action-group

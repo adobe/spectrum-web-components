@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 import { elementUpdated, expect } from '@open-wc/testing';
 import { stub } from 'sinon';
+import type { HookFunction } from 'mocha';
 
 export async function testForLitDevWarnings(
     fixture: () => Promise<HTMLElement>
@@ -94,3 +95,30 @@ export const arrowUpKeyupEvent = (): KeyboardEvent =>
     keyboardEvent('ArrowUp', {}, 'keyup');
 export const arrowDownKeyupEvent = (): KeyboardEvent =>
     keyboardEvent('ArrowDown', {}, 'keyup');
+
+export function ignoreResizeObserverLoopError(
+    before: HookFunction,
+    after: HookFunction
+) {
+    let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
+    before(function () {
+        // Save Mocha's handler.
+        (
+            Mocha as unknown as {
+                process: { removeListener(name: string): void };
+            }
+        ).process.removeListener('uncaughtException');
+        globalErrorHandler = window.onerror;
+        addEventListener('error', (error) => {
+            console.error('Uncaught global error:', error);
+            if (error.message?.match?.(/ResizeObserver loop limit exceeded/)) {
+                return;
+            } else {
+                globalErrorHandler?.(error);
+            }
+        });
+    });
+    after(function () {
+        window.onerror = globalErrorHandler as OnErrorEventHandler;
+    });
+}

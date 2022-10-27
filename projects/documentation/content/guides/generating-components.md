@@ -37,7 +37,18 @@ In response to the prompt above, the package name should be the kebab case versi
    package.json
 ```
 
-From here, peek into the `package.json` file and ensure the "devDependency" of `@spectrum-css/spectrumpattern` listed there is of the most current version. Then, run `yarn` in your terminal to grab any newly-added packages, as well as to ensure that you have the provided CSS processed for use in your component. You'll now be able to see your component in the Storybook, using the command `yarn storybook`, or test its functionality via `yarn test` so that you can dive into fully preparing the pattern for use as a custom element.
+From here, peek into the `package.json` file and ensure the "devDependency" of `@spectrum-css/spectrumpattern` (replacing "spectrumpattern" with the pattern you're implementing, such as "badge" or "tooltip") listed there is of the most current version.
+
+Outside of your new package, you will need to manually add information about your new package to both the `tsconfig-all.json` file and the `bundle` package:
+
+Open `tsconfig-all.json`, find "references", and add an entry for your package (`{ "path": "packages/spectrum-pattern" }`) alphabetically (replacing "spectrum-pattern" with the pattern you're implementing, such as "action-button" or "progress-bar"). The `tsconfig-all.json` config is used to build types for the project in parallel with the JS build that is handled outside of `tsc`. This will ensure that the types for your new package are available throughout the library, include at demonstration and test time.
+
+Include a listing for your package in `bundle/elements.ts` and `bundle/src/index.js`. Then, confirm that your new package is already listed in `packages/bundle/package.json`. The `bundle` package makes it possible to build demo projects with _all_ of the components from the library registered in a single place, and is also leveraged for ease of component consumption in the documentation site build.
+
+-   In `bundle/elements.ts`, please add any, and all (if your package registers more than one element), element registration files to the imports there in, e.g. `import '@spectrum-web-components/spectrum-pattern/sp-spectrum-pattern.js';`.
+-   In `bundle/src/index.js`, please add an export for your new packages default entry, e.g. `export * from '@spectrum-web-components/spectrum-pattern';`, so that any classes exported from your package can be imported from this location.
+
+Finally, run `yarn` in your terminal. This will grab any newly-added packages, as well as to ensure that you have the provided CSS processed for use in your component. You can now see your component in the Storybook, using the command `yarn storybook`, or test its functionality via `yarn test`.
 
 The next place to look is in `node_modules/@spectrum-css/spectrumpattern/metadata/spectrumpattern.yml`. Here, you will find complete Spectrum CSS’s HTML representation of the many states, variants, and capabilities offered by the pattern that you are working with. The content of this file is also found on the <sp-link href="https://opensource.adobe.com/spectrum-css" target="_blank">Spectrum CSS documentation site</sp-link> under the name of the pattern you’re leveraging. Following this as a guide while you implement this component ensures that you will fulfill the expected features of this pattern.
 

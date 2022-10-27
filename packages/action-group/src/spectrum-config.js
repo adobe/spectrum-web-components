@@ -35,6 +35,29 @@ const config = {
                     type: 'boolean',
                     selector: '.spectrum-ActionGroup--justified',
                 },
+                {
+                    type: 'enum',
+                    name: 'size',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 's',
+                            selector: '.spectrum-ActionGroup--sizeS',
+                        },
+                        {
+                            name: 'm',
+                            selector: '.spectrum-ActionGroup--sizeM',
+                        },
+                        {
+                            name: 'l',
+                            selector: '.spectrum-ActionGroup--sizeL',
+                        },
+                        {
+                            name: 'xl',
+                            selector: '.spectrum-ActionGroup--sizeXL',
+                        },
+                    ],
+                },
             ],
             slots: [
                 {

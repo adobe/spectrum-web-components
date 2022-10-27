@@ -122,6 +122,12 @@ const config = {
                         /\.spectrum-Checkbox\.is-invalid \.spectrum-Checkbox-input:checked\s?\+\s?\.spectrum-Checkbox-box::?before/,
                 },
                 {
+                    replacement:
+                        ':host([invalid][indeterminate][size]) #box:before',
+                    selector:
+                        /\.spectrum-Checkbox\.is-invalid\.is-indeterminate .spectrum-Checkbox-box:before/,
+                },
+                {
                     replacement: ':host([invalid][dir]:hover) #box:before',
                     selector:
                         '.spectrum-Checkbox.is-invalid:hover .spectrum-Checkbox-box::?before',

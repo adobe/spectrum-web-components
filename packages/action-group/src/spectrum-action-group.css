@@ -12,274 +12,140 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-actiongroup-button-gap-reset: 0; /* .spectrum-ActionGroup */
+    --spectrum-actiongroup-button-spacing-reset: 0; /* .spectrum-ActionGroup */
+    --spectrum-actiongroup-border-radius-reset: 0;
+    --spectrum-actiongroup-border-radius: var(--spectrum-corner-radius-100);
+}
+:host([size='s']) {
+    --spectrum-actiongroup-horizontal-spacing-regular: var(
+        --spectrum-spacing-75
+    ); /* .spectrum-ActionGroup--sizeS */
+    --spectrum-actiongroup-vertical-spacing-regular: var(--spectrum-spacing-75);
+}
+:host([size='m']) {
+    --spectrum-actiongroup-horizontal-spacing-regular: var(
+        --spectrum-spacing-100
+    ); /* .spectrum-ActionGroup--sizeM */
+    --spectrum-actiongroup-vertical-spacing-regular: var(
+        --spectrum-spacing-100
+    );
+}
+:host([size='l']) {
+    --spectrum-actiongroup-horizontal-spacing-regular: var(
+        --spectrum-spacing-100
+    ); /* .spectrum-ActionGroup--sizeL */
+    --spectrum-actiongroup-vertical-spacing-regular: var(
+        --spectrum-spacing-100
+    );
+}
+:host([size='xl']) {
+    --spectrum-actiongroup-horizontal-spacing-regular: var(
+        --spectrum-spacing-100
+    ); /* .spectrum-ActionGroup--sizeXL */
+    --spectrum-actiongroup-vertical-spacing-regular: var(
+        --spectrum-spacing-100
+    );
 }
 :host {
     display: flex; /* .spectrum-ActionGroup */
     flex-wrap: wrap;
+    gap: var(
+        --mod-actiongroup-horizontal-spacing-regular,
+        var(--spectrum-actiongroup-horizontal-spacing-regular)
+    );
 }
 ::slotted(*) {
     flex-shrink: 0; /* .spectrum-ActionGroup .spectrum-ActionGroup-item */
 }
-:host(:not([vertical]):not([compact])) {
-    margin-top: calc(
-        var(
-                --spectrum-actiongroup-button-gap-y,
-                var(--spectrum-alias-actiongroup-button-gap)
-            ) * -1
-    ); /* .spectrum-ActionGroup:not(.spectrum-ActionGroup--vertical).spectrum-ActionGroup:not(.spectrum-ActionGroup--compact) */
-}
 :host(:not([vertical]):not([compact])) ::slotted(*) {
     flex-shrink: 0; /* .spectrum-ActionGroup:not(.spectrum-ActionGroup--vertical).spectrum-ActionGroup:not(.spectrum-ActionGroup--compact) .spectrum-ActionGroup-item */
-    margin-top: var(
-        --spectrum-actiongroup-button-gap-y,
-        var(--spectrum-alias-actiongroup-button-gap)
-    );
-}
-:host([dir='ltr']:not([vertical]):not([compact])) ::slotted(:not(:last-child)) {
-    margin-right: var(
-        --spectrum-actiongroup-button-gap-x,
-        var(--spectrum-alias-actiongroup-button-gap)
-    ); /* [dir=ltr] .spectrum-ActionGroup:not(.spectrum-ActionGroup--vertical).spectrum-ActionGroup:not(.spectrum-ActionGroup--compact) .spectrum-ActionGroup-item:not(:last-child) */
-}
-:host([dir='rtl']:not([vertical]):not([compact])) ::slotted(:not(:last-child)) {
-    margin-left: var(
-        --spectrum-actiongroup-button-gap-x,
-        var(--spectrum-alias-actiongroup-button-gap)
-    ); /* [dir=rtl] .spectrum-ActionGroup:not(.spectrum-ActionGroup--vertical).spectrum-ActionGroup:not(.spectrum-ActionGroup--compact) .spectrum-ActionGroup-item:not(:last-child) */
 }
 :host([vertical]) {
-    display: inline-flex; /* .spectrum-ActionGroup--vertical */
+    display: inline-flex;
     flex-direction: column;
-}
-:host([dir='ltr'][vertical]) ::slotted(:not(:first-child)) {
-    margin-left: var(
-        --spectrum-actiongroup-button-gap-reset
-    ); /* [dir=ltr] .spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
-:host([dir='rtl'][vertical]) ::slotted(:not(:first-child)) {
-    margin-right: var(
-        --spectrum-actiongroup-button-gap-reset
-    ); /* [dir=rtl] .spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
-:host([vertical]) ::slotted(:not(:first-child)) {
-    margin-top: var(
-        --spectrum-actiongroup-button-gap-y,
-        var(--spectrum-alias-actiongroup-button-gap)
-    ); /* .spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
-:host([dir='ltr'][vertical][vertical]) {
-    margin-left: var(
-        --spectrum-actiongroup-button-gap-reset
-    ); /* [dir=ltr] .spectrum-ActionGroup--vertical.spectrum-ActionGroup--vertical */
-}
-:host([dir='rtl'][vertical][vertical]) {
-    margin-right: var(
-        --spectrum-actiongroup-button-gap-reset
-    ); /* [dir=rtl] .spectrum-ActionGroup--vertical.spectrum-ActionGroup--vertical */
-}
-:host([vertical][vertical]) {
-    margin-top: var(
-        --spectrum-actiongroup-button-gap-y,
-        var(--spectrum-alias-actiongroup-button-gap)
-    ); /* .spectrum-ActionGroup--vertical.spectrum-ActionGroup--vertical */
+    gap: var(
+        --mod-actiongroup-vertical-spacing-regular,
+        var(--spectrum-actiongroup-vertical-spacing-regular)
+    ); /* .spectrum-ActionGroup--vertical */
 }
 :host([compact]) {
     gap: var(
-        --spectrum-actiongroup-compact-button-gap,
-        var(--spectrum-alias-actiongroup-button-gap-compact)
+        --mod-actiongroup-gap-size-compact,
+        var(--spectrum-actiongroup-gap-size-compact)
     ); /* .spectrum-ActionGroup--compact */
-}
-:host([dir='ltr'][compact][quiet]) ::slotted(:not(:first-child)) {
-    margin-left: var(
-        --spectrum-actiongroup-quiet-compact-button-gap,
-        var(--spectrum-alias-actiongroup-button-gap-quiet-compact)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact.spectrum-ActionGroup--quiet .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
-:host([dir='rtl'][compact][quiet]) ::slotted(:not(:first-child)) {
-    margin-right: var(
-        --spectrum-actiongroup-quiet-compact-button-gap,
-        var(--spectrum-alias-actiongroup-button-gap-quiet-compact)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact.spectrum-ActionGroup--quiet .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
-:host([compact][quiet]) ::slotted(:not(:first-child)) {
-    margin-top: var(
-        --spectrum-actiongroup-button-gap-reset
-    ); /* .spectrum-ActionGroup--compact.spectrum-ActionGroup--quiet .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
-:host([dir='ltr'][compact][quiet][vertical]) ::slotted(:not(:first-child)) {
-    margin-left: var(
-        --spectrum-actiongroup-button-gap-reset
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact.spectrum-ActionGroup--quiet.spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
-:host([dir='rtl'][compact][quiet][vertical]) ::slotted(:not(:first-child)) {
-    margin-right: var(
-        --spectrum-actiongroup-button-gap-reset
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact.spectrum-ActionGroup--quiet.spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
-:host([compact][quiet][vertical]) ::slotted(:not(:first-child)) {
-    margin-top: var(
-        --spectrum-actiongroup-quiet-compact-button-gap,
-        var(--spectrum-alias-actiongroup-button-gap-quiet-compact)
-    ); /* .spectrum-ActionGroup--compact.spectrum-ActionGroup--quiet.spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
 }
 :host([compact]:not([quiet])) {
     flex-wrap: nowrap; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) */
 }
 :host([compact]:not([quiet])) ::slotted(*) {
-    --spectrum-actionbutton-focus-ring-border-radius-adjusted: var(
-        --spectrum-alias-border-radius-xsmall,
-        var(--spectrum-global-dimension-size-10)
+    border-radius: var(
+        --mod-actiongroup-border-radius-reset,
+        var(--spectrum-actiongroup-border-radius-reset)
     );
-    border-radius: 0;
     position: relative; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item */
     z-index: 0;
 }
-:host([dir='ltr'][compact]:not([quiet])) ::slotted(:first-child) {
-    border-top-left-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-}
-:host([dir='rtl'][compact]:not([quiet])) ::slotted(:first-child) {
-    border-top-right-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-}
-:host([dir='ltr'][compact]:not([quiet])) ::slotted(:first-child) {
-    border-bottom-left-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-}
-:host([dir='rtl'][compact]:not([quiet])) ::slotted(:first-child) {
-    border-bottom-right-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-}
-:host([dir='ltr'][compact]:not([quiet])) ::slotted(:first-child) {
-    margin-right: calc(
-        var(
-                --spectrum-actionbutton-m-texticon-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1 / 2
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-}
-:host([dir='rtl'][compact]:not([quiet])) ::slotted(:first-child) {
-    margin-left: calc(
-        var(
-                --spectrum-actionbutton-m-texticon-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1 / 2
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
-}
 :host([compact]:not([quiet])) ::slotted(:first-child) {
-    --spectrum-actionbutton-focus-ring-border-radius-adjusted: calc(
-            var(
-                    --spectrum-actionbutton-m-quiet-textonly-border-radius,
-                    var(--spectrum-alias-component-border-radius)
-                ) +
-                var(
-                    --spectrum-actionbutton-m-textonly-focus-ring-gap,
-                    var(--spectrum-alias-component-focusring-gap)
-                )
+    --spectrum-actionbutton-focus-ring-border-radius: var(
+            --mod-actiongroup-border-radius,
+            var(--spectrum-actiongroup-border-radius)
         )
+        0px 0px
         var(
-            --spectrum-alias-border-radius-xsmall,
-            var(--spectrum-global-dimension-size-10)
-        )
-        var(
-            --spectrum-alias-border-radius-xsmall,
-            var(--spectrum-global-dimension-size-10)
-        )
-        calc(
-            var(
-                    --spectrum-actionbutton-m-quiet-textonly-border-radius,
-                    var(--spectrum-alias-component-border-radius)
-                ) +
-                var(
-                    --spectrum-actionbutton-m-textonly-focus-ring-gap,
-                    var(--spectrum-alias-component-focusring-gap)
-                )
-        ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+            --mod-actiongroup-border-radius,
+            var(--spectrum-actiongroup-border-radius)
+        );
+    border-end-start-radius: var(
+        --mod-actiongroup-border-radius,
+        var(--spectrum-actiongroup-border-radius)
+    );
+    border-start-start-radius: var(
+        --mod-actiongroup-border-radius,
+        var(--spectrum-actiongroup-border-radius)
+    ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:first-child */
+    margin-inline-start: var(
+        --mod-actiongroup-button-spacing-reset,
+        var(--spectrum-actiongroup-button-spacing-reset)
+    );
 }
-:host([dir='ltr'][compact]:not([quiet])) ::slotted(:last-child) {
-    border-top-right-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-}
-:host([dir='rtl'][compact]:not([quiet])) ::slotted(:last-child) {
-    border-top-left-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-}
-:host([dir='ltr'][compact]:not([quiet])) ::slotted(:last-child) {
-    border-bottom-right-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-}
-:host([dir='rtl'][compact]:not([quiet])) ::slotted(:last-child) {
-    border-bottom-left-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-}
-:host([dir='ltr'][compact]:not([quiet])) ::slotted(:last-child) {
-    margin-left: calc(
-        var(
-                --spectrum-actionbutton-m-texticon-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1 / 2
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-}
-:host([dir='rtl'][compact]:not([quiet])) ::slotted(:last-child) {
-    margin-right: calc(
-        var(
-                --spectrum-actionbutton-m-texticon-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1 / 2
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-}
-:host([dir='ltr'][compact]:not([quiet])) ::slotted(:last-child) {
-    margin-right: 0; /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
-}
-:host([dir='rtl'][compact]:not([quiet])) ::slotted(:last-child) {
-    margin-left: 0; /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+:host([compact]:not([quiet])) ::slotted(:not(:first-child)) {
+    --spectrum-actionbutton-focus-ring-border-radius: 0px;
+    margin-inline-end: var(
+        --mod-actiongroup-horizontal-spacing-compact,
+        var(--spectrum-actiongroup-horizontal-spacing-compact)
+    );
+    margin-inline-start: var(
+        --mod-actiongroup-horizontal-spacing-compact,
+        var(--spectrum-actiongroup-horizontal-spacing-compact)
+    ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
 }
 :host([compact]:not([quiet])) ::slotted(:last-child) {
-    --spectrum-actionbutton-focus-ring-border-radius-adjusted: var(
-            --spectrum-alias-border-radius-xsmall,
-            var(--spectrum-global-dimension-size-10)
-        )
-        calc(
-            var(
-                    --spectrum-actionbutton-m-quiet-textonly-border-radius,
-                    var(--spectrum-alias-component-border-radius)
-                ) +
-                var(
-                    --spectrum-actionbutton-m-textonly-focus-ring-gap,
-                    var(--spectrum-alias-component-focusring-gap)
-                )
-        )
-        calc(
-            var(
-                    --spectrum-actionbutton-m-quiet-textonly-border-radius,
-                    var(--spectrum-alias-component-border-radius)
-                ) +
-                var(
-                    --spectrum-actionbutton-m-textonly-focus-ring-gap,
-                    var(--spectrum-alias-component-focusring-gap)
-                )
+    --spectrum-actionbutton-focus-ring-border-radius: 0px
+        var(
+            --mod-actiongroup-border-radius,
+            var(--spectrum-actiongroup-border-radius)
         )
         var(
-            --spectrum-alias-border-radius-xsmall,
-            var(--spectrum-global-dimension-size-10)
-        ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+            --mod-actiongroup-border-radius,
+            var(--spectrum-actiongroup-border-radius)
+        )
+        0px;
+    border-end-end-radius: var(
+        --mod-actiongroup-border-radius,
+        var(--spectrum-actiongroup-border-radius)
+    );
+    border-start-end-radius: var(
+        --mod-actiongroup-border-radius,
+        var(--spectrum-actiongroup-border-radius)
+    ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item:last-child */
+    margin-inline-end: var(
+        --mod-actiongroup-border-radius-reset,
+        var(--spectrum-actiongroup-border-radius-reset)
+    );
+    margin-inline-start: var(
+        --mod-actiongroup-horizontal-spacing-compact,
+        var(--spectrum-actiongroup-horizontal-spacing-compact)
+    );
 }
 :host([compact]:not([quiet])) ::slotted([selected]) {
     z-index: 1; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item.is-selected */
@@ -293,125 +159,105 @@ governing permissions and limitations under the License.
 :host([compact]:not([quiet])) ::slotted(:focus-visible) {
     z-index: 3; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item.focus-ring */
 }
-:host([dir='ltr'][compact]:not([quiet])) ::slotted(:not(:first-child)) {
-    margin-left: calc(
-        var(
-                --spectrum-actionbutton-m-texticon-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1 / 2
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
-:host([dir='rtl'][compact]:not([quiet])) ::slotted(:not(:first-child)) {
-    margin-right: calc(
-        var(
-                --spectrum-actionbutton-m-texticon-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1 / 2
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
-:host([dir='ltr'][compact]:not([quiet])) ::slotted(:not(:first-child)) {
-    margin-right: calc(
-        var(
-                --spectrum-actionbutton-m-texticon-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1 / 2
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
-:host([dir='rtl'][compact]:not([quiet])) ::slotted(:not(:first-child)) {
-    margin-left: calc(
-        var(
-                --spectrum-actionbutton-m-texticon-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1 / 2
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet) .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
 :host([compact][vertical]:not([quiet])) {
-    gap: 0; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical */
+    gap: var(
+        --mod-actiongroup-gap-size-compact,
+        var(--spectrum-actiongroup-gap-size-compact)
+    ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical */
 }
 :host([compact][vertical]:not([quiet])) ::slotted(*) {
-    border-radius: 0; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item */
-}
-:host([compact][vertical]:not([quiet])) ::slotted(:not(:first-child)) {
-    margin-bottom: calc(
-        var(
-                --spectrum-actionbutton-m-texticon-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1 / 2
-    );
-    margin-top: calc(
-        var(
-                --spectrum-actionbutton-m-texticon-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1 / 2
-    ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
-}
-:host([dir='ltr'][compact][vertical]:not([quiet])) ::slotted(:first-child) {
-    border-top-left-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:first-child */
-}
-:host([dir='rtl'][compact][vertical]:not([quiet])) ::slotted(:first-child) {
-    border-top-right-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:first-child */
-}
-:host([dir='ltr'][compact][vertical]:not([quiet])) ::slotted(:first-child) {
-    border-top-right-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:first-child */
-}
-:host([dir='rtl'][compact][vertical]:not([quiet])) ::slotted(:first-child) {
-    border-top-left-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:first-child */
+    border-radius: var(
+        --mod-actiongroup-border-radius-reset,
+        var(--spectrum-actiongroup-border-radius-reset)
+    ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item */
 }
 :host([compact][vertical]:not([quiet])) ::slotted(:first-child) {
-    border-radius: 0; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:first-child */
-    margin-bottom: calc(
+    --spectrum-actionbutton-focus-ring-border-radius: var(
+            --mod-actiongroup-border-radius,
+            var(--spectrum-actiongroup-border-radius)
+        )
         var(
-                --spectrum-actionbutton-m-texticon-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1 / 2
+            --mod-actiongroup-border-radius,
+            var(--spectrum-actiongroup-border-radius)
+        )
+        0px 0px;
+    border-start-end-radius: var(
+        --mod-actiongroup-border-radius,
+        var(--spectrum-actiongroup-border-radius)
+    );
+    border-start-start-radius: var(
+        --mod-actiongroup-border-radius,
+        var(--spectrum-actiongroup-border-radius)
+    ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:first-child */
+    margin-block-end: var(
+        --mod-actiongroup-vertical-spacing-compact,
+        var(--spectrum-actiongroup-vertical-spacing-compact)
+    );
+    margin-block-start: var(
+        --mod-actiongroup-vertical-spacing-compact,
+        var(--spectrum-actiongroup-vertical-spacing-compact)
+    );
+    margin-inline-end: var(
+        --mod-actiongroup-button-spacing-reset,
+        var(--spectrum-actiongroup-button-spacing-reset)
     );
 }
-:host([dir='ltr'][compact][vertical]:not([quiet])) ::slotted(:last-child) {
-    border-bottom-left-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:last-child */
-}
-:host([dir='rtl'][compact][vertical]:not([quiet])) ::slotted(:last-child) {
-    border-bottom-right-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:last-child */
-}
-:host([dir='ltr'][compact][vertical]:not([quiet])) ::slotted(:last-child) {
-    border-bottom-right-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=ltr] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:last-child */
-}
-:host([dir='rtl'][compact][vertical]:not([quiet])) ::slotted(:last-child) {
-    border-bottom-left-radius: var(
-        --spectrum-actionbutton-m-texticon-border-radius,
-        var(--spectrum-alias-component-border-radius)
-    ); /* [dir=rtl] .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:last-child */
+:host([compact][vertical]:not([quiet])) ::slotted(:not(:first-child)) {
+    margin-block-end: var(
+        --mod-actiongroup-vertical-spacing-compact,
+        var(--spectrum-actiongroup-vertical-spacing-compact)
+    );
+    margin-block-start: var(
+        --mod-actiongroup-button-spacing-reset,
+        var(--spectrum-actiongroup-button-spacing-reset)
+    );
+    margin-inline-end: var(
+        --mod-actiongroup-button-spacing-reset,
+        var(--spectrum-actiongroup-button-spacing-reset)
+    );
+    margin-inline-start: var(
+        --mod-actiongroup-button-spacing-reset,
+        var(--spectrum-actiongroup-button-spacing-reset)
+    ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item+.spectrum-ActionGroup-item */
 }
 :host([compact][vertical]:not([quiet])) ::slotted(:last-child) {
-    border-radius: 0; /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:last-child */
-    margin-bottom: 0;
-    margin-top: calc(
+    --spectrum-actionbutton-focus-ring-border-radius: 0px 0px
         var(
-                --spectrum-actionbutton-m-texticon-border-size,
-                var(--spectrum-alias-border-size-thin)
-            ) * -1 / 2
+            --mod-actiongroup-border-radius,
+            var(--spectrum-actiongroup-border-radius)
+        )
+        var(
+            --mod-actiongroup-border-radius,
+            var(--spectrum-actiongroup-border-radius)
+        );
+    border-end-end-radius: var(
+        --mod-actiongroup-border-radius,
+        var(--spectrum-actiongroup-border-radius)
+    );
+    border-end-start-radius: var(
+        --mod-actiongroup-border-radius,
+        var(--spectrum-actiongroup-border-radius)
+    ); /* .spectrum-ActionGroup--compact:not(.spectrum-ActionGroup--quiet).spectrum-ActionGroup--vertical .spectrum-ActionGroup-item:last-child */
+    margin-block-end: var(
+        --mod-actiongroup-button-spacing-reset,
+        var(--spectrum-actiongroup-button-spacing-reset)
+    );
+    margin-block-start: var(
+        --mod-actiongroup-vertical-spacing-compact,
+        var(--spectrum-actiongroup-vertical-spacing-compact)
     );
 }
 :host([justified]) ::slotted(*) {
     flex: 1; /* .spectrum-ActionGroup--justified .spectrum-ActionGroup-item */
+}
+:host {
+    --spectrum-actiongroup-gap-size-compact: var(
+        --system-spectrum-actiongroup-gap-size-compact
+    ); /* .spectrum-ActionGroup */
+    --spectrum-actiongroup-horizontal-spacing-compact: var(
+        --system-spectrum-actiongroup-horizontal-spacing-compact
+    );
+    --spectrum-actiongroup-vertical-spacing-compact: var(
+        --system-spectrum-actiongroup-vertical-spacing-compact
+    );
 }

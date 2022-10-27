@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { PropertyValues } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import { ProvideLang } from '@spectrum-web-components/theme';
+import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import {
     NumberFormatOptions,
     NumberFormatter,
@@ -88,8 +88,12 @@ export class SliderHandle extends Focusable {
 
     _forcedUnit = '';
 
+    /**
+     * By default, the value of a Slider Handle will be halfway between its
+     * `min` and `max` values, or the `min` value when `max` is less than `min`.
+     */
     @property({ type: Number })
-    value = 10;
+    value!: number;
 
     @property({ type: Boolean, reflect: true })
     public dragging = false;
@@ -98,17 +102,13 @@ export class SliderHandle extends Focusable {
     public highlight = false;
 
     @property({ type: String })
-    public name = '';
+    public override name = '';
 
     @property({ reflect: true, converter: MinConverter })
     public min?: number | 'previous';
 
     @property({ reflect: true, converter: MaxConverter })
     public max?: number | 'next';
-
-    @property({ attribute: false })
-    private resolvedLanguage =
-        document.documentElement.lang || navigator.language;
 
     @property({ type: Number, reflect: true })
     public step?: number;
@@ -127,7 +127,18 @@ export class SliderHandle extends Focusable {
         return numberFormat.format(value);
     };
 
+    private languageResolver = new LanguageResolutionController(this);
+
     protected override update(changes: PropertyValues): void {
+        if (!this.hasUpdated) {
+            const { max, min } = this as { max: number; min: number };
+            if (this.value == null) {
+                if (!isNaN(max) && !isNaN(min)) {
+                    this.value = max < min ? min : min + (max - min) / 2;
+                }
+            }
+        }
+        
         if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
             delete this._numberFormatCache;
         }
@@ -143,9 +154,7 @@ export class SliderHandle extends Focusable {
         super.update(changes);
     }
 
-    protected override firstUpdated(
-        changedProperties: PropertyValues<this>
-    ): void {
+    protected override firstUpdated(changedProperties: PropertyValues<this>): void {
         super.firstUpdated(changedProperties);
         this.dispatchEvent(new CustomEvent('sp-slider-handle-ready'));
     }
@@ -169,12 +178,12 @@ export class SliderHandle extends Focusable {
         /* c8 ignore next */
         if (
             !this._numberFormatCache ||
-            this.resolvedLanguage !== this._numberFormatCache.language
+            this.languageResolver.language !== this._numberFormatCache.language
         ) {
             let numberFormatter: NumberFormatter;
             try {
                 numberFormatter = new NumberFormatter(
-                    this.resolvedLanguage,
+                    this.languageResolver.language,
                     this.formatOptions
                 );
                 this._forcedUnit = '';
@@ -191,12 +200,12 @@ export class SliderHandle extends Focusable {
                     this._forcedUnit = unit as string;
                 }
                 numberFormatter = new NumberFormatter(
-                    this.resolvedLanguage,
+                    this.languageResolver.language,
                     formatOptionsNoUnit
                 );
             }
             this._numberFormatCache = {
-                language: this.resolvedLanguage,
+                language: this.languageResolver.language,
                 numberFormat: numberFormatter,
             };
         }
@@ -207,32 +216,5 @@ export class SliderHandle extends Focusable {
     public get numberFormat(): NumberFormatter | undefined {
         if (!this.formatOptions) return;
         return this.getNumberFormat();
-    }
-
-    public override connectedCallback(): void {
-        super.connectedCallback();
-        this.resolveLanguage();
-    }
-
-    public override disconnectedCallback(): void {
-        this.resolveLanguage();
-        super.disconnectedCallback();
-    }
-
-    private resolveLanguage(): void {
-        const queryThemeEvent = new CustomEvent<ProvideLang>(
-            'sp-language-context',
-            {
-                bubbles: true,
-                composed: true,
-                detail: {
-                    callback: (lang: string) => {
-                        this.resolvedLanguage = lang;
-                    },
-                },
-                cancelable: true,
-            }
-        );
-        this.dispatchEvent(queryThemeEvent);
     }
 }

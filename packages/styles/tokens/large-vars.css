@@ -83,6 +83,17 @@ governing permissions and limitations under the License.
     --spectrum-help-text-top-to-workflow-icon-large: 8px;
     --spectrum-help-text-top-to-workflow-icon-extra-large: 11px;
     --spectrum-in-line-alert-minimum-width: 360px;
+    --spectrum-menu-item-edge-to-content-not-selected-small: 24px;
+    --spectrum-menu-item-edge-to-content-not-selected-medium: 42px;
+    --spectrum-menu-item-edge-to-content-not-selected-large: 47px;
+    --spectrum-menu-item-edge-to-content-not-selected-extra-large: 54px;
+    --spectrum-menu-item-top-to-chevron-small: 9px;
+    --spectrum-menu-item-top-to-chevron-medium: 13px;
+    --spectrum-menu-item-top-to-chevron-large: 17px;
+    --spectrum-menu-item-top-to-chevron-extra-large: 22px;
+    --spectrum-meter-default-width: 240px;
+    --spectrum-meter-thickness-small: 5px;
+    --spectrum-meter-thickness-medium: 8px;
     --spectrum-swatch-size-extra-small: 20px;
     --spectrum-swatch-size-small: 30px;
     --spectrum-swatch-size-medium: 40px;
@@ -111,8 +122,8 @@ governing permissions and limitations under the License.
     --spectrum-toast-top-to-workflow-icon: 17px;
     --spectrum-toast-top-to-text: 16px;
     --spectrum-toast-bottom-to-text: 19px;
-    --spectrum-tooltip-width: 10px;
-    --spectrum-tooltip-height: 5px;
+    --spectrum-tooltip-tip-width: 10px;
+    --spectrum-tooltip-tip-height: 5px;
     --spectrum-tooltip-maximum-width: 200px;
     --spectrum-tag-top-to-avatar-small: 5px;
     --spectrum-tag-top-to-avatar-medium: 9px;

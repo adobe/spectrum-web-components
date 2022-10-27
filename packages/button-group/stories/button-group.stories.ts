@@ -21,22 +21,42 @@ export default {
     component: 'sp-button-group',
 };
 
-export const buttons = (): TemplateResult => {
+export interface Properties {
+    size?: 's' | 'm' | 'l' | 'xl';
+}
+
+interface Story<T> {
+    (args: T): TemplateResult;
+    args: Partial<T>;
+    argTypes?: Record<string, unknown>;
+}
+
+export const buttons: Story<Properties> = (
+    args: Properties
+): TemplateResult => {
     return html`
-        <sp-button-group>
+        <sp-button-group size=${args.size || 'm'}>
             <sp-button>Button 1</sp-button>
             <sp-button>Longer Button 2</sp-button>
             <sp-button>Short 3</sp-button>
         </sp-button-group>
     `;
 };
+buttons.args = {
+    size: 'm',
+};
 
-export const buttonsVertical = (): TemplateResult => {
+export const buttonsVertical: Story<Properties> = (
+    args: Properties
+): TemplateResult => {
     return html`
-        <sp-button-group vertical>
+        <sp-button-group vertical size=${args.size || 'm'}>
             <sp-button>Button 1</sp-button>
             <sp-button>Longer Button 2</sp-button>
             <sp-button>Short 3</sp-button>
         </sp-button-group>
     `;
+};
+buttonsVertical.args = {
+    size: 'm',
 };

@@ -105,9 +105,7 @@ describe('Dialog Wrapper', () => {
         expect(el.open).to.be.false;
         expect(closeSpy.callCount).to.equal(1);
     });
-    xit('opens and closes when element is recycled', async () => {
-        // Skip while there is an `sp-dialog-base` recyling issue in Chromium and Firefox,
-        // this test passes outside of the testing context and in Safari...
+    it('opens and closes when element is recycled', async () => {
         const closeSpy = spy();
         const test = await styledFixture<OverlayTrigger>(longContent());
         const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;

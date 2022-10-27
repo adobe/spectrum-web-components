@@ -51,9 +51,9 @@ An `<sp-progress-circle>` is used to visually show the progression of a system o
 </div>
 ```
 
-### Over background
+### Static
 
-When a loader needs to be placed on top of a colored background, use the over background loader as signified by `[over-background]`. This loader uses a white opaque color no matter the background. Make sure the background offers enough contrast for the loader to be legible.
+If you display your `<sp-progress-cicle>` element over the top of other content, e.g. an image or an alternate background color, it may become appropariate to update the colors with which the circle and loading progress indicator are delivered. To do this, leverage the `static` attribute with the value of `white` to ensure the content of your page is being delivered accessibly.
 
 ```html
 <div
@@ -62,18 +62,18 @@ When a loader needs to be placed on top of a colored background, use the over ba
     <sp-progress-circle
         label="A small representation of a partially completed action"
         progress="42"
-        over-background
+        static="white"
         size="s"
     ></sp-progress-circle>
     <sp-progress-circle
         label="A medium representation of a barely started action"
         progress="7"
-        over-background
+        static="white"
     ></sp-progress-circle>
     <sp-progress-circle
         label="A large representation of a somewhat completed action"
         progress="68"
-        over-background
+        static="white"
         size="l"
     ></sp-progress-circle>
 </div>

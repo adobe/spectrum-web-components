@@ -89,14 +89,23 @@ async function getCSSComponents() {
 async function getWebComponents() {
     const directoryRE = /(?:\/)([^\/]+)(?=\/src)\//;
     const paths = fg.sync(ConfigPath);
-    const componentPromises = paths.map(async (path) => {
-        const config = await import(pathToFileURL(path));
-        const component = config.default.spectrum;
-        const directory = path.match(directoryRE)[1];
-        const href = `https://opensource.adobe.com/spectrum-web-components/components/${directory}`;
-        return [component, href];
+    const configs = await Promise.all(
+        paths.map(async (path) => {
+            return {
+                directory: path.match(directoryRE)[1],
+                contents: await import(pathToFileURL(path)),
+            };
+        })
+    );
+    const components = configs.flatMap(({ directory, contents }) => {
+        const configs = [contents.default].flat();
+        return configs.map((config) => {
+            return [
+                config.spectrum,
+                `https://opensource.adobe.com/spectrum-web-components/components/${directory}`,
+            ];
+        });
     });
-    const components = await Promise.all(componentPromises);
     return new Map(components);
 }
 

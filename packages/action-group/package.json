@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-group",
-    "version": "0.11.2",
+    "version": "0.12.0",
     "publishConfig": {
         "access": "public"
     },
@@ -58,13 +58,13 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^1.0.1",
-        "@spectrum-web-components/action-button": "^0.10.2",
+        "@spectrum-web-components/action-button": "^0.10.4",
         "@spectrum-web-components/base": "^0.7.0",
-        "@spectrum-web-components/reactive-controllers": "^0.3.0",
+        "@spectrum-web-components/reactive-controllers": "^0.3.1",
         "tslib": "^2.0.0"
     },
     "devDependencies": {
-        "@spectrum-css/actiongroup": "^2.0.0"
+        "@spectrum-css/actiongroup": "^3.0.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

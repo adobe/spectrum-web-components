@@ -81,7 +81,7 @@ type ThemeKindProvider = {
 };
 
 export interface ProvideLang {
-    callback: (lang: string) => void;
+    callback: (lang: string, unsubscribe: () => void) => void;
 }
 
 /**
@@ -311,7 +311,10 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 } else if (
                     !Theme.themeFragmentsByKind
                         .get(name)
-                        ?.get(resolvedValue + themeModifier)
+                        ?.get(
+                            resolvedValue +
+                                (name === 'theme' ? '' : themeModifier)
+                        )
                 ) {
                     issues.push(
                         `You have set "${name}='${resolvedValue}'" but the associated theme fragment has not been loaded.`
@@ -327,8 +330,8 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                     'You are leveraging an <sp-theme> element and the following issues may disrupt your theme delivery:',
                     'https://opensource.adobe.com/spectrum-web-components/components/theme/#example',
                     {
-                        issues
-                    },
+                        issues,
+                    }
                 );
             }
         }
@@ -508,26 +511,35 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         Theme.instances.forEach((instance) => instance.shouldAdoptStyles());
     }
 
-    private _contextConsumers = new Map<HTMLElement, ProvideLang['callback']>();
+    private _contextConsumers = new Map<
+        HTMLElement,
+        [ProvideLang['callback'], () => void]
+    >();
 
     private _provideContext(): void {
-        this._contextConsumers.forEach((consume) => consume(this.lang));
+        this._contextConsumers.forEach(([callback, unsubscribe]) =>
+            callback(this.lang, unsubscribe)
+        );
     }
 
     private _handleContextPresence(event: CustomEvent<ProvideLang>): void {
         const target = event.composedPath()[0] as HTMLElement;
         if (this._contextConsumers.has(target)) {
-            this._contextConsumers.delete(target);
-        } else {
-            this._contextConsumers.set(target, event.detail.callback);
-            const callback = this._contextConsumers.get(target);
-            if (callback) {
-                callback(
-                    this.lang ||
-                        document.documentElement.lang ||
-                        navigator.language
-                );
-            }
+            return;
+        }
+        this._contextConsumers.set(target, [
+            event.detail.callback,
+            () => this._contextConsumers.delete(target),
+        ]);
+        const [callback, unsubscribe] =
+            this._contextConsumers.get(target) || [];
+        if (callback && unsubscribe) {
+            callback(
+                this.lang ||
+                    document.documentElement.lang ||
+                    navigator.language,
+                unsubscribe
+            );
         }
     }
 }

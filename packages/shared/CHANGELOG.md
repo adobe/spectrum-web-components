@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.15.0...@spectrum-web-components/shared@0.15.1) (2022-10-17)
+
+### Bug Fixes
+
+-   correct the relationship between overlayWillCloseCallback and phased animations ([c63db8d](https://github.com/adobe/spectrum-web-components/commit/c63db8d2ea4c942fbd52c6d5239ddd3f1ccea5b0))
+
 # [0.15.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/shared@0.14.5...@spectrum-web-components/shared@0.15.0) (2022-08-09)
 
 ### Features

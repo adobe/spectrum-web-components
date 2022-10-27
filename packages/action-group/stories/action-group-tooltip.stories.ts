@@ -32,6 +32,7 @@ export default {
         quiet: false,
         vertical: false,
         selects: 'none',
+        size: 'm',
     },
     argTypes: {
         compact: {
@@ -106,6 +107,19 @@ export default {
                 options: ['none', 'single', 'multiple'],
             },
         },
+        size: {
+            name: 'size',
+            description: 'The size at which to display the action group.',
+            type: { name: 'string', required: true },
+            table: {
+                type: { summary: '"s" | "m" | "l" | "xl"' },
+                defaultValue: { summary: 'm' },
+            },
+            control: {
+                type: 'select',
+                options: ['s', 'm', 'l', 'xl'],
+            },
+        },
     },
 };
 
@@ -116,6 +130,7 @@ interface Properties {
     quiet?: boolean;
     vertical?: boolean;
     selects?: 'none' | 'single' | 'multiple';
+    size?: 's' | 'm' | 'l' | 'xl';
     [prop: string]: unknown;
 }
 

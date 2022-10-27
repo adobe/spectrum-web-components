@@ -48,6 +48,10 @@ interface ManagedOverlayContent {
     updateComplete?: Promise<boolean>;
 }
 
+function nextFrame(): Promise<void> {
+    return new Promise((res) => requestAnimationFrame(() => res()));
+}
+
 export class OverlayStack {
     public overlays: ActiveOverlay[] = [];
 
@@ -62,7 +66,22 @@ export class OverlayStack {
     private overlayHolder!: HTMLElement;
     private _eventsAreBound = false;
 
+    constructor() {
+        this.initTabTrapping();
+    }
+
     private initTabTrapping(): void {
+        /* c8 ignore next 10 */
+        if (document.readyState === 'loading') {
+            document.addEventListener(
+                'readystatechange',
+                () => {
+                    this.initTabTrapping();
+                },
+                { once: true }
+            );
+            return;
+        }
         if (this.trappingInited) return;
         this.trappingInited = true;
         /* c8 ignore next 4 */
@@ -248,8 +267,8 @@ export class OverlayStack {
 
         const contentWithLifecycle =
             details.content as unknown as ManagedOverlayContent;
+        const { trigger } = details;
         if (contentWithLifecycle.overlayWillOpenCallback) {
-            const { trigger } = details;
             contentWithLifecycle.overlayWillOpenCallback({ trigger });
         }
 
@@ -264,7 +283,6 @@ export class OverlayStack {
             const cancelled = await Promise.race(promises);
             if (cancelled) {
                 if (contentWithLifecycle.overlayOpenCancelledCallback) {
-                    const { trigger } = details;
                     contentWithLifecycle.overlayOpenCancelledCallback({
                         trigger,
                     });
@@ -300,26 +318,26 @@ export class OverlayStack {
          * has to happen AFTER the current call stack completes in case there
          * is work there in to remove the previous "top" overlay.
          */
-        return new Promise((res) => requestAnimationFrame(res)).then(
-            async () => {
-                this.overlays.push(activeOverlay);
-                await activeOverlay.updateComplete;
-                this.addOverlayEventListeners(activeOverlay);
-                if (typeof contentWithLifecycle.open !== 'undefined') {
-                    contentWithLifecycle.open = true;
-                }
-                let cb: () => Promise<void> | void = () => {
-                    return;
-                };
-                if (contentWithLifecycle.overlayOpenCallback) {
-                    const { trigger } = activeOverlay;
-                    const { overlayOpenCallback } = contentWithLifecycle;
-                    cb = async () => await overlayOpenCallback({ trigger });
-                }
-                await activeOverlay.openCallback(cb);
-                return false;
-            }
-        );
+        await nextFrame();
+        this.overlays.push(activeOverlay);
+        await activeOverlay.updateComplete;
+        this.addOverlayEventListeners(activeOverlay);
+        if (typeof contentWithLifecycle.open !== 'undefined') {
+            await nextFrame();
+            // Without the rAF Firefox gets here to early
+            // and is not able trigger the animation.
+            contentWithLifecycle.open = true;
+        }
+        let cb: () => Promise<void> | void = () => {
+            return;
+        };
+        if (contentWithLifecycle.overlayOpenCallback) {
+            const { trigger } = activeOverlay;
+            const { overlayOpenCallback } = contentWithLifecycle;
+            cb = async () => await overlayOpenCallback({ trigger });
+        }
+        await activeOverlay.openCallback(cb);
+        return false;
     }
 
     public addOverlayEventListeners(activeOverlay: ActiveOverlay): void {
@@ -551,6 +569,7 @@ export class OverlayStack {
             this.manageFocusAfterCloseWhenLastOverlay(overlay);
         }
 
+        await overlay.updateComplete;
         overlay.remove();
         overlay.dispose();
 
@@ -585,8 +604,20 @@ export class OverlayStack {
         if (this.preventMouseRootClose || event.defaultPrevented) {
             return;
         }
-        this.closeTopOverlay();
         const overlaysToClose = [];
+        // Find the top most overlay that is not triggered by an
+        // element on the path of the current click event.
+        let index = this.overlays.length;
+        while (index && overlaysToClose.length === 0) {
+            index -= 1;
+            const overlay = this.overlays[index];
+            if (
+                !event.composedPath().includes(overlay.trigger) ||
+                overlay.interaction !== 'hover'
+            ) {
+                overlaysToClose.push(overlay);
+            }
+        }
         let root: HTMLElement | undefined = this.topOverlay?.root;
         let overlay = parentOverlayOf(root);
         while (root && overlay) {

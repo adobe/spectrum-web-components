@@ -198,8 +198,10 @@ export class Card extends LikeAnchor(
                 this.click();
             }
             this.removeEventListener('pointerup', handleEnd);
+            this.removeEventListener('pointercancel', handleEnd);
         };
         this.addEventListener('pointerup', handleEnd);
+        this.addEventListener('pointercancel', handleEnd);
     }
 
     protected get renderHeading(): TemplateResult {

@@ -287,6 +287,14 @@ export class Menu extends SpectrumElement {
             return el.getAttribute('role') === this.childRole;
         }) as MenuItem;
         if (target?.href && target.href.length) {
+            // This event will NOT ALLOW CANCELATION as link action
+            // cancelation should occur on the `<sp-menu-item>` itself.
+            this.dispatchEvent(
+                new Event('change', {
+                    bubbles: true,
+                    composed: true,
+                })
+            );
             return;
         } else if (
             target?.menuData.selectionRoot === this &&

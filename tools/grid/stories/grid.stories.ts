@@ -123,7 +123,9 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const sized = (): TemplateResult => {
+export const sized = (
+    { gap, padding } = { gap: 10, padding: 10 }
+): TemplateResult => {
     const items = generateItems(1000);
 
     const renderItem = (
@@ -188,7 +190,8 @@ export const sized = (): TemplateResult => {
                 width: 200,
                 height: 300,
             }}
-            .gap=${'10px'}
+            .gap=${`${gap}px`}
+            .padding=${`${padding}px`}
         ></sp-grid>
         <sp-action-bar variant="fixed" style="display: none">
             <sp-checkbox @click=${handleActionBarChange} checked>
@@ -208,4 +211,34 @@ export const sized = (): TemplateResult => {
         <h2>Random after content that is focusable</h2>
         <input id="last-input" />
     `;
+};
+
+sized.args = {
+    gap: 10,
+    padding: 10,
+};
+
+sized.argTypes = {
+    gap: {
+        name: 'gap',
+        type: { name: 'number', required: false },
+        description: 'Spacing between items.',
+        table: {
+            type: { summary: 'number' },
+        },
+        control: {
+            type: 'number',
+        },
+    },
+    padding: {
+        name: 'padding',
+        type: { name: 'number', required: false },
+        description: 'Spacing around all items.',
+        table: {
+            type: { summary: 'number' },
+        },
+        control: {
+            type: 'number',
+        },
+    },
 };

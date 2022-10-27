@@ -26,6 +26,9 @@ governing permissions and limitations under the License.
     --spectrum-accent-color-1200: var(--spectrum-blue-1200);
     --spectrum-accent-color-1300: var(--spectrum-blue-1300);
     --spectrum-accent-color-1400: var(--spectrum-blue-1400);
+    --spectrum-heading: var(--spectrum-font-bold-default);
+    --spectrum-heading-emphasized: var(--spectrum-font-bold-italic-default);
+    --spectrum-cjk-heading: var(--spectrum-font-extra-bold-cjk);
     --spectrum-border-width-100: 1px;
 }
 :host,
@@ -284,6 +287,22 @@ governing permissions and limitations under the License.
 }
 :host,
 :root {
+    --system-spectrum-checkbox-control-color-default: var(--spectrum-gray-600);
+    --system-spectrum-checkbox-control-color-hover: var(--spectrum-gray-700);
+    --system-spectrum-checkbox-control-color-down: var(--spectrum-gray-800);
+    --system-spectrum-checkbox-control-color-focus: var(--spectrum-gray-700);
+    --system-spectrum-checkbox-control-selected-color-default: var(
+        --spectrum-gray-700
+    );
+    --system-spectrum-checkbox-control-selected-color-hover: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-checkbox-control-selected-color-down: var(
+        --spectrum-gray-900
+    );
+}
+:host,
+:root {
     --system-spectrum-closebutton-background-color-default: transparent;
     --system-spectrum-closebutton-background-color-hover: var(
         --spectrum-gray-200
@@ -328,4 +347,54 @@ governing permissions and limitations under the License.
     --system-spectrum-radio-emphasized-button-checked-border-color-focus: var(
         --spectrum-accent-color-1000
     );
+}
+:host,
+:root {
+    --system-spectrum-switch-background-color-selected-default: var(
+        --spectrum-gray-700
+    );
+    --system-spectrum-switch-background-color-selected-hover: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-switch-background-color-selected-down: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-switch-background-color-selected-focus: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-switch-handle-border-color-default: var(
+        --spectrum-gray-600
+    );
+    --system-spectrum-switch-handle-border-color-hover: var(
+        --spectrum-gray-700
+    );
+    --system-spectrum-switch-handle-border-color-down: var(--spectrum-gray-800);
+    --system-spectrum-switch-handle-border-color-focus: var(
+        --spectrum-gray-700
+    );
+    --system-spectrum-switch-handle-border-color-selected-default: var(
+        --spectrum-gray-700
+    );
+    --system-spectrum-switch-handle-border-color-selected-hover: var(
+        --spectrum-gray-800
+    );
+    --system-spectrum-switch-handle-border-color-selected-down: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-switch-handle-border-color-selected-focus: var(
+        --spectrum-gray-800
+    );
+}
+
+:host,
+:root {
+    --system-spectrum-toast-background-color-default: var(
+        --spectrum-neutral-subdued-background-color-default
+    );
+}
+:host,
+:root {
+    --system-spectrum-actiongroup-gap-size-compact: 0;
+    --system-spectrum-actiongroup-horizontal-spacing-compact: -1px;
+    --system-spectrum-actiongroup-vertical-spacing-compact: -1px;
 }

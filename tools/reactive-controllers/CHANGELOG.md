@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/reactive-controllers@0.3.0...@spectrum-web-components/reactive-controllers@0.3.1) (2022-10-10)
+
+### Bug Fixes
+
+-   convert the langage resolution workflow to a Reactive Controller ([b7781db](https://github.com/adobe/spectrum-web-components/commit/b7781db820620688f97a40225fb17a10e7881178))
+-   leverage Color Controller to unify color interface across packages ([fb71690](https://github.com/adobe/spectrum-web-components/commit/fb7169066fd4f15aee594c463cc4cdbf7f550a5e))
+-   **table:** add resize controller to TableBody for a11y reasons ([85dd406](https://github.com/adobe/spectrum-web-components/commit/85dd4066328afeacf978acc3fc9acd57436900a1))
+
 # [0.3.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/reactive-controllers@0.2.5...@spectrum-web-components/reactive-controllers@0.3.0) (2022-08-09)
 
 ### Features

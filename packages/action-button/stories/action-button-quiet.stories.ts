@@ -20,6 +20,12 @@ export default {
 
 const quiet = true;
 
+export const XS = (args: Properties): TemplateResult => renderButtons(args);
+XS.args = {
+    size: 'xs',
+    quiet,
+};
+
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
     size: 's',

@@ -66,8 +66,10 @@ export class Tray extends SpectrumElement {
         }
     }
 
+    private animating = false;
+
     public overlayWillCloseCallback(): boolean {
-        if (!this.open) return false;
+        if (!this.open) return this.animating;
         this.close();
         return true;
     }
@@ -89,8 +91,8 @@ export class Tray extends SpectrumElement {
 
     protected handleUnderlayTransitionend(): void {
         if (!this.open) {
-            this.dispatchClosed();
             this.resolveTransitionPromise();
+            this.dispatchClosed();
         }
     }
 
@@ -106,9 +108,13 @@ export class Tray extends SpectrumElement {
             changes.get('open') !== undefined &&
             this.prefersMotion.matches
         ) {
-            this.transitionPromise = new Promise(
-                (res) => (this.resolveTransitionPromise = res)
-            );
+            this.animating = true;
+            this.transitionPromise = new Promise((res) => {
+                this.resolveTransitionPromise = () => {
+                    this.animating = false;
+                    res();
+                };
+            });
         }
         super.update(changes);
     }

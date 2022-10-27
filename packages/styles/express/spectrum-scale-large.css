@@ -295,9 +295,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-button-xl-primary-fill-texticon-padding-left: 27px;
     --spectrum-button-m-primary-outline-texticon-padding-left: 17px;
-    --spectrum-checkbox-l-text-padding-top: var(
-        --spectrum-global-dimension-static-size-150
-    );
     --spectrum-dialog-confirm-title-text-size: var(
         --spectrum-alias-heading-xs-text-size
     );
@@ -324,22 +321,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-progressbar-xl-border-radius: var(
         --spectrum-global-dimension-static-size-75
-    );
-    --spectrum-progresscircle-s-border-size: 3px;
-    --spectrum-progresscircle-m-border-size: var(
-        --spectrum-global-dimension-static-size-50
-    );
-    --spectrum-statuslight-s-info-text-padding-bottom: var(
-        --spectrum-global-dimension-static-size-85
-    );
-    --spectrum-statuslight-l-info-dot-size: var(
-        --spectrum-global-dimension-static-size-150
-    );
-    --spectrum-statuslight-l-info-text-padding-top: var(
-        --spectrum-global-dimension-static-size-150
-    );
-    --spectrum-statuslight-xl-info-dot-size: var(
-        --spectrum-global-dimension-static-size-150
     );
     --spectrum-tag-m-texticon-padding-left: var(
         --spectrum-global-dimension-static-size-150

@@ -22,7 +22,7 @@ import {
     Placement,
 } from '@spectrum-web-components/overlay';
 
-import { isVisible, waitForPredicate } from '../../../test/testing-helpers.js';
+import { isVisible } from '../../../test/testing-helpers.js';
 import {
     elementUpdated,
     expect,
@@ -140,6 +140,7 @@ describe('Overlays', () => {
 
             expect(button).to.exist;
 
+            const opened = oneEvent(button, 'sp-opened');
             openOverlays.push(
                 await Overlay.open(button, 'click', outerPopover, {
                     delayed: false,
@@ -147,15 +148,7 @@ describe('Overlays', () => {
                     offset: 10,
                 })
             );
-
-            // Wait for the DOM node to be stolen and reparented into the overlay
-            await waitForPredicate(
-                () =>
-                    !!(
-                        outerPopover.parentElement &&
-                        outerPopover.parentElement.id !== 'overlay-content'
-                    )
-            );
+            await opened;
 
             expect(outerPopover.parentElement).to.exist;
             if (outerPopover.parentElement) {
@@ -180,21 +173,14 @@ describe('Overlays', () => {
 
         expect(button).to.exist;
 
+        const opened = oneEvent(button, 'sp-opened');
         openOverlays.push(
             await Overlay.open(button, 'click', outerPopover, {
                 delayed: false,
                 offset: 10,
             })
         );
-
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () =>
-                !!(
-                    outerPopover.parentElement &&
-                    outerPopover.parentElement.id !== 'overlay-content'
-                )
-        );
+        await opened;
 
         expect(isVisible(outerPopover)).to.be.true;
 
@@ -216,22 +202,14 @@ describe('Overlays', () => {
 
         expect(button).to.exist;
 
+        const opened = oneEvent(button, 'sp-opened');
         openOverlays.push(
             await Overlay.open(button, 'click', outerPopover, {
                 delayed: true,
                 offset: 10,
             })
         );
-
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitUntil(
-            () =>
-                !!(
-                    outerPopover.parentElement &&
-                    outerPopover.parentElement.id !== 'overlay-content'
-                ),
-            'overlay opened'
-        );
+        await opened;
 
         expect(outerPopover.parentElement).to.exist;
         if (outerPopover.parentElement) {
@@ -249,12 +227,10 @@ describe('Overlays', () => {
             '#outer-popover'
         ) as HTMLElement;
 
-        expect(button).to.exist;
-        expect(hoverOverlay).to.exist;
-
         expect(isVisible(hoverOverlay)).to.be.false;
         expect(isVisible(clickOverlay)).to.be.false;
 
+        let opened = oneEvent(button, 'sp-opened');
         openOverlays.push(
             await Overlay.open(button, 'hover', hoverOverlay, {
                 delayed: false,
@@ -262,15 +238,7 @@ describe('Overlays', () => {
                 offset: 10,
             })
         );
-
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () =>
-                !!(
-                    hoverOverlay.parentElement &&
-                    hoverOverlay.parentElement.id !== 'overlay-content'
-                )
-        );
+        await opened;
 
         expect(hoverOverlay.parentElement).to.exist;
         if (hoverOverlay.parentElement) {
@@ -280,6 +248,7 @@ describe('Overlays', () => {
         }
         expect(isVisible(hoverOverlay)).to.be.true;
 
+        opened = oneEvent(button, 'sp-opened');
         // Opening click overlay should close the hover overlay
         openOverlays.push(
             await Overlay.open(button, 'click', clickOverlay, {
@@ -288,18 +257,7 @@ describe('Overlays', () => {
                 offset: 10,
             })
         );
-
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () =>
-                !!(
-                    clickOverlay.parentElement &&
-                    clickOverlay.parentElement.id !== 'overlay-content' &&
-                    hoverOverlay.parentElement &&
-                    hoverOverlay.parentElement.id === 'overlay-content'
-                )
-        );
-
+        await opened;
         if (hoverOverlay.parentElement) {
             expect(hoverOverlay.parentElement.id).to.equal('overlay-content');
         }
@@ -321,6 +279,7 @@ describe('Overlays', () => {
         expect(isVisible(customOverlay)).to.be.false;
         expect(isVisible(clickOverlay)).to.be.false;
 
+        let opened = oneEvent(button, 'sp-opened');
         openOverlays.push(
             await Overlay.open(button, 'custom', customOverlay, {
                 delayed: false,
@@ -328,15 +287,7 @@ describe('Overlays', () => {
                 offset: 10,
             })
         );
-
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () =>
-                !!(
-                    customOverlay.parentElement &&
-                    customOverlay.parentElement.id !== 'overlay-content'
-                )
-        );
+        await opened;
 
         expect(customOverlay.parentElement).to.exist;
         if (customOverlay.parentElement) {
@@ -346,6 +297,7 @@ describe('Overlays', () => {
         }
         expect(isVisible(customOverlay)).to.be.true;
 
+        opened = oneEvent(button, 'sp-opened');
         // Opening click overlay should close the hover overlay
         openOverlays.push(
             await Overlay.open(button, 'click', clickOverlay, {
@@ -354,15 +306,7 @@ describe('Overlays', () => {
                 offset: 10,
             })
         );
-
-        // Wait for the DOM node to be stolen and reparented into the overlay
-        await waitForPredicate(
-            () =>
-                !!(
-                    clickOverlay.parentElement &&
-                    clickOverlay.parentElement.id !== 'overlay-content'
-                )
-        );
+        await opened;
 
         expect(isVisible(customOverlay)).to.be.true;
         expect(isVisible(clickOverlay)).to.be.true;
@@ -377,6 +321,7 @@ describe('Overlays', () => {
 
         const dialog = el.querySelector('sp-dialog') as Dialog;
 
+        const opened = oneEvent(el, 'sp-opened');
         openOverlays.push(
             await Overlay.open(el, 'click', dialog, {
                 delayed: false,
@@ -384,13 +329,7 @@ describe('Overlays', () => {
                 offset: 10,
             })
         );
-
-        await waitUntil(
-            () =>
-                !!dialog.parentElement &&
-                dialog.parentElement.tagName === 'ACTIVE-OVERLAY',
-            'content is stolen'
-        );
+        await opened;
 
         dialog.close();
 

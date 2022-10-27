@@ -23,15 +23,15 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
+import type { ColorHandle } from '@spectrum-web-components/color-handle';
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
-import styles from './color-slider.css.js';
 import {
-    ColorHandle,
+    ColorController,
     ColorValue,
-    extractHueAndSaturationRegExp,
-    replaceHueAndSaturationRegExp,
-} from '@spectrum-web-components/color-handle';
-import { TinyColor } from '@ctrl/tinycolor';
+    HSL,
+} from '@spectrum-web-components/reactive-controllers/src/Color.js';
+
+import styles from './color-slider.css.js';
 
 /**
  * @element sp-color-slider
@@ -59,132 +59,38 @@ export class ColorSlider extends Focusable {
     @property({ type: Boolean, reflect: true })
     public vertical = false;
 
+    private colorController = new ColorController(this, {
+        /* c8 ignore next 3 */
+        applyColorToState: () => {
+            this.sliderHandlePosition = 100 * (this.colorController.hue / 360);
+        },
+        extractColorFromState: (controller) => ({
+            ...(controller.getColor('hsl') as HSL),
+            h: this.value,
+        }),
+        maintains: 'saturation',
+    });
+
     @property({ type: Number })
     public get value(): number {
-        return this._value;
+        return this.colorController.hue;
     }
 
     public set value(hue: number) {
-        const value = Math.min(360, Math.max(0, hue));
-        if (value === this.value) {
-            return;
-        }
-        const oldValue = this.value;
-        const { s, v } = this._color.toHsv();
-        this._color = new TinyColor({ h: value, s, v });
-        this._value = value;
-
-        if (value !== this.sliderHandlePosition) {
-            this.sliderHandlePosition = 100 * (value / 360);
-        }
-
-        this.requestUpdate('value', oldValue);
+        this.colorController.hue = hue;
     }
-
-    private _value = 0;
 
     @property({ type: Number, reflect: true })
     public sliderHandlePosition = 0;
 
     @property({ type: String })
     public get color(): ColorValue {
-        switch (this._format.format) {
-            case 'rgb':
-                return this._format.isString
-                    ? this._color.toRgbString()
-                    : this._color.toRgb();
-            case 'prgb':
-                return this._format.isString
-                    ? this._color.toPercentageRgbString()
-                    : this._color.toPercentageRgb();
-            case 'hex':
-            case 'hex3':
-            case 'hex4':
-            case 'hex6':
-                return this._format.isString
-                    ? this._color.toHexString()
-                    : this._color.toHex();
-            case 'hex8':
-                return this._format.isString
-                    ? this._color.toHex8String()
-                    : this._color.toHex8();
-            case 'name':
-                return this._color.toName() || this._color.toRgbString();
-            case 'hsl':
-                if (this._format.isString) {
-                    const hslString = this._color.toHslString();
-                    return hslString.replace(
-                        replaceHueAndSaturationRegExp,
-                        `$1${this.value}$2${this._saturation}`
-                    );
-                } else {
-                    const { s, l, a } = this._color.toHsl();
-                    return { h: this.value, s, l, a };
-                }
-            case 'hsv':
-                if (this._format.isString) {
-                    const hsvString = this._color.toHsvString();
-                    return hsvString.replace(
-                        replaceHueAndSaturationRegExp,
-                        `$1${this.value}$2${this._saturation}`
-                    );
-                } else {
-                    const { s, v, a } = this._color.toHsv();
-                    return { h: this.value, s, v, a };
-                }
-            default:
-                return 'No color format applied.';
-        }
+        return this.colorController.color;
     }
 
     public set color(color: ColorValue) {
-        if (color === this.color) {
-            return;
-        }
-        const oldValue = this._color;
-        this._color = new TinyColor(color);
-        const format = this._color.format;
-        let isString = typeof color === 'string' || color instanceof String;
-
-        if (format.startsWith('hex')) {
-            isString = (color as string).startsWith('#');
-        }
-
-        this._format = {
-            format,
-            isString,
-        };
-
-        if (isString && format.startsWith('hs')) {
-            const values = extractHueAndSaturationRegExp.exec(color as string);
-            if (values !== null) {
-                const [, h, s] = values;
-                this.value = Number(h);
-                this._saturation = Number(s);
-            }
-        } else if (!isString && format.startsWith('hs')) {
-            const colorInput = this._color.originalInput;
-            const colorValues = Object.values(colorInput);
-            this.value = colorValues[0];
-            this._saturation = colorValues[1];
-        } else {
-            const { h } = this._color.toHsv();
-            this.value = h;
-        }
-        this._previousColor = oldValue;
-        this.requestUpdate('color', oldValue);
+        this.colorController.color = color;
     }
-
-    private _color = new TinyColor({ h: 0, s: 1, v: 1 });
-
-    private _previousColor = new TinyColor({ h: 0, s: 1, v: 1 });
-
-    private _saturation!: number;
-
-    private _format: { format: string; isString: boolean } = {
-        format: '',
-        isString: false,
-    };
 
     @property({ type: Number })
     public step = 1;
@@ -237,7 +143,7 @@ export class ColorSlider extends Focusable {
             Math.max(0, this.sliderHandlePosition + delta)
         );
         this.value = 360 * (this.sliderHandlePosition / 100);
-        this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
+        this.colorController.applyColorFromState();
 
         if (delta != 0) {
             this.dispatchEvent(
@@ -260,7 +166,7 @@ export class ColorSlider extends Focusable {
 
         this.value = valueAsNumber;
         this.sliderHandlePosition = 100 * (this.value / 360);
-        this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
+        this.colorController.applyColorFromState();
     }
 
     private handleChange(event: Event & { target: HTMLInputElement }): void {
@@ -304,7 +210,7 @@ export class ColorSlider extends Focusable {
             return;
         }
         this._pointerDown = true;
-        this._previousColor = this._color.clone();
+        this.colorController.savePreviousColor();
         this.boundingClientRect = this.getBoundingClientRect();
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
         if (event.pointerType === 'mouse') {
@@ -316,7 +222,7 @@ export class ColorSlider extends Focusable {
         this.sliderHandlePosition = this.calculateHandlePosition(event);
         this.value = 360 * (this.sliderHandlePosition / 100);
 
-        this._color = new TinyColor({ ...this._color.toHsl(), h: this.value });
+        this.colorController.applyColorFromState();
 
         this.dispatchEvent(
             new Event('input', {
@@ -339,7 +245,7 @@ export class ColorSlider extends Focusable {
             })
         );
         if (!applyDefault) {
-            this._color = this._previousColor;
+            this.colorController.restorePreviousColor();
         }
         // Retain focus on input element after mouse up to enable keyboard interactions
         this.focus();

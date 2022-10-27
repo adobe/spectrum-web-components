@@ -12,7 +12,8 @@ governing permissions and limitations under the License.
 
 import { html } from '@spectrum-web-components/base';
 import { elementUpdated, expect } from '@open-wc/testing';
-import { createLanguageContext, getElFrom } from './helpers.js';
+import { getElFrom } from './helpers.js';
+import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import polyfillCheck from '@formatjs/intl-numberformat/should-polyfill.js';
 
 import '@spectrum-web-components/number-field/sp-number-field.js';
@@ -309,7 +310,7 @@ describe('NumberField - inputs', () => {
     });
     describe('locale specific', () => {
         it('can determine the group symbol', async () => {
-            const languageContext = createLanguageContext('es-ES');
+            const [languageContext] = createLanguageContext('es-ES');
             const el = await getElFrom(html`
                 <div @sp-language-context=${languageContext}>${Default()}</div>
             `);

@@ -26,6 +26,7 @@ export class MatchMediaController implements ReactiveController {
 
     constructor(host: ReactiveElement, query: string) {
         this.host = host;
+        this.host.addController(this);
         this.media = window.matchMedia(query);
         this.matches = this.media.matches;
         this.onChange = this.onChange.bind(this);
@@ -33,11 +34,11 @@ export class MatchMediaController implements ReactiveController {
     }
 
     public hostConnected(): void {
-        this.media.addEventListener('change', this.onChange);
+        this.media?.addEventListener('change', this.onChange);
     }
 
     public hostDisconnected(): void {
-        this.media.removeEventListener('change', this.onChange);
+        this.media?.removeEventListener('change', this.onChange);
     }
 
     protected onChange(event: MediaQueryListEvent): void {

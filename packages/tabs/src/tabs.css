@@ -71,53 +71,31 @@ governing permissions and limitations under the License.
 
 #list {
     justify-content: var(--swc-tabs-list-justify-content);
-    border: none !important;
-    background: linear-gradient(
-        to var(--sp-tabs-list-background-direction),
-        var(--sp-tabs-list-background-color) 0,
-        var(--sp-tabs-list-background-color)
-            var(--spectrum-tabs-quiet-textonly-divider-size),
-        transparent var(--spectrum-tabs-quiet-textonly-divider-size)
-    );
-
-    --sp-tabs-list-background-direction: top;
-    --sp-tabs-list-background-color: transparent;
 }
 
 :host(:not([direction^='vertical'])) #list {
     padding-bottom: var(--spectrum-tabs-quiet-textonly-divider-size);
 }
 
-:host(:not([quiet])) #list {
-    --sp-tabs-list-background-color: var(
-        --spectrum-tabs-textonly-divider-background-color
-    );
-}
-
-:host([empasized]) #list {
-    --sp-tabs-list-background-color: var(
-        --spectrum-tabs-emphasized-textonly-divider-background-color
-    );
-}
-
-:host(:not([quiet])[direction^='vertical']) #list {
-    --sp-tabs-list-background-color: var(
-        --spectrum-tabs-vertical-textonly-divider-background-color
-    );
-}
+/*
+ * The upstream feature request https://github.com/adobe/spectrum-css/issues/637
+ * is marked as closed, but this is at least not available in the 5.x version,
+ * so overriding --spectrum-tabs-list-background-direction for now.
+ * TODO: remove
+ */
 
 :host([dir='ltr'][direction='vertical']) #list,
 :host([dir='rtl'][direction='vertical-right']) #list {
     padding-left: var(--spectrum-tabs-quiet-textonly-divider-size);
 
-    --sp-tabs-list-background-direction: right;
+    --spectrum-tabs-list-background-direction: right;
 }
 
 :host([dir='rtl'][direction='vertical']) #list,
 :host([dir='ltr'][direction='vertical-right']) #list {
     padding-right: var(--spectrum-tabs-quiet-textonly-divider-size);
 
-    --sp-tabs-list-background-direction: left;
+    --spectrum-tabs-list-background-direction: left;
 }
 
 :host([disabled]) #list {
@@ -143,6 +121,16 @@ governing permissions and limitations under the License.
     --spectrum-tabs-height: var(--spectrum-tabs-quiet-compact-height);
 }
 
+/*
+ * Workaround for https://github.com/adobe/spectrum-css/issues/1526
+ * TODO: remove when fixed upstream
+ */
+@media (forced-colors: none) {
+    :host([compact]:not([quiet])) #list {
+        --spectrum-tabs-textonly-divider-background-color: unset !important;
+    }
+}
+
 /* 
  * The shorthand border declaration in :host([direction='horizontal']) was overiding
  * the border-bottom-color declared in :host 
@@ -159,42 +147,6 @@ governing permissions and limitations under the License.
  */
 :host([dir][direction='horizontal']) #selection-indicator {
     width: 1px;
-}
-
-/*
- * The following manually add the `vertical-right` direction to sp-tab-list
- * It can be removed after https://github.com/adobe/spectrum-css/issues/637 is resolved
- * In the interim, if there are ever Visual Regression failures to the 'Vertical' tabs story
- * then it is likely that this CSS will need to be updated with changes in @spectrum-css/tabs
- */
-:host([dir='ltr'][direction='vertical-right']) #list {
-    /* .spectrum-Tabs--vertical */
-    border-left: 0;
-    border-right: var(
-            --spectrum-tabs-vertical-rule-width,
-            var(--spectrum-alias-border-size-thick)
-        )
-        solid; /* .spectrum-Tabs--vertical */
-
-    border-right-color: var(
-        --spectrum-tabs-vertical-rule-color,
-        var(--spectrum-global-color-gray-200)
-    );
-}
-
-:host([dir='rtl'][direction='vertical-right']) #list {
-    /* .spectrum-Tabs--vertical */
-    border-right: 0;
-    border-left: var(
-            --spectrum-tabs-vertical-rule-width,
-            var(--spectrum-alias-border-size-thick)
-        )
-        solid; /* .spectrum-Tabs--vertical */
-
-    border-left-color: var(
-        --spectrum-tabs-vertical-rule-color,
-        var(--spectrum-global-color-gray-200)
-    );
 }
 
 :host([dir='rtl'][direction='vertical-right']) #selection-indicator {

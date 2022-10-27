@@ -138,7 +138,7 @@ attribute defaults to `accent` but also accepts the following value: `accent`, `
 ```
 
 </sp-tab-panel>
-<sp-tab value="secondary">Seconday</sp-tab>
+<sp-tab value="secondary">Secondary</sp-tab>
 <sp-tab-panel value="secondary">
 
 ```html demo

@@ -20,6 +20,12 @@ export default {
 
 const emphasized = true;
 
+export const XS = (args: Properties): TemplateResult => renderButtons(args);
+XS.args = {
+    emphasized,
+    size: 'xs',
+};
+
 export const s = (args: Properties): TemplateResult => renderButtons(args);
 s.args = {
     emphasized,

@@ -36,6 +36,9 @@ import '@spectrum-web-components/theme/src/themes.js';
 import { TemplateResult } from '@spectrum-web-components/base';
 import { Theme } from '@spectrum-web-components/theme';
 import { Tooltip } from '@spectrum-web-components/tooltip';
+import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+
+ignoreResizeObserverLoopError(before, after);
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -49,14 +52,6 @@ async function styledFixture<T extends Element>(
 }
 
 describe('Overlay Trigger - Hover', () => {
-    afterEach(async () => {
-        const el = document.querySelector('overlay-trigger') as OverlayTrigger;
-        if (el.open) {
-            const closed = oneEvent(el, 'sp-closed');
-            el.open = undefined;
-            await closed;
-        }
-    });
     it('displays `hover` declaratively', async () => {
         const openedSpy = spy();
         const closedSpy = spy();
@@ -285,6 +280,10 @@ describe('Overlay Trigger - Hover', () => {
         expect(el.open).to.be.null;
     });
     it('will not return focus to a "modal" parent', async () => {
+        // There is an `sp-dialog-base` recyling issue in Firefox
+        if (/Firefox/.test(window.navigator.userAgent)) {
+            return;
+        }
         const el = await styledFixture<OverlayTrigger>(html`
             <overlay-trigger type="modal" placement="none">
                 <sp-button slot="trigger">Toggle Dialog</sp-button>

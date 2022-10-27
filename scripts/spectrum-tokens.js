@@ -29,7 +29,23 @@ const tokensRoot = path.join(
     '*.css'
 );
 
-const tokenPackages = ['actionbutton', 'closebutton', 'helptext', 'radio'];
+const tokenPackages = [
+    'actionbutton',
+    'checkbox',
+    'closebutton',
+    'helptext',
+    'radio',
+    'switch',
+    'statuslight',
+    'toast',
+    'actiongroup',
+    'divider',
+    'fieldlabel',
+    'progresscircle',
+    'buttongroup',
+    'swatch',
+    'swatchgroup',
+];
 
 const packagePaths = tokenPackages.map((packageName) => {
     return path.join(
