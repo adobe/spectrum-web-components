@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/reactive-controllers@0.3.1...@spectrum-web-components/reactive-controllers@0.3.2) (2022-10-28)
+
+### Bug Fixes
+
+-   manage updated node types ([0517fc1](https://github.com/adobe/spectrum-web-components/commit/0517fc19536325332543f95f5ecc0d6cb0c786c5))
+
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/reactive-controllers@0.3.0...@spectrum-web-components/reactive-controllers@0.3.1) (2022-10-10)
 
 ### Bug Fixes

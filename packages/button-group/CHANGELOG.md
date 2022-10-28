@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.9.0...@spectrum-web-components/button-group@0.10.0) (2022-10-28)
+
+### Features
+
+-   **button-group:** use core tokens and add t-shirt sizing ([960e972](https://github.com/adobe/spectrum-web-components/commit/960e9726aa9be615a6b971079fa2d7436d898243))
+
 # [0.9.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button-group@0.8.12...@spectrum-web-components/button-group@0.9.0) (2022-08-09)
 
 ### Features

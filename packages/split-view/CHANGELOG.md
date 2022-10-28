@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.5.0...@spectrum-web-components/split-view@0.5.1) (2022-10-28)
+
+### Bug Fixes
+
+-   **split-view:** prevent touch-action on handle for delivery in mobile ([b68c497](https://github.com/adobe/spectrum-web-components/commit/b68c4975424039322a2d03978983898b07b91824))
+
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-view@0.4.11...@spectrum-web-components/split-view@0.5.0) (2022-08-09)
 
 ### Features

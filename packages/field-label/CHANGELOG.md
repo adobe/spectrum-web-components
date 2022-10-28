@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-label@0.9.1...@spectrum-web-components/field-label@0.10.0) (2022-10-28)
+
+### Features
+
+-   **field-label:** use core tokens ([8db7ac4](https://github.com/adobe/spectrum-web-components/commit/8db7ac48badbad06dbcc7665e9a3bd19b271bb45))
+
 ## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-label@0.9.0...@spectrum-web-components/field-label@0.9.1) (2022-10-17)
 
 **Note:** Version bump only for package @spectrum-web-components/field-label

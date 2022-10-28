@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.19.4...@spectrum-web-components/button@0.19.5) (2022-10-28)
+
+### Bug Fixes
+
+-   **button:** minor docs spelling fix ([a7a1359](https://github.com/adobe/spectrum-web-components/commit/a7a1359990f54869e116d61f1a53626010db8477))
+
 ## [0.19.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.19.3...@spectrum-web-components/button@0.19.4) (2022-10-17)
 
 **Note:** Version bump only for package @spectrum-web-components/button

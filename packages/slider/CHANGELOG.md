@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.14.4...@spectrum-web-components/slider@0.15.0) (2022-10-28)
+
+### Bug Fixes
+
+-   manage updated node types ([0517fc1](https://github.com/adobe/spectrum-web-components/commit/0517fc19536325332543f95f5ecc0d6cb0c786c5))
+
+### Features
+
+-   **slider:** update "value" default to match browser native range input ([0050f63](https://github.com/adobe/spectrum-web-components/commit/0050f633ad2a0d7db192af0e8a77f6b7c646a256))
+
 ## [0.14.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.14.3...@spectrum-web-components/slider@0.14.4) (2022-10-17)
 
 **Note:** Version bump only for package @spectrum-web-components/slider

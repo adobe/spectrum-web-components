@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.15.5...@spectrum-web-components/action-menu@0.15.6) (2022-10-28)
+
+### Bug Fixes
+
+-   ensure Action Menu Item with [href] close the menu ([6b3d87f](https://github.com/adobe/spectrum-web-components/commit/6b3d87f8c922df782432bca3ef93d21637bad78b))
+
 ## [0.15.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.15.4...@spectrum-web-components/action-menu@0.15.5) (2022-10-17)
 
 ### Bug Fixes

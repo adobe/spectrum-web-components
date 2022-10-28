@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/iconset@0.7.1...@spectrum-web-components/iconset@0.7.2) (2022-10-28)
+
+### Bug Fixes
+
+-   manage updated node types ([0517fc1](https://github.com/adobe/spectrum-web-components/commit/0517fc19536325332543f95f5ecc0d6cb0c786c5))
+
 ## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/iconset@0.7.0...@spectrum-web-components/iconset@0.7.1) (2022-10-10)
 
 **Note:** Version bump only for package @spectrum-web-components/iconset
