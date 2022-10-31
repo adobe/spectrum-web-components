@@ -10,7 +10,7 @@
         { "path": "../action-button" },
         { "path": "../icons-ui" },
         { "path": "../icons-workflow" },
-        { "path": "../shared" },
+        { "path": "../../tools/shared" },
         { "path": "../underlay" }
     ]
 }

@@ -7,8 +7,8 @@
     "include": ["*.ts", "src/*.ts", "sync/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [
-        { "path": "../base" },
-        { "path": "../theme" },
-        { "path": "../shared" }
+        { "path": "../../tools/base" },
+        { "path": "../../tools/theme" },
+        { "path": "../../tools/shared" }
     ]
 }

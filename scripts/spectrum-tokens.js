@@ -90,7 +90,7 @@ const processTokens = (srcPath) => {
     css = targetHost(css);
 
     fs.writeFileSync(
-        path.join(__dirname, '..', 'packages', 'styles', 'tokens', fileName),
+        path.join(__dirname, '..', 'tools', 'styles', 'tokens', fileName),
         css
     );
 };
@@ -108,7 +108,7 @@ const processPackages = async (srcPath, index) => {
         path.join(
             __dirname,
             '..',
-            'packages',
+            'tools',
             'styles',
             'tokens',
             'express',
@@ -120,7 +120,7 @@ const processPackages = async (srcPath, index) => {
         path.join(
             __dirname,
             '..',
-            'packages',
+            'tools',
             'styles',
             'tokens',
             'spectrum',
@@ -132,7 +132,7 @@ const processPackages = async (srcPath, index) => {
     const varsPaths = path.join(
         __dirname,
         '..',
-        'packages',
+        'tools',
         'styles',
         '**',
         '*.css'
@@ -155,13 +155,13 @@ const processPackages = async (srcPath, index) => {
 
 const spectrumTokens = async () => {
     fs.mkdirSync(
-        path.join(__dirname, '..', 'packages', 'styles', 'tokens', 'spectrum'),
+        path.join(__dirname, '..', 'tools', 'styles', 'tokens', 'spectrum'),
         {
             recursive: true,
         }
     );
     fs.mkdirSync(
-        path.join(__dirname, '..', 'packages', 'styles', 'tokens', 'express'),
+        path.join(__dirname, '..', 'tools', 'styles', 'tokens', 'express'),
         {
             recursive: true,
         }

@@ -6,5 +6,5 @@
     },
     "include": ["icons/**/*.ts", "src/**/*.ts", "../../global.d.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
-    "references": [{ "path": "../base" }, { "path": "../icon" }]
+    "references": [{ "path": "../../tools/base" }, { "path": "../icon" }]
 }

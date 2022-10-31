@@ -34,6 +34,22 @@
         {% endfor %}
     </sp-sidenav-item>
     <sp-sidenav-item
+        label="Tools"
+        expanded
+        multiLevel
+    >
+        <span slot="no-js">Tools</span>
+        {% for component in collections['tool-examples'] %}
+            <sp-sidenav-item
+                label="{{ component.data.displayName }}"
+                href="{{ component.url }}"
+                value="{{ component.data.componentName }}"
+            >
+                <a href="{{ component.url }}" slot="no-js">{{ component.data.displayName }}</a>
+            </sp-sidenav-item>
+        {% endfor %}
+    </sp-sidenav-item>
+    <sp-sidenav-item
         label="Contributing"
         expanded
         multiLevel

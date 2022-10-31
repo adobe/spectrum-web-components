@@ -37,7 +37,7 @@ async function main() {
     const documents = [];
 
     // Components
-    for await (const path of globby.stream(`${projectDir}/packages/**/*.md`, {
+    for await (const path of globby.stream(`${projectDir}/(packages|tools)/**/*.md`, {
         ignore: ['**/node_modules/**'],
     })) {
         let componentName = /([^/]+)\/([a-zA-Z-]+)\.md$/.exec(path)[1];
