@@ -94,6 +94,20 @@ module.exports = function (eleventyConfig) {
             });
     });
 
+    eleventyConfig.addCollection('tool-examples', function (collection) {
+        return collection
+            .getFilteredByTag('tool-examples')
+            .sort(function (a, b) {
+                if (a.data.displayName < b.data.displayName) {
+                    return -1;
+                }
+                if (b.data.displayName < a.data.displayName) {
+                    return 1;
+                }
+                return 0;
+            });
+    });
+
     eleventyConfig.addPlugin(syntaxHighlight, {
         init: function ({ Prism }) {
             Prism.languages['html-live'] = Prism.languages.html;

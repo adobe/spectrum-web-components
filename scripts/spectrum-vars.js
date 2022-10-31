@@ -70,8 +70,8 @@ const findUsedVars = async () => {
     const usedVariables = new Set();
     for (const cssPath of await fg(`./packages/*/src/*.css`)) {
         if (
-            cssPath.includes('packages/styles') ||
-            cssPath.includes('packages/theme')
+            cssPath.includes('tools/styles') ||
+            cssPath.includes('tools/theme')
         ) {
             continue;
         }
@@ -228,7 +228,7 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
             path.join(
                 __dirname,
                 '..',
-                'packages',
+                'tools',
                 ...packageDir,
                 `theme-${theme}.css`
             )
@@ -244,7 +244,7 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
             path.join(
                 __dirname,
                 '..',
-                'packages',
+                'tools',
                 ...packageDir,
                 `spectrum-scale-${scale}.css`
             )
@@ -261,7 +261,7 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
             path.join(
                 __dirname,
                 '..',
-                'packages',
+                'tools',
                 ...packageDir,
                 `spectrum-core-${core}.css`
             )
@@ -284,7 +284,7 @@ async function processSpectrumVars() {
         );
         const srcPath = path.join(typographyPath, 'index-vars.css');
         const dstPath = path.resolve(
-            path.join(__dirname, '..', 'packages', 'styles', 'typography.css')
+            path.join(__dirname, '..', 'tools', 'styles', 'typography.css')
         );
         console.log(`processing typography`);
         processes.push(await processCSS(srcPath, dstPath, 'typography'));
@@ -313,13 +313,7 @@ async function processSpectrumVars() {
         {
             const srcPath = path.join(typographyPath, 'dist', 'index-vars.css');
             const dstPath = path.resolve(
-                path.join(
-                    __dirname,
-                    '..',
-                    'packages',
-                    'styles',
-                    'typography.css'
-                )
+                path.join(__dirname, '..', 'tools', 'styles', 'typography.css')
             );
             console.log(`processing typography`);
             processes.push(await processCSS(srcPath, dstPath, 'typography'));
@@ -330,7 +324,7 @@ async function processSpectrumVars() {
             // const srcPath1 = path.join(commonsPath, 'fonts.css');
             const srcPath2 = path.join(typographyPath, 'font.css');
             const dstPath = path.resolve(
-                path.join(__dirname, '..', 'packages', 'styles', 'fonts.css')
+                path.join(__dirname, '..', 'tools', 'styles', 'fonts.css')
             );
             console.log(`processing fonts from commons & typography`);
             processes.push(

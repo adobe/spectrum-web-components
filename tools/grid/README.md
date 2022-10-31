@@ -29,7 +29,7 @@ import { Grid } from '@spectrum-web-components/grid';
 
 ## Example
 
-```js
+```ts
 const items = generateItems(1000);
 
 const renderItem = (
@@ -61,15 +61,6 @@ const renderItem = (
 };
 
 // ...
-
-<sp-grid
-    .items=${items}
-    .focusableSelector=${'sp-card'}
-    .renderItem=${renderItem}
-    .itemSize=${{
-        width: 200,
-        height: 300,
-    }}
-    .gap=${'10px'}
-></sp-grid>
 ```
+
+

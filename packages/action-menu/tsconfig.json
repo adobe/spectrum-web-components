@@ -10,6 +10,6 @@
         { "path": "../action-button" },
         { "path": "../picker" },
         { "path": "../icons-workflow" },
-        { "path": "../shared" }
+        { "path": "../../tools/shared" }
     ]
 }
