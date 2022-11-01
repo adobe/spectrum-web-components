@@ -21,6 +21,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-heading-xxxl-margin-top)
     ); /* .spectrum-Typography .spectrum-Heading--sizeXXXL */
 }
+
 .spectrum-Typography .spectrum-Heading--sizeXXL {
     margin-bottom: var(
         --spectrum-heading-xxl-margin-bottom,
@@ -31,6 +32,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-heading-xxl-margin-top)
     ); /* .spectrum-Typography .spectrum-Heading--sizeXXL */
 }
+
 .spectrum-Typography .spectrum-Heading--sizeXL {
     margin-bottom: var(
         --spectrum-heading-xl-margin-bottom,
@@ -41,6 +43,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-heading-xl-margin-top)
     ); /* .spectrum-Typography .spectrum-Heading--sizeXL */
 }
+
 .spectrum-Typography .spectrum-Heading--sizeL {
     margin-bottom: var(
         --spectrum-heading-l-margin-bottom,
@@ -51,6 +54,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-heading-l-margin-top)
     ); /* .spectrum-Typography .spectrum-Heading--sizeL */
 }
+
 .spectrum-Typography .spectrum-Heading--sizeM {
     margin-bottom: var(
         --spectrum-heading-m-margin-bottom,
@@ -61,6 +65,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-heading-m-margin-top)
     ); /* .spectrum-Typography .spectrum-Heading--sizeM */
 }
+
 .spectrum-Typography .spectrum-Heading--sizeS {
     margin-bottom: var(
         --spectrum-heading-s-margin-bottom,
@@ -71,6 +76,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-heading-s-margin-top)
     ); /* .spectrum-Typography .spectrum-Heading--sizeS */
 }
+
 .spectrum-Typography .spectrum-Heading--sizeXS {
     margin-bottom: var(
         --spectrum-heading-xs-margin-bottom,
@@ -81,6 +87,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-heading-xs-margin-top)
     ); /* .spectrum-Typography .spectrum-Heading--sizeXS */
 }
+
 .spectrum-Typography .spectrum-Heading--sizeXXS {
     margin-bottom: var(
         --spectrum-heading-xxs-margin-bottom,
@@ -91,6 +98,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-heading-xxs-margin-top)
     ); /* .spectrum-Typography .spectrum-Heading--sizeXXS */
 }
+
 .spectrum-Typography .spectrum-Body--sizeXXXL {
     margin-bottom: var(
         --spectrum-body-xxxl-margin-bottom,
@@ -101,6 +109,7 @@ governing permissions and limitations under the License.
         0
     ); /* .spectrum-Typography .spectrum-Body--sizeXXXL */
 }
+
 .spectrum-Typography .spectrum-Body--sizeXXL {
     margin-bottom: var(
         --spectrum-body-xxl-margin-bottom,
@@ -111,6 +120,7 @@ governing permissions and limitations under the License.
         0
     ); /* .spectrum-Typography .spectrum-Body--sizeXXL */
 }
+
 .spectrum-Typography .spectrum-Body--sizeXL {
     margin-bottom: var(
         --spectrum-body-xl-margin-bottom,
@@ -121,6 +131,7 @@ governing permissions and limitations under the License.
         0
     ); /* .spectrum-Typography .spectrum-Body--sizeXL */
 }
+
 .spectrum-Typography .spectrum-Body--sizeL {
     margin-bottom: var(
         --spectrum-body-l-margin-bottom,
@@ -131,6 +142,7 @@ governing permissions and limitations under the License.
         0
     ); /* .spectrum-Typography .spectrum-Body--sizeL */
 }
+
 .spectrum-Typography .spectrum-Body--sizeM {
     margin-bottom: var(
         --spectrum-body-m-margin-bottom,
@@ -141,6 +153,7 @@ governing permissions and limitations under the License.
         0
     ); /* .spectrum-Typography .spectrum-Body--sizeM */
 }
+
 .spectrum-Typography .spectrum-Body--sizeS {
     margin-bottom: var(
         --spectrum-body-s-margin-bottom,
@@ -151,6 +164,7 @@ governing permissions and limitations under the License.
         0
     ); /* .spectrum-Typography .spectrum-Body--sizeS */
 }
+
 .spectrum-Typography .spectrum-Body--sizeXS {
     margin-bottom: var(
         --spectrum-body-xs-margin-bottom,

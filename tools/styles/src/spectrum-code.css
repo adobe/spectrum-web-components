@@ -17,6 +17,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-body-text-font-family)
     ); /* .spectrum-Code */
 }
+
 .spectrum-Code .spectrum-Code-strong,
 .spectrum-Code strong {
     font-weight: var(
@@ -25,6 +26,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum-Code strong,
    * .spectrum-Code .spectrum-Code-strong */
 }
+
 .spectrum-Code .spectrum-Code-emphasized,
 .spectrum-Code em {
     font-style: var(
@@ -33,12 +35,14 @@ governing permissions and limitations under the License.
     ); /* .spectrum-Code em,
    * .spectrum-Code .spectrum-Code-emphasized */
 }
+
 .spectrum-Code--serif {
     font-family: var(
         --spectrum-body-m-serif-text-font-family,
         var(--spectrum-alias-serif-text-font-family)
     ); /* .spectrum-Code--serif */
 }
+
 .spectrum-Code--sizeXL {
     font-family: var(
         --spectrum-code-xl-text-font-family,
@@ -48,6 +52,7 @@ governing permissions and limitations under the License.
         --spectrum-code-xl-text-size,
         var(--spectrum-global-dimension-font-size-400)
     ); /* .spectrum-Code--sizeXL */
+
     font-style: var(
         --spectrum-code-xl-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -67,6 +72,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
     margin-top: 0;
 }
+
 .spectrum-Code--sizeL {
     font-family: var(
         --spectrum-code-l-text-font-family,
@@ -76,6 +82,7 @@ governing permissions and limitations under the License.
         --spectrum-code-l-text-size,
         var(--spectrum-global-dimension-font-size-300)
     ); /* .spectrum-Code--sizeL */
+
     font-style: var(
         --spectrum-code-l-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -95,6 +102,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
     margin-top: 0;
 }
+
 .spectrum-Code--sizeM {
     font-family: var(
         --spectrum-code-m-text-font-family,
@@ -104,6 +112,7 @@ governing permissions and limitations under the License.
         --spectrum-code-m-text-size,
         var(--spectrum-global-dimension-font-size-200)
     ); /* .spectrum-Code--sizeM */
+
     font-style: var(
         --spectrum-code-m-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -123,6 +132,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
     margin-top: 0;
 }
+
 .spectrum-Code--sizeS {
     font-family: var(
         --spectrum-code-s-text-font-family,
@@ -132,6 +142,7 @@ governing permissions and limitations under the License.
         --spectrum-code-s-text-size,
         var(--spectrum-global-dimension-font-size-100)
     ); /* .spectrum-Code--sizeS */
+
     font-style: var(
         --spectrum-code-s-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -151,6 +162,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
     margin-top: 0;
 }
+
 .spectrum-Code--sizeXS {
     font-family: var(
         --spectrum-code-xs-text-font-family,
@@ -160,6 +172,7 @@ governing permissions and limitations under the License.
         --spectrum-code-xs-text-size,
         var(--spectrum-global-dimension-font-size-75)
     ); /* .spectrum-Code--sizeXS */
+
     font-style: var(
         --spectrum-code-xs-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -179,30 +192,35 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
     margin-top: 0;
 }
+
 .spectrum-Code--sizeXL {
     color: var(
         --spectrum-code-xl-text-color,
         var(--spectrum-alias-text-color)
     ); /* .spectrum-Code--sizeXL */
 }
+
 .spectrum-Code--sizeL {
     color: var(
         --spectrum-code-l-text-color,
         var(--spectrum-alias-text-color)
     ); /* .spectrum-Code--sizeL */
 }
+
 .spectrum-Code--sizeM {
     color: var(
         --spectrum-code-m-text-color,
         var(--spectrum-alias-text-color)
     ); /* .spectrum-Code--sizeM */
 }
+
 .spectrum-Code--sizeS {
     color: var(
         --spectrum-code-s-text-color,
         var(--spectrum-alias-text-color)
     ); /* .spectrum-Code--sizeS */
 }
+
 .spectrum-Code--sizeXS {
     color: var(
         --spectrum-code-xs-text-color,

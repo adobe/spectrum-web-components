@@ -24,7 +24,10 @@ import {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const projectDir = path.resolve(__dirname, '../../../');
-const componentDestinationPath = path.resolve(__dirname, '../content/components');
+const componentDestinationPath = path.resolve(
+    __dirname,
+    '../content/components'
+);
 const toolDestinationPath = path.resolve(__dirname, '../content/tools');
 const partialPath = path.resolve(
     __dirname,
@@ -102,7 +105,6 @@ async function main() {
             );
         }
         const isComponent = mdPath.includes('/packages/');
-        console.log(componentName, isComponent, mdPath);
         const destinationPath = isComponent
             ? componentDestinationPath
             : toolDestinationPath;

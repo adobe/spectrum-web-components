@@ -17,6 +17,7 @@ governing permissions and limitations under the License.
         --spectrum-alias-body-text-font-family,
         var(--spectrum-global-font-family-base)
     ); /* .spectrum */
+
     font-size: var(
         --spectrum-alias-font-size-default,
         var(--spectrum-global-dimension-font-size-100)
