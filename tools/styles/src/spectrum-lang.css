@@ -17,42 +17,49 @@ governing permissions and limitations under the License.
         var(--spectrum-global-font-font-family-ar)
     ); /* .spectrum:lang(ar) */
 }
+
 .spectrum:lang(he) {
     font-family: var(
         --spectrum-alias-font-family-he,
         var(--spectrum-global-font-font-family-he)
     ); /* .spectrum:lang(he) */
 }
+
 .spectrum:lang(zh-Hans) {
     font-family: var(
         --spectrum-alias-font-family-zhhans,
         var(--spectrum-global-font-font-family-zhhans)
     ); /* .spectrum:lang(zh-Hans) */
 }
+
 .spectrum:lang(zh-Hant) {
     font-family: var(
         --spectrum-alias-font-family-zh,
         var(--spectrum-global-font-font-family-zh)
     ); /* .spectrum:lang(zh-Hant) */
 }
+
 .spectrum:lang(zh) {
     font-family: var(
         --spectrum-alias-font-family-zh,
         var(--spectrum-global-font-font-family-zh)
     ); /* .spectrum:lang(zh) */
 }
+
 .spectrum:lang(ko) {
     font-family: var(
         --spectrum-alias-font-family-ko,
         var(--spectrum-global-font-font-family-ko)
     ); /* .spectrum:lang(ko) */
 }
+
 .spectrum:lang(ja) {
     font-family: var(
         --spectrum-alias-font-family-ja,
         var(--spectrum-global-font-font-family-ja)
     ); /* .spectrum:lang(ja) */
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeXXXL,
 .spectrum:lang(ko) .spectrum-Heading--sizeXXXL,
 .spectrum:lang(zh) .spectrum-Heading--sizeXXXL {
@@ -62,6 +69,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Heading--sizeXXXL,
    * .spectrum:lang(ko) .spectrum-Heading--sizeXXXL,
    * .spectrum:lang(zh) .spectrum-Heading--sizeXXXL */
+
     font-style: var(
         --spectrum-heading-han-xxxl-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -82,6 +90,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-heading-han-xxxl-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeXXL,
 .spectrum:lang(ko) .spectrum-Heading--sizeXXL,
 .spectrum:lang(zh) .spectrum-Heading--sizeXXL {
@@ -91,6 +100,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Heading--sizeXXL,
    * .spectrum:lang(ko) .spectrum-Heading--sizeXXL,
    * .spectrum:lang(zh) .spectrum-Heading--sizeXXL */
+
     font-style: var(
         --spectrum-heading-han-xxl-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -111,6 +121,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-heading-han-xxl-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeXL,
 .spectrum:lang(ko) .spectrum-Heading--sizeXL,
 .spectrum:lang(zh) .spectrum-Heading--sizeXL {
@@ -120,6 +131,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Heading--sizeXL,
    * .spectrum:lang(ko) .spectrum-Heading--sizeXL,
    * .spectrum:lang(zh) .spectrum-Heading--sizeXL */
+
     font-style: var(
         --spectrum-heading-han-xl-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -140,6 +152,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-heading-han-xl-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeL,
 .spectrum:lang(ko) .spectrum-Heading--sizeL,
 .spectrum:lang(zh) .spectrum-Heading--sizeL {
@@ -149,6 +162,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Heading--sizeL,
    * .spectrum:lang(ko) .spectrum-Heading--sizeL,
    * .spectrum:lang(zh) .spectrum-Heading--sizeL */
+
     font-style: var(
         --spectrum-heading-han-l-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -169,6 +183,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-heading-han-l-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeM,
 .spectrum:lang(ko) .spectrum-Heading--sizeM,
 .spectrum:lang(zh) .spectrum-Heading--sizeM {
@@ -178,6 +193,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Heading--sizeM,
    * .spectrum:lang(ko) .spectrum-Heading--sizeM,
    * .spectrum:lang(zh) .spectrum-Heading--sizeM */
+
     font-style: var(
         --spectrum-heading-han-m-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -198,6 +214,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-heading-han-m-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeS,
 .spectrum:lang(ko) .spectrum-Heading--sizeS,
 .spectrum:lang(zh) .spectrum-Heading--sizeS {
@@ -207,6 +224,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Heading--sizeS,
    * .spectrum:lang(ko) .spectrum-Heading--sizeS,
    * .spectrum:lang(zh) .spectrum-Heading--sizeS */
+
     font-style: var(
         --spectrum-heading-han-s-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -227,6 +245,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-heading-han-s-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeXS,
 .spectrum:lang(ko) .spectrum-Heading--sizeXS,
 .spectrum:lang(zh) .spectrum-Heading--sizeXS {
@@ -236,6 +255,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Heading--sizeXS,
    * .spectrum:lang(ko) .spectrum-Heading--sizeXS,
    * .spectrum:lang(zh) .spectrum-Heading--sizeXS */
+
     font-style: var(
         --spectrum-heading-han-xs-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -256,6 +276,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-heading-han-xs-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeXXS,
 .spectrum:lang(ko) .spectrum-Heading--sizeXXS,
 .spectrum:lang(zh) .spectrum-Heading--sizeXXS {
@@ -265,6 +286,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Heading--sizeXXS,
    * .spectrum:lang(ko) .spectrum-Heading--sizeXXS,
    * .spectrum:lang(zh) .spectrum-Heading--sizeXXS */
+
     font-style: var(
         --spectrum-heading-han-xxs-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -285,6 +307,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-heading-han-xxs-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Heading--heavy,
 .spectrum:lang(ko) .spectrum-Heading--heavy,
 .spectrum:lang(zh) .spectrum-Heading--heavy {
@@ -295,6 +318,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--heavy,
    * .spectrum:lang(zh) .spectrum-Heading--heavy */
 }
+
 .spectrum:lang(ja) .spectrum-Heading--heavy .spectrum-Heading--emphasized,
 .spectrum:lang(ja) .spectrum-Heading--heavy em,
 .spectrum:lang(ko) .spectrum-Heading--heavy .spectrum-Heading--emphasized,
@@ -309,10 +333,12 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--heavy .spectrum-Heading--emphasized,
    * .spectrum:lang(zh) .spectrum-Heading--heavy em,
    * .spectrum:lang(zh) .spectrum-Heading--heavy .spectrum-Heading--emphasized */
+
     font-weight: var(
         --spectrum-heading-han-heavy-m-emphasized-text-font-weight
     );
 }
+
 .spectrum:lang(ja) .spectrum-Heading--heavy .spectrum-Heading--strong,
 .spectrum:lang(ja) .spectrum-Heading--heavy strong,
 .spectrum:lang(ko) .spectrum-Heading--heavy .spectrum-Heading--strong,
@@ -328,11 +354,13 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--heavy .spectrum-Heading--strong,
    * .spectrum:lang(zh) .spectrum-Heading--heavy strong,
    * .spectrum:lang(zh) .spectrum-Heading--heavy .spectrum-Heading--strong */
+
     font-weight: var(
         --spectrum-heading-m-heavy-strong-text-font-weight,
         var(--spectrum-alias-heading-text-font-weight-heavy-strong)
     );
 }
+
 .spectrum:lang(ja) .spectrum-Heading--light,
 .spectrum:lang(ko) .spectrum-Heading--light,
 .spectrum:lang(zh) .spectrum-Heading--light {
@@ -343,6 +371,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--light,
    * .spectrum:lang(zh) .spectrum-Heading--light */
 }
+
 .spectrum:lang(ja) .spectrum-Heading--light .spectrum-Heading--emphasized,
 .spectrum:lang(ja) .spectrum-Heading--light em,
 .spectrum:lang(ko) .spectrum-Heading--light .spectrum-Heading--emphasized,
@@ -358,11 +387,13 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--light .spectrum-Heading--emphasized,
    * .spectrum:lang(zh) .spectrum-Heading--light em,
    * .spectrum:lang(zh) .spectrum-Heading--light .spectrum-Heading--emphasized */
+
     font-weight: var(
         --spectrum-heading-han-m-light-emphasized-text-font-weight,
         var(--spectrum-alias-han-heading-text-font-weight-light-emphasis)
     );
 }
+
 .spectrum:lang(ja) .spectrum-Heading--light .spectrum-Heading--strong,
 .spectrum:lang(ja) .spectrum-Heading--light strong,
 .spectrum:lang(ko) .spectrum-Heading--light .spectrum-Heading--strong,
@@ -378,11 +409,13 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--light .spectrum-Heading--strong,
    * .spectrum:lang(zh) .spectrum-Heading--light strong,
    * .spectrum:lang(zh) .spectrum-Heading--light .spectrum-Heading--strong */
+
     font-weight: var(
         --spectrum-heading-han-m-light-strong-text-font-weight,
         var(--spectrum-alias-han-heading-text-font-weight-light-strong)
     );
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeXXXL,
 .spectrum:lang(ko) .spectrum-Body--sizeXXXL,
 .spectrum:lang(zh) .spectrum-Body--sizeXXXL {
@@ -392,6 +425,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Body--sizeXXXL,
    * .spectrum:lang(ko) .spectrum-Body--sizeXXXL,
    * .spectrum:lang(zh) .spectrum-Body--sizeXXXL */
+
     font-style: var(
         --spectrum-body-han-xxxl-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -412,6 +446,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-han-xxxl-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeXXL,
 .spectrum:lang(ko) .spectrum-Body--sizeXXL,
 .spectrum:lang(zh) .spectrum-Body--sizeXXL {
@@ -421,6 +456,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Body--sizeXXL,
    * .spectrum:lang(ko) .spectrum-Body--sizeXXL,
    * .spectrum:lang(zh) .spectrum-Body--sizeXXL */
+
     font-style: var(
         --spectrum-body-han-xxl-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -441,6 +477,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-han-xxl-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeXL,
 .spectrum:lang(ko) .spectrum-Body--sizeXL,
 .spectrum:lang(zh) .spectrum-Body--sizeXL {
@@ -450,6 +487,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Body--sizeXL,
    * .spectrum:lang(ko) .spectrum-Body--sizeXL,
    * .spectrum:lang(zh) .spectrum-Body--sizeXL */
+
     font-style: var(
         --spectrum-body-han-xl-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -470,6 +508,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-han-xl-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeL,
 .spectrum:lang(ko) .spectrum-Body--sizeL,
 .spectrum:lang(zh) .spectrum-Body--sizeL {
@@ -479,6 +518,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Body--sizeL,
    * .spectrum:lang(ko) .spectrum-Body--sizeL,
    * .spectrum:lang(zh) .spectrum-Body--sizeL */
+
     font-style: var(
         --spectrum-body-han-l-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -499,6 +539,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-han-l-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeM,
 .spectrum:lang(ko) .spectrum-Body--sizeM,
 .spectrum:lang(zh) .spectrum-Body--sizeM {
@@ -508,6 +549,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Body--sizeM,
    * .spectrum:lang(ko) .spectrum-Body--sizeM,
    * .spectrum:lang(zh) .spectrum-Body--sizeM */
+
     font-style: var(
         --spectrum-body-han-m-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -528,6 +570,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-han-m-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeS,
 .spectrum:lang(ko) .spectrum-Body--sizeS,
 .spectrum:lang(zh) .spectrum-Body--sizeS {
@@ -537,6 +580,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Body--sizeS,
    * .spectrum:lang(ko) .spectrum-Body--sizeS,
    * .spectrum:lang(zh) .spectrum-Body--sizeS */
+
     font-style: var(
         --spectrum-body-han-s-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -557,6 +601,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-han-s-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeXS,
 .spectrum:lang(ko) .spectrum-Body--sizeXS,
 .spectrum:lang(zh) .spectrum-Body--sizeXS {
@@ -566,6 +611,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Body--sizeXS,
    * .spectrum:lang(ko) .spectrum-Body--sizeXS,
    * .spectrum:lang(zh) .spectrum-Body--sizeXS */
+
     font-style: var(
         --spectrum-body-han-xs-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -586,6 +632,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-han-xs-text-transform, none);
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeXL,
 .spectrum:lang(ko) .spectrum-Detail--sizeXL,
 .spectrum:lang(zh) .spectrum-Detail--sizeXL {
@@ -595,6 +642,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Detail--sizeXL,
    * .spectrum:lang(ko) .spectrum-Detail--sizeXL,
    * .spectrum:lang(zh) .spectrum-Detail--sizeXL */
+
     font-style: var(
         --spectrum-detail-han-xl-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -615,6 +663,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-detail-han-xl-text-transform, uppercase);
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeXL em,
 .spectrum:lang(ko) .spectrum-Detail--sizeXL em,
 .spectrum:lang(zh) .spectrum-Detail--sizeXL em {
@@ -624,6 +673,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Detail--sizeXL em,
    * .spectrum:lang(ko) .spectrum-Detail--sizeXL em,
    * .spectrum:lang(zh) .spectrum-Detail--sizeXL em */
+
     font-style: var(
         --spectrum-detail-han-xl-emphasized-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -647,6 +697,7 @@ governing permissions and limitations under the License.
         uppercase
     );
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeXL strong,
 .spectrum:lang(ko) .spectrum-Detail--sizeXL strong,
 .spectrum:lang(zh) .spectrum-Detail--sizeXL strong {
@@ -656,6 +707,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Detail--sizeXL strong,
    * .spectrum:lang(ko) .spectrum-Detail--sizeXL strong,
    * .spectrum:lang(zh) .spectrum-Detail--sizeXL strong */
+
     font-style: var(
         --spectrum-detail-han-xl-strong-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -679,6 +731,7 @@ governing permissions and limitations under the License.
         uppercase
     );
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeL,
 .spectrum:lang(ko) .spectrum-Detail--sizeL,
 .spectrum:lang(zh) .spectrum-Detail--sizeL {
@@ -688,6 +741,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Detail--sizeL,
    * .spectrum:lang(ko) .spectrum-Detail--sizeL,
    * .spectrum:lang(zh) .spectrum-Detail--sizeL */
+
     font-style: var(
         --spectrum-detail-han-l-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -708,6 +762,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-detail-han-l-text-transform, uppercase);
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeL em,
 .spectrum:lang(ko) .spectrum-Detail--sizeL em,
 .spectrum:lang(zh) .spectrum-Detail--sizeL em {
@@ -717,6 +772,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Detail--sizeL em,
    * .spectrum:lang(ko) .spectrum-Detail--sizeL em,
    * .spectrum:lang(zh) .spectrum-Detail--sizeL em */
+
     font-style: var(
         --spectrum-detail-han-l-emphasized-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -740,6 +796,7 @@ governing permissions and limitations under the License.
         uppercase
     );
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeL strong,
 .spectrum:lang(ko) .spectrum-Detail--sizeL strong,
 .spectrum:lang(zh) .spectrum-Detail--sizeL strong {
@@ -749,6 +806,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Detail--sizeL strong,
    * .spectrum:lang(ko) .spectrum-Detail--sizeL strong,
    * .spectrum:lang(zh) .spectrum-Detail--sizeL strong */
+
     font-style: var(
         --spectrum-detail-han-l-strong-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -772,6 +830,7 @@ governing permissions and limitations under the License.
         uppercase
     );
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeM,
 .spectrum:lang(ko) .spectrum-Detail--sizeM,
 .spectrum:lang(zh) .spectrum-Detail--sizeM {
@@ -781,6 +840,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Detail--sizeM,
    * .spectrum:lang(ko) .spectrum-Detail--sizeM,
    * .spectrum:lang(zh) .spectrum-Detail--sizeM */
+
     font-style: var(
         --spectrum-detail-han-m-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -801,6 +861,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-detail-han-m-text-transform, uppercase);
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeM em,
 .spectrum:lang(ko) .spectrum-Detail--sizeM em,
 .spectrum:lang(zh) .spectrum-Detail--sizeM em {
@@ -810,6 +871,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Detail--sizeM em,
    * .spectrum:lang(ko) .spectrum-Detail--sizeM em,
    * .spectrum:lang(zh) .spectrum-Detail--sizeM em */
+
     font-style: var(
         --spectrum-detail-han-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -833,6 +895,7 @@ governing permissions and limitations under the License.
         uppercase
     );
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeM strong,
 .spectrum:lang(ko) .spectrum-Detail--sizeM strong,
 .spectrum:lang(zh) .spectrum-Detail--sizeM strong {
@@ -842,6 +905,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Detail--sizeM strong,
    * .spectrum:lang(ko) .spectrum-Detail--sizeM strong,
    * .spectrum:lang(zh) .spectrum-Detail--sizeM strong */
+
     font-style: var(
         --spectrum-detail-han-m-strong-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -865,6 +929,7 @@ governing permissions and limitations under the License.
         uppercase
     );
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeS,
 .spectrum:lang(ko) .spectrum-Detail--sizeS,
 .spectrum:lang(zh) .spectrum-Detail--sizeS {
@@ -874,6 +939,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Detail--sizeS,
    * .spectrum:lang(ko) .spectrum-Detail--sizeS,
    * .spectrum:lang(zh) .spectrum-Detail--sizeS */
+
     font-style: var(
         --spectrum-detail-han-s-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -894,6 +960,7 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-detail-han-s-text-transform, uppercase);
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeS em,
 .spectrum:lang(ko) .spectrum-Detail--sizeS em,
 .spectrum:lang(zh) .spectrum-Detail--sizeS em {
@@ -903,6 +970,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Detail--sizeS em,
    * .spectrum:lang(ko) .spectrum-Detail--sizeS em,
    * .spectrum:lang(zh) .spectrum-Detail--sizeS em */
+
     font-style: var(
         --spectrum-detail-han-s-emphasized-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -926,6 +994,7 @@ governing permissions and limitations under the License.
         uppercase
     );
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeS strong,
 .spectrum:lang(ko) .spectrum-Detail--sizeS strong,
 .spectrum:lang(zh) .spectrum-Detail--sizeS strong {
@@ -935,6 +1004,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Detail--sizeS strong,
    * .spectrum:lang(ko) .spectrum-Detail--sizeS strong,
    * .spectrum:lang(zh) .spectrum-Detail--sizeS strong */
+
     font-style: var(
         --spectrum-detail-han-s-strong-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -958,6 +1028,7 @@ governing permissions and limitations under the License.
         uppercase
     );
 }
+
 .spectrum:lang(ja) .spectrum-Detail--light,
 .spectrum:lang(ko) .spectrum-Detail--light,
 .spectrum:lang(zh) .spectrum-Detail--light {
@@ -968,6 +1039,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Detail--light,
    * .spectrum:lang(zh) .spectrum-Detail--light */
 }
+
 .spectrum:lang(ja) .spectrum-Detail--light .spectrum-Detail--emphasized,
 .spectrum:lang(ja) .spectrum-Detail--light em,
 .spectrum:lang(ko) .spectrum-Detail--light .spectrum-Detail--emphasized,
@@ -983,11 +1055,13 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Detail--light .spectrum-Detail--emphasized,
    * .spectrum:lang(zh) .spectrum-Detail--light em,
    * .spectrum:lang(zh) .spectrum-Detail--light .spectrum-Detail--emphasized */
+
     font-weight: var(
         --spectrum-detail-han-m-light-emphasized-text-font-weight,
         var(--spectrum-alias-han-heading-text-font-weight-light-emphasis)
     );
 }
+
 .spectrum:lang(ja) .spectrum-Detail--light .spectrum-Detail--strong,
 .spectrum:lang(ja) .spectrum-Detail--light strong,
 .spectrum:lang(ko) .spectrum-Detail--light .spectrum-Detail--strong,
@@ -1003,11 +1077,13 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Detail--light .spectrum-Detail--strong,
    * .spectrum:lang(zh) .spectrum-Detail--light strong,
    * .spectrum:lang(zh) .spectrum-Detail--light .spectrum-Detail--strong */
+
     font-weight: var(
         --spectrum-detail-han-m-light-strong-text-font-weight,
         var(--spectrum-alias-han-heading-text-font-weight-light-strong)
     );
 }
+
 .spectrum:lang(ja) .spectrum-Code--sizeXL,
 .spectrum:lang(ko) .spectrum-Code--sizeXL,
 .spectrum:lang(zh) .spectrum-Code--sizeXL {
@@ -1021,6 +1097,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Code--sizeXL,
    * .spectrum:lang(ko) .spectrum-Code--sizeXL,
    * .spectrum:lang(zh) .spectrum-Code--sizeXL */
+
     font-style: var(
         --spectrum-code-han-xl-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -1040,6 +1117,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
     margin-top: 0;
 }
+
 .spectrum:lang(ja) .spectrum-Code--sizeL,
 .spectrum:lang(ko) .spectrum-Code--sizeL,
 .spectrum:lang(zh) .spectrum-Code--sizeL {
@@ -1053,6 +1131,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Code--sizeL,
    * .spectrum:lang(ko) .spectrum-Code--sizeL,
    * .spectrum:lang(zh) .spectrum-Code--sizeL */
+
     font-style: var(
         --spectrum-code-han-l-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -1072,6 +1151,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
     margin-top: 0;
 }
+
 .spectrum:lang(ja) .spectrum-Code--sizeM,
 .spectrum:lang(ko) .spectrum-Code--sizeM,
 .spectrum:lang(zh) .spectrum-Code--sizeM {
@@ -1085,6 +1165,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Code--sizeM,
    * .spectrum:lang(ko) .spectrum-Code--sizeM,
    * .spectrum:lang(zh) .spectrum-Code--sizeM */
+
     font-style: var(
         --spectrum-code-han-m-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -1104,6 +1185,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
     margin-top: 0;
 }
+
 .spectrum:lang(ja) .spectrum-Code--sizeS,
 .spectrum:lang(ko) .spectrum-Code--sizeS,
 .spectrum:lang(zh) .spectrum-Code--sizeS {
@@ -1117,6 +1199,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Code--sizeS,
    * .spectrum:lang(ko) .spectrum-Code--sizeS,
    * .spectrum:lang(zh) .spectrum-Code--sizeS */
+
     font-style: var(
         --spectrum-code-han-s-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -1136,6 +1219,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
     margin-top: 0;
 }
+
 .spectrum:lang(ja) .spectrum-Code--sizeXS,
 .spectrum:lang(ko) .spectrum-Code--sizeXS,
 .spectrum:lang(zh) .spectrum-Code--sizeXS {
@@ -1149,6 +1233,7 @@ governing permissions and limitations under the License.
     ); /* .spectrum:lang(ja) .spectrum-Code--sizeXS,
    * .spectrum:lang(ko) .spectrum-Code--sizeXS,
    * .spectrum:lang(zh) .spectrum-Code--sizeXS */
+
     font-style: var(
         --spectrum-code-han-xs-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -1168,6 +1253,7 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
     margin-top: 0;
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeXXXL,
 .spectrum:lang(ko) .spectrum-Body--sizeXXXL,
 .spectrum:lang(zh) .spectrum-Body--sizeXXXL {
@@ -1178,6 +1264,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Body--sizeXXXL,
    * .spectrum:lang(zh) .spectrum-Body--sizeXXXL */
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeXXL,
 .spectrum:lang(ko) .spectrum-Body--sizeXXL,
 .spectrum:lang(zh) .spectrum-Body--sizeXXL {
@@ -1188,6 +1275,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Body--sizeXXL,
    * .spectrum:lang(zh) .spectrum-Body--sizeXXL */
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeXL,
 .spectrum:lang(ko) .spectrum-Body--sizeXL,
 .spectrum:lang(zh) .spectrum-Body--sizeXL {
@@ -1198,6 +1286,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Body--sizeXL,
    * .spectrum:lang(zh) .spectrum-Body--sizeXL */
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeL,
 .spectrum:lang(ko) .spectrum-Body--sizeL,
 .spectrum:lang(zh) .spectrum-Body--sizeL {
@@ -1208,6 +1297,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Body--sizeL,
    * .spectrum:lang(zh) .spectrum-Body--sizeL */
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeM,
 .spectrum:lang(ko) .spectrum-Body--sizeM,
 .spectrum:lang(zh) .spectrum-Body--sizeM {
@@ -1218,6 +1308,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Body--sizeM,
    * .spectrum:lang(zh) .spectrum-Body--sizeM */
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeS,
 .spectrum:lang(ko) .spectrum-Body--sizeS,
 .spectrum:lang(zh) .spectrum-Body--sizeS {
@@ -1228,6 +1319,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Body--sizeS,
    * .spectrum:lang(zh) .spectrum-Body--sizeS */
 }
+
 .spectrum:lang(ja) .spectrum-Body--sizeXS,
 .spectrum:lang(ko) .spectrum-Body--sizeXS,
 .spectrum:lang(zh) .spectrum-Body--sizeXS {
@@ -1238,6 +1330,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Body--sizeXS,
    * .spectrum:lang(zh) .spectrum-Body--sizeXS */
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeXXXL,
 .spectrum:lang(ko) .spectrum-Heading--sizeXXXL,
 .spectrum:lang(zh) .spectrum-Heading--sizeXXXL {
@@ -1248,6 +1341,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--sizeXXXL,
    * .spectrum:lang(zh) .spectrum-Heading--sizeXXXL */
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeXXL,
 .spectrum:lang(ko) .spectrum-Heading--sizeXXL,
 .spectrum:lang(zh) .spectrum-Heading--sizeXXL {
@@ -1258,6 +1352,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--sizeXXL,
    * .spectrum:lang(zh) .spectrum-Heading--sizeXXL */
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeXL,
 .spectrum:lang(ko) .spectrum-Heading--sizeXL,
 .spectrum:lang(zh) .spectrum-Heading--sizeXL {
@@ -1268,6 +1363,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--sizeXL,
    * .spectrum:lang(zh) .spectrum-Heading--sizeXL */
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeL,
 .spectrum:lang(ko) .spectrum-Heading--sizeL,
 .spectrum:lang(zh) .spectrum-Heading--sizeL {
@@ -1278,6 +1374,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--sizeL,
    * .spectrum:lang(zh) .spectrum-Heading--sizeL */
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeM,
 .spectrum:lang(ko) .spectrum-Heading--sizeM,
 .spectrum:lang(zh) .spectrum-Heading--sizeM {
@@ -1288,6 +1385,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--sizeM,
    * .spectrum:lang(zh) .spectrum-Heading--sizeM */
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeS,
 .spectrum:lang(ko) .spectrum-Heading--sizeS,
 .spectrum:lang(zh) .spectrum-Heading--sizeS {
@@ -1298,6 +1396,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--sizeS,
    * .spectrum:lang(zh) .spectrum-Heading--sizeS */
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeXS,
 .spectrum:lang(ko) .spectrum-Heading--sizeXS,
 .spectrum:lang(zh) .spectrum-Heading--sizeXS {
@@ -1308,6 +1407,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--sizeXS,
    * .spectrum:lang(zh) .spectrum-Heading--sizeXS */
 }
+
 .spectrum:lang(ja) .spectrum-Heading--sizeXXS,
 .spectrum:lang(ko) .spectrum-Heading--sizeXXS,
 .spectrum:lang(zh) .spectrum-Heading--sizeXXS {
@@ -1318,6 +1418,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading--sizeXXS,
    * .spectrum:lang(zh) .spectrum-Heading--sizeXXS */
 }
+
 .spectrum:lang(ja) .spectrum-Heading-sizeXXXL--light,
 .spectrum:lang(ko) .spectrum-Heading-sizeXXXL--light,
 .spectrum:lang(zh) .spectrum-Heading-sizeXXXL--light {
@@ -1328,6 +1429,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading-sizeXXXL--light,
    * .spectrum:lang(zh) .spectrum-Heading-sizeXXXL--light */
 }
+
 .spectrum:lang(ja) .spectrum-Heading-sizeXXL--light,
 .spectrum:lang(ko) .spectrum-Heading-sizeXXL--light,
 .spectrum:lang(zh) .spectrum-Heading-sizeXXL--light {
@@ -1338,6 +1440,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading-sizeXXL--light,
    * .spectrum:lang(zh) .spectrum-Heading-sizeXXL--light */
 }
+
 .spectrum:lang(ja) .spectrum-Heading-sizeXL--light,
 .spectrum:lang(ko) .spectrum-Heading-sizeXL--light,
 .spectrum:lang(zh) .spectrum-Heading-sizeXL--light {
@@ -1348,6 +1451,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading-sizeXL--light,
    * .spectrum:lang(zh) .spectrum-Heading-sizeXL--light */
 }
+
 .spectrum:lang(ja) .spectrum-Heading-sizeL--light,
 .spectrum:lang(ko) .spectrum-Heading-sizeL--light,
 .spectrum:lang(zh) .spectrum-Heading-sizeL--light {
@@ -1358,6 +1462,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading-sizeL--light,
    * .spectrum:lang(zh) .spectrum-Heading-sizeL--light */
 }
+
 .spectrum:lang(ja) .spectrum-Heading-sizeXXXL--heavy,
 .spectrum:lang(ko) .spectrum-Heading-sizeXXXL--heavy,
 .spectrum:lang(zh) .spectrum-Heading-sizeXXXL--heavy {
@@ -1368,6 +1473,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading-sizeXXXL--heavy,
    * .spectrum:lang(zh) .spectrum-Heading-sizeXXXL--heavy */
 }
+
 .spectrum:lang(ja) .spectrum-Heading-sizeXXL--heavy,
 .spectrum:lang(ko) .spectrum-Heading-sizeXXL--heavy,
 .spectrum:lang(zh) .spectrum-Heading-sizeXXL--heavy {
@@ -1378,6 +1484,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading-sizeXXL--heavy,
    * .spectrum:lang(zh) .spectrum-Heading-sizeXXL--heavy */
 }
+
 .spectrum:lang(ja) .spectrum-Heading-sizeXL--heavy,
 .spectrum:lang(ko) .spectrum-Heading-sizeXL--heavy,
 .spectrum:lang(zh) .spectrum-Heading-sizeXL--heavy {
@@ -1388,6 +1495,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading-sizeXL--heavy,
    * .spectrum:lang(zh) .spectrum-Heading-sizeXL--heavy */
 }
+
 .spectrum:lang(ja) .spectrum-Heading-sizeL--heavy,
 .spectrum:lang(ko) .spectrum-Heading-sizeL--heavy,
 .spectrum:lang(zh) .spectrum-Heading-sizeL--heavy {
@@ -1398,6 +1506,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading-sizeL--heavy,
    * .spectrum:lang(zh) .spectrum-Heading-sizeL--heavy */
 }
+
 .spectrum:lang(ja) .spectrum-Heading-sizeXXXL--heading,
 .spectrum:lang(ko) .spectrum-Heading-sizeXXXL--heading,
 .spectrum:lang(zh) .spectrum-Heading-sizeXXXL--heading {
@@ -1408,6 +1517,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading-sizeXXXL--heading,
    * .spectrum:lang(zh) .spectrum-Heading-sizeXXXL--heading */
 }
+
 .spectrum:lang(ja) .spectrum-Heading-sizeXXL--heading,
 .spectrum:lang(ko) .spectrum-Heading-sizeXXL--heading,
 .spectrum:lang(zh) .spectrum-Heading-sizeXXL--heading {
@@ -1418,6 +1528,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading-sizeXXL--heading,
    * .spectrum:lang(zh) .spectrum-Heading-sizeXXL--heading */
 }
+
 .spectrum:lang(ja) .spectrum-Heading-sizeXL--heading,
 .spectrum:lang(ko) .spectrum-Heading-sizeXL--heading,
 .spectrum:lang(zh) .spectrum-Heading-sizeXL--heading {
@@ -1428,6 +1539,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading-sizeXL--heading,
    * .spectrum:lang(zh) .spectrum-Heading-sizeXL--heading */
 }
+
 .spectrum:lang(ja) .spectrum-Heading-sizeL--heading,
 .spectrum:lang(ko) .spectrum-Heading-sizeL--heading,
 .spectrum:lang(zh) .spectrum-Heading-sizeL--heading {
@@ -1438,6 +1550,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Heading-sizeL--heading,
    * .spectrum:lang(zh) .spectrum-Heading-sizeL--heading */
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeXL,
 .spectrum:lang(ko) .spectrum-Detail--sizeXL,
 .spectrum:lang(zh) .spectrum-Detail--sizeXL {
@@ -1448,6 +1561,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Detail--sizeXL,
    * .spectrum:lang(zh) .spectrum-Detail--sizeXL */
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeL,
 .spectrum:lang(ko) .spectrum-Detail--sizeL,
 .spectrum:lang(zh) .spectrum-Detail--sizeL {
@@ -1458,6 +1572,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Detail--sizeL,
    * .spectrum:lang(zh) .spectrum-Detail--sizeL */
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeM,
 .spectrum:lang(ko) .spectrum-Detail--sizeM,
 .spectrum:lang(zh) .spectrum-Detail--sizeM {
@@ -1468,6 +1583,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Detail--sizeM,
    * .spectrum:lang(zh) .spectrum-Detail--sizeM */
 }
+
 .spectrum:lang(ja) .spectrum-Detail--sizeS,
 .spectrum:lang(ko) .spectrum-Detail--sizeS,
 .spectrum:lang(zh) .spectrum-Detail--sizeS {
@@ -1478,6 +1594,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Detail--sizeS,
    * .spectrum:lang(zh) .spectrum-Detail--sizeS */
 }
+
 .spectrum:lang(ja) .spectrum-Code--sizeXL,
 .spectrum:lang(ko) .spectrum-Code--sizeXL,
 .spectrum:lang(zh) .spectrum-Code--sizeXL {
@@ -1488,6 +1605,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Code--sizeXL,
    * .spectrum:lang(zh) .spectrum-Code--sizeXL */
 }
+
 .spectrum:lang(ja) .spectrum-Code--sizeL,
 .spectrum:lang(ko) .spectrum-Code--sizeL,
 .spectrum:lang(zh) .spectrum-Code--sizeL {
@@ -1498,6 +1616,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Code--sizeL,
    * .spectrum:lang(zh) .spectrum-Code--sizeL */
 }
+
 .spectrum:lang(ja) .spectrum-Code--sizeM,
 .spectrum:lang(ko) .spectrum-Code--sizeM,
 .spectrum:lang(zh) .spectrum-Code--sizeM {
@@ -1508,6 +1627,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Code--sizeM,
    * .spectrum:lang(zh) .spectrum-Code--sizeM */
 }
+
 .spectrum:lang(ja) .spectrum-Code--sizeS,
 .spectrum:lang(ko) .spectrum-Code--sizeS,
 .spectrum:lang(zh) .spectrum-Code--sizeS {
@@ -1518,6 +1638,7 @@ governing permissions and limitations under the License.
    * .spectrum:lang(ko) .spectrum-Code--sizeS,
    * .spectrum:lang(zh) .spectrum-Code--sizeS */
 }
+
 .spectrum:lang(ja) .spectrum-Code--sizeXS,
 .spectrum:lang(ko) .spectrum-Code--sizeXS,
 .spectrum:lang(zh) .spectrum-Code--sizeXS {
