@@ -77,15 +77,14 @@ describe('Overlays', () => {
                     <div id="overlay-content">
                         <sp-popover
                             id="outer-popover"
-                            dialog
                             slot="click-content"
                             direction="bottom"
                             tip
                             open
                         >
-                            <div class="options-popover-content">
+                            <sp-dialog class="options-popover-content">
                                 A popover message
-                            </div>
+                            </sp-dialog>
                         </sp-popover>
                         <div id="hover-1" class="hover-content">
                             Hover message

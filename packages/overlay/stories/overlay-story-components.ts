@@ -286,23 +286,24 @@ class RecursivePopover extends LitElement {
                     Open Popover
                 </sp-button>
                 <sp-popover
-                    dialog
                     slot="click-content"
                     direction="${this.placement}"
                     tip
                     open
                 >
-                    ${this.depth < MAX_DEPTH
-                        ? html`
-                              <recursive-popover
-                                  position="${this.placement}"
-                                  depth="${this.depth + 1}"
-                                  tabindex="0"
-                              ></recursive-popover>
-                          `
-                        : html`
-                              <div>Maximum Depth</div>
-                          `}
+                    <sp-dialog size="s" no-divider>
+                        ${this.depth < MAX_DEPTH
+                            ? html`
+                                  <recursive-popover
+                                      position="${this.placement}"
+                                      depth="${this.depth + 1}"
+                                      tabindex="0"
+                                  ></recursive-popover>
+                              `
+                            : html`
+                                  <div>Maximum Depth</div>
+                              `}
+                    </sp-dialog>
                 </sp-popover>
             </overlay-trigger>
         `;
@@ -321,11 +322,13 @@ export class PopoverContent extends LitElement {
         return html`
             <overlay-trigger>
                 <sp-button slot="trigger">Open me</sp-button>
-                <sp-popover slot="click-content" direction="bottom" dialog>
-                    <p>This is all the content.</p>
-                    <p>This is all the content.</p>
-                    <p>This is all the content.</p>
-                    <p>This is all the content.</p>
+                <sp-popover slot="click-content" direction="bottom">
+                    <sp-dialog no-divider>
+                        <p>This is all the content.</p>
+                        <p>This is all the content.</p>
+                        <p>This is all the content.</p>
+                        <p>This is all the content.</p>
+                    </sp-dialog>
                 </sp-popover>
             </overlay-trigger>
         `;

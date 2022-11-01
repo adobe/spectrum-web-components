@@ -13,6 +13,8 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/slider/sp-slider.js';
 import '@spectrum-web-components/slider/sp-slider-handle.js';
+import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/dialog/sp-dialog.js';
 import {
     Slider,
     SliderHandle,
@@ -464,18 +466,20 @@ export const Quiet = (args: StoryArgs = {}): TemplateResult => {
 
 export const inPopover = (args: StoryArgs = {}): TemplateResult => {
     return html`
-        <sp-popover open dialog style="min-width: 0">
-            <sp-slider
-                editable
-                hide-stepper
-                quiet
-                value="5"
-                step="0.5"
-                min="0"
-                max="20"
-                label="Intensity"
-                ...=${spreadProps(args)}
-            ></sp-slider>
+        <sp-popover open style="min-width: 0">
+            <sp-dialog no-divider>
+                <sp-slider
+                    editable
+                    hide-stepper
+                    quiet
+                    value="5"
+                    step="0.5"
+                    min="0"
+                    max="20"
+                    label="Intensity"
+                    ...=${spreadProps(args)}
+                ></sp-slider>
+            </sp-dialog>
         </sp-popover>
     `;
 };

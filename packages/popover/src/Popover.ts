@@ -14,6 +14,7 @@ import {
     CSSResultArray,
     html,
     nothing,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -60,15 +61,11 @@ export class Popover extends SpectrumElement {
     protected renderTip(): TemplateResult {
         return html`
             <div id="tip">
-                <svg
-                    xmlns="http://www.w3.org/svg/2000"
-                    class="tip"
-                    viewBox="0 0 24 12"
-                >
-                    <path
-                        class="triangle"
-                        d="M 0.7071067811865476 0 L 11.414213562373096 10.707106781186548 L 22.121320343559645 0"
-                    ></path>
+                <svg class="tip block" viewBox="0 -0.5 16 9">
+                    <path class="triangle" d="M-1,-1 8,8 17,-1"></path>
+                </svg>
+                <svg class="tip inline" viewBox="0 -0.5 9 16">
+                    <path class="triangle" d="M-1,-1 8,8 -1,17"></path>
                 </svg>
             </div>
         `;
@@ -102,6 +99,23 @@ export class Popover extends SpectrumElement {
         if (tipElement) {
             event.detail.overlayContentTipElement = tipElement;
         }
+    }
+
+    protected override update(changes: PropertyValues): void {
+        if (window.__swc.DEBUG) {
+            if (changes.has('dialog') && this.dialog) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> no longer supports the "dialog" attribute. Please slot an <sp-dialog> element into the <${this.localName}> instead.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/popover/#dialog-popovers',
+                    {
+                        type: 'api',
+                        level: 'deprecation',
+                    }
+                );
+            }
+        }
+        super.update(changes);
     }
 
     protected override render(): TemplateResult {

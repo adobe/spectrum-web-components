@@ -23,44 +23,62 @@ governing permissions and limitations under the License.
     overscroll-behavior: contain;
 }
 
-/* provide dimensions */
-
-.tip {
-    width: var(--sp-popover-tip-size);
-    height: calc(var(--sp-popover-tip-size) / 2);
-    position: absolute;
-    left: 0;
-}
-
-/* override #tip orientation so we can orient on .tip instead */
-
-:host([placement*='right']) #tip {
-    transform: none;
-}
-
-:host([placement*='bottom']) #tip {
-    transform: none;
-}
-
 /* orient the tip */
 
-:host([placement*='top']) .tip {
-    top: 100%;
+:host([placement*='left']) #tip[style],
+:host([placement*='right']) #tip[style] {
+    bottom: auto;
 }
 
-:host([placement*='bottom']) .tip {
-    bottom: 100%;
-    transform: scaleY(-1);
+:host([placement*='top']) #tip[style],
+:host([placement*='bottom']) #tip[style] {
+    right: auto;
 }
 
-:host([placement*='left']) .tip {
-    transform-origin: 100% 0%;
-    transform: rotate(-90deg) translateY(-200%);
+:host([placement*='left']) #tip,
+:host([placement*='right']) #tip {
+    width: var(
+        --mod-popover-pointer-width,
+        var(--spectrum-popover-pointer-width)
+    ) !important;
+    height: var(
+        --mod-popover-pointer-width,
+        var(--spectrum-popover-pointer-width)
+    ) !important;
 }
 
-:host([placement*='right']) .tip {
-    transform-origin: 0% 0%;
-    transform: rotate(90deg);
+:host([placement*='top']) #tip,
+:host([placement*='bottom']) #tip {
+    width: var(
+        --mod-popover-pointer-width,
+        var(--spectrum-popover-pointer-width)
+    ) !important;
+    height: var(
+        --mod-popover-pointer-width,
+        var(--spectrum-popover-pointer-width)
+    ) !important;
+}
+
+.block {
+    width: 100%;
+    height: 50%;
+    display: block;
+}
+
+.inline {
+    width: 50%;
+    height: 100%;
+    display: block;
+}
+
+:host([placement*='left']) .block,
+:host([placement*='right']) .block {
+    display: none;
+}
+
+:host([placement*='top']) .inline,
+:host([placement*='bottom']) .inline {
+    display: none;
 }
 
 ::slotted(.visually-hidden) {
@@ -74,4 +92,19 @@ governing permissions and limitations under the License.
     position: absolute;
     width: 1px;
     white-space: nowrap;
+}
+
+::slotted(sp-menu) {
+    margin: 0;
+}
+
+:host([dialog]) {
+    min-width: var(
+        --mod-popover-dialog-min-width,
+        var(--spectrum-popover-dialog-min-width, 270px)
+    );
+    padding: var(
+        --mod-popover-dialog-padding,
+        var(--spectrum-popover-dialog-padding, 30px 29px)
+    );
 }

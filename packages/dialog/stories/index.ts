@@ -29,9 +29,10 @@ class OverlayTriggerReady extends HTMLElement {
 
     async setup(): Promise<void> {
         await nextFrame();
+        await nextFrame();
 
         const overlay = document.querySelector(
-            `overlay-trigger`
+            `overlay-trigger[open]`
         ) as HTMLElement;
         overlay.addEventListener('sp-opened', this.handleTriggerOpened);
     }
