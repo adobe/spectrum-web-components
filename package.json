@@ -179,7 +179,7 @@
         "stylelint": "^14.9.1",
         "stylelint-config-prettier": "^9.0.3",
         "stylelint-config-standard": "^26.0.0",
-        "tachometer": "^0.5.10",
+        "tachometer": "^0.7.0",
         "tar-stream": "^2.2.0",
         "typescript": "^4.7.2",
         "yargs": "^17.2.1"
