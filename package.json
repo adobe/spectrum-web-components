@@ -95,7 +95,7 @@
     "devDependencies": {
         "@commitlint/cli": "^17.0.3",
         "@commitlint/config-conventional": "^17.0.0",
-        "@commitlint/config-lerna-scopes": "^15.0.0",
+        "@commitlint/config-lerna-scopes": "^17.2.1",
         "@custom-elements-manifest/analyzer": "^0.6.3",
         "@netlify/build": "^27.0.2",
         "@open-wc/dev-server-hmr": "^0.1.3",
