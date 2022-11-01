@@ -59,7 +59,6 @@ const initTest = async (
                     </sp-button>
                     <sp-popover
                         id="outer-popover"
-                        dialog
                         slot="click-content"
                         direction="bottom"
                         tip
@@ -67,7 +66,9 @@ const initTest = async (
                         tabindex="0"
                         placement="top"
                     >
-                        This is the overlay content.
+                        <sp-dialog no-divider>
+                            This is the overlay content.
+                        </sp-dialog>
                     </sp-popover>
                 </overlay-trigger>
             </div>

@@ -10,7 +10,12 @@ governing permissions and limitations under the License.
 */
 import '@spectrum-web-components/popover/sp-popover.js';
 import { html, TemplateResult } from '@spectrum-web-components/base';
+import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { Placement } from '@spectrum-web-components/overlay';
+import '@spectrum-web-components/dialog/sp-dialog.js';
+import '@spectrum-web-components/button/sp-button.js';
+import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { overlayTriggerDecorator } from '../../dialog/stories/index.js';
 
 export default {
     component: 'sp-popover',
@@ -97,17 +102,13 @@ const Template = ({ tip, placement, open }: StoryArgs): TemplateResult => {
                 style=" max-width: 320px"
                 .tip="${tip}"
             >
-                <div
-                    style="padding-bottom: 30px; font-size: 18px; font-weight: 700"
-                >
-                    Popover Title
-                </div>
-                <div style="font-size: 14px">
+                <sp-dialog size="s">
+                    <h2 slot="heading">Popover Title</h2>
                     Cupcake ipsum dolor sit amet jelly beans. Chocolate jelly
                     caramels. Icing soufflé chupa chups donut cheesecake.
                     Jelly-o chocolate cake sweet roll cake danish candy biscuit
                     halvah
-                </div>
+                </sp-dialog>
             </sp-popover>
         </div>
     `;
@@ -133,3 +134,77 @@ dialogLeft.args = {
     tip: true,
     placement: 'left',
 };
+
+const overlayStyles = html`
+    <style>
+        html,
+        body,
+        #root,
+        #root-inner,
+        sp-story-decorator {
+            height: 100%;
+            margin: 0;
+        }
+
+        sp-story-decorator > div {
+            display: contents;
+        }
+
+        sp-story-decorator::part(container) {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        overlay-trigger {
+            flex: none;
+            margin: 24px 0;
+        }
+    </style>
+`;
+
+const overlaid = (openPlacement: Placement): TemplateResult => {
+    return html`
+        ${overlayStyles}
+        ${(['bottom', 'left', 'right', 'top'] as Placement[]).map(
+            (placement) => {
+                return html`
+                    <overlay-trigger
+                        placement="${placement}-start"
+                        open=${ifDefined(
+                            openPlacement === placement ? 'click' : undefined
+                        )}
+                    >
+                        <sp-button
+                            label="${placement}-start test"
+                            slot="trigger"
+                        >
+                            Click for ${placement}-start popover
+                        </sp-button>
+                        <sp-popover tip slot="click-content">
+                            <sp-dialog>
+                                <h2 slot="heading">
+                                    Popover ${placement}-start
+                                </h2>
+                                This popover is on the ${placement}-start of its
+                                button.
+                            </sp-dialog>
+                        </sp-popover>
+                    </overlay-trigger>
+                `;
+            }
+        )}
+    `;
+};
+
+export const overlaidTop = (): TemplateResult => overlaid('top');
+overlaidTop.decorators = [overlayTriggerDecorator];
+export const overlaidRight = (): TemplateResult => overlaid('right');
+overlaidRight.decorators = [overlayTriggerDecorator];
+export const overlaidBottom = (): TemplateResult => overlaid('bottom');
+overlaidBottom.decorators = [overlayTriggerDecorator];
+export const overlaidLeft = (): TemplateResult => overlaid('left');
+overlaidLeft.decorators = [overlayTriggerDecorator];

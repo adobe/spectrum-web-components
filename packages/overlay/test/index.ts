@@ -83,14 +83,16 @@ export const runOverlayTriggerTests = (): void => {
                                 </sp-button>
                                 <sp-popover
                                     id="outer-popover"
-                                    dialog
                                     slot="click-content"
                                     direction="bottom"
                                     tip
                                     open
                                     tabindex="0"
                                 >
-                                    <div class="options-popover-content">
+                                    <sp-dialog
+                                        no-divider
+                                        class="options-popover-content"
+                                    >
                                         <overlay-trigger
                                             id="inner-trigger"
                                             placement="bottom"
@@ -103,21 +105,21 @@ export const runOverlayTriggerTests = (): void => {
                                             </sp-button>
                                             <sp-popover
                                                 id="inner-popover"
-                                                dialog
                                                 slot="click-content"
                                                 direction="bottom"
                                                 tip
                                                 open
                                                 tabindex="0"
                                             >
-                                                <div
+                                                <sp-dialog
+                                                    no-divider
                                                     class="options-popover-content"
                                                 >
                                                     Another Popover
-                                                </div>
+                                                </sp-dialog>
                                             </sp-popover>
                                         </overlay-trigger>
-                                    </div>
+                                    </sp-dialog>
                                 </sp-popover>
                                 <div
                                     id="hover-content"
@@ -701,39 +703,51 @@ export const runOverlayTriggerTests = (): void => {
                         <sp-button slot="trigger" variant="accent">
                             Toggle Dialog
                         </sp-button>
-                        <sp-popover dialog slot="click-content">
-                            <overlay-trigger>
-                                <sp-button slot="trigger" variant="primary">
-                                    Toggle Dialog
-                                </sp-button>
-                                <sp-popover dialog slot="click-content">
-                                    <overlay-trigger type="modal">
-                                        <sp-button
-                                            slot="trigger"
-                                            variant="secondary"
-                                        >
-                                            Toggle Dialog
-                                        </sp-button>
-                                        <sp-popover dialog slot="click-content">
-                                            <p>
-                                                When you get this deep, this
-                                                ActiveOverlay should be the only
-                                                one in [slot="open"].
-                                            </p>
-                                            <p>
-                                                All of the rest of the
-                                                ActiveOverlay elements should
-                                                have had their [slot] attribute
-                                                removed.
-                                            </p>
-                                            <p>
-                                                Closing this ActiveOverlay
-                                                should replace them...
-                                            </p>
-                                        </sp-popover>
-                                    </overlay-trigger>
-                                </sp-popover>
-                            </overlay-trigger>
+                        <sp-popover slot="click-content">
+                            <sp-dialog no-divider>
+                                <overlay-trigger>
+                                    <sp-button slot="trigger" variant="primary">
+                                        Toggle Dialog
+                                    </sp-button>
+                                    <sp-popover slot="click-content">
+                                        <sp-dialog no-divider>
+                                            <overlay-trigger type="modal">
+                                                <sp-button
+                                                    slot="trigger"
+                                                    variant="secondary"
+                                                >
+                                                    Toggle Dialog
+                                                </sp-button>
+                                                <sp-popover
+                                                    slot="click-content"
+                                                >
+                                                    <sp-dialog no-divider>
+                                                        <p>
+                                                            When you get this
+                                                            deep, this
+                                                            ActiveOverlay should
+                                                            be the only one in
+                                                            [slot="open"].
+                                                        </p>
+                                                        <p>
+                                                            All of the rest of
+                                                            the ActiveOverlay
+                                                            elements should have
+                                                            had their [slot]
+                                                            attribute removed.
+                                                        </p>
+                                                        <p>
+                                                            Closing this
+                                                            ActiveOverlay should
+                                                            replace them...
+                                                        </p>
+                                                    </sp-dialog>
+                                                </sp-popover>
+                                            </overlay-trigger>
+                                        </sp-dialog>
+                                    </sp-popover>
+                                </overlay-trigger>
+                            </sp-dialog>
                         </sp-popover>
                     </overlay-trigger>
                 `);

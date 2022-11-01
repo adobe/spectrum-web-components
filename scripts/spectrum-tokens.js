@@ -62,6 +62,7 @@ const tokenPackages = [
     'colorloupe',
     'illustratedmessage',
     'slider',
+    'popover',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {

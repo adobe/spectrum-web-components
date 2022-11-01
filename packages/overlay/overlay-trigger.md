@@ -45,8 +45,8 @@ Here a default `<overlay-trigger>` manages content that is triggered by click an
 ```html
 <overlay-trigger id="trigger" placement="bottom" offset="6">
     <sp-button variant="primary" slot="trigger">Button popover</sp-button>
-    <sp-popover dialog slot="click-content" direction="bottom" tip>
-        <div class="options-popover-content">
+    <sp-popover slot="click-content" direction="bottom" tip>
+        <sp-dialog no-divider class="options-popover-content">
             <sp-slider
                 value="5"
                 step="0.5"
@@ -55,7 +55,7 @@ Here a default `<overlay-trigger>` manages content that is triggered by click an
                 label="Awesomeness"
             ></sp-slider>
             <sp-button>Press me</sp-button>
-        </div>
+        </sp-dialog>
     </sp-popover>
     <sp-tooltip slot="hover-content" delayed>Tooltip</sp-tooltip>
     <sp-popover slot="longpress-content" tip>

@@ -156,42 +156,44 @@ const template = ({
             type=${ifDefined(type)}
         >
             <sp-button variant="primary" slot="trigger">Show Popover</sp-button>
-            <sp-popover
-                dialog
-                slot="click-content"
-                placement="${placement}"
-                tip
-            >
-                <div class="options-popover-content">
-                    <sp-slider
-                        value="5"
-                        step="0.5"
-                        min="0"
-                        max="20"
-                        label="Awesomeness"
-                    ></sp-slider>
-                    <div id="styled-div">
-                        The background of this div should be blue
-                    </div>
-                    <overlay-trigger id="inner-trigger" placement="bottom">
-                        <sp-button slot="trigger">Press Me</sp-button>
-                        <sp-popover
-                            dialog
-                            slot="click-content"
-                            placement="bottom"
-                            tip
-                            open
-                        >
-                            <div class="options-popover-content">
-                                Another Popover
-                            </div>
-                        </sp-popover>
+            <sp-popover slot="click-content" placement="${placement}" tip>
+                <sp-dialog no-divider>
+                    <div class="options-popover-content">
+                        <sp-slider
+                            value="5"
+                            step="0.5"
+                            min="0"
+                            max="20"
+                            label="Awesomeness"
+                        ></sp-slider>
+                        <div id="styled-div">
+                            The background of this div should be blue
+                        </div>
+                        <overlay-trigger id="inner-trigger" placement="bottom">
+                            <sp-button slot="trigger">Press Me</sp-button>
+                            <sp-popover
+                                slot="click-content"
+                                placement="bottom"
+                                tip
+                                open
+                            >
+                                <sp-dialog size="s" no-divider>
+                                    <div class="options-popover-content">
+                                        Another Popover
+                                    </div>
+                                </sp-dialog>
+                            </sp-popover>
 
-                        <sp-tooltip slot="hover-content" delayed tip="bottom">
-                            Click to open another popover.
-                        </sp-tooltip>
-                    </overlay-trigger>
-                </div>
+                            <sp-tooltip
+                                slot="hover-content"
+                                delayed
+                                tip="bottom"
+                            >
+                                Click to open another popover.
+                            </sp-tooltip>
+                        </overlay-trigger>
+                    </div>
+                </sp-dialog>
             </sp-popover>
             <sp-tooltip
                 slot="hover-content"
@@ -377,19 +379,21 @@ export const deep = (): TemplateResult => html`
         <sp-button variant="primary" slot="trigger">
             Open popover 1 with buttons + selfmanaged Tooltips
         </sp-button>
-        <sp-popover dialog slot="click-content" direction="bottom" tip open>
-            <sp-action-button>
-                <sp-tooltip self-managed placement="bottom" offset="0">
-                    My Tooltip 1
-                </sp-tooltip>
-                A
-            </sp-action-button>
-            <sp-action-button>
-                <sp-tooltip self-managed placement="bottom" offset="0">
-                    My Tooltip 1
-                </sp-tooltip>
-                B
-            </sp-action-button>
+        <sp-popover slot="click-content" direction="bottom" tip open>
+            <sp-dialog size="s" no-divider>
+                <sp-action-button>
+                    <sp-tooltip self-managed placement="bottom" offset="0">
+                        My Tooltip 1
+                    </sp-tooltip>
+                    A
+                </sp-action-button>
+                <sp-action-button>
+                    <sp-tooltip self-managed placement="bottom" offset="0">
+                        My Tooltip 1
+                    </sp-tooltip>
+                    B
+                </sp-action-button>
+            </sp-dialog>
         </sp-popover>
     </overlay-trigger>
 
@@ -397,9 +401,11 @@ export const deep = (): TemplateResult => html`
         <sp-button variant="primary" slot="trigger">
             Open popover 2 with buttons without ToolTips
         </sp-button>
-        <sp-popover dialog slot="click-content" direction="bottom" tip open>
-            <sp-action-button>X</sp-action-button>
-            <sp-action-button>Y</sp-action-button>
+        <sp-popover slot="click-content" direction="bottom" tip open>
+            <sp-dialog size="s" no-divider>
+                <sp-action-button>X</sp-action-button>
+                <sp-action-button>Y</sp-action-button>
+            </sp-dialog>
         </sp-popover>
     </overlay-trigger>
 `;
@@ -591,47 +597,47 @@ export const updated = (): TemplateResult => {
                 <sp-tooltip slot="hover-content" delayed tip="bottom">
                     Click to open popover
                 </sp-tooltip>
-                <sp-popover
-                    dialog
-                    slot="click-content"
-                    position="bottom"
-                    tip
-                    open
-                >
-                    <div class="options-popover-content">
-                        <sp-slider
-                            value="5"
-                            step="0.5"
-                            min="0"
-                            max="20"
-                            label="Awesomeness"
-                        ></sp-slider>
-                        <div id="styled-div">
-                            The background of this div should be blue
-                        </div>
-                        <overlay-trigger id="inner-trigger" placement="bottom">
-                            <sp-button slot="trigger">Press Me</sp-button>
-                            <sp-popover
-                                dialog
-                                slot="click-content"
+                <sp-popover slot="click-content" position="bottom" tip open>
+                    <sp-dialog size="s" no-divider>
+                        <div class="options-popover-content">
+                            <sp-slider
+                                value="5"
+                                step="0.5"
+                                min="0"
+                                max="20"
+                                label="Awesomeness"
+                            ></sp-slider>
+                            <div id="styled-div">
+                                The background of this div should be blue
+                            </div>
+                            <overlay-trigger
+                                id="inner-trigger"
                                 placement="bottom"
-                                tip
-                                open
                             >
-                                <div class="options-popover-content">
-                                    Another Popover
-                                </div>
-                            </sp-popover>
+                                <sp-button slot="trigger">Press Me</sp-button>
+                                <sp-popover
+                                    slot="click-content"
+                                    placement="bottom"
+                                    tip
+                                    open
+                                >
+                                    <sp-dialog size="s" no-divider>
+                                        <div class="options-popover-content">
+                                            Another Popover
+                                        </div>
+                                    </sp-dialog>
+                                </sp-popover>
 
-                            <sp-tooltip
-                                slot="hover-content"
-                                delayed
-                                tip="bottom"
-                            >
-                                Click to open another popover.
-                            </sp-tooltip>
-                        </overlay-trigger>
-                    </div>
+                                <sp-tooltip
+                                    slot="hover-content"
+                                    delayed
+                                    tip="bottom"
+                                >
+                                    Click to open another popover.
+                                </sp-tooltip>
+                            </overlay-trigger>
+                        </div>
+                    </sp-dialog>
                 </sp-popover>
             </overlay-trigger>
         </overlay-drag>
@@ -872,34 +878,45 @@ export const superComplexModal = (): TemplateResult => {
     return html`
         <overlay-trigger type="modal" placement="none">
             <sp-button slot="trigger" variant="accent">Toggle Dialog</sp-button>
-            <sp-popover dialog slot="click-content">
-                <overlay-trigger>
-                    <sp-button slot="trigger" variant="primary">
-                        Toggle Dialog
-                    </sp-button>
-                    <sp-popover dialog slot="click-content">
-                        <overlay-trigger type="modal">
-                            <sp-button slot="trigger" variant="secondary">
-                                Toggle Dialog
-                            </sp-button>
-                            <sp-popover dialog slot="click-content">
-                                <p>
-                                    When you get this deep, this ActiveOverlay
-                                    should be the only one in [slot="open"].
-                                </p>
-                                <p>
-                                    All of the rest of the ActiveOverlay
-                                    elements should have had their [slot]
-                                    attribute removed.
-                                </p>
-                                <p>
-                                    Closing this ActiveOverlay should replace
-                                    them...
-                                </p>
-                            </sp-popover>
-                        </overlay-trigger>
-                    </sp-popover>
-                </overlay-trigger>
+            <sp-popover slot="click-content">
+                <sp-dialog size="s">
+                    <overlay-trigger>
+                        <sp-button slot="trigger" variant="primary">
+                            Toggle Dialog
+                        </sp-button>
+                        <sp-popover slot="click-content">
+                            <sp-dialog size="s" no-divider>
+                                <overlay-trigger type="modal">
+                                    <sp-button
+                                        slot="trigger"
+                                        variant="secondary"
+                                    >
+                                        Toggle Dialog
+                                    </sp-button>
+                                    <sp-popover slot="click-content">
+                                        <sp-dialog size="s" no-divider>
+                                            <p>
+                                                When you get this deep, this
+                                                ActiveOverlay should be the only
+                                                one in [slot="open"].
+                                            </p>
+                                            <p>
+                                                All of the rest of the
+                                                ActiveOverlay elements should
+                                                have had their [slot] attribute
+                                                removed.
+                                            </p>
+                                            <p>
+                                                Closing this ActiveOverlay
+                                                should replace them...
+                                            </p>
+                                        </sp-dialog>
+                                    </sp-popover>
+                                </overlay-trigger>
+                            </sp-dialog>
+                        </sp-popover>
+                    </overlay-trigger>
+                </sp-dialog>
             </sp-popover>
         </overlay-trigger>
     `;
@@ -1097,8 +1114,10 @@ export const definedOverlayElement = (): TemplateResult => {
     return html`
         <overlay-trigger placement="bottom" type="modal">
             <sp-button variant="primary" slot="trigger">Open popover</sp-button>
-            <sp-popover slot="click-content" direction="bottom" dialog>
-                <popover-content></popover-content>
+            <sp-popover slot="click-content" direction="bottom">
+                <sp-dialog no-divider>
+                    <popover-content></popover-content>
+                </sp-dialog>
             </sp-popover>
         </overlay-trigger>
     `;
@@ -1112,15 +1131,19 @@ export const modalWithinNonModal = (): TemplateResult => {
             <sp-button variant="primary" slot="trigger">
                 Open inline overlay
             </sp-button>
-            <sp-popover slot="click-content" dialog>
-                <overlay-trigger type="modal">
-                    <sp-button variant="primary" slot="trigger">
-                        Open modal overlay
-                    </sp-button>
-                    <sp-popover slot="click-content" dialog>
-                        Modal overlay
-                    </sp-popover>
-                </overlay-trigger>
+            <sp-popover slot="click-content">
+                <sp-dialog size="s" no-divider>
+                    <overlay-trigger type="modal">
+                        <sp-button variant="primary" slot="trigger">
+                            Open modal overlay
+                        </sp-button>
+                        <sp-popover slot="click-content">
+                            <sp-dialog size="s" no-divider>
+                                Modal overlay
+                            </sp-dialog>
+                        </sp-popover>
+                    </overlay-trigger>
+                </sp-dialog>
             </sp-popover>
         </overlay-trigger>
     `;
@@ -1139,10 +1162,12 @@ export const updating = (): TemplateResult => {
             <sp-button variant="primary" slot="trigger">
                 Open inline overlay
             </sp-button>
-            <sp-popover slot="click-content" dialog>
-                <sp-button variant="primary" @click=${update}>
-                    Update trigger location.
-                </sp-button>
+            <sp-popover slot="click-content">
+                <sp-dialog size="s" no-divider>
+                    <sp-button variant="primary" @click=${update}>
+                        Update trigger location.
+                    </sp-button>
+                </sp-dialog>
             </sp-popover>
         </overlay-trigger>
     `;
@@ -1162,68 +1187,66 @@ export const accordion = (): TemplateResult => {
                 Open overlay w/ accordion
             </sp-button>
             <div slot="click-content" style="max-height: 100%;display: flex;">
-                <sp-popover
-                    open
-                    dialog
-                    style="overflow-y: scroll;position: static;"
-                >
-                    <sp-accordion
-                        allow-multiple
-                        @sp-accordion-item-toggle=${handleToggle}
-                    >
-                        <sp-accordion-item label="Some things">
-                            <p>
-                                Thing
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                more things
-                            </p>
-                        </sp-accordion-item>
-                        <sp-accordion-item label="Other things">
-                            <p>
-                                Thing
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                more things
-                            </p>
-                        </sp-accordion-item>
-                        <sp-accordion-item label="More things">
-                            <p>
-                                Thing
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                more things
-                            </p>
-                        </sp-accordion-item>
-                        <sp-accordion-item label="Additional things">
-                            <p>
-                                Thing
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                more things
-                            </p>
-                        </sp-accordion-item>
-                    </sp-accordion>
+                <sp-popover open style="overflow-y: scroll;position: static;">
+                    <sp-dialog size="s" no-divider>
+                        <sp-accordion
+                            allow-multiple
+                            @sp-accordion-item-toggle=${handleToggle}
+                        >
+                            <sp-accordion-item label="Some things">
+                                <p>
+                                    Thing
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    more things
+                                </p>
+                            </sp-accordion-item>
+                            <sp-accordion-item label="Other things">
+                                <p>
+                                    Thing
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    more things
+                                </p>
+                            </sp-accordion-item>
+                            <sp-accordion-item label="More things">
+                                <p>
+                                    Thing
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    more things
+                                </p>
+                            </sp-accordion-item>
+                            <sp-accordion-item label="Additional things">
+                                <p>
+                                    Thing
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    <br />
+                                    more things
+                                </p>
+                            </sp-accordion-item>
+                        </sp-accordion>
+                    </sp-dialog>
                 </sp-popover>
             </div>
         </overlay-trigger>
