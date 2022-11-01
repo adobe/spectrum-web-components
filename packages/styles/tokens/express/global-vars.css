@@ -388,3 +388,129 @@ governing permissions and limitations under the License.
         -1px * var(--spectrum-spacing-50)
     );
 }
+
+@media (forced-colors: active) {
+}
+
+@media (forced-colors: active) {
+    .spectrum-Tag.is-disabled {
+        --system-spectrum-tag-clear-button-spacing-inline-end: var(
+            --spectrum-component-pill-edge-to-visual-100
+        );
+        --system-spectrum-tag-spacing-inline-start: var(
+            --spectrum-component-edge-to-visual-100
+        );
+        --system-spectrum-tag-border-color: var(--spectrum-gray-300);
+        --system-spectrum-tag-border-color-hover: var(--spectrum-gray-400);
+        --system-spectrum-tag-border-color-active: var(--spectrum-gray-500);
+        --system-spectrum-tag-border-color-focus: var(--spectrum-gray-400);
+        --system-spectrum-tag-background-color: transparent;
+        --system-spectrum-tag-background-color-hover: var(--spectrum-gray-300);
+        --system-spectrum-tag-background-color-active: var(--spectrum-gray-400);
+        --system-spectrum-tag-background-color-focus: var(--spectrum-gray-300);
+        --system-spectrum-tag-content-color: var(
+            --spectrum-neutral-content-color-default
+        );
+        --system-spectrum-tag-content-color-hover: var(
+            --spectrum-neutral-content-color-hover
+        );
+        --system-spectrum-tag-content-color-active: var(
+            --spectrum-neutral-content-color-down
+        );
+        --system-spectrum-tag-content-color-focus: var(
+            --spectrum-neutral-content-color-key-focus
+        );
+        --system-spectrum-tag-border-color-selected: var(
+            --spectrum-neutral-background-color-default
+        );
+        --system-spectrum-tag-border-color-selected-hover: var(
+            --spectrum-neutral-background-color-hover
+        );
+        --system-spectrum-tag-border-color-selected-active: var(
+            --spectrum-neutral-background-color-down
+        );
+        --system-spectrum-tag-border-color-selected-focus: var(
+            --spectrum-neutral-background-color-key-focus
+        );
+        --system-spectrum-tag-background-color-selected: var(
+            --spectrum-neutral-background-color-default
+        );
+        --system-spectrum-tag-background-color-selected-hover: var(
+            --spectrum-neutral-background-color-hover
+        );
+        --system-spectrum-tag-background-color-selected-active: var(
+            --spectrum-neutral-background-color-down
+        );
+        --system-spectrum-tag-background-color-selected-focus: var(
+            --spectrum-neutral-background-color-key-focus
+        );
+        --system-spectrum-tag-border-color-disabled: var(
+            --spectrum-disabled-border-color
+        );
+        --system-spectrum-tag-background-color-disabled: transparent;
+        --system-spectrum-tag-sizes-spacing-inline-start: var(
+            --spectrum-component-pill-edge-to-visual-75
+        );
+        --system-spectrum-tag-sizes-label-spacing-inline-end: var(
+            --spectrum-component-pill-edge-to-text-75
+        );
+        --system-spectrum-tag-sizes-corner-radius: var(
+            --spectrum-component-height-75
+        );
+        --system-spectrum-tag-sizes-clear-button-spacing-inline-end: var(
+            --spectrum-component-pill-edge-to-visual-75
+        );
+        --system-spectrum-tag-sizem-spacing-inline-start: var(
+            --spectrum-component-pill-edge-to-visual-100
+        );
+        --system-spectrum-tag-sizem-label-spacing-inline-end: var(
+            --spectrum-component-pill-edge-to-text-100
+        );
+        --system-spectrum-tag-sizem-corner-radius: var(
+            --spectrum-component-height-100
+        );
+        --system-spectrum-tag-sizem-clear-button-spacing-inline-end: var(
+            --spectrum-component-pill-edge-to-visual-100
+        );
+        --system-spectrum-tag-sizel-spacing-inline-start: var(
+            --spectrum-component-pill-edge-to-visual-200
+        );
+        --system-spectrum-tag-sizel-label-spacing-inline-end: var(
+            --spectrum-component-pill-edge-to-text-200
+        );
+        --system-spectrum-tag-sizel-corner-radius: var(
+            --spectrum-component-height-200
+        );
+        --system-spectrum-tag-sizel-clear-button-spacing-inline-end: var(
+            --spectrum-component-pill-edge-to-visual-200
+        );
+        --spectrum-tag-border-color: ButtonText;
+        --spectrum-tag-border-color-hover: ButtonText;
+        --spectrum-tag-border-color-active: ButtonText;
+        --spectrum-tag-border-color-focus: ButtonText;
+
+        --spectrum-tag-background-color: ButtonFace;
+        --spectrum-tag-background-color-hover: ButtonFace;
+        --spectrum-tag-background-color-active: ButtonFace;
+        --spectrum-tag-background-color-focus: ButtonFace;
+
+        --spectrum-tag-content-color: ButtonText;
+        --spectrum-tag-content-color-hover: ButtonText;
+        --spectrum-tag-content-color-active: ButtonText;
+        --spectrum-tag-content-color-focus: ButtonText;
+        --spectrum-tag-border-color-selected: Highlight;
+        --spectrum-tag-border-color-selected-hover: Highlight;
+        --spectrum-tag-border-color-selected-active: Highlight;
+        --spectrum-tag-border-color-selected-focus: Highlight;
+
+        --spectrum-tag-background-color-selected: Highlight;
+        --spectrum-tag-background-color-selected-hover: Highlight;
+        --spectrum-tag-background-color-selected-active: Highlight;
+        --spectrum-tag-background-color-selected-focus: Highlight;
+
+        --spectrum-tag-content-color-selected: HighlightText;
+        --spectrum-tag-border-color-disabled: GrayText;
+        --spectrum-tag-background-color-disabled: ButtonFace;
+        --spectrum-tag-content-color-disabled: GrayText;
+    }
+}

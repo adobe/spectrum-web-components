@@ -4425,10 +4425,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tabs/-/tabs-3.2.20.tgz#f8c139402619e2b9cda14da31d21f3bd9b0f14a3"
   integrity sha512-wfKFLJpjvx22mXZht+FTK5dYw7t/kkwK/dNwM+Fa8nxn7N97WH392iy+wEgqXPU4HJmgUWxaZANITOaAw4sa0A==
 
-"@spectrum-css/tag@^3.3.14":
-  version "3.3.14"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tag/-/tag-3.3.14.tgz#2d1ca0759da6a3a2970d14bcabf33bd4a8f63a5f"
-  integrity sha512-S4RUaxN/83Pr/SYkQHeZNh2NXmtumUEzhrsrrliI6bAt3bjs+mLresTGd9qkIX2+Ycq1JHWTr0HTga4ti1YYyA==
+"@spectrum-css/tag@^4.0.0-beta.0":
+  version "4.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tag/-/tag-4.0.0-beta.0.tgz#f70d2c476560099d5fa0f7edf7703ba5293df807"
+  integrity sha512-F73kaYJ0nGOULiyEm7YvsttGsU92gOGEzClE0VgIWqaklgIflZedGa4vRNLrPL+lVs4gVgvzG/6fsS8MtgnNCQ==
 
 "@spectrum-css/taggroup@^3.3.14":
   version "3.3.14"
