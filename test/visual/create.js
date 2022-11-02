@@ -13,8 +13,8 @@ import fs from 'fs';
 import fg from 'fast-glob';
 import path from 'path';
 
-async function main() {
-    for (const storyPath of await fg(`packages/*/stories/*.stories.ts`)) {
+async function createTest(dir) {
+    for (const storyPath of await fg(`${dir}/*/stories/*.stories.ts`)) {
         const pathParts = storyPath.split('/');
         const packageName = pathParts[1];
         const stories = pathParts[3].replace('.stories.ts', '');
@@ -46,7 +46,7 @@ import type { TestsType } from '../../../test/visual/test.js';
 
 regressVisuals('${name}', stories as unknown as TestsType);
 `;
-        const directory = path.join('packages', packageName, 'test');
+        const directory = path.join(dir, packageName, 'test');
         fs.mkdirSync(directory, { recursive: true });
         fs.writeFileSync(
             path.join(directory, `${stories}.test-vrt.ts`),
@@ -54,6 +54,10 @@ regressVisuals('${name}', stories as unknown as TestsType);
             { recursive: true }
         );
     }
+}
+async function main() {
+    await createTest('packages');
+    await createTest('tools');
 }
 
 main();
