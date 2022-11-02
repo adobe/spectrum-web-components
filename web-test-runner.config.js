@@ -93,11 +93,11 @@ export default {
             'packages/icons-ui/**',
             'packages/icons-workflow/**',
             // The following file is no longer used in Chrome where coverage is calculated.
-            'packages/shared/src/focus-visible.*',
-            'packages/styles/**',
             'test/**',
             '**/test/**',
             'tools/*/stories/*',
+            'tools/shared/src/focus-visible.*',
+            'tools/styles/**',
             '**/node_modules/**',
         ],
         threshold: {
