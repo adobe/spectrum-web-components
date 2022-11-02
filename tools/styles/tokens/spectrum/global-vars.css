@@ -126,6 +126,15 @@
   --system-spectrum-actionbutton-staticwhite-selected-border-color-disabled: transparent
 }
 :host, :root {
+  --system-spectrum-checkbox-control-color-default: var(--spectrum-gray-600);
+  --system-spectrum-checkbox-control-color-hover: var(--spectrum-gray-700);
+  --system-spectrum-checkbox-control-color-down: var(--spectrum-gray-800);
+  --system-spectrum-checkbox-control-color-focus: var(--spectrum-gray-700);
+  --system-spectrum-checkbox-control-selected-color-default: var(--spectrum-gray-700);
+  --system-spectrum-checkbox-control-selected-color-hover: var(--spectrum-gray-800);
+  --system-spectrum-checkbox-control-selected-color-down: var(--spectrum-gray-900)
+}
+:host, :root {
   --system-spectrum-closebutton-background-color-default: transparent;
   --system-spectrum-closebutton-background-color-hover: var(--spectrum-gray-200);
   --system-spectrum-closebutton-background-color-down: var(--spectrum-gray-300);
@@ -169,3 +178,9 @@
   --system-spectrum-actiongroup-horizontal-spacing-compact: -1px;
   --system-spectrum-actiongroup-vertical-spacing-compact: -1px
 }
+
+
+
+
+
+
