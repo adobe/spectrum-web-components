@@ -77,7 +77,7 @@ themeVariants.forEach((themeVariant) => {
                 });
                 vrtGroups.push({
                     name: `vrt-${themeVariant}-${color}-${scale}-${dir}`,
-                    files: 'packages/*/test/*.test-vrt.js',
+                    files: '(packages|tools)/*/test/*.test-vrt.js',
                     testRunnerHtml: testHTML,
                     browsers: [
                         playwrightLauncher({
@@ -101,7 +101,7 @@ vrtGroups = [
         if (!skipPkgs.includes(pkg)) {
             acc.push({
                 name: `vrt-${pkg}`,
-                files: `packages/${pkg}/test/*.test-vrt.js`,
+                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
                 testRunnerHtml: vrtHTML({
                     reduceMotion: true,
                 }),
@@ -117,7 +117,7 @@ vrtGroups = [
             });
             acc.push({
                 name: `vrt-${pkg}-single`,
-                files: `packages/${pkg}/test/*.test-vrt.js`,
+                files: `(packages|tools)/${pkg}/test/*.test-vrt.js`,
                 testRunnerHtml: vrtHTML({
                     themeVariant: 'spectrum',
                     color: 'light',
@@ -140,7 +140,7 @@ vrtGroups = [
     }, []),
     {
         name: `vrt-hcm`,
-        files: 'packages/*/test/*.test-vrt.js',
+        files: '(packages|tools)/*/test/*.test-vrt.js',
         testRunnerHtml: vrtHTML({
             themeVariant: 'spectrum',
             color: 'dark',
