@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { image1, image2, image3, image4, image5 } from './images';
+
 import '@spectrum-web-components/grid/sp-grid.js';
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import '@spectrum-web-components/card/sp-card.js';
@@ -41,8 +41,6 @@ function generateItems(count: number): Item[] {
     return items;
 }
 
-const images = [image1, image2, image3, image4, image5];
-
 export const Default = (): TemplateResult => {
     const items = generateItems(1000);
 
@@ -62,7 +60,12 @@ export const Default = (): TemplateResult => {
                 .selected=${selected}
                 key=${index}
             >
-                <img alt="" slot="preview" src=${images[1]} decoding="async" />
+                <img
+                    alt=""
+                    slot="preview"
+                    src="https://picsum.photos/id/${item.id}/200/300"
+                    decoding="async"
+                />
                 <div slot="description">10/15/18</div>
                 <div slot="footer">Footer</div>
             </sp-card>
@@ -120,6 +123,10 @@ export const Default = (): TemplateResult => {
     `;
 };
 
+Default.swc_vrt = {
+    skip: true,
+};
+
 export const sized = (
     { gap, padding } = { gap: 10, padding: 10 }
 ): TemplateResult => {
@@ -141,7 +148,12 @@ export const sized = (
                 .selected=${selected}
                 key=${index}
             >
-                <img alt="" slot="preview" src=${image1} decoding="async" />
+                <img
+                    alt=""
+                    slot="preview"
+                    src="https://picsum.photos/id/${item.id}/200/300"
+                    decoding="async"
+                />
                 <div slot="description">10/15/18</div>
                 <div slot="footer">Footer</div>
             </sp-card>
@@ -233,4 +245,8 @@ sized.argTypes = {
             type: 'number',
         },
     },
+};
+
+sized.swc_vrt = {
+    skip: true,
 };
