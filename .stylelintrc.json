@@ -11,6 +11,7 @@
         {
             "files": [
                 "packages/**/src/spectrum-*.css",
+                "packages/styles/**/*.css",
                 "tools/styles/**/*.css"
             ],
             "extends": [],
