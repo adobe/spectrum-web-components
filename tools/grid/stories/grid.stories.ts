@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-
+import { image1, image2, image3, image4, image5, image6 } from './images';
 import '@spectrum-web-components/grid/sp-grid.js';
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import '@spectrum-web-components/card/sp-card.js';
@@ -41,6 +41,8 @@ function generateItems(count: number): Item[] {
     return items;
 }
 
+const images = [image1, image2, image3, image4, image5, image6];
+
 export const Default = (): TemplateResult => {
     const items = generateItems(1000);
 
@@ -63,7 +65,7 @@ export const Default = (): TemplateResult => {
                 <img
                     alt=""
                     slot="preview"
-                    src="https://picsum.photos/id/${item.id}/200/300"
+                    src=${images[Math.floor(Math.random() * images.length)]}
                     decoding="async"
                 />
                 <div slot="description">10/15/18</div>
@@ -144,12 +146,7 @@ export const sized = (
                 .selected=${selected}
                 key=${index}
             >
-                <img
-                    alt=""
-                    slot="preview"
-                    src="https://picsum.photos/id/${item.id}/200/300"
-                    decoding="async"
-                />
+                <img alt="" slot="preview" src=${image1} decoding="async" />
                 <div slot="description">10/15/18</div>
                 <div slot="footer">Footer</div>
             </sp-card>
