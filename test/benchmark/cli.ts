@@ -9,12 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { main } from 'tachometer/lib/cli';
-import { ConfigFile } from 'tachometer/lib/configfile';
+import { main } from 'tachometer/lib/cli.js';
+import { ConfigFile } from 'tachometer/lib/configfile.js';
 import { existsSync, readdirSync, writeFileSync } from 'fs';
 import { join as pathjoin } from 'path';
-import * as commandLineArgs from 'command-line-args';
-import * as commandLineUsage from 'command-line-usage';
+import commandLineArgs from 'command-line-args';
+import commandLineUsage from 'command-line-usage';
 
 const optionDefinitions: commandLineUsage.OptionDefinition[] = [
     {
@@ -156,6 +156,7 @@ $ node test/benchmark/cli -n 20
     for (const packageName of packages) {
         const runCommands: string[] = [];
         const config: Partial<ConfigFile> = {
+            root: '../..',
             $schema:
                 'https://raw.githubusercontent.com/Polymer/tachometer/master/config.schema.json',
             timeout: parseFloat(opts.timeout) || 0,
@@ -204,7 +205,10 @@ $ node test/benchmark/cli -n 20
                     monorepoDir,
                     packageName,
                     'package.json'
-                )
+                ),
+                {
+                    assert: { type: 'json' },
+                }
             );
             if (pjson.version === '0.0.1' && opts.compare !== 'none') {
                 // eslint-disable-next-line no-console
@@ -217,7 +221,7 @@ $ node test/benchmark/cli -n 20
             if (opts.compare !== 'none') {
                 config.benchmarks.push({
                     name: `${packageName}:${benchmark}`,
-                    url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}&start=${start}&dir=${monorepoDir}`,
+                    url: `bench-runner.html?bench=${benchmark}&package=${packageName}&start=${start}&dir=${monorepoDir}`,
                     packageVersions: {
                         label: 'remote',
                         dependencies: {
@@ -239,7 +243,7 @@ $ node test/benchmark/cli -n 20
             }
             config.benchmarks.push({
                 name: `${packageName}:${benchmark}`,
-                url: `test/benchmark/bench-runner.html?bench=${benchmark}&package=${packageName}&dir=${monorepoDir}`,
+                url: `bench-runner.html?bench=${benchmark}&package=${packageName}&dir=${monorepoDir}`,
                 measurement: 'global',
                 browser: {
                     name: opts.browser,
