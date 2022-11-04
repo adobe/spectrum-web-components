@@ -15,7 +15,7 @@
         "build:clear-cache": "rimraf packages/*/tsconfig.tsbuildinfo && rimraf tools/*/tsconfig.tsbuildinfo",
         "build:component-inventory": "node ./tasks/build-component-inventory.js",
         "build:confirm": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,close-button,clear-button,icons-ui,icons-workflow,iconset,modal,shared,styles},documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- test -f src/index.js",
-        "build:css": "node ./tasks/build-css.js && pretty-quick --fix --pattern \"packages/**/*.css\"",
+        "build:css": "node ./tasks/build-css.js && pretty-quick --fix --pattern \"packages/**/*.css\" \"tools/**/*.css\"",
         "build:css:watch": "node ./tasks/watch-css.js",
         "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
         "build:ts": "node ./tasks/esbuild-packages.js",
