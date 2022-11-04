@@ -3,6 +3,7 @@ _site
 
 // extraced component docs
 content/components
+content/tools
 custom-elements.json
 
 // typescript build artifacts
