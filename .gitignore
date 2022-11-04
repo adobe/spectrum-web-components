@@ -41,10 +41,17 @@ projects/**/*.js.map
 projects/**/*.d.ts
 !projects/*/global.d.ts
 
+tools/*/src/**/*.css.js
+tools/*/custom-elements.json
+tools/**/spectrum-vars.json
 tools/**/*.js
 tools/**/*.js.map
 tools/**/*.d.ts
+tools/**/*.test-vrt.ts
+!tools/**/*/spectrum-config.js
+!tools/*/test/global.d.ts
 !tools/*/global.d.ts
+!tools/*/local.d.ts
 
 # typescript assets
 !test/global.d.ts
