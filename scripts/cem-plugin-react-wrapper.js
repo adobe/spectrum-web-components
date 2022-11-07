@@ -10,20 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
-import reactWrapperPlugin from './scripts/cem-plugin-react-wrapper.js';
+// import fs from 'fs';
+// import path from 'path';
+// import prettier from 'prettier';
 
-export default {
-    globs: ['**/sp-*.ts', '**/src/[A-Z]*.ts', '**/src/elements/[A-Z]*.ts'],
-    exclude: [
-        '**/*.d.ts',
-        '**/stories/**',
-        '**/test/**',
-        'node_modules/*',
-        '**/*.dev.*',
-    ],
-    outdir: '.',
-    litelement: true,
-    packagejson: false,
-    plugins: [moduleFileExtensionsPlugin(), reactWrapperPlugin()],
-};
+export default function genReactWrapper({
+    exclude = [],
+    attributeMapping = {},
+    outdir = 'legacy',
+} = {}) {
+    return {
+        name: 'react-wrapper',
+        packageLinkPhase({ customElementsManifest }) {
+            console.log(customElementsManifest);
+        },
+    };
+}
