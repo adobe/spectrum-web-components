@@ -473,6 +473,51 @@ export const wrapperFullscreen = (
     `;
 };
 
+export const wrapperWithHeadline = (
+    args: StoryArgs = {},
+    context: { viewMode?: string } = {}
+): TemplateResult => {
+    const open = context.viewMode === 'docs' ? false : true;
+    return html`
+        <sp-dialog-wrapper
+            ?open=${open}
+            headline="Headline for dialog"
+            @close=${handleClose(args)}
+        >
+            Content of the dialog
+        </sp-dialog-wrapper>
+    `;
+};
+
+export const wrapperWithHeadlineNoDivider = (
+    args: StoryArgs = {},
+    context: { viewMode?: string } = {}
+): TemplateResult => {
+    const open = context.viewMode === 'docs' ? false : true;
+    return html`
+        <sp-dialog-wrapper
+            ?open=${open}
+            headline="Headline for dialog"
+            no-divider=${true}
+            @close=${handleClose(args)}
+        >
+            Content of the dialog
+        </sp-dialog-wrapper>
+    `;
+};
+
+export const wrapperNoHeadline = (
+    args: StoryArgs = {},
+    context: { viewMode?: string } = {}
+): TemplateResult => {
+    const open = context.viewMode === 'docs' ? false : true;
+    return html`
+        <sp-dialog-wrapper ?open=${open} @close=${handleClose(args)}>
+            Content of the dialog
+        </sp-dialog-wrapper>
+    `;
+};
+
 export const tooltips = (
     args: StoryArgs = {},
     context: { viewMode?: string } = {}

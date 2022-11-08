@@ -101,7 +101,7 @@ export class DialogWrapper extends DialogBase {
         return html`
             <sp-dialog
                 ?dismissable=${this.dismissable}
-                ?no-divider=${this.noDivider}
+                ?no-divider=${this.noDivider || !this.headline}
                 ?error=${this.error}
                 mode=${ifDefined(this.mode)}
                 size=${ifDefined(this.size)}
