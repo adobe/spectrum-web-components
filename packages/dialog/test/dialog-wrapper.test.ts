@@ -34,11 +34,15 @@ import {
     wrapperDismissableUnderlayError,
     wrapperFullscreen,
     wrapperLabeledHero,
+    wrapperNoHeadline,
+    wrapperWithHeadline,
+    wrapperWithHeadlineNoDivider,
 } from '../stories/dialog-wrapper.stories.js';
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { Theme } from '@spectrum-web-components/theme';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { Divider } from '@spectrum-web-components/divider/src/Divider.js';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -126,6 +130,43 @@ describe('Dialog Wrapper', () => {
 
         expect(el.open).to.be.false;
         expect(closeSpy.callCount).to.equal(1);
+    });
+    it("shows header divider when there's a header", async () => {
+        const wrapper = await styledFixture<DialogWrapper>(
+            wrapperWithHeadline()
+        );
+        await elementUpdated(wrapper);
+
+        const dialog = wrapper.shadowRoot.querySelector('sp-dialog') as Dialog;
+        const divider = dialog.shadowRoot.querySelector(
+            'sp-divider.divider'
+        ) as Divider;
+
+        expect(divider).to.be.not.null;
+    });
+    it('hides header divider when there\'s a header but "no-divider"', async () => {
+        const wrapper = await styledFixture<DialogWrapper>(
+            wrapperWithHeadlineNoDivider()
+        );
+        await elementUpdated(wrapper);
+
+        const dialog = wrapper.shadowRoot.querySelector('sp-dialog') as Dialog;
+        const divider = dialog.shadowRoot.querySelector(
+            'sp-divider.divider'
+        ) as Divider;
+
+        expect(divider).to.be.null;
+    });
+    it("hides header divider when there's no header", async () => {
+        const wrapper = await styledFixture<DialogWrapper>(wrapperNoHeadline());
+        await elementUpdated(wrapper);
+
+        const dialog = wrapper.shadowRoot.querySelector('sp-dialog') as Dialog;
+        const divider = dialog.shadowRoot.querySelector(
+            'sp-divider.divider'
+        ) as Divider;
+
+        expect(divider).to.be.null;
     });
     it('dismisses via clicking the underlay when [dismissable]', async () => {
         const test = await styledFixture<DialogWrapper>(
