@@ -48,6 +48,10 @@ export function LikeAnchor<T extends Constructor<ReactiveElement>>(
         @property({ reflect: true })
         public download?: string;
 
+        /**
+         * An accessible label that describes the component.
+         * It will be applied to aria-label, but not visually rendered.
+         */
         @property()
         public label?: string;
 
