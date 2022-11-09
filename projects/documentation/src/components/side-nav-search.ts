@@ -185,10 +185,14 @@ export class SearchComponent extends LitElement {
         }
     }
 
+    handleMenuKeydown(event: KeyboardEvent): void {
+        event.preventDefault();
+    }
+
     renderResults(): TemplateResult {
         if (this.results.length > 0) {
             return html`
-                <sp-menu>
+                <sp-menu @keydown=${this.handleMenuKeydown}>
                     ${this.results.map(
                         (category) => html`
                             <sp-menu-group>
