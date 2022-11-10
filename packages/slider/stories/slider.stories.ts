@@ -438,6 +438,24 @@ export const Quiet = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 
+export const inPopover = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <sp-popover open dialog style="min-width: 0">
+            <sp-slider
+                editable
+                hide-stepper
+                quiet
+                value="5"
+                step="0.5"
+                min="0"
+                max="20"
+                label="Intensity"
+                ...=${spreadProps(args)}
+            ></sp-slider>
+        </sp-popover>
+    `;
+};
+
 export const Indeterminate = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
