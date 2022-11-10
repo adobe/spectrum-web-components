@@ -50,6 +50,7 @@ const tokenPackages = [
     'link',
     'tag',
     'tooltip',
+    'tray',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {

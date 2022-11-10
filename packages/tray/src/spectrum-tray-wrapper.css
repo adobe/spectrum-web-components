@@ -11,22 +11,32 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([dir='ltr']) {
-    left: 0; /* [dir=ltr] .spectrum-Tray-wrapper */
-}
-:host([dir='rtl']) {
-    right: 0; /* [dir=rtl] .spectrum-Tray-wrapper */
+@media (forced-colors: active) {
+    .spectrum-Tray {
+        --highcontrast-tray-background-color: Background;
+    }
 }
 :host {
     bottom: 0;
     display: flex;
+    inline-size: 100%;
+    inset-inline-start: 0; /* .spectrum-Tray-wrapper */
     justify-content: center;
-    position: fixed; /* .spectrum-Tray-wrapper */
-    width: 100%;
-    z-index: 2;
+    position: fixed;
 }
-@media (max-width: 375px) {
+@media screen and (orientation: landscape) {
     .spectrum-Tray {
-        border-radius: var(--spectrum-tray-border-radius, 0);
+        border-top-left-radius: var(
+            --mod-tray-corner-radius,
+            var(--spectrum-tray-corner-radius)
+        );
+        border-top-right-radius: var(
+            --mod-tray-corner-radius,
+            var(--spectrum-tray-corner-radius)
+        );
+        max-inline-size: var(
+            --mod-tray-max-inline-size,
+            var(--spectrum-tray-max-inline-size)
+        );
     }
 }

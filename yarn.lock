@@ -4686,10 +4686,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-4.0.7.tgz#e1bb615aae9746f71473bdbd58557f6c38c71824"
   integrity sha512-QNwYjTiI38UQax7nFiBbgH0AIKR2F2vadPQ8xjik2ik5lxeprq5jrPlddYRZ7veBsysav0xvDiWUkhU948rKKg==
 
-"@spectrum-css/tray@^1.0.31":
-  version "1.0.31"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-1.0.31.tgz#ab3ea714d1d6397a84c66ff91da14c21bf6d276f"
-  integrity sha512-mdjI8jAsHzIf4gGBWlB3yp/ewp4pp8uMdY4t9UYnYHhiP8e6JV9MUKgAjC4nRowoeFjBozFSwIc/EKePYG3jzg==
+"@spectrum-css/tray@^2.0.9":
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-2.0.9.tgz#415168c0d3440bc1933ff7efe81b3710986bde2d"
+  integrity sha512-Ans6lw1nAdytJbu3oduqDv2p2jnJOpzlKsAWP6YUM0UfLqIj2Bvb2GYTC5hlBstn2OFWTIOAdqQ9qMKAhN5VEA==
 
 "@spectrum-css/typography@^4.0.23":
   version "4.0.23"
