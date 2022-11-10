@@ -488,3 +488,9 @@ governing permissions and limitations under the License.
         --spectrum-component-edge-to-visual-200
     );
 }
+:host,
+:root {
+    --system-spectrum-tooltip-backgound-color-default-neutral: var(
+        --spectrum-neutral-subdued-background-color-default
+    );
+}

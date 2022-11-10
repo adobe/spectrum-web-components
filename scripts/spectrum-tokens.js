@@ -49,6 +49,7 @@ const tokenPackages = [
     'fieldgroup',
     'link',
     'tag',
+    'tooltip',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {

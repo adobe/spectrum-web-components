@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2022 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -12,89 +12,6 @@ governing permissions and limitations under the License.
 
 @import './spectrum-tooltip.css';
 
-/* move the #tip styling from spectrum-css onto a pseudo-element,
-   replacing rotations with mirrors of two different border setups (horizontal vs vertical) */
-
-#tip {
-    border: none;
-}
-
-:host([placement*='right']) #tip,
-:host([placement*='left']) #tip,
-:host([placement*='bottom']) #tip {
+:host([placement]) #tip[style] {
     transform: none;
-}
-
-#tip:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: var(
-        --spectrum-tooltip-tip-height,
-        var(--spectrum-global-dimension-size-50)
-    );
-    border-color: transparent;
-}
-
-/* orient the tip */
-
-:host([placement*='bottom']) #tip:after {
-    bottom: 100%;
-    transform: scaleY(-1);
-}
-
-:host([placement*='left']) #tip:after {
-    left: 100%;
-    transform: rotate(-90deg);
-}
-
-:host([placement*='right']) #tip:after {
-    right: 100%;
-    left: auto;
-    transform: rotate(90deg);
-}
-
-/* color the tip the correct variant color on either a vertical or horizontal axis */
-
-:host([placement]) #tip:after {
-    border-top-color: var(
-        --spectrum-tooltip-background-color,
-        var(--spectrum-global-color-static-gray-700)
-    );
-}
-
-:host([variant='negative']) #tip:after {
-    border-top-color: var(
-        --spectrum-tooltip-negative-background-color,
-        var(--spectrum-global-color-static-red-700)
-    );
-}
-
-:host([variant='info']) #tip:after {
-    border-top-color: var(
-        --spectrum-tooltip-info-background-color,
-        var(--spectrum-global-color-static-blue-700)
-    );
-}
-
-:host([variant='positive']) #tip:after {
-    border-top-color: var(
-        --spectrum-tooltip-positive-background-color,
-        var(--spectrum-global-color-static-green-700)
-    );
-}
-
-@media (forced-colors: active) {
-    #tip:after {
-        --spectrum-tooltip-background-color: canvastext;
-        --spectrum-tooltip-neutral-background-color: canvastext;
-        --spectrum-tooltip-negative-background-color: canvastext;
-        --spectrum-tooltip-info-background-color: canvastext;
-        --spectrum-tooltip-positive-background-color: canvastext;
-
-        forced-color-adjust: none;
-    }
 }
