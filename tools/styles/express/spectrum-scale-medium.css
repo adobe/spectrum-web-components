@@ -321,7 +321,4 @@ governing permissions and limitations under the License.
     --spectrum-textfield-m-texticon-padding-left: var(
         --spectrum-global-dimension-size-125
     );
-    --spectrum-tooltip-neutral-text-margin-bottom: var(
-        --spectrum-global-dimension-static-size-65
-    );
 }

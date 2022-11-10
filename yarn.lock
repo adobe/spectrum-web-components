@@ -4482,10 +4482,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tokens/-/tokens-4.0.0.tgz#581b858225aae05b9b784db1aa0e257c3e9c53cf"
   integrity sha512-lDUDbc1BocZR5q9pKpLvFicb7v8Owjhm0mxd+JPk+sVHXHC/u37PEZf7R0QBzl3D/13fNqurtV9DhlPjrhDm0g==
 
-"@spectrum-css/tooltip@^3.1.20":
-  version "3.1.20"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-3.1.20.tgz#c3b6cf274be3ed552f86534f1fede7169827dc83"
-  integrity sha512-37knTGAjj4GE22M3MQrLa4PyecEc07xOZIle9igfRohXUwHv6ZIyoqy2/cQfmBkeGP6iGEzy8oKJp4nbBKZGsQ==
+"@spectrum-css/tooltip@^4.0.4":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/tooltip/-/tooltip-4.0.4.tgz#403614ea9df2cb5902d04609b6cde43796ad761d"
+  integrity sha512-vLn9dOYNsZslA9KRQ3YV0vs+IimK1pG69KUj8SZXw1mQFdqEUYdpBRdUgUXXhuTkC3P+7NU1W18dQxgFAfh+SA==
 
 "@spectrum-css/tray@^1.0.31":
   version "1.0.31"
