@@ -20,7 +20,10 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
+import {
+    LanguageResolutionController,
+    languageResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 import { NumberFormatter, NumberParser } from '@internationalized/number';
 
@@ -162,7 +165,16 @@ export class NumberField extends TextfieldBase {
 
     private convertValueToNumber(value: string): number {
         if (isIPhone() && this.inputElement.inputMode === 'decimal') {
-            value = value.replace(',', '.');
+            const parts = this.numberFormatter.formatToParts(1000.1);
+            const sourceDecimal = value
+                .split('')
+                .find((char) => char === ',' || char === '.');
+            const replacementDecimal = parts.find(
+                (part) => part.type === 'decimal'
+            )?.value;
+            if (sourceDecimal && replacementDecimal) {
+                value = value.replace(sourceDecimal, replacementDecimal);
+            }
         }
         return this.numberParser.parse(value);
     }
@@ -580,8 +592,11 @@ export class NumberField extends TextfieldBase {
         super.update(changes);
     }
 
-    public override willUpdate(): void {
+    public override willUpdate(changes: PropertyValues): void {
         this.multiline = false;
+        if (changes.has(languageResolverUpdatedSymbol)) {
+            this.clearNumberFormatterCache();
+        }
     }
 
     protected override firstUpdated(changes: PropertyValues): void {

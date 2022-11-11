@@ -13,6 +13,10 @@ governing permissions and limitations under the License.
 import type { ReactiveController, ReactiveElement } from 'lit';
 import { ProvideLang } from '@spectrum-web-components/theme';
 
+export const languageResolverUpdatedSymbol = Symbol(
+    'language resolver updated'
+);
+
 export class LanguageResolutionController implements ReactiveController {
     private host: ReactiveElement;
     language = document.documentElement.lang || navigator.language;
@@ -39,9 +43,13 @@ export class LanguageResolutionController implements ReactiveController {
                 composed: true,
                 detail: {
                     callback: (lang: string, unsubscribe: () => void) => {
+                        const previous = this.language;
                         this.language = lang;
                         this.unsubscribe = unsubscribe;
-                        this.host.requestUpdate();
+                        this.host.requestUpdate(
+                            languageResolverUpdatedSymbol,
+                            previous
+                        );
                     },
                 },
                 cancelable: true,

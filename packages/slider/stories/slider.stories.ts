@@ -244,6 +244,28 @@ const editableDecorator = (story: () => TemplateResult): TemplateResult => {
     `;
 };
 
+export const max20 = (args: StoryArgs = {}): TemplateResult => {
+    return html`
+        <div style="width: 200px; margin: 12px 20px;">
+            <sp-slider
+                editable
+                max="20"
+                min="0"
+                value="5"
+                step="1"
+                @input=${handleEvent(args)}
+                @change=${handleEvent(args)}
+                ...=${spreadProps(args)}
+            >
+                Max 20
+            </sp-slider>
+        </div>
+    `;
+};
+max20.swc_vrt = {
+    skip: true,
+};
+
 export const editable = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <div style="width: 500px; margin: 12px 20px;">
