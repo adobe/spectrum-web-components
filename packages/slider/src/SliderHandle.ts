@@ -13,7 +13,10 @@ governing permissions and limitations under the License.
 import { PropertyValues } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
+import {
+    LanguageResolutionController,
+    languageResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import {
     NumberFormatOptions,
     NumberFormatter,
@@ -138,8 +141,11 @@ export class SliderHandle extends Focusable {
                 }
             }
         }
-        
-        if (changes.has('formatOptions') || changes.has('resolvedLanguage')) {
+
+        if (
+            changes.has('formatOptions') ||
+            changes.has(languageResolverUpdatedSymbol)
+        ) {
             delete this._numberFormatCache;
         }
         if (changes.has('value')) {
@@ -154,7 +160,9 @@ export class SliderHandle extends Focusable {
         super.update(changes);
     }
 
-    protected override firstUpdated(changedProperties: PropertyValues<this>): void {
+    protected override firstUpdated(
+        changedProperties: PropertyValues<this>
+    ): void {
         super.firstUpdated(changedProperties);
         this.dispatchEvent(new CustomEvent('sp-slider-handle-ready'));
     }
