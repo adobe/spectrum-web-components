@@ -29,6 +29,10 @@
             "development": "./src/Color.dev.js",
             "default": "./src/Color.js"
         },
+        "./src/ElementResolution.js": {
+            "development": "./src/ElementResolution.dev.js",
+            "default": "./src/ElementResolution.js"
+        },
         "./src/FocusGroup.js": {
             "development": "./src/FocusGroup.dev.js",
             "default": "./src/FocusGroup.js"
