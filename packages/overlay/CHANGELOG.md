@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.18.6...@spectrum-web-components/overlay@0.18.7) (2022-11-14)
+
+### Bug Fixes
+
+-   keep parent overlays open when not closing child hover overlays ([643fcff](https://github.com/adobe/spectrum-web-components/commit/643fcff10b6e455611fda76040ea0d29ecac5df9))
+
 ## [0.18.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.18.5...@spectrum-web-components/overlay@0.18.6) (2022-10-28)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

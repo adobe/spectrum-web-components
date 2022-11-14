@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.10.1...@spectrum-web-components/tabs@0.10.2) (2022-11-14)
+
+### Bug Fixes
+
+-   tab indicator positioning ([8c20769](https://github.com/adobe/spectrum-web-components/commit/8c20769030c3c90620f1f2e397f5f5b83b2a49c9))
+-   use CSS position relative and revert Tabs.ts changes ([a682bcf](https://github.com/adobe/spectrum-web-components/commit/a682bcf149bc8d7e09875838323145883dbd3cbd))
+
 ## [0.10.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.10.0...@spectrum-web-components/tabs@0.10.1) (2022-10-28)
 
 **Note:** Version bump only for package @spectrum-web-components/tabs

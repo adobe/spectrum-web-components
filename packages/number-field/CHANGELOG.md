@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.5.5...@spectrum-web-components/number-field@0.5.6) (2022-11-14)
+
+### Bug Fixes
+
+-   correct the origin on "maximumFractionDigits" when deciding "inputMode" ([e2fe9c8](https://github.com/adobe/spectrum-web-components/commit/e2fe9c8f71f3cac07905c6e1549594a8f64c8df4))
+-   ensure reactivity of resolved language ([5863a15](https://github.com/adobe/spectrum-web-components/commit/5863a155262d6ba6898f82bff49aed55a6eae4f4))
+
 ## [0.5.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.5.4...@spectrum-web-components/number-field@0.5.5) (2022-10-28)
 
 **Note:** Version bump only for package @spectrum-web-components/number-field

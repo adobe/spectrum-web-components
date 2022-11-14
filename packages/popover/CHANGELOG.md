@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.12.6...@spectrum-web-components/popover@0.12.7) (2022-11-14)
+
+**Note:** Version bump only for package @spectrum-web-components/popover
+
 ## [0.12.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/popover@0.12.5...@spectrum-web-components/popover@0.12.6) (2022-10-28)
 
 **Note:** Version bump only for package @spectrum-web-components/popover

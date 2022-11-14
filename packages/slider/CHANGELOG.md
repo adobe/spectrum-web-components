@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.15.0...@spectrum-web-components/slider@0.15.1) (2022-11-14)
+
+### Bug Fixes
+
+-   ensure reactivity of resolved language ([5863a15](https://github.com/adobe/spectrum-web-components/commit/5863a155262d6ba6898f82bff49aed55a6eae4f4))
+-   **slider:** add less visually effectacious style to the slider output when editable ([8702294](https://github.com/adobe/spectrum-web-components/commit/8702294fb19da70a70ddadb1e9ed1b401ccc8d91))
+
 # [0.15.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.14.4...@spectrum-web-components/slider@0.15.0) (2022-10-28)
 
 ### Bug Fixes

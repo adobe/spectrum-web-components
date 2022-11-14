@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/badge@0.3.1...@spectrum-web-components/badge@0.4.0) (2022-11-14)
+
+### Features
+
+-   **badge:** use core tokens ([83e566c](https://github.com/adobe/spectrum-web-components/commit/83e566c6a80b01621770bbde0ee59dc3d7e7e173))
+
 ## [0.3.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/badge@0.3.0...@spectrum-web-components/badge@0.3.1) (2022-10-17)
 
 **Note:** Version bump only for package @spectrum-web-components/badge

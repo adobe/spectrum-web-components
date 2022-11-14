@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/radio",
-    "version": "0.11.4",
+    "version": "0.11.5",
     "publishConfig": {
         "access": "public"
     },
@@ -65,11 +65,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.0",
-        "@spectrum-web-components/field-group": "^0.7.3",
-        "@spectrum-web-components/help-text": "^0.2.4",
-        "@spectrum-web-components/reactive-controllers": "^0.3.2",
-        "@spectrum-web-components/shared": "^0.15.1"
+        "@spectrum-web-components/base": "^0.7.1",
+        "@spectrum-web-components/field-group": "^0.7.4",
+        "@spectrum-web-components/help-text": "^0.2.5",
+        "@spectrum-web-components/reactive-controllers": "^0.3.3",
+        "@spectrum-web-components/shared": "^0.15.2"
     },
     "devDependencies": {
         "@spectrum-css/radio": "^5.0.1"
