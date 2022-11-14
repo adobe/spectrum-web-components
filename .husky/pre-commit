@@ -1,16 +1,8 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-ALL_STAGED=$(git diff --name-only --cached --diff-filter=d)
 STAGED_FILES_TO_LINT=$(git diff --name-only --cached --diff-filter=d -- "*.ts" "*.js")
-STAGED_CSS_TO_LINT=$(git diff --name-only --cached --diff-filter=d -- "*.css")
-
-[[ $STAGED_FILES_TO_LINT ]] && yarn eslint --fix -f pretty $STAGED_FILES_TO_LINT
-
+yarn eslint -f pretty $STAGED_FILES_TO_LINT
 yarn analyze
-
-[[ $STAGED_CSS_TO_LINT ]] && yarn stylelint --fix $STAGED_CSS_TO_LINT
-
-yarn pretty-quick --staged --fix
-
-[[ $ALL_STAGED ]] && git add $ALL_STAGED
+yarn lint:css
+yarn pretty-quick --staged
