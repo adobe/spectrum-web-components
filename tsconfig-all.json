@@ -7,6 +7,7 @@
     },
     "include": [
         "packages/**/*.ts",
+        "react/**/*.ts",
         "tools/**/*.ts",
         "projects/story-decorator/**/*.ts",
         "projects/vrt-compare/**/*.ts"
@@ -85,6 +86,6 @@
         { "path": "tools/reactive-controllers" },
         { "path": "tools/shared" },
         { "path": "tools/styles" },
-        { "path": "tools/theme" },
+        { "path": "tools/theme" }
     ]
 }
