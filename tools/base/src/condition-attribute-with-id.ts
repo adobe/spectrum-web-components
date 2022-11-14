@@ -37,6 +37,7 @@ export function conditionAttributeWithId(
     const descriptors = ariaDescribedby ? ariaDescribedby.split(/\s+/) : [];
     const hadIds = ids.every((id) => descriptors.indexOf(id) > -1);
     if (hadIds)
+        /* c8 ignore next 3 */
         return (): void => {
             return;
         };

@@ -95,6 +95,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                     activeElement.matches(':focus-visible') ||
                     activeElement.matches('.focus-visible')
                 );
+                /* c8 ignore next 3 */
             } catch (error) {
                 return activeElement.matches('.focus-visible');
             }
@@ -168,12 +169,18 @@ if (window.__swc.DEBUG) {
     window.__swc = {
         ...window.__swc,
         issuedWarnings: new Set(),
-        warn: (element, message, url, { type = 'api', level = 'default', issues } = {}): void => {
+        warn: (
+            element,
+            message,
+            url,
+            { type = 'api', level = 'default', issues } = {}
+        ): void => {
             const { localName = 'base' } = element || {};
             const id = `${localName}:${type}:${level}` as BrandedSWCWarningID;
             if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id))
                 return;
             window.__swc.issuedWarnings.add(id);
+            /* c8 ignore next 3 */
             if (window.__swc.ignoreWarningLocalNames?.[localName]) return;
             if (window.__swc.ignoreWarningTypes?.[type]) return;
             if (window.__swc.ignoreWarningLevels?.[level]) return;
@@ -199,7 +206,7 @@ if (window.__swc.DEBUG) {
                     localName,
                     type,
                     level,
-                }
+                },
             });
             console.warn(...messages);
         },
@@ -209,6 +216,6 @@ if (window.__swc.DEBUG) {
         undefined,
         'Spectrum Web Components is in dev mode. Not recommended for production!',
         'https://opensource.adobe.com/spectrum-web-components/dev-mode/',
-        { type: 'default' },
+        { type: 'default' }
     );
 }
