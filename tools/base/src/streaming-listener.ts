@@ -154,6 +154,7 @@ class StreamingListenerDirective extends AsyncDirective {
         this.removeListeners();
     }
 
+    /* c8 ignore next 3 */
     override reconnected(): void {
         this.addListeners();
     }

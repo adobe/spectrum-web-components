@@ -74,6 +74,7 @@ export class FocusGroupController<T extends HTMLElement>
     private _elements!: () => T[];
 
     protected set focused(focused: boolean) {
+        /* c8 ignore next 1 */
         if (focused === this.focused) return;
         this._focused = focused;
     }
