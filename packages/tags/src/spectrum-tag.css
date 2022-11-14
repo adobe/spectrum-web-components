@@ -11,938 +11,1209 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-avatar-opacity-disabled: 0.3; /* .spectrum-Tag */
+    --spectrum-tag-animation-duration: var(--spectrum-animation-duration-100);
+    --spectrum-tag-border-width: var(--spectrum-border-width-100);
+    --spectrum-tag-focus-ring-thickness: var(
+        --spectrum-focus-indicator-thickness
+    );
+    --spectrum-tag-focus-ring-gap: var(--spectrum-focus-indicator-gap);
+    --spectrum-tag-focus-ring-color: var(--spectrum-focus-indicator-color);
+    --spectrum-tag-label-line-height: var(--spectrum-line-height-100);
+    --spectrum-tag-label-font-weight: var(--spectrum-font-weight-regular);
+    --spectrum-tag-content-color-selected: var(--spectrum-white);
+    --spectrum-tag-border-color-invalid: var(--spectrum-negative-color-900);
+    --spectrum-tag-border-color-invalid-hover: var(
+        --spectrum-negative-color-1000
+    );
+    --spectrum-tag-border-color-invalid-active: var(
+        --spectrum-negative-color-1100
+    );
+    --spectrum-tag-border-color-invalid-focus: var(
+        --spectrum-negative-color-1000
+    );
+    --spectrum-tag-content-color-invalid: var(
+        --spectrum-negative-content-color-default
+    );
+    --spectrum-tag-content-color-invalid-hover: var(
+        --spectrum-negative-content-color-hover
+    );
+    --spectrum-tag-content-color-invalid-active: var(
+        --spectrum-negative-content-color-down
+    );
+    --spectrum-tag-content-color-invalid-focus: var(
+        --spectrum-negative-content-color-key-focus
+    );
+    --spectrum-tag-border-color-invalid-selected: var(
+        --spectrum-negative-background-color-default
+    );
+    --spectrum-tag-border-color-invalid-selected-hover: var(
+        --spectrum-negative-background-color-hover
+    );
+    --spectrum-tag-border-color-invalid-selected-focus: var(
+        --spectrum-negative-background-color-down
+    );
+    --spectrum-tag-border-color-invalid-selected-active: var(
+        --spectrum-negative-background-color-key-focus
+    );
+    --spectrum-tag-background-color-invalid-selected: var(
+        --spectrum-negative-background-color-default
+    );
+    --spectrum-tag-background-color-invalid-selected-hover: var(
+        --spectrum-negative-background-color-hover
+    );
+    --spectrum-tag-background-color-invalid-selected-active: var(
+        --spectrum-negative-background-color-down
+    );
+    --spectrum-tag-background-color-invalid-selected-focus: var(
+        --spectrum-negative-background-color-key-focus
+    );
+    --spectrum-tag-content-color-invalid-selected: var(--spectrum-white);
+    --spectrum-tag-border-color-emphasized: var(
+        --spectrum-accent-background-color-default
+    );
+    --spectrum-tag-border-color-emphasized-hover: var(
+        --spectrum-accent-background-color-hover
+    );
+    --spectrum-tag-border-color-emphasized-active: var(
+        --spectrum-accent-background-color-down
+    );
+    --spectrum-tag-border-color-emphasized-focus: var(
+        --spectrum-accent-background-color-key-focus
+    );
+    --spectrum-tag-background-color-emphasized: var(
+        --spectrum-accent-background-color-default
+    );
+    --spectrum-tag-background-color-emphasized-hover: var(
+        --spectrum-accent-background-color-hover
+    );
+    --spectrum-tag-background-color-emphasized-active: var(
+        --spectrum-accent-background-color-down
+    );
+    --spectrum-tag-background-color-emphasized-focus: var(
+        --spectrum-accent-background-color-key-focus
+    );
+    --spectrum-tag-content-color-emphasized: var(--spectrum-white);
+    --spectrum-tag-content-color-disabled: var(
+        --spectrum-disabled-content-color
+    );
+    --spectrum-tag-icon-spacing-inline-end: var(--spectrum-text-to-visual-100);
+    --spectrum-tag-icon-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-tag-icon-spacing-block-start: var(
+        --spectrum-component-top-to-workflow-icon-100
+    );
+    --spectrum-tag-icon-spacing-block-end: var(
+        --spectrum-component-top-to-workflow-icon-100
+    );
+    --spectrum-tag-avatar-spacing-block-start: var(
+        --spectrum-tag-top-to-avatar-medium
+    );
+    --spectrum-tag-avatar-spacing-block-end: var(
+        --spectrum-tag-top-to-avatar-medium
+    );
+    --spectrum-tag-avatar-spacing-inline-end: var(
+        --spectrum-text-to-visual-100
+    );
+    --spectrum-tag-label-spacing-block: var(
+        --spectrum-component-top-to-text-100
+    );
+    --spectrum-tag-clear-button-spacing-inline-start: var(
+        --spectrum-text-to-visual-100
+    );
+    --spectrum-tag-height: var(--spectrum-component-height-100);
+    --spectrum-tag-font-size: var(--spectrum-font-size-100);
+    --spectrum-tag-clear-button-spacing-block: var(
+        --spectrum-tag-top-to-cross-icon-medium
+    );
+}
 :host([size='s']) {
-    --spectrum-tag-removable-texticon-text-font-weight: var(
-        --spectrum-tag-s-removable-texticon-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
+    --spectrum-tag-height: var(
+        --spectrum-component-height-75
     ); /* .spectrum-Tag--sizeS */
-    --spectrum-tag-texticon-border-size: var(
-        --spectrum-tag-s-texticon-border-size,
-        var(--spectrum-alias-tag-border-size-default)
+    --spectrum-tag-font-size: var(--spectrum-font-size-75);
+    --spectrum-tag-icon-size: var(--spectrum-workflow-icon-size-75);
+    --spectrum-tag-clear-button-spacing-inline-start: var(
+        --spectrum-text-to-visual-75
     );
-    --spectrum-tag-texticon-icon-gap: var(
-        --spectrum-tag-s-texticon-icon-gap,
-        var(--spectrum-global-dimension-size-85)
+    --spectrum-tag-clear-button-spacing-block: var(
+        --spectrum-tag-top-to-cross-icon-small
     );
-    --spectrum-tag-texticon-text-line-height: var(
-        --spectrum-tag-s-texticon-text-line-height,
-        var(--spectrum-alias-component-text-line-height)
+    --spectrum-tag-icon-spacing-block-start: var(
+        --spectrum-component-top-to-workflow-icon-75
     );
-    --spectrum-tag-texticon-focusring-border-size: var(
-        --spectrum-tag-s-texticon-focusring-border-size,
-        var(--spectrum-alias-tag-focusring-size)
+    --spectrum-tag-icon-spacing-block-end: var(
+        --spectrum-component-top-to-workflow-icon-75
     );
-    --spectrum-tag-texticon-height: var(
-        --spectrum-tag-s-texticon-height,
-        var(--spectrum-alias-tag-height-s)
+    --spectrum-tag-icon-spacing-inline-end: var(--spectrum-text-to-visual-75);
+    --spectrum-tag-avatar-spacing-block-start: var(
+        --spectrum-tag-top-to-avatar-small
     );
-    --spectrum-tag-texticon-padding-right: var(
-        --spectrum-tag-s-texticon-padding-right,
-        var(--spectrum-alias-tag-padding-right-s)
+    --spectrum-tag-avatar-spacing-block-end: var(
+        --spectrum-tag-top-to-avatar-small
     );
-    --spectrum-tag-texticon-border-radius: var(
-        --spectrum-tag-s-texticon-border-radius,
-        var(--spectrum-alias-tag-border-radius)
+    --spectrum-tag-avatar-spacing-inline-end: var(--spectrum-text-to-visual-75);
+    --spectrum-tag-label-spacing-block: var(
+        --spectrum-component-top-to-text-75
     );
-    --spectrum-tag-texticon-padding-left: var(
-        --spectrum-tag-s-texticon-padding-left,
-        var(--spectrum-global-dimension-size-85)
+    --spectrum-tag-corner-radius: var(--spectrum-tag-size-small-corner-radius);
+    --spectrum-tag-spacing-inline-start: var(
+        --spectrum-tag-size-small-spacing-inline-start
     );
-    --spectrum-tag-textonly-padding-right: var(
-        --spectrum-tag-s-textonly-padding-right,
-        var(--spectrum-alias-tag-padding-right-s)
+    --spectrum-tag-label-spacing-inline-end: var(
+        --spectrum-tag-size-small-label-spacing-inline-end
     );
-    --spectrum-tag-textonly-padding-left: var(
-        --spectrum-tag-s-textonly-padding-left,
-        var(--spectrum-global-dimension-size-115)
-    );
-    --spectrum-tag-texticon-text-font-size: var(
-        --spectrum-global-dimension-font-size-75
+    --spectrum-tag-clear-button-spacing-inline-end: var(
+        --spectrum-tag-size-small-clear-button-spacing-inline-end
     );
 }
 :host([size='m']) {
-    --spectrum-tag-texticon-padding-left: var(
-        --spectrum-tag-m-texticon-padding-left
+    --spectrum-tag-height: var(
+        --spectrum-component-height-100
     ); /* .spectrum-Tag--sizeM */
-    --spectrum-tag-removable-texticon-text-font-weight: var(
-        --spectrum-tag-m-removable-texticon-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
+    --spectrum-tag-font-size: var(--spectrum-font-size-100);
+    --spectrum-tag-icon-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-tag-clear-button-spacing-inline-start: var(
+        --spectrum-text-to-visual-100
     );
-    --spectrum-tag-texticon-border-size: var(
-        --spectrum-tag-m-texticon-border-size,
-        var(--spectrum-alias-tag-border-size-default)
+    --spectrum-tag-clear-button-spacing-block: var(
+        --spectrum-tag-top-to-cross-icon-medium
     );
-    --spectrum-tag-texticon-icon-gap: var(
-        --spectrum-tag-m-texticon-icon-gap,
-        var(--spectrum-global-dimension-size-100)
+    --spectrum-tag-icon-spacing-block-start: var(
+        --spectrum-component-top-to-workflow-icon-100
     );
-    --spectrum-tag-texticon-text-line-height: var(
-        --spectrum-tag-m-texticon-text-line-height,
-        var(--spectrum-alias-component-text-line-height)
+    --spectrum-tag-icon-spacing-block-end: var(
+        --spectrum-component-top-to-workflow-icon-100
     );
-    --spectrum-tag-texticon-focusring-border-size: var(
-        --spectrum-tag-m-texticon-focusring-border-size,
-        var(--spectrum-alias-tag-focusring-size)
+    --spectrum-tag-icon-spacing-inline-end: var(--spectrum-text-to-visual-100);
+    --spectrum-tag-avatar-spacing-block-start: var(
+        --spectrum-tag-top-to-avatar-medium
     );
-    --spectrum-tag-texticon-height: var(
-        --spectrum-tag-m-texticon-height,
-        var(--spectrum-alias-tag-height-m)
+    --spectrum-tag-avatar-spacing-block-end: var(
+        --spectrum-tag-top-to-avatar-medium
     );
-    --spectrum-tag-texticon-padding-right: var(
-        --spectrum-tag-m-texticon-padding-right,
-        var(--spectrum-alias-tag-padding-right-m)
+    --spectrum-tag-avatar-spacing-inline-end: var(
+        --spectrum-text-to-visual-100
     );
-    --spectrum-tag-texticon-border-radius: var(
-        --spectrum-tag-m-texticon-border-radius,
-        var(--spectrum-alias-tag-border-radius)
+    --spectrum-tag-label-spacing-block: var(
+        --spectrum-component-top-to-text-100
     );
-    --spectrum-tag-textonly-padding-right: var(
-        --spectrum-tag-m-textonly-padding-right,
-        var(--spectrum-alias-tag-padding-right-m)
+    --spectrum-tag-corner-radius: var(--spectrum-tag-size-medium-corner-radius);
+    --spectrum-tag-spacing-inline-start: var(
+        --spectrum-tag-size-medium-spacing-inline-start
     );
-    --spectrum-tag-textonly-padding-left: var(
-        --spectrum-tag-m-textonly-padding-left,
-        var(--spectrum-global-dimension-size-150)
+    --spectrum-tag-label-spacing-inline-end: var(
+        --spectrum-tag-size-medium-label-spacing-inline-end
     );
-    --spectrum-tag-texticon-text-font-size: var(
-        --spectrum-global-dimension-font-size-100
+    --spectrum-tag-clear-button-spacing-inline-end: var(
+        --spectrum-tag-size-medium-clear-button-spacing-inline-end
     );
 }
 :host([size='l']) {
-    --spectrum-tag-removable-texticon-text-font-weight: var(
-        --spectrum-tag-l-removable-texticon-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
+    --spectrum-tag-height: var(
+        --spectrum-component-height-200
     ); /* .spectrum-Tag--sizeL */
-    --spectrum-tag-texticon-border-size: var(
-        --spectrum-tag-l-texticon-border-size,
-        var(--spectrum-alias-tag-border-size-default)
+    --spectrum-tag-font-size: var(--spectrum-font-size-200);
+    --spectrum-tag-icon-size: var(--spectrum-workflow-icon-size-200);
+    --spectrum-tag-clear-button-spacing-inline-start: var(
+        --spectrum-text-to-visual-200
     );
-    --spectrum-tag-texticon-icon-gap: var(
-        --spectrum-tag-l-texticon-icon-gap,
-        var(--spectrum-global-dimension-size-115)
+    --spectrum-tag-clear-button-spacing-block: var(
+        --spectrum-tag-top-to-cross-icon-large
     );
-    --spectrum-tag-texticon-text-line-height: var(
-        --spectrum-tag-l-texticon-text-line-height,
-        var(--spectrum-alias-component-text-line-height)
+    --spectrum-tag-icon-spacing-block-start: var(
+        --spectrum-component-top-to-workflow-icon-200
     );
-    --spectrum-tag-texticon-focusring-border-size: var(
-        --spectrum-tag-l-texticon-focusring-border-size,
-        var(--spectrum-alias-tag-focusring-size)
+    --spectrum-tag-icon-spacing-block-end: var(
+        --spectrum-component-top-to-workflow-icon-200
     );
-    --spectrum-tag-texticon-height: var(
-        --spectrum-tag-l-texticon-height,
-        var(--spectrum-alias-tag-height-l)
+    --spectrum-tag-icon-spacing-inline-end: var(--spectrum-text-to-visual-200);
+    --spectrum-tag-avatar-spacing-block-start: var(
+        --spectrum-tag-top-to-avatar-large
     );
-    --spectrum-tag-texticon-padding-right: var(
-        --spectrum-tag-l-texticon-padding-right,
-        var(--spectrum-alias-tag-padding-right-l)
+    --spectrum-tag-avatar-spacing-block-end: var(
+        --spectrum-tag-top-to-avatar-large
     );
-    --spectrum-tag-texticon-border-radius: var(
-        --spectrum-tag-l-texticon-border-radius,
-        var(--spectrum-alias-tag-border-radius)
+    --spectrum-tag-avatar-spacing-inline-end: var(
+        --spectrum-text-to-visual-200
     );
-    --spectrum-tag-texticon-padding-left: var(
-        --spectrum-tag-l-texticon-padding-left,
-        var(--spectrum-global-dimension-size-160)
+    --spectrum-tag-label-spacing-block: var(
+        --spectrum-component-top-to-text-200
     );
-    --spectrum-tag-textonly-padding-right: var(
-        --spectrum-tag-l-textonly-padding-right,
-        var(--spectrum-alias-tag-padding-right-l)
+    --spectrum-tag-corner-radius: var(--spectrum-tag-size-large-corner-radius);
+    --spectrum-tag-spacing-inline-start: var(
+        --spectrum-tag-size-large-spacing-inline-start
     );
-    --spectrum-tag-textonly-padding-left: var(
-        --spectrum-tag-l-textonly-padding-left,
-        var(--spectrum-global-dimension-size-185)
+    --spectrum-tag-label-spacing-inline-end: var(
+        --spectrum-tag-size-large-label-spacing-inline-end
     );
-    --spectrum-tag-texticon-text-font-size: var(
-        --spectrum-global-dimension-font-size-200
+    --spectrum-tag-clear-button-spacing-inline-end: var(
+        --spectrum-tag-size-large-clear-button-spacing-inline-end
     );
-}
-:host([dir='ltr']) {
-    padding-left: var(
-        --spectrum-tag-textonly-padding-right
-    ); /* [dir=ltr] .spectrum-Tag */
-}
-:host([dir='rtl']) {
-    padding-right: var(
-        --spectrum-tag-textonly-padding-right
-    ); /* [dir=rtl] .spectrum-Tag */
-}
-:host([dir='ltr']) {
-    padding-right: var(
-        --spectrum-tag-textonly-padding-right
-    ); /* [dir=ltr] .spectrum-Tag */
-}
-:host([dir='rtl']) {
-    padding-left: var(
-        --spectrum-tag-textonly-padding-right
-    ); /* [dir=rtl] .spectrum-Tag */
 }
 :host {
     align-items: center;
-    border-radius: var(--spectrum-tag-texticon-border-radius);
-    border-style: solid;
-    border-width: var(--spectrum-tag-texticon-border-size);
-    box-sizing: border-box;
-    display: inline-flex; /* .spectrum-Tag */
-    max-width: 100%;
-    min-height: calc(
-        var(--spectrum-tag-texticon-height) +
-            var(--spectrum-tag-texticon-border-size) +
-            var(--spectrum-tag-texticon-border-size)
+    background-color: var(
+        --highcontrast-tag-background-color,
+        var(--mod-tag-background-color, var(--spectrum-tag-background-color))
     );
+    block-size: var(--mod-tag-height, var(--spectrum-tag-height));
+    border-color: var(
+        --highcontrast-tag-border-color,
+        var(--mod-tag-border-color, var(--spectrum-tag-border-color))
+    ); /* .spectrum-Tag */
+    border-radius: var(
+        --mod-tag-corner-radius,
+        var(--spectrum-tag-corner-radius)
+    );
+    border-style: solid;
+    border-width: var(--mod-tag-border-width, var(--spectrum-tag-border-width));
+    box-sizing: border-box;
+    color: var(
+        --highcontrast-tag-content-color,
+        var(--mod-tag-content-color, var(--spectrum-tag-content-color))
+    );
+    display: inline-flex;
+    max-inline-size: 100%;
     outline: none;
+    padding-inline-end: 0;
+    padding-inline-start: calc(
+        var(
+                --mod-tag-spacing-inline-start,
+                var(--spectrum-tag-spacing-inline-start)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    position: relative;
     transition: border-color
-            var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
-        color var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
-        box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
+            var(
+                --mod-tag-animation-duration,
+                var(--spectrum-tag-animation-duration)
+            )
             ease-in-out,
-        background-color var(--spectrum-global-animation-duration-100, 0.13s)
+        color
+            var(
+                --mod-tag-animation-duration,
+                var(--spectrum-tag-animation-duration)
+            )
+            ease-in-out,
+        box-shadow
+            var(
+                --mod-tag-animation-duration,
+                var(--spectrum-tag-animation-duration)
+            )
+            ease-in-out,
+        background-color
+            var(
+                --mod-tag-animation-duration,
+                var(--spectrum-tag-animation-duration)
+            )
             ease-in-out;
     -webkit-user-select: none;
     user-select: none;
     vertical-align: bottom;
 }
-:host([disabled]) {
-    pointer-events: none; /* .spectrum-Tag.is-disabled */
+::slotted([slot='icon']) {
+    block-size: var(
+        --mod-tag-icon-size,
+        var(--spectrum-tag-icon-size)
+    ); /* .spectrum-Tag .spectrum-Tags-itemIcon */
+    inline-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
+    margin-block-end: calc(
+        var(
+                --mod-tag-icon-spacing-block-end,
+                var(--spectrum-tag-icon-spacing-block-end)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    margin-block-start: calc(
+        var(
+                --mod-tag-icon-spacing-block-start,
+                var(--spectrum-tag-icon-spacing-block-start)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    margin-inline-end: var(
+        --mod-tag-icon-spacing-inline-end,
+        var(--spectrum-tag-icon-spacing-inline-end)
+    );
 }
-:host([dir='ltr']) > ::slotted([slot='avatar']),
-:host([dir='ltr']) > ::slotted([slot='icon']) {
-    padding-right: var(
-        --spectrum-tag-texticon-icon-gap
-    ); /* [dir=ltr] .spectrum-Tag>.spectrum-Icon,
-   * [dir=ltr] 
-  .spectrum-Tag>.spectrum-Avatar */
-}
-:host([dir='rtl']) > ::slotted([slot='avatar']),
-:host([dir='rtl']) > ::slotted([slot='icon']) {
-    padding-left: var(
-        --spectrum-tag-texticon-icon-gap
-    ); /* [dir=rtl] .spectrum-Tag>.spectrum-Icon,
-   * [dir=rtl] 
-  .spectrum-Tag>.spectrum-Avatar */
-}
-:host([dir='ltr']) > ::slotted([slot='avatar']),
-:host([dir='ltr']) > ::slotted([slot='icon']) {
-    margin-left: calc(
-        var(--spectrum-tag-texticon-padding-left) -
-            var(--spectrum-tag-textonly-padding-left)
-    ); /* [dir=ltr] .spectrum-Tag>.spectrum-Icon,
-   * [dir=ltr] 
-  .spectrum-Tag>.spectrum-Avatar */
-}
-:host([dir='rtl']) > ::slotted([slot='avatar']),
-:host([dir='rtl']) > ::slotted([slot='icon']) {
-    margin-right: calc(
-        var(--spectrum-tag-texticon-padding-left) -
-            var(--spectrum-tag-textonly-padding-left)
-    ); /* [dir=rtl] .spectrum-Tag>.spectrum-Icon,
-   * [dir=rtl] 
-  .spectrum-Tag>.spectrum-Avatar */
-}
-:host([dir='ltr']) .clear-button {
-    margin-right: calc(
-        var(--spectrum-tag-texticon-padding-right) * -1
-    ); /* [dir=ltr] .spectrum-Tag .spectrum-Tag-clearButton */
-}
-:host([dir='rtl']) .clear-button {
-    margin-left: calc(
-        var(--spectrum-tag-texticon-padding-right) * -1
-    ); /* [dir=rtl] .spectrum-Tag .spectrum-Tag-clearButton */
+::slotted([slot='avatar']) {
+    margin-block-end: calc(
+        var(
+                --mod-tag-avatar-spacing-block-end,
+                var(--spectrum-tag-avatar-spacing-block-end)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    margin-block-start: calc(
+        var(
+                --mod-tag-avatar-spacing-block-start,
+                var(--spectrum-tag-avatar-spacing-block-start)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    ); /* .spectrum-Tag .spectrum-Avatar */
+    margin-inline-end: var(
+        --mod-tag-avatar-spacing-inline-end,
+        var(--spectrum-tag-avatar-spacing-inline-end)
+    );
 }
 .clear-button {
-    padding-bottom: 0;
-    padding-top: 0; /* .spectrum-Tag .spectrum-Tag-clearButton */
+    --spectrum-clearbutton-fill-size: fit-content;
+    --spectrum-clearbutton-fill-background-color: transparent;
+    box-sizing: border-box; /* .spectrum-Tag .spectrum-Tag-clearButton */
+    color: currentcolor;
+    margin-inline-end: calc(
+        var(
+                --mod-tag-clear-button-spacing-inline-end,
+                var(--spectrum-tag-clear-button-spacing-inline-end)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    margin-inline-start: calc(
+        var(
+                --mod-tag-clear-button-spacing-inline-start,
+                var(--spectrum-tag-clear-button-spacing-inline-start)
+            ) +
+            var(
+                --mod-tag-label-spacing-inline-end,
+                var(--spectrum-tag-label-spacing-inline-end)
+            ) * -1
+    );
+    padding-block-end: calc(
+        var(
+                --mod-tag-clear-button-spacing-block,
+                var(--spectrum-tag-clear-button-spacing-block)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    padding-block-start: calc(
+        var(
+                --mod-tag-clear-button-spacing-block,
+                var(--spectrum-tag-clear-button-spacing-block)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
 }
-.spectrum-Tag-label {
+.clear-button .spectrum-ClearButton-fill {
+    background-color: var(
+        --mod-clearbutton-fill-background-color,
+        var(--spectrum-clearbutton-fill-background-color)
+    ); /* .spectrum-Tag .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+    block-size: var(
+        --mod-clearbutton-fill-size,
+        var(--spectrum-clearbutton-fill-size)
+    );
+    inline-size: var(
+        --mod-clearbutton-fill-size,
+        var(--spectrum-clearbutton-fill-size)
+    );
+}
+.label {
+    block-size: 100%; /* .spectrum-Tag .spectrum-Tags-itemLabel */
+    box-sizing: border-box;
     cursor: default;
     flex: 1 1 auto;
-    font-size: var(--spectrum-tag-texticon-text-font-size);
-    font-weight: var(--spectrum-tag-removable-texticon-text-font-weight);
-    height: 100%; /* .spectrum-Tag-label */
-    line-height: var(--spectrum-tag-texticon-text-line-height);
+    font-size: var(--mod-tag-font-size, var(--spectrum-tag-font-size));
+    font-weight: var(
+        --mod-tag-label-font-weight,
+        var(--spectrum-tag-label-font-weight)
+    );
+    line-height: var(
+        --mod-tag-label-line-height,
+        var(--spectrum-tag-label-line-height)
+    );
+    margin-inline-end: calc(
+        var(
+                --mod-tag-label-spacing-inline-end,
+                var(--spectrum-tag-label-spacing-inline-end)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
     overflow: hidden;
+    padding-block-start: calc(
+        var(
+                --mod-tag-label-spacing-block,
+                var(--spectrum-tag-label-spacing-block)
+            ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-:host([selected].focus-visible):after,
-:host([selected].is-focused):after {
-    box-shadow: 0 0 0 var(--spectrum-tag-texticon-focusring-border-size)
-        var(
-            --spectrum-tag-m-texticon-focusring-border-color-key-focus,
-            var(--spectrum-alias-tag-focusring-border-color-key-focus)
-        ); /* .spectrum-Tag.is-selected.focus-ring:after,
-   * .spectrum-Tag.is-selected.is-focused:after */
-}
-:host([selected].is-focused):after,
-:host([selected]:focus-visible):after {
-    box-shadow: 0 0 0 var(--spectrum-tag-texticon-focusring-border-size)
-        var(
-            --spectrum-tag-m-texticon-focusring-border-color-key-focus,
-            var(--spectrum-alias-tag-focusring-border-color-key-focus)
-        ); /* .spectrum-Tag.is-selected.focus-ring:after,
-   * .spectrum-Tag.is-selected.is-focused:after */
-}
-:host {
-    background-color: var(
-        --spectrum-tag-s-texticon-background-color,
-        var(--spectrum-alias-tag-background-color-default)
-    );
-    border-color: var(
-        --spectrum-tag-s-texticon-border-color,
-        var(--spectrum-alias-tag-border-color-default)
-    );
-    color: var(
-        --spectrum-tag-s-texticon-text-color,
-        var(--spectrum-alias-tag-text-color-default)
-    ); /* .spectrum-Tag */
-}
-.clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color,
-        var(--spectrum-alias-tag-icon-color-default)
-    ); /* .spectrum-Tag .spectrum-Tag-clearButton */
-}
-.clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
 :host(:hover) {
     background-color: var(
-        --spectrum-tag-s-texticon-background-color-hover,
-        var(--spectrum-alias-tag-background-color-hover)
-    ); /* .spectrum-Tag:hover */
-    border-color: var(
-        --spectrum-tag-s-texticon-border-color-hover,
-        var(--spectrum-alias-tag-border-color-hover)
-    );
-    color: var(
-        --spectrum-tag-s-texticon-text-color-hover,
-        var(--spectrum-alias-tag-text-color-hover)
-    );
-}
-:host(:hover) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-hover,
-        var(--spectrum-alias-tag-icon-color-hover)
-    ); /* .spectrum-Tag:hover .spectrum-Tag-clearButton */
-}
-:host(:hover) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host(.focus-visible) {
-    background-color: var(
-        --spectrum-tag-s-texticon-background-color-key-focus,
-        var(--spectrum-alias-tag-background-color-key-focus)
-    ); /* .spectrum-Tag.focus-ring */
-    border-color: var(
-        --spectrum-tag-s-texticon-border-color-key-focus,
-        var(--spectrum-alias-tag-border-color-key-focus)
-    );
-    box-shadow: 0 0 0
+        --highcontrast-tag-background-color-hover,
         var(
-            --spectrum-tag-s-texticon-focusring-border-width,
-            var(--spectrum-alias-focus-ring-size)
+            --mod-tag-background-color-hover,
+            var(--spectrum-tag-background-color-hover)
         )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-hover,
         var(
-            --spectrum-tag-s-texticon-focusring-border-color-key-focus,
-            var(--spectrum-alias-tag-focusring-border-color-key-focus)
-        );
+            --mod-tag-border-color-hover,
+            var(--spectrum-tag-border-color-hover)
+        )
+    ); /* .spectrum-Tag:hover */
     color: var(
-        --spectrum-tag-s-texticon-text-color-key-focus,
-        var(--spectrum-alias-tag-text-color-key-focus)
+        --highcontrast-tag-content-color-hover,
+        var(
+            --mod-tag-content-color-hover,
+            var(--spectrum-tag-content-color-hover)
+        )
     );
 }
+:host(:active) {
+    background-color: var(
+        --highcontrast-tag-background-color-active,
+        var(
+            --mod-tag-background-color-active,
+            var(--spectrum-tag-background-color-active)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-active,
+        var(
+            --mod-tag-border-color-active,
+            var(--spectrum-tag-border-color-active)
+        )
+    ); /* .spectrum-Tag:active */
+    color: var(
+        --highcontrast-tag-content-color-active,
+        var(
+            --mod-tag-content-color-active,
+            var(--spectrum-tag-content-color-active)
+        )
+    );
+}
+:host(.focus-visible),
+:host(.is-focused) {
+    background-color: var(
+        --highcontrast-tag-background-color-focus,
+        var(
+            --mod-tag-background-color-focus,
+            var(--spectrum-tag-background-color-focus)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-focus,
+        var(
+            --mod-tag-border-color-focus,
+            var(--spectrum-tag-border-color-focus)
+        )
+    ); /* .spectrum-Tag:focus-visible,
+   * .spectrum-Tag.is-focused */
+    color: var(
+        --highcontrast-tag-content-color-focus,
+        var(
+            --mod-tag-content-color-focus,
+            var(--spectrum-tag-content-color-focus)
+        )
+    );
+}
+:host(.is-focused),
 :host(:focus-visible) {
     background-color: var(
-        --spectrum-tag-s-texticon-background-color-key-focus,
-        var(--spectrum-alias-tag-background-color-key-focus)
-    ); /* .spectrum-Tag.focus-ring */
-    border-color: var(
-        --spectrum-tag-s-texticon-border-color-key-focus,
-        var(--spectrum-alias-tag-border-color-key-focus)
-    );
-    box-shadow: 0 0 0
+        --highcontrast-tag-background-color-focus,
         var(
-            --spectrum-tag-s-texticon-focusring-border-width,
-            var(--spectrum-alias-focus-ring-size)
+            --mod-tag-background-color-focus,
+            var(--spectrum-tag-background-color-focus)
         )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-focus,
         var(
-            --spectrum-tag-s-texticon-focusring-border-color-key-focus,
-            var(--spectrum-alias-tag-focusring-border-color-key-focus)
-        );
+            --mod-tag-border-color-focus,
+            var(--spectrum-tag-border-color-focus)
+        )
+    ); /* .spectrum-Tag:focus-visible,
+   * .spectrum-Tag.is-focused */
     color: var(
-        --spectrum-tag-s-texticon-text-color-key-focus,
-        var(--spectrum-alias-tag-text-color-key-focus)
+        --highcontrast-tag-content-color-focus,
+        var(
+            --mod-tag-content-color-focus,
+            var(--spectrum-tag-content-color-focus)
+        )
     );
 }
-:host(.focus-visible) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-key-focus,
-        var(--spectrum-alias-tag-icon-color-hover)
-    ); /* .spectrum-Tag.focus-ring .spectrum-Tag-clearButton */
+:host(.focus-visible):after,
+:host(.is-focused):after {
+    block-size: calc(
+        100% + var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) *
+            2 + var(--mod-tag-border-width, var(--spectrum-tag-border-width)) *
+            2
+    );
+    border-color: var(
+        --highcontrast-tag-focus-ring-color,
+        var(--mod-tag-focus-ring-color, var(--spectrum-tag-focus-ring-color))
+    );
+    border-radius: calc(
+        var(--mod-tag-corner-radius, var(--spectrum-tag-corner-radius)) +
+            var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) +
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    border-style: solid;
+    border-width: var(
+        --mod-tag-focus-ring-thickness,
+        var(--spectrum-tag-focus-ring-thickness)
+    );
+    bottom: 0;
+    content: ''; /* .spectrum-Tag:focus-visible:after,
+   * .spectrum-Tag.is-focused::after */
+    display: inline-block;
+    inline-size: calc(
+        100% + var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) *
+            2 + var(--mod-tag-border-width, var(--spectrum-tag-border-width)) *
+            2
+    );
+    left: 0;
+    margin: auto;
+    margin-block-start: calc(
+        (
+                var(
+                        --mod-tag-focus-ring-gap,
+                        var(--spectrum-tag-focus-ring-gap)
+                    ) +
+                    var(
+                        --mod-tag-border-width,
+                        var(--spectrum-tag-border-width)
+                    ) +
+                    var(
+                        --mod-tag-focus-ring-thickness,
+                        var(--spectrum-tag-focus-ring-thickness)
+                    )
+            ) * -1
+    );
+    margin-inline-start: calc(
+        (
+                var(
+                        --mod-tag-focus-ring-gap,
+                        var(--spectrum-tag-focus-ring-gap)
+                    ) +
+                    var(
+                        --mod-tag-border-width,
+                        var(--spectrum-tag-border-width)
+                    ) +
+                    var(
+                        --mod-tag-focus-ring-thickness,
+                        var(--spectrum-tag-focus-ring-thickness)
+                    )
+            ) * -1
+    );
+    position: absolute;
+    right: 0;
+    top: 0;
 }
-:host(:focus-visible) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-key-focus,
-        var(--spectrum-alias-tag-icon-color-hover)
-    ); /* .spectrum-Tag.focus-ring .spectrum-Tag-clearButton */
-}
-:host(.focus-visible) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host(:focus-visible) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+:host(.is-focused):after,
+:host(:focus-visible):after {
+    block-size: calc(
+        100% + var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) *
+            2 + var(--mod-tag-border-width, var(--spectrum-tag-border-width)) *
+            2
+    );
+    border-color: var(
+        --highcontrast-tag-focus-ring-color,
+        var(--mod-tag-focus-ring-color, var(--spectrum-tag-focus-ring-color))
+    );
+    border-radius: calc(
+        var(--mod-tag-corner-radius, var(--spectrum-tag-corner-radius)) +
+            var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) +
+            var(--mod-tag-border-width, var(--spectrum-tag-border-width))
+    );
+    border-style: solid;
+    border-width: var(
+        --mod-tag-focus-ring-thickness,
+        var(--spectrum-tag-focus-ring-thickness)
+    );
+    bottom: 0;
+    content: ''; /* .spectrum-Tag:focus-visible:after,
+   * .spectrum-Tag.is-focused::after */
+    display: inline-block;
+    inline-size: calc(
+        100% + var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) *
+            2 + var(--mod-tag-border-width, var(--spectrum-tag-border-width)) *
+            2
+    );
+    left: 0;
+    margin: auto;
+    margin-block-start: calc(
+        (
+                var(
+                        --mod-tag-focus-ring-gap,
+                        var(--spectrum-tag-focus-ring-gap)
+                    ) +
+                    var(
+                        --mod-tag-border-width,
+                        var(--spectrum-tag-border-width)
+                    ) +
+                    var(
+                        --mod-tag-focus-ring-thickness,
+                        var(--spectrum-tag-focus-ring-thickness)
+                    )
+            ) * -1
+    );
+    margin-inline-start: calc(
+        (
+                var(
+                        --mod-tag-focus-ring-gap,
+                        var(--spectrum-tag-focus-ring-gap)
+                    ) +
+                    var(
+                        --mod-tag-border-width,
+                        var(--spectrum-tag-border-width)
+                    ) +
+                    var(
+                        --mod-tag-focus-ring-thickness,
+                        var(--spectrum-tag-focus-ring-thickness)
+                    )
+            ) * -1
+    );
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 :host([selected]) {
     background-color: var(
-        --spectrum-tag-s-texticon-background-color-selected,
-        var(--spectrum-alias-tag-background-color-selected-default)
-    ); /* .spectrum-Tag.is-selected */
+        --highcontrast-tag-background-color-selected,
+        var(
+            --mod-tag-background-color-selected,
+            var(--spectrum-tag-background-color-selected)
+        )
+    );
     border-color: var(
-        --spectrum-tag-s-texticon-border-color-selected,
-        var(--spectrum-alias-tag-background-color-selected-default)
+        --highcontrast-tag-border-color-selected,
+        var(
+            --mod-tag-border-color-selected,
+            var(--spectrum-tag-border-color-selected)
+        )
+    ); /* .spectrum-Tag.is-selected */
+    color: var(
+        --highcontrast-tag-content-color-selected,
+        var(
+            --mod-tag-content-color-selected,
+            var(--spectrum-tag-content-color-selected)
+        )
     );
-    color: var(
-        --spectrum-tag-s-texticon-text-color-selected,
-        var(--spectrum-alias-tag-text-color-selected)
-    );
-}
-:host([selected]) .spectrum-TagIcon {
-    color: var(
-        --spectrum-tag-s-texticon-icon-color-selected,
-        var(--spectrum-alias-tag-icon-color-selected)
-    ); /* .spectrum-Tag.is-selected .spectrum-TagIcon */
-}
-:host([selected]) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-selected,
-        var(--spectrum-alias-tag-icon-color-selected)
-    ); /* .spectrum-Tag.is-selected .spectrum-Tag-clearButton */
-}
-:host([selected]) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag.is-selected .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
 }
 :host([selected]:hover) {
     background-color: var(
-        --spectrum-tag-s-texticon-background-color-selected-hover,
-        var(--spectrum-alias-tag-background-color-selected-hover)
+        --highcontrast-tag-background-color-selected-hover,
+        var(
+            --mod-tag-background-color-selected-hover,
+            var(--spectrum-tag-background-color-selected-hover)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-selected-hover,
+        var(
+            --mod-tag-border-color-selected-hover,
+            var(--spectrum-tag-border-color-selected-hover)
+        )
     ); /* .spectrum-Tag.is-selected:hover */
 }
-:host([selected]:hover) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-selected-hover,
-        var(--spectrum-alias-tag-icon-color-selected)
-    ); /* .spectrum-Tag.is-selected:hover .spectrum-Tag-clearButton */
-}
-:host([selected]:hover) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag.is-selected:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([selected].focus-visible) {
-    border-color: var(
-        --spectrum-tag-s-texticon-text-color-selected-key-focus,
-        var(--spectrum-alias-tag-text-color-selected)
-    );
-    box-shadow: 0 0 0
+:host([selected]:active) {
+    background-color: var(
+        --highcontrast-tag-background-color-selected-active,
         var(
-            --spectrum-alias-focus-ring-size,
-            var(--spectrum-global-dimension-static-size-25)
+            --mod-tag-background-color-selected-active,
+            var(--spectrum-tag-background-color-selected-active)
         )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-selected-active,
         var(
-            --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,
-            var(--spectrum-alias-tag-focusring-border-color-selected-key-focus)
-        ); /* .spectrum-Tag.is-selected.focus-ring */
+            --mod-tag-border-color-selected-active,
+            var(--spectrum-tag-border-color-selected-active)
+        )
+    ); /* .spectrum-Tag.is-selected:active */
 }
+:host([selected].focus-visible),
+:host([selected].is-focused) {
+    background-color: var(
+        --highcontrast-tag-background-color-selected-focus,
+        var(
+            --mod-tag-background-color-selected-focus,
+            var(--spectrum-tag-background-color-selected-focus)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-selected-focus,
+        var(
+            --mod-tag-border-color-selected-focus,
+            var(--spectrum-tag-border-color-selected-focus)
+        )
+    ); /* .spectrum-Tag.is-selected:focus-visible,
+   * .spectrum-Tag.is-selected.is-focused */
+}
+:host([selected].is-focused),
 :host([selected]:focus-visible) {
-    border-color: var(
-        --spectrum-tag-s-texticon-text-color-selected-key-focus,
-        var(--spectrum-alias-tag-text-color-selected)
-    );
-    box-shadow: 0 0 0
-        var(
-            --spectrum-alias-focus-ring-size,
-            var(--spectrum-global-dimension-static-size-25)
-        )
-        var(
-            --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,
-            var(--spectrum-alias-tag-focusring-border-color-selected-key-focus)
-        ); /* .spectrum-Tag.is-selected.focus-ring */
-}
-:host([selected].focus-visible) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-selected-key-focus,
-        var(--spectrum-alias-tag-icon-color-selected)
-    ); /* .spectrum-Tag.is-selected.focus-ring .spectrum-Tag-clearButton */
-}
-:host([selected]:focus-visible) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-selected-key-focus,
-        var(--spectrum-alias-tag-icon-color-selected)
-    ); /* .spectrum-Tag.is-selected.focus-ring .spectrum-Tag-clearButton */
-}
-:host([selected].focus-visible) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag.is-selected.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([selected]:focus-visible) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag.is-selected.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([selected][invalid]) {
     background-color: var(
-        --spectrum-tag-s-texticon-background-color-error-selected,
-        var(--spectrum-alias-tag-background-color-error-selected-default)
-    );
-    border-color: var(
-        --spectrum-tag-s-texticon-border-color-error-selected,
-        var(--spectrum-alias-tag-border-color-error-selected)
-    ); /* .spectrum-Tag.is-selected.is-invalid */
-}
-:host([selected][invalid]) .spectrum-Tag-label {
-    color: var(
-        --spectrum-tag-s-removable-texticon-text-color-error-selected,
-        var(--spectrum-alias-tag-text-color-selected)
-    ); /* .spectrum-Tag.is-selected.is-invalid .spectrum-Tag-label */
-}
-:host([selected][invalid]) .spectrum-Tag-icon {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-error-selected,
-        var(--spectrum-alias-tag-icon-color-selected)
-    ); /* .spectrum-Tag.is-selected.is-invalid .spectrum-Tag-icon */
-}
-:host([selected][invalid]) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-error-selected,
-        var(--spectrum-alias-tag-icon-color-selected)
-    ); /* .spectrum-Tag.is-selected.is-invalid .spectrum-Tag-clearButton */
-}
-:host([selected][invalid]) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag.is-selected.is-invalid .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([selected][invalid].focus-visible) {
-    border-color: var(
-        --spectrum-tag-s-texticon-text-color-selected-key-focus,
-        var(--spectrum-alias-tag-text-color-selected)
-    );
-    box-shadow: 0 0 0
+        --highcontrast-tag-background-color-selected-focus,
         var(
-            --spectrum-alias-focus-ring-size,
-            var(--spectrum-global-dimension-static-size-25)
+            --mod-tag-background-color-selected-focus,
+            var(--spectrum-tag-background-color-selected-focus)
         )
-        var(
-            --spectrum-tag-s-texticon-border-color-error-selected-key-focus,
-            var(--spectrum-alias-tag-border-color-error-selected)
-        ); /* .spectrum-Tag.is-selected.is-invalid.focus-ring */
-}
-:host([selected][invalid]:focus-visible) {
-    border-color: var(
-        --spectrum-tag-s-texticon-text-color-selected-key-focus,
-        var(--spectrum-alias-tag-text-color-selected)
     );
-    box-shadow: 0 0 0
+    border-color: var(
+        --highcontrast-tag-border-color-selected-focus,
         var(
-            --spectrum-alias-focus-ring-size,
-            var(--spectrum-global-dimension-static-size-25)
+            --mod-tag-border-color-selected-focus,
+            var(--spectrum-tag-border-color-selected-focus)
         )
-        var(
-            --spectrum-tag-s-texticon-border-color-error-selected-key-focus,
-            var(--spectrum-alias-tag-border-color-error-selected)
-        ); /* .spectrum-Tag.is-selected.is-invalid.focus-ring */
-}
-:host([selected][invalid]:hover) {
-    background-color: var(
-        --spectrum-tag-s-texticon-background-color-error-selected-hover,
-        var(--spectrum-alias-tag-background-color-error-selected-hover)
-    );
-    border-color: var(
-        --spectrum-tag-s-texticon-border-color-error-selected-hover,
-        var(--spectrum-alias-tag-border-color-error-selected)
-    ); /* .spectrum-Tag.is-selected.is-invalid:hover */
-}
-:host([selected][invalid]:hover) .clear-button,
-:host([selected][invalid]:hover) .spectrum-Tag-icon,
-:host([selected][invalid]:hover) .spectrum-Tag-label {
-    color: var(
-        --spectrum-tag-s-texticon-icon-color-error-selected-hover,
-        var(--spectrum-alias-tag-icon-color-selected)
-    ); /* .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-icon,
-   * .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-label,
-   * .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-clearButton */
-}
-:host([selected][invalid]:hover) .clear-button .spectrum-ClearButton-fill,
-:host([selected][invalid]:hover) .spectrum-Tag-icon .spectrum-ClearButton-fill,
-:host([selected][invalid]:hover)
-    .spectrum-Tag-label
-    .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-icon .spectrum-ClearButton-fill,
-   * .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-label .spectrum-ClearButton-fill,
-   * .spectrum-Tag.is-selected.is-invalid:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+    ); /* .spectrum-Tag.is-selected:focus-visible,
+   * .spectrum-Tag.is-selected.is-focused */
 }
 :host([invalid]) {
     border-color: var(
-        --spectrum-tag-s-texticon-border-color-error,
-        var(--spectrum-alias-tag-border-color-error-default)
-    );
-    color: var(
-        --spectrum-tag-s-texticon-icon-color-error,
-        var(--spectrum-global-color-red-600)
+        --highcontrast-tag-border-color-invalid,
+        var(
+            --mod-tag-border-color-invalid,
+            var(--spectrum-tag-border-color-invalid)
+        )
     ); /* .spectrum-Tag.is-invalid */
+    color: var(
+        --highcontrast-tag-content-color-invalid,
+        var(
+            --mod-tag-content-color-invalid,
+            var(--spectrum-tag-content-color-invalid)
+        )
+    );
 }
 :host([invalid]:hover) {
     border-color: var(
-        --spectrum-tag-s-texticon-border-color-error-hover,
-        var(--spectrum-alias-tag-border-color-error-hover)
-    );
-    color: var(
-        --spectrum-tag-s-texticon-icon-color-error-hover,
-        var(--spectrum-global-color-red-700)
-    ); /* .spectrum-Tag.is-invalid:hover */
-}
-:host([invalid]:hover) .clear-button,
-:host([invalid]:hover) .spectrum-Tag-icon {
-    color: var(
-        --spectrum-tag-s-texticon-icon-color-error-hover,
-        var(--spectrum-global-color-red-700)
-    ); /* .spectrum-Tag.is-invalid:hover .spectrum-Tag-icon,
-   * .spectrum-Tag.is-invalid:hover .spectrum-Tag-clearButton */
-}
-:host([invalid]:hover) .clear-button .spectrum-ClearButton-fill,
-:host([invalid]:hover) .spectrum-Tag-icon .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag.is-invalid:hover .spectrum-Tag-icon .spectrum-ClearButton-fill,
-   * .spectrum-Tag.is-invalid:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([invalid].focus-visible) {
-    border-color: var(
-        --spectrum-tag-s-texticon-border-color-key-focus,
-        var(--spectrum-alias-tag-border-color-key-focus)
-    );
-    box-shadow: 0 0 0
+        --highcontrast-tag-border-color-invalid-hover,
         var(
-            --spectrum-alias-focus-ring-size,
-            var(--spectrum-global-dimension-static-size-25)
+            --mod-tag-border-color-invalid-hover,
+            var(--spectrum-tag-border-color-invalid-hover)
         )
-        var(
-            --spectrum-tag-s-texticon-border-color-key-focus,
-            var(--spectrum-alias-tag-border-color-key-focus)
-        );
+    ); /* .spectrum-Tag.is-invalid:hover */
     color: var(
-        --spectrum-tag-s-texticon-icon-color-error-hover,
-        var(--spectrum-global-color-red-700)
-    ); /* .spectrum-Tag.is-invalid.focus-ring */
+        --highcontrast-tag-content-color-invalid-hover,
+        var(
+            --mod-tag-content-color-invalid-hover,
+            var(--spectrum-tag-content-color-invalid-hover)
+        )
+    );
 }
+:host([invalid]:active) {
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-active,
+        var(
+            --mod-tag-border-color-invalid-active,
+            var(--spectrum-tag-border-color-invalid-active)
+        )
+    ); /* .spectrum-Tag.is-invalid:active */
+    color: var(
+        --highcontrast-tag-content-color-invalid-active,
+        var(
+            --mod-tag-content-color-invalid-active,
+            var(--spectrum-tag-content-color-invalid-active)
+        )
+    );
+}
+:host([invalid].focus-visible),
+:host([invalid].is-focused) {
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-focus,
+        var(
+            --mod-tag-border-color-invalid-focus,
+            var(--spectrum-tag-border-color-invalid-focus)
+        )
+    ); /* .spectrum-Tag.is-invalid:focus-visible,
+   * .spectrum-Tag.is-invalid.is-focused */
+    color: var(
+        --highcontrast-tag-content-color-invalid-focus,
+        var(
+            --mod-tag-content-color-invalid-focus,
+            var(--spectrum-tag-content-color-invalid-focus)
+        )
+    );
+}
+:host([invalid].is-focused),
 :host([invalid]:focus-visible) {
     border-color: var(
-        --spectrum-tag-s-texticon-border-color-key-focus,
-        var(--spectrum-alias-tag-border-color-key-focus)
-    );
-    box-shadow: 0 0 0
+        --highcontrast-tag-border-color-invalid-focus,
         var(
-            --spectrum-alias-focus-ring-size,
-            var(--spectrum-global-dimension-static-size-25)
+            --mod-tag-border-color-invalid-focus,
+            var(--spectrum-tag-border-color-invalid-focus)
         )
+    ); /* .spectrum-Tag.is-invalid:focus-visible,
+   * .spectrum-Tag.is-invalid.is-focused */
+    color: var(
+        --highcontrast-tag-content-color-invalid-focus,
         var(
-            --spectrum-tag-s-texticon-border-color-key-focus,
-            var(--spectrum-alias-tag-border-color-key-focus)
-        );
+            --mod-tag-content-color-invalid-focus,
+            var(--spectrum-tag-content-color-invalid-focus)
+        )
+    );
+}
+:host([invalid][selected]) {
+    background-color: var(
+        --highcontrast-tag-background-color-invalid-selected,
+        var(
+            --mod-tag-background-color-invalid-selected,
+            var(--spectrum-tag-background-color-invalid-selected)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-selected,
+        var(
+            --mod-tag-border-color-invalid-selected,
+            var(--spectrum-tag-border-color-invalid-selected)
+        )
+    ); /* .spectrum-Tag.is-invalid.is-selected */
     color: var(
-        --spectrum-tag-s-texticon-icon-color-error-hover,
-        var(--spectrum-global-color-red-700)
-    ); /* .spectrum-Tag.is-invalid.focus-ring */
+        --highcontrast-tag-content-color-invalid-selected,
+        var(
+            --mod-tag-content-color-invalid-selected,
+            var(--spectrum-tag-content-color-invalid-selected)
+        )
+    );
 }
-:host([invalid].focus-visible) .clear-button {
+:host([invalid][selected]:hover) {
+    background-color: var(
+        --highcontrast-tag-background-color-invalid-selected-hover,
+        var(
+            --mod-tag-background-color-invalid-selected-hover,
+            var(--spectrum-tag-background-color-invalid-selected-hover)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-selected-hover,
+        var(
+            --mod-tag-border-color-invalid-selected-hover,
+            var(--spectrum-tag-border-color-invalid-selected-hover)
+        )
+    ); /* .spectrum-Tag.is-invalid.is-selected:hover */
+}
+:host([invalid][selected]:active) {
+    background-color: var(
+        --highcontrast-tag-background-color-invalid-selected-active,
+        var(
+            --mod-tag-background-color-invalid-selected-active,
+            var(--spectrum-tag-background-color-invalid-selected-active)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-selected-active,
+        var(
+            --mod-tag-border-color-invalid-selected-active,
+            var(--spectrum-tag-border-color-invalid-selected-active)
+        )
+    ); /* .spectrum-Tag.is-invalid.is-selected:active */
+}
+:host([invalid][selected].focus-visible),
+:host([invalid][selected].is-focused) {
+    background-color: var(
+        --highcontrast-tag-background-color-invalid-selected-focus,
+        var(
+            --mod-tag-background-color-invalid-selected-focus,
+            var(--spectrum-tag-background-color-invalid-selected-focus)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-selected-focus,
+        var(
+            --mod-tag-border-color-invalid-selected-focus,
+            var(--spectrum-tag-border-color-invalid-selected-focus)
+        )
+    ); /* .spectrum-Tag.is-invalid.is-selected:focus-visible,
+   * .spectrum-Tag.is-invalid.is-selected.is-focused */
+}
+:host([invalid][selected].is-focused),
+:host([invalid][selected]:focus-visible) {
+    background-color: var(
+        --highcontrast-tag-background-color-invalid-selected-focus,
+        var(
+            --mod-tag-background-color-invalid-selected-focus,
+            var(--spectrum-tag-background-color-invalid-selected-focus)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-invalid-selected-focus,
+        var(
+            --mod-tag-border-color-invalid-selected-focus,
+            var(--spectrum-tag-border-color-invalid-selected-focus)
+        )
+    ); /* .spectrum-Tag.is-invalid.is-selected:focus-visible,
+   * .spectrum-Tag.is-invalid.is-selected.is-focused */
+}
+:host(.is-emphasized) {
+    background-color: var(
+        --highcontrast-tag-background-color-emphasized,
+        var(
+            --mod-tag-background-color-emphasized,
+            var(--spectrum-tag-background-color-emphasized)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-emphasized,
+        var(
+            --mod-tag-border-color-emphasized,
+            var(--spectrum-tag-border-color-emphasized)
+        )
+    ); /* .spectrum-Tag.is-emphasized */
     color: var(
-        --spectrum-tag-s-texticon-icon-color-error-key-focus,
-        var(--spectrum-global-color-red-700)
-    ); /* .spectrum-Tag.is-invalid.focus-ring .spectrum-Tag-clearButton */
+        --highcontrast-tag-content-color-emphasized,
+        var(
+            --mod-tag-content-color-emphasized,
+            var(--spectrum-tag-content-color-emphasized)
+        )
+    );
 }
-:host([invalid]:focus-visible) .clear-button {
-    color: var(
-        --spectrum-tag-s-texticon-icon-color-error-key-focus,
-        var(--spectrum-global-color-red-700)
-    ); /* .spectrum-Tag.is-invalid.focus-ring .spectrum-Tag-clearButton */
+:host(.is-emphasized:hover) {
+    background-color: var(
+        --highcontrast-tag-background-color-emphasized-hover,
+        var(
+            --mod-tag-background-color-emphasized-hover,
+            var(--spectrum-tag-background-color-emphasized-hover)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-emphasized-hover,
+        var(
+            --mod-tag-border-color-emphasized-hover,
+            var(--spectrum-tag-border-color-emphasized-hover)
+        )
+    ); /* .spectrum-Tag.is-emphasized:hover */
 }
-:host([invalid]) .clear-button,
-:host([invalid]) .spectrum-Tag-icon {
-    color: var(
-        --spectrum-tag-s-texticon-icon-color-error,
-        var(--spectrum-global-color-red-600)
-    ); /* .spectrum-Tag.is-invalid .spectrum-Tag-icon,
-   * .spectrum-Tag.is-invalid .spectrum-Tag-clearButton */
+:host(.is-emphasized:active) {
+    background-color: var(
+        --highcontrast-tag-background-color-emphasized-active,
+        var(
+            --mod-tag-background-color-emphasized-active,
+            var(--spectrum-tag-background-color-emphasized-active)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-emphasized-active,
+        var(
+            --mod-tag-border-color-emphasized-active,
+            var(--spectrum-tag-border-color-emphasized-active)
+        )
+    ); /* .spectrum-Tag.is-emphasized:active */
 }
-:host([invalid]) .clear-button .spectrum-ClearButton-fill,
-:host([invalid]) .spectrum-Tag-icon .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag.is-invalid .spectrum-Tag-icon .spectrum-ClearButton-fill,
-   * .spectrum-Tag.is-invalid .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+:host(.is-emphasized.focus-visible),
+:host(.is-emphasized.is-focused) {
+    background-color: var(
+        --highcontrast-tag-background-color-emphasized-focus,
+        var(
+            --mod-tag-background-color-emphasized-focus,
+            var(--spectrum-tag-background-color-emphasized-focus)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-emphasized-focus,
+        var(
+            --mod-tag-border-color-emphasized-focus,
+            var(--spectrum-tag-border-color-emphasized-focus)
+        )
+    ); /* .spectrum-Tag.is-emphasized:focus-visible,
+   * .spectrum-Tag.is-emphasized.is-focused */
 }
-:host([invalid]) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-error,
-        var(--spectrum-global-color-red-600)
-    ); /* .spectrum-Tag.is-invalid .spectrum-Tag-clearButton */
-}
-:host([invalid]) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag.is-invalid .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+:host(.is-emphasized.is-focused),
+:host(.is-emphasized:focus-visible) {
+    background-color: var(
+        --highcontrast-tag-background-color-emphasized-focus,
+        var(
+            --mod-tag-background-color-emphasized-focus,
+            var(--spectrum-tag-background-color-emphasized-focus)
+        )
+    );
+    border-color: var(
+        --highcontrast-tag-border-color-emphasized-focus,
+        var(
+            --mod-tag-border-color-emphasized-focus,
+            var(--spectrum-tag-border-color-emphasized-focus)
+        )
+    ); /* .spectrum-Tag.is-emphasized:focus-visible,
+   * .spectrum-Tag.is-emphasized.is-focused */
 }
 :host([disabled]) {
     background-color: var(
-        --spectrum-tag-s-texticon-background-color-disabled,
-        var(--spectrum-alias-tag-background-color-disabled)
+        --highcontrast-tag-background-color-disabled,
+        var(
+            --mod-tag-background-color-disabled,
+            var(--spectrum-tag-background-color-disabled)
+        )
     );
     border-color: var(
-        --spectrum-tag-s-texticon-border-color-disabled,
-        var(--spectrum-alias-tag-border-color-disabled)
-    );
-    color: var(
-        --spectrum-tag-s-texticon-text-color-disabled,
-        var(--spectrum-alias-tag-text-color-disabled)
+        --highcontrast-tag-border-color-disabled,
+        var(
+            --mod-tag-border-color-disabled,
+            var(--spectrum-tag-border-color-disabled)
+        )
     ); /* .spectrum-Tag.is-disabled */
+    color: var(
+        --highcontrast-tag-content-color-disabled,
+        var(
+            --mod-tag-content-color-disabled,
+            var(--spectrum-tag-content-color-disabled)
+        )
+    );
+    pointer-events: none;
 }
 :host([disabled]) ::slotted([slot='avatar']) {
     opacity: var(
-        --spectrum-avatar-size-100-opacity-disabled,
-        var(--spectrum-global-color-opacity-30)
+        --mod-avatar-opacity-disabled,
+        var(--spectrum-avatar-opacity-disabled)
     ); /* .spectrum-Tag.is-disabled .spectrum-Avatar */
-}
-:host([disabled]) .spectrum-Tag-icon {
-    color: var(
-        --spectrum-tag-s-texticon-icon-color-disabled,
-        var(--spectrum-alias-tag-icon-color-disabled)
-    ); /* .spectrum-Tag.is-disabled .spectrum-Tag-icon */
-}
-:host([disabled]) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-disabled,
-        var(--spectrum-alias-tag-icon-color-disabled)
-    ); /* .spectrum-Tag.is-disabled .spectrum-Tag-clearButton */
-}
-:host([disabled]) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag.is-disabled .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([deletable]:hover) {
-    color: var(
-        --spectrum-tag-s-removable-texticon-text-color-hover,
-        var(--spectrum-alias-tag-text-color-hover)
-    ); /* .spectrum-Tag--removable:hover */
-}
-:host([deletable]:hover) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-hover,
-        var(--spectrum-alias-tag-icon-color-hover)
-    ); /* .spectrum-Tag--removable:hover .spectrum-Tag-clearButton */
-}
-:host([deletable]:hover) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag--removable:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([deletable]:active) {
-    color: var(
-        --spectrum-tag-s-removable-texticon-text-color-down,
-        var(--spectrum-alias-tag-text-color-down)
-    ); /* .spectrum-Tag--removable:active */
-}
-:host([deletable]:active) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-down,
-        var(--spectrum-alias-tag-icon-color-down)
-    ); /* .spectrum-Tag--removable:active .spectrum-Tag-clearButton */
-}
-:host([deletable]:active) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag--removable:active .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([deletable][invalid]:hover) {
-    border-color: var(
-        --spectrum-tag-s-removable-texticon-border-color-error-hover,
-        var(--spectrum-alias-tag-border-color-error-hover)
-    ); /* .spectrum-Tag--removable.is-invalid:hover */
-    color: var(
-        --spectrum-tag-s-removable-texticon-text-color-error-hover,
-        var(--spectrum-alias-tag-text-color-error-hover)
-    );
-}
-:host([deletable][invalid]:hover) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-error-hover,
-        var(--spectrum-global-color-red-700)
-    ); /* .spectrum-Tag--removable.is-invalid:hover .spectrum-Tag-clearButton */
-}
-:host([deletable][invalid]:hover) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag--removable.is-invalid:hover .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([deletable][invalid]:active) {
-    border-color: var(
-        --spectrum-tag-s-removable-texticon-border-color-error-down,
-        var(--spectrum-alias-tag-border-color-error-down)
-    ); /* .spectrum-Tag--removable.is-invalid:active */
-    color: var(
-        --spectrum-tag-s-removable-texticon-text-color-error-down,
-        var(--spectrum-alias-tag-text-color-error-down)
-    );
-}
-:host([deletable][invalid]:active) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-error-down,
-        var(--spectrum-global-color-red-700)
-    ); /* .spectrum-Tag--removable.is-invalid:active .spectrum-Tag-clearButton */
-}
-:host([deletable][invalid]:active) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag--removable.is-invalid:active .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([deletable].focus-visible) {
-    color: var(
-        --spectrum-tag-s-removable-texticon-text-color-key-focus,
-        var(--spectrum-alias-tag-text-color-key-focus)
-    ); /* .spectrum-Tag--removable.focus-ring */
-}
-:host([deletable]:focus-visible) {
-    color: var(
-        --spectrum-tag-s-removable-texticon-text-color-key-focus,
-        var(--spectrum-alias-tag-text-color-key-focus)
-    ); /* .spectrum-Tag--removable.focus-ring */
-}
-:host([deletable].focus-visible) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-key-focus,
-        var(--spectrum-alias-tag-icon-color-hover)
-    ); /* .spectrum-Tag--removable.focus-ring .spectrum-Tag-clearButton */
-}
-:host([deletable]:focus-visible) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-key-focus,
-        var(--spectrum-alias-tag-icon-color-hover)
-    ); /* .spectrum-Tag--removable.focus-ring .spectrum-Tag-clearButton */
-}
-:host([deletable].focus-visible) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag--removable.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([deletable]:focus-visible) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag--removable.focus-ring .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([deletable][selected]) {
-    color: var(
-        --spectrum-tag-s-removable-texticon-text-color-selected,
-        var(--spectrum-alias-tag-text-color-selected)
-    ); /* .spectrum-Tag--removable.is-selected */
-}
-:host([deletable][selected]) .is-focused {
-    color: var(
-        --spectrum-tag-s-removable-texticon-text-color-selected-key-focus,
-        var(--spectrum-alias-tag-text-color-selected)
-    ); /* .spectrum-Tag--removable.is-selected.is-focused */
-}
-:host([deletable][selected]) .clear-button {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-selected,
-        var(--spectrum-alias-tag-icon-color-selected)
-    ); /* .spectrum-Tag--removable.is-selected .spectrum-Tag-clearButton */
-}
-:host([deletable][selected]) .clear-button .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag--removable.is-selected .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
-}
-:host([deletable][selected]) .clear-button:hover {
-    color: var(
-        --spectrum-tag-s-removable-texticon-icon-color-selected-hover,
-        var(--spectrum-alias-tag-icon-color-selected)
-    ); /* .spectrum-Tag--removable.is-selected .spectrum-Tag-clearButton:hover */
-}
-:host([deletable][selected]) .clear-button:hover .spectrum-ClearButton-fill {
-    background: transparent; /* .spectrum-Tag--removable.is-selected .spectrum-Tag-clearButton:hover .spectrum-ClearButton-fill */
-}
-:host([deletable][selected][invalid]) {
-    color: var(
-        --spectrum-tag-s-removable-texticon-text-color-error-key-focus,
-        var(--spectrum-alias-tag-text-color-error-key-focus)
-    ); /* .spectrum-Tag--removable.is-selected.is-invalid */
 }
 @media (forced-colors: active) {
     :host {
-        --spectrum-tag-s-removable-texticon-border-color-error-down: Highlight;
-        --spectrum-tag-s-removable-texticon-border-color-error-hover: Highlight;
-        --spectrum-tag-s-removable-texticon-icon-color: ButtonText;
-        --spectrum-tag-s-removable-texticon-icon-color-disabled: GrayText;
-        --spectrum-tag-s-removable-texticon-icon-color-down: ButtonText;
-        --spectrum-tag-s-removable-texticon-icon-color-error: ButtonText;
-        --spectrum-tag-s-removable-texticon-icon-color-error-down: ButtonText;
-        --spectrum-tag-s-removable-texticon-icon-color-error-hover: ButtonText;
-        --spectrum-tag-s-removable-texticon-icon-color-error-selected: HighlightText;
-        --spectrum-tag-s-removable-texticon-icon-color-hover: ButtonText;
-        --spectrum-tag-s-removable-texticon-icon-color-key-focus: ButtonText;
-        --spectrum-tag-s-removable-texticon-icon-color-selected: HighlightText;
-        --spectrum-tag-s-removable-texticon-icon-color-selected-hover: HighlightText;
-        --spectrum-tag-s-removable-texticon-icon-color-selected-key-focus: HighlightText;
-        --spectrum-tag-s-removable-texticon-text-color-down: ButtonText;
-        --spectrum-tag-s-removable-texticon-text-color-error-down: ButtonText;
-        --spectrum-tag-s-removable-texticon-text-color-error-hover: ButtonText;
-        --spectrum-tag-s-removable-texticon-text-color-error-key-focus: ButtonText;
-        --spectrum-tag-s-removable-texticon-text-color-error-selected: HighlightText;
-        --spectrum-tag-s-removable-texticon-text-color-hover: ButtonText;
-        --spectrum-tag-s-removable-texticon-text-color-key-focus: ButtonText;
-        --spectrum-tag-s-removable-texticon-text-color-selected: HighlightText;
-        --spectrum-tag-s-removable-texticon-text-color-selected-key-focus: HighlightText;
-        --spectrum-tag-s-texticon-background-color: ButtonFace;
-        --spectrum-tag-s-texticon-background-color-disabled: ButtonFace;
-        --spectrum-tag-s-texticon-background-color-error-selected: Highlight;
-        --spectrum-tag-s-texticon-background-color-error-selected-hover: Highlight;
-        --spectrum-tag-s-texticon-background-color-hover: ButtonFace;
-        --spectrum-tag-s-texticon-background-color-key-focus: ButtonFace;
-        --spectrum-tag-s-texticon-background-color-selected: Highlight;
-        --spectrum-tag-s-texticon-background-color-selected-hover: Highlight;
-        --spectrum-tag-s-texticon-border-color: ButtonText;
-        --spectrum-tag-s-texticon-border-color-disabled: GrayText;
-        --spectrum-tag-s-texticon-border-color-error: Highlight;
-        --spectrum-tag-s-texticon-border-color-error-hover: Highlight;
-        --spectrum-tag-s-texticon-border-color-error-selected: HighlightText;
-        --spectrum-tag-s-texticon-border-color-error-selected-hover: HighlightText;
-        --spectrum-tag-s-texticon-border-color-error-selected-key-focus: HighlightText;
-        --spectrum-tag-s-texticon-border-color-hover: ButtonText;
-        --spectrum-tag-s-texticon-border-color-key-focus: ButtonText;
-        --spectrum-tag-s-texticon-border-color-selected: HighlightText;
-        --spectrum-tag-s-texticon-focusring-border-color-key-focus: ButtonText;
-        --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus: ButtonText;
-        --spectrum-tag-s-texticon-icon-color-disabled: GrayText;
-        --spectrum-tag-s-texticon-icon-color-error: ButtonText;
-        --spectrum-tag-s-texticon-icon-color-error-hover: ButtonText;
-        --spectrum-tag-s-texticon-icon-color-error-key-focus: ButtonText;
-        --spectrum-tag-s-texticon-icon-color-error-selected-hover: HighlightText;
-        --spectrum-tag-s-texticon-icon-color-selected: HighlightText;
-        --spectrum-tag-s-texticon-text-color: ButtonText;
-        --spectrum-tag-s-texticon-text-color-disabled: GrayText;
-        --spectrum-tag-s-texticon-text-color-hover: ButtonText;
-        --spectrum-tag-s-texticon-text-color-key-focus: ButtonText;
-        --spectrum-tag-s-texticon-text-color-selected: HighlightText;
-        --spectrum-tag-s-texticon-text-color-selected-key-focus: HighlightText;
+        --highcontrast-tag-border-color: ButtonText;
+        --highcontrast-tag-border-color-hover: ButtonText;
+        --highcontrast-tag-border-color-active: ButtonText;
+        --highcontrast-tag-border-color-focus: ButtonText;
+        --highcontrast-tag-background-color: ButtonFace;
+        --highcontrast-tag-background-color-hover: ButtonFace;
+        --highcontrast-tag-background-color-active: ButtonFace;
+        --highcontrast-tag-background-color-focus: ButtonFace;
+        --highcontrast-tag-content-color: ButtonText;
+        --highcontrast-tag-content-color-hover: ButtonText;
+        --highcontrast-tag-content-color-active: ButtonText;
+        --highcontrast-tag-content-color-focus: ButtonText;
         forced-color-adjust: none;
     }
-    :host([selected][invalid].focus-visible) {
-        box-shadow: 0 0 0
-            var(
-                --spectrum-alias-focus-ring-size,
-                var(--spectrum-global-dimension-static-size-25)
-            )
-            var(
-                --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,
-                var(
-                    --spectrum-alias-tag-focusring-border-color-selected-key-focus
-                )
-            );
+    :host([selected]) {
+        --highcontrast-tag-border-color-selected: Highlight;
+        --highcontrast-tag-border-color-selected-hover: Highlight;
+        --highcontrast-tag-border-color-selected-active: Highlight;
+        --highcontrast-tag-border-color-selected-focus: Highlight;
+        --highcontrast-tag-background-color-selected: Highlight;
+        --highcontrast-tag-background-color-selected-hover: Highlight;
+        --highcontrast-tag-background-color-selected-active: Highlight;
+        --highcontrast-tag-background-color-selected-focus: Highlight;
+        --highcontrast-tag-content-color-selected: HighlightText;
     }
-    :host([selected][invalid]:focus-visible) {
-        box-shadow: 0 0 0
-            var(
-                --spectrum-alias-focus-ring-size,
-                var(--spectrum-global-dimension-static-size-25)
-            )
-            var(
-                --spectrum-tag-s-texticon-focusring-border-color-selected-key-focus,
-                var(
-                    --spectrum-alias-tag-focusring-border-color-selected-key-focus
-                )
-            );
+    :host([disabled]) {
+        --highcontrast-tag-border-color-disabled: GrayText;
+        --highcontrast-tag-background-color-disabled: ButtonFace;
+        --highcontrast-tag-content-color-disabled: GrayText;
     }
-    :host([selected][invalid].focus-visible) .clear-button {
-        color: var(
-            --spectrum-tag-s-texticon-icon-color-error-selected-hover,
-            var(--spectrum-alias-tag-icon-color-selected)
-        );
+    :host([invalid]) {
+        --highcontrast-tag-border-color-invalid: Highlight;
+        --highcontrast-tag-border-color-invalid-hover: Highlight;
+        --highcontrast-tag-border-color-invalid-active: Highlight;
+        --highcontrast-tag-border-color-invalid-focus: Highlight;
+        --highcontrast-tag-content-color-invalid: CanvasText;
+        --highcontrast-tag-content-color-invalid-hover: CanvasText;
+        --highcontrast-tag-content-color-invalid-active: CanvasText;
+        --highcontrast-tag-content-color-invalid-focus: CanvasText;
     }
-    :host([selected][invalid]:focus-visible) .clear-button {
-        color: var(
-            --spectrum-tag-s-texticon-icon-color-error-selected-hover,
-            var(--spectrum-alias-tag-icon-color-selected)
-        );
+    :host([invalid][selected]) {
+        --highcontrast-tag-border-color-invalid-selected: Highlight;
+        --highcontrast-tag-border-color-invalid-selected-hover: Highlight;
+        --highcontrast-tag-border-color-invalid-selected-focus: Highlight;
+        --highcontrast-tag-border-color-invalid-selected-active: Highlight;
+        --highcontrast-tag-background-color-invalid-selected: Highlight;
+        --highcontrast-tag-background-color-invalid-selected-hover: Highlight;
+        --highcontrast-tag-background-color-invalid-selected-active: Highlight;
+        --highcontrast-tag-background-color-invalid-selected-focus: Highlight;
+        --highcontrast-tag-content-color-invalid-selected: HighlightText;
     }
+    :host(.is-emphasized) {
+        --highcontrast-tag-border-color-emphasized: Highlight;
+        --highcontrast-tag-border-color-emphasized-hover: Highlight;
+        --highcontrast-tag-border-color-emphasized-active: Highlight;
+        --highcontrast-tag-border-color-emphasized-focus: Highlight;
+        --highcontrast-tag-background-color-emphasized: ButtonFace;
+        --highcontrast-tag-background-color-emphasized-hover: ButtonFace;
+        --highcontrast-tag-background-color-emphasized-active: ButtonFace;
+        --highcontrast-tag-background-color-emphasized-focus: ButtonFace;
+        --highcontrast-tag-content-color-emphasized: CanvasText;
+    }
+}
+:host {
+    --spectrum-tag-border-color: var(
+        --system-spectrum-tag-border-color
+    ); /* .spectrum-Tag */
+    --spectrum-tag-border-color-hover: var(
+        --system-spectrum-tag-border-color-hover
+    );
+    --spectrum-tag-border-color-active: var(
+        --system-spectrum-tag-border-color-active
+    );
+    --spectrum-tag-border-color-focus: var(
+        --system-spectrum-tag-border-color-focus
+    );
+    --spectrum-tag-size-small-corner-radius: var(
+        --system-spectrum-tag-size-small-corner-radius
+    );
+    --spectrum-tag-size-medium-corner-radius: var(
+        --system-spectrum-tag-size-medium-corner-radius
+    );
+    --spectrum-tag-size-large-corner-radius: var(
+        --system-spectrum-tag-size-large-corner-radius
+    );
+    --spectrum-tag-background-color: var(
+        --system-spectrum-tag-background-color
+    );
+    --spectrum-tag-background-color-hover: var(
+        --system-spectrum-tag-background-color-hover
+    );
+    --spectrum-tag-background-color-active: var(
+        --system-spectrum-tag-background-color-active
+    );
+    --spectrum-tag-background-color-focus: var(
+        --system-spectrum-tag-background-color-focus
+    );
+    --spectrum-tag-content-color: var(--system-spectrum-tag-content-color);
+    --spectrum-tag-content-color-hover: var(
+        --system-spectrum-tag-content-color-hover
+    );
+    --spectrum-tag-content-color-active: var(
+        --system-spectrum-tag-content-color-active
+    );
+    --spectrum-tag-content-color-focus: var(
+        --system-spectrum-tag-content-color-focus
+    );
+    --spectrum-tag-border-color-selected: var(
+        --system-spectrum-tag-border-color-selected
+    );
+    --spectrum-tag-border-color-selected-hover: var(
+        --system-spectrum-tag-border-color-selected-hover
+    );
+    --spectrum-tag-border-color-selected-active: var(
+        --system-spectrum-tag-border-color-selected-active
+    );
+    --spectrum-tag-border-color-selected-focus: var(
+        --system-spectrum-tag-border-color-selected-focus
+    );
+    --spectrum-tag-background-color-selected: var(
+        --system-spectrum-tag-background-color-selected
+    );
+    --spectrum-tag-background-color-selected-hover: var(
+        --system-spectrum-tag-background-color-selected-hover
+    );
+    --spectrum-tag-background-color-selected-active: var(
+        --system-spectrum-tag-background-color-selected-active
+    );
+    --spectrum-tag-background-color-selected-focus: var(
+        --system-spectrum-tag-background-color-selected-focus
+    );
+    --spectrum-tag-border-color-disabled: var(
+        --system-spectrum-tag-border-color-disabled
+    );
+    --spectrum-tag-background-color-disabled: var(
+        --system-spectrum-tag-background-color-disabled
+    );
+    --spectrum-tag-size-small-spacing-inline-start: var(
+        --system-spectrum-tag-size-small-spacing-inline-start
+    );
+    --spectrum-tag-size-small-label-spacing-inline-end: var(
+        --system-spectrum-tag-size-small-label-spacing-inline-end
+    );
+    --spectrum-tag-size-small-clear-button-spacing-inline-end: var(
+        --system-spectrum-tag-size-small-clear-button-spacing-inline-end
+    );
+    --spectrum-tag-size-medium-spacing-inline-start: var(
+        --system-spectrum-tag-size-medium-spacing-inline-start
+    );
+    --spectrum-tag-size-medium-label-spacing-inline-end: var(
+        --system-spectrum-tag-size-medium-label-spacing-inline-end
+    );
+    --spectrum-tag-size-medium-clear-button-spacing-inline-end: var(
+        --system-spectrum-tag-size-medium-clear-button-spacing-inline-end
+    );
+    --spectrum-tag-size-large-spacing-inline-start: var(
+        --system-spectrum-tag-size-large-spacing-inline-start
+    );
+    --spectrum-tag-size-large-label-spacing-inline-end: var(
+        --system-spectrum-tag-size-large-label-spacing-inline-end
+    );
+    --spectrum-tag-size-large-clear-button-spacing-inline-end: var(
+        --system-spectrum-tag-size-large-clear-button-spacing-inline-end
+    );
 }
