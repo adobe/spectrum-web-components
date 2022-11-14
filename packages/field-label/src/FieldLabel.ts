@@ -25,6 +25,14 @@ import {
 import type { Focusable } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-asterisk100.js';
 import asteriskIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-asterisk.css.js';
+import {
+    conditionAttributeWithId,
+    conditionAttributeWithoutId,
+} from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
+import {
+    ElementResolutionController,
+    elementResolverUpdatedSymbol,
+} from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
 
 import styles from './field-label.css.js';
 
@@ -79,13 +87,36 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
         }
     }
 
-    private async manageFor(): Promise<void> {
-        if (!this.for) {
-            return;
+    private resolvedElement = new ElementResolutionController(this);
+
+    private addTarget(target: Focusable): void {
+        this.target = target.focusElement || target;
+        const targetParent = this.target.getRootNode() as HTMLElement;
+        if (targetParent === (this.getRootNode() as HTMLElement)) {
+            conditionAttributeWithId(this.target, 'aria-labelledby', [this.id]);
+        } else {
+            this.target.setAttribute('aria-label', this.labelText);
         }
-        const parent = this.getRootNode() as HTMLElement;
-        const target = parent.querySelector(`#${this.for}`) as Focusable;
+    }
+
+    private removeTarget(): void {
+        if (this.target) {
+            const targetParent = this.target.getRootNode() as HTMLElement;
+            if (targetParent === (this.getRootNode() as HTMLElement)) {
+                conditionAttributeWithoutId(this.target, 'aria-labelledby', [
+                    this.id,
+                ]);
+            } else {
+                this.target.removeAttribute('aria-label');
+            }
+        }
+    }
+
+    private async manageTarget(): Promise<void> {
+        this.removeTarget();
+        const target = this.resolvedElement.element as Focusable;
         if (!target) {
+            this.target = target;
             return;
         }
         if (target.localName.search('-') > 0) {
@@ -94,16 +125,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
         if (typeof target.updateComplete !== 'undefined') {
             await target.updateComplete;
         }
-        this.target = target.focusElement || target;
-        if (this.target) {
-            const targetParent = this.target.getRootNode() as HTMLElement;
-            if (targetParent === parent) {
-                this.target.setAttribute('aria-labelledby', this.id);
-            } else {
-                this.target.setAttribute('aria-label', this.labelText);
-            }
-        }
-        return Promise.resolve();
+        this.addTarget(target);
     }
 
     private get labelText(): string {
@@ -120,7 +142,7 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
     protected override render(): TemplateResult {
         return html`
             <label>
-                <slot @slotchange=${this.manageFor}></slot>
+                <slot></slot>
                 ${this.required
                     ? html`
                           <sp-icon-asterisk100
@@ -144,8 +166,11 @@ export class FieldLabel extends SizedMixin(SpectrumElement) {
                 `${this.tagName.toLowerCase()}-${FieldLabel.instanceCount++}`
             );
         }
-        if (changes.has('for') || changes.has('id')) {
-            this.manageFor();
+        if (changes.has('for')) {
+            this.resolvedElement.selector = this.for ? `#${this.for}` : '';
+        }
+        if (changes.has('id') || changes.has(elementResolverUpdatedSymbol)) {
+            this.manageTarget();
         }
     }
 }
