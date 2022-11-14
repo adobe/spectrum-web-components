@@ -166,7 +166,7 @@ ${reactComponents.reduce(
     ],
     "dependencies": {
         "@lit-labs/react": "1.1.0",
-        "@spectrum-web-components/accordion": "${pkgVersion}"
+        "${pkgName}": "${pkgVersion}"
     }
 }
 `;
