@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2022 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -71,10 +71,6 @@ const config = {
                     selector: '.spectrum-Tags-itemLabel',
                     name: 'label',
                 },
-                {
-                    selector: '.spectrum-Tags-itemIcon',
-                    name: 'itemIcon',
-                },
             ],
             slots: [
                 {
@@ -82,7 +78,7 @@ const config = {
                     name: 'avatar',
                 },
                 {
-                    selector: '.spectrum-Icon',
+                    selector: '.spectrum-Tags-itemIcon',
                     name: 'icon',
                 },
             ],

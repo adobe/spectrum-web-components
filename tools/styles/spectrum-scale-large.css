@@ -285,12 +285,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-avatar-size-100: 26px;
     --spectrum-alias-avatar-size-400: 36px;
     --spectrum-alias-avatar-size-600: 46px;
-    --spectrum-alias-tag-icon-size-l: var(
-        --spectrum-global-dimension-static-size-300
-    );
-    --spectrum-alias-tag-focusring-border-radius: var(
-        --spectrum-global-dimension-static-size-75
-    );
     --spectrum-button-s-primary-fill-textonly-text-padding-bottom: var(
         --spectrum-global-dimension-static-size-85
     );
@@ -326,9 +320,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-progressbar-xl-border-radius: var(
         --spectrum-global-dimension-static-size-75
-    );
-    --spectrum-tag-m-texticon-padding-left: var(
-        --spectrum-global-dimension-static-size-150
     );
     --spectrum-textfield-m-texticon-padding-left: var(
         --spectrum-global-dimension-static-size-150
