@@ -77,6 +77,51 @@ describe('FieldLabel', () => {
 
         await expect(el).to.be.accessible();
     });
+    it('observes based on `for` value', async () => {
+        const test = await fixture<FieldLabel>(
+            html`
+                <div>
+                    <sp-field-label for="test">Input label</sp-field-label>
+                    <input id="test" />
+                    <input id="test" />
+                </div>
+            `
+        );
+
+        const fieldLabel = test.querySelector('sp-field-label') as FieldLabel;
+        const el = fieldLabel as unknown as { target: HTMLElement | undefined };
+        const input1 = test.querySelector(
+            'input:nth-of-type(1)'
+        ) as HTMLInputElement;
+        const input2 = test.querySelector(
+            'input:nth-of-type(2)'
+        ) as HTMLInputElement;
+
+        await elementUpdated(fieldLabel);
+
+        expect(el.target === input1).to.be.true;
+        input1.remove();
+        await elementUpdated(fieldLabel);
+        expect(el.target === input2).to.be.true;
+        fieldLabel.insertAdjacentElement('beforebegin', input1);
+        await elementUpdated(fieldLabel);
+        expect(el.target === input1).to.be.true;
+        input1.id = 'other';
+        await elementUpdated(fieldLabel);
+        expect(el.target === input2).to.be.true;
+        input2.remove();
+        await elementUpdated(fieldLabel);
+        expect(el.target).to.be.null;
+        input1.id = 'test';
+        await elementUpdated(fieldLabel);
+        expect(el.target === input1).to.be.true;
+        fieldLabel.insertAdjacentElement('afterend', input2);
+        await elementUpdated(fieldLabel);
+        expect(el.target === input2).to.be.false;
+        input2.insertAdjacentElement('afterend', input1);
+        await elementUpdated(fieldLabel);
+        expect(el.target === input2).to.be.true;
+    });
     it('allows unfulfilled "for"', async () => {
         const el = await fixture<FieldLabel>(
             html`
@@ -85,16 +130,16 @@ describe('FieldLabel', () => {
         );
         await elementUpdated(el);
         const manageSpy = stub(
-            el as unknown as { manageFor(): Promise<string> },
-            'manageFor'
+            el as unknown as { manageTarget(): Promise<string> },
+            'manageTarget'
         );
         manageSpy.callsFake(async (...args): Promise<string> => {
             try {
                 await (
                     FieldLabel.prototype as unknown as {
-                        manageFor(): Promise<void>;
+                        manageTarget(): Promise<void>;
                     }
-                ).manageFor.apply(el, ...args);
+                ).manageTarget.apply(el, ...args);
             } catch (error) {
                 return 'Error was thrown.';
             }
@@ -102,6 +147,7 @@ describe('FieldLabel', () => {
         });
 
         el.for = 'not-available';
+        el.id = 'force-manage-target';
         await elementUpdated(el);
         const result = await manageSpy.returnValues[0];
         expect(result).to.equal('No error was thrown.');
