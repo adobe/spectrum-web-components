@@ -157,18 +157,18 @@ ${reactComponents.reduce(
     "name": "@spectrum-web-components/sp-${componentShortName}",
     "version": "${pkgVersion}",
     "description": "React wrapper of the ${pkgName} component",
+    "license": "Apache-2.0",
+    "author": "jian.liao@gmail.com",
     "main": "index.js",
     "keywords": [
         "React",
         "Spectrum Web Components"
     ],
-    "author": "jian.liao@gmail.com",
-    "license": "Apache-2.0",
     "dependencies": {
         "@lit-labs/react": "1.1.0",
         "@spectrum-web-components/accordion": "${pkgVersion}"
     }
-}          
+}
 `;
 
             const componentPath = resolve(`${outDir}/sp-${componentShortName}`);
