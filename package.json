@@ -31,6 +31,7 @@
         "docs:review": "alex packages/**/*.md",
         "docs:start": "yarn workspace documentation serve --watch",
         "find": "test -f custom-elements.json",
+        "gen-react-wrapper": "rm -fr react && lerna exec --ignore \"{@spectrum-web-components/{base,bundle,modal,iconset,shared,styles},documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- cem analyze --config ../../cem-react-wrapper.config.js",
         "get-ready": "yarn build:clear-cache && run-p process-icons process-spectrum && yarn build:clean",
         "icons": "node ./scripts/process-icons.js && pretty-quick --pattern \"packages/**/*.svg.ts\" && eslint -f pretty --fix \"packages/**/*.svg.ts\"",
         "icons:ui": "yarn workspace @spectrum-web-components/icons-ui build",
@@ -95,6 +96,7 @@
         "@commitlint/config-conventional": "^17.0.0",
         "@commitlint/config-lerna-scopes": "^17.2.1",
         "@custom-elements-manifest/analyzer": "^0.6.3",
+        "@lit-labs/react": "^1.1.1",
         "@netlify/build": "^29.1.0",
         "@open-wc/dev-server-hmr": "^0.1.3",
         "@open-wc/testing": "^3.1.7",
@@ -108,6 +110,7 @@
         "@types/command-line-usage": "^5.0.1",
         "@types/common-tags": "^1.4.0",
         "@types/node": "^18.11.0",
+        "@types/react": "^18.0.25",
         "@types/sinon": "^10.0.0",
         "@types/webpack": "^4.4.26",
         "@types/webpack-env": "^1.13.9",
@@ -172,6 +175,7 @@
         "pretty-bytes": "^5.6.0",
         "pretty-quick": "^3.1.3",
         "re-template-tag": "^2.0.1",
+        "react": "^18.2.0",
         "rimraf": "^3.0.2",
         "rollup": "^2.78.0",
         "sinon": "^14.0.0",
@@ -190,6 +194,7 @@
     "workspaces": [
         "packages/*",
         "projects/*",
-        "tools/*"
+        "tools/*",
+        "react/*"
     ]
 }

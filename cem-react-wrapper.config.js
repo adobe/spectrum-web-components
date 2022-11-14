@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2022 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,11 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
+import reactWrapperPlugin from './scripts/cem-plugin-react-wrapper.js';
 
 export default {
-    globs: ['**/sp-*.ts', '**/src/[A-Z]*.ts', '**/src/elements/[A-Z]*.ts'],
+    globs: ['**/sp-*.ts', '**/src/[A-Z]*.ts'],
     exclude: [
+        '**/sp-icon-*.ts',
         '**/*.d.ts',
         '**/stories/**',
         '**/test/**',
@@ -24,5 +25,10 @@ export default {
     outdir: '.',
     litelement: true,
     packagejson: false,
-    plugins: [moduleFileExtensionsPlugin()],
+    plugins: [
+        reactWrapperPlugin({
+            exclude: ['PickerBase', 'DialogBase'],
+            outDir: '../../react',
+        }),
+    ],
 };
