@@ -21,6 +21,19 @@ export type FocusGroupConfig<T> = {
     listenerScope?: HTMLElement | (() => HTMLElement);
 };
 
+function ensureMethod<T, RT>(
+    value: T | RT | undefined,
+    type: string,
+    fallback: T
+): T {
+    if (typeof value === type) {
+        return (() => value) as T;
+    } else if (typeof value === 'function') {
+        return value as T;
+    }
+    return fallback;
+}
+
 export class FocusGroupController<T extends HTMLElement>
     implements ReactiveController
 {
@@ -113,23 +126,22 @@ export class FocusGroupController<T extends HTMLElement>
         this.host.addController(this);
         this._elements = elements;
         this.isFocusableElement = isFocusableElement || this.isFocusableElement;
-        // @TODO: abstract a method to simplify the conditional wrapping of the values as functions.
-        if (typeof direction === 'string') {
-            this._direction = () => direction;
-        } else if (typeof direction === 'function') {
-            this._direction = direction;
-        }
+        this._direction = ensureMethod<() => DirectionTypes, DirectionTypes>(
+            direction,
+            'string',
+            this._direction
+        );
         this.elementEnterAction = elementEnterAction || this.elementEnterAction;
-        if (typeof focusInIndex === 'number') {
-            this._focusInIndex = () => focusInIndex;
-        } else if (typeof focusInIndex === 'function') {
-            this._focusInIndex = focusInIndex;
-        }
-        if (typeof listenerScope === 'object') {
-            this._listenerScope = () => listenerScope;
-        } else if (typeof listenerScope === 'function') {
-            this._listenerScope = listenerScope as () => HTMLElement;
-        }
+        this._focusInIndex = ensureMethod<(_elements: T[]) => number, number>(
+            focusInIndex,
+            'number',
+            this._focusInIndex
+        );
+        this._listenerScope = ensureMethod<() => HTMLElement, HTMLElement>(
+            listenerScope,
+            'object',
+            this._listenerScope
+        );
     }
 
     update({ elements }: FocusGroupConfig<T> = { elements: () => [] }): void {
