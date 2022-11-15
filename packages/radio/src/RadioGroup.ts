@@ -32,7 +32,7 @@ import { RovingTabindexController } from '@spectrum-web-components/reactive-cont
  */
 export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
     @property({ type: String })
-    public override name = '';
+    public name = '';
 
     @queryAssignedNodes('')
     public defaultNodes!: Node[];
