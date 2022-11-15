@@ -112,6 +112,44 @@ export default function genReactWrapper({
                     (m) =>
                         `import '${pkgName}/${m.path?.replace('.ts', '.js')}';`
                 );
+            if (pkgName === '@spectrum-web-components/theme') {
+                fileImports.push(
+                    "import '@spectrum-web-components/theme/theme-darkest.js';"
+                );
+                fileImports.push(
+                    "import '@spectrum-web-components/theme/theme-dark.js';"
+                );
+                fileImports.push(
+                    "import '@spectrum-web-components/theme/theme-light.js';"
+                );
+                fileImports.push(
+                    "import '@spectrum-web-components/theme/theme-lightest.js';"
+                );
+                fileImports.push(
+                    "import '@spectrum-web-components/theme/scale-medium.js';"
+                );
+                fileImports.push(
+                    "import '@spectrum-web-components/theme/scale-large.js';"
+                );
+                fileImports.push(
+                    "import '@spectrum-web-components/theme/express/theme-darkest.js';"
+                );
+                fileImports.push(
+                    "import '@spectrum-web-components/theme/express/theme-dark.js';"
+                );
+                fileImports.push(
+                    "import '@spectrum-web-components/theme/express/theme-light.js';"
+                );
+                fileImports.push(
+                    "import '@spectrum-web-components/theme/express/theme-lightest.js';"
+                );
+                fileImports.push(
+                    "import '@spectrum-web-components/theme/express/scale-medium.js';"
+                );
+                fileImports.push(
+                    "import '@spectrum-web-components/theme/express/scale-large.js';"
+                );
+            }
 
             const reactComponents = [];
 
