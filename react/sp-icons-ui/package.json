@@ -1,0 +1,17 @@
+{
+    "name": "@spectrum-web-components/sp-icons-ui",
+    "version": "0.9.3",
+    "description": "React wrapper of the icons-ui component",
+    "license": "Apache-2.0",
+    "author": "jian.liao@gmail.com",
+    "main": "index.js",
+    "keywords": [
+        "React",
+        "Spectrum Web Components",
+        "icons-ui"
+    ],
+    "dependencies": {
+        "@lit-labs/react": "1.1.0",
+        "@spectrum-web-components/icons-ui": "0.9.3"
+    }
+}
