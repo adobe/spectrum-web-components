@@ -10,11 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    CSSResultArray,
-    PropertyValues,
-    SizedMixin,
-} from '@spectrum-web-components/base';
+import { CSSResultArray, SizedMixin } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { StyledButton } from './StyledButton.js';
 import buttonStyles from './button.css.js';
@@ -36,6 +32,7 @@ export const VALID_VARIANTS = [
     'white',
     'black',
 ];
+export const VALID_STATICS = ['white', 'black'];
 
 export type ButtonTreatments = 'fill' | 'outline';
 
@@ -64,11 +61,40 @@ export class Button extends SizedMixin(StyledButton) {
         switch (variant) {
             case 'cta':
                 this._variant = 'accent';
+                if (window.__swc.DEBUG) {
+                    window.__swc.warn(
+                        this,
+                        `The "cta" value of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "variant='accent'" instead.`,
+                        'https://opensource.adobe.com/spectrum-web-components/components/button/#variants'
+                    );
+                }
                 break;
             case 'overBackground':
-                this._variant = 'white';
+                this.removeAttribute('variant');
+                this.static = 'white';
                 this.treatment = 'outline';
-                break;
+                if (window.__swc.DEBUG) {
+                    window.__swc.warn(
+                        this,
+                        `The "overBackground" value of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static='white'" with "treatment='outline'" instead.`,
+                        'https://opensource.adobe.com/spectrum-web-components/components/button#static'
+                    );
+                }
+                return;
+            case 'white':
+            case 'black':
+                this.static = variant;
+                this.removeAttribute('variant');
+                if (window.__swc.DEBUG) {
+                    window.__swc.warn(
+                        this,
+                        `The "black" and "white" values of the "variant" attribute on <${this.localName}> has been deprecated and will be removed in a future release. Use "static='black'" or "static='white'" instead.`,
+                        'https://opensource.adobe.com/spectrum-web-components/components/button#static'
+                    );
+                }
+                return;
+            case null:
+                return;
             default:
                 if (!VALID_VARIANTS.includes(variant)) {
                     this._variant = 'accent';
@@ -80,6 +106,9 @@ export class Button extends SizedMixin(StyledButton) {
         this.setAttribute('variant', this.variant);
     }
     private _variant: ButtonVariants = 'accent';
+
+    @property({ type: String, reflect: true })
+    public static: 'black' | 'white' | undefined;
 
     /**
      * The visual variant to apply to this button.
@@ -93,12 +122,5 @@ export class Button extends SizedMixin(StyledButton) {
     @property({ type: Boolean })
     public set quiet(quiet: boolean) {
         this.treatment = quiet ? 'outline' : 'fill';
-    }
-
-    protected override firstUpdated(changes: PropertyValues<this>): void {
-        super.firstUpdated(changes);
-        if (!this.hasAttribute('variant')) {
-            this.setAttribute('variant', this.variant);
-        }
     }
 }

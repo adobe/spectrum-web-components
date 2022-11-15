@@ -67,14 +67,6 @@ const config = {
                         '.spectrum-Button--primary',
                         '.spectrum-Button--secondary',
                         '.spectrum-Button--negative',
-                        {
-                            name: 'white',
-                            selector: '.spectrum-Button--staticWhite',
-                        },
-                        {
-                            name: 'black',
-                            selector: '.spectrum-Button--staticBlack',
-                        },
                     ],
                 },
                 {
@@ -83,6 +75,21 @@ const config = {
                     values: [
                         '.spectrum-Button--fill',
                         '.spectrum-Button--outline',
+                    ],
+                },
+                {
+                    type: 'enum',
+                    name: 'static',
+                    forceOntoHost: true,
+                    values: [
+                        {
+                            name: 'white',
+                            selector: '.spectrum-Button--staticWhite',
+                        },
+                        {
+                            name: 'black',
+                            selector: '.spectrum-Button--staticBlack',
+                        },
                     ],
                 },
                 {

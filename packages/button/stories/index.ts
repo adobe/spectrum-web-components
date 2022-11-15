@@ -99,6 +99,7 @@ export const makeOverBackground =
             <div
                 style="
                     --mod-actionbutton-static-content-color: ${color};
+                    --mod-button-static-content-color: ${color};
                     background-color: ${color};
                     color: ${color};
                     padding: var(--spectrum-global-dimension-size-175) var(--spectrum-global-dimension-size-250);
