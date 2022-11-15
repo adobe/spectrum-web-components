@@ -66,7 +66,7 @@ export class DelayedReady extends SpectrumElement {
 @customElement('icons-demo')
 export class IconsDemo extends SpectrumElement {
     @property()
-    public override name = 'ui';
+    public name = 'ui';
 
     @property()
     public package = '';
