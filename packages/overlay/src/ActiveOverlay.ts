@@ -427,7 +427,10 @@ export class ActiveOverlay extends SpectrumElement {
         this.cleanup = autoUpdate(
             this.virtualTrigger || this.trigger,
             this,
-            this.updateOverlayPosition
+            this.updateOverlayPosition,
+            {
+                elementResize: false,
+            }
         );
     }
 
