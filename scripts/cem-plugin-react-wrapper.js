@@ -15,17 +15,40 @@ import fsExtra from 'fs-extra';
 import { resolve } from 'path';
 import prettier from 'prettier';
 
-const { outputFile } = fsExtra;
+const { outputFile, existsSync } = fsExtra;
 
 const uniqueBy = (arr, prop) => {
     return [...new Map(arr.map((m) => [m[prop], m])).values()];
 };
 
-const getEvents = (decl, declMap, events) => {
+const getEvents = async (decl, declMap, events) => {
     if (declMap.has(decl?.superclass?.name)) {
         getEvents(declMap.get(decl?.superclass?.name), declMap, events);
+    } else if (
+        decl?.superclass?.package &&
+        existsSync(
+            `../../packages/${decl?.superclass?.package.replace(
+                '@spectrum-web-components/',
+                ''
+            )}/custom-elements.json`
+        )
+    ) {
+        const { modules } = JSON.parse(
+            await readFile(
+                `../../packages/${decl?.superclass?.package.replace(
+                    '@spectrum-web-components/',
+                    ''
+                )}/custom-elements.json`
+            )
+        );
+        const [superDecl, ...rest] = modules.flatMap((m) =>
+            m.declarations.filter((d) => d.name === decl?.superclass?.name)
+        );
+        if (superDecl) {
+            getEvents(superDecl, declMap, events);
+        }
     }
-    decl?.members ?? [];
+
     events.push(
         (decl?.members ?? [])
             .filter((member) => member.privacy === 'public') // public
@@ -38,6 +61,14 @@ const getEvents = (decl, declMap, events) => {
                 name: event.name,
             }))
     );
+
+    if (decl?.events) {
+        events.push(
+            decl?.events
+                .filter((event) => !!event.name)
+                .map((event) => ({ name: event.name }))
+        );
+    }
 };
 
 export default function genReactWrapper({
@@ -69,16 +100,8 @@ export default function genReactWrapper({
                 return;
             }
 
-            // Component imports
-            // import { Button } from '@spectrum-web-components/button';
-            // import { ClearButton } from '@spectrum-web-components/button';
-            // import { CloseButton } from '@spectrum-web-components/button';
             const componentImports = [];
 
-            // Js file imports
-            // import '@spectrum-web-components/button/sp-button.js';
-            // import '@spectrum-web-components/button/sp-clear-button.js';
-            // import '@spectrum-web-components/button/sp-close-button.js';
             const fileImports = modules
                 .filter(
                     (m) =>
@@ -102,14 +125,13 @@ export default function genReactWrapper({
                 reactComponent.swcComponentName = component.name;
                 reactComponent.elementName = component.tagName;
                 const events = [];
-                getEvents(component, declMap, events);
+                await getEvents(component, declMap, events);
                 reactComponent.events = uniqueBy(events.flat(), 'name');
 
                 reactComponents.push(reactComponent);
             }
 
-            const componentSrc = `
-/*
+            const componentSrc = `/*
 Copyright 2022 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
