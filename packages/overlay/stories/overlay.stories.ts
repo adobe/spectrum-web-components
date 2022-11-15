@@ -289,6 +289,22 @@ clickContentClosedOnScroll.decorators = [
     `,
 ];
 
+export const noCloseOnResize = (args: Properties): TemplateResult => html`
+    <style>
+        sp-button:hover {
+            border: 10px solid;
+            width: 100px;
+        }
+    </style>
+    ${template({
+        ...args,
+        open: 'click',
+    })}
+`;
+noCloseOnResize.swc_vrt = {
+    skip: true,
+};
+
 export const customizedClickContent = (
     args: Properties
 ): TemplateResult => html`
