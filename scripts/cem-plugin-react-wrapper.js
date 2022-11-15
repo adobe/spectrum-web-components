@@ -73,7 +73,6 @@ const getEvents = async (decl, declMap, events) => {
 
 export default function genReactWrapper({
     exclude = [],
-    attributeMapping = {},
     outDir = 'legacy',
 } = {}) {
     return {
