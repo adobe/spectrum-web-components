@@ -190,6 +190,7 @@ ${reactComponents.reduce(
     (pre, component) =>
         pre +
         `export const ${component.name} = createComponent({
+        displayName: '${component.name}',
         elementClass: ${component.swcComponentName},
         react: React,
         tagName: '${component.elementName}',
