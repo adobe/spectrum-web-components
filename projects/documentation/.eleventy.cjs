@@ -21,55 +21,77 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addPassthroughCopy('content/images/**/*');
     eleventyConfig.addPassthroughCopy('content/manifest.webmanifest');
     eleventyConfig.addPassthroughCopy('../src/**/*.css');
+    eleventyConfig.addPlugin(syntaxHighlight, {
+        init: function ({ Prism }) {
+            Prism.languages['html-live'] = Prism.languages.html;
+            Prism.languages['html-no-demo'] = Prism.languages.html;
+        },
+        preTag: 'code-example',
+        codeTag: 'pre',
+    });
+
     let markdownIt = require('markdown-it');
     let markdownItAnchors = require('markdown-it-anchor');
     let options = {
         html: true,
     };
+    const markdown = markdownIt(options).use(markdownItAnchors, {
+        level: [2, 3, 4],
+        permalink: true,
+        permalinkSymbol: '#',
+        permalinkAttrs: () => ({ 'aria-label': '§' }),
+        renderPermalink: (slug, opts, state, idx) => {
+            const space = () =>
+                Object.assign(new state.Token('html_block', '', 0), {
+                    content: '&nbsp;',
+                });
+
+            const linkTokens = [
+                Object.assign(new state.Token('link_open', 'sp-link', 1), {
+                    attrs: [
+                        ['class', opts.permalinkClass],
+                        ['href', opts.permalinkHref(slug, state)],
+                        ...Object.entries(opts.permalinkAttrs(slug, state)),
+                    ],
+                }),
+                Object.assign(new state.Token('html_block', '', 0), {
+                    content: opts.permalinkSymbol,
+                }),
+                new state.Token('link_close', 'sp-link', -1),
+            ];
+
+            const position = {
+                false: 'push',
+                true: 'unshift',
+            };
+            // `push` or `unshift` according to position option.
+            // Space is at the opposite side.
+            if (opts.permalinkSpace) {
+                linkTokens[position[!opts.permalinkBefore]](space());
+            }
+            // `push` or `unshift` according to position option.
+            // Link tokens are at the opposite side.
+            state.tokens[idx + 1].children[position[opts.permalinkBefore]](
+                ...linkTokens
+            );
+        },
+    });
+
+    eleventyConfig.addTransform("transform-postHTML", async function(content, outputPath) {
+        const posthtml = await import('posthtml').then(module => module.default);
+        const spectrumMarkdown = await import('./src/utils/posthtml-spectrum-docs-markdown.js').then(module => module.default);
+        if( outputPath && outputPath.endsWith(".html") ) {
+            return posthtml()
+                .use(spectrumMarkdown())
+                .process(content, { sync: true })
+                .html
+        }
+        return content; // no change done.
+    });
 
     eleventyConfig.setLibrary(
         'md',
-        markdownIt(options).use(markdownItAnchors, {
-            level: [2, 3, 4],
-            permalink: true,
-            permalinkSymbol: '#',
-            permalinkAttrs: () => ({ 'aria-label': '§' }),
-            renderPermalink: (slug, opts, state, idx) => {
-                const space = () =>
-                    Object.assign(new state.Token('html_block', '', 0), {
-                        content: '&nbsp;',
-                    });
-
-                const linkTokens = [
-                    Object.assign(new state.Token('link_open', 'sp-link', 1), {
-                        attrs: [
-                            ['class', opts.permalinkClass],
-                            ['href', opts.permalinkHref(slug, state)],
-                            ...Object.entries(opts.permalinkAttrs(slug, state)),
-                        ],
-                    }),
-                    Object.assign(new state.Token('html_block', '', 0), {
-                        content: opts.permalinkSymbol,
-                    }),
-                    new state.Token('link_close', 'sp-link', -1),
-                ];
-
-                const position = {
-                    false: 'push',
-                    true: 'unshift',
-                };
-                // `push` or `unshift` according to position option.
-                // Space is at the opposite side.
-                if (opts.permalinkSpace) {
-                    linkTokens[position[!opts.permalinkBefore]](space());
-                }
-                // `push` or `unshift` according to position option.
-                // Link tokens are at the opposite side.
-                state.tokens[idx + 1].children[position[opts.permalinkBefore]](
-                    ...linkTokens
-                );
-            },
-        })
+        markdown
     );
 
     eleventyConfig.addCollection('guides', (collection) => {
@@ -106,13 +128,6 @@ module.exports = function (eleventyConfig) {
                 }
                 return 0;
             });
-    });
-
-    eleventyConfig.addPlugin(syntaxHighlight, {
-        init: function ({ Prism }) {
-            Prism.languages['html-live'] = Prism.languages.html;
-            Prism.languages['html-no-demo'] = Prism.languages.html;
-        },
     });
 
     return {

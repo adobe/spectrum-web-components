@@ -8,20 +8,20 @@ The `<sp-accordion>` element contains a list of items that can be expanded or co
 [![How big is this package in your project?](https://img.shields.io/bundlephobia/minzip/@spectrum-web-components/accordion?style=for-the-badge)](https://bundlephobia.com/result?p=@spectrum-web-components/accordion)
 [![Try it on webcomponents.dev](https://img.shields.io/badge/Try%20it%20on-webcomponents.dev-green?style=for-the-badge)](https://webcomponents.dev/edit/collection/fO75441E1Q5ZlI0e9pgq/Muvuvbd79YCP9tcdtnsW/src/index.ts)
 
-```
+```bash
 yarn add @spectrum-web-components/accordion
 ```
 
 Import the side effectful registration of `<sp-accordion>` and `<sp-accordion-item>` via:
 
-```
+```js
 import '@spectrum-web-components/accordion/sp-accordion.js';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 ```
 
 When looking to leverage the `Accordion` and `AccordionItem` base class as a type and/or for extension purposes, do so via:
 
-```
+```js
 import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
 ```
 

@@ -18,10 +18,9 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const projectDir = path.resolve(__dirname, '..', '..', '..');
-const indexPath = path.resolve(
-    projectDir,
-    'projects/documentation/dist/searchIndex.json'
-);
+const indexDir = path.resolve(projectDir, 'projects/documentation/dist');
+const indexPath = path.resolve(indexDir, 'searchIndex.json');
+fs.mkdirSync(indexDir, { recursive: true });
 
 function nameToTitle(name) {
     return name.replace(/((^|\-)(\w))/gm, (match, p1, p2, p3) => {

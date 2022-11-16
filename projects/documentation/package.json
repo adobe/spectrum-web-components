@@ -8,21 +8,17 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "build": "yarn build:tsc && yarn build-search-index && yarn build:move-css && yarn build:eleventy && yarn build:postcss && yarn build:rollup",
-        "build-search-index": "node scripts/build-search-index.js",
-        "build:eleventy": "eleventy --config=.eleventy.cjs --incremental",
-        "build:move-css": "cp src/components/*.css _site/src/components/",
-        "build:postcss": "postcss src/components/{styles,fonts}.css -d _site/ --config src/postcss.config.cjs",
-        "build:production": "SWC_DIR=spectrum-web-components yarn build",
-        "build:rollup": "rollup -c rollup.config.js",
-        "build:tsc": "tsc --build tsconfig.json",
-        "copy-docs": "node scripts/copy-component-docs.js",
-        "prebuild": "rimraf _site && mkdir -p _site/src/components _site/src/tools && rimraf dist && mkdir dist && yarn copy-docs",
-        "prewatch": "WATCH_MODE=true yarn build",
-        "watch": "WATCH_MODE=true run-p watch:readme 'build:tsc -w' 'build:eleventy --watch' watch:move-css build:postcss 'build:postcss --watch' 'build:rollup --watch' watch:serve",
-        "watch:move-css": "yarn build:move-css && node scripts/watch-css.js",
-        "watch:readme": "node scripts/watch-readme.js",
-        "watch:serve": "wds --root-dir=dist --watch"
+        "build": "wireit",
+        "build:assets": "wireit",
+        "build:eleventy": "wireit",
+        "build:move-css": "wireit",
+        "build:postcss": "wireit",
+        "build:production": "wireit",
+        "build:search-index": "wireit",
+        "build:tsc": "wireit",
+        "copy-docs": "wireit",
+        "serve": "wireit",
+        "watch": "yarn serve --watch"
     },
     "dependencies": {
         "@spectrum-css/table": "^4.0.20",
@@ -37,19 +33,21 @@
         "@rollup/plugin-commonjs": "^21.0.1",
         "@rollup/plugin-json": "^5.0.0",
         "@rollup/plugin-node-resolve": "^13.1.3",
+        "@toycode/markdown-it-class": "^1.2.4",
         "@types/lunr": "^2.3.3",
         "@types/prismjs": "^1.16.6",
         "@web/dev-server": "^0.1.35",
         "@web/rollup-plugin-copy": "^0.3.0",
         "@web/rollup-plugin-html": "^1.11.0",
         "alex": "^10.0.0",
+        "esbuild-plugin-lit-css": "^2.0.0",
         "lunr": "^2.3.9",
         "markdown-it-anchor": "^8.4.1",
+        "markdown-it-for-inline": "^0.1.1",
         "postcss-cli": "^10.0.0",
-        "posthtml": "^0.16.5",
+        "posthtml": "^0.16.6",
         "posthtml-attrs-parser": "^0.1.1",
-        "posthtml-match-helper": "^1.0.1",
-        "posthtml-transform": "^1.0.10",
+        "posthtml-match-helper": "^1.0.3",
         "prismjs": "^1.26.0",
         "rimraf": "^3.0.2",
         "rollup": "^2.68.0",
@@ -57,13 +55,149 @@
         "rollup-plugin-minify-html-literals": "^1.2.6",
         "rollup-plugin-styles": "^4.0.0",
         "rollup-plugin-visualizer": "^5.5.4",
-        "rollup-plugin-workbox": "^6.2.0"
+        "rollup-plugin-workbox": "^6.2.0",
+        "wireit": "^0.9.0"
     },
     "sideEffects": [
         "_site/**/*.css",
         "_site/**/*.js",
         "_site/**/*.json",
         "src/**/*.css",
-        "src/**/*.js"
-    ]
+        "src/**/*.js",
+        "src/**/*.ts"
+    ],
+    "wireit": {
+        "build": {
+            "command": "rollup -c rollup.config.js",
+            "dependencies": [
+                {
+                    "script": "build:assets"
+                }
+            ]
+        },
+        "build:assets": {
+            "dependencies": [
+                {
+                    "script": "build:tsc"
+                },
+                {
+                    "script": "build:move-css"
+                },
+                {
+                    "script": "build:postcss"
+                },
+                {
+                    "script": "build:search-index"
+                }
+            ]
+        },
+        "build:eleventy": {
+            "command": "eleventy --config=.eleventy.cjs --incremental --quiet",
+            "dependencies": [
+                "copy-docs"
+            ],
+            "files": [
+                "./content/**/*.md",
+                "./.eleventy.cjs"
+            ],
+            "clean": "if-file-deleted",
+            "output": [
+                "_site/**/*.html"
+            ]
+        },
+        "build:move-css": {
+            "command": "mkdir -p _site/src/components/ && cp src/components/*.css _site/src/components/",
+            "files": [
+                "./src/components/!(style|fonts).css"
+            ],
+            "output": [
+                "./_site/src/components/!(style|fonts).css"
+            ],
+            "clean": "if-file-deleted"
+        },
+        "build:postcss": {
+            "command": "postcss src/components/{styles,fonts}.css -d _site/ --config src/postcss.config.cjs",
+            "files": [
+                "./src/components/{styles,fonts}.css",
+                "src/postcss.config.cjs",
+                "_site/**/*.html"
+            ],
+            "output": [
+                "_site/src/components/{styles,fonts}.css"
+            ],
+            "clean": "if-file-deleted",
+            "dependencies": [
+                {
+                    "script": "build:eleventy",
+                    "cascade": false
+                }
+            ]
+        },
+        "build:production": {
+            "command": "SWC_DIR=spectrum-web-components rollup -c rollup.config.js",
+            "dependencies": [
+                {
+                    "script": "build:assets"
+                }
+            ]
+        },
+        "build:search-index": {
+            "command": "node scripts/build-search-index.js",
+            "files": [
+                "../../packages/*/*.md",
+                "../../tools/*/*.md",
+                "scripts/build-search-index.js"
+            ],
+            "output": [
+                "dist/searchIndex.json"
+            ]
+        },
+        "build:tsc": {
+            "command": "node scripts/build-ts.js",
+            "files": [
+                "./src/**/*.ts",
+                "scripts/build-ts.js"
+            ],
+            "output": [
+                "./src/**/*.js",
+                "!src/utils/**/*.js"
+            ],
+            "clean": "if-file-deleted",
+            "dependencies": [
+                {
+                    "script": "../../:build"
+                }
+            ]
+        },
+        "copy-docs": {
+            "command": "node scripts/copy-component-docs.js",
+            "files": [
+                "../../packages/**/*.md",
+                "../../tools/**/*.md",
+                "scripts/copy-component-docs.js"
+            ],
+            "clean": "if-file-deleted",
+            "output": [
+                "content/components/**/*.md",
+                "content/tools/**/*.md"
+            ],
+            "dependencies": [
+                {
+                    "script": "../../:docs:analyze",
+                    "cascade": false
+                }
+            ]
+        },
+        "serve": {
+            "command": "wds --config web-dev-server.config.js",
+            "service": true,
+            "files": [],
+            "dependencies": [
+                {
+                    "script": "build:assets",
+                    "cascade": false
+                }
+            ]
+        }
+    }
 }
