@@ -53,6 +53,8 @@ tools/**/*.test-vrt.ts
 !tools/*/global.d.ts
 !tools/*/local.d.ts
 
+.wireit
+
 # typescript assets
 !test/global.d.ts
 *.tsbuildinfo

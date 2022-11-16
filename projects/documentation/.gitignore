@@ -9,6 +9,9 @@ content/components
 content/tools
 custom-elements.json
 
+// scripting
+!/scripts/*.js
+
 // typescript build artifacts
 src/*.js
 !src/postcss.config.js
@@ -21,4 +24,5 @@ src/custom-elements.json
 
 // rollup build directory and artifacts
 dist/
+!web-dev-server.config.js
 stats.html

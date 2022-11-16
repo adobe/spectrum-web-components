@@ -21,46 +21,10 @@ import { createBasicConfig } from '@open-wc/building-rollup';
 import { injectManifest } from 'rollup-plugin-workbox';
 import path from 'path';
 import html from '@web/rollup-plugin-html';
-import posthtml from 'posthtml';
-import spectrumMarkdown from './src/utils/posthtml-spectrum-docs-markdown.js';
 import Terser from 'terser';
 const { postCSSPlugins } = require('../../scripts/css-processing.cjs');
 import postCSSPrefixwrap from 'postcss-prefixwrap';
-import postcss from 'postcss';
-import purgecss from '@fullhuman/postcss-purgecss';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-
-const injectUsedCss = (css) => {
-    return (html) => {
-        const initialHTML = processHtml(html);
-        const htmlWithCSS = postcss([
-            purgecss({
-                content: [
-                    {
-                        extension: 'html',
-                        raw: initialHTML,
-                    },
-                ],
-            }),
-        ])
-            .process(css, {
-                from: `${process.cwd()}/src/components/`,
-            })
-            .then((result) => {
-                const processed = initialHTML.replace(
-                    '<link rel="stylesheet" href="/styles.css">',
-                    `<style>${result.css}</style>`
-                );
-                return stringReplaceHtml(processed);
-            });
-        return htmlWithCSS;
-    };
-};
-
-const processHtml = (source) => {
-    return posthtml().use(spectrumMarkdown()).process(source, { sync: true })
-        .html;
-};
 
 const stringReplaceHtml = (source) => {
     return source
@@ -83,7 +47,7 @@ const stringReplaceHtml = (source) => {
 };
 
 const processAndReplaceHTML = (source) => {
-    return stringReplaceHtml(processHtml(source));
+    return stringReplaceHtml(source);
 };
 
 module.exports = async () => {
