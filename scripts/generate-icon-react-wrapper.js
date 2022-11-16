@@ -39,7 +39,7 @@ governing permissions and limitations under the License.
 import { createComponent } from '@lit-labs/react';
 import * as React from 'react';
   
-import { ${id} } from '@spectrum-web-components/${iconPkg}/src/elements/${id}.js';
+import { ${component} } from '@spectrum-web-components/${iconPkg}/src/elements/${id}.js';
 import '@spectrum-web-components/${iconPkg}/icons/${iconElementName}.js';
   
 export const ${wrapperComponentName} = createComponent({ react: React, tagName: '${iconElementName}', elementClass: ${component}, events: {}, displayName: '${wrapperComponentName}' });

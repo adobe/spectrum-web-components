@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import { createComponent } from '@lit-labs/react';
 import * as React from 'react';
 
-import { IconRSS } from '@spectrum-web-components/icons-workflow/src/elements/IconRSS.js';
+import { IconRss } from '@spectrum-web-components/icons-workflow/src/elements/IconRSS.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-rss.js';
 
 export const SpIconRss = createComponent({
