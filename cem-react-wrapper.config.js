@@ -27,7 +27,7 @@ export default {
     packagejson: false,
     plugins: [
         reactWrapperPlugin({
-            exclude: ['PickerBase', 'DialogBase'],
+            exclude: ['DialogBase', 'PickerBase', 'StoryDecorator'],
             outDir: '../../react',
         }),
     ],

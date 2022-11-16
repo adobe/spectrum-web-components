@@ -120,7 +120,8 @@ const generateIconWrapper = async (iconType) => {
         "@lit-labs/react": "1.1.0",
         "${pkgName}": "${pkgVersion}"
     }
-}`
+}
+`
             );
         }
     );
