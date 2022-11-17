@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Adobe. All rights reserved.
+Copyright 2022 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -154,12 +154,12 @@ export default function genReactWrapper({
 
             for (let component of components) {
                 componentImports.push(
-                    `import { ${component.name} } from '${pkgName}';`
+                    `import { ${component.name} as Sp${component.name} } from '${pkgName}';`
                 );
 
                 const reactComponent = {};
-                reactComponent.name = `Sp${component.name}`;
-                reactComponent.swcComponentName = component.name;
+                reactComponent.name = `${component.name}`;
+                reactComponent.swcComponentName = `Sp${component.name}`;
                 reactComponent.elementName = component.tagName;
                 const events = [];
                 await getEvents(component, declMap, events);
@@ -214,7 +214,7 @@ ${reactComponents.reduce(
             );
 
             const packageJson = `{
-    "name": "@spectrum-web-components/sp-${componentShortName}",
+    "name": "@swc-react/${componentShortName}",
     "version": "${pkgVersion}",
     "publishConfig": {
         "access": "public"
@@ -223,10 +223,15 @@ ${reactComponents.reduce(
     "license": "Apache-2.0",
     "author": "",
     "main": "index.js",
+    "module": "index.js",
+    "type": "module",
     "keywords": [
         "React",
         "Spectrum Web Components"
     ],
+    "peerDependencies": {
+        "react": "^17.0.0 || ^18.0.0"
+    },
     "dependencies": {
         "@lit-labs/react": "1.1.0",
         "${pkgName}": "${pkgVersion}"
@@ -234,7 +239,17 @@ ${reactComponents.reduce(
 }
 `;
 
-            const componentPath = resolve(`${outDir}/sp-${componentShortName}`);
+            const tsconfigJson = `{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "./"
+    },
+    "include": ["*.ts"]
+}
+`;
+
+            const componentPath = resolve(`${outDir}/${componentShortName}`);
             await outputFile(
                 resolve(`${componentPath}/index.ts`),
                 prettier.format(componentSrc, {
@@ -252,6 +267,10 @@ ${reactComponents.reduce(
             await outputFile(
                 resolve(`${componentPath}/package.json`),
                 packageJson
+            );
+            await outputFile(
+                resolve(`${componentPath}/tsconfig.json`),
+                tsconfigJson
             );
         },
     };

@@ -2962,10 +2962,17 @@
   dependencies:
     "@lit/reactive-element" "^1.1.0"
 
+<<<<<<< HEAD
 "@lit-labs/react@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@lit-labs/react/-/react-1.1.1.tgz#88a4320d357dcdfd7c7e276f809e3453a124cbbc"
   integrity sha512-9TC+/ZWb6BJlWCyUr14FKFlaGnyKpeEDorufXozQgke/VoVrslUQNaL7nBmrAWdNrmzx5jWgi8lFmWwrxMjnlA==
+=======
+"@lit-labs/react@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@lit-labs/react/-/react-1.1.0.tgz#665cf27cc83c5d0c6782ead5b906bd250619442b"
+  integrity sha512-uvdOtzACm1WzTySpKnqXth62iPL+4yDow7cSZH7m7jHbDr+tZVXn44DJ5IoJuMjEevORRe57lNrOywFW6d4Fyg==
+>>>>>>> e9ada2287 (chore: changed names and generate types)
 
 "@lit-labs/virtualizer@^1.0.1":
   version "1.0.1"

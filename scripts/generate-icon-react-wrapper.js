@@ -23,7 +23,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const { outputFile, readJSON } = fsExtra;
 
 const index = (component, id, iconElementName, iconPkg) => {
-    const wrapperComponentName = `Sp${component}`;
+    const wrapperComponentName = `${component}`;
     return `/*
 Copyright 2022 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -39,10 +39,10 @@ governing permissions and limitations under the License.
 import { createComponent } from '@lit-labs/react';
 import * as React from 'react';
   
-import { ${component} } from '@spectrum-web-components/${iconPkg}/src/elements/${id}.js';
+import { ${component} as Sp${component} } from '@spectrum-web-components/${iconPkg}/src/elements/${id}.js';
 import '@spectrum-web-components/${iconPkg}/icons/${iconElementName}.js';
   
-export const ${wrapperComponentName} = createComponent({ react: React, tagName: '${iconElementName}', elementClass: ${component}, events: {}, displayName: '${wrapperComponentName}' });
+export const ${wrapperComponentName} = createComponent({ react: React, tagName: '${iconElementName}', elementClass: Sp${component}, events: {}, displayName: '${wrapperComponentName}' });
 `;
 };
 
@@ -66,7 +66,7 @@ const generateIconWrapper = async (iconType) => {
                     path.resolve(
                         __dirname,
                         '..',
-                        `react/sp-${iconType}/${componentName}.ts`
+                        `react/${iconType}/${componentName}.ts`
                     ),
                     prettier.format(
                         index(
@@ -99,13 +99,9 @@ const generateIconWrapper = async (iconType) => {
             );
 
             await outputFile(
-                path.resolve(
-                    __dirname,
-                    '..',
-                    `react/sp-${iconType}/package.json`
-                ),
+                path.resolve(__dirname, '..', `react/${iconType}/package.json`),
                 `{
-    "name": "@spectrum-web-components/sp-${iconType}",
+    "name": "@swc-react/${iconType}",
     "version": "${pkgVersion}",
     "publishConfig": {
         "access": "public"
@@ -125,6 +121,23 @@ const generateIconWrapper = async (iconType) => {
     }
 }
 `
+            );
+
+            await outputFile(
+                path.resolve(
+                    __dirname,
+                    '..',
+                    `react/${iconType}/tsconfig.json`
+                ),
+                `{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "./"
+    },
+    "include": ["*.ts"]
+}
+                `
             );
         }
     );

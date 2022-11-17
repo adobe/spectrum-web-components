@@ -17,7 +17,7 @@
         "build:confirm": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,close-button,clear-button,iconset,modal,shared,styles},documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- test -f src/index.js",
         "build:css": "node ./tasks/build-css.js && pretty-quick --fix --pattern \"{packages,tools}/**/*.css\"",
         "build:css:watch": "node ./tasks/watch-css.js",
-        "build:react": "yarn run gen-react-wrapper && node ./tasks/build-react.js",
+        "build:react": "yarn gen-react-wrapper && node ./tasks/build-react.js && yarn build:types",
         "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
         "build:ts": "node ./tasks/esbuild-packages.js",
         "build:ts:watch": "node ./tasks/watch-packages.js",
