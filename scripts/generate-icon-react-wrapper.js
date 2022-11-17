@@ -107,9 +107,12 @@ const generateIconWrapper = async (iconType) => {
                 `{
     "name": "@spectrum-web-components/sp-${iconType}",
     "version": "${pkgVersion}",
+    "publishConfig": {
+        "access": "public"
+    },
     "description": "React wrapper of the ${iconType} component",
     "license": "Apache-2.0",
-    "author": "jian.liao@gmail.com",
+    "author": "",
     "main": "index.js",
     "keywords": [
         "React",

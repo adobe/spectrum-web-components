@@ -216,9 +216,12 @@ ${reactComponents.reduce(
             const packageJson = `{
     "name": "@spectrum-web-components/sp-${componentShortName}",
     "version": "${pkgVersion}",
+    "publishConfig": {
+        "access": "public"
+    },
     "description": "React wrapper of the ${pkgName} component",
     "license": "Apache-2.0",
-    "author": "jian.liao@gmail.com",
+    "author": "",
     "main": "index.js",
     "keywords": [
         "React",
