@@ -32,6 +32,7 @@ import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
+import { ActiveOverlay } from '@spectrum-web-components/overlay';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult,
@@ -906,5 +907,144 @@ describe('Submenu', () => {
         await closed;
         activeOverlays = document.querySelectorAll('active-overlay');
         expect(activeOverlays.length).to.equal(0);
+    });
+    it('cleans up submenus that close before they are "open"', async () => {
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [-5, -5],
+                },
+            ],
+        });
+        const el = await styledFixture<Menu>(
+            html`
+                <sp-menu>
+                    <sp-menu-item class="root-1">
+                        Has submenu
+                        <sp-menu slot="submenu">
+                            <sp-menu-item class="submenu-item-1">
+                                One
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-2">
+                                Two
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-3">
+                                Three
+                            </sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                    <sp-menu-item class="root-2">
+                        Has submenu
+                        <sp-menu slot="submenu">
+                            <sp-menu-item class="submenu-item-1">
+                                One
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-2">
+                                Two
+                            </sp-menu-item>
+                            <sp-menu-item class="submenu-item-3">
+                                Three
+                            </sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-menu>
+            `
+        );
+
+        await elementUpdated(el);
+        const rootItem1 = el.querySelector('.root-1') as MenuItem;
+        const rootItem2 = el.querySelector('.root-2') as MenuItem;
+        expect(rootItem1.open, 'initially closed 1').to.be.false;
+        expect(rootItem2.open, 'initially closed 2').to.be.false;
+
+        const rootItemBoundingRect1 = rootItem1.getBoundingClientRect();
+        const rootItemBoundingRect2 = rootItem2.getBoundingClientRect();
+        let activeOverlay!: ActiveOverlay | null;
+
+        // Open the first submenu
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        rootItemBoundingRect1.left +
+                            rootItemBoundingRect1.width / 2,
+                        rootItemBoundingRect1.top +
+                            rootItemBoundingRect1.height / 2,
+                    ],
+                },
+            ],
+        });
+        // Open the second submenu, closing the first
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        rootItemBoundingRect2.left +
+                            rootItemBoundingRect2.width / 2,
+                        rootItemBoundingRect2.top +
+                            rootItemBoundingRect2.height / 2,
+                    ],
+                },
+            ],
+        });
+        // Open the first submenu, closing the second
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        rootItemBoundingRect1.left +
+                            rootItemBoundingRect1.width / 2,
+                        rootItemBoundingRect1.top +
+                            rootItemBoundingRect1.height / 2,
+                    ],
+                },
+            ],
+        });
+        // Open the second submenu, closing the first
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        rootItemBoundingRect2.left +
+                            rootItemBoundingRect2.width / 2,
+                        rootItemBoundingRect2.top +
+                            rootItemBoundingRect2.height / 2,
+                    ],
+                },
+            ],
+        });
+        const closed = oneEvent(rootItem2, 'sp-closed');
+        // Close the second submenu
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [
+                        rootItemBoundingRect2.left +
+                            rootItemBoundingRect2.width / 2,
+                        rootItemBoundingRect2.top +
+                            rootItemBoundingRect2.top +
+                            rootItemBoundingRect2.height / 2,
+                    ],
+                },
+            ],
+        });
+        activeOverlay = document.querySelector(
+            'active-overlay'
+        ) as ActiveOverlay;
+        expect(activeOverlay).to.not.be.null;
+        await closed;
+
+        activeOverlay = document.querySelector(
+            'active-overlay'
+        ) as ActiveOverlay;
+        expect(activeOverlay).to.be.null;
+        expect(rootItem1.open, 'finally closed 1').to.be.false;
+        expect(rootItem2.open, 'finally closed 2').to.be.false;
     });
 });

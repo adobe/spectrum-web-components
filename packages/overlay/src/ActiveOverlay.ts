@@ -139,7 +139,10 @@ export class ActiveOverlay extends SpectrumElement {
     public virtualTrigger?: VirtualTrigger;
     private cleanup?: () => void;
 
-    protected childrenReady!: Promise<unknown[]>;
+    protected contentAnimationPromise: Promise<boolean> = Promise.resolve(true);
+    protected resolveContentAnimationPromise = (): void => {
+        return;
+    };
 
     @property()
     public _state = stateTransition();
@@ -298,19 +301,10 @@ export class ActiveOverlay extends SpectrumElement {
                 this.updateOverlayPosition
             );
         }
-        const actions: Promise<unknown>[] = [];
         if (this.placement && this.placement !== 'none') {
-            actions.push(this.applyContentAnimation('sp-overlay-fade-in'));
+            this.contentAnimationPromise =
+                this.applyContentAnimation('sp-overlay-fade-in');
         }
-        if (
-            typeof (this.overlayContent as SpectrumElement).updateComplete !==
-            'undefined'
-        ) {
-            actions.push(
-                (this.overlayContent as SpectrumElement).updateComplete
-            );
-        }
-        this.childrenReady = Promise.all(actions);
     }
 
     public async openCallback(
@@ -536,6 +530,7 @@ export class ActiveOverlay extends SpectrumElement {
     };
 
     public async hide(animated = true): Promise<void> {
+        if (this.state !== 'active') return;
         this.state = 'hiding';
         if (animated) {
             await this.applyContentAnimation('sp-overlay-fade-out');
@@ -580,7 +575,11 @@ export class ActiveOverlay extends SpectrumElement {
         if (this.placement === 'none') {
             return Promise.resolve(true);
         }
+        this.resolveContentAnimationPromise();
         return new Promise((resolve): void => {
+            this.resolveContentAnimationPromise = () => {
+                resolve(false);
+            };
             const contents = this.shadowRoot.querySelector(
                 '#contents'
             ) as HTMLElement;
@@ -641,8 +640,14 @@ export class ActiveOverlay extends SpectrumElement {
             super.getUpdateComplete(),
             this.stealOverlayContentPromise,
         ];
-        if (this.childrenReady) {
-            actions.push(this.childrenReady);
+        actions.push(this.contentAnimationPromise);
+        if (
+            typeof (this.overlayContent as SpectrumElement).updateComplete !==
+            'undefined'
+        ) {
+            actions.push(
+                (this.overlayContent as SpectrumElement).updateComplete
+            );
         }
         const [complete] = await Promise.all(actions);
         return complete as boolean;
