@@ -506,13 +506,18 @@ export const wrapperWithHeadlineNoDivider = (
     `;
 };
 
-export const wrapperNoHeadline = (
+export const wrapperHeadlineVisibilityNone = (
     args: StoryArgs = {},
     context: { viewMode?: string } = {}
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
     return html`
-        <sp-dialog-wrapper ?open=${open} @close=${handleClose(args)}>
+        <sp-dialog-wrapper
+            headline="Accessible headline"
+            .headlineVisibility=${'none'}
+            ?open=${open}
+            @close=${handleClose(args)}
+        >
             Content of the dialog
         </sp-dialog-wrapper>
     `;

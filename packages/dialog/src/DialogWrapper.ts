@@ -69,6 +69,9 @@ export class DialogWrapper extends DialogBase {
     @property()
     public headline = '';
 
+    @property({ type: String, attribute: 'headline-visibility' })
+    public headlineVisibility: 'none' | undefined;
+
     protected override get dialog(): Dialog {
         return this.shadowRoot.querySelector('sp-dialog') as Dialog;
     }
@@ -98,10 +101,14 @@ export class DialogWrapper extends DialogBase {
     }
 
     protected override renderDialog(): TemplateResult {
+        const hideDivider =
+            this.noDivider ||
+            !this.headline ||
+            this.headlineVisibility === 'none';
         return html`
             <sp-dialog
                 ?dismissable=${this.dismissable}
-                ?no-divider=${this.noDivider || !this.headline}
+                ?no-divider=${hideDivider}
                 ?error=${this.error}
                 mode=${ifDefined(this.mode)}
                 size=${ifDefined(this.size)}
@@ -122,7 +129,12 @@ export class DialogWrapper extends DialogBase {
                     : html``}
                 ${this.headline
                     ? html`
-                          <h2 slot="heading">${this.headline}</h2>
+                          <h2
+                              slot="heading"
+                              ?hidden=${this.headlineVisibility === 'none'}
+                          >
+                              ${this.headline}
+                          </h2>
                       `
                     : html``}
                 <slot></slot>
