@@ -62,6 +62,7 @@
         "@spectrum-web-components/base": "^0.7.1",
         "@spectrum-web-components/icon": "^0.12.3",
         "@spectrum-web-components/icons-ui": "^0.9.3",
+        "@spectrum-web-components/reactive-controllers": "^0.3.3",
         "@spectrum-web-components/shared": "^0.15.2",
         "@spectrum-web-components/textfield": "^0.13.6"
     },

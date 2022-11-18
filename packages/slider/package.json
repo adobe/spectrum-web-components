@@ -78,6 +78,7 @@
         "@spectrum-web-components/base": "^0.7.1",
         "@spectrum-web-components/field-label": "^0.10.1",
         "@spectrum-web-components/number-field": "^0.5.6",
+        "@spectrum-web-components/reactive-controllers": "^0.3.3",
         "@spectrum-web-components/shared": "^0.15.2",
         "@spectrum-web-components/theme": "^0.14.6"
     },
