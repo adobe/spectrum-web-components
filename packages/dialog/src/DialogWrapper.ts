@@ -105,6 +105,20 @@ export class DialogWrapper extends DialogBase {
             this.noDivider ||
             !this.headline ||
             this.headlineVisibility === 'none';
+
+        if (window.__swc.DEBUG) {
+            if (!this.headline) {
+                window.__swc.warn(
+                    this,
+                    `<${this.localName}> elements will not be accessible to screen readers without a "headline" attribute or property.`,
+                    'https://opensource.adobe.com/spectrum-web-components/components/dialog-wrapper/#accessibility',
+                    {
+                        type: 'accessibility',
+                    }
+                );
+            }
+        }
+
         return html`
             <sp-dialog
                 ?dismissable=${this.dismissable}

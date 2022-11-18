@@ -118,3 +118,7 @@ import { DialogWrapper } from '@spectrum-web-components/dialog';
     </sp-button>
 </overlay-trigger>
 ```
+
+## Accessibility
+
+An `sp-dialog-wrapper` element leverages the `headline` attribute/property to label the dialog content for screen readers. The `headline-visibility` attribute will accept a value of `"none"` to suppress the headline visually.
