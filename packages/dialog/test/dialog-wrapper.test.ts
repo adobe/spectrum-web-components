@@ -17,7 +17,7 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import { spy } from 'sinon';
+import { spy, stub } from 'sinon';
 
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
@@ -313,5 +313,29 @@ describe('Dialog Wrapper', () => {
         expect(confirmSpy.callCount).to.equal(1);
         expect(secondarySpy.callCount).to.equal(1);
         expect(cancelSpy.called, 'dispatched `secondary`').to.be.true;
+    });
+
+    it('warns in Dev Mode when accessible attributes are not leveraged', async () => {
+        const consoleWarnStub = stub(console, 'warn');
+        const el = await fixture<DialogWrapper>(html`
+            <sp-dialog-wrapper></sp-dialog-wrapper>
+        `);
+
+        await elementUpdated(el);
+
+        expect(consoleWarnStub.called).to.be.true;
+        const spyCall = consoleWarnStub.getCall(0);
+        expect(
+            spyCall.args.at(0).includes('accessible'),
+            'confirm accessibility-centric message'
+        ).to.be.true;
+        expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
+            data: {
+                localName: 'sp-dialog-wrapper',
+                type: 'accessibility',
+                level: 'default',
+            },
+        });
+        consoleWarnStub.restore();
     });
 });
