@@ -33,8 +33,8 @@ import {
     wrapperDismissable,
     wrapperDismissableUnderlayError,
     wrapperFullscreen,
+    wrapperHeadlineVisibilityNone,
     wrapperLabeledHero,
-    wrapperNoHeadline,
     wrapperWithHeadline,
     wrapperWithHeadlineNoDivider,
 } from '../stories/dialog-wrapper.stories.js';
@@ -150,6 +150,8 @@ describe('Dialog Wrapper', () => {
         );
         await elementUpdated(wrapper);
 
+        await expect(wrapper).to.be.accessible();
+
         const dialog = wrapper.shadowRoot.querySelector('sp-dialog') as Dialog;
         const divider = dialog.shadowRoot.querySelector(
             'sp-divider.divider'
@@ -158,8 +160,12 @@ describe('Dialog Wrapper', () => {
         expect(divider).to.be.null;
     });
     it("hides header divider when there's no header", async () => {
-        const wrapper = await styledFixture<DialogWrapper>(wrapperNoHeadline());
+        const wrapper = await styledFixture<DialogWrapper>(
+            wrapperHeadlineVisibilityNone()
+        );
         await elementUpdated(wrapper);
+
+        await expect(wrapper).to.be.accessible();
 
         const dialog = wrapper.shadowRoot.querySelector('sp-dialog') as Dialog;
         const divider = dialog.shadowRoot.querySelector(
