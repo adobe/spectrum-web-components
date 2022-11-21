@@ -233,8 +233,8 @@ ${reactComponents.reduce(
         "react": "^17.0.0 || ^18.0.0"
     },
     "dependencies": {
-        "@lit-labs/react": "1.1.0",
-        "${pkgName}": "${pkgVersion}"
+        "@lit-labs/react": "^1.1.0",
+        "${pkgName}": "^${pkgVersion}"
     }
 }
 `;
