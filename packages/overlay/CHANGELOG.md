@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.18.7...@spectrum-web-components/overlay@0.18.8) (2022-11-21)
+
+### Bug Fixes
+
+-   ensure that an overlay can be released even if it does not complete its fade in animation ([4cbb36f](https://github.com/adobe/spectrum-web-components/commit/4cbb36f91569ce9b7f926437142950fc8fbd59f9))
+-   **overlay:** focus closure action on ancestor scroll, not participant resize ([925af0a](https://github.com/adobe/spectrum-web-components/commit/925af0af345fd0b9dc532efff052ac26ebdde80b))
+
 ## [0.18.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.18.6...@spectrum-web-components/overlay@0.18.7) (2022-11-14)
 
 ### Bug Fixes

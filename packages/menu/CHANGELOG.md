@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.16.7...@spectrum-web-components/menu@0.16.8) (2022-11-21)
+
+### Bug Fixes
+
+-   ensure that an overlay can be released even if it does not complete its fade in animation ([4cbb36f](https://github.com/adobe/spectrum-web-components/commit/4cbb36f91569ce9b7f926437142950fc8fbd59f9))
+
 ## [0.16.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.16.6...@spectrum-web-components/menu@0.16.7) (2022-11-14)
 
 **Note:** Version bump only for package @spectrum-web-components/menu

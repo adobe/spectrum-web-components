@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/reactive-controllers@0.3.3...@spectrum-web-components/reactive-controllers@0.3.4) (2022-11-21)
+
+### Bug Fixes
+
+-   add support for Element Resolution ([d6a65d0](https://github.com/adobe/spectrum-web-components/commit/d6a65d0ce26da864729e707f62683585fe5e49c4))
+
 ## [0.3.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/reactive-controllers@0.3.2...@spectrum-web-components/reactive-controllers@0.3.3) (2022-11-14)
 
 ### Bug Fixes

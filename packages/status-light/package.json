@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/status-light",
-    "version": "0.11.2",
+    "version": "0.11.3",
     "publishConfig": {
         "access": "public"
     },
@@ -57,7 +57,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.1"
+        "@spectrum-web-components/base": "^0.7.2"
     },
     "devDependencies": {
         "@spectrum-css/statuslight": "^5.0.1"

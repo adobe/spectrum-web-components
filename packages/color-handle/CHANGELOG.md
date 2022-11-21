@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.4.2...@spectrum-web-components/color-handle@0.4.3) (2022-11-21)
+
+**Note:** Version bump only for package @spectrum-web-components/color-handle
+
 ## [0.4.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.4.1...@spectrum-web-components/color-handle@0.4.2) (2022-11-14)
 
 **Note:** Version bump only for package @spectrum-web-components/color-handle

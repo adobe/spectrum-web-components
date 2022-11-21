@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.15.1...@spectrum-web-components/slider@0.15.2) (2022-11-21)
+
+### Bug Fixes
+
+-   ensure dependencies included in package.json ([eb77858](https://github.com/adobe/spectrum-web-components/commit/eb778588c8bd75a9801d568c348096aecb74614a))
+
 ## [0.15.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.15.0...@spectrum-web-components/slider@0.15.1) (2022-11-14)
 
 ### Bug Fixes

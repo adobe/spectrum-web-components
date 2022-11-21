@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.11.6...@spectrum-web-components/dialog@0.11.7) (2022-11-21)
+
+### Bug Fixes
+
+-   **dialog:** dialog wrapper headline a11y ([205e8f7](https://github.com/adobe/spectrum-web-components/commit/205e8f7a7e92fd7545d2810d79e429881061025a))
+-   **dialog:** don't show DialogWrapper divider when there's no headline ([b46f724](https://github.com/adobe/spectrum-web-components/commit/b46f724401ce1cfa2829af63378cde063ad98073))
+
 ## [0.11.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dialog@0.11.5...@spectrum-web-components/dialog@0.11.6) (2022-11-14)
 
 **Note:** Version bump only for package @spectrum-web-components/dialog
