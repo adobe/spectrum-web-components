@@ -42,7 +42,7 @@
         "lint:css": "stylelint \"packages/**/*.css\" \"tools/**/*.css\"",
         "lint:docs": "eslint -f pretty \"projects/documentation/**/*.ts\"",
         "lint:js": "pretty-quick --pattern \"tasks/**/*.js\" && pretty-quick --pattern \"scripts/**/*.js\"",
-        "lint:packagejson": "pretty-quick --pattern package.json && pretty-quick --pattern \"packages/*/package.json\" && pretty-quick --pattern \"projects/*/package.json\" && pretty-quick --pattern \"tools/*/package.json\"",
+        "lint:packagejson": "pretty-quick --pattern package.json --pattern \"packages/*/package.json\" --pattern \"projects/*/package.json\" --pattern \"tools/*/package.json\" --pattern \"react/*/package.json\"",
         "lint:ts": "pretty-quick --pattern \"packages/**/*.ts\" && eslint -f pretty \"packages/**/*.ts\" && pretty-quick --pattern \"tools/**/*.ts\" && eslint -f pretty \"tools/**/*.ts\"",
         "lint:versions": "node ./scripts/lint-versions.js",
         "new-package": "cd projects/templates && plop",
