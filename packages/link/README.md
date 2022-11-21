@@ -51,9 +51,13 @@ The secondary variant is the same color as the paragraph text inline of which it
 This is a <sp-link href="#" variant="secondary">secondary link</sp-link>.
 ```
 
-### Links over backgrounds
+### Static colored links
 
-When a link needs to be placed on top of a colored background or a visual, use the over background link. This link uses a white opaque color instead of a blue color and stands out from the rest of the text with the addition of an underline.
+When a link needs to be placed on top of a colored background or a visual it may be appropriate to ship it with a static color, regardless of the theme settings with which it is delivered. Leverage the `static` attribute with its `white` or `black` values to ensure the delivery is the same in all contexts.
+
+<sp-tabs selected="white" auto label="Static Attribute Options">
+<sp-tab value="white">White</sp-tab>
+<sp-tab-panel value="white">
 
 ```html
 <div
@@ -61,11 +65,30 @@ When a link needs to be placed on top of a colored background or a visual, use t
 >
     <p style="color: rgb(240, 240, 240);">
         This
-        <sp-link over-background href="#">link</sp-link>
+        <sp-link static="white" href="#">link</sp-link>
         is over a background.
     </p>
 </div>
 ```
+
+</sp-tab-panel>
+<sp-tab value="black">Black</sp-tab>
+<sp-tab-panel value="black">
+
+```html
+<div
+    style="background-color: rgb(181, 209, 211); padding: 15px 20px; display: inline-block;"
+>
+    <p style="color: rgb(15, 15, 15);">
+        This
+        <sp-link static="black" href="#">link</sp-link>
+        is over a background.
+    </p>
+</div>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ### Quiet links
 
@@ -80,7 +103,7 @@ All links can have a quiet style, which means they don’t have an underline. Th
 >
     <p style="color: rgb(240, 240, 240);">
         This is a
-        <sp-link over-background quiet href="#">quiet link</sp-link>
+        <sp-link static="white" quiet href="#">quiet link</sp-link>
         over a background.
     </p>
 </div>
