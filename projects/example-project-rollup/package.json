@@ -28,7 +28,7 @@
     "@spectrum-web-components/styles": "^0.21.0"
   },
   "devDependencies": {
-    "@open-wc/building-rollup": "^2.0.1",
+    "@open-wc/building-rollup": "^2.2.1",
     "@open-wc/eslint-config": "^8.0.2",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@types/node": "^18.11.0",
