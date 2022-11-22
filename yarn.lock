@@ -4693,9 +4693,9 @@
   integrity sha512-NoT7N9W2NkjzW4279X18sB8mKYfSZH3kEfWvily4JvDmTjcda8CjtuWXkCo0TRkbCiDPIoqzr2UNgqjHvr0bPA==
 
 "@spectrum-css/underlay@^2.0.31":
-  version "2.0.31"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/underlay/-/underlay-2.0.31.tgz#d796f0518112c9428e8d2f1e042372ef2f8f4a30"
-  integrity sha512-v+QU4eUiJbR6j0DrGttlUb2k0vn1mjekWm/SRR52p7lVVNhfZe6y+Zc94xkOxJDQkSo5rhBWSTT3llaNIxjNKQ==
+  version "2.0.32"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/underlay/-/underlay-2.0.32.tgz#6d3d5ae495d341755beeeccf5469483474f0f777"
+  integrity sha512-6rV9hHi20wCUig19tyByTkbX3ak3E1qEHOu+Gk0vRcEXRWy1yGoQ4+VTGBp5FRKfbvGfJ9Gu6hqZ6rGTwAVYPQ==
 
 "@spectrum-css/vars@^8.0.0":
   version "8.0.0"
