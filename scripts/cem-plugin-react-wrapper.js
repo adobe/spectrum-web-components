@@ -17,10 +17,17 @@ import prettier from 'prettier';
 
 const { outputFile, existsSync } = fsExtra;
 
+/**
+ * Remove the duplicate array elements that has same value of a property
+ */
 const uniqueBy = (arr, prop) => {
     return [...new Map(arr.map((m) => [m[prop], m])).values()];
 };
 
+/**
+ * Recusively get all the public events/methods from component itself and its super class
+ * It even supports extracting from external component package.
+ */
 const getEvents = async (decl, declMap, events) => {
     if (declMap.has(decl?.superclass?.name)) {
         getEvents(declMap.get(decl?.superclass?.name), declMap, events);
@@ -33,6 +40,7 @@ const getEvents = async (decl, declMap, events) => {
             )}/custom-elements.json`
         )
     ) {
+        // Extract events/method from external package
         const { modules } = JSON.parse(
             await readFile(
                 `../../packages/${decl?.superclass?.package.replace(
@@ -51,11 +59,11 @@ const getEvents = async (decl, declMap, events) => {
 
     events.push(
         (decl?.members ?? [])
-            .filter((member) => member.privacy === 'public') // public
+            .filter((member) => member.privacy === 'public') // Only care about public
             .filter(
                 (member) =>
-                    member.type?.text?.includes('EventEmitter') ||
-                    member?.kind === 'method'
+                    member.type?.text?.includes('EventEmitter') || // event
+                    member?.kind === 'method' // method
             )
             .map((event) => ({
                 name: event.name,
@@ -71,6 +79,11 @@ const getEvents = async (decl, declMap, events) => {
     }
 };
 
+/**
+ * @param {*} exclude array of excluded component class name
+ * @param {*} outDir root output directory for generated code
+ * @param {*} prettierConfig prettier library configuration
+ */
 export default function genReactWrapper({
     exclude = [],
     outDir = 'legacy',
@@ -112,44 +125,6 @@ export default function genReactWrapper({
                     (m) =>
                         `import '${pkgName}/${m.path?.replace('.ts', '.js')}';`
                 );
-            if (pkgName === '@spectrum-web-components/theme') {
-                fileImports.push(
-                    "import '@spectrum-web-components/theme/theme-darkest.js';"
-                );
-                fileImports.push(
-                    "import '@spectrum-web-components/theme/theme-dark.js';"
-                );
-                fileImports.push(
-                    "import '@spectrum-web-components/theme/theme-light.js';"
-                );
-                fileImports.push(
-                    "import '@spectrum-web-components/theme/theme-lightest.js';"
-                );
-                fileImports.push(
-                    "import '@spectrum-web-components/theme/scale-medium.js';"
-                );
-                fileImports.push(
-                    "import '@spectrum-web-components/theme/scale-large.js';"
-                );
-                fileImports.push(
-                    "import '@spectrum-web-components/theme/express/theme-darkest.js';"
-                );
-                fileImports.push(
-                    "import '@spectrum-web-components/theme/express/theme-dark.js';"
-                );
-                fileImports.push(
-                    "import '@spectrum-web-components/theme/express/theme-light.js';"
-                );
-                fileImports.push(
-                    "import '@spectrum-web-components/theme/express/theme-lightest.js';"
-                );
-                fileImports.push(
-                    "import '@spectrum-web-components/theme/express/scale-medium.js';"
-                );
-                fileImports.push(
-                    "import '@spectrum-web-components/theme/express/scale-large.js';"
-                );
-            }
 
             const reactComponents = [];
 

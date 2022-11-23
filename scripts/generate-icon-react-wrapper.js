@@ -27,6 +27,9 @@ const prettierConfig = yaml.load(
     readFileSync(path.resolve(__dirname, '..', '.prettierrc.yaml'))
 );
 
+/**
+ * Code generation method
+ */
 const index = (component, id, iconElementName, iconPkg) => {
     const wrapperComponentName = `${component}`;
     return `/*
@@ -51,6 +54,9 @@ export const ${wrapperComponentName} = createComponent({ react: React, tagName: 
 `;
 };
 
+/**
+ * Core entry function
+ */
 const generateIconWrapper = async (iconType) => {
     glob(
         path.resolve(
