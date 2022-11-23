@@ -22,15 +22,13 @@ title: Spectrum Web Components
 </section>
 <section id="features">
     <div class="feature">
-        <h2 id="standards-based" class="spectrum-Heading spectrum-Heading--sizeS">
-            Standards based&nbsp;<sp-link class="header-anchor" href="index.html#standards-based" aria-label="§" data-js-focus-visible="" tabindex="0">#</sp-link>
+        <h2 id="accessible" class="spectrum-Heading spectrum-Heading--sizeS">
+            Accessible by default&nbsp;<sp-link class="header-anchor" href="index.html#accessible" aria-label="§" data-js-focus-visible="" tabindex="0">#</sp-link>
         </h2>
         <p class="spectrum-Body spectrum-Body--sizeM">
-        <sp-link
-            href="https://developer.mozilla.org/en-US/docs/Web/Web_Components"
-        >Web Components</sp-link> are a set of technologies that work together, letting
-        you create custom elements that work just like the
-        standard HTML elements built into your browser.
+            Developed with existing and emerging browser specifications in mind,
+	        our components deliver a high quality experience whether using a screen
+            reader, keyboard navigation, and/or customized contrast.
         </p>
     </div>
     <div class="feature">
@@ -43,6 +41,18 @@ title: Spectrum Web Components
                 href="https://lit-element.polymer-project.org/"
             >LitElement</sp-link> base class. LitElement is designed for creating web
             components with a minimum amount of overhead.
+        </p>
+    </div>
+    <div class="feature">
+        <h2 id="standards-based" class="spectrum-Heading spectrum-Heading--sizeS">
+            Standards based&nbsp;<sp-link class="header-anchor" href="index.html#standards-based" aria-label="§" data-js-focus-visible="" tabindex="0">#</sp-link>
+        </h2>
+        <p class="spectrum-Body spectrum-Body--sizeM">
+        <sp-link
+            href="https://developer.mozilla.org/en-US/docs/Web/Web_Components"
+        >Web Components</sp-link> are a set of technologies that work together, letting
+        you create custom elements that work just like the
+        standard HTML elements built into your browser.
         </p>
     </div>
     <div class="feature">
