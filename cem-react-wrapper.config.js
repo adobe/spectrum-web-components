@@ -11,6 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import reactWrapperPlugin from './scripts/cem-plugin-react-wrapper.js';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
+import yaml from 'js-yaml';
 
 export default {
     globs: ['**/sp-*.ts', '**/src/[A-Z]*.ts'],
@@ -29,6 +32,9 @@ export default {
         reactWrapperPlugin({
             exclude: ['DialogBase', 'PickerBase', 'StoryDecorator'],
             outDir: '../../react',
+            prettierConfig: yaml.load(
+                readFileSync(resolve('../../.prettierrc.yaml'))
+            ),
         }),
     ],
 };

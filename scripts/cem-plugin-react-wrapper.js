@@ -74,6 +74,7 @@ const getEvents = async (decl, declMap, events) => {
 export default function genReactWrapper({
     exclude = [],
     outDir = 'legacy',
+    prettierConfig = {},
 } = {}) {
     return {
         name: 'react-wrapper',
@@ -254,23 +255,22 @@ ${reactComponents.reduce(
                 resolve(`${componentPath}/index.ts`),
                 prettier.format(componentSrc, {
                     parser: 'babel',
-                    printWidth: 80,
-                    tabWidth: 4,
-                    semi: true,
-                    singleQuote: true,
-                    trailingComma: 'es5',
-                    bracketSpacing: true,
-                    arrowParens: 'always',
-                    htmlWhitespaceSensitivity: 'ignore',
+                    ...prettierConfig,
                 })
             );
             await outputFile(
                 resolve(`${componentPath}/package.json`),
-                packageJson
+                prettier.format(packageJson, {
+                    parser: 'json',
+                    ...prettierConfig,
+                })
             );
             await outputFile(
                 resolve(`${componentPath}/tsconfig.json`),
-                tsconfigJson
+                prettier.format(tsconfigJson, {
+                    parser: 'json',
+                    ...prettierConfig,
+                })
             );
         },
     };

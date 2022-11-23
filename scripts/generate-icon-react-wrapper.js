@@ -17,10 +17,15 @@ import glob from 'glob';
 import fsExtra from 'fs-extra';
 import { fileURLToPath } from 'url';
 import prettier from 'prettier';
+import yaml from 'js-yaml';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const { outputFile, readJSON } = fsExtra;
+const { outputFile, readFileSync, readJSON } = fsExtra;
+
+const prettierConfig = yaml.load(
+    readFileSync(path.resolve(__dirname, '..', '.prettierrc.yaml'))
+);
 
 const index = (component, id, iconElementName, iconPkg) => {
     const wrapperComponentName = `${component}`;
@@ -77,14 +82,7 @@ const generateIconWrapper = async (iconType) => {
                         ),
                         {
                             parser: 'babel',
-                            printWidth: 80,
-                            tabWidth: 4,
-                            semi: true,
-                            singleQuote: true,
-                            trailingComma: 'es5',
-                            bracketSpacing: true,
-                            arrowParens: 'always',
-                            htmlWhitespaceSensitivity: 'ignore',
+                            ...prettierConfig,
                         }
                     )
                 );
@@ -100,7 +98,8 @@ const generateIconWrapper = async (iconType) => {
 
             await outputFile(
                 path.resolve(__dirname, '..', `react/${iconType}/package.json`),
-                `{
+                prettier.format(
+                    `{
     "name": "@swc-react/${iconType}",
     "version": "${pkgVersion}",
     "publishConfig": {
@@ -120,7 +119,12 @@ const generateIconWrapper = async (iconType) => {
         "${pkgName}": "${pkgVersion}"
     }
 }
-`
+`,
+                    {
+                        parser: 'json',
+                        ...prettierConfig,
+                    }
+                )
             );
 
             await outputFile(
@@ -129,7 +133,8 @@ const generateIconWrapper = async (iconType) => {
                     '..',
                     `react/${iconType}/tsconfig.json`
                 ),
-                `{
+                prettier.format(
+                    `{
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "composite": true,
@@ -137,7 +142,12 @@ const generateIconWrapper = async (iconType) => {
     },
     "include": ["*.ts"]
 }
-                `
+                `,
+                    {
+                        parser: 'json',
+                        ...prettierConfig,
+                    }
+                )
             );
         }
     );
