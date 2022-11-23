@@ -1,0 +1,501 @@
+/*
+Copyright 2022 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+:host,
+:root {
+    --spectrum-global-color-status: Verified;
+    --spectrum-global-color-version: 5.1.0;
+    --spectrum-global-color-opacity-100: 1;
+    --spectrum-global-color-opacity-90: 0.9;
+    --spectrum-global-color-opacity-80: 0.8;
+    --spectrum-global-color-opacity-70: 0.7;
+    --spectrum-global-color-opacity-60: 0.6;
+    --spectrum-global-color-opacity-55: 0.55;
+    --spectrum-global-color-opacity-50: 0.5;
+    --spectrum-global-color-opacity-42: 0.42;
+    --spectrum-global-color-opacity-40: 0.4;
+    --spectrum-global-color-opacity-30: 0.3;
+    --spectrum-global-color-opacity-25: 0.25;
+    --spectrum-global-color-opacity-20: 0.2;
+    --spectrum-global-color-opacity-15: 0.15;
+    --spectrum-global-color-opacity-10: 0.1;
+    --spectrum-global-color-opacity-8: 0.08;
+    --spectrum-global-color-opacity-7: 0.07;
+    --spectrum-global-color-opacity-6: 0.06;
+    --spectrum-global-color-opacity-5: 0.05;
+    --spectrum-global-color-opacity-4: 0.04;
+    --spectrum-global-color-opacity-0: 0;
+    --spectrum-global-color-celery-400-rgb: 34, 184, 51;
+    --spectrum-global-color-celery-400: rgb(
+        var(--spectrum-global-color-celery-400-rgb)
+    );
+    --spectrum-global-color-celery-500-rgb: 68, 202, 73;
+    --spectrum-global-color-celery-500: rgb(
+        var(--spectrum-global-color-celery-500-rgb)
+    );
+    --spectrum-global-color-celery-600-rgb: 105, 220, 99;
+    --spectrum-global-color-celery-600: rgb(
+        var(--spectrum-global-color-celery-600-rgb)
+    );
+    --spectrum-global-color-celery-700-rgb: 142, 235, 127;
+    --spectrum-global-color-celery-700: rgb(
+        var(--spectrum-global-color-celery-700-rgb)
+    );
+    --spectrum-global-color-chartreuse-400-rgb: 148, 192, 8;
+    --spectrum-global-color-chartreuse-400: rgb(
+        var(--spectrum-global-color-chartreuse-400-rgb)
+    );
+    --spectrum-global-color-chartreuse-500-rgb: 166, 211, 18;
+    --spectrum-global-color-chartreuse-500: rgb(
+        var(--spectrum-global-color-chartreuse-500-rgb)
+    );
+    --spectrum-global-color-chartreuse-600-rgb: 184, 229, 37;
+    --spectrum-global-color-chartreuse-600: rgb(
+        var(--spectrum-global-color-chartreuse-600-rgb)
+    );
+    --spectrum-global-color-chartreuse-700-rgb: 205, 245, 71;
+    --spectrum-global-color-chartreuse-700: rgb(
+        var(--spectrum-global-color-chartreuse-700-rgb)
+    );
+    --spectrum-global-color-yellow-400-rgb: 228, 194, 0;
+    --spectrum-global-color-yellow-400: rgb(
+        var(--spectrum-global-color-yellow-400-rgb)
+    );
+    --spectrum-global-color-yellow-500-rgb: 244, 213, 0;
+    --spectrum-global-color-yellow-500: rgb(
+        var(--spectrum-global-color-yellow-500-rgb)
+    );
+    --spectrum-global-color-yellow-600-rgb: 249, 232, 92;
+    --spectrum-global-color-yellow-600: rgb(
+        var(--spectrum-global-color-yellow-600-rgb)
+    );
+    --spectrum-global-color-yellow-700-rgb: 252, 246, 187;
+    --spectrum-global-color-yellow-700: rgb(
+        var(--spectrum-global-color-yellow-700-rgb)
+    );
+    --spectrum-global-color-magenta-400-rgb: 222, 61, 130;
+    --spectrum-global-color-magenta-400: rgb(
+        var(--spectrum-global-color-magenta-400-rgb)
+    );
+    --spectrum-global-color-magenta-500-rgb: 237, 87, 149;
+    --spectrum-global-color-magenta-500: rgb(
+        var(--spectrum-global-color-magenta-500-rgb)
+    );
+    --spectrum-global-color-magenta-600-rgb: 249, 114, 167;
+    --spectrum-global-color-magenta-600: rgb(
+        var(--spectrum-global-color-magenta-600-rgb)
+    );
+    --spectrum-global-color-magenta-700-rgb: 255, 143, 185;
+    --spectrum-global-color-magenta-700: rgb(
+        var(--spectrum-global-color-magenta-700-rgb)
+    );
+    --spectrum-global-color-fuchsia-400-rgb: 205, 57, 206;
+    --spectrum-global-color-fuchsia-400: rgb(
+        var(--spectrum-global-color-fuchsia-400-rgb)
+    );
+    --spectrum-global-color-fuchsia-500-rgb: 223, 81, 224;
+    --spectrum-global-color-fuchsia-500: rgb(
+        var(--spectrum-global-color-fuchsia-500-rgb)
+    );
+    --spectrum-global-color-fuchsia-600-rgb: 235, 110, 236;
+    --spectrum-global-color-fuchsia-600: rgb(
+        var(--spectrum-global-color-fuchsia-600-rgb)
+    );
+    --spectrum-global-color-fuchsia-700-rgb: 244, 140, 242;
+    --spectrum-global-color-fuchsia-700: rgb(
+        var(--spectrum-global-color-fuchsia-700-rgb)
+    );
+    --spectrum-global-color-purple-400-rgb: 157, 87, 243;
+    --spectrum-global-color-purple-400: rgb(
+        var(--spectrum-global-color-purple-400-rgb)
+    );
+    --spectrum-global-color-purple-500-rgb: 172, 111, 249;
+    --spectrum-global-color-purple-500: rgb(
+        var(--spectrum-global-color-purple-500-rgb)
+    );
+    --spectrum-global-color-purple-600-rgb: 187, 135, 251;
+    --spectrum-global-color-purple-600: rgb(
+        var(--spectrum-global-color-purple-600-rgb)
+    );
+    --spectrum-global-color-purple-700-rgb: 202, 159, 252;
+    --spectrum-global-color-purple-700: rgb(
+        var(--spectrum-global-color-purple-700-rgb)
+    );
+    --spectrum-global-color-indigo-400-rgb: 104, 109, 244;
+    --spectrum-global-color-indigo-400: rgb(
+        var(--spectrum-global-color-indigo-400-rgb)
+    );
+    --spectrum-global-color-indigo-500-rgb: 124, 129, 251;
+    --spectrum-global-color-indigo-500: rgb(
+        var(--spectrum-global-color-indigo-500-rgb)
+    );
+    --spectrum-global-color-indigo-600-rgb: 145, 149, 255;
+    --spectrum-global-color-indigo-600: rgb(
+        var(--spectrum-global-color-indigo-600-rgb)
+    );
+    --spectrum-global-color-indigo-700-rgb: 167, 170, 255;
+    --spectrum-global-color-indigo-700: rgb(
+        var(--spectrum-global-color-indigo-700-rgb)
+    );
+    --spectrum-global-color-seafoam-400-rgb: 0, 158, 152;
+    --spectrum-global-color-seafoam-400: rgb(
+        var(--spectrum-global-color-seafoam-400-rgb)
+    );
+    --spectrum-global-color-seafoam-500-rgb: 3, 178, 171;
+    --spectrum-global-color-seafoam-500: rgb(
+        var(--spectrum-global-color-seafoam-500-rgb)
+    );
+    --spectrum-global-color-seafoam-600-rgb: 54, 197, 189;
+    --spectrum-global-color-seafoam-600: rgb(
+        var(--spectrum-global-color-seafoam-600-rgb)
+    );
+    --spectrum-global-color-seafoam-700-rgb: 93, 214, 207;
+    --spectrum-global-color-seafoam-700: rgb(
+        var(--spectrum-global-color-seafoam-700-rgb)
+    );
+    --spectrum-global-color-red-400-rgb: 234, 56, 41;
+    --spectrum-global-color-red-400: rgb(
+        var(--spectrum-global-color-red-400-rgb)
+    );
+    --spectrum-global-color-red-500-rgb: 246, 88, 67;
+    --spectrum-global-color-red-500: rgb(
+        var(--spectrum-global-color-red-500-rgb)
+    );
+    --spectrum-global-color-red-600-rgb: 255, 117, 94;
+    --spectrum-global-color-red-600: rgb(
+        var(--spectrum-global-color-red-600-rgb)
+    );
+    --spectrum-global-color-red-700-rgb: 255, 149, 129;
+    --spectrum-global-color-red-700: rgb(
+        var(--spectrum-global-color-red-700-rgb)
+    );
+    --spectrum-global-color-orange-400-rgb: 244, 129, 12;
+    --spectrum-global-color-orange-400: rgb(
+        var(--spectrum-global-color-orange-400-rgb)
+    );
+    --spectrum-global-color-orange-500-rgb: 254, 154, 46;
+    --spectrum-global-color-orange-500: rgb(
+        var(--spectrum-global-color-orange-500-rgb)
+    );
+    --spectrum-global-color-orange-600-rgb: 255, 181, 88;
+    --spectrum-global-color-orange-600: rgb(
+        var(--spectrum-global-color-orange-600-rgb)
+    );
+    --spectrum-global-color-orange-700-rgb: 253, 206, 136;
+    --spectrum-global-color-orange-700: rgb(
+        var(--spectrum-global-color-orange-700-rgb)
+    );
+    --spectrum-global-color-green-400-rgb: 18, 162, 108;
+    --spectrum-global-color-green-400: rgb(
+        var(--spectrum-global-color-green-400-rgb)
+    );
+    --spectrum-global-color-green-500-rgb: 43, 180, 125;
+    --spectrum-global-color-green-500: rgb(
+        var(--spectrum-global-color-green-500-rgb)
+    );
+    --spectrum-global-color-green-600-rgb: 67, 199, 143;
+    --spectrum-global-color-green-600: rgb(
+        var(--spectrum-global-color-green-600-rgb)
+    );
+    --spectrum-global-color-green-700-rgb: 94, 217, 162;
+    --spectrum-global-color-green-700: rgb(
+        var(--spectrum-global-color-green-700-rgb)
+    );
+    --spectrum-global-color-blue-400-rgb: 52, 143, 244;
+    --spectrum-global-color-blue-400: rgb(
+        var(--spectrum-global-color-blue-400-rgb)
+    );
+    --spectrum-global-color-blue-500-rgb: 84, 163, 246;
+    --spectrum-global-color-blue-500: rgb(
+        var(--spectrum-global-color-blue-500-rgb)
+    );
+    --spectrum-global-color-blue-600-rgb: 114, 183, 249;
+    --spectrum-global-color-blue-600: rgb(
+        var(--spectrum-global-color-blue-600-rgb)
+    );
+    --spectrum-global-color-blue-700-rgb: 143, 202, 252;
+    --spectrum-global-color-blue-700: rgb(
+        var(--spectrum-global-color-blue-700-rgb)
+    );
+    --spectrum-global-color-gray-50-rgb: 29, 29, 29;
+    --spectrum-global-color-gray-50: rgb(
+        var(--spectrum-global-color-gray-50-rgb)
+    );
+    --spectrum-global-color-gray-75-rgb: 38, 38, 38;
+    --spectrum-global-color-gray-75: rgb(
+        var(--spectrum-global-color-gray-75-rgb)
+    );
+    --spectrum-global-color-gray-100-rgb: 50, 50, 50;
+    --spectrum-global-color-gray-100: rgb(
+        var(--spectrum-global-color-gray-100-rgb)
+    );
+    --spectrum-global-color-gray-200-rgb: 63, 63, 63;
+    --spectrum-global-color-gray-200: rgb(
+        var(--spectrum-global-color-gray-200-rgb)
+    );
+    --spectrum-global-color-gray-300-rgb: 84, 84, 84;
+    --spectrum-global-color-gray-300: rgb(
+        var(--spectrum-global-color-gray-300-rgb)
+    );
+    --spectrum-global-color-gray-400-rgb: 112, 112, 112;
+    --spectrum-global-color-gray-400: rgb(
+        var(--spectrum-global-color-gray-400-rgb)
+    );
+    --spectrum-global-color-gray-500-rgb: 144, 144, 144;
+    --spectrum-global-color-gray-500: rgb(
+        var(--spectrum-global-color-gray-500-rgb)
+    );
+    --spectrum-global-color-gray-600-rgb: 178, 178, 178;
+    --spectrum-global-color-gray-600: rgb(
+        var(--spectrum-global-color-gray-600-rgb)
+    );
+    --spectrum-global-color-gray-700-rgb: 209, 209, 209;
+    --spectrum-global-color-gray-700: rgb(
+        var(--spectrum-global-color-gray-700-rgb)
+    );
+    --spectrum-global-color-gray-800-rgb: 235, 235, 235;
+    --spectrum-global-color-gray-800: rgb(
+        var(--spectrum-global-color-gray-800-rgb)
+    );
+    --spectrum-global-color-gray-900-rgb: 255, 255, 255;
+    --spectrum-global-color-gray-900: rgb(
+        var(--spectrum-global-color-gray-900-rgb)
+    );
+    --spectrum-alias-avatar-border-color-default: hsla(0, 0%, 100%, 0.1);
+    --spectrum-alias-avatar-border-color-hover: hsla(0, 0%, 100%, 0.25);
+    --spectrum-alias-avatar-border-color-down: hsla(0, 0%, 100%, 0.4);
+    --spectrum-alias-avatar-border-color-key-focus: hsla(0, 0%, 100%, 0.25);
+    --spectrum-alias-avatar-border-color-selected-disabled: hsla(
+        0,
+        0%,
+        100%,
+        0.1
+    );
+    --spectrum-alias-transparent-blue-background-color-default: rgba(
+        124,
+        129,
+        251,
+        0.15
+    );
+    --spectrum-alias-transparent-blue-background-color-hover: rgba(
+        145,
+        149,
+        255,
+        0.15
+    );
+    --spectrum-alias-transparent-blue-background-color-down: rgba(
+        167,
+        170,
+        255,
+        0.15
+    );
+    --spectrum-alias-transparent-blue-background-color-key-focus: rgba(
+        145,
+        149,
+        255,
+        0.15
+    );
+    --spectrum-alias-border-color-selected: hsla(0, 0%, 100%, 0.9);
+    --spectrum-alias-background-color-primary: var(
+        --spectrum-global-color-gray-100
+    );
+    --spectrum-alias-background-color-secondary: var(
+        --spectrum-global-color-gray-75
+    );
+    --spectrum-alias-background-color-tertiary: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-background-color-modal-overlay: rgba(0, 0, 0, 0.5);
+    --spectrum-alias-dropshadow-color: rgba(0, 0, 0, 0.5);
+    --spectrum-alias-background-color-hover-overlay: hsla(0, 0%, 100%, 0.06);
+    --spectrum-alias-highlight-hover: hsla(0, 0%, 100%, 0.07);
+    --spectrum-alias-highlight-down: hsla(0, 0%, 100%, 0.1);
+    --spectrum-alias-highlight-selected: rgba(84, 163, 246, 0.15);
+    --spectrum-alias-highlight-selected-hover: rgba(84, 163, 246, 0.25);
+    --spectrum-alias-text-highlight-color: rgba(84, 163, 246, 0.25);
+    --spectrum-alias-background-color-quickactions: rgba(50, 50, 50, 0.9);
+    --spectrum-alias-border-color-translucent: hsla(0, 0%, 100%, 0.1);
+    --spectrum-alias-radial-reaction-color-default: hsla(0, 0%, 92%, 0.6);
+    --spectrum-alias-pasteboard-background-color: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-appframe-border-color: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-alias-appframe-separator-color: var(
+        --spectrum-global-color-gray-50
+    );
+    --spectrum-scrollbar-mac-s-track-background-color: var(
+        --spectrum-global-color-gray-100
+    );
+    --spectrum-scrollbar-mac-m-track-background-color: var(
+        --spectrum-global-color-gray-100
+    );
+    --spectrum-scrollbar-mac-l-track-background-color: var(
+        --spectrum-global-color-gray-100
+    );
+    --spectrum-slider-s-tick-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-s-ramp-tick-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-s-range-tick-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-s-tick-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-s-ramp-tick-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-s-range-tick-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-s-editable-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-s-ramp-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-s-range-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-s-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-s-ramp-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-s-range-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-m-tick-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-m-ramp-tick-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-m-range-tick-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-m-tick-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-m-ramp-tick-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-m-range-tick-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-m-editable-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-m-ramp-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-m-range-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-m-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-m-ramp-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-m-range-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-l-tick-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-l-ramp-tick-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-l-range-tick-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-l-tick-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-l-ramp-tick-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-l-range-tick-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-l-editable-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-l-ramp-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-l-range-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-l-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-l-ramp-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-l-range-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-xl-tick-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-xl-ramp-tick-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-xl-range-tick-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-xl-tick-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-xl-ramp-tick-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-xl-range-tick-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-xl-editable-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-xl-ramp-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-xl-range-editable-radial-reaction-color: hsla(
+        0,
+        0%,
+        92%,
+        0.6
+    );
+    --spectrum-slider-xl-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-xl-ramp-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-slider-xl-range-radial-reaction-color: hsla(0, 0%, 92%, 0.6);
+    --spectrum-well-background-color: hsla(0, 0%, 92%, 0.02);
+    --spectrum-well-border-color: hsla(0, 0%, 100%, 0.05);
+}

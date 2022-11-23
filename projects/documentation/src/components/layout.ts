@@ -454,6 +454,12 @@ export class LayoutElement extends LitElement {
                         ? 'dark'
                         : 'light';
             });
+            (
+                document.querySelector('html') as HTMLHtmlElement
+            ).style.colorScheme =
+                this.color === 'dark' || this.color === 'darkest'
+                    ? 'dark'
+                    : 'light';
         }
         if (changes.has('scale')) {
             if (window.localStorage) {

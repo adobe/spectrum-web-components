@@ -59,7 +59,6 @@ governing permissions and limitations under the License.
 
 body {
     margin: 0;
-    background-color: var(--spectrum-global-color-gray-50);
     -webkit-font-smoothing: antialiased;
 }
 
