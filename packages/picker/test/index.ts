@@ -892,7 +892,7 @@ export function runPickerTests(): void {
             await (
                 el as unknown as { generatePopover(): void }
             ).generatePopover();
-            (el as unknown as { popover: Popover }).popover.style.height =
+            (el as unknown as { popoverEl: Popover }).popoverEl.style.height =
                 '40px';
 
             const firstItem = el.querySelector(

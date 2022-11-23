@@ -38,7 +38,7 @@ export class SearchComponent extends LitElement {
     private searchResultsPopover: Popover | null = null;
 
     @query('sp-popover')
-    private popover?: Popover;
+    private popoverEl?: Popover;
 
     @query('sp-search')
     private searchField!: Search;
@@ -116,11 +116,11 @@ export class SearchComponent extends LitElement {
     }
 
     private async openPopover() {
-        if (!this.popover) return;
+        if (!this.popoverEl) return;
 
-        this.searchResultsPopover = this.popover;
+        this.searchResultsPopover = this.popoverEl;
 
-        const { popover } = this;
+        const { popoverEl: popover } = this;
         this.closeOverlay = await openOverlay(
             this.searchField,
             'click',
