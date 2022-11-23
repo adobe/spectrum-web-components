@@ -230,7 +230,7 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
                 '..',
                 'tools',
                 ...packageDir,
-                `theme-${theme}.css`
+                `spectrum-theme-${theme}.css`
             )
         );
 
