@@ -114,7 +114,7 @@
         "@spectrum-css/commons": "^3.0.6",
         "@spectrum-css/expressvars": "^2.0.0",
         "@spectrum-css/tokens": "^4.0.0",
-        "@spectrum-css/typography": "^4.0.20",
+        "@spectrum-css/typography": "^4.0.21",
         "@spectrum-css/vars": "^8.0.0"
     },
     "customElements": "custom-elements.json",

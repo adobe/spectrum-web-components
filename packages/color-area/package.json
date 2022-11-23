@@ -67,7 +67,7 @@
         "@spectrum-web-components/reactive-controllers": "^0.3.4"
     },
     "devDependencies": {
-        "@spectrum-css/colorarea": "^1.0.22"
+        "@spectrum-css/colorarea": "^1.0.23"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
