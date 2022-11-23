@@ -36,13 +36,15 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-stopwatch.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-user-activity.js';
 
 if ('requestIdleCallback' in window) {
-    requestIdleCallback(
-        () => import('@spectrum-web-components/bundle/elements.js')
-    );
+    requestIdleCallback(() => {
+        import('@spectrum-web-components/bundle/elements.js');
+        import('@spectrum-web-components/grid/sp-grid.js');
+    });
 } else {
-    requestAnimationFrame(
-        () => import('@spectrum-web-components/bundle/elements.js')
-    );
+    requestAnimationFrame(() => {
+        import('@spectrum-web-components/bundle/elements.js');
+        import('@spectrum-web-components/grid/sp-grid.js');
+    });
 }
 
 declare global {
