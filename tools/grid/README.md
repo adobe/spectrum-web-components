@@ -29,38 +29,126 @@ import { Grid } from '@spectrum-web-components/grid';
 
 ## Example
 
-```ts
-const items = generateItems(1000);
+```html-live
+<sp-grid
+    id="grid-demo"
+    style="
+        margin:
+            calc(-1 * var(--spectrum-global-dimension-size-400))
+            calc(-1 * var(--spectrum-global-dimension-size-500))
+    "
+></sp-grid>
+<script type="module">
+    const initItems = (count) => {
+        const total = count;
+        const items = [];
+        while (count) {
+            count--;
+            items.push({
+                name: String(total - count),
+                date: count,
+            });
+        }
+        return items;
+    };
+    const initGrid = () => {
+        const grid = document.querySelector('#grid-demo');
+        grid.items = initItems(100);
+        grid.focusableSelector = 'sp-card';
+        grid.gap = '10px';
+        grid.itemSize = {
+            width: 200,
+            height: 300,
+        };
 
-const renderItem = (
-    item: Item,
-    index: number,
-    selected: boolean
-): TemplateResult => {
-    return html`
-        <sp-card
-            toggles
-            variant="quiet"
-            heading="Card Heading ${item.id}"
-            subheading="JPG Photo"
-            style="contain: strict; padding: 1px;"
-            value="card-${item.id}"
-            .selected=${selected}
-            key=${index}
-        >
-            <img
-                alt=""
-                slot="preview"
-                src="https://picsum.photos/id/${item.id}/200/300"
-                decoding="async"
-            />
-            <div slot="description">10/15/18</div>
-            <div slot="footer">Footer</div>
-        </sp-card>
-    `;
-};
-
-// ...
+        grid.renderItem = (
+            item,
+            index,
+            selected
+        ) => {
+            const card = document.createElement('sp-card');
+            const img = document.createElement('img');
+            const description = document.createElement('div');
+            const footer = document.createElement('div');
+            card.toggles = true;
+            card.variant = 'quiet';
+            card.heading = `Card Heading ${index}`
+            card.subheading = 'JPG Photo'
+            card.style = 'contain: strict; padding: 1px;'
+            card.value = `card-${index}`
+            card.selected = selected;
+            card.key = index;
+            img.alt = '';
+            img.slot = 'preview';
+            img.src = `https://picsum.photos/id/${index}/200/300`;
+            img.decoding = 'async';
+            description.slot = 'description';
+            description.textContent = '10/15/18';
+            footer.slot = 'footer';
+            footer.textContent = 'Footer';
+            card.append(img, description, footer);
+            return card;
+        }
+    };
+    customElements.whenDefined('sp-grid').then(() => {
+        initGrid();
+    });
+</script>
 ```
 
+<script type="module">
+    const initItems = (count) => {
+        const total = count;
+        const items = [];
+        while (count) {
+            count--;
+            items.push({
+                name: String(total - count),
+                date: count,
+            });
+        }
+        return items;
+    };
+    const initGrid = () => {
+        const grid = document.querySelector('#grid-demo');
+        grid.items = initItems(100);
+        grid.focusableSelector = 'sp-card';
+        grid.gap = '10px';
+        grid.itemSize = {
+            width: 200,
+            height: 300,
+        };
 
+        grid.renderItem = (
+            item,
+            index,
+            selected
+        ) => {
+            const card = document.createElement('sp-card');
+            const img = document.createElement('img');
+            const description = document.createElement('div');
+            const footer = document.createElement('div');
+            card.toggles = true;
+            card.variant = 'quiet';
+            card.heading = `Card Heading ${index}`
+            card.subheading = 'JPG Photo'
+            card.style = 'contain: strict; padding: 1px;'
+            card.value = `card-${index}`
+            card.selected = selected;
+            card.key = index;
+            img.alt = '';
+            img.slot = 'preview';
+            img.src = `https://picsum.photos/id/${index}/200/300`;
+            img.decoding = 'async';
+            description.slot = 'description';
+            description.textContent = '10/15/18';
+            footer.slot = 'footer';
+            footer.textContent = 'Footer';
+            card.append(img, description, footer);
+            return card;
+        }
+    };
+    customElements.whenDefined('sp-grid').then(() => {
+        initGrid();
+    });
+</script>
