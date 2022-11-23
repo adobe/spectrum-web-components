@@ -140,7 +140,7 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     private closeOverlay?: Promise<() => void>;
 
-    private popover!: Popover;
+    private popoverEl!: Popover;
 
     protected listRole: 'listbox' | 'menu' = 'listbox';
     protected itemRole = 'option';
@@ -295,8 +295,8 @@ export class PickerBase extends SizedMixin(Focusable) {
             this.popoverFragment = document.createDocumentFragment();
         }
         render(this.renderPopover, this.popoverFragment, { host: this });
-        this.popover = this.popoverFragment.children[0] as Popover;
-        this.optionsMenu = this.popover.children[1] as Menu;
+        this.popoverEl = this.popoverFragment.children[0] as Popover;
+        this.optionsMenu = this.popoverEl.children[1] as Menu;
     }
 
     private async openMenu(): Promise<void> {
@@ -342,8 +342,8 @@ export class PickerBase extends SizedMixin(Focusable) {
             },
         });
 
-        this.sizePopover(this.popover);
-        this.closeOverlay = Picker.openOverlay(this, 'modal', this.popover, {
+        this.sizePopover(this.popoverEl);
+        this.closeOverlay = Picker.openOverlay(this, 'modal', this.popoverEl, {
             placement: this.isMobile.matches ? 'none' : this.placement,
             receivesFocus: 'auto',
         });
