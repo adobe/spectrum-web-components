@@ -115,6 +115,11 @@ const generateIconWrapper = async (iconType) => {
     "license": "Apache-2.0",
     "author": "",
     "main": "index.js",
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map"
+    ],
     "keywords": [
         "React",
         "Spectrum Web Components",

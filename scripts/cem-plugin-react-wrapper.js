@@ -201,6 +201,11 @@ ${reactComponents.reduce(
     "main": "index.js",
     "module": "index.js",
     "type": "module",
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map"
+    ],
     "keywords": [
         "React",
         "Spectrum Web Components"
