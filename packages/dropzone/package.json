@@ -60,7 +60,7 @@
         "@spectrum-web-components/base": "^0.7.2"
     },
     "devDependencies": {
-        "@spectrum-css/dropzone": "^3.0.25"
+        "@spectrum-css/dropzone": "^3.0.26"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
