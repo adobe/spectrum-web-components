@@ -18,10 +18,10 @@ jobs:
               with:
                   ref: main
 
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - name: Setup Node 16
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   node-version: '16'
                   cache: 'yarn'
@@ -31,26 +31,26 @@ jobs:
               run: yarn --frozen-lockfile
 
             - name: Post Previews
-              uses: actions/github-script@v4
+              uses: actions/github-script@v6
               with:
                   script: |
                       const buildPreviewURLComment = require('./tasks/build-preview-urls-comment.cjs').buildPreviewURLComment;
                       const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
-                      github.issues.listComments({
+                      github.rest.issues.listComments({
                         owner: context.repo.owner,
                         repo: context.repo.repo,
                         issue_number: context.issue.number,
                       }).then(({data}) => {
                         const priorComment = data.find(comment => comment.body.startsWith('# Branch Preview'));
                         if (priorComment) {
-                          github.issues.updateComment({
+                          github.rest.issues.updateComment({
                             owner: context.repo.owner,
                             repo: context.repo.repo,
                             comment_id: priorComment.id,
                             body
                           });
                         } else {
-                          github.issues.createComment({
+                          github.rest.issues.createComment({
                             owner: context.repo.owner,
                             repo: context.repo.repo,
                             issue_number: context.issue.number,
@@ -67,14 +67,14 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
               with:
                   ref: main
 
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - name: Setup Node 16
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   node-version: '16'
                   cache: 'yarn'
@@ -90,7 +90,7 @@ jobs:
               run: touch tachometer.ran.txt
 
             - name: Archive Firefox tachometer results
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: tachometer-results
                   path: |
@@ -106,14 +106,14 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
               with:
                   ref: main
 
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - name: Setup Node 16
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   node-version: '16'
                   cache: 'yarn'
@@ -129,7 +129,7 @@ jobs:
               run: touch tachometer.ran.txt
 
             - name: Archive Chrome tachometer results
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v3
               with:
                   name: tachometer-results
                   path: |
@@ -146,14 +146,14 @@ jobs:
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
               with:
                   ref: main
 
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - name: Setup Node 16
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   node-version: '16'
                   cache: 'yarn'
@@ -163,31 +163,31 @@ jobs:
               run: yarn --frozen-lockfile
 
             - name: Retrieve tachometer results archives
-              uses: actions/download-artifact@v2
+              uses: actions/download-artifact@v3
               with:
                   name: tachometer-results
 
             - name: Post Performance
-              uses: actions/github-script@v4
+              uses: actions/github-script@v6
               with:
                   script: |
                       const buildTachometerComment = require('./tasks/build-tachometer-comment.cjs').buildTachometerComment;
                       const body = buildTachometerComment();
-                      github.issues.listComments({
+                      github.rest.issues.listComments({
                         owner: context.repo.owner,
                         repo: context.repo.repo,
                         issue_number: context.issue.number,
                       }).then(({data}) => {
                         const priorComment = data.find(comment => comment.body.startsWith('# Tachometer results'));
                         if (priorComment) {
-                          github.issues.updateComment({
+                          github.rest.issues.updateComment({
                             owner: context.repo.owner,
                             repo: context.repo.repo,
                             comment_id: priorComment.id,
                             body
                           });
                         } else {
-                          github.issues.createComment({
+                          github.rest.issues.createComment({
                             owner: context.repo.owner,
                             repo: context.repo.repo,
                             issue_number: context.issue.number,
