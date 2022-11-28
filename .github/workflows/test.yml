@@ -65,7 +65,7 @@ jobs:
         # tachometer action reports results by posting a comment, and we can't post
         # comments without a github token.
         if: github.event.pull_request == null || github.event.pull_request.head.repo.full_name == github.repository
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-20.04
         steps:
             - uses: actions/checkout@v3
               with:
@@ -82,6 +82,8 @@ jobs:
 
             - name: Install dependencies
               run: yarn --frozen-lockfile
+
+            - run: firefox --version
 
             - name: Tachometer the changed packages
               run: yarn test:changed --browser=firefox
