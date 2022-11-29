@@ -50,8 +50,8 @@ governing permissions and limitations under the License.
 :host([placement='none']) {
     position: fixed;
     height: 100vh;
+    height: 100dvh;
     height: fill-available;
-    max-height: var(--swc-visual-viewport-height);
     top: 0;
     left: 0;
 }
