@@ -161,7 +161,7 @@
         "postcss": "^8.4.14",
         "postcss-custom-properties": "^12.1.8",
         "postcss-focus-visible": "^6.0.3",
-        "postcss-import": "^14.1.0",
+        "postcss-import": "^15.0.0",
         "postcss-mixins": "^9.0.3",
         "postcss-prefixwrap": "^1.31.0",
         "postcss-preset-env": "^7.7.2",
