@@ -16,7 +16,8 @@ governing permissions and limitations under the License.
 :host {
     align-items: flex-end;
     position: fixed !important;
-    max-height: var(--swc-visual-viewport-height);
+    max-height: 100vh;
+    max-height: 100dvh;
 }
 
 sp-underlay {

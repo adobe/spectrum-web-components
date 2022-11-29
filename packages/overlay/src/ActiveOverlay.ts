@@ -283,18 +283,8 @@ export class ActiveOverlay extends SpectrumElement {
 
         this.state = 'active';
 
-        // force paint
-        // this prevents a timing issue that can show up in tests as
-        // 'Error: Timeout: Wait for decorator to become ready...'
-        this.offsetWidth;
-
         this.feature();
-        if (this.placement === 'none') {
-            this.style.setProperty(
-                '--swc-visual-viewport-height',
-                `${window.innerHeight}px`
-            );
-        } else if (this.placement) {
+        if (this.placement && this.placement !== 'none') {
             await this.updateOverlayPosition();
             document.addEventListener(
                 'sp-update-overlays',
