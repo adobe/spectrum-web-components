@@ -100,12 +100,7 @@ a.focus-visible {
         var(--spectrum-link-text-color-primary-focus)
     ); /* .spectrum-Link:focus-visible */
     text-decoration: underline;
-    -webkit-text-decoration-color: var(
-        --highcontrast-link-focus-color,
-        inherit
-    );
     text-decoration-color: var(--highcontrast-link-focus-color, inherit);
-    -webkit-text-decoration-style: double;
     text-decoration-style: double;
 }
 a:focus-visible {
@@ -114,12 +109,7 @@ a:focus-visible {
         var(--spectrum-link-text-color-primary-focus)
     ); /* .spectrum-Link:focus-visible */
     text-decoration: underline;
-    -webkit-text-decoration-color: var(
-        --highcontrast-link-focus-color,
-        inherit
-    );
     text-decoration-color: var(--highcontrast-link-focus-color, inherit);
-    -webkit-text-decoration-style: double;
     text-decoration-style: double;
 }
 :host([variant='secondary']) a {
