@@ -57,24 +57,17 @@ const getEvents = async (decl, declMap, events) => {
         }
     }
 
-    events.push(
-        (decl?.members ?? [])
-            .filter((member) => member.privacy === 'public') // Only care about public
-            .filter(
-                (member) =>
-                    member.type?.text?.includes('EventEmitter') || // event
-                    member?.kind === 'method' // method
-            )
-            .map((event) => ({
-                name: event.name,
-            }))
-    );
-
     if (decl?.events) {
         events.push(
             decl?.events
                 .filter((event) => !!event.name)
-                .map((event) => ({ name: event.name }))
+                .map((event) => {
+                    return {
+                        name: event.name,
+                        type: event.type?.text || 'Event',
+                        description: event.description,
+                    };
+                })
         );
     }
 };
@@ -158,6 +151,11 @@ governing permissions and limitations under the License.
 
 import * as React from 'react';
 import { createComponent } from '@lit-labs/react';
+${
+    reactComponents.flatMap((component) => component.events).length > 0
+        ? "import type { EventName } from '@lit-labs/react';"
+        : null
+}
 ${componentImports.reduce((pre, cur) => pre + cur + '\n', '')}
 ${fileImports.reduce((pre, cur) => pre + cur + '\n', '')}
 
@@ -175,11 +173,20 @@ ${reactComponents.reduce(
                     pre +
                     `${event.name.replace(/-./g, (m) =>
                         m[1].toUpperCase()
-                    )}: '${event.name}', `,
+                    )}: '${event.name}' as EventName<${event.type}>, ${
+                        event.description ? `// ${event.description}` : ''
+                    }\n`,
                 ''
             )}
         }
     });`,
+    ''
+)}
+
+${reactComponents.reduce(
+    (pre, component) =>
+        pre +
+        `export type ${component.name}Type = EventTarget & ${component.swcComponentName};\n`,
     ''
 )}
 `;
@@ -234,7 +241,7 @@ ${reactComponents.reduce(
             await outputFile(
                 resolve(`${componentPath}/index.ts`),
                 prettier.format(componentSrc, {
-                    parser: 'babel',
+                    parser: 'typescript',
                     ...prettierConfig,
                 })
             );
