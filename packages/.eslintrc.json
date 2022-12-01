@@ -6,7 +6,7 @@
         "es6": true
     },
     "parser": "@typescript-eslint/parser",
-    "plugins": ["@typescript-eslint", "notice", "spectrum-web-components"],
+    "plugins": ["@typescript-eslint", "notice", "@spectrum-web-components"],
     "extends": [
         "plugin:@typescript-eslint/recommended",
         "prettier",
@@ -15,11 +15,11 @@
     "rules": {
         "no-debugger": 2,
         "no-console": ["error", { "allow": ["warn", "error"] }],
-        "spectrum-web-components/prevent-argument-names": [
+        "@spectrum-web-components/prevent-argument-names": [
             "error",
             ["e", "ev", "evt", "err"]
         ],
-        "spectrum-web-components/document-active-element": ["error"],
+        "@spectrum-web-components/document-active-element": ["error"],
         "notice/notice": [
             "error",
             {
@@ -73,7 +73,7 @@
                 "**/test/*.ts"
             ],
             "rules": {
-                "spectrum-web-components/document-active-element": ["off"],
+                "@spectrum-web-components/document-active-element": ["off"],
                 "lit-a11y/no-autofocus": ["off"],
                 "lit-a11y/tabindex-no-positive": ["off"]
             }
