@@ -228,7 +228,7 @@ export class ActiveOverlay extends SpectrumElement {
     }
 
     public feature(): void {
-        // eslint-disable-next-line spectrum-web-components/document-active-element
+        // eslint-disable-next-line @spectrum-web-components/document-active-element
         if (!this.contains(document.activeElement)) {
             this.tabIndex = -1;
         }

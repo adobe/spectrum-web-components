@@ -1,5 +1,5 @@
 {
-    "name": "eslint-plugin-spectrum-web-components",
+    "name": "@spectrum-web-components/eslint-plugin",
     "version": "1.1.1",
     "main": "index.js"
 }

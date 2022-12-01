@@ -4699,6 +4699,9 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-8.0.0.tgz#b88a3b1165b63de50ab01f20ccafb42115d67443"
   integrity sha512-cClQgNyH1VdNu6zdiZ5M7kbQDZS4/wPAclk5IPO5+nMhSzqTesUL/zfiaPB95MTCKFyVJrFpOeJ37HmUifWJ3A==
 
+"@spectrum-web-components/eslint-plugin@file:./linters/eslint":
+  version "1.1.1"
+
 "@storybook/csf-tools@^6.4.9":
   version "6.4.19"
   resolved "https://registry.yarnpkg.com/@storybook/csf-tools/-/csf-tools-6.4.19.tgz#28bdea11da17501a8bc4e761b821d7721880eaf6"
@@ -10511,9 +10514,6 @@ eslint-plugin-prettier@^4.0.0:
   integrity sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==
   dependencies:
     prettier-linter-helpers "^1.0.0"
-
-"eslint-plugin-spectrum-web-components@file:./linters/eslint":
-  version "1.1.1"
 
 eslint-plugin-wc@^1.2.0:
   version "1.3.0"
