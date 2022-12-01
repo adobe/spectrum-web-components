@@ -288,7 +288,7 @@ export class ActiveOverlay extends SpectrumElement {
             await this.updateOverlayPosition();
             document.addEventListener(
                 'sp-update-overlays',
-                this.updateOverlayPosition
+                this.setOverlayPosition
             );
         }
         if (this.placement && this.placement !== 'none') {
@@ -418,12 +418,16 @@ export class ActiveOverlay extends SpectrumElement {
         );
     }
 
-    public updateOverlayPosition = async (): Promise<void> => {
-        if (!this.placement || this.placement === 'none') {
-            return;
-        }
+    public updateOverlayPosition = (): void => {
         if (this.interaction !== 'modal' && this.cleanup) {
             this.dispatchEvent(new Event('close'));
+            return;
+        }
+        this.setOverlayPosition();
+    };
+
+    public setOverlayPosition = async (): Promise<void> => {
+        if (!this.placement || this.placement === 'none') {
             return;
         }
         await (document.fonts ? document.fonts.ready : Promise.resolve());
@@ -646,7 +650,7 @@ export class ActiveOverlay extends SpectrumElement {
     override disconnectedCallback(): void {
         document.removeEventListener(
             'sp-update-overlays',
-            this.updateOverlayPosition
+            this.setOverlayPosition
         );
         super.disconnectedCallback();
     }
