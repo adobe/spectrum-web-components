@@ -166,8 +166,31 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
 export class SpectrumElement extends SpectrumMixin(LitElement) {}
 
 if (window.__swc.DEBUG) {
+    const ignoreWarningTypes = {
+        default: false,
+        accessibility: false,
+        api: false,
+    };
+    const ignoreWarningLevels = {
+        default: false,
+        low: false,
+        medium: false,
+        high: false,
+        deprecation: false,
+    };
     window.__swc = {
         ...window.__swc,
+        ignoreWarningLocalNames: {
+            ...(window.__swc?.ignoreWarningLocalNames || {}),
+        },
+        ignoreWarningTypes: {
+            ...ignoreWarningTypes,
+            ...(window.__swc?.ignoreWarningTypes || {}),
+        },
+        ignoreWarningLevels: {
+            ...ignoreWarningLevels,
+            ...(window.__swc?.ignoreWarningLevels || {}),
+        },
         issuedWarnings: new Set(),
         warn: (
             element,
@@ -179,11 +202,11 @@ if (window.__swc.DEBUG) {
             const id = `${localName}:${type}:${level}` as BrandedSWCWarningID;
             if (!window.__swc.verbose && window.__swc.issuedWarnings.has(id))
                 return;
-            window.__swc.issuedWarnings.add(id);
             /* c8 ignore next 3 */
-            if (window.__swc.ignoreWarningLocalNames?.[localName]) return;
-            if (window.__swc.ignoreWarningTypes?.[type]) return;
-            if (window.__swc.ignoreWarningLevels?.[level]) return;
+            if (window.__swc.ignoreWarningLocalNames[localName]) return;
+            if (window.__swc.ignoreWarningTypes[type]) return;
+            if (window.__swc.ignoreWarningLevels[level]) return;
+            window.__swc.issuedWarnings.add(id);
             let listedIssues = '';
             if (issues && issues.length) {
                 issues.unshift('');

@@ -18,8 +18,27 @@ export const openOverlay = async (
     content: HTMLElement,
     options: OverlayOptions
 ): Promise<() => void> => {
+    if (window.__swc.DEBUG) {
+        // eslint-disable-next-line no-var
+        var ignoreDeprecations = window.__swc.ignoreWarningLevels.deprecation;
+    }
     const { Overlay } = await import(
         '@spectrum-web-components/overlay/src/overlay.js'
     );
+    if (window.__swc.DEBUG) {
+        if (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            ignoreDeprecations &&
+            !window.__swc.ignoreWarningLevels.deprecation
+        ) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            window.__swc.ignoreWarningLevels.deprecation = ignoreDeprecations;
+            requestAnimationFrame(() => {
+                window.__swc.ignoreWarningLevels.deprecation = false;
+            });
+        }
+    }
     return Overlay.open(target, interaction, content, options);
 };
