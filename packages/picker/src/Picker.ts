@@ -343,10 +343,16 @@ export class PickerBase extends SizedMixin(Focusable) {
         });
 
         this.sizePopover(this.popoverEl);
+        if (window.__swc.DEBUG) {
+            window.__swc.ignoreWarningLevels.deprecation = true;
+        }
         this.closeOverlay = Picker.openOverlay(this, 'modal', this.popoverEl, {
             placement: this.isMobile.matches ? 'none' : this.placement,
             receivesFocus: 'auto',
         });
+        if (window.__swc.DEBUG) {
+            window.__swc.ignoreWarningLevels.deprecation = false;
+        }
     }
 
     protected sizePopover(popover: HTMLElement): void {

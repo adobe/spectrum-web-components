@@ -192,11 +192,17 @@ export class Tooltip extends SpectrumElement {
         const abortPromise: Promise<boolean> = new Promise((res) => {
             this.abortOverlay = res;
         });
+        if (window.__swc.DEBUG) {
+            window.__swc.ignoreWarningLevels.deprecation = true;
+        }
         this.closeOverlayCallback = openOverlay(parentElement, 'hover', this, {
             abortPromise,
             offset: this.offset,
             placement: this.placement,
         });
+        if (window.__swc.DEBUG) {
+            window.__swc.ignoreWarningLevels.deprecation = false;
+        }
     };
 
     private closeOverlay = async (

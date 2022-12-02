@@ -65,6 +65,17 @@ export class Overlay {
         options: OverlayOptions
     ): Promise<() => void> {
         const overlay = new Overlay(owner, interaction, overlayElement);
+        if (window.__swc.DEBUG) {
+            window.__swc.warn(
+                undefined,
+                'The Overlay API is currently being refactored and there are likely to be breaking changes, deprecations and/or removals in a future release. The SWC team wants feedback from direct Overlay API consumers like you - please share your thoughts on the future of overlays here:',
+                'https://github.com/adobe/spectrum-web-components/discussions/2764',
+                {
+                    type: 'default',
+                    level: 'deprecation',
+                }
+            );
+        }
         await overlay.open(options);
         return (): void => {
             overlay.close();

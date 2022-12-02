@@ -341,12 +341,18 @@ export class OverlayTrigger extends SpectrumElement {
         const { targetContent, clickContent } = this;
         this.closeAllOverlays();
         this.prepareToFocusOverlayContent(clickContent);
+        if (window.__swc.DEBUG) {
+            window.__swc.ignoreWarningLevels.deprecation = true;
+        }
         this.closeClickOverlay = this.openOverlay(
             targetContent,
             this.type ? this.type : 'click',
             clickContent,
             this.overlayOptions
         );
+        if (window.__swc.DEBUG) {
+            window.__swc.ignoreWarningLevels.deprecation = false;
+        }
     }
 
     private _longpressEvent?: CustomEvent<LongpressEvent>;
@@ -364,6 +370,9 @@ export class OverlayTrigger extends SpectrumElement {
         this.prepareToFocusOverlayContent(longpressContent);
         const notImmediatelyClosable =
             this._longpressEvent?.detail?.source !== 'keyboard';
+        if (window.__swc.DEBUG) {
+            window.__swc.ignoreWarningLevels.deprecation = true;
+        }
         this.closeLongpressOverlay = this.openOverlay(
             targetContent,
             this.type ? this.type : 'longpress',
@@ -374,6 +383,9 @@ export class OverlayTrigger extends SpectrumElement {
                 notImmediatelyClosable,
             }
         );
+        if (window.__swc.DEBUG) {
+            window.__swc.ignoreWarningLevels.deprecation = false;
+        }
         this._longpressEvent = undefined;
     }
 
@@ -393,6 +405,9 @@ export class OverlayTrigger extends SpectrumElement {
             this.abortOverlay = res;
         });
         const { targetContent, hoverContent } = this;
+        if (window.__swc.DEBUG) {
+            window.__swc.ignoreWarningLevels.deprecation = true;
+        }
         this.closeHoverOverlay = this.openOverlay(
             targetContent,
             'hover',
@@ -402,6 +417,9 @@ export class OverlayTrigger extends SpectrumElement {
                 ...this.overlayOptions,
             }
         );
+        if (window.__swc.DEBUG) {
+            window.__swc.ignoreWarningLevels.deprecation = false;
+        }
     }
 
     private onClickSlotChange(
