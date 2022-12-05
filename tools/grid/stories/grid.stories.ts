@@ -10,7 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult } from '@spectrum-web-components/base';
+import {
+    css,
+    html,
+    SpectrumElement,
+    TemplateResult,
+} from '@spectrum-web-components/base';
 
 import '@spectrum-web-components/grid/sp-grid.js';
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
@@ -41,59 +46,62 @@ function generateItems(count: number): Item[] {
     return items;
 }
 
+const renderItem = (
+    item: Item,
+    index: number,
+    selected: boolean
+): TemplateResult => {
+    return html`
+        <sp-card
+            toggles
+            variant="quiet"
+            heading="Card Heading ${item.id}"
+            subheading="JPG Photo"
+            style="contain: strict; padding: 1px;"
+            value="card-${item.id}"
+            .selected=${selected}
+            key=${index}
+        >
+            <img
+                alt=""
+                slot="preview"
+                src="https://picsum.photos/id/${item.id}/200/300"
+                decoding="async"
+            />
+            <div slot="description">10/15/18</div>
+            <div slot="footer">Footer</div>
+        </sp-card>
+    `;
+};
+
+const handleChange = (event: Event & { currentTarget: Grid }): void => {
+    const actionbar = document.querySelector('sp-action-bar') as ActionBar;
+    const selected = document.querySelector('.selected') as HTMLElement;
+    const ids = document.querySelector('.ids') as HTMLElement;
+    actionbar.open = !!event.currentTarget.selected.length;
+    actionbar.style.setProperty(
+        'display',
+        !!event.currentTarget.selected.length ? 'flex' : 'none'
+    );
+    selected.textContent = '' + event.currentTarget.selected.length;
+    ids.textContent =
+        '' +
+        event.currentTarget.selected
+            .map((selection) => selection.id)
+            .join(', ');
+};
+
+const handleActionBarChange = (event: Event): void => {
+    event.preventDefault();
+    const grid = document.querySelector('sp-grid') as Grid;
+    const actionbar = document.querySelector('sp-action-bar') as ActionBar;
+    actionbar.open = false;
+    grid.selected = [];
+};
+
 export const Default = (): TemplateResult => {
     const items = generateItems(1000);
 
-    const renderItem = (
-        item: Item,
-        index: number,
-        selected: boolean
-    ): TemplateResult => {
-        return html`
-            <sp-card
-                toggles
-                variant="quiet"
-                heading="Card Heading ${item.id}"
-                subheading="JPG Photo"
-                style="contain: strict; padding: 1px;"
-                value="card-${item.id}"
-                .selected=${selected}
-                key=${index}
-            >
-                <img
-                    alt=""
-                    slot="preview"
-                    src="https://picsum.photos/id/${item.id}/200/300"
-                    decoding="async"
-                />
-                <div slot="description">10/15/18</div>
-                <div slot="footer">Footer</div>
-            </sp-card>
-        `;
-    };
-    const handleChange = (event: Event & { currentTarget: Grid }): void => {
-        const actionbar = document.querySelector('sp-action-bar') as ActionBar;
-        const selected = document.querySelector('.selected') as HTMLElement;
-        const ids = document.querySelector('.ids') as HTMLElement;
-        actionbar.open = !!event.currentTarget.selected.length;
-        actionbar.style.setProperty(
-            'display',
-            !!event.currentTarget.selected.length ? 'flex' : 'none'
-        );
-        selected.textContent = '' + event.currentTarget.selected.length;
-        ids.textContent =
-            '' +
-            event.currentTarget.selected
-                .map((selection) => selection.id)
-                .join(', ');
-    };
-    const handleActionBarChange = (event: Event): void => {
-        event.preventDefault();
-        const grid = document.querySelector('sp-grid') as Grid;
-        const actionbar = document.querySelector('sp-action-bar') as ActionBar;
-        actionbar.open = false;
-        grid.selected = [];
-    };
     return html`
         <h1>Random before content that is focusable</h1>
         <input id="first-input" />
@@ -132,56 +140,6 @@ export const sized = (
 ): TemplateResult => {
     const items = generateItems(1000);
 
-    const renderItem = (
-        item: Item,
-        index: number,
-        selected: boolean
-    ): TemplateResult => {
-        return html`
-            <sp-card
-                toggles
-                variant="quiet"
-                heading="Card Heading ${item.id}"
-                subheading="JPG Photo"
-                style="contain: strict; padding: 1px;"
-                value="card-${item.id}"
-                .selected=${selected}
-                key=${index}
-            >
-                <img
-                    alt=""
-                    slot="preview"
-                    src="https://picsum.photos/id/${item.id}/200/300"
-                    decoding="async"
-                />
-                <div slot="description">10/15/18</div>
-                <div slot="footer">Footer</div>
-            </sp-card>
-        `;
-    };
-    const handleChange = (event: Event & { currentTarget: Grid }): void => {
-        const actionbar = document.querySelector('sp-action-bar') as ActionBar;
-        const selected = document.querySelector('.selected') as HTMLElement;
-        const ids = document.querySelector('.ids') as HTMLElement;
-        actionbar.open = !!event.currentTarget.selected.length;
-        actionbar.style.setProperty(
-            'display',
-            !!event.currentTarget.selected.length ? 'flex' : 'none'
-        );
-        selected.textContent = '' + event.currentTarget.selected.length;
-        ids.textContent =
-            '' +
-            event.currentTarget.selected
-                .map((selection) => selection.id)
-                .join(', ');
-    };
-    const handleActionBarChange = (event: Event): void => {
-        event.preventDefault();
-        const grid = document.querySelector('sp-grid') as Grid;
-        const actionbar = document.querySelector('sp-action-bar') as ActionBar;
-        actionbar.open = false;
-        grid.selected = [];
-    };
     return html`
         <h1>Random before content that is focusable</h1>
         <input id="first-input" />
@@ -248,5 +206,48 @@ sized.argTypes = {
 };
 
 sized.swc_vrt = {
+    skip: true,
+};
+
+class MyParent extends SpectrumElement {
+    static override styles = [
+        css`
+            :host {
+                display: block;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            .child {
+                height: 100%;
+                overflow: scroll;
+            }
+        `,
+    ];
+
+    override render(): TemplateResult {
+        return html`
+            <div class="child"><slot></slot></div>
+        `;
+    }
+}
+
+customElements.define('my-parent', MyParent);
+
+export const scrollParentInAssignedSlot = (): TemplateResult => {
+    const items = generateItems(1000);
+
+    return html`
+        <my-parent>
+            <sp-grid
+                .items=${items}
+                .focusableSelector=${'sp-card'}
+                .renderItem=${renderItem}
+            ></sp-grid>
+        </my-parent>
+    `;
+};
+
+scrollParentInAssignedSlot.swc_vrt = {
     skip: true,
 };
