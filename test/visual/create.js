@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import fs from 'fs';
 import fg from 'fast-glob';
 import path from 'path';
+import rimraf from 'rimraf';
 
 async function createTest(dir) {
     for (const storyPath of await fg(`${dir}/*/stories/*.stories.ts`)) {
@@ -55,9 +56,15 @@ regressVisuals('${name}', stories as unknown as TestsType);
         );
     }
 }
-async function main() {
-    await createTest('packages');
-    await createTest('tools');
+function main() {
+    rimraf('**/*-vrt.ts', async (error) => {
+        if (error) {
+            process.exit(1);
+        }
+        await createTest('packages');
+        await createTest('tools');
+        process.exit(0);
+    });
 }
 
 main();
