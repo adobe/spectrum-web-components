@@ -11,315 +11,317 @@ governing permissions and limitations under the License.
 */
 
 import type { ReactiveElement } from 'lit';
-import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
-export type { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor };
+import Color from 'colorjs.io';
+import type {
+    ColorObject,
+    ColorTypes as DefaultColorTypes,
+} from 'colorjs.io/types/src/color';
+import type ColorSpace from 'colorjs.io/types/src/space';
 
-export type ColorValue =
-    | string
-    | number
-    | TinyColor
-    | HSVA
-    | HSV
-    | RGB
-    | RGBA
-    | HSL
-    | HSLA;
+type ColorTypes =
+    | DefaultColorTypes
+    | { r: number; g: number; b: number; a?: number | string }
+    | { r: string; g: string; b: string; a?: number | string }
+    | { h: number; s: number; l: number; a?: number | string }
+    | { h: string; s: string; l: string; a?: number | string }
+    | { h: number; s: number; v: number; a?: number | string }
+    | { h: string; s: string; v: string; a?: number | string };
 
-export const extractHueAndSaturationRegExp =
-    /^hs[v|l]a?\s?\((\d{1,3}\.?\d*?),?\s?(\d{1,3})/;
-export const replaceHueAndSaturationRegExp =
-    /(^hs[v|l]a?\s?\()\d{1,3}\.?\d*?(,?\s?)\d{1,3}/;
-export const replaceHueRegExp = /(^hs[v|l]a?\()\d{1,3}/;
+export type { Color, ColorTypes };
 
-type TinyColorToValue = {
-    toHex: ColorValue;
-    toHexString: ColorValue;
-    toHsv: ColorValue;
-    toHsvString: ColorValue;
-    toHsl: ColorValue;
-    toHslString: ColorValue;
-    toHex8: ColorValue;
-    toHex8String: ColorValue;
-    toPercentageRgb: ColorValue;
-    toPercentageRgbString: ColorValue;
-    toRgb: ColorValue;
-    toRgbString: ColorValue;
-};
-
-const getHexValue = (color: TinyColor, isString: boolean): ColorValue =>
-    isString ? color.toHexString() : color.toHex();
+export const extractHueSaturationValueAndAlphaRegExp =
+    /^hsva?\s?\((\d{1,3}\.?\d*?)%?,?\s?(\d{1,3})%?,?\s?(\d{1,3})%?,?\s?(\d\.?\d?)?/;
 
 export class ColorController {
+    get color(): Color {
+        return this._color;
+    }
+
+    set color(color: ColorTypes) {
+        this._colorOrigin = color;
+        let newColor!: Color;
+        if (typeof color === 'string') {
+            // HSV is not supported natively, manage it outself when encountered.
+            const values = extractHueSaturationValueAndAlphaRegExp.exec(
+                color as string
+            );
+            if (values !== null) {
+                const [, h, s, v, a] = values;
+                newColor = new Color(
+                    'hsv',
+                    [Number(h), Number(s), Number(v)],
+                    Number(a) || 1
+                );
+            } else {
+                try {
+                    Color.parse(color);
+                } catch (error) {
+                    try {
+                        newColor = new Color(`#${color}`);
+                    } catch (error) {}
+                }
+            }
+        } else if (!Array.isArray(color)) {
+            const { h, s, l, v, r, g, b, a } = color as {
+                h: string;
+                s: string;
+                l: string;
+                v: string;
+                r: string;
+                g: string;
+                b: string;
+                a?: string;
+            };
+            if (typeof h !== 'undefined' && typeof s !== 'undefined') {
+                const lv = l ?? v;
+                newColor = new Color(
+                    typeof l !== 'undefined' ? 'hsl' : 'hsv',
+                    [
+                        parseFloat(h),
+                        typeof s !== 'string' ? s * 100 : parseFloat(s),
+                        typeof lv !== 'string' ? lv * 100 : parseFloat(lv),
+                    ],
+                    parseFloat(a || '1')
+                );
+            } else if (
+                typeof r !== 'undefined' &&
+                typeof g !== 'undefined' &&
+                typeof b !== 'undefined'
+            ) {
+                newColor = new Color(
+                    'srgb',
+                    [
+                        parseFloat(r) / 255,
+                        parseFloat(g) / 255,
+                        parseFloat(b) / 255,
+                    ],
+                    parseFloat(a || '1')
+                );
+            }
+        }
+        if (!newColor) {
+            newColor = new Color(color as DefaultColorTypes);
+        }
+
+        if (this.manageAs) {
+            this._color = newColor.to(this.manageAs) as Color;
+        } else {
+            this._color = newColor;
+        }
+        this.host.requestUpdate();
+    }
+
+    _color = new Color('hsv', [0, 100, 100], 1);
+
+    _colorOrigin!: ColorTypes;
+
+    get colorValue(): ColorTypes {
+        if (typeof this._colorOrigin === 'string') {
+            let spaceId = '';
+            if (
+                extractHueSaturationValueAndAlphaRegExp.exec(
+                    this._colorOrigin
+                ) !== null
+            ) {
+                spaceId = 'hsv';
+            } else {
+                try {
+                    ({ spaceId } = Color.parse(this._colorOrigin));
+                } catch (error) {
+                    spaceId = 'hex string';
+                }
+            }
+            switch (spaceId) {
+                case 'hsv': {
+                    const hadAlpha = this._colorOrigin[3] === 'a';
+                    const { h, s, v } = (this._color.to('hsv') as Color).hsv;
+                    const a = this._color.alpha;
+                    return `hsv${hadAlpha ? `a` : ''}(${Math.round(
+                        h
+                    )}, ${Math.round(s)}%, ${Math.round(v)}%${
+                        hadAlpha ? `, ${a}` : ''
+                    })`;
+                }
+                case 'hsl': {
+                    const hadAlpha = this._colorOrigin[3] === 'a';
+                    const { h, s, l } = (this._color.to('hsl') as Color).hsl;
+                    const a = this._color.alpha;
+                    return `hsl${hadAlpha ? `a` : ''}(${Math.round(
+                        h
+                    )}, ${Math.round(s)}%, ${Math.round(l)}%${
+                        hadAlpha ? `, ${a}` : ''
+                    })`;
+                }
+                case 'hex string': {
+                    const { r, g, b } = (this._color.to('srgb') as Color).srgb;
+                    const hadAlpha =
+                        this._colorOrigin.length === 4 ||
+                        this._colorOrigin.length === 8;
+                    const a = this._color.alpha;
+                    const rHex = Math.round(r * 255).toString(16);
+                    const gHex = Math.round(g * 255).toString(16);
+                    const bHex = Math.round(b * 255).toString(16);
+                    const aHex = Math.round(a * 255).toString(16);
+                    return `${rHex.padStart(2, '0')}${gHex.padStart(
+                        2,
+                        '0'
+                    )}${bHex.padStart(2, '0')}${
+                        hadAlpha ? aHex.padStart(2, '0') : ''
+                    }`;
+                }
+                default: {
+                    const { r, g, b } = (this._color.to('srgb') as Color).srgb;
+                    if (this._colorOrigin.startsWith('#')) {
+                        const hadAlpha =
+                            this._colorOrigin.length === 5 ||
+                            this._colorOrigin.length === 9;
+                        const a = this._color.alpha;
+                        const rHex = Math.round(r * 255).toString(16);
+                        const gHex = Math.round(g * 255).toString(16);
+                        const bHex = Math.round(b * 255).toString(16);
+                        const aHex = Math.round(a * 255).toString(16);
+                        return `#${rHex.padStart(2, '0')}${gHex.padStart(
+                            2,
+                            '0'
+                        )}${bHex.padStart(2, '0')}${
+                            hadAlpha ? aHex.padStart(2, '0') : ''
+                        }`;
+                    }
+                    if (this._colorOrigin.search('%') > -1) {
+                        return `rgb(${Math.round(r * 100)}%, ${Math.round(
+                            g * 100
+                        )}%, ${Math.round(b * 100)}%)`;
+                    }
+                    return `rgb(${Math.round(r * 255)}, ${Math.round(
+                        g * 255
+                    )}, ${Math.round(b * 255)})`;
+                }
+            }
+        }
+        let spaceId;
+        if (this._colorOrigin) {
+            try {
+                ({ spaceId } = new Color(
+                    this._colorOrigin as DefaultColorTypes
+                ));
+            } catch (error) {
+                const { h, s, l, v, r, g, b } = this._colorOrigin as {
+                    h: string;
+                    s: string;
+                    l: string;
+                    v: string;
+                    r: string;
+                    g: string;
+                    b: string;
+                };
+                if (
+                    typeof h !== 'undefined' &&
+                    typeof s !== 'undefined' &&
+                    typeof l !== 'undefined'
+                ) {
+                    spaceId = 'hsl';
+                } else if (
+                    typeof h !== 'undefined' &&
+                    typeof s !== 'undefined' &&
+                    typeof v !== 'undefined'
+                ) {
+                    spaceId = 'hsv';
+                } else if (
+                    typeof r !== 'undefined' &&
+                    typeof g !== 'undefined' &&
+                    typeof b !== 'undefined'
+                ) {
+                    spaceId = 'srgb';
+                }
+            }
+        } else {
+            ({ spaceId } = this.color);
+        }
+        switch (spaceId) {
+            case 'hsv': {
+                const { h, s, v } = (this._color.to('hsv') as Color).hsv;
+                return {
+                    h,
+                    s: s / 100,
+                    v: v / 100,
+                    a: this._color.alpha,
+                };
+            }
+            case 'hsl': {
+                const { h, s, l } = (this._color.to('hsl') as Color).hsl;
+                return {
+                    h,
+                    s: s / 100,
+                    l: l / 100,
+                    a: this._color.alpha,
+                };
+            }
+            case 'srgb': {
+                const { r, g, b } = (this._color.to('srgb') as Color).srgb;
+                if (
+                    this._colorOrigin &&
+                    typeof (this._colorOrigin as { r: string }).r ===
+                        'string' &&
+                    (this._colorOrigin as { r: string }).r.search('%')
+                ) {
+                    return {
+                        r: `${Math.round(r * 255)}%`,
+                        g: `${Math.round(g * 255)}%`,
+                        b: `${Math.round(b * 255)}%`,
+                        a: this._color.alpha,
+                    };
+                }
+                return {
+                    r: Math.round(r * 255),
+                    g: Math.round(g * 255),
+                    b: Math.round(b * 255),
+                    a: this._color.alpha,
+                };
+            }
+        }
+        return this._color;
+    }
+
     protected host: ReactiveElement;
 
-    protected applyColorToState!: ({
-        h,
-        s,
-        v,
-    }: {
-        h: number;
-        s: number;
-        v: number;
-    }) => void;
-
-    protected extractColorFromState!: (
-        controller: ColorController
-    ) => ColorValue;
-
-    protected setColorProcess(
-        currentColor: TinyColor,
-        nextColor: ColorValue,
-        format: string,
-        isString: boolean
-    ): void {
-        if (this.maintains === 'hue') {
-            this.setColorMaintainHue(currentColor, nextColor, format, isString);
-        } else if (this.maintains === 'saturation') {
-            this.setColorMaintainSaturation(
-                currentColor,
-                nextColor,
-                format,
-                isString
-            );
-        }
+    get hue(): number {
+        return Number((this._color.to('hsl') as Color).hsl.h);
     }
 
-    protected setColorMaintainHue(
-        currentColor: TinyColor,
-        nextColor: ColorValue,
-        format: string,
-        isString: boolean
-    ): void {
-        const { h, s, v } = this._color.toHsv();
-        let originalHue: number | undefined = undefined;
-
-        if (isString && format.startsWith('hs')) {
-            const values = extractHueAndSaturationRegExp.exec(
-                nextColor as string
-            );
-
-            if (values !== null) {
-                const [, h] = values;
-                originalHue = Number(h);
-            }
-        } else if (!isString && format.startsWith('hs')) {
-            const colorInput = currentColor.originalInput;
-            const colorValues = Object.values(colorInput);
-            originalHue = colorValues[0];
-        }
-
-        this.hue = originalHue || h;
-        this.applyColorToState({ h, s, v });
+    set hue(hue: number) {
+        this._color.set('h', hue);
+        this.host.requestUpdate();
     }
 
-    protected setColorMaintainSaturation(
-        currentColor: TinyColor,
-        nextColor: ColorValue,
-        format: string,
-        isString: boolean
-    ): void {
-        if (isString && format.startsWith('hs')) {
-            const values = extractHueAndSaturationRegExp.exec(
-                nextColor as string
-            );
+    private manageAs?: string;
 
-            if (values !== null) {
-                const [, h, s] = values;
-                this.hue = Number(h);
-                this.saturation = Number(s);
-            }
-        } else if (!isString && format.startsWith('hs')) {
-            const colorInput = currentColor.originalInput;
-            const colorValues = Object.values(colorInput);
-            this.hue = colorValues[0];
-            this.saturation = colorValues[1];
-        } else {
-            const { h } = currentColor.toHsv();
-            this.hue = h;
-        }
-        this.applyColorToState(currentColor.toHsv());
-    }
-
-    protected maintains: 'hue' | 'saturation' = 'hue';
-    private saturation!: number;
+    private _previousColor!: Color;
 
     constructor(
         host: ReactiveElement,
         {
-            applyColorToState,
-            extractColorFromState,
-            maintains,
+            manageAs,
         }: {
-            applyColorToState({
-                h,
-                s,
-                v,
-            }: {
-                h: number;
-                s: number;
-                v: number;
-            }): void;
-            extractColorFromState(controller: ColorController): ColorValue;
-            maintains?: 'hue' | 'saturation';
-        }
+            manageAs?: string;
+        } = {}
     ) {
         this.host = host;
-        this.applyColorToState = applyColorToState;
-        this.extractColorFromState = extractColorFromState;
-        this.maintains = maintains || this.maintains;
+        this.manageAs = manageAs;
     }
 
-    public applyColorFromState(): void {
-        this._color = new TinyColor(this.extractColorFromState(this));
+    getColor(format: string | ColorSpace): ColorObject {
+        return this._color.to(format);
     }
 
-    public get hue(): number {
-        return this._hue;
+    getHslString(): string {
+        return this._color.to('hsl').toString();
     }
 
-    public set hue(value: number) {
-        const hue = Math.min(360, Math.max(0, value));
-        if (hue === this.hue) {
-            return;
-        }
-        const oldValue = this.hue;
-        const { s, v } = this._color.toHsv();
-        this._color = new TinyColor({ h: hue, s, v });
-        this._hue = hue;
-        this.host.requestUpdate('hue', oldValue);
-    }
-
-    private _hue = 0;
-
-    protected getColorProcesses: Record<
-        string,
-        (color: TinyColor, isString: boolean) => ColorValue
-    > = {
-        rgb: (color, isString) =>
-            isString ? color.toRgbString() : color.toRgb(),
-        prgb: (color, isString) =>
-            isString ? color.toPercentageRgbString() : color.toPercentageRgb(),
-        hex8: (color, isString) =>
-            isString ? color.toHex8String() : color.toHex8(),
-        name: (color) => color.toName() || color.toRgbString(),
-        hsl: (color, isString) => {
-            if (this.maintains === 'hue') {
-                if (isString) {
-                    const hslString = color.toHslString();
-                    return hslString.replace(replaceHueRegExp, `$1${this.hue}`);
-                } else {
-                    const { s, l, a } = color.toHsl();
-                    return { h: this.hue, s, l, a };
-                }
-            } else {
-                if (isString) {
-                    const hslString = color.toHslString();
-                    return hslString.replace(
-                        replaceHueAndSaturationRegExp,
-                        `$1${this.hue}$2${this.saturation}`
-                    );
-                } else {
-                    const { s, l, a } = color.toHsl();
-                    return { h: this.hue, s, l, a };
-                }
-            }
-        },
-        hsv: (color, isString) => {
-            if (this.maintains === 'hue') {
-                if (isString) {
-                    const hsvString = color.toHsvString();
-                    return hsvString.replace(replaceHueRegExp, `$1${this.hue}`);
-                } else {
-                    const { s, v, a } = color.toHsv();
-                    return { h: this.hue, s, v, a };
-                }
-            } else {
-                if (isString) {
-                    const hsvString = color.toHsvString();
-                    return hsvString.replace(
-                        replaceHueAndSaturationRegExp,
-                        `$1${this.hue}$2${this.saturation}`
-                    );
-                } else {
-                    const { s, v, a } = color.toHsv();
-                    return { h: this.hue, s, v, a };
-                }
-            }
-        },
-        hex: getHexValue,
-        hex3: getHexValue,
-        hex4: getHexValue,
-        hex6: getHexValue,
-    };
-
-    /* c8 ignore next 3 */
-    public get value(): ColorValue {
-        return this.color;
-    }
-
-    public get color(): ColorValue {
-        return this.getColorProcesses[this._format.format || 'hex'](
-            this._color,
-            this._format.isString
-        );
-    }
-
-    public set color(color: ColorValue) {
-        /* c8 ignore next 3 */
-        if (color === this.color) {
-            return;
-        }
-        const oldValue = this._color;
-        this._color = new TinyColor(color);
-        const format = this._color.format;
-        let isString = typeof color === 'string' || color instanceof String;
-
-        if (format.startsWith('hex')) {
-            isString = (color as string).startsWith('#');
-        }
-
-        this._format = {
-            format,
-            isString,
-        };
-
-        this.setColorProcess(this._color, color, format, isString);
-        this.host.requestUpdate('color', oldValue);
-    }
-
-    private _color = new TinyColor({ h: 0, s: 1, v: 1 });
-
-    public getColor(format: string): ColorValue {
-        const formatOptions: Record<string, keyof TinyColorToValue> = {
-            hsl: 'toHsl',
-        };
-        return this._color[formatOptions[format]]();
-    }
-
-    public setColor(color: TinyColor): void {
-        this._color = color;
-        const isString =
-            typeof this._color.originalInput === 'string' ||
-            this._color.originalInput instanceof String;
-        this.setColorProcess(this._color, color, this._color.format, isString);
-    }
-
-    public getHslString(): string {
-        return this._color.toHslString();
-    }
-
-    private _previousColor = new TinyColor({ h: 0, s: 1, v: 1 });
-
-    public savePreviousColor(): void {
+    savePreviousColor(): void {
         this._previousColor = this._color.clone();
     }
 
-    public restorePreviousColor(): void {
-        this.setColor(this._previousColor);
+    restorePreviousColor(): void {
+        this._color = this._previousColor;
     }
-
-    private _format: { format: string; isString: boolean } = {
-        format: '',
-        isString: false,
-    };
 }

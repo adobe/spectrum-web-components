@@ -61,13 +61,13 @@
         "lit-html"
     ],
     "dependencies": {
-        "@ctrl/tinycolor": "^4.0.3",
         "@spectrum-web-components/base": "^0.41.2",
         "@spectrum-web-components/color-handle": "^0.41.2",
         "@spectrum-web-components/reactive-controllers": "^0.41.2",
         "@spectrum-web-components/shared": "^0.41.2"
     },
     "devDependencies": {
+        "@ctrl/tinycolor": "^4.0.3",
         "@spectrum-css/colorwheel": "^3.1.4"
     },
     "types": "./src/index.d.ts",
