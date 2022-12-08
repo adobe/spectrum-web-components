@@ -4,7 +4,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "description": "",
+    "description": "Web component implementation of a Spectrum design Tags",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
