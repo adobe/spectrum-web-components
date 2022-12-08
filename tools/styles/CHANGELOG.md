@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.21.0...@spectrum-web-components/styles@0.22.0) (2022-12-08)
+
+### Bug Fixes
+
+-   **styles:** add basic color-scheme support ([1ccf110](https://github.com/adobe/spectrum-web-components/commit/1ccf110e75890ecaaa7f160fce09ffeb15c570a3))
+
+### Features
+
+-   **field-group:** use core tokens ([7433e59](https://github.com/adobe/spectrum-web-components/commit/7433e598634adc74eb8d2d6c7794eaa5a2ec27e7))
+
 # [0.21.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.20.1...@spectrum-web-components/styles@0.21.0) (2022-11-21)
 
 ### Features

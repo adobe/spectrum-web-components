@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/picker",
-    "version": "0.13.8",
+    "version": "0.13.9",
     "publishConfig": {
         "access": "public"
     },
@@ -66,16 +66,16 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.2",
-        "@spectrum-web-components/button": "^0.19.7",
-        "@spectrum-web-components/icon": "^0.12.4",
-        "@spectrum-web-components/icons-ui": "^0.9.4",
-        "@spectrum-web-components/icons-workflow": "^0.9.4",
-        "@spectrum-web-components/menu": "^0.16.8",
-        "@spectrum-web-components/overlay": "^0.18.8",
-        "@spectrum-web-components/popover": "^0.12.8",
+        "@spectrum-web-components/button": "^0.19.8",
+        "@spectrum-web-components/icon": "^0.12.5",
+        "@spectrum-web-components/icons-ui": "^0.9.5",
+        "@spectrum-web-components/icons-workflow": "^0.9.5",
+        "@spectrum-web-components/menu": "^0.16.9",
+        "@spectrum-web-components/overlay": "^0.18.9",
+        "@spectrum-web-components/popover": "^0.12.9",
         "@spectrum-web-components/reactive-controllers": "^0.3.4",
         "@spectrum-web-components/shared": "^0.15.3",
-        "@spectrum-web-components/tray": "^0.4.6"
+        "@spectrum-web-components/tray": "^0.4.7"
     },
     "devDependencies": {
         "@spectrum-css/picker": "^1.2.13"

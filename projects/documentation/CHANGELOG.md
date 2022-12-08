@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/documentation@0.4.4...documentation@0.4.5) (2022-12-08)
+
+### Bug Fixes
+
+-   **styles:** add basic color-scheme support ([1ccf110](https://github.com/adobe/spectrum-web-components/commit/1ccf110e75890ecaaa7f160fce09ffeb15c570a3))
+
 ## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/documentation@0.4.3...documentation@0.4.4) (2022-11-21)
 
 **Note:** Version bump only for package documentation

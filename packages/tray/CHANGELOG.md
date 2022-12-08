@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.4.6...@spectrum-web-components/tray@0.4.7) (2022-12-08)
+
+### Bug Fixes
+
+-   leverage "dvh" rather than measured screen height ([84b9df0](https://github.com/adobe/spectrum-web-components/commit/84b9df0d101d9870a1b0c20eb34ba33fcdd0fbe1))
+
 ## [0.4.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.4.5...@spectrum-web-components/tray@0.4.6) (2022-11-21)
 
 **Note:** Version bump only for package @spectrum-web-components/tray
