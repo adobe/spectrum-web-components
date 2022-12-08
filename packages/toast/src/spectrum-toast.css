@@ -20,7 +20,7 @@ governing permissions and limitations under the License.
     --spectrum-toast-block-size: var(--spectrum-toast-height);
     --spectrum-toast-border-width: var(--spectrum-border-width-100);
     --spectrum-toast-line-height: var(--spectrum-line-height-100);
-    --spectrum-toast-line-height-cjk: var(--spectrum-cjk-line-height-100);
+    --spectrum-toast-line-height-cjk: var(--spectrum-line-height-cjk-100);
     --spectrum-toast-spacing-icon-to-text: var(--spectrum-text-to-visual-100);
     --spectrum-toast-spacing-start-edge-to-text-and-icon: var(
         --spectrum-spacing-300

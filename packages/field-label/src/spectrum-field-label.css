@@ -20,7 +20,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-fieldlabel-font-size: var(--spectrum-font-size-75);
     --spectrum-fieldlabel-line-height: var(--spectrum-line-height-100);
-    --spectrum-fieldlabel-cjk-line-height: var(--spectrum-cjk-line-height-100);
+    --spectrum-fieldlabel-line-height-cjk: var(--spectrum-line-height-cjk-100);
     --spectrum-fieldlabel-asterisk-gap: var(
         --spectrum-field-label-top-to-asterisk-small
     );
@@ -41,7 +41,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-fieldlabel-font-size: var(--spectrum-font-size-75);
     --spectrum-fieldlabel-line-height: var(--spectrum-line-height-200);
-    --spectrum-fieldlabel-cjk-line-height: var(--spectrum-cjk-line-height-200);
+    --spectrum-fieldlabel-line-height-cjk: var(--spectrum-line-height-cjk-200);
     --spectrum-fieldlabel-asterisk-gap: var(
         --spectrum-field-label-top-to-asterisk-medium
     );
@@ -62,7 +62,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-fieldlabel-font-size: var(--spectrum-font-size-100);
     --spectrum-fieldlabel-line-height: var(--spectrum-line-height-100);
-    --spectrum-fieldlabel-cjk-line-height: var(--spectrum-cjk-line-height-100);
+    --spectrum-fieldlabel-line-height-cjk: var(--spectrum-line-height-cjk-100);
     --spectrum-fieldlabel-asterisk-gap: var(
         --spectrum-field-label-top-to-asterisk-large
     );
@@ -83,7 +83,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-fieldlabel-font-size: var(--spectrum-font-size-200);
     --spectrum-fieldlabel-line-height: var(--spectrum-line-height-200);
-    --spectrum-fieldlabel-cjk-line-height: var(--spectrum-cjk-line-height-200);
+    --spectrum-fieldlabel-line-height-cjk: var(--spectrum-line-height-cjk-200);
     --spectrum-fieldlabel-asterisk-gap: var(
         --spectrum-field-label-top-to-asterisk-extra-large
     );
@@ -122,8 +122,8 @@ governing permissions and limitations under the License.
 :host(:lang(ko)),
 :host(:lang(zh)) {
     line-height: var(
-        --mod-fieldlabel-cjk-line-height,
-        var(--spectrum-fieldlabel-cjk-line-height)
+        --mod-fieldlabel-line-height-cjk,
+        var(--spectrum-fieldlabel-line-height-cjk)
     ); /* .spectrum-FieldLabel:lang(ja),
    * .spectrum-FieldLabel:lang(zh),
    * .spectrum-FieldLabel:lang(ko) */

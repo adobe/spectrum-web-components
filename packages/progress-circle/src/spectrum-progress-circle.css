@@ -390,7 +390,9 @@ governing permissions and limitations under the License.
     --spectrum-progress-circle-track-border-color: var(
         --spectrum-gray-300
     ); /* .spectrum-ProgressCircle */
-    --spectrum-progress-circle-fill-border-color: var(--spectrum-blue-900);
+    --spectrum-progress-circle-fill-border-color: var(
+        --spectrum-accent-content-color-default
+    );
     --spectrum-progress-circle-track-border-color-over-background: var(
         --spectrum-transparent-white-300
     );
