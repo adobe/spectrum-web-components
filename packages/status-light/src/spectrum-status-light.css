@@ -20,7 +20,7 @@ governing permissions and limitations under the License.
         --spectrum-status-light-dot-size-medium
     );
     --spectrum-statuslight-line-height: var(--spectrum-line-height-100);
-    --spectrum-statuslight-line-height-cjk: var(--spectrum-cjk-line-height-100);
+    --spectrum-statuslight-line-height-cjk: var(--spectrum-line-height-cjk-100);
     --spectrum-statuslight-font-size: var(--spectrum-font-size-100);
     --spectrum-statuslight-spacing-dot-to-label: var(
         --spectrum-text-to-visual-100
@@ -221,7 +221,7 @@ governing permissions and limitations under the License.
     );
     line-height: var(
         --mod-statuslight-line-height,
-        --spectrum-statuslight-line-height
+        var(--spectrum-statuslight-line-height)
     );
     min-height: var(
         --mod-statuslight-height,
@@ -241,11 +241,8 @@ governing permissions and limitations under the License.
 :host(:lang(ko)),
 :host(:lang(zh)) {
     line-height: var(
-        --spectrum-statuslight-line-height-cjk,
-        var(
-            --mod-statuslight-line-height,
-            var(--spectrum-statuslight-line-height)
-        )
+        --mod-statuslight-line-height-cjk,
+        var(--spectrum-statuslight-line-height-cjk)
     ); /* .spectrum-StatusLight:lang(ja),
    * .spectrum-StatusLight:lang(zh),
    * .spectrum-StatusLight:lang(ko) */

@@ -50,8 +50,8 @@ governing permissions and limitations under the License.
 :host(:lang(ja)),
 :host(:lang(ko)),
 :host(:lang(zh)) {
-    --spectrum-helptext-cjk-line-height: var(
-        --spectrum-cjk-line-height-100
+    --spectrum-helptext-line-height-cjk: var(
+        --spectrum-line-height-cjk-100
     ); /* .spectrum-HelpText:lang(ja),
    * .spectrum-HelpText:lang(zh),
    * .spectrum-HelpText:lang(ko) */
@@ -192,8 +192,8 @@ governing permissions and limitations under the License.
 :host(:lang(ko)) .text,
 :host(:lang(zh)) .text {
     line-height: var(
-        --mod-helptext-cjk-line-height,
-        var(--spectrum-helptext-cjk-line-height)
+        --mod-helptext-line-height-cjk,
+        var(--spectrum-helptext-line-height-cjk)
     ); /* .spectrum-HelpText:lang(ja) .spectrum-HelpText-text,
    * .spectrum-HelpText:lang(zh) .spectrum-HelpText-text,
    * .spectrum-HelpText:lang(ko) .spectrum-HelpText-text */

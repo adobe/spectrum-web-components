@@ -63,7 +63,7 @@
         "@spectrum-web-components/icons-ui": "^0.9.4"
     },
     "devDependencies": {
-        "@spectrum-css/actionbutton": "^3.0.1"
+        "@spectrum-css/actionbutton": "^3.0.2"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
