@@ -1,7 +1,6 @@
 import { create } from '@web/storybook-prebuilt/theming/create.js';
 
 export default create({
-    base: 'light',
     brandTitle: 'Spectrum Web Components',
     brandUrl: 'https://opensource.adobe.com/spectrum-web-components',
     brandImage:

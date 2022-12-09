@@ -23,6 +23,7 @@ import {
     queryAsync,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { DARK_MODE } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/theme/src/express/themes.js';
@@ -49,7 +50,9 @@ export let dir: 'ltr' | 'rtl' =
     (urlParams.get('sp_dir') as 'ltr' | 'rtl') || 'ltr';
 export let theme: ThemeVariant =
     (urlParams.get('sp_theme') as ThemeVariant) || 'spectrum';
-export let color: Color = (urlParams.get('sp_color') as Color) || 'light';
+export let color: Color =
+    (urlParams.get('sp_color') as Color) ||
+    (matchMedia(DARK_MODE).matches ? 'dark' : 'light');
 export let scale: Scale = (urlParams.get('sp_scale') as Scale) || 'medium';
 export let reduceMotion = urlParams.get('sp_reduceMotion') === 'true';
 
