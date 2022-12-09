@@ -126,7 +126,7 @@ const generateIconWrapper = async (iconType) => {
         "${iconType}"
     ],
     "dependencies": {
-        "@lit-labs/react": "1.1.0",
+        "@lit-labs/react": "1.1.1",
         "${pkgName}": "${pkgVersion}"
     }
 }
