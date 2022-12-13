@@ -52,7 +52,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
     private prismjsLoaded = false;
 
     public static override get styles(): CSSResultArray {
-        return [Styles, StylesLight, StylesDark];
+        return [Styles];
     }
 
     private get codeSlot(): Element | this {
@@ -142,7 +142,7 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
                       </div>
                   `
                 : undefined}
-            <bdo class="markup ${this.codeTheme}" dir="ltr">
+            <bdo class="markup" dir="ltr">
                 ${highlightedCode}
                 <div class="copy-holder">
                     <sp-action-button
@@ -155,6 +155,11 @@ export class CodeExample extends FocusVisiblePolyfillMixin(LitElement) {
                     </sp-action-button>
                 </div>
             </bdo>
+            <style>
+                ${this.codeTheme === 'light'
+                    ? StylesLight.toString()
+                    : StylesDark.toString()}
+            </style>
         `;
     }
 
