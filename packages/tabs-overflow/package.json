@@ -1,0 +1,70 @@
+{
+    "name": "@spectrum-web-components/tabs-overflow",
+    "version": "0.0.1",
+    "publishConfig": {
+        "access": "public"
+    },
+    "description": "Web component implementation of a Spectrum design TabsOverflow",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adobe/spectrum-web-components.git",
+        "directory": "packages/tabs-overflow"
+    },
+    "author": "",
+    "homepage": "https://adobe.github.io/spectrum-web-components/components/tabs-overflow",
+    "bugs": {
+        "url": "https://github.com/adobe/spectrum-web-components/issues"
+    },
+    "main": "src/index.js",
+    "module": "src/index.js",
+    "type": "module",
+    "exports": {
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./package.json": "./package.json",
+        "./src/TabsOverflow.js": {
+            "development": "./src/TabsOverflow.dev.js",
+            "default": "./src/TabsOverflow.js"
+        },
+        "./src/index.js": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
+        "./src/tabs-overflow.css.js": "./src/tabs-overflow.css.js",
+        "./sp-tabs-overflow.js": {
+            "development": "./sp-tabs-overflow.dev.js",
+            "default": "./sp-tabs-overflow.js"
+        }
+    },
+    "scripts": {
+        "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
+    },
+    "files": [
+        "**/*.d.ts",
+        "**/*.js",
+        "**/*.js.map",
+        "custom-elements.json",
+        "!stories/",
+        "!test/"
+    ],
+    "keywords": [
+        "spectrum css",
+        "web components",
+        "lit-element",
+        "lit-html"
+    ],
+    "dependencies": {
+        "@spectrum-web-components/base": "^0.7.2",
+        "tslib": "^2.0.0"
+    },
+    "types": "./src/index.d.ts",
+    "customElements": "custom-elements.json",
+    "sideEffects": [
+        "./sp-*.js",
+        "./**/*.dev.js",
+        "./**/*.dev.js"
+    ]
+}

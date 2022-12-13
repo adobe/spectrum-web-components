@@ -1,0 +1,4 @@
+{
+    "./src/*": "./src/*.js",
+    "./sp-tabs-overflow.js": "./sp-tabs-overflow.js"
+}
