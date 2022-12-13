@@ -1,0 +1,137 @@
+/*
+Copyright 2020 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+:host {
+    inset: 0;
+    width: 100%;
+
+    --sp-tabs-overflow-next-button-right: -15px;
+    --sp-tabs-overflow-previous-button-left: -15px;
+    --sp-tabs-overflow-button-size: var(
+        --spectrum-global-dimension-static-size-500
+    );
+    --sp-tabs-overflow-button-top: 5px;
+    --sp-tabs-overflow-button-radius: 50px;
+    --sp-tabs-overflow-icon-color: var(--spectrum-global-color-static-gray-800);
+    --sp-tabs-overflow-shadow-color: var(--spectrum-global-color-static-white);
+    --sp-tabs-overflow-shadow-width: 50px;
+    --sp-tabs-overflow-shadow-border-radius: 0;
+}
+
+sp-action-button {
+    width: var(--sp-tabs-overflow-button-size);
+    height: var(--sp-tabs-overflow-button-size);
+    position: absolute;
+    inset-block-start: var(--sp-tabs-overflow-button-top);
+    z-index: 2;
+    border-radius: var(--sp-tabs-overflow-button-radius);
+    border: none;
+    text-align: center;
+    box-shadow: none;
+    background: transparent;
+}
+
+sp-action-button.left-scroll {
+    visibility: hidden;
+    inset-inline-end: var(--sp-tabs-overflow-previous-button-left);
+}
+
+sp-action-button.right-scroll {
+    visibility: hidden;
+    inset-inline-end: var(--sp-tabs-overflow-next-button-right);
+}
+
+sp-action-button.left-scroll.show,
+sp-action-button.right-scroll.show {
+    visibility: visible;
+}
+
+.tabs-overflow-container {
+    position: relative;
+}
+
+.tabs-overflow-container.s {
+    --sp-tabs-overflow-button-top: 0px;
+}
+
+.tabs-overflow-container.m {
+    --sp-tabs-overflow-button-top: 5px;
+}
+
+.tabs-overflow-container.l {
+    --sp-tabs-overflow-button-top: 8px;
+}
+
+.tabs-overflow-container.xl {
+    --sp-tabs-overflow-button-top: 12px;
+}
+
+/* styling for shadow behind the left and right buttons */
+.tabs-overflow-container:before,
+.tabs-overflow-container:after {
+    content: '';
+    visibility: hidden;
+    position: absolute;
+    z-index: 1;
+    border-radius: var(--sp-tabs-overflow-shadow-border-radius);
+    height: 100%;
+    width: var(--sp-tabs-overflow-shadow-width);
+    pointer-events: none;
+    inset-block-start: 0;
+}
+
+.tabs-overflow-container.s:before,
+.tabs-overflow-container.s:after {
+    height: 40px;
+}
+
+.tabs-overflow-container.m:before,
+.tabs-overflow-container.m:after {
+    height: 48px;
+}
+
+.tabs-overflow-container.l:before,
+.tabs-overflow-container.l:after {
+    height: 56px;
+}
+
+.tabs-overflow-container.xl:before,
+.tabs-overflow-container.xl:after {
+    height: 64px;
+}
+
+.tabs-overflow-container:before {
+    background: var(--spectrum-alias-background-color-transparent)
+        linear-gradient(
+            270deg,
+            var(--spectrum-alias-background-color-transparent),
+            var(--sp-tabs-overflow-shadow-color)
+        )
+        0 0 no-repeat padding-box;
+    inset-inline-start: 0;
+}
+
+.tabs-overflow-container:after {
+    background: var(--spectrum-alias-background-color-transparent)
+        linear-gradient(
+            90deg,
+            var(--spectrum-alias-background-color-transparent),
+            var(--sp-tabs-overflow-shadow-color)
+        )
+        0 0 no-repeat padding-box;
+    inset-inline-end: 0;
+}
+
+.tabs-overflow-container.left-shadow:before,
+.tabs-overflow-container.right-shadow:after {
+    visibility: visible;
+}

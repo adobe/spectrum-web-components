@@ -23,7 +23,10 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import {
+    classMap,
+    ifDefined,
+} from '@spectrum-web-components/base/src/directives.js';
 import { IntersectionController } from '@lit-labs/observers/intersection_controller.js';
 import { Tab } from './Tab.js';
 import { Focusable } from '@spectrum-web-components/shared';
@@ -100,6 +103,9 @@ export class Tabs extends SizedMixin(Focusable) {
 
     @property()
     public label = '';
+
+    @property({ type: Boolean, reflect: true })
+    public enableTabsScroll = false;
 
     /**
      * The tab list is displayed without a border.
@@ -193,6 +199,29 @@ export class Tabs extends SizedMixin(Focusable) {
         return this.rovingTabindexController.focusInElement || this;
     }
 
+    public scrollTabs(
+        delta: number,
+        behavior: ScrollBehavior = 'smooth'
+    ): void {
+        this.tabList?.scrollBy({
+            left: delta,
+            top: 0,
+            behavior,
+        });
+    }
+
+    public get scrollState(): Record<string, boolean> {
+        const canScrollLeft = this.tabList?.scrollLeft > 0;
+        const canScrollRight =
+            Math.ceil(this.tabList?.scrollLeft) <
+            this.tabList?.scrollWidth - this.tabList?.clientWidth;
+
+        return {
+            canScrollLeft,
+            canScrollRight,
+        };
+    }
+
     protected override manageAutoFocus(): void {
         const tabs = [...this.children] as Tab[];
         const tabUpdateCompletes = tabs.map((tab) => {
@@ -222,10 +251,12 @@ export class Tabs extends SizedMixin(Focusable) {
     protected override render(): TemplateResult {
         return html`
             <div
+                class=${classMap({ scroll: this.enableTabsScroll })}
                 aria-label=${ifDefined(this.label ? this.label : undefined)}
                 @click=${this.onClick}
                 @keydown=${this.onKeyDown}
                 @sp-tab-contentchange=${this.updateSelectionIndicator}
+                @scroll=${this.onTabsScroll}
                 id="list"
                 role="tablist"
                 part="tablist"
@@ -291,6 +322,15 @@ export class Tabs extends SizedMixin(Focusable) {
             this.shouldAnimate = true;
         }
     }
+
+    private onTabsScroll = (): void => {
+        this.dispatchEvent(
+            new Event('sp-tabs-scroll', {
+                bubbles: true,
+                composed: true,
+            })
+        );
+    };
 
     private onClick = (event: Event): void => {
         if (this.disabled) {

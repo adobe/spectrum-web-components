@@ -154,14 +154,23 @@ governing permissions and limitations under the License.
 
 :host([dir='ltr'][direction='vertical-right']) ::slotted(:not([slot])) {
     margin-left: 0;
-    margin-right: calc(
-        var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2
-    ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item */
+    margin-right: calc(var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2);
+
+    /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item */
 }
 
 :host([dir='rtl'][direction='vertical-right']) ::slotted(:not([slot])) {
     margin-right: 0;
-    margin-left: calc(
-        var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2
-    ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item */
+    margin-left: calc(var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2);
+
+    /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item */
+}
+
+:host([dir][direction='horizontal']) #list.scroll {
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+:host([dir][direction='horizontal']) #list.scroll::-webkit-scrollbar {
+    display: none;
 }
