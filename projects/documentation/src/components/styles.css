@@ -192,7 +192,7 @@ body {
     width: 36px;
     height: 31px;
     display: block;
-    margin-right: var(--spectrum-global-dimension-size-200);
+    margin-inline-end: var(--spectrum-spacing-300);
     margin-bottom: 12px;
     flex-shrink: 0;
     position: relative;
