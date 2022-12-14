@@ -150,12 +150,12 @@ governing permissions and limitations under the License.
 */
 
 import * as React from 'react';
-import { createComponent } from '@lit-labs/react';
-${
-    reactComponents.flatMap((component) => component.events).length > 0
-        ? "import type { EventName } from '@lit-labs/react';"
-        : null
-}
+import { createComponent } from '@lit-labs/react';${
+                reactComponents.flatMap((component) => component.events)
+                    .length > 0
+                    ? "\nimport type { EventName } from '@lit-labs/react';"
+                    : ''
+            }
 ${componentImports.reduce((pre, cur) => pre + cur + '\n', '')}
 ${fileImports.reduce((pre, cur) => pre + cur + '\n', '')}
 
