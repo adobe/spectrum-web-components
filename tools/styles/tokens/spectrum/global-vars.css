@@ -490,7 +490,20 @@ governing permissions and limitations under the License.
 }
 :host,
 :root {
+<<<<<<< HEAD
     --system-spectrum-tooltip-backgound-color-default-neutral: var(
         --spectrum-neutral-subdued-background-color-default
     );
+=======
+    --system-spectrum-textfield-border-color: var(--spectrum-gray-500);
+    --system-spectrum-textfield-border-color-hover: var(--spectrum-gray-600);
+    --system-spectrum-textfield-border-color-focus: var(--spectrum-gray-800);
+    --system-spectrum-textfield-border-color-focus-hover: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-textfield-border-color-keyboard-focus: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-textfield-border-width: var(--spectrum-border-width-100);
+>>>>>>> 824cd8b30 (refactor(textfield): migrate spectrum tokens)
 }

@@ -4579,10 +4579,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-3.3.15.tgz#5fe5a76933ce439751664c9a73642ea3b539bd5d"
   integrity sha512-N6fT3lFzXQgybJzjyELUBx+gj3S2mYlhpW8qXRcYKRQLas6iy20WXkKmyMfOGuZSdL328K3g6i/2sjt+HM10ug==
 
-"@spectrum-css/textfield@^3.2.6":
-  version "3.2.6"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-3.2.6.tgz#ad55cc6dd64f006fc659150298d3df463118fa24"
-  integrity sha512-yNTlrteDJcjKJRL7HV7vF2fZ9SLEDaRcLR6Zf2iwe0fdzzY0SXo9LGf0zoVRe47eW3UFrGC1cMyX27y2MMH1ag==
+"@spectrum-css/textfield@^4.0.0-beta.0":
+  version "4.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/textfield/-/textfield-4.0.0-beta.0.tgz#bc82e30ca813507d92a0f74abfc7f6437d3bbd7e"
+  integrity sha512-s2HO3+x/KXq1I+w4qTikzboFdDtpz99dIi4RC9N9eA/qRGxgel3UVvNWD+S5xcv7s/Qnb4TrO1tvOGqF1nhs4g==
 
 "@spectrum-css/thumbnail@^2.0.18":
   version "2.0.18"
