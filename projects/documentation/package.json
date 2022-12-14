@@ -15,6 +15,7 @@
         "build:postcss": "wireit",
         "build:production": "wireit",
         "build:search-index": "wireit",
+        "build:search-index:prod": "wireit",
         "build:tsc": "wireit",
         "copy-docs": "wireit",
         "serve": "wireit",
