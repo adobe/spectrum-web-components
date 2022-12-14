@@ -33,7 +33,6 @@
         "@rollup/plugin-commonjs": "^21.0.1",
         "@rollup/plugin-json": "^5.0.0",
         "@rollup/plugin-node-resolve": "^13.1.3",
-        "@rollup/plugin-replace": "^5.0.1",
         "@toycode/markdown-it-class": "^1.2.4",
         "@types/lunr": "^2.3.3",
         "@types/prismjs": "^1.16.6",
@@ -73,6 +72,9 @@
             "dependencies": [
                 {
                     "script": "build:assets"
+                },
+                {
+                    "script": "build:search-index"
                 }
             ]
         },
@@ -86,9 +88,6 @@
                 },
                 {
                     "script": "build:postcss"
-                },
-                {
-                    "script": "build:search-index"
                 }
             ]
         },
@@ -139,11 +138,25 @@
             "dependencies": [
                 {
                     "script": "build:assets"
+                },
+                {
+                    "script": "build:search-index"
                 }
             ]
         },
         "build:search-index": {
             "command": "node scripts/build-search-index.js",
+            "files": [
+                "../../packages/*/*.md",
+                "../../tools/*/*.md",
+                "./**/scripts/build-search-index.js"
+            ],
+            "output": [
+                "dist/searchIndex.json"
+            ]
+        },
+        "build:search-index:prod": {
+            "command": "SWC_DIR=spectrum-web-components node scripts/build-search-index.js",
             "files": [
                 "../../packages/*/*.md",
                 "../../tools/*/*.md",
@@ -197,6 +210,9 @@
                 {
                     "script": "build:assets",
                     "cascade": false
+                },
+                {
+                    "script": "build:search-index"
                 }
             ]
         }

@@ -25,7 +25,6 @@ import Terser from 'terser';
 const { postCSSPlugins } = require('../../scripts/css-processing.cjs');
 import postCSSPrefixwrap from 'postcss-prefixwrap';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
 
 const stringReplaceHtml = (source) => {
     return source
@@ -69,12 +68,6 @@ module.exports = async () => {
     mpaConfig.plugins.unshift(
         nodeResolve({
             exportConditions: ['browser', 'import', mode],
-        })
-    );
-    mpaConfig.plugins.push(
-        replace({
-            include: '**/search-index.ts',
-            'process.env.SWC_DIR': process.env.SWC_DIR,
         })
     );
     mpaConfig.plugins.push(

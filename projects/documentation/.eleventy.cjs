@@ -77,22 +77,25 @@ module.exports = function (eleventyConfig) {
         },
     });
 
-    eleventyConfig.addTransform("transform-postHTML", async function(content, outputPath) {
-        const posthtml = await import('posthtml').then(module => module.default);
-        const spectrumMarkdown = await import('./src/utils/posthtml-spectrum-docs-markdown.js').then(module => module.default);
-        if( outputPath && outputPath.endsWith(".html") ) {
-            return posthtml()
-                .use(spectrumMarkdown())
-                .process(content, { sync: true })
-                .html
+    eleventyConfig.addTransform(
+        'transform-postHTML',
+        async function (content, outputPath) {
+            const posthtml = await import('posthtml').then(
+                (module) => module.default
+            );
+            const spectrumMarkdown = await import(
+                './src/utils/posthtml-spectrum-docs-markdown.js'
+            ).then((module) => module.default);
+            if (outputPath && outputPath.endsWith('.html')) {
+                return posthtml()
+                    .use(spectrumMarkdown())
+                    .process(content, { sync: true }).html;
+            }
+            return content; // no change done.
         }
-        return content; // no change done.
-    });
-
-    eleventyConfig.setLibrary(
-        'md',
-        markdown
     );
+
+    eleventyConfig.setLibrary('md', markdown);
 
     eleventyConfig.addCollection('guides', (collection) => {
         return [...collection.getFilteredByGlob('./content/guides/*.md')];

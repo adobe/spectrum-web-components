@@ -10,13 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import postHTMLSpectrumTypeography from './posthtml-spectrum-typography.js';
-export { postHTMLSpectrumTypeography };
+import postHTMLSpectrumTypography from './posthtml-spectrum-typography.js';
+export { postHTMLSpectrumTypography };
 
 // Add a few doc-specific transforms for code examples
 
 export default () =>
-    postHTMLSpectrumTypeography({
+    postHTMLSpectrumTypography({
         customTransforms: [
             {
                 // take `<pre>` tags where their first child is a `<code>` tag,

@@ -13,8 +13,6 @@ governing permissions and limitations under the License.
 import { build } from 'esbuild';
 import { litCssPlugin } from 'esbuild-plugin-lit-css';
 import postcss from 'postcss';
-// import { postCSSPlugins } from '../../../scripts/css-processing.cjs';
-import purgecss from '@fullhuman/postcss-purgecss';
 import postcssImport from 'postcss-import';
 import postcssEnv from 'postcss-preset-env';
 import cssnano from 'cssnano';

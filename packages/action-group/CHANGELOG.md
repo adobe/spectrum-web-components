@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.12.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.12.3...@spectrum-web-components/action-group@0.12.4) (2022-12-08)
 
-**Note:** Version bump only for package @spectrum-web-components/action-group
+**Note:** Version bum nly for package @spectrum-web-components/action-grou
 
 ## [0.12.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.12.2...@spectrum-web-components/action-group@0.12.3) (2022-11-21)
 

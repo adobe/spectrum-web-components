@@ -37,8 +37,6 @@ function label(name: string): string {
     );
 }
 
-const BASE_URL = process.env.SWC_DIR;
-
 export async function search(value: string): Promise<ResultGroup[]> {
     if (!index) {
         const searchIndexURL = new URL('./searchIndex.json', import.meta.url)
@@ -74,7 +72,7 @@ export async function search(value: string): Promise<ResultGroup[]> {
             catagoryData.results.push({
                 name,
                 label: label(name),
-                url: BASE_URL + item.ref,
+                url: item.ref,
             });
         }
     }
