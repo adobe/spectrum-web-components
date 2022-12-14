@@ -140,7 +140,7 @@
                     "script": "build:assets"
                 },
                 {
-                    "script": "build:search-index"
+                    "script": "build:search-index:prod"
                 }
             ]
         },
