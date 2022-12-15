@@ -433,6 +433,9 @@ export class ActiveOverlay extends SpectrumElement {
         await (document.fonts ? document.fonts.ready : Promise.resolve());
 
         function roundByDPR(num: number): number {
+            if (num === 0) {
+                return num;
+            }
             const dpr = window.devicePixelRatio || 1;
             return Math.round(num * dpr) / dpr || -10000;
         }
