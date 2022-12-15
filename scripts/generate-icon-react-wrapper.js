@@ -31,7 +31,7 @@ const prettierConfig = yaml.load(
  * Code generation method
  */
 const index = (component, id, iconElementName, iconPkg) => {
-    const wrapperComponentName = `${component}`;
+    const componentAliasName = `Sp${component}`;
     return `/*
 Copyright 2022 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -47,10 +47,12 @@ governing permissions and limitations under the License.
 import { createComponent } from '@lit-labs/react';
 import * as React from 'react';
   
-import { ${component} as Sp${component} } from '@spectrum-web-components/${iconPkg}/src/elements/${id}.js';
+import { ${component} as ${componentAliasName} } from '@spectrum-web-components/${iconPkg}/src/elements/${id}.js';
 import '@spectrum-web-components/${iconPkg}/icons/${iconElementName}.js';
   
-export const ${wrapperComponentName} = createComponent({ react: React, tagName: '${iconElementName}', elementClass: Sp${component}, events: {}, displayName: '${wrapperComponentName}' });
+export const ${component} = createComponent({ react: React, tagName: '${iconElementName}', elementClass: ${componentAliasName}, events: {}, displayName: '${component}' });
+
+export type ${component}Type = ${componentAliasName};
 `;
 };
 
