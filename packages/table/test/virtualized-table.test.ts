@@ -38,6 +38,8 @@ import { virtualized } from '../stories/table-virtualized.stories.js';
 import { makeItems, renderItem } from '../stories/index.js';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
+import { virtualizerRef } from '@lit-labs/virtualizer/virtualize.js';
+import { Virtualizer } from '@lit-labs/virtualizer/Virtualizer.js';
 
 let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
 before(function () {
@@ -351,7 +353,10 @@ describe('Virtualized Table', () => {
                 </sp-table-head>
             </sp-table>
         `);
-        await nextFrame();
+        const body = el.querySelector('sp-table-body') as unknown as {
+            [virtualizerRef]: Virtualizer;
+        };
+        await body[virtualizerRef].layoutComplete;
 
         expect(el.selected).to.deep.equal(['1', '47']);
 

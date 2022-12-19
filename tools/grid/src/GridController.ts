@@ -16,7 +16,7 @@ import { RovingTabindexController } from '@spectrum-web-components/reactive-cont
 import {
     RangeChangedEvent,
     VisibilityChangedEvent,
-} from '@lit-labs/virtualizer/Virtualizer.js';
+} from '@lit-labs/virtualizer/events.js';
 import { Grid } from './Grid.js';
 
 interface ItemSize {

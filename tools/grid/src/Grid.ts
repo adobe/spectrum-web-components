@@ -56,25 +56,6 @@ export class Grid extends LitVirtualizer {
         height: 200,
     };
 
-    /* c8 ignore next 3 */
-    override get renderItem(): (
-        item: unknown,
-        index: number
-    ) => TemplateResult {
-        return super.renderItem;
-    }
-
-    override set renderItem(
-        fn: (item: unknown, index: number, selected: boolean) => TemplateResult
-    ) {
-        super.renderItem = (item, index: number): TemplateResult => {
-            const selected = this.selected.includes(
-                item as Record<string, unknown>
-            );
-            return fn(item, index, selected);
-        };
-    }
-
     @property({ type: Array })
     public selected: Record<string, unknown>[] = [];
 
@@ -116,7 +97,7 @@ export class Grid extends LitVirtualizer {
         return renderRoot as unknown as this;
     }
 
-    public override render(): TemplateResult {
+    public override render(): TemplateResult<1> {
         return html`
             <slot></slot>
         `;
@@ -150,6 +131,19 @@ export class Grid extends LitVirtualizer {
                 gap: this.gap,
                 padding: this.padding || this.gap,
             });
+        }
+        if (changes.has('renderItem')) {
+            const fn = this.renderItem as unknown as (
+                item: unknown,
+                index: number,
+                selected: boolean
+            ) => TemplateResult;
+            this.renderItem = (item, index: number): TemplateResult => {
+                const selected = this.selected.includes(
+                    item as Record<string, unknown>
+                );
+                return fn(item, index, selected);
+            };
         }
 
         if (this.isConnected) {
