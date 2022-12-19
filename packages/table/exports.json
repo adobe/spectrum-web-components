@@ -1,5 +1,6 @@
 {
     "./src/*": "./src/*.js",
+    "./elements.js": "./elements.js",
     "./sp-table-body.js": "./sp-table-body.js",
     "./sp-table-cell.js": "./sp-table-cell.js",
     "./sp-table-checkbox-cell.js": "./sp-table-checkbox-cell.js",
