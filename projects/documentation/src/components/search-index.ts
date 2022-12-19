@@ -56,10 +56,14 @@ export async function search(value: string): Promise<ResultGroup[]> {
     const search = index.search(value);
     for (const item of search) {
         const parts = item.ref.split('/');
-        if (parts.length < 3) continue;
-
         const name = parts.pop() as string;
-        const category = parts.pop() as string;
+        let category = '';
+        if (parts.length < 3) {
+            category = 'Guides';
+        } else {
+            category = parts.pop() as string;
+        }
+
         if (!collatedResults.has(category)) {
             collatedResults.set(category, {
                 maxScore: 0,

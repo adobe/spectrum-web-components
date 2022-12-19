@@ -18,14 +18,12 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const projectDir = path.resolve(__dirname, '..', '..', '..');
-const indexDir = path.resolve(
-    projectDir,
-    process.env.SWC_DIR
-        ? 'projects/documentation/dist'
-        : 'projects/documentation/_site/src/'
-);
-const indexPath = path.resolve(indexDir, 'searchIndex.json');
-fs.mkdirSync(indexDir, { recursive: true });
+const localDir = path.resolve(projectDir, 'projects/documentation/_site/src/');
+const buildDir = path.resolve(projectDir, 'projects/documentation/dist');
+const localIndexPath = path.resolve(localDir, 'searchIndex.json');
+const buildIndexPath = path.resolve(buildDir, 'searchIndex.json');
+fs.mkdirSync(localDir, { recursive: true });
+fs.mkdirSync(buildDir, { recursive: true });
 
 function nameToTitle(name) {
     return name.replace(/((^|\-)(\w))/gm, (match, p1, p2, p3) => {
@@ -99,14 +97,15 @@ async function main() {
         }
     )) {
         const guideName = /\/([^/]+).md$/.exec(path)[1];
+        const guideDir = path.split('/').at(-2);
         const content = await fs.readFile(path, { encoding: 'utf8' });
         const body = content.replace(/```((.|\s)*?)```/g, '');
         documents.push({
             title: nameToTitle(guideName),
             body,
-            url: `/${
-                process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''
-            }guides/${guideName}`,
+            url: `/${process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''}${
+                guideDir !== 'content' ? `${guideDir}/` : ''
+            }${guideName}`,
         });
     }
 
@@ -120,7 +119,8 @@ async function main() {
         }
     });
 
-    await fs.writeFile(indexPath, JSON.stringify(index));
+    await fs.writeFile(localIndexPath, JSON.stringify(index));
+    await fs.writeFile(buildIndexPath, JSON.stringify(index));
 }
 
 main();
