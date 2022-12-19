@@ -213,7 +213,8 @@
                     "cascade": false
                 },
                 {
-                    "script": "build:search-index"
+                    "script": "build:search-index",
+                    "cascade": false
                 }
             ]
         }
