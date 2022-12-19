@@ -18,7 +18,7 @@
         "@spectrum-web-components/menu": "^0.16.9",
         "@spectrum-web-components/picker": "^0.13.9",
         "@spectrum-web-components/styles": "^0.22.0",
-        "lit": "^2.2.0"
+        "lit": "^2.5.0"
     },
     "devDependencies": {
         "clean-webpack-plugin": "^4.0.0",

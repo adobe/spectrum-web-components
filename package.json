@@ -149,7 +149,7 @@
         "husky": "^8.0.1",
         "latest-version": "^7.0.0",
         "lerna": "^6.0.1",
-        "lit": "^2.2.0",
+        "lit": "^2.5.0",
         "lit-analyzer": "^1.2.1",
         "mocha-junit-reporter": "^2.0.2",
         "netlify-cli": "^12.1.0",

@@ -32,7 +32,9 @@ import type { TableRow } from './TableRow.js';
 import {
     virtualize,
     VirtualizeDirectiveConfig,
+    virtualizerRef,
 } from '@lit-labs/virtualizer/virtualize.js';
+import { Virtualizer } from '@lit-labs/virtualizer/Virtualizer.js';
 
 interface Range {
     first: number;
@@ -414,8 +416,14 @@ export class Table extends SizedMixin(SpectrumElement, {
     }
 
     public scrollToIndex(index?: number): void {
-        if (index) {
-            this.renderVirtualizedItems(index);
+        if (index && !!this.tableBody) {
+            const virtualizerParent = this.tableBody as unknown as {
+                [virtualizerRef]: Virtualizer;
+            };
+            const item = virtualizerParent[virtualizerRef].element(index);
+            if (item) {
+                item.scrollIntoView();
+            }
         }
     }
 
@@ -445,7 +453,7 @@ export class Table extends SizedMixin(SpectrumElement, {
         }
     }
 
-    protected renderVirtualizedItems(index?: number): void {
+    protected renderVirtualizedItems(): void {
         // Rendering updates into the table while disconnected can
         // cause runaway event binding in ancestor elements.
         if (!this.isConnected) return;
@@ -472,11 +480,6 @@ export class Table extends SizedMixin(SpectrumElement, {
             renderItem: this.renderItem,
             scroller: this.scroller,
         };
-        if (index) {
-            config.scrollToIndex = {
-                index,
-            };
-        }
         render(
             html`
                 ${virtualize(config)}
