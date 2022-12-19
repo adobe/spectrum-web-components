@@ -36,12 +36,9 @@ async function main() {
     const documents = [];
 
     // Components
-    for await (const path of globby.stream(
-        `${projectDir}/(packages|tools)/**/*.md`,
-        {
-            ignore: ['**/node_modules/**'],
-        }
-    )) {
+    for await (const path of globby.stream(`${projectDir}/packages/**/*.md`, {
+        ignore: ['**/node_modules/**'],
+    })) {
         let componentName = /([^/]+)\/([a-zA-Z-]+)\.md$/.exec(path)[1];
         const fileName = /([a-zA-Z-]+)\.md$/.exec(path)[0];
         if (fileName === 'CHANGELOG.md') {
@@ -58,6 +55,29 @@ async function main() {
             url: `/${
                 process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''
             }components/${componentName}`,
+        });
+    }
+
+    // Tools
+    for await (const path of globby.stream(`${projectDir}/tools/**/*.md`, {
+        ignore: ['**/node_modules/**'],
+    })) {
+        let componentName = /([^/]+)\/([a-zA-Z-]+)\.md$/.exec(path)[1];
+        const fileName = /([a-zA-Z-]+)\.md$/.exec(path)[0];
+        if (fileName === 'CHANGELOG.md') {
+            continue;
+        }
+        if (fileName !== 'README.md') {
+            componentName = fileName.replace('.md', '');
+        }
+        const content = await fs.readFile(path, { encoding: 'utf8' });
+        const body = content.replace(/```((.|\s)*?)```/g, '');
+        documents.push({
+            title: nameToTitle(componentName),
+            body,
+            url: `/${
+                process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''
+            }tools/${componentName}`,
         });
     }
 
