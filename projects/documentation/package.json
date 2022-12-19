@@ -150,7 +150,7 @@
             "files": [
                 "../../packages/*/*.md",
                 "../../tools/*/*.md",
-                "./**/scripts/build-search-index.js"
+                "./scripts/build-search-index.js"
             ],
             "output": [
                 "dist/searchIndex.json"
@@ -161,7 +161,7 @@
             "files": [
                 "../../packages/*/*.md",
                 "../../tools/*/*.md",
-                "scripts/build-search-index.js"
+                "./scripts/build-search-index.js"
             ],
             "output": [
                 "dist/searchIndex.json"
