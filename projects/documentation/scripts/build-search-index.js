@@ -18,7 +18,12 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const projectDir = path.resolve(__dirname, '..', '..', '..');
-const indexDir = path.resolve(projectDir, 'projects/documentation/dist');
+const indexDir = path.resolve(
+    projectDir,
+    process.env.SWC_DIR
+        ? 'projects/documentation/dist'
+        : 'projects/documentation/_site/src/'
+);
 const indexPath = path.resolve(indexDir, 'searchIndex.json');
 fs.mkdirSync(indexDir, { recursive: true });
 
@@ -83,7 +88,12 @@ async function main() {
 
     // Guides
     for await (const path of globby.stream(
-        `${projectDir}/documentation/guides/*.md`,
+        [
+            `${projectDir}/projects/documentation/content/guides/*.md`,
+            `${projectDir}/projects/documentation/content/migrations/*.md`,
+            `${projectDir}/projects/documentation/content/getting-started.md`,
+            `${projectDir}/projects/documentation/content/dev-mode.md`,
+        ],
         {
             ignore: ['**/node_modules/**'],
         }
