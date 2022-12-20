@@ -30,6 +30,7 @@ const postCSSPlugins = (resourcePath, toTS) => {
                 'nesting-rules': true,
             },
         }),
+        require('postcss-focus-visible')({ disablePolyfillReadyClass: true }),
         // minify the css with cssnano presets
         require('cssnano')({
             preset: [
@@ -37,11 +38,9 @@ const postCSSPlugins = (resourcePath, toTS) => {
                 {
                     svgo: false,
                     discardComments: !!toTS,
-                    uniqueSelectors: false,
                 },
             ],
         }),
-        require('postcss-focus-visible')(),
     ];
 };
 
