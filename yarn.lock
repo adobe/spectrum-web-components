@@ -4123,10 +4123,10 @@
     "@sindresorhus/transliterate" "^0.1.1"
     escape-string-regexp "^4.0.0"
 
-"@sindresorhus/slugify@^2.0.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@sindresorhus/slugify/-/slugify-2.1.0.tgz#1e252117008cd1121e4cdea9fc67767dd1653d25"
-  integrity sha512-gU3Gdm/V167BmUwIn8APHZ3SeeRVRUSOdXxnt7Q/JkUHLXaaTA/prYmoRumwsSitJZWUDYMzDWdWgrOdvE8IRQ==
+"@sindresorhus/slugify@^2.0.0", "@sindresorhus/slugify@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@sindresorhus/slugify/-/slugify-2.1.1.tgz#3076b0e95dd2cd05e5da2dd8efa38fe153a0cfe0"
+  integrity sha512-XokPHZ+q6FtQGEi1hnfvARVJJVPEhwHQTPHPPuNHaN6zcHjzYNynhhHMopa1wNPqLAFOwpsbintunEqWecXJMg==
   dependencies:
     "@sindresorhus/transliterate" "^1.0.0"
     escape-string-regexp "^5.0.0"
