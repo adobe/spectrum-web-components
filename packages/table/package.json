@@ -64,6 +64,10 @@
         "./src/table-head.css.js": "./src/table-head.css.js",
         "./src/table-row.css.js": "./src/table-row.css.js",
         "./src/table.css.js": "./src/table.css.js",
+        "./elements.js": {
+            "development": "./elements.dev.js",
+            "default": "./elements.js"
+        },
         "./sp-table-body.js": {
             "development": "./sp-table-body.dev.js",
             "default": "./sp-table-body.js"
