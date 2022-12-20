@@ -131,8 +131,8 @@ governing permissions and limitations under the License.
     width: 100%;
     z-index: 1;
 }
-.track,
-.fill {
+.fill,
+.track {
     height: var(--spectrum-progressbar-height);
 }
 .fill {

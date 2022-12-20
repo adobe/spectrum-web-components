@@ -872,8 +872,8 @@ governing permissions and limitations under the License.
         var(--spectrum-global-dimension-size-600)
     ); /* .spectrum-PickerButton.spectrum-PickerButton--uiicononly.spectrum-PickerButton--sizeXL .spectrum-PickerButton-fill */
 }
-.root.uiicononly .spectrum-PickerButton-label,
-.root.uiicononly .spectrum-PickerButton-icon {
+.root.uiicononly .spectrum-PickerButton-icon,
+.root.uiicononly .spectrum-PickerButton-label {
     display: none; /* .spectrum-PickerButton.spectrum-PickerButton--uiicononly .spectrum-PickerButton-icon */
 }
 .root.uiicononly .spectrum-PickerButton-UIIcon {

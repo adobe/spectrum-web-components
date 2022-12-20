@@ -219,8 +219,8 @@ governing permissions and limitations under the License.
     );
     margin-inline-start: 0;
 }
-.type,
-.content {
+.content,
+.type {
     color: var(
         --highcontrast-toast-text-and-icon-color,
         var(

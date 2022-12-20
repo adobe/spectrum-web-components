@@ -319,7 +319,6 @@ governing permissions and limitations under the License.
         --spectrum-clearbutton-fill-uiicon-color-key-focus
     ); /* .spectrum-ClearButton.focus-ring */
 }
-:host([disabled]),
 :host([disabled]) {
     color: var(
         --spectrum-clearbutton-fill-uiicon-color-disabled
@@ -346,7 +345,6 @@ governing permissions and limitations under the License.
         --spectrum-clearbutton-fill-background-color-key-focus
     ); /* .spectrum-ClearButton.focus-ring .spectrum-ClearButton-fill */
 }
-:host([disabled]) .fill,
 :host([disabled]) .fill {
     background-color: var(
         --spectrum-clearbutton-fill-background-color-disabled
@@ -485,7 +483,6 @@ governing permissions and limitations under the License.
         var(--spectrum-global-color-static-white)
     );
 }
-:host([variant='overBackground'][disabled]),
 :host([variant='overBackground'][disabled]) {
     background-color: var(
         --spectrum-button-m-primary-outline-white-texticon-background-color-disabled,

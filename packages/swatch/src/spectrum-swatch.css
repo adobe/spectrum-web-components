@@ -245,7 +245,6 @@ governing permissions and limitations under the License.
         -25deg
     ); /* .spectrum-Swatch.is-nothing.spectrum-Swatch--rectangle .spectrum-Swatch-fill:after */
 }
-:host([disabled]) .disabledIcon,
 :host([disabled]) .disabledIcon {
     visibility: visible; /* .spectrum-Swatch[disabled] .spectrum-Swatch-disabledIcon,
    * .spectrum-Swatch.is-disabled .spectrum-Swatch-disabledIcon */
@@ -419,8 +418,8 @@ governing permissions and limitations under the License.
         transparent
     ); /* .spectrum-Swatch-mixedValueIcon */
 }
-.mixedValueIcon,
-.disabledIcon {
+.disabledIcon,
+.mixedValueIcon {
     pointer-events: none;
     visibility: hidden;
 }
