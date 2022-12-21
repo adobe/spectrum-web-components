@@ -62,6 +62,8 @@ window.__swc_hack_knobs__ = window.__swc_hack_knobs__ || {
 };
 
 const reduceMotionProperties = css`
+    --spectrum-animation-duration-100: 0ms;
+    --spectrum-animation-duration-200: 0ms;
     --spectrum-global-animation-duration-100: 0ms;
     --spectrum-global-animation-duration-200: 0ms;
     --spectrum-global-animation-duration-300: 0ms;

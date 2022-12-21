@@ -807,6 +807,8 @@ export const complexModal = (): TemplateResult => {
                 place-content: center;
             }
             active-overlay > * {
+                --spectrum-animation-duration-100: 0ms;
+                --spectrum-animation-duration-200: 0ms;
                 --spectrum-global-animation-duration-100: 0ms;
                 --spectrum-global-animation-duration-200: 0ms;
                 --spectrum-global-animation-duration-300: 0ms;
