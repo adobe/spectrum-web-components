@@ -497,6 +497,7 @@ export class ActiveOverlay extends SpectrumElement {
             {
                 placement: this.placement,
                 middleware,
+                strategy: 'fixed',
             }
         );
 

@@ -36,7 +36,7 @@ governing permissions and limitations under the License.
 
 :host {
     z-index: 1000;
-    position: absolute;
+    position: fixed;
     display: inline-block;
     pointer-events: none;
     top: -9999em;
