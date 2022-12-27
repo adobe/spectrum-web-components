@@ -377,7 +377,7 @@ describe('Menu', () => {
         const selectedItem = el.querySelector('.selected') as MenuItem;
 
         await elementUpdated(el);
-
+        await nextFrame();
         el.focus();
 
         expect(document.activeElement).to.equal(el);

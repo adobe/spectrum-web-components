@@ -14,6 +14,7 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
@@ -24,8 +25,8 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 
-describe('Overlay Trigger - Lifecycle Methods', () => {
-    it('calls the overlay lifecycle (willOpen/Close)', async () => {
+describe('Overlay Trigger - accessible hover content management', () => {
+    it('accessibly describes trigger content with hover content', async () => {
         const el = await fixture<OverlayTrigger>(html`
             <overlay-trigger placement="right-start">
                 <sp-action-button slot="trigger">
@@ -40,13 +41,13 @@ describe('Overlay Trigger - Lifecycle Methods', () => {
         await elementUpdated(el);
 
         expect(el.open).to.be.undefined;
-        expect(el.childNodes.length).to.equal(5);
-        const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
         type DescribedNode = {
             name: string;
             description: string;
         };
-        let snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
+        const snapshot = (await a11ySnapshot(
+            {}
+        )) as unknown as DescribedNode & {
             children: DescribedNode[];
         };
         expect(
@@ -58,40 +59,8 @@ describe('Overlay Trigger - Lifecycle Methods', () => {
             ),
             '`name`ed with no `description`'
         );
-        const opened = oneEvent(el, 'sp-opened');
-        trigger.dispatchEvent(
-            new FocusEvent('focusin', { bubbles: true, composed: true })
-        );
-        await opened;
-
-        expect(el.open).to.equal('hover');
-        snapshot = (await a11ySnapshot({})) as unknown as DescribedNode & {
-            children: DescribedNode[];
-        };
-
-        expect(el.childNodes.length).to.equal(6);
-        expect(
-            findAccessibilityNode<DescribedNode>(
-                snapshot,
-                (node) =>
-                    node.name === 'Button with Tooltip' &&
-                    node.description ===
-                        'Described by this content on focus/hover.'
-            ),
-            '`name`ed with `description`'
-        );
-
-        const closed = oneEvent(el, 'sp-closed');
-        trigger.dispatchEvent(
-            new FocusEvent('focusout', { bubbles: true, composed: true })
-        );
-        await closed;
-        await elementUpdated(el);
-
-        await waitUntil(() => el.open === null);
-        expect(el.childNodes.length).to.equal(5);
     });
-    it('calls the overlay lifecycle (willOpen/openCanceled)', async () => {
+    xit('calls the overlay lifecycle (willOpen/openCanceled)', async () => {
         const el = await fixture<OverlayTrigger>(html`
             <overlay-trigger placement="right-start">
                 <sp-action-button slot="trigger">
@@ -139,35 +108,21 @@ describe('Overlay Trigger - Lifecycle Methods', () => {
         `);
 
         const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
-        const tooltip = el.querySelector('sp-tooltip') as Tooltip;
 
         await elementUpdated(el);
 
-        expect(trigger.getAttribute('aria-describedby')).to.equal('descriptor');
-        expect(el.open).to.be.undefined;
-        expect(el.childNodes.length, 'always').to.equal(5);
-
-        const opened = oneEvent(el, 'sp-opened');
-        trigger.dispatchEvent(
-            new FocusEvent('focusin', { bubbles: true, composed: true })
-        );
-        await opened;
-
         expect(trigger.getAttribute('aria-describedby')).to.equal(
-            `descriptor ${
-                (tooltip as unknown as { _tooltipId: string })._tooltipId
-            }`
+            `descriptor hover-overlay`
         );
 
-        const closed = oneEvent(el, 'sp-closed');
-        trigger.dispatchEvent(
-            new FocusEvent('focusout', { bubbles: true, composed: true })
-        );
-        await closed;
+        trigger.remove();
+
+        // slot change timing
+        await nextFrame();
 
         expect(trigger.getAttribute('aria-describedby')).to.equal('descriptor');
     });
-    it('adds and removes `aria-describedby` attribute', async () => {
+    it('applies `aria-describedby` attribute', async () => {
         const el = await fixture<OverlayTrigger>(html`
             <overlay-trigger placement="right-start">
                 <sp-action-button slot="trigger">
@@ -180,31 +135,19 @@ describe('Overlay Trigger - Lifecycle Methods', () => {
         `);
 
         const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
-        const tooltip = el.querySelector('sp-tooltip') as Tooltip;
 
         await elementUpdated(el);
 
-        expect(trigger.hasAttribute('aria-describedby')).to.be.false;
-        expect(el.open).to.be.undefined;
-        expect(el.childNodes.length, 'always').to.equal(5);
-
-        const opened = oneEvent(el, 'sp-opened');
-        trigger.dispatchEvent(
-            new FocusEvent('focusin', { bubbles: true, composed: true })
-        );
-        await opened;
-
         expect(trigger.getAttribute('aria-describedby')).to.equal(
-            `${(tooltip as unknown as { _tooltipId: string })._tooltipId}`
+            'hover-overlay'
         );
 
-        const closed = oneEvent(el, 'sp-closed');
-        trigger.dispatchEvent(
-            new FocusEvent('focusout', { bubbles: true, composed: true })
-        );
-        await closed;
+        trigger.remove();
 
-        expect(trigger.hasAttribute('aria-describedby')).to.be.false;
+        // slot change timing
+        await nextFrame();
+
+        expect(trigger.getAttribute('aria-describedby')).to.be.null;
     });
     it('does not duplicate `aria-describedby` attribute', async () => {
         const el = await fixture<OverlayTrigger>(html`

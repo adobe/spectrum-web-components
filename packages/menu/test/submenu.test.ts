@@ -32,7 +32,6 @@ import { ActionMenu } from '@spectrum-web-components/action-menu';
 import '@spectrum-web-components/action-menu/sp-action-menu.js';
 import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
-import { ActiveOverlay } from '@spectrum-web-components/overlay';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult,
@@ -120,9 +119,10 @@ describe('Submenu', () => {
         await closed;
         await nextFrame();
 
-        expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
-            .true;
-        expect(submenuChanged.calledWith('Two'), 'submenu changed').to.be.true;
+        expect(submenuChanged.withArgs('Two').calledOnce, 'submenu changed').to
+            .be.true;
+        expect(rootChanged.withArgs('Has submenu').calledOnce, 'root changed')
+            .to.be.true;
     });
     it('closes deep tree on selection', async () => {
         const rootChanged = spy();
@@ -267,6 +267,7 @@ describe('Submenu', () => {
             const el = await styledFixture<Menu>(
                 html`
                     <sp-menu
+                        id="base"
                         @change=${(event: Event & { target: Menu }) => {
                             rootChanged(event.target.value);
                         }}
@@ -274,6 +275,7 @@ describe('Submenu', () => {
                         <sp-menu-item class="root">
                             Has submenu
                             <sp-menu
+                                id="sub"
                                 slot="submenu"
                                 @change=${(event: Event & { target: Menu }) => {
                                     submenuChanged(event.target.value);
@@ -297,6 +299,7 @@ describe('Submenu', () => {
 
             await elementUpdated(el);
             const rootItem = el.querySelector('.root') as MenuItem;
+            const submenu = el.querySelector('[slot="submenu"]') as Menu;
             expect(rootItem.open).to.be.false;
             el.focus();
             await elementUpdated(el);
@@ -308,6 +311,10 @@ describe('Submenu', () => {
             await opened;
 
             expect(rootItem.open).to.be.true;
+            expect(
+                submenu === document.activeElement,
+                `${document.activeElement?.id}`
+            ).to.be.true;
 
             let closed = oneEvent(rootItem, 'sp-closed');
             sendKeys({
@@ -316,6 +323,10 @@ describe('Submenu', () => {
             await closed;
 
             expect(rootItem.open).to.be.false;
+            expect(
+                el === document.activeElement,
+                `${document.activeElement?.id}`
+            ).to.be.true;
 
             opened = oneEvent(rootItem, 'sp-opened');
             sendKeys({
@@ -334,11 +345,16 @@ describe('Submenu', () => {
                 press: 'Enter',
             });
             await closed;
+            await elementUpdated(el);
+            await nextFrame();
 
-            expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
-                .true;
             expect(submenuChanged.calledWith('Two'), 'submenu changed').to.be
                 .true;
+            expect(rootChanged.called, 'root has changed').to.be.true;
+            expect(
+                rootChanged.calledWith('Has submenu'),
+                'root specifically changed'
+            ).to.be.true;
         });
     });
     it('closes on `pointerleave`', async () => {
@@ -658,23 +674,17 @@ describe('Submenu', () => {
         await opened;
         expect(el.open).to.be.true;
 
-        let activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(1);
         opened = oneEvent(rootMenu1, 'sp-opened');
         rootMenu1.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(2);
 
         opened = oneEvent(childMenu2, 'sp-opened');
         childMenu2.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(3);
 
         const overlaysManaged = Promise.all([
             oneEvent(childMenu2, 'sp-closed'),
@@ -685,8 +695,6 @@ describe('Submenu', () => {
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await overlaysManaged;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(2);
     });
 
     it('closes back to the first overlay without a `root` when clicking away', async () => {
@@ -739,33 +747,31 @@ describe('Submenu', () => {
         await opened;
         expect(el.open).to.be.true;
 
-        let activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(1);
         opened = oneEvent(rootMenu1, 'sp-opened');
         rootMenu1.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(2);
 
         opened = oneEvent(childMenu2, 'sp-opened');
         childMenu2.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(3);
-
         const closed = Promise.all([
             oneEvent(childMenu2, 'sp-closed'),
             oneEvent(rootMenu1, 'sp-closed'),
             oneEvent(el, 'sp-closed'),
         ]);
-        document.body.click();
+        sendMouse({
+            steps: [
+                {
+                    type: 'click',
+                    position: [600, 5],
+                },
+            ],
+        });
         await closed;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(0);
     });
 
     it('closes decendent menus when Menu Item in ancestor without a submenu is pointerentered', async () => {
@@ -808,23 +814,17 @@ describe('Submenu', () => {
         await opened;
         expect(el.open).to.be.true;
 
-        let activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(1);
         opened = oneEvent(rootMenu, 'sp-opened');
         rootMenu.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(2);
 
         const closed = oneEvent(rootMenu, 'sp-closed');
         noSubmenu.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await closed;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(1);
     });
 
     it('closes decendent menus when Menu Item in ancestor is clicked', async () => {
@@ -880,23 +880,17 @@ describe('Submenu', () => {
         await opened;
         expect(el.open).to.be.true;
 
-        let activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(1);
         opened = oneEvent(rootMenu1, 'sp-opened');
         rootMenu1.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(2);
 
         opened = oneEvent(childMenu2, 'sp-opened');
         childMenu2.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(3);
 
         const closed = Promise.all([
             oneEvent(childMenu2, 'sp-closed'),
@@ -905,8 +899,6 @@ describe('Submenu', () => {
         ]);
         ancestorItem.click();
         await closed;
-        activeOverlays = document.querySelectorAll('active-overlay');
-        expect(activeOverlays.length).to.equal(0);
     });
     it('cleans up submenus that close before they are "open"', async () => {
         await sendMouse({
@@ -960,7 +952,6 @@ describe('Submenu', () => {
 
         const rootItemBoundingRect1 = rootItem1.getBoundingClientRect();
         const rootItemBoundingRect2 = rootItem2.getBoundingClientRect();
-        let activeOverlay!: ActiveOverlay | null;
 
         // Open the first submenu
         await sendMouse({
@@ -1034,16 +1025,8 @@ describe('Submenu', () => {
                 },
             ],
         });
-        activeOverlay = document.querySelector(
-            'active-overlay'
-        ) as ActiveOverlay;
-        expect(activeOverlay).to.not.be.null;
         await closed;
 
-        activeOverlay = document.querySelector(
-            'active-overlay'
-        ) as ActiveOverlay;
-        expect(activeOverlay).to.be.null;
         expect(rootItem1.open, 'finally closed 1').to.be.false;
         expect(rootItem2.open, 'finally closed 2').to.be.false;
     });

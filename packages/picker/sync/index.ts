@@ -17,11 +17,6 @@ import {
     TriggerInteractions,
 } from '@spectrum-web-components/overlay';
 
-Picker.openOverlay = async (
-    target: HTMLElement,
-    interaction: TriggerInteractions,
-    content: HTMLElement,
-    options: OverlayOptions
-): Promise<() => void> => {
-    return await Overlay.open(target, interaction, content, options);
-};
+export { Picker, Overlay };
+export type {OverlayOptions,
+    TriggerInteractions, }

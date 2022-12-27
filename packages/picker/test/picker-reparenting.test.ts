@@ -20,6 +20,7 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     oneEvent,
 } from '@open-wc/testing';
 
@@ -70,13 +71,13 @@ describe('Reparented Picker', () => {
         expect(picker.getAttribute('dir')).to.equal('ltr');
 
         after.append(picker);
-        await elementUpdated(picker);
+        await nextFrame();
 
         expect(picker.dir).to.equal('ltr');
         expect(picker.getAttribute('dir')).to.equal('ltr');
 
         before.append(picker);
-        await elementUpdated(picker);
+        await nextFrame();
 
         expect(picker.dir).to.equal('ltr');
         expect(picker.getAttribute('dir')).to.equal('ltr');
@@ -92,30 +93,37 @@ describe('Reparented Picker', () => {
         picker.click();
         await opened;
         await elementUpdated(picker);
+        expect(picker.open).to.be.true;
         let closed = oneEvent(picker, 'sp-closed');
         item2.click();
         await closed;
         await elementUpdated(picker);
+        await nextFrame();
 
         expect(picker.value).to.equal('2');
+        expect(picker.open).to.be.false;
 
         after.append(picker);
         opened = oneEvent(picker, 'sp-opened');
         picker.click();
         await opened;
         await elementUpdated(picker);
+        expect(picker.open).to.be.true;
         closed = oneEvent(picker, 'sp-closed');
         await elementUpdated(item3);
         item3.click();
         await closed;
         await elementUpdated(picker);
+        await nextFrame();
 
         expect(picker.value).to.equal('3');
+        expect(picker.open).to.be.false;
 
         opened = oneEvent(picker, 'sp-opened');
         picker.click();
         await opened;
         await elementUpdated(picker);
+        expect(picker.open).to.be.true;
         expect(picker.value).to.equal('3');
         closed = oneEvent(picker, 'sp-closed');
         before.append(picker);

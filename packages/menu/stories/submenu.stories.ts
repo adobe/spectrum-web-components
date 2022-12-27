@@ -43,49 +43,55 @@ class SubmenuReady extends HTMLElement {
         });
     }
 
+    menu!: ActionMenu;
+    submenu!: MenuItem;
+    submenuChild!: MenuItem;
+
     async setup(): Promise<void> {
         await nextFrame();
 
-        const menu = document.querySelector(`sp-action-menu`) as ActionMenu;
-        menu.addEventListener('sp-opened', this.handleMenuOpened, {
-            once: true,
-        });
-        menu.open = true;
+        this.menu = document.querySelector(`sp-action-menu`) as ActionMenu;
+        this.menu.addEventListener('sp-opened', this.handleMenuOpened);
+        this.menu.open = true;
     }
 
     handleMenuOpened = async (event: Event): Promise<void> => {
+        this.menu.removeEventListener('sp-opened', this.handleMenuOpened);
         await nextFrame();
         await (event.target as ActionMenu).updateComplete;
 
-        const submenu = document.querySelector('#submenu-item-1') as MenuItem;
-        if (!submenu) {
+        this.submenu = document.querySelector('#submenu-item-1') as MenuItem;
+        if (!this.submenu) {
             return;
         }
-        submenu.addEventListener('sp-opened', this.handleSubmenuOpened, {
-            once: true,
-        });
-        submenu.dispatchEvent(
-            new PointerEvent('pointerenter', { bubbles: true, composed: true })
-        );
+
+        this.submenu.addEventListener('sp-opened', this.handleSubmenuOpened);
+        this.submenu.click();
     };
 
     handleSubmenuOpened = async (event: Event): Promise<void> => {
+        this.submenu.removeEventListener('sp-opened', this.handleSubmenuOpened);
         await nextFrame();
         await (event.target as MenuItem).updateComplete;
 
-        const submenu = document.querySelector('#submenu-item-2') as MenuItem;
-        if (!submenu) {
+        this.submenuChild = document.querySelector(
+            '#submenu-item-2'
+        ) as MenuItem;
+        if (!this.submenuChild) {
             return;
         }
-        submenu.addEventListener('sp-opened', this.handleSubmenuChildOpened, {
-            once: true,
-        });
-        submenu.dispatchEvent(
-            new PointerEvent('pointerenter', { bubbles: true, composed: true })
+        this.submenuChild.addEventListener(
+            'sp-opened',
+            this.handleSubmenuChildOpened
         );
+        this.submenuChild.click();
     };
 
     handleSubmenuChildOpened = async (event: Event): Promise<void> => {
+        this.submenuChild.removeEventListener(
+            'sp-opened',
+            this.handleSubmenuChildOpened
+        );
         await nextFrame();
         await (event.target as MenuItem).updateComplete;
 

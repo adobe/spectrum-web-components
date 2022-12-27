@@ -92,9 +92,7 @@ export class MenuGroup extends Menu {
             <span class="header" ?hidden=${!this.headerElement}>
                 <slot name="header" @slotchange=${this.updateLabel}></slot>
             </span>
-            <sp-menu ignore>
-                <slot></slot>
-            </sp-menu>
+            <sp-menu ignore>${this.renderMenuItemSlot()}</sp-menu>
         `;
     }
 }

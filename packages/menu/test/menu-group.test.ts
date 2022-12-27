@@ -110,30 +110,45 @@ describe('Menu group', () => {
             html`
                 <sp-menu selects="single">
                     <sp-menu-item selected>First</sp-menu-item>
+                    <!-- 1 -->
                     <sp-menu-item>Second</sp-menu-item>
+                    <!-- 1 -->
                     <sp-menu-group id="mg-multi" selects="multiple">
                         <sp-menu-item selected>Multi1</sp-menu-item>
+                        <!-- 2 -->
                         <sp-menu-item>Multi2</sp-menu-item>
+                        <!-- 2 -->
                         <sp-menu-group id="mg-sub-inherit" selects="inherit">
                             <sp-menu-item>SubInherit1</sp-menu-item>
+                            <!-- 2 -->
                             <sp-menu-item>SubInherit2</sp-menu-item>
+                            <!-- 2 -->
                         </sp-menu-group>
                     </sp-menu-group>
                     <sp-menu-group id="mg-single" selects="single">
                         <sp-menu-item selected>Single1</sp-menu-item>
+                        <!-- 3 -->
                         <sp-menu-item>Single2</sp-menu-item>
+                        <!-- 3 -->
                     </sp-menu-group>
                     <sp-menu-group id="mg-none">
                         <sp-menu-item>Inherit1</sp-menu-item>
+                        <!-- - -->
                         <sp-menu-item>Inherit2</sp-menu-item>
+                        <!-- - -->
                     </sp-menu-group>
                     <sp-menu-group id="mg-inherit" selects="inherit">
                         <sp-menu-item>Inherit1</sp-menu-item>
+                        <!-- 1 -->
                         <sp-menu-item>Inherit2</sp-menu-item>
+                        <!-- 1 -->
                     </sp-menu-group>
                 </sp-menu>
             `
         );
+
+        // 1 & 3 should be menuitemradio
+        // 2 shouwl menuitemcheckbox
 
         await waitUntil(
             () => managedItems(el).length === 4,

@@ -81,7 +81,7 @@ const initTest = async (
     };
 };
 
-describe('Overlay Trigger - extended', () => {
+describe.skip('Overlay Trigger - extended', () => {
     let overlayTrigger!: OverlayTrigger;
     let button!: Button;
     let popover!: Popover;

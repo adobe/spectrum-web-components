@@ -19,31 +19,21 @@ import {
 } from '@spectrum-web-components/base';
 import {
     property,
+    query,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
-import type { LongpressEvent } from '@spectrum-web-components/action-button';
-import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import {
     isAndroid,
     isIOS,
 } from '@spectrum-web-components/shared/src/platform.js';
 
-import {
-    OverlayOpenCloseDetail,
-    OverlayOptions,
-    OverlayTriggerInteractions,
-    Placement,
-    TriggerInteractions,
-} from './overlay-types';
-import { openOverlay } from './loader.js';
+import { OverlayTriggerInteractions } from './overlay-types';
 import overlayTriggerStyles from './overlay-trigger.css.js';
+import '../sp-overlay.js';
+import { Placement } from '@floating-ui/dom';
+import { OverlayBase } from './OverlayBase';
 
 export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
-
-type closeOverlay =
-    | 'closeClickOverlay'
-    | 'closeHoverOverlay'
-    | 'closeLongpressOverlay';
 
 export const LONGPRESS_INSTRUCTIONS = {
     touch: 'Double tap and long press for additional options',
@@ -63,10 +53,6 @@ export const LONGPRESS_INSTRUCTIONS = {
  * @fires sp-closed - Announces that the overlay has been closed
  */
 export class OverlayTrigger extends SpectrumElement {
-    private closeClickOverlay?: Promise<() => void>;
-    private closeLongpressOverlay?: Promise<() => void>;
-    private closeHoverOverlay?: Promise<() => void>;
-
     public static override get styles(): CSSResultArray {
         return [overlayTriggerStyles];
     }
@@ -76,7 +62,7 @@ export class OverlayTrigger extends SpectrumElement {
      * @attr
      */
     @property({ reflect: true })
-    public placement: Placement = 'bottom';
+    public placement?: Placement;
 
     @property()
     public type?: OverlayTriggerInteractions;
@@ -94,23 +80,49 @@ export class OverlayTrigger extends SpectrumElement {
     public hasLongpressContent = false;
 
     private longpressDescriptor?: HTMLElement;
-    private clickContent?: HTMLElement;
-    private longpressContent?: HTMLElement;
-    private hoverContent?: HTMLElement;
-    private targetContent?: HTMLElement;
-    private overlaidContent?: HTMLElement;
+
+    @state()
+    private clickContent: HTMLElement[] = [];
+
+    @state()
+    private longpressContent: HTMLElement[] = [];
+
+    @state()
+    private hoverContent: HTMLElement[] = [];
+
+    @state()
+    private targetContent: HTMLElement[] = [];
+
+    @query('#click-overlay', true)
+    clickOverlayElement!: OverlayBase;
+
+    @query('#longpress-overlay', true)
+    longpressOverlayElement!: OverlayBase;
+
+    @query('#hover-overlay', true)
+    hoverOverlayElement!: OverlayBase;
 
     private _longpressId = `longpress-describedby-descriptor`;
 
-    private handleClose(event?: CustomEvent<OverlayOpenCloseDetail>): void {
-        if (
-            event &&
-            event.detail.interaction !== this.open &&
-            event.detail.interaction !== this.type
-        ) {
-            return;
-        }
-        this.removeAttribute('open');
+    private getAssignedElementsFromEvent(event: Event): HTMLElement[] {
+        const target = event.target as HTMLSlotElement;
+        return target.assignedElements({ flatten: true }) as HTMLElement[];
+    }
+
+    private handleTriggerContent(event: Event): void {
+        this.targetContent = this.getAssignedElementsFromEvent(event);
+    }
+
+    private handleClickContent(event: Event): void {
+        this.clickContent = this.getAssignedElementsFromEvent(event);
+    }
+
+    private handleLongpressContent(event: Event): void {
+        this.longpressContent = this.getAssignedElementsFromEvent(event);
+    }
+
+    private handleHoverContent(event: Event): void {
+        this.hoverContent = this.getAssignedElementsFromEvent(event);
     }
 
     protected override render(): TemplateResult {
@@ -119,29 +131,92 @@ export class OverlayTrigger extends SpectrumElement {
         return html`
             <slot
                 id="trigger"
-                @click=${this.onTrigger}
-                @longpress=${this.onTrigger}
-                @mouseenter=${this.onTrigger}
-                @mouseleave=${this.onTrigger}
-                @focusin=${this.onTrigger}
-                @focusout=${this.onTrigger}
-                @sp-closed=${this.handleClose}
-                @slotchange=${this.onTargetSlotChange}
                 name="trigger"
+                @slotchange=${this.handleTriggerContent}
             ></slot>
             <div id="overlay-content">
-                <slot
-                    @slotchange=${this.onClickSlotChange}
-                    name="click-content"
-                ></slot>
-                <slot
-                    @slotchange=${this.onLongpressSlotChange}
-                    name="longpress-content"
-                ></slot>
-                <slot
-                    @slotchange=${this.onHoverSlotChange}
-                    name="hover-content"
-                ></slot>
+                <sp-overlay
+                    id="click-overlay"
+                    ?disabled=${!this.clickContent.length}
+                    ?open=${this.open === 'click' && !!this.clickContent.length}
+                    .offset=${this.offset}
+                    .placement=${this.placement}
+                    .triggerElement=${this.targetContent[0]}
+                    .triggerInteraction=${'click'}
+                    .type=${this.type !== 'modal' ? 'auto' : 'modal'}
+                    @sp-closed=${(event: Event) => {
+                        const target = event.composedPath()[0];
+                        if (target !== this.clickOverlayElement) return;
+                        if (this.open === 'click') {
+                            this.open = undefined;
+                        }
+                    }}
+                    @sp-opened=${(event: Event) => {
+                        const target = event.composedPath()[0];
+                        if (target !== this.clickOverlayElement) return;
+                        this.open = 'click';
+                    }}
+                >
+                    <slot
+                        name="click-content"
+                        @slotchange=${this.handleClickContent}
+                    ></slot>
+                </sp-overlay>
+                <sp-overlay
+                    id="longpress-overlay"
+                    ?disabled=${!this.longpressContent.length}
+                    ?open=${this.open === 'longpress' &&
+                    !!this.longpressContent.length}
+                    .offset=${this.offset}
+                    .placement=${this.placement}
+                    .triggerElement=${this.targetContent[0]}
+                    .triggerInteraction=${'longpress'}
+                    .type=${'auto'}
+                    @sp-closed=${(event: Event) => {
+                        const target = event.composedPath()[0];
+                        if (target !== this.longpressOverlayElement) return;
+                        if (this.open === 'longpress') {
+                            this.open = undefined;
+                        }
+                    }}
+                    @sp-opened=${(event: Event) => {
+                        const target = event.composedPath()[0];
+                        if (target !== this.longpressOverlayElement) return;
+                        this.open = 'longpress';
+                    }}
+                >
+                    <slot
+                        name="longpress-content"
+                        @slotchange=${this.handleLongpressContent}
+                    ></slot>
+                </sp-overlay>
+                <sp-overlay
+                    id="hover-overlay"
+                    ?disabled=${!this.hoverContent.length}
+                    ?open=${this.open === 'hover' && !!this.hoverContent.length}
+                    .offset=${this.offset}
+                    .placement=${this.placement}
+                    .triggerElement=${this.targetContent[0]}
+                    .triggerInteraction=${'hover'}
+                    .type=${'hint'}
+                    @sp-closed=${(event: Event) => {
+                        const target = event.composedPath()[0];
+                        if (target !== this.hoverOverlayElement) return;
+                        if (this.open === 'hover') {
+                            this.open = undefined;
+                        }
+                    }}
+                    @sp-opened=${(event: Event) => {
+                        const target = event.composedPath()[0];
+                        if (target !== this.hoverOverlayElement) return;
+                        this.open = 'hover';
+                    }}
+                >
+                    <slot
+                        name="hover-content"
+                        @slotchange=${this.handleHoverContent}
+                    ></slot>
+                </sp-overlay>
                 <slot name=${this._longpressId}></slot>
             </div>
         `;
@@ -151,11 +226,8 @@ export class OverlayTrigger extends SpectrumElement {
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
         if (this.disabled && changes.has('disabled')) {
-            this.closeAllOverlays();
+            this.open = undefined;
             return;
-        }
-        if (changes.has('open')) {
-            this.manageOpen();
         }
         if (changes.has('hasLongpressContent')) {
             this.manageLongpressDescriptor();
@@ -196,278 +268,14 @@ export class OverlayTrigger extends SpectrumElement {
         }
     }
 
-    private closeAllOverlays(): void {
-        if (this.abortOverlay) this.abortOverlay(true);
-        (
-            [
-                'closeClickOverlay',
-                'closeHoverOverlay',
-                'closeLongpressOverlay',
-            ] as closeOverlay[]
-        ).forEach(async (name) => {
-            const canClose = this[name] as Promise<() => void>;
-            if (canClose == null) return;
-            delete this[name];
-            (await canClose)();
-        });
-        this.overlaidContent = undefined;
-    }
-
-    private manageOpen(): void {
-        const openHandlers: Record<OverlayContentTypes | 'none', () => void> = {
-            click: () => this.onTriggerClick(),
-            hover: () => this.onTriggerMouseEnter(),
-            longpress: () => this.onTriggerLongpress(),
-            none: () => this.closeAllOverlays(),
-        };
-        openHandlers[this.open ?? 'none']();
-    }
-
-    private async openOverlay(
-        target: HTMLElement,
-        interaction: TriggerInteractions,
-        content: HTMLElement,
-        options: OverlayOptions
-    ): Promise<() => void> {
-        this.openStatePromise = new Promise(
-            (res) => (this.openStateResolver = res)
-        );
-        this.addEventListener(
-            'sp-opened',
-            () => {
-                this.openStateResolver();
-            },
-            { once: true }
-        );
-        this.overlaidContent = content;
-        return OverlayTrigger.openOverlay(
-            target,
-            interaction,
-            content,
-            options
-        );
-    }
-
-    public static openOverlay = async (
-        target: HTMLElement,
-        interaction: TriggerInteractions,
-        content: HTMLElement,
-        options: OverlayOptions
-    ): Promise<() => void> => {
-        return openOverlay(target, interaction, content, options);
-    };
-
-    private get overlayOptions(): OverlayOptions {
-        return {
-            offset: this.offset,
-            placement: this.placement,
-            receivesFocus:
-                !this.type || this.type === 'inline' || this.open === 'hover'
-                    ? undefined
-                    : 'auto',
-        };
-    }
-
-    private onTrigger(event: CustomEvent<LongpressEvent>): void {
-        const mouseIsEnteringHoverContent =
-            event.type === 'mouseleave' &&
-            this.open === 'hover' &&
-            (event as unknown as MouseEvent).relatedTarget ===
-                this.overlaidContent;
-        if (mouseIsEnteringHoverContent && this.overlaidContent) {
-            this.overlaidContent.addEventListener(
-                'mouseleave',
-                (event: MouseEvent) => {
-                    const mouseIsEnteringTrigger =
-                        event.relatedTarget === this.targetContent;
-                    if (mouseIsEnteringTrigger) {
-                        return;
-                    }
-                    this.onTrigger(
-                        event as unknown as CustomEvent<LongpressEvent>
-                    );
-                },
-                { once: true }
-            );
-            return;
-        }
-        if (this.disabled) return;
-
-        switch (event.type) {
-            case 'mouseenter':
-            case 'focusin':
-                if (!this.open && this.hoverContent) {
-                    this.open = 'hover';
-                }
-                return;
-            case 'mouseleave':
-            case 'focusout':
-                if (this.open === 'hover') {
-                    this.handleClose();
-                }
-                return;
-            case 'click':
-                if (this.clickContent) {
-                    this.open = event.type;
-                }
-                return;
-            case 'longpress':
-                if (this.longpressContent) {
-                    this._longpressEvent = event;
-                    this.open = event.type;
-                }
-                return;
-        }
-    }
-
-    private prepareToFocusOverlayContent(overlayContent: HTMLElement): void {
-        if (this.type !== 'modal') {
-            return;
-        }
-        const firstFocusable = firstFocusableIn(overlayContent);
-        if (!firstFocusable) {
-            overlayContent.tabIndex = 0;
-        }
-    }
-
-    public async onTriggerClick(): Promise<void> {
-        if (
-            !this.targetContent ||
-            !this.clickContent ||
-            this.closeClickOverlay
-        ) {
-            return;
-        }
-        const { targetContent, clickContent } = this;
-        this.closeAllOverlays();
-        this.prepareToFocusOverlayContent(clickContent);
-        if (window.__swc.DEBUG) {
-            window.__swc.ignoreWarningLevels.deprecation = true;
-        }
-        this.closeClickOverlay = this.openOverlay(
-            targetContent,
-            this.type ? this.type : 'click',
-            clickContent,
-            this.overlayOptions
-        );
-        if (window.__swc.DEBUG) {
-            window.__swc.ignoreWarningLevels.deprecation = false;
-        }
-    }
-
-    private _longpressEvent?: CustomEvent<LongpressEvent>;
-
-    private async onTriggerLongpress(): Promise<void> {
-        if (
-            !this.targetContent ||
-            !this.longpressContent ||
-            this.closeLongpressOverlay
-        ) {
-            return;
-        }
-        const { targetContent, longpressContent } = this;
-        this.closeAllOverlays();
-        this.prepareToFocusOverlayContent(longpressContent);
-        const notImmediatelyClosable =
-            this._longpressEvent?.detail?.source !== 'keyboard';
-        if (window.__swc.DEBUG) {
-            window.__swc.ignoreWarningLevels.deprecation = true;
-        }
-        this.closeLongpressOverlay = this.openOverlay(
-            targetContent,
-            this.type ? this.type : 'longpress',
-            longpressContent,
-            {
-                ...this.overlayOptions,
-                receivesFocus: 'auto',
-                notImmediatelyClosable,
-            }
-        );
-        if (window.__swc.DEBUG) {
-            window.__swc.ignoreWarningLevels.deprecation = false;
-        }
-        this._longpressEvent = undefined;
-    }
-
-    private abortOverlay: (cancelled: boolean) => void = () => {
-        return;
-    };
-
-    public async onTriggerMouseEnter(): Promise<void> {
-        if (
-            !this.targetContent ||
-            !this.hoverContent ||
-            this.closeHoverOverlay
-        ) {
-            return;
-        }
-        const abortPromise: Promise<boolean> = new Promise((res) => {
-            this.abortOverlay = res;
-        });
-        const { targetContent, hoverContent } = this;
-        if (window.__swc.DEBUG) {
-            window.__swc.ignoreWarningLevels.deprecation = true;
-        }
-        this.closeHoverOverlay = this.openOverlay(
-            targetContent,
-            'hover',
-            hoverContent,
-            {
-                abortPromise,
-                ...this.overlayOptions,
-            }
-        );
-        if (window.__swc.DEBUG) {
-            window.__swc.ignoreWarningLevels.deprecation = false;
-        }
-    }
-
-    private onClickSlotChange(
-        event: Event & { target: HTMLSlotElement }
-    ): void {
-        this.clickContent = this.extractSlotContentFromEvent(event);
-        this.manageOpen();
-    }
-
-    private onLongpressSlotChange(
-        event: Event & { target: HTMLSlotElement }
-    ): void {
-        this.longpressContent = this.extractSlotContentFromEvent(event);
-        this.hasLongpressContent =
-            !!this.longpressContent || !!this.closeLongpressOverlay;
-        this.manageOpen();
-    }
-
-    private onHoverSlotChange(
-        event: Event & { target: HTMLSlotElement }
-    ): void {
-        this.hoverContent = this.extractSlotContentFromEvent(event);
-        this.manageOpen();
-    }
-
-    private onTargetSlotChange(
-        event: Event & { target: HTMLSlotElement }
-    ): void {
-        this.targetContent = this.extractSlotContentFromEvent(event);
-    }
-
-    private extractSlotContentFromEvent(event: Event): HTMLElement | undefined {
-        const slot = event.target as HTMLSlotElement;
-        const nodes = slot.assignedNodes({ flatten: true });
-        return nodes.find((node) => node instanceof HTMLElement) as HTMLElement;
-    }
-
-    private openStatePromise = Promise.resolve();
-    private openStateResolver!: () => void;
-
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
-        await this.openStatePromise;
         return complete;
     }
 
-    public override disconnectedCallback(): void {
-        this.closeAllOverlays();
-        super.disconnectedCallback();
+    protected override willUpdate(): void {
+        if ((this.placement as unknown as 'none') === 'none') {
+            this.placement = undefined;
+        }
     }
 }

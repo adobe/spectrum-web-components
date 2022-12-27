@@ -74,10 +74,6 @@ sp-button {
  * End workaround for SplitButton not natively supporting t-shirt sizes.
  */
 
-sp-popover {
-    display: none;
-}
-
 ::slotted(sp-menu) {
     display: none;
 }

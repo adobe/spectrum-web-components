@@ -89,7 +89,6 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
                     await firstFocusable.updateComplete;
                 }
                 firstFocusable.focus();
-                this.removeAttribute('tabindex');
             } else {
                 this.dialog.focus();
             }
@@ -198,8 +197,6 @@ export class DialogBase extends FocusVisiblePolyfillMixin(SpectrumElement) {
                         this.dialog.shouldManageTabOrderForScrolling();
                     });
                 }
-            } else {
-                this.tabIndex = 0;
             }
         }
     }
