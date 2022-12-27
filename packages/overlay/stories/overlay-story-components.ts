@@ -290,7 +290,6 @@ class RecursivePopover extends LitElement {
                     slot="click-content"
                     direction="${this.placement}"
                     tip
-                    open
                 >
                     ${this.depth < MAX_DEPTH
                         ? html`
@@ -319,7 +318,7 @@ export class PopoverContent extends LitElement {
 
     override render(): TemplateResult {
         return html`
-            <overlay-trigger>
+            <overlay-trigger type="modal" placement="bottom">
                 <sp-button slot="trigger">Open me</sp-button>
                 <sp-popover slot="click-content" direction="bottom" dialog>
                     <p>This is all the content.</p>

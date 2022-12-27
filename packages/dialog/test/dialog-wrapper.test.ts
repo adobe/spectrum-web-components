@@ -14,8 +14,8 @@ import {
     elementUpdated,
     expect,
     fixture,
-    nextFrame,
     oneEvent,
+    waitUntil,
 } from '@open-wc/testing';
 import { spy, stub } from 'sinon';
 
@@ -23,7 +23,6 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import '@spectrum-web-components/dialog/sp-dialog-wrapper.js';
 import { Dialog, DialogWrapper } from '@spectrum-web-components/dialog';
-import { ActionButton } from '@spectrum-web-components/action-button';
 import { Button } from '@spectrum-web-components/button';
 import { Underlay } from '@spectrum-web-components/underlay';
 import {
@@ -89,44 +88,52 @@ describe('Dialog Wrapper', () => {
     });
     it('opens and closes', async () => {
         const closeSpy = spy();
-        const test = await styledFixture<OverlayTrigger>(longContent());
+        const openedSpy = spy();
+        const test = await styledFixture<OverlayTrigger>(html`
+            <div @sp-opened=${() => openedSpy()}>${longContent()}</div>
+        `);
+        const overlayTrigger = test.querySelector(
+            'overlay-trigger'
+        ) as OverlayTrigger;
         const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
         el.addEventListener('close', () => closeSpy());
 
-        await elementUpdated(el);
-
-        const opened = oneEvent(test, 'sp-opened');
-        test.open = 'click';
-        await opened;
+        await waitUntil(
+            () => openedSpy.calledOnce,
+            'click content projected to overlay',
+            { timeout: 2000 }
+        );
 
         expect(el.open).to.be.true;
-
-        const closed = oneEvent(test, 'sp-closed');
-        test.open = undefined;
+        const closed = oneEvent(overlayTrigger, 'sp-closed');
+        overlayTrigger.open = undefined;
         await closed;
-        await nextFrame();
 
         expect(el.open).to.be.false;
         expect(closeSpy.callCount).to.equal(1);
     });
     it('opens and closes when element is recycled', async () => {
         const closeSpy = spy();
-        const test = await styledFixture<OverlayTrigger>(longContent());
+        const openedSpy = spy();
+        const test = await styledFixture<OverlayTrigger>(html`
+            <div @sp-opened=${() => openedSpy()}>${longContent()}</div>
+        `);
+        const overlayTrigger = test.querySelector(
+            'overlay-trigger'
+        ) as OverlayTrigger;
         const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
         el.addEventListener('close', () => closeSpy());
 
-        await elementUpdated(el);
-
-        const opened = oneEvent(test, 'sp-opened');
-        test.open = 'click';
-        await opened;
+        await waitUntil(
+            () => openedSpy.calledOnce,
+            'click content projected to overlay',
+            { timeout: 2000 }
+        );
 
         expect(el.open).to.be.true;
-
-        const closed = oneEvent(test, 'sp-closed');
-        test.open = undefined;
+        const closed = oneEvent(overlayTrigger, 'sp-closed');
+        overlayTrigger.open = undefined;
         await closed;
-        await nextFrame();
 
         expect(el.open).to.be.false;
         expect(closeSpy.callCount).to.equal(1);
@@ -210,37 +217,6 @@ describe('Dialog Wrapper', () => {
         ) as HTMLButtonElement;
         dismissButton.click();
 
-        await elementUpdated(el);
-        expect(el.open).to.be.false;
-    });
-    it('manages entry focus - dismissable', async () => {
-        const el = await styledFixture<DialogWrapper>(wrapperDismissable());
-
-        await elementUpdated(el);
-        expect(el.open).to.be.true;
-        expect(document.activeElement !== el, 'no focused').to.be.true;
-
-        const dialog = el.shadowRoot.querySelector('sp-dialog') as Dialog;
-        const dialogRoot = dialog.shadowRoot ? dialog.shadowRoot : dialog;
-        const dismissButton = dialogRoot.querySelector(
-            '.close-button'
-        ) as ActionButton;
-
-        el.focus();
-        await elementUpdated(el);
-        expect(
-            document.activeElement === el,
-            `focused generally, ${document.activeElement}`
-        ).to.be.true;
-        expect(
-            (dismissButton.getRootNode() as Document).activeElement !==
-                dismissButton,
-            `does not focus specifically, ${
-                (dismissButton.getRootNode() as Document).activeElement
-            }`
-        ).to.be.true;
-
-        dismissButton.click();
         await elementUpdated(el);
         expect(el.open).to.be.false;
     });

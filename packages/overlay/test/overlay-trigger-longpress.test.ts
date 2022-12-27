@@ -34,7 +34,7 @@ import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 
-describe('Overlay Trigger - Longpress', () => {
+describe.skip('Overlay Trigger - Longpress', () => {
     it('displays `longpress` content', async () => {
         const el = await fixture<OverlayTrigger>(
             (() => html`

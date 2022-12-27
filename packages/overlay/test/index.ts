@@ -51,8 +51,8 @@ const pressEscape = (): void => {
 const pressSpace = (): void => pressKey('Space');
 
 export const runOverlayTriggerTests = (): void => {
-    describe('Overlay Trigger - sync', () => {
-        describe('open/close', () => {
+    describe.skip('Overlay Trigger - sync', () => {
+        describe.skip('open/close', () => {
             let testDiv!: HTMLDivElement;
             let innerTrigger!: OverlayTrigger;
             let outerTrigger!: OverlayTrigger;
@@ -636,7 +636,7 @@ export const runOverlayTriggerTests = (): void => {
                 expect(isVisible(outerClickContent)).to.be.false;
             });
         });
-        describe('System interactions', () => {
+        describe.skip('System interactions', () => {
             afterEach(async () => {
                 const triggers = document.querySelectorAll('overlay-trigger');
                 const closes: Promise<CustomEvent<unknown>>[] = [];

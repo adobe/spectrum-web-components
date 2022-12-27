@@ -14,6 +14,7 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
@@ -48,13 +49,14 @@ describe('Overlay Trigger - Click', () => {
                 </overlay-trigger>
             `)()
         );
-        await elementUpdated(el);
 
         await waitUntil(
             () => openedSpy.calledOnce,
             'click content projected to overlay',
             { timeout: 2000 }
         );
+
+        await nextFrame();
 
         el.removeAttribute('open');
         await elementUpdated(el);
@@ -101,7 +103,7 @@ describe('Overlay Trigger - Click', () => {
                     }
                     await closed;
 
-                    expect(el.open).to.be.null;
+                    expect(el.open).to.be.undefined;
                 });
             }
         );

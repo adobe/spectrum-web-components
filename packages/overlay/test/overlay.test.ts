@@ -40,7 +40,7 @@ import {
 import { PopoverContent } from '../stories/overlay-story-components.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 
-describe('Overlays', () => {
+describe.skip('Overlays', () => {
     let testDiv!: HTMLDivElement;
     let openOverlays: (() => void)[] = [];
 
@@ -470,7 +470,7 @@ describe('Overlays', () => {
         content.remove();
     });
 });
-describe('Overlay - type="modal"', () => {
+describe.skip('Overlay - type="modal"', () => {
     it('closes on `contextmenu` and passes that to the underlying page', async () => {
         await fixture<HTMLDivElement>(html`
             ${virtualElement({
@@ -631,7 +631,7 @@ describe('Overlay - type="modal"', () => {
         await close;
     });
 });
-describe('Overlay - timing', () => {
+describe.skip('Overlay - timing', () => {
     it('manages multiple modals in a row without preventing them from closing', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>

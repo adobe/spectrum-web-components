@@ -3,7 +3,6 @@ Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software distributed under
 the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
 OF ANY KIND, either express or implied. See the License for the specific language
@@ -14,32 +13,32 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/button/sp-button.js';
-import '@spectrum-web-components/overlay/overlay-trigger.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import { alertDestructive } from './dialog.stories.js';
 import { portrait } from './images.js';
-import { overlayTriggerDecorator } from './index.js';
 
 export default {
     title: 'Dialog Base',
     component: 'sp-dialog-base',
     decorators: [
-        (story: () => TemplateResult): TemplateResult => html`
-            <overlay-trigger type="modal" open="click" placement="none">
-                <sp-button slot="trigger" variant="primary">
+        (story: () => TemplateResult): TemplateResult => {
+            return html`
+                <sp-button variant="primary" id="trigger">
                     Toggle Dialog
                 </sp-button>
-                ${story()}
-            </overlay-trigger>
-        `,
-        overlayTriggerDecorator,
+                <sp-overlay type="modal" trigger="trigger@click" open>
+                    ${story()}
+                </sp-overlay>
+            `;
+        },
+        // overlayTriggerDecorator,
     ],
 };
 
 export const Slotted = (): TemplateResult => html`
     <sp-dialog-base
         underlay
-        slot="click-content"
         @click=${(event: Event) => {
             if ((event.target as HTMLElement).localName === 'sp-button') {
                 (event.target as HTMLElement).dispatchEvent(
@@ -56,7 +55,6 @@ export const disabledButton = (): TemplateResult => {
     return html`
         <sp-dialog-base
             underlay
-            slot="click-content"
             @click=${(event: Event) => {
                 if ((event.target as HTMLElement).localName === 'sp-button') {
                     (event.target as HTMLElement).dispatchEvent(
@@ -64,21 +62,31 @@ export const disabledButton = (): TemplateResult => {
                     );
                 }
             }}
-            .overlayOpenCallback=${() => {
-                setTimeout(() => {
+            @sp-opened=${() => {
+                let count = 5;
+                const timer = setInterval(() => {
+                    count -= 1;
+                    if (!count) {
+                        (
+                            document.querySelector(
+                                '#changing-header'
+                            ) as HTMLElement
+                        ).textContent = 'The button in this dialog is now enabled';
+                        (
+                            document.querySelector(
+                                '#changing-button'
+                            ) as HTMLButtonElement
+                        ).disabled = false;
+                        clearInterval(timer);
+                    }
                     (
                         document.querySelector(
-                            '#changing-header'
+                            '.time'
                         ) as HTMLElement
-                    ).textContent = 'The button in this dialog is now enabled';
-                    (
-                        document.querySelector(
-                            '#changing-button'
-                        ) as HTMLButtonElement
-                    ).disabled = false;
-                }, 5000);
+                    ).textContent = count.toString();
+                }, 1000);
             }}
-            .overlayCloseCallback=${() => {
+            @close=${() => {
                 (
                     document.querySelector('#changing-header') as HTMLElement
                 ).textContent = 'The button in this dialog is disabled';
@@ -87,13 +95,18 @@ export const disabledButton = (): TemplateResult => {
                         '#changing-button'
                     ) as HTMLButtonElement
                 ).disabled = true;
+                (
+                    document.querySelector(
+                        '.time'
+                    ) as HTMLElement
+                ).textContent = '5';
             }}
         >
             <sp-dialog size="s">
                 <h2 slot="heading" id="changing-header">
                     The button in this dialog is disabled
                 </h2>
-                <p>After about 5 seconds the button with be enabled.</p>
+                <p>After about <span class="time">5</span> seconds the button with be enabled.</p>
                 <sp-button disabled slot="button" id="changing-button">
                     Ok
                 </sp-button>
@@ -105,7 +118,6 @@ export const disabledButton = (): TemplateResult => {
 export const notAgain = (): TemplateResult => html`
     <sp-dialog-base
         underlay
-        slot="click-content"
         @click=${(event: Event) => {
             if ((event.target as HTMLElement).localName === 'sp-button') {
                 (event.target as HTMLElement).dispatchEvent(
@@ -132,7 +144,6 @@ export const notAgain = (): TemplateResult => html`
 export const moreCustom = (): TemplateResult => html`
     <sp-dialog-base
         underlay
-        slot="click-content"
         @click=${(event: Event) => {
             if ((event.target as HTMLElement).localName === 'sp-button') {
                 (event.target as HTMLElement).dispatchEvent(
@@ -179,7 +190,6 @@ export const moreCustom = (): TemplateResult => html`
 export const fullyCustom = (): TemplateResult => html`
     <sp-dialog-base
         underlay
-        slot="click-content"
         @click=${(event: Event) => {
             if ((event.target as HTMLElement).localName === 'button') {
                 (event.target as HTMLElement).dispatchEvent(

@@ -65,6 +65,11 @@ export default {
             'tools/shared/src/focus-visible.*',
             'tools/styles/**',
             '**/node_modules/**',
+            // The following are WIP removals for the Overlay API update
+            '**/ActiveOverlay.*',
+            '**/overlay-stack.*',
+            '**/overlay-utils.*',
+            '**/OverlayPopover.*',
         ],
         threshold: {
             statements: 98.5,

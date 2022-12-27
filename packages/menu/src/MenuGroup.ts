@@ -92,9 +92,7 @@ export class MenuGroup extends Menu {
             >
                 <slot name="header" @slotchange=${this.updateLabel}></slot>
             </span>
-            <sp-menu role="none">
-                <slot></slot>
-            </sp-menu>
+            <sp-menu role="none">${this.renderMenuItemSlot()}</sp-menu>
         `;
     }
 }

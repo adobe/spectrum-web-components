@@ -85,10 +85,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
         return this.button;
     }
 
-    protected override sizePopover(popover: HTMLElement): void {
-        popover.style.setProperty('min-width', `${this.offsetWidth}px`);
-    }
-
     private passClick(): void {
         const target =
             this.type === 'more'
@@ -121,9 +117,9 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 this.selects = 'single';
             }
         }
-        if (changes.has('value')) {
-            this.manageSplitButtonItems();
-        }
+        // if (changes.has('value')) {
+        //     this.manageSplitButtonItems();
+        // }
         super.update(changes);
     }
 
@@ -179,7 +175,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
             buttons.reverse();
         }
         return html`
-            ${buttons}
+            ${buttons} ${this.renderOverlay}
         `;
     }
 
@@ -190,7 +186,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
 
     private async manageSplitButtonItems(): Promise<void> {
         if (!this.menuItems.length) {
-            await this.updateComplete;
+            await this.optionsMenu.updateComplete;
             if (!this.menuItems.length) {
                 return;
             }

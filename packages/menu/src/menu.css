@@ -28,11 +28,6 @@ governing permissions and limitations under the License.
             var(--spectrum-icon-checkmark-medium-width) +
             var(--spectrum-listitem-icon-gap)
     );
-
-    /**
-     * Allow menu elements to be foreced to width 100% when placed inside of a Tray
-     **/
-    width: var(--swc-menu-width);
 }
 
 :host(:focus) {
@@ -44,6 +39,4 @@ governing permissions and limitations under the License.
      * Remove when Spectrum CSS supports this correctly
      */
     flex-shrink: 0;
-
-    --swc-menu-width: 100%;
 }

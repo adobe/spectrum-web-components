@@ -1,0 +1,90 @@
+/*
+Copyright 2022 Adobe. All rights reserved.
+This file is licensed to you under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. You may obtain a copy
+of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under
+the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+OF ANY KIND, either express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+*/
+
+:host {
+    /**
+     * duplicate --spectrum-overlay-animation-distance, which is out of scope
+     * rather than over write so we continue to get new values from Spectrum CSS
+     * if they are provided in the future.
+     **/
+    --swc-overlay-animation-distance: var(
+        --spectrum-picker-m-texticon-popover-offset-y,
+        var(--spectrum-global-dimension-size-75)
+    );
+}
+
+dialog {
+    margin: 0;
+    border: 0;
+    background: none;
+    padding: 0;
+    pointer-events: none;
+    display: flex;
+    position: fixed;
+    overflow: visible;
+    opacity: 1 !important;
+    box-sizing: border-box;
+}
+
+dialog::backdrop {
+    display: none;
+}
+
+dialog > div {
+    width: 100%;
+}
+
+::slotted(sp-popover) {
+    position: static;
+}
+
+/**
+ * Offset the transition displacement from the trigger edge by
+ * padding the equivelent distance off of the opposite edge.
+ **/
+dialog[actual-placement*='top'] {
+    padding-top: var(--swc-overlay-animation-distance);
+}
+
+dialog[actual-placement*='right'] {
+    padding-right: var(--swc-overlay-animation-distance);
+}
+
+dialog[actual-placement*='bottom'] {
+    padding-bottom: var(--swc-overlay-animation-distance);
+}
+
+dialog[actual-placement*='left'] {
+    padding-left: var(--swc-overlay-animation-distance);
+}
+
+/* stylelint-disable */
+@supports selector(:open) {
+    dialog {
+        opacity: 0;
+    }
+
+    dialog:open {
+        opacity: 1;
+    }
+}
+
+@supports not selector(:open) {
+    dialog:not([open]) {
+        pointer-events: none;
+    }
+
+    dialog[actual-placement] {
+        z-index: var(--swc-overlay-z-index);
+    }
+}
+/* stylelint-enable */

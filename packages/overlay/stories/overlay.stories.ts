@@ -30,6 +30,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-open-in.js';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
+import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
@@ -48,6 +49,7 @@ import './overlay-story-components.js';
 import { render } from 'lit-html';
 import { Popover } from '@spectrum-web-components/popover';
 import { Button } from '@spectrum-web-components/button';
+import { PopoverContent } from './overlay-story-components.js';
 
 const storyStyles = html`
     <style>
@@ -180,7 +182,6 @@ const template = ({
                             slot="click-content"
                             placement="bottom"
                             tip
-                            open
                         >
                             <div class="options-popover-content">
                                 Another Popover
@@ -204,126 +205,6 @@ const template = ({
     `;
 };
 
-export const Default = (args: Properties): TemplateResult => template(args);
-
-export const openHoverContent = (args: Properties): TemplateResult =>
-    template({
-        ...args,
-        open: 'hover',
-    });
-
-export const openClickContent = (args: Properties): TemplateResult =>
-    template({
-        ...args,
-        open: 'click',
-    });
-
-class ScrollForcer extends HTMLElement {
-    ready!: (value: boolean | PromiseLike<boolean>) => void;
-
-    constructor() {
-        super();
-        this.readyPromise = new Promise((res) => {
-            this.ready = res;
-        });
-        this.setup();
-    }
-
-    async setup(): Promise<void> {
-        await nextFrame();
-        await nextFrame();
-
-        this.previousElementSibling?.addEventListener(
-            'sp-opened',
-            () => {
-                this.doScroll();
-            },
-            { once: true }
-        );
-    }
-
-    async doScroll(): Promise<void> {
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
-        await nextFrame();
-
-        if (document.scrollingElement) {
-            document.scrollingElement.scrollTop = 100;
-        }
-
-        await nextFrame();
-        await nextFrame();
-        this.ready(true);
-    }
-
-    private readyPromise: Promise<boolean> = Promise.resolve(false);
-
-    get updateComplete(): Promise<boolean> {
-        return this.readyPromise;
-    }
-}
-
-customElements.define('scroll-forcer', ScrollForcer);
-
-export const clickContentClosedOnScroll = (
-    args: Properties
-): TemplateResult => html`
-    <div style="margin: 50vh 0 100vh;">
-        ${template({
-            ...args,
-            open: 'click',
-        })}
-    </div>
-`;
-clickContentClosedOnScroll.decorators = [
-    (story: () => TemplateResult): TemplateResult => html`
-        <style>
-            html,
-            body,
-            #root,
-            #root-inner,
-            sp-story-decorator {
-                height: auto !important;
-            }
-        </style>
-        ${story()}
-        <scroll-forcer></scroll-forcer>
-    `,
-];
-
-export const noCloseOnResize = (args: Properties): TemplateResult => html`
-    <style>
-        sp-button:hover {
-            border: 10px solid;
-            width: 100px;
-        }
-    </style>
-    ${template({
-        ...args,
-        open: 'click',
-    })}
-`;
-noCloseOnResize.swc_vrt = {
-    skip: true,
-};
-
-export const customizedClickContent = (
-    args: Properties
-): TemplateResult => html`
-    <style>
-        active-overlay::part(theme) {
-            --styled-div-background-color: var(--spectrum-semantic-cta-background-color-default);
-            --spectrum-button-m-cta-texticon-background-color: rebeccapurple;
-        }
-    </style>
-    </style>
-    ${template({
-        ...args,
-        open: 'click',
-    })}
-`;
-
 const extraText = html`
     <p>This is some text.</p>
     <p>This is some text.</p>
@@ -334,371 +215,90 @@ const extraText = html`
     </p>
 `;
 
-export const inline = (): TemplateResult => {
-    const closeEvent = new Event('close', { bubbles: true, composed: true });
+function nextFrame(): Promise<void> {
+    return new Promise((res) => requestAnimationFrame(() => res()));
+}
+
+export const Default = (args: Properties): TemplateResult => template(args);
+
+export const accordion = (): TemplateResult => {
+    const handleToggle = (): void => {
+        Overlay.update();
+    };
     return html`
-        <overlay-trigger type="inline">
-            <sp-button slot="trigger">Open</sp-button>
-            <sp-overlay slot="click-content">
-                <sp-button
-                    @click=${(event: Event & { target: HTMLElement }): void => {
-                        event.target.dispatchEvent(closeEvent);
-                    }}
-                >
-                    Close
-                </sp-button>
-            </sp-overlay>
-        </overlay-trigger>
-        ${extraText}
-    `;
-};
-
-export const replace = (): TemplateResult => {
-    const closeEvent = new Event('close', { bubbles: true, composed: true });
-    return html`
-        <overlay-trigger type="replace">
-            <sp-button slot="trigger">Open</sp-button>
-            <sp-overlay slot="click-content">
-                <sp-button
-                    @click=${(event: Event & { target: HTMLElement }): void => {
-                        event.target.dispatchEvent(closeEvent);
-                    }}
-                >
-                    Close
-                </sp-button>
-            </sp-overlay>
-        </overlay-trigger>
-        ${extraText}
-    `;
-};
-
-export const deep = (): TemplateResult => html`
-    <overlay-trigger>
-        <sp-button variant="primary" slot="trigger">
-            Open popover 1 with buttons + selfmanaged Tooltips
-        </sp-button>
-        <sp-popover dialog slot="click-content" direction="bottom" tip open>
-            <sp-action-button>
-                <sp-tooltip self-managed placement="bottom" offset="0">
-                    My Tooltip 1
-                </sp-tooltip>
-                A
-            </sp-action-button>
-            <sp-action-button>
-                <sp-tooltip self-managed placement="bottom" offset="0">
-                    My Tooltip 1
-                </sp-tooltip>
-                B
-            </sp-action-button>
-        </sp-popover>
-    </overlay-trigger>
-
-    <overlay-trigger>
-        <sp-button variant="primary" slot="trigger">
-            Open popover 2 with buttons without ToolTips
-        </sp-button>
-        <sp-popover dialog slot="click-content" direction="bottom" tip open>
-            <sp-action-button>X</sp-action-button>
-            <sp-action-button>Y</sp-action-button>
-        </sp-popover>
-    </overlay-trigger>
-`;
-deep.swc_vrt = {
-    skip: true,
-};
-
-export const modalLoose = (): TemplateResult => {
-    const closeEvent = new Event('close', { bubbles: true, composed: true });
-    return html`
-        <overlay-trigger type="modal" placement="none">
-            <sp-button slot="trigger">Open</sp-button>
-            <sp-dialog
-                size="s"
-                dismissable
+        <overlay-trigger type="modal" placement="right">
+            <sp-button variant="primary" slot="trigger">
+                Open overlay w/ accordion
+            </sp-button>
+            <sp-popover
+                dialog
                 slot="click-content"
-                @closed=${(event: Event & { target: DialogWrapper }) =>
-                    event.target.dispatchEvent(closeEvent)}
+                style="overflow-y: scroll;position: static;"
             >
-                <h2 slot="heading">Loose Dialog</h2>
-                <p>
-                    The
-                    <code>sp-dialog</code>
-                    element is not "meant" to be a modal alone. In that way it
-                    does not manage its own
-                    <code>open</code>
-                    attribute or outline when it should have
-                    <code>pointer-events: auto</code>
-                    . It's a part of this test suite to prove that content in
-                    this way can be used in an
-                    <code>overlay-trigger</code>
-                    element.
-                </p>
-            </sp-dialog>
-        </overlay-trigger>
-        ${extraText}
-    `;
-};
-
-export const modalManaged = (): TemplateResult => {
-    const closeEvent = new Event('close', { bubbles: true, composed: true });
-    return html`
-        <overlay-trigger type="modal" placement="none">
-            <sp-button slot="trigger">Open</sp-button>
-            <sp-dialog-wrapper
-                underlay
-                slot="click-content"
-                headline="Wrapped Dialog w/ Hero Image"
-                confirm-label="Keep Both"
-                secondary-label="Replace"
-                cancel-label="Cancel"
-                footer="Content for footer"
-                @confirm=${(event: Event & { target: DialogWrapper }): void => {
-                    event.target.dispatchEvent(closeEvent);
-                }}
-                @secondary=${(
-                    event: Event & { target: DialogWrapper }
-                ): void => {
-                    event.target.dispatchEvent(closeEvent);
-                }}
-                @cancel=${(event: Event & { target: DialogWrapper }): void => {
-                    event.target.dispatchEvent(closeEvent);
-                }}
-            >
-                <p>
-                    The
-                    <code>sp-dialog-wrapper</code>
-                    element has been prepared for use in an
-                    <code>overlay-trigger</code>
-                    element by it's combination of modal, underlay, etc. styles
-                    and features.
-                </p>
-            </sp-dialog-wrapper>
-        </overlay-trigger>
-        ${extraText}
-    `;
-};
-
-export const deepNesting = (): TemplateResult => {
-    const color = window.__swc_hack_knobs__.defaultColor;
-    const outter = color === 'light' ? 'dark' : 'light';
-    return html`
-        ${storyStyles}
-        <sp-theme
-            color=${outter}
-            theme=${window.__swc_hack_knobs__.defaultThemeVariant}
-            scale=${window.__swc_hack_knobs__.defaultScale}
-            dir=${window.__swc_hack_knobs__.defaultDirection}
-        >
-            <sp-theme
-                color=${color}
-                theme=${window.__swc_hack_knobs__.defaultThemeVariant}
-                scale=${window.__swc_hack_knobs__.defaultScale}
-                dir=${window.__swc_hack_knobs__.defaultDirection}
-            >
-                <recursive-popover
-                    tabindex=""
-                    style="
-                        background-color: var(--spectrum-global-color-gray-100);
-                        color: var(--spectrum-global-color-gray-800);
-                        padding: var(--spectrum-global-dimension-size-225);
-                    "
-                ></recursive-popover>
-            </sp-theme>
-        </sp-theme>
-    `;
-};
-
-export const edges = (): TemplateResult => {
-    return html`
-        <style>
-            .demo {
-                position: absolute;
-            }
-            .top-left {
-                top: 0;
-                left: 0;
-            }
-            .top-right {
-                top: 0;
-                right: 0;
-            }
-            .bottom-right {
-                bottom: 0;
-                right: 0;
-            }
-            .bottom-left {
-                bottom: 0;
-                left: 0;
-            }
-        </style>
-        <overlay-trigger class="demo top-left" placement="bottom">
-            <sp-button slot="trigger">
-                Top/
-                <br />
-                Left
-            </sp-button>
-            <sp-tooltip slot="hover-content" delayed open tip="bottom">
-                Triskaidekaphobia and More
-            </sp-tooltip>
-        </overlay-trigger>
-        <overlay-trigger class="demo top-right" placement="bottom">
-            <sp-button slot="trigger">
-                Top/
-                <br />
-                Right
-            </sp-button>
-            <sp-tooltip slot="hover-content" delayed open tip="bottom">
-                Triskaidekaphobia and More
-            </sp-tooltip>
-        </overlay-trigger>
-        <overlay-trigger class="demo bottom-left" placement="top">
-            <sp-button slot="trigger">
-                Bottom/
-                <br />
-                Left
-            </sp-button>
-            <sp-tooltip slot="hover-content" delayed open tip="top">
-                Triskaidekaphobia and More
-            </sp-tooltip>
-        </overlay-trigger>
-        <overlay-trigger placement="top" class="demo bottom-right">
-            <sp-button slot="trigger">
-                Bottom/
-                <br />
-                Right
-            </sp-button>
-            <sp-tooltip slot="hover-content" delayed open tip="top">
-                Triskaidekaphobia and More
-            </sp-tooltip>
-        </overlay-trigger>
-    `;
-};
-
-export const updated = (): TemplateResult => {
-    return html`
-        ${storyStyles}
-        <style>
-            sp-tooltip {
-                transition: none;
-            }
-        </style>
-        <overlay-drag>
-            <overlay-trigger class="demo top-left" placement="bottom">
-                <overlay-target-icon
-                    slot="trigger"
-                    style="translate(400px, 300px)"
-                ></overlay-target-icon>
-                <sp-tooltip slot="hover-content" delayed tip="bottom">
-                    Click to open popover
-                </sp-tooltip>
-                <sp-popover
-                    dialog
-                    slot="click-content"
-                    position="bottom"
-                    tip
-                    open
+                <sp-accordion
+                    allow-multiple
+                    @sp-accordion-item-toggle=${handleToggle}
                 >
-                    <div class="options-popover-content">
-                        <sp-slider
-                            value="5"
-                            step="0.5"
-                            min="0"
-                            max="20"
-                            label="Awesomeness"
-                        ></sp-slider>
-                        <div id="styled-div">
-                            The background of this div should be blue
-                        </div>
-                        <overlay-trigger id="inner-trigger" placement="bottom">
-                            <sp-button slot="trigger">Press Me</sp-button>
-                            <sp-popover
-                                dialog
-                                slot="click-content"
-                                placement="bottom"
-                                tip
-                                open
-                            >
-                                <div class="options-popover-content">
-                                    Another Popover
-                                </div>
-                            </sp-popover>
-
-                            <sp-tooltip
-                                slot="hover-content"
-                                delayed
-                                tip="bottom"
-                            >
-                                Click to open another popover.
-                            </sp-tooltip>
-                        </overlay-trigger>
-                    </div>
-                </sp-popover>
-            </overlay-trigger>
-        </overlay-drag>
-    `;
-};
-
-export const sideHoverDraggable = (): TemplateResult => {
-    return html`
-        ${storyStyles}
-        <style>
-            sp-tooltip {
-                transition: none;
-            }
-        </style>
-        <overlay-drag>
-            <overlay-trigger placement="right">
-                <overlay-target-icon slot="trigger"></overlay-target-icon>
-                <sp-tooltip slot="hover-content" delayed tip="right">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Vivamus egestas sed enim sed condimentum. Nunc facilisis
-                    scelerisque massa sed luctus. Orci varius natoque penatibus
-                    et magnis dis parturient montes, nascetur ridiculus mus.
-                    Suspendisse sagittis sodales purus vitae ultricies. Integer
-                    at dui sem. Sed quam tortor, ornare in nisi et, rhoncus
-                    lacinia mauris. Sed vel rutrum mauris, ac pellentesque nibh.
-                    Sed feugiat semper libero, sit amet vehicula orci fermentum
-                    id. Vivamus imperdiet egestas luctus. Mauris tincidunt
-                    malesuada ante, faucibus viverra nunc blandit a. Fusce et
-                    nisl nisi. Aenean dictum quam id mollis faucibus. Nulla a
-                    ultricies dui. In hac habitasse platea dictumst. Curabitur
-                    gravida lobortis vestibulum.
-                </sp-tooltip>
-            </overlay-trigger>
-        </overlay-drag>
-    `;
-};
-
-export const longpress = (): TemplateResult => {
-    return html`
-        <overlay-trigger placement="right-start">
-            <sp-action-button slot="trigger" hold-affordance>
-                <sp-icon-magnify slot="icon"></sp-icon-magnify>
-            </sp-action-button>
-            <sp-tooltip slot="hover-content">Search real hard...</sp-tooltip>
-            <sp-popover slot="longpress-content" tip>
-                <sp-action-group
-                    @change=${(event: Event & { target: HTMLElement }) =>
-                        event.target.dispatchEvent(
-                            new Event('close', { bubbles: true })
-                        )}
-                    selects="single"
-                    vertical
-                    style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
-                >
-                    <sp-action-button>
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                    </sp-action-button>
-                    <sp-action-button>
-                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
-                    </sp-action-button>
-                </sp-action-group>
+                    <sp-accordion-item label="Some things">
+                        <p>
+                            Thing
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            more things
+                        </p>
+                    </sp-accordion-item>
+                    <sp-accordion-item label="Other things">
+                        <p>
+                            Thing
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            more things
+                        </p>
+                    </sp-accordion-item>
+                    <sp-accordion-item label="More things">
+                        <p>
+                            Thing
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            more things
+                        </p>
+                    </sp-accordion-item>
+                    <sp-accordion-item label="Additional things">
+                        <p>
+                            Thing
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            more things
+                        </p>
+                    </sp-accordion-item>
+                </sp-accordion>
             </sp-popover>
         </overlay-trigger>
     `;
+};
+
+accordion.swc_vrt = {
+    skip: true,
 };
 
 export const clickAndHoverTargets = (): TemplateResult => {
@@ -738,9 +338,83 @@ clickAndHoverTargets.swc_vrt = {
     skip: true,
 };
 
-function nextFrame(): Promise<void> {
-    return new Promise((res) => requestAnimationFrame(() => res()));
+class ScrollForcer extends HTMLElement {
+    ready!: (value: boolean | PromiseLike<boolean>) => void;
+
+    constructor() {
+        super();
+        this.readyPromise = new Promise((res) => {
+            this.ready = res;
+        });
+        this.setup();
+    }
+
+    async setup(): Promise<void> {
+        await nextFrame();
+        await nextFrame();
+
+        this.previousElementSibling?.addEventListener(
+            'sp-opened',
+            this.doScroll
+        );
+        await nextFrame();
+        await nextFrame();
+        (this.previousElementSibling?.lastElementChild as OverlayTrigger).open =
+            'click';
+    }
+
+    doScroll = async (): Promise<void> => {
+        this.previousElementSibling?.addEventListener(
+            'sp-opened',
+            this.doScroll
+        );
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        if (document.scrollingElement) {
+            document.scrollingElement.scrollTop = 100;
+        }
+
+        await nextFrame();
+        await nextFrame();
+        this.ready(true);
+    };
+
+    private readyPromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.readyPromise;
+    }
 }
+
+customElements.define('scroll-forcer', ScrollForcer);
+
+export const clickContentClosedOnScroll = (
+    args: Properties
+): TemplateResult => html`
+    <div style="margin: 50vh 0 100vh;">
+        ${template({
+            ...args,
+        })}
+    </div>
+`;
+clickContentClosedOnScroll.decorators = [
+    (story: () => TemplateResult): TemplateResult => html`
+        <style>
+            html,
+            body,
+            #root,
+            #root-inner,
+            sp-story-decorator {
+                height: auto !important;
+            }
+        </style>
+        ${story()}
+        <scroll-forcer></scroll-forcer>
+    `,
+];
 
 class ComplexModalReady extends HTMLElement {
     ready!: (value: boolean | PromiseLike<boolean>) => void;
@@ -868,6 +542,515 @@ export const complexModal = (): TemplateResult => {
 
 complexModal.decorators = [complexModalDecorator];
 
+export const customizedClickContent = (
+    args: Properties
+): TemplateResult => html`
+    <style>
+        overlay-trigger {
+            --styled-div-background-color: var(
+                --spectrum-semantic-cta-background-color-default
+            );
+            --spectrum-button-m-accent-fill-texticon-background-color: rebeccapurple;
+        }
+    </style>
+    ${template({
+        ...args,
+        open: 'click',
+    })}
+`;
+
+export const deep = (): TemplateResult => html`
+    <overlay-trigger>
+        <sp-button variant="primary" slot="trigger">
+            Open popover 1 with buttons + selfmanaged Tooltips
+        </sp-button>
+        <sp-popover dialog slot="click-content" direction="bottom" tip>
+            <sp-action-button>
+                <sp-tooltip self-managed placement="bottom" offset="0">
+                    My Tooltip 1
+                </sp-tooltip>
+                A
+            </sp-action-button>
+            <sp-action-button>
+                <sp-tooltip self-managed placement="bottom" offset="0">
+                    My Tooltip 1
+                </sp-tooltip>
+                B
+            </sp-action-button>
+        </sp-popover>
+    </overlay-trigger>
+
+    <overlay-trigger>
+        <sp-button variant="primary" slot="trigger">
+            Open popover 2 with buttons without ToolTips
+        </sp-button>
+        <sp-popover dialog slot="click-content" direction="bottom" tip>
+            <sp-action-button>X</sp-action-button>
+            <sp-action-button>Y</sp-action-button>
+        </sp-popover>
+    </overlay-trigger>
+`;
+deep.swc_vrt = {
+    skip: true,
+};
+
+export const deepNesting = (): TemplateResult => {
+    const color = window.__swc_hack_knobs__.defaultColor;
+    const outter = color === 'light' ? 'dark' : 'light';
+    return html`
+        ${storyStyles}
+        <sp-theme
+            color=${outter}
+            theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+            scale=${window.__swc_hack_knobs__.defaultScale}
+            dir=${window.__swc_hack_knobs__.defaultDirection}
+        >
+            <sp-theme
+                color=${color}
+                theme=${window.__swc_hack_knobs__.defaultThemeVariant}
+                scale=${window.__swc_hack_knobs__.defaultScale}
+                dir=${window.__swc_hack_knobs__.defaultDirection}
+            >
+                <recursive-popover
+                    tabindex=""
+                    style="
+                        background-color: var(--spectrum-global-color-gray-100);
+                        color: var(--spectrum-global-color-gray-800);
+                        padding: var(--spectrum-global-dimension-size-225);
+                    "
+                ></recursive-popover>
+            </sp-theme>
+        </sp-theme>
+    `;
+};
+
+class DefinedOverlayReady extends HTMLElement {
+    ready!: (value: boolean | PromiseLike<boolean>) => void;
+
+    connectedCallback(): void {
+        if (!!this.ready) return;
+
+        this.readyPromise = new Promise((res) => {
+            this.ready = res;
+            this.setup();
+        });
+    }
+
+    overlay!: OverlayTrigger;
+    popover!: PopoverContent;
+
+    async setup(): Promise<void> {
+        await nextFrame();
+        await nextFrame();
+
+        this.overlay = document.querySelector(
+            `overlay-trigger`
+        ) as OverlayTrigger;
+        const button = document.querySelector(
+            `[slot="trigger"]`
+        ) as HTMLButtonElement;
+        this.overlay.addEventListener('sp-opened', this.handleTriggerOpened);
+        await nextFrame();
+        await nextFrame();
+        button.click();
+    }
+
+    handleTriggerOpened = async (): Promise<void> => {
+        this.overlay.removeEventListener('sp-opened', this.handleTriggerOpened);
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+
+        this.popover = document.querySelector(
+            'popover-content'
+        ) as PopoverContent;
+        if (!this.popover) {
+            return;
+        }
+        this.popover.addEventListener('sp-opened', this.handlePopoverOpen);
+        await nextFrame();
+        await nextFrame();
+        this.popover.button.click();
+    };
+
+    handlePopoverOpen = async (): Promise<void> => {
+        await nextFrame();
+
+        this.ready(true);
+    };
+
+    disconnectedCallback(): void {
+        this.overlay.removeEventListener('sp-opened', this.handleTriggerOpened);
+        this.popover.removeEventListener('sp-opened', this.handlePopoverOpen);
+    }
+
+    private readyPromise: Promise<boolean> = Promise.resolve(false);
+
+    get updateComplete(): Promise<boolean> {
+        return this.readyPromise;
+    }
+}
+
+customElements.define('defined-overlay-ready', DefinedOverlayReady);
+
+const definedOverlayDecorator = (
+    story: () => TemplateResult
+): TemplateResult => {
+    return html`
+        ${story()}
+        <defined-overlay-ready></defined-overlay-ready>
+    `;
+};
+
+export const definedOverlayElement = (): TemplateResult => {
+    return html`
+        <overlay-trigger placement="bottom" type="modal">
+            <sp-button variant="primary" slot="trigger">Open popover</sp-button>
+            <sp-popover slot="click-content" direction="bottom" dialog>
+                <popover-content></popover-content>
+            </sp-popover>
+        </overlay-trigger>
+    `;
+};
+
+definedOverlayElement.decorators = [definedOverlayDecorator];
+
+export const detachedElement = (): TemplateResult => {
+    let closeOverlay: (() => void) | undefined;
+    const openDetachedOverlayContent = async ({
+        target,
+    }: {
+        target: HTMLElement;
+    }): Promise<void> => {
+        if (closeOverlay) {
+            closeOverlay();
+            closeOverlay = undefined;
+            return;
+        }
+        const div = document.createElement('div');
+        div.textContent = 'This div is overlaid';
+        div.setAttribute(
+            'style',
+            `
+            background-color: var(--spectrum-global-color-gray-50);
+            color: var(--spectrum-global-color-gray-800);
+            border: 1px solid;
+            padding: 2em;
+        `
+        );
+        closeOverlay = await Overlay.open(target, 'click', div, {
+            offset: 0,
+            placement: 'bottom',
+        });
+    };
+    requestAnimationFrame(() => {
+        openDetachedOverlayContent({
+            target: document.querySelector(
+                '#detached-content-trigger'
+            ) as HTMLElement,
+        });
+    });
+    return html`
+        <sp-action-button
+            id="detached-content-trigger"
+            @click=${openDetachedOverlayContent}
+            @sp-closed=${() => (closeOverlay = undefined)}
+        >
+            <sp-icon-open-in
+                slot="icon"
+                label="Open in overlay"
+            ></sp-icon-open-in>
+        </sp-action-button>
+    `;
+};
+
+export const edges = (): TemplateResult => {
+    return html`
+        <style>
+            .demo {
+                position: absolute;
+            }
+            .top-left {
+                top: 0;
+                left: 0;
+            }
+            .top-right {
+                top: 0;
+                right: 0;
+            }
+            .bottom-right {
+                bottom: 0;
+                right: 0;
+            }
+            .bottom-left {
+                bottom: 0;
+                left: 0;
+            }
+        </style>
+        <overlay-trigger class="demo top-left" placement="bottom">
+            <sp-button slot="trigger">
+                Top/
+                <br />
+                Left
+            </sp-button>
+            <sp-tooltip slot="hover-content" delayed tip="bottom">
+                Triskaidekaphobia and More
+            </sp-tooltip>
+        </overlay-trigger>
+        <overlay-trigger class="demo top-right" placement="bottom">
+            <sp-button slot="trigger">
+                Top/
+                <br />
+                Right
+            </sp-button>
+            <sp-tooltip slot="hover-content" delayed tip="bottom">
+                Triskaidekaphobia and More
+            </sp-tooltip>
+        </overlay-trigger>
+        <overlay-trigger class="demo bottom-left" placement="top">
+            <sp-button slot="trigger">
+                Bottom/
+                <br />
+                Left
+            </sp-button>
+            <sp-tooltip slot="hover-content" delayed tip="top">
+                Triskaidekaphobia and More
+            </sp-tooltip>
+        </overlay-trigger>
+        <overlay-trigger placement="top" class="demo bottom-right">
+            <sp-button slot="trigger">
+                Bottom/
+                <br />
+                Right
+            </sp-button>
+            <sp-tooltip slot="hover-content" delayed tip="top">
+                Triskaidekaphobia and More
+            </sp-tooltip>
+        </overlay-trigger>
+    `;
+};
+
+export const inline = (): TemplateResult => {
+    const closeEvent = new Event('close', { bubbles: true, composed: true });
+    return html`
+        <overlay-trigger type="inline">
+            <sp-button slot="trigger">Open</sp-button>
+            <sp-popover slot="click-content">
+                <sp-button
+                    @click=${(event: Event & { target: HTMLElement }): void => {
+                        event.target.dispatchEvent(closeEvent);
+                    }}
+                >
+                    Close
+                </sp-button>
+            </sp-popover>
+        </overlay-trigger>
+        ${extraText}
+    `;
+};
+
+export const longpress = (): TemplateResult => {
+    return html`
+        <overlay-trigger placement="right-start">
+            <sp-action-button slot="trigger" hold-affordance>
+                <sp-icon-magnify slot="icon"></sp-icon-magnify>
+            </sp-action-button>
+            <sp-tooltip slot="hover-content">Search real hard...</sp-tooltip>
+            <sp-popover slot="longpress-content" tip>
+                <sp-action-group
+                    @change=${(event: Event & { target: HTMLElement }) =>
+                        event.target.dispatchEvent(
+                            new Event('close', { bubbles: true })
+                        )}
+                    selects="single"
+                    vertical
+                    style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+                >
+                    <sp-action-button>
+                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                    </sp-action-button>
+                    <sp-action-button>
+                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                    </sp-action-button>
+                    <sp-action-button>
+                        <sp-icon-magnify slot="icon"></sp-icon-magnify>
+                    </sp-action-button>
+                </sp-action-group>
+            </sp-popover>
+        </overlay-trigger>
+    `;
+};
+
+export const modalLoose = (): TemplateResult => {
+    const closeEvent = new Event('close', { bubbles: true, composed: true });
+    return html`
+        <overlay-trigger type="modal" placement="none">
+            <sp-button slot="trigger">Open</sp-button>
+            <sp-dialog
+                size="s"
+                dismissable
+                slot="click-content"
+                @closed=${(event: Event & { target: DialogWrapper }) =>
+                    event.target.dispatchEvent(closeEvent)}
+            >
+                <h2 slot="heading">Loose Dialog</h2>
+                <p>
+                    The
+                    <code>sp-dialog</code>
+                    element is not "meant" to be a modal alone. In that way it
+                    does not manage its own
+                    <code>open</code>
+                    attribute or outline when it should have
+                    <code>pointer-events: auto</code>
+                    . It's a part of this test suite to prove that content in
+                    this way can be used in an
+                    <code>overlay-trigger</code>
+                    element.
+                </p>
+            </sp-dialog>
+        </overlay-trigger>
+        ${extraText}
+    `;
+};
+
+export const modalManaged = (): TemplateResult => {
+    const closeEvent = new Event('close', { bubbles: true, composed: true });
+    return html`
+        <overlay-trigger type="modal" placement="none">
+            <sp-button slot="trigger">Open</sp-button>
+            <sp-dialog-wrapper
+                underlay
+                slot="click-content"
+                headline="Wrapped Dialog w/ Hero Image"
+                confirm-label="Keep Both"
+                secondary-label="Replace"
+                cancel-label="Cancel"
+                footer="Content for footer"
+                @confirm=${(event: Event & { target: DialogWrapper }): void => {
+                    event.target.dispatchEvent(closeEvent);
+                }}
+                @secondary=${(
+                    event: Event & { target: DialogWrapper }
+                ): void => {
+                    event.target.dispatchEvent(closeEvent);
+                }}
+                @cancel=${(event: Event & { target: DialogWrapper }): void => {
+                    event.target.dispatchEvent(closeEvent);
+                }}
+            >
+                <p>
+                    The
+                    <code>sp-dialog-wrapper</code>
+                    element has been prepared for use in an
+                    <code>overlay-trigger</code>
+                    element by it's combination of modal, underlay, etc. styles
+                    and features.
+                </p>
+            </sp-dialog-wrapper>
+        </overlay-trigger>
+        ${extraText}
+    `;
+};
+
+export const modalWithinNonModal = (): TemplateResult => {
+    return html`
+        <overlay-trigger type="inline">
+            <sp-button variant="primary" slot="trigger">
+                Open inline overlay
+            </sp-button>
+            <sp-popover slot="click-content" dialog>
+                <overlay-trigger type="modal">
+                    <sp-button variant="primary" slot="trigger">
+                        Open modal overlay
+                    </sp-button>
+                    <sp-popover slot="click-content" dialog>
+                        Modal overlay
+                    </sp-popover>
+                </overlay-trigger>
+            </sp-popover>
+        </overlay-trigger>
+    `;
+};
+
+export const noCloseOnResize = (args: Properties): TemplateResult => html`
+    <style>
+        sp-button:hover {
+            border: 10px solid;
+            width: 100px;
+        }
+    </style>
+    ${template({
+        ...args,
+        open: 'click',
+    })}
+`;
+noCloseOnResize.swc_vrt = {
+    skip: true,
+};
+
+export const openClickContent = (args: Properties): TemplateResult =>
+    template({
+        ...args,
+        open: 'click',
+    });
+
+export const openHoverContent = (args: Properties): TemplateResult =>
+    template({
+        ...args,
+        open: 'hover',
+    });
+
+export const replace = (): TemplateResult => {
+    const closeEvent = new Event('close', { bubbles: true, composed: true });
+    return html`
+        <overlay-trigger type="replace">
+            <sp-button slot="trigger">Open</sp-button>
+            <sp-popover slot="click-content">
+                <sp-button
+                    @click=${(event: Event & { target: HTMLElement }): void => {
+                        event.target.dispatchEvent(closeEvent);
+                    }}
+                >
+                    Close
+                </sp-button>
+            </sp-popover>
+        </overlay-trigger>
+        ${extraText}
+    `;
+};
+
+export const sideHoverDraggable = (): TemplateResult => {
+    return html`
+        ${storyStyles}
+        <style>
+            sp-tooltip {
+                transition: none;
+            }
+        </style>
+        <overlay-drag>
+            <overlay-trigger placement="right">
+                <overlay-target-icon slot="trigger"></overlay-target-icon>
+                <sp-tooltip slot="hover-content" delayed tip="right">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Vivamus egestas sed enim sed condimentum. Nunc facilisis
+                    scelerisque massa sed luctus. Orci varius natoque penatibus
+                    et magnis dis parturient montes, nascetur ridiculus mus.
+                    Suspendisse sagittis sodales purus vitae ultricies. Integer
+                    at dui sem. Sed quam tortor, ornare in nisi et, rhoncus
+                    lacinia mauris. Sed vel rutrum mauris, ac pellentesque nibh.
+                    Sed feugiat semper libero, sit amet vehicula orci fermentum
+                    id. Vivamus imperdiet egestas luctus. Mauris tincidunt
+                    malesuada ante, faucibus viverra nunc blandit a. Fusce et
+                    nisl nisi. Aenean dictum quam id mollis faucibus. Nulla a
+                    ultricies dui. In hac habitasse platea dictumst. Curabitur
+                    gravida lobortis vestibulum.
+                </sp-tooltip>
+            </overlay-trigger>
+        </overlay-drag>
+    `;
+};
+
 export const superComplexModal = (): TemplateResult => {
     return html`
         <overlay-trigger type="modal" placement="none">
@@ -903,6 +1086,89 @@ export const superComplexModal = (): TemplateResult => {
             </sp-popover>
         </overlay-trigger>
     `;
+};
+
+export const updated = (): TemplateResult => {
+    return html`
+        ${storyStyles}
+        <style>
+            sp-tooltip {
+                transition: none;
+            }
+        </style>
+        <overlay-drag>
+            <overlay-trigger class="demo top-left" placement="bottom">
+                <overlay-target-icon
+                    slot="trigger"
+                    style="translate(400px, 300px)"
+                ></overlay-target-icon>
+                <sp-tooltip slot="hover-content" delayed tip="bottom">
+                    Click to open popover
+                </sp-tooltip>
+                <sp-popover dialog slot="click-content" position="bottom" tip>
+                    <div class="options-popover-content">
+                        <sp-slider
+                            value="5"
+                            step="0.5"
+                            min="0"
+                            max="20"
+                            label="Awesomeness"
+                        ></sp-slider>
+                        <div id="styled-div">
+                            The background of this div should be blue
+                        </div>
+                        <overlay-trigger id="inner-trigger" placement="bottom">
+                            <sp-button slot="trigger">Press Me</sp-button>
+                            <sp-popover
+                                dialog
+                                slot="click-content"
+                                placement="bottom"
+                                tip
+                            >
+                                <div class="options-popover-content">
+                                    Another Popover
+                                </div>
+                            </sp-popover>
+
+                            <sp-tooltip
+                                slot="hover-content"
+                                delayed
+                                tip="bottom"
+                            >
+                                Click to open another popover.
+                            </sp-tooltip>
+                        </overlay-trigger>
+                    </div>
+                </sp-popover>
+            </overlay-trigger>
+        </overlay-drag>
+    `;
+};
+
+export const updating = (): TemplateResult => {
+    const update = (): void => {
+        const button = document.querySelector('[slot="trigger"]') as Button;
+        button.style.left = `${Math.floor(Math.random() * 200)}px`;
+        button.style.top = `${Math.floor(Math.random() * 200)}px`;
+        button.style.position = 'fixed';
+        Overlay.update();
+    };
+    return html`
+        <overlay-trigger type="click">
+            <sp-button variant="primary" slot="trigger">
+                Open inline overlay
+            </sp-button>
+            <sp-popover slot="click-content" dialog>
+                <sp-button variant="primary" @click=${update}>
+                    Update trigger location.
+                </sp-button>
+            </sp-popover>
+        </overlay-trigger>
+    `;
+};
+
+updating.swc_vrt = {
+    skip: true,
 };
 
 class StartEndContextmenu extends HTMLElement {
@@ -983,253 +1249,4 @@ export const virtualElement = (args: Properties): TemplateResult => {
 
 virtualElement.args = {
     placement: 'right-start' as Placement,
-};
-
-export const detachedElement = (): TemplateResult => {
-    let closeOverlay: (() => void) | undefined;
-    const openDetachedOverlayContent = async ({
-        target,
-    }: {
-        target: HTMLElement;
-    }): Promise<void> => {
-        if (closeOverlay) {
-            closeOverlay();
-            closeOverlay = undefined;
-            return;
-        }
-        const div = document.createElement('div');
-        div.textContent = 'This div is overlaid';
-        div.setAttribute(
-            'style',
-            `
-            background-color: var(--spectrum-global-color-gray-50);
-            color: var(--spectrum-global-color-gray-800);
-            border: 1px solid;
-            padding: 2em;
-        `
-        );
-        closeOverlay = await Overlay.open(target, 'click', div, {
-            offset: 0,
-            placement: 'bottom',
-        });
-    };
-    requestAnimationFrame(() => {
-        openDetachedOverlayContent({
-            target: document.querySelector(
-                '#detached-content-trigger'
-            ) as HTMLElement,
-        });
-    });
-    return html`
-        <sp-action-button
-            id="detached-content-trigger"
-            @click=${openDetachedOverlayContent}
-            @sp-closed=${() => (closeOverlay = undefined)}
-        >
-            <sp-icon-open-in
-                slot="icon"
-                label="Open in overlay"
-            ></sp-icon-open-in>
-        </sp-action-button>
-    `;
-};
-
-class DefinedOverlayReady extends HTMLElement {
-    ready!: (value: boolean | PromiseLike<boolean>) => void;
-
-    constructor() {
-        super();
-        this.readyPromise = new Promise((res) => {
-            this.ready = res;
-            this.setup();
-        });
-    }
-
-    async setup(): Promise<void> {
-        await nextFrame();
-
-        const overlay = document.querySelector(
-            `overlay-trigger`
-        ) as OverlayTrigger;
-        const button = document.querySelector(
-            `[slot="trigger"]`
-        ) as HTMLButtonElement;
-        overlay.addEventListener('sp-opened', this.handleTriggerOpened);
-        button.click();
-    }
-
-    handleTriggerOpened = async (): Promise<void> => {
-        await nextFrame();
-
-        const popover = document.querySelector('popover-content');
-        if (!popover) {
-            return;
-        }
-        popover.addEventListener('sp-opened', this.handlePopoverOpen);
-        popover.button.click();
-    };
-
-    handlePopoverOpen = async (): Promise<void> => {
-        await nextFrame();
-
-        this.ready(true);
-    };
-
-    private readyPromise: Promise<boolean> = Promise.resolve(false);
-
-    get updateComplete(): Promise<boolean> {
-        return this.readyPromise;
-    }
-}
-
-customElements.define('defined-overlay-ready', DefinedOverlayReady);
-
-const definedOverlayDecorator = (
-    story: () => TemplateResult
-): TemplateResult => {
-    return html`
-        ${story()}
-        <defined-overlay-ready></defined-overlay-ready>
-    `;
-};
-
-export const definedOverlayElement = (): TemplateResult => {
-    return html`
-        <overlay-trigger placement="bottom" type="modal">
-            <sp-button variant="primary" slot="trigger">Open popover</sp-button>
-            <sp-popover slot="click-content" direction="bottom" dialog>
-                <popover-content></popover-content>
-            </sp-popover>
-        </overlay-trigger>
-    `;
-};
-
-definedOverlayElement.decorators = [definedOverlayDecorator];
-
-export const modalWithinNonModal = (): TemplateResult => {
-    return html`
-        <overlay-trigger type="inline">
-            <sp-button variant="primary" slot="trigger">
-                Open inline overlay
-            </sp-button>
-            <sp-popover slot="click-content" dialog>
-                <overlay-trigger type="modal">
-                    <sp-button variant="primary" slot="trigger">
-                        Open modal overlay
-                    </sp-button>
-                    <sp-popover slot="click-content" dialog>
-                        Modal overlay
-                    </sp-popover>
-                </overlay-trigger>
-            </sp-popover>
-        </overlay-trigger>
-    `;
-};
-
-export const updating = (): TemplateResult => {
-    const update = (): void => {
-        const button = document.querySelector('[slot="trigger"]') as Button;
-        button.style.left = `${Math.floor(Math.random() * 200)}px`;
-        button.style.top = `${Math.floor(Math.random() * 200)}px`;
-        button.style.position = 'fixed';
-        Overlay.update();
-    };
-    return html`
-        <overlay-trigger type="click">
-            <sp-button variant="primary" slot="trigger">
-                Open inline overlay
-            </sp-button>
-            <sp-popover slot="click-content" dialog>
-                <sp-button variant="primary" @click=${update}>
-                    Update trigger location.
-                </sp-button>
-            </sp-popover>
-        </overlay-trigger>
-    `;
-};
-
-updating.swc_vrt = {
-    skip: true,
-};
-
-export const accordion = (): TemplateResult => {
-    const handleToggle = (): void => {
-        Overlay.update();
-    };
-    return html`
-        <overlay-trigger type="modal" placement="right">
-            <sp-button variant="primary" slot="trigger">
-                Open overlay w/ accordion
-            </sp-button>
-            <div slot="click-content" style="max-height: 100%;display: flex;">
-                <sp-popover
-                    open
-                    dialog
-                    style="overflow-y: scroll;position: static;"
-                >
-                    <sp-accordion
-                        allow-multiple
-                        @sp-accordion-item-toggle=${handleToggle}
-                    >
-                        <sp-accordion-item label="Some things">
-                            <p>
-                                Thing
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                more things
-                            </p>
-                        </sp-accordion-item>
-                        <sp-accordion-item label="Other things">
-                            <p>
-                                Thing
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                more things
-                            </p>
-                        </sp-accordion-item>
-                        <sp-accordion-item label="More things">
-                            <p>
-                                Thing
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                more things
-                            </p>
-                        </sp-accordion-item>
-                        <sp-accordion-item label="Additional things">
-                            <p>
-                                Thing
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                more things
-                            </p>
-                        </sp-accordion-item>
-                    </sp-accordion>
-                </sp-popover>
-            </div>
-        </overlay-trigger>
-    `;
-};
-
-accordion.swc_vrt = {
-    skip: true,
 };

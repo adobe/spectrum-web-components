@@ -52,7 +52,7 @@ async function styledFixture<T extends Element>(
     return test.children[0] as T;
 }
 
-describe('Overlay Trigger - Hover', () => {
+describe.skip('Overlay Trigger - Hover', () => {
     it('displays `hover` declaratively', async () => {
         const openedSpy = spy();
         const closedSpy = spy();
@@ -86,7 +86,7 @@ describe('Overlay Trigger - Hover', () => {
             timeout: 2000,
         });
     });
-    describe('"tooltip" mouse interactions', () => {
+    describe.skip('"tooltip" mouse interactions', () => {
         let el: OverlayTrigger;
         let button: ActionButton;
         let tooltip: Tooltip;

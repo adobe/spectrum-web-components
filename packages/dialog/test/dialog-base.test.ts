@@ -11,11 +11,11 @@ governing permissions and limitations under the License.
 */
 
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
     html,
-    nextFrame,
     oneEvent,
 } from '@open-wc/testing';
 import { TemplateResult } from '@spectrum-web-components/base';
@@ -42,7 +42,7 @@ async function styledFixture<T extends Element>(
 }
 
 const overlayTrigger = (story: () => TemplateResult): TemplateResult => html`
-    <overlay-trigger type="modal" placement="none">
+    <overlay-trigger type="modal">
         <sp-button slot="trigger" variant="primary">Toggle Dialog</sp-button>
         ${story()}
     </overlay-trigger>
@@ -72,36 +72,33 @@ describe('dialog base', () => {
 
         expect(el.open).to.be.undefined;
         expect(dialog.open).to.be.false;
-        expect(dialog.parentElement?.localName).to.equal('overlay-trigger');
-        await nextFrame();
         const opened = oneEvent(el, 'sp-opened');
         el.open = 'click';
         await opened;
-        await nextFrame();
 
         expect(dialog.open).to.be.true;
         expect(el.open).to.be.equal('click');
-        expect(dialog.parentElement?.localName).to.equal('active-overlay');
 
         secondaryButton.click();
+        // Give time to ensure reactions DO NOT close the dialog.
+        await aTimeout(100);
 
         expect(el.open).to.be.equal('click');
-        expect(dialog.parentElement?.localName).to.equal('active-overlay');
 
         negativeButton.click();
+        // Give time to ensure reactions DO NOT close the dialog.
+        await aTimeout(100);
 
         expect(el.open).to.be.equal('click');
-        expect(dialog.parentElement?.localName).to.equal('active-overlay');
+
         const closed = oneEvent(el, 'sp-closed');
-        el.open = undefined;
+        dialog.open = false;
         await closed;
         await elementUpdated(el);
 
         expect(dialog.open).to.be.false;
-        expect(el.open).to.be.undefined;
-        expect(dialog.parentElement?.localName).to.equal('overlay-trigger');
     });
-    it('does not close by default with interacting with buttons when recycled', async () => {
+    it('does not close by default when interacting with buttons when recycled', async () => {
         const el = await styledFixture<OverlayTrigger>(
             overlayTrigger(
                 () => html`
@@ -124,26 +121,25 @@ describe('dialog base', () => {
 
         expect(el.open).to.be.undefined;
         expect(dialog.open).to.be.false;
-        expect(dialog.parentElement?.localName).to.equal('overlay-trigger');
-        await nextFrame();
         const opened = oneEvent(el, 'sp-opened');
         el.open = 'click';
         await opened;
-        await nextFrame();
 
         expect(dialog.open).to.be.true;
         expect(el.open).to.be.equal('click');
-        expect(dialog.parentElement?.localName).to.equal('active-overlay');
 
         secondaryButton.click();
+        // Give time to ensure reactions DO NOT close the dialog.
+        await aTimeout(100);
 
         expect(el.open).to.be.equal('click');
-        expect(dialog.parentElement?.localName).to.equal('active-overlay');
 
         negativeButton.click();
+        // Give time to ensure reactions DO NOT close the dialog.
+        await aTimeout(100);
 
         expect(el.open).to.be.equal('click');
-        expect(dialog.parentElement?.localName).to.equal('active-overlay');
+
         const closed = oneEvent(el, 'sp-closed');
         dialog.open = false;
         await closed;
