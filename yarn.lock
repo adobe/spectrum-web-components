@@ -4313,9 +4313,9 @@
   integrity sha512-YUHIqjJ3vqlF4wsyCC7VEHaV4KsbT35FnmyGvykJg5kcbXHHkVa2ioyRrknx4jwqhWWEX8e/SeKxS6k3jd4aFg==
 
 "@spectrum-css/expressvars@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/expressvars/-/expressvars-2.0.0.tgz#462c1679df96d515780b3ee7fea2b8bccbd901bc"
-  integrity sha512-K8hwoWOHcZTwLo6P3Itvl/ggZ+GChFyNoj5Rvlgj8R9/p62Eb9Vp9UDx2Mcg1zCJN2sBZAiqhYRQM+WawRtx5w==
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/expressvars/-/expressvars-2.0.1.tgz#54c3465d1d3a06b87c066cbf9fd43ff44d6b052f"
+  integrity sha512-oHvxnaK24N4tAjt1pkyXbMHseXoKlPK947PWWlzWWJLGGJpW6FwV33cuyddKupHjYD/khoVbY3kux2MwRVCMDQ==
 
 "@spectrum-css/fieldgroup@^4.0.2":
   version "4.0.2"
