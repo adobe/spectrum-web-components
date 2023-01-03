@@ -55,14 +55,7 @@ export async function search(value: string): Promise<ResultGroup[]> {
 
     const search = index.search(value);
     for (const item of search) {
-        const parts = item.ref.split('/');
-        const name = parts.pop() as string;
-        let category = '';
-        if (parts.length < 3) {
-            category = 'Guides';
-        } else {
-            category = parts.pop() as string;
-        }
+        const { category, name, url } = JSON.parse(item.ref);
 
         if (!collatedResults.has(category)) {
             collatedResults.set(category, {
@@ -76,7 +69,7 @@ export async function search(value: string): Promise<ResultGroup[]> {
             catagoryData.results.push({
                 name,
                 label: label(name),
-                url: item.ref,
+                url,
             });
         }
     }

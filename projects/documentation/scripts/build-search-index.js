@@ -52,12 +52,17 @@ async function main() {
         }
         const content = await fs.readFile(path, { encoding: 'utf8' });
         const body = content.replace(/```((.|\s)*?)```/g, '');
+        const title = nameToTitle(componentName);
         documents.push({
-            title: nameToTitle(componentName),
+            title,
             body,
-            url: `/${
-                process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''
-            }components/${componentName}`,
+            metadata: JSON.stringify({
+                category: 'Components',
+                name: title,
+                url: `/${
+                    process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''
+                }components/${componentName}`,
+            }),
         });
     }
 
@@ -75,12 +80,17 @@ async function main() {
         }
         const content = await fs.readFile(path, { encoding: 'utf8' });
         const body = content.replace(/```((.|\s)*?)```/g, '');
+        const title = nameToTitle(componentName);
         documents.push({
-            title: nameToTitle(componentName),
+            title,
             body,
-            url: `/${
-                process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''
-            }tools/${componentName}`,
+            metadata: JSON.stringify({
+                category: 'Tools',
+                name: title,
+                url: `/${
+                    process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''
+                }tools/${componentName}`,
+            }),
         });
     }
 
@@ -100,19 +110,25 @@ async function main() {
         const guideDir = path.split('/').at(-2);
         const content = await fs.readFile(path, { encoding: 'utf8' });
         const body = content.replace(/```((.|\s)*?)```/g, '');
+        const title = nameToTitle(guideName);
         documents.push({
-            title: nameToTitle(guideName),
+            title,
             body,
-            url: `/${process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''}${
-                guideDir !== 'content' ? `${guideDir}/` : ''
-            }${guideName}`,
+            metadata: JSON.stringify({
+                category: 'Guides',
+                name: title,
+                url: `/${process.env.SWC_DIR ? `${process.env.SWC_DIR}/` : ''}${
+                    guideDir !== 'content' ? `${guideDir}/` : ''
+                }${guideName}`,
+            }),
         });
     }
 
     const index = lunr(function () {
-        this.ref('url');
+        this.ref('metadata');
         this.field('title', { boost: 10 });
         this.field('body');
+        this.field('category');
 
         for (const document of documents) {
             this.add(document);
