@@ -99,7 +99,7 @@
         "@open-wc/testing": "^3.1.7",
         "@rollup/plugin-commonjs": "^21.0.1",
         "@rollup/plugin-json": "^5.0.0",
-        "@rollup/plugin-node-resolve": "^13.1.3",
+        "@rollup/plugin-node-resolve": "^15.0.1",
         "@sindresorhus/slugify": "^1.1.2",
         "@spectrum-web-components/eslint-plugin": "file:./linters/eslint",
         "@types/chai": "^4.1.7",
