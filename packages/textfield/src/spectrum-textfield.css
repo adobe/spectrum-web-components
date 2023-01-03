@@ -77,6 +77,7 @@ governing permissions and limitations under the License.
     );
     --spectrum-textfield-font-family: var(--spectrum-font-family-base);
     --spectrum-textfield-font-weight: var(--spectrum-font-weight-regular);
+    --spectrum-textfield-placeholder-font-size: var(--spectrum-font-size-100);
     --spectrum-textfield-character-count-font-family: var(
         --spectrum-font-family-base
     );
@@ -992,7 +993,7 @@ governing permissions and limitations under the License.
    * .is-invalid:focus .spectrum-Textfield-input:hover,
    * .is-invalid .spectrum-Textfield-input:focus:hover */
 }
-.input.focus-visible,
+:host([invalid]) .input.focus-visible,
 :host([invalid][focused]) #textfield .input {
     border-color: var(
         --highcontrast-textfield-border-color-invalid-keyboard-focus,
@@ -1001,10 +1002,10 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-border-color-invalid-keyboard-focus)
         )
     ); /* .is-invalid.is-keyboardFocused .spectrum-Textfield-input,
-   * .spectrum-Textfield-input.focus-ring,
-   * .spectrum-Textfield-input:focus-visible */
+   * .is-invalid .spectrum-Textfield-input.focus-ring,
+   * .is-invalid .spectrum-Textfield-input:focus-visible */
 }
-.input:focus-visible,
+:host([invalid]) .input:focus-visible,
 :host([invalid][focused]) #textfield .input {
     border-color: var(
         --highcontrast-textfield-border-color-invalid-keyboard-focus,
@@ -1013,8 +1014,8 @@ governing permissions and limitations under the License.
             var(--spectrum-textfield-border-color-invalid-keyboard-focus)
         )
     ); /* .is-invalid.is-keyboardFocused .spectrum-Textfield-input,
-   * .spectrum-Textfield-input.focus-ring,
-   * .spectrum-Textfield-input:focus-visible */
+   * .is-invalid .spectrum-Textfield-input.focus-ring,
+   * .is-invalid .spectrum-Textfield-input:focus-visible */
 }
 .input:disabled,
 :host([disabled]) #textfield .input,

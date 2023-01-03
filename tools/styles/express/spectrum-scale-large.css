@@ -310,7 +310,4 @@ governing permissions and limitations under the License.
     --spectrum-progressbar-xl-border-radius: var(
         --spectrum-global-dimension-static-size-75
     );
-    --spectrum-textfield-m-texticon-padding-left: var(
-        --spectrum-global-dimension-static-size-150
-    );
 }

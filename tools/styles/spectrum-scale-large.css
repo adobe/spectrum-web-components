@@ -321,12 +321,4 @@ governing permissions and limitations under the License.
     --spectrum-progressbar-xl-border-radius: var(
         --spectrum-global-dimension-static-size-75
     );
-<<<<<<< HEAD
-    --spectrum-textfield-m-texticon-padding-left: var(
-        --spectrum-global-dimension-static-size-150
-=======
-    --spectrum-tooltip-neutral-text-margin-bottom: var(
-        --spectrum-global-dimension-static-size-85
->>>>>>> 824cd8b30 (refactor(textfield): migrate spectrum tokens)
-    );
 }
