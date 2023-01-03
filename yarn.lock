@@ -4310,9 +4310,9 @@
   integrity sha512-OJ9nntHAotsx9d+RwFNmBRn1LRGL43eIe6JiJ3dmGBbFycj4rI8LHqMC1dbvWboOHPj42CAWpyPUV2jncaatvA==
 
 "@spectrum-css/dialog@^6.0.16":
-  version "6.0.16"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/dialog/-/dialog-6.0.16.tgz#363196e80280422e75e68bff248edd081db966f3"
-  integrity sha512-m1eTp5tu/7Ze8apwO2gLWRBloRnch3C7vhl9PzqK9j3qHF2ouoG3YUvYM06GrZSsXjUwFQPM0pWDfXxYsl8i8w==
+  version "6.0.19"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/dialog/-/dialog-6.0.19.tgz#fbeb6849b53862a598687752a64151e38a987501"
+  integrity sha512-QzDOToDrZx+PQMZMbTbV0V0OhUcStaE6yyRh6IVuy93Jm6IvdOHP5w/drDBBniulUBgccp/PGyYhnf4q7uc3Wg==
 
 "@spectrum-css/divider@^2.0.2":
   version "2.0.2"
