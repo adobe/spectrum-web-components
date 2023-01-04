@@ -20,10 +20,7 @@
     "module": "src/spectrum-base.css.js",
     "type": "module",
     "exports": {
-        ".": {
-            "development": "./src/index.dev.js",
-            "default": "./src/index.js"
-        },
+        ".": "./src/spectrum-base.css.js",
         "./package.json": "./package.json",
         "./all-large-dark.css": "./all-large-dark.css",
         "./all-large-darkest.css": "./all-large-darkest.css",
