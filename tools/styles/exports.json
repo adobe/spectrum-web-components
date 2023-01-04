@@ -1,4 +1,5 @@
 {
+    ".": "./src/spectrum-base.css.js",
     "./all-large-dark.css": "./all-large-dark.css",
     "./all-large-darkest.css": "./all-large-darkest.css",
     "./all-large-light.css": "./all-large-light.css",
