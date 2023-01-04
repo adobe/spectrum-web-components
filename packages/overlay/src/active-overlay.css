@@ -41,6 +41,7 @@ governing permissions and limitations under the License.
     pointer-events: none;
     top: -9999em;
     left: -9999em;
+    max-height: 100%;
 }
 
 :host(:focus) {
