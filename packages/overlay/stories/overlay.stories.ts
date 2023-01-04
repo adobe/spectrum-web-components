@@ -40,6 +40,8 @@ import '@spectrum-web-components/radio/sp-radio-group.js';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+import '@spectrum-web-components/accordion/sp-accordion.js';
+import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '../../../projects/story-decorator/src/types.js';
 
 import './overlay-story-components.js';
@@ -1136,5 +1138,88 @@ export const updating = (): TemplateResult => {
 };
 
 updating.swc_vrt = {
+    skip: true,
+};
+
+export const accordion = (): TemplateResult => {
+    const handleToggle = (): void => {
+        Overlay.update();
+        console.log('hi');
+    };
+    return html`
+        <overlay-trigger type="modal" placement="right">
+            <sp-button variant="primary" slot="trigger">
+                Open overlay w/ accordion
+            </sp-button>
+            <div slot="click-content" style="max-height: 100%;display: flex;">
+                <sp-popover
+                    open
+                    dialog
+                    style="overflow-y: scroll;position: static;"
+                >
+                    <sp-accordion
+                        allow-multiple
+                        @sp-accordion-item-toggle=${handleToggle}
+                    >
+                        <sp-accordion-item label="Some things">
+                            <p>
+                                Thing
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                more things
+                            </p>
+                        </sp-accordion-item>
+                        <sp-accordion-item label="Other things">
+                            <p>
+                                Thing
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                more things
+                            </p>
+                        </sp-accordion-item>
+                        <sp-accordion-item label="More things">
+                            <p>
+                                Thing
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                more things
+                            </p>
+                        </sp-accordion-item>
+                        <sp-accordion-item label="Additional things">
+                            <p>
+                                Thing
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                more things
+                            </p>
+                        </sp-accordion-item>
+                    </sp-accordion>
+                </sp-popover>
+            </div>
+        </overlay-trigger>
+    `;
+};
+
+accordion.swc_vrt = {
     skip: true,
 };
