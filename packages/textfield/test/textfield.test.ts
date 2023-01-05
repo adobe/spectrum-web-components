@@ -18,6 +18,7 @@ import { HelpText } from '@spectrum-web-components/help-text';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
 
 describe('Textfield', () => {
     testForLitDevWarnings(
@@ -886,11 +887,11 @@ describe('Textfield', () => {
             // when our tooling no longer runs into this error.
             try {
                 await findDescribedNode(name, descriptionNegative);
-                if (/Firefox/.test(window.navigator.userAgent)) {
+                if (isFirefox()) {
                     throw new Error('this does not fail anymore...');
                 }
             } catch (error) {
-                if (!/Firefox/.test(window.navigator.userAgent)) {
+                if (!isFirefox()) {
                     throw error;
                 }
             }
@@ -925,11 +926,11 @@ describe('Textfield', () => {
             // when our tooling no longer runs into this error.
             try {
                 await findDescribedNode(name, descriptionNegative);
-                if (/Firefox/.test(window.navigator.userAgent)) {
+                if (isFirefox()) {
                     throw new Error('this does not fail anymore...');
                 }
             } catch (error) {
-                if (!/Firefox/.test(window.navigator.userAgent)) {
+                if (!isFirefox()) {
                     throw error;
                 }
             }

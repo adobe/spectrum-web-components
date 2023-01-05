@@ -37,6 +37,7 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import { Theme } from '@spectrum-web-components/theme';
 import { Tooltip } from '@spectrum-web-components/tooltip';
 import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -281,7 +282,7 @@ describe('Overlay Trigger - Hover', () => {
     });
     it('will not return focus to a "modal" parent', async () => {
         // There is an `sp-dialog-base` recyling issue in Firefox
-        if (/Firefox/.test(window.navigator.userAgent)) {
+        if (isFirefox()) {
             return;
         }
         const el = await styledFixture<OverlayTrigger>(html`

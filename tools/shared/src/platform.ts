@@ -58,6 +58,14 @@ export function isChrome(): boolean {
     return testUserAgent(/Chrome/);
 }
 
+export function isFirefox(): boolean {
+    return testUserAgent(/Firefox/) && !isSeamonkey();
+}
+
+export function isSeamonkey(): boolean {
+    return testUserAgent(/Seamonkey/);
+}
+
 export function isAndroid(): boolean {
     return testUserAgent(/Android/);
 }
