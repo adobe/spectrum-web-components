@@ -9,10 +9,10 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/theme"
+        "directory": "tools/theme"
     },
     "author": "",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/theme",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/theme",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },

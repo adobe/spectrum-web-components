@@ -9,10 +9,10 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/grid"
+        "directory": "tools/grid"
     },
     "author": "",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/grid",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/grid",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
