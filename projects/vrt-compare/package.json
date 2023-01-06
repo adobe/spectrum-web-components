@@ -12,7 +12,6 @@
         "directory": "packages/vrt-compare"
     },
     "author": "",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/vrt-compare",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },

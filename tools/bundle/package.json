@@ -9,10 +9,10 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/bundle"
+        "directory": "tools/bundle"
     },
     "author": "",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/bundle",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/bundle",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },

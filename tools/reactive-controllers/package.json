@@ -9,10 +9,10 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/adobe/spectrum-web-components.git",
-        "directory": "packages/reactive-controllers"
+        "directory": "tools/reactive-controllers"
     },
     "author": "",
-    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/reactive-controllers",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/tools/reactive-controllers",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
