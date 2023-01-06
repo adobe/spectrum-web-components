@@ -12,7 +12,7 @@
         "directory": "packages/action-bar"
     },
     "author": "",
-    "homepage": "https://adobe.github.io/spectrum-web-components/components/action-bar",
+    "homepage": "https://opensource.adobe.com/spectrum-web-components/components/action-bar",
     "bugs": {
         "url": "https://github.com/adobe/spectrum-web-components/issues"
     },
