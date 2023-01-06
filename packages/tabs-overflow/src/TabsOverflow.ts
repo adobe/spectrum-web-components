@@ -25,8 +25,8 @@ import { classMap } from '@spectrum-web-components/base/src/directives.js';
 import { ResizeController } from '@lit-labs/observers/resize_controller.js';
 import { Tabs } from '@spectrum-web-components/tabs';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-left.js';
-import '@spectrum-web-components/icons-workflow/icons/sp-icon-chevron-right.js';
+import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
+import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 
 import styles from './tabs-overflow.css.js';
 
@@ -39,7 +39,7 @@ interface TabsOverflowState {
  */
 export class TabsOverflow extends SpectrumElement {
     public static override get styles(): CSSResultArray {
-        return [styles];
+        return [styles, chevronIconStyles];
     }
 
     @state()
@@ -134,7 +134,10 @@ export class TabsOverflow extends SpectrumElement {
                     dir="rtl"
                     @click=${this._handleScrollClick}
                 >
-                    <sp-icon-chevron-left slot="icon"></sp-icon-chevron-left>
+                    <sp-icon-chevron100
+                        slot="icon"
+                        class="spectrum-UIIcon-ChevronLeft300"
+                    ></sp-icon-chevron100>
                 </sp-action-button>
                 <sp-action-button
                     class=${classMap({
@@ -144,7 +147,10 @@ export class TabsOverflow extends SpectrumElement {
                     quiet
                     @click=${this._handleScrollClick}
                 >
-                    <sp-icon-chevron-right slot="icon"></sp-icon-chevron-right>
+                    <sp-icon-chevron100
+                        slot="icon"
+                        class="spectrum-UIIcon-ChevronRight300"
+                    ></sp-icon-chevron100>
                 </sp-action-button>
                 <slot @slotchange=${this._handleSlotChange}></slot>
             </div>
