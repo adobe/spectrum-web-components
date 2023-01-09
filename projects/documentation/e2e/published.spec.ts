@@ -42,15 +42,11 @@ test.describe('search and go', () => {
     });
 
     test('tool: base', async ({ page }) => {
-        // Skip test while https://github.com/adobe/spectrum-web-components/pull/2805 is unpublished.
-        test.skip();
         await searchFor('base', page);
         await expect(page).toHaveURL(/base/);
     });
 
     test('guide: getting-started', async ({ page }) => {
-        // Skip test while https://github.com/adobe/spectrum-web-components/pull/2805 is unpublished.
-        test.skip();
         await searchFor('good luck', page);
         await expect(page).toHaveURL(/getting-started/);
     });
