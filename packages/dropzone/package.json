@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/dropzone",
-    "version": "0.10.3",
+    "version": "0.10.4",
     "publishConfig": {
         "access": "public"
     },
@@ -57,7 +57,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.2"
+        "@spectrum-web-components/base": "^0.7.3"
     },
     "devDependencies": {
         "@spectrum-css/dropzone": "^3.0.26"

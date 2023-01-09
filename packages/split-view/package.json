@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/split-view",
-    "version": "0.5.4",
+    "version": "0.5.5",
     "publishConfig": {
         "access": "public"
     },
@@ -61,7 +61,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.2"
+        "@spectrum-web-components/base": "^0.7.3"
     },
     "devDependencies": {
         "@spectrum-css/splitview": "^3.0.23"

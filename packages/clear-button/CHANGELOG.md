@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/clear-button@0.2.3...@spectrum-web-components/clear-button@0.2.4) (2023-01-09)
+
+**Note:** Version bump only for package @spectrum-web-components/clear-button
+
 ## [0.2.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/clear-button@0.2.2...@spectrum-web-components/clear-button@0.2.3) (2022-12-08)
 
 **Note:** Version bump only for package @spectrum-web-components/clear-button

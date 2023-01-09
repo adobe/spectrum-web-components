@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-menu",
-    "version": "0.15.9",
+    "version": "0.15.10",
     "publishConfig": {
         "access": "public"
     },
@@ -61,12 +61,12 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/action-button": "^0.10.8",
-        "@spectrum-web-components/base": "^0.7.2",
-        "@spectrum-web-components/icon": "^0.12.5",
-        "@spectrum-web-components/icons-workflow": "^0.9.5",
-        "@spectrum-web-components/picker": "^0.13.9",
-        "@spectrum-web-components/shared": "^0.15.3"
+        "@spectrum-web-components/action-button": "^0.10.9",
+        "@spectrum-web-components/base": "^0.7.3",
+        "@spectrum-web-components/icon": "^0.12.6",
+        "@spectrum-web-components/icons-workflow": "^0.9.6",
+        "@spectrum-web-components/picker": "^0.13.10",
+        "@spectrum-web-components/shared": "^0.15.4"
     },
     "devDependencies": {
         "@spectrum-css/actionmenu": "^4.0.2"

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/table@0.1.6...@spectrum-web-components/table@0.1.7) (2023-01-09)
+
+### Bug Fixes
+
+-   add missing "elements.js" export for sp-table component ([ab8e2a7](https://github.com/adobe/spectrum-web-components/commit/ab8e2a7dc54bcccfa5c060d6361091b4cf83e8c1))
+
 ## [0.1.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/table@0.1.5...@spectrum-web-components/table@0.1.6) (2022-12-08)
 
 **Note:** Version bump only for package @spectrum-web-components/table

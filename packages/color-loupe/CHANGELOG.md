@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.4.3...@spectrum-web-components/color-loupe@0.4.4) (2023-01-09)
+
+**Note:** Version bump only for package @spectrum-web-components/color-loupe
+
 ## [0.4.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.4.2...@spectrum-web-components/color-loupe@0.4.3) (2022-12-08)
 
 **Note:** Version bump only for package @spectrum-web-components/color-loupe

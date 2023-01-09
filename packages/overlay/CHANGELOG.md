@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.18.9...@spectrum-web-components/overlay@0.18.10) (2023-01-09)
+
+### Bug Fixes
+
+-   use "fixed" strategy to prevent unexpected overlay placement ([e39e108](https://github.com/adobe/spectrum-web-components/commit/e39e108def1336adabb21823d1454e917fd38599))
+
 ## [0.18.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.18.8...@spectrum-web-components/overlay@0.18.9) (2022-12-08)
 
 ### Bug Fixes

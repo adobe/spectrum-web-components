@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.6](https://github.com/adobe/spectrum-web-components/compare/documentation@0.4.5...documentation@0.4.6) (2023-01-09)
+
+### Bug Fixes
+
+-   **documentation:** add base search url ([#2799](https://github.com/adobe/spectrum-web-components/issues/2799)) ([f7af7cd](https://github.com/adobe/spectrum-web-components/commit/f7af7cdeeff481e68d55028650f7a01d687df6f0))
+
 ## [0.4.5](https://github.com/adobe/spectrum-web-components/compare/documentation@0.4.4...documentation@0.4.5) (2022-12-08)
 
 ### Bug Fixes

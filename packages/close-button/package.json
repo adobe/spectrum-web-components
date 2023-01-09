@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/close-button",
-    "version": "0.3.6",
+    "version": "0.3.7",
     "publishConfig": {
         "access": "public"
     },
@@ -42,7 +42,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.2"
+        "@spectrum-web-components/base": "^0.7.3"
     },
     "devDependencies": {
         "@spectrum-css/closebutton": "^3.0.2"
