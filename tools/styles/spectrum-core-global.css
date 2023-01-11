@@ -1872,15 +1872,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-ui-icon-asterisk-size-100: var(
         --spectrum-global-dimension-size-100
     );
-    --spectrum-alias-avatar-size-50: var(--spectrum-global-dimension-size-200);
-    --spectrum-alias-avatar-size-75: var(--spectrum-global-dimension-size-225);
-    --spectrum-alias-avatar-size-200: var(--spectrum-global-dimension-size-275);
-    --spectrum-alias-avatar-size-300: var(--spectrum-global-dimension-size-325);
-    --spectrum-alias-avatar-size-500: var(--spectrum-global-dimension-size-400);
-    --spectrum-alias-avatar-size-700: var(--spectrum-global-dimension-size-500);
-    --spectrum-alias-avatar-border-size: var(
-        --spectrum-global-dimension-size-0
-    );
     --spectrum-alias-colorloupe-width: var(
         --spectrum-global-dimension-static-size-600
     );
@@ -2212,42 +2203,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-component-border-color-emphasized-selected: var(
         --spectrum-alias-component-border-color-emphasized-selected-default
-    );
-    --spectrum-alias-avatar-border-color-default: var(
-        --spectrum-alias-background-color-transparent
-    );
-    --spectrum-alias-avatar-border-color-hover: var(
-        --spectrum-alias-background-color-transparent
-    );
-    --spectrum-alias-avatar-border-color-down: var(
-        --spectrum-alias-background-color-transparent
-    );
-    --spectrum-alias-avatar-border-color-key-focus: var(
-        --spectrum-alias-background-color-transparent
-    );
-    --spectrum-alias-avatar-border-color: var(
-        --spectrum-alias-avatar-border-color-default
-    );
-    --spectrum-alias-avatar-border-color-disabled: var(
-        --spectrum-alias-background-color-transparent
-    );
-    --spectrum-alias-avatar-border-color-selected-default: var(
-        --spectrum-alias-background-color-transparent
-    );
-    --spectrum-alias-avatar-border-color-selected-hover: var(
-        --spectrum-alias-background-color-transparent
-    );
-    --spectrum-alias-avatar-border-color-selected-down: var(
-        --spectrum-alias-background-color-transparent
-    );
-    --spectrum-alias-avatar-border-color-selected-key-focus: var(
-        --spectrum-alias-background-color-transparent
-    );
-    --spectrum-alias-avatar-border-color-selected: var(
-        --spectrum-alias-avatar-border-color-selected-default
-    );
-    --spectrum-alias-avatar-border-color-selected-disabled: var(
-        --spectrum-alias-background-color-transparent
     );
     --spectrum-alias-toggle-background-color-default: var(
         --spectrum-global-color-gray-700
