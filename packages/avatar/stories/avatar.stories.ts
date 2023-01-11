@@ -19,16 +19,19 @@ export default {
     component: 'sp-avatar',
     title: 'Avatar',
     argTypes: {
+        disabled: { control: 'boolean' },
         label: { control: 'text' },
         src: { control: 'text' },
     },
     args: {
+        disabled: false,
         label: 'Place dog',
         src: avatar,
     },
 };
 
 interface StoryArgs {
+    disabled?: boolean;
     label?: string;
     src?: string;
     size?: AvatarSize;
@@ -43,6 +46,24 @@ const Template = ({
         <sp-avatar label=${label} src=${src} size=${size}></sp-avatar>
     `;
 };
+
+const Link = ({
+    disabled = false,
+    label = 'Place Dog',
+    src = avatar,
+    size = 100,
+}: StoryArgs = {}): TemplateResult => {
+    return html`
+        <sp-avatar
+            href="https://opensource.adobe.com/spectrum-web-components"
+            ?disabled=${disabled}
+            label=${label}
+            src=${src}
+            size=${size}
+        ></sp-avatar>
+    `;
+};
+
 export const size50 = (args: StoryArgs = {}): TemplateResult =>
     Template({ ...args, size: 50 });
 export const size75 = (args: StoryArgs = {}): TemplateResult =>
@@ -61,3 +82,6 @@ export const size600 = (args: StoryArgs = {}): TemplateResult =>
     Template({ ...args, size: 600 });
 export const size700 = (args: StoryArgs = {}): TemplateResult =>
     Template({ ...args, size: 700 });
+export const linked = (args: StoryArgs = {}): TemplateResult => Link(args);
+export const disabled = (args: StoryArgs = {}): TemplateResult => Link(args);
+disabled.args = { disabled: true };

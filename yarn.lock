@@ -4416,10 +4416,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/asset/-/asset-3.0.28.tgz#288c04901ba844375b1cf911ffbdae6683b882c7"
   integrity sha512-kQ4nv2QaXokVG2B0oGp+7gDKgUa/DlCu2hPQ6jAYM5DJSTsM1VY0PwNcBpJ/pvbKEF00lfV9KBfMOVobqhjjYQ==
 
-"@spectrum-css/avatar@^5.0.25":
-  version "5.0.25"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/avatar/-/avatar-5.0.25.tgz#10a70bcef6b71d1b67e8d1087d716f62652555cb"
-  integrity sha512-dsgZ5umdgqEfbH+1yVATvhVPNjueCWGn4LToMymmxs+L8JbBuKRKyBs1ohV4HCf4qOPr+2DKiuc8LA+02w7qXg==
+"@spectrum-css/avatar@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/avatar/-/avatar-6.0.0.tgz#9e8354e1c7f39c68236816608c82749614127d9c"
+  integrity sha512-3KmuULwc3bhViydMFn7kLxM8uTshC0600WV8yu1DqgKTHTO8bFuFAltzR22MCQ8HzVeWDqMqwUIYejZESROcbg==
 
 "@spectrum-css/badge@^2.0.9":
   version "2.0.9"

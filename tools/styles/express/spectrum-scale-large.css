@@ -271,9 +271,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-ui-icon-asterisk-size-300: var(
         --spectrum-global-dimension-static-size-150
     );
-    --spectrum-alias-avatar-size-100: 26px;
-    --spectrum-alias-avatar-size-400: 36px;
-    --spectrum-alias-avatar-size-600: 46px;
     --spectrum-dialog-confirm-title-text-size: var(
         --spectrum-alias-heading-xs-text-size
     );

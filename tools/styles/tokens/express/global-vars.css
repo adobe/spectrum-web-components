@@ -291,6 +291,7 @@ governing permissions and limitations under the License.
     );
     --system-spectrum-actionbutton-staticwhite-selected-border-color-disabled: transparent;
 }
+
 :host,
 :root {
     --system-spectrum-checkbox-control-color-default: var(--spectrum-gray-800);

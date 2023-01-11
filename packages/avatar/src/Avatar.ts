@@ -14,11 +14,15 @@ import {
     CSSResultArray,
     html,
     PropertyValues,
-    SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
+import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
+import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
 
 import avatarStyles from './avatar.css.js';
 
@@ -29,13 +33,17 @@ const defaultSize = validSizes[2];
 /**
  * @element sp-avatar
  */
-export class Avatar extends SpectrumElement {
+export class Avatar extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
         return [avatarStyles];
     }
 
-    @property()
-    public label = '';
+    @query('#link')
+    anchorElement!: HTMLAnchorElement;
+
+    public override get focusElement(): HTMLElement {
+        return this.anchorElement;
+    }
 
     @property()
     public src = '';
@@ -64,13 +72,21 @@ export class Avatar extends SpectrumElement {
     private _size = defaultSize;
 
     protected override render(): TemplateResult {
-        return html`
+        const avatar = html`
             <img
                 class="image"
                 alt=${ifDefined(this.label || undefined)}
                 src=${this.src}
             />
         `;
+        if (this.href) {
+            return this.renderAnchor({
+                id: 'link',
+                className: 'link',
+                anchorContent: avatar,
+            });
+        }
+        return avatar;
     }
 
     protected override firstUpdated(changes: PropertyValues): void {

@@ -270,11 +270,6 @@ governing permissions and limitations under the License.
     --spectrum-global-color-gray-900: rgb(
         var(--spectrum-global-color-gray-900-rgb)
     );
-    --spectrum-alias-avatar-border-color-default: rgba(0, 0, 0, 0.1);
-    --spectrum-alias-avatar-border-color-hover: rgba(0, 0, 0, 0.25);
-    --spectrum-alias-avatar-border-color-down: rgba(0, 0, 0, 0.4);
-    --spectrum-alias-avatar-border-color-key-focus: rgba(0, 0, 0, 0.25);
-    --spectrum-alias-avatar-border-color-selected-disabled: rgba(0, 0, 0, 0.1);
     --spectrum-alias-transparent-blue-background-color-default: rgba(
         82,
         88,

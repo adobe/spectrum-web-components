@@ -72,6 +72,10 @@ const config = {
                     selector: '.spectrum-Avatar-image',
                     name: 'image',
                 },
+                {
+                    selector: '.spectrum-Avatar-link',
+                    name: 'link',
+                },
             ],
         },
     ],
