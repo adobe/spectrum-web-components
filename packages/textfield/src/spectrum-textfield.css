@@ -151,6 +151,12 @@ governing permissions and limitations under the License.
     --spectrum-textfield-icon-color-invalid: var(
         --spectrum-negative-visual-color
     );
+    --spectrum-textfield-text-color-invalid: var(
+        --spectrum-neutral-content-color-default
+    );
+    --spectrum-textfield-text-color-valid: var(
+        --spectrum-neutral-content-color-default
+    );
     --spectrum-textfield-icon-color-valid: var(
         --spectrum-positive-visual-color
     );
@@ -373,17 +379,30 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     #textfield {
-        --spectrum-textfield-border-color-hover: Highlight;
-        --spectrum-textfield-border-color-keyboard-focus: Highlight;
-        --spectrum-textfield-border-color-invalid-default: Highlight;
-        --spectrum-textfield-border-color-invalid-hover: Highlight;
-        --spectrum-textfield-border-color-invalid-keyboard-focus: Highlight;
-        --spectrum-textfield-text-color-default: GrayText;
-        --spectrum-textfield-text-color-hover: GrayText;
-        --spectrum-textfield-text-color-keyboard-focus: GrayText;
-        --spectrum-textfield-text-color-disabled: GrayText;
-        --spectrum-textfield-text-color-readonly: CanvasText;
-        --spectrum-textfield-focus-indicator-color: Highlight;
+        --highcontrast-textfield-border-color-hover: Highlight;
+        --highcontrast-textfield-border-color-focus: Highlight;
+        --highcontrast-textfield-border-color-keyboard-focus: Highlight;
+        --highcontrast-textfield-focus-indicator-color: CanvasText;
+        --highcontrast-textfield-border-color-invalid-default: Highlight;
+        --highcontrast-textfield-border-color-invalid-hover: Highlight;
+        --highcontrast-textfield-border-color-invalid-focus: Highlight;
+        --highcontrast-textfield-border-color-invalid-keyboard-focus: Highlight;
+        --highcontrast-textfield-text-color-valid: CanvasText;
+        --highcontrast-textfield-text-color-invalid: CanvasText;
+    }
+    .input {
+        --highcontrast-textfield-text-color-default: CanvasText;
+        --highcontrast-textfield-text-color-hover: CanvasText;
+        --highcontrast-textfield-text-color-keyboard-focus: CanvasText;
+        --highcontrast-textfield-text-color-disabled: GrayText;
+        --highcontrast-textfield-text-color-readonly: CanvasText;
+    }
+    .input::placeholder {
+        --highcontrast-textfield-text-color-default: GrayText;
+        --highcontrast-textfield-text-color-hover: GrayText;
+        --highcontrast-textfield-text-color-keyboard-focus: GrayText;
+        --highcontrast-textfield-text-color-disabled: GrayText;
+        --highcontrast-textfield-text-color-readonly: CanvasText;
     }
     :host([focused]) #textfield .spectrum-Textfield-input-wrapper:after {
         forced-color-adjust: none;
@@ -405,9 +424,52 @@ governing permissions and limitations under the License.
 }
 .icon-workflow {
     bottom: 0;
+    color: var(
+        --highcontrast-textfield-text-color-default,
+        var(
+            --mod-textfield-text-color-default,
+            var(--spectrum-textfield-text-color-default)
+        )
+    );
     margin: auto;
     position: absolute; /* .spectrum-Textfield-icon */
     top: 0;
+}
+:host([disabled]) #textfield .icon-workflow {
+    color: var(
+        --highcontrast-textfield-text-color-disabled,
+        var(
+            --mod-textfield-text-color-disabled,
+            var(--spectrum-textfield-text-color-disabled)
+        )
+    ); /* .spectrum-Textfield.is-disabled .spectrum-Textfield-icon */
+}
+:host([quiet]) .icon-workflow {
+    color: var(
+        --highcontrast-textfield-text-color-default,
+        var(
+            --mod-textfield-text-color-default,
+            var(--spectrum-textfield-text-color-default)
+        )
+    ); /* .spectrum-Textfield--quiet .spectrum-Textfield-icon */
+}
+:host([quiet][disabled]) #textfield .icon-workflow {
+    color: var(
+        --highcontrast-textfield-text-color-disabled,
+        var(
+            --mod-textfield-text-color-disabled,
+            var(--spectrum-textfield-text-color-disabled)
+        )
+    ); /* .spectrum-Textfield--quiet.is-disabled .spectrum-Textfield-icon */
+}
+:host([readonly]) #textfield .icon-workflow {
+    color: var(
+        --highcontrast-textfield-text-color-readonly,
+        var(
+            --mod-textfield-text-color-readonly,
+            var(--spectrum-textfield-text-color-readonly)
+        )
+    ); /* .spectrum-Textfield.is-readOnly .spectrum-Textfield-icon */
 }
 .spectrum-FieldLabel {
     grid-column: 1 / span 2;
@@ -947,12 +1009,28 @@ governing permissions and limitations under the License.
    * .spectrum-Textfield-input.focus-ring::placeholder,
    * .spectrum-Textfield-input:focus-visible::placeholder */
 }
+:host([valid]) .input {
+    color: var(
+        --highcontrast-textfield-text-color-valid,
+        var(
+            --mod-textfield-text-color-valid,
+            var(--spectrum-textfield-text-color-valid)
+        )
+    ); /* .is-valid .spectrum-Textfield-input */
+}
 :host([invalid]) .input {
     border-color: var(
         --highcontrast-textfield-border-color-invalid-default,
         var(
             --mod-textfield-border-color-invalid-default,
             var(--spectrum-textfield-border-color-invalid-default)
+        )
+    );
+    color: var(
+        --highcontrast-textfield-text-color-invalid,
+        var(
+            --mod-textfield-text-color-invalid,
+            var(--spectrum-textfield-text-color-invalid)
         )
     ); /* .is-invalid .spectrum-Textfield-input */
 }
@@ -1171,7 +1249,7 @@ governing permissions and limitations under the License.
         --mod-text-area-min-inline-size,
         var(--spectrum-text-area-min-inline-size)
     ); /* .spectrum-Textfield--multiline .spectrum-Textfield-input */
-    resize: none;
+    resize: inherit;
 }
 :host([multiline][quiet]) #textfield .input {
     min-block-size: var(
