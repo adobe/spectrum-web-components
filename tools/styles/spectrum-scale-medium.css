@@ -295,7 +295,4 @@ governing permissions and limitations under the License.
     --spectrum-listitem-m-textthumbnail-padding-left: var(
         --spectrum-global-dimension-size-125
     );
-    --spectrum-picker-m-texticon-padding-left: var(
-        --spectrum-global-dimension-size-125
-    );
 }

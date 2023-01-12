@@ -1247,3 +1247,28 @@ governing permissions and limitations under the License.
         --spectrum-neutral-background-color-default
     );
 }
+
+:host,
+:root {
+    --system-spectrum-picker-border-size: none;
+    --system-spectrum-picker-background-color-default: var(--spectrum-gray-200);
+    --system-spectrum-picker-background-color-default-open: var(
+        --spectrum-gray-300
+    );
+    --system-spectrum-picker-background-color-active: var(--spectrum-gray-400);
+    --system-spectrum-picker-background-color-hover: var(--spectrum-gray-300);
+    --system-spectrum-picker-background-color-hover-open: var(
+        --spectrum-gray-300
+    );
+    --system-spectrum-picker-background-color-key-focus: var(
+        --spectrum-gray-300
+    );
+    --system-spectrum-picker-border-color-default: var(--spectrum-gray-400);
+    --system-spectrum-picker-border-color-default-open: var(
+        --spectrum-gray-400
+    );
+    --system-spectrum-picker-border-color-hover: var(--spectrum-gray-500);
+    --system-spectrum-picker-border-color-hover-open: var(--spectrum-gray-500);
+    --system-spectrum-picker-border-color-active: var(--spectrum-gray-600);
+    --system-spectrum-picker-border-color-key-focus: var(--spectrum-gray-500);
+}
