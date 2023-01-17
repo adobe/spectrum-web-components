@@ -4449,9 +4449,9 @@
   integrity sha512-NbNX3dLfZS4CtZyyZji+FrscC8LcUXQyNogQwjbbdIqszU7AN8/II5EUsUSSaPIS4BreiCVbIc+8dtQ+Fy+a8w==
 
 "@spectrum-css/statuslight@^5.0.3":
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/statuslight/-/statuslight-5.0.3.tgz#d351467852ceea0333792928de025defed4e571b"
-  integrity sha512-0omVCuI1FnDePE2QSSgChl8Qz43nbwH1+4od+OGIgvXPenIjLnKAUh0g2b0cA/2cXXSOozOi0clMTtsqEHu05Q==
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/statuslight/-/statuslight-5.0.7.tgz#5a461364afa5e45d891492e9c81c8334d06aae04"
+  integrity sha512-5+q2rEtieMb8blcyooTMNG6abzGcJYEbHzo8XtyfbpHnLnVfkwJBeU6B4ftvsSz3/1Cko8vhEj5nKTV3LcRwsw==
 
 "@spectrum-css/stepper@^3.0.28":
   version "3.0.28"
