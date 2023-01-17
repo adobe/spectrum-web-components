@@ -4439,9 +4439,9 @@
   integrity sha512-v7hz25gqDGEh/U/TCMGaXys6csqw5eM9EAL1d/PqoBybbIFkcW4DzF9hY7av6C0lRdbBY/RDY9UtFsnA3YKwpw==
 
 "@spectrum-css/splitbutton@^5.0.14":
-  version "5.0.14"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-5.0.14.tgz#fa8095e48614a4e2b15c42c0100f3e2a4bf7f722"
-  integrity sha512-RN95hQHNmE/Ohbu9nlNhvViv0MnjmzJywIf+zCwTUkMJ9UCPOcWD6ymehhr2WePOVdPKzkqHI9V+jOXPQvbiDQ==
+  version "5.0.18"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/splitbutton/-/splitbutton-5.0.18.tgz#adb92a9dffecf0ee91ac80396388992d7cc37826"
+  integrity sha512-4S5tNlbcMGKHVCj8jsF2Nvo/hxP9PX/szUUY6PQ3lRxVPeGyZe/TCu/UkNzuTIoesMsFVOT/WlsTK+afaYNobw==
 
 "@spectrum-css/splitview@^3.0.23":
   version "3.0.23"
