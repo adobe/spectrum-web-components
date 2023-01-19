@@ -1144,7 +1144,6 @@ updating.swc_vrt = {
 export const accordion = (): TemplateResult => {
     const handleToggle = (): void => {
         Overlay.update();
-        console.log('hi');
     };
     return html`
         <overlay-trigger type="modal" placement="right">
