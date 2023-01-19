@@ -80,7 +80,7 @@ export const buildPackage = async (paths) => {
             build({
                 ...config,
                 entryPoints: devPaths,
-                define: { 'window.__swc.DEBUG': true },
+                define: { 'window.__swc.DEBUG': 'true' },
                 outExtension: { '.js': '.dev.js' },
                 plugins: devPlugins,
             }).catch(() => process.exit(1))
@@ -88,7 +88,7 @@ export const buildPackage = async (paths) => {
     }
     const prodConfig = {
         ...config,
-        define: { 'window.__swc.DEBUG': false },
+        define: { 'window.__swc.DEBUG': 'false' },
         plugins: paths.length === 1 ? [] : prodPlugins,
     };
     if (prodPath.length) {
