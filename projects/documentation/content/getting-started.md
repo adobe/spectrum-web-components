@@ -9,7 +9,7 @@ slug: getting-started
 
 There are a couple ways to get started working with Spectrum Web Components:
 
-If you know which components you want to use, you can import those packages directly. We recommend grabbing `@spectrum-web-components/theme` in addition to your chosen components, as `sp-theme` is necessary for styling those components with Spectrum CSS. <sp-link href="../components/theme">You can click here to learn about the full range of style customization provided by `@spectrum-web-components/theme`.</sp-link> 
+If you know which components you want to use, you can import those packages directly. We recommend grabbing `@spectrum-web-components/theme` in addition to your chosen components, as `sp-theme` is necessary for styling those components with Spectrum CSS. <sp-link href="../tools/theme">You can click here to learn about the full range of style customization provided by `@spectrum-web-components/theme`.</sp-link> 
 
 There is also the `@spectrum-web-components/bundle` package, which includes all of the elements defined by Spectrum Web Components in one easy-to-import entry point. The `@spectrum-web-components/bundle` package is literally _everything_ that Spectrum Web Components has to offer. This is why when bundled, <sp-link target="_blank" href="https://bundlephobia.com/result?p=@spectrum-web-components/bundle">it weighs as large as it does</sp-link>, and is why we DO NOT suggest leveraging this technique in a production application. 
 
