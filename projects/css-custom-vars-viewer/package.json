@@ -1,0 +1,107 @@
+{
+    "name": "sp-demo-app",
+    "version": "0.0.0",
+    "description": "Demo app created with Spectrum Web Components, following open-wc guidelines",
+    "license": "MIT",
+    "author": "najikahalsema",
+    "main": "dist/src/index.js",
+    "module": "dist/src/index.js",
+    "type": "module",
+    "exports": {
+        ".": "./dist/src/index.js",
+        "./sp-css-table.js": "./dist/src/sp-css-table.js",
+        "./sp-demo-app.js": "./dist/src/sp-demo-app.js"
+    },
+    "engines": {
+        "node": ">=16.14.2",
+        "yarn": ">=1.16.0"
+    },
+    "scripts": {
+        "analyze": "cem analyze --litelement",
+        "build": "tsc && npm run analyze -- --exclude dist",
+        "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
+        "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
+        "parse-json": "node ./scripts/parse-json.js",
+        "prepublish": "tsc && npm run analyze -- --exclude dist",
+        "prestorybook": "yarn parse-json",
+        "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
+        "storybook": "tsc && npm run analyze -- --exclude dist && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds -c .storybook/server.mjs\"",
+        "storybook:build": "tsc && npm run analyze -- --exclude dist && build-storybook",
+        "test": "tsc && wtr --coverage",
+        "test:watch": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch\""
+    },
+    "dependencies": {
+        "@rollup/plugin-json": "^5.0.2",
+        "@spectrum-web-components/base": "^0.7.2",
+        "@spectrum-web-components/field-label": "^0.10.3",
+        "@spectrum-web-components/link": "^0.14.1",
+        "@spectrum-web-components/menu": "^0.16.9",
+        "@spectrum-web-components/picker": "^0.13.9",
+        "@spectrum-web-components/story-decorator": "^0.7.9",
+        "@spectrum-web-components/styles": "^0.22.0",
+        "@spectrum-web-components/swatch": "^0.3.3",
+        "@spectrum-web-components/table": "^0.1.6",
+        "@spectrum-web-components/theme": "^0.14.8",
+        "@spectrum-web-components/toast": "^0.11.8",
+        "@web/dev-server-rollup": "^0.3.19",
+        "lit": "^2.4.1"
+    },
+    "devDependencies": {
+        "@custom-elements-manifest/analyzer": "^0.4.17",
+        "@open-wc/eslint-config": "^8.0.2",
+        "@open-wc/testing": "^3.1.6",
+        "@typescript-eslint/eslint-plugin": "^4.33.0",
+        "@typescript-eslint/parser": "^4.33.0",
+        "@web/dev-server": "^0.1.34",
+        "@web/dev-server-storybook": "^0.5.4",
+        "@web/test-runner": "^0.14.0",
+        "concurrently": "^5.3.0",
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "husky": "^4.3.8",
+        "lint-staged": "^10.5.4",
+        "prettier": "^2.4.1",
+        "tslib": "^2.3.1",
+        "typescript": "^4.5.2"
+    },
+    "customElements": "custom-elements.json",
+    "eslintConfig": {
+        "parser": "@typescript-eslint/parser",
+        "extends": [
+            "@open-wc",
+            "prettier"
+        ],
+        "plugins": [
+            "@typescript-eslint"
+        ],
+        "rules": {
+            "no-unused-vars": "off",
+            "@typescript-eslint/no-unused-vars": [
+                "error"
+            ],
+            "import/no-unresolved": "off",
+            "import/extensions": [
+                "error",
+                "always",
+                {
+                    "ignorePackages": true
+                }
+            ]
+        }
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.ts": [
+            "eslint --fix",
+            "prettier --write"
+        ]
+    },
+    "prettier": {
+        "singleQuote": true,
+        "arrowParens": "avoid"
+    }
+}
