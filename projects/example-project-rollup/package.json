@@ -1,6 +1,6 @@
 {
   "name": "example-project-rollup",
-  "version": "0.6.10",
+  "version": "0.6.11",
   "private": true,
   "description": "An example project that uses the web components and gives an example of how to bundle them minimally with rollup.",
   "license": "Apache-2.0",
@@ -21,11 +21,11 @@
     "tsc:watch": "tsc --watch"
   },
   "dependencies": {
-    "@spectrum-web-components/button": "^0.19.9",
-    "@spectrum-web-components/field-label": "^0.10.4",
-    "@spectrum-web-components/menu": "^0.16.10",
-    "@spectrum-web-components/picker": "^0.13.10",
-    "@spectrum-web-components/styles": "^0.22.1"
+    "@spectrum-web-components/button": "^0.19.10",
+    "@spectrum-web-components/field-label": "^0.10.5",
+    "@spectrum-web-components/menu": "^0.16.11",
+    "@spectrum-web-components/picker": "^0.13.11",
+    "@spectrum-web-components/styles": "^0.22.2"
   },
   "devDependencies": {
     "@open-wc/building-rollup": "^2.2.1",

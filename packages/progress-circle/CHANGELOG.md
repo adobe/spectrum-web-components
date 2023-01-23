@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/progress-circle@0.7.4...@spectrum-web-components/progress-circle@0.7.5) (2023-01-23)
+
+**Note:** Version bump only for package @spectrum-web-components/progress-circle
+
 ## [0.7.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/progress-circle@0.7.3...@spectrum-web-components/progress-circle@0.7.4) (2023-01-09)
 
 **Note:** Version bump only for package @spectrum-web-components/progress-circle

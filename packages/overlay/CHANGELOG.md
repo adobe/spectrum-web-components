@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.18.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.18.10...@spectrum-web-components/overlay@0.18.11) (2023-01-23)
+
+### Bug Fixes
+
+-   **overlay:** reset cached values and applied CSS before "updating" overlays ([b871e52](https://github.com/adobe/spectrum-web-components/commit/b871e52950aaa3b1d7990d77e26b8285040ecb6e))
+
 ## [0.18.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.18.9...@spectrum-web-components/overlay@0.18.10) (2023-01-09)
 
 ### Bug Fixes

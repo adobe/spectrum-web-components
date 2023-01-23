@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.5.9...@spectrum-web-components/number-field@0.5.10) (2023-01-23)
+
+### Bug Fixes
+
+-   ensure "wheel" interactions lead to a "change" event ([3be87cd](https://github.com/adobe/spectrum-web-components/commit/3be87cd0e606a3e96f163e3e14da3ab455bc588d))
+
 ## [0.5.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.5.8...@spectrum-web-components/number-field@0.5.9) (2023-01-09)
 
 **Note:** Version bump only for package @spectrum-web-components/number-field

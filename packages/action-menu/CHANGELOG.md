@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.15.10...@spectrum-web-components/action-menu@0.15.11) (2023-01-23)
+
+**Note:** Version bump only for package @spectrum-web-components/action-menu
+
 ## [0.15.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.15.9...@spectrum-web-components/action-menu@0.15.10) (2023-01-09)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu

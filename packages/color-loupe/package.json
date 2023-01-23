@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-loupe",
-    "version": "0.4.4",
+    "version": "0.4.5",
     "publishConfig": {
         "access": "public"
     },
@@ -57,7 +57,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.3"
+        "@spectrum-web-components/base": "^0.7.4"
     },
     "devDependencies": {
         "@spectrum-css/colorloupe": "^2.0.9"

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.7](https://github.com/adobe/spectrum-web-components/compare/documentation@0.4.6...documentation@0.4.7) (2023-01-23)
+
+### Bug Fixes
+
+-   **sidenav:** prevent items with hrefs from toggling expanded or selection ([7ff4920](https://github.com/adobe/spectrum-web-components/commit/7ff4920bc14aac7709f1c588078730aa9054bae3))
+
 ## [0.4.6](https://github.com/adobe/spectrum-web-components/compare/documentation@0.4.5...documentation@0.4.6) (2023-01-09)
 
 ### Bug Fixes
