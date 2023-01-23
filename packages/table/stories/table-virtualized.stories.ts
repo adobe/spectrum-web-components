@@ -241,7 +241,7 @@ export const virtualizedCustomValue = (args: Properties): TemplateResult => {
         <sp-table
             size="m"
             scroller="true"
-            style="height: 300px"
+            style="height: 200px"
             selects=${args.selects}
             .selected=${args.selected}
             @change=${args.onChange}
