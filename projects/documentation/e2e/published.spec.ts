@@ -47,7 +47,7 @@ test.describe('search and go', () => {
     });
 
     test('guide: getting-started', async ({ page }) => {
-        await searchFor('good luck', page);
+        await searchFor('getting started', page);
         await expect(page).toHaveURL(/getting-started/);
     });
 });
