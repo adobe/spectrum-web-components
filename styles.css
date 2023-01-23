@@ -2832,7 +2832,13 @@ governing permissions and limitations under the License.
             --spectrum-sidenav-item-padding-x,var(--spectrum-global-dimension-size-150)
         );position:relative;text-decoration:none;width:100%;word-break:break-word}sp-sidenav-item:not(:defined) span,sp-sidenav>sp-sidenav-item[multilevel]:not(:defined)>a{font-weight:var(--spectrum-global-font-weight-bold)}sp-sidenav-item:not(:defined) span,sp-sidenav>sp-sidenav-item:not(:defined)>a{padding-left:var(
         --spectrum-sidenav-item-padding-x,var(--spectrum-global-dimension-size-150)
-    )}sp-sidenav-item:not(:defined) a{padding-left:calc(var(
+    )}sp-sidenav-item[expanded]>sp-sidenav-item[expanded]>sp-sidenav-item:not(:defined)>a{padding-left:calc(var(
+                --spectrum-sidenav-multilevel-item-indentation-level2,
+                var(--spectrum-global-dimension-size-300)
+            ) + var(
+                --spectrum-sidenav-item-padding-x,
+                var(--spectrum-global-dimension-size-150)
+            ))}sp-sidenav-item:not([expanded],:defined)>sp-sidenav-item{display:none}sp-sidenav-item:not(:defined) a{padding-left:calc(var(
                 --spectrum-sidenav-multilevel-item-indentation-level1,
                 var(--spectrum-global-dimension-size-150)
             ) + var(

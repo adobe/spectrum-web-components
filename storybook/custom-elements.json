@@ -15636,6 +15636,14 @@
         },
         {
           "kind": "variable",
+          "name": "CHANGE_DEBOUNCE_MS",
+          "type": {
+            "text": "number"
+          },
+          "default": "100"
+        },
+        {
+          "kind": "variable",
           "name": "indeterminatePlaceholder",
           "type": {
             "text": "string"
@@ -16097,6 +16105,14 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "field",
+              "name": "queuedChangeEvent",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "private"
             },
             {
               "kind": "method",
@@ -17022,6 +17038,14 @@
         },
         {
           "kind": "js",
+          "name": "CHANGE_DEBOUNCE_MS",
+          "declaration": {
+            "name": "CHANGE_DEBOUNCE_MS",
+            "module": "packages/number-field/src/NumberField.js"
+          }
+        },
+        {
+          "kind": "js",
           "name": "indeterminatePlaceholder",
           "declaration": {
             "name": "indeterminatePlaceholder",
@@ -17410,7 +17434,7 @@
               "kind": "field",
               "name": "initialHeight",
               "type": {
-                "text": "number"
+                "text": "number | undefined"
               },
               "privacy": "private"
             },
@@ -17436,6 +17460,11 @@
             {
               "kind": "field",
               "name": "updateOverlayPosition",
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "resetOverlayPosition",
               "privacy": "public"
             },
             {
@@ -48194,7 +48223,7 @@
         {
           "kind": "variable",
           "name": "styles",
-          "default": "css`\n@keyframes sp-overlay-fade-in{0%{opacity:0;transform:var(--sp-overlay-from)}to{opacity:1;transform:translate(0)}}@keyframes sp-overlay-fade-out{0%{opacity:1;transform:translate(0)}to{opacity:0;transform:var(--sp-overlay-from)}}:host{display:inline-block;left:-9999em;pointer-events:none;position:fixed;top:-9999em;z-index:1000}:host(:focus){outline:none}:host([placement=none]){height:100vh;height:100dvh;height:-webkit-fill-available;height:fill-available;left:0;position:fixed;top:0}#contents,sp-theme{height:100%}#contents{--swc-overlay-animation-distance:var(\n--spectrum-picker-m-texticon-popover-offset-y,var(--spectrum-global-dimension-size-75)\n);animation-duration:var(\n--swc-test-duration,var(--spectrum-global-animation-duration-200,.16s)\n);animation-timing-function:var(\n--spectrum-global-animation-ease-out,ease-out\n);box-sizing:border-box;display:inline-block;opacity:1;pointer-events:none;visibility:visible}:host([actual-placement*=top]) #contents{--sp-overlay-from:translateY(var(--spectrum-global-dimension-size-75));align-items:flex-end;display:inline-flex;padding-top:var(--swc-overlay-animation-distance)}:host([actual-placement*=right]) #contents{--sp-overlay-from:translateX(calc(var(--spectrum-global-dimension-size-75)*-1));padding-right:var(--swc-overlay-animation-distance)}:host([actual-placement*=bottom]) #contents{--sp-overlay-from:translateY(calc(var(--spectrum-global-dimension-size-75)*-1));padding-bottom:var(--swc-overlay-animation-distance)}:host([actual-placement*=left]) #contents{--sp-overlay-from:translateX(var(--spectrum-global-dimension-size-75));padding-left:var(--swc-overlay-animation-distance)}:host([animating]) ::slotted(*){pointer-events:none}:host(:not([animating])) ::slotted(*){pointer-events:auto}#contents ::slotted(*){position:relative}\n`"
+          "default": "css`\n@keyframes sp-overlay-fade-in{0%{opacity:0;transform:var(--sp-overlay-from)}to{opacity:1;transform:translate(0)}}@keyframes sp-overlay-fade-out{0%{opacity:1;transform:translate(0)}to{opacity:0;transform:var(--sp-overlay-from)}}:host{display:inline-block;left:-9999em;max-height:100%;pointer-events:none;position:fixed;top:-9999em;z-index:1000}:host(:focus){outline:none}:host([placement=none]){height:100vh;height:100dvh;height:-webkit-fill-available;height:fill-available;left:0;position:fixed;top:0}#contents,sp-theme{height:100%}#contents{--swc-overlay-animation-distance:var(\n--spectrum-picker-m-texticon-popover-offset-y,var(--spectrum-global-dimension-size-75)\n);animation-duration:var(\n--swc-test-duration,var(--spectrum-global-animation-duration-200,.16s)\n);animation-timing-function:var(\n--spectrum-global-animation-ease-out,ease-out\n);box-sizing:border-box;display:inline-block;opacity:1;pointer-events:none;visibility:visible}:host([actual-placement*=top]) #contents{--sp-overlay-from:translateY(var(--spectrum-global-dimension-size-75));align-items:flex-end;display:inline-flex;padding-top:var(--swc-overlay-animation-distance)}:host([actual-placement*=right]) #contents{--sp-overlay-from:translateX(calc(var(--spectrum-global-dimension-size-75)*-1));padding-right:var(--swc-overlay-animation-distance)}:host([actual-placement*=bottom]) #contents{--sp-overlay-from:translateY(calc(var(--spectrum-global-dimension-size-75)*-1));padding-bottom:var(--swc-overlay-animation-distance)}:host([actual-placement*=left]) #contents{--sp-overlay-from:translateX(var(--spectrum-global-dimension-size-75));padding-left:var(--swc-overlay-animation-distance)}:host([animating]) ::slotted(*){pointer-events:none}:host(:not([animating])) ::slotted(*){pointer-events:auto}#contents ::slotted(*){position:relative}\n`"
         }
       ],
       "exports": [
