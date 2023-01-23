@@ -59,7 +59,7 @@ export const elements = (): TemplateResult => {
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
                 <sp-table-head-cell>Column Title</sp-table-head-cell>
             </sp-table-head>
-            <sp-table-body style="height: 120px">
+            <sp-table-body style="height: 200px">
                 <sp-table-row value="row1" class="row1">
                     <sp-table-cell>Row Item Alpha</sp-table-cell>
                     <sp-table-cell>Row Item Alpha</sp-table-cell>
