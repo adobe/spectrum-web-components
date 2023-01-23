@@ -119,6 +119,10 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
         if (this.selects === 'single') {
             const { target } = event;
             target.tabIndex = 0;
+            target.selected = true;
+            if (this.selectedSet.has(target.value)) {
+                return;
+            }
             this.selectedSet.clear();
             this.selectedSet.add(target.value);
             this.rovingTabindexController.elements.forEach((child) => {

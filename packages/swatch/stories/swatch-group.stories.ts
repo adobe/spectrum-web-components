@@ -98,7 +98,16 @@ export default {
         },
     },
     decorators: [
-        (story: () => TemplateResult): TemplateResult => html`
+        (
+            story: () => TemplateResult,
+            {
+                args: { selected = [] },
+            }: {
+                args: {
+                    selected: string[];
+                };
+            }
+        ): TemplateResult => html`
             <div
                 @change=${async (event: Event & { target: SwatchGroup }) => {
                     await 0;
@@ -111,7 +120,7 @@ export default {
                 }}
             >
                 ${story()}
-                <div>Selected: []</div>
+                <div>Selected: ${JSON.stringify(selected)}</div>
             </div>
         `,
     ],

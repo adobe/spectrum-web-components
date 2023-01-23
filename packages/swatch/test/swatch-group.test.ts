@@ -125,6 +125,12 @@ describe('Swatch Group', () => {
         expect(changeSpy.calledOnce).to.be.true;
         expect(el.selected).to.deep.equal([selectedChild.value]);
         expect(selectedChild.selected).to.be.true;
+
+        selectedChild.click();
+
+        expect(changeSpy.calledOnce).to.be.true;
+        expect(el.selected).to.deep.equal([selectedChild.value]);
+        expect(selectedChild.selected).to.be.true;
     });
     it('can have `change` events prevented', async () => {
         el.selects = 'single';
