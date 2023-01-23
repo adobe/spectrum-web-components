@@ -88,9 +88,12 @@ export const test = (
                     `;
                 const decorate = (
                     story: () => TemplateResult,
-                    decorator: (story: () => TemplateResult) => TemplateResult
+                    decorator: (
+                        story: () => TemplateResult,
+                        { args }: { args: unknown }
+                    ) => TemplateResult
                 ) => {
-                    return () => decorator(story);
+                    return () => decorator(story, { args });
                 };
 
                 while (decorators.length) {
