@@ -427,8 +427,8 @@ export class ActiveOverlay extends SpectrumElement {
     };
 
     public resetOverlayPosition = (): void => {
-        this.style.setProperty('max-height', '');
-        this.style.setProperty('height', '');
+        this.style.removeProperty('max-height');
+        this.style.removeProperty('height');
         this.initialHeight = undefined;
         this.isConstrained = false;
         // force paint
