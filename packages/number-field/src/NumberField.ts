@@ -38,6 +38,8 @@ import chevronStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevr
 import styles from './number-field.css.js';
 
 export const FRAMES_PER_CHANGE = 5;
+// Debounce duration for inserting a `change` event after a batch of `wheel` originating `input` events.
+export const CHANGE_DEBOUNCE_MS = 100;
 export const indeterminatePlaceholder = '-';
 export const remapMultiByteCharacters: Record<string, string> = {
     '１': '1',
@@ -320,13 +322,12 @@ export class NumberField extends TextfieldBase {
             : event.deltaY / Math.abs(event.deltaY);
         if (direction !== 0 && !isNaN(direction)) {
             this.stepBy(direction * (event.shiftKey ? this.stepModifier : 1));
-            // Dispatch a change event after no new `input` events are queued by `wheel` interactions for 100ms.
             clearTimeout(this.queuedChangeEvent);
             this.queuedChangeEvent = setTimeout(() => {
                 this.dispatchEvent(
                     new Event('change', { bubbles: true, composed: true })
                 );
-            }, 100) as unknown as number;
+            }, CHANGE_DEBOUNCE_MS) as unknown as number;
         }
         this.managedInput = false;
     }

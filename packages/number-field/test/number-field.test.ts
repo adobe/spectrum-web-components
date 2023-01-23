@@ -31,6 +31,7 @@ import {
 } from '../stories/number-field.stories.js';
 import '@spectrum-web-components/number-field/sp-number-field.js';
 import {
+    CHANGE_DEBOUNCE_MS,
     FRAMES_PER_CHANGE,
     indeterminatePlaceholder,
     NumberField,
@@ -362,7 +363,7 @@ describe('NumberField', () => {
             expect(el.value).to.equal(52);
             expect(inputSpy.callCount).to.equal(2);
             expect(changeSpy.callCount).to.equal(0);
-            await aTimeout(110);
+            await aTimeout(CHANGE_DEBOUNCE_MS + 10);
             expect(inputSpy.callCount).to.equal(2);
             expect(changeSpy.callCount).to.equal(1);
         });
