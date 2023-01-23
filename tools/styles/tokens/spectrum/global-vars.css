@@ -496,6 +496,15 @@ governing permissions and limitations under the License.
 }
 :host,
 :root {
+    --system-spectrum-stepper-spectrum-textfield-m-texticon-border-color: var(
+        --spectrum-gray-500
+    );
+    --system-spectrum-stepper-stepup-border-size: var(
+        --spectrum-border-width-100
+    );
+    --system-spectrum-stepper-stepdown-border-size: var(
+        --spectrum-border-width-100
+    );
     --system-spectrum-textfield-border-color: var(--spectrum-gray-500);
     --system-spectrum-textfield-border-color-hover: var(--spectrum-gray-600);
     --system-spectrum-textfield-border-color-focus: var(--spectrum-gray-800);
