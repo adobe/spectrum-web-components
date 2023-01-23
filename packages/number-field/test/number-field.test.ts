@@ -11,7 +11,13 @@ governing permissions and limitations under the License.
 */
 
 import { html } from '@spectrum-web-components/base';
-import { elementUpdated, expect, nextFrame, oneEvent } from '@open-wc/testing';
+import {
+    aTimeout,
+    elementUpdated,
+    expect,
+    nextFrame,
+    oneEvent,
+} from '@open-wc/testing';
 import polyfillCheck from '@formatjs/intl-numberformat/should-polyfill.js';
 
 import {
@@ -337,6 +343,28 @@ describe('NumberField', () => {
             el.addEventListener('change', (event: Event) => {
                 changeSpy((event.target as NumberField)?.value);
             });
+        });
+        it('via scroll', async () => {
+            el.focus();
+            await elementUpdated(el);
+            expect(el.focused).to.be.true;
+            el.dispatchEvent(new WheelEvent('wheel', { deltaY: 1 }));
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('51');
+            expect(el.valueAsString).to.equal('51');
+            expect(el.value).to.equal(51);
+            expect(inputSpy.callCount).to.equal(1);
+            expect(changeSpy.callCount).to.equal(0);
+            el.dispatchEvent(new WheelEvent('wheel', { deltaY: 100 }));
+            await elementUpdated(el);
+            expect(el.formattedValue).to.equal('52');
+            expect(el.valueAsString).to.equal('52');
+            expect(el.value).to.equal(52);
+            expect(inputSpy.callCount).to.equal(2);
+            expect(changeSpy.callCount).to.equal(0);
+            await aTimeout(110);
+            expect(inputSpy.callCount).to.equal(2);
+            expect(changeSpy.callCount).to.equal(1);
         });
         it('has a useful `value`', async () => {
             el.focus();

@@ -310,6 +310,8 @@ export class NumberField extends TextfieldBase {
         }
     }
 
+    private queuedChangeEvent!: number;
+
     protected onScroll(event: WheelEvent): void {
         event.preventDefault();
         this.managedInput = true;
@@ -318,6 +320,13 @@ export class NumberField extends TextfieldBase {
             : event.deltaY / Math.abs(event.deltaY);
         if (direction !== 0 && !isNaN(direction)) {
             this.stepBy(direction * (event.shiftKey ? this.stepModifier : 1));
+            // Dispatch a change event after no new `input` events are queued by `wheel` interactions for 100ms.
+            clearTimeout(this.queuedChangeEvent);
+            this.queuedChangeEvent = setTimeout(() => {
+                this.dispatchEvent(
+                    new Event('change', { bubbles: true, composed: true })
+                );
+            }, 100) as unknown as number;
         }
         this.managedInput = false;
     }
