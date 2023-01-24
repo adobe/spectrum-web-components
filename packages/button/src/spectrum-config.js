@@ -127,6 +127,12 @@ const config = {
             excludeSourceSelector: [
                 /^(\.spectrum-Button.*),(\.spectrum-ClearButton.*),(\.spectrum-LogicButton.*)$/,
             ],
+            complexSelectors: [
+                {
+                    replacement: '#label[hidden]',
+                    selector: '.spectrum-Button-label:empty',
+                },
+            ],
         },
     ],
 };
