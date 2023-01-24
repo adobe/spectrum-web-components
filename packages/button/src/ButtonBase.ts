@@ -57,12 +57,9 @@ export class ButtonBase extends LikeAnchor(
     protected get buttonContent(): TemplateResult[] {
         const content = [
             html`
-                <div id="label" ?hidden=${!this.hasLabel}>
-                    <slot
-                        id="slot"
-                        @slotchange=${this.manageTextObservedSlot}
-                    ></slot>
-                </div>
+                <span id="label" ?hidden=${!this.hasLabel}>
+                    <slot @slotchange=${this.manageTextObservedSlot}></slot>
+                </span>
             `,
         ];
         if (this.hasIcon) {

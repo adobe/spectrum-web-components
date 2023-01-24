@@ -107,7 +107,7 @@ governing permissions and limitations under the License.
     justify-self: center;
     text-align: center;
 }
-#label:empty {
+#label[hidden] {
     display: none; /* .spectrum-Button-label:empty */
 }
 :host {
