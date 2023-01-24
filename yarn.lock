@@ -4411,9 +4411,9 @@
   integrity sha512-QhYtKibbcgQP+jS66ubzZJCTpGNF8lA4ja5naiv5vE100C95NEi3QKq+BVHTOLrRs6FFAKauUiaWe8mMlTGesg==
 
 "@spectrum-css/asset@^3.0.23":
-  version "3.0.23"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/asset/-/asset-3.0.23.tgz#05c92c994e0ab78049c86a5db496506fc0cb6915"
-  integrity sha512-qE5B6i7xANS1y4MBE8EsJgcq/DatgseL+lTCVZUt4czbQtNzt7unzKuTr6VEJ1wPi39EjR5iklpBQ5Wg54vmXg==
+  version "3.0.25"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/asset/-/asset-3.0.25.tgz#2535df0b3d92efb407caa2018e693408bc086293"
+  integrity sha512-BwXx08vXRFkR6Gf75c1C+gmiCPqNaM4CIuU05idbFJbzFWwmpYATNLeRNEt0w+3pATAzrUbL0XVPE5QvK/yOAw==
 
 "@spectrum-css/avatar@^5.0.20":
   version "5.0.20"
