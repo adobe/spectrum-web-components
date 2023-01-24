@@ -46,7 +46,7 @@ export interface Item extends TableItem {
 }
 
 export class CssTable extends SpectrumElement {
-    static styles = css`
+    static override styles = css`
         .table-head {
             align-items: center;
         }
@@ -56,9 +56,6 @@ export class CssTable extends SpectrumElement {
             bottom: var(--spectrum-global-dimension-size-200);
             left: 50%;
             transform: translateX(-50%);
-        }
-        sp-table-body {
-            min-height: 530px;
         }
     `;
 
@@ -71,7 +68,6 @@ export class CssTable extends SpectrumElement {
     @property({ type: String, attribute: 'color-theme' })
     colorTheme: 'light' | 'dark' | 'darkest' | 'wireframe' = 'light';
 
-    // TO-DO: initialise items by getting whatever the demo app sends it
     @property({ type: Array })
     public items: Item[] = [];
 
@@ -149,6 +145,7 @@ export class CssTable extends SpectrumElement {
             <sp-table
                 size="m"
                 scroller="true"
+                style="height: 422px"
                 .items=${this.items}
                 .renderItem=${this.renderItem}
                 @sorted=${(event: CustomEvent<SortedEventDetails>): void => {
