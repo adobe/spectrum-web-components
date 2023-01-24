@@ -62,7 +62,7 @@
         "lint-staged": "^10.5.4",
         "prettier": "^2.4.1",
         "tslib": "^2.3.1",
-        "typescript": "^4.5.2"
+        "typescript": "^4.7.2"
     },
     "customElements": "custom-elements.json",
     "eslintConfig": {

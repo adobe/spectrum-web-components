@@ -54,7 +54,7 @@ export interface Item extends TableItem {
 }
 
 export class DemoApp extends SpectrumElement {
-    static styles = css`
+    static override styles = css`
         :host {
             display: block;
             padding: 25px;
@@ -126,7 +126,7 @@ export class DemoApp extends SpectrumElement {
         }
     };
 
-    protected render(): TemplateResult {
+    protected override render(): TemplateResult {
         return html`
             <div class="picker-container">
                 <sp-field-label
