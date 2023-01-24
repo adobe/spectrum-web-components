@@ -34,7 +34,7 @@ jobs:
               uses: actions/github-script@v6
               with:
                   script: |
-                      const buildPreviewURLComment = require('./tasks/build-preview-urls-comment.cjs').buildPreviewURLComment;
+                      const { buildPreviewURLComment } = await import('${{ github.workspace }}/tasks/build-preview-urls-comment.js');
                       const body = buildPreviewURLComment(process.env.GITHUB_HEAD_REF);
                       github.rest.issues.listComments({
                         owner: context.repo.owner,
@@ -173,7 +173,7 @@ jobs:
               uses: actions/github-script@v6
               with:
                   script: |
-                      const buildTachometerComment = require('./tasks/build-tachometer-comment.cjs').buildTachometerComment;
+                      const { buildTachometerComment } = await import('${{ github.workspace }}/tasks/build-tachometer-comment.js');
                       const body = buildTachometerComment();
                       github.rest.issues.listComments({
                         owner: context.repo.owner,

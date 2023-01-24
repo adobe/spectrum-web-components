@@ -11,9 +11,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const slugify = require('@sindresorhus/slugify');
-const execSync = require('child_process').execSync;
-const crypto = require('crypto');
+import slugify from '@sindresorhus/slugify';
+import { execSync } from 'child_process';
+import crypto from 'crypto';
 
 // Duplicated from `tasks/test-changes.js` because GitHub Actions and CJS. 🤦
 const getChangedPackages = () => {
@@ -49,7 +49,7 @@ const getHash = (context) => {
     return md5.digest('hex');
 };
 
-const buildPreviewURLComment = (ref) => {
+export const buildPreviewURLComment = (ref) => {
     const packages = getChangedPackages();
     const branch = ref.replace('refs/heads/', '');
     const branchSlug = slugify(branch);
@@ -97,7 +97,3 @@ ${previewLinks.join('')}
 };
 
 console.log(buildPreviewURLComment('current/branch'));
-
-module.exports = {
-    buildPreviewURLComment,
-};

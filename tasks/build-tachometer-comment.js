@@ -11,9 +11,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-const fg = require('fast-glob');
-const fs = require('fs');
-const prettyBytes = require('pretty-bytes');
+import fg from 'fast-glob';
+import fs from 'fs';
+import prettyBytes from 'pretty-bytes';
 
 const getTachometerResults = () => {
     const results = {
@@ -126,7 +126,7 @@ const buildTable = (result) => {
     return table;
 };
 
-const buildTachometerComment = () => {
+export const buildTachometerComment = () => {
     const results = getTachometerResults();
     const chromeTables = results.chrome.map(buildTable);
     const firefoxTables = results.firefox.map(buildTable);
@@ -164,7 +164,3 @@ ${body[1]}
 };
 
 console.log(buildTachometerComment());
-
-module.exports = {
-    buildTachometerComment,
-};
