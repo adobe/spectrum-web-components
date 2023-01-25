@@ -63,7 +63,7 @@
         "@spectrum-web-components/reactive-controllers": "^0.3.5"
     },
     "devDependencies": {
-        "@spectrum-css/actiongroup": "^3.0.3"
+        "@spectrum-css/actiongroup": "^3.0.9"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
