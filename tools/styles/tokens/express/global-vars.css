@@ -12,6 +12,19 @@ governing permissions and limitations under the License.
 
 :host,
 :root {
+    --spectrum-neutral-background-color-selected-default: var(
+        --spectrum-gray-800
+    );
+    --spectrum-neutral-background-color-selected-hover: var(
+        --spectrum-gray-900
+    );
+    --spectrum-neutral-background-color-selected-down: var(--spectrum-gray-900);
+    --spectrum-neutral-background-color-selected-key-focus: var(
+        --spectrum-gray-900
+    );
+    --spectrum-slider-track-thickness: 4px;
+    --spectrum-slider-handle-gap: 0px;
+    --spectrum-border-width-100: 2px;
     --spectrum-accent-color-100: var(--spectrum-indigo-100);
     --spectrum-accent-color-200: var(--spectrum-indigo-200);
     --spectrum-accent-color-300: var(--spectrum-indigo-300);
@@ -26,12 +39,17 @@ governing permissions and limitations under the License.
     --spectrum-accent-color-1200: var(--spectrum-indigo-1200);
     --spectrum-accent-color-1300: var(--spectrum-indigo-1300);
     --spectrum-accent-color-1400: var(--spectrum-indigo-1400);
-    --spectrum-heading: var(--spectrum-font-black-default);
-    --spectrum-heading-emphasized: var(--spectrum-font-black-italic-default);
-    --spectrum-cjk-heading: var(--spectrum-font-black-cjk);
-    --spectrum-slider-track-thickness: 4px;
-    --spectrum-slider-handle-gap: 0px;
-    --spectrum-border-width-100: 2px;
+    --spectrum-heading-sans-serif-font-weight: var(
+        --spectrum-font-weight-black
+    );
+    --spectrum-heading-serif-font-weight: var(--spectrum-font-weight-black);
+    --spectrum-heading-cjk-font-weight: var(--spectrum-font-weight-black);
+    --spectrum-heading-sans-serif-emphasized-font-weight: var(
+        --spectrum-font-weight-black
+    );
+    --spectrum-heading-serif-emphasized-font-weight: var(
+        --spectrum-font-weight-black
+    );
 }
 :host,
 :root {

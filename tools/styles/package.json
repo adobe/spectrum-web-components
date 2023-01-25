@@ -108,9 +108,9 @@
         "@spectrum-web-components/base": "^0.7.4"
     },
     "devDependencies": {
-        "@spectrum-css/commons": "^3.0.6",
+        "@spectrum-css/commons": "^4.0.2",
         "@spectrum-css/expressvars": "^2.0.3",
-        "@spectrum-css/tokens": "^4.0.0",
+        "@spectrum-css/tokens": "^6.2.2",
         "@spectrum-css/typography": "^4.0.23",
         "@spectrum-css/vars": "^8.0.2"
     },
