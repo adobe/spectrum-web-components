@@ -68,7 +68,7 @@
         "@spectrum-web-components/shared": "^0.15.5"
     },
     "devDependencies": {
-        "@spectrum-css/colorwheel": "^1.0.23"
+        "@spectrum-css/colorwheel": "^1.0.25"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

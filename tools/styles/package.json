@@ -109,10 +109,10 @@
     },
     "devDependencies": {
         "@spectrum-css/commons": "^3.0.6",
-        "@spectrum-css/expressvars": "^2.0.0",
+        "@spectrum-css/expressvars": "^2.0.3",
         "@spectrum-css/tokens": "^4.0.0",
-        "@spectrum-css/typography": "^4.0.21",
-        "@spectrum-css/vars": "^8.0.0"
+        "@spectrum-css/typography": "^4.0.23",
+        "@spectrum-css/vars": "^8.0.2"
     },
     "customElements": "custom-elements.json",
     "sideEffects": [

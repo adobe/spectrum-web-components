@@ -45,7 +45,7 @@
         "@spectrum-web-components/base": "^0.7.4"
     },
     "devDependencies": {
-        "@spectrum-css/clearbutton": "^1.2.13"
+        "@spectrum-css/clearbutton": "^1.2.15"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
