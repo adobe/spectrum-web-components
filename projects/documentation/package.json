@@ -22,7 +22,7 @@
         "watch": "yarn serve --watch"
     },
     "dependencies": {
-        "@spectrum-css/table": "^4.0.23",
+        "@spectrum-css/table": "^4.0.26",
         "@spectrum-web-components/bundle": "^0.28.7"
     },
     "devDependencies": {

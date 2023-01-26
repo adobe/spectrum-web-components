@@ -192,13 +192,10 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='m']) {
-    --spectrum-picker-texticon-padding-left: var(
-        --spectrum-picker-m-texticon-padding-left
-    ); /* .spectrum-Picker--sizeM */
     --spectrum-picker-texticon-border-size: var(
         --spectrum-picker-m-texticon-border-size,
         var(--spectrum-alias-border-size-thin)
-    );
+    ); /* .spectrum-Picker--sizeM */
     --spectrum-picker-texticon-text-size: var(
         --spectrum-picker-m-texticon-text-size,
         var(--spectrum-global-dimension-font-size-100)
@@ -258,6 +255,9 @@ governing permissions and limitations under the License.
     --spectrum-picker-textonly-border-radius: var(
         --spectrum-picker-m-textonly-border-radius,
         var(--spectrum-alias-component-border-radius)
+    );
+    --spectrum-picker-texticon-padding-left: var(
+        --spectrum-picker-m-texticon-padding-left
     );
 }
 :host([size='l']) {

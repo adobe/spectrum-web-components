@@ -61,7 +61,7 @@
         "@spectrum-web-components/overlay": "^0.18.11"
     },
     "devDependencies": {
-        "@spectrum-css/tooltip": "^4.0.7"
+        "@spectrum-css/tooltip": "^4.0.10"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

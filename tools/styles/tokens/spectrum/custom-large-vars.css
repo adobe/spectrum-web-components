@@ -12,10 +12,14 @@ governing permissions and limitations under the License.
 
 /* This file contains overrides and additions to core tokens */
 
-:host, :root {
-  /* edge-to-visual-only is used for icon-only buttons */
-  --spectrum-edge-to-visual-only-75: 5px;
-  --spectrum-edge-to-visual-only-100: 9px;
-  --spectrum-edge-to-visual-only-200: 13px;
-  --spectrum-edge-to-visual-only-300: 16px;
+:host,
+:root {
+    /* edge-to-visual-only is used for icon-only buttons */
+    --spectrum-edge-to-visual-only-75: 5px;
+    --spectrum-edge-to-visual-only-100: 9px;
+    --spectrum-edge-to-visual-only-200: 13px;
+    --spectrum-edge-to-visual-only-300: 16px;
+
+    --spectrum-slider-tick-mark-height: 13px;
+    --spectrum-slider-ramp-track-height: 20px;
 }
