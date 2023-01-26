@@ -49,7 +49,7 @@
         "@spectrum-web-components/iconset": "^0.7.6"
     },
     "devDependencies": {
-        "@spectrum-css/icon": "^3.0.27",
+        "@spectrum-css/icon": "^3.0.30",
         "case": "^1.6.1",
         "cheerio": "^1.0.0-rc.2",
         "fs": "^0.0.1-security",

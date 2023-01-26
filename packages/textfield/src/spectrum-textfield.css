@@ -12,13 +12,10 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-textfield-texticon-padding-left: var(
-        --spectrum-textfield-m-texticon-padding-left
-    ); /* .spectrum-Textfield */
     --spectrum-textfield-quiet-texticon-border-bottom-size: var(
         --spectrum-textfield-m-quiet-texticon-border-bottom-size,
         var(--spectrum-alias-input-border-size)
-    );
+    ); /* .spectrum-Textfield */
     --spectrum-textfield-quiet-texticon-success-icon-margin-left: var(
         --spectrum-textfield-m-quiet-texticon-success-icon-margin-left,
         var(--spectrum-global-dimension-size-150)
@@ -136,6 +133,9 @@ governing permissions and limitations under the License.
     --spectrum-textarea-padding-top: var(--spectrum-textarea-text-padding-top);
     --spectrum-textarea-padding-bottom: var(
         --spectrum-textarea-text-padding-bottom
+    );
+    --spectrum-textfield-texticon-padding-left: var(
+        --spectrum-alias-item-workflow-padding-left-m
     );
 }
 #textfield {

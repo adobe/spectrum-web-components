@@ -48,7 +48,7 @@
         "@spectrum-web-components/icons-ui": "^0.9.7"
     },
     "devDependencies": {
-        "@spectrum-css/pickerbutton": "^2.0.4"
+        "@spectrum-css/pickerbutton": "^2.0.7"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

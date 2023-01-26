@@ -18,16 +18,39 @@ governing permissions and limitations under the License.
     border-style: solid;
     box-sizing: border-box; /* .spectrum-CloseButton */
     cursor: pointer;
-    font-family: var(--spectrum-font-family-base);
-    line-height: var(--spectrum-line-height-small);
+    font-family: var(--mod-font-family-base, var(--spectrum-font-family-base));
+    line-height: var(
+        --mod-line-height-small,
+        var(--spectrum-line-height-small)
+    );
     margin: 0;
     overflow: visible;
     text-decoration: none;
     text-transform: none;
-    transition: background var(--spectrum-animation-duration-100) ease-out,
-        border-color var(--spectrum-animation-duration-100) ease-out,
-        color var(--spectrum-animation-duration-100) ease-out,
-        box-shadow var(--spectrum-animation-duration-100) ease-out;
+    transition: background
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
+            ease-out,
+        border-color
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
+            ease-out,
+        color
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
+            ease-out,
+        box-shadow
+            var(
+                --mod-animation-duration-100,
+                var(--spectrum-animation-duration-100)
+            )
+            ease-out;
     user-select: none;
     -webkit-user-select: none;
     vertical-align: top;
