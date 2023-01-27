@@ -11,4 +11,8 @@ governing permissions and limitations under the License.
 */
 import { DemoApp } from './DemoApp.js';
 
-window.customElements.define('sp-demo-app', DemoApp);
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-demo-app': DemoApp;
+    }
+}
