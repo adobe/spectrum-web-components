@@ -15,6 +15,42 @@ import fs from 'fs';
 import path from 'path';
 import fg from 'fast-glob';
 
+export const chromium = playwrightLauncher({
+    product: 'chromium',
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+        }),
+});
+
+export const firefox = playwrightLauncher({
+    product: 'firefox',
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+        }),
+    launchOptions: {
+        firefoxUserPrefs: {
+            'toolkit.telemetry.reportingpolicy.firstRun': false,
+            'browser.shell.checkDefaultBrowser': false,
+            'browser.bookmarks.restore_default_bookmarks': false,
+            'dom.disable_open_during_load': false,
+            'dom.max_script_run_time': 0,
+            'dom.min_background_timeout_value': 10,
+            'extensions.autoDisableScopes': 0,
+            'extensions.enabledScopes': 15,
+        },
+    },
+});
+
+export const webkit = playwrightLauncher({
+    product: 'webkit',
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+        }),
+});
+
 const tools = fs
     .readdirSync('tools')
     .filter((dir) => fs.statSync(`tools/${dir}`).isDirectory());
@@ -79,15 +115,7 @@ themeVariants.forEach((themeVariant) => {
                     name: `vrt-${themeVariant}-${color}-${scale}-${dir}`,
                     files: '(packages|tools)/*/test/*.test-vrt.js',
                     testRunnerHtml: testHTML,
-                    browsers: [
-                        playwrightLauncher({
-                            product: 'chromium',
-                            createBrowserContext: ({ browser }) =>
-                                browser.newContext({
-                                    ignoreHTTPSErrors: true,
-                                }),
-                        }),
-                    ],
+                    browsers: [chromium],
                 });
             });
         });
@@ -105,15 +133,7 @@ vrtGroups = [
                 testRunnerHtml: vrtHTML({
                     reduceMotion: true,
                 }),
-                browsers: [
-                    playwrightLauncher({
-                        product: 'chromium',
-                        createBrowserContext: ({ browser }) =>
-                            browser.newContext({
-                                ignoreHTTPSErrors: true,
-                            }),
-                    }),
-                ],
+                browsers: [chromium],
             });
             acc.push({
                 name: `vrt-${pkg}-single`,
@@ -125,15 +145,7 @@ vrtGroups = [
                     dir: 'ltr',
                     reduceMotion: true,
                 }),
-                browsers: [
-                    playwrightLauncher({
-                        product: 'chromium',
-                        createBrowserContext: ({ browser }) =>
-                            browser.newContext({
-                                ignoreHTTPSErrors: true,
-                            }),
-                    }),
-                ],
+                browsers: [chromium],
             });
         }
         return acc;
@@ -149,15 +161,7 @@ vrtGroups = [
             hcm: true,
             reduceMotion: true,
         }),
-        browsers: [
-            playwrightLauncher({
-                product: 'chromium',
-                createBrowserContext: ({ browser }) =>
-                    browser.newContext({
-                        ignoreHTTPSErrors: true,
-                    }),
-            }),
-        ],
+        browsers: [chromium],
     },
 ];
 

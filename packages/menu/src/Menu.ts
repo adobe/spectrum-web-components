@@ -466,7 +466,7 @@ export class Menu extends SpectrumElement {
             (!this.isLTR && code === 'ArrowRight');
         if (shouldOpenSubmenu) {
             const lastFocusedItem = this.childItems[this.focusedItemIndex];
-            if (lastFocusedItem.hasSubmenu) {
+            if (lastFocusedItem?.hasSubmenu) {
                 // Remove focus while opening overlay from keyboard or the visible focus
                 // will slip back to the first item in the menu.
                 this.blur();
@@ -485,7 +485,7 @@ export class Menu extends SpectrumElement {
         }
         if (code === 'Space') {
             const lastFocusedItem = this.childItems[this.focusedItemIndex];
-            if (lastFocusedItem.hasSubmenu) {
+            if (lastFocusedItem?.hasSubmenu) {
                 // Remove focus while opening overlay from keyboard or the visible focus
                 // will slip back to the first item in the menu.
                 this.blur();

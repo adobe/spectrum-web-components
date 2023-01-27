@@ -11,6 +11,11 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+:host {
+    --spectrum-fieldlabel-color: var(
+        --spectrum-neutral-subdued-content-color-default
+    ); /* .spectrum-FieldLabel */
+}
 :host([size='s']) {
     --spectrum-fieldlabel-top-to-text: var(
         --spectrum-component-top-to-text-75
@@ -100,6 +105,7 @@ governing permissions and limitations under the License.
     -moz-osx-font-smoothing: auto;
     font-smoothing: subpixel-antialiased;
     box-sizing: border-box;
+    color: var(--spectrum-fieldlabel-color);
     display: block; /* .spectrum-FieldLabel */
     font-size: var(
         --mod-fieldlabel-font-size,

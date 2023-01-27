@@ -9,16 +9,18 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { playwrightLauncher } from '@web/test-runner-playwright';
 import {
     a11ySnapshotPlugin,
     sendKeysPlugin,
 } from '@web/test-runner-commands/plugins';
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
+    chromium,
     configuredVisualRegressionPlugin,
+    firefox,
     packages,
     vrtGroups,
+    webkit,
 } from './web-test-runner.utils.js';
 import { fromRollup } from '@web/dev-server-rollup';
 import rollupJson from '@rollup/plugin-json';
@@ -26,42 +28,6 @@ import rollupCommonjs from '@rollup/plugin-commonjs';
 
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);
-
-export const chromium = playwrightLauncher({
-    product: 'chromium',
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-        }),
-});
-
-export const firefox = playwrightLauncher({
-    product: 'firefox',
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-        }),
-    launchOptions: {
-        firefoxUserPrefs: {
-            'toolkit.telemetry.reportingpolicy.firstRun': false,
-            'browser.shell.checkDefaultBrowser': false,
-            'browser.bookmarks.restore_default_bookmarks': false,
-            'dom.disable_open_during_load': false,
-            'dom.max_script_run_time': 0,
-            'dom.min_background_timeout_value': 10,
-            'extensions.autoDisableScopes': 0,
-            'extensions.enabledScopes': 15,
-        },
-    },
-});
-
-export const webkit = playwrightLauncher({
-    product: 'webkit',
-    createBrowserContext: ({ browser }) =>
-        browser.newContext({
-            ignoreHTTPSErrors: true,
-        }),
-});
 
 export default {
     plugins: [
