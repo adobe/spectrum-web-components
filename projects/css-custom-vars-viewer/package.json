@@ -59,33 +59,5 @@
         "tslib": "^2.3.1",
         "typescript": "^4.7.2"
     },
-    "customElements": "custom-elements.json",
-    "eslintConfig": {
-        "parser": "@typescript-eslint/parser",
-        "extends": [
-            "@open-wc",
-            "prettier"
-        ],
-        "plugins": [
-            "@typescript-eslint"
-        ],
-        "rules": {
-            "no-unused-vars": "off",
-            "@typescript-eslint/no-unused-vars": [
-                "error"
-            ],
-            "import/no-unresolved": "off",
-            "import/extensions": [
-                "error",
-                "always",
-                {
-                    "ignorePackages": true
-                }
-            ]
-        }
-    },
-    "prettier": {
-        "singleQuote": true,
-        "arrowParens": "avoid"
-    }
+    "customElements": "custom-elements.json"
 }
