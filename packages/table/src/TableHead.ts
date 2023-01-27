@@ -22,7 +22,7 @@ import { TableCheckboxCell } from './TableCheckboxCell.js';
 import styles from './table-head.css.js';
 
 /**
- * @element sp-table
+ * @element sp-table-head
  *
  */
 export class TableHead extends SpectrumElement {
@@ -31,7 +31,7 @@ export class TableHead extends SpectrumElement {
     }
 
     @property({ reflect: true })
-    public role = 'row';
+    public override role = 'row';
 
     @property({ type: Boolean, reflect: true })
     public selected?: boolean;

@@ -36,7 +36,7 @@ const ariaSortValue = (sortDirection?: 'asc' | 'desc'): string => {
 };
 
 /**
- * @element sp-table
+ * @element sp-table-head-cell
  *
  * @fires sorted - Announces that the table head has been sorted and handles the sorted event
  */
@@ -46,7 +46,7 @@ export class TableHeadCell extends SpectrumElement {
     }
 
     @property({ reflect: true })
-    public role = 'columnheader';
+    public override role = 'columnheader';
 
     @property({ type: Boolean, reflect: true })
     public sortable = false;

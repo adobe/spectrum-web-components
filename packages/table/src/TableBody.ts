@@ -20,7 +20,7 @@ import styles from './table-body.css.js';
 import { MutationController } from '@lit-labs/observers/mutation_controller.js';
 
 /**
- * @element sp-table
+ * @element sp-table-body
  */
 export class TableBody extends SpectrumElement {
     public static override get styles(): CSSResultArray {
@@ -51,7 +51,7 @@ export class TableBody extends SpectrumElement {
     }
 
     @property({ reflect: true })
-    public role = 'rowgroup';
+    public override role = 'rowgroup';
 
     protected override render(): TemplateResult {
         return html`

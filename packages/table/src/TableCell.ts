@@ -20,7 +20,7 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import styles from './table-cell.css.js';
 
 /**
- * @element sp-table
+ * @element sp-table-cell
  */
 export class TableCell extends SpectrumElement {
     public static override get styles(): CSSResultArray {
@@ -28,7 +28,7 @@ export class TableCell extends SpectrumElement {
     }
 
     @property({ reflect: true })
-    public role = 'gridcell';
+    public override role = 'gridcell';
 
     protected override render(): TemplateResult {
         return html`

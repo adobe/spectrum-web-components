@@ -27,7 +27,7 @@ import styles from './table-checkbox-cell.css.js';
 import { Checkbox } from '@spectrum-web-components/checkbox';
 
 /**
- * @element sp-table
+ * @element sp-table-checkbox-cell
  */
 export class TableCheckboxCell extends SpectrumElement {
     public static override get styles(): CSSResultArray {
@@ -35,7 +35,7 @@ export class TableCheckboxCell extends SpectrumElement {
     }
 
     @property({ reflect: true })
-    public role = 'gridcell';
+    public override role = 'gridcell';
 
     @query('.checkbox')
     public checkbox!: Checkbox;
