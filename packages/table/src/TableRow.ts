@@ -40,7 +40,7 @@ export class TableRow extends SpectrumElement {
     checkboxCells!: TableCheckboxCell[];
 
     @property({ reflect: true })
-    public override role = 'row';
+    public role = 'row';
 
     @property({ type: Boolean })
     public selectable = false;
