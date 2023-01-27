@@ -51,7 +51,7 @@ export class TableBody extends SpectrumElement {
     }
 
     @property({ reflect: true })
-    public override role = 'rowgroup';
+    public role = 'rowgroup';
 
     protected override render(): TemplateResult {
         return html`

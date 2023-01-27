@@ -28,7 +28,7 @@ export class TableCell extends SpectrumElement {
     }
 
     @property({ reflect: true })
-    public override role = 'gridcell';
+    public role = 'gridcell';
 
     protected override render(): TemplateResult {
         return html`

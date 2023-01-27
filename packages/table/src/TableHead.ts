@@ -31,7 +31,7 @@ export class TableHead extends SpectrumElement {
     }
 
     @property({ reflect: true })
-    public override role = 'row';
+    public role = 'row';
 
     @property({ type: Boolean, reflect: true })
     public selected?: boolean;

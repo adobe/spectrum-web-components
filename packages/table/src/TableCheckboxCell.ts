@@ -35,7 +35,7 @@ export class TableCheckboxCell extends SpectrumElement {
     }
 
     @property({ reflect: true })
-    public override role = 'gridcell';
+    public role = 'gridcell';
 
     @query('.checkbox')
     public checkbox!: Checkbox;
