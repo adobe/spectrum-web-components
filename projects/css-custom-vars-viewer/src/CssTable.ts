@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
 Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -11,19 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    html,
     css,
+    html,
+    PropertyValues,
     SpectrumElement,
     TemplateResult,
-    PropertyValues,
 } from '@spectrum-web-components/base';
 import {
     property,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 import type {
-    TableItem,
     SortedEventDetails,
+    TableItem,
 } from '@spectrum-web-components/table';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/table/sp-table.js';
@@ -56,6 +55,9 @@ export class CssTable extends SpectrumElement {
             bottom: var(--spectrum-global-dimension-size-200);
             left: 50%;
             transform: translateX(-50%);
+        }
+        sp-table {
+            height: var(--spectrum-global-dimension-size-4600);
         }
     `;
 
@@ -145,7 +147,6 @@ export class CssTable extends SpectrumElement {
             <sp-table
                 size="m"
                 scroller="true"
-                style="height: 422px"
                 .items=${this.items}
                 .renderItem=${this.renderItem}
                 @sorted=${(event: CustomEvent<SortedEventDetails>): void => {
@@ -158,7 +159,7 @@ export class CssTable extends SpectrumElement {
                 }}
             >
                 <sp-table-head class="table-head">
-                    <sp-table-head-cell> Preview </sp-table-head-cell>
+                    <sp-table-head-cell>Preview</sp-table-head-cell>
                     <sp-table-head-cell
                         sortable
                         sort-key="customVar"
@@ -166,8 +167,8 @@ export class CssTable extends SpectrumElement {
                     >
                         Colour name
                     </sp-table-head-cell>
-                    <sp-table-head-cell> Token </sp-table-head-cell>
-                    <sp-table-head-cell> RGB Value </sp-table-head-cell>
+                    <sp-table-head-cell>Token</sp-table-head-cell>
+                    <sp-table-head-cell>RGB Value</sp-table-head-cell>
                 </sp-table-head>
             </sp-table>
             <sp-toast ?open=${this.copyTimeout != null} variant="positive">

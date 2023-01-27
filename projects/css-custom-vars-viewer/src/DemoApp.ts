@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /*
 Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -11,8 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    html,
     css,
+    html,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -57,18 +56,15 @@ export class DemoApp extends SpectrumElement {
     static override styles = css`
         :host {
             display: block;
-            padding: 25px;
+            padding: var(--spectrum-global-dimension-size-300);
         }
         .picker-container {
             display: flex;
             align-items: center;
-            padding-bottom: 4px;
+            padding-bottom: var(--spectrum-global-dimension-size-50);
         }
         sp-swatch-group {
-            padding: 4px;
-        }
-        sp-css-table sp-table-body {
-            height: 530px; // this isn't applied, sadly...
+            padding: var(--spectrum-global-dimension-size-50);
         }
     `;
 
@@ -114,10 +110,10 @@ export class DemoApp extends SpectrumElement {
         if (colorSelection.length === 0) {
             this.colors = this._colors;
         } else {
-            colorSelection.forEach(selection => {
+            colorSelection.forEach((selection) => {
                 const selectedColors = [
                     ...this._colors.filter(
-                        color => color.customVar.search(selection) > -1
+                        (color) => color.customVar.search(selection) > -1
                     ),
                 ];
                 newSelections.unshift(...selectedColors);
