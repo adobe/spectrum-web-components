@@ -24,7 +24,7 @@ import styles from './table-row.css.js';
 import { TableCheckboxCell } from './TableCheckboxCell.js';
 
 /**
- * @element sp-table
+ * @element sp-table-row
  *
  * @fires sorted - Announces that `selected` of the table row has changed
  */
@@ -40,7 +40,7 @@ export class TableRow extends SpectrumElement {
     checkboxCells!: TableCheckboxCell[];
 
     @property({ reflect: true })
-    public role = 'row';
+    public override role = 'row';
 
     @property({ type: Boolean })
     public selectable = false;
