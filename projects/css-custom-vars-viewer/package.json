@@ -2,7 +2,7 @@
     "name": "sp-demo-app",
     "version": "0.0.0",
     "description": "Demo app created with Spectrum Web Components, following open-wc guidelines",
-    "license": "MIT",
+    "license": "Apache-2.0",
     "author": "najikahalsema",
     "main": "dist/src/index.js",
     "module": "dist/src/index.js",
@@ -56,11 +56,6 @@
         "@web/dev-server-storybook": "^0.5.4",
         "@web/test-runner": "^0.14.0",
         "concurrently": "^5.3.0",
-        "eslint": "^7.32.0",
-        "eslint-config-prettier": "^8.3.0",
-        "husky": "^4.3.8",
-        "lint-staged": "^10.5.4",
-        "prettier": "^2.4.1",
         "tslib": "^2.3.1",
         "typescript": "^4.7.2"
     },
@@ -88,17 +83,6 @@
                 }
             ]
         }
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
-    "lint-staged": {
-        "*.ts": [
-            "eslint --fix",
-            "prettier --write"
-        ]
     },
     "prettier": {
         "singleQuote": true,

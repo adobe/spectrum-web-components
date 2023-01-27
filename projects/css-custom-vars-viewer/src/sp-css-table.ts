@@ -11,4 +11,8 @@ governing permissions and limitations under the License.
 */
 import { CssTable } from './CssTable.js';
 
-window.customElements.define('sp-css-table', CssTable);
+declare global {
+    interface HTMLElementTagNameMap {
+        'sp-css-table': CssTable;
+    }
+}
