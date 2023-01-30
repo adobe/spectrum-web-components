@@ -25,14 +25,7 @@ import type {
     TableItem,
 } from '@spectrum-web-components/table';
 import '@spectrum-web-components/link/sp-link.js';
-import '@spectrum-web-components/table/sp-table.js';
-import '@spectrum-web-components/table/sp-table-body.js';
-import '@spectrum-web-components/table/sp-table-cell.js';
-import '@spectrum-web-components/table/sp-table-head.js';
-import '@spectrum-web-components/table/sp-table-head-cell.js';
-import '@spectrum-web-components/table/sp-table-row.js';
-import '@spectrum-web-components/toast/sp-toast.js';
-import '@spectrum-web-components/swatch/sp-swatch.js';
+import '@spectrum-web-components/table/elements.js';
 
 export interface Item extends TableItem {
     customVar: string;
