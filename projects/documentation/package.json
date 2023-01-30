@@ -26,8 +26,8 @@
         "@spectrum-web-components/bundle": "^0.28.9"
     },
     "devDependencies": {
-        "@11ty/eleventy": "^1.0.0",
-        "@11ty/eleventy-plugin-syntaxhighlight": "^4.0.0",
+        "@11ty/eleventy": "^2.0.0",
+        "@11ty/eleventy-plugin-syntaxhighlight": "^4.2.0",
         "@fullhuman/postcss-purgecss": "^4.1.3",
         "@open-wc/building-rollup": "^2.2.1",
         "@playwright/test": "^1.29.1",
