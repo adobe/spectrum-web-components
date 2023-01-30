@@ -24,6 +24,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { TopNavItem } from './TopNavItem.js';
 
 import tabStyles from '@spectrum-web-components/tabs/src/tabs.css.js';
+import { ScaledIndicator } from '@spectrum-web-components/tabs/src/Tabs.js';
 
 const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
@@ -37,7 +38,7 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
 export class TopNav extends SizedMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
-        return [tabStyles];
+        return [tabStyles, ScaledIndicator.baseStyles()];
     }
 
     @property()
@@ -172,12 +173,11 @@ export class TopNav extends SizedMixin(SpectrumElement) {
             selectedItem.updateComplete,
             document.fonts ? document.fonts.ready : Promise.resolve(),
         ]);
-        const itemBoundingClientRect = selectedItem.getBoundingClientRect();
-
-        const width = itemBoundingClientRect.width;
-        const offset = selectedItem.offsetLeft;
-
-        this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${width});`;
+        const { width } = selectedItem.getBoundingClientRect();
+        this.selectionIndicatorStyle = ScaledIndicator.transformX(
+            selectedItem.offsetLeft,
+            width
+        );
     };
 
     public override connectedCallback(): void {

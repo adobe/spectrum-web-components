@@ -11,6 +11,8 @@ governing permissions and limitations under the License.
 */
 
 import {
+    css,
+    CSSResult,
     CSSResultArray,
     html,
     PropertyValues,
@@ -30,7 +32,33 @@ import { RovingTabindexController } from '@spectrum-web-components/reactive-cont
 import tabStyles from './tabs.css.js';
 import { TabPanel } from './TabPanel.js';
 
-const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
+// Encapsulated for use both here and in TopNav
+export const ScaledIndicator = {
+    baseSize: 100 as const,
+    noSelectionStyle: 'transform: translateX(0px) scaleX(0) scaleY(0)',
+
+    transformX(left: number, width: number): string {
+        const scale = width / this.baseSize;
+        return `transform: translateX(${left}px) scaleX(${scale});`;
+    },
+
+    transformY(top: number, height: number): string {
+        const scale = height / this.baseSize;
+        return `transform: translateY(${top}px) scaleY(${scale});`;
+    },
+
+    baseStyles(): CSSResult {
+        return css`
+            :host([direction='vertical-right']) #selection-indicator,
+            :host([direction='vertical']) #selection-indicator {
+                height: ${this.baseSize}px;
+            }
+            :host([dir][direction='horizontal']) #selection-indicator {
+                width: ${this.baseSize}px;
+            }
+        `;
+    },
+};
 
 /**
  * @element sp-tabs
@@ -43,7 +71,7 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
  */
 export class Tabs extends SizedMixin(Focusable) {
     public static override get styles(): CSSResultArray {
-        return [tabStyles];
+        return [tabStyles, ScaledIndicator.baseStyles()];
     }
 
     /**
@@ -80,7 +108,7 @@ export class Tabs extends SizedMixin(Focusable) {
     public quiet = false;
 
     @property({ attribute: false })
-    public selectionIndicatorStyle = noSelectionStyle;
+    public selectionIndicatorStyle = ScaledIndicator.noSelectionStyle;
 
     @property({ attribute: false })
     public shouldAnimate = false;
@@ -349,26 +377,19 @@ export class Tabs extends SizedMixin(Focusable) {
     private updateSelectionIndicator = async (): Promise<void> => {
         const selectedElement = this.tabs.find((el) => el.selected);
         if (!selectedElement) {
-            this.selectionIndicatorStyle = noSelectionStyle;
+            this.selectionIndicatorStyle = ScaledIndicator.noSelectionStyle;
             return;
         }
         await Promise.all([
             selectedElement.updateComplete,
             document.fonts ? document.fonts.ready : Promise.resolve(),
         ]);
-        const tabBoundingClientRect = selectedElement.getBoundingClientRect();
+        const { width, height } = selectedElement.getBoundingClientRect();
 
-        if (this.direction === 'horizontal') {
-            const width = tabBoundingClientRect.width;
-            const offset = selectedElement.offsetLeft;
-
-            this.selectionIndicatorStyle = `transform: translateX(${offset}px) scaleX(${width});`;
-        } else {
-            const height = tabBoundingClientRect.height;
-            const offset = selectedElement.offsetTop;
-
-            this.selectionIndicatorStyle = `transform: translateY(${offset}px) scaleY(${height});`;
-        }
+        this.selectionIndicatorStyle =
+            this.direction === 'horizontal'
+                ? ScaledIndicator.transformX(selectedElement.offsetLeft, width)
+                : ScaledIndicator.transformY(selectedElement.offsetTop, height);
     };
 
     private tabChangePromise = Promise.resolve();
