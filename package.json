@@ -71,6 +71,7 @@
         "test:changed": "node ./tasks/test-changes.js",
         "test:ci": "yarn test:start",
         "test:create": "node test/visual/create.js",
+        "test:errors": "yarn test | grep -A 32 ❌",
         "test:focus": "yarn build && yarn test:ci --coverage --group",
         "test:start": "web-test-runner",
         "test:visual": "yarn test:visual:ci",

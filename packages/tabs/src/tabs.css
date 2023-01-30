@@ -110,7 +110,6 @@ governing permissions and limitations under the License.
 :host([direction='vertical-right']) #selection-indicator,
 :host([direction='vertical']) #selection-indicator {
     top: 0;
-    height: 1px;
 }
 
 /* 
@@ -141,13 +140,6 @@ governing permissions and limitations under the License.
         --spectrum-tabs-rule-color,
         var(--spectrum-global-color-gray-200)
     );
-}
-
-/*
- * Power scale based indicator transitions
- */
-:host([dir][direction='horizontal']) #selection-indicator {
-    width: 1px;
 }
 
 :host([dir='rtl'][direction='vertical-right']) #selection-indicator {
