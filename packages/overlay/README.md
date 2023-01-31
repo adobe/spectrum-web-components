@@ -159,7 +159,7 @@ When working with the DOM-based APIs of custom elements, it is sometimes preferr
 
 ```js
 const trigger = shadowRoot.querySelector('#trigger');
-const slot = shadowRoot.querySeletor('slot');
+const slot = shadowRoot.querySelector('slot');
 const interaction = 'click';
 const content = slot
     .assignedNodes({ flatten: true })
