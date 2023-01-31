@@ -4477,9 +4477,9 @@
   integrity sha512-bCvPQUoALZJOv+7qaGwJ2NRR2E9VGtIS3B6DyFcjCtEEXNvj4buQ0JPSh4oPdY96nd+rAyrG7ukGWIF6jpWI+A==
 
 "@spectrum-css/colorloupe@^2.0.11":
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorloupe/-/colorloupe-2.0.11.tgz#eef5113a04efcbfa24a4cecb603555807c9d8b84"
-  integrity sha512-RT7S+yB1teGtwJ4E7hLGBy+jz5T6NVub+mNnf27jQHTkyQgx+Fq/nMA6N4EGKeAXBgEKO5uXDBi4WzfLmDeujg==
+  version "2.0.13"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorloupe/-/colorloupe-2.0.13.tgz#d7feddf2905bc66612144158f9cccceea99f7add"
+  integrity sha512-aQSyNeOzFhRvMDBxdDLQjkpr4WRgnisdb6hLNuvRFU7hT9GJYdVap46RXujjTwk1LwqACmCCmpEcTj/qSVtrPA==
 
 "@spectrum-css/colorslider@^2.0.11":
   version "2.0.11"
