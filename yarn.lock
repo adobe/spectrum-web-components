@@ -4387,9 +4387,9 @@
   integrity sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==
 
 "@spectrum-css/accordion@^3.0.28":
-  version "3.0.28"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/accordion/-/accordion-3.0.28.tgz#5676d93e420035af27ecd1ea7d326ac8e80e0449"
-  integrity sha512-oYJ2Pew/QEEp4Fv2dDGsVjfORChBYLI46x3nrPkzkNF2wv6gXm7NZokNG4TK4ZOzRPnFIV6OQs65ydtW8uZhqQ==
+  version "3.0.30"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/accordion/-/accordion-3.0.30.tgz#0893a6db28bab984bf5adaf7e1ba194e741db615"
+  integrity sha512-J9zw5blM72pl+mtticqJKwLHaQYBwtrfwDXwQuz3lOTUcedzxQ0Pk2lZ1P46+98hdJzxTXZ5RjIyXre3TPEq1w==
 
 "@spectrum-css/actionbar@^4.0.1":
   version "4.0.1"
