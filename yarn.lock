@@ -4496,10 +4496,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/commons/-/commons-4.0.2.tgz#4cb4c614c5e87927ecdf0d91582528f85e05a6e8"
   integrity sha512-suAr8H9b/ALlnGV+wTwvLOWTmHPYcekPHXtCPgUUok2p379suy86+M9Ps0u5t2J4HaZ8FIxMAH4EBewL5oqBMg==
 
-"@spectrum-css/dialog@^6.0.21":
-  version "6.0.21"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/dialog/-/dialog-6.0.21.tgz#c39b99783cd8959fa2da7e2a56a59905a070bfc3"
-  integrity sha512-40Mb4Z3dW0eXf39qBSQlsJzhMa/ieDfwwthySDKtOe5Fd1nR7SpkhbJfYgf1a7NKu+gVUVMeygLzX3g6o2tYHw==
+"@spectrum-css/dialog@^6.0.24":
+  version "6.0.24"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/dialog/-/dialog-6.0.24.tgz#7cbe808a16e44d39e7f3cb49e9694be59b0db0f4"
+  integrity sha512-9RL4Qvwqq59OyvRqGBXMqL2vMhphiVMoxUA38+yKHfMIF/44s0rHb5zLzFx+8bK/6+r5Md64XQXPJhIywcB2aA==
 
 "@spectrum-css/divider@^2.0.7":
   version "2.0.7"

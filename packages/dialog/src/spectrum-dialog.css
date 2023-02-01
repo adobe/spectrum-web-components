@@ -158,6 +158,14 @@ governing permissions and limitations under the License.
     );
     width: 100%;
 }
+:host([mode='fullscreen']) slot[name='heading'] + .divider {
+    margin-bottom: calc(
+        var(
+                --spectrum-dialog-confirm-divider-margin-bottom,
+                var(--spectrum-global-dimension-static-size-200)
+            ) - var(--spectrum-dialog-confirm-description-padding) * 2
+    ); /* .spectrum-Dialog--fullscreen .spectrum-Dialog-heading+.spectrum-Dialog-divider */
+}
 :host([no-divider]) .divider {
     display: none; /* .spectrum-Dialog--noDivider .spectrum-Dialog-divider */
 }
@@ -192,7 +200,7 @@ governing permissions and limitations under the License.
     );
     margin: 0 var(--spectrum-dialog-confirm-description-margin);
     overflow-y: auto;
-    padding: 0 var(--spectrum-dialog-confirm-description-padding);
+    padding: calc(var(--spectrum-dialog-confirm-description-padding) * 2);
 }
 .content,
 .footer {
