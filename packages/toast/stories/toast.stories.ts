@@ -30,7 +30,14 @@ const toast = ({
         ?open=${open}
     >
         ${content}
-        <sp-button slot="action" variant="overBackground" quiet>Undo</sp-button>
+        <sp-button
+            slot="action"
+            static="white"
+            variant="secondary"
+            treatment="outline"
+        >
+            Undo
+        </sp-button>
     </sp-toast>
 `;
 

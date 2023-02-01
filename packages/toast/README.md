@@ -37,7 +37,12 @@ import { Toast } from '@spectrum-web-components/toast';
 ```html
 <sp-toast open>
     This is important information that you should read, soon.
-    <sp-button slot="action" variant="overBackground" quiet>
+    <sp-button
+        slot="action"
+        static="white"
+        variant="secondary"
+        treatment="outline"
+    >
         Do something
     </sp-button>
 </sp-toast>
@@ -48,7 +53,12 @@ import { Toast } from '@spectrum-web-components/toast';
 ```html
 <sp-toast open style="width: 300px">
     This is important information that you should read, soon.
-    <sp-button slot="action" variant="overBackground" quiet>
+    <sp-button
+        slot="action"
+        static="white"
+        variant="secondary"
+        treatment="outline"
+    >
         Do something
     </sp-button>
 </sp-toast>
