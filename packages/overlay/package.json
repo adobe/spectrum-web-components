@@ -102,7 +102,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@floating-ui/dom": "^1.1.0",
+        "@floating-ui/dom": "^1.2.0",
         "@spectrum-web-components/action-button": "^0.10.10",
         "@spectrum-web-components/base": "^0.7.4",
         "@spectrum-web-components/shared": "^0.15.5",
