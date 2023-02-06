@@ -12,17 +12,6 @@ governing permissions and limitations under the License.
 
 @import './spectrum-slider.css';
 
-:host {
-    --spectrum-slider-handle-default-background-color: var(
-        --spectrum-slider-m-handle-background-color,
-        var(--spectrum-alias-background-color-transparent)
-    );
-    --spectrum-slider-handle-default-border-color: var(
-        --spectrum-slider-m-handle-border-color,
-        var(--spectrum-global-color-gray-700)
-    );
-}
-
 sp-field-label {
     padding-top: 0;
     padding-bottom: 0;
@@ -133,47 +122,12 @@ sp-field-label {
     background-size: var(--spectrum-slider-track-background-size) !important;
 }
 
-:host([dir='ltr']) .track:before {
-    background: var(
-        --spectrum-slider-m-track-color,
-        var(
-            --spectrum-slider-track-color,
-            var(--spectrum-global-color-gray-300)
-        )
-    );
-}
-
-:host([dir='rtl']) .track:before {
-    /* .spectrum-Slider-track:before */
-    background: var(
-        --spectrum-slider-m-track-color,
-        var(
-            --spectrum-slider-track-color-rtl,
-            var(
-                --spectrum-slider-track-color,
-                var(--spectrum-global-color-gray-300)
-            )
-        )
-    );
-}
-
 :host([dir='ltr']) .track:last-of-type:before {
     background-position: 100%;
 }
 
 :host([dir='rtl']) .track:first-of-type:before {
     background-position: 100%;
-}
-
-.track:not(:first-of-type, :last-of-type) {
-    padding-left: calc(
-        var(--spectrum-slider-handle-width) / 2 +
-            var(--spectrum-slider-track-handleoffset)
-    ) !important;
-    padding-right: calc(
-        var(--spectrum-slider-handle-width) / 2 +
-            var(--spectrum-slider-track-handleoffset)
-    ) !important;
 }
 
 :host([dir='ltr']) .track:not(:first-of-type, :last-of-type) {
@@ -206,21 +160,3 @@ sp-field-label {
     padding: 0;
     margin: 0;
 }
-
-/**
- * Start workaround to fastfoward fixes in https://github.com/adobe/spectrum-web-components/issues/2905
- */
-
-#track {
-    cursor: pointer;
-}
-
-.handle.dragging,
-.handle.handle-highlight,
-.handle:active {
-    border-width: var(--spectrum-slider-handle-border-width-down-medium);
-}
-
-/**
- * End workaround to fastfoward fixes in https://github.com/adobe/spectrum-web-components/issues/2905
- */

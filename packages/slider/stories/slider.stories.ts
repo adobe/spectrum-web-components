@@ -372,11 +372,13 @@ export const Gradient = (args: StoryArgs = {}): TemplateResult => {
             style="
                 width: 500px;
                 margin: 12px 20px;
-                --spectrum-slider-track-color:linear-gradient(to right, red, green 100%);
-                --spectrum-slider-track-color-rtl:linear-gradient(to left, red, green 100%);
             "
         >
             <sp-slider
+                style="
+                    --spectrum-slider-track-color:linear-gradient(to right, red, green 100%);
+                    --spectrum-slider-track-color-rtl:linear-gradient(to left, red, green 100%);
+                "
                 label="Opacity"
                 max="100"
                 min="0"
@@ -607,6 +609,9 @@ export const ThreeHandlesPc = (args: StoryArgs = {}): TemplateResult => {
         </div>
     `;
 };
+ThreeHandlesPc.args = {
+    variant: 'range',
+};
 
 export const ThreeHandlesOrdered = (args: StoryArgs = {}): TemplateResult => {
     return html`
@@ -644,6 +649,7 @@ export const ThreeHandlesOrdered = (args: StoryArgs = {}): TemplateResult => {
     `;
 };
 ThreeHandlesOrdered.args = {
+    variant: 'range',
     tickStep: 10,
 };
 
@@ -798,7 +804,8 @@ export const ThreeHandlesComplex = (args: StoryArgs = {}): TemplateResult => {
         </div>
     `;
 };
-ThreeHandlesOrdered.args = {
+ThreeHandlesComplex.args = {
+    variant: 'range',
     tickStep: 10,
 };
 

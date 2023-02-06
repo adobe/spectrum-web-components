@@ -2677,9 +2677,6 @@ governing permissions and limitations under the License.
     --spectrum-colorcontrol-checkerboard-dark-color: var(
         --spectrum-global-color-static-gray-300
     );
-    --spectrum-slider-m-track-inside-border-radius: var(
-        --spectrum-slider-m-track-border-radius
-    );
     --spectrum-slider-label-text-size: var(
         --spectrum-global-dimension-font-size-75
     );
