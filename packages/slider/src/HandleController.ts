@@ -492,8 +492,8 @@ export class HandleController implements Controller {
             }%`,
             'z-index': zIndex.toString(),
             // Allow setting background per-handle
-            'background-color': `var(--spectrum-slider-handle-background-color-${index}, var(--spectrum-slider-handle-default-background-color))`,
-            'border-color': `var(--spectrum-slider-handle-border-color-${index}, var(-spectrum-slider-handle-default-border-color))`,
+            'background-color': `var(--spectrum-slider-handle-background-color-${index}, var(--spectrum-slider-handle-background-color))`,
+            'border-color': `var(--spectrum-slider-handle-border-color-${index}, var(--spectrum-slider-handle-border-color))`,
         };
         const ariaLabelledBy = isMultiHandle ? `label input-${index}` : 'label';
         return html`

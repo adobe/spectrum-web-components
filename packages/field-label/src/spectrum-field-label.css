@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
+    --spectrum-fieldlabel-min-height: var(--spectrum-component-height-75);
     --spectrum-fieldlabel-color: var(
         --spectrum-neutral-subdued-content-color-default
     );
@@ -21,15 +22,17 @@ governing permissions and limitations under the License.
     --spectrum-field-label-text-to-asterisk: var(
         --spectrum-field-label-text-to-asterisk-medium
     );
+    --spectrum-fieldlabel-font-weight: var(--spectrum-regular-font-weight);
+    --spectrum-fieldlabel-line-height: var(--spectrum-line-height-100);
+    --spectrum-fieldlabel-line-height-cjk: var(--spectrum-cjk-line-height-100);
 }
 :host([size='s']) {
+    --spectrum-fieldlabel-min-height: var(--spectrum-component-height-75);
     --spectrum-fieldlabel-top-to-text: var(--spectrum-component-top-to-text-75);
     --spectrum-fieldlabel-bottom-to-text: var(
         --spectrum-component-bottom-to-text-75
     );
     --spectrum-fieldlabel-font-size: var(--spectrum-font-size-75);
-    --spectrum-fieldlabel-line-height: var(--spectrum-line-height-100);
-    --spectrum-fieldlabel-line-height-cjk: var(--spectrum-line-height-cjk-100);
     --spectrum-fieldlabel-side-padding-top: var(
         --spectrum-component-top-to-text-75
     );
@@ -42,13 +45,12 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='m']) {
+    --spectrum-fieldlabel-min-height: var(--spectrum-component-height-75);
     --spectrum-fieldlabel-top-to-text: var(--spectrum-component-top-to-text-75);
     --spectrum-fieldlabel-bottom-to-text: var(
         --spectrum-component-bottom-to-text-75
     );
     --spectrum-fieldlabel-font-size: var(--spectrum-font-size-75);
-    --spectrum-fieldlabel-line-height: var(--spectrum-line-height-200);
-    --spectrum-fieldlabel-line-height-cjk: var(--spectrum-line-height-cjk-200);
     --spectrum-fieldlabel-side-padding-top: var(
         --spectrum-component-top-to-text-75
     );
@@ -61,6 +63,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='l']) {
+    --spectrum-fieldlabel-min-height: var(--spectrum-component-height-100);
     --spectrum-fieldlabel-top-to-text: var(
         --spectrum-component-top-to-text-100
     );
@@ -68,8 +71,6 @@ governing permissions and limitations under the License.
         --spectrum-component-bottom-to-text-100
     );
     --spectrum-fieldlabel-font-size: var(--spectrum-font-size-100);
-    --spectrum-fieldlabel-line-height: var(--spectrum-line-height-100);
-    --spectrum-fieldlabel-line-height-cjk: var(--spectrum-line-height-cjk-100);
     --spectrum-fieldlabel-side-padding-top: var(
         --spectrum-component-top-to-text-100
     );
@@ -82,6 +83,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='xl']) {
+    --spectrum-fieldlabel-min-height: var(--spectrum-component-height-200);
     --spectrum-fieldlabel-top-to-text: var(
         --spectrum-component-top-to-text-200
     );
@@ -89,8 +91,6 @@ governing permissions and limitations under the License.
         --spectrum-component-bottom-to-text-200
     );
     --spectrum-fieldlabel-font-size: var(--spectrum-font-size-200);
-    --spectrum-fieldlabel-line-height: var(--spectrum-line-height-200);
-    --spectrum-fieldlabel-line-height-cjk: var(--spectrum-line-height-cjk-200);
     --spectrum-fieldlabel-side-padding-top: var(
         --spectrum-component-top-to-text-200
     );
@@ -114,12 +114,16 @@ governing permissions and limitations under the License.
         var(--spectrum-fieldlabel-font-size)
     );
     font-weight: var(
-        --mod-font-weight-regular,
-        var(--spectrum-font-weight-regular)
+        --mod-fieldlabel-font-weight,
+        var(--spectrum-fieldlabel-font-weight)
     );
     line-height: var(
         --mod-fieldlabel-line-height,
         var(--spectrum-fieldlabel-line-height)
+    );
+    min-block-size: var(
+        --mod-fieldlabel-min-height,
+        var(--spectrum-fieldlabel-min-height)
     );
     padding-block: var(--spectrum-fieldlabel-top-to-text)
         var(--spectrum-fieldlabel-bottom-to-text);
@@ -183,13 +187,24 @@ governing permissions and limitations under the License.
 }
 :host([disabled]) {
     color: var(
-        --mod-disabled-content-color,
-        var(--spectrum-disabled-content-color)
+        --highcontrast-disabled-content-color,
+        var(
+            --mod-disabled-content-color,
+            var(--spectrum-disabled-content-color)
+        )
     );
 }
 :host([disabled]) .required-icon {
     color: var(
-        --mod-disabled-content-color,
-        var(--spectrum-disabled-content-color)
+        --highcontrast-disabled-content-color,
+        var(
+            --mod-disabled-content-color,
+            var(--spectrum-disabled-content-color)
+        )
     );
+}
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-disabled-content-color: GrayText;
+    }
 }
