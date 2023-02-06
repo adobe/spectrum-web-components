@@ -180,7 +180,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
             return this._itemChildren;
         }
 
-        const iconSlot = this.shadowRoot.querySelector(
+        const iconSlot = this.shadowRoot?.querySelector(
             'slot[name="icon"]'
         ) as HTMLSlotElement;
         const icon = !iconSlot
@@ -191,7 +191,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
                   newElement.classList.toggle('icon');
                   return newElement;
               });
-        const contentSlot = this.shadowRoot.querySelector(
+        const contentSlot = this.shadowRoot?.querySelector(
             'slot:not([name])'
         ) as HTMLSlotElement;
         const content = !contentSlot
