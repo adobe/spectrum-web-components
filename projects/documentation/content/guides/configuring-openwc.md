@@ -12,7 +12,7 @@ This guide expounds upon configuration specifics you may want to adopt in your `
 In your terminal, run the following command:
 
 ```bash
-    npm init @open-wc
+npm init @open-wc
 ```
 
 Once you do that, `@open-wc` will give you a few configuration options. You'll want to set up your project as a Web Component and allow it to use typescript. When it asks you what features to add, say "yes" to all of them--we'll explain how to set them up to be more compatible with SWC in this guide. SWC uses `yarn` to manage its package dependencies, so you can go ahead and choose that one, as well.
