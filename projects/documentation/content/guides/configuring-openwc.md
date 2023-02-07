@@ -15,7 +15,7 @@ In your terminal, run the following command:
 npm init @open-wc
 ```
 
-Once you do that, `@open-wc` will give you a few configuration options. You'll want to set up your project as a Web Component and allow it to use typescript. When it asks you what features to add, say "yes" to all of them--we'll explain how to set them up to be more compatible with SWC in this guide. SWC uses `yarn` to manage its package dependencies, so you can go ahead and choose that one, as well.
+Once you do that, `@open-wc` will give you a few configuration options. You'll want to set up your project as a Web Component and allow it to use typescript. When it asks you what features to add, say "yes" (by pressing the Space Bar, not the Enter key) to all of them--we'll explain how to set them up to be more compatible with SWC in this guide. SWC uses `yarn` to manage its package dependencies, so you can go ahead and choose that one, as well.
 
 ## Setting up your .gitignore
 
@@ -76,14 +76,6 @@ bracketSpacing: true
 arrowParens: always
 htmlWhitespaceSensitivity: ignore
 ```
-
-Also create a file in your root called `.prettierignore`, and in it, put:
-
-```
-node_modules
-```
-
-Your linter is all set up!
 
 ## Setting up Storybook
 
