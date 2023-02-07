@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
-import cheerio from 'cheerio';
+import { load } from 'cheerio';
 import prettier from 'prettier';
 import Case from 'case';
 import { fileURLToPath } from 'url';
@@ -81,7 +81,7 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
             id += 'Advert';
         }
         const ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
-        const $ = cheerio.load(svg, {
+        const $ = load(svg, {
             xmlMode: true,
         });
         const title = Case.capital(id);
@@ -103,8 +103,10 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
                 if (keepColors !== 'keep') {
                     $(el).attr('fill', 'currentColor');
                 }
-                $(el).attr('aria-label', '${title}');
+                $(el).attr('aria-label', '...');
                 $(el).removeAttr('id');
+                $(el).attr('width', '...');
+                $(el).attr('height', '...');
             }
             if (el.name === 'defs') {
                 $(el).remove();
@@ -118,11 +120,6 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
                 }
                 if (keepColors !== 'keep' && x === 'fill') {
                     $(el).attr(x, 'currentColor');
-                }
-                if (el.name === 'svg') {
-                    if (x === 'width' || x === 'height') {
-                        $(el).attr(x, '${' + x + '}');
-                    }
                 }
             });
         });
@@ -143,8 +140,11 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
             .toString()
             .replace(
                 'aria-hidden="..."',
-                "aria-hidden=\"${hidden ? 'true' : 'false'}\""
-            )}\`;
+                "aria-hidden=${hidden ? 'true' : 'false'}"
+            )
+            .replace('width="..."', 'width=${width}')
+            .replace('height="..."', 'height=${height}')
+            .replace('aria-label="..."', 'aria-label=${title}')}\`;
       }
     `;
 
