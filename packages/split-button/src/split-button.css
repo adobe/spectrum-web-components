@@ -12,18 +12,61 @@ governing permissions and limitations under the License.
 
 @import './spectrum-split-button.css';
 
+#button {
+    --spectrum-splitbutton-flat-edge-padding: calc(
+        var(--spectrum-button-edge-to-text) -
+            var(
+                --spectrum-button-border-width,
+                var(--spectrum-alias-border-size-thick)
+            ) * 2
+    );
+    --spectrum-splitbutton-round-edge-padding: var(
+        --spectrum-button-edge-to-visual,
+        var(--spectrum-global-dimension-size-200)
+    );
+    --spectrum-splitbutton-cta-flat-edge-padding: calc(
+        var(--spectrum-button-edge-to-text) -
+            var(
+                --spectrum-button-border-width,
+                var(--spectrum-alias-border-size-thick)
+            ) * 3
+    );
+}
+
+.trigger {
+    --spectrum-splitbutton-trigger-flat-edge-padding: calc(
+        var(--spectrum-button-edge-to-text) -
+            var(
+                --spectrum-button-border-width,
+                var(--spectrum-alias-border-size-thick)
+            ) * 2
+    );
+    --spectrum-splitbutton-trigger-round-edge-padding: var(
+        --spectrum-button-edge-to-visual,
+        var(--spectrum-global-dimension-size-200)
+    );
+    --spectrum-splitbutton-cta-trigger-flat-edge-padding: calc(
+        var(--spectrum-button-edge-to-text) -
+            var(
+                --spectrum-button-border-width,
+                var(--spectrum-alias-border-size-thick)
+            ) * 3
+    );
+}
+
+:host([dir='ltr']) #button[variant='accent'] {
+    margin-right: var(
+        --spectrum-button-border-width,
+        var(--spectrum-alias-border-size-thick)
+    );
+}
+
 /**
  * Begin workaround for SplitButton not natively supporting t-shirt sizes.
  */
 sp-button {
-    --spectrum-button-m-primary-outline-texticon-border-radius: calc(
-        (
-                var(--spectrum-button-primary-fill-texticon-text-size) *
-                    var(
-                        --spectrum-button-primary-fill-texticon-text-line-height
-                    )
-            ) + var(--spectrum-icon-tshirt-size-height) / 2 +
-            var(--spectrum-alias-border-size-thick)
+    --spectrum-button-m-primary-outline-texticon-border-radius: var(
+        --spectrum-button-border-radius
     );
 }
 
