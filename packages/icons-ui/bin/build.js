@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
-import cheerio from 'cheerio';
+import { load } from 'cheerio';
 import prettier from 'prettier';
 import Case from 'case';
 import { fileURLToPath } from 'url';
@@ -72,14 +72,19 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
 
     icons.forEach((i) => {
         const svg = fs.readFileSync(i, 'utf-8');
-        const id = path
+        let id = path
             .basename(i, '.svg')
             .replace('S_', '')
             .replace('_22_N', '');
+        if (id.search(/^Ad[A-Z]/) !== -1) {
+            id = id.replace(/^Ad/, '');
+            id += 'Advert';
+        }
         const ComponentName = id === 'github' ? 'GitHub' : Case.pascal(id);
-        const $ = cheerio.load(svg, {
+        const $ = load(svg, {
             xmlMode: true,
         });
+        const title = Case.capital(id);
         const fileName = `${id}.ts`;
         const location = path.join(
             rootDir,
@@ -94,10 +99,14 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
         $('*').each((index, el) => {
             if (el.name === 'svg') {
                 $(el).attr('aria-hidden', 'true');
+                $(el).attr('role', 'img');
                 if (keepColors !== 'keep') {
                     $(el).attr('fill', 'currentColor');
                 }
+                $(el).attr('aria-label', '...');
                 $(el).removeAttr('id');
+                $(el).attr('width', '...');
+                $(el).attr('height', '...');
             }
             if (el.name === 'defs') {
                 $(el).remove();
@@ -121,8 +130,16 @@ glob(`${rootDir}/node_modules/${iconsPath}/**.svg`, (error, icons) => {
       import {tag as html, TemplateResult} from '../custom-tag.js';
 
       export {setCustomTemplateLiteralTag} from '../custom-tag.js';
-      export const ${ComponentName}Icon = (): string | TemplateResult => {
-        return html\`${$('svg').toString()}\`;
+      export const ${ComponentName}Icon = ({
+        width = 24,
+        height = 24,
+        title = '${title}',
+      } = {},): string | TemplateResult => {
+        return html\`${$('svg')
+            .toString()
+            .replace('width="..."', 'width=${width}')
+            .replace('height="..."', 'height=${height}')
+            .replace('aria-label="..."', 'aria-label=${title}')}\`;
       }
     `;
 

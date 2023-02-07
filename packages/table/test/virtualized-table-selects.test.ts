@@ -502,6 +502,10 @@ describe('Virtualized Table Selects', () => {
 
         await oneEvent(el, 'rangeChanged');
         await elementUpdated(el);
+        const body = el.querySelector('sp-table-body') as unknown as {
+            [virtualizerRef]: Virtualizer;
+        };
+        await body[virtualizerRef].layoutComplete;
 
         const rowOne = el.querySelector('[value="0"]') as TableRow;
         const rowOneCheckboxCell = rowOne.querySelector(
