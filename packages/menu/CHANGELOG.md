@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.16.11...@spectrum-web-components/menu@0.16.12) (2023-02-08)
+
+### Bug Fixes
+
+-   **menu:** patch undefined lastFocusedItem ([772a7ea](https://github.com/adobe/spectrum-web-components/commit/772a7ea63507b69432e8fac33354578873c3585c))
+-   prepare for querying child items while disconnected ([f4152a5](https://github.com/adobe/spectrum-web-components/commit/f4152a5474b661d72b69e7a8cab41639ec7fb8c0))
+
 ## [0.16.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/menu@0.16.10...@spectrum-web-components/menu@0.16.11) (2023-01-23)
 
 **Note:** Version bump only for package @spectrum-web-components/menu

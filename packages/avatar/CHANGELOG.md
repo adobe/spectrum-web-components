@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/avatar@0.10.5...@spectrum-web-components/avatar@0.11.0) (2023-02-08)
+
+### Features
+
+-   **avatar:** use core tokens ([6937e68](https://github.com/adobe/spectrum-web-components/commit/6937e684aadd69e825de2b40bfc0366eb8555ef7))
+
 ## [0.10.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/avatar@0.10.4...@spectrum-web-components/avatar@0.10.5) (2023-01-23)
 
 **Note:** Version bump only for package @spectrum-web-components/avatar

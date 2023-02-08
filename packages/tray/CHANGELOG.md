@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.4.9...@spectrum-web-components/tray@0.5.0) (2023-02-08)
+
+### Features
+
+-   **tray:** use spectrum tokens ([cdd78b2](https://github.com/adobe/spectrum-web-components/commit/cdd78b28d464a2ff2fb7701fc6fed780a4f557c9))
+
 ## [0.4.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tray@0.4.8...@spectrum-web-components/tray@0.4.9) (2023-01-23)
 
 **Note:** Version bump only for package @spectrum-web-components/tray

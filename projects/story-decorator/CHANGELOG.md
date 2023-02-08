@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.7.11...@spectrum-web-components/story-decorator@0.8.0) (2023-02-08)
+
+### Features
+
+-   **progress-bar:** use core tokens ([540552e](https://github.com/adobe/spectrum-web-components/commit/540552ecda4cfab4f26045a6ef2ed58457190ab9))
+
 ## [0.7.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/story-decorator@0.7.10...@spectrum-web-components/story-decorator@0.7.11) (2023-01-23)
 
 **Note:** Version bump only for package @spectrum-web-components/story-decorator

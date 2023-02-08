@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/documentation@0.4.7...documentation@0.4.8) (2023-02-08)
+
+### Bug Fixes
+
+-   missing new-line preventing commits ([d88e2a9](https://github.com/adobe/spectrum-web-components/commit/d88e2a909ec0972373fa1ef7147b255ace59d0bd))
+
 ## [0.4.7](https://github.com/adobe/spectrum-web-components/compare/documentation@0.4.6...documentation@0.4.7) (2023-01-23)
 
 ### Bug Fixes

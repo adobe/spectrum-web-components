@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/table@0.1.8...@spectrum-web-components/table@0.1.9) (2023-02-08)
+
+### Bug Fixes
+
+-   **table:** allow tablebody to be resized via flex-grow ([f797202](https://github.com/adobe/spectrum-web-components/commit/f797202501d81ff878b500551b6ca6fbb5022e76))
+-   **table:** update element tag in sp table sub components ([4e94d70](https://github.com/adobe/spectrum-web-components/commit/4e94d709b85eec887bf2f39ae4f3057dd67e5868))
+-   **table:** update sp-table import in elements.js ([0cfe25a](https://github.com/adobe/spectrum-web-components/commit/0cfe25a971520ae0cf6d57de0fe14430b53b72bb))
+
 ## [0.1.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/table@0.1.7...@spectrum-web-components/table@0.1.8) (2023-01-23)
 
 **Note:** Version bump only for package @spectrum-web-components/table

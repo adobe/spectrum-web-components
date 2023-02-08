@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.19.10...@spectrum-web-components/button@0.20.0) (2023-02-08)
+
+### Bug Fixes
+
+-   updating spectrum-config to support new label styles ([cefeaad](https://github.com/adobe/spectrum-web-components/commit/cefeaade098d246f7b222e54de5ff8becf42d315))
+-   work around icon positioning error in CSS source ([ef5271c](https://github.com/adobe/spectrum-web-components/commit/ef5271c208569b44166b00692baa2caeb0a30d27))
+
+### Features
+
+-   **button:** move "white" and "black" out of "variant" and into "static" ([5cf51df](https://github.com/adobe/spectrum-web-components/commit/5cf51df7db6f010f4c22d125b17a68e54fd507ba))
+-   **button:** using core-tokens for button ([a4a6d42](https://github.com/adobe/spectrum-web-components/commit/a4a6d42e7615466c6de344ccf36c8d7b4903a921))
+
 ## [0.19.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.19.9...@spectrum-web-components/button@0.19.10) (2023-01-23)
 
 **Note:** Version bump only for package @spectrum-web-components/button

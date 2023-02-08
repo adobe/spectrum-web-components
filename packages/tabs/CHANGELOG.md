@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.10.6...@spectrum-web-components/tabs@0.10.7) (2023-02-08)
+
+### Bug Fixes
+
+-   **tabs:** correct indicator size by scaling from 100px ([a3fb68b](https://github.com/adobe/spectrum-web-components/commit/a3fb68bb8103bc87a9c1e14e3bca8a5476e3a2f1))
+
 ## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.10.5...@spectrum-web-components/tabs@0.10.6) (2023-01-23)
 
 **Note:** Version bump only for package @spectrum-web-components/tabs

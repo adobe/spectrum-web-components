@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.9.11...@spectrum-web-components/split-button@0.9.12) (2023-02-08)
+
+### Bug Fixes
+
+-   modify overrides for new Button CSS ([8a36124](https://github.com/adobe/spectrum-web-components/commit/8a36124a78bbf4ff3b65dc169af62e9379b30c85))
+
 ## [0.9.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/split-button@0.9.10...@spectrum-web-components/split-button@0.9.11) (2023-01-23)
 
 **Note:** Version bump only for package @spectrum-web-components/split-button

@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.22.2...@spectrum-web-components/styles@0.23.0) (2023-02-08)
+
+### Features
+
+-   **avatar:** use core tokens ([6937e68](https://github.com/adobe/spectrum-web-components/commit/6937e684aadd69e825de2b40bfc0366eb8555ef7))
+-   **button:** using core-tokens for button ([a4a6d42](https://github.com/adobe/spectrum-web-components/commit/a4a6d42e7615466c6de344ccf36c8d7b4903a921))
+-   **picker:** use new tokens ([7d65b69](https://github.com/adobe/spectrum-web-components/commit/7d65b69d47d69a34f75b456a5aa457f22ec04aca))
+-   **progress-bar:** use core tokens ([540552e](https://github.com/adobe/spectrum-web-components/commit/540552ecda4cfab4f26045a6ef2ed58457190ab9))
+
 ## [0.22.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.22.1...@spectrum-web-components/styles@0.22.2) (2023-01-23)
 
 **Note:** Version bump only for package @spectrum-web-components/styles

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.6.10...@spectrum-web-components/top-nav@0.6.11) (2023-02-08)
+
+### Bug Fixes
+
+-   **tabs:** correct indicator size by scaling from 100px ([a3fb68b](https://github.com/adobe/spectrum-web-components/commit/a3fb68bb8103bc87a9c1e14e3bca8a5476e3a2f1))
+
 ## [0.6.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.6.9...@spectrum-web-components/top-nav@0.6.10) (2023-01-23)
 
 **Note:** Version bump only for package @spectrum-web-components/top-nav

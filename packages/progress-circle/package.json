@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/progress-circle",
-    "version": "0.7.5",
+    "version": "0.7.6",
     "publishConfig": {
         "access": "public"
     },

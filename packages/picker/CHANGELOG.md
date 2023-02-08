@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.13.11...@spectrum-web-components/picker@0.14.0) (2023-02-08)
+
+### Features
+
+-   **picker:** use new tokens ([7d65b69](https://github.com/adobe/spectrum-web-components/commit/7d65b69d47d69a34f75b456a5aa457f22ec04aca))
+
 ## [0.13.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.13.10...@spectrum-web-components/picker@0.13.11) (2023-01-23)
 
 **Note:** Version bump only for package @spectrum-web-components/picker
