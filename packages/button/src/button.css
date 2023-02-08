@@ -82,6 +82,44 @@ governing permissions and limitations under the License.
     }
 }
 
+/* stylelint-disable */
+:host {
+    padding: 0 !important;
+    padding-inline: var(
+        --mod-button-edge-to-text,
+        var(--spectrum-button-edge-to-text)
+    ) !important;
+    gap: var(--spectrum-button-padding-label-to-icon);
+}
+
+#label {
+    padding: 0 !important;
+    padding-block-start: var(
+        --mod-button-padding-label-top,
+        var(--spectrum-button-padding-label-top)
+    );
+    padding-block-end: var(
+        --mod-button-padding-label-bottom,
+        var(--spectrum-button-padding-label-bottom)
+    );
+    line-height: calc(
+        var(--mod-button-height, var(--spectrum-button-height)) -
+            var(
+                --mod-button-padding-label-top,
+                var(--spectrum-button-padding-label-top)
+            ) -
+            var(
+                --mod-button-padding-label-bottom,
+                var(--spectrum-button-padding-label-bottom)
+            )
+    );
+}
+
 ::slotted([slot='icon']) {
-    inset: unset;
+    margin: 0 !important;
+    inset: 0 !important;
+    margin-inline-start: calc(
+        var(--spectrum-button-edge-to-visual) -
+            var(--spectrum-button-edge-to-text)
+    );
 }

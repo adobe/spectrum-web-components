@@ -129,3 +129,45 @@ governing permissions and limitations under the License.
         --highcontrast-actionbutton-content-color-disabled: GrayText;
     }
 }
+
+/* stylelint-disable */
+:host {
+    padding: 0 !important;
+    padding-inline: var(--spectrum-actionbutton-edge-to-text) !important;
+    gap: calc(
+        var(--spectrum-actionbutton-text-to-visual) +
+            (
+                var(--spectrum-actionbutton-edge-to-text) -
+                    var(--spectrum-actionbutton-edge-to-visual-only)
+            )
+    );
+}
+
+#label {
+    padding: 0 !important;
+}
+
+::slotted([slot='icon']) {
+    margin: 0 !important;
+    /* With text */
+    margin-inline-start: calc(
+        var(--spectrum-actionbutton-edge-to-visual) -
+            var(--spectrum-actionbutton-edge-to-text)
+    ) !important;
+    margin-inline-end: calc(
+        var(--spectrum-actionbutton-edge-to-visual-only) -
+            var(--spectrum-actionbutton-edge-to-text)
+    ) !important;
+}
+
+[icon-only]::slotted([slot='icon']) {
+    /* Without text */
+    margin-inline-start: calc(
+        var(--spectrum-actionbutton-edge-to-visual-only) -
+            var(--spectrum-actionbutton-edge-to-text)
+    ) !important;
+}
+
+[icon-only] + #label {
+    display: none;
+}

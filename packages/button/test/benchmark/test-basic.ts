@@ -15,5 +15,10 @@ import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-button>Click me</sp-button>
+    <sp-button>Click Me</sp-button>
+    <sp-button disabled>Click Me</sp-button>
+    <sp-button>
+        <sp-icon-help slot="icon"></sp-icon-help>
+        Click Me
+    </sp-button>
 `);

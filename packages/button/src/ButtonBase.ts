@@ -21,31 +21,17 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import {
-    ObserveSlotPresence,
-    ObserveSlotText,
-} from '@spectrum-web-components/shared';
 
 /**
  * @slot - text content to be displayed in the Button element
  * @slot icon - icon element(s) to display at the start of the button
  */
-export class ButtonBase extends LikeAnchor(
-    ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
-) {
-    protected get hasIcon(): boolean {
-        return this.slotContentIsPresent;
-    }
-
+export class ButtonBase extends LikeAnchor(Focusable) {
     @property({ type: Boolean, reflect: true })
     public active = false;
 
     @property({ type: String })
     public type: 'button' | 'submit' | 'reset' = 'button';
-
-    protected get hasLabel(): boolean {
-        return this.slotHasContent;
-    }
 
     @query('.anchor')
     private anchorElement!: HTMLButtonElement;
@@ -57,16 +43,14 @@ export class ButtonBase extends LikeAnchor(
     protected get buttonContent(): TemplateResult[] {
         const content = [
             html`
-                <span id="label" ?hidden=${!this.hasLabel}>
-                    <slot @slotchange=${this.manageTextObservedSlot}></slot>
+                <slot name="icon"></slot>
+            `,
+            html`
+                <span id="label">
+                    <slot></slot>
                 </span>
             `,
         ];
-        if (this.hasIcon) {
-            content.unshift(html`
-                <slot name="icon" ?icon-only=${!this.hasLabel}></slot>
-            `);
-        }
         return content;
     }
 

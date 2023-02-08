@@ -23,6 +23,9 @@ import { ButtonBase } from '@spectrum-web-components/button';
 import buttonStyles from './action-button.css.js';
 import cornerTriangleStyles from '@spectrum-web-components/icon/src/spectrum-icon-corner-triangle.css.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-corner-triangle300.js';
+import {
+    ObserveSlotText,
+} from '@spectrum-web-components/shared';
 
 const holdAffordanceClass = {
     xs: 'spectrum-UIIcon-CornerTriangle75',
@@ -49,7 +52,7 @@ export type LongpressEvent = {
  * `pointerdown` event that is >=300ms or a keyboard event wher code is `Space` or code is `ArrowDown`
  * while `altKey===true`.
  */
-export class ActionButton extends SizedMixin(ButtonBase, {
+export class ActionButton extends SizedMixin(ObserveSlotText(ButtonBase), {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],
 }) {
     public static override get styles(): CSSResultArray {
@@ -58,6 +61,10 @@ export class ActionButton extends SizedMixin(ButtonBase, {
 
     @property({ type: Boolean, reflect: true })
     public emphasized = false;
+
+    protected get hasLabel(): boolean {
+        return this.slotHasContent;
+    }
 
     @property({ type: Boolean, reflect: true, attribute: 'hold-affordance' })
     public holdAffordance = false;
@@ -194,7 +201,16 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     }
 
     protected override get buttonContent(): TemplateResult[] {
-        const buttonContent = super.buttonContent;
+        const buttonContent = [
+            html`
+                <slot name="icon" ?icon-only=${!this.hasLabel}></slot>
+            `,
+            html`
+                <span id="label">
+                    <slot @slotchange=${this.manageTextObservedSlot}></slot>
+                </span>
+            `,
+        ];;
         if (this.holdAffordance) {
             buttonContent.unshift(html`
                 <sp-icon-corner-triangle300
