@@ -54,6 +54,10 @@ export class TableRow extends SpectrumElement {
     protected async handleChange(
         event: Event & { target: TableCheckboxCell }
     ): Promise<void> {
+        if (!event.target?.checkbox) {
+            return;
+        }
+
         this.selected = event.target.checkbox.checked;
 
         await 0;
@@ -80,17 +84,14 @@ export class TableRow extends SpectrumElement {
 
     protected handleClick(event: Event): void {
         if (
-            event
-                .composedPath()
-                .find(
-                    (node) => (node as HTMLElement).localName === 'sp-checkbox'
-                )
+            ['sp-table-cell'].includes((event.target as HTMLElement).localName)
         ) {
-            return;
+            const [checkboxCell] = this.checkboxCells;
+            if (!checkboxCell) /* c8 ignore next */ return;
+            checkboxCell.click();
         }
-        const [checkboxCell] = this.checkboxCells;
-        if (!checkboxCell) /* c8 ignore next */ return;
-        checkboxCell.click();
+
+        return;
     }
 
     protected override render(): TemplateResult {
