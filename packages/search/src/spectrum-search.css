@@ -51,10 +51,10 @@ governing permissions and limitations under the License.
         var(--spectrum-global-dimension-size-50)
     );
 }
-:host([dir='ltr']:not([quiet])) #textfield .icon {
+:host([dir='ltr']:not([quiet])) #textfield .icon-search {
     left: var(--spectrum-alias-search-padding-left-m);
 }
-:host([dir='rtl']:not([quiet])) #textfield .icon {
+:host([dir='rtl']:not([quiet])) #textfield .icon-search {
     right: var(--spectrum-alias-search-padding-left-m);
 }
 :host([dir='ltr']:not([quiet])) #textfield .input {
@@ -100,37 +100,37 @@ governing permissions and limitations under the License.
 :host([quiet]) #textfield:after {
     border-radius: var(--spectrum-alias-search-border-radius-quiet, 0);
 }
-.icon {
+.icon-search {
     color: var(
         --spectrum-textfield-m-texticon-icon-color,
         var(--spectrum-alias-component-icon-color-default)
     );
 }
-.input:hover ~ .icon {
+.input:hover ~ .icon-search {
     color: var(
         --spectrum-search-m-icon-color-hover,
         var(--spectrum-alias-component-icon-color-hover)
     );
 }
-.input:active ~ .icon {
+.input:active ~ .icon-search {
     color: var(
         --spectrum-search-m-icon-color-down,
         var(--spectrum-alias-component-icon-color-down)
     );
 }
-.input.focus-visible ~ .icon {
+.input.focus-visible ~ .icon-search {
     color: var(
         --spectrum-search-m-icon-color-key-focus,
         var(--spectrum-alias-component-icon-color-key-focus)
     );
 }
-.input:focus-visible ~ .icon {
+.input:focus-visible ~ .icon-search {
     color: var(
         --spectrum-search-m-icon-color-key-focus,
         var(--spectrum-alias-component-icon-color-key-focus)
     );
 }
-.input:disabled ~ .icon {
+.input:disabled ~ .icon-search {
     color: var(
         --spectrum-textfield-m-texticon-text-color-disabled,
         var(--spectrum-alias-component-text-color-disabled)
