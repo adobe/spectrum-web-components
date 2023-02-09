@@ -32,7 +32,7 @@ const config = {
                 converter.classToId('spectrum-Search', 'textfield'),
                 converter.classToClass('spectrum-Search-input', 'input'),
                 converter.classToClass('spectrum-Icon', 'icon'),
-                converter.classToClass('spectrum-Search-icon', 'icon'),
+                converter.classToClass('spectrum-Search-icon', 'icon-search'),
                 converter.classToAttribute('spectrum-Search--quiet', 'quiet'),
                 converter.classToId('spectrum-Search-clearButton', 'button'),
                 converter.classToId('spectrum-Search-textfield', 'textfield'),

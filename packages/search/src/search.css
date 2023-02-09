@@ -12,14 +12,8 @@ governing permissions and limitations under the License.
 
 @import './spectrum-search.css';
 
-:host([dir='ltr']) {
-    --spectrum-textfield-texticon-padding-right: var(
-        --spectrum-alias-infieldbutton-full-height-m
-    );
-}
-
-:host([dir='rtl']) {
-    --spectrum-textfield-texticon-padding-left: var(
+:host {
+    --mod-textfield-spacing-inline: var(
         --spectrum-alias-infieldbutton-full-height-m
     );
 }

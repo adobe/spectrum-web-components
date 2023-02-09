@@ -56,17 +56,61 @@ textarea {
     overflow: hidden;
 }
 
+:host([grows]) #textfield:after {
+    grid-area: unset;
+    min-block-size: calc(
+        var(
+                --mod-text-area-min-block-size,
+                var(--spectrum-text-area-min-block-size)
+            ) +
+            var(
+                --mod-textfield-focus-indicator-gap,
+                var(--spectrum-textfield-focus-indicator-gap)
+            ) * 2
+    );
+}
+
 :host([grows]) #sizer {
+    min-block-size: var(
+        --mod-text-area-min-block-size,
+        var(--spectrum-text-area-min-block-size)
+    );
     word-break: break-word;
     white-space: pre-wrap;
     box-sizing: border-box;
     overflow-wrap: break-word;
     border: var(--spectrum-textfield-texticon-border-size) solid;
     border-radius: var(--spectrum-textfield-texticon-border-radius);
-    padding: var(--spectrum-textarea-padding-top)
-        var(--spectrum-textarea-padding-right)
-        var(--spectrum-textarea-padding-bottom)
-        calc(var(--spectrum-textarea-padding-left) - 1px);
+    padding-block-end: calc(
+        var(
+                --mod-textfield-spacing-block-end,
+                var(--spectrum-textfield-spacing-block-end)
+            ) +
+            var(
+                --mod-textfield-border-width,
+                var(--spectrum-textfield-border-width)
+            )
+    );
+    padding-block-start: calc(
+        var(
+                --mod-textfield-spacing-block-start,
+                var(--spectrum-textfield-spacing-block-start)
+            ) +
+            var(
+                --mod-textfield-border-width,
+                var(--spectrum-textfield-border-width)
+            )
+    );
+    padding-inline: calc(
+        var(
+                --mod-textfield-spacing-inline,
+                var(--spectrum-textfield-spacing-inline)
+            ) +
+            var(
+                --mod-textfield-border-width,
+                var(--spectrum-textfield-border-width)
+            )
+    );
     text-indent: 0;
     width: 100%;
     vertical-align: top;
@@ -108,22 +152,6 @@ textarea {
             ease-in-out;
 }
 
-:host([multiline][focused]:not([quiet])) textarea,
-:host([multiline][focused]:not([quiet]):hover) textarea {
-    box-shadow: 0 0 0
-        calc(
-            0px +
-                var(
-                    --spectrum-textfield-m-texticon-focus-ring-border-width,
-                    var(--spectrum-alias-component-focusring-size)
-                )
-        )
-        var(
-            --spectrum-textfield-m-textonly-focus-ring-border-color-key-focus,
-            var(--spectrum-alias-focus-ring-color)
-        ) !important;
-}
-
 :host([multiline]:not([quiet])) #textfield:after {
     box-shadow: none;
 }
@@ -140,5 +168,17 @@ textarea {
     border-color: var(
         --spectrum-textfield-m-quiet-texticon-border-color-disabled,
         var(--spectrum-alias-input-border-color-quiet-disabled)
+    );
+}
+
+/* :not selector not working with regex for process-spectrum so had to override here */
+:host([disabled]) #textfield .icon.icon-search,
+:host([readonly]) #textfield .icon.icon-search {
+    color: var(
+        --highcontrast-textfield-text-color-disabled,
+        var(
+            --mod-textfield-text-color-disabled,
+            var(--spectrum-textfield-text-color-disabled)
+        )
     );
 }

@@ -51,8 +51,13 @@ export default {
                     'spectrum-Textfield-icon',
                     'icon-workflow'
                 ),
+                converter.classToClass('spectrum-Search-icon', 'icon-search'),
                 converter.classToAttribute('spectrum-Textfield--multiline'),
                 converter.classToAttribute('spectrum-Textfield--quiet'),
+                converter.classToAttribute(
+                    'spectrum-Textfield--grows',
+                    'grows'
+                ),
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-keyboardFocused', 'focused'),
                 converter.classToAttribute('is-valid', 'valid'),

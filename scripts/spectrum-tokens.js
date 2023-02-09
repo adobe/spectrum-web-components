@@ -65,6 +65,7 @@ const tokenPackages = [
     'popover',
     'thumbnail',
     'dropzone',
+    'textfield',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
