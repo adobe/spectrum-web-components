@@ -210,6 +210,8 @@ $ node test/benchmark/cli -n 20
                     assert: { type: 'json' },
                 }
             );
+            // eslint-disable-next-line no-console
+            console.log(pjson);
             if (pjson.version === '0.0.1' && opts.compare !== 'none') {
                 // eslint-disable-next-line no-console
                 console.log(
