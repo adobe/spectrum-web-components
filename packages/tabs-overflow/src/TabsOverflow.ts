@@ -11,8 +11,10 @@ governing permissions and limitations under the License.
 */
 import {
     CSSResultArray,
+    ElementSize,
     html,
     PropertyValues,
+    SizedMixin,
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
@@ -37,7 +39,7 @@ interface TabsOverflowState {
 /**
  * @element sp-tabs-overflow
  */
-export class TabsOverflow extends SpectrumElement {
+export class TabsOverflow extends SizedMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
         return [styles, chevronIconStyles];
     }
@@ -53,9 +55,6 @@ export class TabsOverflow extends SpectrumElement {
 
     @query('.tabs-overflow-container')
     private overflowContainer!: HTMLDivElement;
-
-    @state()
-    private tabsSize = 'm';
 
     resizeController!: ResizeController;
 
@@ -73,7 +72,8 @@ export class TabsOverflow extends SpectrumElement {
         super.firstUpdated(changes);
         // enable scroll event
         this.scrollContent[0]?.setAttribute('enableTabsScroll', '');
-        this.tabsSize = this.scrollContent[0]?.getAttribute('size') || 'm';
+        this.size = (this.scrollContent[0]?.getAttribute('size') ||
+            'm') as ElementSize;
         this.resizeController.observe(this.overflowContainer);
     }
 
@@ -121,7 +121,6 @@ export class TabsOverflow extends SpectrumElement {
                     'tabs-overflow-container': true,
                     'left-shadow': canScrollLeft,
                     'right-shadow': canScrollRight,
-                    [this.tabsSize]: true,
                 })}
                 @sp-tabs-scroll=${this._updateScrollState}
             >

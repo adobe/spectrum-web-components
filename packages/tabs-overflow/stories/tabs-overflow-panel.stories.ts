@@ -13,19 +13,19 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import { renderTabsOverflowExample } from './index.js';
 
 export default {
-    title: 'Tabs Overflow',
+    title: 'Tabs Overflow/with Panel',
     component: 'sp-tabs-overflow',
 };
 
 export const s = (): TemplateResult => {
-    return renderTabsOverflowExample(20, 's', false);
+    return renderTabsOverflowExample(20, 's', true);
 };
 export const m = (): TemplateResult => {
-    return renderTabsOverflowExample(20, 'm', false);
+    return renderTabsOverflowExample(20, 'm', true);
 };
 export const l = (): TemplateResult => {
-    return renderTabsOverflowExample(20, 'l', false);
+    return renderTabsOverflowExample(20, 'l', true);
 };
 export const XL = (): TemplateResult => {
-    return renderTabsOverflowExample(20, 'xl', false);
+    return renderTabsOverflowExample(20, 'xl', true);
 };
