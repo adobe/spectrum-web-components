@@ -1,6 +1,8 @@
 ## Description
 
-The `<sp-tabs-overflow>` is a decorator component for the `<sp-tabs>` component that enables scrolling for horizontal tabs when there is not enough width to display all of the tabs.
+The `<sp-tabs-overflow>` is a decorative component that works in conjunction with the `<sp-tabs>` component. It enables horizontal tab scrolling in cases where the available width is insufficient to display all tabs.
+
+_Note: Veritical scrolling is not yet supported._
 
 ### Usage
 
@@ -11,13 +13,13 @@ The `<sp-tabs-overflow>` is a decorator component for the `<sp-tabs>` component 
 yarn add @spectrum-web-components/tabs-overflow
 ```
 
-Import the side effectful registration of `<sp-tabs-overflow>` via:
+To import the `<sp-tabs-overflow>` component with its associated side effects, use the following import statement:
 
 ```
 import '@spectrum-web-components/tabs-overflow/sp-tabs-overflow.js';
 ```
 
-When looking to leverage the `TabsOverflow` base class as a type and/or for extension purposes, do so via:
+To utilize the `TabsOverflow` base class as a type or for extending its functionality, utilize the following method:
 
 ```
 import { TabsOverflow } from '@spectrum-web-components/tabs-overflow';
@@ -25,7 +27,7 @@ import { TabsOverflow } from '@spectrum-web-components/tabs-overflow';
 
 ## Example
 
-To use the `<sp-tabs-overflow>` component, simply wrap it around the `<sp-tabs>` element as a child element, like so:
+To use the `<sp-tabs-overflow>` component, simply wrap it around the `<sp-tabs>` element as a child element:
 
 ```html
 <sp-tabs-overflow>
