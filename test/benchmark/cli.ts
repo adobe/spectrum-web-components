@@ -199,7 +199,7 @@ $ node test/benchmark/cli -n 20
              * Assume that packages with the default package version
              * have yet to be published to NPM and skip.
              **/
-            const pjson = await import(
+            const { default: pjson } = await import(
                 pathjoin(
                     process.cwd(),
                     monorepoDir,
