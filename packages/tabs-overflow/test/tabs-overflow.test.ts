@@ -107,9 +107,7 @@ describe('TabsOverflow', () => {
         const spTabsOverflows: TabsOverflow = el.querySelector(
             'sp-tabs-overflow'
         ) as TabsOverflow;
-        const overflowContainerEl = spTabsOverflows.shadowRoot.querySelector(
-            '.tabs-overflow-container'
-        ) as HTMLDivElement;
-        expect(overflowContainerEl.classList[1]).to.equal('m');
+
+        expect(spTabsOverflows.getAttribute('size')).to.equal('m');
     });
 });

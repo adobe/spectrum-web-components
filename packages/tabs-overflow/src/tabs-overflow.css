@@ -23,26 +23,26 @@ governing permissions and limitations under the License.
     --sp-tabs-overflow-button-size: var(
         --spectrum-global-dimension-static-size-500
     );
-    --sp-tabs-overflow-button-height: var(--spectrum-global-dimension-size-450);
+    --sp-tabs-overflow-button-height: var(--spectrum-global-dimension-size-500);
     --sp-tabs-overflow-icon-color: var(--spectrum-gray-800);
     --sp-tabs-overflow-shadow-color: var(--spectrum-gray-100);
     --sp-tabs-overflow-shadow-width: 50px;
 }
 
 :host([size='s']) {
-    --sp-tabs-overflow-button-height: var(--spectrum-global-dimension-size-450);
+    --sp-tabs-overflow-button-height: var(--spectrum-global-dimension-size-500);
 }
 
 :host([size='m']) {
-    --sp-tabs-overflow-button-height: var(--spectrum-global-dimension-size-550);
+    --sp-tabs-overflow-button-height: var(--spectrum-global-dimension-size-600);
 }
 
 :host([size='l']) {
-    --sp-tabs-overflow-button-height: var(--spectrum-global-dimension-size-650);
+    --sp-tabs-overflow-button-height: var(--spectrum-global-dimension-size-700);
 }
 
 :host([size='xl']) {
-    --sp-tabs-overflow-button-height: var(--spectrum-global-dimension-size-750);
+    --sp-tabs-overflow-button-height: var(--spectrum-global-dimension-size-800);
 }
 
 sp-action-button {
