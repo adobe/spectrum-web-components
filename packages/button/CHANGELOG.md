@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.20.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.20.0...@spectrum-web-components/button@0.20.1) (2023-02-13)
+
+### Bug Fixes
+
+-   **button:** revert default "variant" application when missing ([fab993e](https://github.com/adobe/spectrum-web-components/commit/fab993e72dad8d7c4962e6d00632803c1a4d30ef))
+
 # [0.20.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.19.10...@spectrum-web-components/button@0.20.0) (2023-02-08)
 
 ### Bug Fixes

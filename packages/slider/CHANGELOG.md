@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.15.6...@spectrum-web-components/slider@0.15.7) (2023-02-13)
+
+**Note:** Version bump only for package @spectrum-web-components/slider
+
 ## [0.15.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.15.5...@spectrum-web-components/slider@0.15.6) (2023-02-08)
 
 **Note:** Version bump only for package @spectrum-web-components/slider
