@@ -49,6 +49,10 @@ describe('Button', () => {
         expect(el).to.not.be.undefined;
         expect(el.textContent).to.include('Button');
         await expect(el).to.be.accessible();
+
+        // Applies a default variant as an stylable attribute
+        expect(el.variant).to.equal('accent');
+        expect(el.getAttribute('variant')).to.equal('accent');
     });
     it('loads default w/ element content', async () => {
         const el = await fixture<Button>(

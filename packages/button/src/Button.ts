@@ -130,6 +130,8 @@ export class Button extends SizedMixin(StyledButton) {
 
     protected override firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
+        // There is no Spectrum design context for an `<sp-button>` without a variant
+        // apply one manually when a consumer has not applied one themselves.
         if (!this.hasAttribute('variant')) {
             this.setAttribute('variant', this.variant);
         }
