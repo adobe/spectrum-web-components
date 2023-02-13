@@ -10,7 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, SizedMixin } from '@spectrum-web-components/base';
+import {
+    CSSResultArray,
+    PropertyValues,
+    SizedMixin,
+} from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { StyledButton } from './StyledButton.js';
 import buttonStyles from './button.css.js';
@@ -122,5 +126,12 @@ export class Button extends SizedMixin(StyledButton) {
     @property({ type: Boolean })
     public set quiet(quiet: boolean) {
         this.treatment = quiet ? 'outline' : 'fill';
+    }
+
+    protected override firstUpdated(changes: PropertyValues<this>): void {
+        super.firstUpdated(changes);
+        if (!this.hasAttribute('variant')) {
+            this.setAttribute('variant', this.variant);
+        }
     }
 }
