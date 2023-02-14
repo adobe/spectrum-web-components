@@ -25,7 +25,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { classMap } from '@spectrum-web-components/base/src/directives.js';
 import { ResizeController } from '@lit-labs/observers/resize_controller.js';
-import { Tabs } from '@spectrum-web-components/tabs';
+import { Tabs } from './Tabs.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';

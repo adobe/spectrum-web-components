@@ -37,12 +37,17 @@
             "development": "./src/Tabs.dev.js",
             "default": "./src/Tabs.js"
         },
+        "./src/TabsOverflow.js": {
+            "development": "./src/TabsOverflow.dev.js",
+            "default": "./src/TabsOverflow.js"
+        },
         "./src/index.js": {
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
         "./src/tab-panel.css.js": "./src/tab-panel.css.js",
         "./src/tab.css.js": "./src/tab.css.js",
+        "./src/tabs-overflow.css.js": "./src/tabs-overflow.css.js",
         "./src/tabs.css.js": "./src/tabs.css.js",
         "./sp-tabs.js": {
             "development": "./sp-tabs.dev.js",
@@ -55,6 +60,10 @@
         "./sp-tab-panel.js": {
             "development": "./sp-tab-panel.dev.js",
             "default": "./sp-tab-panel.js"
+        },
+        "./sp-tabs-overflow.js": {
+            "development": "./sp-tabs-overflow.dev.js",
+            "default": "./sp-tabs-overflow.js"
         }
     },
     "scripts": {
@@ -77,6 +86,8 @@
     "dependencies": {
         "@lit-labs/observers": "^1.0.1",
         "@spectrum-web-components/base": "^0.7.4",
+        "@spectrum-web-components/icon": "^0.12.5",
+        "@spectrum-web-components/icons-ui": "^0.9.5",
         "@spectrum-web-components/reactive-controllers": "^0.3.5",
         "@spectrum-web-components/shared": "^0.15.5"
     },
