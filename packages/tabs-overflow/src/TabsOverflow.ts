@@ -122,7 +122,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                     'left-shadow': canScrollLeft,
                     'right-shadow': canScrollRight,
                 })}
-                @sp-tabs-scroll=${this._updateScrollState}
             >
                 <sp-action-button
                     class=${classMap({
@@ -151,7 +150,10 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                         class="spectrum-UIIcon-ChevronRight300"
                     ></sp-icon-chevron100>
                 </sp-action-button>
-                <slot @slotchange=${this._handleSlotChange}></slot>
+                <slot
+                    @slotchange=${this._handleSlotChange}
+                    @sp-tabs-scroll=${this._updateScrollState}
+                ></slot>
             </div>
         `;
     }

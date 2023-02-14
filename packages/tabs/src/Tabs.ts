@@ -104,7 +104,7 @@ export class Tabs extends SizedMixin(Focusable) {
     @property()
     public label = '';
 
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean })
     public enableTabsScroll = false;
 
     /**
