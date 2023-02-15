@@ -304,6 +304,7 @@ export const overlaidLeft = (): TemplateResult => overlaid('left');
 
 export const selfManaged = ({
     placement,
+    open,
     offset,
     delayed,
 }: Properties): TemplateResult => html`
@@ -315,7 +316,7 @@ export const selfManaged = ({
             placement=${placement}
             offset=${offset}
             ?delayed=${delayed}
-            open
+            open=${open}
         >
             This is a tooltip.
         </sp-tooltip>
@@ -323,6 +324,7 @@ export const selfManaged = ({
 `;
 selfManaged.args = {
     placement: 'top',
+    open: true,
     offset: 6,
     delayed: false,
 };
@@ -337,6 +339,18 @@ selfManaged.argTypes = {
         type: { name: 'number', required: false },
         description:
             'The pixel distance from the parent element to place the tooltip',
+    },
+    open: {
+        name: 'open',
+        type: { name: 'boolean', required: false },
+        description: 'Whether the tooltip is open.',
+        table: {
+            type: { summary: 'boolean' },
+            defaultValue: { summary: false },
+        },
+        control: {
+            type: 'boolean',
+        },
     },
     placement: {
         name: 'placement',
