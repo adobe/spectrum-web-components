@@ -74,6 +74,9 @@ export class SideNav extends Focusable {
     @property({ reflect: true })
     public value: string | undefined = undefined;
 
+    @property({ reflect: true })
+    public variant?: 'multilevel';
+
     private handleSelect(
         event: CustomEvent<SidenavSelectDetail> & { target: SideNavItem }
     ): void {
