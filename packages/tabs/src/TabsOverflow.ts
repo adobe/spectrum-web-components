@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 import {
     CSSResultArray,
-    ElementSize,
     html,
     PropertyValues,
     SizedMixin,
@@ -72,14 +71,12 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
         super.firstUpdated(changes);
         // enable scroll event
         this.scrollContent[0]?.setAttribute('enableTabsScroll', '');
-        this.size = (this.scrollContent[0]?.getAttribute('size') ||
-            'm') as ElementSize;
         this.resizeController.observe(this.overflowContainer);
     }
 
     private async _handleSlotChange(): Promise<void> {
         const [tabsElement] = this.scrollContent;
-        await tabsElement.updateComplete;
+        await tabsElement?.updateComplete;
         this._updateScrollState();
     }
 
@@ -107,7 +104,7 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
         const [tabsElement] = this.scrollContent;
 
         const dist = tabsElement.clientWidth * 0.5;
-        const left = currentTarget?.classList?.contains('left-scroll')
+        const left = currentTarget.classList.contains('left-scroll')
             ? -dist
             : dist;
         tabsElement.scrollTabs(left, 'smooth');
