@@ -14,11 +14,15 @@ import { html, nothing } from '@spectrum-web-components/base';
 import { repeat } from 'lit/directives/repeat.js';
 
 import { TabsOverflow } from '../src/TabsOverflow';
+import { Tab } from '../src/Tab';
 import { ActionButton } from '@spectrum-web-components/action-button';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/scale-medium.js';
 import '@spectrum-web-components/theme/theme-light.js';
 import '../sp-tabs-overflow.js';
+import '../sp-tabs.js';
+import '../sp-tab.js';
+import '../sp-tab-panel.js';
 
 const renderTabsOverflow = async (
     count: number,
@@ -109,5 +113,34 @@ describe('TabsOverflow', () => {
         ) as TabsOverflow;
 
         expect(spTabsOverflows.getAttribute('size')).to.equal('m');
+    });
+
+    it('should scroll when the button is clicked', async () => {
+        const el = await renderTabsOverflow(20, 'l', true);
+        await elementUpdated(el);
+
+        const spTabsOverflows: TabsOverflow = el.querySelector(
+            'sp-tabs-overflow'
+        ) as TabsOverflow;
+        const leftButton = spTabsOverflows.shadowRoot.querySelector(
+            '.left-scroll'
+        ) as ActionButton;
+
+        const rightButton = spTabsOverflows.shadowRoot.querySelector(
+            '.right-scroll'
+        ) as ActionButton;
+
+        leftButton.click();
+
+        const tabsEl = spTabsOverflows.querySelector('sp-tab') as Tab;
+        const initialLeft = tabsEl.getBoundingClientRect().left;
+        rightButton.click();
+        await elementUpdated(el);
+        rightButton.click();
+        await elementUpdated(el);
+        rightButton.click();
+        await elementUpdated(el);
+        const finalLeft = tabsEl.getBoundingClientRect().left;
+        expect(finalLeft).to.be.lessThanOrEqual(initialLeft);
     });
 });

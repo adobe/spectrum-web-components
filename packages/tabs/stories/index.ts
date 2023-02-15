@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 import { html, nothing, TemplateResult } from '@spectrum-web-components/base';
 import { repeat } from '@spectrum-web-components/base/src/directives.js';
 
-import '@spectrum-web-components/tabs/sp-tab-panel.js';
-import '@spectrum-web-components/tabs/sp-tab.js';
-import '@spectrum-web-components/tabs/sp-tabs.js';
+import '../sp-tab-panel.js';
+import '../sp-tab.js';
+import '../sp-tabs.js';
 import '../sp-tabs-overflow.js';
 
 export const renderTabsOverflowExample = (
