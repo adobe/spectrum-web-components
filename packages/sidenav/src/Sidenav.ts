@@ -74,8 +74,11 @@ export class SideNav extends Focusable {
     @property({ reflect: true })
     public value: string | undefined = undefined;
 
+    /**
+     * The multilevel variant will have multiple layers of hierarchical navigation items.
+     */
     @property({ reflect: true })
-    public variant?: 'multilevel';
+    public variant?: 'multilevel' = undefined;
 
     private handleSelect(
         event: CustomEvent<SidenavSelectDetail> & { target: SideNavItem }
