@@ -130,17 +130,32 @@ describe('TabsOverflow', () => {
             '.right-scroll'
         ) as ActionButton;
 
-        leftButton.click();
+        leftButton.dispatchEvent(new Event('click', {}));
 
         const tabsEl = spTabsOverflows.querySelector('sp-tab') as Tab;
         const initialLeft = tabsEl.getBoundingClientRect().left;
-        rightButton.click();
+        rightButton.dispatchEvent(new Event('click', {}));
         await elementUpdated(el);
-        rightButton.click();
+        rightButton.dispatchEvent(new Event('click', {}));
         await elementUpdated(el);
-        rightButton.click();
+        rightButton.dispatchEvent(new Event('click', {}));
         await elementUpdated(el);
         const finalLeft = tabsEl.getBoundingClientRect().left;
         expect(finalLeft).to.be.lessThanOrEqual(initialLeft);
+    });
+
+    it('should fail properly if slot is not sp-tabs', async () => {
+        const el = await fixture<TabsOverflow>(
+            html`
+                <sp-tabs-overflow>
+                    <div>Some div</div>
+                </sp-tabs-overflow>
+            `
+        );
+
+        await elementUpdated(el);
+        const slot = el.shadowRoot.querySelector('slot');
+        const slotContent = slot?.assignedElements() || '';
+        expect(slotContent[0].toString()).to.not.contains('Tabs');
     });
 });
