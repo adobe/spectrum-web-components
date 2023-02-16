@@ -91,4 +91,24 @@ describe('Avatar', () => {
             : (el.querySelector('img') as HTMLImageElement);
         expect(imageEl.hasAttribute('alt')).to.be.false;
     });
+    it('can receive a `tabindex` without an `href`', async () => {
+        try {
+            const el = await fixture<Avatar>(
+                html`
+                    <sp-avatar
+                        label="Shantanu Narayen"
+                        src="https://place.dog/500/500"
+                        tabindex="0"
+                    ></sp-avatar>
+                `
+            );
+            await elementUpdated(el);
+            const focusEl = el.focusElement;
+            expect(focusEl).to.exist;
+        } catch (error) {
+            expect(() => {
+                throw error;
+            }).to.throw('There should be no error.');
+        }
+    });
 });
