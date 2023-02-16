@@ -42,7 +42,7 @@ export class Avatar extends LikeAnchor(Focusable) {
     anchorElement!: HTMLAnchorElement;
 
     public override get focusElement(): HTMLElement {
-        return this.anchorElement;
+        return this.anchorElement || this;
     }
 
     @property()
