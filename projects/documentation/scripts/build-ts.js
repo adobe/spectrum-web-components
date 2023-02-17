@@ -27,6 +27,7 @@ async function main() {
         format: 'esm',
         target: ['es2020'],
         bundle: true,
+        splitting: true,
         outdir: './_site/src/',
         plugins: [
             litCssPlugin({
