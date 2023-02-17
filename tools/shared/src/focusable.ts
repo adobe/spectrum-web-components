@@ -27,6 +27,43 @@ function nextFrame(): Promise<void> {
  * https://github.com/web-padawan/aybolit/blob/master/packages/core/src/mixins/delegate-focus-mixin.js
  */
 export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
+    static override shadowRootOptions = {
+        ...SpectrumElement.shadowRootOptions,
+        delegatesFocus: true,
+    };
+
+    /**
+     * Disable this control. It will not receive focus or events
+     */
+    @property({ type: Boolean, reflect: true })
+    public disabled = false;
+
+    /**
+     * @private
+     */
+    public get focusElement(): DisableableElement {
+        throw new Error('Must implement focusElement getter!');
+    }
+
+    protected manageAutoFocus(): void {
+        return;
+    }
+}
+export class FocusableA extends FocusVisiblePolyfillMixin(SpectrumElement) {
+    /**
+     * Disable this control. It will not receive focus or events
+     */
+    @property({ type: Boolean, reflect: true })
+    public disabled = false;
+
+    /**
+     * @private
+     */
+    public get focusElement(): DisableableElement {
+        throw new Error('Must implement focusElement getter!');
+    }
+}
+export class Focusable2 extends FocusVisiblePolyfillMixin(SpectrumElement) {
     /**
      * Disable this control. It will not receive focus or events
      */

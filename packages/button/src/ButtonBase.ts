@@ -21,17 +21,26 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
-import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+import { FocusableA } from '@spectrum-web-components/shared/src/focusable.js';
+import {
+    ObserveSlotPresence,
+    ObserveSlotText,
+} from '@spectrum-web-components/shared';
 import buttonStyles from './button-base.css.js';
 
 /**
  * @slot - text content to be displayed in the Button element
  * @slot icon - icon element(s) to display at the start of the button
  */
-export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable)) {
+export class ButtonBase extends LikeAnchor(
+    ObserveSlotText(ObserveSlotPresence(FocusableA, '[slot="icon"]'))
+) {
     public static override get styles(): CSSResultArray {
         return [buttonStyles];
+    }
+    
+    protected get hasIcon(): boolean {
+        return this.slotContentIsPresent;
     }
 
     @property({ type: Boolean, reflect: true })
