@@ -83,15 +83,12 @@ export class TableRow extends SpectrumElement {
     }
 
     protected handleClick(event: Event): void {
-        if (
-            ['sp-table-cell'].includes((event.target as HTMLElement).localName)
-        ) {
-            const [checkboxCell] = this.checkboxCells;
-            if (!checkboxCell) /* c8 ignore next */ return;
-            checkboxCell.click();
-        }
+        if ((event.target as HTMLElement).localName !== 'sp-table-cell')
+            /* c8 ignore next */ return;
 
-        return;
+        const [checkboxCell] = this.checkboxCells;
+        if (!checkboxCell) /* c8 ignore next */ return;
+        checkboxCell.click();
     }
 
     protected override render(): TemplateResult {

@@ -363,15 +363,13 @@ export class Table extends SizedMixin(SpectrumElement, {
         };
         if (!rowItem.value) {
             const { checkbox } = target as TableCheckboxCell;
-            if (checkbox) {
-                if (checkbox.checked || checkbox.indeterminate) {
-                    this.selectAllRows();
-                } else {
-                    this.deselectAllRows();
-                }
-            }
+            if (!checkbox) return;
 
-            return;
+            if (checkbox.checked || checkbox.indeterminate) {
+                this.selectAllRows();
+            } else {
+                this.deselectAllRows();
+            }
         } else {
             switch (this.selects) {
                 case 'single': {
