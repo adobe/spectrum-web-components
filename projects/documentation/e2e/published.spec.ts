@@ -18,7 +18,7 @@ test.describe('search and go', () => {
         searchString: string,
         page: Page
     ): Promise<void> => {
-        await page.keyboard.type(searchString);
+        await page.keyboard.type(searchString, { delay: 100 });
         const menu = await page.locator(menuSelector);
         await page.keyboard.press('ArrowDown');
         await expect(menu).toBeFocused();
