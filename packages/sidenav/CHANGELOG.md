@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.13.9...@spectrum-web-components/sidenav@0.13.10) (2023-02-21)
+
+### Bug Fixes
+
+-   [#2933](https://github.com/adobe/spectrum-web-components/issues/2933) by adding optional variant property to SideNav ([9c45c33](https://github.com/adobe/spectrum-web-components/commit/9c45c337e0434045729de2acafa2218817890261))
+
 ## [0.13.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.13.8...@spectrum-web-components/sidenav@0.13.9) (2023-02-08)
 
 **Note:** Version bump only for package @spectrum-web-components/sidenav

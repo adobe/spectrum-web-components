@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/avatar@0.11.0...@spectrum-web-components/avatar@0.11.1) (2023-02-21)
+
+### Bug Fixes
+
+-   **avatar:** ensure there is ALWAYS a focusElement ([c1c8644](https://github.com/adobe/spectrum-web-components/commit/c1c864466a6f241bf12965e580ad5a6618bc26a0))
+
 # [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/avatar@0.10.5...@spectrum-web-components/avatar@0.11.0) (2023-02-08)
 
 ### Features

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.10.7...@spectrum-web-components/tabs@0.11.0) (2023-02-21)
+
+### Features
+
+-   **tabs-overflow:** address comments ([b0e3398](https://github.com/adobe/spectrum-web-components/commit/b0e3398518d8c8d72dc901bd3c137a7c4c8f4b54))
+-   **tabs-overflow:** first round implementation of sp-tabs-overflow ([c5b589a](https://github.com/adobe/spectrum-web-components/commit/c5b589a41d74e61edfd1a10f012f70052ae39f6d))
+-   **tabs:** add test coverage, remove unused property from component class ([9933ad8](https://github.com/adobe/spectrum-web-components/commit/9933ad83dea315533bd749be9a25a15d9a33b24a))
+-   **tabs:** add test coverage, update import paths ([d104b52](https://github.com/adobe/spectrum-web-components/commit/d104b520f1ae0892f4905b6ba4e5d41d13e2fa76))
+-   **tabs:** moving tabs overflow under tabs package ([a18c692](https://github.com/adobe/spectrum-web-components/commit/a18c692a858163859cc73c86755a078ee003d67f))
+-   **tabs:** update bundle setup and readme ([0249b94](https://github.com/adobe/spectrum-web-components/commit/0249b94d36567f9a1e6c9de35a56ffeb1163df1b))
+-   **tabs:** update imports to get correct coverage ([2e421cd](https://github.com/adobe/spectrum-web-components/commit/2e421cda336833b55ba67f0e69bc76195e2b5a0a))
+
 ## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.10.6...@spectrum-web-components/tabs@0.10.7) (2023-02-08)
 
 ### Bug Fixes

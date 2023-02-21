@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/bundle",
-    "version": "0.28.9",
+    "version": "0.29.0",
     "publishConfig": {
         "access": "public"
     },
@@ -66,7 +66,7 @@
         "@spectrum-web-components/action-group": "^0.12.8",
         "@spectrum-web-components/action-menu": "^0.15.13",
         "@spectrum-web-components/asset": "^0.7.6",
-        "@spectrum-web-components/avatar": "^0.11.0",
+        "@spectrum-web-components/avatar": "^0.11.1",
         "@spectrum-web-components/badge": "^0.4.5",
         "@spectrum-web-components/banner": "^0.9.4",
         "@spectrum-web-components/base": "^0.7.4",
@@ -111,7 +111,7 @@
         "@spectrum-web-components/reactive-controllers": "^0.3.5",
         "@spectrum-web-components/search": "^0.12.12",
         "@spectrum-web-components/shared": "^0.15.5",
-        "@spectrum-web-components/sidenav": "^0.13.9",
+        "@spectrum-web-components/sidenav": "^0.13.10",
         "@spectrum-web-components/slider": "^0.15.7",
         "@spectrum-web-components/split-button": "^0.9.13",
         "@spectrum-web-components/split-view": "^0.5.7",
@@ -120,14 +120,14 @@
         "@spectrum-web-components/swatch": "^0.3.6",
         "@spectrum-web-components/switch": "^0.11.8",
         "@spectrum-web-components/table": "^0.1.9",
-        "@spectrum-web-components/tabs": "^0.10.7",
+        "@spectrum-web-components/tabs": "^0.11.0",
         "@spectrum-web-components/tags": "^0.10.4",
         "@spectrum-web-components/textfield": "^0.13.11",
         "@spectrum-web-components/theme": "^0.14.11",
         "@spectrum-web-components/thumbnail": "^0.6.6",
         "@spectrum-web-components/toast": "^0.11.12",
         "@spectrum-web-components/tooltip": "^0.11.13",
-        "@spectrum-web-components/top-nav": "^0.6.11",
+        "@spectrum-web-components/top-nav": "^0.6.12",
         "@spectrum-web-components/tray": "^0.5.0",
         "@spectrum-web-components/underlay": "^0.9.6"
     },
