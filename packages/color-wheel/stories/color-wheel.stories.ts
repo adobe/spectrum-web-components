@@ -64,7 +64,7 @@ class CanvasWriter extends HTMLElement {
                     const height = canvas.height;
                     const centerX = width / 2;
                     const centerY = height / 2;
-                    const ringSize = 57;
+                    const ringSize = centerX - 18;
 
                     for (let i = 0; i < 360; i += Math.PI / 8) {
                         const rad = (i * (2 * Math.PI)) / 360;

@@ -291,16 +291,39 @@ export class ColorWheel extends Focusable {
         const trackWidth = 24;
         const innerRadius = radius - trackWidth;
         const innerDiameter = innerRadius * 2;
-        const clipPath = `path(evenodd, "M ${radius} ${radius} m -${radius} 0 a ${radius} ${radius} 0 1 0 ${diameter} 0 a ${radius} ${radius} 0 1 0 -${diameter} 0 M ${radius} ${radius} m -${innerRadius} 0 a ${innerRadius} ${innerRadius} 0 1 0 ${innerDiameter} 0 a ${innerRadius} ${innerRadius} 0 1 0 -${innerDiameter} 0")`;
+        const clipPathBorders = `"M ${radius} ${radius} m -${radius} 0 a ${radius} ${radius} 0 1 0 ${diameter} 0 a ${radius} ${radius} 0 1 0 -${diameter} 0 M ${radius} ${radius} m -${innerRadius} 0 a ${innerRadius} ${innerRadius} 0 1 0 ${innerDiameter} 0 a ${innerRadius} ${innerRadius} 0 1 0 -${innerDiameter} 0"`;
+        const clipPath = `"M ${radius - 1} ${radius - 1} m -${radius - 1} 0 a ${
+            radius - 1
+        } ${radius - 1} 0 1 0 ${diameter - 2} 0 a ${radius - 1} ${
+            radius - 1
+        } 0 1 0 -${diameter - 2} 0 M ${radius - 1} ${radius - 1} m -${
+            innerRadius + 1
+        } 0 a ${innerRadius + 1} ${innerRadius + 1} 0 1 0 ${
+            innerDiameter + 2
+        } 0 a ${innerRadius + 1} ${innerRadius + 1} 0 1 0 -${
+            innerDiameter + 2
+        } 0"`;
         const handleLocationStyles = `transform: translate(${
-            (radius - 12.5) * Math.cos((this.value * Math.PI) / 180)
-        }px, ${(radius - 12.5) * Math.sin((this.value * Math.PI) / 180)}px);`;
+            (radius - 12) * Math.cos((this.value * Math.PI) / 180)
+        }px, ${(radius - 12) * Math.sin((this.value * Math.PI) / 180)}px);`;
         return html`
             <slot
                 name="gradient"
                 @pointerdown=${this.handleGradientPointerdown}
+                style="
+                    --spectrum-colorwheel-colorarea-container-size: ${diameter}px;
+                    --spectrum-colorwheel-height: ${diameter}px;
+                    --spectrum-colorwheel-width: ${diameter}px;
+                    --spectrum-colorwheel-path-borders: ${clipPathBorders};
+                    --spectrum-colorwheel-path: ${clipPath};
+                "
             >
-                <div class="wheel" style="clip-path: ${clipPath}"></div>
+                <div class="inner">
+                    <div class="colorarea-container"></div>
+                </div>
+                <div class="border">
+                    <div class="wheel"></div>
+                </div>
             </slot>
 
             <sp-color-handle
