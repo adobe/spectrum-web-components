@@ -129,7 +129,7 @@ export class CustomVarsViewer extends SpectrumElement {
                     size="m"
                     side-aligned="start"
                 >
-                    Theme:
+                    Theme color:
                 </sp-field-label>
                 <sp-picker
                     id="theme-picker"
