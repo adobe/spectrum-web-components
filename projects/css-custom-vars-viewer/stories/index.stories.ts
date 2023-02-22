@@ -10,11 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, TemplateResult } from 'lit';
-import '../src/sp-demo-app.js';
+import '../src/custom-vars-viewer.js';
 
 export default {
-    title: 'DemoApp',
-    component: 'sp-demo-app',
+    title: 'CustomVarsViewer',
+    component: 'custom-vars-viewer',
     argTypes: {
         title: { control: 'text' },
         counter: { control: 'number' },
@@ -23,5 +23,5 @@ export default {
 };
 
 export const Template = (): TemplateResult => html`
-    <sp-demo-app></sp-demo-app>
+    <custom-vars-viewer></custom-vars-viewer>
 `;

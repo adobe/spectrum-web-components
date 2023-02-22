@@ -23,7 +23,8 @@
     },
     "dependencies": {
         "@spectrum-css/table": "^4.0.26",
-        "@spectrum-web-components/bundle": "^0.29.1"
+        "@spectrum-web-components/bundle": "^0.29.1",
+        "@spectrum-web-components/custom-vars-viewer": "^0.0.0"
     },
     "devDependencies": {
         "@11ty/eleventy": "^2.0.0",

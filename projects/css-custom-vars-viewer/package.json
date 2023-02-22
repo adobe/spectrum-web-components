@@ -1,6 +1,7 @@
 {
-    "name": "sp-demo-app",
+    "name": "@spectrum-web-components/custom-vars-viewer",
     "version": "0.0.0",
+    "private": "true",
     "description": "Demo app created with Spectrum Web Components, following open-wc guidelines",
     "license": "Apache-2.0",
     "author": "najikahalsema",
@@ -10,7 +11,7 @@
     "exports": {
         ".": "./dist/src/index.js",
         "./sp-css-table.js": "./dist/src/sp-css-table.js",
-        "./sp-demo-app.js": "./dist/src/sp-demo-app.js"
+        "./custom-vars-viewer.js": "./dist/src/custom-vars-viewer.js"
     },
     "engines": {
         "node": ">=16.14.2",
