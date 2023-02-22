@@ -20,7 +20,7 @@ governing permissions and limitations under the License.
         --spectrum-status-light-dot-size-medium
     );
     --spectrum-statuslight-line-height: var(--spectrum-line-height-100);
-    --spectrum-statuslight-line-height-cjk: var(--spectrum-line-height-cjk-100);
+    --spectrum-statuslight-line-height-cjk: var(--spectrum-cjk-line-height-100);
     --spectrum-statuslight-font-size: var(--spectrum-font-size-100);
     --spectrum-statuslight-spacing-dot-to-label: var(
         --spectrum-text-to-visual-100
