@@ -55,6 +55,7 @@ const tokenPackages = [
     'tray',
     'progressbar',
     'picker',
+    'colorarea',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
