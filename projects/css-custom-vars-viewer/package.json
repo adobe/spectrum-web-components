@@ -19,11 +19,10 @@
     },
     "scripts": {
         "analyze": "cem analyze --litelement",
-        "build": "tsc && npm run analyze -- --exclude dist",
+        "build": "tsc && yarn parse-json && npm run analyze -- --exclude dist",
         "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
         "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
         "parse-json": "node ./scripts/parse-json.js",
-        "prebuild": "yarn parse-json",
         "prepublish": "tsc && npm run analyze -- --exclude dist",
         "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
         "storybook": "tsc && npm run analyze -- --exclude dist && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds -c .storybook/server.mjs\"",
