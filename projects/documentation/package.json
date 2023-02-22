@@ -184,6 +184,9 @@
             "dependencies": [
                 {
                     "script": "../css-custom-vars-viewer/:build"
+                },
+                {
+                    "script": "../../:build"
                 }
             ]
         },
