@@ -56,6 +56,7 @@ const tokenPackages = [
     'progressbar',
     'picker',
     'colorarea',
+    'colorwheel',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {

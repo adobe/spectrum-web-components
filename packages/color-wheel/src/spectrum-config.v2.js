@@ -11,7 +11,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { converterFor } from '../../../tasks/process-spectrum-utils.js';
+import {
+    builder,
+    converterFor,
+} from '../../../tasks/process-spectrum-utils.js';
 
 const converter = converterFor('spectrum-ColorWheel');
 
@@ -24,6 +27,10 @@ const config = {
             inPackage: '@spectrum-css/colorwheel',
             outPackage: 'color-wheel',
             fileName: 'color-wheel',
+            excludeByComponents: [
+                builder.class('🤫'),
+                builder.class('spectrum-ColorWheel-ColorArea-handle'),
+            ],
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('is-focused', 'focused'),
@@ -35,6 +42,11 @@ const config = {
                 converter.classToClass('spectrum-ColorWheel-innerCircle'),
                 converter.classToClass('spectrum-ColorWheel-outerCircle'),
                 converter.classToClass('spectrum-ColorWheel-segment'),
+                converter.classToClass('spectrum-ColorWheel-border'),
+                converter.classToClass(
+                    'spectrum-ColorWheel-colorarea-container'
+                ),
+                converter.classToClass('spectrum-ColorWheel-inner'),
                 converter.classToSlotted(
                     'spectrum-ColorWheel-gradient',
                     'gradient'

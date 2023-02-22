@@ -20,6 +20,7 @@ import {
     arrowRightKeyupEvent,
     arrowUpEvent,
     arrowUpKeyupEvent,
+    ignoreResizeObserverLoopError,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
 
@@ -29,6 +30,8 @@ import { HSL, HSLA, HSV, HSVA, RGB, RGBA, TinyColor } from '@ctrl/tinycolor';
 import { sendKeys } from '@web/test-runner-commands';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { spy } from 'sinon';
+
+ignoreResizeObserverLoopError(before, after);
 
 describe('ColorWheel', () => {
     testForLitDevWarnings(
@@ -359,7 +362,7 @@ describe('ColorWheel', () => {
             html`
                 <sp-color-wheel
                     .color=${color}
-                    style="--spectrum-global-dimension-size-125: 10px;"
+                    style="--mod-colorwheel-width: 160px; --mod-colorwheel-height: 160px;"
                 ></sp-color-wheel>
             `
         );
