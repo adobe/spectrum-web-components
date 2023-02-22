@@ -4314,10 +4314,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/coachmark/-/coachmark-5.0.23.tgz#e59f8a02ff3a3c28bb3580db14b6767569c29d14"
   integrity sha512-UhuXSmefOE/9qKB1IkVWlNjX9V11Q1zOuyBefaQLPaiJHKx8E5NL9swI5PjswfFugfP15A/Rc+j4KFfTGy1QQw==
 
-"@spectrum-css/colorarea@^1.0.27":
-  version "1.0.27"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorarea/-/colorarea-1.0.27.tgz#38fb910b00c7f74840c457bc9faa7bb5413ba52f"
-  integrity sha512-lsyChpQ9wO3ut7W3Gn0YqDTR+qKP1HuIWYxe/Hd+s71oogQmSSRi917Km0QAbrdTFO7UmMnY9x/oDpwH6UsJWw==
+"@spectrum-css/colorarea@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorarea/-/colorarea-3.0.0.tgz#817f0371b032c2c6b2e8d87d5f7b400854f5d434"
+  integrity sha512-4mUzpf6yU7W6WgmnNWGNXrzknz76HtRY2+1BwlijoclxyGID28QdfkfsSuaIm6f2fNWu6+XAQ4fSTImeZLa0jw==
 
 "@spectrum-css/colorhandle@^2.0.13":
   version "2.0.13"

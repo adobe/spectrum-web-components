@@ -363,7 +363,7 @@ describe('ColorArea', () => {
         const el = await fixture<ColorArea>(
             html`
                 <sp-color-area
-                    style="--spectrum-colorarea-default-width: 192px; --spectrum-colorarea-default-height: 192px;"
+                    style="--mod-colorarea-height: 192px; --mod-colorarea-width: 192px;"
                 ></sp-color-area>
             `
         );
