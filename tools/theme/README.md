@@ -18,9 +18,9 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 ```
 
-The above import statements do two things: the first will get you started using the `<sp-theme>` wrapper element, and the second includes all four (4) color options (`lightest`, `light`, `dark`, and `darkest`) and both (2) scale options (`medium` and `large`) for the Spectrum Classic theme. Having all of these options available together is the easiest way to get a handle on the theming possibilities offered by the package and empowers you to prototype and test various deliveries of your application. However, reserving the download and parse time for all of the variants may not be required for all applications. See the "Advanced usage" section below for instructions on tuning the performance of an application that leverages this package. 
+The above import statements do two things: the first will get you started using the `<sp-theme>` wrapper element, and the second includes all four (4) color options (`lightest`, `light`, `dark`, and `darkest`) and both (2) scale options (`medium` and `large`) for the Spectrum Classic theme. Having all of these options available together is the easiest way to get a handle on the theming possibilities offered by the package and empowers you to prototype and test various deliveries of your application. However, reserving the download and parse time for all of the variants may not be required for all applications. See the "Advanced usage" section below for instructions on tuning the performance of an application that leverages this package.
 
-Below are more ways to import the different scale and color options individually, in case you didn't want to import all of them as we did above. You'll use these statements in combination with the side effectful registration import statement `import '@spectrum-web-components/theme/sp-theme.js'`. 
+Below are more ways to import the different scale and color options individually, in case you didn't want to import all of them as we did above. You'll use these statements in combination with the side effectful registration import statement `import '@spectrum-web-components/theme/sp-theme.js'`.
 
 The various Classic themes can be imported en masse, as in the example above:
 
@@ -89,11 +89,44 @@ In the example below, notice the usage of `scale="medium"` and `color="lightest"
 
 </div>
 
+There is text here.
+
+<custom-vars-viewer></custom-vars-viewer>
+
+<script type="module">
+    const varsViewer = document.querySelector('custom-vars-viewer');
+    const options = {
+        rootMargin: '20px'
+    }
+    const callback = async (entries, observer) => {
+        if (entries[0].intersectionRatio === 0) return;
+        import('@spectrum-web-components/custom-vars-viewer/custom-vars-viewer.js').then(() => {
+            const queryThemeEvent = new CustomEvent('sp-track-theme', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    callback: (color) => {
+                        varsViewer.themeColor = color.startsWith('light')
+                            ? 'light'
+                            : color;
+                    },
+                },
+                cancelable: true,
+            });
+            varsViewer.dispatchEvent(queryThemeEvent);
+        });
+        observer.disconnect();
+    }
+
+    const observer = new IntersectionObserver(callback, options);
+    observer.observe(varsViewer);
+</script>
+
 When you're ready to look into more advanced usage of the components and themes in your application, there are vanilla CSS implementations of these tokens available in the `@spectrum-web-components/styles` package.
 
 ## Example
 
-An `<sp-theme>` element expects a value for each of its `color` and `scale` attributes to be provided on the element. While not required, you can also use the `theme` attribute to specify whether the theme you're using is Spectrum Classic (the default) or Spectrum Express. 
+An `<sp-theme>` element expects a value for each of its `color` and `scale` attributes to be provided on the element. While not required, you can also use the `theme` attribute to specify whether the theme you're using is Spectrum Classic (the default) or Spectrum Express.
 
 ```html
 <sp-theme

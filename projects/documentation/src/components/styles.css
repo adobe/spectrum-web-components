@@ -367,7 +367,10 @@ sp-sidenav > sp-sidenav-item:not(:defined) > a {
     );
 }
 
-sp-sidenav-item[expanded] > sp-sidenav-item[expanded] > sp-sidenav-item:not(:defined) > a {
+sp-sidenav-item[expanded]
+    > sp-sidenav-item[expanded]
+    > sp-sidenav-item:not(:defined)
+    > a {
     padding-left: calc(
         var(
                 --spectrum-sidenav-multilevel-item-indentation-level2,
@@ -754,4 +757,9 @@ icons-demo::part(search) {
 icons-demo::part(icon) {
     padding: calc(0.5 * var(--spectrum-global-dimension-static-size-200)) 0;
     gap: var(--spectrum-global-dimension-static-size-200);
+}
+
+custom-vars-viewer:not(:defined) {
+    display: block;
+    height: 494px;
 }

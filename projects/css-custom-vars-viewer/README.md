@@ -1,4 +1,4 @@
-# \<sp-demo-app>
+# \<custom-vars-viewer>
 
 This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
 

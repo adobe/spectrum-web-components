@@ -52,7 +52,7 @@ export interface Item extends TableItem {
     };
 }
 
-export class DemoApp extends SpectrumElement {
+export class CustomVarsViewer extends SpectrumElement {
     static override styles = css`
         :host {
             display: block;
@@ -69,7 +69,7 @@ export class DemoApp extends SpectrumElement {
     `;
 
     @property({ type: String })
-    public theme = 'light';
+    public themeColor = 'light';
 
     @property({ type: Array })
     public colors: Item[] = [];
@@ -97,8 +97,7 @@ export class DemoApp extends SpectrumElement {
     ];
 
     protected handlePicker = (event: Event): void => {
-        const picker = event.target as Picker;
-        this.theme = picker.value;
+        this.themeColor = (event.target as Picker).value as string;
     };
 
     protected handleSwatchSelect = (event: Event): void => {
@@ -136,7 +135,7 @@ export class DemoApp extends SpectrumElement {
                     id="theme-picker"
                     label="Select a theme"
                     size="m"
-                    value="light"
+                    value=${this.themeColor}
                     quiet
                     @change=${this.handlePicker}
                 >
@@ -219,7 +218,7 @@ export class DemoApp extends SpectrumElement {
             </sp-swatch-group>
             <sp-css-table
                 .items=${this.colors}
-                color-theme=${this.theme}
+                color-theme=${this.themeColor}
             ></sp-css-table>
         `;
     }
