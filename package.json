@@ -52,7 +52,7 @@
         "postprocess-spectrum": "yarn lint:css --fix && pretty-quick --fix --pattern \"packages/**/*.css\"",
         "precustom-element-json": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,iconset,modal,shared,styles},documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- rm custom-elements.json ||:",
         "preeleventy": "yarn docs:analyze",
-        "prelerna-publish": "yarn get-ready && yarn custom-element-json && yarn build:confirm",
+        "prelerna-publish": "yarn get-ready && yarn custom-element-json && yarn build:confirm && yarn build:react",
         "prepare": "husky install",
         "prestorybook": "cem analyze --outdir .storybook/",
         "prestorybook:build": "cem analyze --outdir .storybook/",
