@@ -183,7 +183,7 @@
             "clean": "if-file-deleted",
             "dependencies": [
                 {
-                    "script": "../../:build"
+                    "script": "../css-custom-vars-viewer/:build"
                 }
             ]
         },
