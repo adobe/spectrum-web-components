@@ -63,33 +63,7 @@ Visually, all Spectrum Web Components are an expression of the design tokens spe
 
 Additionally, the `sp-theme` element manages the content direction applied to the elements in its DOM scope. By default, an `sp-theme` element resolves its initial content direction from the value specified by its first `sp-theme` or `document` ancestor; otherwise, it uses the value `dir="ltr"` if a content direction isn't present in those elements. When a value for `dir` is manually supplied to `sp-theme`, the default value is overridden. In all cases, though, `sp-theme` manages the `dir` value of its `SpectrumElement` descendents, unless another `sp-theme` element is placed into its scope and overrides that management.
 
-In the example below, notice the usage of `scale="medium"` and `color="lightest"` to outline the scale and color applied to this theme context. You can use the following code sample to get started and see how `sp-theme` works:
-
-<div style="--demo-example-padding-bottom: 0">
-
-```html
-<sp-theme
-    scale="medium"
-    color="lightest"
-    style="
-        background: var(--spectrum-global-color-gray-75);
-        padding: var(--spectrum-global-dimension-size-400);
-        display: block;
-        margin:
-            calc(-1 * var(--spectrum-global-dimension-size-400))
-            calc(-1 * var(--spectrum-global-dimension-size-500))
-            0;
-    "
->
-    <!-- Insert content requiring theme application here. -->
-    <sp-button onclick="alert('I was clicked');">Click me!</sp-button>
-    <!-- End content requiring theme application. -->
-</sp-theme>
-```
-
-</div>
-
-There is text here.
+To make the above concepts a little more concrete, take a look at the table below. Try selecting another `color` in the picker, and notice how that changes the values of the colors. The token names for the variables persist, but the RGB values under the hood change! Considering that `sp-theme` also manages all the other theme and size options, `sp-theme` reveals itself to be a pretty powerful component.
 
 <custom-vars-viewer></custom-vars-viewer>
 
