@@ -228,9 +228,7 @@ Gallery cards can contain a heading, a subheading, an image preview, a descripti
 A `horizontal` card:
 
 ```html demo
-<div
-    style="color: var(--spectrum-body-text-color, var(--spectrum-alias-text-color));"
->
+<div style="color: var(--spectrum-neutral-content-color-default);">
     <sp-card size="s" horizontal heading="Card Heading" subheading="JPG Photo">
         <sp-icon slot="preview" style="width: 36px; height: 36px;">
             <svg
@@ -254,7 +252,7 @@ Or a `quiet` card:
 
 ```html demo
 <div
-    style="color: var(--spectrum-body-text-color, var(--spectrum-alias-text-color)); width: 110px;"
+    style="color: var(--spectrum-neutral-content-color-default); width: 110px;"
 >
     <sp-card
         size="s"

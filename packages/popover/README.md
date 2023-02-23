@@ -29,7 +29,7 @@ import { Popover } from '@spectrum-web-components/popover';
 ```html
 <div
     style="
-        color: var(--spectrum-global-color-gray-800);
+        color: var(--spectrum-gray-800);
         height: 200px;
         position: relative;
         width: 320px;
@@ -65,7 +65,7 @@ element by default. The default popover has no padding by default
 ```html
 <div
     style="
-        color: var(--spectrum-global-color-gray-800);
+        color: var(--spectrum-gray-800);
         height: 200px;
         position: relative;
         width: 320px;
@@ -104,7 +104,7 @@ Popovers with padding, ideal for dialogs.
 ```html
 <div
     style="
-        color: var(--spectrum-global-color-gray-800);
+        color: var(--spectrum-gray-800);
         height: 200px;
         position: relative;
         width: 320px;
@@ -135,7 +135,7 @@ Popovers with padding, ideal for dialogs.
 ```html
 <div
     style="
-        color: var(--spectrum-global-color-gray-800);
+        color: var(--spectrum-gray-800);
         height: 200px;
         position: relative;
         width: 320px;
@@ -170,7 +170,7 @@ Popovers with padding, ideal for dialogs.
 ```html
 <div
     style="
-        color: var(--spectrum-global-color-gray-800);
+        color: var(--spectrum-gray-800);
         height: 200px;
         position: relative;
         width: 320px;
@@ -205,7 +205,7 @@ Popovers with padding, ideal for dialogs.
 ```html
 <div
     style="
-        color: var(--spectrum-global-color-gray-800);
+        color: var(--spectrum-gray-800);
         height: 200px;
         position: relative;
         width: 320px;
@@ -240,7 +240,7 @@ Popovers with padding, ideal for dialogs.
 ```html
 <div
     style="
-        color: var(--spectrum-global-color-gray-800);
+        color: var(--spectrum-gray-800);
         height: 200px;
         position: relative;
         width: 320px;

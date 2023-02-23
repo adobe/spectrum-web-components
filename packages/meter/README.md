@@ -69,7 +69,7 @@ When a loader needs to be placed on top of a colored background, use the over ba
 
 ```html
 <div
-    style="width: var(--spectrum-global-dimension-size-3000); height: var(--spectrum-global-dimension-size-2000); display: flex; flex-direction: column; align-items: center; justify-content: space-around; background-color: var(--spectrum-alias-background-color-modal-overlay);"
+    style="width: 240px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: space-around; background-color: var(--spectrum-transparent-black-400);"
 >
     <sp-meter progress="42" over-background>Tasks Completed</sp-meter>
 </div>

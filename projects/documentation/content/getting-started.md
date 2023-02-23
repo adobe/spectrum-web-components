@@ -34,7 +34,7 @@ Whether you chose to start with the bundle or a selection of components (you'll 
 
 The code above (with the comments around`<script>` tag removed) renders to the browser as follows (be patient while the JS for the `<iframe>` is loaded from the JSPM CDN...):
 
-<style>iframe { width: 100%; border: none; background: var(--spectrum-global-color-gray-75); border-radius: 6px; }</style>
+<style>iframe { width: 100%; border: none; background: var(--spectrum-gray-75); border-radius: 6px; }</style>
 
 <iframe src="data:text/html;base64,PHNjcmlwdCBzcmM9Imh0dHBzOi8vanNwbS5kZXYvQHNwZWN0cnVtLXdlYi1jb21wb25lbnRzL2J1bmRsZS9lbGVtZW50cy5qcyIgdHlwZT0ibW9kdWxlIj48L3NjcmlwdD4NCg0KPHNwLXRoZW1lIHNjYWxlPSJsYXJnZSIgY29sb3I9ImRhcmsiPg0KICAgPHNwLWJ1dHRvbiBvbmNsaWNrPSJhbGVydCgnSSB3YXMgY2xpY2tlZCcpOyI+Q2xpY2sgbWUhPC9zcC1idXR0b24+DQo8L3NwLXRoZW1lPg=="></iframe>
 

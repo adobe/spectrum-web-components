@@ -49,8 +49,8 @@ Here a default `<overlay-trigger>` manages content that is triggered by click an
     }
 
     .tooltip {
-        background-color: var(--spectrum-global-color-gray-800);
-        color: var(--spectrum-global-color-gray-50);
+        background-color: var(--spectrum-gray-800);
+        color: var(--spectrum-gray-50);
         padding: 4px 10px;
         font-size: 10px;
     }
@@ -74,7 +74,7 @@ Here a default `<overlay-trigger>` manages content that is triggered by click an
         <sp-action-group
             selects="single"
             vertical
-            style="margin: calc(var(--spectrum-actiongroup-button-gap-y,var(--spectrum-global-dimension-size-100)) / 2);"
+            style="margin: calc(var(--spectrum-spacing-100) / 2);"
         >
             <sp-action-button>
                 <sp-icon-magnify slot="icon"></sp-icon-magnify>
@@ -141,8 +141,8 @@ Content that is thrown into an overlay (e.g. `[slot="*-content"]`) will be moved
     <div
         slot="click-content"
         style="
-        background-color: var(--spectrum-global-color-gray-50);
-        color: var(--spectrum-global-color-gray-800);
+        background-color: var(--spectrum-gray-50);
+        color: var(--spectrum-gray-800);
         border: 1px solid;
         padding: 2em;
     "
@@ -160,8 +160,8 @@ Content that is thrown into an overlay (e.g. `[slot="*-content"]`) will be moved
     <div slot="click-content" id="styled-content">
         <style>
             #styled-content {
-                background-color: var(--spectrum-global-color-gray-50);
-                color: var(--spectrum-global-color-gray-800);
+                background-color: var(--spectrum-gray-50);
+                color: var(--spectrum-gray-800);
                 border: 1px solid;
                 padding: 2em;
             }
@@ -188,8 +188,8 @@ Content that is thrown into an overlay (e.g. `[slot="*-content"]`) will be moved
             this.shadowRoot.innerHTML = `
                 <style>
                     :host {
-                        background-color: var(--spectrum-global-color-gray-50);
-                        color: var(--spectrum-global-color-gray-800);
+                        background-color: var(--spectrum-gray-50);
+                        color: var(--spectrum-gray-800);
                         border: 1px solid;
                         padding: 2em;
                     }

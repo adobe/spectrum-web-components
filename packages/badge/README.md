@@ -31,7 +31,7 @@ import { Badge } from '@spectrum-web-components/badge';
 <sp-tab-panel value="s">
 
 ```html demo
-<div style="display: flex; gap: var(--spectrum-global-dimension-size-50);">
+<div style="display: flex; gap: var(--spectrum-spacing-75);">
     <sp-badge size="s">Label</sp-badge>
     <sp-badge size="s">
         <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
@@ -45,7 +45,7 @@ import { Badge } from '@spectrum-web-components/badge';
 <sp-tab-panel value="m">
 
 ```html demo
-<div style="display: flex; gap: var(--spectrum-global-dimension-size-50);">
+<div style="display: flex; gap: var(--spectrum-spacing-75);">
     <sp-badge size="m">Label</sp-badge>
     <sp-badge size="m">
         <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
@@ -59,7 +59,7 @@ import { Badge } from '@spectrum-web-components/badge';
 <sp-tab-panel value="l">
 
 ```html demo
-<div style="display: flex; gap: var(--spectrum-global-dimension-size-50);">
+<div style="display: flex; gap: var(--spectrum-spacing-75);">
     <sp-badge size="l">Label</sp-badge>
     <sp-badge size="l">
         <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
@@ -73,7 +73,7 @@ import { Badge } from '@spectrum-web-components/badge';
 <sp-tab-panel value="xl">
 
 ```html demo
-<div style="display: flex; gap: var(--spectrum-global-dimension-size-50);">
+<div style="display: flex; gap: var(--spectrum-spacing-75);">
     <sp-badge size="xl">Label</sp-badge>
     <sp-badge size="xl">
         <sp-icon-checkmark-circle slot="icon"></sp-icon-checkmark-circle>
@@ -92,7 +92,7 @@ The `<sp-badge>` can be customized with either semantic or non-semantic variants
 ### Semantic
 
 ```html demo
-<div style="display: flex; gap: var(--spectrum-global-dimension-size-50);">
+<div style="display: flex; gap: var(--spectrum-spacing-75);">
     <sp-badge variant="neutral">Neutral</sp-badge>
     <sp-badge variant="informative">Informative</sp-badge>
     <sp-badge variant="positive">Positive</sp-badge>
@@ -105,41 +105,43 @@ The `<sp-badge>` can be customized with either semantic or non-semantic variants
 Non-semantic badge colors are no longer supported directly by Spectrum and Spectrum Web Components. You can mimic their delivery via the following CSS Custom Properties. These values for the `variant` attribute/property have not been marked as deprecated, but will no longer achieve the results you may have relied on in the past.
 
 ```html demo
-<div style="display: flex; gap: var(--spectrum-global-dimension-size-50);">
+<div style="display: flex; gap: var(--spectrum-spacing-75);">
     <sp-badge
         variant="seafoam"
-        style="--mod-badge-background-color-default: var(--spectrum-global-color-static-seafoam-600)"
+        style="--mod-badge-background-color-default: var(--spectrum-seafoam-600)"
     >
         Seafoam
     </sp-badge>
     <sp-badge
         variant="indigo"
-        style="--mod-badge-background-color-default: var(--spectrum-global-color-static-indigo-600)"
+        style="--mod-badge-background-color-default: var(--spectrum-indigo-600)"
     >
         Indigo
     </sp-badge>
     <sp-badge
         variant="purple"
-        style="--mod-badge-background-color-default: var(--spectrum-global-color-static-purple-600)"
+        style="--mod-badge-background-color-default: var(--spectrum-purple-600)"
     >
         Purple
     </sp-badge>
     <sp-badge
         variant="fuchsia"
-        style="--mod-badge-background-color-default: var(--spectrum-global-color-static-fuchsia-600)"
+        style="--mod-badge-background-color-default: var(--spectrum-fuchsia-600)"
     >
         Fuchsia
     </sp-badge>
     <sp-badge
         variant="magenta"
-        style="--mod-badge-background-color-default: var(--spectrum-global-color-static-magenta-600)"
+        style="--mod-badge-background-color-default: var(--spectrum-magenta-600)"
     >
         Magenta
     </sp-badge>
     <sp-badge
         variant="yellow"
         static="black"
-        style="--mod-badge-background-color-default: var(--spectrum-alias-background-color-yellow-default)"
+        style="
+            --mod-badge-background-color-default: var(--spectrum-yellow-background-color-default); --mod-badge-label-icon-color-white: var(--spectrum-black);
+        "
     >
         Yellow
     </sp-badge>

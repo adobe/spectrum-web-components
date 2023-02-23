@@ -248,7 +248,7 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ```html demo
 <sp-button-group
-    style="background: var(--spectrum-global-color-seafoam-600); padding: 0.5em; min-width: max-content"
+    style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
 >
     <sp-button treatment="outline" static="black">Label only</sp-button>
     <sp-button treatment="outline" static="black">
@@ -267,7 +267,7 @@ The `treatment` attribute accepts `fill` and `outline` as values, and defaults t
 
 ```html demo
 <sp-button-group
-    style="background: var(--spectrum-global-color-seafoam-600); padding: 0.5em; min-width: max-content"
+    style="background: var(--spectrum-seafoam-600); padding: 0.5em; min-width: max-content"
 >
     <sp-button treatment="outline" static="white">Label only</sp-button>
     <sp-button treatment="outline" static="white">
