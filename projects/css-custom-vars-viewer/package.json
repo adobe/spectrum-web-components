@@ -19,7 +19,7 @@
     },
     "scripts": {
         "analyze": "cem analyze --litelement",
-        "build": "tsc && yarn parse-json && npm run analyze -- --exclude dist",
+        "build": "yarn parse-json && tsc && npm run analyze -- --exclude dist",
         "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
         "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
         "parse-json": "node ./scripts/parse-json.js",
