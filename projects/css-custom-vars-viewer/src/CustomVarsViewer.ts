@@ -64,9 +64,6 @@ export class CustomVarsViewer extends SpectrumElement {
         sp-swatch-group {
             padding: var(--spectrum-global-dimension-size-100);
         }
-        sp-swatch {
-            pointer-events: none;
-        }
     `;
 
     @property({ type: String })
