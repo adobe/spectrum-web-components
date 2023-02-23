@@ -36,6 +36,8 @@ packages/**/*.test-vrt.ts
 !packages/*/global.d.ts
 !packages/*/local.d.ts
 
+react
+
 projects/**/*.js
 projects/**/*.js.map
 projects/**/*.d.ts

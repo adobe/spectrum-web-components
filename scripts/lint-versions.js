@@ -18,10 +18,10 @@ import { hideBin } from 'yargs/helpers';
 
 const { fix } = yargs(hideBin(process.argv)).argv;
 
-const getDirectories = (source) =>
-    readdirSync(source, { withFileTypes: true })
+const getDirectories = (sourceDir) =>
+    readdirSync(`./${sourceDir}`, { withFileTypes: true })
         .filter((pathMeta) => pathMeta.isDirectory())
-        .map((pathMeta) => pathMeta.name);
+        .map((pathMeta) => [sourceDir, pathMeta.name]);
 
 function readPackageJsonDeps(filePath) {
     if (existsSync(filePath)) {
@@ -87,10 +87,17 @@ function compareVersions(versionsA, versionsB) {
 let currentVersions = readPackageJsonDeps('./package.json');
 let endReturn = 0;
 let written = false;
+const directories = [
+    ...getDirectories('packages'),
+    ...getDirectories('tools'),
+    ...getDirectories('react'),
+];
 
 // find all versions in the monorepo
-getDirectories('./packages').forEach((subPackage) => {
-    const filePath = path.normalize(`./packages/${subPackage}/package.json`);
+directories.forEach(([sourceDir, subPackage]) => {
+    const filePath = path.normalize(
+        `./${sourceDir}/${subPackage}/package.json`
+    );
     currentVersions = {
         ...currentVersions,
         ...readPackageJsonNameVersion(filePath),
@@ -98,8 +105,10 @@ getDirectories('./packages').forEach((subPackage) => {
 });
 
 // lint all versions in packages
-getDirectories('./packages').forEach((subPackage) => {
-    const filePath = path.normalize(`./packages/${subPackage}/package.json`);
+directories.forEach(([sourceDir, subPackage]) => {
+    const filePath = path.normalize(
+        `./${sourceDir}/${subPackage}/package.json`
+    );
     const subPackageVersions = readPackageJsonDeps(filePath);
     const packageName = readPackageJsonName(filePath);
     const { dependencyNamesAndVersions, output, newVersions } = compareVersions(
@@ -112,10 +121,10 @@ getDirectories('./packages').forEach((subPackage) => {
         if (fix) {
             const jsonData = JSON.parse(readFileSync(filePath, 'utf-8'));
             dependencyNamesAndVersions.forEach(([dep, version]) => {
-                if (jsonData.dependencies[dep]) {
+                if (jsonData.dependencies?.[dep]) {
                     jsonData.dependencies[dep] = version;
                 }
-                if (jsonData.devDependencies[dep]) {
+                if (jsonData.devDependencies?.[dep]) {
                     jsonData.devDependencies[dep] = version;
                 }
             });
