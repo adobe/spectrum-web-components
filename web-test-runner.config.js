@@ -25,9 +25,88 @@ import {
 import { fromRollup } from '@web/dev-server-rollup';
 import rollupJson from '@rollup/plugin-json';
 import rollupCommonjs from '@rollup/plugin-commonjs';
+import { defaultReporter, SESSION_STATUS } from '@web/test-runner';
+import * as path from 'path';
 
 const commonjs = fromRollup(rollupCommonjs);
 const json = fromRollup(rollupJson);
+
+// This reporter will only print browser console logs for test files that either:
+// 1. Didn't pass all their tests or
+// 2. Include "debug" in their filename, eg: accordion-item.debug.test.ts
+// It always reports all active files for each browser.
+
+function quietReporter({
+    reportTestResults = true,
+    reportTestProgress = true,
+} = {}) {
+    const dr = defaultReporter({ reportTestResults, reportTestProgress });
+    let _args;
+
+    return {
+        start(args) {
+            _args = args;
+            return dr.start(args);
+        },
+
+        getTestProgress({ testRun, focusedTestFile, testCoverage }) {
+            const progress = dr.getTestProgress({
+                testRun,
+                focusedTestFile,
+                testCoverage,
+            });
+            const { sessions, browsers } = _args;
+            const activeFiles = browsers.reduce((files, browser) => {
+                const allBrowserSessions = Array.from(
+                    sessions.forBrowser(browser)
+                );
+                const browserSessions = focusedTestFile
+                    ? allBrowserSessions.filter(
+                          (s) => s.testFile === focusedTestFile
+                      )
+                    : allBrowserSessions;
+                const browserFiles = browserSessions.reduce(
+                    (files, session) => {
+                        const inActive = [
+                            SESSION_STATUS.SCHEDULED,
+                            SESSION_STATUS.FINISHED,
+                        ].includes(session.status);
+                        return inActive
+                            ? files
+                            : [
+                                  ...files,
+                                  `${browser.name}: ${path.basename(
+                                      session.testFile
+                                  )}`,
+                              ];
+                    },
+                    []
+                );
+                return [...files, ...browserFiles];
+            }, []);
+            return ['', ...progress, ...activeFiles];
+        },
+
+        reportTestFileResults({ logger, sessionsForTestFile, testFile }) {
+            const allPassed = sessionsForTestFile.every((s) => s.passed);
+            const notDebug = !path.basename(testFile).includes('debug');
+            if (allPassed && notDebug) {
+                const relFile = path.relative(process.cwd(), testFile);
+                logger.buffer.unshift({
+                    method: 'log',
+                    args: [`${relFile}: ✅`],
+                });
+                return;
+            }
+
+            return dr.reportTestFileResults({
+                logger,
+                sessionsForTestFile,
+                testFile,
+            });
+        },
+    };
+}
 
 export default {
     plugins: [
@@ -103,5 +182,6 @@ export default {
         }, []),
     ],
     group: 'unit',
-    browsers: [chromium, firefox, webkit],
+    browsers: [chromium], //, firefox, webkit],
+    reporters: [quietReporter()],
 };
