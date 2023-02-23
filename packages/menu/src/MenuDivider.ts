@@ -10,7 +10,12 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray, SpectrumElement } from '@spectrum-web-components/base';
+import {
+    CSSResultArray,
+    PropertyValues,
+    SizedMixin,
+    SpectrumElement,
+} from '@spectrum-web-components/base';
 
 import menuDividerStyles from './menu-divider.css.js';
 import dividerStyles from '@spectrum-web-components/divider/src/divider.css.js';
@@ -18,13 +23,15 @@ import dividerStyles from '@spectrum-web-components/divider/src/divider.css.js';
 /**
  * @element sp-menu-divider
  */
-export class MenuDivider extends SpectrumElement {
+export class MenuDivider extends SizedMixin(SpectrumElement, {
+    validSizes: ['s', 'm', 'l'],
+}) {
     public static override get styles(): CSSResultArray {
         return [dividerStyles, menuDividerStyles];
     }
 
-    protected override firstUpdated(): void {
+    protected override firstUpdated(changed: PropertyValues<this>): void {
+        super.firstUpdated(changed);
         this.setAttribute('role', 'separator');
-        this.setAttribute('size', 'm');
     }
 }
