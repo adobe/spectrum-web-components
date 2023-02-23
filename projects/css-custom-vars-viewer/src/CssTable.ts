@@ -52,6 +52,9 @@ export class CssTable extends SpectrumElement {
         sp-table {
             height: var(--spectrum-global-dimension-size-4600);
         }
+        sp-swatch {
+            pointer-events: none;
+        }
     `;
 
     @state()
