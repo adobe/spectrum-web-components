@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/checkbox",
-    "version": "0.14.9",
+    "version": "0.14.10",
     "publishConfig": {
         "access": "public"
     },

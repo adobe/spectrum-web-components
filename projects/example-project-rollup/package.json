@@ -1,6 +1,6 @@
 {
   "name": "example-project-rollup",
-  "version": "0.6.13",
+  "version": "0.6.14",
   "private": true,
   "description": "An example project that uses the web components and gives an example of how to bundle them minimally with rollup.",
   "license": "Apache-2.0",

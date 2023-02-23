@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/table",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "publishConfig": {
         "access": "public"
     },
@@ -117,7 +117,7 @@
     "dependencies": {
         "@lit-labs/virtualizer": "^1.0.1",
         "@spectrum-web-components/base": "^0.7.4",
-        "@spectrum-web-components/checkbox": "^0.14.9",
+        "@spectrum-web-components/checkbox": "^0.14.10",
         "@spectrum-web-components/icon": "^0.12.8",
         "@spectrum-web-components/icons-ui": "^0.9.8"
     },

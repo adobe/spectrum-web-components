@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/story-decorator",
-    "version": "0.8.1",
+    "version": "0.8.2",
     "publishConfig": {
         "access": "public"
     },
@@ -71,7 +71,7 @@
         "@spectrum-web-components/overlay": "^0.19.1",
         "@spectrum-web-components/picker": "^0.14.1",
         "@spectrum-web-components/reactive-controllers": "^0.3.5",
-        "@spectrum-web-components/switch": "^0.11.8",
+        "@spectrum-web-components/switch": "^0.11.9",
         "@spectrum-web-components/theme": "^0.14.11"
     },
     "types": "./src/index.d.ts",

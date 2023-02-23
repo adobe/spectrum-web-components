@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/bundle",
-    "version": "0.29.0",
+    "version": "0.29.1",
     "publishConfig": {
         "access": "public"
     },
@@ -72,8 +72,8 @@
         "@spectrum-web-components/base": "^0.7.4",
         "@spectrum-web-components/button": "^0.20.1",
         "@spectrum-web-components/button-group": "^0.10.7",
-        "@spectrum-web-components/card": "^0.13.7",
-        "@spectrum-web-components/checkbox": "^0.14.9",
+        "@spectrum-web-components/card": "^0.13.8",
+        "@spectrum-web-components/checkbox": "^0.14.10",
         "@spectrum-web-components/clear-button": "^0.2.6",
         "@spectrum-web-components/close-button": "^0.3.9",
         "@spectrum-web-components/coachmark": "^0.10.6",
@@ -115,11 +115,11 @@
         "@spectrum-web-components/slider": "^0.15.7",
         "@spectrum-web-components/split-button": "^0.9.13",
         "@spectrum-web-components/split-view": "^0.5.7",
-        "@spectrum-web-components/status-light": "^0.11.7",
+        "@spectrum-web-components/status-light": "^0.11.8",
         "@spectrum-web-components/styles": "^0.23.0",
         "@spectrum-web-components/swatch": "^0.3.6",
-        "@spectrum-web-components/switch": "^0.11.8",
-        "@spectrum-web-components/table": "^0.1.9",
+        "@spectrum-web-components/switch": "^0.11.9",
+        "@spectrum-web-components/table": "^0.1.10",
         "@spectrum-web-components/tabs": "^0.11.0",
         "@spectrum-web-components/tags": "^0.10.4",
         "@spectrum-web-components/textfield": "^0.13.11",
