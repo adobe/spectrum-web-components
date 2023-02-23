@@ -108,31 +108,31 @@ Non-semantic badge colors are no longer supported directly by Spectrum and Spect
 <div style="display: flex; gap: var(--spectrum-spacing-75);">
     <sp-badge
         variant="seafoam"
-        style="--mod-badge-background-color-default: var(--spectrum-seafoam-600)"
+        style="--mod-badge-background-color-default: var(--spectrum-seafoam-background-color-default)"
     >
         Seafoam
     </sp-badge>
     <sp-badge
         variant="indigo"
-        style="--mod-badge-background-color-default: var(--spectrum-indigo-600)"
+        style="--mod-badge-background-color-default: var(--spectrum-indigo-background-color-default)"
     >
         Indigo
     </sp-badge>
     <sp-badge
         variant="purple"
-        style="--mod-badge-background-color-default: var(--spectrum-purple-600)"
+        style="--mod-badge-background-color-default: var(--spectrum-purple-background-color-default)"
     >
         Purple
     </sp-badge>
     <sp-badge
         variant="fuchsia"
-        style="--mod-badge-background-color-default: var(--spectrum-fuchsia-600)"
+        style="--mod-badge-background-color-default: var(--spectrum-fuchsia-background-color-default)"
     >
         Fuchsia
     </sp-badge>
     <sp-badge
         variant="magenta"
-        style="--mod-badge-background-color-default: var(--spectrum-magenta-600)"
+        style="--mod-badge-background-color-default: var(--spectrum-magenta-background-color-default)"
     >
         Magenta
     </sp-badge>
