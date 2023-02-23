@@ -65,7 +65,7 @@ Additionally, the `sp-theme` element manages the content direction applied to th
 
 To make the above concepts a little more concrete, take a look at the table below. Try selecting another `color` in the picker, and notice how that changes the values of the colors. The token names for the variables persist, but the RGB values under the hood change! Considering that `sp-theme` also manages all the other theme and size options, `sp-theme` reveals itself to be a pretty powerful component.
 
-<custom-vars-viewer></custom-vars-viewer>
+<custom-vars-viewer id="color-tokens"></custom-vars-viewer>
 
 <script type="module">
     const varsViewer = document.querySelector('custom-vars-viewer');
