@@ -59,12 +59,10 @@ export class CustomVarsViewer extends SpectrumElement {
             padding: var(--spectrum-global-dimension-size-300);
         }
         .picker-container {
-            display: flex;
-            align-items: center;
             padding-bottom: var(--spectrum-global-dimension-size-50);
         }
         sp-swatch-group {
-            padding: var(--spectrum-global-dimension-size-50);
+            padding: var(--spectrum-global-dimension-size-100);
         }
     `;
 
@@ -136,7 +134,6 @@ export class CustomVarsViewer extends SpectrumElement {
                     label="Select a theme"
                     size="m"
                     value=${this.themeColor}
-                    quiet
                     @change=${this.handlePicker}
                 >
                     <sp-menu-item value="light">Light</sp-menu-item>
@@ -153,67 +150,67 @@ export class CustomVarsViewer extends SpectrumElement {
                 <sp-swatch
                     border="none"
                     value="gray"
-                    color="var(--spectrum-global-color-gray-500)"
+                    color="var(--spectrum-gray-500)"
                 ></sp-swatch>
                 <sp-swatch
                     border="none"
                     value="red"
-                    color="var(--spectrum-global-color-red-500)"
+                    color="var(--spectrum-red-500)"
                 ></sp-swatch>
                 <sp-swatch
                     border="none"
                     value="orange"
-                    color="var(--spectrum-global-color-orange-500)"
+                    color="var(--spectrum-orange-500)"
                 ></sp-swatch>
                 <sp-swatch
                     border="none"
                     value="yellow"
-                    color="var(--spectrum-global-color-yellow-500)"
+                    color="var(--spectrum-yellow-500)"
                 ></sp-swatch>
                 <sp-swatch
                     border="none"
                     value="chartreuse"
-                    color="var(--spectrum-global-color-chartreuse-500)"
+                    color="var(--spectrum-chartreuse-500)"
                 ></sp-swatch>
                 <sp-swatch
                     border="none"
                     value="celery"
-                    color="var(--spectrum-global-color-celery-500)"
+                    color="var(--spectrum-celery-500)"
                 ></sp-swatch>
                 <sp-swatch
                     border="none"
                     value="green"
-                    color="var(--spectrum-global-color-green-500)"
+                    color="var(--spectrum-green-500)"
                 ></sp-swatch>
                 <sp-swatch
                     border="none"
                     value="seafoam"
-                    color="var(--spectrum-global-color-seafoam-500)"
+                    color="var(--spectrum-seafoam-500)"
                 ></sp-swatch>
                 <sp-swatch
                     border="none"
                     value="blue"
-                    color="var(--spectrum-global-color-blue-500)"
+                    color="var(--spectrum-blue-500)"
                 ></sp-swatch>
                 <sp-swatch
                     border="none"
                     value="indigo"
-                    color="var(--spectrum-global-color-indigo-500)"
+                    color="var(--spectrum-indigo-500)"
                 ></sp-swatch>
                 <sp-swatch
                     border="none"
                     value="purple"
-                    color="var(--spectrum-global-color-purple-500)"
+                    color="var(--spectrum-purple-500)"
                 ></sp-swatch>
                 <sp-swatch
                     border="none"
                     value="fuchsia"
-                    color="var(--spectrum-global-color-fuchsia-500)"
+                    color="var(--spectrum-fuchsia-500)"
                 ></sp-swatch>
                 <sp-swatch
                     border="none"
                     value="magenta"
-                    color="var(--spectrum-global-color-magenta-500)"
+                    color="var(--spectrum-magenta-500)"
                 ></sp-swatch>
             </sp-swatch-group>
             <sp-css-table
