@@ -102,7 +102,7 @@ export class CssTable extends SpectrumElement {
         };
 
     public renderItem = (item: Item): TemplateResult => {
-        const splitVarName = item.customVar.substring(24);
+        const splitVarName = item.customVar.substring(11);
         const splitColourName = splitVarName.split('-').join(' ');
         const colourName =
             splitColourName.charAt(0).toUpperCase() +

@@ -49,7 +49,7 @@ spectrumColours.forEach((colour) => {
                 console.log('invalid format!');
             } else {
                 colorArray.push({
-                    customVar: `--spectrum-global-color-${key}`,
+                    customVar: `--spectrum-${key}`,
                     sets: {
                         light: info.sets.light.value,
                         dark: info.sets.dark.value,
