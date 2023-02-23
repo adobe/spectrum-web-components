@@ -124,7 +124,7 @@
 </script>
 
   
-<link rel="preload" href="./ddd5355b.js" as="script" />
+<link rel="preload" href="./b32b9b47.js" as="script" />
 </head>
 
   <body>
@@ -141,7 +141,7 @@
   
 <script>(function () {
   function polyfillsLoader() {
-    function loadScript(src, type, attributes = []) {
+    function loadScript(src, type, attributes) {
       return new Promise(function (resolve) {
         var script = document.createElement('script');
 
@@ -155,9 +155,12 @@
 
         script.src = src;
         script.onload = onLoaded;
-        attributes.forEach(att => {
-          script.setAttribute(att.name, att.value);
-        });
+
+        if (attributes) {
+          attributes.forEach(function (att) {
+            script.setAttribute(att.name, att.value);
+          });
+        }
 
         script.onerror = function () {
           console.error('[polyfills-loader] failed to load: ' + src + ' check the network tab for HTTP status.');
@@ -170,32 +173,32 @@
     }
 
     var polyfills = [];
-    polyfills.push(loadScript('./polyfills/regenerator-runtime.ebfd7b154777d0fed9fa79f20e07b8fc.js'));
+    polyfills.push(loadScript('./polyfills/regenerator-runtime.c15591b8a30384cfa8a4865abe8c232d.js'));
 
     if (!('fetch' in window) || !('Request' in window) || !('signal' in window.Request.prototype)) {
-      polyfills.push(loadScript('./polyfills/fetch.c406ed8f3fd5c584ab4b8ee2407c3814.js'));
+      polyfills.push(loadScript('./polyfills/fetch.23f8b832593ed1e0f6ba5342ebf986f6.js'));
     }
 
-    polyfills.push(loadScript('./polyfills/systemjs.b6ad53205d8657841448f9c91e83f589.js'));
+    polyfills.push(loadScript('./polyfills/systemjs.c12345a3f6a1d7c2542d26a81dfc5f25.js'));
 
     if (!('IntersectionObserver' in window && 'IntersectionObserverEntry' in window && 'intersectionRatio' in window.IntersectionObserverEntry.prototype)) {
-      polyfills.push(loadScript('./polyfills/intersection-observer.83ec8aa758f883d6da14b722e6a50fcc.js'));
+      polyfills.push(loadScript('./polyfills/intersection-observer.ed3b4417df0895e4cf8465d32b69adc6.js'));
     }
 
     if (!('ResizeObserver' in window)) {
-      polyfills.push(loadScript('./polyfills/resize-observer.c66e75decd4adba0d63c03d136370195.js'));
+      polyfills.push(loadScript('./polyfills/resize-observer.38344559723dcec47f2a0354769ab383.js'));
     }
 
     if (!('attachShadow' in Element.prototype) || !('getRootNode' in Element.prototype) || window.ShadyDOM && window.ShadyDOM.force) {
-      polyfills.push(loadScript('./polyfills/webcomponents.ed846db3e7c3b1354dcb129b8858e4d4.js'));
+      polyfills.push(loadScript('./polyfills/webcomponents.89d9e615c60247d4288ba9d1a6c16e3e.js'));
     }
 
     if (!('noModule' in HTMLScriptElement.prototype) && 'getRootNode' in Element.prototype) {
-      polyfills.push(loadScript('./polyfills/custom-elements-es5-adapter.3342b468203af1a14ca005e80d14148f.js'));
+      polyfills.push(loadScript('./polyfills/custom-elements-es5-adapter.79106fd9b808b3bbd70d54b934850301.js'));
     }
 
     function loadFiles() {
-      System.import('./ddd5355b.js');
+      System.import('./b32b9b47.js');
     }
 
     if (polyfills.length) {
@@ -213,7 +216,7 @@
       polyfillsLoader();
     }
 
-    s.src = "./polyfills/core-js.7ff002eca84cf9d753513ecea8612061.js";
+    s.src = "./polyfills/core-js.6c1a5b5cc5591f393558821fadc240f3.js";
     s.onload = onLoaded;
 
     s.onerror = function () {
