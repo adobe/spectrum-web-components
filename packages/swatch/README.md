@@ -180,7 +180,7 @@ The `color` attribute/property determines the color value that the `<sp-swatch>`
 <sp-swatch-group>
     <sp-swatch color="rgb(255 0 0 / 0.7)"></sp-swatch>
     <sp-swatch color="orange"></sp-swatch>
-    <sp-swatch color="var(--spectrum-global-color-magenta-500)"></sp-swatch>
+    <sp-swatch color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 
@@ -192,10 +192,7 @@ The `disabled` attribute/property determines prevents interaction on the `<sp-sw
 <sp-swatch-group>
     <sp-swatch disabled color="rgb(255 0 0 / 0.7)"></sp-swatch>
     <sp-swatch disabled color="orange"></sp-swatch>
-    <sp-swatch
-        disabled
-        color="var(--spectrum-global-color-magenta-500)"
-    ></sp-swatch>
+    <sp-swatch disabled color="var(--spectrum-magenta-500)"></sp-swatch>
 </sp-swatch-group>
 ```
 

@@ -84,7 +84,7 @@ import { Thumbnail } from '@spectrum-web-components/thumbnail';
 When `focused` or `selected` the `sp-thumbnail` element will be displayed as follows:
 
 ```html
-<div style="display: flex; gap: var(--spectrum-global-dimension-size-100);">
+<div style="display: flex; gap: var(--spectrum-spacing-100);">
     <sp-thumbnail focused>
         <img src="https://place.dog/100/100" alt="Demo Image" />
     </sp-thumbnail>
@@ -99,7 +99,7 @@ When `focused` or `selected` the `sp-thumbnail` element will be displayed as fol
 By default, an `sp-thumbnail` will ensure that the entirety of the content that it respresents is visible by letterboxing that content with a checkerboard background when its aspect ratio is not square.
 
 ```html
-<div style="display: flex; gap: var(--spectrum-global-dimension-size-100);">
+<div style="display: flex; gap: var(--spectrum-spacing-100);">
     <sp-thumbnail>
         <img src="https://place.dog/300/400" alt="Eiffel Tower at night" />
     </sp-thumbnail>
@@ -116,7 +116,7 @@ By default, an `sp-thumbnail` will ensure that the entirety of the content that 
 The `background` attribute takes a string value of the CSS "background" property in order to customize the letterboxing.
 
 ```html
-<div style="display: flex; gap: var(--spectrum-global-dimension-size-100);">
+<div style="display: flex; gap: var(--spectrum-spacing-100);">
     <sp-thumbnail background="red">
         <img src="https://place.dog/300/400" alt="Eiffel Tower at night" />
     </sp-thumbnail>
@@ -133,7 +133,7 @@ The `background` attribute takes a string value of the CSS "background" property
 The `cover` attribute will cause the content to fill the space provided by the `sp-thumbnail` element:
 
 ```html
-<div style="display: flex; gap: var(--spectrum-global-dimension-size-100);">
+<div style="display: flex; gap: var(--spectrum-spacing-100);">
     <sp-thumbnail cover>
         <img src="https://place.dog/300/400" alt="Eiffel Tower at night" />
     </sp-thumbnail>

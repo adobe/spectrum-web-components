@@ -41,6 +41,6 @@ import { ColorHandle } from '@spectrum-web-components/color-handle';
 When the `<sp-color-handle>` uses the `open` property, the `<sp-color-loupe>` component can be used above the handle to show the selected color that would otherwise be covered by a mouse, stylus, or finger on the down/touch state. This can be customized to appear only on finger-input, or always appear regardless of input type.
 
 ```html
-<div style="height: var(--spectrum-global-dimension-size-900)"></div>
+<div style="height: 72px"></div>
 <sp-color-handle open></sp-color-handle>
 ```

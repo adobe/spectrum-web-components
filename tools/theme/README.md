@@ -107,7 +107,7 @@ An `<sp-theme>` element expects a value for each of its `color` and `scale` attr
     theme="spectrum"
     color="light"
     scale="medium"
-    style="background-color: var(--spectrum-global-color-gray-100)"
+    style="background-color: var(--spectrum-gray-100)"
 >
     <sp-button onclick="spAlert(this, 'Themed <sp-button> clicked!')">
         Click me!
@@ -182,8 +182,8 @@ When bundling your application, be sure to consult the documentation of your bun
     #example {
         max-width: 500px;
         padding: 3em;
-        background-color: var(--spectrum-global-color-gray-100);
-        color: var(--spectrum-global-color-gray-800);
+        background-color: var(--spectrum-gray-100);
+        color: var(--spectrum-gray-800);
     }
 
     #buttons {
@@ -206,8 +206,8 @@ When bundling your application, be sure to consult the documentation of your bun
     #example {
         max-width: 500px;
         padding: 3em;
-        background-color: var(--spectrum-global-color-gray-100);
-        color: var(--spectrum-global-color-gray-800);
+        background-color: var(--spectrum-gray-100);
+        color: var(--spectrum-gray-800);
     }
 
     #buttons {
@@ -232,8 +232,8 @@ The large scale of `<sp-theme>` will switch to using Spectrum's larger mobile [P
     #example {
         max-width: 500px;
         padding: 1em;
-        background-color: var(--spectrum-global-color-gray-100);
-        color: var(--spectrum-global-color-gray-800);
+        background-color: var(--spectrum-gray-100);
+        color: var(--spectrum-gray-800);
     }
 
     #buttons {
@@ -272,15 +272,15 @@ previewing or editing content that will be displayed in a light theme with a rig
     #outer {
         max-width: 500px;
         padding: 1em;
-        background-color: var(--spectrum-global-color-gray-100);
-        color: var(--spectrum-global-color-gray-800);
+        background-color: var(--spectrum-gray-100);
+        color: var(--spectrum-gray-800);
     }
 
     #inner {
         margin-top: 2em;
         padding: 1em;
-        background-color: var(--spectrum-global-color-gray-100);
-        color: var(--spectrum-global-color-gray-800);
+        background-color: var(--spectrum-gray-100);
+        color: var(--spectrum-gray-800);
     }
 
     #buttons {

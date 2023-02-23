@@ -1,6 +1,6 @@
 ## Description
 
-Spectrum Web Components are a [`LitElement`](https://lit-element.polymer-project.org)-powered web component library of patterns built on top of the [Spectrum CSS](https://opensource.adobe.com/spectrum-css) specification. Styles for these components are made available (and, in some cases, customizable) via CSS Custom Properties, e.g. `var(--spectrum-global-color-static-black)`. In this package, you will find the CSS Custom Properties that power the various color and size themes defined by Spectrum CSS.
+Spectrum Web Components are a [`LitElement`](https://lit-element.polymer-project.org)-powered web component library of patterns built on top of the [Spectrum CSS](https://opensource.adobe.com/spectrum-css) specification. Styles for these components are made available (and, in some cases, customizable) via CSS Custom Properties, e.g. `var(--spectrum-black)`. In this package, you will find the CSS Custom Properties that power the various color and size themes defined by Spectrum CSS.
 
 The easiest way to consume these values is via the `<sp-theme>` element. However, in some cases, it can be useful to have direct access to the files outlining the CSS Custom Properties, on top of which the rest of the component system is built.
 

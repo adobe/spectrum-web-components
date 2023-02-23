@@ -468,9 +468,7 @@ The use of the `hold-affordance` attribute signifies that the `<sp-action-button
             <sp-icon-edit slot="icon"></sp-icon-edit>
         </sp-action-button>
         <sp-popover slot="longpress-content" dialog tip>
-            <p
-                style="color: var(--spectrum-body-m-text-color,var(--spectrum-alias-text-color));"
-            >
+            <p style="color: var(--spectrum-neutral-content-color-default);">
                 This content is triggered by the "longpress" interaction.
             </p>
         </sp-popover>
@@ -481,9 +479,7 @@ The use of the `hold-affordance` attribute signifies that the `<sp-action-button
             Show Longpress Content
         </sp-action-button>
         <sp-popover slot="longpress-content" dialog tip>
-            <p
-                style="color: var(--spectrum-body-m-text-color,var(--spectrum-alias-text-color));"
-            >
+            <p style="color: var(--spectrum-neutral-content-color-default);">
                 This content is triggered by the "longpress" interaction.
             </p>
         </sp-popover>
@@ -495,9 +491,7 @@ The use of the `hold-affordance` attribute signifies that the `<sp-action-button
             Extended Content with Longpress
         </sp-action-button>
         <sp-popover slot="longpress-content" dialog tip>
-            <p
-                style="color: var(--spectrum-body-m-text-color,var(--spectrum-alias-text-color));"
-            >
+            <p style="color: var(--spectrum-neutral-content-color-default);">
                 This content is triggered by the "longpress" interaction.
             </p>
         </sp-popover>
