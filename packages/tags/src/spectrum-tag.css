@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-avatar-opacity-disabled: 0.3; /* .spectrum-Tag */
+    --spectrum-avatar-opacity-disabled: 0.3;
     --spectrum-tag-animation-duration: var(--spectrum-animation-duration-100);
     --spectrum-tag-border-width: var(--spectrum-border-width-100);
     --spectrum-tag-focus-ring-thickness: var(
@@ -128,9 +128,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='s']) {
-    --spectrum-tag-height: var(
-        --spectrum-component-height-75
-    ); /* .spectrum-Tag--sizeS */
+    --spectrum-tag-height: var(--spectrum-component-height-75);
     --spectrum-tag-font-size: var(--spectrum-font-size-75);
     --spectrum-tag-icon-size: var(--spectrum-workflow-icon-size-75);
     --spectrum-tag-clear-button-spacing-inline-start: var(
@@ -168,9 +166,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='m']) {
-    --spectrum-tag-height: var(
-        --spectrum-component-height-100
-    ); /* .spectrum-Tag--sizeM */
+    --spectrum-tag-height: var(--spectrum-component-height-100);
     --spectrum-tag-font-size: var(--spectrum-font-size-100);
     --spectrum-tag-icon-size: var(--spectrum-workflow-icon-size-100);
     --spectrum-tag-clear-button-spacing-inline-start: var(
@@ -210,9 +206,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='l']) {
-    --spectrum-tag-height: var(
-        --spectrum-component-height-200
-    ); /* .spectrum-Tag--sizeL */
+    --spectrum-tag-height: var(--spectrum-component-height-200);
     --spectrum-tag-font-size: var(--spectrum-font-size-200);
     --spectrum-tag-icon-size: var(--spectrum-workflow-icon-size-200);
     --spectrum-tag-clear-button-spacing-inline-start: var(
@@ -261,7 +255,7 @@ governing permissions and limitations under the License.
     border-color: var(
         --highcontrast-tag-border-color,
         var(--mod-tag-border-color, var(--spectrum-tag-border-color))
-    ); /* .spectrum-Tag */
+    );
     border-radius: var(
         --mod-tag-corner-radius,
         var(--spectrum-tag-corner-radius)
@@ -313,10 +307,7 @@ governing permissions and limitations under the License.
     vertical-align: bottom;
 }
 ::slotted([slot='icon']) {
-    block-size: var(
-        --mod-tag-icon-size,
-        var(--spectrum-tag-icon-size)
-    ); /* .spectrum-Tag .spectrum-Tags-itemIcon */
+    block-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
     inline-size: var(--mod-tag-icon-size, var(--spectrum-tag-icon-size));
     margin-block-end: calc(
         var(
@@ -347,7 +338,7 @@ governing permissions and limitations under the License.
                 --mod-tag-avatar-spacing-block-start,
                 var(--spectrum-tag-avatar-spacing-block-start)
             ) - var(--mod-tag-border-width, var(--spectrum-tag-border-width))
-    ); /* .spectrum-Tag .spectrum-Avatar */
+    );
     margin-inline-end: var(
         --mod-tag-avatar-spacing-inline-end,
         var(--spectrum-tag-avatar-spacing-inline-end)
@@ -356,8 +347,8 @@ governing permissions and limitations under the License.
 .clear-button {
     --spectrum-clearbutton-fill-size: fit-content;
     --spectrum-clearbutton-fill-background-color: transparent;
-    box-sizing: border-box; /* .spectrum-Tag .spectrum-Tag-clearButton */
-    color: currentcolor;
+    box-sizing: border-box;
+    color: currentColor;
     margin-inline-end: calc(
         var(
                 --mod-tag-clear-button-spacing-inline-end,
@@ -391,7 +382,7 @@ governing permissions and limitations under the License.
     background-color: var(
         --mod-clearbutton-fill-background-color,
         var(--spectrum-clearbutton-fill-background-color)
-    ); /* .spectrum-Tag .spectrum-Tag-clearButton .spectrum-ClearButton-fill */
+    );
     block-size: var(
         --mod-clearbutton-fill-size,
         var(--spectrum-clearbutton-fill-size)
@@ -402,10 +393,10 @@ governing permissions and limitations under the License.
     );
 }
 .label {
-    block-size: 100%; /* .spectrum-Tag .spectrum-Tags-itemLabel */
+    block-size: 100%;
     box-sizing: border-box;
     cursor: default;
-    flex: 1 1 auto;
+    flex: auto;
     font-size: var(--mod-tag-font-size, var(--spectrum-tag-font-size));
     font-weight: var(
         --mod-tag-label-font-weight,
@@ -445,7 +436,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-hover,
             var(--spectrum-tag-border-color-hover)
         )
-    ); /* .spectrum-Tag:hover */
+    );
     color: var(
         --highcontrast-tag-content-color-hover,
         var(
@@ -468,7 +459,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-active,
             var(--spectrum-tag-border-color-active)
         )
-    ); /* .spectrum-Tag:active */
+    );
     color: var(
         --highcontrast-tag-content-color-active,
         var(
@@ -478,7 +469,7 @@ governing permissions and limitations under the License.
     );
 }
 :host(.focus-visible),
-:host(.is-focused) {
+:host([focused]) {
     background-color: var(
         --highcontrast-tag-background-color-focus,
         var(
@@ -492,8 +483,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-focus,
             var(--spectrum-tag-border-color-focus)
         )
-    ); /* .spectrum-Tag:focus-visible,
-   * .spectrum-Tag.is-focused */
+    );
     color: var(
         --highcontrast-tag-content-color-focus,
         var(
@@ -502,8 +492,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(.is-focused),
-:host(:focus-visible) {
+:host(:focus-visible),
+:host([focused]) {
     background-color: var(
         --highcontrast-tag-background-color-focus,
         var(
@@ -517,8 +507,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-focus,
             var(--spectrum-tag-border-color-focus)
         )
-    ); /* .spectrum-Tag:focus-visible,
-   * .spectrum-Tag.is-focused */
+    );
     color: var(
         --highcontrast-tag-content-color-focus,
         var(
@@ -528,7 +517,7 @@ governing permissions and limitations under the License.
     );
 }
 :host(.focus-visible):after,
-:host(.is-focused):after {
+:host([focused]):after {
     block-size: calc(
         100% + var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) *
             2 + var(--mod-tag-border-width, var(--spectrum-tag-border-width)) *
@@ -548,16 +537,14 @@ governing permissions and limitations under the License.
         --mod-tag-focus-ring-thickness,
         var(--spectrum-tag-focus-ring-thickness)
     );
-    bottom: 0;
-    content: ''; /* .spectrum-Tag:focus-visible:after,
-   * .spectrum-Tag.is-focused::after */
+    content: '';
     display: inline-block;
     inline-size: calc(
         100% + var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) *
             2 + var(--mod-tag-border-width, var(--spectrum-tag-border-width)) *
             2
     );
-    left: 0;
+    inset: 0;
     margin: auto;
     margin-block-start: calc(
         (
@@ -592,11 +579,9 @@ governing permissions and limitations under the License.
             ) * -1
     );
     position: absolute;
-    right: 0;
-    top: 0;
 }
-:host(.is-focused):after,
-:host(:focus-visible):after {
+:host(:focus-visible):after,
+:host([focused]):after {
     block-size: calc(
         100% + var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) *
             2 + var(--mod-tag-border-width, var(--spectrum-tag-border-width)) *
@@ -616,16 +601,14 @@ governing permissions and limitations under the License.
         --mod-tag-focus-ring-thickness,
         var(--spectrum-tag-focus-ring-thickness)
     );
-    bottom: 0;
-    content: ''; /* .spectrum-Tag:focus-visible:after,
-   * .spectrum-Tag.is-focused::after */
+    content: '';
     display: inline-block;
     inline-size: calc(
         100% + var(--mod-tag-focus-ring-gap, var(--spectrum-tag-focus-ring-gap)) *
             2 + var(--mod-tag-border-width, var(--spectrum-tag-border-width)) *
             2
     );
-    left: 0;
+    inset: 0;
     margin: auto;
     margin-block-start: calc(
         (
@@ -660,8 +643,6 @@ governing permissions and limitations under the License.
             ) * -1
     );
     position: absolute;
-    right: 0;
-    top: 0;
 }
 :host([selected]) {
     background-color: var(
@@ -677,7 +658,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-selected,
             var(--spectrum-tag-border-color-selected)
         )
-    ); /* .spectrum-Tag.is-selected */
+    );
     color: var(
         --highcontrast-tag-content-color-selected,
         var(
@@ -700,7 +681,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-selected-hover,
             var(--spectrum-tag-border-color-selected-hover)
         )
-    ); /* .spectrum-Tag.is-selected:hover */
+    );
 }
 :host([selected]:active) {
     background-color: var(
@@ -716,10 +697,10 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-selected-active,
             var(--spectrum-tag-border-color-selected-active)
         )
-    ); /* .spectrum-Tag.is-selected:active */
+    );
 }
 :host([selected].focus-visible),
-:host([selected].is-focused) {
+:host([selected][focused]) {
     background-color: var(
         --highcontrast-tag-background-color-selected-focus,
         var(
@@ -733,11 +714,10 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-selected-focus,
             var(--spectrum-tag-border-color-selected-focus)
         )
-    ); /* .spectrum-Tag.is-selected:focus-visible,
-   * .spectrum-Tag.is-selected.is-focused */
+    );
 }
-:host([selected].is-focused),
-:host([selected]:focus-visible) {
+:host([selected]:focus-visible),
+:host([selected][focused]) {
     background-color: var(
         --highcontrast-tag-background-color-selected-focus,
         var(
@@ -751,8 +731,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-selected-focus,
             var(--spectrum-tag-border-color-selected-focus)
         )
-    ); /* .spectrum-Tag.is-selected:focus-visible,
-   * .spectrum-Tag.is-selected.is-focused */
+    );
 }
 :host([invalid]) {
     border-color: var(
@@ -761,7 +740,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-invalid,
             var(--spectrum-tag-border-color-invalid)
         )
-    ); /* .spectrum-Tag.is-invalid */
+    );
     color: var(
         --highcontrast-tag-content-color-invalid,
         var(
@@ -777,7 +756,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-invalid-hover,
             var(--spectrum-tag-border-color-invalid-hover)
         )
-    ); /* .spectrum-Tag.is-invalid:hover */
+    );
     color: var(
         --highcontrast-tag-content-color-invalid-hover,
         var(
@@ -793,7 +772,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-invalid-active,
             var(--spectrum-tag-border-color-invalid-active)
         )
-    ); /* .spectrum-Tag.is-invalid:active */
+    );
     color: var(
         --highcontrast-tag-content-color-invalid-active,
         var(
@@ -803,15 +782,14 @@ governing permissions and limitations under the License.
     );
 }
 :host([invalid].focus-visible),
-:host([invalid].is-focused) {
+:host([invalid][focused]) {
     border-color: var(
         --highcontrast-tag-border-color-invalid-focus,
         var(
             --mod-tag-border-color-invalid-focus,
             var(--spectrum-tag-border-color-invalid-focus)
         )
-    ); /* .spectrum-Tag.is-invalid:focus-visible,
-   * .spectrum-Tag.is-invalid.is-focused */
+    );
     color: var(
         --highcontrast-tag-content-color-invalid-focus,
         var(
@@ -820,16 +798,15 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([invalid].is-focused),
-:host([invalid]:focus-visible) {
+:host([invalid]:focus-visible),
+:host([invalid][focused]) {
     border-color: var(
         --highcontrast-tag-border-color-invalid-focus,
         var(
             --mod-tag-border-color-invalid-focus,
             var(--spectrum-tag-border-color-invalid-focus)
         )
-    ); /* .spectrum-Tag.is-invalid:focus-visible,
-   * .spectrum-Tag.is-invalid.is-focused */
+    );
     color: var(
         --highcontrast-tag-content-color-invalid-focus,
         var(
@@ -852,7 +829,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-invalid-selected,
             var(--spectrum-tag-border-color-invalid-selected)
         )
-    ); /* .spectrum-Tag.is-invalid.is-selected */
+    );
     color: var(
         --highcontrast-tag-content-color-invalid-selected,
         var(
@@ -875,7 +852,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-invalid-selected-hover,
             var(--spectrum-tag-border-color-invalid-selected-hover)
         )
-    ); /* .spectrum-Tag.is-invalid.is-selected:hover */
+    );
 }
 :host([invalid][selected]:active) {
     background-color: var(
@@ -891,10 +868,10 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-invalid-selected-active,
             var(--spectrum-tag-border-color-invalid-selected-active)
         )
-    ); /* .spectrum-Tag.is-invalid.is-selected:active */
+    );
 }
 :host([invalid][selected].focus-visible),
-:host([invalid][selected].is-focused) {
+:host([invalid][selected][focused]) {
     background-color: var(
         --highcontrast-tag-background-color-invalid-selected-focus,
         var(
@@ -908,11 +885,10 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-invalid-selected-focus,
             var(--spectrum-tag-border-color-invalid-selected-focus)
         )
-    ); /* .spectrum-Tag.is-invalid.is-selected:focus-visible,
-   * .spectrum-Tag.is-invalid.is-selected.is-focused */
+    );
 }
-:host([invalid][selected].is-focused),
-:host([invalid][selected]:focus-visible) {
+:host([invalid][selected]:focus-visible),
+:host([invalid][selected][focused]) {
     background-color: var(
         --highcontrast-tag-background-color-invalid-selected-focus,
         var(
@@ -926,10 +902,9 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-invalid-selected-focus,
             var(--spectrum-tag-border-color-invalid-selected-focus)
         )
-    ); /* .spectrum-Tag.is-invalid.is-selected:focus-visible,
-   * .spectrum-Tag.is-invalid.is-selected.is-focused */
+    );
 }
-:host(.is-emphasized) {
+:host([emphasized]) {
     background-color: var(
         --highcontrast-tag-background-color-emphasized,
         var(
@@ -943,7 +918,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-emphasized,
             var(--spectrum-tag-border-color-emphasized)
         )
-    ); /* .spectrum-Tag.is-emphasized */
+    );
     color: var(
         --highcontrast-tag-content-color-emphasized,
         var(
@@ -952,7 +927,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(.is-emphasized:hover) {
+:host([emphasized]:hover) {
     background-color: var(
         --highcontrast-tag-background-color-emphasized-hover,
         var(
@@ -966,9 +941,9 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-emphasized-hover,
             var(--spectrum-tag-border-color-emphasized-hover)
         )
-    ); /* .spectrum-Tag.is-emphasized:hover */
+    );
 }
-:host(.is-emphasized:active) {
+:host([emphasized]:active) {
     background-color: var(
         --highcontrast-tag-background-color-emphasized-active,
         var(
@@ -982,10 +957,10 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-emphasized-active,
             var(--spectrum-tag-border-color-emphasized-active)
         )
-    ); /* .spectrum-Tag.is-emphasized:active */
+    );
 }
-:host(.is-emphasized.focus-visible),
-:host(.is-emphasized.is-focused) {
+:host([emphasized].focus-visible),
+:host([emphasized][focused]) {
     background-color: var(
         --highcontrast-tag-background-color-emphasized-focus,
         var(
@@ -999,11 +974,10 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-emphasized-focus,
             var(--spectrum-tag-border-color-emphasized-focus)
         )
-    ); /* .spectrum-Tag.is-emphasized:focus-visible,
-   * .spectrum-Tag.is-emphasized.is-focused */
+    );
 }
-:host(.is-emphasized.is-focused),
-:host(.is-emphasized:focus-visible) {
+:host([emphasized]:focus-visible),
+:host([emphasized][focused]) {
     background-color: var(
         --highcontrast-tag-background-color-emphasized-focus,
         var(
@@ -1017,8 +991,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-emphasized-focus,
             var(--spectrum-tag-border-color-emphasized-focus)
         )
-    ); /* .spectrum-Tag.is-emphasized:focus-visible,
-   * .spectrum-Tag.is-emphasized.is-focused */
+    );
 }
 :host([disabled]) {
     background-color: var(
@@ -1034,7 +1007,7 @@ governing permissions and limitations under the License.
             --mod-tag-border-color-disabled,
             var(--spectrum-tag-border-color-disabled)
         )
-    ); /* .spectrum-Tag.is-disabled */
+    );
     color: var(
         --highcontrast-tag-content-color-disabled,
         var(
@@ -1048,7 +1021,7 @@ governing permissions and limitations under the License.
     opacity: var(
         --mod-avatar-opacity-disabled,
         var(--spectrum-avatar-opacity-disabled)
-    ); /* .spectrum-Tag.is-disabled .spectrum-Avatar */
+    );
 }
 @media (forced-colors: active) {
     :host {
@@ -1103,7 +1076,7 @@ governing permissions and limitations under the License.
         --highcontrast-tag-background-color-invalid-selected-focus: Highlight;
         --highcontrast-tag-content-color-invalid-selected: HighlightText;
     }
-    :host(.is-emphasized) {
+    :host([emphasized]) {
         --highcontrast-tag-border-color-emphasized: Highlight;
         --highcontrast-tag-border-color-emphasized-hover: Highlight;
         --highcontrast-tag-border-color-emphasized-active: Highlight;
@@ -1116,9 +1089,7 @@ governing permissions and limitations under the License.
     }
 }
 :host {
-    --spectrum-tag-border-color: var(
-        --system-spectrum-tag-border-color
-    ); /* .spectrum-Tag */
+    --spectrum-tag-border-color: var(--system-spectrum-tag-border-color);
     --spectrum-tag-border-color-hover: var(
         --system-spectrum-tag-border-color-hover
     );

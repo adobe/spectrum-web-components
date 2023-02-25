@@ -17,6 +17,8 @@ import fg from 'fast-glob';
 const excludes = [
     // internal config file
     './src/spectrum-config.js',
+    './src/spectrum-config.v2.js',
+    './src/~spectrum-config.v2.js',
     // partial only asset the is used to build other exports
     /spectrum-(?![i][c][o][n][-]).+\.css/,
     /\.css$/,

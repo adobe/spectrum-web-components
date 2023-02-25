@@ -72,18 +72,12 @@ governing permissions and limitations under the License.
         );
     }
 }
-:host([dir='ltr']) .spectrum-CoachMarkPopover-footer {
-    text-align: right; /* [dir=ltr] .spectrum-CoachMarkPopover-footer */
-}
-:host([dir='rtl']) .spectrum-CoachMarkPopover-footer {
-    text-align: left; /* [dir=rtl] .spectrum-CoachMarkPopover-footer */
-}
 :host {
     margin: var(
         --spectrum-coachmark-indicator-gap,
         var(--spectrum-global-dimension-size-75)
     );
-    position: relative; /* .spectrum-CoachMarkIndicator */
+    position: relative;
 }
 .ring {
     border-radius: 50%;
@@ -92,7 +86,7 @@ governing permissions and limitations under the License.
         --spectrum-coachmark-indicator-ring-border-size,
         var(--spectrum-global-dimension-static-size-25)
     );
-    display: block; /* .spectrum-CoachMarkIndicator-ring */
+    display: block;
     position: absolute;
 }
 .ring:nth-child(2) {
@@ -102,7 +96,7 @@ governing permissions and limitations under the License.
                 --spectrum-coachmark-animation-indicator-ring-center-delay-multiple,
                 -0.66
             )
-    ); /* .spectrum-CoachMarkIndicator-ring:nth-child(2) */
+    );
 }
 .ring:nth-child(3) {
     animation-delay: calc(
@@ -111,7 +105,7 @@ governing permissions and limitations under the License.
                 --spectrum-coachmark-animation-indicator-ring-outer-delay-multiple,
                 -1
             )
-    ); /* .spectrum-CoachMarkIndicator-ring:nth-child(3) */
+    );
 }
 :host {
     min-height: calc(
@@ -125,7 +119,7 @@ governing permissions and limitations under the License.
                 --spectrum-coachmark-indicator-ring-diameter,
                 var(--spectrum-global-dimension-size-200)
             ) * 3
-    ); /* .spectrum-CoachMarkIndicator */
+    );
 }
 :host([dir='ltr']) .ring {
     left: calc(
@@ -133,7 +127,7 @@ governing permissions and limitations under the License.
                 --spectrum-coachmark-indicator-ring-diameter,
                 var(--spectrum-global-dimension-size-200)
             ) * 0.75
-    ); /* [dir=ltr] .spectrum-CoachMarkIndicator-ring */
+    );
 }
 :host([dir='rtl']) .ring {
     right: calc(
@@ -141,7 +135,7 @@ governing permissions and limitations under the License.
                 --spectrum-coachmark-indicator-ring-diameter,
                 var(--spectrum-global-dimension-size-200)
             ) * 0.75
-    ); /* [dir=rtl] .spectrum-CoachMarkIndicator-ring */
+    );
 }
 .ring {
     animation: pulse
@@ -156,7 +150,7 @@ governing permissions and limitations under the License.
                 --spectrum-coachmark-indicator-ring-diameter,
                 var(--spectrum-global-dimension-size-200)
             ) * 0.75
-    ); /* .spectrum-CoachMarkIndicator-ring */
+    );
     width: var(
         --spectrum-coachmark-indicator-ring-diameter,
         var(--spectrum-global-dimension-size-200)
@@ -169,7 +163,7 @@ governing permissions and limitations under the License.
                 --spectrum-coachmark-animation-indicator-ring-inner-delay-multiple,
                 -0.5
             )
-    ); /* .spectrum-CoachMarkIndicator-ring:nth-child(1) */
+    );
 }
 :host([quiet]) {
     min-height: calc(
@@ -183,7 +177,7 @@ governing permissions and limitations under the License.
                 --spectrum-coachmark-quiet-indicator-ring-diameter,
                 var(--spectrum-global-dimension-size-100)
             ) * 2.75
-    ); /* .spectrum-CoachMarkIndicator--quiet */
+    );
 }
 :host([dir='ltr'][quiet]) .ring {
     left: calc(
@@ -191,7 +185,7 @@ governing permissions and limitations under the License.
                 --spectrum-coachmark-quiet-indicator-ring-diameter,
                 var(--spectrum-global-dimension-size-100)
             ) * 0.75
-    ); /* [dir=ltr] .spectrum-CoachMarkIndicator--quiet .spectrum-CoachMarkIndicator-ring */
+    );
 }
 :host([dir='rtl'][quiet]) .ring {
     right: calc(
@@ -199,7 +193,7 @@ governing permissions and limitations under the License.
                 --spectrum-coachmark-quiet-indicator-ring-diameter,
                 var(--spectrum-global-dimension-size-100)
             ) * 0.75
-    ); /* [dir=rtl] .spectrum-CoachMarkIndicator--quiet .spectrum-CoachMarkIndicator-ring */
+    );
 }
 :host([quiet]) .ring {
     animation: pulse--quiet
@@ -214,7 +208,7 @@ governing permissions and limitations under the License.
                 --spectrum-coachmark-quiet-indicator-ring-diameter,
                 var(--spectrum-global-dimension-size-100)
             ) * 0.75
-    ); /* .spectrum-CoachMarkIndicator--quiet .spectrum-CoachMarkIndicator-ring */
+    );
     width: var(
         --spectrum-coachmark-quiet-indicator-ring-diameter,
         var(--spectrum-global-dimension-size-100)
@@ -227,23 +221,23 @@ governing permissions and limitations under the License.
                 --spectrum-coachmark-quiet-animation-indicator-ring-inner-delay-multiple,
                 -0.33
             )
-    ); /* .spectrum-CoachMarkIndicator--quiet .spectrum-CoachMarkIndicator-ring:nth-child(1) */
+    );
 }
 .ring {
     border-color: var(
         --spectrum-coachmark-indicator-ring-default-color,
         var(--spectrum-alias-focus-color)
-    ); /* .spectrum-CoachMarkIndicator-ring */
+    );
 }
 :host([variant='light']) .ring {
     border-color: var(
         --spectrum-coachmark-indicator-ring-low-contrast-color,
         var(--spectrum-global-color-gray-50)
-    ); /* .spectrum-CoachMarkIndicator--light .spectrum-CoachMarkIndicator-ring */
+    );
 }
 :host([variant='dark']) .ring {
     border-color: var(
         --spectrum-coachmark-indicator-ring-high-contrast-color,
         var(--spectrum-global-color-gray-900)
-    ); /* .spectrum-CoachMarkIndicator--dark .spectrum-CoachMarkIndicator-ring */
+    );
 }

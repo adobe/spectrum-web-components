@@ -1,0 +1,25 @@
+// @ts-check
+
+import {
+    converterFor,
+} from '../../../tasks/process-spectrum-utils.js';
+
+const converter = converterFor('spectrum-{{className name}}');
+
+/**
+ * @type { import('../../../tasks/spectrum-css-converter').SpectrumCSSConverter }
+ */
+const config = {
+    conversions: [
+        {
+            inPackage: '@spectrum-css/{{spectrum}}',
+            outPackage: '{{ name }}',
+            fileName: '{{ name }}',
+            components: [
+                converter.classToHost(),
+            ],
+        },
+    ],
+};
+
+export default config;

@@ -122,7 +122,8 @@ export const NonSemantic = (): TemplateResult => {
         </sp-badge>
         <sp-badge
             variant="yellow"
-            style="--mod-badge-background-color-default: var(--spectrum-alias-background-color-yellow-default); --mod-badge-label-icon-color-white: var(--spectrum-global-color-static-black);"
+            static="black"
+            style="--mod-badge-background-color-default: var(--spectrum-alias-background-color-yellow-default)"
         >
             Yellow
         </sp-badge>

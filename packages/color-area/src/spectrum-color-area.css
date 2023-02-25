@@ -15,7 +15,7 @@ governing permissions and limitations under the License.
     height: 100%;
     left: 0;
     margin: 0;
-    opacity: 0; /* .spectrum-ColorArea-slider */
+    opacity: 0;
     pointer-events: none;
     position: absolute;
     top: 0;
@@ -46,7 +46,7 @@ governing permissions and limitations under the License.
                 --spectrum-colorhandle-size,
                 var(--spectrum-global-dimension-size-200)
             ) * 2
-    ); /* .spectrum-ColorArea.is-focused .spectrum-ColorArea-handle */
+    );
 }
 :host {
     border-radius: var(
@@ -59,7 +59,7 @@ governing permissions and limitations under the License.
         --spectrum-colorarea-default-height,
         var(--spectrum-global-dimension-size-2400)
     );
-    position: relative; /* .spectrum-ColorArea */
+    position: relative;
     -webkit-user-select: none;
     user-select: none;
     width: var(
@@ -68,26 +68,23 @@ governing permissions and limitations under the License.
     );
 }
 :host([focused]) {
-    z-index: 2; /* .spectrum-ColorArea.is-focused */
+    z-index: 2;
 }
 :host([disabled]) {
-    pointer-events: none; /* .spectrum-ColorArea.is-disabled */
+    pointer-events: none;
 }
 :host:before {
     border-radius: var(
         --spectrum-colorarea-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
-    bottom: 0;
-    content: ''; /* .spectrum-ColorArea:before */
-    left: 0;
+    content: '';
+    inset: 0;
     position: absolute;
-    right: 0;
-    top: 0;
     z-index: 1;
 }
 .handle {
-    left: 0; /* .spectrum-ColorArea-handle */
+    left: 0;
     top: 0;
 }
 .gradient {
@@ -96,7 +93,7 @@ governing permissions and limitations under the License.
         var(--spectrum-alias-border-radius-regular)
     );
     height: 100%;
-    width: 100%; /* .spectrum-ColorArea-gradient */
+    width: 100%;
 }
 :host:before {
     box-shadow: inset 0 0 0
@@ -107,16 +104,16 @@ governing permissions and limitations under the License.
         var(
             --spectrum-colorarea-border-color,
             var(--spectrum-alias-border-color-translucent)
-        ); /* .spectrum-ColorArea:before */
+        );
 }
 .gradient {
-    forced-color-adjust: none; /* .spectrum-ColorArea-gradient */
+    forced-color-adjust: none;
 }
 :host([disabled]) {
     background: var(
         --spectrum-colorarea-fill-color-disabled,
         var(--spectrum-alias-track-color-disabled)
-    ); /* .spectrum-ColorArea.is-disabled */
+    );
 }
 :host([disabled]):before {
     box-shadow: inset 0 0 0
@@ -127,10 +124,10 @@ governing permissions and limitations under the License.
         var(
             --spectrum-colorarea-border-color-disabled,
             var(--spectrum-alias-track-color-disabled)
-        ); /* .spectrum-ColorArea.is-disabled:before */
+        );
 }
 :host([disabled]) .gradient {
-    display: none; /* .spectrum-ColorArea.is-disabled .spectrum-ColorArea-gradient */
+    display: none;
 }
 @media (forced-colors: active) {
     :host {

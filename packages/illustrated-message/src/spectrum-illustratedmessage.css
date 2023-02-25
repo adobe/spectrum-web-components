@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-illustratedmessage-description-max-width: 500px; /* .spectrum-IllustratedMessage */
+    --spectrum-illustratedmessage-description-max-width: 500px;
     --spectrum-illustratedmessage-heading-max-width: 500px;
     --spectrum-illustratedmessage-illustration-margin-bottom: 24px;
     --spectrum-illustratedmessage-heading-margin: 0;
@@ -22,20 +22,20 @@ governing permissions and limitations under the License.
     align-items: center;
     display: flex;
     flex-direction: column;
-    height: 100%; /* .spectrum-IllustratedMessage */
+    height: 100%;
     justify-content: center;
     text-align: center;
 }
 #illustration {
     margin-bottom: var(
         --spectrum-illustratedmessage-illustration-margin-bottom
-    ); /* .spectrum-IllustratedMessage-illustration */
+    );
 }
 #heading {
     color: var(
         --spectrum-illustratedmessage-heading-color,
         var(--spectrum-global-color-gray-800)
-    ); /* .spectrum-IllustratedMessage-heading */
+    );
     font-size: var(
         --spectrum-illustratedmessage-heading-font-size,
         var(--spectrum-alias-heading-m-text-size)
@@ -51,7 +51,7 @@ governing permissions and limitations under the License.
     color: var(
         --spectrum-illustratedmessage-description-color,
         var(--spectrum-global-color-gray-700)
-    ); /* .spectrum-IllustratedMessage-description */
+    );
     font-style: var(
         --spectrum-illustratedmessage-description-font-style,
         var(--spectrum-global-font-style-regular)
@@ -63,12 +63,10 @@ governing permissions and limitations under the License.
     font-style: var(
         --spectrum-illustratedmessage-description-font-style,
         var(--spectrum-global-font-style-regular)
-    ); /* .spectrum-IllustratedMessage--cta .spectrum-IllustratedMessage-description */
+    );
 }
 #illustration {
     fill: currentColor;
     stroke: currentColor;
-    color: var(
-        --spectrum-global-color-gray-500
-    ); /* .spectrum-IllustratedMessage-illustration */
+    color: var(--spectrum-global-color-gray-500);
 }
