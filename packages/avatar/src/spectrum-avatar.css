@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-avatar-color-opacity: 1; /* .spectrum-Avatar */
+    --spectrum-avatar-color-opacity: 1;
     --spectrum-avatar-inline-size: var(--spectrum-avatar-size-100);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-100);
     --spectrum-avatar-border-radius: var(--spectrum-avatar-block-size);
@@ -28,57 +28,39 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='50']) {
-    --spectrum-avatar-inline-size: var(
-        --spectrum-avatar-size-50
-    ); /* .spectrum-Avatar--size50 */
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-50);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-50);
 }
 :host([size='75']) {
-    --spectrum-avatar-inline-size: var(
-        --spectrum-avatar-size-75
-    ); /* .spectrum-Avatar--size75 */
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-75);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-75);
 }
 :host([size='100']) {
-    --spectrum-avatar-inline-size: var(
-        --spectrum-avatar-size-100
-    ); /* .spectrum-Avatar--size100 */
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-100);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-100);
 }
 :host([size='200']) {
-    --spectrum-avatar-inline-size: var(
-        --spectrum-avatar-size-200
-    ); /* .spectrum-Avatar--size200 */
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-200);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-200);
 }
 :host([size='300']) {
-    --spectrum-avatar-inline-size: var(
-        --spectrum-avatar-size-300
-    ); /* .spectrum-Avatar--size300 */
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-300);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-300);
 }
 :host([size='400']) {
-    --spectrum-avatar-inline-size: var(
-        --spectrum-avatar-size-400
-    ); /* .spectrum-Avatar--size400 */
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-400);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-400);
 }
 :host([size='500']) {
-    --spectrum-avatar-inline-size: var(
-        --spectrum-avatar-size-500
-    ); /* .spectrum-Avatar--size500 */
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-500);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-500);
 }
 :host([size='600']) {
-    --spectrum-avatar-inline-size: var(
-        --spectrum-avatar-size-600
-    ); /* .spectrum-Avatar--size600 */
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-600);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-600);
 }
 :host([size='700']) {
-    --spectrum-avatar-inline-size: var(
-        --spectrum-avatar-size-700
-    ); /* .spectrum-Avatar--size700 */
+    --spectrum-avatar-inline-size: var(--spectrum-avatar-size-700);
     --spectrum-avatar-block-size: var(--spectrum-avatar-size-700);
 }
 @media (forced-colors: active) {
@@ -95,7 +77,7 @@ governing permissions and limitations under the License.
         var(--spectrum-avatar-border-radius)
     );
     border-width: 0;
-    display: inline-block; /* .spectrum-Avatar */
+    display: inline-block;
     inline-size: var(
         --mod-avatar-inline-size,
         var(--spectrum-avatar-inline-size)
@@ -117,7 +99,7 @@ governing permissions and limitations under the License.
             --mod-avatar-color-opacity-disabled,
             var(--spectrum-avatar-color-opacity-disabled)
         )
-    ); /* .spectrum-Avatar.is-disabled */
+    );
 }
 :host(:not([disabled])) .link.focus-visible:after {
     block-size: calc(
@@ -175,7 +157,7 @@ governing permissions and limitations under the License.
                     )
             ) * -1
     );
-    pointer-events: none; /* .spectrum-Avatar:not(.is-disabled) .spectrum-Avatar-link:focus-visible:after */
+    pointer-events: none;
     position: absolute;
 }
 :host(:not([disabled])) .link:focus-visible:after {
@@ -234,12 +216,10 @@ governing permissions and limitations under the License.
                     )
             ) * -1
     );
-    pointer-events: none; /* .spectrum-Avatar:not(.is-disabled) .spectrum-Avatar-link:focus-visible:after */
+    pointer-events: none;
     position: absolute;
 }
 .link {
-    outline-color: transparent; /* .spectrum-Avatar-link */
-    outline-style: solid;
     outline: none;
 }
 .image {
@@ -251,5 +231,5 @@ governing permissions and limitations under the License.
     inline-size: var(
         --mod-avatar-inline-size,
         var(--spectrum-avatar-inline-size)
-    ); /* .spectrum-Avatar-image */
+    );
 }

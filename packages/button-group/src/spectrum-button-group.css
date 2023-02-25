@@ -12,37 +12,27 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-buttongroup-spacing-horizontal: var(
-        --spectrum-spacing-300
-    ); /* .spectrum-ButtonGroup */
+    --spectrum-buttongroup-spacing-horizontal: var(--spectrum-spacing-300);
     --spectrum-buttongroup-spacing-vertical: var(--spectrum-spacing-300);
 }
 :host([size='s']) {
-    --spectrum-buttongroup-spacing-horizontal: var(
-        --spectrum-spacing-200
-    ); /* .spectrum-ButtonGroup--sizeS */
+    --spectrum-buttongroup-spacing-horizontal: var(--spectrum-spacing-200);
     --spectrum-buttongroup-spacing-vertical: var(--spectrum-spacing-200);
 }
 :host([size='m']) {
-    --spectrum-buttongroup-spacing-horizontal: var(
-        --spectrum-spacing-300
-    ); /* .spectrum-ButtonGroup--sizeM */
+    --spectrum-buttongroup-spacing-horizontal: var(--spectrum-spacing-300);
     --spectrum-buttongroup-spacing-vertical: var(--spectrum-spacing-300);
 }
 :host([size='l']) {
-    --spectrum-buttongroup-spacing-horizontal: var(
-        --spectrum-spacing-300
-    ); /* .spectrum-ButtonGroup--sizeL */
+    --spectrum-buttongroup-spacing-horizontal: var(--spectrum-spacing-300);
     --spectrum-buttongroup-spacing-vertical: var(--spectrum-spacing-300);
 }
 :host([size='xl']) {
-    --spectrum-buttongroup-spacing-horizontal: var(
-        --spectrum-spacing-300
-    ); /* .spectrum-ButtonGroup--sizeXL */
+    --spectrum-buttongroup-spacing-horizontal: var(--spectrum-spacing-300);
     --spectrum-buttongroup-spacing-vertical: var(--spectrum-spacing-300);
 }
 :host {
-    display: flex; /* .spectrum-ButtonGroup */
+    display: flex;
     flex-wrap: wrap;
     gap: var(
         --mod-buttongroup-spacing-horizontal,
@@ -50,10 +40,10 @@ governing permissions and limitations under the License.
     );
 }
 ::slotted(*) {
-    flex-shrink: 0; /* .spectrum-ButtonGroup .spectrum-ButtonGroup-item */
+    flex-shrink: 0;
 }
 :host([vertical]) {
-    display: inline-flex; /* .spectrum-ButtonGroup--vertical */
+    display: inline-flex;
     flex-direction: column;
     gap: var(
         --mod-buttongroup-spacing-vertical,

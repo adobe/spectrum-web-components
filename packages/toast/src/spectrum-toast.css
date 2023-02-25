@@ -12,9 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-toast-font-weight: var(
-        --spectrum-font-weight-regular
-    ); /* .spectrum-Toast */
+    --spectrum-toast-font-weight: var(--spectrum-font-weight-regular);
     --spectrum-toast-font-size: var(--spectrum-font-size-100);
     --spectrum-toast-corner-radius: var(--spectrum-corner-radius-100);
     --spectrum-toast-block-size: var(--spectrum-toast-height);
@@ -83,7 +81,7 @@ governing permissions and limitations under the License.
         --mod-toast-corner-radius,
         var(--spectrum-toast-corner-radius)
     );
-    box-sizing: border-box; /* .spectrum-Toast */
+    box-sizing: border-box;
     color: var(
         --highcontrast-toast-background-color-default,
         var(
@@ -111,7 +109,7 @@ governing permissions and limitations under the License.
             --mod-toast-negative-background-color-default,
             var(--spectrum-toast-negative-background-color-default)
         )
-    ); /* .spectrum-Toast--negative */
+    );
     color: var(
         --highcontrast-toast-negative-background-color-default,
         var(
@@ -127,7 +125,7 @@ governing permissions and limitations under the License.
             --mod-toast-negative-background-color-default,
             var(--spectrum-toast-negative-background-color-default)
         )
-    ); /* .spectrum-Toast--negative .spectrum-Toast-closeButton:focus-visible:not(:active) */
+    );
 }
 :host([variant='negative']) .closeButton:focus-visible:not(:active) {
     color: var(
@@ -136,7 +134,7 @@ governing permissions and limitations under the License.
             --mod-toast-negative-background-color-default,
             var(--spectrum-toast-negative-background-color-default)
         )
-    ); /* .spectrum-Toast--negative .spectrum-Toast-closeButton:focus-visible:not(:active) */
+    );
 }
 :host([variant='info']) {
     background-color: var(
@@ -145,7 +143,7 @@ governing permissions and limitations under the License.
             --mod-toast-informative-background-color-default,
             var(--spectrum-toast-informative-background-color-default)
         )
-    ); /* .spectrum-Toast--info */
+    );
     color: var(
         --highcontrast-toast-informative-background-color-default,
         var(
@@ -161,7 +159,7 @@ governing permissions and limitations under the License.
             --mod-toast-informative-background-color-default,
             var(--spectrum-toast-informative-background-color-default)
         )
-    ); /* .spectrum-Toast--info .spectrum-Toast-closeButton:focus-visible:not(:active) */
+    );
 }
 :host([variant='info']) .closeButton:focus-visible:not(:active) {
     color: var(
@@ -170,7 +168,7 @@ governing permissions and limitations under the License.
             --mod-toast-informative-background-color-default,
             var(--spectrum-toast-informative-background-color-default)
         )
-    ); /* .spectrum-Toast--info .spectrum-Toast-closeButton:focus-visible:not(:active) */
+    );
 }
 :host([variant='positive']) {
     background-color: var(
@@ -179,7 +177,7 @@ governing permissions and limitations under the License.
             --mod-toast-positive-background-color-default,
             var(--spectrum-toast-positive-background-color-default)
         )
-    ); /* .spectrum-Toast--positive */
+    );
     color: var(
         --highcontrast-toast-positive-background-color-default,
         var(
@@ -195,7 +193,7 @@ governing permissions and limitations under the License.
             --mod-toast-positive-background-color-default,
             var(--spectrum-toast-positive-background-color-default)
         )
-    ); /* .spectrum-Toast--positive .spectrum-Toast-closeButton:focus-visible:not(:active) */
+    );
 }
 :host([variant='positive']) .closeButton:focus-visible:not(:active) {
     color: var(
@@ -204,11 +202,11 @@ governing permissions and limitations under the License.
             --mod-toast-positive-background-color-default,
             var(--spectrum-toast-positive-background-color-default)
         )
-    ); /* .spectrum-Toast--positive .spectrum-Toast-closeButton:focus-visible:not(:active) */
+    );
 }
 .type {
     flex-grow: 0;
-    flex-shrink: 0; /* .spectrum-Toast-typeIcon */
+    flex-shrink: 0;
     margin-block-start: var(
         --mod-toast-spacing-top-edge-to-icon,
         var(--spectrum-toast-spacing-top-edge-to-icon)
@@ -232,7 +230,7 @@ governing permissions and limitations under the License.
 .content {
     box-sizing: border-box;
     display: inline-block;
-    flex: 1 1 auto; /* .spectrum-Toast-content */
+    flex: auto;
     line-height: var(
         --mod-toast-line-height,
         var(--spectrum-toast-line-height)
@@ -270,9 +268,7 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-toast-line-height-cjk,
         var(--spectrum-toast-line-height-cjk)
-    ); /* .spectrum-Toast-content:lang(ja),
-   * .spectrum-Toast-content:lang(zh),
-   * .spectrum-Toast-content:lang(ko) */
+    );
 }
 .buttons {
     align-items: flex-start;
@@ -280,8 +276,8 @@ governing permissions and limitations under the License.
         --mod-toast-divider-color,
         var(--spectrum-toast-divider-color)
     );
-    display: flex; /* .spectrum-Toast-buttons */
-    flex: 0 0 auto;
+    display: flex;
+    flex: none;
     margin-block-end: var(
         --mod-toast-spacing-bottom-edge-to-divider,
         var(--spectrum-toast-spacing-bottom-edge-to-divider)
@@ -296,13 +292,13 @@ governing permissions and limitations under the License.
     );
 }
 .buttons .spectrum-CloseButton {
-    align-self: flex-start; /* .spectrum-Toast-buttons .spectrum-CloseButton */
+    align-self: flex-start;
 }
 .body {
     align-items: center;
     align-self: center;
-    display: flex; /* .spectrum-Toast-body */
-    flex: 1 1 auto;
+    display: flex;
+    flex: auto;
     flex-wrap: wrap;
     padding-block-end: var(
         --mod-toast-spacing-block-end,
@@ -317,13 +313,13 @@ governing permissions and limitations under the License.
     margin-inline-end: var(
         --mod-toast-spacing-text-and-action-button-to-divider,
         var(--spectrum-toast-spacing-text-and-action-button-to-divider)
-    ); /* .spectrum-Toast-body .spectrum-Button */
+    );
 }
 :host([dir='ltr']) .body ::slotted([slot='action']) {
-    margin-left: auto; /* [dir=ltr] .spectrum-Toast-body .spectrum-Button */
+    margin-left: auto;
 }
 :host([dir='rtl']) .body ::slotted([slot='action']) {
-    margin-right: auto; /* [dir=rtl] .spectrum-Toast-body .spectrum-Button */
+    margin-right: auto;
     margin-inline-end: var(
         --mod-toast-spacing-text-and-action-button-to-divider,
         var(--spectrum-toast-spacing-text-and-action-button-to-divider)
@@ -335,10 +331,10 @@ governing permissions and limitations under the License.
     padding-inline-start: var(
         --mod-toast-spacing-close-button,
         var(--spectrum-toast-spacing-close-button)
-    ); /* .spectrum-Toast-body+.spectrum-Toast-buttons */
+    );
 }
 :host {
     --spectrum-toast-background-color-default: var(
         --system-spectrum-toast-background-color-default
-    ); /* .spectrum-Toast */
+    );
 }
