@@ -12,87 +12,32 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr'][drop-target]):before {
-    left: 0; /* [dir=ltr] .spectrum-Table-body.is-drop-target:before,
-   * [dir=ltr] 
-.spectrum-Table-row.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    left: 0;
 }
 :host([dir='rtl'][drop-target]):before {
-    right: 0; /* [dir=rtl] .spectrum-Table-body.is-drop-target:before,
-   * [dir=rtl] 
-.spectrum-Table-row.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    right: 0;
 }
 :host([dir='ltr'][drop-target]):before {
-    right: 0; /* [dir=ltr] .spectrum-Table-body.is-drop-target:before,
-   * [dir=ltr] 
-.spectrum-Table-row.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    right: 0;
 }
 :host([dir='rtl'][drop-target]):before {
-    left: 0; /* [dir=rtl] .spectrum-Table-body.is-drop-target:before,
-   * [dir=rtl] 
-.spectrum-Table-row.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    left: 0;
 }
 :host([drop-target]):before {
     bottom: 0;
-    content: ''; /* .spectrum-Table-body.is-drop-target:before,
-   * .spectrum-Table-row.is-drop-target::before,
-   * .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
-   * .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
-   * .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
-   * .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    content: '';
     position: absolute;
     top: 0;
     z-index: 1;
 }
 :host {
     cursor: pointer;
-    position: relative; /* .spectrum-Table-row */
+    position: relative;
     transition: background-color
         var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out;
 }
 :host(:focus) {
-    outline: 0; /* .spectrum-Table-row:focus */
-}
-:host([dir='ltr']) .spectrum-Table-checkboxCell {
-    padding-right: var(
-        --spectrum-table-regular-cell-checkbox-padding-right
-    ); /* [dir=ltr] .spectrum-Table-checkboxCell */
-}
-:host([dir='rtl']) .spectrum-Table-checkboxCell {
-    padding-left: var(
-        --spectrum-table-regular-cell-checkbox-padding-right
-    ); /* [dir=rtl] .spectrum-Table-checkboxCell */
+    outline: 0;
 }
 :host {
     background-color: var(
@@ -103,63 +48,59 @@ governing permissions and limitations under the License.
         var(
             --spectrum-table-m-regular-border-color,
             var(--spectrum-alias-border-color-mid)
-        ); /* .spectrum-Table-row */
+        );
 }
 :host(:hover) {
     background-color: var(
         --spectrum-table-m-regular-row-background-color-hover,
         var(--spectrum-alias-highlight-hover)
-    ); /* .spectrum-Table-row:hover */
+    );
 }
 :host(.focus-visible),
 :host([focused]) {
     background-color: var(
         --spectrum-table-m-regular-row-background-color-hover,
         var(--spectrum-alias-highlight-hover)
-    ); /* .spectrum-Table-row.focus-ring,
-   * .spectrum-Table-row.is-focused */
+    );
 }
 :host(:focus-visible),
 :host([focused]) {
     background-color: var(
         --spectrum-table-m-regular-row-background-color-hover,
         var(--spectrum-alias-highlight-hover)
-    ); /* .spectrum-Table-row.focus-ring,
-   * .spectrum-Table-row.is-focused */
+    );
 }
-:host(:active) {
+:host:active {
     background-color: var(
         --spectrum-table-m-regular-row-background-color-down,
         var(--spectrum-alias-highlight-down)
-    ); /* .spectrum-Table-row:active */
+    );
 }
 :host([selected]) {
     background-color: var(
         --spectrum-table-m-regular-row-background-color-selected,
         var(--spectrum-alias-highlight-selected)
-    ); /* .spectrum-Table-row.is-selected */
+    );
 }
 :host([selected]:hover) {
     background-color: var(
         --spectrum-table-m-regular-row-background-color-selected-hover,
         var(--spectrum-alias-highlight-selected-hover)
-    ); /* .spectrum-Table-row.is-selected:hover */
+    );
 }
 :host([selected].focus-visible),
 :host([selected][focused]) {
     background-color: var(
         --spectrum-table-m-regular-row-background-color-selected-key-focus,
         var(--spectrum-alias-highlight-selected-hover)
-    ); /* .spectrum-Table-row.is-selected.focus-ring,
-   * .spectrum-Table-row.is-selected.is-focused */
+    );
 }
 :host([selected]:focus-visible),
 :host([selected][focused]) {
     background-color: var(
         --spectrum-table-m-regular-row-background-color-selected-key-focus,
         var(--spectrum-alias-highlight-selected-hover)
-    ); /* .spectrum-Table-row.is-selected.focus-ring,
-   * .spectrum-Table-row.is-selected.is-focused */
+    );
 }
 :host([drop-target]):before {
     background-color: var(--spectrum-alias-highlight-selected);
@@ -167,5 +108,5 @@ governing permissions and limitations under the License.
         var(
             --spectrum-alias-border-color-key-focus,
             var(--spectrum-global-color-blue-400)
-        ); /* .spectrum-Table-row.is-drop-target:before */
+        );
 }

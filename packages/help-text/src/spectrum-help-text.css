@@ -12,9 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-helptext-line-height: var(
-        --spectrum-line-height-100
-    ); /* .spectrum-HelpText */
+    --spectrum-helptext-line-height: var(--spectrum-line-height-100);
     --spectrum-helptext-content-color-default: var(
         --spectrum-neutral-subdued-content-color-default
     );
@@ -28,7 +26,7 @@ governing permissions and limitations under the License.
 :host([variant='neutral']) {
     --spectrum-helptext-content-color-default: var(
         --spectrum-neutral-subdued-content-color-default
-    ); /* .spectrum-HelpText.spectrum-HelpText--neutral */
+    );
     --spectrum-helptext-icon-color-default: var(
         --spectrum-neutral-subdued-content-color-default
     );
@@ -36,13 +34,13 @@ governing permissions and limitations under the License.
 :host([variant='negative']) {
     --spectrum-helptext-content-color-default: var(
         --spectrum-negative-color-900
-    ); /* .spectrum-HelpText.spectrum-HelpText--negative */
+    );
     --spectrum-helptext-icon-color-default: var(--spectrum-negative-color-900);
 }
 :host([disabled]) {
     --spectrum-helptext-content-color-default: var(
         --spectrum-helptext-disabled-content-color
-    ); /* .spectrum-HelpText.is-disabled */
+    );
     --spectrum-helptext-icon-color-default: var(
         --spectrum-helptext-disabled-content-color
     );
@@ -50,16 +48,10 @@ governing permissions and limitations under the License.
 :host(:lang(ja)),
 :host(:lang(ko)),
 :host(:lang(zh)) {
-    --spectrum-helptext-line-height-cjk: var(
-        --spectrum-line-height-cjk-100
-    ); /* .spectrum-HelpText:lang(ja),
-   * .spectrum-HelpText:lang(zh),
-   * .spectrum-HelpText:lang(ko) */
+    --spectrum-helptext-line-height-cjk: var(--spectrum-line-height-cjk-100);
 }
 :host([size='s']) {
-    --spectrum-helptext-min-height: var(
-        --spectrum-component-height-75
-    ); /* .spectrum-HelpText--sizeS */
+    --spectrum-helptext-min-height: var(--spectrum-component-height-75);
     --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-75);
     --spectrum-helptext-font-size: var(--spectrum-font-size-75);
     --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-75);
@@ -75,9 +67,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='m']) {
-    --spectrum-helptext-min-height: var(
-        --spectrum-component-height-75
-    ); /* .spectrum-HelpText--sizeM */
+    --spectrum-helptext-min-height: var(--spectrum-component-height-75);
     --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-100);
     --spectrum-helptext-font-size: var(--spectrum-font-size-75);
     --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-75);
@@ -93,9 +83,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='l']) {
-    --spectrum-helptext-min-height: var(
-        --spectrum-component-height-100
-    ); /* .spectrum-HelpText--sizeL */
+    --spectrum-helptext-min-height: var(--spectrum-component-height-100);
     --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-200);
     --spectrum-helptext-font-size: var(--spectrum-font-size-100);
     --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-100);
@@ -111,9 +99,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='xl']) {
-    --spectrum-helptext-min-height: var(
-        --spectrum-component-height-200
-    ); /* .spectrum-HelpText--sizeXL */
+    --spectrum-helptext-min-height: var(--spectrum-component-height-200);
     --spectrum-helptext-icon-size: var(--spectrum-workflow-icon-size-300);
     --spectrum-helptext-font-size: var(--spectrum-font-size-200);
     --spectrum-helptext-text-to-visual: var(--spectrum-text-to-visual-200);
@@ -146,7 +132,7 @@ governing permissions and limitations under the License.
             --mod-helptext-content-color-default,
             var(--spectrum-helptext-content-color-default)
         )
-    ); /* .spectrum-HelpText */
+    );
     display: flex;
     font-size: var(
         --mod-helptext-font-size,
@@ -163,7 +149,7 @@ governing permissions and limitations under the License.
     margin-inline-end: var(
         --mod-helptext-text-to-visual,
         var(--spectrum-helptext-text-to-visual)
-    ); /* .spectrum-HelpText .spectrum-HelpText-validationIcon */
+    );
     padding-block-end: var(
         --mod-helptext-bottom-to-workflow-icon,
         var(--spectrum-helptext-bottom-to-workflow-icon)
@@ -186,7 +172,7 @@ governing permissions and limitations under the License.
     padding-block-start: var(
         --mod-helptext-top-to-text,
         var(--spectrum-helptext-top-to-text)
-    ); /* .spectrum-HelpText .spectrum-HelpText-text */
+    );
 }
 :host(:lang(ja)) .text,
 :host(:lang(ko)) .text,
@@ -194,9 +180,7 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-helptext-line-height-cjk,
         var(--spectrum-helptext-line-height-cjk)
-    ); /* .spectrum-HelpText:lang(ja) .spectrum-HelpText-text,
-   * .spectrum-HelpText:lang(zh) .spectrum-HelpText-text,
-   * .spectrum-HelpText:lang(ko) .spectrum-HelpText-text */
+    );
 }
 :host([variant='neutral']) .text {
     color: var(
@@ -205,7 +189,7 @@ governing permissions and limitations under the License.
             --mod-helptext-content-color-default,
             var(--spectrum-helptext-content-color-default)
         )
-    ); /* .spectrum-HelpText.spectrum-HelpText--neutral .spectrum-HelpText-text */
+    );
 }
 :host([variant='neutral']) .icon {
     color: var(
@@ -214,7 +198,7 @@ governing permissions and limitations under the License.
             --mod-helptext-icon-color-default,
             var(--spectrum-helptext-icon-color-default)
         )
-    ); /* .spectrum-HelpText.spectrum-HelpText--neutral .spectrum-HelpText-validationIcon */
+    );
 }
 :host([variant='negative']) .text {
     color: var(
@@ -223,7 +207,7 @@ governing permissions and limitations under the License.
             --mod-helptext-content-color-default,
             var(--spectrum-helptext-content-color-default)
         )
-    ); /* .spectrum-HelpText.spectrum-HelpText--negative .spectrum-HelpText-text */
+    );
 }
 :host([variant='negative']) .icon {
     color: var(
@@ -232,7 +216,7 @@ governing permissions and limitations under the License.
             --mod-helptext-icon-color-default,
             var(--spectrum-helptext-icon-color-default)
         )
-    ); /* .spectrum-HelpText.spectrum-HelpText--negative .spectrum-HelpText-validationIcon */
+    );
 }
 :host([disabled]) .text {
     color: var(
@@ -241,7 +225,7 @@ governing permissions and limitations under the License.
             --mod-helptext-content-color-default,
             var(--spectrum-helptext-content-color-default)
         )
-    ); /* .spectrum-HelpText.is-disabled .spectrum-HelpText-text */
+    );
 }
 :host([disabled]) .icon {
     color: var(
@@ -250,5 +234,5 @@ governing permissions and limitations under the License.
             --mod-helptext-icon-color-default,
             var(--spectrum-helptext-icon-color-default)
         )
-    ); /* .spectrum-HelpText.is-disabled .spectrum-HelpText-validationIcon */
+    );
 }

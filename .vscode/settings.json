@@ -2,10 +2,14 @@
     "files.exclude": {
         "**/*.css.ts": { "when": "$(basename)" },
         "packages/*/src/spectrum-vars.json": true,
-        "**/*.js.map": true,
-        "**/*.js": { "when": "$(basename).ts" },
-        "**/*.dev.js": { "when": "$(basename).js" },
-        "**/*.d.ts": { "when": "$(basename).ts" },
+        "packages/**/*.js.map": true,
+        "packages/**/*.js": { "when": "$(basename).ts" },
+        "packages/**/*.dev.js": { "when": "$(basename).js" },
+        "packages/**/*.d.ts": { "when": "$(basename).ts" },
+        "tools/**/*.js.map": true,
+        "tools/**/*.js": { "when": "$(basename).ts" },
+        "tools/**/*.dev.js": { "when": "$(basename).js" },
+        "tools/**/*.d.ts": { "when": "$(basename).ts" },
         "**/*.test-vrt.ts": true
     }
 }

@@ -45,18 +45,18 @@ governing permissions and limitations under the License.
     bottom: 0;
 }
 
-:host([dir='ltr'][direction='vertical']) #selection-indicator,
-:host([dir='rtl'][direction='vertical-right']) #selection-indicator {
+:host([dir='ltr'][direction='vertical']) #list #selection-indicator,
+:host([dir='rtl'][direction='vertical-right']) #list #selection-indicator {
     left: 0;
 }
 
-:host([dir='ltr'][direction='vertical-right']) #selection-indicator,
-:host([dir='rtl'][direction='vertical']) #selection-indicator {
+:host([dir='ltr'][direction='vertical-right']) #list #selection-indicator,
+:host([dir='rtl'][direction='vertical']) #list #selection-indicator {
     left: auto;
     right: 0;
 }
 
-:host([disabled]) #selection-indicator {
+:host([disabled]) #list #selection-indicator {
     background-color: var(
         --spectrum-tabs-m-text-color-disabled,
         var(--spectrum-alias-text-color-disabled)
@@ -107,8 +107,8 @@ governing permissions and limitations under the License.
  * While https://github.com/adobe/spectrum-css/issues/641 goes unaddressed,
  * then we'll need to place this at `top: 0;` ourselves.
  */
-:host([direction='vertical-right']) #selection-indicator,
-:host([direction='vertical']) #selection-indicator {
+:host([direction='vertical-right']) #list #selection-indicator,
+:host([direction='vertical']) #list #selection-indicator {
     top: 0;
 }
 
@@ -131,6 +131,12 @@ governing permissions and limitations under the License.
     }
 }
 
+@media (forced-colors: active) {
+    :host {
+        --spectrum-tabs-textonly-divider-background-color: unset !important;
+    }
+}
+
 /* 
  * The shorthand border declaration in :host([direction='horizontal']) was overiding
  * the border-bottom-color declared in :host 
@@ -142,7 +148,7 @@ governing permissions and limitations under the License.
     );
 }
 
-:host([dir='rtl'][direction='vertical-right']) #selection-indicator {
+:host([dir='rtl'][direction='vertical-right']) #list #selection-indicator {
     /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
     right: auto;
     left: 0;
@@ -152,14 +158,14 @@ governing permissions and limitations under the License.
     transition: none;
 }
 
-:host([dir='ltr'][direction='vertical-right']) ::slotted(:not([slot])) {
+:host([dir='ltr'][direction='vertical-right']) #list ::slotted(:not([slot])) {
     margin-left: 0;
     margin-right: calc(var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2);
 
     /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item */
 }
 
-:host([dir='rtl'][direction='vertical-right']) ::slotted(:not([slot])) {
+:host([dir='rtl'][direction='vertical-right']) #list ::slotted(:not([slot])) {
     margin-right: 0;
     margin-left: calc(var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2);
 
@@ -173,4 +179,10 @@ governing permissions and limitations under the License.
 
 :host([dir][direction='horizontal']) #list.scroll::-webkit-scrollbar {
     display: none;
+}
+
+:host([quiet][emphasized][direction]) #list {
+    --spectrum-tabs-textonly-divider-background-color: var(
+        --spectrum-tabs-quiet-textonly-divider-background-color
+    );
 }

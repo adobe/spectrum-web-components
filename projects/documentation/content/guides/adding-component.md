@@ -48,69 +48,107 @@ must structure our CSS very differently.
 The CSS from the <sp-link href="https://github.com/adobe/spectrum-css">spectrum-css</sp-link> project
 is intended to be installed globally on a web page. Using it in the context of a
 web component requires that we modify it. To facilitate that, this project comes
-with a <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/scripts/process-spectrum-postcss-plugin.js">config-driven processor</sp-link> that can transform the Spectrum CSS into a format
+with a <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/tasks/process-spectrum.js">config-driven processor</sp-link> that can transform the Spectrum CSS into a format
 that can be consumed in a web component.
 
-The first step is to create a directory and a `spectrum-config.js` file for your
+The first step is to create a directory and a `spectrum-config.v2.js` file for your
 new component. This config file contains information about the structure of
 the web component in relation to the Spectrum CSS classes.
 
-Below is a fragment of the <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/button/spectrum-config.js">`spectrum-config.js` file for `sp-button`</sp-link>.
+Below is a snapshot of the <sp-link href="https://github.com/adobe/spectrum-web-components/blob/master/src/button/spectrum-config.js">`spectrum-config.v2.js` file for `sp-button`</sp-link>.
 
 ```javascript
-module.exports = {
-    spectrum: 'button',
-    components: [
+// @ts-check
+import {
+    builder,
+    converterFor,
+} from '../../../tasks/process-spectrum-utils.js';
+
+const converter = converterFor('spectrum-Button');
+
+/**
+ * @type { import('../../../tasks/spectrum-css-converter').SpectrumCSSConverter }
+ */
+const config = {
+    conversions: [
         {
-            name: 'button',
-            host: {
-                selector: '.spectrum-Button',
-                shadowSelector: '#button',
-            },
-            focus: '#button',
-            attributes: [
+            inPackage: '@spectrum-css/button',
+            outPackage: 'button',
+            fileName: 'button',
+            excludeByComponents: [builder.element('a')],
+            components: [
+                converter.classToHost(),
+                converter.classToAttribute('spectrum-Button--quiet'),
+                converter.classToAttribute('spectrum-Button--emphasized'),
+                converter.classToAttribute('is-disabled', 'disabled'),
+                converter.classToAttribute('is-selected', 'selected'),
+                converter.classToAttribute('is-focused', 'focused'),
+                converter.pseudoToAttribute('disabled', 'disabled'),
+                converter.pseudoToAttribute('active', 'active'),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Button--sizeS', 's'],
+                        ['spectrum-Button--sizeM', 'm'],
+                        ['spectrum-Button--sizeL', 'l'],
+                        ['spectrum-Button--sizeXL', 'xl'],
+                    ],
+                    'size'
+                ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Button--accent'],
+                        ['spectrum-Button--primary'],
+                        ['spectrum-Button--secondary'],
+                        ['spectrum-Button--negative'],
+                    ],
+                    'variant'
+                ),
+                ...converter.enumerateAttributes(
+                    [['spectrum-Button--fill'], ['spectrum-Button--outline']],
+                    'treatment'
+                ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Button--staticWhite', 'white'],
+                        ['spectrum-Button--staticBlack', 'black'],
+                    ],
+                    'static'
+                ),
+                converter.classToId('spectrum-Button-label'),
+                converter.classToSlotted('spectrum-Icon', 'icon'),
                 {
-                    type: 'boolean',
-                    selector: '.spectrum-Button--quiet',
-                },
-                {
-                    type: 'boolean',
-                    selector: ':disabled',
-                },
-                {
-                    type: 'enum',
-                    name: 'variant',
-                    values: [
-                        '.spectrum-Button--cta',
-                        '.spectrum-Button--primary',
-                        '.spectrum-Button--secondary',
+                    find: [
+                        builder.class('spectrum-Icon'),
+                        builder.combinator('+'),
+                        builder.class('spectrum-Button-label'),
+                    ],
+                    replace: [
                         {
-                            name: 'negative',
-                            selector: '.spectrum-Button--warning',
+                            replace: builder.attribute('name', 'icon', 'equal'),
+                            hoist: false,
                         },
-                        '.spectrum-Button--overBackground',
-                        '.spectrum-Button--secondary',
+                        builder.combinator('+'),
+                        builder.id('label'),
                     ],
                 },
-            ],
-            ids: ['.spectrum-Button-label'],
-            slots: [
                 {
-                    name: 'icon',
-                    selector: '.spectrum-Icon',
+                    hoist: false,
+                    find: builder.pseudoClass('empty'),
+                    replace: builder.attribute('hidden'),
                 },
             ],
-            exclude: [/\.is-disabled/],
         },
     ],
 };
+
+export default config;
 ```
 
 If we wanted to create a button component using this config file, the steps would be as
 follows:
 
 1. Make the directory <sp-link href="https://github.com/adobe/spectrum-web-components/tree/master/src/button">`src/components/button`</sp-link>
-2. In that new directory, create a <sp-link href="https://github.com/adobe/spectrum-web-components/blob/main/packages/button/src/spectrum-config.js">`spectrum-config.js`</sp-link>
+2. In that new directory, create a <sp-link href="https://github.com/adobe/spectrum-web-components/blob/main/packages/button/src/spectrum-config.v2.js">`spectrum-config.v2.js`</sp-link>
    file with the above contents
 3. Run the command `yarn process-spectrum` to create the <sp-link href="https://github.com/adobe/spectrum-web-components/blob/main/packages/button/src/spectrum-button.css">CSS file</sp-link>
 

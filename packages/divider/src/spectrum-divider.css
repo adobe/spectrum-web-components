@@ -12,9 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-divider-thickness: var(
-        --spectrum-divider-thickness-medium
-    ); /* .spectrum-Divider */
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
     --spectrum-divider-background-color: var(
         --spectrum-divider-background-color-medium
     );
@@ -41,25 +39,19 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='s']) {
-    --spectrum-divider-thickness: var(
-        --spectrum-divider-thickness-small
-    ); /* .spectrum-Divider--sizeS */
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-small);
     --spectrum-divider-background-color: var(
         --spectrum-divider-background-color-small
     );
 }
 :host([size='m']) {
-    --spectrum-divider-thickness: var(
-        --spectrum-divider-thickness-medium
-    ); /* .spectrum-Divider--sizeM */
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-medium);
     --spectrum-divider-background-color: var(
         --spectrum-divider-background-color-medium
     );
 }
 :host([size='l']) {
-    --spectrum-divider-thickness: var(
-        --spectrum-divider-thickness-large
-    ); /* .spectrum-Divider--sizeL */
+    --spectrum-divider-thickness: var(--spectrum-divider-thickness-large);
     --spectrum-divider-background-color: var(
         --spectrum-divider-background-color-large
     );
@@ -80,10 +72,7 @@ governing permissions and limitations under the License.
         --mod-divider-background-color,
         var(--spectrum-divider-background-color)
     );
-    block-size: var(
-        --mod-divider-thickness,
-        var(--spectrum-divider-thickness)
-    ); /* .spectrum-Divider */
+    block-size: var(--mod-divider-thickness, var(--spectrum-divider-thickness));
     border: none;
     border-radius: var(
         --mod-divider-thickness,
@@ -96,44 +85,44 @@ governing permissions and limitations under the License.
     inline-size: 100%;
     overflow: visible;
 }
-:host([size='s']) .spectrum-Divider--staticWhite {
+:host([static='white'][size='s']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-small-static-white,
         var(--spectrum-divider-background-color-small-static-white)
-    ); /* .spectrum-Divider--staticWhite.spectrum-Divider--sizeS */
+    );
 }
-:host([size='m']) .spectrum-Divider--staticWhite {
+:host([static='white'][size='m']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-medium-static-white,
         var(--spectrum-divider-background-color-medium-static-white)
-    ); /* .spectrum-Divider--staticWhite.spectrum-Divider--sizeM */
+    );
 }
-:host([size='l']) .spectrum-Divider--staticWhite {
+:host([static='white'][size='l']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-large-static-white,
         var(--spectrum-divider-background-color-large-static-white)
-    ); /* .spectrum-Divider--staticWhite.spectrum-Divider--sizeL */
+    );
 }
-:host([size='s']) .spectrum-Divider--staticBlack {
+:host([static='black'][size='s']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-small-static-black,
         var(--spectrum-divider-background-color-small-static-black)
-    ); /* .spectrum-Divider--staticBlack.spectrum-Divider--sizeS */
+    );
 }
-:host([size='m']) .spectrum-Divider--staticBlack {
+:host([static='black'][size='m']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-medium-static-black,
         var(--spectrum-divider-background-color-medium-static-black)
-    ); /* .spectrum-Divider--staticBlack.spectrum-Divider--sizeM */
+    );
 }
-:host([size='l']) .spectrum-Divider--staticBlack {
+:host([static='black'][size='l']) {
     --spectrum-divider-background-color: var(
         --mod-divider-background-color-large-static-black,
         var(--spectrum-divider-background-color-large-static-black)
-    ); /* .spectrum-Divider--staticBlack.spectrum-Divider--sizeL */
+    );
 }
 :host([vertical]) {
-    block-size: 100%; /* .spectrum-Divider--vertical */
+    block-size: 100%;
     inline-size: var(
         --mod-divider-thickness,
         var(--spectrum-divider-thickness)

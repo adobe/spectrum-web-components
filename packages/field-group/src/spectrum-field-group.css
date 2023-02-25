@@ -12,42 +12,29 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-fieldgroup-margin: var(
-        --spectrum-spacing-300
-    ); /* .spectrum-FieldGroup */
-    --spectrum-fieldgroup-readonly-delimiter: '\\002c';
+    --spectrum-fieldgroup-margin: var(--spectrum-spacing-300);
+    --spectrum-fieldgroup-readonly-delimiter: ',';
 }
 .spectrum-FieldGroup--toplabel {
-    flex-direction: column; /* .spectrum-FieldGroup--toplabel */
+    flex-direction: column;
 }
 .spectrum-FieldGroup--sidelabel {
-    flex-direction: row; /* .spectrum-FieldGroup--sidelabel */
+    flex-direction: row;
 }
 .group {
     align-items: top;
-    display: flex; /* .spectrum-FieldGroupInputLayout */
-    flex-direction: column;
-    flex-wrap: wrap;
+    display: flex;
+    flex-flow: column wrap;
 }
 :host([vertical]) .group {
-    flex-direction: column; /* .spectrum-FieldGroup--vertical .spectrum-FieldGroupInputLayout */
+    flex-direction: column;
 }
 :host([horizontal]) .group {
-    flex-direction: row; /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroupInputLayout */
+    flex-direction: row;
 }
 :host([horizontal]) .group slot:not([name])::slotted(:not(:last-child)) {
-    margin-inline-end: var(
-        --spectrum-fieldgroup-margin
-    ); /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroupInputLayout .spectrum-FieldGroup-item:not(:last-child) */
+    margin-inline-end: var(--spectrum-fieldgroup-margin);
 }
 :host([horizontal]) .group .spectrum-HelpText {
-    flex-basis: 100%; /* .spectrum-FieldGroup--horizontal .spectrum-FieldGroupInputLayout .spectrum-HelpText */
-}
-.spectrum-Checkbox.is-readOnly .spectrum-Checkbox-box {
-    display: none; /* .spectrum-FieldGroup .spectrum-Checkbox.is-readOnly .spectrum-Checkbox-box */
-}
-.spectrum-Checkbox.is-readOnly:not(:last-child) .spectrum-Checkbox-label:after {
-    content: var(
-        --spectrum-fieldgroup-readonly-delimiter
-    ); /* .spectrum-FieldGroup .spectrum-Checkbox.is-readOnly:not(:last-child) .spectrum-Checkbox-label:after */
+    flex-basis: 100%;
 }
