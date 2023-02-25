@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Adobe. All rights reserved.
+Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -15,8 +15,7 @@ governing permissions and limitations under the License.
     font-size: var(
         --spectrum-body-xxxl-text-size,
         var(--spectrum-global-dimension-font-size-600)
-    ); /* .spectrum-Body--sizeXXXL */
-
+    );
     font-style: var(
         --spectrum-body-xxxl-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -37,13 +36,11 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-xxxl-text-transform, none);
 }
-
 .spectrum-Body--sizeXXL {
     font-size: var(
         --spectrum-body-xxl-text-size,
         var(--spectrum-global-dimension-font-size-500)
-    ); /* .spectrum-Body--sizeXXL */
-
+    );
     font-style: var(
         --spectrum-body-xxl-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -64,13 +61,11 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-xxl-text-transform, none);
 }
-
 .spectrum-Body--sizeXL {
     font-size: var(
         --spectrum-body-xl-text-size,
         var(--spectrum-global-dimension-font-size-400)
-    ); /* .spectrum-Body--sizeXL */
-
+    );
     font-style: var(
         --spectrum-body-xl-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -91,13 +86,11 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-xl-text-transform, none);
 }
-
 .spectrum-Body--sizeL {
     font-size: var(
         --spectrum-body-l-text-size,
         var(--spectrum-global-dimension-font-size-300)
-    ); /* .spectrum-Body--sizeL */
-
+    );
     font-style: var(
         --spectrum-body-l-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -118,13 +111,11 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-l-text-transform, none);
 }
-
 .spectrum-Body--sizeM {
     font-size: var(
         --spectrum-body-m-text-size,
         var(--spectrum-global-dimension-font-size-200)
-    ); /* .spectrum-Body--sizeM */
-
+    );
     font-style: var(
         --spectrum-body-m-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -145,13 +136,11 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-m-text-transform, none);
 }
-
 .spectrum-Body--sizeS {
     font-size: var(
         --spectrum-body-s-text-size,
         var(--spectrum-global-dimension-font-size-100)
-    ); /* .spectrum-Body--sizeS */
-
+    );
     font-style: var(
         --spectrum-body-s-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -172,13 +161,11 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-s-text-transform, none);
 }
-
 .spectrum-Body--sizeXS {
     font-size: var(
         --spectrum-body-xs-text-size,
         var(--spectrum-global-dimension-font-size-75)
-    ); /* .spectrum-Body--sizeXS */
-
+    );
     font-style: var(
         --spectrum-body-xs-text-font-style,
         var(--spectrum-global-font-style-regular)
@@ -199,92 +186,105 @@ governing permissions and limitations under the License.
     margin-top: 0;
     text-transform: var(--spectrum-body-xs-text-transform, none);
 }
-
 .spectrum-Body {
     font-family: var(
         --spectrum-body-m-text-font-family,
         var(--spectrum-alias-body-text-font-family)
-    ); /* .spectrum-Body */
+    );
 }
-
 .spectrum-Body .spectrum-Body-strong,
 .spectrum-Body strong {
     font-weight: var(
         --spectrum-body-m-strong-text-font-weight,
         var(--spectrum-global-font-weight-bold)
-    ); /* .spectrum-Body strong,
-   * .spectrum-Body .spectrum-Body-strong */
+    );
 }
-
 .spectrum-Body .spectrum-Body-emphasized,
 .spectrum-Body em {
     font-style: var(
         --spectrum-body-m-emphasized-text-font-style,
         var(--spectrum-global-font-style-italic)
-    ); /* .spectrum-Body em,
-   * .spectrum-Body .spectrum-Body-emphasized */
+    );
 }
-
 .spectrum-Body--serif {
     font-family: var(
         --spectrum-body-m-serif-text-font-family,
         var(--spectrum-alias-serif-text-font-family)
-    ); /* .spectrum-Body--serif */
+    );
 }
-
+.spectrum-Typography .spectrum-Body--sizeXXXL {
+    margin-bottom: var(
+        --spectrum-body-xxxl-margin-bottom,
+        var(--spectrum-global-dimension-size-400)
+    );
+    margin-top: var(--spectrum-body-xxxl-margin-top, 0);
+}
+.spectrum-Typography .spectrum-Body--sizeXXL {
+    margin-bottom: var(
+        --spectrum-body-xxl-margin-bottom,
+        var(--spectrum-global-dimension-size-300)
+    );
+    margin-top: var(--spectrum-body-xxl-margin-top, 0);
+}
+.spectrum-Typography .spectrum-Body--sizeXL {
+    margin-bottom: var(
+        --spectrum-body-xl-margin-bottom,
+        var(--spectrum-global-dimension-size-200)
+    );
+    margin-top: var(--spectrum-body-xl-margin-top, 0);
+}
+.spectrum-Typography .spectrum-Body--sizeL {
+    margin-bottom: var(
+        --spectrum-body-l-margin-bottom,
+        var(--spectrum-global-dimension-size-160)
+    );
+    margin-top: var(--spectrum-body-l-margin-top, 0);
+}
+.spectrum-Typography .spectrum-Body--sizeM {
+    margin-bottom: var(
+        --spectrum-body-m-margin-bottom,
+        var(--spectrum-global-dimension-size-150)
+    );
+    margin-top: var(--spectrum-body-m-margin-top, 0);
+}
+.spectrum-Typography .spectrum-Body--sizeS {
+    margin-bottom: var(
+        --spectrum-body-s-margin-bottom,
+        var(--spectrum-global-dimension-size-125)
+    );
+    margin-top: var(--spectrum-body-s-margin-top, 0);
+}
+.spectrum-Typography .spectrum-Body--sizeXS {
+    margin-bottom: var(
+        --spectrum-body-xs-margin-bottom,
+        var(--spectrum-global-dimension-size-115)
+    );
+    margin-top: var(--spectrum-body-xs-margin-top, 0);
+}
 .spectrum-Body--sizeXXXL {
     color: var(
         --spectrum-body-xxxl-text-color,
         var(--spectrum-alias-text-color)
-    ); /* .spectrum-Body--sizeXXXL */
+    );
 }
-
 .spectrum-Body--sizeXXL {
     color: var(
         --spectrum-body-xxl-text-color,
         var(--spectrum-alias-text-color)
-    ); /* .spectrum-Body--sizeXXL */
+    );
 }
-
 .spectrum-Body--sizeXL {
-    color: var(
-        --spectrum-body-xl-text-color,
-        var(--spectrum-alias-text-color)
-    ); /* .spectrum-Body--sizeXL */
+    color: var(--spectrum-body-xl-text-color, var(--spectrum-alias-text-color));
 }
-
 .spectrum-Body--sizeL {
-    color: var(
-        --spectrum-body-l-text-color,
-        var(--spectrum-alias-text-color)
-    ); /* .spectrum-Body--sizeL */
+    color: var(--spectrum-body-l-text-color, var(--spectrum-alias-text-color));
 }
-
 .spectrum-Body--sizeM {
-    color: var(
-        --spectrum-body-m-text-color,
-        var(--spectrum-alias-text-color)
-    ); /* .spectrum-Body--sizeM */
+    color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
 }
-
 .spectrum-Body--sizeS {
-    color: var(
-        --spectrum-body-s-text-color,
-        var(--spectrum-alias-text-color)
-    ); /* .spectrum-Body--sizeS */
+    color: var(--spectrum-body-s-text-color, var(--spectrum-alias-text-color));
 }
-
 .spectrum-Body--sizeXS {
-    color: var(
-        --spectrum-body-xs-text-color,
-        var(--spectrum-alias-text-color)
-    ); /* .spectrum-Body--sizeXS */
-}
-
-.spectrum-Body {
-    color: var(
-        --spectrum-body-m-text-color,
-        var(--spectrum-alias-text-color)
-    ); /* .spectrum,
-   * .spectrum-Body */
+    color: var(--spectrum-body-xs-text-color, var(--spectrum-alias-text-color));
 }

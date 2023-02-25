@@ -12,8 +12,8 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-tray-exit-animation-delay: 0ms; /* .spectrum-Tray */
-    --spectrum-tray-entry-animation-delay: 160ms;
+    --spectrum-tray-exit-animation-delay: 0s;
+    --spectrum-tray-entry-animation-delay: 0.16s;
     --spectrum-tray-max-inline-size: 375px;
     --spectrum-tray-spacing-edge-to-tray-safe-zone: 64px;
     --spectrum-tray-entry-animation-duration: var(
@@ -26,17 +26,9 @@ governing permissions and limitations under the License.
     --spectrum-tray-background-color: var(--spectrum-background-layer-2-color);
 }
 @media (forced-colors: active) {
-    .tray {
+    :host {
         --highcontrast-tray-background-color: Background;
     }
-}
-.spectrum-Tray-wrapper {
-    bottom: 0;
-    display: flex;
-    inline-size: 100%;
-    inset-inline-start: 0; /* .spectrum-Tray-wrapper */
-    justify-content: center;
-    position: fixed;
 }
 .tray {
     background-color: var(
@@ -44,7 +36,7 @@ governing permissions and limitations under the License.
         var(--mod-tray-background-color, var(--spectrum-tray-background-color))
     );
     border-radius: unset;
-    inline-size: 100%; /* .spectrum-Tray */
+    inline-size: 100%;
     margin-block-start: var(
         --mod-tray-spacing-edge-to-tray-safe-zone,
         var(--spectrum-tray-spacing-edge-to-tray-safe-zone)
@@ -117,7 +109,7 @@ governing permissions and limitations under the License.
             var(
                 --mod-tray-entry-animation-delay,
                 var(--spectrum-tray-entry-animation-delay)
-            ); /* .spectrum-Tray.is-open */
+            );
 }
 @media screen and (orientation: landscape) {
     .tray {

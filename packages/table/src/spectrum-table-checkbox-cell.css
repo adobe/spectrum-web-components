@@ -12,22 +12,18 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr']) {
-    padding-right: var(
-        --spectrum-table-regular-cell-checkbox-padding-right
-    ); /* [dir=ltr] .spectrum-Table-checkboxCell */
+    padding-right: var(--spectrum-table-regular-cell-checkbox-padding-right);
 }
 :host([dir='rtl']) {
-    padding-left: var(
-        --spectrum-table-regular-cell-checkbox-padding-right
-    ); /* [dir=rtl] .spectrum-Table-checkboxCell */
+    padding-left: var(--spectrum-table-regular-cell-checkbox-padding-right);
 }
 :host {
     padding-bottom: 0;
-    padding-top: 0; /* .spectrum-Table-checkboxCell */
+    padding-top: 0;
     vertical-align: var(
         --spectrum-table-regular-cell-checkbox-vertical-alignment
     );
 }
 .checkbox {
-    vertical-align: super; /* .spectrum-Table-checkbox */
+    vertical-align: super;
 }
