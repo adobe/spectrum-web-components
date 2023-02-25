@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-dialog-fullscreen-header-text-size: 28px; /* .spectrum-Dialog */
+    --spectrum-dialog-fullscreen-header-text-size: 28px;
     --spectrum-dialog-confirm-small-width: 400px;
     --spectrum-dialog-confirm-medium-width: 480px;
     --spectrum-dialog-confirm-large-width: 640px;
@@ -50,7 +50,7 @@ governing permissions and limitations under the License.
 }
 :host {
     box-sizing: border-box;
-    display: flex; /* .spectrum-Dialog */
+    display: flex;
     max-height: inherit;
     max-width: 100%;
     min-width: var(
@@ -62,19 +62,13 @@ governing permissions and limitations under the License.
     width: fit-content;
 }
 :host([size='s']) {
-    width: var(
-        --spectrum-dialog-confirm-small-width
-    ); /* .spectrum-Dialog--small */
+    width: var(--spectrum-dialog-confirm-small-width);
 }
 :host([size='m']) {
-    width: var(
-        --spectrum-dialog-confirm-medium-width
-    ); /* .spectrum-Dialog--medium */
+    width: var(--spectrum-dialog-confirm-medium-width);
 }
 :host([size='l']) {
-    width: var(
-        --spectrum-dialog-confirm-large-width
-    ); /* .spectrum-Dialog--large */
+    width: var(--spectrum-dialog-confirm-large-width);
 }
 ::slotted([slot='hero']) {
     background-position: 50%;
@@ -87,13 +81,14 @@ governing permissions and limitations under the License.
         --spectrum-dialog-confirm-border-radius,
         var(--spectrum-alias-component-border-radius)
     );
-    grid-area: hero; /* .spectrum-Dialog-hero */
+    grid-area: hero;
     height: var(--spectrum-dialog-confirm-hero-height);
     overflow: hidden;
 }
 .grid {
-    display: grid; /* .spectrum-Dialog .spectrum-Dialog-grid */
-    grid-template-areas: 'hero hero    hero    hero        hero        hero' '.    .       .       .           .           .' '.    heading header  header      typeIcon    .' '.    divider divider divider     divider     .' '.    content content content     content     .' '.    footer  footer  buttonGroup buttonGroup .' '.    .       .       .           .           .';
+    display: -ms-grid;
+    display: grid;
+    grid-template-areas: 'hero hero hero hero hero hero' '. . . . . .' '. heading header header typeIcon .' '. divider divider divider divider .' '. content content content content .' '. footer footer buttonGroup buttonGroup .' '. . . . . .';
     grid-template-columns:
         var(--spectrum-dialog-confirm-padding) auto 1fr auto minmax(0, auto)
         var(--spectrum-dialog-confirm-padding);
@@ -103,14 +98,10 @@ governing permissions and limitations under the License.
     width: 100%;
 }
 :host([dir='ltr']) ::slotted([slot='heading']) {
-    padding-right: var(
-        --spectrum-dialog-confirm-gap-size
-    ); /* [dir=ltr] .spectrum-Dialog-heading */
+    padding-right: var(--spectrum-dialog-confirm-gap-size);
 }
 :host([dir='rtl']) ::slotted([slot='heading']) {
-    padding-left: var(
-        --spectrum-dialog-confirm-gap-size
-    ); /* [dir=rtl] .spectrum-Dialog-heading */
+    padding-left: var(--spectrum-dialog-confirm-gap-size);
 }
 ::slotted([slot='heading']) {
     font-size: var(--spectrum-dialog-confirm-title-text-size);
@@ -118,7 +109,7 @@ governing permissions and limitations under the License.
         --spectrum-dialog-confirm-title-text-font-weight,
         var(--spectrum-alias-heading-text-font-weight-regular)
     );
-    grid-area: heading; /* .spectrum-Dialog-heading */
+    grid-area: heading;
     line-height: var(
         --spectrum-dialog-confirm-title-text-line-height,
         var(--spectrum-alias-heading-text-line-height)
@@ -127,27 +118,27 @@ governing permissions and limitations under the License.
     outline: none;
 }
 :host([dir='ltr']) .no-header::slotted([slot='heading']) {
-    padding-right: 0; /* [dir=ltr] .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
+    padding-right: 0;
 }
 :host([dir='rtl']) .no-header::slotted([slot='heading']) {
-    padding-left: 0; /* [dir=rtl] .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
+    padding-left: 0;
 }
 .no-header::slotted([slot='heading']) {
-    grid-area: heading-start/heading-start/header-end/header-end; /* .spectrum-Dialog-heading.spectrum-Dialog-heading--noHeader */
+    grid-area: heading-start/heading-start/header-end/header-end;
 }
 .header {
     align-items: center;
     box-sizing: border-box;
     display: flex;
-    grid-area: header; /* .spectrum-Dialog-header */
+    grid-area: header;
     justify-content: flex-end;
     outline: none;
 }
 .type-icon {
-    grid-area: typeIcon; /* .spectrum-Dialog-typeIcon */
+    grid-area: typeIcon;
 }
 .divider {
-    grid-area: divider; /* .spectrum-Dialog .spectrum-Dialog-divider */
+    grid-area: divider;
     margin-bottom: var(
         --spectrum-dialog-confirm-divider-margin-bottom,
         var(--spectrum-global-dimension-static-size-200)
@@ -158,16 +149,16 @@ governing permissions and limitations under the License.
     );
     width: 100%;
 }
-:host([mode='fullscreen']) slot[name='heading'] + .divider {
+:host([mode='fullscreen']) [name='heading'] + .divider {
     margin-bottom: calc(
         var(
                 --spectrum-dialog-confirm-divider-margin-bottom,
                 var(--spectrum-global-dimension-static-size-200)
             ) - var(--spectrum-dialog-confirm-description-padding) * 2
-    ); /* .spectrum-Dialog--fullscreen .spectrum-Dialog-heading+.spectrum-Dialog-divider */
+    );
 }
 :host([no-divider]) .divider {
-    display: none; /* .spectrum-Dialog--noDivider .spectrum-Dialog-divider */
+    display: none;
 }
 :host([no-divider]) ::slotted([slot='heading']) {
     padding-bottom: calc(
@@ -183,7 +174,7 @@ governing permissions and limitations under the License.
                 --spectrum-dialog-confirm-divider-height,
                 var(--spectrum-global-dimension-size-25)
             )
-    ); /* .spectrum-Dialog--noDivider .spectrum-Dialog-heading */
+    );
 }
 .content {
     -webkit-overflow-scrolling: touch;
@@ -193,106 +184,91 @@ governing permissions and limitations under the License.
         --spectrum-dialog-confirm-description-text-font-weight,
         var(--spectrum-global-font-weight-regular)
     );
-    grid-area: content; /* .spectrum-Dialog-content */
+    grid-area: content;
     line-height: var(
         --spectrum-dialog-confirm-description-text-line-height,
         var(--spectrum-alias-component-text-line-height)
     );
     margin: 0 var(--spectrum-dialog-confirm-description-margin);
+    outline: none;
     overflow-y: auto;
     padding: calc(var(--spectrum-dialog-confirm-description-padding) * 2);
-}
-.content,
-.footer {
-    outline: none;
 }
 .footer {
     display: flex;
     flex-wrap: wrap;
-    grid-area: footer; /* .spectrum-Dialog-footer */
+    grid-area: footer;
+    outline: none;
     padding-top: var(--spectrum-dialog-confirm-footer-padding-top);
 }
-.footer > .button + .button,
-.footer > ::slotted(*) {
-    margin-bottom: 0; /* .spectrum-Dialog-footer>*,
-   * .spectrum-Dialog-footer>.spectrum-Button+.spectrum-Button */
+.footer > *,
+.footer > .spectrum-Button + .spectrum-Button {
+    margin-bottom: 0;
 }
 :host([dir='ltr']) .button-group {
-    padding-left: var(
-        --spectrum-dialog-confirm-gap-size
-    ); /* [dir=ltr] .spectrum-Dialog-buttonGroup */
+    padding-left: var(--spectrum-dialog-confirm-gap-size);
 }
 :host([dir='rtl']) .button-group {
-    padding-right: var(
-        --spectrum-dialog-confirm-gap-size
-    ); /* [dir=rtl] .spectrum-Dialog-buttonGroup */
+    padding-right: var(--spectrum-dialog-confirm-gap-size);
 }
 .button-group {
     display: flex;
-    grid-area: buttonGroup; /* .spectrum-Dialog-buttonGroup */
+    grid-area: buttonGroup;
     justify-content: flex-end;
     padding-top: var(--spectrum-dialog-confirm-buttongroup-padding-top);
 }
 .button-group.button-group--noFooter {
-    grid-area: footer-start/footer-start/buttonGroup-end/buttonGroup-end; /* .spectrum-Dialog-buttonGroup.spectrum-Dialog-buttonGroup--noFooter */
+    grid-area: footer-start/footer-start/buttonGroup-end/buttonGroup-end;
 }
 :host([dismissable]) .grid {
-    grid-template-areas: 'hero hero    hero    hero        hero        hero        hero' '.    .       .       .           .           closeButton closeButton' '.    heading header  header      typeIcon    closeButton closeButton' '.    divider divider divider     divider     divider     .' '.    content content content     content     content     .' '.    footer  footer  buttonGroup buttonGroup buttonGroup .' '.    .       .       .           .           .           .';
+    grid-template-areas: 'hero hero hero hero hero hero hero' '. . . . . closeButton closeButton' '. heading header header typeIcon closeButton closeButton' '. divider divider divider divider divider .' '. content content content content content .' '. footer footer buttonGroup buttonGroup buttonGroup .' '. . . . . . .';
     grid-template-columns:
         var(--spectrum-dialog-confirm-padding) auto 1fr auto minmax(0, auto)
-        minmax(0, var(--spectrum-dialog-confirm-close-button-size)) var(--spectrum-dialog-confirm-padding); /* .spectrum-Dialog.spectrum-Dialog--dismissable .spectrum-Dialog-grid */
+        minmax(0, var(--spectrum-dialog-confirm-close-button-size)) var(--spectrum-dialog-confirm-padding);
     grid-template-rows: auto var(--spectrum-dialog-confirm-padding) auto auto 1fr auto var(
             --spectrum-dialog-confirm-padding
         );
 }
 :host([dismissable]) .grid .button-group {
-    display: none; /* .spectrum-Dialog.spectrum-Dialog--dismissable .spectrum-Dialog-grid .spectrum-Dialog-buttonGroup */
+    display: none;
 }
 :host([dismissable]) .grid .footer {
-    grid-area: footer/footer/buttonGroup/buttonGroup; /* .spectrum-Dialog.spectrum-Dialog--dismissable .spectrum-Dialog-grid .spectrum-Dialog-footer */
+    grid-area: footer/footer/buttonGroup/buttonGroup;
 }
 :host([dir='ltr']) .close-button {
-    margin-right: var(
-        --spectrum-dialog-confirm-close-button-padding
-    ); /* [dir=ltr] .spectrum-Dialog-closeButton */
+    margin-right: var(--spectrum-dialog-confirm-close-button-padding);
 }
 :host([dir='rtl']) .close-button {
-    margin-left: var(
-        --spectrum-dialog-confirm-close-button-padding
-    ); /* [dir=rtl] .spectrum-Dialog-closeButton */
+    margin-left: var(--spectrum-dialog-confirm-close-button-padding);
 }
 .close-button {
-    align-self: start;
-    grid-area: closeButton; /* .spectrum-Dialog-closeButton */
-    justify-self: end;
+    -ms-grid-row-align: start;
+    grid-area: closeButton;
     margin-top: var(--spectrum-dialog-confirm-close-button-padding);
+    place-self: start end;
 }
 :host([error]) {
-    width: var(
-        --spectrum-dialog-error-width,
-        90%
-    ); /* .spectrum-Dialog--error */
+    width: var(--spectrum-dialog-error-width, 90%);
 }
 :host([mode='fullscreen']) {
     height: 100%;
-    width: 100%; /* .spectrum-Dialog--fullscreen */
+    width: 100%;
 }
 :host([mode='fullscreenTakeover']) {
     border-radius: 0;
     height: 100%;
-    width: 100%; /* .spectrum-Dialog--fullscreenTakeover */
+    width: 100%;
 }
 :host([mode='fullscreenTakeover']),
 :host([mode='fullscreen']) {
-    max-height: none; /* .spectrum-Dialog--fullscreen,
-   * .spectrum-Dialog--fullscreenTakeover */
+    max-height: none;
     max-width: none;
 }
 :host([mode='fullscreenTakeover']) .grid,
 :host([mode='fullscreen']) .grid {
-    display: grid; /* .spectrum-Dialog--fullscreen.spectrum-Dialog .spectrum-Dialog-grid,
-   * .spectrum-Dialog--fullscreenTakeover.spectrum-Dialog .spectrum-Dialog-grid */
-    grid-template-areas: '.    .       .       .            .' '.    heading header  buttonGroup  .' '.    divider divider divider      .' '.    content content content      .' '.    .       .       .            .';
+    display: -ms-grid;
+    display: grid;
+    grid-template-areas: '. . . . .' '. heading header buttonGroup .' '. divider divider divider .' '. content content content .' '. . . . .';
     grid-template-columns: var(--spectrum-dialog-confirm-padding) 1fr auto auto var(
             --spectrum-dialog-confirm-padding
         );
@@ -302,39 +278,31 @@ governing permissions and limitations under the License.
 }
 :host([mode='fullscreenTakeover']) ::slotted([slot='heading']),
 :host([mode='fullscreen']) ::slotted([slot='heading']) {
-    font-size: var(
-        --spectrum-dialog-fullscreen-header-text-size
-    ); /* .spectrum-Dialog--fullscreen .spectrum-Dialog-heading,
-   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-heading */
+    font-size: var(--spectrum-dialog-fullscreen-header-text-size);
 }
 :host([mode='fullscreenTakeover']) .content,
 :host([mode='fullscreen']) .content {
-    max-height: none; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-content,
-   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-content */
+    max-height: none;
 }
 :host([mode='fullscreenTakeover']) .button-group,
 :host([mode='fullscreenTakeover']) .footer,
 :host([mode='fullscreen']) .button-group,
 :host([mode='fullscreen']) .footer {
-    padding-top: 0; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-footer,
-   * .spectrum-Dialog--fullscreen .spectrum-Dialog-buttonGroup,
-   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-footer,
-   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-buttonGroup */
+    padding-top: 0;
 }
 :host([mode='fullscreenTakeover']) .footer,
 :host([mode='fullscreen']) .footer {
-    display: none; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-footer,
-   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-footer */
+    display: none;
 }
 :host([mode='fullscreenTakeover']) .button-group,
 :host([mode='fullscreen']) .button-group {
+    -ms-grid-row-align: start;
     align-self: start;
-    grid-area: buttonGroup; /* .spectrum-Dialog--fullscreen .spectrum-Dialog-buttonGroup,
-   * .spectrum-Dialog--fullscreenTakeover .spectrum-Dialog-buttonGroup */
+    grid-area: buttonGroup;
 }
 @media screen and (max-width: 700px) {
     .grid {
-        grid-template-areas: 'hero hero    hero    hero        hero        hero' '.    .       .       .           .           .' '.    heading heading heading     typeIcon    .' '.    header  header  header      header      .' '.    divider divider divider     divider     .' '.    content content content     content     .' '.    footer  footer  buttonGroup buttonGroup .' '.    .       .       .           .           .';
+        grid-template-areas: 'hero hero hero hero hero hero' '. . . . . .' '. heading heading heading typeIcon .' '. header header header header .' '. divider divider divider divider .' '. content content content content .' '. footer footer buttonGroup buttonGroup .' '. . . . . .';
         grid-template-columns:
             var(--spectrum-dialog-confirm-padding) auto 1fr auto minmax(0, auto)
             var(--spectrum-dialog-confirm-padding);
@@ -343,7 +311,7 @@ governing permissions and limitations under the License.
             );
     }
     :host([dismissable]) .grid {
-        grid-template-areas: 'hero hero    hero    hero        hero        hero        hero' '.    .       .       .           .           closeButton closeButton' '.    heading heading heading     typeIcon    closeButton closeButton' '.    header  header  header      header      header      .' '.    divider divider divider     divider     divider     .' '.    content content content     content     content     .' '.    footer  footer  buttonGroup buttonGroup buttonGroup .' '.    .       .       .           .           .           .';
+        grid-template-areas: 'hero hero hero hero hero hero hero' '. . . . . closeButton closeButton' '. heading heading heading typeIcon closeButton closeButton' '. header header header header header .' '. divider divider divider divider divider .' '. content content content content content .' '. footer footer buttonGroup buttonGroup buttonGroup .' '. . . . . . .';
         grid-template-columns:
             var(--spectrum-dialog-confirm-padding) auto 1fr auto minmax(0, auto)
             minmax(0, var(--spectrum-dialog-confirm-close-button-size)) var(--spectrum-dialog-confirm-padding);
@@ -356,8 +324,9 @@ governing permissions and limitations under the License.
     }
     :host([mode='fullscreenTakeover']) .grid,
     :host([mode='fullscreen']) .grid {
+        display: -ms-grid;
         display: grid;
-        grid-template-areas: '.    .            .' '.    heading      .' '.    header       .' '.    divider      .' '.    content      .' '.    buttonGroup  .' '.    .            .';
+        grid-template-areas: '. . .' '. heading .' '. header .' '. divider .' '. content .' '. buttonGroup .' '. . .';
         grid-template-columns: var(--spectrum-dialog-confirm-padding) 1fr var(
                 --spectrum-dialog-confirm-padding
             );
@@ -383,24 +352,24 @@ governing permissions and limitations under the License.
     color: var(
         --spectrum-dialog-confirm-title-text-color,
         var(--spectrum-alias-heading-text-color)
-    ); /* .spectrum-Dialog-heading */
+    );
 }
 .content,
 .footer {
     color: var(
         --spectrum-dialog-confirm-description-text-color,
         var(--spectrum-global-color-gray-800)
-    ); /* .spectrum-Dialog-footer */
+    );
 }
 .type-icon {
     color: var(
         --spectrum-dialog-confirm-icon-color,
         var(--spectrum-global-color-gray-900)
-    ); /* .spectrum-Dialog-typeIcon */
+    );
 }
 :host([error]) .type-icon {
     color: var(
         --spectrum-dialog-error-icon-color,
         var(--spectrum-semantic-negative-icon-color)
-    ); /* .spectrum-Dialog--error .spectrum-Dialog-typeIcon */
+    );
 }

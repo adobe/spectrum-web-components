@@ -25,26 +25,26 @@ governing permissions and limitations under the License.
         --spectrum-dropzone-padding,
         var(--spectrum-global-dimension-size-900)
     );
-    text-align: center; /* .spectrum-Dropzone */
+    text-align: center;
 }
 :host([dragged]) {
-    border-style: solid; /* .spectrum-Dropzone.is-dragged */
+    border-style: solid;
 }
 :host(:focus) {
     border-style: dashed;
-    outline: 0; /* .spectrum-Dropzone:focus */
+    outline: 0;
 }
 :host(:focus.focus-visible) {
-    border-style: solid; /* .spectrum-Dropzone:focus.focus-ring */
+    border-style: solid;
 }
 :host(:focus:focus-visible) {
-    border-style: solid; /* .spectrum-Dropzone:focus.focus-ring */
+    border-style: solid;
 }
 :host {
     border-color: var(
         --spectrum-dropzone-border-color,
         var(--spectrum-global-color-gray-300)
-    ); /* .spectrum-Dropzone */
+    );
 }
 :host([dragged]) {
     background-color: var(
@@ -54,44 +54,38 @@ governing permissions and limitations under the License.
     border-color: var(
         --spectrum-dropzone-border-color-selected-hover,
         var(--spectrum-global-color-blue-400)
-    ); /* .spectrum-Dropzone.is-dragged */
+    );
 }
 :host([dragged]) ::slotted(*) {
-    color: var(
-        --spectrum-global-color-blue-400
-    ); /* .spectrum-Dropzone.is-dragged .spectrum-IllustratedMessage-illustration */
+    color: var(--spectrum-global-color-blue-400);
 }
 :host(:focus) {
     border-color: var(
         --spectrum-dropzone-border-color,
         var(--spectrum-global-color-gray-300)
-    ); /* .spectrum-Dropzone:focus */
+    );
 }
 :host(:focus) ::slotted(*) {
     color: var(
         --spectrum-global-color-static-gray-500,
         rgb(var(--spectrum-global-color-static-gray-500-rgb))
-    ); /* .spectrum-Dropzone:focus .spectrum-IllustratedMessage-illustration */
+    );
 }
 :host(:focus.focus-visible) {
     border-color: var(
         --spectrum-dropzone-border-color-selected-hover,
         var(--spectrum-global-color-blue-400)
-    ); /* .spectrum-Dropzone:focus.focus-ring */
+    );
 }
 :host(:focus:focus-visible) {
     border-color: var(
         --spectrum-dropzone-border-color-selected-hover,
         var(--spectrum-global-color-blue-400)
-    ); /* .spectrum-Dropzone:focus.focus-ring */
+    );
 }
 :host(:focus[dragged].focus-visible) ::slotted(*) {
-    color: var(
-        --spectrum-global-color-blue-400
-    ); /* .spectrum-Dropzone:focus.is-dragged.focus-ring .spectrum-IllustratedMessage-illustration */
+    color: var(--spectrum-global-color-blue-400);
 }
 :host(:focus[dragged]:focus-visible) ::slotted(*) {
-    color: var(
-        --spectrum-global-color-blue-400
-    ); /* .spectrum-Dropzone:focus.is-dragged.focus-ring .spectrum-IllustratedMessage-illustration */
+    color: var(--spectrum-global-color-blue-400);
 }

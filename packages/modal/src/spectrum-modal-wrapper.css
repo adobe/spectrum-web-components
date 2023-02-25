@@ -22,16 +22,16 @@ governing permissions and limitations under the License.
     justify-content: center;
     left: 0;
     pointer-events: none;
-    position: fixed; /* .spectrum-Modal-wrapper */
+    position: fixed;
     top: 0;
-    transition: visibility 0ms linear
+    transition: visibility 0s linear
         var(--spectrum-global-animation-duration-100, 0.13s);
     visibility: hidden;
     width: 100vw;
     z-index: 2;
 }
 :host([open]) {
-    visibility: visible; /* .spectrum-Modal-wrapper.is-open */
+    visibility: visible;
 }
 @media only screen and (max-device-height: 350px),
     only screen and (max-device-width: 400px) {

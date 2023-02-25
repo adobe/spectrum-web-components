@@ -14,7 +14,7 @@ governing permissions and limitations under the License.
 :host {
     --spectrum-fieldlabel-color: var(
         --spectrum-neutral-subdued-content-color-default
-    ); /* .spectrum-FieldLabel */
+    );
     --spectrum-field-label-top-to-asterisk: var(
         --spectrum-field-label-top-to-asterisk-medium
     );
@@ -23,9 +23,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='s']) {
-    --spectrum-fieldlabel-top-to-text: var(
-        --spectrum-component-top-to-text-75
-    ); /* .spectrum-FieldLabel--sizeS */
+    --spectrum-fieldlabel-top-to-text: var(--spectrum-component-top-to-text-75);
     --spectrum-fieldlabel-bottom-to-text: var(
         --spectrum-component-bottom-to-text-75
     );
@@ -44,9 +42,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='m']) {
-    --spectrum-fieldlabel-top-to-text: var(
-        --spectrum-component-top-to-text-75
-    ); /* .spectrum-FieldLabel--sizeM */
+    --spectrum-fieldlabel-top-to-text: var(--spectrum-component-top-to-text-75);
     --spectrum-fieldlabel-bottom-to-text: var(
         --spectrum-component-bottom-to-text-75
     );
@@ -67,7 +63,7 @@ governing permissions and limitations under the License.
 :host([size='l']) {
     --spectrum-fieldlabel-top-to-text: var(
         --spectrum-component-top-to-text-100
-    ); /* .spectrum-FieldLabel--sizeL */
+    );
     --spectrum-fieldlabel-bottom-to-text: var(
         --spectrum-component-bottom-to-text-100
     );
@@ -88,7 +84,7 @@ governing permissions and limitations under the License.
 :host([size='xl']) {
     --spectrum-fieldlabel-top-to-text: var(
         --spectrum-component-top-to-text-200
-    ); /* .spectrum-FieldLabel--sizeXL */
+    );
     --spectrum-fieldlabel-bottom-to-text: var(
         --spectrum-component-bottom-to-text-200
     );
@@ -112,7 +108,7 @@ governing permissions and limitations under the License.
     font-smoothing: subpixel-antialiased;
     box-sizing: border-box;
     color: var(--spectrum-fieldlabel-color);
-    display: block; /* .spectrum-FieldLabel */
+    display: block;
     font-size: var(
         --mod-fieldlabel-font-size,
         var(--spectrum-fieldlabel-font-size)
@@ -136,12 +132,10 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-fieldlabel-line-height-cjk,
         var(--spectrum-fieldlabel-line-height-cjk)
-    ); /* .spectrum-FieldLabel:lang(ja),
-   * .spectrum-FieldLabel:lang(zh),
-   * .spectrum-FieldLabel:lang(ko) */
+    );
 }
 .required-icon {
-    margin-block: 0; /* .spectrum-FieldLabel-requiredIcon */
+    margin-block: 0;
     margin-inline: var(
             --mod-field-label-text-to-asterisk,
             var(--spectrum-field-label-text-to-asterisk)
@@ -149,7 +143,7 @@ governing permissions and limitations under the License.
         0;
 }
 :host([side-aligned='start']) {
-    display: inline-block; /* .spectrum-FieldLabel--left */
+    display: inline-block;
     padding-block: var(
             --mod-fieldlabel-side-padding-top,
             var(--spectrum-fieldlabel-side-padding-top)
@@ -166,7 +160,7 @@ governing permissions and limitations under the License.
             --mod-field-label-text-to-asterisk,
             var(--spectrum-field-label-text-to-asterisk)
         )
-        0; /* .spectrum-FieldLabel--left .spectrum-FieldLabel-requiredIcon */
+        0;
     margin-inline: var(
             --mod-field-label-text-to-asterisk,
             var(--spectrum-field-label-text-to-asterisk)
@@ -174,7 +168,7 @@ governing permissions and limitations under the License.
         0;
 }
 :host([side-aligned='end']) {
-    display: inline-block; /* .spectrum-FieldLabel--right */
+    display: inline-block;
     padding-block: var(
             --mod-fieldlabel-side-padding-top,
             var(--spectrum-fieldlabel-side-padding-top)
@@ -191,13 +185,11 @@ governing permissions and limitations under the License.
     color: var(
         --mod-disabled-content-color,
         var(--spectrum-disabled-content-color)
-    ); /* .spectrum-FieldLabel.is-disabled,
-   * .spectrum-Form-itemLabel.is-disabled */
+    );
 }
 :host([disabled]) .required-icon {
     color: var(
         --mod-disabled-content-color,
         var(--spectrum-disabled-content-color)
-    ); /* .spectrum-FieldLabel.is-disabled .spectrum-FieldLabel-requiredIcon,
-   * .spectrum-Form-itemLabel.is-disabled .spectrum-FieldLabel-requiredIcon */
+    );
 }

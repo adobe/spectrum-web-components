@@ -12,9 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-actionbar-height: var(
-        --spectrum-global-dimension-size-600
-    ); /* .spectrum-ActionBar */
+    --spectrum-actionbar-height: var(--spectrum-global-dimension-size-600);
     --spectrum-actionbar-padding-left: var(
         --spectrum-global-dimension-size-200
     );
@@ -28,7 +26,7 @@ governing permissions and limitations under the License.
 :host {
     bottom: 0;
     box-sizing: border-box;
-    display: flex; /* .spectrum-ActionBar */
+    display: flex;
     height: 0;
     justify-content: center;
     opacity: 0;
@@ -46,49 +44,39 @@ governing permissions and limitations under the License.
                 --spectrum-actionbar-height,
                 var(--spectrum-global-dimension-size-600)
             ) + var(--spectrum-actionbar-margin-x) * 2
-    ); /* .spectrum-ActionBar.is-open */
+    );
     opacity: 1;
 }
 :host([dir='ltr'][variant='sticky']) {
-    left: 0; /* [dir=ltr] .spectrum-ActionBar--sticky */
+    left: 0;
+}
+:host([dir='ltr'][variant='sticky']),
+:host([dir='rtl'][variant='sticky']) {
+    right: 0;
 }
 :host([dir='rtl'][variant='sticky']) {
-    right: 0; /* [dir=rtl] .spectrum-ActionBar--sticky */
-}
-:host([dir='ltr'][variant='sticky']) {
-    right: 0; /* [dir=ltr] .spectrum-ActionBar--sticky */
-}
-:host([dir='rtl'][variant='sticky']) {
-    left: 0; /* [dir=rtl] .spectrum-ActionBar--sticky */
+    left: 0;
 }
 :host([variant='sticky']) {
-    position: sticky; /* .spectrum-ActionBar--sticky */
+    position: sticky;
 }
 :host([flexible]) #popover {
-    width: auto; /* .spectrum-ActionBar--flexible .spectrum-ActionBar-popover */
+    width: auto;
 }
 :host([variant='fixed']) {
-    position: fixed; /* .spectrum-ActionBar--fixed */
+    position: fixed;
 }
 :host([dir='ltr']) #popover {
-    padding-left: var(
-        --spectrum-actionbar-padding-left
-    ); /* [dir=ltr] .spectrum-ActionBar-popover */
+    padding-left: var(--spectrum-actionbar-padding-left);
 }
 :host([dir='rtl']) #popover {
-    padding-right: var(
-        --spectrum-actionbar-padding-left
-    ); /* [dir=rtl] .spectrum-ActionBar-popover */
+    padding-right: var(--spectrum-actionbar-padding-left);
 }
 :host([dir='ltr']) #popover {
-    padding-right: var(
-        --spectrum-actionbar-padding-right
-    ); /* [dir=ltr] .spectrum-ActionBar-popover */
+    padding-right: var(--spectrum-actionbar-padding-right);
 }
 :host([dir='rtl']) #popover {
-    padding-left: var(
-        --spectrum-actionbar-padding-right
-    ); /* [dir=rtl] .spectrum-ActionBar-popover */
+    padding-left: var(--spectrum-actionbar-padding-right);
 }
 #popover {
     align-items: center;
@@ -109,6 +97,6 @@ governing permissions and limitations under the License.
         var(--spectrum-global-dimension-static-size-3500)
     );
     pointer-events: auto;
-    position: relative; /* .spectrum-ActionBar-popover */
+    position: relative;
     width: 100%;
 }

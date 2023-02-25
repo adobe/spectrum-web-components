@@ -12,65 +12,20 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir='ltr'][drop-target]):before {
-    left: 0; /* [dir=ltr] .spectrum-Table-body.is-drop-target:before,
-   * [dir=ltr] 
-.spectrum-Table-row.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    left: 0;
 }
 :host([dir='rtl'][drop-target]):before {
-    right: 0; /* [dir=rtl] .spectrum-Table-body.is-drop-target:before,
-   * [dir=rtl] 
-.spectrum-Table-row.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    right: 0;
 }
 :host([dir='ltr'][drop-target]):before {
-    right: 0; /* [dir=ltr] .spectrum-Table-body.is-drop-target:before,
-   * [dir=ltr] 
-.spectrum-Table-row.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
-   * [dir=ltr] 
-.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    right: 0;
 }
 :host([dir='rtl'][drop-target]):before {
-    left: 0; /* [dir=rtl] .spectrum-Table-body.is-drop-target:before,
-   * [dir=rtl] 
-.spectrum-Table-row.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
-   * [dir=rtl] 
-.spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    left: 0;
 }
 :host([drop-target]):before {
     bottom: 0;
-    content: ''; /* .spectrum-Table-body.is-drop-target:before,
-   * .spectrum-Table-row.is-drop-target::before,
-   * .spectrum-Table--compact .spectrum-Table-body.is-drop-target::before,
-   * .spectrum-Table--compact .spectrum-Table-row.is-drop-target::before,
-   * .spectrum-Table--spacious .spectrum-Table-body.is-drop-target::before,
-   * .spectrum-Table--spacious .spectrum-Table-row.is-drop-target::before */
+    content: '';
     position: absolute;
     top: 0;
     z-index: 1;
@@ -79,7 +34,7 @@ governing permissions and limitations under the License.
     border-radius: var(--spectrum-table-regular-border-radius);
     border-width: var(--spectrum-table-regular-border-size);
     overflow: auto;
-    position: relative; /* .spectrum-Table-body */
+    position: relative;
     vertical-align: var(--spectrum-table-regular-cell-vertical-alignment);
 }
 :host {
@@ -91,13 +46,13 @@ governing permissions and limitations under the License.
         --spectrum-table-m-regular-border-color,
         var(--spectrum-alias-border-color-mid)
     );
-    border-style: solid; /* .spectrum-Table-body */
+    border-style: solid;
 }
 :host([drop-target]) {
     border-color: var(
         --spectrum-alias-border-color-key-focus,
         var(--spectrum-global-color-blue-400)
-    ); /* .spectrum-Table-body.is-drop-target */
+    );
     box-shadow: 0 0 0 1px
         var(
             --spectrum-alias-border-color-key-focus,
@@ -105,7 +60,5 @@ governing permissions and limitations under the License.
         );
 }
 :host([drop-target]):before {
-    background-color: var(
-        --spectrum-alias-highlight-selected
-    ); /* .spectrum-Table-body.is-drop-target:before */
+    background-color: var(--spectrum-alias-highlight-selected);
 }

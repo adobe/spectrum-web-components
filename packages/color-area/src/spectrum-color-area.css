@@ -14,8 +14,8 @@ governing permissions and limitations under the License.
 :host {
     --spectrum-colorarea-border-radius: var(
         --spectrum-color-area-border-rounding
-    ); /* .spectrum-ColorArea */
-    --spectrum-colorarea-border-color: rgba(0, 0, 0, 0.1);
+    );
+    --spectrum-colorarea-border-color: #0000001a;
     --spectrum-colorarea-disabled-background-color: var(
         --spectrum-disabled-background-color
     );
@@ -34,8 +34,7 @@ governing permissions and limitations under the License.
     :host([disabled]) {
         forced-color-adjust: none;
     }
-    .gradient,
-    .spectrum-ColorHandle-color {
+    .gradient {
         forced-color-adjust: none;
     }
 }
@@ -69,18 +68,16 @@ governing permissions and limitations under the License.
         --mod-colorarea-min-width,
         var(--spectrum-colorarea-min-width)
     );
-    position: relative; /* .spectrum-ColorArea */
+    position: relative;
     -webkit-user-select: none;
     user-select: none;
 }
 :host([focused]) {
-    z-index: 2; /* .spectrum-ColorArea.is-focused */
+    z-index: 2;
 }
 :host([focused]) .handle {
     block-size: calc(var(--spectrum-color-handle-size) * 2);
-    inline-size: calc(
-        var(--spectrum-color-handle-size) * 2
-    ); /* .spectrum-ColorArea.is-focused .spectrum-ColorArea-handle */
+    inline-size: calc(var(--spectrum-color-handle-size) * 2);
     margin-block-start: calc(var(--spectrum-color-handle-size) * -1);
     margin-inline-start: calc(var(--spectrum-color-handle-size) * -1);
 }
@@ -97,10 +94,10 @@ governing permissions and limitations under the License.
             var(--spectrum-colorarea-border-width)
         )
         solid var(--highcontrast-colorarea-border-color-disabled);
-    pointer-events: none; /* .spectrum-ColorArea.is-disabled */
+    pointer-events: none;
 }
 :host([disabled]) .gradient {
-    display: none; /* .spectrum-ColorArea.is-disabled .spectrum-ColorArea-gradient */
+    display: none;
 }
 .handle {
     inset-block-start: 0;
@@ -109,16 +106,16 @@ governing permissions and limitations under the License.
             var(--mod-colorarea-width, var(--spectrum-colorarea-width)) -
                 var(--spectrum-colorarea-border-width)
         )
-    ); /* .spectrum-ColorArea-handle */
+    );
 }
 :host([dir='rtl']) .handle {
-    inset-inline-end: 0; /* [dir=rtl] .spectrum-ColorArea-handle */
+    inset-inline-end: 0;
 }
 .gradient {
     border-radius: var(
         --mod-colorarea-border-radius,
         var(--spectrum-colorarea-border-radius)
-    ); /* .spectrum-ColorArea-gradient */
+    );
 }
 .gradient,
 .slider {
@@ -129,7 +126,7 @@ governing permissions and limitations under the License.
     inset-block-start: 0;
     inset-inline-start: 0;
     margin: 0;
-    opacity: 0; /* .spectrum-ColorArea-slider */
+    opacity: 0;
     pointer-events: none;
     position: absolute;
     z-index: 0;

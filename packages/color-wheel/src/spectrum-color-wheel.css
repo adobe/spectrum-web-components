@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-colorwheel-border-radius: 100%; /* .spectrum-ColorWheel */
+    --spectrum-colorwheel-border-radius: 100%;
     --spectrum-colorwheel-width: calc(
         var(--spectrum-global-dimension-size-125) * 16
     );
@@ -45,13 +45,13 @@ governing permissions and limitations under the License.
                 --spectrum-colorhandle-size,
                 var(--spectrum-global-dimension-size-200)
             ) * 2
-    ); /* .spectrum-ColorWheel.is-focused .spectrum-ColorWheel-handle */
+    );
 }
 .slider {
     height: 100%;
     left: 0;
     margin: 0;
-    opacity: 0; /* .spectrum-ColorWheel-slider */
+    opacity: 0;
     pointer-events: none;
     position: absolute;
     top: 0;
@@ -66,7 +66,7 @@ governing permissions and limitations under the License.
         --spectrum-colorwheel-height,
         var(--spectrum-global-dimension-size-2400)
     );
-    position: relative; /* .spectrum-ColorWheel */
+    position: relative;
     -webkit-user-select: none;
     user-select: none;
     width: var(
@@ -75,13 +75,13 @@ governing permissions and limitations under the License.
     );
 }
 :host([focused]) {
-    z-index: 2; /* .spectrum-ColorWheel.is-focused */
+    z-index: 2;
 }
 :host([disabled]) {
-    pointer-events: none; /* .spectrum-ColorWheel.is-disabled */
+    pointer-events: none;
 }
 :host([dragged]) {
-    z-index: 2; /* .spectrum-ColorWheel.is-dragged */
+    z-index: 2;
 }
 ::slotted([slot='gradient']) {
     border-radius: 100%;
@@ -95,7 +95,7 @@ governing permissions and limitations under the License.
         --spectrum-colorwheel-height,
         var(--spectrum-global-dimension-size-2400)
     );
-    position: relative; /* .spectrum-ColorWheel-gradient */
+    position: relative;
     width: var(
         --spectrum-colorwheel-width,
         var(--spectrum-global-dimension-size-2400)
@@ -103,58 +103,55 @@ governing permissions and limitations under the License.
     z-index: 0;
 }
 .wheel {
-    position: relative; /* .spectrum-ColorWheel-wheel */
+    position: relative;
     z-index: 1;
 }
 .innerCircle,
 .outerCircle {
-    fill: transparent; /* .spectrum-ColorWheel-outerCircle,
-   * .spectrum-ColorWheel-innerCircle */
+    fill: #0000;
     stroke-width: var(
         --spectrum-colorwheel-border-size,
         var(--spectrum-alias-border-size-thin)
     );
 }
 .handle {
-    left: 50%; /* .spectrum-ColorWheel-handle */
+    left: 50%;
     top: 50%;
 }
 :host {
     --spectrum-colorwheel-border-color: var(
         --spectrum-colorarea-border-color,
         var(--spectrum-alias-border-color-translucent)
-    ); /* .spectrum-ColorWheel */
+    );
 }
 :host([disabled]) .innerCircle,
 :host([disabled]) .outerCircle {
     stroke: var(
         --spectrum-colorwheel-border-color-disabled,
         var(--spectrum-alias-track-color-disabled)
-    ); /* .spectrum-ColorWheel.is-disabled .spectrum-ColorWheel-outerCircle,
-   * .spectrum-ColorWheel.is-disabled .spectrum-ColorWheel-innerCircle */
+    );
 }
 :host([disabled]) .outerCircle {
     fill: var(
         --spectrum-colorwheel-fill-color-disabled,
         var(--spectrum-alias-track-color-disabled)
-    ); /* .spectrum-ColorWheel.is-disabled .spectrum-ColorWheel-outerCircle */
+    );
 }
 :host([disabled]) .segment {
-    display: none; /* .spectrum-ColorWheel.is-disabled .spectrum-ColorWheel-segment */
+    display: none;
 }
 ::slotted([slot='gradient']) {
     border-color: var(
         --spectrum-colorwheel-border-color,
         var(--spectrum-alias-border-color-translucent)
-    ); /* .spectrum-ColorWheel-gradient */
+    );
 }
 .innerCircle,
 .outerCircle {
     stroke: var(
         --spectrum-colorwheel-border-color,
         var(--spectrum-alias-border-color-translucent)
-    ); /* .spectrum-ColorWheel-outerCircle,
-   * .spectrum-ColorWheel-innerCircle */
+    );
 }
 @media (forced-colors: active) {
     :host {

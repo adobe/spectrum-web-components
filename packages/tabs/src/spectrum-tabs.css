@@ -15,7 +15,7 @@ governing permissions and limitations under the License.
     --spectrum-tabs-quiet-textonly-tabitem-selection-indicator-background-color-selected: var(
         --spectrum-tabs-s-quiet-textonly-tabitem-selection-indicator-background-color-selected,
         var(--spectrum-alias-tabitem-text-color-selected-default)
-    ); /* .spectrum-Tabs--sizeS */
+    );
     --spectrum-tabs-quiet-textonly-divider-background-color: var(
         --spectrum-tabs-s-quiet-textonly-divider-background-color,
         var(--spectrum-alias-tabs-divider-background-color-quiet)
@@ -177,7 +177,7 @@ governing permissions and limitations under the License.
     --spectrum-tabs-quiet-textonly-tabitem-selection-indicator-background-color-selected: var(
         --spectrum-tabs-m-quiet-textonly-tabitem-selection-indicator-background-color-selected,
         var(--spectrum-alias-tabitem-text-color-selected-default)
-    ); /* .spectrum-Tabs--sizeM */
+    );
     --spectrum-tabs-quiet-textonly-divider-background-color: var(
         --spectrum-tabs-m-quiet-textonly-divider-background-color,
         var(--spectrum-alias-tabs-divider-background-color-quiet)
@@ -339,7 +339,7 @@ governing permissions and limitations under the License.
     --spectrum-tabs-quiet-textonly-tabitem-selection-indicator-background-color-selected: var(
         --spectrum-tabs-l-quiet-textonly-tabitem-selection-indicator-background-color-selected,
         var(--spectrum-alias-tabitem-text-color-selected-default)
-    ); /* .spectrum-Tabs--sizeL */
+    );
     --spectrum-tabs-quiet-textonly-divider-background-color: var(
         --spectrum-tabs-l-quiet-textonly-divider-background-color,
         var(--spectrum-alias-tabs-divider-background-color-quiet)
@@ -501,7 +501,7 @@ governing permissions and limitations under the License.
     --spectrum-tabs-quiet-textonly-tabitem-selection-indicator-background-color-selected: var(
         --spectrum-tabs-xl-quiet-textonly-tabitem-selection-indicator-background-color-selected,
         var(--spectrum-alias-tabitem-text-color-selected-default)
-    ); /* .spectrum-Tabs--sizeXL */
+    );
     --spectrum-tabs-quiet-textonly-divider-background-color: var(
         --spectrum-tabs-xl-quiet-textonly-divider-background-color,
         var(--spectrum-alias-tabs-divider-background-color-quiet)
@@ -659,14 +659,12 @@ governing permissions and limitations under the License.
         var(--spectrum-global-dimension-size-125)
     );
 }
-:host {
+#list {
     --spectrum-tabs-compact-item-height: calc(
         var(--spectrum-tabs-compact-textonly-height) -
             var(--spectrum-tabs-compact-textonly-divider-size)
-    ); /* .spectrum-Tabs */
-}
-#list {
-    display: flex; /* .spectrum-Tabs */
+    );
+    display: flex;
     margin: 0;
     padding-bottom: 0;
     padding-top: 0;
@@ -674,36 +672,35 @@ governing permissions and limitations under the License.
     vertical-align: top;
     z-index: 0;
 }
+::slotted(:not([slot])).is-disabled {
+    cursor: default;
+}
 :host([dir='ltr']) ::slotted(:not([slot])):before {
-    left: calc(
-        var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
-    ); /* [dir=ltr] .spectrum-Tabs-item:before */
+    left: calc(var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1);
 }
 :host([dir='rtl']) ::slotted(:not([slot])):before {
     right: calc(
         var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
-    ); /* [dir=rtl] .spectrum-Tabs-item:before */
+    );
 }
 :host([dir='ltr']) ::slotted(:not([slot])):before {
     right: calc(
         var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
-    ); /* [dir=ltr] .spectrum-Tabs-item:before */
+    );
 }
 :host([dir='rtl']) ::slotted(:not([slot])):before {
-    left: calc(
-        var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1
-    ); /* [dir=rtl] .spectrum-Tabs-item:before */
+    left: calc(var(--spectrum-tabs-textonly-tabitem-focus-ring-padding-x) * -1);
 }
 :host([dir='ltr']) #selection-indicator {
-    left: 0; /* [dir=ltr] .spectrum-Tabs-selectionIndicator */
+    left: 0;
 }
 :host([dir='rtl']) #selection-indicator {
-    right: 0; /* [dir=rtl] .spectrum-Tabs-selectionIndicator */
+    right: 0;
 }
 #selection-indicator {
     border-radius: var(--spectrum-tabs-textonly-divider-border-radius);
-    position: absolute; /* .spectrum-Tabs-selectionIndicator */
-    transform-origin: top left;
+    position: absolute;
+    transform-origin: 0 0;
     transition: transform
         var(
             --spectrum-tabs-texticon-tabitem-selection-indicator-animation-duration
@@ -712,61 +709,51 @@ governing permissions and limitations under the License.
     z-index: 0;
 }
 :host([compact]) ::slotted(:not([slot])) {
-    height: var(
-        --spectrum-tabs-compact-item-height
-    ); /* .spectrum-Tabs--compact .spectrum-Tabs-item */
+    height: var(--spectrum-tabs-compact-item-height);
     line-height: var(--spectrum-tabs-compact-item-height);
 }
 :host([direction^='horizontal']) #list {
-    align-items: center; /* .spectrum-Tabs--horizontal */
+    align-items: center;
 }
-:host([direction^='horizontal']) ::slotted(:not([slot])) {
-    vertical-align: top; /* .spectrum-Tabs--horizontal .spectrum-Tabs-item */
+:host([direction^='horizontal']) #list ::slotted(:not([slot])) {
+    vertical-align: top;
 }
 :host([dir='ltr'][direction^='horizontal'])
+    #list
     ::slotted(:not([slot]):not(:first-child)) {
-    margin-left: var(
-        --spectrum-tabs-textonly-tabitem-margin-right
-    ); /* [dir=ltr] .spectrum-Tabs--horizontal .spectrum-Tabs-item+*:not(.spectrum-Tabs-selectionIndicator) */
+    margin-left: var(--spectrum-tabs-textonly-tabitem-margin-right);
 }
 :host([dir='rtl'][direction^='horizontal'])
+    #list
     ::slotted(:not([slot]):not(:first-child)) {
-    margin-right: var(
-        --spectrum-tabs-textonly-tabitem-margin-right
-    ); /* [dir=rtl] .spectrum-Tabs--horizontal .spectrum-Tabs-item+*:not(.spectrum-Tabs-selectionIndicator) */
+    margin-right: var(--spectrum-tabs-textonly-tabitem-margin-right);
 }
-:host([direction^='horizontal']) #selection-indicator {
+:host([direction^='horizontal']) #list #selection-indicator {
     bottom: 0;
     height: var(--spectrum-tabs-quiet-textonly-divider-size);
-    position: absolute; /* .spectrum-Tabs--horizontal .spectrum-Tabs-selectionIndicator */
+    position: absolute;
 }
 :host([direction^='horizontal'][compact]) #list {
     align-items: end;
-    box-sizing: content-box; /* .spectrum-Tabs--horizontal.spectrum-Tabs--compact */
+    box-sizing: content-box;
     height: var(--spectrum-tabs-compact-item-height);
 }
 :host([quiet]) #list {
-    display: inline-flex; /* .spectrum-Tabs--quiet */
+    display: inline-flex;
 }
 :host([direction^='vertical']) #list {
-    display: inline-flex; /* .spectrum-Tabs--vertical */
+    display: inline-flex;
     flex-direction: column;
     padding: 0;
 }
-:host([dir='ltr'][direction^='vertical']) ::slotted(:not([slot])) {
-    margin-left: calc(
-        var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2
-    ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item */
+:host([dir='ltr'][direction^='vertical']) #list ::slotted(:not([slot])) {
+    margin-left: calc(var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2);
 }
-:host([dir='rtl'][direction^='vertical']) ::slotted(:not([slot])) {
-    margin-right: calc(
-        var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2
-    ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item */
+:host([dir='rtl'][direction^='vertical']) #list ::slotted(:not([slot])) {
+    margin-right: calc(var(--spectrum-tabs-vertical-textonly-tabitem-gap) / 2);
 }
-:host([direction^='vertical']) ::slotted(:not([slot])) {
-    height: var(
-        --spectrum-tabs-vertical-textonly-tabitem-height
-    ); /* .spectrum-Tabs--vertical .spectrum-Tabs-item */
+:host([direction^='vertical']) #list ::slotted(:not([slot])) {
+    height: var(--spectrum-tabs-vertical-textonly-tabitem-height);
     line-height: var(--spectrum-tabs-vertical-textonly-tabitem-height);
     margin-bottom: var(--spectrum-tabs-vertical-textonly-tabitem-gap);
     padding-bottom: 0;
@@ -778,123 +765,110 @@ governing permissions and limitations under the License.
     );
     padding-top: 0;
 }
-:host([dir='ltr'][direction^='vertical']) ::slotted(:not([slot])):before {
-    left: calc(
-        var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1
-    ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
+:host([dir='ltr'][direction^='vertical']) #list ::slotted(:not([slot])):before {
+    left: calc(var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1);
 }
-:host([dir='rtl'][direction^='vertical']) ::slotted(:not([slot])):before {
-    right: calc(
-        var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1
-    ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
+:host([dir='rtl'][direction^='vertical']) #list ::slotted(:not([slot])):before {
+    right: calc(var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1);
 }
-:host([dir='ltr'][direction^='vertical']) ::slotted(:not([slot])):before {
-    right: calc(
-        var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1
-    ); /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
+:host([dir='ltr'][direction^='vertical']) #list ::slotted(:not([slot])):before {
+    right: calc(var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1);
 }
-:host([dir='rtl'][direction^='vertical']) ::slotted(:not([slot])):before {
-    left: calc(
-        var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1
-    ); /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-item:before */
-}
-:host([direction^='vertical']) .spectrum-Icon {
-    height: var(
-        --spectrum-tabs-vertical-textonly-tabitem-height
-    ); /* .spectrum-Tabs--vertical .spectrum-Icon */
-    line-height: var(--spectrum-tabs-vertical-textonly-tabitem-height);
+:host([dir='rtl'][direction^='vertical']) #list ::slotted(:not([slot])):before {
+    left: calc(var(--spectrum-tabs-textonly-tabitem-focus-ring-size) * -1);
 }
 :host([direction^='vertical'][compact]) #list ::slotted(:not([slot])) {
-    height: var(
-        --spectrum-tabs-compact-vertical-textonly-tabitem-height
-    ); /* .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-item */
+    height: var(--spectrum-tabs-compact-vertical-textonly-tabitem-height);
     line-height: var(--spectrum-tabs-compact-vertical-textonly-tabitem-height);
     margin-bottom: var(--spectrum-tabs-compact-vertical-textonly-tabitem-gap);
 }
-:host([dir='ltr'][direction^='vertical']) #selection-indicator {
-    left: 0; /* [dir=ltr] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+:host([dir='ltr'][direction^='vertical']) #list #selection-indicator {
+    left: 0;
 }
-:host([dir='rtl'][direction^='vertical']) #selection-indicator {
-    right: 0; /* [dir=rtl] .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+:host([dir='rtl'][direction^='vertical']) #list #selection-indicator {
+    right: 0;
 }
-:host([direction^='vertical']) #selection-indicator {
-    position: absolute; /* .spectrum-Tabs--vertical .spectrum-Tabs-selectionIndicator */
+:host([direction^='vertical']) #list #selection-indicator {
+    position: absolute;
     width: var(--spectrum-tabs-quiet-textonly-divider-size);
 }
-:host {
-    --spectrum-tabs-list-background-direction: top; /* .spectrum-Tabs */
-}
 #list {
+    --spectrum-tabs-list-background-direction: top;
     background: linear-gradient(
         to var(--spectrum-tabs-list-background-direction),
         var(--spectrum-tabs-textonly-divider-background-color) 0
             var(--spectrum-tabs-quiet-textonly-divider-size),
         transparent var(--spectrum-tabs-quiet-textonly-divider-size)
-    ); /* .spectrum-Tabs */
+    );
 }
-:host([direction^='vertical']) {
-    --spectrum-tabs-list-background-direction: right; /* .spectrum-Tabs--vertical */
+:host([direction^='vertical']) #list {
+    --spectrum-tabs-list-background-direction: right;
 }
 :host([direction^='vertical'][compact]) #list,
 :host([quiet]) #list,
-:host([quiet][compact]) #list {
+:host([quiet][compact]) {
     --spectrum-tabs-textonly-divider-background-color: var(
         --spectrum-tabs-quiet-textonly-divider-background-color
-    ); /* .spectrum-Tabs--quiet,
-   * .spectrum-Tabs--quiet.spectrum-Tabs--compact,
-   * .spectrum-Tabs--vertical.spectrum-Tabs--compact */
+    );
 }
-:host([direction^='vertical'][emphasized]) {
+:host([direction^='vertical'][emphasized]) #list {
     --spectrum-tabs-textonly-divider-background-color: var(
         --spectrum-tabs-emphasized-textonly-divider-background-color
-    ); /* .spectrum-Tabs--vertical.spectrum-Tabs--emphasized */
+    );
 }
 #selection-indicator {
     background-color: var(
         --spectrum-tabs-textonly-tabitem-selection-indicator-background-color-selected
-    ); /* .spectrum-Tabs-selectionIndicator */
+    );
 }
 :host([emphasized]) #selection-indicator {
     background-color: var(
         --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected
-    ); /* .spectrum-Tabs--emphasized .spectrum-Tabs-selectionIndicator */
+    );
+}
+:host(:hover)::slotted(:not([slot])) {
+    color: var(--spectrum-tabs-textonly-tabitem-text-color-hover);
+}
+::slotted([selected]:not([slot])) {
+    color: var(--spectrum-tabs-textonly-tabitem-text-color-selected);
+}
+:host(.focus-visible)::slotted(:not([slot])) {
+    color: var(--spectrum-tabs-textonly-tabitem-text-color-selected-key-focus);
+}
+:host(:focus-visible)::slotted(:not([slot])) {
+    color: var(--spectrum-tabs-textonly-tabitem-text-color-selected-key-focus);
+}
+::slotted(:not([slot])).is-disabled {
+    color: var(--spectrum-tabs-textonly-tabitem-text-color-disabled);
 }
 :host([emphasized]) ::slotted([selected]:not([slot])) {
-    color: var(
-        --spectrum-tabs-emphasized-texticon-tabitem-text-color-selected
-    ); /* .spectrum-Tabs--emphasized .spectrum-Tabs-item.is-selected */
-}
-:host([emphasized]) ::slotted([selected]:not([slot])) .spectrum-Icon {
-    color: var(
-        --spectrum-tabs-emphasized-texticon-tabitem-icon-color-selected
-    ); /* .spectrum-Tabs--emphasized .spectrum-Tabs-item.is-selected .spectrum-Icon */
+    color: var(--spectrum-tabs-emphasized-texticon-tabitem-text-color-selected);
 }
 :host([quiet]) #list {
     border-bottom-color: var(
         --spectrum-tabs-quiet-textonly-divider-background-color
-    ); /* .spectrum-Tabs--quiet */
+    );
 }
 :host([quiet]) #selection-indicator {
     background-color: var(
         --spectrum-tabs-quiet-textonly-tabitem-selection-indicator-background-color-selected
-    ); /* .spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator */
+    );
 }
-:host([quiet][emphasized]) #list #selection-indicator {
+:host([quiet][emphasized]) #selection-indicator {
     background-color: var(
         --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected
-    ); /* .spectrum-Tabs--quiet.spectrum-Tabs--emphasized .spectrum-Tabs-selectionIndicator */
+    );
 }
 :host([direction^='vertical'][compact]) #list #selection-indicator,
 :host([direction^='vertical'][quiet]) #list #selection-indicator {
     background-color: var(
         --spectrum-tabs-vertical-textonly-tabitem-selection-indicator-background-color-selected
-    ); /* .spectrum-Tabs--vertical.spectrum-Tabs--quiet .spectrum-Tabs-selectionIndicator,
-   * .spectrum-Tabs--vertical.spectrum-Tabs--compact .spectrum-Tabs-selectionIndicator */
+    );
 }
 :host([direction^='vertical'][emphasized]) #list #selection-indicator {
     background-color: var(
         --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected
-    ); /* .spectrum-Tabs--vertical.spectrum-Tabs--emphasized .spectrum-Tabs-selectionIndicator */
+    );
 }
 @media (forced-colors: active) {
     #list {
@@ -919,13 +893,13 @@ governing permissions and limitations under the License.
         --spectrum-tabs-vertical-textonly-tabitem-selection-indicator-background-color-selected: Highlight;
         forced-color-adjust: none;
     }
-    ::slotted(:not([slot])):before {
+    #list ::slotted(:not([slot])):before {
         background-color: ButtonFace;
     }
-    ::slotted([selected]:not([slot])) {
+    #list ::slotted([selected]:not([slot])) {
         color: HighlightText;
     }
-    ::slotted([selected]:not([slot])):before {
+    #list ::slotted([selected]:not([slot])):before {
         background-color: Highlight;
         color: HighlightText;
     }
