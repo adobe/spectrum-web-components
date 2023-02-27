@@ -89,8 +89,10 @@ let endReturn = 0;
 let written = false;
 const directories = [
     ...getDirectories('packages'),
+    ...getDirectories('projects'),
+    // While this is a build artifact, it doesn't really need to be included here.
+    // ...getDirectories('react'),
     ...getDirectories('tools'),
-    ...getDirectories('react'),
 ];
 
 // find all versions in the monorepo

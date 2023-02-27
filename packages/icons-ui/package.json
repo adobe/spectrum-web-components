@@ -55,7 +55,7 @@
         "fs": "^0.0.1-security",
         "glob": "^8.0.3",
         "path": "^0.12.7",
-        "prettier": "^2.4.1"
+        "prettier": "^2.7.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
