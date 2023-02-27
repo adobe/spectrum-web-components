@@ -130,4 +130,96 @@ describe('Sidenav Item', () => {
         expect(otherItem.focusElement.hasAttribute('aria-current'), 'other').to
             .be.false;
     });
+
+    it('automatically expand parent items in multilevel mode', async () => {
+        const el = await fixture<SideNavItem>(
+            html`
+                <sp-sidenav variant="multilevel" value="2.3.1">
+                    <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
+                    <sp-sidenav-item value="baz" label="baz">
+                        <sp-sidenav-item
+                            value="2.1"
+                            label="2.1"
+                        ></sp-sidenav-item>
+                        <sp-sidenav-item
+                            value="2.2"
+                            label="2.2"
+                        ></sp-sidenav-item>
+                        <sp-sidenav-item value="2.3" label="2.3">
+                            <sp-sidenav-item
+                                value="2.3.1"
+                                label="2.3.1"
+                            ></sp-sidenav-item>
+                            <sp-sidenav-item
+                                disabled
+                                value="2.3.2"
+                                label="2.3.2"
+                            ></sp-sidenav-item>
+                        </sp-sidenav-item>
+                    </sp-sidenav-item>
+                    <sp-sidenav-item
+                        value="test"
+                        label="test"
+                    ></sp-sidenav-item>
+                    <sp-sidenav-item value="hi" label="hi"></sp-sidenav-item>
+                </sp-sidenav>
+            `
+        );
+
+        await elementUpdated(el);
+
+        const sideNavItem_foo = el.querySelector(
+            'sp-sidenav-item[label="foo"]'
+        ) as SideNavItem;
+        const sideNavItem_baz = el.querySelector(
+            'sp-sidenav-item[label="baz"]'
+        ) as SideNavItem;
+        const sideNavItem_test = el.querySelector(
+            'sp-sidenav-item[label="test"]'
+        ) as SideNavItem;
+        const sideNavItem_hi = el.querySelector(
+            'sp-sidenav-item[label="hi"]'
+        ) as SideNavItem;
+
+        await elementUpdated(sideNavItem_foo);
+        await elementUpdated(sideNavItem_baz);
+        await elementUpdated(sideNavItem_test);
+        await elementUpdated(sideNavItem_hi);
+
+        expect(sideNavItem_foo.hasAttribute('expanded')).to.be.false;
+        expect(sideNavItem_baz.hasAttribute('expanded')).to.be.true;
+        expect(sideNavItem_test.hasAttribute('expanded')).to.be.false;
+        expect(sideNavItem_hi.hasAttribute('expanded')).to.be.false;
+
+        const sideNavItem_2_1 = sideNavItem_baz.querySelector(
+            'sp-sidenav-item[label="2.1"]'
+        ) as SideNavItem;
+        const sideNavItem_2_2 = sideNavItem_baz.querySelector(
+            'sp-sidenav-item[label="2.2"]'
+        ) as SideNavItem;
+        const sideNavItem_2_3 = sideNavItem_baz.querySelector(
+            'sp-sidenav-item[label="2.3"]'
+        ) as SideNavItem;
+
+        await elementUpdated(sideNavItem_2_1);
+        await elementUpdated(sideNavItem_2_2);
+        await elementUpdated(sideNavItem_2_3);
+
+        expect(sideNavItem_2_1.hasAttribute('expanded')).to.be.false;
+        expect(sideNavItem_2_2.hasAttribute('expanded')).to.be.false;
+        expect(sideNavItem_2_3.hasAttribute('expanded')).to.be.true;
+
+        const sideNavItem_2_3_1 = sideNavItem_2_3.querySelector(
+            'sp-sidenav-item[label="2.3.1"]'
+        ) as SideNavItem;
+        const sideNavItem_2_3_2 = sideNavItem_2_3.querySelector(
+            'sp-sidenav-item[label="2.3.2"]'
+        ) as SideNavItem;
+
+        await elementUpdated(sideNavItem_2_3_1);
+        await elementUpdated(sideNavItem_2_3_2);
+
+        expect(sideNavItem_2_3_1.hasAttribute('selected')).to.be.true;
+        expect(sideNavItem_2_3_2.hasAttribute('selected')).to.be.false;
+    });
 });
