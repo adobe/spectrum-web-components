@@ -20,59 +20,27 @@ export default {
     title: 'Menu Divider',
 };
 
-export const large = (): TemplateResult => {
+const Template = (size: string): TemplateResult => {
     return html`
         <sp-popover open>
             <sp-menu>
                 <sp-menu-item>Deselect</sp-menu-item>
                 <sp-menu-item>Select Inverse</sp-menu-item>
                 <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-divider size="s"></sp-menu-divider>
+                <sp-menu-divider size=${size}></sp-menu-divider>
                 <sp-menu-item>Select and Mask...</sp-menu-item>
                 <sp-menu-item>Make Work Path</sp-menu-item>
-                <sp-menu-divider size="s"></sp-menu-divider>
+                <sp-menu-divider size=${size}></sp-menu-divider>
                 <sp-menu-item>Save Selection</sp-menu-item>
-                <sp-menu-divider size="s"></sp-menu-divider>
+                <sp-menu-divider size=${size}></sp-menu-divider>
                 <sp-menu-item>Create group</sp-menu-item>
             </sp-menu>
         </sp-popover>
     `;
 };
 
-export const medium = (): TemplateResult => {
-    return html`
-        <sp-popover open>
-            <sp-menu>
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item>Select Inverse</sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-divider size="m"></sp-menu-divider>
-                <sp-menu-item>Select and Mask...</sp-menu-item>
-                <sp-menu-item>Make Work Path</sp-menu-item>
-                <sp-menu-divider size="m"></sp-menu-divider>
-                <sp-menu-item>Save Selection</sp-menu-item>
-                <sp-menu-divider size="m"></sp-menu-divider>
-                <sp-menu-item>Create group</sp-menu-item>
-            </sp-menu>
-        </sp-popover>
-    `;
-};
+export const sizeS = (): TemplateResult => Template('s');
 
-export const small = (): TemplateResult => {
-    return html`
-        <sp-popover open>
-            <sp-menu>
-                <sp-menu-item>Deselect</sp-menu-item>
-                <sp-menu-item>Select Inverse</sp-menu-item>
-                <sp-menu-item>Feather...</sp-menu-item>
-                <sp-menu-divider size="l"></sp-menu-divider>
-                <sp-menu-item>Select and Mask...</sp-menu-item>
-                <sp-menu-item>Make Work Path</sp-menu-item>
-                <sp-menu-divider size="l"></sp-menu-divider>
-                <sp-menu-item>Save Selection</sp-menu-item>
-                <sp-menu-divider size="l"></sp-menu-divider>
-                <sp-menu-item>Create group</sp-menu-item>
-            </sp-menu>
-        </sp-popover>
-    `;
-};
+export const sizeM = (): TemplateResult => Template('m');
+
+export const sizeL = (): TemplateResult => Template('l');
