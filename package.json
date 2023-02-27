@@ -188,9 +188,6 @@
         "typescript": "^4.7.2",
         "yargs": "^17.2.1"
     },
-    "resolutions": {
-        "@web/polyfills-loader": "1.4.1"
-    },
     "workspaces": [
         "packages/*",
         "projects/*",
