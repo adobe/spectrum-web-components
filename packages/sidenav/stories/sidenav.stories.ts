@@ -61,10 +61,10 @@ export const Multilevel = ({
     return html`
         <sp-sidenav variant="multilevel" value="2.3.1" @change=${onChange}>
             <sp-sidenav-item value="foo" label="foo"></sp-sidenav-item>
-            <sp-sidenav-item value="baz" label="baz" expanded>
+            <sp-sidenav-item value="baz" label="baz">
                 <sp-sidenav-item value="2.1" label="2.1"></sp-sidenav-item>
                 <sp-sidenav-item value="2.2" label="2.2"></sp-sidenav-item>
-                <sp-sidenav-item value="2.3" label="2.3" expanded>
+                <sp-sidenav-item value="2.3" label="2.3">
                     <sp-sidenav-item
                         value="2.3.1"
                         label="2.3.1"
