@@ -4383,9 +4383,9 @@
   integrity sha512-7oLSwCFaDQsMZp2cvA3UgAmFjAHxsVLRzD+/GQWW7KZPQfcOQu0BiVTpOn7atdh/1wDX9PiXxnzALQKSusRIGw==
 
 "@spectrum-css/link@^4.0.11":
-  version "4.0.14"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/link/-/link-4.0.14.tgz#2f964e704311bf4209422c24f4eebfe64e00590c"
-  integrity sha512-1/kSJlCMrMSlW+OvKLZ4HaFKAv/M3nGlSwtFZCdoaLgNs5lhBWbv+Fr7dPBCTOuzn+JMqNGtbpsqJL7Fj3hiXw==
+  version "4.0.16"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/link/-/link-4.0.16.tgz#0e011c095a13810956c23d9895e69b575de19125"
+  integrity sha512-lqD8y8PuOEBKoe/ocTsoIqQmF7Pt++/grSbDGcTjzSuL2OlU7XN8ZiemNVnlI/7FVFaWtpuexGszVM7oxi/jiw==
 
 "@spectrum-css/menu@^4.0.11":
   version "4.0.11"
