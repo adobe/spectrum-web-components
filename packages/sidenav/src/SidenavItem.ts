@@ -166,6 +166,16 @@ export class SideNavItem extends LikeAnchor(Focusable) {
             parentSideNav.startTrackingSelectionForItem(this);
             this.selected =
                 this.value != null && this.value === parentSideNav.value;
+            if (
+                this.selected === true &&
+                parentSideNav.variant === 'multilevel'
+            ) {
+                let element = this.parentElement;
+                while (element instanceof SideNavItem) {
+                    element.expanded = true;
+                    element = element.parentElement;
+                }
+            }
         }
     }
 
