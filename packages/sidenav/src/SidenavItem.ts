@@ -172,9 +172,7 @@ export class SideNavItem extends LikeAnchor(Focusable) {
             ) {
                 let element = this.parentElement;
                 while (element instanceof SideNavItem) {
-                    if (element.expanded === false) {
-                        element.expanded = true;
-                    }
+                    element.expanded = true;
                     element = element.parentElement;
                 }
             }
