@@ -23,7 +23,6 @@ import linkStyles from './link.css.js';
 /**
  * @element sp-link
  *
- * @attr quiet - uses quiet styles or not
  * @attr over-background - uses over background styles or not
  */
 export class Link extends LikeAnchor(Focusable) {
@@ -39,6 +38,12 @@ export class Link extends LikeAnchor(Focusable) {
 
     @property({ type: String, reflect: true })
     public static: 'black' | 'white' | undefined;
+
+    /**
+     * Uses quiet styles or not
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'quiet' })
+    public quiet = false;
 
     public override get focusElement(): HTMLElement {
         return this.anchorElement;
