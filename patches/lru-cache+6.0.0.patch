@@ -1,0 +1,13 @@
+diff --git a/node_modules/lru-cache/index.js b/node_modules/lru-cache/index.js
+index 573b6b8..6d47439 100644
+--- a/node_modules/lru-cache/index.js
++++ b/node_modules/lru-cache/index.js
+@@ -151,6 +151,8 @@ class LRUCache {
+   }
+ 
+   set (key, value, maxAge) {
++    return;
++    
+     maxAge = maxAge || this[MAX_AGE]
+ 
+     if (maxAge && typeof maxAge !== 'number')

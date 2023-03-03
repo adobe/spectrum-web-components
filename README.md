@@ -191,3 +191,13 @@ The build process compiles `.css` files using PostCSS and wraps them in the `lit
 # Contributing
 
 We'd be very grateful if you contributed to the project! Check out our [contribution guidelines](CONTRIBUTING.md) for more information.
+
+<a name="patches"></a>
+
+<details><summary><strong>Active patches</strong></summary>
+
+### lru-cache
+
+The `lru-cache` leveraged by `@web/dev-server` can interact negatively with ARM based macOS machines causing a critical hang in the cache of transpiled file responses. This only effects development time operations and specifically effects the local test passes. To avoid this `lru-cache@6.0` has been patched to make its `set` method a noop, avoiding the caching process all together.
+
+</details>
