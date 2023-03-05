@@ -175,8 +175,10 @@ export default function genReactWrapper({
             const fileImports = modules
                 .filter(
                     (m) =>
-                        m.declarations.length === 0 &&
-                        m.path.indexOf('sync/') === -1
+                        m.exports.length === 1 &&
+                        m.exports.filter(
+                            (exp) => exp.kind === 'custom-element-definition'
+                        ).length > 0
                 )
                 .map(
                     (m) =>

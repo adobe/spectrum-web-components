@@ -13,7 +13,13 @@ governing permissions and limitations under the License.
 import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
 
 export default {
-    globs: ['**/sp-*.ts', '**/src/[A-Z]*.ts', '**/src/elements/[A-Z]*.ts'],
+    globs: [
+        '**/sp-*.ts',
+        '**/active-overlay.ts',
+        '**/overlay-trigger.ts',
+        '**/src/[A-Z]*.ts',
+        '**/src/elements/[A-Z]*.ts',
+    ],
     exclude: [
         '**/*.d.ts',
         '**/stories/**',
