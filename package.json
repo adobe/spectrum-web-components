@@ -32,7 +32,7 @@
         "docs:review": "alex packages/**/*.md",
         "docs:start": "yarn workspace documentation serve --watch",
         "find": "test -f custom-elements.json",
-        "gen-react-wrapper": "rm -fr react && lerna exec --ignore \"{@spectrum-web-components/{base,bundle,modal,iconset,shared,styles},documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- cem analyze --config ../../cem-react-wrapper.config.js && node ./scripts/generate-icon-react-wrapper.js",
+        "gen-react-wrapper": "rm -fr react && lerna exec --ignore \"{@spectrum-web-components/{base,bundle,custom-vars-viewer,modal,iconset,shared,styles},documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- cem analyze --config ../../cem-react-wrapper.config.js && node ./scripts/generate-icon-react-wrapper.js",
         "get-ready": "yarn build:clear-cache && run-p process-icons process-spectrum && yarn build:clean",
         "icons": "node ./scripts/process-icons.js && pretty-quick --pattern \"packages/**/*.svg.ts\" && eslint -f pretty --fix \"packages/**/*.svg.ts\"",
         "icons:ui": "yarn workspace @spectrum-web-components/icons-ui build",
