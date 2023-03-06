@@ -15,7 +15,6 @@ import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
 export default {
     globs: [
         '**/sp-*.ts',
-        '**/active-overlay.ts',
         '**/overlay-trigger.ts',
         '**/src/[A-Z]*.ts',
         '**/src/elements/[A-Z]*.ts',

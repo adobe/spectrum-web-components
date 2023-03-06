@@ -176,9 +176,9 @@ export default function genReactWrapper({
                 .filter(
                     (m) =>
                         m.exports.length === 1 &&
-                        m.exports.filter(
+                        m.exports.some(
                             (exp) => exp.kind === 'custom-element-definition'
-                        ).length > 0
+                        )
                 )
                 .map(
                     (m) =>

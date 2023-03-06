@@ -16,12 +16,7 @@ import { resolve } from 'path';
 import yaml from 'js-yaml';
 
 export default {
-    globs: [
-        '**/sp-*.ts',
-        '**/active-overlay.ts',
-        '**/overlay-trigger.ts',
-        '**/src/[A-Z]*.ts',
-    ],
+    globs: ['**/sp-*.ts', '**/overlay-trigger.ts', '**/src/[A-Z]*.ts'],
     exclude: [
         '**/sp-icon-*.ts',
         '**/*.d.ts',
