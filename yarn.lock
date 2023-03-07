@@ -4550,9 +4550,9 @@
   integrity sha512-WrhrRRgdG3dtLoF4Dsskq28zKNUcnS779PHD7x5dsAiehPOY9e0/MjHhb/U9QkGzr791b0AzbO/n5TZakVVpXQ==
 
 "@spectrum-css/vars@^8.0.3":
-  version "8.0.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-8.0.3.tgz#a5da23c58861b36ee48b9cd5983f956d2bb7977f"
-  integrity sha512-LoSPi5273u21O5ItFr3FuLZS3D0y9dlmJImmat8W66r6dPaFJhHDRAbIB93hGOk5mPxqrQb8guAUx7FmvZrbuQ==
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/vars/-/vars-8.0.4.tgz#dcf115551f240b25ba629a3b6c4d3eb1429bee15"
+  integrity sha512-3jYj5HYxbVfkR4jLV9l+L3g6jS4R09m0lV+gupqnXWpwcThlP0EOjkCkevu195imoS4pZ/i2iLpd98l4qcTc2Q==
 
 "@spectrum-web-components/eslint-plugin@file:./linters/eslint":
   version "1.1.1"
