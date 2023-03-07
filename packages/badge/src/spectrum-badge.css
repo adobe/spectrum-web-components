@@ -16,7 +16,7 @@ governing permissions and limitations under the License.
         --spectrum-corner-radius-100
     ); /* .spectrum-Badge */
     --spectrum-badge-line-height: var(--spectrum-line-height-100);
-    --spectrum-badge-line-height-cjk: var(--spectrum-line-height-cjk-100);
+    --spectrum-badge-line-height-cjk: var(--spectrum-cjk-line-height-100);
     --spectrum-badge-label-icon-color-white: var(--spectrum-white);
     --spectrum-badge-label-icon-color-black: var(--spectrum-black);
     --spectrum-badge-background-color-default: var(
