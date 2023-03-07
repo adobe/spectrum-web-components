@@ -4404,10 +4404,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/modal/-/modal-3.0.28.tgz#7687176f06fc50a7b6442437b85d2659db5bf9a0"
   integrity sha512-lPqPulGq6wPNmH56v53DojUe3Y+flxtXUwNNIjZrw6SG8TXFtHa1zC+IOqd5pkFzlSAX+rbiK6Xea4G3cbSXbQ==
 
-"@spectrum-css/picker@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/picker/-/picker-2.0.0.tgz#a5ffd75564291d9ad96ca665c00ab6793dc07515"
-  integrity sha512-PY0P0jNU20ZgvL8pNiTNMDGWtcQv5AIqPfa5+EW8qqVOVHT6tOBa8YQlv+dSRnAN6UsXSPCgclrcwl/0C3V2/A==
+"@spectrum-css/picker@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/picker/-/picker-2.0.5.tgz#9ba1bd2843a18bcdd061952a92f85ffe6105c50d"
+  integrity sha512-EBncWkbWtm3dPvrt5ZObdwEHsZWhTNg/aX5mxJm7UncwxmZMdz0xpVCYDy87cnzGrudefGHR6QnFkYllsO8QpQ==
 
 "@spectrum-css/pickerbutton@^2.0.7":
   version "2.0.7"
