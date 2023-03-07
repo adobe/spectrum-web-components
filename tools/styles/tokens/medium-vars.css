@@ -109,6 +109,8 @@ governing permissions and limitations under the License.
     --spectrum-thumbnail-size-800: 44px;
     --spectrum-thumbnail-size-900: 50px;
     --spectrum-thumbnail-size-1000: 56px;
+    --spectrum-alert-dialog-title-size: var(--spectrum-heading-size-s);
+    --spectrum-alert-dialog-description-size: var(--spectrum-body-size-s);
     --spectrum-opacity-checkerboard-square-size: 8px;
     --spectrum-breadcrumbs-height-multiline: 72px;
     --spectrum-breadcrumbs-top-to-text: 13px;
@@ -145,7 +147,8 @@ governing permissions and limitations under the License.
     --spectrum-color-area-minimum-width: 64px;
     --spectrum-color-area-height: 192px;
     --spectrum-color-area-minimum-height: 64px;
-    --spectrum-color-wheel-minimum-width: 192px;
+    --spectrum-color-wheel-width: 192px;
+    --spectrum-color-wheel-minimum-width: 175px;
     --spectrum-color-slider-length: 192px;
     --spectrum-illustrated-message-title-size: var(--spectrum-heading-size-m);
     --spectrum-illustrated-message-cjk-title-size: var(
