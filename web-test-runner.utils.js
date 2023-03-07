@@ -23,6 +23,17 @@ export const chromium = playwrightLauncher({
         }),
 });
 
+export const chromiumWithFlags = playwrightLauncher({
+    product: 'chromium',
+    launchOptions: {
+        args: ['--enable-experimental-web-platform-features'],
+    },
+    createBrowserContext: ({ browser }) =>
+        browser.newContext({
+            ignoreHTTPSErrors: true,
+        }),
+});
+
 export const firefox = playwrightLauncher({
     product: 'firefox',
     createBrowserContext: ({ browser }) =>
