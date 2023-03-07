@@ -108,6 +108,9 @@ governing permissions and limitations under the License.
     --spectrum-color-loupe-outer-border: var(--spectrum-white);
     --spectrum-card-selection-background-color: var(--spectrum-gray-100);
     --spectrum-card-selection-background-color-opacity: 0.95;
+    --spectrum-drop-zone-background-color: var(--spectrum-accent-visual-color);
+    --spectrum-drop-zone-background-color-opacity: 0.1;
+    --spectrum-drop-zone-background-color-opacity-filled: 0.3;
     --spectrum-white: rgb(255, 255, 255);
     --spectrum-transparent-white-100: rgba(255, 255, 255, 0);
     --spectrum-transparent-white-200: rgba(255, 255, 255, 0.1);
@@ -175,6 +178,21 @@ governing permissions and limitations under the License.
     --spectrum-card-minimum-width: 100px;
     --spectrum-card-preview-minimum-height: 130px;
     --spectrum-card-selection-background-size: 40px;
+    --spectrum-drop-zone-width: 428px;
+    --spectrum-drop-zone-content-maximum-width: var(
+        --spectrum-illustrated-message-maximum-width
+    );
+    --spectrum-drop-zone-border-dash-length: 8px;
+    --spectrum-drop-zone-border-dash-gap: 4px;
+    --spectrum-drop-zone-title-size: var(
+        --spectrum-illustrated-message-title-size
+    );
+    --spectrum-drop-zone-cjk-title-size: var(
+        --spectrum-illustrated-message-cjk-title-size
+    );
+    --spectrum-drop-zone-body-size: var(
+        --spectrum-illustrated-message-body-size
+    );
     --spectrum-android-elevation: 2dp;
     --spectrum-spacing-50: 2px;
     --spectrum-spacing-75: 4px;
@@ -486,6 +504,7 @@ governing permissions and limitations under the License.
     --spectrum-heading-cjk-line-height: var(--spectrum-cjk-line-height-100);
     --spectrum-heading-margin-top-multiplier: 0.88888889;
     --spectrum-heading-margin-bottom-multiplier: 0.25;
+    --spectrum-heading-color: var(--spectrum-gray-900);
     --spectrum-body-sans-serif-font-family: var(
         --spectrum-sans-serif-font-family
     );
@@ -553,6 +572,7 @@ governing permissions and limitations under the License.
     --spectrum-body-line-height: var(--spectrum-line-height-200);
     --spectrum-body-cjk-line-height: var(--spectrum-cjk-line-height-200);
     --spectrum-body-margin-multiplier: 0.75;
+    --spectrum-body-color: var(--spectrum-gray-800);
     --spectrum-detail-sans-serif-font-family: var(
         --spectrum-sans-serif-font-family
     );
@@ -691,6 +711,9 @@ governing permissions and limitations under the License.
     --spectrum-detail-margin-top-multiplier: 0.88888889;
     --spectrum-detail-margin-bottom-multiplier: 0.25;
     --spectrum-detail-letter-spacing: 0.06em;
+    --spectrum-detail-sans-serif-text-transform: uppercase;
+    --spectrum-detail-serif-text-transform: uppercase;
+    --spectrum-detail-color: var(--spectrum-gray-900);
     --spectrum-code-font-family: Source Code Pro;
     --spectrum-code-cjk-font-family: var(--spectrum-code-font-family);
     --spectrum-code-font-weight: var(--spectrum-regular-font-weight);
@@ -728,4 +751,5 @@ governing permissions and limitations under the License.
     --spectrum-code-size-xs: var(--spectrum-font-size-75);
     --spectrum-code-line-height: var(--spectrum-line-height-200);
     --spectrum-code-cjk-line-height: var(--spectrum-cjk-line-height-200);
+    --spectrum-code-color: var(--spectrum-gray-800);
 }

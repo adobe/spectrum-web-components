@@ -22,4 +22,26 @@ governing permissions and limitations under the License.
 
     --spectrum-slider-tick-mark-height: 10px;
     --spectrum-slider-ramp-track-height: 16px;
+
+    --spectrum-colorwheel-path: 'M 95 95 m -95 0 a 95 95 0 1 0 190 0 a 95 95 0 1 0 -190 0.2 M 95 95 m -73 0 a 73 73 0 1 0 146 0 a 73 73 0 1 0 -146 0';
+    --spectrum-colorwheel-path-borders: 'M 96 96 m -96 0 a 96 96 0 1 0 192 0 a 96 96 0 1 0 -192 0.2 M 96 96 m -72 0 a 72 72 0 1 0 144 0 a 72 72 0 1 0 -144 0';
+    --spectrum-colorwheel-colorarea-container-size: 144px;
+
+    /* TODO: --spectrum-color-handle-size will need to be removed here once it's defined in @adobe/spectrum-tokens */
+    --spectrum-color-handle-size: 16px;
+
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-small: 28px;
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-medium: 32px;
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-large: 38px;
+    --spectrum-menu-item-selectable-edge-to-text-not-selected-extra-large: 45px;
+
+    --spectrum-menu-item-checkmark-height-small: 10px;
+    --spectrum-menu-item-checkmark-height-medium: 10px;
+    --spectrum-menu-item-checkmark-height-large: 12px;
+    --spectrum-menu-item-checkmark-height-extra-large: 14px;
+
+    --spectrum-menu-item-checkmark-width-small: 10px;
+    --spectrum-menu-item-checkmark-width-medium: 10px;
+    --spectrum-menu-item-checkmark-width-large: 12px;
+    --spectrum-menu-item-checkmark-width-extra-large: 14px;
 }

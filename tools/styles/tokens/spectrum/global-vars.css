@@ -24,6 +24,10 @@ governing permissions and limitations under the License.
     );
     --spectrum-slider-track-thickness: 2px;
     --spectrum-slider-handle-gap: 4px;
+    --spectrum-color-loupe-height: 64px;
+    --spectrum-color-loupe-width: 48px;
+    --spectrum-color-loupe-bottom-to-color-handle: 12px;
+    --spectrum-color-loupe-inner-border-width: var(--spectrum-border-width-200);
     --spectrum-border-width-100: 1px;
     --spectrum-accent-color-100: var(--spectrum-blue-100);
     --spectrum-accent-color-200: var(--spectrum-blue-200);
