@@ -1258,7 +1258,6 @@ governing permissions and limitations under the License.
 
 :host,
 :root {
-    --system-spectrum-picker-border-size: var(--spectrum-border-width-100);
     --system-spectrum-picker-background-color-default: var(--spectrum-gray-75);
     --system-spectrum-picker-background-color-default-open: var(
         --spectrum-gray-200
