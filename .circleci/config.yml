@@ -144,6 +144,22 @@ jobs:
                   name: Are there changes?
                   command: git diff --exit-code
 
+    test-chromium-flags:
+        executor: node
+
+        steps:
+            - downstream
+            - run:
+                  name: Run tests
+                  command: yarn test:ci --config web-test-runner.config.ci-chromium-flags.js --group unit
+            - store_test_results:
+                  path: /root/project/results/
+            - store_artifacts:
+                  path: coverage
+            - run:
+                  name: Are there changes?
+                  command: git diff --exit-code
+
     test-firefox:
         executor: node
 
@@ -286,6 +302,7 @@ workflows:
     build:
         jobs:
             - test-chromium
+            - test-chromium-flags
             - test-firefox
             - test-webkit
             - hcm-visual:
