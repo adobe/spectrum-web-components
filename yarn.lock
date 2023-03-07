@@ -4269,10 +4269,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/avatar/-/avatar-6.0.0.tgz#9e8354e1c7f39c68236816608c82749614127d9c"
   integrity sha512-3KmuULwc3bhViydMFn7kLxM8uTshC0600WV8yu1DqgKTHTO8bFuFAltzR22MCQ8HzVeWDqMqwUIYejZESROcbg==
 
-"@spectrum-css/badge@^2.0.9":
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/badge/-/badge-2.0.9.tgz#05a8265a86bfb93bdcf6fe0e27e8df83691bc3fa"
-  integrity sha512-xaKQYdNEYSMDzkQtVq4Fy1rd3RcRK3+uU73lGs4LeYIll9H+KAj45OiNtTTp6pfINye9qFo/q5jypHjZS2c+Dw==
+"@spectrum-css/badge@^3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/badge/-/badge-3.0.5.tgz#6265201e45054c463d0c45d1ef6d5a36699b3719"
+  integrity sha512-TznSs+aGRmC2T4sW/CiLPP6MGZ6xqSY6FOBV8+uHO6eVXubw84pHffrbGIzQ64nlz8h3iZTAWesPtOl4DGRvOg==
 
 "@spectrum-css/banner@3.0.0-beta.2":
   version "3.0.0-beta.2"
