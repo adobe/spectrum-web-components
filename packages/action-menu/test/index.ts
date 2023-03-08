@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
@@ -22,9 +23,25 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
 import { spy } from 'sinon';
 
-import type { ActionMenu } from '@spectrum-web-components/action-menu';
+import { ActionMenu } from '@spectrum-web-components/action-menu';
 import type { Menu, MenuItem } from '@spectrum-web-components/menu';
 import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+import '@spectrum-web-components/dialog/sp-dialog-base.js';
+import { Theme } from '@spectrum-web-components/theme';
+import { TemplateResult } from '@spectrum-web-components/base';
+
+async function styledFixture<T extends Element>(
+    story: TemplateResult
+): Promise<T> {
+    const test = await fixture<Theme>(html`
+        <sp-theme theme="spectrum" scale="medium" color="dark">
+            ${story}
+        </sp-theme>
+    `);
+    return test.children[0] as T;
+}
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -154,6 +171,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 `
             );
 
+            await nextFrame();
+
             expect(changeSpy.callCount).to.equal(0);
             expect(el.open).to.be.false;
 
@@ -200,6 +219,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                     </sp-action-menu>
                 `
             );
+
+            await nextFrame();
 
             expect(changeSpy.callCount).to.equal(0);
             expect(el.open).to.be.false;
@@ -347,7 +368,26 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             ).to.be.true;
         });
         it('allows top-level selection state to change', async () => {
-            const root = await actionSubmenuFixture();
+            const root = await styledFixture<ActionMenu>(html`
+                <sp-action-menu label="More Actions">
+                    <sp-menu-item>One</sp-menu-item>
+                    <sp-menu-item selected id="root-selected-item">
+                        Two
+                    </sp-menu-item>
+                    <sp-menu-item id="item-with-submenu">
+                        B should be selected
+                        <sp-menu slot="submenu">
+                            <sp-menu-item>A</sp-menu-item>
+                            <sp-menu-item selected id="sub-selected-item">
+                                B
+                            </sp-menu-item>
+                            <sp-menu-item>C</sp-menu-item>
+                        </sp-menu>
+                    </sp-menu-item>
+                </sp-action-menu>
+            `);
+
+            await nextFrame();
             const unselectedItem = root.querySelector(
                 'sp-menu-item'
             ) as MenuItem;
@@ -369,28 +409,33 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             let opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
+            await aTimeout(150);
 
             // close by clicking selected
             // (with event listener: should set selected = false)
             let closed = oneEvent(root, 'sp-closed');
             selectedItem.click();
             await closed;
+            await aTimeout(150);
             await nextFrame();
 
             opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
+            await aTimeout(150);
 
             // close by clicking unselected
             // (no event listener: should remain selected = false)
             closed = oneEvent(root, 'sp-closed');
             unselectedItem.click();
             await closed;
+            await aTimeout(150);
             await nextFrame();
 
             opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
+            await aTimeout(150);
 
             expect(unselectedItem.textContent).to.include('One');
             expect(unselectedItem.selected).to.be.false;
@@ -402,11 +447,13 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             closed = oneEvent(root, 'sp-closed');
             selectedItem.click();
             await closed;
+            await aTimeout(150);
             await nextFrame();
 
             opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
+            await aTimeout(150);
 
             expect(unselectedItem.textContent).to.include('One');
             expect(unselectedItem.selected).to.be.false;

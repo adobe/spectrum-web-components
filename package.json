@@ -81,6 +81,7 @@
         "test:visual:clean:baseline": "rimraf test/visual/screenshots-baseline",
         "test:visual:clean:current": "rimraf test/visual/screenshots-current",
         "test:watch": "yarn test:watch:focus unit",
+        "test:watch:flags:focus": "yarn build && run-p build:watch \"test:start --watch --group {1} --config web-test-runner.config.ci-chromium-flags.js\" --",
         "test:watch:focus": "yarn build && run-p build:watch \"test:start --watch --group {1}\" --",
         "update:spectrum-css": "node ./scripts/update-spectrum-css.js --latest || yarn update:spectrum-css:cleanup",
         "update:spectrum-css:cleanup": "yarn lint:packagejson && yarn --ignore-scripts && yarn process-spectrum",

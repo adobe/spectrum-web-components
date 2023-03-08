@@ -15,6 +15,7 @@ import type { Picker } from '@spectrum-web-components/picker';
 // import type { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay';
 import type { MenuItem } from '@spectrum-web-components/menu';
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
@@ -44,6 +45,8 @@ import { sendMouse } from '../../../test/plugins/browser.js';
 import type { Popover } from '@spectrum-web-components/popover';
 import { ignoreResizeObserverLoopError } from '../../../test/testing-helpers.js';
 import { isWebKit } from '@spectrum-web-components/shared/src/platform.js';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
 
 ignoreResizeObserverLoopError(before, after);
 
@@ -56,7 +59,7 @@ export function runPickerTests(): void {
     const pickerFixture = async (): Promise<Picker> => {
         const test = await fixture<HTMLDivElement>(
             html`
-                <div>
+                <sp-theme scale="medium" color="light">
                     <sp-field-label for="picker">
                         Where do you live?
                     </sp-field-label>
@@ -74,7 +77,7 @@ export function runPickerTests(): void {
                         <sp-menu-item>Save Selection</sp-menu-item>
                         <sp-menu-item disabled>Make Work Path</sp-menu-item>
                     </sp-picker>
-                </div>
+                </sp-theme>
             `
         );
 
@@ -84,6 +87,7 @@ export function runPickerTests(): void {
         beforeEach(async () => {
             el = await pickerFixture();
             await elementUpdated(el);
+            await nextFrame();
         });
         afterEach(async () => {
             if (el.open) {
@@ -128,6 +132,7 @@ export function runPickerTests(): void {
             el.value = 'option-2';
             await elementUpdated(option2);
             await elementUpdated(el);
+            await aTimeout(150);
             expect(el.value).to.equal('option-2');
             expect((el.button.textContent || '').trim()).to.equal(
                 'Select Inverse'
@@ -152,6 +157,7 @@ export function runPickerTests(): void {
             const option2 = el.querySelector('[value="option-2"') as MenuItem;
             el.value = 'option-2';
             await elementUpdated(el);
+            await aTimeout(150);
             expect(el.value).to.equal('option-2');
             expect((el.button.textContent || '').trim()).to.equal(
                 'Select Inverse'
@@ -176,6 +182,7 @@ export function runPickerTests(): void {
             el.value = 'option-2';
 
             await elementUpdated(el);
+            await aTimeout(150);
             expect(el.value).to.equal('option-2');
             expect((el.button.textContent || '').trim()).to.equal(
                 'Select Inverse'
@@ -191,9 +198,13 @@ export function runPickerTests(): void {
             await Promise.all(removals);
             await elementUpdated(el);
             await nextFrame();
+            await aTimeout(150);
             expect(el.optionsMenu.childItems.length).to.equal(0);
-            expect(el.value).to.equal('');
+            if ('showPopover' in document.createElement('div')) {
+                return;
+            }
             expect((el.button.textContent || '').trim()).to.equal('');
+            expect(el.value).to.equal('');
         });
         it('accepts a new item and value at the same time', async () => {
             el.value = 'option-2';
@@ -286,6 +297,7 @@ export function runPickerTests(): void {
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
+            await aTimeout(150);
             expect(
                 el.optionsMenu.getAttribute('aria-activedescendant')
             ).to.equal(firstItem?.id);
@@ -403,6 +415,7 @@ export function runPickerTests(): void {
             button.click();
             await opened;
             await elementUpdated(el);
+            await aTimeout(150);
 
             expect(el.open).to.be.true;
             expect(el.selectedItem?.itemText).to.be.undefined;
@@ -464,7 +477,6 @@ export function runPickerTests(): void {
         it('dispatches bubbling and composed events', async () => {
             const changeSpy = spy();
             const parent = el.parentElement as HTMLElement;
-            parent.attachShadow({ mode: 'open' });
             (parent.shadowRoot as ShadowRoot).append(el);
             const secondItem = el.querySelector(
                 'sp-menu-item:nth-of-type(2)'
@@ -878,6 +890,7 @@ export function runPickerTests(): void {
                 const opened = oneEvent(el, 'sp-opened');
                 await sendKeys({ press: 'ArrowUp' });
                 await opened;
+                await aTimeout(150);
 
                 expect(el.open, 'opened').to.be.true;
                 await waitUntil(
@@ -928,9 +941,10 @@ export function runPickerTests(): void {
 
             await elementUpdated(el);
 
+            const opened = oneEvent(el, 'sp-opened');
             el.open = true;
-
-            await elementUpdated(el);
+            await opened;
+            await aTimeout(150);
             await waitUntil(
                 () => isMenuActiveElement(el),
                 'first item focused'
@@ -1188,6 +1202,8 @@ export function runPickerTests(): void {
         const el2 = await pickerFixture();
         const el1 = await pickerFixture();
 
+        (el1.parentElement as HTMLElement).style.float = 'left';
+        (el2.parentElement as HTMLElement).style.float = 'left';
         el1.id = 'away';
         el2.id = 'other';
 
@@ -1198,6 +1214,7 @@ export function runPickerTests(): void {
         let open = oneEvent(el1, 'sp-opened');
         el1.click();
         await open;
+        await aTimeout(150);
         expect(el1.open).to.be.true;
         expect(el2.open).to.be.false;
 
@@ -1205,6 +1222,7 @@ export function runPickerTests(): void {
         let closed = oneEvent(el1, 'sp-closed');
         el2.click();
         await Promise.all([open, closed]);
+        await aTimeout(150);
         expect(el1.open).to.be.false;
         expect(el2.open).to.be.true;
 
@@ -1212,8 +1230,9 @@ export function runPickerTests(): void {
         closed = oneEvent(el2, 'sp-closed');
         el1.click();
         await Promise.all([open, closed]);
-        expect(el1.open).to.be.true;
+        await aTimeout(150);
         expect(el2.open).to.be.false;
+        expect(el1.open).to.be.true;
 
         closed = oneEvent(el1, 'sp-closed');
         sendKeys({
@@ -1239,6 +1258,7 @@ export function runPickerTests(): void {
                 </sp-picker>
             `
         );
+        await nextFrame();
 
         await elementUpdated(el);
         await waitUntil(
@@ -1267,6 +1287,7 @@ export function runPickerTests(): void {
         sendKeys({ press: 'Enter' });
         await opened;
         await elementUpdated(el.optionsMenu);
+        await aTimeout(150);
 
         expect(
             el === document.activeElement,

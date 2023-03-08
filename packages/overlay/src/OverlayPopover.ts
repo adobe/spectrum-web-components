@@ -9,8 +9,17 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
+import {
+    firstFocusableIn,
+    firstFocusableSlottedIn,
+} from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import { ReactiveElement } from 'lit';
-import { OverlayBase } from './OverlayBase.js';
+import {
+    BeforetoggleClosedEvent,
+    BeforetoggleOpenEvent,
+    OpenableElement,
+    OverlayBase,
+} from './OverlayBase.js';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,6 +41,7 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
                     once: true,
                 });
                 this.manageChildren(false);
+                this.dispatchEvent(new BeforetoggleClosedEvent());
             };
             if (this.open) {
                 await this.managePosition();
@@ -40,14 +50,52 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
                     requestAnimationFrame(() => {
                         // Ensure that child content is fully "on the DOM" before showing the modal.
                         // This allow for that content to be available to the focus algorithm of that process.
-                        this.dialogEl.showPopover();
+                        if (!this.dialogEl.matches(':open')) {
+                            this.dialogEl.showPopover();
+                        }
+                        requestAnimationFrame(async () => {
+                            let focusEl = null as HTMLElement | null;
+                            this.elements.forEach(
+                                (element: OpenableElement): void => {
+                                    if (typeof element.open !== 'undefined') {
+                                        element.open = true;
+                                    }
+                                    if (!focusEl) {
+                                        focusEl = firstFocusableIn(element);
+                                    }
+                                    if (!focusEl) {
+                                        const childSlots =
+                                            element.querySelectorAll('slot');
+                                        childSlots.forEach((slot) => {
+                                            if (!focusEl) {
+                                                focusEl =
+                                                    firstFocusableSlottedIn(
+                                                        slot
+                                                    );
+                                            }
+                                        });
+                                    }
+                                }
+                            );
+                            requestAnimationFrame(() => {
+                                requestAnimationFrame(() => {
+                                    this.manageChildren(true);
+                                    if (focusEl) focusEl.focus();
+                                    this.dispatchEvent(
+                                        new BeforetoggleOpenEvent()
+                                    );
+                                });
+                            });
+                        });
                     });
                 }
             } else {
                 if (this.dialogEl.matches(':open')) {
                     doClose(() => {
                         if (!this.open) {
-                            this.dialogEl.hidePopover();
+                            if (this.dialogEl.matches(':open')) {
+                                this.dialogEl.hidePopover();
+                            }
                         }
                     });
                 } else {
