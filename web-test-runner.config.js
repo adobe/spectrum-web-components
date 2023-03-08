@@ -106,6 +106,16 @@ export default {
             }
             return acc;
         }, []),
+        {
+            name: 'overlay-api',
+            files: [
+                'packages/action-menu/test/*.test.js',
+                'packages/menu/test/*.test.js',
+                'packages/overlay/test/*.test.js',
+                'packages/picker/test/*.test.js',
+                'packages/split-button/test/*.test.js',
+            ],
+        },
     ],
     group: 'unit',
     browsers: [chromium, firefox, webkit],

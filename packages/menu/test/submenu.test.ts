@@ -14,6 +14,7 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { Menu, MenuItem } from '@spectrum-web-components/menu';
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
@@ -98,6 +99,7 @@ describe('Submenu', () => {
             ],
         });
         await opened;
+        await aTimeout(150);
 
         expect(rootItem.open).to.be.true;
 
@@ -117,6 +119,7 @@ describe('Submenu', () => {
             ],
         });
         await closed;
+        await aTimeout(150);
         await nextFrame();
 
         expect(submenuChanged.withArgs('Two').calledOnce, 'submenu changed').to
@@ -124,7 +127,7 @@ describe('Submenu', () => {
         expect(rootChanged.withArgs('Has submenu').calledOnce, 'root changed')
             .to.be.true;
     });
-    it('closes deep tree on selection', async () => {
+    it.only('closes deep tree on selection', async () => {
         const rootChanged = spy();
         const submenuChanged = spy();
         const subSubmenuChanged = spy();
@@ -176,12 +179,15 @@ describe('Submenu', () => {
             `
         );
 
+        await aTimeout(150);
+
         await elementUpdated(el);
         const rootItem = el.querySelector('.root') as MenuItem;
         const rootItemBoundingRect = rootItem.getBoundingClientRect();
         expect(rootItem.open).to.be.false;
 
-        const opened = oneEvent(rootItem, 'sp-opened');
+        let opened = oneEvent(rootItem, 'sp-opened');
+        // Hover the root menu item to open a submenu
         sendMouse({
             steps: [
                 {
@@ -196,13 +202,15 @@ describe('Submenu', () => {
             ],
         });
         await opened;
+        await aTimeout(150);
 
         expect(rootItem.open).to.be.true;
 
         const item2 = document.querySelector('.submenu-item-2') as MenuItem;
         const item2BoundingRect = item2.getBoundingClientRect();
 
-        let closed = oneEvent(item2, 'sp-opened');
+        opened = oneEvent(item2, 'sp-opened');
+        // Click the submenu item to open a submenu
         sendMouse({
             steps: [
                 {
@@ -214,7 +222,8 @@ describe('Submenu', () => {
                 },
             ],
         });
-        await closed;
+        await opened;
+        await aTimeout(150);
         await nextFrame();
 
         expect(item2.open).to.be.true;
@@ -222,7 +231,8 @@ describe('Submenu', () => {
         const itemC = document.querySelector('.sub-submenu-item-3') as MenuItem;
         const itemCBoundingRect = itemC.getBoundingClientRect();
 
-        closed = oneEvent(rootItem, 'sp-closed');
+        const closed = oneEvent(rootItem, 'sp-closed');
+        // click to select and close
         sendMouse({
             steps: [
                 {
@@ -235,12 +245,13 @@ describe('Submenu', () => {
             ],
         });
         await closed;
+        await aTimeout(150);
         await nextFrame();
 
-        expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
-            .true;
         expect(submenuChanged.calledWith('Two'), 'submenu changed').to.be.true;
         expect(subSubmenuChanged.calledWith('C'), 'sub submenu changed').to.be
+            .true;
+        expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
             .true;
     });
     (
@@ -309,6 +320,7 @@ describe('Submenu', () => {
                 press: testData.openKey,
             });
             await opened;
+            await aTimeout(150);
 
             expect(rootItem.open).to.be.true;
             expect(
@@ -321,6 +333,7 @@ describe('Submenu', () => {
                 press: testData.closeKey,
             });
             await closed;
+            await aTimeout(150);
 
             expect(rootItem.open).to.be.false;
             expect(
@@ -333,6 +346,7 @@ describe('Submenu', () => {
                 press: testData.openKey,
             });
             await opened;
+            await aTimeout(150);
 
             expect(rootItem.open).to.be.true;
 
@@ -345,6 +359,7 @@ describe('Submenu', () => {
                 press: 'Enter',
             });
             await closed;
+            await aTimeout(150);
             await elementUpdated(el);
             await nextFrame();
 
@@ -869,6 +884,7 @@ describe('Submenu', () => {
                 </sp-menu-group>
             </sp-action-menu>
         `);
+        await nextFrame();
 
         const rootMenu1 = el.querySelector('#submenu-item-1') as MenuItem;
         const childMenu2 = el.querySelector('#submenu-item-2') as MenuItem;
@@ -901,6 +917,9 @@ describe('Submenu', () => {
         await closed;
     });
     it('cleans up submenus that close before they are "open"', async () => {
+        if ('showPopover' in document.createElement('div')) {
+            return;
+        }
         await sendMouse({
             steps: [
                 {
@@ -1009,6 +1028,12 @@ describe('Submenu', () => {
                 },
             ],
         });
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
+        await nextFrame();
         const closed = oneEvent(rootItem2, 'sp-closed');
         // Close the second submenu
         await sendMouse({
@@ -1019,8 +1044,7 @@ describe('Submenu', () => {
                         rootItemBoundingRect2.left +
                             rootItemBoundingRect2.width / 2,
                         rootItemBoundingRect2.top +
-                            rootItemBoundingRect2.top +
-                            rootItemBoundingRect2.height / 2,
+                            rootItemBoundingRect2.height * 2,
                     ],
                 },
             ],

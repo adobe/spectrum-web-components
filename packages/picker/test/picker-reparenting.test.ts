@@ -16,6 +16,7 @@ import '@spectrum-web-components/menu/sp-menu-divider.js';
 import { Picker } from '@spectrum-web-components/picker';
 import { MenuItem } from '@spectrum-web-components/menu';
 import {
+    aTimeout,
     elementUpdated,
     expect,
     fixture,
@@ -93,12 +94,14 @@ describe('Reparented Picker', () => {
         picker.click();
         await opened;
         await elementUpdated(picker);
+        await aTimeout(150);
         expect(picker.open).to.be.true;
         let closed = oneEvent(picker, 'sp-closed');
         item2.click();
         await closed;
         await elementUpdated(picker);
         await nextFrame();
+        await aTimeout(150);
 
         expect(picker.value).to.equal('2');
         expect(picker.open).to.be.false;

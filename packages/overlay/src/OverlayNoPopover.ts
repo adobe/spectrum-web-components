@@ -14,12 +14,7 @@ import {
     firstFocusableSlottedIn,
 } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import { ReactiveElement } from 'lit';
-import {
-    BeforetoggleClosedEvent,
-    BeforetoggleOpenEvent,
-    OpenableElement,
-    OverlayBase,
-} from './OverlayBase.js';
+import { OpenableElement, OverlayBase } from './OverlayBase.js';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,7 +36,6 @@ export function OverlayNoPopover<T extends Constructor<OverlayBase>>(
                     once: true,
                 });
                 this.manageChildren(false);
-                this.dispatchEvent(new BeforetoggleClosedEvent());
             };
             if (this.open) {
                 await this.managePosition();
@@ -73,7 +67,6 @@ export function OverlayNoPopover<T extends Constructor<OverlayBase>>(
                             requestAnimationFrame(() => {
                                 this.manageChildren(true);
                                 if (focusEl) focusEl.focus();
-                                this.dispatchEvent(new BeforetoggleOpenEvent());
                             });
                         });
                     });
