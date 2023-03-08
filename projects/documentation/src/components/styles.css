@@ -68,7 +68,7 @@ body {
         right: 0;
         min-height: 100vh;
         box-sizing: border-box;
-        padding: 96px 0 24px
+        padding: 92px 0 24px
             calc(var(--spectrum-global-dimension-size-2400) + 48px);
         background: linear-gradient(
             to right,
@@ -120,7 +120,7 @@ body {
 @media screen and (max-width: 960px) {
     docs-page:not(:defined) {
         display: block;
-        padding: 114px var(--spectrum-global-dimension-size-300) 24px;
+        padding: 71px var(--spectrum-global-dimension-size-300) 24px;
         overflow: hidden;
     }
 
@@ -128,7 +128,7 @@ body {
         content: '';
         position: absolute;
         width: 100%;
-        top: 48px;
+        top: 60px;
         border-bottom: 1px solid var(--spectrum-global-color-gray-200);
         left: 0;
     }
@@ -159,12 +159,6 @@ body {
 @media screen and (max-width: 500px) {
     sp-sidenav:not(:defined) {
         column-count: 2;
-    }
-}
-
-@media screen and (max-width: 458px) {
-    docs-page:not(:defined) {
-        padding: 212px var(--spectrum-global-dimension-size-300) 24px;
     }
 }
 
