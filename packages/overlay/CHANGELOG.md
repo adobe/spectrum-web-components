@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.19.1...@spectrum-web-components/overlay@0.19.2) (2023-03-08)
+
+**Note:** Version bump only for package @spectrum-web-components/overlay
+
 ## [0.19.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/overlay@0.19.0...@spectrum-web-components/overlay@0.19.1) (2023-02-13)
 
 **Note:** Version bump only for package @spectrum-web-components/overlay

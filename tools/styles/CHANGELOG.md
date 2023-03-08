@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.23.0...@spectrum-web-components/styles@0.23.1) (2023-03-08)
+
+**Note:** Version bump only for package @spectrum-web-components/styles
+
 # [0.23.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.22.2...@spectrum-web-components/styles@0.23.0) (2023-02-08)
 
 ### Features

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/swatch",
-    "version": "0.3.6",
+    "version": "0.3.7",
     "publishConfig": {
         "access": "public"
     },
@@ -69,7 +69,7 @@
         "@lit-labs/observers": "^1.0.1",
         "@spectrum-web-components/base": "^0.7.4",
         "@spectrum-web-components/icon": "^0.12.8",
-        "@spectrum-web-components/icons-ui": "^0.9.8",
+        "@spectrum-web-components/icons-ui": "^0.9.9",
         "@spectrum-web-components/reactive-controllers": "^0.3.5",
         "@spectrum-web-components/shared": "^0.15.5"
     },

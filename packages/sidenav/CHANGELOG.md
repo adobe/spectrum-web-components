@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.13.10...@spectrum-web-components/sidenav@0.14.0) (2023-03-08)
+
+### Features
+
+-   implement [#2964](https://github.com/adobe/spectrum-web-components/issues/2964) for sidenav component ([99afac9](https://github.com/adobe/spectrum-web-components/commit/99afac986f1ddf45cc6d0486306cdac246f8764a))
+-   implement [#2964](https://github.com/adobe/spectrum-web-components/issues/2964) for sidenav component ([5bf36e5](https://github.com/adobe/spectrum-web-components/commit/5bf36e56c132781b62a28eeb5a01c523aa6633bb))
+
 ## [0.13.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/sidenav@0.13.9...@spectrum-web-components/sidenav@0.13.10) (2023-02-21)
 
 ### Bug Fixes

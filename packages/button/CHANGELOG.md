@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.20.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.20.1...@spectrum-web-components/button@0.20.2) (2023-03-08)
+
+### Bug Fixes
+
+-   docs button variant usage ([894282c](https://github.com/adobe/spectrum-web-components/commit/894282c579b39a3d69ff0d401e0598746c78c352))
+
 ## [0.20.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/button@0.20.0...@spectrum-web-components/button@0.20.1) (2023-02-13)
 
 ### Bug Fixes

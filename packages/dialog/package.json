@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/dialog",
-    "version": "0.11.12",
+    "version": "0.11.13",
     "publishConfig": {
         "access": "public"
     },
@@ -74,10 +74,10 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.4",
-        "@spectrum-web-components/button": "^0.20.1",
-        "@spectrum-web-components/button-group": "^0.10.7",
+        "@spectrum-web-components/button": "^0.20.2",
+        "@spectrum-web-components/button-group": "^0.10.8",
         "@spectrum-web-components/divider": "^0.6.6",
-        "@spectrum-web-components/icons-workflow": "^0.9.8",
+        "@spectrum-web-components/icons-workflow": "^0.9.9",
         "@spectrum-web-components/modal": "^0.7.7",
         "@spectrum-web-components/shared": "^0.15.5",
         "@spectrum-web-components/underlay": "^0.9.6"

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/top-nav",
-    "version": "0.6.12",
+    "version": "0.6.13",
     "publishConfig": {
         "access": "public"
     },
@@ -67,7 +67,7 @@
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.4",
         "@spectrum-web-components/shared": "^0.15.5",
-        "@spectrum-web-components/tabs": "^0.11.0"
+        "@spectrum-web-components/tabs": "^0.11.1"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

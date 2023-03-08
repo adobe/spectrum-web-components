@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.14.4...@spectrum-web-components/link@0.14.5) (2023-03-08)
+
+### Bug Fixes
+
+-   add the missing quiet property to Link component ([867ea43](https://github.com/adobe/spectrum-web-components/commit/867ea43bc609b2516142c08ee90c598a1531fb99))
+
 ## [0.14.4](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/link@0.14.3...@spectrum-web-components/link@0.14.4) (2023-02-08)
 
 **Note:** Version bump only for package @spectrum-web-components/link
