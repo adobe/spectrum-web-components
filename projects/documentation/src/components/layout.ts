@@ -28,16 +28,15 @@ import type {
     Theme,
     ThemeVariant,
 } from '@spectrum-web-components/theme';
-import '@spectrum-web-components/picker/sp-picker.js';
 import type { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
-import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/link/sp-link.js';
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/toast/sp-toast.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-settings.js';
 
 import type { SideNav } from './side-nav.js';
 import './adobe-logo.js';
@@ -165,6 +164,9 @@ export class LayoutElement extends LitElement {
     @property({ type: Boolean })
     public open = false;
 
+    @property({ type: Boolean })
+    public settings = false;
+
     @property({ type: Boolean, attribute: false })
     private isNarrow = isNarrowMediaQuery.matches;
 
@@ -193,6 +195,10 @@ export class LayoutElement extends LitElement {
 
     toggleNav() {
         this.open = !this.open;
+    }
+
+    toggleSettings() {
+        this.settings = !this.settings;
     }
 
     private updateColor(event: Event) {
@@ -309,6 +315,32 @@ export class LayoutElement extends LitElement {
         `;
     }
 
+    private get settingsContent(): TemplateResult {
+        if (this.settings || !this.isNarrow) {
+            import('./settings.js');
+        }
+        return html`
+            <sp-underlay
+                class="scrim"
+                ?open=${this.settings}
+                @click=${this.toggleSettings}
+                ?hidden=${!this.isNarrow}
+            ></sp-underlay>
+            <aside class=${this.settings ? 'show' : ''}>
+                <header>
+                    <sp-action-button
+                        quiet
+                        label="Cloase Navigation"
+                        @click=${this.toggleSettings}
+                    >
+                        <sp-icon-close slot="icon"></sp-icon-close>
+                    </sp-action-button>
+                </header>
+                ${this.manageTheme}
+            </aside>
+        `;
+    }
+
     private get manageTheme(): TemplateResult {
         return html`
             <div class="manage-theme">
@@ -400,18 +432,28 @@ export class LayoutElement extends LitElement {
                                       slot="icon"
                                   ></sp-icon-show-menu>
                               </sp-action-button>
+
+                              <sp-action-button
+                                  quiet
+                                  label="Open Settings"
+                                  @click=${this.toggleSettings}
+                              >
+                                  <sp-icon-settings
+                                      slot="icon"
+                                  ></sp-icon-settings>
+                              </sp-action-button>
                           </header>
                       `
                     : html``}
                 <div id="body">
-                    ${this.sideNav}
+                    ${this.sideNav} ${this.settingsContent}
                     <div
                         id="page"
                         ?inert=${this.isNarrow && this.open}
                         @alert=${this.addAlert}
                         @copy-text=${this.copyText}
                     >
-                        ${this.manageTheme}
+                        ${!this.isNarrow ? this.manageTheme : ''}
                         <slot></slot>
                     </div>
                 </div>
