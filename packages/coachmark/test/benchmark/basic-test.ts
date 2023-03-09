@@ -11,9 +11,23 @@ governing permissions and limitations under the License.
 */
 
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
+import '@spectrum-web-components/coachmark/sp-coachmark-popover.js';
+import '@spectrum-web-components/coachmark/sp-coachmark-popover-content.js';
 import { html } from 'lit';
 import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 
 measureFixtureCreation(html`
-    <sp-coachmark open></sp-coachmark>
+    <sp-coachmark></sp-coachmark>
+`);
+
+measureFixtureCreation(html`
+    <sp-coachmark-popover open>
+        <sp-coachmark-popover-content
+            slot="coachmark"
+            primary-cta="Got it!"
+            secondary-cta="Skip"
+            heading="Learn about the world"
+            content="The world has some explaining to do!"
+        ></sp-coachmark-popover-content>
+    </sp-coachmark-popover>
 `);

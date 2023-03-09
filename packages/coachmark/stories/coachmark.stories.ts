@@ -15,7 +15,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 
 export default {
-    title: 'Coachmark',
+    title: 'Coachmark/Pulsemark',
     component: 'sp-coachmark',
 };
 
@@ -27,7 +27,7 @@ export const Default = (): TemplateResult => {
     `;
 };
 
-export const quiet = (): TemplateResult => {
+export const Quiet = (): TemplateResult => {
     return html`
         <sp-coachmark quiet></sp-coachmark>
         <sp-coachmark quiet variant="dark"></sp-coachmark>

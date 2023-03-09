@@ -9,6 +9,27 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-export * from './Coachmark.js';
-export * from './CoachmarkPopover.js';
-export * from './CoachmarkPopoverContent.js';
+
+slot[name='coachmark'] {
+    display: none;
+}
+
+#target {
+    display: inline-flex;
+    position: relative;
+}
+
+#coachmark-wrapper {
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    inset: 0;
+}
+
+#coachmark-wrapper > sp-coachmark {
+    margin: 0;
+    min-height: 100%;
+}

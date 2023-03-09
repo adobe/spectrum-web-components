@@ -1,4 +1,6 @@
 {
     "./src/*": "./src/*",
-    "./sp-coachmark.js": "./sp-coachmark.js"
+    "./sp-coachmark.js": "./sp-coachmark.js",
+    "./sp-coachmark-popover.js": "./sp-coachmark-popover.js",
+    "./sp-coachmark-popover-content.js": "./sp-coachmark-popover-content.js"
 }

@@ -68,6 +68,40 @@ const config = {
                     'variant'
                 ),
             ],
+            exclude: [/\.spectrum-CoachMarkPopover-footer/],
+        },
+        {
+            name: 'coachmark-popover-content',
+            host: {
+                selector: '.spectrum-CoachMarkPopover',
+            },
+            ids: [
+                {
+                    selector: '.spectrum-CoachMarkPopover-header',
+                    name: 'header',
+                },
+                {
+                    selector: '.spectrum-CoachMarkPopover-title',
+                    name: 'title',
+                },
+                {
+                    selector: '.spectrum-CoachMarkPopover-content',
+                    name: 'content',
+                },
+                {
+                    selector: '.spectrum-CoachMarkPopover-footer',
+                    name: 'footer',
+                },
+                {
+                    selector: '.spectrum-CoachMarkPopover-step',
+                    name: 'step',
+                },
+                {
+                    selector: '.spectrum-CoachMarkPopover-image',
+                    name: 'image',
+                },
+            ],
+            exclude: [/\.spectrum-CoachMarkIndicator/, /pulse/],
         },
     ],
 };

@@ -29,6 +29,16 @@
             "development": "./src/Coachmark.dev.js",
             "default": "./src/Coachmark.js"
         },
+        "./src/CoachmarkPopover.js": {
+            "development": "./src/CoachmarkPopover.dev.js",
+            "default": "./src/CoachmarkPopover.js"
+        },
+        "./src/CoachmarkPopoverContent.js": {
+            "development": "./src/CoachmarkPopoverContent.dev.js",
+            "default": "./src/CoachmarkPopoverContent.js"
+        },
+        "./src/coachmark-popover-content.css.js": "./src/coachmark-popover-content.css.js",
+        "./src/coachmark-popover.css.js": "./src/coachmark-popover.css.js",
         "./src/coachmark.css.js": "./src/coachmark.css.js",
         "./src/index.js": {
             "development": "./src/index.dev.js",
@@ -37,6 +47,14 @@
         "./sp-coachmark.js": {
             "development": "./sp-coachmark.dev.js",
             "default": "./sp-coachmark.js"
+        },
+        "./sp-coachmark-popover.js": {
+            "development": "./sp-coachmark-popover.dev.js",
+            "default": "./sp-coachmark-popover.js"
+        },
+        "./sp-coachmark-popover-content.js": {
+            "development": "./sp-coachmark-popover-content.dev.js",
+            "default": "./sp-coachmark-popover-content.js"
         }
     },
     "scripts": {
@@ -57,7 +75,9 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.5"
+        "@spectrum-web-components/base": "^0.7.5",
+        "@spectrum-web-components/button": "^0.20.2",
+        "@spectrum-web-components/overlay": "^0.19.2"
     },
     "devDependencies": {
         "@spectrum-css/coachmark": "^5.0.21"

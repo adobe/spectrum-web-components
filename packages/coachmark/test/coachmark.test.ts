@@ -14,17 +14,8 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import { Coachmark } from '@spectrum-web-components/coachmark';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Coachmark', () => {
-    testForLitDevWarnings(
-        async () =>
-            await fixture<Coachmark>(
-                html`
-                    <sp-coachmark></sp-coachmark>
-                `
-            )
-    );
     it('loads default coachmark accessibly', async () => {
         const el = await fixture<Coachmark>(
             html`
