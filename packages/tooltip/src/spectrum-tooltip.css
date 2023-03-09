@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-overlay-animation-distance: 6px; /* .spectrum-Tooltip */
+    --spectrum-overlay-animation-distance: 6px;
     --spectrum-overlay-animation-duration: var(
         --spectrum-animation-duration-100
     );
@@ -20,25 +20,21 @@ governing permissions and limitations under the License.
     pointer-events: none;
     transition: transform var(--spectrum-overlay-animation-duration) ease-in-out,
         opacity var(--spectrum-overlay-animation-duration) ease-in-out,
-        visibility 0ms linear var(--spectrum-overlay-animation-duration);
+        visibility 0s linear var(--spectrum-overlay-animation-duration);
     visibility: hidden;
 }
 :host([open]) {
     opacity: 1;
     pointer-events: auto;
-    transition-delay: 0ms;
-    visibility: visible; /* .spectrum-Tooltip.is-open */
+    transition-delay: 0s;
+    visibility: visible;
 }
 :host([open]) .spectrum-Tooltip--bottom-end,
 :host([open]) .spectrum-Tooltip--bottom-left,
 :host([open]) .spectrum-Tooltip--bottom-right,
 :host([open]) .spectrum-Tooltip--bottom-start,
 :host([placement*='bottom'][open]) {
-    --spectrum-overlay-animation-distance: 6px; /* .spectrum-Tooltip--bottom.is-open,
-   * .spectrum-Tooltip--bottom-left.is-open,
-   * .spectrum-Tooltip--bottom-right.is-open,
-   * .spectrum-Tooltip--bottom-start.is-open,
-   * .spectrum-Tooltip--bottom-end.is-open */
+    --spectrum-overlay-animation-distance: 6px;
     transform: translateY(var(--spectrum-overlay-animation-distance));
 }
 :host([open]),
@@ -47,12 +43,7 @@ governing permissions and limitations under the License.
 :host([open]) .spectrum-Tooltip--top-right,
 :host([open]) .spectrum-Tooltip--top-start,
 :host([placement*='top'][open]) {
-    --spectrum-overlay-animation-distance: 6px; /* .spectrum-Tooltip.is-open,
-   * .spectrum-Tooltip--top.is-open,
-   * .spectrum-Tooltip--top-left.is-open,
-   * .spectrum-Tooltip--top-right.is-open,
-   * .spectrum-Tooltip--top-start.is-open,
-   * .spectrum-Tooltip--top-end.is-open */
+    --spectrum-overlay-animation-distance: 6px;
     transform: translateY(
         calc(var(--spectrum-overlay-animation-distance) * -1)
     );
@@ -66,15 +57,7 @@ governing permissions and limitations under the License.
 :host([open]) .spectrum-Tooltip--right-bottom,
 :host([open]) .spectrum-Tooltip--right-top,
 :host([placement*='right'][open]) {
-    --spectrum-overlay-animation-distance: 6px; /* .spectrum-Tooltip--right.is-open,
-   * .spectrum-Tooltip--right-bottom.is-open,
-   * .spectrum-Tooltip--right-top.is-open,
-   * [dir=rtl] .spectrum-Tooltip--start.is-open,
-   * [dir=rtl] .spectrum-Tooltip--start-top.is-open,
-   * [dir=rtl] .spectrum-Tooltip--start-bottom.is-open,
-   * .spectrum-Tooltip--end.is-open,
-   * .spectrum-Tooltip--end-top.is-open,
-   * .spectrum-Tooltip--end-bottom.is-open */
+    --spectrum-overlay-animation-distance: 6px;
     transform: translateX(var(--spectrum-overlay-animation-distance));
 }
 :host([dir='rtl'][open]) .spectrum-Tooltip--end,
@@ -86,15 +69,7 @@ governing permissions and limitations under the License.
 :host([open]) .spectrum-Tooltip--start-bottom,
 :host([open]) .spectrum-Tooltip--start-top,
 :host([placement*='left'][open]) {
-    --spectrum-overlay-animation-distance: 6px; /* .spectrum-Tooltip--left.is-open,
-   * .spectrum-Tooltip--left-bottom.is-open,
-   * .spectrum-Tooltip--left-top.is-open,
-   * .spectrum-Tooltip--start.is-open,
-   * .spectrum-Tooltip--start-top.is-open,
-   * .spectrum-Tooltip--start-bottom.is-open,
-   * [dir=rtl] .spectrum-Tooltip--end.is-open,
-   * [dir=rtl] .spectrum-Tooltip--end-top.is-open,
-   * [dir=rtl] .spectrum-Tooltip--end-bottom.is-open */
+    --spectrum-overlay-animation-distance: 6px;
     transform: translateX(
         calc(var(--spectrum-overlay-animation-distance) * -1)
     );
@@ -102,7 +77,7 @@ governing permissions and limitations under the License.
 :host {
     --spectrum-tooltip-animation-duration: var(
         --spectrum-animation-duration-100
-    ); /* .spectrum-Tooltip */
+    );
     --spectrum-tooltip-animation-distance: var(--spectrum-spacing-75);
     --spectrum-tooltip-margin: 0px;
     --spectrum-tooltip-height: var(--spectrum-component-height-75);
@@ -153,7 +128,7 @@ governing permissions and limitations under the License.
 }
 @media (forced-colors: active) {
     :host {
-        border: 1px solid transparent;
+        border: 1px solid #0000;
     }
     #tip {
         --highcontrast-tooltip-background-color-default: CanvasText;
@@ -203,7 +178,7 @@ governing permissions and limitations under the License.
         --mod-tooltip-spacing-inline,
         var(--spectrum-tooltip-spacing-inline)
     );
-    position: relative; /* .spectrum-Tooltip */
+    position: relative;
     vertical-align: top;
     width: auto;
     word-break: break-word;
@@ -214,17 +189,15 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-tooltip-cjk-line-height,
         var(--spectrum-tooltip-cjk-line-height)
-    ); /* .spectrum-Tooltip:lang(ja),
-   * .spectrum-Tooltip:lang(zh),
-   * .spectrum-Tooltip:lang(ko) */
+    );
 }
 :host {
-    cursor: default; /* .spectrum-Tooltip */
+    cursor: default;
     -webkit-user-select: none;
     user-select: none;
 }
 p {
-    margin: 0; /* .spectrum-Tooltip p */
+    margin: 0;
 }
 :host([variant='info']) {
     background-color: var(
@@ -233,7 +206,7 @@ p {
             --mod-tooltip-background-color-informative,
             var(--spectrum-tooltip-background-color-informative)
         )
-    ); /* .spectrum-Tooltip--info */
+    );
 }
 :host([variant='positive']) {
     background-color: var(
@@ -242,7 +215,7 @@ p {
             --mod-tooltip-background-color-positive,
             var(--spectrum-tooltip-background-color-positive)
         )
-    ); /* .spectrum-Tooltip--positive */
+    );
 }
 :host([variant='negative']) {
     background-color: var(
@@ -251,7 +224,7 @@ p {
             --mod-tooltip-background-color-negative,
             var(--spectrum-tooltip-background-color-negative)
         )
-    ); /* .spectrum-Tooltip--negative */
+    );
 }
 #tip {
     background-color: var(
@@ -267,7 +240,7 @@ p {
         var(--spectrum-tooltip-tip-block-size)
     );
     left: 50%;
-    position: absolute; /* .spectrum-Tooltip-tip */
+    position: absolute;
     top: 100%;
     transform: translateX(-50%);
     width: var(
@@ -282,7 +255,7 @@ p {
             --mod-tooltip-background-color-informative,
             var(--spectrum-tooltip-background-color-informative)
         )
-    ); /* .spectrum-Tooltip--info .spectrum-Tooltip-tip */
+    );
 }
 :host([variant='positive']) #tip {
     background-color: var(
@@ -291,7 +264,7 @@ p {
             --mod-tooltip-background-color-positive,
             var(--spectrum-tooltip-background-color-positive)
         )
-    ); /* .spectrum-Tooltip--positive .spectrum-Tooltip-tip */
+    );
 }
 :host([variant='negative']) #tip {
     background-color: var(
@@ -300,18 +273,14 @@ p {
             --mod-tooltip-background-color-negative,
             var(--spectrum-tooltip-background-color-negative)
         )
-    ); /* .spectrum-Tooltip--negative .spectrum-Tooltip-tip */
+    );
 }
 .spectrum-Tooltip--top-end #tip,
 .spectrum-Tooltip--top-left #tip,
 .spectrum-Tooltip--top-right #tip,
 .spectrum-Tooltip--top-start #tip,
 :host([placement*='top']) #tip {
-    top: 100%; /* .spectrum-Tooltip--top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--top-left .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--top-right .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--top-start .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--top-end .spectrum-Tooltip-tip */
+    top: 100%;
 }
 .spectrum-Tooltip--bottom-end #tip,
 .spectrum-Tooltip--bottom-left #tip,
@@ -319,15 +288,7 @@ p {
 .spectrum-Tooltip--bottom-start #tip,
 :host([placement*='bottom']) #tip {
     bottom: 100%;
-    clip-path: polygon(
-        50% 0,
-        0 105%,
-        100% 105%
-    ); /* .spectrum-Tooltip--bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--bottom-left .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--bottom-right .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--bottom-start .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--bottom-end .spectrum-Tooltip-tip */
+    clip-path: polygon(50% 0, 0 105%, 100% 105%);
     top: auto;
 }
 .spectrum-Tooltip--bottom-end #tip,
@@ -338,27 +299,18 @@ p {
 .spectrum-Tooltip--top-left #tip,
 .spectrum-Tooltip--top-right #tip,
 .spectrum-Tooltip--top-start #tip {
-    transform: none; /* .spectrum-Tooltip--top-left .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--bottom-left .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--top-right .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--bottom-right .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--top-start .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--bottom-start .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--top-end .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--bottom-end .spectrum-Tooltip-tip */
+    transform: none;
 }
 .spectrum-Tooltip--bottom-left #tip,
 .spectrum-Tooltip--top-left #tip {
     left: var(
         --mod-tooltip-pointer-corner-spacing,
         var(--spectrum-tooltip-pointer-corner-spacing)
-    ); /* .spectrum-Tooltip--top-left .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--bottom-left .spectrum-Tooltip-tip */
+    );
 }
 .spectrum-Tooltip--bottom-right #tip,
 .spectrum-Tooltip--top-right #tip {
-    left: auto; /* .spectrum-Tooltip--top-right .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--bottom-right .spectrum-Tooltip-tip */
+    left: auto;
     right: var(
         --mod-tooltip-pointer-corner-spacing,
         var(--spectrum-tooltip-pointer-corner-spacing)
@@ -369,8 +321,7 @@ p {
     left: var(
         --mod-tooltip-pointer-corner-spacing,
         var(--spectrum-tooltip-pointer-corner-spacing)
-    ); /* .spectrum-Tooltip--top-start .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--bottom-start .spectrum-Tooltip-tip */
+    );
     right: auto;
 }
 :host([dir='rtl']) .spectrum-Tooltip--bottom-start #tip,
@@ -379,13 +330,11 @@ p {
     right: var(
         --mod-tooltip-pointer-corner-spacing,
         var(--spectrum-tooltip-pointer-corner-spacing)
-    ); /* [dir=rtl] .spectrum-Tooltip--top-start .spectrum-Tooltip-tip,
-   * [dir=rtl] .spectrum-Tooltip--bottom-start .spectrum-Tooltip-tip */
+    );
 }
 .spectrum-Tooltip--bottom-end #tip,
 .spectrum-Tooltip--top-end #tip {
-    left: auto; /* .spectrum-Tooltip--top-end .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--bottom-end .spectrum-Tooltip-tip */
+    left: auto;
     right: var(
         --mod-tooltip-pointer-corner-spacing,
         var(--spectrum-tooltip-pointer-corner-spacing)
@@ -396,8 +345,7 @@ p {
     left: var(
         --mod-tooltip-pointer-corner-spacing,
         var(--spectrum-tooltip-pointer-corner-spacing)
-    ); /* [dir=rtl] .spectrum-Tooltip--top-end .spectrum-Tooltip-tip,
-   * [dir=rtl] .spectrum-Tooltip--bottom-end .spectrum-Tooltip-tip */
+    );
     right: auto;
 }
 .spectrum-Tooltip--end #tip,
@@ -415,18 +363,7 @@ p {
     height: var(
         --mod-tooltip-tip-inline-size,
         var(--spectrum-tooltip-tip-inline-size)
-    ); /* .spectrum-Tooltip--right .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--right-bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--right-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--left .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--left-bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--left-top  .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--start .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--start-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--start-bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--end .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--end-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--end-bottom .spectrum-Tooltip-tip */
+    );
     top: 50%;
     transform: translateY(-50%);
     width: var(
@@ -443,14 +380,7 @@ p {
 .spectrum-Tooltip--start-bottom #tip,
 .spectrum-Tooltip--start-top #tip {
     top: auto;
-    transform: none; /* .spectrum-Tooltip--right-bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--right-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--left-bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--left-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--start-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--start-bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--end-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--end-bottom .spectrum-Tooltip-tip */
+    transform: none;
 }
 .spectrum-Tooltip--end #tip,
 .spectrum-Tooltip--end-bottom #tip,
@@ -458,16 +388,7 @@ p {
 .spectrum-Tooltip--right-bottom #tip,
 .spectrum-Tooltip--right-top #tip,
 :host([placement*='right']) #tip {
-    clip-path: polygon(
-        0 50%,
-        105% 100%,
-        105% 0
-    ); /* .spectrum-Tooltip--right .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--right-bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--right-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--end .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--end-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--end-bottom .spectrum-Tooltip-tip */
+    clip-path: polygon(0 50%, 105% 100%, 105% 0);
     left: calc(
         var(
                 --mod-tooltip-tip-block-size,
@@ -482,16 +403,7 @@ p {
 .spectrum-Tooltip--start-bottom #tip,
 .spectrum-Tooltip--start-top #tip,
 :host([placement*='left']) #tip {
-    clip-path: polygon(
-        -5% 0,
-        -5% 100%,
-        100% 50%
-    ); /* .spectrum-Tooltip--left .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--left-bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--left-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--start .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--start-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--start-bottom .spectrum-Tooltip-tip */
+    clip-path: polygon(-5% 0, -5% 100%, 100% 50%);
     left: 100%;
 }
 .spectrum-Tooltip--end-top #tip,
@@ -501,10 +413,7 @@ p {
     top: var(
         --mod-tooltip-pointer-corner-spacing,
         var(--spectrum-tooltip-pointer-corner-spacing)
-    ); /* .spectrum-Tooltip--right-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--left-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--start-top .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--end-top .spectrum-Tooltip-tip */
+    );
 }
 .spectrum-Tooltip--end-bottom #tip,
 .spectrum-Tooltip--left-bottom #tip,
@@ -513,21 +422,12 @@ p {
     bottom: var(
         --mod-tooltip-pointer-corner-spacing,
         var(--spectrum-tooltip-pointer-corner-spacing)
-    ); /* .spectrum-Tooltip--right-bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--left-bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--start-bottom .spectrum-Tooltip-tip,
-   * .spectrum-Tooltip--end-bottom .spectrum-Tooltip-tip */
+    );
 }
 :host([dir='rtl']) .spectrum-Tooltip--end #tip,
 :host([dir='rtl']) .spectrum-Tooltip--end-bottom #tip,
 :host([dir='rtl']) .spectrum-Tooltip--end-top #tip {
-    clip-path: polygon(
-        -5% 0,
-        -5% 100%,
-        100% 50%
-    ); /* [dir=rtl] .spectrum-Tooltip--end .spectrum-Tooltip-tip,
-   * [dir=rtl] .spectrum-Tooltip--end-top .spectrum-Tooltip-tip,
-   * [dir=rtl] .spectrum-Tooltip--end-bottom .spectrum-Tooltip-tip */
+    clip-path: polygon(-5% 0, -5% 100%, 100% 50%);
     left: 100%;
     right: calc(
         var(
@@ -539,13 +439,7 @@ p {
 :host([dir='rtl']) .spectrum-Tooltip--start #tip,
 :host([dir='rtl']) .spectrum-Tooltip--start-bottom #tip,
 :host([dir='rtl']) .spectrum-Tooltip--start-top #tip {
-    clip-path: polygon(
-        0 50%,
-        105% 100%,
-        105% 0
-    ); /* [dir=rtl] .spectrum-Tooltip--start .spectrum-Tooltip-tip,
-   * [dir=rtl] .spectrum-Tooltip--start-top .spectrum-Tooltip-tip,
-   * [dir=rtl] .spectrum-Tooltip--start-bottom .spectrum-Tooltip-tip */
+    clip-path: polygon(0 50%, 105% 100%, 105% 0);
     left: calc(
         var(
                 --mod-tooltip-tip-block-size,
@@ -575,14 +469,14 @@ p {
                 --mod-tooltip-spacing-inline,
                 var(--spectrum-tooltip-spacing-inline)
             )
-    ); /* .spectrum-Tooltip-typeIcon */
+    );
     width: var(--mod-tooltip-icon-width, var(--spectrum-tooltip-icon-width));
 }
 #label {
     line-height: var(
         --mod-tooltip-line-height,
         var(--spectrum-tooltip-line-height)
-    ); /* .spectrum-Tooltip-label */
+    );
     margin-block-end: var(
         --mod-tooltip-spacing-block-end,
         var(--spectrum-tooltip-spacing-block-end)
@@ -603,12 +497,7 @@ p {
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
-    ); /* .spectrum-Tooltip,
-   * .spectrum-Tooltip--top,
-   * .spectrum-Tooltip--top-left,
-   * .spectrum-Tooltip--top-right,
-   * .spectrum-Tooltip--top-start,
-   * .spectrum-Tooltip--top-end */
+    );
 }
 .spectrum-Tooltip--bottom-end,
 .spectrum-Tooltip--bottom-left,
@@ -620,11 +509,7 @@ p {
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
-    ); /* .spectrum-Tooltip--bottom,
-   * .spectrum-Tooltip--bottom-left,
-   * .spectrum-Tooltip--bottom-right,
-   * .spectrum-Tooltip--bottom-start,
-   * .spectrum-Tooltip--bottom-end */
+    );
 }
 .spectrum-Tooltip--right-bottom,
 .spectrum-Tooltip--right-top,
@@ -634,9 +519,7 @@ p {
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
-    ); /* .spectrum-Tooltip--right,
-   * .spectrum-Tooltip--right-bottom,
-   * .spectrum-Tooltip--right-top */
+    );
 }
 .spectrum-Tooltip--left-bottom,
 .spectrum-Tooltip--left-top,
@@ -646,9 +529,7 @@ p {
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
-    ); /* .spectrum-Tooltip--left,
-   * .spectrum-Tooltip--left-bottom,
-   * .spectrum-Tooltip--left-top */
+    );
 }
 .spectrum-Tooltip--start,
 .spectrum-Tooltip--start-bottom,
@@ -658,9 +539,7 @@ p {
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
-    ); /* .spectrum-Tooltip--start,
-   * .spectrum-Tooltip--start-top,
-   * .spectrum-Tooltip--start-bottom */
+    );
 }
 .spectrum-Tooltip--end,
 .spectrum-Tooltip--end-bottom,
@@ -670,101 +549,10 @@ p {
                 --mod-tooltip-tip-block-size,
                 var(--spectrum-tooltip-tip-block-size)
             ) + var(--mod-tooltip-margin, var(--spectrum-tooltip-margin))
-    ); /* .spectrum-Tooltip--end,
-   * .spectrum-Tooltip--end-top,
-   * .spectrum-Tooltip--end-bottom */
-}
-:host([dir='rtl']) .u-tooltip-showOnHover .spectrum-Tooltip--start,
-:host([dir='rtl']) .u-tooltip-showOnHover .spectrum-Tooltip--start-bottom,
-:host([dir='rtl']) .u-tooltip-showOnHover .spectrum-Tooltip--start-top {
-    left: 100%; /* [dir=rtl] .u-tooltip-showOnHover .spectrum-Tooltip--start,
-   * [dir=rtl] .u-tooltip-showOnHover .spectrum-Tooltip--start-top,
-   * [dir=rtl] .u-tooltip-showOnHover .spectrum-Tooltip--start-bottom */
-    right: auto;
-}
-:host([dir='rtl']) .u-tooltip-showOnHover .spectrum-Tooltip--end,
-:host([dir='rtl']) .u-tooltip-showOnHover .spectrum-Tooltip--end-bottom,
-:host([dir='rtl']) .u-tooltip-showOnHover .spectrum-Tooltip--end-top {
-    left: auto; /* [dir=rtl] .u-tooltip-showOnHover .spectrum-Tooltip--end,
-   * [dir=rtl] .u-tooltip-showOnHover .spectrum-Tooltip--end-top,
-   * [dir=rtl] .u-tooltip-showOnHover .spectrum-Tooltip--end-bottom */
-    right: 100%;
-}
-:host([dir='rtl']) .u-tooltip-showOnHover :focus .spectrum-Tooltip--start,
-:host([dir='rtl'])
-    .u-tooltip-showOnHover
-    :focus
-    .spectrum-Tooltip--start-bottom,
-:host([dir='rtl']) .u-tooltip-showOnHover :focus .spectrum-Tooltip--start-top,
-:host([dir='rtl']) .u-tooltip-showOnHover.is-focused .spectrum-Tooltip--start,
-:host([dir='rtl'])
-    .u-tooltip-showOnHover.is-focused
-    .spectrum-Tooltip--start-bottom,
-:host([dir='rtl'])
-    .u-tooltip-showOnHover.is-focused
-    .spectrum-Tooltip--start-top,
-:host([dir='rtl']) .u-tooltip-showOnHover:focus .spectrum-Tooltip--start,
-:host([dir='rtl']) .u-tooltip-showOnHover:focus .spectrum-Tooltip--start-bottom,
-:host([dir='rtl']) .u-tooltip-showOnHover:focus .spectrum-Tooltip--start-top,
-:host([dir='rtl']) .u-tooltip-showOnHover:hover .spectrum-Tooltip--start,
-:host([dir='rtl']) .u-tooltip-showOnHover:hover .spectrum-Tooltip--start-bottom,
-:host([dir='rtl']) .u-tooltip-showOnHover:hover .spectrum-Tooltip--start-top {
-    transform: translate(
-        var(
-            --mod-tooltip-animation-distance,
-            var(--spectrum-tooltip-animation-distance)
-        ),
-        -50%
-    ); /* [dir=rtl] .u-tooltip-showOnHover:hover .spectrum-Tooltip--start,
-   * [dir=rtl] .u-tooltip-showOnHover:hover .spectrum-Tooltip--start-top,
-   * [dir=rtl] .u-tooltip-showOnHover:hover .spectrum-Tooltip--start-bottom,
-   * [dir=rtl] .u-tooltip-showOnHover:focus .spectrum-Tooltip--start,
-   * [dir=rtl] .u-tooltip-showOnHover:focus .spectrum-Tooltip--start-top,
-   * [dir=rtl] .u-tooltip-showOnHover:focus .spectrum-Tooltip--start-bottom,
-   * [dir=rtl] .u-tooltip-showOnHover.is-focused .spectrum-Tooltip--start,
-   * [dir=rtl] .u-tooltip-showOnHover.is-focused .spectrum-Tooltip--start-top,
-   * [dir=rtl] .u-tooltip-showOnHover.is-focused .spectrum-Tooltip--start-bottom,
-   * [dir=rtl] .u-tooltip-showOnHover *:focus .spectrum-Tooltip--start,
-   * [dir=rtl] .u-tooltip-showOnHover *:focus .spectrum-Tooltip--start-top,
-   * [dir=rtl] .u-tooltip-showOnHover *:focus .spectrum-Tooltip--start-bottom */
-}
-:host([dir='rtl']) .u-tooltip-showOnHover :focus .spectrum-Tooltip--end,
-:host([dir='rtl']) .u-tooltip-showOnHover :focus .spectrum-Tooltip--end-bottom,
-:host([dir='rtl']) .u-tooltip-showOnHover :focus .spectrum-Tooltip--end-top,
-:host([dir='rtl']) .u-tooltip-showOnHover.is-focused .spectrum-Tooltip--end,
-:host([dir='rtl'])
-    .u-tooltip-showOnHover.is-focused
-    .spectrum-Tooltip--end-bottom,
-:host([dir='rtl']) .u-tooltip-showOnHover.is-focused .spectrum-Tooltip--end-top,
-:host([dir='rtl']) .u-tooltip-showOnHover:focus .spectrum-Tooltip--end,
-:host([dir='rtl']) .u-tooltip-showOnHover:focus .spectrum-Tooltip--end-bottom,
-:host([dir='rtl']) .u-tooltip-showOnHover:focus .spectrum-Tooltip--end-top,
-:host([dir='rtl']) .u-tooltip-showOnHover:hover .spectrum-Tooltip--end,
-:host([dir='rtl']) .u-tooltip-showOnHover:hover .spectrum-Tooltip--end-bottom,
-:host([dir='rtl']) .u-tooltip-showOnHover:hover .spectrum-Tooltip--end-top {
-    transform: translate(
-        calc(
-            var(
-                    --mod-tooltip-animation-distance,
-                    var(--spectrum-tooltip-animation-distance)
-                ) * -1
-        ),
-        -50%
-    ); /* [dir=rtl] .u-tooltip-showOnHover:hover .spectrum-Tooltip--end,
-   * [dir=rtl] .u-tooltip-showOnHover:hover .spectrum-Tooltip--end-top,
-   * [dir=rtl] .u-tooltip-showOnHover:hover .spectrum-Tooltip--end-bottom,
-   * [dir=rtl] .u-tooltip-showOnHover:focus .spectrum-Tooltip--end,
-   * [dir=rtl] .u-tooltip-showOnHover:focus .spectrum-Tooltip--end-top,
-   * [dir=rtl] .u-tooltip-showOnHover:focus .spectrum-Tooltip--end-bottom,
-   * [dir=rtl] .u-tooltip-showOnHover.is-focused .spectrum-Tooltip--end,
-   * [dir=rtl] .u-tooltip-showOnHover.is-focused .spectrum-Tooltip--end-top,
-   * [dir=rtl] .u-tooltip-showOnHover.is-focused .spectrum-Tooltip--end-bottom,
-   * [dir=rtl] .u-tooltip-showOnHover *:focus .spectrum-Tooltip--end,
-   * [dir=rtl] .u-tooltip-showOnHover *:focus .spectrum-Tooltip--end-top,
-   * [dir=rtl] .u-tooltip-showOnHover *:focus .spectrum-Tooltip--end-bottom */
+    );
 }
 :host {
     --spectrum-tooltip-backgound-color-default-neutral: var(
         --system-spectrum-tooltip-backgound-color-default-neutral
-    ); /* .spectrum-Tooltip */
+    );
 }
