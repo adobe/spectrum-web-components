@@ -40,8 +40,8 @@ export class CoachmarkPopoverContent extends SpectrumElement {
     @property()
     source?: string;
 
-    @property({ type: Number })
-    step?: number;
+    @property({ type: String })
+    step?: string;
 
     @property({ type: String })
     content!: string;
