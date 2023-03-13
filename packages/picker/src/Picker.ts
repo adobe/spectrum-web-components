@@ -354,7 +354,6 @@ export class PickerBase extends SizedMixin(Focusable) {
                 ?open=${this.open}
                 .placement=${this.placement}
                 type="auto"
-                @sp-menu-item-added-or-updated=${this.manageSelection}
                 @beforetoggle=${(event: Event & { target: OverlayBase }) => {
                     this.open = event.target.open;
                     if (!this.open) {
@@ -414,7 +413,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             // MenuItems update a frame late for <slot> management,
             // await the same here.
             requestAnimationFrame(() => {
-                this.manageSelection();
+                // this.manageSelection();
             });
         }
         if (window.__swc.DEBUG) {
@@ -453,7 +452,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                 .selects=${this.selects}
                 .selected=${this.value ? [this.value] : []}
             >
-                <slot></slot>
+                <slot @slotchange=${this.shouldManageSelection}></slot>
             </sp-menu>
             ${this.dismissHelper}
         `;
@@ -478,6 +477,19 @@ export class PickerBase extends SizedMixin(Focusable) {
                 ${content}
             </sp-popover>
         `;
+    }
+
+    protected shouldManageSelection(event: Event): void {
+        if (
+            ((event.target as HTMLElement).getRootNode() as ShadowRoot).host ===
+            this
+        ) {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    this.manageSelection();
+                });
+            });
+        }
     }
 
     protected async manageSelection(): Promise<void> {

@@ -714,10 +714,26 @@ export class Menu extends SpectrumElement {
         }
     }
 
+    private handleSlotchange({
+        target,
+    }: Event & { target: HTMLSlotElement }): void {
+        const assignedElement = target.assignedElements({
+            flatten: true,
+        }) as MenuItem[];
+        if (this.childItems.length !== assignedElement.length) {
+            assignedElement.forEach((item) => {
+                if (typeof item.triggerUpdate !== 'undefined') {
+                    item.triggerUpdate();
+                }
+            });
+        }
+    }
+
     protected renderMenuItemSlot(): TemplateResult {
         return html`
             <slot
                 @sp-menu-submenu-opened=${this.handleDescendentOverlayOpened}
+                @slotchange=${this.handleSlotchange}
             ></slot>
         `;
     }
