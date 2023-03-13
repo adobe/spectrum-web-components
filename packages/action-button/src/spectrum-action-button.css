@@ -20,12 +20,12 @@ governing permissions and limitations under the License.
     box-sizing: border-box;
     cursor: pointer;
     display: inline-flex;
-    font-family: var(--mod-font-family-base, var(--spectrum-font-family-base));
-    justify-content: center;
-    line-height: var(
-        --mod-line-height-small,
-        var(--spectrum-line-height-small)
+    font-family: var(
+        --mod-sans-font-family-stack,
+        var(--spectrum-sans-font-family-stack)
     );
+    justify-content: center;
+    line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
     margin: 0;
     overflow: visible;
     text-decoration: none;
@@ -280,16 +280,26 @@ governing permissions and limitations under the License.
             var(--spectrum-actionbutton-content-color-default)
         )
     );
+    gap: calc(
+        var(
+                --mod-actionbutton-text-to-visual,
+                var(--spectrum-actionbutton-text-to-visual)
+            ) +
+            var(
+                --mod-actionbutton-edge-to-text,
+                var(--spectrum-actionbutton-edge-to-text)
+            ) -
+            var(
+                --mod-actionbutton-edge-to-visual-only,
+                var(--spectrum-actionbutton-edge-to-visual-only)
+            )
+    );
     height: var(--mod-actionbutton-height, var(--spectrum-actionbutton-height));
     min-inline-size: var(
         --mod-actionbutton-min-width,
         var(--spectrum-actionbutton-min-width)
     );
-    padding-inline-end: var(
-        --mod-actionbutton-edge-to-text,
-        var(--spectrum-actionbutton-edge-to-text)
-    );
-    padding-inline-start: var(
+    padding-inline: var(
         --mod-actionbutton-edge-to-text,
         var(--spectrum-actionbutton-edge-to-text)
     );
@@ -416,67 +426,42 @@ governing permissions and limitations under the License.
         --mod-actionbutton-icon-size,
         var(--spectrum-actionbutton-icon-size)
     );
-    margin-inline-start: calc(
-        (
-                var(
-                        --mod-actionbutton-edge-to-text,
-                        var(--spectrum-actionbutton-edge-to-text)
-                    ) -
-                    var(
-                        --mod-actionbutton-edge-to-visual,
-                        var(--spectrum-actionbutton-edge-to-visual)
-                    )
-            ) * -1
+    margin-inline-end: calc(
+        var(
+                --mod-actionbutton-edge-to-visual-only,
+                var(--spectrum-actionbutton-edge-to-visual-only)
+            ) -
+            var(
+                --mod-actionbutton-edge-to-text,
+                var(--spectrum-actionbutton-edge-to-text)
+            )
     );
-    padding-inline-start: calc(
-        (
-                var(
-                        --mod-actionbutton-edge-to-text,
-                        var(--spectrum-actionbutton-edge-to-text)
-                    ) -
-                    var(
-                        --mod-actionbutton-edge-to-visual,
-                        var(--spectrum-actionbutton-edge-to-visual)
-                    )
-            ) * -1
+    margin-inline-start: calc(
+        var(
+                --mod-actionbutton-edge-to-visual,
+                var(--spectrum-actionbutton-edge-to-visual)
+            ) -
+            var(
+                --mod-actionbutton-edge-to-text,
+                var(--spectrum-actionbutton-edge-to-text)
+            )
     );
     width: var(
         --mod-actionbutton-icon-size,
         var(--spectrum-actionbutton-icon-size)
     );
 }
-[name='icon'] + #label {
-    padding-inline-end: 0;
-    padding-inline-start: var(
-        --mod-actionbutton-text-to-visual,
-        var(--spectrum-actionbutton-text-to-visual)
-    );
-}
 .hold-affordance + ::slotted([slot='icon']),
 [icon-only]::slotted([slot='icon']) {
-    margin-inline-end: calc(
-        (
-                var(
-                        --mod-actionbutton-edge-to-text,
-                        var(--spectrum-actionbutton-edge-to-text)
-                    ) -
-                    var(
-                        --mod-actionbutton-edge-to-visual-only,
-                        var(--spectrum-actionbutton-edge-to-visual-only)
-                    )
-            ) * -1
-    );
     margin-inline-start: calc(
-        (
-                var(
-                        --mod-actionbutton-edge-to-text,
-                        var(--spectrum-actionbutton-edge-to-text)
-                    ) -
-                    var(
-                        --mod-actionbutton-edge-to-visual-only,
-                        var(--spectrum-actionbutton-edge-to-visual-only)
-                    )
-            ) * -1
+        var(
+                --mod-actionbutton-edge-to-visual-only,
+                var(--spectrum-actionbutton-edge-to-visual-only)
+            ) -
+            var(
+                --mod-actionbutton-edge-to-text,
+                var(--spectrum-actionbutton-edge-to-text)
+            )
     );
 }
 #label {

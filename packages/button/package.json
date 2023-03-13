@@ -90,7 +90,7 @@
         "@spectrum-web-components/shared": "^0.15.5"
     },
     "devDependencies": {
-        "@spectrum-css/button": "^9.0.0"
+        "@spectrum-css/button": "^9.0.8"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

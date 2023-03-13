@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import {
+    CSSResultArray,
     html,
     PropertyValues,
     TemplateResult,
@@ -21,20 +22,16 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 import { LikeAnchor } from '@spectrum-web-components/shared/src/like-anchor.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import {
-    ObserveSlotPresence,
-    ObserveSlotText,
-} from '@spectrum-web-components/shared';
+import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+import buttonStyles from './button-base.css.js';
 
 /**
  * @slot - text content to be displayed in the Button element
  * @slot icon - icon element(s) to display at the start of the button
  */
-export class ButtonBase extends LikeAnchor(
-    ObserveSlotText(ObserveSlotPresence(Focusable, '[slot="icon"]'))
-) {
-    protected get hasIcon(): boolean {
-        return this.slotContentIsPresent;
+export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable)) {
+    public static override get styles(): CSSResultArray {
+        return [buttonStyles];
     }
 
     @property({ type: Boolean, reflect: true })
@@ -43,10 +40,6 @@ export class ButtonBase extends LikeAnchor(
     @property({ type: String })
     public type: 'button' | 'submit' | 'reset' = 'button';
 
-    protected get hasLabel(): boolean {
-        return this.slotHasContent;
-    }
-
     @query('.anchor')
     private anchorElement!: HTMLButtonElement;
 
@@ -54,19 +47,21 @@ export class ButtonBase extends LikeAnchor(
         return this;
     }
 
+    protected get hasLabel(): boolean {
+        return this.slotHasContent;
+    }
+
     protected get buttonContent(): TemplateResult[] {
         const content = [
             html`
-                <span id="label" ?hidden=${!this.hasLabel}>
+                <slot name="icon" ?icon-only=${!this.hasLabel}></slot>
+            `,
+            html`
+                <span id="label">
                     <slot @slotchange=${this.manageTextObservedSlot}></slot>
                 </span>
             `,
         ];
-        if (this.hasIcon) {
-            content.unshift(html`
-                <slot name="icon" ?icon-only=${!this.hasLabel}></slot>
-            `);
-        }
         return content;
     }
 

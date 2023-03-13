@@ -10,12 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { CSSResultArray } from '@spectrum-web-components/base';
 import { ButtonBase } from './ButtonBase.js';
-import buttonStyles from './button-base.css.js';
 
-export class StyledButton extends ButtonBase {
-    public static override get styles(): CSSResultArray {
-        return [buttonStyles];
-    }
-}
+export class StyledButton extends ButtonBase {}
