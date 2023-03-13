@@ -221,7 +221,6 @@ governing permissions and limitations under the License.
     );
 }
 :host {
-    block-size: auto;
     border-radius: var(
         --mod-button-border-radius,
         var(--spectrum-button-border-radius)
@@ -234,28 +233,20 @@ governing permissions and limitations under the License.
     color: inherit;
     font-size: var(--mod-button-font-size, var(--spectrum-button-font-size));
     font-weight: var(--mod-bold-font-weight, var(--spectrum-bold-font-weight));
+    gap: var(
+        --mod-button-padding-label-to-icon,
+        var(--spectrum-button-padding-label-to-icon)
+    );
     height: var(--mod-button-height, var(--spectrum-button-height));
-    min-block-size: var(
-        --mod-button-min-width,
-        var(--spectrum-button-min-width)
-    );
-    min-block-size: var(
-        --mod-spectrum-button-height,
-        var(--spectrum-button-height)
-    );
+    min-block-size: var(--mod-button-height, var(--spectrum-button-height));
     min-inline-size: var(
         --mod-button-min-width,
         var(--spectrum-button-min-width)
     );
-    min-width: var(--mod-button-min-width, var(--spectrum-button-min-width));
     padding-block: 0;
-    padding-inline-end: var(
+    padding-inline: var(
         --mod-button-edge-to-text,
         var(--spectrum-button-edge-to-text)
-    );
-    padding-inline-start: var(
-        --mod-button-edge-to-visual,
-        var(--spectrum-button-edge-to-visual)
     );
     position: relative;
 }
@@ -265,26 +256,9 @@ governing permissions and limitations under the License.
 }
 ::slotted([slot='icon']) {
     color: inherit;
-    inset-block-end: calc(
-        var(
-                --mod-spectrum-button-edge-to-visual,
-                var(--spectrum-button-edge-to-visual)
-            ) -
-            var(--mod-button-border-width, var(--spectrum-button-border-width))
-    );
-    inset-inline-end: calc(
-        var(
-                --mod-spectrum-button-edge-to-visual,
-                var(--spectrum-button-edge-to-visual)
-            ) -
-            var(--mod-button-border-width, var(--spectrum-button-border-width))
-    );
-}
-[name='icon'] + #label {
-    padding-inline-end: 0;
-    padding-inline-start: var(
-        --mod-button-padding-label-to-icon,
-        var(--spectrum-button-padding-label-to-icon)
+    margin-inline-start: calc(
+        var(--mod-button-edge-to-visual, var(--spectrum-button-edge-to-visual)) -
+            var(--mod-button-edge-to-text, var(--spectrum-button-edge-to-text))
     );
 }
 :host:after {
@@ -294,14 +268,23 @@ governing permissions and limitations under the License.
     );
 }
 #label {
-    padding-block-end: var(
-        --mod-button-padding-label-bottom,
-        var(--spectrum-button-padding-label-bottom)
+    align-self: start;
+    line-height: var(--spectrum-line-height-100);
+    padding-block-end: calc(
+        var(
+                --mod-button-padding-label-bottom,
+                var(--spectrum-button-padding-label-bottom)
+            ) -
+            var(--mod-button-border-width, var(--spectrum-button-border-width))
     );
-    padding-block-start: var(
-        --mod-button-padding-label-top,
-        var(--spectrum-button-padding-label-top)
+    padding-block-start: calc(
+        var(
+                --mod-button-padding-label-top,
+                var(--spectrum-button-padding-label-top)
+            ) -
+            var(--mod-button-border-width, var(--spectrum-button-border-width))
     );
+    white-space: nowrap;
 }
 :host(.focus-visible):after,
 :host([focused]):after {
@@ -548,7 +531,7 @@ governing permissions and limitations under the License.
                 --mod-button-focus-ring-thickness,
                 var(--spectrum-button-focus-ring-thickness)
             )
-            ButtonTExt;
+            ButtonText;
         forced-color-adjust: none;
     }
     :host(:focus-visible):after {
@@ -557,7 +540,7 @@ governing permissions and limitations under the License.
                 --mod-button-focus-ring-thickness,
                 var(--spectrum-button-focus-ring-thickness)
             )
-            ButtonTExt;
+            ButtonText;
         forced-color-adjust: none;
     }
     :host([variant='accent'][treatment='fill']) {

@@ -53,7 +53,7 @@ export class ActionButton extends SizedMixin(ButtonBase, {
     validSizes: ['xs', 's', 'm', 'l', 'xl'],
 }) {
     public static override get styles(): CSSResultArray {
-        return [buttonStyles, cornerTriangleStyles];
+        return [...super.styles, buttonStyles, cornerTriangleStyles];
     }
 
     @property({ type: Boolean, reflect: true })

@@ -16,7 +16,7 @@ import {
     SizedMixin,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
-import { StyledButton } from './StyledButton.js';
+import { ButtonBase } from './ButtonBase.js';
 import buttonStyles from './button.css.js';
 
 export type DeprecatedButtonVariants = 'cta' | 'overBackground';
@@ -46,7 +46,7 @@ export type ButtonTreatments = 'fill' | 'outline';
  * @slot - text label of the Button
  * @slot icon - The icon to use for Button
  */
-export class Button extends SizedMixin(StyledButton) {
+export class Button extends SizedMixin(ButtonBase) {
     public static override get styles(): CSSResultArray {
         return [...super.styles, buttonStyles];
     }
