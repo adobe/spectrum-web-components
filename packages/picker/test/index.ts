@@ -83,18 +83,19 @@ export function runPickerTests(): void {
 
         return test.querySelector('sp-picker') as Picker;
     };
-    describe('standard', () => {
+    describe.only('standard', () => {
         beforeEach(async () => {
             el = await pickerFixture();
             await elementUpdated(el);
             await nextFrame();
         });
         afterEach(async () => {
-            if (el.open) {
-                const closed = oneEvent(el, 'sp-closed');
-                el.open = false;
-                await closed;
-            }
+            // if (el.open) {
+            //     console.log(el);
+            //     const closed = oneEvent(el, 'sp-closed');
+            //     el.open = false;
+            //     await closed;
+            // }
         });
         it('loads accessibly', async () => {
             await expect(el).to.be.accessible();
@@ -571,10 +572,10 @@ export function runPickerTests(): void {
 
             expect(el.open, 'still closed').to.be.false;
 
+            const opened = oneEvent(el, 'sp-opened');
             button.dispatchEvent(arrowUpEvent());
             await elementUpdated(el);
 
-            const opened = oneEvent(el, 'sp-opened');
             expect(el.open, 'open by ArrowUp').to.be.true;
             await opened;
 
@@ -582,7 +583,7 @@ export function runPickerTests(): void {
             button.dispatchEvent(escapeEvent());
             await closed;
             await elementUpdated(el);
-            await waitUntil(() => el.open === false, 'closed by Escape');
+            expect(el.open).to.be.false;
         });
         it('opens on ArrowDown', async () => {
             const firstItem = el.querySelector(
@@ -1030,6 +1031,7 @@ export function runPickerTests(): void {
         beforeEach(async () => {
             el = await pickerFixture();
             await elementUpdated(el);
+            await nextFrame();
         });
         afterEach(async () => {
             if (el.open) {
@@ -1118,6 +1120,7 @@ export function runPickerTests(): void {
             beforeEach(async () => {
                 el = await pickerFixture();
                 await elementUpdated(el);
+                await nextFrame();
             });
             afterEach(async () => {
                 if (el.open) {

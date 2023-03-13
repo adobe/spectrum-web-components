@@ -25,10 +25,6 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
-        "./src/ActiveOverlay.js": {
-            "development": "./src/ActiveOverlay.dev.js",
-            "default": "./src/ActiveOverlay.js"
-        },
         "./src/OverlayBase.js": {
             "development": "./src/OverlayBase.dev.js",
             "default": "./src/OverlayBase.js"
@@ -61,7 +57,6 @@
             "development": "./src/VirtualTrigger.dev.js",
             "default": "./src/VirtualTrigger.js"
         },
-        "./src/active-overlay.css.js": "./src/active-overlay.css.js",
         "./src/fullSizePlugin.js": {
             "development": "./src/fullSizePlugin.dev.js",
             "default": "./src/fullSizePlugin.js"
@@ -70,18 +65,10 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
-        "./src/loader.js": {
-            "development": "./src/loader.dev.js",
-            "default": "./src/loader.js"
-        },
         "./src/overlay-base.css.js": "./src/overlay-base.css.js",
         "./src/overlay-events.js": {
             "development": "./src/overlay-events.dev.js",
             "default": "./src/overlay-events.js"
-        },
-        "./src/overlay-stack.js": {
-            "development": "./src/overlay-stack.dev.js",
-            "default": "./src/overlay-stack.js"
         },
         "./src/overlay-timer.js": {
             "development": "./src/overlay-timer.dev.js",
@@ -91,14 +78,6 @@
         "./src/overlay-types.js": {
             "development": "./src/overlay-types.dev.js",
             "default": "./src/overlay-types.js"
-        },
-        "./src/overlay-utils.js": {
-            "development": "./src/overlay-utils.dev.js",
-            "default": "./src/overlay-utils.js"
-        },
-        "./src/overlay.js": {
-            "development": "./src/overlay.dev.js",
-            "default": "./src/overlay.js"
         },
         "./src/placement.js": {
             "development": "./src/placement.dev.js",
