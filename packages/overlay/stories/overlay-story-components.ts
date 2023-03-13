@@ -21,11 +21,7 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 
-import {
-    Overlay,
-    OverlayTrigger,
-    Placement,
-} from '@spectrum-web-components/overlay';
+import { OverlayTrigger, Placement } from '@spectrum-web-components/overlay';
 import { RadioGroup } from '@spectrum-web-components/radio';
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
@@ -149,7 +145,7 @@ class OverlayDrag extends LitElement {
             };
             this.left = Math.min(Math.max(newPosition.x, 0), max.x);
             this.top = Math.min(Math.max(newPosition.y, 0), max.y);
-            Overlay.update();
+            // Overlay.update();
         };
 
         const onMouseUp = (): void => {

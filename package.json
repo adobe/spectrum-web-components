@@ -73,7 +73,7 @@
         "test:ci": "yarn test:start",
         "test:create": "wireit",
         "test:errors": "yarn test | grep -A 32 ❌",
-        "test:focus": "yarn build && yarn test:ci --coverage --group",
+        "test:focus": "yarn build && yarn test:ci --group",
         "test:start": "web-test-runner",
         "test:visual": "yarn test:visual:ci",
         "test:visual:ci": "yarn test:start --group",

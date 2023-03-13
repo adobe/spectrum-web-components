@@ -12,11 +12,9 @@ governing permissions and limitations under the License.
 
 import { Picker } from '../src/Picker.js';
 import {
-    Overlay,
     OverlayOptions,
     TriggerInteractions,
 } from '@spectrum-web-components/overlay';
 
-export { Picker, Overlay };
-export type {OverlayOptions,
-    TriggerInteractions, }
+export { Picker };
+export type { OverlayOptions, TriggerInteractions };
