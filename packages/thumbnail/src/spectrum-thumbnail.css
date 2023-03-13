@@ -27,14 +27,14 @@ governing permissions and limitations under the License.
     margin: 0;
     overflow: hidden;
     padding: 0;
-    position: relative; /* .spectrum-Thumbnail */
+    position: relative;
     vertical-align: top;
     width: var(--spectrum-thumbnail-width);
     z-index: 0;
 }
 :host:before {
     border-radius: var(--spectrum-thumbnail-border-radius);
-    content: ''; /* .spectrum-Thumbnail:before */
+    content: '';
     height: 100%;
     position: absolute;
     width: 100%;
@@ -44,7 +44,7 @@ governing permissions and limitations under the License.
     --spectrum-thumbnail-border-color-selected: var(
         --spectrum-thumbnail-xxs-border-color-selected,
         var(--spectrum-alias-border-color-selected)
-    ); /* .spectrum-Thumbnail--sizeXXS */
+    );
     --spectrum-thumbnail-border-size-selected-key-focus: var(
         --spectrum-thumbnail-xxs-border-size-selected-key-focus,
         var(--spectrum-alias-border-size-thick)
@@ -82,7 +82,7 @@ governing permissions and limitations under the License.
     --spectrum-thumbnail-border-color-selected: var(
         --spectrum-thumbnail-xs-border-color-selected,
         var(--spectrum-alias-border-color-selected)
-    ); /* .spectrum-Thumbnail--sizeXS */
+    );
     --spectrum-thumbnail-border-size-selected-key-focus: var(
         --spectrum-thumbnail-xs-border-size-selected-key-focus,
         var(--spectrum-alias-border-size-thick)
@@ -120,7 +120,7 @@ governing permissions and limitations under the License.
     --spectrum-thumbnail-border-color-selected: var(
         --spectrum-thumbnail-s-border-color-selected,
         var(--spectrum-alias-border-color-selected)
-    ); /* .spectrum-Thumbnail--sizeS */
+    );
     --spectrum-thumbnail-border-size-selected-key-focus: var(
         --spectrum-thumbnail-s-border-size-selected-key-focus,
         var(--spectrum-alias-border-size-thick)
@@ -158,7 +158,7 @@ governing permissions and limitations under the License.
     --spectrum-thumbnail-border-color-selected: var(
         --spectrum-thumbnail-m-border-color-selected,
         var(--spectrum-alias-border-color-selected)
-    ); /* .spectrum-Thumbnail--sizeM */
+    );
     --spectrum-thumbnail-border-size-selected-key-focus: var(
         --spectrum-thumbnail-m-border-size-selected-key-focus,
         var(--spectrum-alias-border-size-thick)
@@ -196,7 +196,7 @@ governing permissions and limitations under the License.
     --spectrum-thumbnail-border-color-selected: var(
         --spectrum-thumbnail-l-border-color-selected,
         var(--spectrum-alias-border-color-selected)
-    ); /* .spectrum-Thumbnail--sizeL */
+    );
     --spectrum-thumbnail-border-size-selected-key-focus: var(
         --spectrum-thumbnail-l-border-size-selected-key-focus,
         var(--spectrum-alias-border-size-thick)
@@ -231,12 +231,12 @@ governing permissions and limitations under the License.
     );
 }
 ::slotted(*) {
-    max-height: 100%; /* .spectrum-Thumbnail-image */
+    max-height: 100%;
     max-width: 100%;
     z-index: 1;
 }
 :host([cover]) ::slotted(*) {
-    height: 100%; /* .spectrum-Thumbnail--cover .spectrum-Thumbnail-image */
+    height: 100%;
     object-fit: cover;
     object-position: center;
     width: 100%;
@@ -244,12 +244,9 @@ governing permissions and limitations under the License.
 .background {
     background-position: 50%;
     background-size: cover;
-    bottom: 0;
     height: 100%;
-    left: 0;
-    position: absolute; /* .spectrum-Thumbnail-background */
-    right: 0;
-    top: 0;
+    inset: 0;
+    position: absolute;
     width: 100%;
     z-index: 0;
 }
@@ -257,7 +254,7 @@ governing permissions and limitations under the License.
     background-color: var(
         --spectrum-global-color-static-white,
         rgb(var(--spectrum-global-color-static-white-rgb))
-    ); /* .spectrum-Thumbnail */
+    );
     background-image: linear-gradient(
             -45deg,
             transparent 75.5%,
@@ -281,24 +278,23 @@ governing permissions and limitations under the License.
 }
 :host:before {
     box-shadow: inset 0 0 0 var(--spectrum-thumbnail-border-size)
-        var(--spectrum-thumbnail-border-color); /* .spectrum-Thumbnail:before */
+        var(--spectrum-thumbnail-border-color);
 }
 :host([selected]) {
     box-shadow: 0 0 0
         calc(var(--spectrum-thumbnail-border-size-selected-key-focus) / 2)
-        var(--spectrum-thumbnail-border-color-selected); /* .spectrum-Thumbnail.is-selected */
+        var(--spectrum-thumbnail-border-color-selected);
 }
 :host([selected]):before {
     box-shadow: inset 0 0 0
         calc(var(--spectrum-thumbnail-border-size-selected-key-focus) / 2)
-        var(--spectrum-thumbnail-border-color-selected); /* .spectrum-Thumbnail.is-selected:before */
+        var(--spectrum-thumbnail-border-color-selected);
 }
 :host(.focus-visible),
 :host([focused]) {
     box-shadow: 0 0 0
         calc(var(--spectrum-thumbnail-border-size-selected-key-focus) / 2)
-        var(--spectrum-thumbnail-border-color-selected); /* .spectrum-Thumbnail.is-focused,
-   * .spectrum-Thumbnail.focus-ring */
+        var(--spectrum-thumbnail-border-color-selected);
     outline: none;
     overflow: visible;
 }
@@ -306,8 +302,7 @@ governing permissions and limitations under the License.
 :host([focused]) {
     box-shadow: 0 0 0
         calc(var(--spectrum-thumbnail-border-size-selected-key-focus) / 2)
-        var(--spectrum-thumbnail-border-color-selected); /* .spectrum-Thumbnail.is-focused,
-   * .spectrum-Thumbnail.focus-ring */
+        var(--spectrum-thumbnail-border-color-selected);
     outline: none;
     overflow: visible;
 }
@@ -315,15 +310,13 @@ governing permissions and limitations under the License.
 :host([focused]):before {
     box-shadow: inset 0 0 0
         calc(var(--spectrum-thumbnail-border-size-selected-key-focus) / 2)
-        var(--spectrum-thumbnail-border-color-selected); /* .spectrum-Thumbnail.is-focused:before,
-   * .spectrum-Thumbnail.focus-ring:before */
+        var(--spectrum-thumbnail-border-color-selected);
 }
 :host(:focus-visible):before,
 :host([focused]):before {
     box-shadow: inset 0 0 0
         calc(var(--spectrum-thumbnail-border-size-selected-key-focus) / 2)
-        var(--spectrum-thumbnail-border-color-selected); /* .spectrum-Thumbnail.is-focused:before,
-   * .spectrum-Thumbnail.focus-ring:before */
+        var(--spectrum-thumbnail-border-color-selected);
 }
 :host(.focus-visible):after,
 :host([focused]):after {
@@ -334,13 +327,11 @@ governing permissions and limitations under the License.
                 var(--spectrum-global-dimension-static-size-25)
             )
     );
-    bottom: 0;
     box-shadow: 0 0 0 var(--spectrum-thumbnail-border-size-selected-key-focus)
-        var(--spectrum-thumbnail-border-color-key-focus); /* .spectrum-Thumbnail.is-focused:after,
-   * .spectrum-Thumbnail.focus-ring:after */
+        var(--spectrum-thumbnail-border-color-key-focus);
     content: '';
     display: block;
-    left: 0;
+    inset: 0;
     margin: calc(
         var(
                 --spectrum-alias-focus-ring-gap,
@@ -348,8 +339,6 @@ governing permissions and limitations under the License.
             ) * -1
     );
     position: absolute;
-    right: 0;
-    top: 0;
 }
 :host(:focus-visible):after,
 :host([focused]):after {
@@ -360,13 +349,11 @@ governing permissions and limitations under the License.
                 var(--spectrum-global-dimension-static-size-25)
             )
     );
-    bottom: 0;
     box-shadow: 0 0 0 var(--spectrum-thumbnail-border-size-selected-key-focus)
-        var(--spectrum-thumbnail-border-color-key-focus); /* .spectrum-Thumbnail.is-focused:after,
-   * .spectrum-Thumbnail.focus-ring:after */
+        var(--spectrum-thumbnail-border-color-key-focus);
     content: '';
     display: block;
-    left: 0;
+    inset: 0;
     margin: calc(
         var(
                 --spectrum-alias-focus-ring-gap,
@@ -374,6 +361,4 @@ governing permissions and limitations under the License.
             ) * -1
     );
     position: absolute;
-    right: 0;
-    top: 0;
 }
