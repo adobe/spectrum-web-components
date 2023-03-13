@@ -66,7 +66,9 @@ export function OverlayNoPopover<T extends Constructor<OverlayBase>>(
                         requestAnimationFrame(() => {
                             requestAnimationFrame(() => {
                                 this.manageChildren(true);
-                                if (focusEl) focusEl.focus();
+                                if (focusEl && this.receivesFocus !== 'false') {
+                                    focusEl.focus();
+                                }
                             });
                         });
                     });

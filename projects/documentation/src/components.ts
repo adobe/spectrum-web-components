@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import './router.js';
-import { Overlay } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
@@ -53,14 +52,6 @@ if ('requestIdleCallback' in window) {
         import('@spectrum-web-components/grid/sp-grid.js');
     });
 }
-
-declare global {
-    interface Window {
-        Overlay: typeof Overlay;
-    }
-}
-
-window.Overlay = Overlay;
 
 class StyledElement extends HTMLElement {
     constructor() {
