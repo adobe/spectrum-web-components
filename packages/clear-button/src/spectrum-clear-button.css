@@ -46,12 +46,6 @@ governing permissions and limitations under the License.
 :host(:focus) {
     outline: none;
 }
-:host(::-moz-focus-inner) {
-    border: 0;
-    margin-bottom: -2px;
-    margin-top: -2px;
-    padding: 0;
-}
 :host([disabled]) {
     cursor: default;
 }
