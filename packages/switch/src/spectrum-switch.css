@@ -386,7 +386,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[checked]) #input:enabled + #switch {
+:host([checked]:hover) #input:enabled + #switch {
     background-color: var(
         --highcontrast-switch-background-color-selected-hover,
         var(
@@ -395,7 +395,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[checked]) #input:enabled + #switch:before {
+:host([checked]:hover) #input:enabled + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-selected-hover,
         var(
@@ -404,7 +404,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[disabled]) #input + #switch {
+:host([disabled]:hover) #input + #switch {
     background-color: var(
         --highcontrast-switch-background-color-disabled,
         var(
@@ -413,7 +413,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[disabled]) #input + #switch:before {
+:host([disabled]:hover) #input + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-disabled,
         var(
@@ -422,7 +422,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[disabled]) #input ~ #label {
+:host([disabled]:hover) #input ~ #label {
     color: var(
         --highcontrast-switch-label-color-disabled,
         var(
@@ -431,7 +431,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[disabled][checked]) #input + #switch {
+:host([disabled][checked]:hover) #input + #switch {
     background-color: var(
         --highcontrast-switch-background-color-selected-disabled,
         var(
@@ -440,7 +440,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[disabled][checked]) #input + #switch:before {
+:host([disabled][checked]:hover) #input + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-disabled,
         var(
@@ -449,7 +449,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[disabled][checked]) #input ~ #label {
+:host([disabled][checked]:hover) #input ~ #label {
     color: var(
         --highcontrast-switch-label-color-disabled,
         var(
@@ -544,8 +544,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[checked]) #input.focus-visible + #switch,
-:host([checked]) #input.focus-visible + #switch {
+:host([checked]) #input.focus-visible + #switch,
+:host([checked]:hover) #input.focus-visible + #switch {
     background-color: var(
         --highcontrast-switch-background-color-selected-focus,
         var(
@@ -554,8 +554,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[checked]) #input:focus-visible + #switch,
-:host([checked]) #input:focus-visible + #switch {
+:host([checked]) #input:focus-visible + #switch,
+:host([checked]:hover) #input:focus-visible + #switch {
     background-color: var(
         --highcontrast-switch-background-color-selected-focus,
         var(
@@ -564,8 +564,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[checked]) #input.focus-visible + #switch:before,
-:host([checked]) #input.focus-visible + #switch:before {
+:host([checked]) #input.focus-visible + #switch:before,
+:host([checked]:hover) #input.focus-visible + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-selected-focus,
         var(
@@ -574,8 +574,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[checked]) #input:focus-visible + #switch:before,
-:host([checked]) #input:focus-visible + #switch:before {
+:host([checked]) #input:focus-visible + #switch:before,
+:host([checked]:hover) #input:focus-visible + #switch:before {
     border-color: var(
         --highcontrast-switch-handle-border-color-selected-focus,
         var(
@@ -708,11 +708,11 @@ governing permissions and limitations under the License.
     :host(:hover) #input:not(:checked) + #switch {
         box-shadow: inset 0 0 0 1px Highlight;
     }
-    :host(:hover[disabled][checked]) #input + #switch {
+    :host([disabled][checked]:hover) #input + #switch {
         background-color: GrayText;
         box-shadow: inset 0 0 0 1px GrayText;
     }
-    :host(:hover[disabled][checked]) #input + #switch:before {
+    :host([disabled][checked]:hover) #input + #switch:before {
         background-color: ButtonFace;
         border-color: GrayText;
     }

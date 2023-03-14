@@ -181,7 +181,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover[checked]) #input + #button:before {
+:host([checked]:hover) #input + #button:before {
     border-color: var(
         --highcontrast-radio-button-checked-border-color-hover,
         var(
@@ -257,7 +257,7 @@ governing permissions and limitations under the License.
             var(--spectrum-radio-focus-indicator-gap) * 2
     );
 }
-:host(:focus[checked]) #input + #button:before {
+:host([checked]:focus) #input + #button:before {
     border-color: var(
         --highcontrast-radio-button-checked-border-color-focus,
         var(
@@ -310,7 +310,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([emphasized]:hover[checked]) #input + #button:before {
+:host([emphasized][checked]:hover) #input + #button:before {
     border-color: var(
         --highcontrast-radio-emphasized-accent-color-hover,
         var(
@@ -328,7 +328,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([emphasized]:focus[checked]) #input + #button:before {
+:host([emphasized][checked]:focus) #input + #button:before {
     border-color: var(
         --highcontrast-radio-emphasized-accent-color-focus,
         var(

@@ -27,7 +27,6 @@ const config = {
             inPackage: '@spectrum-css/tabs',
             outPackage: 'tabs',
             fileName: 'tabs',
-            // hoistCustomPropertiesFrom: 'spectrum-Tabs',
             components: [
                 {
                     exactSelector: true,
@@ -198,6 +197,7 @@ const config = {
             excludeByComponents: [
                 builder.class('spectrum-Tabs-itemLabel'),
                 builder.class('spectrum-Icon'),
+                builder.pseudoClass('hover'),
             ],
             excludeByExactComponentSeries: [
                 [builder.class('spectrum-Tabs-item')],
