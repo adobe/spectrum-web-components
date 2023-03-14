@@ -80,13 +80,6 @@ const isHoistedPseudoClass = (component) => {
     );
 };
 
-const isHoistedPseudoElement = (component) => {
-    /**
-     * -moz-focus-inner
-     */
-    return component.type === 'pseudo-element' && component.kind === 'custom';
-};
-
 const nullRuleFromRule = (rule) => ({
     type: 'style',
     value: {
@@ -214,14 +207,6 @@ async function processComponent(componentPath) {
                     });
                     matched = true;
                 } else if (isHoistedPseudoClass(component)) {
-                    match.push({
-                        hoist: true,
-                        find: { ...component },
-                        replace: { ...component },
-                    });
-                    matched = true;
-                    log = true;
-                } else if (isHoistedPseudoElement(component)) {
                     match.push({
                         hoist: true,
                         find: { ...component },
@@ -464,7 +449,6 @@ async function processComponent(componentPath) {
             return buildSelectorsV2(selectorMetadata);
         };
 
-        console.log(conversion.outPackage, conversion.fileName);
         const { code } = transform({
             code: Buffer.from(sourceCSS),
             visitor: {
