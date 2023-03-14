@@ -87,6 +87,13 @@ const config = {
                     hoist: true,
                 },
             ],
+            excludeByComponents: [
+                {
+                    type: 'pseudo-element',
+                    kind: 'custom',
+                    name: '-moz-focus-inner',
+                },
+            ],
         },
     ],
 };
