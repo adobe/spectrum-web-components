@@ -34,6 +34,7 @@ import { Focusable } from '@spectrum-web-components/shared';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 import tabStyles from './tabs.css.js';
+import tabSizes from './spectrum-tabs-sizes.css.js';
 import { TabPanel } from './TabPanel.js';
 
 // Encapsulated for use both here and in TopNav
@@ -75,7 +76,7 @@ export const ScaledIndicator = {
  */
 export class Tabs extends SizedMixin(Focusable) {
     public static override get styles(): CSSResultArray {
-        return [tabStyles, ScaledIndicator.baseStyles()];
+        return [tabSizes, tabStyles, ScaledIndicator.baseStyles()];
     }
 
     /**
