@@ -27,7 +27,14 @@ const config = {
             inPackage: '@spectrum-css/button',
             outPackage: 'button',
             fileName: 'button',
-            excludeByComponents: [builder.element('a')],
+            excludeByComponents: [
+                builder.element('a'),
+                {
+                    type: 'pseudo-element',
+                    kind: 'custom',
+                    name: '-moz-focus-inner',
+                },
+            ],
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('spectrum-Button--quiet'),
