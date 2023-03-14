@@ -105,20 +105,22 @@ export const builder = {
      * @param {string} kind
      * @returns {import('lightningcss').SelectorComponent}
      */
-    pseudoClass: (kind) => ({
+    pseudoClass: (kind, custom = false) => ({
         type: 'pseudo-class',
         // @ts-ignore
-        kind,
+        kind: custom ? 'custom' : kind,
+        name: custom ? kind : undefined,
     }),
     /**
      *
      * @param {string} kind
      * @returns {import('lightningcss').SelectorComponent}
      */
-    pseudoElement: (kind) => ({
+    pseudoElement: (kind, custom = false) => ({
         type: 'pseudo-element',
         // @ts-ignore
-        kind,
+        kind: custom ? 'custom' : kind,
+        name: custom ? kind : undefined,
     }),
     /**
      *

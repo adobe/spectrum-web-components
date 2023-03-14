@@ -127,3 +127,16 @@ textarea {
 :host([multiline]:not([quiet])) #textfield:after {
     box-shadow: none;
 }
+
+:host([disabled][quiet]) #textfield .input,
+:host([disabled][quiet]) #textfield:hover .input,
+:host([quiet]) .input :disabled {
+    background-color: var(
+        --spectrum-textfield-m-quiet-texticon-background-color-disabled,
+        var(--spectrum-alias-background-color-transparent)
+    );
+    border-color: var(
+        --spectrum-textfield-m-quiet-texticon-border-color-disabled,
+        var(--spectrum-alias-input-border-color-quiet-disabled)
+    );
+}
