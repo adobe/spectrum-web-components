@@ -34,10 +34,10 @@ governing permissions and limitations under the License.
     border-style: dashed;
     outline: 0;
 }
-:host(:focus.focus-visible) {
+:host(.focus-visible:focus) {
     border-style: solid;
 }
-:host(:focus:focus-visible) {
+:host(:focus-visible:focus) {
     border-style: solid;
 }
 :host {
@@ -71,21 +71,21 @@ governing permissions and limitations under the License.
         rgb(var(--spectrum-global-color-static-gray-500-rgb))
     );
 }
-:host(:focus.focus-visible) {
+:host(.focus-visible:focus) {
     border-color: var(
         --spectrum-dropzone-border-color-selected-hover,
         var(--spectrum-global-color-blue-400)
     );
 }
-:host(:focus:focus-visible) {
+:host(:focus-visible:focus) {
     border-color: var(
         --spectrum-dropzone-border-color-selected-hover,
         var(--spectrum-global-color-blue-400)
     );
 }
-:host(:focus[dragged].focus-visible) ::slotted(*) {
+:host([dragged].focus-visible:focus) ::slotted(*) {
     color: var(--spectrum-global-color-blue-400);
 }
-:host(:focus[dragged]:focus-visible) ::slotted(*) {
+:host([dragged]:focus-visible:focus) ::slotted(*) {
     color: var(--spectrum-global-color-blue-400);
 }
