@@ -206,14 +206,6 @@ async function processComponent(componentPath) {
                         },
                     });
                     matched = true;
-                } else if (isHoistedPseudoClass(component)) {
-                    match.push({
-                        hoist: true,
-                        find: { ...component },
-                        replace: { ...component },
-                    });
-                    matched = true;
-                    log = true;
                 }
                 conversion.components.forEach((componentConversion) => {
                     if (Array.isArray(componentConversion.find)) {
@@ -413,6 +405,13 @@ async function processComponent(componentPath) {
                 });
                 // @ts-ignore
                 if (host) {
+                    if (
+                        newSelector.length &&
+                        isHoistedPseudoClass(newSelector[0])
+                    ) {
+                        host.selectors = host.selectors || [];
+                        host.selectors?.push(newSelector.shift());
+                    }
                     const firstIsPseudo = isPseudo(newSelector[0]);
                     const firstIsNotSlotted =
                         newSelector[0]?.value !== 'slotted';
