@@ -18,6 +18,7 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
+    property,
     query,
     queryAssignedElements,
     state,
@@ -42,6 +43,9 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
         return [chevronIconStyles, styles, tabSizes];
     }
+
+    @property({ type: Boolean, reflect: true })
+    compact = false;
 
     @state()
     private overflowState: TabsOverflowState = {
