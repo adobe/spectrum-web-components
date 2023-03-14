@@ -248,6 +248,29 @@ const config = {
                 builder.class('spectrum-Tabs-selectionIndicator'),
             ],
         },
+        {
+            inPackage: '@spectrum-css/tabs',
+            outPackage: 'tabs',
+            fileName: 'tabs-overflow',
+            components: [
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Tabs--sizeS', 's'],
+                        ['spectrum-Tabs--sizeM', 'm'],
+                        ['spectrum-Tabs--sizeL', 'l'],
+                        ['spectrum-Tabs--sizeXL', 'xl'],
+                    ],
+                    'size'
+                ),
+            ],
+            requireComponentPresence: [
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Tabs--size/,
+                },
+            ],
+        },
     ],
 };
 
