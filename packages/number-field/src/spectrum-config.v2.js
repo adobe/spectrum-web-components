@@ -31,6 +31,50 @@ const config = {
             hoistCustomPropertiesFrom: 'spectrum-Stepper',
             components: [
                 {
+                    find: builder.pseudoClass('hover'),
+                    replace: builder.pseudoClass('hover'),
+                    hoist: true,
+                },
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [[builder.class('is-focused')]],
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [[builder.attribute('focused')]],
+                    },
+                    hoist: true,
+                },
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [[builder.class('is-disabled')]],
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [[builder.attribute('disabled')]],
+                    },
+                    hoist: true,
+                },
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [[builder.class('is-invalid')]],
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [[builder.attribute('invalid')]],
+                    },
+                    hoist: true,
+                },
+                {
                     exactSelector: true,
                     find: [builder.class('spectrum-Stepper--quiet')],
                     replace: [

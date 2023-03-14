@@ -826,9 +826,6 @@ governing permissions and limitations under the License.
         --spectrum-tabs-emphasized-texticon-tabitem-selection-indicator-background-color-selected
     );
 }
-:host(:hover)::slotted(:not([slot])) {
-    color: var(--spectrum-tabs-textonly-tabitem-text-color-hover);
-}
 ::slotted([selected]:not([slot])) {
     color: var(--spectrum-tabs-textonly-tabitem-text-color-selected);
 }
