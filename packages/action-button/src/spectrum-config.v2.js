@@ -32,6 +32,11 @@ const config = {
                     type: 'type',
                     name: 'a',
                 },
+                {
+                    type: 'pseudo-element',
+                    kind: 'custom',
+                    name: '-moz-focus-inner',
+                },
             ],
             components: [
                 converter.classToHost(),

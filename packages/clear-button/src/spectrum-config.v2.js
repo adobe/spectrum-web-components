@@ -51,6 +51,13 @@ const config = {
                 converter.classToClass('spectrum-Icon', 'icon'),
                 converter.classToClass('spectrum-ClearButton-fill'),
             ],
+            excludeByComponents: [
+                {
+                    type: 'pseudo-element',
+                    kind: 'custom',
+                    name: '-moz-focus-inner',
+                },
+            ],
         },
     ],
 };

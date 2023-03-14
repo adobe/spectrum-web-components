@@ -409,7 +409,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([emphasized][invalid][invalid]:hover) #input:checked + #box:before,
-:host([emphasized][invalid][invalid]:hover[indeterminate]) #box:before {
+:host([emphasized][invalid][invalid][indeterminate]:hover) #box:before {
     border-color: var(
         --highcontrast-checkbox-color-hover,
         var(
@@ -419,7 +419,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([emphasized]:hover) #input:checked + #box:before,
-:host([emphasized]:hover[indeterminate]) #box:before {
+:host([emphasized][indeterminate]:hover) #box:before {
     border-color: var(
         --highcontrast-checkbox-highlight-color-hover,
         var(

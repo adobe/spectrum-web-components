@@ -249,14 +249,14 @@ governing permissions and limitations under the License.
     position: absolute;
     width: var(--spectrum-stepper-button-offset);
 }
-:host(:hover)
-    #textfield:not(.is-disabled):not(.is-invalid):not(.is-focused):not(.is-keyboardFocused)
+:host(:hover:not([disabled]):not([invalid]):not([focused]))
+    #textfield:not(.is-keyboardFocused)
     .input,
-:host(:hover)
-    #textfield:not(.is-disabled):not(.is-invalid):not(.is-focused):not(.is-keyboardFocused)
+:host(:hover:not([disabled]):not([invalid]):not([focused]))
+    #textfield:not(.is-keyboardFocused)
     .stepDown,
-:host(:hover)
-    #textfield:not(.is-disabled):not(.is-invalid):not(.is-focused):not(.is-keyboardFocused)
+:host(:hover:not([disabled]):not([invalid]):not([focused]))
+    #textfield:not(.is-keyboardFocused)
     .stepUp {
     border-color: var(
         --spectrum-textfield-m-texticon-border-color-hover,
