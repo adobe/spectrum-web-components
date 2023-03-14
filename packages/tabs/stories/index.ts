@@ -32,7 +32,7 @@ export const renderTabsOverflowExample = (
             }
         </style>
         <div class="container">
-            <sp-tabs-overflow>
+            <sp-tabs-overflow size=${size}>
                 <sp-tabs size=${size} selected="1">
                     ${repeat(
                         new Array(count),

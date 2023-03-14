@@ -151,15 +151,6 @@ const config = {
                 converter.classToAttribute('spectrum-Tabs--compact'),
                 converter.classToAttribute('spectrum-Tabs--quiet'),
                 converter.classToAttribute('spectrum-Tabs--emphasized'),
-                ...converter.enumerateAttributes(
-                    [
-                        ['spectrum-Tabs--sizeS', 's'],
-                        ['spectrum-Tabs--sizeM', 'm'],
-                        ['spectrum-Tabs--sizeL', 'l'],
-                        ['spectrum-Tabs--sizeXL', 'xl'],
-                    ],
-                    'size'
-                ),
                 converter.classToId(
                     'spectrum-Tabs-selectionIndicator',
                     'selection-indicator'
@@ -198,6 +189,11 @@ const config = {
                 builder.class('spectrum-Tabs-itemLabel'),
                 builder.class('spectrum-Icon'),
                 builder.pseudoClass('hover'),
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Tabs--size/,
+                },
             ],
             excludeByWholeSelector: [
                 [builder.class('spectrum-Tabs-item')],
@@ -251,7 +247,7 @@ const config = {
         {
             inPackage: '@spectrum-css/tabs',
             outPackage: 'tabs',
-            fileName: 'tabs-overflow',
+            fileName: 'tabs-sizes',
             components: [
                 ...converter.enumerateAttributes(
                     [
