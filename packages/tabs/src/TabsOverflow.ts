@@ -18,7 +18,6 @@ import {
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
-    property,
     query,
     queryAssignedElements,
     state,
@@ -31,7 +30,6 @@ import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
 import tabSizes from './spectrum-tabs-sizes.css.js';
 import styles from './tabs-overflow.css.js';
-import { MutationController } from '@lit-labs/observers/mutation_controller.js';
 
 interface TabsOverflowState {
     canScrollLeft: boolean;
@@ -44,9 +42,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
         return [chevronIconStyles, styles, tabSizes];
     }
-
-    @property({ type: Boolean, reflect: true })
-    compact = false;
 
     @state()
     private overflowState: TabsOverflowState = {
@@ -62,17 +57,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
 
     resizeController!: ResizeController;
 
-    tabsMutations = new MutationController(this, {
-        target: null,
-        config: {
-            attributes: true,
-            attributeFilter: ['size', 'compact'],
-        },
-        callback: () => {
-            this.manageTabsAttributes();
-        },
-    });
-
     public constructor() {
         super();
         this.resizeController = new ResizeController(this, {
@@ -81,13 +65,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
                 this._updateScrollState();
             },
         });
-    }
-
-    private manageTabsAttributes(): void {
-        const [tabsElement] = this.scrollContent;
-        this.size = tabsElement.size;
-        this.compact = tabsElement.compact;
-        this.compact;
     }
 
     protected override firstUpdated(changes: PropertyValues): void {
@@ -99,7 +76,6 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
 
     private async _handleSlotChange(): Promise<void> {
         const [tabsElement] = this.scrollContent;
-        this.manageTabsAttributes();
         await tabsElement?.updateComplete;
         this._updateScrollState();
     }
