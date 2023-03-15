@@ -4410,9 +4410,9 @@
   integrity sha512-EBncWkbWtm3dPvrt5ZObdwEHsZWhTNg/aX5mxJm7UncwxmZMdz0xpVCYDy87cnzGrudefGHR6QnFkYllsO8QpQ==
 
 "@spectrum-css/pickerbutton@^2.0.7":
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/pickerbutton/-/pickerbutton-2.0.7.tgz#110a762b379647fb69ddfe62bc89519f37af3029"
-  integrity sha512-MkSTsLfuDdwtXCkhAtMd1Cbsq82FGquzXVHfbm3BHruqSf2UvORBt490mrWfYF5zJmdCPptX2fa84g4KlCutkA==
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/pickerbutton/-/pickerbutton-2.0.12.tgz#cba66576d6340c78f898fe163cb884593bbcbf43"
+  integrity sha512-GUKSb5NnOmLe1r1V8oV28E+sZh98EDrtkzDnWrr5vHYgzeu6/W0HYFe/4d4FyyZsTyD3yh3tMRXOY9KgJ3rdzQ==
 
 "@spectrum-css/popover@^5.0.18":
   version "5.0.18"
