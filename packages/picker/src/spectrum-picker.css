@@ -290,13 +290,11 @@ governing permissions and limitations under the License.
         );
     }
     :host([quiet]) #button.focus-visible,
-    :host([quiet].focus-visible) #button,
     :host([quiet][focused]) #button {
         forced-color-adjust: none;
         outline: 0;
     }
     :host([quiet]) #button:focus-visible,
-    :host([quiet]:focus-visible) #button,
     :host([quiet][focused]) #button {
         forced-color-adjust: none;
         outline: 0;
@@ -433,16 +431,13 @@ governing permissions and limitations under the License.
     pointer-events: none;
     position: absolute;
 }
-#button.focus-visible,
-:host(.focus-visible) #button {
+#button.focus-visible {
     outline: none;
 }
-#button:focus-visible,
-:host(:focus-visible) #button {
+#button:focus-visible {
     outline: none;
 }
-#button.focus-visible:after,
-:host(.focus-visible) #button:after {
+#button.focus-visible:after {
     border-color: var(
         --highcontrast-picker-focus-indicator-color,
         var(
@@ -451,8 +446,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-#button:focus-visible:after,
-:host(:focus-visible) #button:after {
+#button:focus-visible:after {
     border-color: var(
         --highcontrast-picker-focus-indicator-color,
         var(
@@ -519,7 +513,6 @@ governing permissions and limitations under the License.
     );
 }
 #button.focus-visible,
-:host(.focus-visible) #button,
 :host([focused]) #button {
     background-color: var(
         --highcontrast-picker-background-color-default,
@@ -548,7 +541,6 @@ governing permissions and limitations under the License.
     );
 }
 #button:focus-visible,
-:host(:focus-visible) #button,
 :host([focused]) #button {
     background-color: var(
         --highcontrast-picker-background-color-default,
@@ -577,7 +569,6 @@ governing permissions and limitations under the License.
     );
 }
 #button.focus-visible.placeholder,
-:host(.focus-visible) #button.placeholder,
 :host([focused]) #button.placeholder {
     color: var(
         --highcontrast-picker-font-color-key-focus,
@@ -588,7 +579,6 @@ governing permissions and limitations under the License.
     );
 }
 #button:focus-visible.placeholder,
-:host(:focus-visible) #button.placeholder,
 :host([focused]) #button.placeholder {
     color: var(
         --highcontrast-picker-font-color-key-focus,
@@ -726,7 +716,6 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([invalid]) #button.focus-visible,
 :host([invalid]) #button:focus-visible,
 :host([invalid][focused]) #button {
     border-color: var(
@@ -805,15 +794,11 @@ governing permissions and limitations under the License.
     min-inline-size: 0;
 }
 :host([quiet]) #button:disabled.focus-visible,
-:host([quiet].focus-visible) #button:disabled,
-:host([quiet][disabled]) #button.focus-visible,
-:host([quiet][disabled].focus-visible) #button {
+:host([quiet][disabled]) #button.focus-visible {
     border-color: #0000;
 }
 :host([quiet]) #button:disabled:focus-visible,
-:host([quiet]:focus-visible) #button:disabled,
-:host([quiet][disabled]) #button:focus-visible,
-:host([quiet][disabled]:focus-visible) #button {
+:host([quiet][disabled]) #button:focus-visible {
     border-color: #0000;
 }
 #label {
@@ -898,8 +883,7 @@ governing permissions and limitations under the License.
         ease-out;
     vertical-align: top;
 }
-.picker.focus-visible,
-:host(.focus-visible) .picker {
+.picker.focus-visible {
     color: var(
         --highcontrast-picker-icon-color-key-focus,
         var(
@@ -908,8 +892,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-.picker:focus-visible,
-:host(:focus-visible) .picker {
+.picker:focus-visible {
     color: var(
         --highcontrast-picker-icon-color-key-focus,
         var(
@@ -986,17 +969,14 @@ governing permissions and limitations under the License.
     background-color: #0000;
 }
 :host([quiet]) #button.focus-visible,
-:host([quiet].focus-visible) #button,
 :host([quiet][focused]) #button {
     background-color: #0000;
 }
 :host([quiet]) #button:focus-visible,
-:host([quiet]:focus-visible) #button,
 :host([quiet][focused]) #button {
     background-color: #0000;
 }
 :host([quiet]) #button.focus-visible:after,
-:host([quiet].focus-visible) #button:after,
 :host([quiet][focused]) #button:after {
     border: none;
     border-radius: 0;
@@ -1028,7 +1008,6 @@ governing permissions and limitations under the License.
         0;
 }
 :host([quiet]) #button:focus-visible:after,
-:host([quiet]:focus-visible) #button:after,
 :host([quiet][focused]) #button:after {
     border: none;
     border-radius: 0;
