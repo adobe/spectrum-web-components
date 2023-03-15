@@ -57,64 +57,493 @@ const config = {
                 converter.classToId('spectrum-Picker-label', 'label'),
                 converter.classToId('spectrum-Picker-popover', 'popover'),
                 {
+                    // .spectrum-Picker--quiet:focus-visible
                     find: [
-                        builder.class('spectrum-Picker'),
-                        builder.pseudoClass('focus'),
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.pseudoClass('focus-visible'),
                     ],
                     replace: [
-                        {
-                            replace: builder.id('button'),
-                        },
-                        {
-                            replace: builder.pseudoClass('focus'),
-                        },
-                    ],
-                },
-                {
-                    find: [
-                        builder.class('spectrum-Picker'),
-                        {
-                            type: 'pseudo-element',
-                            kind: 'custom',
-                            name: '-moz-focus-inner',
-                        },
-                    ],
-                    replace: [
-                        {
-                            replace: builder.id('button'),
-                        },
                         {
                             replace: {
-                                type: 'pseudo-element',
-                                kind: 'custom',
-                                name: '-moz-focus-inner',
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
                             },
                         },
-                    ],
-                },
-                {
-                    find: [
-                        builder.class('spectrum-Picker'),
-                        builder.class('quiet'),
-                        builder.id('button'),
-                        builder.class('focus-visible'),
-                    ],
-                    replace: [
-                        // {
-                        //     replace: {
-                        //         type: 'pseudo-class',
-                        //         kind: 'host',
-                        //         selectors: [builder.attribute('quiet')],
-                        //     },
-                        // },
                         {
-                            replace: builder.combinator(' '),
+                            replace: builder.combinator('descendant'),
                         },
                         {
                             replace: builder.id('button'),
                         },
                         {
                             replace: builder.class('focus-visible'),
+                        },
+                    ],
+                },
+                {
+                    // .spectrum-Picker--quiet.focus-ring
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.class('focus-ring'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.pseudoClass('focus-visible'),
+                        },
+                    ],
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.class('is-focused'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.attribute('focused'),
+                        },
+                    ],
+                },
+                {
+                    // .spectrum-Picker.is-invalid.focus-ring
+                    find: [
+                        builder.class('spectrum-Picker'),
+                        builder.class('is-invalid'),
+                        builder.class('focus-ring'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('invalid')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.class('focus-visible'),
+                        },
+                    ],
+                },
+
+                {
+                    // .spectrum-Picker--quiet:disabled.focus-ring, :host([quiet]) #button:disabled.focus-visible
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.pseudoClass('disabled'),
+                        builder.class('focus-ring'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.pseudoClass('disabled'),
+                        },
+                        {
+                            replace: builder.class('focus-visible'),
+                        },
+                    ],
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.pseudoClass('disabled'),
+                        builder.pseudoClass('focus-visible'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.pseudoClass('disabled'),
+                        },
+                        {
+                            replace: builder.pseudoClass('focus-visible'),
+                        },
+                    ],
+                },
+                {
+                    // .spectrum-Picker--quiet.is-disabled.focus-ring
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.class('is-disabled'),
+                        builder.class('focus-ring'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    builder.attribute('quiet'),
+                                    builder.attribute('disabled'),
+                                ],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.class('focus-visible'),
+                        },
+                    ],
+                },
+                {
+                    // .spectrum-Picker--quiet.is-disabled.focus-ring
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.class('is-disabled'),
+                        builder.class('focus-ring'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [
+                                    builder.attribute('quiet'),
+                                    builder.attribute('disabled'),
+                                ],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.pseudoClass('focus-visible'),
+                        },
+                    ],
+                },
+                {
+                    // .spectrum-Picker--quiet:disabled:focus-visible
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.class('is-disabled'),
+                        builder.pseudoClass('focus-visible'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.pseudoClass('disabled'),
+                        },
+                        {
+                            replace: builder.pseudoClass('focus-visible'),
+                        },
+                    ],
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.pseudoClass('hover'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.pseudoClass('hover'),
+                        },
+                    ],
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.pseudoElement('after'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.pseudoElement('after'),
+                        },
+                    ],
+                },
+                {
+                    // :host([quiet]) #button.focus-visible:after
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.pseudoClass('focus-visible'),
+                        builder.pseudoElement('after'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.class('focus-visible'),
+                        },
+                        {
+                            replace: builder.pseudoElement('after'),
+                        },
+                    ],
+                },
+                {
+                    // :host([quiet]) #button:focus-visible:after
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.class('focus-ring'),
+                        builder.pseudoElement('after'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.pseudoClass('focus-visible'),
+                        },
+                        {
+                            replace: builder.pseudoElement('after'),
+                        },
+                    ],
+                },
+                {
+                    //:host([quiet][focused]) #button:after
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.class('is-focused'),
+                        builder.pseudoElement('after'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.attribute('focused'),
+                        },
+                        {
+                            replace: builder.pseudoElement('after'),
+                        },
+                    ],
+                },
+                {
+                    //:host([quiet]) #button:active
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.pseudoClass('active'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.pseudoClass('active'),
+                        },
+                    ],
+                },
+                {
+                    //:host([quiet][open]) #button
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.class('is-open'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.attribute('open'),
+                        },
+                    ],
+                },
+                {
+                    find: [
+                        builder.class('spectrum-Picker'),
+                        builder.class('spectrum-Picker-icon'),
+                    ],
+                    replace: [
+                        {
+                            replace: builder.class('icon'),
+                        },
+                    ],
+                },
+                {
+                    //:host([quiet]) #button:disabled
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.pseudoClass('disabled'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.pseudoClass('disabled'),
+                        },
+                    ],
+                },
+                {
+                    //:host([quiet][disabled]) #button
+                    find: [
+                        builder.class('spectrum-Picker--quiet'),
+                        builder.class('is-disabled'),
+                    ],
+                    replace: [
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'host',
+                                selectors: [builder.attribute('quiet')],
+                            },
+                        },
+                        {
+                            replace: builder.combinator('descendant'),
+                        },
+                        {
+                            replace: builder.id('button'),
+                        },
+                        {
+                            replace: builder.attribute('disabled'),
                         },
                     ],
                 },
