@@ -4400,9 +4400,9 @@
   integrity sha512-LyqQ4PuW4Mhz5w/F+IjgT2WT2E48KfOV0TEHXOSIvtbsXL0DHnr1UwgAx3CZAuyQ6idD/CmOin+7bVnqPaEgUQ==
 
 "@spectrum-css/modal@^3.0.28":
-  version "3.0.28"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/modal/-/modal-3.0.28.tgz#7687176f06fc50a7b6442437b85d2659db5bf9a0"
-  integrity sha512-lPqPulGq6wPNmH56v53DojUe3Y+flxtXUwNNIjZrw6SG8TXFtHa1zC+IOqd5pkFzlSAX+rbiK6Xea4G3cbSXbQ==
+  version "3.0.33"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/modal/-/modal-3.0.33.tgz#bdbae853310863db186e8471e7a25abc9daa933c"
+  integrity sha512-hs8uwe9bt3/gUV2R6ZTBHZdsUyP1DzqOOaj/rPtkATL7bNjrZ70+J+4N0Mzha2bZAE6VrOeg1gZx+LnJFF1gMg==
 
 "@spectrum-css/picker@^2.0.5":
   version "2.0.5"
