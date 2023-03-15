@@ -314,7 +314,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
             }
             if (typeof this.minlength !== 'undefined') {
                 validity =
-                    validity && this.value.toString().length > this.minlength;
+                    validity && this.value.toString().length >= this.minlength;
             }
             this.valid = validity;
             this.invalid = !validity;
