@@ -160,7 +160,7 @@ export class Table extends SizedMixin(SpectrumElement, {
     /**
      * Uses quiet styles or not
      */
-    @property({ type: Boolean, reflect: true, attribute: 'quiet' })
+    @property({ type: Boolean, reflect: true })
     public quiet = false;
 
     private tableBody?: TableBody;

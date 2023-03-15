@@ -272,6 +272,229 @@ export const selectsMultiple = (): TemplateResult => {
     `;
 };
 
+export const elementsQuiet = (): TemplateResult => {
+    return html`
+        <sp-table quiet size="m">
+            <sp-table-head>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+            </sp-table-head>
+            <sp-table-body style="height: 200px">
+                <sp-table-row value="row1" class="row1">
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row2" class="row2">
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row3" class="row3">
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row4" class="row4">
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row5" class="row5">
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                </sp-table-row>
+            </sp-table-body>
+        </sp-table>
+    `;
+};
+
+export const smallQuiet = (): TemplateResult => {
+    return html`
+        <sp-table quiet size="s">
+            <sp-table-head>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+            </sp-table-head>
+            <sp-table-body style="height: 120px">
+                <sp-table-row value="row1" class="row1">
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row2" class="row2">
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row3" class="row3">
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row4" class="row4">
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row5" class="row5">
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                </sp-table-row>
+            </sp-table-body>
+        </sp-table>
+    `;
+};
+
+export const selectsSingleQuiet = (): TemplateResult => {
+    return html`
+        <sp-table
+            quiet
+            size="m"
+            selects="single"
+            .selected=${['row1']}
+            @change=${({ target }: Event & { target: Table }) => {
+                const next = target.nextElementSibling as HTMLDivElement;
+                next.textContent = `Selected: ${JSON.stringify(
+                    target.selected
+                )}`;
+            }}
+        >
+            <sp-table-head>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+            </sp-table-head>
+            <sp-table-body style="height: 120px">
+                <sp-table-row value="row1" class="row1">
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row2" class="row2">
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row3" class="row3">
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row4" class="row4">
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row5" class="row5">
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                </sp-table-row>
+            </sp-table-body>
+        </sp-table>
+        <div>Selected: ["row1"]</div>
+    `;
+};
+export const noSelectsSpecifiedQuiet = (): TemplateResult => {
+    return html`
+        <sp-table quiet size="m" .selected=${['row1', 'row2']}>
+            <sp-table-head>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+            </sp-table-head>
+            <sp-table-body style="height: 120px">
+                <sp-table-row value="row1" class="row1">
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row2" class="row2">
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row3" class="row3">
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row4" class="row4">
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row5" class="row5">
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                </sp-table-row>
+            </sp-table-body>
+        </sp-table>
+    `;
+};
+
+export const selectsMultipleQuiet = (): TemplateResult => {
+    return html`
+        <sp-table
+            quiet
+            size="m"
+            selects="multiple"
+            .selected=${['row1', 'row2']}
+            @change=${({ target }: Event & { target: Table }) => {
+                const next = target.nextElementSibling as HTMLDivElement;
+                next.textContent = `Selected: ${JSON.stringify(
+                    target.selected,
+                    null,
+                    ' '
+                )}`;
+                const nextNext = next.nextElementSibling as HTMLDivElement;
+                nextNext.textContent = `Selected Count: ${target.selected.length}`;
+            }}
+        >
+            <sp-table-head>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+                <sp-table-head-cell>Column Title</sp-table-head-cell>
+            </sp-table-head>
+            <sp-table-body style="height: 120px">
+                <sp-table-row value="row1" class="row1">
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                    <sp-table-cell>Row Item Alpha</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row2" class="row2">
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                    <sp-table-cell>Row Item Bravo</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row3" class="row3">
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                    <sp-table-cell>Row Item Charlie</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row4" class="row4">
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                    <sp-table-cell>Row Item Delta</sp-table-cell>
+                </sp-table-row>
+                <sp-table-row value="row5" class="row5">
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                    <sp-table-cell>Row Item Echo</sp-table-cell>
+                </sp-table-row>
+            </sp-table-body>
+        </sp-table>
+        <div>Selected: ["row1", "row2"]</div>
+        <div>Selected Count: 2</div>
+    `;
+};
+
 // export const selectsMultipleAttributes = (): TemplateResult => {
 //     return html`
 //         <sp-table size="m" selects="multiple">
