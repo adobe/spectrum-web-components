@@ -157,6 +157,12 @@ export class Table extends SizedMixin(SpectrumElement, {
     @property({ type: Boolean, reflect: true })
     public scroller = false;
 
+    /**
+     * Uses quiet styles or not
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'quiet' })
+    public quiet = false;
+
     private tableBody?: TableBody;
 
     private tableHeadCheckboxCell?: TableCheckboxCell;
