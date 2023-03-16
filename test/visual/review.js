@@ -16,6 +16,7 @@ import pixelmatch from 'pixelmatch';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import crypto from 'crypto';
+import slugify from '@sindresorhus/slugify';
 
 const { commit, theme, branch } = yargs(hideBin(process.argv)).argv;
 
@@ -173,6 +174,9 @@ async function main() {
     const data = JSON.stringify({
         meta: {
             branch,
+            preview: `https://${slugify(
+                branch
+            )}--spectrum-web-components.netlify.app`,
             commit,
             theme,
             vrts,
