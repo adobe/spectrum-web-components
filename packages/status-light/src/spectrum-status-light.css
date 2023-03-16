@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host([dir]) {
-    --spectrum-statuslight-corner-radius: 50%; /* .spectrum-StatusLight */
+    --spectrum-statuslight-corner-radius: 50%;
     --spectrum-statuslight-font-weight: 400;
     --spectrum-statuslight-border-width: var(--spectrum-border-width-100);
     --spectrum-statuslight-height: var(--spectrum-component-height-100);
@@ -102,9 +102,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='s']) {
-    --spectrum-statuslight-height: var(
-        --spectrum-component-height-75
-    ); /* .spectrum-StatusLight--sizeS */
+    --spectrum-statuslight-height: var(--spectrum-component-height-75);
     --spectrum-statuslight-dot-size: var(
         --spectrum-status-light-dot-size-small
     );
@@ -123,9 +121,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='m']) {
-    --spectrum-statuslight-height: var(
-        --spectrum-component-height-100
-    ); /* .spectrum-StatusLight--sizeM */
+    --spectrum-statuslight-height: var(--spectrum-component-height-100);
     --spectrum-statuslight-dot-size: var(
         --spectrum-status-light-dot-size-medium
     );
@@ -144,9 +140,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='l']) {
-    --spectrum-statuslight-height: var(
-        --spectrum-component-height-200
-    ); /* .spectrum-StatusLight--sizeL */
+    --spectrum-statuslight-height: var(--spectrum-component-height-200);
     --spectrum-statuslight-dot-size: var(
         --spectrum-status-light-dot-size-large
     );
@@ -165,9 +159,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([size='xl']) {
-    --spectrum-statuslight-height: var(
-        --spectrum-component-height-300
-    ); /* .spectrum-StatusLight--sizeXL */
+    --spectrum-statuslight-height: var(--spectrum-component-height-300);
     --spectrum-statuslight-dot-size: var(
         --spectrum-status-light-dot-size-extra-large
     );
@@ -209,7 +201,7 @@ governing permissions and limitations under the License.
             var(--spectrum-statuslight-content-color-default)
         )
     );
-    display: flex; /* .spectrum-StatusLight */
+    display: flex;
     flex-direction: row;
     font-size: var(
         --mod-statuslight-font-size,
@@ -243,9 +235,7 @@ governing permissions and limitations under the License.
     line-height: var(
         --mod-statuslight-line-height-cjk,
         var(--spectrum-statuslight-line-height-cjk)
-    ); /* .spectrum-StatusLight:lang(ja),
-   * .spectrum-StatusLight:lang(zh),
-   * .spectrum-StatusLight:lang(ko) */
+    );
 }
 :host:before {
     --spectrum-statuslight-spacing-computed-top-to-dot: calc(
@@ -267,7 +257,7 @@ governing permissions and limitations under the License.
         --mod-statuslight-corner-radius,
         var(--spectrum-statuslight-corner-radius)
     );
-    content: ''; /* .spectrum-StatusLight:before */
+    content: '';
     display: inline-block;
     flex-grow: 0;
     flex-shrink: 0;
@@ -283,7 +273,7 @@ governing permissions and limitations under the License.
     );
 }
 :host([variant='neutral']) {
-    font-style: italic; /* .spectrum-StatusLight--neutral */
+    font-style: italic;
 }
 :host([variant='neutral']) {
     color: var(
@@ -292,125 +282,125 @@ governing permissions and limitations under the License.
             --mod-statuslight-subdued-content-color-default,
             var(--spectrum-statuslight-subdued-content-color-default)
         )
-    ); /* .spectrum-StatusLight--neutral */
+    );
 }
 :host([variant='neutral']):before {
     background-color: var(
         --mod-statuslight-semantic-neutral-color,
         var(--spectrum-statuslight-semantic-neutral-color)
-    ); /* .spectrum-StatusLight--neutral:before */
+    );
 }
 .spectrum-StatusLight--accent:before {
     background-color: var(
         --mod-statuslight-semantic-accent-color,
         var(--spectrum-statuslight-semantic-accent-color)
-    ); /* .spectrum-StatusLight--accent:before */
+    );
 }
 :host([variant='info']):before {
     background-color: var(
         --mod-statuslight-semantic-info-color,
         var(--spectrum-statuslight-semantic-info-color)
-    ); /* .spectrum-StatusLight--info:before */
+    );
 }
 :host([variant='negative']):before {
     background-color: var(
         --mod-statuslight-semantic-negative-color,
         var(--spectrum-statuslight-semantic-negative-color)
-    ); /* .spectrum-StatusLight--negative:before */
+    );
 }
 :host([variant='notice']):before {
     background-color: var(
         --mod-statuslight-semantic-notice-color,
         var(--spectrum-statuslight-semantic-notice-color)
-    ); /* .spectrum-StatusLight--notice:before */
+    );
 }
 :host([variant='positive']):before {
     background-color: var(
         --mod-statuslight-semantic-positive-color,
         var(--spectrum-statuslight-semantic-positive-color)
-    ); /* .spectrum-StatusLight--positive:before */
+    );
 }
 .spectrum-StatusLight--gray:before {
     background-color: var(
         --mod-statuslight-nonsemantic-gray-color,
         var(--spectrum-statuslight-nonsemantic-gray-color)
-    ); /* .spectrum-StatusLight--gray:before */
+    );
 }
 .spectrum-StatusLight--red:before {
     background-color: var(
         --mod-statuslight-nonsemantic-red-color,
         var(--spectrum-statuslight-nonsemantic-red-color)
-    ); /* .spectrum-StatusLight--red:before */
+    );
 }
 .spectrum-StatusLight--orange:before {
     background-color: var(
         --mod-statuslight-nonsemantic-orange-color,
         var(--spectrum-statuslight-nonsemantic-orange-color)
-    ); /* .spectrum-StatusLight--orange:before */
+    );
 }
 :host([variant='yellow']):before {
     background-color: var(
         --mod-statuslight-nonsemantic-yellow-color,
         var(--spectrum-statuslight-nonsemantic-yellow-color)
-    ); /* .spectrum-StatusLight--yellow:before */
+    );
 }
 :host([variant='chartreuse']):before {
     background-color: var(
         --mod-statuslight-nonsemantic-chartreuse-color,
         var(--spectrum-statuslight-nonsemantic-chartreuse-color)
-    ); /* .spectrum-StatusLight--chartreuse:before */
+    );
 }
 :host([variant='celery']):before {
     background-color: var(
         --mod-statuslight-nonsemantic-celery-color,
         var(--spectrum-statuslight-nonsemantic-celery-color)
-    ); /* .spectrum-StatusLight--celery:before */
+    );
 }
 .spectrum-StatusLight--green:before {
     background-color: var(
         --mod-statuslight-nonsemantic-green-color,
         var(--spectrum-statuslight-nonsemantic-green-color)
-    ); /* .spectrum-StatusLight--green:before */
+    );
 }
 :host([variant='seafoam']):before {
     background-color: var(
         --mod-statuslight-nonsemantic-seafoam-color,
         var(--spectrum-statuslight-nonsemantic-seafoam-color)
-    ); /* .spectrum-StatusLight--seafoam:before */
+    );
 }
 .spectrum-StatusLight--cyan:before {
     background-color: var(
         --mod-statuslight-nonsemantic-cyan-color,
         var(--spectrum-statuslight-nonsemantic-cyan-color)
-    ); /* .spectrum-StatusLight--cyan:before */
+    );
 }
 .spectrum-StatusLight--blue:before {
     background-color: var(
         --mod-statuslight-nonsemantic-blue-color,
         var(--spectrum-statuslight-nonsemantic-blue-color)
-    ); /* .spectrum-StatusLight--blue:before */
+    );
 }
 :host([variant='indigo']):before {
     background-color: var(
         --mod-statuslight-nonsemantic-indigo-color,
         var(--spectrum-statuslight-nonsemantic-indigo-color)
-    ); /* .spectrum-StatusLight--indigo:before */
+    );
 }
 :host([variant='purple']):before {
     background-color: var(
         --mod-statuslight-nonsemantic-purple-color,
         var(--spectrum-statuslight-nonsemantic-purple-color)
-    ); /* .spectrum-StatusLight--purple:before */
+    );
 }
 :host([variant='fuchsia']):before {
     background-color: var(
         --mod-statuslight-nonsemantic-fuchsia-color,
         var(--spectrum-statuslight-nonsemantic-fuchsia-color)
-    ); /* .spectrum-StatusLight--fuchsia:before */
+    );
 }
 :host([variant='magenta']):before {
     background-color: var(
         --mod-statuslight-nonsemantic-magenta-color,
         var(--spectrum-statuslight-nonsemantic-magenta-color)
-    ); /* .spectrum-StatusLight--magenta:before */
+    );
 }
