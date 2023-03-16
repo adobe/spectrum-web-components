@@ -377,6 +377,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             return;
         }
         event.preventDefault();
+        event.stopPropagation();
         const { detail: theme } = event;
         theme.color = this.color || undefined;
         theme.scale = this.scale || undefined;
