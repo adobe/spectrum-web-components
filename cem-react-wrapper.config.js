@@ -30,7 +30,7 @@ export default {
     packagejson: false,
     plugins: [
         reactWrapperPlugin({
-            exclude: ['DialogBase', 'PickerBase', 'StoryDecorator'],
+            exclude: ['PickerBase', 'StoryDecorator'],
             outDir: '../../react',
             prettierConfig: yaml.load(
                 readFileSync(resolve('../../.prettierrc.yaml'))
