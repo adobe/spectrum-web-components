@@ -225,6 +225,7 @@ export function runPickerTests(): void {
             item.textContent = 'New Option';
 
             el.append(item);
+            await nextFrame();
             await elementUpdated(el);
 
             let opened = oneEvent(el, 'sp-opened');
@@ -430,7 +431,7 @@ export function runPickerTests(): void {
             ) as MenuItem;
             const button = el.button as HTMLButtonElement;
 
-            const opened = oneEvent(el, 'sp-opened');
+            let opened = oneEvent(el, 'sp-opened');
             button.click();
             await opened;
             await nextFrame();
@@ -439,27 +440,28 @@ export function runPickerTests(): void {
             expect(el.selectedItem?.itemText).to.be.undefined;
             expect(el.value).to.equal('');
 
-            const closed = oneEvent(el, 'sp-closed');
+            let closed = oneEvent(el, 'sp-closed');
             secondItem.click();
             await closed;
+            await aTimeout(150);
             await nextFrame();
 
             expect(el.open).to.be.false;
             expect(el.selectedItem?.itemText).to.equal('Select Inverse');
             expect(el.value).to.equal('option-2');
 
-            const opened2 = oneEvent(el, 'sp-opened');
+            opened = oneEvent(el, 'sp-opened');
             button.click();
-            await opened2;
+            await opened;
             await nextFrame();
 
             expect(el.open).to.be.true;
             expect(el.selectedItem?.itemText).to.equal('Select Inverse');
             expect(el.value).to.equal('option-2');
 
-            const closed2 = oneEvent(el, 'sp-closed');
+            closed = oneEvent(el, 'sp-closed');
             firstItem.click();
-            await closed2;
+            await closed;
             await nextFrame();
 
             expect(el.open).to.be.false;
@@ -481,6 +483,7 @@ export function runPickerTests(): void {
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
+            await aTimeout(150);
             await elementUpdated(el);
 
             const closed = oneEvent(el, 'sp-closed');
@@ -586,6 +589,7 @@ export function runPickerTests(): void {
             const closed = oneEvent(el, 'sp-closed');
             button.dispatchEvent(escapeEvent());
             await closed;
+            await aTimeout(150);
             await elementUpdated(el);
             expect(el.open).to.be.false;
         });

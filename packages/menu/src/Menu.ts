@@ -669,7 +669,10 @@ export class Menu extends SpectrumElement {
             // Debounce the update so we only update once
             // if multiple items have changed
             window.requestAnimationFrame(() => {
-                if (this.cachedChildItems === undefined) {
+                if (
+                    this._willUpdateItems ||
+                    this.cachedChildItems === undefined
+                ) {
                     this.updateSelectedItemIndex();
                     this.updateItemFocus();
                 }

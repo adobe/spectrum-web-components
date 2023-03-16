@@ -229,7 +229,10 @@ export class OverlayTrigger extends SpectrumElement {
             this.open = undefined;
             return;
         }
-        if (changes.has('hasLongpressContent')) {
+        if (
+            changes.has('hasLongpressContent') &&
+            typeof changes.get('hasLongpressContent') !== 'undefined'
+        ) {
             this.manageLongpressDescriptor();
         }
     }

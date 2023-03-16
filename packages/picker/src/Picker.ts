@@ -227,12 +227,18 @@ export class PickerBase extends SizedMixin(Focusable) {
         item: MenuItem,
         menuChangeEvent?: Event
     ): Promise<void> {
+        // should always close when "setting" a value.
+        this.open = false;
         const oldSelectedItem = this.selectedItem;
         const oldValue = this.value;
-        this.selectedItem = item;
-        this.value = item.value;
-        this.open = false;
-        await this.updateComplete;
+
+        // When there are no selects, don't set a value.
+        if (this.selects) {
+            // Set a value, but allow it to be prevented.
+            this.selectedItem = item;
+            this.value = item.value;
+            await this.updateComplete;
+        }
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 bubbles: true,
@@ -240,11 +246,11 @@ export class PickerBase extends SizedMixin(Focusable) {
                 composed: true,
             })
         );
-        if (!applyDefault) {
+        if (!applyDefault && this.selects) {
             if (menuChangeEvent) {
                 menuChangeEvent.preventDefault();
             }
-            this.setMenuItemSelected(this.selectedItem, false);
+            this.setMenuItemSelected(this.selectedItem as MenuItem, false);
             if (oldSelectedItem) {
                 this.setMenuItemSelected(oldSelectedItem, true);
             }

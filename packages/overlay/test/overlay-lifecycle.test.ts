@@ -108,11 +108,14 @@ describe('Overlay Trigger - accessible hover content management', () => {
         `);
 
         const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+        const tooptip = el.querySelector(
+            '[slot="hover-content"]'
+        ) as HTMLElement;
 
         await elementUpdated(el);
 
         expect(trigger.getAttribute('aria-describedby')).to.equal(
-            `descriptor hover-overlay`
+            `descriptor ${tooptip.id}`
         );
 
         trigger.remove();
@@ -135,12 +138,13 @@ describe('Overlay Trigger - accessible hover content management', () => {
         `);
 
         const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
+        const tooptip = el.querySelector(
+            '[slot="hover-content"]'
+        ) as HTMLElement;
 
         await elementUpdated(el);
 
-        expect(trigger.getAttribute('aria-describedby')).to.equal(
-            'hover-overlay'
-        );
+        expect(trigger.getAttribute('aria-describedby')).to.equal(tooptip.id);
 
         trigger.remove();
 
@@ -151,27 +155,28 @@ describe('Overlay Trigger - accessible hover content management', () => {
     });
     it('does not duplicate `aria-describedby` attribute', async () => {
         const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger placement="right-start">
+            <div>
                 <sp-action-button slot="trigger">
                     Button with Tooltip
                 </sp-action-button>
-                <sp-tooltip slot="hover-content" delayed>
-                    Described by this content on focus/hover. 2
-                </sp-tooltip>
-            </overlay-trigger>
+                <overlay-trigger placement="right-start">
+                    <sp-tooltip slot="hover-content" delayed>
+                        Described by this content on focus/hover. 2
+                    </sp-tooltip>
+                </overlay-trigger>
+            </div>
         `);
 
         const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
         const tooltip = el.querySelector('sp-tooltip') as Tooltip;
-        const tooltipId = (tooltip as unknown as { _tooltipId: string })
-            ._tooltipId;
-        trigger.setAttribute('aria-describedby', tooltipId);
+        const overlay = el.querySelector('overlay-trigger') as OverlayTrigger;
+
+        trigger.setAttribute('aria-describedby', tooltip.id);
+        overlay.append(trigger);
 
         await elementUpdated(el);
-
-        expect(trigger.getAttribute('aria-describedby')).to.equal(tooltipId);
+        expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
         expect(el.open).to.be.undefined;
-        expect(el.childNodes.length, 'always').to.equal(5);
 
         const opened = oneEvent(el, 'sp-opened');
         trigger.dispatchEvent(
@@ -179,7 +184,7 @@ describe('Overlay Trigger - accessible hover content management', () => {
         );
         await opened;
 
-        expect(trigger.getAttribute('aria-describedby')).to.equal(tooltipId);
+        expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
 
         const closed = oneEvent(el, 'sp-closed');
         trigger.dispatchEvent(
@@ -187,6 +192,6 @@ describe('Overlay Trigger - accessible hover content management', () => {
         );
         await closed;
 
-        expect(trigger.getAttribute('aria-describedby')).to.equal(tooltipId);
+        expect(trigger.getAttribute('aria-describedby')).to.equal(tooltip.id);
     });
 });

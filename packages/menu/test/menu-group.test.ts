@@ -272,6 +272,7 @@ describe('Menu group', () => {
         expect(el.selectedItems.length).to.equal(1);
 
         noneItem2.click();
+        await elementUpdated(el);
         await elementUpdated(noneGroup);
         await elementUpdated(noneItem2);
         expect(inheritItem1.selected).to.be.true;
@@ -283,8 +284,8 @@ describe('Menu group', () => {
         await elementUpdated(singleGroup);
         await elementUpdated(singleItem1);
         await elementUpdated(singleItem2);
-        expect(singleItem1.selected, 'first item not selected').to.be.false;
         expect(singleItem2.selected).to.be.true;
+        expect(singleItem1.selected, 'first item not selected').to.be.false;
         expect(inheritItem1.selected).to.be.true;
         expect(singleItem1.getAttribute('aria-checked')).to.equal('false');
         expect(singleItem2.getAttribute('aria-checked')).to.equal('true');

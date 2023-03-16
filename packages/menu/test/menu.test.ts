@@ -381,6 +381,13 @@ describe('Menu', () => {
         el.focus();
 
         expect(document.activeElement).to.equal(el);
+        // Enforce visible focus
+        await sendKeys({
+            press: 'ArrowUp',
+        });
+        await sendKeys({
+            press: 'ArrowDown',
+        });
         expect(selectedItem.focused).to.be.true;
 
         selectedItem.remove();

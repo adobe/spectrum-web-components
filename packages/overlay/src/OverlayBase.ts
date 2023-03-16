@@ -376,18 +376,53 @@ export class OverlayBase extends SpectrumElement {
                 );
                 if (this.receivesFocus === 'true') return;
 
-                const releaseAriaDescribedby = conditionAttributeWithId(
-                    nextTriggerElement,
-                    'aria-describedby',
-                    [this.id]
-                );
-                this.releaseAriaDescribedby = () => {
-                    releaseAriaDescribedby();
-                    this.releaseAriaDescribedby = () => {
-                        return;
-                    };
-                };
+                this.prepareAriaDescribedby(nextTriggerElement);
                 return;
+        }
+    }
+
+    private elementIds: string[] = [];
+
+    private prepareAriaDescribedby(trigger: HTMLElement): void {
+        const triggerRoot = trigger.getRootNode();
+        const contentRoot = this.elements[0].getRootNode();
+        const overlayRoot = this.getRootNode();
+        if (triggerRoot == overlayRoot) {
+            const releaseAriaDescribedby = conditionAttributeWithId(
+                trigger,
+                'aria-describedby',
+                [this.id]
+            );
+            this.releaseAriaDescribedby = () => {
+                releaseAriaDescribedby();
+                this.releaseAriaDescribedby = () => {
+                    return;
+                };
+            };
+        } else if (triggerRoot === contentRoot) {
+            this.elementIds = this.elements.map((el) => el.id);
+            const appliedIds = this.elements.map((el) => {
+                if (!el.id) {
+                    el.id = `${this.tagName.toLowerCase()}-helper-${crypto
+                        .randomUUID()
+                        .slice(0, 8)}`;
+                }
+                return el.id;
+            });
+            const releaseAriaDescribedby = conditionAttributeWithId(
+                trigger,
+                'aria-describedby',
+                appliedIds
+            );
+            this.releaseAriaDescribedby = () => {
+                releaseAriaDescribedby();
+                this.elements.map((el, index) => {
+                    el.id = this.elementIds[index];
+                });
+                this.releaseAriaDescribedby = () => {
+                    return;
+                };
+            };
         }
     }
 
