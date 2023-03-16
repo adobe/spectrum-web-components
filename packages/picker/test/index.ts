@@ -118,6 +118,7 @@ export function runPickerTests(): void {
         });
         it('accepts new selected item content', async () => {
             await nextFrame();
+            await nextFrame();
             const option2 = el.querySelector('[value="option-2"') as MenuItem;
             el.value = 'option-2';
             await elementUpdated(option2);
@@ -207,7 +208,7 @@ export function runPickerTests(): void {
             item.textContent = 'New Option';
 
             el.append(item);
-            await nextFrame();
+            await elementUpdated(el);
 
             el.value = 'option-new';
 
@@ -224,7 +225,7 @@ export function runPickerTests(): void {
             item.textContent = 'New Option';
 
             el.append(item);
-            await nextFrame();
+            await elementUpdated(el);
 
             let opened = oneEvent(el, 'sp-opened');
             el.open = true;
@@ -268,6 +269,7 @@ export function runPickerTests(): void {
 
             el.value = 'option-2';
             await elementUpdated(el);
+            await nextFrame();
             await nextFrame();
             snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
                 children: NamedNode[];
@@ -338,7 +340,7 @@ export function runPickerTests(): void {
             expect(el.open).to.be.false;
             await waitUntil(() => !firstItem.focused, 'not visually focused');
         });
-        it('opens without visible focus on a menu item on click', async () => {
+        it('opens, on click, without visible focus on a menu item', async () => {
             const firstItem = el.querySelector('sp-menu-item') as MenuItem;
 
             await elementUpdated(el);
@@ -578,6 +580,8 @@ export function runPickerTests(): void {
 
             expect(el.open, 'open by ArrowUp').to.be.true;
             await opened;
+            await aTimeout(150);
+            await aTimeout(150);
 
             const closed = oneEvent(el, 'sp-closed');
             button.dispatchEvent(escapeEvent());

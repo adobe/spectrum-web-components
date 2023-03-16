@@ -15,7 +15,6 @@ import {
 } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 import { ReactiveElement } from 'lit';
 import {
-    BeforetoggleClosedEvent,
     BeforetoggleOpenEvent,
     OpenableElement,
     OverlayBase,
@@ -41,7 +40,6 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
                     once: true,
                 });
                 this.manageChildren(false);
-                this.dispatchEvent(new BeforetoggleClosedEvent());
             };
             if (this.open) {
                 await this.managePosition();

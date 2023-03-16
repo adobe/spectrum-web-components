@@ -441,51 +441,14 @@ export class MenuItem extends LikeAnchor(Focusable) {
         }
         this.open = true;
         this.active = true;
-        // const submenu = (
-        //     this.shadowRoot.querySelector(
-        //         'slot[name="submenu"]'
-        //     ) as HTMLSlotElement
-        // ).assignedElements()[0] as Menu;
-        // submenu.addEventListener(
-        //     'pointerenter',
-        //     this.handleSubmenuPointerenter
-        // );
-        // submenu.addEventListener('change', this.handleSubmenuChange);
-        // const popover = document.createElement('sp-popover');
-        // const returnSubmenu = reparentChildren([submenu], popover, {
-        //     position: 'beforeend',
-        //     prepareCallback: (el) => {
-        //         const slotName = el.slot;
-        //         el.tabIndex = 0;
-        //         el.removeAttribute('slot');
-        //         el.isSubmenu = true;
-        //         return (el) => {
-        //             el.tabIndex = -1;
-        //             el.slot = slotName;
-        //             el.isSubmenu = false;
-        //         };
-        //     },
-        // });
-        // const closeOverlay = openOverlay(this, 'click', popover, {
-        //     placement: this.isLTR ? 'right-start' : 'left-start',
-        //     receivesFocus: 'auto',
-        //     root: this.menuData.focusRoot,
-        // });
-        // const closeSubmenu = async (): Promise<void> => {
-        //     this.open = false;
-        // };
-        // this.closeOverlay = closeSubmenu;
         const cleanup = (event: Event): void => {
             event.stopPropagation();
-            // delete this.closeOverlay;
-            // returnSubmenu();
             this.open = false;
             this.active = false;
         };
         this.addEventListener('sp-closed', cleanup as EventListener, {
             once: true,
         });
-        // this.popover.addEventListener('change', closeSubmenu);
     }
 
     updateAriaSelected(): void {
@@ -556,12 +519,10 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     public override connectedCallback(): void {
         super.connectedCallback();
-        this.isInSubmenu = !!this.closest('[slot="submenu"]');
-        if (this.isInSubmenu) {
-            return;
-        }
-        addOrUpdateEvent.reset(this);
-        this.dispatchEvent(addOrUpdateEvent);
+        this.menuDataUpdated = new Promise(
+            (res) => (this.resolveMenuDataUpdated = res)
+        );
+        this.triggerUpdate();
     }
 
     _parentElement!: HTMLElement;
@@ -573,15 +534,21 @@ export class MenuItem extends LikeAnchor(Focusable) {
     }
 
     public async triggerUpdate(): Promise<void> {
-        // if (this.isInSubmenu) {
-        //     return;
-        // }
         await new Promise((ready) => requestAnimationFrame(ready));
         addOrUpdateEvent.reset(this);
         this.dispatchEvent(addOrUpdateEvent);
         this._parentElement =
             this.assignedSlot || (this.parentElement as HTMLElement);
+        if (!!this.menuData.focusRoot) {
+            this.resolveMenuDataUpdated();
+        }
+        return this.menuDataUpdated;
     }
+
+    protected menuDataUpdated!: Promise<void>;
+    protected resolveMenuDataUpdated = (): void => {
+        return;
+    };
 
     public menuData: {
         focusRoot?: Menu;

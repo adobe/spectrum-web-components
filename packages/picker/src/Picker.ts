@@ -412,9 +412,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         if (changes.has('value')) {
             // MenuItems update a frame late for <slot> management,
             // await the same here.
-            requestAnimationFrame(() => {
-                // this.manageSelection();
-            });
+            this.shouldScheduleManageSelection();
         }
         if (window.__swc.DEBUG) {
             if (!this.hasUpdated && this.querySelector('sp-menu')) {
@@ -451,8 +449,9 @@ export class PickerBase extends SizedMixin(Focusable) {
                 @change=${this.handleChange}
                 .selects=${this.selects}
                 .selected=${this.value ? [this.value] : []}
+                @sp-menu-item-added-or-updated=${this.shouldManageSelection}
             >
-                <slot @slotchange=${this.shouldManageSelection}></slot>
+                <slot @slotchange=${this.shouldScheduleManageSelection}></slot>
             </sp-menu>
             ${this.dismissHelper}
         `;
@@ -479,17 +478,30 @@ export class PickerBase extends SizedMixin(Focusable) {
         `;
     }
 
-    protected shouldManageSelection(event: Event): void {
+    private willManageSelection = false;
+
+    protected shouldScheduleManageSelection(event?: Event): void {
         if (
-            ((event.target as HTMLElement).getRootNode() as ShadowRoot).host ===
-            this
+            !this.willManageSelection &&
+            (!event ||
+                ((event.target as HTMLElement).getRootNode() as ShadowRoot)
+                    .host === this)
         ) {
+            this.willManageSelection = true;
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     this.manageSelection();
                 });
             });
         }
+    }
+
+    protected shouldManageSelection(): void {
+        if (this.willManageSelection) {
+            return;
+        }
+        this.willManageSelection = true;
+        this.manageSelection();
     }
 
     protected async manageSelection(): Promise<void> {
@@ -519,6 +531,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             this.optionsMenu.updateSelectedItemIndex();
         }
         this.selectionResolver();
+        this.willManageSelection = false;
     }
 
     private selectionPromise = Promise.resolve();

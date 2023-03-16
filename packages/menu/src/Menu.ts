@@ -347,7 +347,10 @@ export class Menu extends SpectrumElement {
         const selectionRoot =
             this.childItems[this.focusedItemIndex]?.menuData.selectionRoot ||
             this;
-        if (activeElement !== selectionRoot || !wasOrContainedRelatedTarget) {
+        if (
+            activeElement !== selectionRoot ||
+            (!wasOrContainedRelatedTarget && event.target !== this)
+        ) {
             selectionRoot.focus({ preventScroll: true });
             if (activeElement && this.focusedItemIndex === 0) {
                 const offset = this.childItems.findIndex(
@@ -568,8 +571,10 @@ export class Menu extends SpectrumElement {
     public focusMenuItemByOffset(offset: number): MenuItem {
         const step = offset || 1;
         const focusedItem = this.childItems[this.focusedItemIndex];
-        focusedItem.focused = false;
-        focusedItem.active = false;
+        if (focusedItem) {
+            focusedItem.focused = false;
+            focusedItem.active = false;
+        }
         this.focusedItemIndex =
             (this.childItems.length + this.focusedItemIndex + offset) %
             this.childItems.length;
