@@ -38,10 +38,6 @@ function buildNavigation(tests, metadata) {
                     label=${metadata.theme}
                     style="user-select: all"
                 ></sp-sidenav-item>
-                <sp-sidenav-item
-                    label=${metadata.commit}
-                    style="user-select: all"
-                ></sp-sidenav-item>
             </sp-sidenav-heading>
             <sp-sidenav-item multilevel label="Other VRT Results">
                 ${metadata.vrts.map(
@@ -53,6 +49,22 @@ function buildNavigation(tests, metadata) {
                     `
                 )}
             </sp-sidenav-item>
+            <sp-sidenav-heading label="Preview">
+                <sp-sidenav-item
+                    label="Docs Site"
+                    href=${metadata.preview}
+                ></sp-sidenav-item>
+                <sp-sidenav-item
+                    label="Storybook"
+                    href="${metadata.preview}/storybook"
+                ></sp-sidenav-item>
+            </sp-sidenav-heading>
+            <sp-sidenav-heading label="Golden Images Hash">
+                <sp-sidenav-item
+                    label=${metadata.commit}
+                    style="user-select: all"
+                ></sp-sidenav-item>
+            </sp-sidenav-heading>
             ${resultTypes.map((resultType) => {
                 const groups = Object.keys(tests[resultType]).sort();
                 return html`
