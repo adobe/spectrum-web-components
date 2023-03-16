@@ -15,31 +15,29 @@ governing permissions and limitations under the License.
     --spectrum-overlay-animation-distance: var(
         --spectrum-picker-m-texticon-popover-offset-y,
         var(--spectrum-global-dimension-size-75)
-    ); /* .spectrum-QuickActions */
+    );
     opacity: 0;
     pointer-events: none;
     transition: transform var(--spectrum-global-animation-duration-100, 0.13s)
             ease-in-out,
         opacity var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
-        visibility 0ms linear
+        visibility 0s linear
             var(--spectrum-global-animation-duration-100, 0.13s);
     visibility: hidden;
 }
 :host([opened]) {
     opacity: 1;
     pointer-events: auto;
-    transition-delay: 0ms;
-    visibility: visible; /* .spectrum-QuickActions.is-open */
+    transition-delay: 0s;
+    visibility: visible;
 }
 :host([enter-from='left'][opened]) {
-    transform: translateX(
-        var(--spectrum-overlay-animation-distance)
-    ); /* .spectrum-QuickActions--left.is-open */
+    transform: translateX(var(--spectrum-overlay-animation-distance));
 }
 :host([enter-from='right'][opened]) {
     transform: translateX(
         calc(var(--spectrum-overlay-animation-distance) * -1)
-    ); /* .spectrum-QuickActions--right.is-open */
+    );
 }
 :host {
     align-items: center;
@@ -47,7 +45,7 @@ governing permissions and limitations under the License.
         --spectrum-quickactions-border-radius,
         var(--spectrum-alias-border-radius-regular)
     );
-    box-sizing: border-box; /* .spectrum-QuickActions */
+    box-sizing: border-box;
     display: inline-flex;
     height: var(
         --spectrum-quickactions-height,
@@ -63,39 +61,39 @@ governing permissions and limitations under the License.
             var(--spectrum-global-dimension-size-50)
         );
 }
-:host([dir='ltr']) slot[name='action'] + ::slotted([slot='action']) {
+:host([dir='ltr']) [name='action'] + ::slotted([slot='action']) {
     margin-left: var(
         --spectrum-quickactions-button-gap-x,
         var(--spectrum-global-dimension-size-100)
-    ); /* [dir=ltr] .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */
+    );
 }
-:host([dir='rtl']) slot[name='action'] + ::slotted([slot='action']) {
+:host([dir='rtl']) [name='action'] + ::slotted([slot='action']) {
     margin-right: var(
         --spectrum-quickactions-button-gap-x,
         var(--spectrum-global-dimension-size-100)
-    ); /* [dir=rtl] .spectrum-QuickActions .spectrum-ActionButton+.spectrum-ActionButton */
+    );
 }
-:host([dir='ltr'][text-only]) slot[name='action'] + ::slotted([slot='action']) {
+:host([dir='ltr'][text-only]) [name='action'] + ::slotted([slot='action']) {
     margin-left: var(
         --spectrum-quickactions-text-button-gap-x,
         var(--spectrum-global-dimension-size-50)
-    ); /* [dir=ltr] .spectrum-QuickActions--textOnly .spectrum-ActionButton+.spectrum-ActionButton */
+    );
 }
-:host([dir='rtl'][text-only]) slot[name='action'] + ::slotted([slot='action']) {
+:host([dir='rtl'][text-only]) [name='action'] + ::slotted([slot='action']) {
     margin-right: var(
         --spectrum-quickactions-text-button-gap-x,
         var(--spectrum-global-dimension-size-50)
-    ); /* [dir=rtl] .spectrum-QuickActions--textOnly .spectrum-ActionButton+.spectrum-ActionButton */
+    );
 }
 #overlay {
     background-color: var(
         --spectrum-quickactions-overlay-color,
         var(--spectrum-alias-background-color-quickactions-overlay)
-    ); /* .spectrum-QuickActions-overlay */
+    );
 }
 :host {
     background-color: var(
         --spectrum-quickactions-background-color,
         var(--spectrum-alias-background-color-quickactions)
-    ); /* .spectrum-QuickActions */
+    );
 }
