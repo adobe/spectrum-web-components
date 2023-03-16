@@ -31,6 +31,21 @@ const config = {
                     'spectrum-Popover--dialog',
                     'dialog'
                 ),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Popover--top', 'top'],
+                        ['spectrum-Popover--bottom', 'bottom'],
+                        ['spectrum-Popover--left', 'left'],
+                        ['spectrum-Popover--right', 'right'],
+                    ],
+                    'placement',
+                    'substring'
+                ),
+                converter.classToId('spectrum-Popover-tip', 'tip'),
+                converter.classToClass(
+                    'spectrum-Popover-tip-triangle',
+                    'triangle'
+                ),
             ],
         },
     ],
