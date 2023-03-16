@@ -11,7 +11,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { converterFor } from '../../../tasks/process-spectrum-utils.js';
+import {
+    builder,
+    converterFor,
+} from '../../../tasks/process-spectrum-utils.js';
 
 const converter = converterFor('spectrum-Search');
 
@@ -33,6 +36,27 @@ const config = {
                 converter.classToAttribute('spectrum-Search--quiet', 'quiet'),
                 converter.classToId('spectrum-Search-clearButton', 'button'),
                 converter.classToId('spectrum-Search-textfield', 'textfield'),
+                {
+                    find: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [[builder.class('spectrum-Search--quiet')]],
+                    },
+                    replace: {
+                        type: 'pseudo-class',
+                        kind: 'not',
+                        selectors: [[builder.attribute('quiet')]],
+                    },
+                    hoist: true,
+                },
+                {
+                    find: [builder.class('focus-ring')],
+                    replace: [
+                        {
+                            replace: builder.pseudoClass('focus-visible'),
+                        },
+                    ],
+                },
             ],
         },
     ],
