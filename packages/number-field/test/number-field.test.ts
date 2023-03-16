@@ -18,7 +18,7 @@ import {
     nextFrame,
     oneEvent,
 } from '@open-wc/testing';
-import polyfillCheck from '@formatjs/intl-numberformat/should-polyfill.js';
+import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
 
 import {
     currency,
@@ -45,13 +45,21 @@ import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('NumberField', () => {
     before(async () => {
-        if (polyfillCheck.shouldPolyfill()) {
-            await import('@formatjs/intl-numberformat/polyfill.js');
+        const shouldPolyfillEn = shouldPolyfill('en');
+        const shouldPolyfillFr = shouldPolyfill('fr');
+        // eslint-disable-next-line no-console
+        console.log({
+            en: shouldPolyfillEn,
+            fr: shouldPolyfillFr,
+            shouldPolyfill,
+        });
+        if (shouldPolyfillEn || shouldPolyfillFr) {
+            await import('@formatjs/intl-numberformat/polyfill-force.js');
         }
-        if (
-            (Intl.NumberFormat as unknown as { polyfilled: boolean }).polyfilled
-        ) {
+        if (shouldPolyfillEn) {
             await import('@formatjs/intl-numberformat/locale-data/en.js');
+        }
+        if (shouldPolyfillFr) {
             await import('@formatjs/intl-numberformat/locale-data/fr.js');
         }
     });

@@ -15,14 +15,12 @@ import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import styles from 'rollup-plugin-styles';
 import litcss from 'rollup-plugin-lit-css';
-import visualizer from 'rollup-plugin-visualizer';
-import minifyHTML from 'rollup-plugin-minify-html-literals';
 import { createBasicConfig } from '@open-wc/building-rollup';
 import { injectManifest } from 'rollup-plugin-workbox';
 import path from 'path';
-import html from '@web/rollup-plugin-html';
+import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
 import Terser from 'terser';
-const { postCSSPlugins } = require('../../scripts/css-processing.cjs');
+import { postCSSPlugins } from '../../scripts/css-processing.cjs';
 import postCSSPrefixwrap from 'postcss-prefixwrap';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 
@@ -50,7 +48,7 @@ const processAndReplaceHTML = (source) => {
     return stringReplaceHtml(source);
 };
 
-module.exports = async () => {
+export default async () => {
     const mpaConfig = createBasicConfig({
         // development mode creates a non-minified build for debugging or development
         developmentMode: process.env.ROLLUP_WATCH === 'true',
@@ -134,8 +132,11 @@ module.exports = async () => {
     mpaConfig.output.sourcemap = true;
 
     mpaConfig.moduleContext = {
-        [require.resolve('focus-visible')]: 'window',
+        ['focus-visible']: 'window',
     };
+    const {
+        default: { default: minifyHTML },
+    } = await import('rollup-plugin-minify-html-literals');
     mpaConfig.plugins.push(minifyHTML());
     mpaConfig.preserveEntrySignatures = false;
 
@@ -214,6 +215,10 @@ module.exports = async () => {
             rootDir: './_site',
         })
     );
+
+    const {
+        default: { default: visualizer },
+    } = await import('rollup-plugin-visualizer');
 
     mpaConfig.plugins.push(
         visualizer({

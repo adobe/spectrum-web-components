@@ -31,7 +31,7 @@
         "test:watch": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wtr --watch\""
     },
     "dependencies": {
-        "@rollup/plugin-json": "^5.0.0",
+        "@rollup/plugin-json": "^6.0.0",
         "@spectrum-web-components/base": "^0.7.5",
         "@spectrum-web-components/field-label": "^0.10.10",
         "@spectrum-web-components/link": "^0.14.8",
@@ -43,7 +43,7 @@
         "@spectrum-web-components/table": "^0.1.14",
         "@spectrum-web-components/theme": "^0.15.0",
         "@spectrum-web-components/toast": "^0.11.16",
-        "@web/dev-server-rollup": "^0.4.1",
+        "@web/dev-server-rollup": "^0.5.0",
         "lit": "^2.5.0"
     },
     "devDependencies": {
@@ -52,9 +52,9 @@
         "@open-wc/testing": "^3.1.7",
         "@typescript-eslint/eslint-plugin": "^5.35.0",
         "@typescript-eslint/parser": "^5.35.0",
-        "@web/dev-server": "^0.1.38",
-        "@web/dev-server-storybook": "^0.6.2",
-        "@web/test-runner": "^0.15.3",
+        "@web/dev-server": "^0.2.1",
+        "@web/dev-server-storybook": "^0.7.1",
+        "@web/test-runner": "^0.16.1",
         "concurrently": "^5.3.0",
         "tslib": "^2.3.1",
         "typescript": "^4.7.2"

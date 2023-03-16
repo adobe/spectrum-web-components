@@ -14,7 +14,7 @@ import { html } from '@spectrum-web-components/base';
 import { elementUpdated, expect } from '@open-wc/testing';
 import { getElFrom } from './helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
-import polyfillCheck from '@formatjs/intl-numberformat/should-polyfill.js';
+import { shouldPolyfill } from '@formatjs/intl-numberformat/should-polyfill.js';
 
 import '@spectrum-web-components/number-field/sp-number-field.js';
 import { remapMultiByteCharacters } from '@spectrum-web-components/number-field';
@@ -29,14 +29,20 @@ import { sendKeys } from '@web/test-runner-commands';
 
 describe('NumberField - inputs', () => {
     before(async () => {
-        if (polyfillCheck.shouldPolyfill()) {
-            await import('@formatjs/intl-numberformat/polyfill.js');
+        const shouldPolyfillEn = shouldPolyfill('en');
+        const shouldPolyfillEs = shouldPolyfill('es');
+        const shouldPolyfillFr = shouldPolyfill('fr');
+        if (shouldPolyfillEn || shouldPolyfillEs || shouldPolyfillFr) {
+            await import('@formatjs/intl-numberformat/polyfill-force.js');
         }
-        if (
-            (Intl.NumberFormat as unknown as { polyfilled: boolean }).polyfilled
-        ) {
+        if (shouldPolyfillEn) {
             await import('@formatjs/intl-numberformat/locale-data/en.js');
+        }
+        if (shouldPolyfillEs) {
             await import('@formatjs/intl-numberformat/locale-data/es.js');
+        }
+        if (shouldPolyfillFr) {
+            await import('@formatjs/intl-numberformat/locale-data/fr.js');
         }
     });
     describe('keystroke prevention', () => {
