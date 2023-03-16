@@ -27,6 +27,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { ResizeController } from '@lit-labs/observers/resize_controller.js';
 import { TopNavItem } from './TopNavItem.js';
 
+import tabsSizes from '@spectrum-web-components/tabs/src/spectrum-tabs-sizes.css.js';
 import tabStyles from '@spectrum-web-components/tabs/src/tabs.css.js';
 import { ScaledIndicator } from '@spectrum-web-components/tabs/src/Tabs.js';
 
@@ -42,7 +43,7 @@ const noSelectionStyle = 'transform: translateX(0px) scaleX(0) scaleY(0)';
 
 export class TopNav extends SizedMixin(SpectrumElement) {
     public static override get styles(): CSSResultArray {
-        return [tabStyles, ScaledIndicator.baseStyles()];
+        return [tabsSizes, tabStyles, ScaledIndicator.baseStyles()];
     }
 
     @property()
