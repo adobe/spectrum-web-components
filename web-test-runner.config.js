@@ -32,6 +32,7 @@ const json = fromRollup(rollupJson);
 export default {
     plugins: [
         commonjs({
+            requireReturnsDefault: 'preferred',
             include: ['**/node_modules/@formatjs/intl-numberformat/**/*.js'],
         }),
         sendKeysPlugin(),
@@ -39,6 +40,17 @@ export default {
         a11ySnapshotPlugin(),
         configuredVisualRegressionPlugin(),
         json({}),
+        {
+            name: 'plugin-js-buffer-to-string',
+            transform(context) {
+                if (
+                    context.response.is('js') &&
+                    Buffer.isBuffer(context.body)
+                ) {
+                    context.body = context.body.toString();
+                }
+            },
+        },
     ],
     mimeTypes: {
         '**/*.json': 'js',
