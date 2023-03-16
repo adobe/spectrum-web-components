@@ -178,11 +178,6 @@ governing permissions and limitations under the License.
         --spectrum-focus-indicator-color
     );
 }
-:host([open]) #button + .spectrum-Popover--bottom {
-    --spectrum-picker-spacing-picker-to-popover: var(
-        --spectrum-component-to-menu-medium
-    );
-}
 :host([size='s']) {
     --spectrum-picker-font-size: var(--spectrum-font-size-75);
     --spectrum-picker-block-size: var(--spectrum-component-height-75);
@@ -195,11 +190,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-picker-spacing-label-to-picker-quiet: var(
         --spectrum-field-label-to-component-quiet-small
-    );
-}
-:host([size='s'][open]) + .spectrum-Popover--bottom {
-    --spectrum-picker-spacing-picker-to-popover: var(
-        --spectrum-component-to-menu-small
     );
 }
 :host([size='m']) {
@@ -216,11 +206,6 @@ governing permissions and limitations under the License.
         --spectrum-field-label-to-component-quiet-medium
     );
 }
-:host([size='m'][open]) + .spectrum-Popover--bottom {
-    --spectrum-picker-spacing-picker-to-popover: var(
-        --spectrum-component-to-menu-medium
-    );
-}
 :host([size='l']) {
     --spectrum-picker-font-size: var(--spectrum-font-size-200);
     --spectrum-picker-block-size: var(--spectrum-component-height-200);
@@ -235,11 +220,6 @@ governing permissions and limitations under the License.
         --spectrum-field-label-to-component-quiet-large
     );
 }
-:host([size='l'][open]) + .spectrum-Popover--bottom {
-    --spectrum-picker-spacing-picker-to-popover: var(
-        --spectrum-component-to-menu-large
-    );
-}
 :host([size='xl']) {
     --spectrum-picker-font-size: var(--spectrum-font-size-300);
     --spectrum-picker-block-size: var(--spectrum-component-height-300);
@@ -252,11 +232,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-picker-spacing-label-to-picker-quiet: var(
         --spectrum-field-label-to-component-quiet-extra-large
-    );
-}
-:host([size='xl'][open]) + .spectrum-Popover--bottom {
-    --spectrum-picker-spacing-picker-to-popover: var(
-        --spectrum-component-to-menu-extra-large
     );
 }
 @media (forced-colors: active) {
@@ -920,22 +895,6 @@ governing permissions and limitations under the License.
     margin-inline-start: var(
         --mod-picker-spacing-text-to-icon,
         var(--spectrum-picker-spacing-text-to-icon)
-    );
-}
-:host([open]) #button + .spectrum-Popover--bottom {
-    transform: translateY(
-        var(
-            --mod-picker-spacing-picker-to-popover,
-            var(--spectrum-picker-spacing-picker-to-popover)
-        )
-    );
-}
-:host([quiet][open]) #button + .spectrum-Popover--bottom {
-    margin-inline-start: calc(
-        var(
-                --mod-picker-popover-quiet-offset-x,
-                var(--spectrum-picker-popover-quiet-offset-x)
-            ) * -1
     );
 }
 :host([quiet]) #button {
