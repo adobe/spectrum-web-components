@@ -68,6 +68,7 @@ export function runSplitButtonTests(
         await elementUpdated(el1);
         await elementUpdated(el2);
         await nextFrame();
+        await nextFrame();
 
         await expect(el1).to.be.accessible();
         await expect(el2).to.be.accessible();
@@ -81,6 +82,7 @@ export function runSplitButtonTests(
 
         await elementUpdated(el1);
         await elementUpdated(el2);
+        await nextFrame();
         await nextFrame();
 
         await expect(el1).to.be.accessible();
@@ -102,6 +104,7 @@ export function runSplitButtonTests(
 
         await elementUpdated(el1);
         await elementUpdated(el2);
+        await nextFrame();
         await nextFrame();
 
         await expect(el1).to.be.accessible();
@@ -259,6 +262,7 @@ export function runSplitButtonTests(
 
         await elementUpdated(el);
         await nextFrame();
+        await nextFrame();
 
         expect(el.selectedItem?.itemText).to.equal('Option 1');
         expect(el.open).to.be.false;
@@ -305,6 +309,7 @@ export function runSplitButtonTests(
         );
         const el = test.querySelector('sp-split-button') as SplitButton;
         await elementUpdated(el);
+        await nextFrame();
         await nextFrame();
 
         expect(el.selectedItem?.itemText).to.equal('Option 1');
@@ -423,6 +428,7 @@ export function runSplitButtonTests(
 
         await elementUpdated(el);
         await nextFrame();
+        await nextFrame();
 
         expect(el.selectedItem?.itemText).to.equal('Option 1');
         expect(el.open).to.be.false;
@@ -448,6 +454,7 @@ export function runSplitButtonTests(
         let opened = oneEvent(el, 'sp-opened');
         trigger.click();
         await opened;
+        await aTimeout(150);
 
         await elementUpdated(el);
 
@@ -456,6 +463,7 @@ export function runSplitButtonTests(
         let closed = oneEvent(el, 'sp-closed');
         item3.click();
         await closed;
+        await aTimeout(150);
         await nextFrame();
         await elementUpdated(el);
 
@@ -474,6 +482,7 @@ export function runSplitButtonTests(
         closed = oneEvent(el, 'sp-closed');
         item2.click();
         await closed;
+        await nextFrame();
         await nextFrame();
 
         await elementUpdated(el);

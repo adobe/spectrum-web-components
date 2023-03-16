@@ -117,9 +117,6 @@ export class SplitButton extends SizedMixin(PickerBase) {
                 this.selects = 'single';
             }
         }
-        // if (changes.has('value')) {
-        //     this.manageSplitButtonItems();
-        // }
         super.update(changes);
     }
 

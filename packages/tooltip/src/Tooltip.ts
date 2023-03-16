@@ -38,13 +38,6 @@ export class Tooltip extends SpectrumElement {
     }
 
     /**
-     * @private
-     */
-    static instanceCount = 0;
-
-    // private _tooltipId = `sp-tooltip-describedby-helper-${Tooltip.instanceCount++}`;
-
-    /**
      * Automatically bind to the parent element's hover interaction. Without this, you must provide your own `overlay-trigger`.
      */
     @property({ type: Boolean, attribute: 'self-managed' })
@@ -52,7 +45,6 @@ export class Tooltip extends SpectrumElement {
 
     @property({ type: Number, reflect: true })
     public offset = 6;
-    // private hadTooltipId = false;
 
     @property({ type: Boolean, reflect: true })
     public open = false;
@@ -86,45 +78,6 @@ export class Tooltip extends SpectrumElement {
         this.removeAttribute('variant');
         this._variant = '';
     }
-
-    // public overlayWillOpenCallback({
-    //     trigger,
-    // }: {
-    //     trigger: HTMLElement;
-    // }): void {
-    //     this.setAttribute('aria-hidden', 'true');
-    //     const ariaDescribedby = trigger.getAttribute('aria-describedby') || '';
-    //     this.hadTooltipId = ariaDescribedby.search(this._tooltipId) > -1;
-
-    //     if (this.hadTooltipId) return;
-
-    //     if (ariaDescribedby) {
-    //         trigger.setAttribute(
-    //             'aria-describedby',
-    //             `${ariaDescribedby} ${this._tooltipId}`
-    //         );
-    //     } else {
-    //         trigger.setAttribute('aria-describedby', `${this._tooltipId}`);
-    //     }
-    // }
-
-    // public overlayCloseCallback({ trigger }: { trigger: HTMLElement }): void {
-    //     const ariaDescribedby = trigger.getAttribute('aria-describedby') || '';
-    //     let descriptors = ariaDescribedby.split(/\s+/);
-
-    //     if (!this.hadTooltipId) {
-    //         descriptors = descriptors.filter(
-    //             (descriptor) => descriptor !== this._tooltipId
-    //         );
-    //     }
-    //     if (descriptors.length) {
-    //         trigger.setAttribute('aria-describedby', descriptors.join(' '));
-    //     } else {
-    //         trigger.removeAttribute('aria-describedby');
-    //     }
-
-    //     this.removeAttribute('aria-hidden');
-    // }
 
     private handleOpenOverlay = (): void => {
         this.open = true;

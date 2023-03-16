@@ -48,7 +48,10 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
                     requestAnimationFrame(() => {
                         // Ensure that child content is fully "on the DOM" before showing the modal.
                         // This allow for that content to be available to the focus algorithm of that process.
-                        if (!this.dialogEl.matches(':open')) {
+                        if (
+                            !this.dialogEl.matches(':open') &&
+                            this.isConnected
+                        ) {
                             this.dialogEl.showPopover();
                         }
                         requestAnimationFrame(async () => {
@@ -91,7 +94,10 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
                 if (this.dialogEl.matches(':open')) {
                     doClose(() => {
                         if (!this.open) {
-                            if (this.dialogEl.matches(':open')) {
+                            if (
+                                this.dialogEl.matches(':open') &&
+                                this.isConnected
+                            ) {
                                 this.dialogEl.hidePopover();
                             }
                         }

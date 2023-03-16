@@ -107,15 +107,18 @@ describe('Reparented Picker', () => {
         expect(picker.open).to.be.false;
 
         after.append(picker);
+        await aTimeout(150);
         opened = oneEvent(picker, 'sp-opened');
         picker.click();
         await opened;
+        await aTimeout(150);
         await elementUpdated(picker);
         expect(picker.open).to.be.true;
         closed = oneEvent(picker, 'sp-closed');
         await elementUpdated(item3);
         item3.click();
         await closed;
+        await aTimeout(150);
         await elementUpdated(picker);
         await nextFrame();
 
