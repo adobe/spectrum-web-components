@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .fill-submask-2 {
-    animation: spectrum-fill-mask-2 1s linear infinite; /* .spectrum-ProgressCircle--indeterminate-fill-submask-2 */
+    animation: spectrum-fill-mask-2 1s linear infinite;
 }
 @keyframes spectrum-fill-mask-1 {
     0% {
@@ -34,61 +34,61 @@ governing permissions and limitations under the License.
         transform: rotate(10.6deg);
     }
     10.17% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     11.86% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     13.56% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     15.25% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     16.95% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     18.64% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     20.34% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     22.03% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     23.73% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     25.42% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     27.12% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     28.81% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     30.51% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     32.2% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     33.9% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     35.59% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     37.29% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     38.98% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     40.68% {
-        transform: rotate(0deg);
+        transform: rotate(0);
     }
     42.37% {
         transform: rotate(5.3deg);
@@ -387,9 +387,7 @@ governing permissions and limitations under the License.
     }
 }
 :host {
-    --spectrum-progress-circle-track-border-color: var(
-        --spectrum-gray-300
-    ); /* .spectrum-ProgressCircle */
+    --spectrum-progress-circle-track-border-color: var(--spectrum-gray-300);
     --spectrum-progress-circle-fill-border-color: var(
         --spectrum-accent-content-color-default
     );
@@ -408,9 +406,7 @@ governing permissions and limitations under the License.
     --spectrum-progress-circle-track-border-style: solid;
 }
 :host([size='s']) {
-    --spectrum-progress-circle-size: var(
-        --spectrum-progress-circle-size-small
-    ); /* .spectrum-ProgressCircle--small */
+    --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-small);
     --spectrum-progress-circle-thickness: var(
         --spectrum-progress-circle-thickness-small
     );
@@ -418,15 +414,13 @@ governing permissions and limitations under the License.
 .spectrum-ProgressCircle--medium {
     --spectrum-progress-circle-size: var(
         --spectrum-progress-circle-size-medium
-    ); /* .spectrum-ProgressCircle--medium */
+    );
     --spectrum-progress-circle-thickness: var(
         --spectrum-progress-circle-thickness-medium
     );
 }
 :host([size='l']) {
-    --spectrum-progress-circle-size: var(
-        --spectrum-progress-circle-size-large
-    ); /* .spectrum-ProgressCircle--large */
+    --spectrum-progress-circle-size: var(--spectrum-progress-circle-size-large);
     --spectrum-progress-circle-thickness: var(
         --spectrum-progress-circle-thickness-large
     );
@@ -446,7 +440,7 @@ governing permissions and limitations under the License.
         var(--spectrum-progress-circle-size)
     );
     direction: ltr;
-    display: inline-block; /* .spectrum-ProgressCircle */
+    display: inline-block;
     inline-size: var(
         --mod-progress-circle-size,
         var(--spectrum-progress-circle-size)
@@ -478,7 +472,7 @@ governing permissions and limitations under the License.
         --mod-progress-circle-thickness,
         var(--spectrum-progress-circle-thickness)
     );
-    box-sizing: border-box; /* .spectrum-ProgressCircle-track */
+    box-sizing: border-box;
     inline-size: var(
         --mod-progress-circle-size,
         var(--spectrum-progress-circle-size)
@@ -489,7 +483,7 @@ governing permissions and limitations under the License.
     inline-size: 100%;
     inset-block-start: 0;
     inset-inline-start: 0;
-    position: absolute; /* .spectrum-ProgressCircle-fills */
+    position: absolute;
 }
 .fill {
     block-size: var(
@@ -512,7 +506,7 @@ governing permissions and limitations under the License.
         --mod-progress-circle-thickness,
         var(--spectrum-progress-circle-thickness)
     );
-    box-sizing: border-box; /* .spectrum-ProgressCircle-fill */
+    box-sizing: border-box;
     inline-size: var(
         --mod-progress-circle-size,
         var(--spectrum-progress-circle-size)
@@ -522,7 +516,7 @@ governing permissions and limitations under the License.
     border-color: var(
         --mod-progress-circle-track-border-color-over-background,
         var(--spectrum-progress-circle-track-border-color-over-background)
-    ); /* .spectrum-ProgressCircle.spectrum-ProgressCircle--staticWhite .spectrum-ProgressCircle-track */
+    );
 }
 :host([static='white']) .fill {
     border-color: var(
@@ -531,44 +525,42 @@ governing permissions and limitations under the License.
             --mod-progress-circle-fill-border-color-over-background,
             var(--spectrum-progress-circle-fill-border-color-over-background)
         )
-    ); /* .spectrum-ProgressCircle.spectrum-ProgressCircle--staticWhite .spectrum-ProgressCircle-fill */
+    );
 }
 .fillMask1,
 .fillMask2 {
     block-size: 100%;
-    inline-size: 50%; /* .spectrum-ProgressCircle-fillMask1,
-   * .spectrum-ProgressCircle-fillMask2 */
+    inline-size: 50%;
     overflow: hidden;
     position: absolute;
     transform: rotate(180deg);
-    transform-origin: 100% center;
+    transform-origin: 100%;
 }
 .fillSubMask1,
 .fillSubMask2 {
     block-size: 100%;
-    inline-size: 100%; /* .spectrum-ProgressCircle-fillSubMask1,
-   * .spectrum-ProgressCircle-fillSubMask2 */
+    inline-size: 100%;
     overflow: hidden;
     transform: rotate(-180deg);
-    transform-origin: 100% center;
+    transform-origin: 100%;
 }
 .fillMask2 {
-    transform: rotate(0deg); /* .spectrum-ProgressCircle-fillMask2 */
+    transform: rotate(0);
 }
 :host([indeterminate]) .fills {
     animation: spectrum-fills-rotate 1s cubic-bezier(0.25, 0.78, 0.48, 0.89)
         infinite;
     transform: translateZ(0);
     transform-origin: center;
-    will-change: transform; /* .spectrum-ProgressCircle--indeterminate .spectrum-ProgressCircle-fills */
+    will-change: transform;
 }
 :host([indeterminate]) .fillSubMask1 {
     animation: spectrum-fill-mask-1 1s linear infinite;
     transform: translateZ(0);
-    will-change: transform; /* .spectrum-ProgressCircle--indeterminate .spectrum-ProgressCircle-fillSubMask1 */
+    will-change: transform;
 }
 :host([indeterminate]) .fillSubMask2 {
     animation: spectrum-fill-mask-2 1s linear infinite;
     transform: translateZ(0);
-    will-change: transform; /* .spectrum-ProgressCircle--indeterminate .spectrum-ProgressCircle-fillSubMask2 */
+    will-change: transform;
 }
