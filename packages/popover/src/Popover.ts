@@ -17,10 +17,11 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import { property, query } from '@spectrum-web-components/base/src/decorators.js';
-import type {
-    Placement,
-} from '@spectrum-web-components/overlay/src/overlay-types.js';
+import {
+    property,
+    query,
+} from '@spectrum-web-components/base/src/decorators.js';
+import type { Placement } from '@spectrum-web-components/overlay/src/overlay-types.js';
 import popoverStyles from './popover.css.js';
 
 /**
@@ -51,7 +52,7 @@ export class Popover extends SpectrumElement {
      * @attr
      */
     @property({ reflect: true })
-    public placement: Placement = 'none';
+    public placement: Placement | 'none' = 'none';
 
     @property({ type: Boolean, reflect: true })
     public tip = false;

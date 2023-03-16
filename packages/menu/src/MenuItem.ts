@@ -120,8 +120,6 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     static instanceCount = 0;
 
-    private isInSubmenu = false;
-
     @property({ type: Boolean, reflect: true })
     public active = false;
 
@@ -297,10 +295,10 @@ export class MenuItem extends LikeAnchor(Focusable) {
                   })
                 : html``}
             <sp-overlay
-                .triggerElement=${this}
+                .triggerElement=${this as HTMLElement}
                 ?open=${this.hasSubmenu && this.open}
                 .placement=${this.isLTR ? 'right-start' : 'left-start'}
-                .offset=${[-10, -5]}
+                .offset=${[-10, -5] as [number, number]}
                 .type=${'auto'}
                 @sp-opened=${(event: Event) => {
                     this.focused = false;

@@ -349,7 +349,7 @@ export class PickerBase extends SizedMixin(Focusable) {
     protected get renderOverlay(): TemplateResult {
         return html`
             <sp-overlay
-                .triggerElement=${this}
+                .triggerElement=${this as HTMLElement}
                 .offset=${0}
                 ?open=${this.open}
                 .placement=${this.placement}
