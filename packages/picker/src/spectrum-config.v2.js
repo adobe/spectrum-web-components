@@ -27,6 +27,7 @@ const config = {
             outPackage: 'picker',
             fileName: 'picker',
             hoistCustomPropertiesFrom: 'spectrum-Picker',
+            excludeByComponents: [builder.class('spectrum-Popover--bottom')],
             components: [
                 converter.classToId('spectrum-Picker', 'button'),
                 converter.classToAttribute('spectrum-Picker--quiet'),
