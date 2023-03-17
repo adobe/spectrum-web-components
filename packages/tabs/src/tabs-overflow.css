@@ -20,9 +20,7 @@ governing permissions and limitations under the License.
     --sp-tabs-overflow-previous-button-left: calc(
         -1 * var(--spectrum-component-edge-to-text-100)
     );
-    --sp-tabs-overflow-button-size: var(
-        --spectrum-global-dimension-static-size-500
-    );
+    --sp-tabs-overflow-button-size: var(--spectrum-component-height-200);
     --sp-tabs-overflow-button-height: var(
         --spectrum-tabs-quiet-textonly-tabitem-height
     );
@@ -50,12 +48,12 @@ sp-action-button {
 
 sp-action-button.left-scroll {
     visibility: hidden;
-    inset-inline-end: var(--sp-tabs-overflow-previous-button-left);
+    left: var(--sp-tabs-overflow-previous-button-left);
 }
 
 sp-action-button.right-scroll {
     visibility: hidden;
-    inset-inline-end: var(--sp-tabs-overflow-next-button-right);
+    right: var(--sp-tabs-overflow-next-button-right);
 }
 
 sp-action-button.left-scroll.show,
@@ -88,7 +86,7 @@ sp-action-button.right-scroll.show {
             var(--sp-tabs-overflow-shadow-color)
         )
         0 0 no-repeat padding-box;
-    inset-inline-start: 0;
+    left: 0;
 }
 
 .tabs-overflow-container:after {
@@ -99,7 +97,7 @@ sp-action-button.right-scroll.show {
             var(--sp-tabs-overflow-shadow-color)
         )
         0 0 no-repeat padding-box;
-    inset-inline-end: 0;
+    right: 0;
 }
 
 .tabs-overflow-container.left-shadow:before,

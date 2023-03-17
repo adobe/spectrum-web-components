@@ -27,7 +27,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import { ResizeController } from '@lit-labs/observers/resize_controller.js';
 import { TopNavItem } from './TopNavItem.js';
 
-import tabsSizes from '@spectrum-web-components/tabs/src/spectrum-tabs-sizes.css.js';
+import tabsSizes from '@spectrum-web-components/tabs/src/tabs-sizes.css.js';
 import tabStyles from '@spectrum-web-components/tabs/src/tabs.css.js';
 import { ScaledIndicator } from '@spectrum-web-components/tabs/src/Tabs.js';
 

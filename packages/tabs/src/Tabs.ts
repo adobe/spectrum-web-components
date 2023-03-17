@@ -34,7 +34,7 @@ import { Focusable } from '@spectrum-web-components/shared';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
 
 import tabStyles from './tabs.css.js';
-import tabSizes from './spectrum-tabs-sizes.css.js';
+import tabSizes from './tabs-sizes.css.js';
 import { TabPanel } from './TabPanel.js';
 
 // Encapsulated for use both here and in TopNav
@@ -212,15 +212,19 @@ export class Tabs extends SizedMixin(Focusable) {
     }
 
     public get scrollState(): Record<string, boolean> {
-        const canScrollLeft = this.tabList?.scrollLeft > 0;
-        const canScrollRight =
-            Math.ceil(this.tabList?.scrollLeft) <
-            this.tabList?.scrollWidth - this.tabList?.clientWidth;
-
-        return {
-            canScrollLeft,
-            canScrollRight,
-        };
+        if (this.tabList) {
+            const { scrollLeft, clientWidth, scrollWidth } = this.tabList;
+            const canScrollLeft = Math.abs(scrollLeft) > 0;
+            const canScrollRight =
+                Math.ceil(Math.abs(scrollLeft)) < scrollWidth - clientWidth;
+            return {
+                canScrollLeft:
+                    this.dir === 'ltr' ? canScrollLeft : canScrollRight,
+                canScrollRight:
+                    this.dir === 'ltr' ? canScrollRight : canScrollLeft,
+            };
+        }
+        return {};
     }
 
     protected override manageAutoFocus(): void {

@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import {
     CSSResultArray,
     html,
+    PropertyValueMap,
     PropertyValues,
     SizedMixin,
     SpectrumElement,
@@ -29,7 +30,7 @@ import { Tabs } from './Tabs.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-ui/icons/sp-icon-chevron100.js';
 import chevronIconStyles from '@spectrum-web-components/icon/src/spectrum-icon-chevron.css.js';
-import tabSizes from './spectrum-tabs-sizes.css.js';
+import tabSizes from './tabs-sizes.css.js';
 import styles from './tabs-overflow.css.js';
 
 interface TabsOverflowState {
@@ -74,7 +75,10 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
     protected override firstUpdated(changes: PropertyValues): void {
         super.firstUpdated(changes);
         // enable scroll event
-        this.scrollContent[0]?.setAttribute('enableTabsScroll', '');
+        const [tabs] = this.scrollContent;
+        if (tabs) {
+            tabs.enableTabsScroll = true;
+        }
         this.resizeController.observe(this.overflowContainer);
     }
 
@@ -112,6 +116,15 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
             ? -dist
             : dist;
         tabsElement.scrollTabs(left, 'smooth');
+    }
+
+    protected override updated(
+        changedProperties: PropertyValueMap<this>
+    ): void {
+        super.updated(changedProperties);
+        if (changedProperties.has('dir')) {
+            this._updateScrollState();
+        }
     }
 
     protected override render(): TemplateResult {
