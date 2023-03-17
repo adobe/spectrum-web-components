@@ -10,7 +10,10 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { converterFor } from '../../../tasks/process-spectrum-utils.js';
+import {
+    builder,
+    converterFor,
+} from '../../../tasks/process-spectrum-utils.js';
 
 const converter = converterFor('spectrum-Slider');
 
@@ -24,6 +27,17 @@ const config = {
             outPackage: 'slider',
             fileName: 'slider',
             hoistCustomPropertiesFrom: 'spectrum-Slider',
+            excludeByExactComponentSeries: [
+                [
+                    builder.attribute('dir'),
+                    builder.combinator(' '),
+                    builder.attribute('dir'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Slider--range'),
+                    builder.combinator(' '),
+                    builder.class('spectrum-Slider-track'),
+                ],
+            ],
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('is-disabled', 'disabled'),
