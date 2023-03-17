@@ -48,6 +48,7 @@
         "./src/tab-panel.css.js": "./src/tab-panel.css.js",
         "./src/tab.css.js": "./src/tab.css.js",
         "./src/tabs-overflow.css.js": "./src/tabs-overflow.css.js",
+        "./src/tabs-sizes.css.js": "./src/tabs-sizes.css.js",
         "./src/tabs.css.js": "./src/tabs.css.js",
         "./sp-tabs.js": {
             "development": "./sp-tabs.dev.js",
