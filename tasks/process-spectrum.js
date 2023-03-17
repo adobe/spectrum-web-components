@@ -49,7 +49,10 @@ const compareSelectors = (oldSelector, newSelector) => {
 const isThemeOnlyRule = (rule) => {
     return (
         rule.value.selectors?.[0][0].name === 'spectrum--express' ||
-        rule.value.selectors?.[0][0].name === 'spectrum'
+        rule.value.selectors?.[0][0].name === 'spectrum' ||
+        rule.value.selectors?.[0][0].name === 'spectrum--light' ||
+        rule.value.selectors?.[0][0].name === 'spectrum--dark' ||
+        rule.value.selectors?.[0][0].name === 'spectrum--darkest'
     );
 };
 
