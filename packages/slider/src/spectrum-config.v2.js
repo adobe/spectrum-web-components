@@ -52,7 +52,7 @@ const config = {
                 converter.classToClass('spectrum-Slider-tick', 'tick'),
                 converter.classToClass(
                     'spectrum-Slider-tickLabel',
-                    'tick-label'
+                    'tickLabel'
                 ),
                 converter.classToClass('spectrum-Slider-ticks', 'ticks'),
                 converter.classToClass('spectrum-Slider-track', 'track'),
