@@ -435,20 +435,6 @@ governing permissions and limitations under the License.
 :host([dir='rtl'][variant='range']) .track:first-of-type:before {
     border-bottom-left-radius: 0;
 }
-:host([dir='ltr'][dir='ltr'][variant='range']) .track,
-:host([dir='ltr'][dir='rtl'][variant='range']) .track {
-    left: auto;
-}
-:host([dir='ltr'][dir='ltr'][variant='range']) .track,
-:host([dir='ltr'][dir='rtl'][variant='range']) .track,
-:host([dir='rtl'][dir='ltr'][variant='range']) .track,
-:host([dir='rtl'][dir='rtl'][variant='range']) .track {
-    right: auto;
-}
-:host([dir='rtl'][dir='ltr'][variant='range']) .track,
-:host([dir='rtl'][dir='rtl'][variant='range']) .track {
-    left: auto;
-}
 :host([dir='ltr'][variant='range']) .track,
 :host([dir='rtl'][variant='range']) .track {
     margin-left: var(--spectrum-slider-range-track-reset);
