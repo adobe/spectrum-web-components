@@ -107,7 +107,7 @@ Cards can be supplied an `actions` via a names slot.
         alt="Demo Image"
     />
     <div slot="footer">Footer</div>
-    <sp-action-menu slot="actions" placement="bottom-end">
+    <sp-action-menu slot="actions" placement="bottom-end" quiet>
         <sp-menu-item>Deselect</sp-menu-item>
         <sp-menu-item>Select Inverse</sp-menu-item>
         <sp-menu-item>Feather...</sp-menu-item>
@@ -181,7 +181,7 @@ Quiet cards will also accept `actions` via a named slot.
     <sp-card variant="quiet" heading="Card Heading" subheading="JPG Photo">
         <img alt="" slot="preview" src="https://picsum.photos/200/300" />
         <div slot="description">10/15/18</div>
-        <sp-action-menu slot="actions" placement="bottom-end">
+        <sp-action-menu slot="actions" placement="bottom-end" quiet>
             <sp-menu-item>Deselect</sp-menu-item>
             <sp-menu-item>Select Inverse</sp-menu-item>
             <sp-menu-item>Feather...</sp-menu-item>
@@ -264,7 +264,7 @@ Or a `quiet` card:
     >
         <img src="https://picsum.photos/110" alt="Demo Image" slot="preview" />
         <div slot="footer">Footer</div>
-        <sp-action-menu slot="actions" placement="bottom-end">
+        <sp-action-menu slot="actions" placement="bottom-end" quiet>
             <sp-menu-item>Deselect</sp-menu-item>
             <sp-menu-item>Select Inverse</sp-menu-item>
             <sp-menu-item>Feather...</sp-menu-item>

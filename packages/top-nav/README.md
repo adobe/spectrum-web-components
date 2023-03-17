@@ -40,6 +40,7 @@ import { TopNav, TopNavItem } from '@spectrum-web-components/top-nav';
         label="Account"
         placement="bottom-end"
         style="margin-inline-start: auto;"
+        quiet
     >
         <sp-menu-item>Account Settings</sp-menu-item>
         <sp-menu-item>My Profile</sp-menu-item>

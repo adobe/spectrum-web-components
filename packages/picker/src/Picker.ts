@@ -360,9 +360,6 @@ export class PickerBase extends SizedMixin(Focusable) {
             popover.style.setProperty('--swc-menu-width', `100%`);
             return;
         }
-        if (this.quiet) return;
-        // only use `this.offsetWidth` when Standard variant
-        popover.style.setProperty('min-width', `${this.offsetWidth}px`);
     }
 
     private async closeMenu(): Promise<void> {
@@ -635,6 +632,14 @@ export class PickerBase extends SizedMixin(Focusable) {
 export class Picker extends PickerBase {
     public static override get styles(): CSSResultArray {
         return [pickerStyles, chevronStyles];
+    }
+
+    protected override sizePopover(popover: HTMLElement): void {
+        super.sizePopover(popover);
+
+        if (this.quiet) return;
+        // only use `this.offsetWidth` when Standard variant
+        popover.style.setProperty('min-width', `${this.offsetWidth}px`);
     }
 
     protected override onKeydown = (event: KeyboardEvent): void => {

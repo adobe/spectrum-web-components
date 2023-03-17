@@ -108,6 +108,7 @@ describe('card', () => {
                         slot="actions"
                         placement="bottom-end"
                         label="More Actions"
+                        quiet
                     >
                         <sp-menu>
                             <sp-menu-item>Deselect</sp-menu-item>

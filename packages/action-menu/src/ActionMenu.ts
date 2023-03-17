@@ -62,7 +62,7 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
     protected override render(): TemplateResult {
         return html`
             <sp-action-button
-                quiet
+                ?quiet=${this.quiet}
                 ?selected=${this.open}
                 aria-haspopup="true"
                 aria-controls="popover"
@@ -85,7 +85,6 @@ export class ActionMenu extends ObserveSlotText(PickerBase, 'label') {
         if (changedProperties.has('invalid')) {
             this.invalid = false;
         }
-        this.quiet = true;
         super.update(changedProperties);
     }
 }
