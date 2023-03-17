@@ -12,24 +12,20 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 #list {
-    --spectrum-sidenav-item-padding-y: var(
-        --spectrum-global-dimension-size-65
-    ); /* .spectrum-SideNav */ /* .spectrum-SideNav */
+    --spectrum-sidenav-item-padding-y: var(--spectrum-global-dimension-size-65);
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 :host([dir='ltr']) #heading {
-    margin-right: 0; /* [dir=ltr] .spectrum-SideNav-heading */
+    margin-right: 0;
+}
+:host([dir='ltr']) #heading,
+:host([dir='rtl']) #heading {
+    margin-left: 0;
 }
 :host([dir='rtl']) #heading {
-    margin-left: 0; /* [dir=rtl] .spectrum-SideNav-heading */
-}
-:host([dir='ltr']) #heading {
-    margin-left: 0; /* [dir=ltr] .spectrum-SideNav-heading */
-}
-:host([dir='rtl']) #heading {
-    margin-right: 0; /* [dir=rtl] .spectrum-SideNav-heading */
+    margin-right: 0;
 }
 #heading {
     border-radius: var(
@@ -52,7 +48,7 @@ governing permissions and limitations under the License.
     height: var(
         --spectrum-sidenav-heading-height,
         var(--spectrum-alias-single-line-height)
-    ); /* .spectrum-SideNav-heading */
+    );
     letter-spacing: var(
         --spectrum-sidenav-heading-text-letter-spacing,
         var(--spectrum-global-font-letter-spacing-medium)
@@ -79,5 +75,5 @@ governing permissions and limitations under the License.
         var(--spectrum-global-dimension-size-150)
     );
     padding-top: 0;
-    text-transform: uppercase; /* .spectrum-SideNav-heading */
+    text-transform: uppercase;
 }
