@@ -35,6 +35,8 @@ import {
 } from '@spectrum-web-components/shared';
 
 import styles from './dialog.css.js';
+import uxpstyles from './dialog-uxp.css.js';
+
 import type { CloseButton } from '@spectrum-web-components/button';
 
 let appliedIds = 0;
@@ -75,6 +77,9 @@ export class Dialog extends FocusVisiblePolyfillMixin(
     ])
 ) {
     public static override get styles(): CSSResultArray {
+        if (window.navigator.userAgent.includes('UXP')) {
+            return [styles, uxpstyles];
+        }
         return [styles];
     }
 
