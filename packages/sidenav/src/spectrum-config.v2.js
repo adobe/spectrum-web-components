@@ -60,6 +60,9 @@ const config = {
                     ],
                 },
             ],
+            excludeByComponents: [
+                builder.class('spectrum-SideNav--multiLevel'),
+            ],
             excludeByExactComponentSeries: [
                 [builder.class('spectrum-SideNav-heading')],
             ],
