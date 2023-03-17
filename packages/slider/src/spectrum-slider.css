@@ -710,7 +710,7 @@ governing permissions and limitations under the License.
     top: 0;
     width: var(--spectrum-slider-tick-mark-width);
 }
-.tick .tick-label {
+.tick .tickLabel {
     align-items: center;
     display: flex;
     font-size: var(
@@ -727,8 +727,8 @@ governing permissions and limitations under the License.
             var(--spectrum-slider-tick-mark-height)
     );
 }
-.tick:first-of-type .tick-label,
-.tick:last-of-type .tick-label {
+.tick:first-of-type .tickLabel,
+.tick:last-of-type .tickLabel {
     display: block;
     margin-left: 0;
     margin-right: 0;
@@ -740,10 +740,10 @@ governing permissions and limitations under the License.
 :host([dir='rtl']) .tick:first-of-type {
     right: calc(var(--spectrum-slider-tick-mark-width) / -2);
 }
-:host([dir='ltr']) .tick:first-of-type .tick-label {
+:host([dir='ltr']) .tick:first-of-type .tickLabel {
     left: 0;
 }
-:host([dir='rtl']) .tick:first-of-type .tick-label {
+:host([dir='rtl']) .tick:first-of-type .tickLabel {
     right: 0;
 }
 :host([dir='ltr']) .tick:last-of-type {
@@ -752,10 +752,10 @@ governing permissions and limitations under the License.
 :host([dir='rtl']) .tick:last-of-type {
     left: calc(var(--spectrum-slider-tick-mark-width) / -2);
 }
-:host([dir='ltr']) .tick:last-of-type .tick-label {
+:host([dir='ltr']) .tick:last-of-type .tickLabel {
     right: 0;
 }
-:host([dir='rtl']) .tick:last-of-type .tick-label {
+:host([dir='rtl']) .tick:last-of-type .tickLabel {
     left: 0;
 }
 :host([disabled]) {
