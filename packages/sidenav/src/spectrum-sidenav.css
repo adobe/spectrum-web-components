@@ -12,12 +12,14 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-sidenav-item-padding-y: var(
-        --spectrum-global-dimension-size-65
-    ); /* .spectrum-SideNav */
+    --spectrum-sidenav-item-padding-y: var(--spectrum-global-dimension-size-65);
 }
 :host {
-    list-style-type: none; /* .spectrum-SideNav */
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+:host([multilevel]) {
     margin: 0;
     padding: 0;
 }
