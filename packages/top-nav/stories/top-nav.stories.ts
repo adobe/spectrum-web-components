@@ -45,7 +45,11 @@ export const Default = (): TemplateResult => {
             <sp-top-nav-item href="#page-4">
                 Page with Really Long Name
             </sp-top-nav-item>
-            <sp-action-menu label="Account" style="margin-inline-start: auto;">
+            <sp-action-menu
+                label="Account"
+                style="margin-inline-start: auto;"
+                quiet
+            >
                 <sp-icon-settings slot="icon"></sp-icon-settings>
                 <sp-menu-item>Account Settings</sp-menu-item>
                 <sp-menu-item>My Profile</sp-menu-item>
@@ -77,7 +81,11 @@ export const Selected = (): TemplateResult => {
             <sp-top-nav-item href="#page-4">
                 Page with Really Long Name
             </sp-top-nav-item>
-            <sp-action-menu label="Account" style="margin-inline-start: auto;">
+            <sp-action-menu
+                label="Account"
+                style="margin-inline-start: auto;"
+                quiet
+            >
                 <sp-icon-settings slot="icon"></sp-icon-settings>
                 <sp-menu-item>Account Settings</sp-menu-item>
                 <sp-menu-item>My Profile</sp-menu-item>
@@ -108,7 +116,7 @@ class WrappedTopNav extends HTMLElement {
                 <sp-top-nav-item href="#page-4" autofocus>
                     Page with Really Long Name
                 </sp-top-nav-item>
-                <sp-action-menu label="Account" style="margin-inline-start: auto;">
+                <sp-action-menu label="Account" style="margin-inline-start: auto;" quiet>
                     <sp-icon-settings slot="icon"></sp-icon-settings>
                     <sp-menu-item>Account Settings</sp-menu-item>
                     <sp-menu-item>My Profile</sp-menu-item>
@@ -155,7 +163,7 @@ export const Modes = (): TemplateResult => {
                 <sp-action-button label="Link">
                     <sp-icon-link slot="icon"></sp-icon-link>
                 </sp-action-button>
-                <sp-action-menu label="User">
+                <sp-action-menu label="User" quiet>
                     <sp-avatar
                         slot="icon"
                         label="User avatar"

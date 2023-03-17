@@ -57,11 +57,24 @@ export default {
             },
             control: 'text',
         },
+        quiet: {
+            name: 'quiet',
+            type: { name: 'boolean', required: false },
+            description: 'Quiet rendering',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
     },
     args: {
         visibleLabel: 'More Actions',
         disabled: false,
         open: false,
+        quiet: false,
     },
 };
 
@@ -72,12 +85,18 @@ interface StoryArgs {
     customIcon?: string | TemplateResult;
     selects?: 'single';
     selected?: boolean;
+    quiet?: boolean;
 }
 
 const Template = (args: StoryArgs = {}): TemplateResult =>
     ActionMenuMarkup(args);
 
 export const Default = (args: StoryArgs = {}): TemplateResult => Template(args);
+
+export const quiet = (args: StoryArgs = {}): TemplateResult => Template(args);
+quiet.args = {
+    quiet: true,
+};
 
 export const selects = (args: StoryArgs = {}): TemplateResult =>
     Template({

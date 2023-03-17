@@ -21,6 +21,7 @@ export const ActionMenuMarkup = ({
     changeHandler = (() => undefined) as (event: Event) => void,
     disabled = false,
     open = false,
+    quiet = false,
     visibleLabel = '',
     customIcon = '' as string | TemplateResult,
     size = 'm' as 'm' | 's' | 'l' | 'xl' | 'xxl',
@@ -32,6 +33,7 @@ export const ActionMenuMarkup = ({
             label=${ariaLabel}
             ?disabled=${disabled}
             ?open=${open}
+            ?quiet=${quiet}
             size=${size}
             @change="${changeHandler}"
             .selects=${selects ? selects : undefined}
