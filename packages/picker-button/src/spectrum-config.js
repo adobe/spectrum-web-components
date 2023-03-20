@@ -18,6 +18,10 @@ import {
 
 const converter = converterFor('spectrum-PickerButton');
 
+/**
+ * @property {string} size
+ * @returns {import('../../../tasks/spectrum-css-converter').ComplexSelectorConversion[]}
+ */
 const convertSize = (size) => [
     {
         collapseSelector: true,

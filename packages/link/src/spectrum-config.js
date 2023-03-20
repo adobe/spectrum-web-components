@@ -44,6 +44,14 @@ const includeAnchor = (className, attribute, value) => ({
     ],
 });
 
+/**
+ *
+ * @param {string} pseudo
+ * @param {string} className
+ * @param {string} attribute
+ * @param {string} value
+ * @returns {import('../../../tasks/spectrum-css-converter').ComplexSelectorConversion}
+ */
 const includeAnchorWithPseudoClass = (pseudo, className, attribute, value) => {
     const component = includeAnchor(className, attribute, value);
     const pseudoComponent =

@@ -43,7 +43,6 @@ const compareSelectors = (oldSelector, newSelector) => {
         return oldSelector === newSelector;
     }
     return matches;
-    // return deepEqual(oldSelector, newSelector);
 };
 
 const isThemeOnlyRule = (rule) => {
@@ -150,7 +149,7 @@ function conditionSelector(newSelector) {
 
 async function processComponent(componentPath) {
     const { default: config } = await import(
-        path.join(componentPath, 'spectrum-config.v2.js')
+        path.join(componentPath, 'spectrum-config.js')
     );
     /**
      * @type { import('./spectrum-css-converter').SpectrumCSSConverter}
@@ -161,9 +160,6 @@ async function processComponent(componentPath) {
      * @type { import('./spectrum-css-converter').SpectrumCSSConverter}
      */
     for await (const conversion of conversions) {
-        // console.log(conversion.name);
-        // console.log(JSON.stringify(conversion, null, '  '));
-
         const sourcePath = require.resolve(conversion.inPackage);
         const sourceCSS = fs.readFileSync(sourcePath, 'utf-8');
         const outputPath = path.join(
@@ -173,15 +169,12 @@ async function processComponent(componentPath) {
             'src',
             `spectrum-${conversion.fileName}.css`
         );
-
-        // console.log(conversion.name, outputPath);
         const processSelectorV2 = (selector) => {
             let log = false;
             const matches = Array(selector.length);
             let injected = 0;
             selector.forEach((component, selectorIndex) => {
                 let index = selectorIndex + injected;
-                // console.log(index, JSON.stringify({ matches }, null, '  '));
                 const match = [...(matches[index] || [])];
                 let matched = false;
                 if (isDirAttr(component)) {
@@ -239,9 +232,6 @@ async function processComponent(componentPath) {
                                         )
                                 );
                         }
-                        if (complexConversion.collapseSelector && found) {
-                            // console.log(JSON.stringify(matches, null, '  '));
-                        }
                         if (found) {
                             if (complexConversion.expandSelector) {
                                 let lengthDelta = Array.isArray(
@@ -265,13 +255,8 @@ async function processComponent(componentPath) {
                                 matches.splice(index - injected, lengthDelta);
                                 injected -= lengthDelta;
                             }
-                            // console.log('found');
-                            // console.log(selector);
                             complexConversion.replace.forEach(
                                 (replace, findIndex) => {
-                                    // console.log(index + findIndex);
-                                    // console.log(selector[index + findIndex]);
-                                    // console.log(matches[index + findIndex]);
                                     if (findIndex === 0) {
                                         match.unshift({
                                             ...(replace === 'take'
@@ -299,16 +284,6 @@ async function processComponent(componentPath) {
                                                   }
                                                 : replace),
                                         });
-                                        // console.log(
-                                        //     index,
-                                        //     index + findIndex,
-                                        //     replace
-                                        // );
-                                        // console.log(matches[index + findIndex]);
-                                        // console.log(selector);
-                                        // console.log(
-                                        //     JSON.stringify(matches, null, '  ')
-                                        // );
                                     }
                                 }
                             );
@@ -324,7 +299,6 @@ async function processComponent(componentPath) {
                             newMatch.replace = component;
                         }
                         match.push(newMatch);
-                        // console.log(JSON.stringify({process}, null, '  '));
                         matched = true;
                     }
                 });
@@ -335,17 +309,11 @@ async function processComponent(componentPath) {
                 }
                 matches[index] = match;
             });
-            // if (log) {
-            //     console.log(JSON.stringify({matches}, null, '  '));
-            // }
-            // console.log(1, selector);
-            // console.log(2, JSON.stringify({ matches }, null, '  '));
             return matches;
         };
 
         const buildSelectorsV2 = (metadata) => {
             const selectors = [];
-            // console.log(JSON.stringify(metadata, null, '  '));
             metadata.forEach((selector) => {
                 const newSelector = [];
                 /**
@@ -419,7 +387,6 @@ async function processComponent(componentPath) {
                     const firstIsNotSlotted =
                         newSelector[0]?.value !== 'slotted';
                     const firstIsCombinator = isCombinator(newSelector[0]);
-                    // console.log(firstIsPseudo, firstIsNotSlotted, firstIsCombinator);
                     if (!newSelector.length) {
                         newSelector.push(host);
                     } else if (
@@ -439,10 +406,8 @@ async function processComponent(componentPath) {
                 if (isCombinator(newSelector[0])) {
                     newSelector.shift();
                 }
-                // console.log(newSelector);
                 selectors.push(conditionSelector(newSelector));
             });
-            // console.log(selectors);
             return selectors;
         };
 
@@ -491,7 +456,7 @@ async function processComponent(componentPath) {
                         const nextSelectors = [];
                         currentSelectors.forEach((selector) => {
                             let include = true;
-                            conversion.excludeByExactComponentSeries?.forEach(
+                            conversion.excludeByWholeSelector?.forEach(
                                 (exclusion) => {
                                     include =
                                         include &&
@@ -619,7 +584,7 @@ async function processComponents() {
     // eslint-disable-next-line no-console
     console.log(chalk.bold.green('Processing Spectrum Components'));
     for (const configPath of await fg(
-        `${root}/{packages,tools}/*/src/spectrum-config.v2.js`
+        `${root}/{packages,tools}/*/src/spectrum-config.js`
     )) {
         promises.push(processComponent(path.join(configPath, '..')));
     }

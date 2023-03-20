@@ -27,7 +27,7 @@ const config = {
             outPackage: 'slider',
             fileName: 'slider',
             hoistCustomPropertiesFrom: 'spectrum-Slider',
-            excludeByExactComponentSeries: [
+            excludeByWholeSelector: [
                 [
                     builder.attribute('dir'),
                     builder.combinator(' '),
