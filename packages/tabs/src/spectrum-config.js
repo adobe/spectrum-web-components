@@ -199,7 +199,7 @@ const config = {
                 builder.class('spectrum-Icon'),
                 builder.pseudoClass('hover'),
             ],
-            excludeByExactComponentSeries: [
+            excludeByWholeSelector: [
                 [builder.class('spectrum-Tabs-item')],
                 [
                     builder.class('spectrum-Tabs-item'),

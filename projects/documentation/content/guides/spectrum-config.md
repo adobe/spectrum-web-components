@@ -5,12 +5,12 @@ displayName: Spectrum Config
 slug: spectrum-config
 ---
 
-# Specification for spectrum-config.v2.js files
+# Specification for spectrum-config.js files
 
 The "Spectrum config" for a package outlines how source CSS provided by [Spectrum CSS](https://opensource.adobe.com/spectrum-css) is converted to support the specifics of the Spectrum Web Component context. Specifically, this configuration allows for certain selectors to be converted to `:host()` or `::slotted()` values as needed in a custom element with shadow DOM, but more generally the process can be used to simplify class names, converted class names and pseudo-classes into other values, and mangle more complex selectors in ways only possible when working with style encapsulation. This process leverages [Lightning CSS](https://lightningcss.dev/) and will `find` one or more [Selector Components](https://github.com/parcel-bundler/lightningcss/blob/master/node/ast.d.ts#L6031) and `replace` them with the provided Selector Component(s). Some system wide helpers are provided via `builder` (to more easily construct individual Selector Components, sans boilerplate) and `converterFor` (to leverage the idea that most packages are focused on a single selector scope). Local to any specific package, additional helpers for building out these JSON objects can be found or built as needed.
 
 The following is an annotated example that serves to document the format
-of the `spectrum-config.v2.js` file. A higher-level explanation may be found
+of the `spectrum-config.js` file. A higher-level explanation may be found
 [here](/guides/adding-component).
 
 ## Annotated Sample
@@ -185,14 +185,19 @@ const config = {
                  * the values will be converted when the components are found in the provided
                  * order, e.g.:
                  *
-                 *      .spectrum-Icon + .spectrum-Button-label => [name="icon"] + #label
-                 *
-                 * The arrays in `find` and `replace` do not need to be symetrical. When they
-                 * are not, you can collapse or expand the difference with the `collapseSelector`
-                 * and `expandSelector` booleans.
+                 *      [dir="ltr"] .spectrum-Icon + .spectrum-Button-label => :host([dir="ltr"]) [name="icon"] + #label
                  *
                  * When `exactSelector` is true, the conversion will only happen when there are
                  * no other components in the selector.
+                 *
+                 *      ✔️ .spectrum-Icon + .spectrum-Button-label => [name="icon"] + #label
+                 *      ❌ [dir="ltr"] .spectrum-Icon + .spectrum-Button-label => :host([dir="ltr"]) .spectrum-Item + .spectrum-Button-label
+                 *
+                 * The arrays in `find` and `replace` do not need to be symetrical. When they
+                 * are not, you can collapse or expand the difference with the `collapseSelector`
+                 * and `expandSelector` booleans. Otherwise, when the `replace` array is longer, replacement
+                 * will eat into any remaining Selector Components, and when the `replace` is shorter, matches
+                 * Selector Components may remain in the larger Selector.
                  */
                 {
                     find: [

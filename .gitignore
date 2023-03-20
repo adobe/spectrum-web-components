@@ -32,7 +32,7 @@ packages/**/*.js.map
 packages/**/*.d.ts
 packages/**/*.test-vrt.ts
 !packages/**/*/spectrum-config.js
-!packages/**/*/spectrum-config.v2.js
+!packages/**/*/spectrum-config.v1.js
 !packages/*/test/global.d.ts
 !packages/*/global.d.ts
 !packages/*/local.d.ts
@@ -52,7 +52,6 @@ tools/**/*.js.map
 tools/**/*.d.ts
 tools/**/*.test-vrt.ts
 !tools/**/*/spectrum-config.js
-!tools/**/*/spectrum-config.v2.js
 !tools/*/test/global.d.ts
 !tools/*/global.d.ts
 !tools/*/local.d.ts

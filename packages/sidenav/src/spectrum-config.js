@@ -63,7 +63,7 @@ const config = {
             excludeByComponents: [
                 builder.class('spectrum-SideNav--multiLevel'),
             ],
-            excludeByExactComponentSeries: [
+            excludeByWholeSelector: [
                 [builder.class('spectrum-SideNav-heading')],
             ],
         },

@@ -108,8 +108,8 @@ module.exports = function (plop) {
             },
             {
                 type: 'add',
-                path: '../../packages/{{name}}/src/spectrum-config.v2.js',
-                templateFile: 'plop-templates/spectrum-config.v2.js.hbs',
+                path: '../../packages/{{name}}/src/spectrum-config.js',
+                templateFile: 'plop-templates/spectrum-config.js.hbs',
             },
             {
                 type: 'add',

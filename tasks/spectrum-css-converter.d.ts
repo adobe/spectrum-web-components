@@ -20,15 +20,34 @@ export type HostSelectorComponent = SelectorComponent & {
 };
 
 type ReplacementComponent = {
+    /**
+     * Emphasize the specificity of this Selector Component by using it twice
+     * in the final Selector
+     */
     emphasize?: boolean;
+    /**
+     * Whether to apply this Selector Component to `:host(...)`. Attribute Selector
+     * Components are hoised by default
+     */
     hoist?: boolean;
     replace: SelectorComponent;
 };
 
 type ComplexSelectorConversion = {
     find: SelectorComponent[];
+    /**
+     * Remove Selector Components from the final selector so that it matches the
+     * length of the `replace` listing
+     */
     collapseSelector?: boolean;
+    /**
+     * Only convert the Selector when all of the Selector Components are matched
+     */
     exactSelector?: boolean;
+    /**
+     * Add Selector Components to the final selector so that it matches the
+     * length of the `replace` listing
+     */
     expandSelector?: boolean;
     replace: ('take' | ReplacementComponent)[];
 };
@@ -38,18 +57,37 @@ type SelectorConversion = ReplacementComponent & {
 };
 
 type SelectorComponentWithRegex = SelectorComponent & {
+    /**
+     * A RegExp can be provided to help match a larger sampling of Component Selectors
+     */
     regex?: RegExp;
 };
 
 type Conversion = {
+    /**
+     * By defaults `.spectrum`, `.spectrum--dark`, etc. are excluded
+     */
     allowThemeRules?: boolean;
     components: (SelectorConversion | ComplexSelectorConversion)[];
-    excludeByExactComponentSeries?: SelectorComponentWithRegex[][];
+    /**
+     * Selectors exactly matching the array of Selector Components present will be excluded
+     */
+    excludeByWholeSelector?: SelectorComponentWithRegex[][];
+    /**
+     * Selectors containing an included Selector Component will be excluded
+     */
     excludeByComponents?: SelectorComponentWithRegex[];
     fileName: string;
+    /**
+     * When a Rule only contains CSS Custom Property definitions and matches this selector, move
+     * the Rule to point to `:host`
+     */
     hoistCustomPropertiesFrom?: string;
     inPackage: string;
     outPackage: string | string[];
+    /**
+     * Exclude Selectors that do not feature the Selector Components included herein
+     */
     requireComponentPresence?: SelectorComponentWithRegex[];
 };
 
