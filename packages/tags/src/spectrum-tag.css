@@ -21,7 +21,7 @@ governing permissions and limitations under the License.
     --spectrum-tag-focus-ring-gap: var(--spectrum-focus-indicator-gap);
     --spectrum-tag-focus-ring-color: var(--spectrum-focus-indicator-color);
     --spectrum-tag-label-line-height: var(--spectrum-line-height-100);
-    --spectrum-tag-label-font-weight: var(--spectrum-font-weight-regular);
+    --spectrum-tag-label-font-weight: var(--spectrum-regular-font-weight);
     --spectrum-tag-content-color-selected: var(--spectrum-white);
     --spectrum-tag-border-color-invalid: var(--spectrum-negative-color-900);
     --spectrum-tag-border-color-invalid-hover: var(
