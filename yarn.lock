@@ -4324,9 +4324,9 @@
   integrity sha512-hs8uwe9bt3/gUV2R6ZTBHZdsUyP1DzqOOaj/rPtkATL7bNjrZ70+J+4N0Mzha2bZAE6VrOeg1gZx+LnJFF1gMg==
 
 "@spectrum-css/picker@^2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/picker/-/picker-2.0.5.tgz#9ba1bd2843a18bcdd061952a92f85ffe6105c50d"
-  integrity sha512-EBncWkbWtm3dPvrt5ZObdwEHsZWhTNg/aX5mxJm7UncwxmZMdz0xpVCYDy87cnzGrudefGHR6QnFkYllsO8QpQ==
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/picker/-/picker-2.0.9.tgz#9a42ef9908610e054597776297f30b2a0d7e9aa3"
+  integrity sha512-1js7vzLbH1tUQV7p3P27WQ6zHttI0tBGnIMu6lLnpRDbY9D9Rvep5V+SucZGkMbUARh0cCUpmj61+xY98n/f5g==
 
 "@spectrum-css/pickerbutton@^2.0.7":
   version "2.0.12"
