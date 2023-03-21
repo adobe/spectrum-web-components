@@ -242,23 +242,27 @@ export class Tooltip extends SpectrumElement {
                 this.previousSlot = this.slot;
             }
             this.slot = 'self-managed-tooltip';
-            parentElement.addEventListener('pointerenter', this.openOverlay);
-            parentElement.addEventListener('focusin', this.openOverlay);
-            parentElement.addEventListener('pointerleave', this.closeOverlay);
-            parentElement.addEventListener('focusout', this.closeOverlay);
+            if (parentElement) {
+                parentElement.addEventListener('pointerenter', this.openOverlay);
+                parentElement.addEventListener('focusin', this.openOverlay);
+                parentElement.addEventListener('pointerleave', this.closeOverlay);
+                parentElement.addEventListener('focusout', this.closeOverlay);
+            }
         } else {
             if (this.previousSlot) {
                 this.slot = this.previousSlot;
             } else if (this.slot === 'self-managed-tooltip') {
                 this.removeAttribute('slot');
             }
-            parentElement.removeEventListener('pointerenter', this.openOverlay);
-            parentElement.removeEventListener('focusin', this.openOverlay);
-            parentElement.removeEventListener(
-                'pointerleave',
-                this.closeOverlay
-            );
-            parentElement.removeEventListener('focusout', this.closeOverlay);
+            if (parentElement) {
+                parentElement.removeEventListener('pointerenter', this.openOverlay);
+                parentElement.removeEventListener('focusin', this.openOverlay);
+                parentElement.removeEventListener(
+                    'pointerleave',
+                    this.closeOverlay
+                );
+                parentElement.removeEventListener('focusout', this.closeOverlay);
+            }
         }
     }
 
