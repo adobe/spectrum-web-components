@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.11.1...@spectrum-web-components/tabs@0.11.2) (2023-03-22)
+
+### Bug Fixes
+
+-   extract and share tshirt size styles ([3acfc30](https://github.com/adobe/spectrum-web-components/commit/3acfc308efea0993f00e7be01ee2fb49bd092449))
+-   extract and share tshirt size styles ([b1440f7](https://github.com/adobe/spectrum-web-components/commit/b1440f7e828f525a101ffba69df16984be154da1))
+-   keep compact property ([904df71](https://github.com/adobe/spectrum-web-components/commit/904df71d63d542d6f8cf724dbfb81347d0f0de1b))
+-   keep compact property ([b5af15f](https://github.com/adobe/spectrum-web-components/commit/b5af15fb1fa6794cee0a88ffa9839921c2b21508))
+-   move hover/focus hoisting into conditioning ([15ac2f7](https://github.com/adobe/spectrum-web-components/commit/15ac2f7f561b3cb5b865d1539fbd753999f25119))
+-   proper overflow rtl support ([9b1c9d4](https://github.com/adobe/spectrum-web-components/commit/9b1c9d4470051e059c8e22b544dee7f46d03593a))
+-   remove attribute binding logic ([1f6833f](https://github.com/adobe/spectrum-web-components/commit/1f6833f6f1058b7c91aec45ba51330c9dfbe6372))
+-   remove attribute binding logic ([7bce0ae](https://github.com/adobe/spectrum-web-components/commit/7bce0ae239e55a6479268ab76a992199452c0cb5))
+-   **tabs:** bind tabs overflow state with sp-tabs ([a07c45b](https://github.com/adobe/spectrum-web-components/commit/a07c45bdce27a7b0bed3faf46bd638ebab9b42d9))
+-   **tabs:** bind tabs overflow state with sp-tabs ([570a2cd](https://github.com/adobe/spectrum-web-components/commit/570a2cdaf282ef0f565574c65eef619c82ef2a60))
+
 ## [0.11.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/tabs@0.11.0...@spectrum-web-components/tabs@0.11.1) (2023-03-08)
 
 **Note:** Version bump only for package @spectrum-web-components/tabs

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.7](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropzone@0.10.6...@spectrum-web-components/dropzone@0.10.7) (2023-03-22)
+
+### Bug Fixes
+
+-   move hover/focus hoisting into conditioning ([15ac2f7](https://github.com/adobe/spectrum-web-components/commit/15ac2f7f561b3cb5b865d1539fbd753999f25119))
+
 ## [0.10.6](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropzone@0.10.5...@spectrum-web-components/dropzone@0.10.6) (2023-02-08)
 
 **Note:** Version bump only for package @spectrum-web-components/dropzone

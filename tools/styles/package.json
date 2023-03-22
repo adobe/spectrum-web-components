@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/styles",
-    "version": "0.23.1",
+    "version": "0.23.2",
     "publishConfig": {
         "access": "public"
     },

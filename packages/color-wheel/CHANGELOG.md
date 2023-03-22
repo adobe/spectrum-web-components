@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.4.9...@spectrum-web-components/color-wheel@0.5.0) (2023-03-22)
+
+### Features
+
+-   **color-wheel:** use core tokens ([57159a2](https://github.com/adobe/spectrum-web-components/commit/57159a2443b776b78128bfd9a83b2aa3de1a8342))
+
 ## [0.4.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-wheel@0.4.8...@spectrum-web-components/color-wheel@0.4.9) (2023-02-08)
 
 **Note:** Version bump only for package @spectrum-web-components/color-wheel

@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.10.13...@spectrum-web-components/action-button@0.10.14) (2023-03-22)
+
+### Bug Fixes
+
+-   prevent default hoisting of custom pseudo elements ([7f66346](https://github.com/adobe/spectrum-web-components/commit/7f6634665fb9fdc530bd3009246e62c24cac1904))
+
+### Performance Improvements
+
+-   accept new Spectrum CSS featuring simpler DOM structure ([a0b042b](https://github.com/adobe/spectrum-web-components/commit/a0b042b1d05bc23b0b824123af94df5bc3e1e0d2))
+
 ## [0.10.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.10.12...@spectrum-web-components/action-button@0.10.13) (2023-03-08)
 
 **Note:** Version bump only for package @spectrum-web-components/action-button

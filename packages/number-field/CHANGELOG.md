@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.5.13...@spectrum-web-components/number-field@0.6.0) (2023-03-22)
+
+### Bug Fixes
+
+-   move hover/focus hoisting into conditioning ([15ac2f7](https://github.com/adobe/spectrum-web-components/commit/15ac2f7f561b3cb5b865d1539fbd753999f25119))
+
+### Features
+
+-   **number-field:** use new config ([8d42d69](https://github.com/adobe/spectrum-web-components/commit/8d42d693363e69362e18c49f1d7a5c91262f4c38))
+
 ## [0.5.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.5.12...@spectrum-web-components/number-field@0.5.13) (2023-03-08)
 
 **Note:** Version bump only for package @spectrum-web-components/number-field

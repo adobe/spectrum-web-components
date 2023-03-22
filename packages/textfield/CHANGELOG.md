@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.13.12...@spectrum-web-components/textfield@0.13.13) (2023-03-22)
+
+### Bug Fixes
+
+-   minlength now accepted as minimum length for value.toString ([bc3b1c2](https://github.com/adobe/spectrum-web-components/commit/bc3b1c2ab56d1b569203ed4fb87e293a4990544a))
+
 ## [0.13.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.13.11...@spectrum-web-components/textfield@0.13.12) (2023-03-08)
 
 **Note:** Version bump only for package @spectrum-web-components/textfield

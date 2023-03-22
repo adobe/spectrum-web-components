@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/close-button@0.3.9...@spectrum-web-components/close-button@0.3.10) (2023-03-22)
+
+### Bug Fixes
+
+-   prevent default hoisting of custom pseudo elements ([7f66346](https://github.com/adobe/spectrum-web-components/commit/7f6634665fb9fdc530bd3009246e62c24cac1904))
+
 ## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/close-button@0.3.8...@spectrum-web-components/close-button@0.3.9) (2023-02-08)
 
 **Note:** Version bump only for package @spectrum-web-components/close-button

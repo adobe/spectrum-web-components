@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/accordion",
-    "version": "0.7.10",
+    "version": "0.7.11",
     "publishConfig": {
         "access": "public"
     },
@@ -67,8 +67,8 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.4",
-        "@spectrum-web-components/icon": "^0.12.8",
-        "@spectrum-web-components/icons-ui": "^0.9.9",
+        "@spectrum-web-components/icon": "^0.12.9",
+        "@spectrum-web-components/icons-ui": "^0.9.10",
         "@spectrum-web-components/reactive-controllers": "^0.3.5",
         "@spectrum-web-components/shared": "^0.15.5"
     },

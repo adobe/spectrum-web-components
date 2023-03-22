@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/clear-button",
-    "version": "0.2.6",
+    "version": "0.2.7",
     "publishConfig": {
         "access": "public"
     },
