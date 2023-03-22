@@ -13,13 +13,35 @@ import { TemplateResult } from '@spectrum-web-components/base';
 import { OverflowProperties, renderTabsOverflowExample } from './index.js';
 
 export default {
-    title: 'Tabs Overflow',
+    title: 'Tabs Overflow/Sizes/with Panel',
     component: 'sp-tabs-overflow',
 };
 
-export const compact = (args: OverflowProperties): TemplateResult => {
+export const s = (args: OverflowProperties): TemplateResult => {
     return renderTabsOverflowExample(args);
 };
-compact.args = {
-    compact: true,
+s.args = {
+    size: 's',
+    includeTabPanel: true,
+};
+export const m = (args: OverflowProperties): TemplateResult => {
+    return renderTabsOverflowExample(args);
+};
+m.args = {
+    size: 'm',
+    includeTabPanel: true,
+};
+export const l = (args: OverflowProperties): TemplateResult => {
+    return renderTabsOverflowExample(args);
+};
+l.args = {
+    size: 'l',
+    pincludeTabPanelanel: true,
+};
+export const XL = (args: OverflowProperties): TemplateResult => {
+    return renderTabsOverflowExample(args);
+};
+XL.args = {
+    size: 'xl',
+    includeTabPanel: true,
 };

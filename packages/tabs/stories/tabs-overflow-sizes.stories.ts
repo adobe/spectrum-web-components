@@ -10,22 +10,34 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { TemplateResult } from '@spectrum-web-components/base';
-import { renderTabsOverflowExample } from './index.js';
+import { OverflowProperties, renderTabsOverflowExample } from './index.js';
 
 export default {
-    title: 'Tabs Overflow/with Panel',
+    title: 'Tabs Overflow/Sizes',
     component: 'sp-tabs-overflow',
 };
 
-export const s = (): TemplateResult => {
-    return renderTabsOverflowExample(20, 's', true);
+export const s = (args: OverflowProperties): TemplateResult => {
+    return renderTabsOverflowExample(args);
 };
-export const m = (): TemplateResult => {
-    return renderTabsOverflowExample(20, 'm', true);
+s.args = {
+    size: 's',
 };
-export const l = (): TemplateResult => {
-    return renderTabsOverflowExample(20, 'l', true);
+export const m = (args: OverflowProperties): TemplateResult => {
+    return renderTabsOverflowExample(args);
 };
-export const XL = (): TemplateResult => {
-    return renderTabsOverflowExample(20, 'xl', true);
+m.args = {
+    size: 'm',
+};
+export const l = (args: OverflowProperties): TemplateResult => {
+    return renderTabsOverflowExample(args);
+};
+l.args = {
+    size: 'l',
+};
+export const XL = (args: OverflowProperties): TemplateResult => {
+    return renderTabsOverflowExample(args);
+};
+XL.args = {
+    size: 'xl',
 };
