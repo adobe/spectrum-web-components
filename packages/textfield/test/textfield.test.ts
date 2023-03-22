@@ -607,6 +607,29 @@ describe('Textfield', () => {
         await sendKeys({ press: 'Backspace' });
         expect(el.value).to.equal('Name');
     });
+    it('handles minlength with required', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield required minlength="3"></sp-textfield>
+            `
+        );
+        el.focus();
+        await sendKeys({
+            type: 'ab',
+        });
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('ab');
+        expect(el.checkValidity()).to.be.false;
+
+        await sendKeys({
+            type: 'c',
+        });
+        await elementUpdated(el);
+
+        expect(el.value).to.equal('abc');
+        expect(el.checkValidity()).to.be.true;
+    });
     it('accepts maxlength', async () => {
         const el = await litFixture<Textfield>(
             html`
