@@ -35,6 +35,7 @@ import {
     selectsMultiple,
     selectsSingle,
 } from '../stories/table-elements.stories.js';
+import { spy } from 'sinon';
 
 let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
 before(function () {
@@ -138,7 +139,43 @@ describe('Table Selects', () => {
         expect(rowTwo.selected).to.be.false;
         expect(el.selected.length).to.equal(0);
     });
+    it('ignores unexpected `change` events', async () => {
+        const changeSpy = spy();
+        const el = await fixture<Table>(html`
+            <sp-table
+                size="m"
+                selects="single"
+                @change=${(event: Event) => {
+                    event.preventDefault();
+                    changeSpy();
+                }}
+            >
+                <sp-table-head>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                    <sp-table-head-cell>Column Title</sp-table-head-cell>
+                </sp-table-head>
+                <sp-table-body style="height: 120px">
+                    <sp-table-row value="row1" class="row1">
+                        <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        <sp-table-cell>Row Item Alpha</sp-table-cell>
+                        <sp-table-cell>
+                            <sp-checkbox>Test checkbox</sp-checkbox>
+                        </sp-table-cell>
+                    </sp-table-row>
+                </sp-table-body>
+            </sp-table>
+        `);
 
+        const checkbox = el.querySelector('sp-checkbox');
+
+        try {
+            checkbox?.click();
+            expect(changeSpy.callCount).to.equal(1);
+        } catch (error) {
+            expect(true, 'There was an error due to the click.').to.be.false;
+        }
+    });
     it('surfaces [selects="single"] selection', async () => {
         const el = await fixture<Table>(selectsSingle());
 
