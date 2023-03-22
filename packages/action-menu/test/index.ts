@@ -220,13 +220,13 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(el.open).to.be.false;
             expect(changeSpy.callCount).to.equal(0);
         });
-        it('stays `quiet`', async () => {
+        it('can be `quiet`', async () => {
             const el = await actionMenuFixture();
             await elementUpdated(el);
 
-            expect(el.quiet).to.be.true;
+            expect(el.quiet).to.be.false;
 
-            el.quiet = false;
+            el.quiet = true;
             await elementUpdated(el);
 
             expect(el.quiet).to.be.true;
