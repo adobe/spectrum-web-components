@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/table@0.1.11...@spectrum-web-components/table@0.1.12) (2023-03-22)
+
+### Bug Fixes
+
+-   **table:** allow "change" events from table row content ([97699a0](https://github.com/adobe/spectrum-web-components/commit/97699a05f1845ea627814e012ed880b411855446))
+
 ## [0.1.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/table@0.1.10...@spectrum-web-components/table@0.1.11) (2023-03-08)
 
 **Note:** Version bump only for package @spectrum-web-components/table

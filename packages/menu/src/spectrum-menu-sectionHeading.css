@@ -13,12 +13,10 @@ governing permissions and limitations under the License.
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 .header {
     color: var(--spectrum-listheading-text-color);
-    display: block; /* .spectrum-Menu-sectionHeading */
+    display: block;
     font-size: var(--spectrum-listitem-texticon-heading-text-size);
     font-weight: var(--spectrum-listitem-texticon-heading-text-font-weight);
-    letter-spacing: var(
-        --spectrum-listitem-texticon-heading-letter-spacing
-    ); /* .spectrum-Menu-sectionHeading */
+    letter-spacing: var(--spectrum-listitem-texticon-heading-letter-spacing);
     line-height: var(--spectrum-listitem-texticon-heading-line-height);
     margin: var(--spectrum-listitem-texticon-heading-margin);
     padding: var(--spectrum-listitem-texticon-heading-padding);

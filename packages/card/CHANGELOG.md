@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.13.9...@spectrum-web-components/card@0.14.0) (2023-03-22)
+
+### Features
+
+-   sets action-menu quiet to false by default, fixes [#3040](https://github.com/adobe/spectrum-web-components/issues/3040) ([8414cab](https://github.com/adobe/spectrum-web-components/commit/8414cab2ef916be40be9f624f485fb02184eec2b))
+
 ## [0.13.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/card@0.13.8...@spectrum-web-components/card@0.13.9) (2023-03-08)
 
 **Note:** Version bump only for package @spectrum-web-components/card

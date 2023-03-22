@@ -11,10 +11,10 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host {
+:host .spectrum-Menu {
     margin: calc(var(--spectrum-listitem-texticon-divider-padding) / 2)
         var(--spectrum-listitem-texticon-padding-y);
-    overflow: visible; /* .spectrum-Menu .spectrum-Menu-divider */
+    overflow: visible;
     width: auto;
 }
 @media (forced-colors: active) {

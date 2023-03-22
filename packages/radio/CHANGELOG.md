@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.11.11...@spectrum-web-components/radio@0.11.12) (2023-03-22)
+
+### Bug Fixes
+
+-   move hover/focus hoisting into conditioning ([15ac2f7](https://github.com/adobe/spectrum-web-components/commit/15ac2f7f561b3cb5b865d1539fbd753999f25119))
+
 ## [0.11.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.11.10...@spectrum-web-components/radio@0.11.11) (2023-03-08)
 
 **Note:** Version bump only for package @spectrum-web-components/radio

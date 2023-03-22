@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.5.8...@spectrum-web-components/color-area@0.6.0) (2023-03-22)
+
+### Features
+
+-   **color-area:** use core tokens ([51a89de](https://github.com/adobe/spectrum-web-components/commit/51a89de75aaa1aa8b5f56dbed1e9ab76d903b54b))
+
 ## [0.5.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-area@0.5.7...@spectrum-web-components/color-area@0.5.8) (2023-02-08)
 
 **Note:** Version bump only for package @spectrum-web-components/color-area

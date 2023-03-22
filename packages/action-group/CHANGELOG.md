@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.12.9...@spectrum-web-components/action-group@0.12.10) (2023-03-22)
+
+**Note:** Version bump only for package @spectrum-web-components/action-group
+
 ## [0.12.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-group@0.12.8...@spectrum-web-components/action-group@0.12.9) (2023-03-08)
 
 **Note:** Version bump only for package @spectrum-web-components/action-group

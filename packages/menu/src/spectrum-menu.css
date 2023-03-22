@@ -12,9 +12,7 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-menu-margin-x: var(
-        --spectrum-global-dimension-size-40
-    ); /* .spectrum-Menu */
+    --spectrum-menu-margin-x: var(--spectrum-global-dimension-size-40);
     --spectrum-listitem-texticon-heading-text-size: var(
         --spectrum-global-dimension-font-size-50
     );
@@ -49,7 +47,7 @@ governing permissions and limitations under the License.
 :host {
     --spectrum-listitem-texticon-padding-left: var(
         --spectrum-listitem-m-texticon-padding-left
-    ); /* .spectrum-Menu */
+    );
     --spectrum-listitem-textthumbnail-padding-left: var(
         --spectrum-listitem-m-textthumbnail-padding-left
     );
@@ -96,7 +94,7 @@ governing permissions and limitations under the License.
 }
 :host {
     box-sizing: border-box;
-    display: inline-block; /* .spectrum-Menu */
+    display: inline-block;
     list-style-type: none;
     margin-bottom: var(
         --spectrum-popover-padding-y,
@@ -112,14 +110,10 @@ governing permissions and limitations under the License.
     padding: 0;
 }
 :host([dir='ltr'][selects]) ::slotted(sp-menu-item) {
-    padding-right: var(
-        --spectrum-listitem-texticon-selectable-padding-right
-    ); /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */
+    padding-right: var(--spectrum-listitem-texticon-selectable-padding-right);
 }
 :host([dir='rtl'][selects]) ::slotted(sp-menu-item) {
-    padding-left: var(
-        --spectrum-listitem-texticon-selectable-padding-right
-    ); /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item */
+    padding-left: var(--spectrum-listitem-texticon-selectable-padding-right);
 }
 :host([dir='ltr'][selects]) ::slotted(sp-menu-item[selected]) {
     padding-right: calc(
@@ -128,7 +122,7 @@ governing permissions and limitations under the License.
                 --spectrum-popover-border-size,
                 var(--spectrum-alias-border-size-thin)
             )
-    ); /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
+    );
 }
 :host([dir='rtl'][selects]) ::slotted(sp-menu-item[selected]) {
     padding-left: calc(
@@ -137,19 +131,168 @@ governing permissions and limitations under the License.
                 --spectrum-popover-border-size,
                 var(--spectrum-alias-border-size-thin)
             )
-    ); /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
+    );
 }
-::slotted(sp-menu) {
-    display: block; /* .spectrum-Menu .spectrum-Menu */
+:host([dir='ltr']) ::slotted(sp-menu-item) {
+    border-left: var(--spectrum-listitem-texticon-focus-indicator-size) solid
+        transparent;
+}
+:host([dir='rtl']) ::slotted(sp-menu-item) {
+    border-right: var(--spectrum-listitem-texticon-focus-indicator-size) solid
+        transparent;
+}
+::slotted(sp-menu-item):focus {
+    outline: none;
+}
+:host([dir='ltr']) ::slotted(sp-menu-item[selected]) {
+    padding-right: calc(
+        var(--spectrum-listitem-texticon-padding-right) -
+            var(
+                --spectrum-popover-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    );
+}
+:host([dir='rtl']) ::slotted(sp-menu-item[selected]) {
+    padding-left: calc(
+        var(--spectrum-listitem-texticon-padding-right) -
+            var(
+                --spectrum-popover-border-size,
+                var(--spectrum-alias-border-size-thin)
+            )
+    );
+}
+::slotted(sp-menu-item).spectrum-Icon,
+::slotted(sp-menu-item).spectrum-Menu-itemIcon {
+    align-self: flex-start;
+    flex-shrink: 0;
 }
 :host {
-    --spectrum-listheading-text-color: var(
-        --spectrum-global-color-gray-700
-    ); /* .spectrum-Menu */
+    --spectrum-listheading-text-color: var(--spectrum-global-color-gray-700);
 }
 :host {
     background-color: var(
         --spectrum-listitem-m-texticon-background-color,
         var(--spectrum-alias-background-color-transparent)
-    ); /* .spectrum-Menu */
+    );
+}
+:host([dir='ltr']) ::slotted(sp-menu-item).is-focused,
+:host([dir='ltr'].focus-visible) ::slotted(sp-menu-item) {
+    border-left-color: var(
+        --spectrum-listitem-m-texticon-focus-indicator-color,
+        var(--spectrum-alias-border-color-key-focus)
+    );
+}
+:host([dir='ltr']) ::slotted(sp-menu-item).is-focused,
+:host([dir='ltr']:focus-visible) ::slotted(sp-menu-item) {
+    border-left-color: var(
+        --spectrum-listitem-m-texticon-focus-indicator-color,
+        var(--spectrum-alias-border-color-key-focus)
+    );
+}
+:host([dir='rtl']) ::slotted(sp-menu-item).is-focused,
+:host([dir='rtl'].focus-visible) ::slotted(sp-menu-item) {
+    border-right-color: var(
+        --spectrum-listitem-m-texticon-focus-indicator-color,
+        var(--spectrum-alias-border-color-key-focus)
+    );
+}
+:host([dir='rtl']) ::slotted(sp-menu-item).is-focused,
+:host([dir='rtl']:focus-visible) ::slotted(sp-menu-item) {
+    border-right-color: var(
+        --spectrum-listitem-m-texticon-focus-indicator-color,
+        var(--spectrum-alias-border-color-key-focus)
+    );
+}
+::slotted(sp-menu-item).is-focused,
+:host(.focus-visible)::slotted(sp-menu-item) {
+    background-color: var(
+        --spectrum-listitem-m-texticon-background-color-key-focus,
+        var(--spectrum-alias-background-color-hover-overlay)
+    );
+    color: var(
+        --spectrum-listitem-m-texticon-text-color-key-focus,
+        var(--spectrum-alias-component-text-color-key-focus)
+    );
+}
+::slotted(sp-menu-item).is-focused,
+:host(:focus-visible)::slotted(sp-menu-item) {
+    background-color: var(
+        --spectrum-listitem-m-texticon-background-color-key-focus,
+        var(--spectrum-alias-background-color-hover-overlay)
+    );
+    color: var(
+        --spectrum-listitem-m-texticon-text-color-key-focus,
+        var(--spectrum-alias-component-text-color-key-focus)
+    );
+}
+::slotted(sp-menu-item).is-highlighted,
+::slotted(sp-menu-item).is-open,
+::slotted(sp-menu-item):focus,
+::slotted(sp-menu-item):hover {
+    background-color: var(
+        --spectrum-listitem-m-texticon-background-color-hover,
+        var(--spectrum-alias-background-color-hover-overlay)
+    );
+    color: var(
+        --spectrum-listitem-m-texticon-text-color-hover,
+        var(--spectrum-alias-component-text-color-hover)
+    );
+}
+::slotted(sp-menu-item[selected]) {
+    color: var(
+        --spectrum-listitem-m-texticon-text-color-selected,
+        var(--spectrum-alias-component-text-color-default)
+    );
+}
+::slotted(sp-menu-item).is-active,
+::slotted(sp-menu-item):active {
+    background-color: var(
+        --spectrum-listitem-m-texticon-background-color-down,
+        var(--spectrum-alias-background-color-hover-overlay)
+    );
+}
+::slotted(sp-menu-item).is-disabled {
+    background-color: var(
+        --spectrum-listitem-m-texticon-background-color-disabled,
+        var(--spectrum-alias-background-color-transparent)
+    );
+    background-image: none;
+    color: var(
+        --spectrum-listitem-m-texticon-text-color-disabled,
+        var(--spectrum-alias-component-text-color-disabled)
+    );
+    cursor: default;
+}
+@media (forced-colors: active) {
+    ::slotted(sp-menu-item):not(.is-disabled).is-focused,
+    ::slotted(sp-menu-item):not(.is-disabled).is-highlighted,
+    ::slotted(sp-menu-item):not(.is-disabled).is-open,
+    ::slotted(sp-menu-item):not(.is-disabled):focus,
+    ::slotted(sp-menu-item):not(.is-disabled):hover,
+    :host(.focus-visible)::slotted(sp-menu-item):not(.is-disabled) {
+        background-color: var(
+            --spectrum-listitem-m-texticon-background-color-key-focus,
+            var(--spectrum-alias-background-color-hover-overlay)
+        );
+        color: var(
+            --spectrum-listitem-m-texticon-text-color-key-focus,
+            var(--spectrum-alias-component-text-color-key-focus)
+        );
+    }
+    ::slotted(sp-menu-item):not(.is-disabled).is-focused,
+    ::slotted(sp-menu-item):not(.is-disabled).is-highlighted,
+    ::slotted(sp-menu-item):not(.is-disabled).is-open,
+    ::slotted(sp-menu-item):not(.is-disabled):focus,
+    ::slotted(sp-menu-item):not(.is-disabled):hover,
+    :host(:focus-visible)::slotted(sp-menu-item):not(.is-disabled) {
+        background-color: var(
+            --spectrum-listitem-m-texticon-background-color-key-focus,
+            var(--spectrum-alias-background-color-hover-overlay)
+        );
+        color: var(
+            --spectrum-listitem-m-texticon-text-color-key-focus,
+            var(--spectrum-alias-component-text-color-key-focus)
+        );
+    }
 }

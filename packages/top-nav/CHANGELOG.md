@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.6.13...@spectrum-web-components/top-nav@0.7.0) (2023-03-22)
+
+### Bug Fixes
+
+-   add tabs sizes to TopNav ([159bc89](https://github.com/adobe/spectrum-web-components/commit/159bc897cd9c14ef058c86b2493c4f52b608a203))
+-   proper overflow rtl support ([9b1c9d4](https://github.com/adobe/spectrum-web-components/commit/9b1c9d4470051e059c8e22b544dee7f46d03593a))
+
+### Features
+
+-   sets action-menu quiet to false by default, fixes [#3040](https://github.com/adobe/spectrum-web-components/issues/3040) ([8414cab](https://github.com/adobe/spectrum-web-components/commit/8414cab2ef916be40be9f624f485fb02184eec2b))
+
 ## [0.6.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.6.12...@spectrum-web-components/top-nav@0.6.13) (2023-03-08)
 
 **Note:** Version bump only for package @spectrum-web-components/top-nav

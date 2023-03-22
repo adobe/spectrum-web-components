@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.15.14...@spectrum-web-components/action-menu@0.16.0) (2023-03-22)
+
+### Features
+
+-   sets action-menu quiet to false by default, fixes [#3040](https://github.com/adobe/spectrum-web-components/issues/3040) ([8414cab](https://github.com/adobe/spectrum-web-components/commit/8414cab2ef916be40be9f624f485fb02184eec2b))
+
 ## [0.15.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-menu@0.15.13...@spectrum-web-components/action-menu@0.15.14) (2023-03-08)
 
 **Note:** Version bump only for package @spectrum-web-components/action-menu
