@@ -284,28 +284,50 @@ export class ColorWheel extends Focusable {
         this.handlePointermove(event);
     }
 
-    protected override render(): TemplateResult {
+    calculateStyleData(): {
+        clipPath: string;
+        clipPathBorders: string;
+        diameter: number;
+        handleLocationStyles: string;
+    } {
+        // Extract values from element.
         const { width: diameter = 160 } = this.boundingClientRect || {};
+        const styles = getComputedStyle(this);
+        const borderWidth = parseFloat(
+            styles.getPropertyValue('--border-width')
+        );
+        const trackWidth = parseFloat(styles.getPropertyValue('--track-width'));
 
+        // Calculate wheel data.
         const radius = diameter / 2;
-        const trackWidth = 24;
+        const diameterAfterBoarder = diameter - borderWidth * 2;
+        const radiusAfterBoarder = radius - borderWidth;
         const innerRadius = radius - trackWidth;
         const innerDiameter = innerRadius * 2;
+        const innerRadiusAfterBorder = innerRadius + borderWidth;
+        const innerDiameterAfterBorder = innerDiameter + borderWidth * 2;
         const clipPathBorders = `"M ${radius} ${radius} m -${radius} 0 a ${radius} ${radius} 0 1 0 ${diameter} 0 a ${radius} ${radius} 0 1 0 -${diameter} 0 M ${radius} ${radius} m -${innerRadius} 0 a ${innerRadius} ${innerRadius} 0 1 0 ${innerDiameter} 0 a ${innerRadius} ${innerRadius} 0 1 0 -${innerDiameter} 0"`;
-        const clipPath = `"M ${radius - 1} ${radius - 1} m -${radius - 1} 0 a ${
-            radius - 1
-        } ${radius - 1} 0 1 0 ${diameter - 2} 0 a ${radius - 1} ${
-            radius - 1
-        } 0 1 0 -${diameter - 2} 0 M ${radius - 1} ${radius - 1} m -${
-            innerRadius + 1
-        } 0 a ${innerRadius + 1} ${innerRadius + 1} 0 1 0 ${
-            innerDiameter + 2
-        } 0 a ${innerRadius + 1} ${innerRadius + 1} 0 1 0 -${
-            innerDiameter + 2
-        } 0"`;
-        const handleLocationStyles = `transform: translate(${
-            (radius - 12) * Math.cos((this.value * Math.PI) / 180)
-        }px, ${(radius - 12) * Math.sin((this.value * Math.PI) / 180)}px);`;
+        const clipPath = `"M ${radiusAfterBoarder} ${radiusAfterBoarder} m -${radiusAfterBoarder} 0 a ${radiusAfterBoarder} ${radiusAfterBoarder} 0 1 0 ${diameterAfterBoarder} 0 a ${radiusAfterBoarder} ${radiusAfterBoarder} 0 1 0 -${diameterAfterBoarder} 0 M ${radiusAfterBoarder} ${radiusAfterBoarder} m -${innerRadiusAfterBorder} 0 a ${innerRadiusAfterBorder} ${innerRadiusAfterBorder} 0 1 0 ${innerDiameterAfterBorder} 0 a ${innerRadiusAfterBorder} ${innerRadiusAfterBorder} 0 1 0 -${innerDiameterAfterBorder} 0"`;
+
+        // Calculate handle position on the wheel.
+        const translateX =
+            (radius - trackWidth / 2) * Math.cos((this.value * Math.PI) / 180);
+        const translateY =
+            (radius - trackWidth / 2) * Math.sin((this.value * Math.PI) / 180);
+        const handleLocationStyles = `transform: translate(${translateX}px, ${translateY}px);`;
+
+        return {
+            clipPath,
+            clipPathBorders,
+            diameter,
+            handleLocationStyles,
+        };
+    }
+
+    protected override render(): TemplateResult {
+        const { clipPath, clipPathBorders, diameter, handleLocationStyles } =
+            this.calculateStyleData();
+
         return html`
             <slot
                 name="gradient"
