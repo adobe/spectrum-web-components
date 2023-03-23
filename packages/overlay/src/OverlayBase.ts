@@ -79,6 +79,10 @@ export class BeforetoggleOpenEvent extends Event {
     }
 }
 
+const noop = (): void => {
+    return;
+};
+
 export class OverlayBase extends SpectrumElement {
     static override styles = [styles];
 
@@ -142,9 +146,7 @@ export class OverlayBase extends SpectrumElement {
     @property({ attribute: 'receives-focus' })
     receivesFocus: 'true' | 'false' | 'auto' = 'auto';
 
-    private releaseAriaDescribedby = (): void => {
-        return;
-    };
+    private releaseAriaDescribedby = noop;
 
     @query('slot')
     slotEl!: HTMLSlotElement;
@@ -384,6 +386,16 @@ export class OverlayBase extends SpectrumElement {
     private elementIds: string[] = [];
 
     private prepareAriaDescribedby(trigger: HTMLElement): void {
+        if (
+            // only "hover" relationships establed described by content
+            this.triggerInteraction !== 'hover' ||
+            // do not reapply until target is recycled
+            this.releaseAriaDescribedby !== noop ||
+            // require " hover content" to apply relationship
+            !this.elements.length
+        )
+            return;
+
         const triggerRoot = trigger.getRootNode();
         const contentRoot = this.elements[0].getRootNode();
         const overlayRoot = this.getRootNode();
@@ -395,9 +407,7 @@ export class OverlayBase extends SpectrumElement {
             );
             this.releaseAriaDescribedby = () => {
                 releaseAriaDescribedby();
-                this.releaseAriaDescribedby = () => {
-                    return;
-                };
+                this.releaseAriaDescribedby = noop;
             };
         } else if (triggerRoot === contentRoot) {
             this.elementIds = this.elements.map((el) => el.id);
@@ -419,9 +429,7 @@ export class OverlayBase extends SpectrumElement {
                 this.elements.map((el, index) => {
                     el.id = this.elementIds[index];
                 });
-                this.releaseAriaDescribedby = () => {
-                    return;
-                };
+                this.releaseAriaDescribedby = noop;
             };
         }
     }
@@ -625,7 +633,15 @@ export class OverlayBase extends SpectrumElement {
                 })}
             >
                 <div part="content">
-                    <slot></slot>
+                    <slot
+                        @slotchange=${() => {
+                            if (this.triggerElement) {
+                                this.prepareAriaDescribedby(
+                                    this.triggerElement as HTMLElement
+                                );
+                            }
+                        }}
+                    ></slot>
                 </div>
             </dialog>
         `;
