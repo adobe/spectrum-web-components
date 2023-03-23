@@ -42,6 +42,7 @@ const config = {
                     [['spectrum-Table--compact'], ['spectrum-Table--spacious']],
                     'density'
                 ),
+                converter.classToAttribute('spectrum-Table--quiet'),
             ],
             excludeByComponents: [
                 builder.class('spectrum-Table-sortedIcon'),
