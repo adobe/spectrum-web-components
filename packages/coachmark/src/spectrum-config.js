@@ -27,31 +27,8 @@ const config = {
             excludeByComponents: [
                 {
                     type: 'class',
-                    name: 'spectrum-CoachMarkPopover',
-                },
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover-image',
-                },
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover-content',
-                },
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover-footer',
-                },
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover-header',
-                },
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover-step',
-                },
-                {
-                    type: 'class',
-                    name: 'spectrum-CoachMarkPopover-title',
+                    name: 'regex',
+                    regex: /spectrum-CoachMarkPopover/,
                 },
             ],
             components: [
@@ -68,40 +45,46 @@ const config = {
                     'variant'
                 ),
             ],
-            exclude: [/\.spectrum-CoachMarkPopover-footer/],
         },
         {
-            name: 'coachmark-popover-content',
-            host: {
-                selector: '.spectrum-CoachMarkPopover',
-            },
-            ids: [
+            inPackage: '@spectrum-css/coachmark',
+            outPackage: 'coachmark',
+            fileName: 'coachmark-popover-content',
+            components: [
+                converter.classToHost('spectrum-CoachMarkPopover'),
+                converter.classToId(
+                    'spectrum-CoachMarkPopover-header',
+                    'header'
+                ),
+                converter.classToId('spectrum-CoachMarkPopover-title', 'title'),
+                converter.classToId(
+                    'spectrum-CoachMarkPopover-content',
+                    'content'
+                ),
+                converter.classToId(
+                    'spectrum-CoachMarkPopover-footer',
+                    'footer'
+                ),
+                converter.classToId('spectrum-CoachMarkPopover-step', 'step'),
+                converter.classToId('spectrum-CoachMarkPopover-image', 'image'),
+            ],
+            excludeByComponents: [
                 {
-                    selector: '.spectrum-CoachMarkPopover-header',
-                    name: 'header',
-                },
-                {
-                    selector: '.spectrum-CoachMarkPopover-title',
-                    name: 'title',
-                },
-                {
-                    selector: '.spectrum-CoachMarkPopover-content',
-                    name: 'content',
-                },
-                {
-                    selector: '.spectrum-CoachMarkPopover-footer',
-                    name: 'footer',
-                },
-                {
-                    selector: '.spectrum-CoachMarkPopover-step',
-                    name: 'step',
-                },
-                {
-                    selector: '.spectrum-CoachMarkPopover-image',
-                    name: 'image',
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-CoachMarkIndicator/,
                 },
             ],
-            exclude: [/\.spectrum-CoachMarkIndicator/, /pulse/],
+            excludeByKeyFrames: [
+                {
+                    type: 'ident',
+                    value: 'pulse',
+                },
+                {
+                    type: 'ident',
+                    value: 'pulse--quiet',
+                },
+            ],
         },
     ],
 };

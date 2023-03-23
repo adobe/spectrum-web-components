@@ -11,7 +11,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { Selector, SelectorComponent } from 'lightningcss';
+import { KeyframesName, Selector, SelectorComponent } from 'lightningcss';
 
 export type HostSelectorComponent = SelectorComponent & {
     kind: 'host';
@@ -89,6 +89,10 @@ type Conversion = {
      * Exclude Selectors that do not feature the Selector Components included herein
      */
     requireComponentPresence?: SelectorComponentWithRegex[];
+    /**
+     * Keyframes containing an included keyframe identifier will be excluded
+     */
+    excludeByKeyFrames?: KeyframesName[];
 };
 
 export type SpectrumCSSConverter = {

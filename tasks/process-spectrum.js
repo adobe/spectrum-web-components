@@ -424,6 +424,15 @@ async function processComponent(componentPath) {
                     if (!conversion.allowThemeRules && isThemeOnlyRule(rule)) {
                         return nullRuleFromRule(rule);
                     }
+                    if (
+                        rule.type === 'keyframes' &&
+                        conversion.excludeByKeyFrames &&
+                        conversion.excludeByKeyFrames.some(
+                            ({ value }) => rule.value.name.value === value
+                        )
+                    ) {
+                        return nullRuleFromRule(rule);
+                    }
                     if (rule.type === 'style' && rule.value.selectors?.length) {
                         if (
                             conversion.hoistCustomPropertiesFrom &&

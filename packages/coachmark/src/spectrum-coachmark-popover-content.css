@@ -11,67 +11,6 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-@keyframes pulse {
-    0% {
-        opacity: var(
-            --spectrum-coachmark-animation-indicator-keyframe-0-opacity,
-            0
-        );
-        -webkit-transform: scale(
-            var(--spectrum-coachmark-animation-indicator-keyframe-0-scale, 1)
-        );
-    }
-    50% {
-        opacity: var(
-            --spectrum-coachmark-animation-indicator-keyframe-50-opacity,
-            1
-        );
-        -webkit-transform: scale(
-            var(--spectrum-coachmark-animation-indicator-keyframe-50-scale, 1.5)
-        );
-    }
-    to {
-        opacity: var(
-            --spectrum-coachmark-animation-indicator-keyframe-100-opacity,
-            0
-        );
-        -webkit-transform: scale(
-            var(--spectrum-coachmark-animation-indicator-keyframe-100-scale, 2)
-        );
-    }
-}
-@keyframes pulse--quiet {
-    0% {
-        opacity: var(
-            --spectrum-coachmark-animation-indicator-keyframe-0-opacity,
-            0
-        );
-        -webkit-transform: scale(
-            var(
-                --spectrum-coachmark-quiet-animation-indicator-keyframe-0-scale,
-                0.8
-            )
-        );
-    }
-    50% {
-        opacity: var(
-            --spectrum-coachmark-animation-indicator-keyframe-50-opacity,
-            1
-        );
-        -webkit-transform: scale(
-            var(--spectrum-coachmark-animation-indicator-keyframe-50-scale, 1.5)
-        );
-    }
-    to {
-        opacity: var(
-            --spectrum-coachmark-animation-indicator-keyframe-100-opacity,
-            0
-        );
-        -webkit-transform: scale(
-            var(--spectrum-coachmark-animation-indicator-keyframe-100-scale, 2)
-        );
-    }
-}
 :host {
     border-radius: var(
         --spectrum-coachmark-border-radius,
@@ -90,7 +29,7 @@ governing permissions and limitations under the License.
         --spectrum-coachmark-min-width,
         var(--spectrum-global-dimension-size-3400)
     );
-    position: relative; /* .spectrum-CoachMarkPopover */
+    position: relative;
 }
 #image {
     border-radius: var(
@@ -101,7 +40,7 @@ governing permissions and limitations under the License.
             --spectrum-coachmark-border-radius,
             var(--spectrum-alias-border-radius-regular)
         )
-        0 0; /* .spectrum-CoachMarkPopover-image */
+        0 0;
     width: 100%;
 }
 #content,
@@ -116,25 +55,23 @@ governing permissions and limitations under the License.
         --spectrum-coachmark-padding-x,
         var(--spectrum-global-dimension-size-300)
     );
-    padding-top: 0; /* .spectrum-CoachMarkPopover-header,
-   * .spectrum-CoachMarkPopover-content,
-   * .spectrum-CoachMarkPopover-footer */
+    padding-top: 0;
 }
 #header {
     padding-top: var(
         --spectrum-coachmark-padding-y,
         var(--spectrum-global-dimension-size-300)
-    ); /* .spectrum-CoachMarkPopover-header */
+    );
 }
 #footer {
     padding-bottom: var(
         --spectrum-coachmark-padding-y,
         var(--spectrum-global-dimension-size-300)
-    ); /* .spectrum-CoachMarkPopover-footer */
+    );
 }
 #header {
     align-items: flex-end;
-    display: flex; /* .spectrum-CoachMarkPopover-header */
+    display: flex;
     justify-content: space-between;
     margin-bottom: var(
         --spectrum-coachmark-title-margin-bottom,
@@ -145,7 +82,7 @@ governing permissions and limitations under the License.
     font-size: var(
         --spectrum-coachmark-title-text-size,
         var(--spectrum-alias-heading-xs-text-size)
-    ); /* .spectrum-CoachMarkPopover-title */
+    );
     font-weight: var(
         --spectrum-coachmark-title-text-font-weight,
         var(--spectrum-alias-heading-text-font-weight-regular)
@@ -157,7 +94,8 @@ governing permissions and limitations under the License.
     margin-bottom: 0;
 }
 #step {
-    align-self: start; /* .spectrum-CoachMarkPopover-step */
+    -ms-grid-row-align: start;
+    align-self: start;
     font-size: var(
         --spectrum-coachmark-step-text-size,
         var(--spectrum-global-dimension-font-size-100)
@@ -176,22 +114,22 @@ governing permissions and limitations under the License.
     margin-bottom: var(
         --spectrum-coachmark-content-margin-bottom,
         var(--spectrum-global-dimension-size-200)
-    ); /* .spectrum-CoachMarkPopover-content */
+    );
 }
 :host([dir='ltr']) #footer {
-    text-align: right; /* [dir=ltr] .spectrum-CoachMarkPopover-footer */
+    text-align: right;
 }
 :host([dir='rtl']) #footer {
-    text-align: left; /* [dir=rtl] .spectrum-CoachMarkPopover-footer */
+    text-align: left;
 }
 #footer {
-    margin-top: 0; /* .spectrum-CoachMarkPopover-footer */
+    margin-top: 0;
 }
 :host {
     background-color: var(
         --spectrum-coachmark-background-color,
         var(--spectrum-global-color-gray-50)
-    ); /* .spectrum-CoachMarkPopover */
+    );
     border-color: var(
         --spectrum-coachmark-border-color,
         var(--spectrum-alias-border-color-dark)
@@ -206,17 +144,17 @@ governing permissions and limitations under the License.
     color: var(
         --spectrum-coachmark-title-text-color,
         var(--spectrum-alias-heading-text-color)
-    ); /* .spectrum-CoachMarkPopover-title */
+    );
 }
 #step {
     color: var(
         --spectrum-coachmark-step-text-color,
         var(--spectrum-alias-label-text-color)
-    ); /* .spectrum-CoachMarkPopover-step */
+    );
 }
 #content {
     color: var(
         --spectrum-coachmark-content-text-color,
         var(--spectrum-alias-text-color)
-    ); /* .spectrum-CoachMarkPopover-content */
+    );
 }
