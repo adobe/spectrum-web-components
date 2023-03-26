@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 
 import { LitElement, ReactiveElement } from 'lit';
-import { property } from 'lit/decorators.js';
 type ThemeRoot = HTMLElement & {
     startManagingContentDirection: (el: HTMLElement) => void;
     stopManagingContentDirection: (el: HTMLElement) => void;
@@ -60,7 +59,7 @@ const canManageContentDirection = (el: ContentDirectionManager): boolean =>
 export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
     constructor: T
 ): T & Constructor<SpectrumInterface> {
-    class SlotTextObservingElement extends constructor {
+    class SpectrumMixinElement extends constructor {
         /**
          * @private
          */
@@ -70,8 +69,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
         /**
          * @private
          */
-        @property({ reflect: true })
-        public override dir: 'ltr' | 'rtl' = 'ltr';
+        public override dir!: 'ltr' | 'rtl';
 
         /**
          * @private
@@ -116,12 +114,8 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
                         (dirParent as unknown as ShadowRoot)
                             .host) as HTMLElement;
                 }
-                const oldDir = this.dir;
                 this.dir =
                     dirParent.dir === 'rtl' ? dirParent.dir : this.dir || 'ltr';
-                if (oldDir === this.dir) {
-                    this.setAttribute('dir', this.dir);
-                }
                 if (dirParent === document.documentElement) {
                     observedForElements.add(this);
                 } else {
@@ -160,7 +154,7 @@ export function SpectrumMixin<T extends Constructor<ReactiveElement>>(
             }
         }
     }
-    return SlotTextObservingElement;
+    return SpectrumMixinElement;
 }
 
 export class SpectrumElement extends SpectrumMixin(LitElement) {}

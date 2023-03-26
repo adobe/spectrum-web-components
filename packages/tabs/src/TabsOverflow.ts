@@ -48,6 +48,9 @@ export class TabsOverflow extends SizedMixin(SpectrumElement) {
     @property({ type: Boolean, reflect: true })
     compact = false;
 
+    @property({ reflect: true })
+    public override dir!: 'ltr' | 'rtl';
+
     @state()
     private overflowState: TabsOverflowState = {
         canScrollLeft: false,

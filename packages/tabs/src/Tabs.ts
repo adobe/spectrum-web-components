@@ -97,6 +97,9 @@ export class Tabs extends SizedMixin(Focusable) {
     public compact = false;
 
     @property({ reflect: true })
+    public override dir!: 'ltr' | 'rtl';
+
+    @property({ reflect: true })
     public direction: 'vertical' | 'vertical-right' | 'horizontal' =
         'horizontal';
 
