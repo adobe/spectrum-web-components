@@ -69,6 +69,10 @@
             "development": "./src/index.dev.js",
             "default": "./src/index.js"
         },
+        "./src/loader.js": {
+            "development": "./src/loader.dev.js",
+            "default": "./src/loader.js"
+        },
         "./src/overlay-base.css.js": "./src/overlay-base.css.js",
         "./src/overlay-events.js": {
             "development": "./src/overlay-events.dev.js",

@@ -71,7 +71,7 @@ export type OverlayOptions = {
     delayed?: boolean;
     placement?: Placement;
     offset?: number;
-    receivesFocus?: 'auto';
+    receivesFocus?: 'true' | 'false' | 'auto';
     notImmediatelyClosable?: boolean;
     abortPromise?: Promise<boolean>;
     virtualTrigger?: VirtualTrigger;

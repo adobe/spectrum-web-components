@@ -69,12 +69,14 @@ export class Overlay extends OverlayFeatures {
             await new Promise<void>((res) =>
                 requestAnimationFrame(() => res())
             );
+            // Do we want to "open" this path, or leave that to the consumer?
             overlay.open = true;
             return overlay;
         } else if (content && options) {
             const target = targetOrContent;
             const interaction = interactionOrOptions;
             overlay.append(content);
+            overlay.receivesFocus = options.receivesFocus ?? 'auto';
             overlay.triggerElement = target;
             overlay.type =
                 interaction === 'modal'
@@ -82,7 +84,7 @@ export class Overlay extends OverlayFeatures {
                     : interaction === 'hover'
                     ? 'hint'
                     : 'auto';
-            overlay.offset = options.offset || 6;
+            overlay.offset = options.offset ?? 6;
             overlay.placement = options.placement;
             // This is super dirty...find a better way.
             // Maybe imperative open should go _at the end_ of everything?
