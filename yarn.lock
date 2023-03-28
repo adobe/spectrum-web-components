@@ -4418,9 +4418,9 @@
   integrity sha512-qvFtm6wFeTmTBeLkj7aGJbssYf6DR+Xo7Ee/3hcFYRf6XztafsaRiBeaOxsvEbfZxdg0Ari5GscT1s4N3Lplhg==
 
 "@spectrum-css/swatch@^3.0.9":
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/swatch/-/swatch-3.0.9.tgz#934da81a691f5d176effb982a25253fb5036236d"
-  integrity sha512-cyD0udElrg+3pmUeKGUo85cv8MUh4gLdWUGWBNNqHSXIjTHY6O0Ap+aygkUAC5sW0URrYVkEMgBBt90xeO4wmA==
+  version "3.0.19"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/swatch/-/swatch-3.0.19.tgz#02ef65e5681b0983db9fce3554a7e0015f764367"
+  integrity sha512-aSiEEYRFIg10KvoI/rr1RyE1MTrcFuyA/6yGPbnhp1bDrV6PSfSKf3+jOqpQNLSTZ1m0bvBX5tih3XstK91zew==
 
 "@spectrum-css/swatchgroup@^2.0.10":
   version "2.0.10"
