@@ -22,12 +22,22 @@ governing permissions and limitations under the License.
     --spectrum-neutral-background-color-selected-key-focus: var(
         --spectrum-gray-800
     );
+    --spectrum-color-handle-inner-border-opacity: 0.42;
+    --spectrum-color-handle-outer-border-color: var(--spectrum-black);
+    --spectrum-color-handle-outer-border-opacity: var(
+        --spectrum-color-handle-inner-border-opacity
+    );
     --spectrum-slider-track-thickness: 2px;
     --spectrum-slider-handle-gap: 4px;
+    --spectrum-picker-border-width: var(--spectrum-border-width-100);
     --spectrum-color-loupe-height: 64px;
     --spectrum-color-loupe-width: 48px;
     --spectrum-color-loupe-bottom-to-color-handle: 12px;
     --spectrum-color-loupe-inner-border-width: var(--spectrum-border-width-200);
+    --spectrum-color-handle-outer-border-width: 1px;
+    --spectrum-color-handle-drop-shadow-x: 0;
+    --spectrum-color-handle-drop-shadow-y: 0;
+    --spectrum-color-handle-drop-shadow-blur: 0;
     --spectrum-border-width-100: 1px;
     --spectrum-accent-color-100: var(--spectrum-blue-100);
     --spectrum-accent-color-200: var(--spectrum-blue-200);

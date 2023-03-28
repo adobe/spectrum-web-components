@@ -22,10 +22,22 @@ governing permissions and limitations under the License.
     --spectrum-neutral-background-color-selected-key-focus: var(
         --spectrum-gray-900
     );
+    --spectrum-color-handle-inner-border-opacity: 0.15;
+    --spectrum-color-handle-drop-shadow-color: var(
+        --spectrum-drop-shadow-color
+    );
     --spectrum-slider-track-thickness: 4px;
     --spectrum-slider-handle-gap: 0px;
     --spectrum-color-loupe-bottom-to-color-handle: 6px;
     --spectrum-color-loupe-inner-border-width: 3px;
+    --spectrum-color-handle-outer-border-width: 0px;
+    --spectrum-color-handle-drop-shadow-x: var(--spectrum-drop-shadow-x);
+    --spectrum-color-handle-drop-shadow-y: var(
+        --spectrum-color-loupe-drop-shadow-y
+    );
+    --spectrum-color-handle-drop-shadow-blur: var(
+        --spectrum-color-loupe-drop-shadow-blur
+    );
     --spectrum-border-width-100: 2px;
     --spectrum-accent-color-100: var(--spectrum-indigo-100);
     --spectrum-accent-color-200: var(--spectrum-indigo-200);

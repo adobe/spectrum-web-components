@@ -66,6 +66,8 @@ governing permissions and limitations under the License.
     --spectrum-slider-bottom-to-handle-extra-large: 15px;
     --spectrum-color-loupe-height: 50px;
     --spectrum-color-loupe-width: 40px;
+    --spectrum-color-handle-size: 24px;
+    --spectrum-color-handle-size-key-focus: 48px;
     --spectrum-corner-radius-75: 4px;
     --spectrum-corner-radius-100: 8px;
     --spectrum-corner-radius-200: 16px;
