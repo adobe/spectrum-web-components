@@ -4373,9 +4373,9 @@
   integrity sha512-sN0n3+tqRukj3hBe4QhkstQUKQswc6w9O1sOYPtjEVZls4IDqCuFh8QuqQ6VMtsj6qOs1/Mf5ynH8pfuAQBQZg==
 
 "@spectrum-css/quickaction@^3.0.32":
-  version "3.0.32"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/quickaction/-/quickaction-3.0.32.tgz#e3e3f1bc2fbe3311359bef604d45e9dbe128092c"
-  integrity sha512-BrV/jdKNrp/BMbq3jdIyuiGFkX1agqJE/BtP7FP2NYU+heDLM/BvUTJ405Y1wPDbJpT5Mjimk3hxdeSP6fVkrA==
+  version "3.0.37"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/quickaction/-/quickaction-3.0.37.tgz#264d6b814164196a07bfe83fbf6f5b9200d400d6"
+  integrity sha512-2VFWsr2hTeSa9dOK2lrp+dylgS59xZEBjPczXhgYg5UX+F5x7z1FZXKhSgC6ouc9+rDAInGV9q9IQGbRk4fk/g==
 
 "@spectrum-css/radio@^5.0.1":
   version "5.0.1"
