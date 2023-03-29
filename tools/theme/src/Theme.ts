@@ -523,6 +523,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     private _handleContextPresence(event: CustomEvent<ProvideLang>): void {
+        event.stopPropagation();
         const target = event.composedPath()[0] as HTMLElement;
         if (this._contextConsumers.has(target)) {
             return;
