@@ -47,6 +47,7 @@ const COLLAPSE_THREASHOLD = 50;
  * @element sp-split-view
  *
  * @slot Two sibling elements to be sized by the element attritubes
+ * @fires change - Announces the new position of the splitter
  */
 export class SplitView extends SpectrumElement {
     public static override get styles(): CSSResultArray {
