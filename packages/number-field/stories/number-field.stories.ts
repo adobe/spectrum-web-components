@@ -255,6 +255,31 @@ decimals.args = {
     value: 19.274,
 };
 
+export const germanDecimals = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="decimals">
+            Enter a number with visible decimals
+        </sp-field-label>
+        <sp-theme lang="de">
+            <sp-number-field
+                id="decimals"
+                style="width: 200px"
+                ...=${spreadProps(args)}
+                @change=${args.onChange}
+                .formatOptions=${{
+                    signDisplay: 'exceptZero',
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 2,
+                } as unknown as Intl.NumberFormatOptions}
+            ></sp-number-field>
+        </sp-theme>
+    `;
+};
+
+germanDecimals.args = {
+    value: 19.274,
+};
+
 export const percents = (args: StoryArgs = {}): TemplateResult => {
     return html`
         <sp-field-label for="percents">Enter a percentage</sp-field-label>
