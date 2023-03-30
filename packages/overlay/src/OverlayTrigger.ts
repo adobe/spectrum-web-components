@@ -31,7 +31,7 @@ import { OverlayTriggerInteractions } from './overlay-types';
 import overlayTriggerStyles from './overlay-trigger.css.js';
 import '../sp-overlay.js';
 import { Placement } from '@floating-ui/dom';
-import { OverlayBase } from './OverlayBase';
+import { BeforetoggleOpenEvent, OverlayBase } from './OverlayBase.js';
 
 export type OverlayContentTypes = 'click' | 'hover' | 'longpress';
 
@@ -67,7 +67,7 @@ export class OverlayTrigger extends SpectrumElement {
     @property()
     public type?: OverlayTriggerInteractions;
 
-    @property({ type: Number, reflect: true })
+    @property({ type: Number })
     public offset = 6;
 
     @property({ reflect: true })
@@ -125,6 +125,25 @@ export class OverlayTrigger extends SpectrumElement {
         this.hoverContent = this.getAssignedElementsFromEvent(event);
     }
 
+    private handleBeforetoggle(event: BeforetoggleOpenEvent): void {
+        const target = event.composedPath()[0];
+        let type: OverlayContentTypes;
+        if (target === this.clickOverlayElement) {
+            type = 'click';
+        } else if (target === this.longpressOverlayElement) {
+            type = 'longpress';
+        } else if (target === this.hoverOverlayElement) {
+            type = 'hover';
+        } else {
+            return;
+        }
+        if (event.newState === 'open') {
+            this.open = type;
+        } else if (this.open === type) {
+            this.open = undefined;
+        }
+    }
+
     protected override render(): TemplateResult {
         // Keyboard event availability documented in README.md
         /* eslint-disable lit-a11y/click-events-have-key-events */
@@ -137,25 +156,14 @@ export class OverlayTrigger extends SpectrumElement {
             <div id="overlay-content">
                 <sp-overlay
                     id="click-overlay"
-                    ?disabled=${!this.clickContent.length}
+                    ?disabled=${this.disabled || !this.clickContent.length}
                     ?open=${this.open === 'click' && !!this.clickContent.length}
                     .offset=${this.offset}
                     .placement=${this.placement}
                     .triggerElement=${this.targetContent[0]}
                     .triggerInteraction=${'click'}
                     .type=${this.type !== 'modal' ? 'auto' : 'modal'}
-                    @sp-closed=${(event: Event) => {
-                        const target = event.composedPath()[0];
-                        if (target !== this.clickOverlayElement) return;
-                        if (this.open === 'click') {
-                            this.open = undefined;
-                        }
-                    }}
-                    @sp-opened=${(event: Event) => {
-                        const target = event.composedPath()[0];
-                        if (target !== this.clickOverlayElement) return;
-                        this.open = 'click';
-                    }}
+                    @beforetoggle=${this.handleBeforetoggle}
                 >
                     <slot
                         name="click-content"
@@ -164,7 +172,7 @@ export class OverlayTrigger extends SpectrumElement {
                 </sp-overlay>
                 <sp-overlay
                     id="longpress-overlay"
-                    ?disabled=${!this.longpressContent.length}
+                    ?disabled=${this.disabled || !this.longpressContent.length}
                     ?open=${this.open === 'longpress' &&
                     !!this.longpressContent.length}
                     .offset=${this.offset}
@@ -172,18 +180,7 @@ export class OverlayTrigger extends SpectrumElement {
                     .triggerElement=${this.targetContent[0]}
                     .triggerInteraction=${'longpress'}
                     .type=${'auto'}
-                    @sp-closed=${(event: Event) => {
-                        const target = event.composedPath()[0];
-                        if (target !== this.longpressOverlayElement) return;
-                        if (this.open === 'longpress') {
-                            this.open = undefined;
-                        }
-                    }}
-                    @sp-opened=${(event: Event) => {
-                        const target = event.composedPath()[0];
-                        if (target !== this.longpressOverlayElement) return;
-                        this.open = 'longpress';
-                    }}
+                    @beforetoggle=${this.handleBeforetoggle}
                 >
                     <slot
                         name="longpress-content"
@@ -192,25 +189,14 @@ export class OverlayTrigger extends SpectrumElement {
                 </sp-overlay>
                 <sp-overlay
                     id="hover-overlay"
-                    ?disabled=${!this.hoverContent.length}
+                    ?disabled=${this.disabled || !this.hoverContent.length}
                     ?open=${this.open === 'hover' && !!this.hoverContent.length}
                     .offset=${this.offset}
                     .placement=${this.placement}
                     .triggerElement=${this.targetContent[0]}
                     .triggerInteraction=${'hover'}
                     .type=${'hint'}
-                    @sp-closed=${(event: Event) => {
-                        const target = event.composedPath()[0];
-                        if (target !== this.hoverOverlayElement) return;
-                        if (this.open === 'hover') {
-                            this.open = undefined;
-                        }
-                    }}
-                    @sp-opened=${(event: Event) => {
-                        const target = event.composedPath()[0];
-                        if (target !== this.hoverOverlayElement) return;
-                        this.open = 'hover';
-                    }}
+                    @beforetoggle=${this.handleBeforetoggle}
                 >
                     <slot
                         name="hover-content"

@@ -42,6 +42,7 @@ class OverlayStack {
 
         const overlay = this.stack.at(-1);
         if (!overlay) return;
+        if (overlay.shouldPreventClose()) return;
 
         const composedPath = event.composedPath();
         const shouldClose = !composedPath.find(

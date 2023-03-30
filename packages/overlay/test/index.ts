@@ -10,12 +10,16 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { escapeEvent, isVisible } from '../../../test/testing-helpers.js';
+import {
+    escapeEvent,
+    fixture,
+    isOnTopLayer,
+    isVisible,
+} from '../../../test/testing-helpers.js';
 import {
     aTimeout,
     elementUpdated,
     expect,
-    fixture,
     html,
     nextFrame,
     oneEvent,
@@ -49,9 +53,9 @@ const pressEscape = (): void => {
 
 const pressSpace = (): void => pressKey('Space');
 
-export const runOverlayTriggerTests = (): void => {
-    describe.skip('Overlay Trigger - sync', () => {
-        describe.skip('open/close', () => {
+export const runOverlayTriggerTests = (type: string): void => {
+    describe(`Overlay Trigger - ${type}`, () => {
+        describe('open/close', () => {
             let testDiv!: HTMLDivElement;
             let innerTrigger!: OverlayTrigger;
             let outerTrigger!: OverlayTrigger;
@@ -86,8 +90,6 @@ export const runOverlayTriggerTests = (): void => {
                                     slot="click-content"
                                     direction="bottom"
                                     tip
-                                    open
-                                    tabindex="0"
                                 >
                                     <div class="options-popover-content">
                                         <overlay-trigger
@@ -106,8 +108,6 @@ export const runOverlayTriggerTests = (): void => {
                                                 slot="click-content"
                                                 direction="bottom"
                                                 tip
-                                                open
-                                                tabindex="0"
                                             >
                                                 <div
                                                     class="options-popover-content"
@@ -165,32 +165,27 @@ export const runOverlayTriggerTests = (): void => {
                 innerTrigger.removeAttribute('type');
             });
 
-            it('loads', async () => {
-                if (!(outerClickContent instanceof Popover))
-                    throw new Error('popover is not an instance of Popover');
-
-                expect(outerClickContent).to.exist;
-                expect(outerClickContent.shadowRoot).to.exist;
-                expect(outerClickContent.parentElement).to.be.an.instanceOf(
-                    OverlayTrigger
-                );
-            });
-
             it('opens a popover', async () => {
-                expect(isVisible(outerClickContent)).to.be.false;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'popover not available at point'
+                ).to.be.false;
 
                 expect(outerButton).to.exist;
                 const open = oneEvent(outerTrigger, 'sp-opened');
                 outerButton.click();
                 await open;
-                expect(outerClickContent.parentElement).to.not.be.an.instanceOf(
-                    OverlayTrigger
-                );
-                expect(isVisible(outerClickContent)).to.be.true;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'popover available at point'
+                ).to.be.true;
             });
 
             it('[disabled] closes a popover', async () => {
-                expect(isVisible(outerClickContent)).to.be.false;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'popover not available at point'
+                ).to.be.false;
                 expect(outerTrigger.disabled).to.be.false;
 
                 expect(outerButton).to.exist;
@@ -199,39 +194,44 @@ export const runOverlayTriggerTests = (): void => {
                 outerButton.click();
                 await opened;
 
-                expect(outerClickContent.parentElement).to.not.be.an.instanceOf(
-                    OverlayTrigger
-                );
-                expect(isVisible(outerClickContent)).to.be.true;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'popover available at point'
+                ).to.be.true;
 
                 const closed = oneEvent(outerButton, 'sp-closed');
                 outerTrigger.disabled = true;
                 await closed;
 
-                expect(isVisible(outerClickContent)).to.be.false;
-                expect(outerTrigger.disabled).to.be.true;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'popover not available at point'
+                ).to.be.false;
             });
 
             it('resizes a popover', async () => {
-                expect(isVisible(outerClickContent)).to.be.false;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'popover not available at point'
+                ).to.be.false;
 
                 expect(outerButton).to.exist;
                 const open = oneEvent(outerTrigger, 'sp-opened');
                 outerButton.click();
                 await open;
 
-                expect(outerClickContent.parentElement).to.not.be.an.instanceOf(
-                    OverlayTrigger
-                );
-                expect(isVisible(outerClickContent)).to.be.true;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'popover available at point'
+                ).to.be.true;
 
                 window.dispatchEvent(new Event('resize'));
                 window.dispatchEvent(new Event('resize'));
 
-                expect(outerClickContent.parentElement).to.not.be.an.instanceOf(
-                    OverlayTrigger
-                );
-                expect(isVisible(outerClickContent)).to.be.true;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'popover available at point'
+                ).to.be.true;
             });
 
             ['modal', 'replace', 'inline'].map((type: string) => {
@@ -241,42 +241,44 @@ export const runOverlayTriggerTests = (): void => {
                         'inline' | 'modal' | 'replace'
                     >;
                     await elementUpdated(outerTrigger);
-
-                    expect(isVisible(outerClickContent)).to.be.false;
+                    expect(
+                        await isOnTopLayer(outerClickContent),
+                        'popover not available at point'
+                    ).to.be.false;
 
                     expect(outerButton).to.exist;
                     const opened = oneEvent(outerTrigger, 'sp-opened');
                     outerButton.click();
                     await opened;
-
                     expect(
-                        outerClickContent.parentElement
-                    ).to.not.be.an.instanceOf(OverlayTrigger);
-                    expect(isVisible(outerClickContent)).to.be.true;
+                        await isOnTopLayer(outerClickContent),
+                        'popover available at point'
+                    ).to.be.true;
                 });
             });
 
             it('does not open a hover popover when a click popover is open', async () => {
                 expect(
-                    isVisible(outerClickContent),
-                    'outer popover not visible'
+                    await isOnTopLayer(outerClickContent),
+                    'popover not available at point'
                 ).to.be.false;
-                expect(isVisible(hoverContent), 'hover popover not visible').to
-                    .be.false;
+                expect(
+                    await isOnTopLayer(hoverContent),
+                    'hover not available at point'
+                ).to.be.false;
 
                 expect(outerButton).to.exist;
                 const open = oneEvent(outerTrigger, 'sp-opened');
                 outerButton.click();
                 await open;
 
-                expect(outerClickContent.parentElement).to.not.be.an.instanceOf(
-                    OverlayTrigger
-                );
-                expect(isVisible(outerClickContent), 'outer popover visible').to
-                    .be.true;
                 expect(
-                    isVisible(hoverContent),
-                    'hover popover still not visible'
+                    await isOnTopLayer(outerClickContent),
+                    'popover available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(hoverContent),
+                    'hover not available at point'
                 ).to.be.false;
 
                 outerButton.dispatchEvent(
@@ -287,21 +289,18 @@ export const runOverlayTriggerTests = (): void => {
                 );
 
                 await nextFrame();
-                expect(hoverContent.parentElement).to.be.instanceOf(
-                    OverlayTrigger
-                );
 
                 expect(
-                    isVisible(outerClickContent),
-                    'outer popover visible again'
+                    await isOnTopLayer(outerClickContent),
+                    'popover available at point'
                 ).to.be.true;
                 expect(
-                    isVisible(hoverContent),
-                    'hover popover not visible again'
+                    await isOnTopLayer(hoverContent),
+                    'hover not available at point'
                 ).to.be.false;
             });
 
-            it('does not open a popover when [disabled]', async () => {
+            it.skip('does not open a popover when [disabled]', async () => {
                 const root = outerTrigger.shadowRoot
                     ? outerTrigger.shadowRoot
                     : outerTrigger;
@@ -313,15 +312,17 @@ export const runOverlayTriggerTests = (): void => {
                 let open = oneEvent(outerTrigger, 'sp-opened');
                 outerButton.click();
                 await open;
-                expect(outerClickContent.parentElement?.localName).to.equal(
-                    'active-overlay'
-                );
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'hover available at point'
+                ).to.be.true;
                 let closed = oneEvent(outerTrigger, 'sp-closed');
                 document.body.click();
                 await closed;
-                expect(outerClickContent.parentElement?.localName).to.equal(
-                    'overlay-trigger'
-                );
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'hover not available at point'
+                ).to.be.false;
 
                 outerTrigger.disabled = true;
                 await elementUpdated(outerTrigger);
@@ -330,16 +331,18 @@ export const runOverlayTriggerTests = (): void => {
                 expect(outerTrigger.hasAttribute('disabled')).to.be.true;
                 // The overlay shouldn't open here.
                 outerButton.click();
-                await aTimeout(200);
-                expect(outerClickContent.parentElement?.localName).to.equal(
-                    'overlay-trigger'
-                );
+                await aTimeout(150);
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'hover not available at point'
+                ).to.be.false;
                 // The overlay shouldn't open here, either.
                 triggerZone.dispatchEvent(new Event('mouseenter'));
-                await aTimeout(200);
-                expect(outerClickContent.parentElement?.localName).to.equal(
-                    'overlay-trigger'
-                );
+                await aTimeout(150);
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'hover not available at point'
+                ).to.be.false;
 
                 outerTrigger.disabled = false;
                 await elementUpdated(outerTrigger);
@@ -349,89 +352,106 @@ export const runOverlayTriggerTests = (): void => {
                 open = oneEvent(outerTrigger, 'sp-opened');
                 outerButton.click();
                 await open;
-                expect(outerClickContent.parentElement?.localName).to.equal(
-                    'active-overlay'
-                );
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'hover available at point'
+                ).to.be.true;
                 closed = oneEvent(outerTrigger, 'sp-closed');
                 outerButton.click();
                 await closed;
-                expect(outerClickContent.parentElement?.localName).to.equal(
-                    'overlay-trigger'
-                );
+
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'hover not available at point'
+                ).to.be.false;
             });
 
-            it('opens a nested popover', async () => {
-                expect(isVisible(outerClickContent)).to.be.false;
-                expect(isVisible(innerClickContent)).to.be.false;
+            it.skip('opens a nested popover', async () => {
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'hover not available at point'
+                ).to.be.false;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'hover not available at point'
+                ).to.be.false;
 
                 expect(outerButton).to.exist;
                 let open = oneEvent(outerTrigger, 'sp-opened');
                 outerButton.click();
                 await open;
 
-                expect(outerClickContent.parentElement).to.not.be.an.instanceOf(
-                    OverlayTrigger
-                );
-                expect(isVisible(outerClickContent)).to.be.true;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content available at point'
+                ).to.be.true;
                 expect(isVisible(innerClickContent)).to.be.false;
 
                 open = oneEvent(innerTrigger, 'sp-opened');
                 innerButton.click();
                 await open;
-                expect(innerClickContent.parentElement).to.not.be.instanceOf(
-                    OverlayTrigger
-                );
 
-                expect(isVisible(outerClickContent)).to.be.true;
-                expect(isVisible(innerClickContent)).to.be.true;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content available at point'
+                ).to.be.true;
             });
 
-            it('focus previous "modal" when closing nested "modal"', async () => {
+            it.skip('focus previous "modal" when closing nested "modal"', async () => {
                 outerTrigger.type = 'modal';
                 innerTrigger.type = 'modal';
 
                 expect(
-                    isVisible(outerClickContent),
-                    'outer popover starts closed'
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content not available at point'
                 ).to.be.false;
                 expect(
-                    isVisible(innerClickContent),
-                    'inner popover starts closed'
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content not available at point'
                 ).to.be.false;
 
-                expect(outerButton).to.exist;
                 const outerOpen = oneEvent(outerButton, 'sp-opened');
                 outerButton.click();
                 await outerOpen;
 
-                expect(outerClickContent.parentElement).to.not.be.an.instanceOf(
-                    OverlayTrigger
-                );
-                expect(isVisible(outerClickContent), 'outer popover opens').to
-                    .be.true;
                 expect(
-                    isVisible(innerClickContent),
-                    'inner popover stays closed'
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content available at point'
                 ).to.be.false;
 
                 const innerOpen = oneEvent(innerButton, 'sp-opened');
                 innerButton.click();
                 await innerOpen;
-                expect(innerClickContent.parentElement).to.not.be.instanceOf(
-                    OverlayTrigger
-                );
 
-                expect(isVisible(outerClickContent), 'outer popover stays open')
-                    .to.be.true;
-                expect(isVisible(innerClickContent), 'inner popover opens').to
-                    .be.true;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content available at point'
+                ).to.be.true;
 
                 const innerClose = oneEvent(innerButton, 'sp-closed');
                 pressEscape();
                 await innerClose;
-                expect(innerClickContent.parentElement).to.be.instanceOf(
-                    OverlayTrigger
-                );
+
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content not available at point'
+                ).to.be.false;
 
                 expect(
                     document.activeElement === innerButton,
@@ -439,7 +459,7 @@ export const runOverlayTriggerTests = (): void => {
                 ).to.be.true;
             });
 
-            it('escape closes an open popover', async () => {
+            it.skip('escape closes an open popover', async () => {
                 outerTrigger.type = 'modal';
                 innerTrigger.type = 'modal';
                 const outerOpen = oneEvent(outerButton, 'sp-opened');
@@ -447,51 +467,62 @@ export const runOverlayTriggerTests = (): void => {
                 await outerOpen;
 
                 expect(
-                    outerClickContent.parentElement instanceof OverlayTrigger,
-                    'outer content stolen and reparented'
-                ).to.be.false;
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content available at point'
+                ).to.be.true;
 
                 const innerOpen = oneEvent(innerButton, 'sp-opened');
                 innerButton.click();
                 await innerOpen;
 
                 expect(
-                    innerClickContent.parentElement instanceof OverlayTrigger,
-                    'inner content stolen and reparented'
-                ).to.be.false;
-
-                expect(isVisible(outerClickContent)).to.be.true;
-                expect(isVisible(innerClickContent)).to.be.true;
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content available at point'
+                ).to.be.true;
 
                 pressSpace();
 
-                expect(isVisible(outerClickContent)).to.be.true;
-                expect(isVisible(innerClickContent)).to.be.true;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content available at point'
+                ).to.be.true;
 
                 const innerClose = oneEvent(innerButton, 'sp-closed');
                 pressEscape();
                 await innerClose;
 
                 expect(
-                    innerClickContent.parentElement instanceof OverlayTrigger,
-                    'inner content returned'
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content available at point'
                 ).to.be.true;
-                expect(isVisible(outerClickContent)).to.be.true;
-                expect(isVisible(innerClickContent)).to.be.false;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content not available at point'
+                ).to.be.false;
 
                 const outerClose = oneEvent(outerButton, 'sp-closed');
                 pressEscape();
                 await outerClose;
 
                 expect(
-                    outerClickContent.parentElement instanceof OverlayTrigger,
-                    'outer content returned'
-                ).to.be.true;
-                expect(isVisible(outerClickContent)).to.be.false;
-                expect(isVisible(innerClickContent)).to.be.false;
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content not available at point'
+                ).to.be.false;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content not available at point'
+                ).to.be.false;
             });
 
-            it('click closes an open popover', async () => {
+            it.skip('click closes an open popover', async () => {
                 outerTrigger.type = 'modal';
                 innerTrigger.type = 'modal';
                 const outerOpen = oneEvent(outerButton, 'sp-opened');
@@ -499,54 +530,65 @@ export const runOverlayTriggerTests = (): void => {
                 await outerOpen;
 
                 expect(
-                    outerClickContent.parentElement instanceof OverlayTrigger,
-                    'outer content stolen and reparented'
-                ).to.be.false;
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content is available at point'
+                ).to.be.true;
 
                 const innerOpen = oneEvent(innerButton, 'sp-opened');
                 innerButton.click();
                 await innerOpen;
 
                 expect(
-                    innerClickContent.parentElement instanceof OverlayTrigger,
-                    'inner content stolen and reparented'
-                ).to.be.false;
-
-                expect(isVisible(outerClickContent)).to.be.true;
-                expect(isVisible(innerClickContent)).to.be.true;
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content is available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content is available at point'
+                ).to.be.true;
 
                 // Test that clicking in the overlay content does not close the overlay
                 // 200ms is slightly more than the overlay animation fade out time (130ms)
                 innerClickContent.click();
                 await aTimeout(200);
 
-                expect(isVisible(outerClickContent)).to.be.true;
-                expect(isVisible(innerClickContent)).to.be.true;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content is available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content is available at point'
+                ).to.be.true;
 
                 const innerClose = oneEvent(innerButton, 'sp-closed');
                 document.body.click();
                 await innerClose;
 
                 expect(
-                    innerClickContent.parentElement instanceof OverlayTrigger,
-                    'inner content returned'
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content is available at point'
                 ).to.be.true;
-                expect(isVisible(outerClickContent)).to.be.true;
-                expect(isVisible(innerClickContent)).to.be.false;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content is not available at point'
+                ).to.be.false;
 
                 const outerClose = oneEvent(outerButton, 'sp-closed');
                 document.body.click();
                 await outerClose;
 
                 expect(
-                    outerClickContent.parentElement instanceof OverlayTrigger,
-                    'outer content returned'
-                ).to.be.true;
-                expect(isVisible(outerClickContent)).to.be.false;
-                expect(isVisible(innerClickContent)).to.be.false;
+                    await isOnTopLayer(outerClickContent),
+                    'outer click content is not available at point'
+                ).to.be.not;
+                expect(
+                    await isOnTopLayer(innerClickContent),
+                    'inner click content is not available at point'
+                ).to.be.not;
             });
 
-            it('opens a hover popover', async () => {
+            it.skip('opens a hover popover', async () => {
                 const root = outerTrigger.shadowRoot
                     ? outerTrigger.shadowRoot
                     : outerTrigger;
@@ -566,21 +608,19 @@ export const runOverlayTriggerTests = (): void => {
                 const mouseEnter = new MouseEvent('mouseenter');
                 triggerZone.dispatchEvent(mouseEnter);
                 await open;
-                expect(hoverContent.parentElement).to.not.be.instanceOf(
-                    OverlayTrigger
-                );
-
-                expect(isVisible(hoverContent)).to.be.true;
+                expect(
+                    await isOnTopLayer(hoverContent),
+                    'hover content is available at point'
+                ).to.be.true;
 
                 const close = oneEvent(outerTrigger, 'sp-closed');
                 const mouseLeave = new MouseEvent('mouseleave');
                 triggerZone.dispatchEvent(mouseLeave);
                 await close;
-                expect(hoverContent.parentElement).to.be.instanceOf(
-                    OverlayTrigger
-                );
-
-                expect(isVisible(hoverContent)).to.be.false;
+                expect(
+                    await isOnTopLayer(hoverContent),
+                    'hover content is not available at point'
+                ).to.be.false;
             });
 
             it('closes a hover popover', async () => {
@@ -598,28 +638,33 @@ export const runOverlayTriggerTests = (): void => {
                 expect(hoverContent).to.exist;
 
                 expect(
-                    isVisible(hoverContent),
-                    'hoverContent should not be visible'
+                    await isOnTopLayer(hoverContent),
+                    'hover content is not available at point'
                 ).to.be.false;
 
                 const mouseEnter = new MouseEvent('mouseenter');
                 const mouseLeave = new MouseEvent('mouseleave');
                 triggerZone.dispatchEvent(mouseEnter);
                 await nextFrame();
+                await nextFrame();
                 triggerZone.dispatchEvent(mouseLeave);
-
-                await waitUntil(
-                    () => isVisible(hoverContent) === false,
-                    'hoverContent should still not be visible'
-                );
+                await nextFrame();
+                await nextFrame();
+                expect(
+                    await isOnTopLayer(hoverContent),
+                    'hover content is not available at point'
+                ).to.be.false;
             });
 
-            it('dispatches events on open/close', async () => {
+            it.skip('dispatches events on open/close', async () => {
                 const opened = oneEvent(outerButton, 'sp-opened');
                 outerButton.click();
                 const openedEvent = await opened;
 
-                expect(isVisible(outerClickContent)).to.be.true;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'hover content is available at point'
+                ).to.be.true;
                 expect(outerTrigger.open).to.equal('click');
 
                 expect(openedEvent.detail.interaction).to.equal('click');
@@ -627,15 +672,14 @@ export const runOverlayTriggerTests = (): void => {
                 const closed = oneEvent(outerButton, 'sp-closed');
                 document.body.click();
                 const closedEvent = await closed;
-                expect(outerClickContent.parentElement).to.be.instanceOf(
-                    OverlayTrigger
-                );
                 expect(closedEvent.detail.interaction).to.equal('click');
-
-                expect(isVisible(outerClickContent)).to.be.false;
+                expect(
+                    await isOnTopLayer(outerClickContent),
+                    'hover content is not available at point'
+                ).to.be.false;
             });
         });
-        describe.skip('System interactions', () => {
+        describe('System interactions', () => {
             afterEach(async () => {
                 const triggers = document.querySelectorAll('overlay-trigger');
                 const closes: Promise<CustomEvent<unknown>>[] = [];
@@ -648,7 +692,7 @@ export const runOverlayTriggerTests = (): void => {
                 });
                 await Promise.all(closes);
             });
-            it('acquires a `color` and `size` from `sp-theme`', async () => {
+            it.skip('acquires a `color` and `size` from `sp-theme`', async () => {
                 const el = await fixture<Theme>(html`
                     <sp-theme color="dark">
                         <sp-theme color="light">
@@ -666,9 +710,13 @@ export const runOverlayTriggerTests = (): void => {
                                     slot="click-content"
                                     direction="bottom"
                                     tip
-                                    open
                                 >
-                                    Popover content!
+                                    <sp-button
+                                        id="test-button"
+                                        variant="primary"
+                                    >
+                                        Test popover.
+                                    </sp-button>
                                 </sp-popover>
                             </overlay-trigger>
                         </sp-theme>
@@ -680,25 +728,22 @@ export const runOverlayTriggerTests = (): void => {
                 expect(document.querySelector('active-overlay')).to.be.null;
 
                 const button = el.querySelector('sp-button') as Button;
+                const testButton = el.querySelector('#test-button') as Button;
+                const buttonStyles = getComputedStyle(button);
                 const opened = oneEvent(button, 'sp-opened');
                 button.click();
                 await opened;
 
-                await elementUpdated(el);
+                const testStyles = getComputedStyle(testButton);
 
-                // const overlay = document.querySelector(
-                //     'active-overlay'
-                // ) as HTMLDivElement & {
-                //     theme: {
-                //         color: string;
-                //     };
-                // };
-
-                // expect(overlay).to.exist;
-                // expect(overlay.theme.color).to.not.equal('dark');
-                // expect(overlay.theme.color).to.equal('light');
+                expect(testStyles.getPropertyValue('background')).to.equal(
+                    buttonStyles.getPropertyValue('background')
+                );
+                expect(testStyles.getPropertyValue('min-height')).to.equal(
+                    buttonStyles.getPropertyValue('min-height')
+                );
             });
-            it('manages multiple layers of `type="modal"', async () => {
+            it.skip('manages multiple layers of `type="modal"', async () => {
                 const el = await fixture(html`
                     <overlay-trigger type="modal" placement="none">
                         <sp-button slot="trigger" variant="accent">

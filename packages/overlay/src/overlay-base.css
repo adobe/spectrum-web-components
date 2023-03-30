@@ -27,12 +27,23 @@ dialog {
     border: 0;
     background: none;
     padding: 0;
-    pointer-events: none;
     display: flex;
     position: fixed;
     overflow: visible;
     opacity: 1 !important;
     box-sizing: border-box;
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+    max-width: calc(100vw - 16px);
+
+    /* pointer-events: none; */
+}
+
+:host(:not([open])) dialog {
+    top: 0;
+    left: 0;
+    transform: translate(-999em, -999em);
+    pointer-events: none;
 }
 
 dialog::backdrop {
@@ -50,21 +61,30 @@ dialog > div {
 /**
  * Offset the transition displacement from the trigger edge by
  * padding the equivelent distance off of the opposite edge.
+ *
+ * <HACK>
+ * Prepare for Context Menus with [popover] by adding margin/border
+ * that _should_ still be under the pointer when `pointerup` is dispatched.
+ * </HACK>
  **/
 dialog[actual-placement*='top'] {
-    padding-top: var(--swc-overlay-animation-distance);
+    padding-block: var(--swc-overlay-animation-distance);
+    margin-top: var(--swc-overlay-animation-distance);
 }
 
 dialog[actual-placement*='right'] {
-    padding-right: var(--swc-overlay-animation-distance);
+    padding-inline: var(--swc-overlay-animation-distance);
+    margin-left: calc(-1 * var(--swc-overlay-animation-distance));
 }
 
 dialog[actual-placement*='bottom'] {
-    padding-bottom: var(--swc-overlay-animation-distance);
+    padding-block: var(--swc-overlay-animation-distance);
+    margin-top: calc(-1 * var(--swc-overlay-animation-distance));
 }
 
 dialog[actual-placement*='left'] {
-    padding-left: var(--swc-overlay-animation-distance);
+    padding-inline: var(--swc-overlay-animation-distance);
+    margin-left: var(--swc-overlay-animation-distance);
 }
 
 /* stylelint-disable */
@@ -79,7 +99,7 @@ dialog[actual-placement*='left'] {
 }
 
 @supports not selector(:open) {
-    dialog:not([open]) {
+    :host:not([open]) dialog {
         pointer-events: none;
     }
 

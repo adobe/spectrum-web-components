@@ -360,7 +360,11 @@ export class PickerBase extends SizedMixin(Focusable) {
                 ?open=${this.open}
                 .placement=${this.placement}
                 type="auto"
+                .receivesFocus=${'true'}
                 @beforetoggle=${(event: Event & { target: OverlayBase }) => {
+                    if (event.composedPath()[0] !== event.target) {
+                        return;
+                    }
                     this.open = event.target.open;
                     if (!this.open) {
                         this.preventToggle = true;
@@ -369,8 +373,6 @@ export class PickerBase extends SizedMixin(Focusable) {
                         );
                         this.optionsMenu.updateSelectedItemIndex();
                         this.optionsMenu.closeDescendentOverlays();
-                    } else {
-                        this.optionsMenu.focus();
                     }
                 }}
             >
@@ -420,8 +422,13 @@ export class PickerBase extends SizedMixin(Focusable) {
             // await the same here.
             this.shouldScheduleManageSelection();
         }
+        // Maybe it's finally time to remove this support?
+        if (!this.hasUpdated) {
+            const deprecatedMenu = this.querySelector(':scope > sp-menu');
+            deprecatedMenu?.setAttribute('selects', 'inherit');
+        }
         if (window.__swc.DEBUG) {
-            if (!this.hasUpdated && this.querySelector('sp-menu')) {
+            if (!this.hasUpdated && this.querySelector(':scope > sp-menu')) {
                 const { localName } = this;
                 window.__swc.warn(
                     this,
@@ -547,10 +554,6 @@ export class PickerBase extends SizedMixin(Focusable) {
         const complete = (await super.getUpdateComplete()) as boolean;
         await this.selectionPromise;
         return complete;
-    }
-
-    public override connectedCallback(): void {
-        super.connectedCallback();
     }
 
     public override disconnectedCallback(): void {

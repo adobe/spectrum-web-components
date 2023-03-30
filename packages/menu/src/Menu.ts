@@ -266,6 +266,7 @@ export class Menu extends SpectrumElement {
         this.addEventListener('sp-menu-item-removed', this.removeChildItem);
         this.addEventListener('click', this.onClick);
         this.addEventListener('focusin', this.handleFocusin);
+        this.addEventListener('focusout', this.handleFocusout);
         this.addEventListener('sp-opened', this.handleSubmenuOpened);
     }
 
@@ -366,7 +367,6 @@ export class Menu extends SpectrumElement {
 
     public startListeningToKeyboard(): void {
         this.addEventListener('keydown', this.handleKeydown);
-        this.addEventListener('focusout', this.handleFocusout);
     }
 
     public handleFocusout(event: FocusEvent): void {
@@ -374,40 +374,23 @@ export class Menu extends SpectrumElement {
             return;
         }
         this.stopListeningToKeyboard();
-        if (
-            event.target === this &&
-            this.childItems.some(
-                (childItem) => childItem.menuData.focusRoot === this
-            )
-        ) {
-            const focusedItem = this.childItems[this.focusedItemIndex];
-            if (
-                focusedItem &&
-                !event
-                    .composedPath()
-                    .find((el) => el === focusedItem.menuData.focusRoot)
-            ) {
-                focusedItem.focused = false;
-            }
-        }
+        this.childItems.forEach((child) => (child.focused = false));
         this.removeAttribute('aria-activedescendant');
     }
 
     public stopListeningToKeyboard(): void {
         this.removeEventListener('keydown', this.handleKeydown);
-        this.removeEventListener('focusout', this.handleFocusout);
     }
 
     private descendentOverlays = new Map<OverlayBase, OverlayBase>();
 
     protected handleDescendentOverlayOpened(event: Event): void {
-        const target = event
-            .composedPath()
-            .find(
-                (el) => (el as HTMLElement)?.localName === 'sp-overlay'
-            ) as OverlayBase;
-        if (!target) return;
-        this.descendentOverlays.set(target, target);
+        const target = event.composedPath()[0] as MenuItem;
+        if (!target.overlayElement) return;
+        this.descendentOverlays.set(
+            target.overlayElement,
+            target.overlayElement
+        );
     }
 
     public handleSubmenuOpened = (event: Event): void => {
@@ -655,31 +638,30 @@ export class Menu extends SpectrumElement {
         this.focusInItemIndex = firstOrFirstSelectedIndex;
     }
 
-    private _willUpdateItems = false;
+    private _willUpdateItems?: number;
 
     private handleItemsChanged(): void {
         this.cachedChildItems = undefined;
         if (!this._willUpdateItems) {
-            /* c8 ignore next 3 */
-            let resolve = (): void => {
-                return;
-            };
-            this.cacheUpdated = new Promise((res) => (resolve = res));
-            this._willUpdateItems = true;
-            // Debounce the update so we only update once
-            // if multiple items have changed
-            window.requestAnimationFrame(() => {
-                if (
-                    this._willUpdateItems ||
-                    this.cachedChildItems === undefined
-                ) {
-                    this.updateSelectedItemIndex();
-                    this.updateItemFocus();
-                }
-                this._willUpdateItems = false;
-                resolve();
-            });
+            // collect ONE proise for all of the item updates in a batch
+            this.cacheUpdated = new Promise(
+                (res) =>
+                    (this.resolveCacheUpdated = (): void => {
+                        res();
+                        this._willUpdateItems = undefined;
+                    })
+            );
+        } else {
+            // reset the animation frame when subsequent updates are received for the same batch
+            cancelAnimationFrame(this._willUpdateItems);
         }
+        this._willUpdateItems = requestAnimationFrame(() => {
+            if (this._willUpdateItems || this.cachedChildItems === undefined) {
+                this.updateSelectedItemIndex();
+                this.updateItemFocus();
+            }
+            this.resolveCacheUpdated();
+        });
     }
 
     private updateItemFocus(): void {
@@ -808,6 +790,9 @@ export class Menu extends SpectrumElement {
 
     protected childItemsUpdated!: Promise<unknown[]>;
     protected cacheUpdated = Promise.resolve();
+    protected resolveCacheUpdated = (): void => {
+        return;
+    };
 
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;

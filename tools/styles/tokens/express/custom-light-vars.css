@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 
 /* This file contains overrides and additions to core tokens */
 
-.spectrum--express.spectrum--light {
+:host,
+:root {
     /* */
 }

@@ -16,9 +16,12 @@ import {
 import { ReactiveElement } from 'lit';
 import {
     BeforetoggleClosedEvent,
+    BeforetoggleOpenEvent,
+    guaranteedTransitionend,
     OpenableElement,
     OverlayBase,
 } from './OverlayBase.js';
+import { VirtualTrigger } from './VirtualTrigger.js';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,61 +29,138 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
+function nextFrame(): Promise<void> {
+    return new Promise((res) => requestAnimationFrame(() => res()));
+}
+
 export function OverlayNoPopover<T extends Constructor<OverlayBase>>(
     constructor: T
 ): T & Constructor<ReactiveElement> {
     class OverlayWithNoPopover extends constructor {
         protected override async managePopoverOpen(): Promise<void> {
-            const doClose = (
-                cb = () => {
+            const targetOpenState = this.open;
+            await this.managePosition();
+            await this.ensureOnDOM();
+            const focusEl = await this.makeTransition(targetOpenState);
+            await this.applyFocus(focusEl);
+        }
+
+        private async ensureOnDOM(): Promise<void> {
+            await nextFrame();
+            await nextFrame();
+        }
+
+        private async makeTransition(
+            targetOpenState: boolean
+        ): Promise<HTMLElement | null> {
+            let focusEl = null as HTMLElement | null;
+            const start = (el: OpenableElement, index: number) => (): void => {
+                if (typeof el.open !== 'undefined') {
+                    el.open = targetOpenState;
+                }
+                if (index === 0) {
+                    const event = targetOpenState
+                        ? BeforetoggleOpenEvent
+                        : BeforetoggleClosedEvent;
+                    this.dispatchEvent(new event());
+                }
+                if (!targetOpenState) {
                     return;
                 }
-            ): void => {
-                this.elements[0]?.addEventListener('transitionend', cb, {
-                    once: true,
+                focusEl = focusEl || firstFocusableIn(el);
+                if (focusEl) {
+                    return;
+                }
+                const childSlots = el.querySelectorAll('slot');
+                childSlots.forEach((slot) => {
+                    if (!focusEl) {
+                        focusEl = firstFocusableSlottedIn(slot);
+                    }
                 });
-                this.manageChildren(false);
-                this.dispatchEvent(new BeforetoggleClosedEvent());
             };
-            if (this.open) {
-                await this.managePosition();
-                // we can acquire overlay position
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(async () => {
-                        let focusEl = null as HTMLElement | null;
-                        this.elements.forEach(
-                            (element: OpenableElement): void => {
-                                if (typeof element.open !== 'undefined') {
-                                    element.open = true;
-                                }
-                                if (!focusEl) {
-                                    focusEl = firstFocusableIn(element);
-                                }
-                                if (!focusEl) {
-                                    const childSlots =
-                                        element.querySelectorAll('slot');
-                                    childSlots.forEach((slot) => {
-                                        if (!focusEl) {
-                                            focusEl =
-                                                firstFocusableSlottedIn(slot);
-                                        }
-                                    });
-                                }
-                            }
-                        );
-                        requestAnimationFrame(() => {
-                            requestAnimationFrame(() => {
-                                this.manageChildren(true);
-                                if (focusEl && this.receivesFocus !== 'false') {
-                                    focusEl.focus();
-                                }
-                            });
-                        });
-                    });
-                });
-            } else {
-                doClose();
+            const finish = (el: OpenableElement, index: number) => (): void => {
+                if (this.open !== targetOpenState) {
+                    return;
+                }
+                const eventName = targetOpenState ? 'sp-opened' : 'sp-closed';
+                el.dispatchEvent(
+                    new Event(eventName, {
+                        bubbles: false,
+                        composed: false,
+                    })
+                );
+                if (index > 0) {
+                    return;
+                }
+                const hasVirtualTrigger =
+                    this.triggerElement instanceof VirtualTrigger;
+                this.dispatchEvent(
+                    new Event(eventName, {
+                        bubbles: hasVirtualTrigger,
+                        composed: hasVirtualTrigger,
+                    })
+                );
+                if (this.triggerElement && !hasVirtualTrigger) {
+                    (this.triggerElement as HTMLElement).dispatchEvent(
+                        new CustomEvent(eventName, {
+                            bubbles: true,
+                            composed: true,
+                            detail: { interaction: this.type },
+                        })
+                    );
+                }
+            };
+            this.elements.forEach((el, index) => {
+                guaranteedTransitionend(
+                    el,
+                    start(el, index),
+                    finish(el, index)
+                );
+            });
+            return focusEl;
+        }
+
+        private async applyFocus(focusEl: HTMLElement | null): Promise<void> {
+            if (this.receivesFocus === 'false') {
+                return;
             }
+
+            await nextFrame();
+            await nextFrame();
+            if (!this.open) {
+                if (
+                    // Do not return focus to trigger when overlay is a "hint" (tooltip)
+                    this.type !== 'hint' &&
+                    // Only return focus when the trigger is not "virtual"
+                    this.triggerElement &&
+                    !(this.triggerElement instanceof VirtualTrigger)
+                ) {
+                    // This has a bug where the current overlay and the focused content could share the same `activeElement` shadow root...
+                    const relationEvent = new Event('overlay-relation-query', {
+                        bubbles: true,
+                        composed: true,
+                    });
+                    this.addEventListener(
+                        relationEvent.type,
+                        (event: Event) => {
+                            /* eslint-disable @spectrum-web-components/document-active-element */
+                            if (
+                                document.activeElement &&
+                                event
+                                    .composedPath()
+                                    .includes(document.activeElement)
+                            ) {
+                                (this.triggerElement as HTMLElement).focus();
+                            }
+                            /* eslint-enable @spectrum-web-components/document-active-element */
+                        }
+                    );
+                    this.dispatchEvent(relationEvent);
+                }
+                return;
+            }
+
+            focusEl?.focus();
         }
     }
     return OverlayWithNoPopover;

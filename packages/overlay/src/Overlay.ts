@@ -9,7 +9,7 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { OverlayBase } from './OverlayBase.js';
+import { noop, OverlayBase } from './OverlayBase.js';
 import { OverlayDialog } from './OverlayDialog.js';
 import { OverlayPopover } from './OverlayPopover.js';
 import { OverlayNoPopover } from './OverlayNoPopover.js';
@@ -37,7 +37,12 @@ type OverlayOptionsV2 = {
 
 export class Overlay extends OverlayFeatures {
     public static update(): void {
-        return;
+        const overlayUpdateEvent = new CustomEvent('sp-update-overlays', {
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+        });
+        document.dispatchEvent(overlayUpdateEvent);
     }
 
     public static async open(
@@ -77,7 +82,7 @@ export class Overlay extends OverlayFeatures {
             const interaction = interactionOrOptions;
             overlay.append(content);
             overlay.receivesFocus = options.receivesFocus ?? 'auto';
-            overlay.triggerElement = target;
+            overlay.triggerElement = options.virtualTrigger || target;
             overlay.type =
                 interaction === 'modal'
                     ? 'modal'
@@ -86,6 +91,7 @@ export class Overlay extends OverlayFeatures {
                     : 'auto';
             overlay.offset = options.offset ?? 6;
             overlay.placement = options.placement;
+            overlay.willPreventClose = !!options.notImmediatelyClosable;
             // This is super dirty...find a better way.
             // Maybe imperative open should go _at the end_ of everything?
             // Having an option is likely useful.
@@ -94,23 +100,26 @@ export class Overlay extends OverlayFeatures {
             // Possibly the giving all of the responsiblities to the user is the best path.
             const parent = target.getRootNode() as Document;
             if (parent === document) {
-                document.body.append(overlay);
+                target.insertAdjacentElement('afterend', overlay);
             } else {
                 parent.append(overlay);
             }
             await new Promise<void>((res) =>
-                requestAnimationFrame(() => res())
+                requestAnimationFrame(() => requestAnimationFrame(() => res()))
             );
             overlay.open = true;
-            return () => {
+            overlay.dispose = () => {
                 overlay.addEventListener('sp-closed', () => {
                     requestAnimationFrame(() => {
                         overlay.remove();
                     });
                 });
                 overlay.open = false;
+                overlay.dispose = noop;
             };
+            return overlay.dispose;
         }
+        /* c8 ignore next 1 */
         return overlay;
     }
 }

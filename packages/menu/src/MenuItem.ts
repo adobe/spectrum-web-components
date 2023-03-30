@@ -175,7 +175,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
     private anchorElement!: HTMLAnchorElement;
 
     @query('sp-overlay')
-    private overlayElement!: OverlayBase;
+    public overlayElement!: OverlayBase;
 
     public override get focusElement(): HTMLElement {
         return this;
@@ -296,21 +296,11 @@ export class MenuItem extends LikeAnchor(Focusable) {
                 : html``}
             <sp-overlay
                 .triggerElement=${this as HTMLElement}
+                ?disabled=${!this.hasSubmenu}
                 ?open=${this.hasSubmenu && this.open}
                 .placement=${this.isLTR ? 'right-start' : 'left-start'}
                 .offset=${[-10, -5] as [number, number]}
                 .type=${'auto'}
-                @sp-opened=${(event: Event) => {
-                    this.focused = false;
-                    const parentOverlay = event.composedPath().find((el) => {
-                        return (
-                            el !== this.overlayElement &&
-                            (el as HTMLElement).localName === 'sp-overlay'
-                        );
-                    }) as OverlayBase;
-                    this.overlayElement.parentOverlayToForceClose =
-                        parentOverlay;
-                }}
                 @close=${(event: Event) => event.stopPropagation()}
             >
                 <sp-popover
@@ -433,6 +423,17 @@ export class MenuItem extends LikeAnchor(Focusable) {
         });
     }
 
+    protected handleSubmenuOpen(event: Event): void {
+        this.focused = false;
+        const parentOverlay = event.composedPath().find((el) => {
+            return (
+                el !== this.overlayElement &&
+                (el as HTMLElement).localName === 'sp-overlay'
+            );
+        }) as OverlayBase;
+        this.overlayElement.parentOverlayToForceClose = parentOverlay;
+    }
+
     public async openOverlay(): Promise<void> {
         if (!this.hasSubmenu || this.open || this.disabled) {
             return;
@@ -501,6 +502,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
                 this.addEventListener('click', this.handleSubmenuClick);
                 this.addEventListener('pointerenter', this.handlePointerenter);
                 this.addEventListener('pointerleave', this.handlePointerleave);
+                this.addEventListener('sp-opened', this.handleSubmenuOpen);
             } else if (!this.closeOverlay) {
                 this.removeEventListener('click', this.handleSubmenuClick);
                 this.removeEventListener(
@@ -511,6 +513,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
                     'pointerleave',
                     this.handlePointerleave
                 );
+                this.removeEventListener('sp-opened', this.handleSubmenuOpen);
             }
         }
     }

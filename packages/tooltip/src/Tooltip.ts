@@ -25,6 +25,22 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 
 import tooltipStyles from './tooltip.css.js';
 
+class TooltipOpenable extends HTMLElement {
+    set open(open: boolean) {
+        this._open = open;
+        const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
+        tooltip.open = open;
+    }
+    get open(): boolean {
+        return this._open;
+    }
+    private _open = false;
+}
+
+if (!customElements.get('sp-tooltip-openable')) {
+    customElements.define('sp-tooltip-openable', TooltipOpenable);
+}
+
 /**
  * @element sp-tooltip
  *
@@ -89,22 +105,37 @@ export class Tooltip extends SpectrumElement {
         this.open = false;
     };
 
-    protected handleTransitionend(): void {
+    protected handleTransitionrun(event: TransitionEvent): void {
         this.dispatchEvent(
-            new Event('transitionend', {
+            new TransitionEvent('transitionrun', {
                 bubbles: true,
                 composed: true,
+                propertyName: event.propertyName,
+            })
+        );
+    }
+
+    protected handleTransitionend(event: TransitionEvent): void {
+        this.dispatchEvent(
+            new TransitionEvent('transitionend', {
+                bubbles: true,
+                composed: true,
+                propertyName: event.propertyName,
             })
         );
     }
 
     override render(): TemplateResult {
         const tooltip = html`
-            <span id="tooltip" @transitionend=${this.handleTransitionend}>
+            <sp-tooltip-openable
+                id="tooltip"
+                @transitionrun=${this.handleTransitionrun}
+                @transitionend=${this.handleTransitionend}
+            >
                 <slot name="icon"></slot>
                 <span id="label"><slot></slot></span>
                 <span id="tip"></span>
-            </span>
+            </sp-tooltip-openable>
         `;
         if (this.selfManaged) {
             return html`

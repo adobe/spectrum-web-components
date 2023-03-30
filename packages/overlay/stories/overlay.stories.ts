@@ -11,11 +11,12 @@ governing permissions and limitations under the License.
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import {
+    openOverlay,
     OverlayContentTypes,
     OverlayTrigger,
     Placement,
     TriggerInteractions,
-    // VirtualTrigger,
+    VirtualTrigger,
 } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/action-group/sp-action-group.js';
@@ -31,6 +32,7 @@ import '@spectrum-web-components/picker/sp-picker.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
+import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/menu/sp-menu-divider.js';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/slider/sp-slider.js';
@@ -44,8 +46,8 @@ import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import '../../../projects/story-decorator/src/types.js';
 
 import './overlay-story-components.js';
-// import { render } from 'lit-html';
-// import { Popover } from '@spectrum-web-components/popover';
+import { render } from 'lit-html';
+import { Popover } from '@spectrum-web-components/popover';
 import { Button } from '@spectrum-web-components/button';
 import { PopoverContent } from './overlay-story-components.js';
 
@@ -220,9 +222,6 @@ function nextFrame(): Promise<void> {
 export const Default = (args: Properties): TemplateResult => template(args);
 
 export const accordion = (): TemplateResult => {
-    const handleToggle = (): void => {
-        // Overlay.update();
-    };
     return html`
         <overlay-trigger type="modal" placement="right">
             <sp-button variant="primary" slot="trigger">
@@ -233,10 +232,7 @@ export const accordion = (): TemplateResult => {
                 slot="click-content"
                 style="overflow-y: scroll;position: static;"
             >
-                <sp-accordion
-                    allow-multiple
-                    @sp-accordion-item-toggle=${handleToggle}
-                >
+                <sp-accordion allow-multiple>
                     <sp-accordion-item label="Some things">
                         <p>
                             Thing
@@ -1194,45 +1190,65 @@ class StartEndContextmenu extends HTMLElement {
 
 customElements.define('start-end-contextmenu', StartEndContextmenu);
 
-export const virtualElement = (): // args: Properties
-TemplateResult => {
-    // const contextMenuTemplate = (kind = ''): TemplateResult => html`
-    //     <sp-popover
-    //         style="width:300px;"
-    //         @click=${(event: Event) =>
-    //             event.target?.dispatchEvent(
-    //                 new Event('close', { bubbles: true })
-    //             )}
-    //     >
-    //         <sp-menu>
-    //             <sp-menu-group>
-    //                 <span slot="header">Menu source: ${kind}</span>
-    //                 <sp-menu-item>Deselect</sp-menu-item>
-    //                 <sp-menu-item>Select inverse</sp-menu-item>
-    //                 <sp-menu-item>Feather...</sp-menu-item>
-    //                 <sp-menu-item>Select and mask...</sp-menu-item>
-    //                 <sp-menu-divider></sp-menu-divider>
-    //                 <sp-menu-item>Save selection</sp-menu-item>
-    //                 <sp-menu-item disabled>Make work path</sp-menu-item>
-    //             </sp-menu-group>
-    //         </sp-menu>
-    //     </sp-popover>
-    // `;
-    const pointerenter = async (): // event: PointerEvent
-    Promise<void> => {
-        // event.preventDefault();
-        // const source = event.composedPath()[0] as HTMLDivElement;
-        // const { id } = source;
-        // const trigger = event.target as HTMLElement;
-        // const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
-        // const fragment = document.createDocumentFragment();
-        // render(contextMenuTemplate(id), fragment);
-        // const popover = fragment.querySelector('sp-popover') as Popover;
-        // openOverlay(trigger, 'modal', popover, {
-        //     placement: args.placement,
-        //     receivesFocus: 'auto',
-        //     virtualTrigger,
-        // });
+export const virtualElement = (args: Properties): TemplateResult => {
+    const contextMenuTemplate = (kind = ''): TemplateResult => html`
+        <sp-popover
+            style="width:300px;"
+            @click=${(event: PointerEvent) => {
+                if (
+                    (event.target as HTMLElement).localName === 'sp-menu-item'
+                ) {
+                    event.target?.dispatchEvent(
+                        new Event('close', { bubbles: true })
+                    );
+                }
+            }}
+        >
+            <sp-menu>
+                <sp-menu-group>
+                    <span slot="header">Menu source: ${kind}</span>
+                    <sp-menu-item>Deselect</sp-menu-item>
+                    <sp-menu-item>Select inverse</sp-menu-item>
+                    <sp-menu-item>Feather...</sp-menu-item>
+                    <sp-menu-item>Select and mask...</sp-menu-item>
+                    <sp-menu-divider></sp-menu-divider>
+                    <sp-menu-item>Save selection</sp-menu-item>
+                    <sp-menu-item disabled>Make work path</sp-menu-item>
+                </sp-menu-group>
+            </sp-menu>
+        </sp-popover>
+    `;
+    const handlePointerdown = (event: PointerEvent): void => {
+        if (event.button === 2) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    };
+    const handlePointerup = (event: PointerEvent): void => {
+        if (event.button === 2) {
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+        }
+    };
+    const handleContextmenu = async (event: PointerEvent): Promise<void> => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const source = event.composedPath()[0] as HTMLDivElement;
+        const { id } = source;
+        const trigger = event.target as HTMLElement;
+        const virtualTrigger = new VirtualTrigger(event.clientX, event.clientY);
+        const fragment = document.createDocumentFragment();
+        render(contextMenuTemplate(id), fragment);
+        const popover = fragment.querySelector('sp-popover') as Popover;
+        openOverlay(trigger, 'click', popover, {
+            placement: args.placement,
+            receivesFocus: 'auto',
+            virtualTrigger,
+            offset: 0,
+            notImmediatelyClosable: true,
+        });
     };
     return html`
         <style>
@@ -1243,7 +1259,18 @@ TemplateResult => {
         </style>
         <start-end-contextmenu
             class="app-root"
-            @contextmenu=${pointerenter}
+            @pointerdown=${{
+                capture: true,
+                handleEvent: handlePointerdown,
+            }}
+            @pointerup=${{
+                capture: true,
+                handleEvent: handlePointerup,
+            }}
+            @contextmenu=${{
+                capture: true,
+                handleEvent: handleContextmenu,
+            }}
         ></start-end-contextmenu>
     `;
 };
