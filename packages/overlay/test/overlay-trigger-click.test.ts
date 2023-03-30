@@ -12,16 +12,15 @@ governing permissions and limitations under the License.
 import {
     elementUpdated,
     expect,
-    fixture,
     html,
     nextFrame,
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
+import type { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/popover/sp-popover.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
-import '@spectrum-web-components/popover/sp-popover.js';
 import {
     OverlayTrigger,
     TriggerInteractions,
@@ -29,6 +28,7 @@ import {
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { spy } from 'sinon';
 import { ActionButton } from '@spectrum-web-components/action-button';
+import { fixture, isInteractive } from '../../../test/testing-helpers.js';
 
 describe('Overlay Trigger - Click', () => {
     it('displays `click` declaratively', async () => {
@@ -51,7 +51,9 @@ describe('Overlay Trigger - Click', () => {
         );
 
         await waitUntil(
-            () => openedSpy.calledOnce,
+            () => {
+                return openedSpy.calledOnce;
+            },
             'click content projected to overlay',
             { timeout: 2000 }
         );
@@ -88,6 +90,8 @@ describe('Overlay Trigger - Click', () => {
                             <sp-popover slot="click-content" tip></sp-popover>
                         </overlay-trigger>
                     `);
+                    await nextFrame();
+                    const popover = el.querySelector('sp-popover') as Popover;
                     expect(el.open).to.be.undefined;
 
                     await elementUpdated(el);
@@ -96,6 +100,7 @@ describe('Overlay Trigger - Click', () => {
                     await opened;
 
                     expect(el.open).to.equal('click');
+                    expect(await isInteractive(popover)).to.be.true;
 
                     const closed = oneEvent(el, 'sp-closed');
                     if (document.scrollingElement) {
@@ -104,6 +109,7 @@ describe('Overlay Trigger - Click', () => {
                     await closed;
 
                     expect(el.open).to.be.undefined;
+                    expect(await isInteractive(popover)).to.be.false;
                 });
             }
         );

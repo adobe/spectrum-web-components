@@ -10,7 +10,18 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { ReactiveElement } from 'lit';
-import { OpenableElement, OverlayBase } from './OverlayBase.js';
+import {
+    firstFocusableIn,
+    firstFocusableSlottedIn,
+} from '@spectrum-web-components/shared/src/first-focusable-in.js';
+import {
+    BeforetoggleClosedEvent,
+    BeforetoggleOpenEvent,
+    guaranteedTransitionend,
+    OpenableElement,
+    OverlayBase,
+} from './OverlayBase.js';
+import { VirtualTrigger } from './VirtualTrigger.js';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,46 +29,180 @@ type Constructor<T = Record<string, unknown>> = {
     prototype: T;
 };
 
+function nextFrame(): Promise<void> {
+    return new Promise((res) => requestAnimationFrame(() => res()));
+}
+
 export function OverlayDialog<T extends Constructor<OverlayBase>>(
     constructor: T
 ): T & Constructor<ReactiveElement> {
     class OverlayWithDialog extends constructor {
         protected override async manageDialogOpen(): Promise<void> {
-            if (this.open) {
-                await this.managePosition();
-                requestAnimationFrame(() => {
-                    requestAnimationFrame(() => {
-                        this.manageChildren(true);
-                        requestAnimationFrame(() => {
-                            // Ensure that child content is fully "on the DOM" before showing the modal.
-                            // This allow for that content to be available to the focus algorithm of that process.
-                            if (this.isConnected && !this.dialogEl.open)
-                                this.dialogEl.showModal();
-                        });
-                    });
-                });
-            } else {
-                let hasSelfManagedChild = false;
-                const close = (event?: Event): void => {
-                    event?.target?.removeEventListener('transitionend', close);
-                    event?.target?.removeEventListener('close', close);
-                    this.dialogEl.close();
-                    this.manageChildren(false);
-                };
-                this.elements.forEach((element: OpenableElement): void => {
-                    if (typeof element.open !== 'undefined') {
-                        if (element.open) {
-                            element.addEventListener('transitionend', close);
-                            element.addEventListener('close', close);
-                            hasSelfManagedChild = true;
-                            element.open = false;
-                        }
+            const targetOpenState = this.open;
+            await this.managePosition();
+            await this.dialogEnsureOnDOM();
+            const focusEl = await this.dialogMakeTransition(targetOpenState);
+            await this.dialogApplyFocus(focusEl);
+        }
+
+        protected async dialogEnsureOnDOM(): Promise<void> {
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+            await nextFrame();
+        }
+
+        protected async dialogMakeTransition(
+            targetOpenState: boolean
+        ): Promise<HTMLElement | null> {
+            let focusEl = null as HTMLElement | null;
+            const start =
+                (el: OpenableElement, index: number) =>
+                async (): Promise<void> => {
+                    if (typeof el.open !== 'undefined') {
+                        el.open = targetOpenState;
                     }
-                });
-                if (!hasSelfManagedChild) {
-                    close();
+                    if (!targetOpenState) {
+                        const close = (): void => {
+                            el.removeEventListener('close', close);
+                            finish(el, index);
+                        };
+                        el.addEventListener('close', close);
+                    }
+                    if (index > 0 || !targetOpenState) {
+                        return;
+                    }
+                    const event = targetOpenState
+                        ? BeforetoggleOpenEvent
+                        : BeforetoggleClosedEvent;
+                    this.dispatchEvent(new event());
+                    focusEl = focusEl || firstFocusableIn(el);
+                    if (!focusEl) {
+                        const childSlots = el.querySelectorAll('slot');
+                        childSlots.forEach((slot) => {
+                            if (!focusEl) {
+                                focusEl = firstFocusableSlottedIn(slot);
+                            }
+                        });
+                    }
+                    if (!this.isConnected || this.dialogEl.open) {
+                        return;
+                    }
+                    this.dialogEl.showModal();
+                };
+            const finish = (el: OpenableElement, index: number) => (): void => {
+                if (this.open !== targetOpenState) {
+                    return;
                 }
+                const eventName = targetOpenState ? 'sp-opened' : 'sp-closed';
+                if (index > 0) {
+                    el.dispatchEvent(
+                        new Event(eventName, {
+                            bubbles: false,
+                            composed: false,
+                        })
+                    );
+                    return;
+                }
+                if (!this.isConnected || targetOpenState !== this.open) {
+                    return;
+                }
+                const reportChange = (): void => {
+                    const hasVirtualTrigger =
+                        this.triggerElement instanceof VirtualTrigger;
+                    this.dispatchEvent(
+                        new Event(eventName, {
+                            bubbles: hasVirtualTrigger,
+                            composed: hasVirtualTrigger,
+                        })
+                    );
+                    el.dispatchEvent(
+                        new Event(eventName, {
+                            bubbles: false,
+                            composed: false,
+                        })
+                    );
+                    if (this.triggerElement && !hasVirtualTrigger) {
+                        (this.triggerElement as HTMLElement).dispatchEvent(
+                            new CustomEvent(eventName, {
+                                bubbles: true,
+                                composed: true,
+                                detail: { interaction: this.type },
+                            })
+                        );
+                    }
+                };
+                if (!targetOpenState && this.dialogEl.open) {
+                    this.dialogEl.addEventListener(
+                        'close',
+                        () => {
+                            reportChange();
+                        },
+                        { once: true }
+                    );
+                    this.dialogEl.close();
+                } else {
+                    reportChange();
+                }
+            };
+            this.elements.forEach((el, index) => {
+                guaranteedTransitionend(
+                    el,
+                    start(el, index),
+                    finish(el, index)
+                );
+            });
+            return focusEl;
+        }
+
+        protected async dialogApplyFocus(
+            focusEl: HTMLElement | null
+        ): Promise<void> {
+            /**
+             * Focus should handled natively in `<dialog>` elements when leveraging `.showModal()`, but it's NOT.
+             * - webkit bug: https://bugs.webkit.org/show_bug.cgi?id=255507
+             * - firefox bug: https://bugzilla.mozilla.org/show_bug.cgi?id=1828398
+             **/
+            if (this.receivesFocus === 'false') {
+                return;
             }
+
+            await nextFrame();
+            await nextFrame();
+            if (!this.open) {
+                if (
+                    // Do not return focus to trigger when overlay is a "hint" (tooltip)
+                    this.type !== 'hint' &&
+                    // Only return focus when the trigger is not "virtual"
+                    this.triggerElement &&
+                    !(this.triggerElement instanceof VirtualTrigger)
+                ) {
+                    // This has a bug where the current overlay and the focused content could share the same `activeElement` shadow root...
+                    const relationEvent = new Event('overlay-relation-query', {
+                        bubbles: true,
+                        composed: true,
+                    });
+                    this.addEventListener(
+                        relationEvent.type,
+                        (event: Event) => {
+                            /* eslint-disable @spectrum-web-components/document-active-element */
+                            if (
+                                document.activeElement &&
+                                event
+                                    .composedPath()
+                                    .includes(document.activeElement)
+                            ) {
+                                (this.triggerElement as HTMLElement).focus();
+                            }
+                            /* eslint-enable @spectrum-web-components/document-active-element */
+                        }
+                    );
+                    this.dispatchEvent(relationEvent);
+                }
+                return;
+            }
+
+            focusEl?.focus();
         }
     }
     return OverlayWithDialog;

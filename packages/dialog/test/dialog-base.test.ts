@@ -49,7 +49,7 @@ const overlayTrigger = (story: () => TemplateResult): TemplateResult => html`
 `;
 
 describe('dialog base', () => {
-    it('does not close by default with interacting with buttons', async () => {
+    it('does not close by default when interacting with buttons', async () => {
         const el = await styledFixture<OverlayTrigger>(
             overlayTrigger(
                 () => html`
@@ -94,7 +94,6 @@ describe('dialog base', () => {
         const closed = oneEvent(el, 'sp-closed');
         dialog.open = false;
         await closed;
-        await elementUpdated(el);
 
         expect(dialog.open).to.be.false;
     });

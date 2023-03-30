@@ -97,7 +97,6 @@ describe('Dialog Wrapper', () => {
         ) as OverlayTrigger;
         const el = test.querySelector('sp-dialog-wrapper') as DialogWrapper;
         el.addEventListener('close', () => closeSpy());
-
         await waitUntil(
             () => openedSpy.calledOnce,
             'click content projected to overlay',

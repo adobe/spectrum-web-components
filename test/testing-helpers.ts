@@ -10,9 +10,21 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { elementUpdated, expect } from '@open-wc/testing';
-import { stub } from 'sinon';
+import {
+    elementUpdated,
+    expect,
+    nextFrame,
+    fixture as owcFixture,
+} from '@open-wc/testing';
+import { html } from '@spectrum-web-components/base';
+import { spy, stub } from 'sinon';
 import type { HookFunction } from 'mocha';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/themes.js';
+import { Theme } from '@spectrum-web-components/theme';
+import { TemplateResult } from '@spectrum-web-components/base';
+
+import { sendMouse } from './plugins/browser.js';
 
 export async function testForLitDevWarnings(
     fixture: () => Promise<HTMLElement>
@@ -121,4 +133,86 @@ export function ignoreResizeObserverLoopError(
     after(function () {
         window.onerror = globalErrorHandler as OnErrorEventHandler;
     });
+}
+
+export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
+    let resolve!: (isFound: boolean) => void;
+    const found = new Promise<boolean>((res) => (resolve = res));
+    const queryEvent = new Event('on-top-layer-event', {
+        composed: true,
+        bubbles: true,
+    });
+    element.addEventListener(queryEvent.type, (event: Event) => {
+        const closestDialog = ([...event.composedPath()] as HTMLElement[]).find(
+            (el) => {
+                return el.localName === 'dialog';
+            }
+        );
+        if (!closestDialog) {
+            resolve(false);
+            return;
+        }
+        let open = false;
+        try {
+            open = closestDialog.matches(':open');
+        } catch (error) {}
+        let modal = false;
+        try {
+            modal = closestDialog.matches(':modal');
+        } catch (error) {}
+        let polyfill = false;
+        if (!open && !modal) {
+            const style = getComputedStyle(closestDialog);
+            polyfill =
+                style.getPropertyValue('position') === 'fixed' &&
+                style.getPropertyValue('pointer-events') !== 'none';
+        }
+        resolve(open || modal || polyfill);
+    });
+    element.dispatchEvent(queryEvent);
+    return found;
+}
+
+export async function isInteractive(
+    el: HTMLElement,
+    position = 'center'
+): Promise<boolean> {
+    const clickSpy = spy();
+    el.addEventListener(
+        'click',
+        () => {
+            clickSpy();
+        },
+        { once: true }
+    );
+    await nextFrame();
+    await nextFrame();
+    const clientRect = el.getBoundingClientRect();
+    const points: Record<string, [number, number]> = {
+        center: [
+            clientRect.left + clientRect.width / 2,
+            clientRect.top + clientRect.height / 2,
+        ],
+        'top-left': [clientRect.left + 10, clientRect.top + 2],
+    };
+    await sendMouse({
+        steps: [
+            {
+                type: 'click',
+                position: points[position],
+            },
+        ],
+    });
+    return clickSpy.callCount === 1;
+}
+
+export async function fixture<T extends Element>(
+    story: TemplateResult
+): Promise<T> {
+    const test = await owcFixture<Theme>(html`
+        <sp-theme theme="spectrum" scale="medium" color="dark">
+            ${story}
+        </sp-theme>
+    `);
+    return test.children[0] as T;
 }

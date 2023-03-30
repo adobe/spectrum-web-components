@@ -79,10 +79,67 @@ export class BeforetoggleOpenEvent extends Event {
     }
 }
 
-const noop = (): void => {
+export const noop = (): void => {
     return;
 };
 
+/**
+ * Apply a "transitionend" listener to an element that may not transition but
+ * guarantee the callback will be fired either way.
+ *
+ * @param el {HTMLElement} - Target of the "transition" listeners.
+ * @param action {Function} - Method to trigger the "transition".
+ * @param cb {Function} - Callback to trigger when the "transition" has ended.
+ */
+export const guaranteedTransitionend = (
+    el: HTMLElement,
+    action: () => void,
+    cb: () => void
+): void => {
+    const cleanup = (): void => {
+        el.removeEventListener('transitionrun', handleTransitionrun);
+        el.removeEventListener('transitionend', handleTransitionend);
+        cb();
+    };
+    let guarantee2: number;
+    let guarantee3: number;
+    // WebKit fires `transitionrun` a little earlier, so the inner/outer relationship
+    // here allows WebKit to be caught, but doesn't remove the animation listener until
+    // after it would have fired in Chromium.
+    const guarantee1 = requestAnimationFrame(() => {
+        guarantee2 = requestAnimationFrame(() => {
+            guarantee3 = requestAnimationFrame(() => {
+                cleanup();
+            });
+        });
+    });
+    const handleTransitionend = (event: TransitionEvent): void => {
+        if (event.propertyName === 'visibility') {
+            // Ignore "visibility" transitions because they often happen before/after a
+            // larger transition and don't represent the overall transition duration.
+            return;
+        }
+        cleanup();
+    };
+    const handleTransitionrun = (event: TransitionEvent): void => {
+        if (event.propertyName === 'visibility') {
+            // Ignore "visibility" transitions because they often happen before/after a
+            // larger transition and don't represent the overall transition duration.
+            return;
+        }
+        cancelAnimationFrame(guarantee1);
+        cancelAnimationFrame(guarantee2);
+        cancelAnimationFrame(guarantee3);
+        el.removeEventListener('transitionrun', handleTransitionrun);
+        el.addEventListener('transitionend', handleTransitionend);
+    };
+    el.addEventListener('transitionrun', handleTransitionrun);
+    action();
+};
+
+/**
+ * @element sp-overlay
+ */
 export class OverlayBase extends SpectrumElement {
     static override styles = [styles];
 
@@ -109,6 +166,8 @@ export class OverlayBase extends SpectrumElement {
     }
 
     private _disabled = false;
+
+    protected dispose = noop;
 
     @queryAssignedElements({ flatten: true })
     elements!: OpenableElement[];
@@ -183,31 +242,7 @@ export class OverlayBase extends SpectrumElement {
         }
     }
 
-    protected manageChildren(open: boolean): void {
-        const eventName = open ? 'sp-opened' : 'sp-closed';
-        let announced = false;
-        this.elements.forEach((el) => {
-            if (typeof el.open !== 'undefined') {
-                el.open = open;
-                el.dispatchEvent(
-                    new Event(eventName, {
-                        bubbles: false,
-                        composed: false,
-                    })
-                );
-            }
-            if (!announced) {
-                this.dispatchEvent(
-                    new Event(eventName, {
-                        bubbles: true,
-                        composed: true,
-                    })
-                );
-                announced = true;
-            }
-        });
-    }
-
+    /* c8 ignore next 12 */
     protected async manageDialogOpen(): Promise<void> {
         console.warn(
             'Implement the `manageDialogOpen` method in a class extension.'
@@ -249,7 +284,7 @@ export class OverlayBase extends SpectrumElement {
         });
     }
 
-    protected async manageOpen(): Promise<void> {
+    protected async manageOpen(oldOpen: boolean): Promise<void> {
         if (!this.isConnected) return;
 
         if (!this.hasUpdated) {
@@ -259,6 +294,9 @@ export class OverlayBase extends SpectrumElement {
         if (this.open) {
             overlayStack.add(this);
         } else {
+            if (oldOpen) {
+                this.dispose();
+            }
             overlayStack.remove(this);
         }
 
@@ -269,8 +307,6 @@ export class OverlayBase extends SpectrumElement {
         }
         if (this.open) {
             OverlayBase.openCount += 1;
-            // this.manageChildren(this.open);
-            // this.managePosition();
         } else {
             // If the focus remains inside of the overlay or
             // a slotted descendent of the overlay you need to return
@@ -551,19 +587,45 @@ export class OverlayBase extends SpectrumElement {
     protected handlePopoverhide(): void {
         this.open = false;
         this.dispatchEvent(new BeforetoggleClosedEvent());
-        // const triggerElement = this.triggerElement as HTMLElement;
-        // if (this.triggerInteraction === 'click') {
-        //     requestAnimationFrame(() => {
-        //         triggerElement.addEventListener('click', this.handleClick);
-        //     });
-        // }
     }
 
     protected handlePopovershow(): void {
         this.dispatchEvent(new BeforetoggleOpenEvent());
     }
 
+    public willPreventClose = false;
+
+    public shouldPreventClose(): boolean {
+        const shouldPreventClose = this.willPreventClose;
+        this.willPreventClose = false;
+        return shouldPreventClose;
+    }
+
     override willUpdate(changes: PropertyValues): void {
+        if (!this.hasUpdated) {
+            this.addEventListener('focusout', (event: FocusEvent) => {
+                if (this.type !== 'auto') {
+                    return;
+                }
+                if (!event.relatedTarget) {
+                    this.open = false;
+                    return;
+                }
+                const relationEvent = new Event('overlay-relation-query', {
+                    bubbles: true,
+                    composed: true,
+                });
+                event.relatedTarget.addEventListener(
+                    relationEvent.type,
+                    (event: Event) => {
+                        if (!event.composedPath().includes(this)) {
+                            this.open = false;
+                        }
+                    }
+                );
+                event.relatedTarget.dispatchEvent(relationEvent);
+            });
+        }
         if (!this.hasAttribute('id')) {
             this.setAttribute(
                 'id',
@@ -576,7 +638,7 @@ export class OverlayBase extends SpectrumElement {
             changes.has('open') &&
             (typeof changes.get('open') !== 'undefined' || this.open)
         ) {
-            this.manageOpen();
+            this.manageOpen(changes.get('open'));
         }
         if (changes.has('trigger')) {
             const [id, interaction] = this.trigger?.split('@') || [];

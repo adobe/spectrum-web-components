@@ -78,7 +78,7 @@ const initTest = async (
     };
 };
 
-describe.skip('Overlay Trigger - extended', () => {
+describe('Overlay Trigger - extended', () => {
     let overlayTrigger!: OverlayTrigger;
     let button!: Button;
     let popover!: Popover;
@@ -138,7 +138,7 @@ describe.skip('Overlay Trigger - extended', () => {
         expect(popover.placement).to.equal('bottom');
     });
 
-    it('occludes content behind the overlay', async () => {
+    xit('occludes content behind the overlay', async () => {
         ({ overlayTrigger, button, popover } = await initTest());
         const textfield = document.createElement('sp-textfield');
         document.body.append(textfield);

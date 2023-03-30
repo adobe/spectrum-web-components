@@ -83,6 +83,7 @@ describe('Picker, responsive', () => {
             await setViewport({ width: 701, height: 640 });
             // Allow viewport update to propagate.
             await nextFrame();
+            await nextFrame();
 
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;

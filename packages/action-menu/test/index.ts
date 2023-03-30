@@ -11,12 +11,10 @@ governing permissions and limitations under the License.
 */
 
 import {
-    aTimeout,
     elementUpdated,
     expect,
     fixture,
     html,
-    nextFrame,
     oneEvent,
 } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers';
@@ -171,8 +169,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 `
             );
 
-            await nextFrame();
-
             expect(changeSpy.callCount).to.equal(0);
             expect(el.open).to.be.false;
 
@@ -183,14 +179,12 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const opened = oneEvent(el, 'sp-opened');
             el.click();
             await opened;
-            await elementUpdated(el);
 
             expect(el.open).to.be.true;
 
             const closed = oneEvent(el, 'sp-closed');
             menuItem2.click();
             await closed;
-            await elementUpdated(el);
 
             expect(el.open).to.be.false;
             expect(changeSpy.callCount).to.equal(1);
@@ -220,8 +214,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 `
             );
 
-            await nextFrame();
-
             expect(changeSpy.callCount).to.equal(0);
             expect(el.open).to.be.false;
 
@@ -232,21 +224,18 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             const opened = oneEvent(el, 'sp-opened');
             el.click();
             await opened;
-            await elementUpdated(el);
 
             expect(el.open).to.be.true;
 
             const closed = oneEvent(el, 'sp-closed');
             menuItem2.click();
             await closed;
-            await elementUpdated(el);
 
             expect(el.open).to.be.false;
             expect(changeSpy.callCount).to.equal(0);
         });
         it('can be `quiet`', async () => {
             const el = await actionMenuFixture();
-            await elementUpdated(el);
 
             expect(el.quiet).to.be.false;
 
@@ -258,8 +247,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         it('stay `valid`', async () => {
             const el = await actionMenuFixture();
 
-            await elementUpdated(el);
-
             expect(el.invalid).to.be.false;
 
             el.invalid = true;
@@ -269,8 +256,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         });
         it('focus()', async () => {
             const el = await actionMenuFixture();
-
-            await elementUpdated(el);
 
             el.focus();
 
@@ -291,7 +276,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         it('opens unmeasured', async () => {
             const el = await actionMenuFixture();
 
-            await elementUpdated(el);
             const button = el.button as HTMLButtonElement;
 
             button.click();
@@ -301,7 +285,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         it('opens unmeasured with deprecated syntax', async () => {
             const el = await deprecatedActionMenuFixture();
 
-            await elementUpdated(el);
             const button = el.button as HTMLButtonElement;
 
             button.click();
@@ -310,8 +293,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         });
         it('toggles open/close multiple time', async () => {
             const el = await actionMenuFixture();
-
-            await elementUpdated(el);
 
             let opened = oneEvent(el, 'sp-opened');
             el.open = true;
@@ -387,7 +368,6 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
                 </sp-action-menu>
             `);
 
-            await nextFrame();
             const unselectedItem = root.querySelector(
                 'sp-menu-item'
             ) as MenuItem;
@@ -409,33 +389,27 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             let opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
-            await aTimeout(150);
 
             // close by clicking selected
             // (with event listener: should set selected = false)
             let closed = oneEvent(root, 'sp-closed');
             selectedItem.click();
             await closed;
-            await aTimeout(150);
-            await nextFrame();
 
+            expect(root.open).to.be.false;
             opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
-            await aTimeout(150);
 
             // close by clicking unselected
             // (no event listener: should remain selected = false)
             closed = oneEvent(root, 'sp-closed');
             unselectedItem.click();
             await closed;
-            await aTimeout(150);
-            await nextFrame();
 
             opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
-            await aTimeout(150);
 
             expect(unselectedItem.textContent).to.include('One');
             expect(unselectedItem.selected).to.be.false;
@@ -447,13 +421,10 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             closed = oneEvent(root, 'sp-closed');
             selectedItem.click();
             await closed;
-            await aTimeout(150);
-            await nextFrame();
 
             opened = oneEvent(root, 'sp-opened');
             root.click();
             await opened;
-            await aTimeout(150);
 
             expect(unselectedItem.textContent).to.include('One');
             expect(unselectedItem.selected).to.be.false;

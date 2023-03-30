@@ -32,7 +32,6 @@ export default {
                 </sp-overlay>
             `;
         },
-        // overlayTriggerDecorator,
     ],
 };
 
@@ -71,7 +70,8 @@ export const disabledButton = (): TemplateResult => {
                             document.querySelector(
                                 '#changing-header'
                             ) as HTMLElement
-                        ).textContent = 'The button in this dialog is now enabled';
+                        ).textContent =
+                            'The button in this dialog is now enabled';
                         (
                             document.querySelector(
                                 '#changing-button'
@@ -80,9 +80,7 @@ export const disabledButton = (): TemplateResult => {
                         clearInterval(timer);
                     }
                     (
-                        document.querySelector(
-                            '.time'
-                        ) as HTMLElement
+                        document.querySelector('.time') as HTMLElement
                     ).textContent = count.toString();
                 }, 1000);
             }}
@@ -95,18 +93,19 @@ export const disabledButton = (): TemplateResult => {
                         '#changing-button'
                     ) as HTMLButtonElement
                 ).disabled = true;
-                (
-                    document.querySelector(
-                        '.time'
-                    ) as HTMLElement
-                ).textContent = '5';
+                (document.querySelector('.time') as HTMLElement).textContent =
+                    '5';
             }}
         >
             <sp-dialog size="s">
                 <h2 slot="heading" id="changing-header">
                     The button in this dialog is disabled
                 </h2>
-                <p>After about <span class="time">5</span> seconds the button with be enabled.</p>
+                <p>
+                    After about
+                    <span class="time">5</span>
+                    seconds the button with be enabled.
+                </p>
                 <sp-button disabled slot="button" id="changing-button">
                     Ok
                 </sp-button>

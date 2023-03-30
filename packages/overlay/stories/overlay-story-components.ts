@@ -21,7 +21,11 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 
-import { OverlayTrigger, Placement } from '@spectrum-web-components/overlay';
+import {
+    Overlay,
+    OverlayTrigger,
+    Placement,
+} from '@spectrum-web-components/overlay';
 import { RadioGroup } from '@spectrum-web-components/radio';
 import '@spectrum-web-components/button/sp-button.js';
 import { Button } from '@spectrum-web-components/button';
@@ -109,17 +113,19 @@ class OverlayDrag extends LitElement {
         ) as HTMLElement;
         if (!this.targetElement) return;
 
-        this.targetElement.addEventListener('mousedown', (event) =>
-            this.onMouseDown(event)
+        this.targetElement.addEventListener(
+            'pointerdown',
+            (event: PointerEvent) => this.onMouseDown(event)
         );
 
         this.resetTargetPosition();
     }
 
-    private onMouseDown(event: MouseEvent): void {
+    private onMouseDown(event: PointerEvent): void {
         const target = event.target as HTMLElement;
         const parent = target.parentElement;
         if (!parent) return;
+        target.setPointerCapture(event.pointerId);
 
         const max = {
             x: parent.offsetWidth - target.offsetWidth,
@@ -145,16 +151,17 @@ class OverlayDrag extends LitElement {
             };
             this.left = Math.min(Math.max(newPosition.x, 0), max.x);
             this.top = Math.min(Math.max(newPosition.y, 0), max.y);
-            // Overlay.update();
+            Overlay.update();
         };
 
-        const onMouseUp = (): void => {
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
+        const onMouseUp = (event: PointerEvent): void => {
+            target.setPointerCapture(event.pointerId);
+            document.removeEventListener('pointermove', onMouseMove);
+            document.removeEventListener('pointerup', onMouseUp);
         };
 
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
+        document.addEventListener('pointermove', onMouseMove);
+        document.addEventListener('pointerup', onMouseUp);
     }
 
     public resetTargetPosition(): void {

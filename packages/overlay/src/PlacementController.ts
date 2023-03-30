@@ -80,6 +80,8 @@ export class PlacementController implements ReactiveController {
 
     private options!: OverlayOptions;
 
+    private originalPlacements = new WeakMap<HTMLElement, Placement>();
+
     private target!: HTMLElement;
 
     constructor(host: ReactiveElement & { elements: OpenableElement[] }) {
@@ -97,7 +99,7 @@ export class PlacementController implements ReactiveController {
         this.options = options;
         if (!target || !options) return;
 
-        this.cleanup = autoUpdate(
+        const cleanup = autoUpdate(
             options.trigger,
             target,
             this.updatePlacement,
@@ -105,6 +107,16 @@ export class PlacementController implements ReactiveController {
                 elementResize: false,
             }
         );
+        this.cleanup = () => {
+            this.host.elements?.forEach((element) => {
+                const placement = this.originalPlacements.get(element);
+                if (placement) {
+                    element.setAttribute('placement', placement);
+                }
+                this.originalPlacements.delete(element);
+            });
+            cleanup();
+        };
     }
 
     updatePlacement = (): void => {
@@ -127,12 +139,9 @@ export class PlacementController implements ReactiveController {
               })
             : flip();
 
-        const mainAxis = Array.isArray(options?.offset)
-            ? options?.offset[0]
-            : options?.offset || 0;
-        const crossAxis = Array.isArray(options?.offset)
-            ? options?.offset[1] || 0
-            : 0;
+        const [mainAxis = 0, crossAxis = 0] = Array.isArray(options?.offset)
+            ? options.offset
+            : [options.offset, 0];
 
         const tipElement = this.host.elements.find(
             (el) => el.tipElement
@@ -193,6 +202,10 @@ export class PlacementController implements ReactiveController {
 
         target.setAttribute('actual-placement', placement);
         this.host.elements?.forEach((element) => {
+            this.originalPlacements.set(
+                element,
+                element.getAttribute('placement') as Placement
+            );
             element.setAttribute('placement', placement);
         });
 
@@ -226,7 +239,7 @@ export class PlacementController implements ReactiveController {
         this.isConstrained = false;
         // force paint
         this.host.offsetHeight;
-        this.updatePlacement();
+        this.computePlacement();
     };
 
     hostConnected(): void {
