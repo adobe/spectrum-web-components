@@ -10,18 +10,18 @@
     },
     "scripts": {
         "analyze": "lit-analyzer \"{packages,tools}/*/src/**/!(*.css).ts\"",
-        "build": "run-p test:create build:css && run-p build:ts build:types",
+        "build": "wireit",
         "build:clean": "yarn build:types --clean && yarn build",
         "build:clear-cache": "rimraf packages/*/tsconfig.tsbuildinfo && rimraf tools/*/tsconfig.tsbuildinfo",
         "build:component-inventory": "node ./tasks/build-component-inventory.js",
         "build:confirm": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,close-button,clear-button,iconset,modal,shared,styles,custom-vars-viewer},documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- test -f src/index.js",
-        "build:css": "node ./tasks/build-css.js && pretty-quick --fix --pattern \"{packages,tools}/**/*.css\"",
+        "build:css": "wireit",
         "build:css:watch": "node ./tasks/watch-css.js",
         "build:react": "yarn gen-react-wrapper && node ./tasks/build-react.js && yarn tsc --build tsconfig-react-wrapper.json",
         "build:tests": "tsc --build test/tsconfig.json && tsc --build test/tsconfig-node.json",
-        "build:ts": "node ./tasks/esbuild-packages.js",
+        "build:ts": "wireit",
         "build:ts:watch": "node ./tasks/watch-packages.js",
-        "build:types": "yarn tsc --build tsconfig-all.json",
+        "build:types": "wireit",
         "build:watch": "run-p build:css:watch build:ts:watch",
         "custom-element-json": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,modal,iconset,shared,styles,custom-vars-viewer},documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- cem analyze --config ../../custom-elements-manifest.config.js --packagejson",
         "docs:analyze": "cem analyze --globs \"packages/**/*.ts\" --exclude \"**/*.d.ts\" --exclude \"**/stories/**\" --exclude \"**/icons/**\" --exclude \"**/elements/**\" --outdir projects/documentation --litelement",
@@ -55,7 +55,7 @@
         "preeleventy": "yarn docs:analyze",
         "prelerna-publish": "rimraf react && yarn get-ready && yarn custom-element-json && yarn build:confirm",
         "prepare": "husky install",
-        "prestorybook": "cem analyze --outdir .storybook/",
+        "prestorybook": "wireit",
         "prestorybook:build": "cem analyze --outdir .storybook/",
         "pretest:bench": "test -f test/benchmark/cli.js ||:",
         "pretest:visual": "yarn build && yarn build",
@@ -65,7 +65,7 @@
         "spectrum-tokens": "node ./scripts/spectrum-tokens.js",
         "spectrum-vars": "node ./scripts/spectrum-vars.js",
         "start": "yarn storybook",
-        "storybook": "yarn build && yarn storybook:quick",
+        "storybook": "wireit",
         "storybook:build": "build-storybook -o projects/documentation/dist/storybook",
         "storybook:quick": "run-p build:watch storybook:run",
         "storybook:run": "web-dev-server --config wds-storybook.config.js",
@@ -73,7 +73,7 @@
         "test:bench": "node test/benchmark/cli.js",
         "test:changed": "node ./tasks/test-changes.js",
         "test:ci": "yarn test:start",
-        "test:create": "node test/visual/create.js",
+        "test:create": "wireit",
         "test:errors": "yarn test | grep -A 32 ❌",
         "test:focus": "yarn build && yarn test:ci --coverage --group",
         "test:start": "web-test-runner",
@@ -188,7 +188,97 @@
         "tar-stream": "^3.0.0",
         "terser": "^4.8.1",
         "typescript": "^4.7.2",
+        "wireit": "^0.9.5",
         "yargs": "^17.2.1"
+    },
+    "wireit": {
+        "build:css": {
+            "command": "node ./tasks/build-css.js && pretty-quick --fix --pattern \"{packages,tools}/**/*.css\"",
+            "files": [
+                "packages/**/*.css",
+                "tools/**/*.css"
+            ],
+            "output": [
+                "packages/**/*.css.ts",
+                "tools/**/*.css.ts"
+            ],
+            "clean": "if-file-deleted"
+        },
+        "build:ts": {
+            "command": "node ./tasks/esbuild-packages.js",
+            "dependencies": [
+                "test:create",
+                "build:css"
+            ],
+            "files": [
+                "packages/**/*.ts",
+                "tools/**/*.ts"
+            ],
+            "output": [
+                "packages/**/.js",
+                "tools/**/*.js",
+                "!**/spectrum-config.js",
+                "!**/spectrum-config.v1.js",
+                "!**/build.js"
+            ],
+            "clean": "if-file-deleted"
+        },
+        "build:types": {
+            "command": "tsc --build tsconfig-all.json",
+            "dependencies": [
+                "test:create",
+                "build:css"
+            ],
+            "files": [
+                "packages/**/*.ts",
+                "tools/**/*.ts"
+            ],
+            "output": [
+                "packages/**/*.d.ts",
+                "tools/**/*.d.ts",
+                "!**/local.d.ts"
+            ],
+            "clean": "if-file-deleted"
+        },
+        "build": {
+            "dependencies": [
+                "build:ts",
+                "build:types"
+            ]
+        },
+        "prestorybook": {
+            "command": "cem analyze --outdir .storybook/",
+            "files": [
+                "packages/**/*.ts",
+                "tools/**/*.ts"
+            ],
+            "output": [
+                ".storybook/custom-elements.json"
+            ]
+        },
+        "storybook": {
+            "command": "web-dev-server --config wds-storybook.config.js",
+            "service": true,
+            "files": [
+                "wds-storybook.config.js"
+            ],
+            "dependencies": [
+                "build",
+                "prestorybook"
+            ]
+        },
+        "test:create": {
+            "command": "node test/visual/create.js",
+            "files": [
+                "packages/*/stories/*.stories.ts",
+                "tools/*/stories/*.stories.ts"
+            ],
+            "output": [
+                "packages/**/*.test-vrt.ts",
+                "tools/**/*.test-vrt.ts"
+            ],
+            "clean": "if-file-deleted"
+        }
     },
     "workspaces": [
         "packages/*",
