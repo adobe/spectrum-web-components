@@ -51,13 +51,25 @@
         multiLevel
     >
         <span slot="no-js">Tools</span>
-        {% for component in collections['tool-examples'] %}
+        {% for toolRoot in collections['tool-root'] %}
             <sp-sidenav-item
-                label="{{ component.data.displayName }}"
-                href="{{ component.url }}"
-                value="{{ component.data.componentName }}"
+                label="{{ toolRoot.data.displayName }}"
+                href="{{ toolRoot.url }}"
+                value="{{ toolRoot.data.componentName }}"
+                {% if componentPackage === toolRoot.data.componentName %}expanded{% endif %}
+                {% if value === toolRoot.data.componentName %}autofocus{% endif %}
             >
-                <a href="{{ component.url }}" slot="no-js">{{ component.data.displayName }}</a>
+                <a href="{{ toolRoot.url }}" slot="no-js">{{ toolRoot.data.displayName }}</a>
+                {% for componentChild in collections[toolRoot.data.componentName + '-children'] %}
+                    <sp-sidenav-item
+                        label="{{ componentChild.data.displayName }}"
+                        href="{{ componentChild.url }}"
+                        value="{{ componentChild.data.componentName }}"
+                        {% if value === componentChild.data.componentName %}autofocus{% endif %}
+                    >
+                        <a href="{{ componentChild.url }}" slot="no-js">{{ componentChild.data.displayName }}</a>
+                    </sp-sidenav-item>
+                {% endfor %}
             </sp-sidenav-item>
         {% endfor %}
     </sp-sidenav-item>

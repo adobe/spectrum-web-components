@@ -133,7 +133,21 @@ module.exports = function (eleventyConfig) {
             });
     });
 
-    eleventyConfig.addCollection('tool-examples', function (collection) {
+    eleventyConfig.addCollection('tool-root', function (collection) {
+        return collection
+            .getFilteredByTags('tool-examples', 'root')
+            .sort(function (a, b) {
+                if (a.data.displayName < b.data.displayName) {
+                    return -1;
+                }
+                if (b.data.displayName < a.data.displayName) {
+                    return 1;
+                }
+                return 0;
+            });
+    });
+
+    eleventyConfig.addCollection('tool-all', function (collection) {
         return collection
             .getFilteredByTag('tool-examples')
             .sort(function (a, b) {
