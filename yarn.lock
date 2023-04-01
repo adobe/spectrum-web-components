@@ -23619,10 +23619,10 @@ winston@^3.2.1, winston@^3.3.3:
     triple-beam "^1.3.0"
     winston-transport "^4.4.2"
 
-wireit@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/wireit/-/wireit-0.9.0.tgz#4dd6ea4d9bec5563e1c4e3e17feb7d9f171d6255"
-  integrity sha512-O3DpiOUM7RSMHW4mehXUqcunPCX3djHchnCKMLhQsykdO8LoLvx3jCJQKVbC0XtPZI2ovIkAJok9iKbvvZ7AeQ==
+wireit@^0.9.5:
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/wireit/-/wireit-0.9.5.tgz#7c3622f6ff5e63b7fac05783baf82f967f52562c"
+  integrity sha512-dKKNAwLxQjbPPMrltPxMUFKvLy2z6hlVjvR/qitvPm8GEQyb/1QYBG7ObvOQLsi95uAXpkWLJXBYkCKeVcMVgA==
   dependencies:
     braces "^3.0.2"
     chokidar "^3.5.3"
