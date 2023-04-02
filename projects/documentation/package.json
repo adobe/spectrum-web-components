@@ -16,7 +16,7 @@
         "build:production": "wireit",
         "build:search-index": "wireit",
         "build:search-index:prod": "wireit",
-        "build:tsc": "wireit",
+        "build:ts": "wireit",
         "copy-docs": "wireit",
         "serve": "wireit",
         "watch": "yarn serve --watch"
@@ -84,7 +84,7 @@
         "build:assets": {
             "dependencies": [
                 {
-                    "script": "build:tsc"
+                    "script": "build:ts"
                 },
                 {
                     "script": "build:move-css"
@@ -169,7 +169,7 @@
                 "dist/searchIndex.json"
             ]
         },
-        "build:tsc": {
+        "build:ts": {
             "command": "node scripts/build-ts.js",
             "files": [
                 "./src/**/*.ts",

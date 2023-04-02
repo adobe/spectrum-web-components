@@ -11,7 +11,6 @@
     "scripts": {
         "analyze": "lit-analyzer \"{packages,tools}/*/src/**/!(*.css).ts\"",
         "build": "wireit",
-        "build:clean": "yarn build:types --clean && yarn build",
         "build:clear-cache": "rimraf packages/*/tsconfig.tsbuildinfo && rimraf tools/*/tsconfig.tsbuildinfo",
         "build:component-inventory": "node ./tasks/build-component-inventory.js",
         "build:confirm": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,close-button,clear-button,iconset,modal,shared,styles,custom-vars-viewer},documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- test -f src/index.js",
@@ -33,10 +32,10 @@
         "docs:start": "yarn workspace documentation serve --watch",
         "find": "test -f custom-elements.json",
         "gen-react-wrapper": "rm -fr react && lerna exec --ignore \"{@spectrum-web-components/{base,bundle,custom-vars-viewer,modal,iconset,shared,styles},documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- cem analyze --config ../../cem-react-wrapper.config.js && node ./scripts/generate-icon-react-wrapper.js",
-        "get-ready": "yarn build:clear-cache && run-p process-icons process-spectrum && yarn build:clean",
-        "icons": "node ./scripts/process-icons.js && pretty-quick --pattern \"packages/**/*.svg.ts\" && eslint -f pretty --fix \"packages/**/*.svg.ts\"",
-        "icons:ui": "yarn workspace @spectrum-web-components/icons-ui build",
-        "icons:workflow": "yarn workspace @spectrum-web-components/icons-workflow build",
+        "get-ready": "yarn build:clear-cache && yarn build",
+        "icons": "wireit",
+        "icons:ui": "wireit",
+        "icons:workflow": "wireit",
         "lerna-publish": "lerna publish --message \"chore: release new versions #publish\"",
         "lint": "run-p lint:js lint:docs lint:ts lint:css lint:packagejson",
         "lint:css": "stylelint \"packages/**/*.css\" \"tools/**/*.css\"",
@@ -50,7 +49,6 @@
         "postdocs:analyze": "node ./scripts/add-custom-properties.js --src=\"projects/documentation/custom-elements.json\"",
         "postinstall": "patch-package && yarn get-ready",
         "postlerna-publish": "yarn build:react && lerna publish from-package --message \"chore: release new Reach Wrapper versions #publish\"",
-        "postprocess-spectrum": "yarn lint:css --fix && pretty-quick --pattern \"{packages,tools}/**/*.css\" && pretty-quick --pattern \"packages/dialog/src/spectrum-dialog.css\"",
         "precustom-element-json": "lerna exec --ignore \"{@spectrum-web-components/{base,bundle,iconset,modal,shared,styles,custom-vars-viewer},documentation,example-project-rollup,example-project-webpack,swc-templates,@types/swc}\" -- rm custom-elements.json ||:",
         "preeleventy": "yarn docs:analyze",
         "prelerna-publish": "rimraf react && yarn get-ready && yarn custom-element-json && yarn build:confirm",
@@ -59,11 +57,11 @@
         "prestorybook:build": "cem analyze --outdir .storybook/",
         "pretest:bench": "test -f test/benchmark/cli.js ||:",
         "pretest:visual": "yarn build && yarn build",
-        "process-icons": "run-p icons icons:ui icons:workflow",
-        "process-spectrum": "yarn spectrum-vars && yarn spectrum-css && yarn spectrum-tokens",
-        "spectrum-css": "node ./tasks/process-spectrum.js",
-        "spectrum-tokens": "node ./scripts/spectrum-tokens.js",
-        "spectrum-vars": "node ./scripts/spectrum-vars.js",
+        "process-icons": "wireit",
+        "process-spectrum": "wireit",
+        "spectrum-css": "wireit",
+        "spectrum-tokens": "wireit",
+        "spectrum-vars": "wireit",
         "start": "yarn storybook",
         "storybook": "wireit",
         "storybook:build": "build-storybook -o projects/documentation/dist/storybook",
@@ -193,7 +191,10 @@
     },
     "wireit": {
         "build:css": {
-            "command": "node ./tasks/build-css.js && pretty-quick --fix --pattern \"{packages,tools}/**/*.css\"",
+            "command": "node ./tasks/build-css.js",
+            "dependencies": [
+                "process-spectrum"
+            ],
             "files": [
                 "packages/**/*.css",
                 "tools/**/*.css"
@@ -207,12 +208,15 @@
         "build:ts": {
             "command": "node ./tasks/esbuild-packages.js",
             "dependencies": [
+                "process-icons",
                 "test:create",
                 "build:css"
             ],
             "files": [
                 "packages/**/*.ts",
-                "tools/**/*.ts"
+                "tools/**/*.ts",
+                "!packages/**/*.d.ts",
+                "!tools/**/*.d.ts"
             ],
             "output": [
                 "packages/**/.js",
@@ -246,6 +250,47 @@
                 "build:types"
             ]
         },
+        "icons": {
+            "command": "node ./scripts/process-icons.js && pretty-quick --pattern \"packages/**/*.svg.ts\" && eslint -f pretty --fix \"packages/**/*.svg.ts\"",
+            "files": [
+                "scripts/process-icons.js"
+            ],
+            "output": [
+                "packages/**/*.svg.ts"
+            ]
+        },
+        "icons:ui": {
+            "command": "yarn workspace @spectrum-web-components/icons-ui build",
+            "files": [
+                "packages/icons-ui/bin/build.js",
+                "node_modules/@spectrum-css/icon/medium/**.svg"
+            ],
+            "output": [
+                "packages/icons-ui/**/*.ts",
+                "!packages/icons-ui/**/*.d.ts",
+                "!packages/icons-ui/stories/**/*.ts",
+                "!packages/icons-ui/test/**/*.ts",
+                "!packages/icons-ui/src/index.ts",
+                "!packages/icons-ui/src/custom-tag.ts"
+            ],
+            "clean": "if-file-deleted"
+        },
+        "icons:workflow": {
+            "command": "yarn workspace @spectrum-web-components/icons-workflow build",
+            "files": [
+                "packages/icons-workflow/bin/build.js",
+                "node_modules/@adobe/spectrum-css-workflow-icons/dist/18/**.svg"
+            ],
+            "output": [
+                "packages/icons-workflow/**/*.ts",
+                "!packages/icons-workflow/**/*.d.ts",
+                "!packages/icons-workflow/stories/**/*.ts",
+                "!packages/icons-workflow/test/**/*.ts",
+                "!packages/icons-workflow/src/index.ts",
+                "!packages/icons-workflow/src/custom-tag.ts"
+            ],
+            "clean": "if-file-deleted"
+        },
         "prestorybook": {
             "command": "cem analyze --outdir .storybook/",
             "files": [
@@ -255,6 +300,32 @@
             "output": [
                 ".storybook/custom-elements.json"
             ]
+        },
+        "process-icons": {
+            "dependencies": [
+                "icons",
+                "icons:ui",
+                "icons:workflow"
+            ]
+        },
+        "process-spectrum": {
+            "command": "node ./scripts/spectrum-vars.js && node ./tasks/process-spectrum.js && node ./scripts/spectrum-tokens.js && yarn lint:css --fix && pretty-quick --pattern \"{packages,tools}/**/*.css\" && pretty-quick --pattern \"packages/dialog/src/spectrum-dialog.css\"",
+            "files": [
+                "tasks/process-spectrum.js",
+                "packages/**/spectrum-config.js",
+                "tools/**/spectrum-config.js",
+                "node_modules/@spectrum-css/**/index-vars.css",
+                "scripts/spectrum-tokens.js",
+                "node_modules/@spectrum-css/**/*.css",
+                "scripts/spectrum-vars.js",
+                "node_modules/@spectrum-css/**/*.css"
+            ],
+            "output": [
+                "packages/*/src/spectrum-*.css",
+                "tools/*/src/spectrum-*.css",
+                "tools/styles/*.css"
+            ],
+            "clean": false
         },
         "storybook": {
             "command": "web-dev-server --config wds-storybook.config.js",
@@ -274,8 +345,8 @@
                 "tools/*/stories/*.stories.ts"
             ],
             "output": [
-                "packages/**/*.test-vrt.ts",
-                "tools/**/*.test-vrt.ts"
+                "packages/*/test/*.test-vrt.ts",
+                "tools/*/test/*.test-vrt.ts"
             ],
             "clean": "if-file-deleted"
         }
