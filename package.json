@@ -219,11 +219,22 @@
                 "!tools/**/*.d.ts"
             ],
             "output": [
-                "packages/**/.js",
+                "packages/**/*.js",
+                "projects/**/*.js",
+                "packages/**/*.js.map",
+                "projects/**/*.js.map",
+                "!projects/documentation/**/*.js",
                 "tools/**/*.js",
+                "tools/**/*.js.map",
                 "!**/spectrum-config.js",
                 "!**/spectrum-config.v1.js",
-                "!**/build.js"
+                "!**/build.js",
+                "test/**/*.js",
+                "test/**/*.js.map",
+                "!test/visual/create.js",
+                "!test/visual/review.js",
+                "!test/visual/rollup.config.js",
+                "!test/visual/src/review.js"
             ],
             "clean": "if-file-deleted"
         },
@@ -269,6 +280,7 @@
                 "packages/icons-ui/**/*.ts",
                 "!packages/icons-ui/**/*.d.ts",
                 "!packages/icons-ui/stories/**/*.ts",
+                "packages/icons-ui/stories/icon-manifest.ts",
                 "!packages/icons-ui/test/**/*.ts",
                 "!packages/icons-ui/src/index.ts",
                 "!packages/icons-ui/src/custom-tag.ts"
@@ -285,6 +297,7 @@
                 "packages/icons-workflow/**/*.ts",
                 "!packages/icons-workflow/**/*.d.ts",
                 "!packages/icons-workflow/stories/**/*.ts",
+                "packages/icons-workflow/stories/icon-manifest.ts",
                 "!packages/icons-workflow/test/**/*.ts",
                 "!packages/icons-workflow/src/index.ts",
                 "!packages/icons-workflow/src/custom-tag.ts"
