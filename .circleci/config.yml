@@ -17,14 +17,22 @@ commands:
             - checkout
             - restore_cache:
                   keys:
-                      - v3a-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - restore_cache:
+                  keys:
+                      - v3b-wireit-{{ arch }}-{{ checksum "package.json" }}-
+                      - v3b-wireit-{{ arch }}-
             - run:
                   name: Installing Dependencies
                   command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
             - save_cache:
                   paths:
                       - ~/.cache/yarn
-                  key: v3a-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                  key: v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+            - save_cache:
+                  paths:
+                      - .wireit
+                  key: v3b-wireit-{{ arch }}-{{ checksum "package.json" }}-{{ epoch }}
             - attach_workspace:
                   at: /
     run-regressions:
@@ -111,14 +119,15 @@ jobs:
             - checkout
             - restore_cache:
                   keys:
-                      - v3a-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - run:
                   name: Installing Dependencies
                   command: yarn --ignore-scripts --frozen-lockfile --cache-folder ~/.cache/yarn
             - save_cache:
                   paths:
                       - ~/.cache/yarn
-                  key: v3a-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
+                      - .wireit
+                  key: v3b-dependencies-{{ arch }}-{{ checksum "yarn.lock" }}
             - run:
                   name: Define environment variable with lastest commit's message
                   command: |
