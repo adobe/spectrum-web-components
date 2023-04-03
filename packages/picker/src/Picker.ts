@@ -386,6 +386,15 @@ export class PickerBase extends SizedMixin(Focusable) {
         `;
     }
 
+    protected renderStateIcon(): TemplateResult | typeof nothing {
+        if (!this.invalid) {
+            return nothing;
+        }
+        return html`
+            <sp-icon-alert class="validation-icon"></sp-icon-alert>
+        `;
+    }
+
     protected get buttonContent(): TemplateResult[] {
         const labelClasses = {
             'visually-hidden': this.icons === 'only' && !!this.value,
@@ -399,13 +408,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                 <span id="label" class=${classMap(labelClasses)}>
                     ${this.renderLabelContent(this.selectedItemContent.content)}
                 </span>
-                ${this.invalid
-                    ? html`
-                          <sp-icon-alert
-                              class="validation-icon"
-                          ></sp-icon-alert>
-                      `
-                    : nothing}
+                ${this.renderStateIcon()}
                 <sp-icon-chevron100
                     class="picker ${chevronClass[
                         this.size as DefaultElementSize
