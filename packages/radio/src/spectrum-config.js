@@ -29,6 +29,15 @@ const config = {
             fileName: 'radio',
             components: [
                 {
+                    find: [builder.pseudoClass('focus')],
+                    replace: [
+                        {
+                            replace: builder.pseudoClass('focus-visible'),
+                            hoist: true,
+                        },
+                    ],
+                },
+                {
                     // .spectrum-Radio-input:focus-visible+.spectrum-Radio-button:after
                     find: [
                         builder.class('spectrum-Radio-input'),
