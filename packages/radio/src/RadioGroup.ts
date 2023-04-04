@@ -104,9 +104,7 @@ export class RadioGroup extends FocusVisiblePolyfillMixin(FieldGroup) {
                 const selectedRadio = this.querySelector(
                     `sp-radio[value="${this.selected}"]`
                 ) as Radio;
-                if (!selectedRadio) {
-                    this.selected = '';
-                } else {
+                if (selectedRadio) {
                     selectedRadio.checked = true;
                 }
             }
