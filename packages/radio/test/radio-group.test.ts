@@ -13,7 +13,13 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/radio/sp-radio-group.js';
 import '@spectrum-web-components/radio/sp-radio.js';
 import { Radio, RadioGroup } from '@spectrum-web-components/radio';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    nextFrame,
+} from '@open-wc/testing';
 import {
     arrowDownEvent,
     arrowLeftEvent,
@@ -627,5 +633,31 @@ describe('Radio Group', () => {
         charmander.click();
 
         expect(changeSpy.calledWith(undefined)).to.be.false;
+    });
+});
+
+describe('Radio Group - late children', () => {
+    it.only('accepts frame late children', async () => {
+        const test = await fixture(html`
+            <div>
+                <sp-radio value="first">Bulbasaur</sp-radio>
+                <sp-radio value="second">Squirtle</sp-radio>
+                <sp-radio value="third">Charmander</sp-radio>
+                <sp-radio value="fourth">Other</sp-radio>
+            </div>
+        `);
+        const group = document.createElement('sp-radio-group');
+        const buttons = [...test.querySelectorAll('sp-radio')] as Radio[];
+
+        test.append(group);
+        group.selected = 'first';
+        Promise.resolve().then(function () {
+            group.append(...buttons);
+        });
+        await nextFrame();
+        await nextFrame();
+
+        expect(group.buttons.length).to.equal(4);
+        expect(group.selected).to.equal('first');
     });
 });
