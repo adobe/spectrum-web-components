@@ -4382,10 +4382,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/radio/-/radio-5.0.1.tgz#4e2b896599ec9bad61cba389e59c6dcd4f002f10"
   integrity sha512-dJ1+YOaEmBiZl2dXSufn+M3akAWrLnuvVanHZTn//Xdq1vjmAK2IPtYAEuJpA6ckwLU5GXypQ4MjCFmxbhC9rQ==
 
-"@spectrum-css/search@^4.2.20":
-  version "4.2.25"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/search/-/search-4.2.25.tgz#35eb30d9afcec2aa3f95be49721470df795bf065"
-  integrity sha512-xdig3z3EchtpqjHSwTNP6VfTTtSae6VzjL84PVTj/n4Z50m+x2lWXeRbOu7bYR6puMhZ0QSypAyyOl52niAFwA==
+"@spectrum-css/search@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/search/-/search-5.0.0.tgz#0e8c548d7206c327dd854420476b558d373b9309"
+  integrity sha512-JAJ9QxtWJxnuXQU/CIf4vfy843XBMLZe8x+KnBgnzqGEkpYrheJ3E540GS/G7p889sfeKI4enZ5DHR/9tXEkBA==
 
 "@spectrum-css/sidenav@^3.0.31":
   version "3.0.31"
