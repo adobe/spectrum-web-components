@@ -637,7 +637,7 @@ describe('Radio Group', () => {
 });
 
 describe('Radio Group - late children', () => {
-    it.only('accepts frame late children', async () => {
+    it('accepts frame late children', async () => {
         const test = await fixture(html`
             <div>
                 <sp-radio value="first">Bulbasaur</sp-radio>
