@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.7.0...@spectrum-web-components/top-nav@0.7.1) (2023-04-05)
+
+### Performance Improvements
+
+-   reduce render cycles when managing "dir" attribute ([7b28309](https://github.com/adobe/spectrum-web-components/commit/7b28309ff2b977ad8a61d9e6c41737abfbb111bf))
+
 # [0.7.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/top-nav@0.6.13...@spectrum-web-components/top-nav@0.7.0) (2023-03-22)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
     "name": "documentation",
-    "version": "0.4.13",
+    "version": "0.4.14",
     "private": true,
     "description": "The documentation site for Spectrum Web Components",
     "license": "Apache-2.0",
@@ -22,8 +22,8 @@
         "watch": "yarn serve --watch"
     },
     "dependencies": {
-        "@spectrum-web-components/bundle": "^0.29.3",
-        "@spectrum-web-components/custom-vars-viewer": "^0.0.2"
+        "@spectrum-web-components/bundle": "^0.29.4",
+        "@spectrum-web-components/custom-vars-viewer": "^0.0.3"
     },
     "devDependencies": {
         "@11ty/eleventy": "^2.0.0",

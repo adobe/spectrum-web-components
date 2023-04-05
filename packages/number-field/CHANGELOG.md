@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.6.0...@spectrum-web-components/number-field@0.6.1) (2023-04-05)
+
+### Bug Fixes
+
+-   **theme:** stop language resolution propagation and demo using local languages ([6b81391](https://github.com/adobe/spectrum-web-components/commit/6b81391c3e4416889daa5627526dc0194f2f5f56))
+
 # [0.6.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/number-field@0.5.13...@spectrum-web-components/number-field@0.6.0) (2023-03-22)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/progress-circle",
-    "version": "0.7.7",
+    "version": "0.7.8",
     "publishConfig": {
         "access": "public"
     },
@@ -57,7 +57,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.4"
+        "@spectrum-web-components/base": "^0.7.5"
     },
     "devDependencies": {
         "@spectrum-css/progresscircle": "^2.0.10"

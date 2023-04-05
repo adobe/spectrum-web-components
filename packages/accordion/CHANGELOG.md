@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.7.11...@spectrum-web-components/accordion@0.7.12) (2023-04-05)
+
+**Note:** Version bump only for package @spectrum-web-components/accordion
+
 ## [0.7.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/accordion@0.7.10...@spectrum-web-components/accordion@0.7.11) (2023-03-22)
 
 **Note:** Version bump only for package @spectrum-web-components/accordion

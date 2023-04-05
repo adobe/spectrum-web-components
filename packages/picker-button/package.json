@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/picker-button",
-    "version": "0.1.9",
+    "version": "0.1.10",
     "publishConfig": {
         "access": "public"
     },
@@ -44,8 +44,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.4",
-        "@spectrum-web-components/icons-ui": "^0.9.10"
+        "@spectrum-web-components/base": "^0.7.5",
+        "@spectrum-web-components/icons-ui": "^0.9.11"
     },
     "devDependencies": {
         "@spectrum-css/pickerbutton": "^2.0.7"

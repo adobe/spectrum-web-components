@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/top-nav",
-    "version": "0.7.0",
+    "version": "0.7.1",
     "publishConfig": {
         "access": "public"
     },
@@ -66,9 +66,9 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^1.1.0",
-        "@spectrum-web-components/base": "^0.7.4",
-        "@spectrum-web-components/shared": "^0.15.5",
-        "@spectrum-web-components/tabs": "^0.11.2"
+        "@spectrum-web-components/base": "^0.7.5",
+        "@spectrum-web-components/shared": "^0.15.6",
+        "@spectrum-web-components/tabs": "^0.11.3"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.11.12...@spectrum-web-components/radio@0.11.13) (2023-04-05)
+
+### Bug Fixes
+
+-   **radio:** process :focus and :focus-visible ([77bc0e9](https://github.com/adobe/spectrum-web-components/commit/77bc0e9f22e9e3d00b7a3d831e59221bc117fd0c))
+
 ## [0.11.12](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.11.11...@spectrum-web-components/radio@0.11.12) (2023-03-22)
 
 ### Bug Fixes

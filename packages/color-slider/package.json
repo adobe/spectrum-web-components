@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/color-slider",
-    "version": "0.4.10",
+    "version": "0.4.11",
     "publishConfig": {
         "access": "public"
     },
@@ -62,10 +62,10 @@
     ],
     "dependencies": {
         "@ctrl/tinycolor": "^3.3.3",
-        "@spectrum-web-components/base": "^0.7.4",
-        "@spectrum-web-components/color-handle": "^0.4.8",
+        "@spectrum-web-components/base": "^0.7.5",
+        "@spectrum-web-components/color-handle": "^0.4.9",
         "@spectrum-web-components/reactive-controllers": "^0.3.5",
-        "@spectrum-web-components/shared": "^0.15.5"
+        "@spectrum-web-components/shared": "^0.15.6"
     },
     "devDependencies": {
         "@spectrum-css/colorslider": "^2.0.13"
