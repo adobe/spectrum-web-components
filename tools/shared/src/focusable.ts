@@ -81,9 +81,10 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             return;
         }
         if (this.focusElement === this) {
-            if (tabIndex !== this.tabIndex) {
+            if (tabIndex !== this._tabIndex) {
                 this._tabIndex = tabIndex;
                 const tabindex = this.disabled ? '-1' : '' + tabIndex;
+                this.manipulatingTabindex = true;
                 this.setAttribute('tabindex', tabindex);
             }
             return;
@@ -122,7 +123,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
         this.manageFocusElementTabindex(tabIndex);
     }
-    private _tabIndex = 0;
+    private _tabIndex = -1;
 
     private onPointerdownManagementOfTabIndex(): void {
         if (this.tabIndex === -1) {

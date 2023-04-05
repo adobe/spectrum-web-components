@@ -59,6 +59,34 @@ describe('ActionButton', () => {
         expect(el.textContent).to.include('Button');
         await expect(el).to.be.accessible();
     });
+    it('manages a `tabindex`', async () => {
+        const el = await fixture<ActionButton>(
+            html`
+                <sp-action-button>Button</sp-action-button>
+            `
+        );
+
+        expect(el.tabIndex).to.equal(0);
+        expect(el.disabled).to.be.false;
+
+        el.setAttribute('tabindex', '-1');
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(-1);
+        expect(el.disabled).to.be.false;
+
+        el.disabled = true;
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(-1);
+        expect(el.disabled).to.be.true;
+
+        el.disabled = false;
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(-1);
+        expect(el.disabled).to.be.false;
+    });
     it('maintains a `size` attribute', async () => {
         const el = await fixture<ActionButton>(
             html`

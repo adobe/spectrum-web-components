@@ -191,7 +191,7 @@
     },
     "wireit": {
         "build:css:watch": {
-            "command": "yarn build:css --watch",
+            "command": "node ./tasks/watch-css.js",
             "service": true
         },
         "build:css": {
@@ -210,7 +210,7 @@
             "clean": "if-file-deleted"
         },
         "build:ts:watch": {
-            "command": "yarn build:ts --watch",
+            "command": "node ./tasks/watch-packages.js",
             "service": true
         },
         "build:ts": {
