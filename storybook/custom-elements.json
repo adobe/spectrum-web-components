@@ -1424,9 +1424,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -1468,18 +1465,6 @@
               "default": "false",
               "description": "Allows multiple accordion items to be opened at the same time",
               "fieldName": "allowMultiple"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -1745,9 +1730,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -1821,18 +1803,6 @@
                 "text": "string"
               },
               "fieldName": "variant"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -2742,9 +2712,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -2848,18 +2815,6 @@
                 "text": "string[]"
               },
               "fieldName": "selected"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -3987,9 +3942,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -4037,18 +3989,6 @@
               },
               "default": "''",
               "fieldName": "label"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -4274,9 +4214,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -4324,18 +4261,6 @@
               },
               "default": "'informative'",
               "fieldName": "variant"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -4467,9 +4392,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -4520,18 +4442,6 @@
               },
               "default": "false",
               "fieldName": "corner"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -6423,9 +6333,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -6466,18 +6373,6 @@
               },
               "default": "false",
               "fieldName": "vertical"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -6875,9 +6770,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -6995,18 +6887,6 @@
               },
               "default": "''",
               "fieldName": "subheading"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -7161,6 +7041,12 @@
                 "name": "CheckboxBase",
                 "module": "packages/checkbox/src/CheckboxBase.js"
               }
+            }
+          ],
+          "events": [
+            {
+              "description": "Announces a change in the `checked` property of a Checkbox",
+              "name": "change"
             }
           ],
           "attributes": [
@@ -7393,9 +7279,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -7444,18 +7327,6 @@
               },
               "default": "''",
               "fieldName": "variant"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -7952,9 +7823,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -8085,18 +7953,6 @@
               },
               "default": "0.01",
               "fieldName": "step"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -8237,9 +8093,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -8304,18 +8157,6 @@
               },
               "default": "'rgba(255, 0, 0, 0.5)'",
               "fieldName": "color"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -8398,9 +8239,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -8449,18 +8287,6 @@
               },
               "default": "'rgba(255, 0, 0, 0.5)'",
               "fieldName": "color"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -9287,6 +9113,15 @@
               ]
             },
             {
+              "kind": "method",
+              "name": "calculateStyleData",
+              "return": {
+                "type": {
+                  "text": "{\n        clipPath: string;\n        clipPathBorders: string;\n        diameter: number;\n        handleLocationStyles: string;\n    }"
+                }
+              }
+            },
+            {
               "kind": "field",
               "name": "observer",
               "type": {
@@ -9680,9 +9515,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -9762,18 +9594,6 @@
                 "text": "'s' | 'm' | 'l' | undefined"
               },
               "fieldName": "size"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -10048,9 +9868,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -10132,18 +9949,6 @@
               },
               "default": "false",
               "fieldName": "underlay"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -10631,9 +10436,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -10846,18 +10648,6 @@
                 "name": "DialogBase",
                 "module": "packages/dialog/src/DialogBase.ts"
               }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -10930,9 +10720,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -10973,18 +10760,6 @@
               },
               "default": "false",
               "fieldName": "vertical"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -11161,9 +10936,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -11230,18 +11002,6 @@
               },
               "default": "false",
               "fieldName": "isDragged"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -11412,9 +11172,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -11479,18 +11236,6 @@
               },
               "default": "false",
               "fieldName": "vertical"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -11712,9 +11457,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -11786,18 +11528,6 @@
                 "text": "'start' | 'end' | undefined"
               },
               "fieldName": "sideAligned"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -11888,9 +11618,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -11940,18 +11667,6 @@
               "default": "'neutral'",
               "description": "The visual variant to apply to this help text.",
               "fieldName": "variant"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -12081,9 +11796,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -12113,20 +11825,6 @@
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
-              }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
               }
             }
           ]
@@ -12446,9 +12144,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -12516,18 +12211,6 @@
               "inheritedFrom": {
                 "name": "IconBase",
                 "module": "packages/icon/src/IconBase.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
               }
             }
           ],
@@ -12609,9 +12292,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -12658,18 +12338,6 @@
                 "text": "'s' | 'm' | 'l' | 'xl' | 'xxl' | undefined"
               },
               "fieldName": "size"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -12773,9 +12441,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -12824,18 +12489,6 @@
               },
               "default": "''",
               "fieldName": "description"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -13539,9 +13192,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -13621,18 +13271,6 @@
               },
               "default": "','",
               "fieldName": "valueSeparator"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -13694,9 +13332,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -13740,21 +13375,7 @@
             "package": "@spectrum-web-components/base"
           },
           "tagName": "sp-menu-divider",
-          "customElement": true,
-          "attributes": [
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
-            }
-          ]
+          "customElement": true
         }
       ],
       "exports": [
@@ -14568,9 +14189,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -14656,18 +14274,6 @@
               "inheritedFrom": {
                 "name": "Menu",
                 "module": "packages/menu/src/Menu.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
               }
             }
           ],
@@ -15459,9 +15065,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -15557,18 +15160,6 @@
                 "text": "'white' | undefined"
               },
               "fieldName": "static"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -17601,9 +17192,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -17655,18 +17243,6 @@
                 "text": "Placement | undefined"
               },
               "fieldName": "placement"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -18187,9 +17763,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -18271,18 +17844,6 @@
               },
               "default": "false",
               "fieldName": "disabled"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -20607,9 +20168,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -20677,18 +20235,6 @@
               },
               "default": "false",
               "fieldName": "tip"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -20813,9 +20359,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -20895,18 +20438,6 @@
                 "text": "'white' | undefined"
               },
               "fieldName": "static"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -21044,9 +20575,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -21118,18 +20646,6 @@
               },
               "default": "0",
               "fieldName": "progress"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -21224,9 +20740,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -21275,18 +20788,6 @@
               },
               "default": "false",
               "fieldName": "textOnly"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -21479,9 +20980,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -21595,18 +21093,6 @@
               },
               "default": "false",
               "fieldName": "readonly"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -21887,9 +21373,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -21994,18 +21477,6 @@
               "inheritedFrom": {
                 "name": "FieldGroup",
                 "module": "packages/field-group/src/FieldGroup.ts"
-              }
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
               }
             }
           ],
@@ -23214,9 +22685,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -23257,18 +22725,6 @@
               },
               "default": "''",
               "fieldName": "label"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -26892,9 +26348,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -26925,6 +26378,12 @@
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
               }
+            }
+          ],
+          "events": [
+            {
+              "description": "Announces the new position of the splitter",
+              "name": "change"
             }
           ],
           "attributes": [
@@ -27027,18 +26486,6 @@
               },
               "default": "0",
               "fieldName": "viewSize"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -27130,9 +26577,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -27183,18 +26627,6 @@
               "default": "'info'",
               "description": "The visual variant to apply to this status light.",
               "fieldName": "variant"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -27746,9 +27178,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -27824,18 +27253,6 @@
                 "text": "SwatchShape"
               },
               "fieldName": "shape"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -28350,9 +27767,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -28451,18 +27865,6 @@
               "default": "false",
               "description": "Whether or not the virtualized table has a scroll bar. If this is set to true, make sure to specify a height in the sp-table's inline styles.",
               "fieldName": "scroller"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -28559,9 +27961,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -28602,18 +28001,6 @@
               },
               "default": "'rowgroup'",
               "fieldName": "role"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -28686,9 +28073,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -28729,18 +28113,6 @@
               },
               "default": "'gridcell'",
               "fieldName": "role"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -28872,9 +28244,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -28947,18 +28316,6 @@
               },
               "default": "false",
               "fieldName": "selectsSingle"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -29077,9 +28434,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -29127,18 +28481,6 @@
                 "text": "boolean | undefined"
               },
               "fieldName": "selected"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -29252,9 +28594,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -29327,18 +28666,6 @@
               },
               "default": "''",
               "fieldName": "sortKey"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -29513,9 +28840,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -29586,18 +28910,6 @@
               },
               "default": "''",
               "fieldName": "value"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -29750,9 +29062,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -29825,18 +29134,6 @@
               },
               "default": "''",
               "fieldName": "value"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -29950,9 +29247,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -30001,18 +29295,6 @@
               },
               "default": "''",
               "fieldName": "value"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -30088,6 +29370,16 @@
               "default": "false",
               "description": "The tab items are displayed closer together.",
               "attribute": "compact",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "public",
+              "attribute": "dir",
               "reflects": true
             },
             {
@@ -30364,6 +29656,13 @@
               "fieldName": "compact"
             },
             {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "fieldName": "dir"
+            },
+            {
               "name": "direction",
               "type": {
                 "text": "'vertical' | 'vertical-right' | 'horizontal'"
@@ -30467,6 +29766,20 @@
             },
             {
               "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
+            {
+              "kind": "field",
               "name": "overflowState",
               "type": {
                 "text": "TabsOverflowState"
@@ -30562,21 +29875,6 @@
             },
             {
               "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.js"
-              }
-            },
-            {
-              "kind": "field",
               "name": "isLTR",
               "type": {
                 "text": "boolean"
@@ -30616,12 +29914,7 @@
               "type": {
                 "text": "'ltr' | 'rtl'"
               },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
+              "fieldName": "dir"
             }
           ],
           "mixins": [
@@ -30777,9 +30070,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -30844,18 +30134,6 @@
               },
               "default": "false",
               "fieldName": "readonly"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -30985,9 +30263,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -31031,21 +30306,7 @@
             "package": "@spectrum-web-components/base"
           },
           "tagName": "sp-tags",
-          "customElement": true,
-          "attributes": [
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
-            }
-          ]
+          "customElement": true
         }
       ],
       "exports": [
@@ -32476,9 +31737,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -32526,18 +31784,6 @@
               },
               "default": "false",
               "fieldName": "cover"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -32784,9 +32030,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -32868,18 +32111,6 @@
                 "text": "ToastVariants"
               },
               "fieldName": "variant"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -33215,9 +32446,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -33290,18 +32518,6 @@
                 "text": "string"
               },
               "fieldName": "variant"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -33354,6 +32570,20 @@
             }
           ],
           "members": [
+            {
+              "kind": "field",
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "privacy": "private",
+              "attribute": "dir",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "SpectrumMixin",
+                "module": "tools/base/src/Base.js"
+              }
+            },
             {
               "kind": "field",
               "name": "selectionIndicatorStyle",
@@ -33514,21 +32744,6 @@
             },
             {
               "kind": "field",
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.js"
-              }
-            },
-            {
-              "kind": "field",
               "name": "isLTR",
               "type": {
                 "text": "boolean"
@@ -33570,6 +32785,13 @@
               "name": "compact"
             },
             {
+              "name": "dir",
+              "type": {
+                "text": "'ltr' | 'rtl'"
+              },
+              "fieldName": "dir"
+            },
+            {
               "name": "selectionIndicatorStyle",
               "default": "noSelectionStyle",
               "resolveInitializer": {
@@ -33583,18 +32805,6 @@
                 "text": "string | undefined"
               },
               "fieldName": "selected"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -33883,9 +33093,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -33935,18 +33142,6 @@
               },
               "default": "false",
               "fieldName": "open"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -34019,9 +33214,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -34062,18 +33254,6 @@
               },
               "default": "false",
               "fieldName": "open"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -34198,9 +33378,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -34257,18 +33434,6 @@
               },
               "default": "[]",
               "fieldName": "items"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -34369,9 +33534,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -34420,18 +33582,6 @@
               },
               "default": "[]",
               "fieldName": "colors"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -34733,9 +33883,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -34795,12 +33942,7 @@
               "type": {
                 "text": "'ltr' | 'rtl'"
               },
-              "default": "'ltr'",
-              "fieldName": "direction",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
+              "fieldName": "direction"
             },
             {
               "name": "reduce-motion",
@@ -34976,9 +34118,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -35019,18 +34158,6 @@
               },
               "default": "0.5",
               "fieldName": "onionLevel"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "superclass": {
@@ -35244,9 +34371,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -35295,18 +34419,6 @@
               },
               "default": "1",
               "fieldName": "zoom"
-            },
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
             }
           ],
           "mixins": [
@@ -35363,10 +34475,7 @@
               "type": {
                 "text": "'ltr' | 'rtl'"
               },
-              "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -35385,16 +34494,6 @@
                   "text": "boolean"
                 }
               }
-            }
-          ],
-          "attributes": [
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir"
             }
           ],
           "parameters": [
@@ -35421,20 +34520,6 @@
             "package": "lit"
           },
           "customElement": true,
-          "attributes": [
-            {
-              "name": "dir",
-              "type": {
-                "text": "'ltr' | 'rtl'"
-              },
-              "default": "'ltr'",
-              "fieldName": "dir",
-              "inheritedFrom": {
-                "name": "SpectrumMixin",
-                "module": "tools/base/src/Base.ts"
-              }
-            }
-          ],
           "members": [
             {
               "kind": "field",
@@ -35467,9 +34552,6 @@
                 "text": "'ltr' | 'rtl'"
               },
               "privacy": "private",
-              "default": "'ltr'",
-              "attribute": "dir",
-              "reflects": true,
               "inheritedFrom": {
                 "name": "SpectrumMixin",
                 "module": "tools/base/src/Base.js"
@@ -39168,7 +38250,7 @@
         {
           "kind": "variable",
           "name": "styles",
-          "default": "css`\n:host{--spectrum-colorwheel-width:var(--spectrum-color-wheel-width);--spectrum-colorwheel-min-width:var(--spectrum-color-wheel-minimum-width);--spectrum-colorwheel-height:var(--spectrum-color-wheel-width);--spectrum-colorwheel-border-color:var(--spectrum-transparent-black-200);--spectrum-colorwheel-border-width:var(--spectrum-border-width-100);--spectrum-colorwheel-fill-color-disabled:var(\n--spectrum-disabled-background-color\n);--spectrum-colorwheel-track-width:var(\n--spectrum-color-control-track-width\n);--spectrum-colorwheel-colorarea-margin:var(\n--spectrum-color-wheel-color-area-margin\n);--spectrum-colorwheel-colorhandle-position:calc(var(--spectrum-colorwheel-width)/2 - var(--spectrum-colorwheel-track-width)/2)}@media (forced-colors:active){:host{--highcontrast-colorwheel-border-color-disabled:GrayText;--highcontrast-colorwheel-fill-color-disabled:Canvas}:host{forced-color-adjust:none}}:host{block-size:var(--mod-colorwheel-height,var(--spectrum-colorwheel-height));cursor:default;display:block;inline-size:var(--mod-colorwheel-width,var(--spectrum-colorwheel-width));min-inline-size:var(\n--mod-colorwheel-min-width,var(--spectrum-colorwheel-min-width)\n);position:relative;-webkit-user-select:none;user-select:none}:host([focused]){z-index:2}:host([focused]) .handle{block-size:calc(var(--spectrum-color-handle-size)*2);inline-size:calc(var(--spectrum-color-handle-size)*2);margin-block-start:calc(var(--spectrum-color-handle-size)*-1);margin-inline-start:calc(var(--spectrum-color-handle-size)*-1)}:host([disabled]){pointer-events:none}:host([dragged]){z-index:2}.inner{block-size:var(\n--mod-colorwheel-colorarea-container-size,var(--spectrum-colorwheel-colorarea-container-size)\n);display:flex;inline-size:var(\n--mod-colorwheel-colorarea-container-size,var(--spectrum-colorwheel-colorarea-container-size)\n);inset-block:0;inset-inline:0;margin:auto;position:absolute}.colorarea-container{align-items:center;block-size:auto;display:flex;inline-size:100%;justify-content:center;margin:var(\n--mod-colorwheel-colorarea-margin,var(--spectrum-colorwheel-colorarea-margin)\n)}.slider{block-size:100%;inline-size:100%;inset-block-start:0;inset-inline-start:0;margin:0;opacity:0;pointer-events:none;position:absolute;z-index:0}.handle{inset-block-start:50%;transform:translate(var(--spectrum-colorwheel-colorhandle-position))}:host([dir=ltr]) .handle{inset-inline-start:50%}:host([dir=rtl]) .handle{inset-inline-end:50%}.border{background-color:var(\n--mod-colorwheel-border-color,var(--spectrum-colorwheel-border-color)\n);block-size:var(--mod-colorwheel-height,var(--spectrum-colorwheel-height));clip-path:path(evenodd,var(\n--mod-colorwheel-path-borders,var(--spectrum-colorwheel-path-borders)\n));inline-size:var(--mod-colorwheel-width,var(--spectrum-colorwheel-width));position:relative}:host([disabled]) .border{background-color:var(\n--highcontrast-colorwheel-border-color-disabled,var(\n--mod-colorwheel-fill-color-disabled,var(--spectrum-colorwheel-fill-color-disabled)\n)\n)}.wheel{--track-width:var(\n--mod-colorwheel-track-width,var(--spectrum-colorwheel-track-width)\n);--border-width:var(\n--mod-colorwheel-border-width,var(--spectrum-colorwheel-border-width)\n);background:conic-gradient(from 90deg,red,#ff8000,#ff0,#80ff00,#0f0,#00ff80,#0ff,#0080ff,#00f,#8000ff,#f0f,#ff0080,red);clip-path:path(evenodd,var(--mod-colorwheel-path,var(--spectrum-colorwheel-path)));inset-block:var(--spectrum-colorwheel-border-width);inset-inline:var(--spectrum-colorwheel-border-width);position:absolute}:host([disabled]) .wheel{background:var(\n--highcontrast-colorwheel-fill-color-disabled,var(\n--mod-colorwheel-fill-color-disabled,var(--spectrum-colorwheel-fill-color-disabled)\n)\n);pointer-events:none}:host{touch-action:none}:host(:focus){outline:none}::slotted([slot=gradient]){block-size:var(--mod-colorwheel-height,var(--spectrum-colorwheel-height));border-color:var(\n--spectrum-colorwheel-border-color,var(--spectrum-alias-border-color-translucent)\n);border-radius:100%;border-style:solid;border-width:var(\n--spectrum-colorwheel-border-size,var(--spectrum-alias-border-size-thin)\n);box-sizing:border-box;inline-size:var(--mod-colorwheel-width,var(--spectrum-colorwheel-width));position:relative;z-index:0}\n`"
+          "default": "css`\n:host{--spectrum-colorwheel-width:var(--spectrum-color-wheel-width);--spectrum-colorwheel-min-width:var(--spectrum-color-wheel-minimum-width);--spectrum-colorwheel-height:var(--spectrum-color-wheel-width);--spectrum-colorwheel-border-color:var(--spectrum-transparent-black-200);--spectrum-colorwheel-border-width:var(--spectrum-border-width-100);--spectrum-colorwheel-fill-color-disabled:var(\n--spectrum-disabled-background-color\n);--spectrum-colorwheel-track-width:var(\n--spectrum-color-control-track-width\n);--spectrum-colorwheel-colorarea-margin:var(\n--spectrum-color-wheel-color-area-margin\n);--spectrum-colorwheel-colorhandle-position:calc(var(--spectrum-colorwheel-width)/2 - var(--spectrum-colorwheel-track-width)/2)}@media (forced-colors:active){:host{--highcontrast-colorwheel-border-color-disabled:GrayText;--highcontrast-colorwheel-fill-color-disabled:Canvas}:host{forced-color-adjust:none}}:host{block-size:var(--mod-colorwheel-height,var(--spectrum-colorwheel-height));cursor:default;display:block;inline-size:var(--mod-colorwheel-width,var(--spectrum-colorwheel-width));min-inline-size:var(\n--mod-colorwheel-min-width,var(--spectrum-colorwheel-min-width)\n);position:relative;-webkit-user-select:none;user-select:none}:host([focused]){z-index:2}:host([focused]) .handle{block-size:calc(var(--spectrum-color-handle-size)*2);inline-size:calc(var(--spectrum-color-handle-size)*2);margin-block-start:calc(var(--spectrum-color-handle-size)*-1);margin-inline-start:calc(var(--spectrum-color-handle-size)*-1)}:host([disabled]){pointer-events:none}:host([dragged]){z-index:2}.inner{block-size:var(\n--mod-colorwheel-colorarea-container-size,var(--spectrum-colorwheel-colorarea-container-size)\n);display:flex;inline-size:var(\n--mod-colorwheel-colorarea-container-size,var(--spectrum-colorwheel-colorarea-container-size)\n);inset-block:0;inset-inline:0;margin:auto;position:absolute}.colorarea-container{align-items:center;block-size:auto;display:flex;inline-size:100%;justify-content:center;margin:var(\n--mod-colorwheel-colorarea-margin,var(--spectrum-colorwheel-colorarea-margin)\n)}.slider{block-size:100%;inline-size:100%;inset-block-start:0;inset-inline-start:0;margin:0;opacity:0;pointer-events:none;position:absolute;z-index:0}.handle{inset-block-start:50%;transform:translate(var(--spectrum-colorwheel-colorhandle-position))}:host([dir=ltr]) .handle{inset-inline-start:50%}:host([dir=rtl]) .handle{inset-inline-end:50%}.border{background-color:var(\n--mod-colorwheel-border-color,var(--spectrum-colorwheel-border-color)\n);block-size:var(--mod-colorwheel-height,var(--spectrum-colorwheel-height));clip-path:path(evenodd,var(\n--mod-colorwheel-path-borders,var(--spectrum-colorwheel-path-borders)\n));inline-size:var(--mod-colorwheel-width,var(--spectrum-colorwheel-width));position:relative}:host([disabled]) .border{background-color:var(\n--highcontrast-colorwheel-border-color-disabled,var(\n--mod-colorwheel-fill-color-disabled,var(--spectrum-colorwheel-fill-color-disabled)\n)\n)}.wheel{--track-width:var(\n--mod-colorwheel-track-width,var(--spectrum-colorwheel-track-width)\n);--border-width:var(\n--mod-colorwheel-border-width,var(--spectrum-colorwheel-border-width)\n);background:conic-gradient(from 90deg,red,#ff8000,#ff0,#80ff00,#0f0,#00ff80,#0ff,#0080ff,#00f,#8000ff,#f0f,#ff0080,red);clip-path:path(evenodd,var(--mod-colorwheel-path,var(--spectrum-colorwheel-path)));inset-block:var(--spectrum-colorwheel-border-width);inset-inline:var(--spectrum-colorwheel-border-width);position:absolute}:host([disabled]) .wheel{background:var(\n--highcontrast-colorwheel-fill-color-disabled,var(\n--mod-colorwheel-fill-color-disabled,var(--spectrum-colorwheel-fill-color-disabled)\n)\n);pointer-events:none}:host{--track-width:var(\n--mod-colorwheel-track-width,var(--spectrum-colorwheel-track-width)\n);--border-width:var(\n--mod-colorwheel-border-width,var(--spectrum-colorwheel-border-width)\n);touch-action:none}:host(:focus){outline:none}::slotted([slot=gradient]){block-size:var(--mod-colorwheel-height,var(--spectrum-colorwheel-height));border-color:var(\n--spectrum-colorwheel-border-color,var(--spectrum-alias-border-color-translucent)\n);border-radius:100%;border-style:solid;border-width:var(\n--spectrum-colorwheel-border-size,var(--spectrum-alias-border-size-thin)\n);box-sizing:border-box;inline-size:var(--mod-colorwheel-width,var(--spectrum-colorwheel-width));position:relative;z-index:0}\n`"
         }
       ],
       "exports": [
@@ -50219,7 +49301,7 @@
         {
           "kind": "variable",
           "name": "styles",
-          "default": "css`\n:host{--spectrum-radio-neutral-content-color:var(\n--spectrum-neutral-content-color-default\n);--spectrum-radio-neutral-content-color-hover:var(\n--spectrum-neutral-content-color-hover\n);--spectrum-radio-neutral-content-color-down:var(\n--spectrum-neutral-content-color-down\n);--spectrum-radio-neutral-content-color-focus:var(\n--spectrum-neutral-content-color-key-focus\n);--spectrum-radio-focus-indicator-thickness:var(\n--spectrum-focus-indicator-thickness\n);--spectrum-radio-focus-indicator-gap:var(--spectrum-focus-indicator-gap);--spectrum-radio-focus-indicator-color:var(\n--spectrum-focus-indicator-color\n);--spectrum-radio-disabled-content-color:var(\n--spectrum-disabled-content-color\n);--spectrum-radio-disabled-border-color:var(--spectrum-gray-400);--spectrum-radio-emphasized-accent-color:var(--spectrum-accent-color-900);--spectrum-radio-emphasized-accent-color-hover:var(\n--spectrum-accent-color-1000\n);--spectrum-radio-emphasized-accent-color-down:var(\n--spectrum-accent-color-1100\n);--spectrum-radio-emphasized-accent-color-focus:var(\n--spectrum-accent-color-1000\n);--spectrum-radio-border-width:var(--spectrum-border-width-200);--spectrum-radio-button-background-color:var(--spectrum-gray-75);--spectrum-radio-line-height:var(--spectrum-line-height-100);--spectrum-radio-animation-duration:var(--spectrum-animation-duration-100);--spectrum-radio-height:var(--spectrum-component-height-100);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-medium\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-100);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-100\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-100\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-medium\n);--spectrum-radio-font-size:var(--spectrum-font-size-100)}:host(:lang(ja)),:host(:lang(ko)),:host(:lang(zh)){--spectrum-radio-cjk-line-height:var(--spectrum-cjk-line-height-100)}:host([size=s]){--spectrum-radio-height:var(--spectrum-component-height-75);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-small\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-75);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-75\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-75\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-small\n);--spectrum-radio-font-size:var(--spectrum-font-size-75)}:host([size=m]){--spectrum-radio-height:var(--spectrum-component-height-100);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-medium\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-100);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-100\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-100\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-medium\n);--spectrum-radio-font-size:var(--spectrum-font-size-100)}:host([size=l]){--spectrum-radio-height:var(--spectrum-component-height-200);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-large\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-200);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-200\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-200\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-large\n);--spectrum-radio-font-size:var(--spectrum-font-size-200)}:host([size=xl]){--spectrum-radio-height:var(--spectrum-component-height-300);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-extra-large\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-300);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-300\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-300\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-extra-large\n);--spectrum-radio-font-size:var(--spectrum-font-size-300)}@media (forced-colors:active){:host{--highcontrast-radio-neutral-content-color:CanvasText;--highcontrast-radio-neutral-content-color-hover:CanvasText;--highcontrast-radio-neutral-content-color-down:CanvasText;--highcontrast-radio-neutral-content-color-focus:CanvasText;--highcontrast-radio-button-border-color-default:ButtonText;--highcontrast-radio-button-border-color-hover:Highlight;--highcontrast-radio-button-border-color-down:ButtonText;--highcontrast-radio-button-border-color-focus:Highlight;--highcontrast-radio-emphasized-accent-color:ButtonText;--highcontrast-radio-emphasized-accent-color-hover:Highlight;--highcontrast-radio-emphasized-accent-color-down:ButtonText;--highcontrast-radio-emphasized-accent-color-focus:Highlight;--highcontrast-radio-button-checked-border-color-default:Highlight;--highcontrast-radio-button-checked-border-color-hover:Highlight;--highcontrast-radio-button-checked-border-color-down:Highlight;--highcontrast-radio-button-checked-border-color-focus:Highlight;--highcontrast-radio-disabled-content-color:GrayText;--highcontrast-radio-disabled-border-color:GrayText;--highcontrast-radio-focus-indicator-color:CanvasText}#button:after{forced-color-adjust:none}}:host{align-items:flex-start;display:inline-flex;max-inline-size:100%;min-block-size:var(--mod-radio-height,var(--spectrum-radio-height));position:relative;vertical-align:top}:host(:hover) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-hover,var(\n--mod-radio-button-border-color-hover,var(--spectrum-radio-button-border-color-hover)\n)\n)}:host([checked]:hover) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-hover,var(\n--mod-radio-button-checked-border-color-hover,var(--spectrum-radio-button-checked-border-color-hover)\n)\n)}:host(:hover) #label{color:var(\n--highcontrast-radio-neutral-content-color-hover,var(\n--mod-radio-neutral-content-color-hover,var(--spectrum-radio-neutral-content-color-hover)\n)\n)}:host(:active) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-down,var(\n--mod-radio-button-border-color-down,var(--spectrum-radio-button-border-color-down)\n)\n)}:host(:active[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-down,var(\n--mod-radio-button-checked-border-color-down,var(--spectrum-radio-button-checked-border-color-down)\n)\n)}:host(:active) #label{color:var(\n--highcontrast-radio-neutral-content-color-down,var(\n--mod-radio-neutral-content-color-down,var(--spectrum-radio-neutral-content-color-down)\n)\n)}:host(:focus) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-focus,var(\n--mod-radio-button-border-color-focus,var(--spectrum-radio-button-border-color-focus)\n)\n)}:host(:focus) #button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}:host([checked]:focus) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-focus,var(\n--mod-radio-button-checked-border-color-focus,var(--spectrum-radio-button-checked-border-color-focus)\n)\n)}:host(:focus) #label{color:var(\n--highcontrast-radio-neutral-content-color-focus,var(\n--mod-radio-neutral-content-color-focus,var(--spectrum-radio-neutral-content-color-focus)\n)\n)}:host([invalid]) #label{color:var(\n--highcontrast-radio-neutral-content-color,var(\n--mod-radio-neutral-content-color,var(--spectrum-radio-neutral-content-color)\n)\n)}:host([readonly]) #input:read-only{cursor:auto}:host([readonly]) #button{clip:rect(1px,1px,1px,1px);bottom:100%;clip-path:inset(50%);position:fixed;right:100%}:host([readonly]),:host([readonly]) #label,:host([readonly][checked][disabled]) #input~#label,:host([readonly][disabled]) #input~#label{color:inherit;margin-inline-start:auto}:host([emphasized][checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color,var(\n--mod-radio-emphasized-accent-color,var(--spectrum-radio-emphasized-accent-color)\n)\n)}:host([emphasized][checked]:hover) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-hover,var(\n--mod-radio-emphasized-accent-color-hover,var(--spectrum-radio-emphasized-accent-color-hover)\n)\n)}:host([emphasized]:active[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-down,var(\n--mod-radio-emphasized-accent-color-down,var(--spectrum-radio-emphasized-accent-color-down)\n)\n)}:host([emphasized][checked]:focus) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-focus,var(\n--mod-radio-emphasized-accent-color-focus,var(--spectrum-radio-emphasized-accent-color-focus)\n)\n)}:host([checked][disabled]) #input+#button:before,:host([disabled]) #input+#button:before{border-color:var(\n--highcontrast-radio-disabled-border-color,var(\n--mod-radio-disabled-border-color,var(--spectrum-radio-disabled-border-color)\n)\n)}:host([checked][disabled]) #input~#label,:host([disabled]) #input~#label{color:var(\n--highcontrast-radio-disabled-content-color,var(\n--mod-radio-disabled-content-color,var(--spectrum-radio-disabled-content-color)\n)\n)}#input{block-size:100%;box-sizing:border-box;cursor:pointer;font-family:inherit;font-size:100%;inline-size:100%;line-height:var(\n--mod-radio-line-height,var(--spectrum-radio-line-height)\n);margin:0;opacity:0;overflow:visible;padding:0;position:absolute;z-index:1}:host([disabled]) #input{cursor:default}:host([checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-default,var(\n--mod-radio-button-checked-border-color-default,var(--spectrum-radio-button-checked-border-color-default)\n)\n);border-width:calc(var(--spectrum-radio-button-control-size)/2 - var(--spectrum-radio-button-selection-indicator)/2)}#input.focus-visible+#button:after,:host(.focus-visible) #input+#button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}#input.focus-visible+#button:after,:host(.focus-visible) #input+#button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}#input:focus-visible+#button:after,:host(:focus-visible) #input+#button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}#label{color:var(\n--highcontrast-radio-neutral-content-color,var(\n--mod-radio-neutral-content-color,var(--spectrum-radio-neutral-content-color)\n)\n);font-size:var(--mod-radio-font-size,var(--spectrum-radio-font-size));line-height:var(\n--mod-radio-line-height,var(--spectrum-radio-line-height)\n);margin-block-end:var(--spectrum-radio-label-bottom-to-text);margin-block-start:var(--spectrum-radio-label-top-to-text);margin-inline-start:var(\n--mod-radio-text-to-control,var(--spectrum-radio-text-to-control)\n);text-align:start;transition:color var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-in-out}#label:lang(ja),#label:lang(ko),#label:lang(zh){line-height:var(--spectrum-radio-cjk-line-height)}#button{block-size:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);box-sizing:border-box;flex-grow:0;flex-shrink:0;inline-size:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);margin-block-start:var(\n--mod-radio-button-top-to-control,var(--spectrum-radio-button-top-to-control)\n);position:relative}#button:before{background-color:var(\n--highcontrast-radio-button-background-color,var(\n--mod-radio-button-background-color,var(--spectrum-radio-button-background-color)\n)\n);border-color:var(\n--highcontrast-radio-button-border-color-default,var(\n--mod-radio-button-border-color-default,var(--spectrum-radio-button-border-color-default)\n)\n);border-radius:50%;border-style:solid;border-width:var(\n--mod-radio-border-width,var(--spectrum-radio-border-width)\n);box-sizing:border-box;content:\"\";display:block;height:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);position:absolute;transition:border var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-in-out,box-shadow var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-in-out;width:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);z-index:0}#button:after{border-radius:50%;content:\"\";display:block;left:50%;position:absolute;top:50%;transform:translateX(-50%) translateY(-50%);transition:opacity var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-out,margin var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-out}:host{--spectrum-radio-button-border-color-default:var(\n--system-spectrum-radio-button-border-color-default\n);--spectrum-radio-button-border-color-hover:var(\n--system-spectrum-radio-button-border-color-hover\n);--spectrum-radio-button-border-color-down:var(\n--system-spectrum-radio-button-border-color-down\n);--spectrum-radio-button-border-color-focus:var(\n--system-spectrum-radio-button-border-color-focus\n);--spectrum-radio-button-checked-border-color-default:var(\n--system-spectrum-radio-button-checked-border-color-default\n);--spectrum-radio-button-checked-border-color-hover:var(\n--system-spectrum-radio-button-checked-border-color-hover\n);--spectrum-radio-button-checked-border-color-down:var(\n--system-spectrum-radio-button-checked-border-color-down\n);--spectrum-radio-button-checked-border-color-focus:var(\n--system-spectrum-radio-button-checked-border-color-focus\n)}:host([emphasized]){--spectrum-radio-button-checked-border-color-default:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-default\n);--spectrum-radio-button-checked-border-color-hover:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-hover\n);--spectrum-radio-button-checked-border-color-down:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-down\n);--spectrum-radio-button-checked-border-color-focus:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-focus\n)}:host{--spectrum-radio-label-margin-top:var(\n--spectrum-global-dimension-size-75,6px\n)}:host(:focus){outline:none}:host([disabled]){pointer-events:none}\n`"
+          "default": "css`\n:host{--spectrum-radio-neutral-content-color:var(\n--spectrum-neutral-content-color-default\n);--spectrum-radio-neutral-content-color-hover:var(\n--spectrum-neutral-content-color-hover\n);--spectrum-radio-neutral-content-color-down:var(\n--spectrum-neutral-content-color-down\n);--spectrum-radio-neutral-content-color-focus:var(\n--spectrum-neutral-content-color-key-focus\n);--spectrum-radio-focus-indicator-thickness:var(\n--spectrum-focus-indicator-thickness\n);--spectrum-radio-focus-indicator-gap:var(--spectrum-focus-indicator-gap);--spectrum-radio-focus-indicator-color:var(\n--spectrum-focus-indicator-color\n);--spectrum-radio-disabled-content-color:var(\n--spectrum-disabled-content-color\n);--spectrum-radio-disabled-border-color:var(--spectrum-gray-400);--spectrum-radio-emphasized-accent-color:var(--spectrum-accent-color-900);--spectrum-radio-emphasized-accent-color-hover:var(\n--spectrum-accent-color-1000\n);--spectrum-radio-emphasized-accent-color-down:var(\n--spectrum-accent-color-1100\n);--spectrum-radio-emphasized-accent-color-focus:var(\n--spectrum-accent-color-1000\n);--spectrum-radio-border-width:var(--spectrum-border-width-200);--spectrum-radio-button-background-color:var(--spectrum-gray-75);--spectrum-radio-line-height:var(--spectrum-line-height-100);--spectrum-radio-animation-duration:var(--spectrum-animation-duration-100);--spectrum-radio-height:var(--spectrum-component-height-100);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-medium\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-100);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-100\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-100\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-medium\n);--spectrum-radio-font-size:var(--spectrum-font-size-100)}:host(:lang(ja)),:host(:lang(ko)),:host(:lang(zh)){--spectrum-radio-cjk-line-height:var(--spectrum-cjk-line-height-100)}:host([size=s]){--spectrum-radio-height:var(--spectrum-component-height-75);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-small\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-75);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-75\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-75\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-small\n);--spectrum-radio-font-size:var(--spectrum-font-size-75)}:host([size=m]){--spectrum-radio-height:var(--spectrum-component-height-100);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-medium\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-100);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-100\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-100\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-medium\n);--spectrum-radio-font-size:var(--spectrum-font-size-100)}:host([size=l]){--spectrum-radio-height:var(--spectrum-component-height-200);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-large\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-200);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-200\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-200\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-large\n);--spectrum-radio-font-size:var(--spectrum-font-size-200)}:host([size=xl]){--spectrum-radio-height:var(--spectrum-component-height-300);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-extra-large\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-300);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-300\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-300\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-extra-large\n);--spectrum-radio-font-size:var(--spectrum-font-size-300)}@media (forced-colors:active){:host{--highcontrast-radio-neutral-content-color:CanvasText;--highcontrast-radio-neutral-content-color-hover:CanvasText;--highcontrast-radio-neutral-content-color-down:CanvasText;--highcontrast-radio-neutral-content-color-focus:CanvasText;--highcontrast-radio-button-border-color-default:ButtonText;--highcontrast-radio-button-border-color-hover:Highlight;--highcontrast-radio-button-border-color-down:ButtonText;--highcontrast-radio-button-border-color-focus:Highlight;--highcontrast-radio-emphasized-accent-color:ButtonText;--highcontrast-radio-emphasized-accent-color-hover:Highlight;--highcontrast-radio-emphasized-accent-color-down:ButtonText;--highcontrast-radio-emphasized-accent-color-focus:Highlight;--highcontrast-radio-button-checked-border-color-default:Highlight;--highcontrast-radio-button-checked-border-color-hover:Highlight;--highcontrast-radio-button-checked-border-color-down:Highlight;--highcontrast-radio-button-checked-border-color-focus:Highlight;--highcontrast-radio-disabled-content-color:GrayText;--highcontrast-radio-disabled-border-color:GrayText;--highcontrast-radio-focus-indicator-color:CanvasText}#button:after{forced-color-adjust:none}}:host{align-items:flex-start;display:inline-flex;max-inline-size:100%;min-block-size:var(--mod-radio-height,var(--spectrum-radio-height));position:relative;vertical-align:top}:host(:hover) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-hover,var(\n--mod-radio-button-border-color-hover,var(--spectrum-radio-button-border-color-hover)\n)\n)}:host([checked]:hover) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-hover,var(\n--mod-radio-button-checked-border-color-hover,var(--spectrum-radio-button-checked-border-color-hover)\n)\n)}:host(:hover) #label{color:var(\n--highcontrast-radio-neutral-content-color-hover,var(\n--mod-radio-neutral-content-color-hover,var(--spectrum-radio-neutral-content-color-hover)\n)\n)}:host(:active) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-down,var(\n--mod-radio-button-border-color-down,var(--spectrum-radio-button-border-color-down)\n)\n)}:host(:active[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-down,var(\n--mod-radio-button-checked-border-color-down,var(--spectrum-radio-button-checked-border-color-down)\n)\n)}:host(:active) #label{color:var(\n--highcontrast-radio-neutral-content-color-down,var(\n--mod-radio-neutral-content-color-down,var(--spectrum-radio-neutral-content-color-down)\n)\n)}:host(.focus-visible) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-focus,var(\n--mod-radio-button-border-color-focus,var(--spectrum-radio-button-border-color-focus)\n)\n)}:host(.focus-visible) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-focus,var(\n--mod-radio-button-border-color-focus,var(--spectrum-radio-button-border-color-focus)\n)\n)}:host(:focus-visible) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-focus,var(\n--mod-radio-button-border-color-focus,var(--spectrum-radio-button-border-color-focus)\n)\n)}:host(.focus-visible) #button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}:host(.focus-visible) #button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}:host(:focus-visible) #button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}:host(.focus-visible[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-focus,var(\n--mod-radio-button-checked-border-color-focus,var(--spectrum-radio-button-checked-border-color-focus)\n)\n)}:host(.focus-visible[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-focus,var(\n--mod-radio-button-checked-border-color-focus,var(--spectrum-radio-button-checked-border-color-focus)\n)\n)}:host(:focus-visible[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-focus,var(\n--mod-radio-button-checked-border-color-focus,var(--spectrum-radio-button-checked-border-color-focus)\n)\n)}:host(.focus-visible) #label{color:var(\n--highcontrast-radio-neutral-content-color-focus,var(\n--mod-radio-neutral-content-color-focus,var(--spectrum-radio-neutral-content-color-focus)\n)\n)}:host(.focus-visible) #label{color:var(\n--highcontrast-radio-neutral-content-color-focus,var(\n--mod-radio-neutral-content-color-focus,var(--spectrum-radio-neutral-content-color-focus)\n)\n)}:host(:focus-visible) #label{color:var(\n--highcontrast-radio-neutral-content-color-focus,var(\n--mod-radio-neutral-content-color-focus,var(--spectrum-radio-neutral-content-color-focus)\n)\n)}:host([invalid]) #label{color:var(\n--highcontrast-radio-neutral-content-color,var(\n--mod-radio-neutral-content-color,var(--spectrum-radio-neutral-content-color)\n)\n)}:host([readonly]) #input:read-only{cursor:auto}:host([readonly]) #button{clip:rect(1px,1px,1px,1px);bottom:100%;clip-path:inset(50%);position:fixed;right:100%}:host([readonly]),:host([readonly]) #label,:host([readonly][checked][disabled]) #input~#label,:host([readonly][disabled]) #input~#label{color:inherit;margin-inline-start:auto}:host([emphasized][checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color,var(\n--mod-radio-emphasized-accent-color,var(--spectrum-radio-emphasized-accent-color)\n)\n)}:host([emphasized][checked]:hover) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-hover,var(\n--mod-radio-emphasized-accent-color-hover,var(--spectrum-radio-emphasized-accent-color-hover)\n)\n)}:host([emphasized]:active[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-down,var(\n--mod-radio-emphasized-accent-color-down,var(--spectrum-radio-emphasized-accent-color-down)\n)\n)}:host([emphasized].focus-visible[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-focus,var(\n--mod-radio-emphasized-accent-color-focus,var(--spectrum-radio-emphasized-accent-color-focus)\n)\n)}:host([emphasized].focus-visible[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-focus,var(\n--mod-radio-emphasized-accent-color-focus,var(--spectrum-radio-emphasized-accent-color-focus)\n)\n)}:host([emphasized]:focus-visible[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-focus,var(\n--mod-radio-emphasized-accent-color-focus,var(--spectrum-radio-emphasized-accent-color-focus)\n)\n)}:host([checked][disabled]) #input+#button:before,:host([disabled]) #input+#button:before{border-color:var(\n--highcontrast-radio-disabled-border-color,var(\n--mod-radio-disabled-border-color,var(--spectrum-radio-disabled-border-color)\n)\n)}:host([checked][disabled]) #input~#label,:host([disabled]) #input~#label{color:var(\n--highcontrast-radio-disabled-content-color,var(\n--mod-radio-disabled-content-color,var(--spectrum-radio-disabled-content-color)\n)\n)}#input{block-size:100%;box-sizing:border-box;cursor:pointer;font-family:inherit;font-size:100%;inline-size:100%;line-height:var(\n--mod-radio-line-height,var(--spectrum-radio-line-height)\n);margin:0;opacity:0;overflow:visible;padding:0;position:absolute;z-index:1}:host([disabled]) #input{cursor:default}:host([checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-default,var(\n--mod-radio-button-checked-border-color-default,var(--spectrum-radio-button-checked-border-color-default)\n)\n);border-width:calc(var(--spectrum-radio-button-control-size)/2 - var(--spectrum-radio-button-selection-indicator)/2)}#input.focus-visible+#button:after,:host(.focus-visible) #input+#button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}#input.focus-visible+#button:after,:host(.focus-visible) #input+#button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}#input:focus-visible+#button:after,:host(:focus-visible) #input+#button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}#label{color:var(\n--highcontrast-radio-neutral-content-color,var(\n--mod-radio-neutral-content-color,var(--spectrum-radio-neutral-content-color)\n)\n);font-size:var(--mod-radio-font-size,var(--spectrum-radio-font-size));line-height:var(\n--mod-radio-line-height,var(--spectrum-radio-line-height)\n);margin-block-end:var(--spectrum-radio-label-bottom-to-text);margin-block-start:var(--spectrum-radio-label-top-to-text);margin-inline-start:var(\n--mod-radio-text-to-control,var(--spectrum-radio-text-to-control)\n);text-align:start;transition:color var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-in-out}#label:lang(ja),#label:lang(ko),#label:lang(zh){line-height:var(--spectrum-radio-cjk-line-height)}#button{block-size:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);box-sizing:border-box;flex-grow:0;flex-shrink:0;inline-size:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);margin-block-start:var(\n--mod-radio-button-top-to-control,var(--spectrum-radio-button-top-to-control)\n);position:relative}#button:before{background-color:var(\n--highcontrast-radio-button-background-color,var(\n--mod-radio-button-background-color,var(--spectrum-radio-button-background-color)\n)\n);border-color:var(\n--highcontrast-radio-button-border-color-default,var(\n--mod-radio-button-border-color-default,var(--spectrum-radio-button-border-color-default)\n)\n);border-radius:50%;border-style:solid;border-width:var(\n--mod-radio-border-width,var(--spectrum-radio-border-width)\n);box-sizing:border-box;content:\"\";display:block;height:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);position:absolute;transition:border var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-in-out,box-shadow var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-in-out;width:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);z-index:0}#button:after{border-radius:50%;content:\"\";display:block;left:50%;position:absolute;top:50%;transform:translateX(-50%) translateY(-50%);transition:opacity var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-out,margin var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-out}:host{--spectrum-radio-button-border-color-default:var(\n--system-spectrum-radio-button-border-color-default\n);--spectrum-radio-button-border-color-hover:var(\n--system-spectrum-radio-button-border-color-hover\n);--spectrum-radio-button-border-color-down:var(\n--system-spectrum-radio-button-border-color-down\n);--spectrum-radio-button-border-color-focus:var(\n--system-spectrum-radio-button-border-color-focus\n);--spectrum-radio-button-checked-border-color-default:var(\n--system-spectrum-radio-button-checked-border-color-default\n);--spectrum-radio-button-checked-border-color-hover:var(\n--system-spectrum-radio-button-checked-border-color-hover\n);--spectrum-radio-button-checked-border-color-down:var(\n--system-spectrum-radio-button-checked-border-color-down\n);--spectrum-radio-button-checked-border-color-focus:var(\n--system-spectrum-radio-button-checked-border-color-focus\n)}:host([emphasized]){--spectrum-radio-button-checked-border-color-default:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-default\n);--spectrum-radio-button-checked-border-color-hover:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-hover\n);--spectrum-radio-button-checked-border-color-down:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-down\n);--spectrum-radio-button-checked-border-color-focus:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-focus\n)}:host{--spectrum-radio-label-margin-top:var(\n--spectrum-global-dimension-size-75,6px\n)}:host(:focus){outline:none}:host([disabled]){pointer-events:none}\n`"
         }
       ],
       "exports": [
@@ -50240,7 +49322,7 @@
         {
           "kind": "variable",
           "name": "styles",
-          "default": "css`\n:host{--spectrum-radio-neutral-content-color:var(\n--spectrum-neutral-content-color-default\n);--spectrum-radio-neutral-content-color-hover:var(\n--spectrum-neutral-content-color-hover\n);--spectrum-radio-neutral-content-color-down:var(\n--spectrum-neutral-content-color-down\n);--spectrum-radio-neutral-content-color-focus:var(\n--spectrum-neutral-content-color-key-focus\n);--spectrum-radio-focus-indicator-thickness:var(\n--spectrum-focus-indicator-thickness\n);--spectrum-radio-focus-indicator-gap:var(--spectrum-focus-indicator-gap);--spectrum-radio-focus-indicator-color:var(\n--spectrum-focus-indicator-color\n);--spectrum-radio-disabled-content-color:var(\n--spectrum-disabled-content-color\n);--spectrum-radio-disabled-border-color:var(--spectrum-gray-400);--spectrum-radio-emphasized-accent-color:var(--spectrum-accent-color-900);--spectrum-radio-emphasized-accent-color-hover:var(\n--spectrum-accent-color-1000\n);--spectrum-radio-emphasized-accent-color-down:var(\n--spectrum-accent-color-1100\n);--spectrum-radio-emphasized-accent-color-focus:var(\n--spectrum-accent-color-1000\n);--spectrum-radio-border-width:var(--spectrum-border-width-200);--spectrum-radio-button-background-color:var(--spectrum-gray-75);--spectrum-radio-line-height:var(--spectrum-line-height-100);--spectrum-radio-animation-duration:var(--spectrum-animation-duration-100);--spectrum-radio-height:var(--spectrum-component-height-100);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-medium\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-100);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-100\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-100\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-medium\n);--spectrum-radio-font-size:var(--spectrum-font-size-100)}:host(:lang(ja)),:host(:lang(ko)),:host(:lang(zh)){--spectrum-radio-cjk-line-height:var(--spectrum-cjk-line-height-100)}:host([size=s]){--spectrum-radio-height:var(--spectrum-component-height-75);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-small\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-75);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-75\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-75\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-small\n);--spectrum-radio-font-size:var(--spectrum-font-size-75)}:host([size=m]){--spectrum-radio-height:var(--spectrum-component-height-100);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-medium\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-100);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-100\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-100\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-medium\n);--spectrum-radio-font-size:var(--spectrum-font-size-100)}:host([size=l]){--spectrum-radio-height:var(--spectrum-component-height-200);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-large\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-200);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-200\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-200\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-large\n);--spectrum-radio-font-size:var(--spectrum-font-size-200)}:host([size=xl]){--spectrum-radio-height:var(--spectrum-component-height-300);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-extra-large\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-300);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-300\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-300\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-extra-large\n);--spectrum-radio-font-size:var(--spectrum-font-size-300)}@media (forced-colors:active){:host{--highcontrast-radio-neutral-content-color:CanvasText;--highcontrast-radio-neutral-content-color-hover:CanvasText;--highcontrast-radio-neutral-content-color-down:CanvasText;--highcontrast-radio-neutral-content-color-focus:CanvasText;--highcontrast-radio-button-border-color-default:ButtonText;--highcontrast-radio-button-border-color-hover:Highlight;--highcontrast-radio-button-border-color-down:ButtonText;--highcontrast-radio-button-border-color-focus:Highlight;--highcontrast-radio-emphasized-accent-color:ButtonText;--highcontrast-radio-emphasized-accent-color-hover:Highlight;--highcontrast-radio-emphasized-accent-color-down:ButtonText;--highcontrast-radio-emphasized-accent-color-focus:Highlight;--highcontrast-radio-button-checked-border-color-default:Highlight;--highcontrast-radio-button-checked-border-color-hover:Highlight;--highcontrast-radio-button-checked-border-color-down:Highlight;--highcontrast-radio-button-checked-border-color-focus:Highlight;--highcontrast-radio-disabled-content-color:GrayText;--highcontrast-radio-disabled-border-color:GrayText;--highcontrast-radio-focus-indicator-color:CanvasText}#button:after{forced-color-adjust:none}}:host{align-items:flex-start;display:inline-flex;max-inline-size:100%;min-block-size:var(--mod-radio-height,var(--spectrum-radio-height));position:relative;vertical-align:top}:host(:hover) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-hover,var(\n--mod-radio-button-border-color-hover,var(--spectrum-radio-button-border-color-hover)\n)\n)}:host([checked]:hover) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-hover,var(\n--mod-radio-button-checked-border-color-hover,var(--spectrum-radio-button-checked-border-color-hover)\n)\n)}:host(:hover) #label{color:var(\n--highcontrast-radio-neutral-content-color-hover,var(\n--mod-radio-neutral-content-color-hover,var(--spectrum-radio-neutral-content-color-hover)\n)\n)}:host(:active) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-down,var(\n--mod-radio-button-border-color-down,var(--spectrum-radio-button-border-color-down)\n)\n)}:host(:active[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-down,var(\n--mod-radio-button-checked-border-color-down,var(--spectrum-radio-button-checked-border-color-down)\n)\n)}:host(:active) #label{color:var(\n--highcontrast-radio-neutral-content-color-down,var(\n--mod-radio-neutral-content-color-down,var(--spectrum-radio-neutral-content-color-down)\n)\n)}:host(:focus) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-focus,var(\n--mod-radio-button-border-color-focus,var(--spectrum-radio-button-border-color-focus)\n)\n)}:host(:focus) #button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}:host([checked]:focus) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-focus,var(\n--mod-radio-button-checked-border-color-focus,var(--spectrum-radio-button-checked-border-color-focus)\n)\n)}:host(:focus) #label{color:var(\n--highcontrast-radio-neutral-content-color-focus,var(\n--mod-radio-neutral-content-color-focus,var(--spectrum-radio-neutral-content-color-focus)\n)\n)}:host([invalid]) #label{color:var(\n--highcontrast-radio-neutral-content-color,var(\n--mod-radio-neutral-content-color,var(--spectrum-radio-neutral-content-color)\n)\n)}:host([readonly]) #input:read-only{cursor:auto}:host([readonly]) #button{clip:rect(1px,1px,1px,1px);bottom:100%;clip-path:inset(50%);position:fixed;right:100%}:host([readonly]),:host([readonly]) #label,:host([readonly][checked][disabled]) #input~#label,:host([readonly][disabled]) #input~#label{color:inherit;margin-inline-start:auto}:host([emphasized][checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color,var(\n--mod-radio-emphasized-accent-color,var(--spectrum-radio-emphasized-accent-color)\n)\n)}:host([emphasized][checked]:hover) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-hover,var(\n--mod-radio-emphasized-accent-color-hover,var(--spectrum-radio-emphasized-accent-color-hover)\n)\n)}:host([emphasized]:active[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-down,var(\n--mod-radio-emphasized-accent-color-down,var(--spectrum-radio-emphasized-accent-color-down)\n)\n)}:host([emphasized][checked]:focus) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-focus,var(\n--mod-radio-emphasized-accent-color-focus,var(--spectrum-radio-emphasized-accent-color-focus)\n)\n)}:host([checked][disabled]) #input+#button:before,:host([disabled]) #input+#button:before{border-color:var(\n--highcontrast-radio-disabled-border-color,var(\n--mod-radio-disabled-border-color,var(--spectrum-radio-disabled-border-color)\n)\n)}:host([checked][disabled]) #input~#label,:host([disabled]) #input~#label{color:var(\n--highcontrast-radio-disabled-content-color,var(\n--mod-radio-disabled-content-color,var(--spectrum-radio-disabled-content-color)\n)\n)}#input{block-size:100%;box-sizing:border-box;cursor:pointer;font-family:inherit;font-size:100%;inline-size:100%;line-height:var(\n--mod-radio-line-height,var(--spectrum-radio-line-height)\n);margin:0;opacity:0;overflow:visible;padding:0;position:absolute;z-index:1}:host([disabled]) #input{cursor:default}:host([checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-default,var(\n--mod-radio-button-checked-border-color-default,var(--spectrum-radio-button-checked-border-color-default)\n)\n);border-width:calc(var(--spectrum-radio-button-control-size)/2 - var(--spectrum-radio-button-selection-indicator)/2)}#input.focus-visible+#button:after,:host(.focus-visible) #input+#button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}#input.focus-visible+#button:after,:host(.focus-visible) #input+#button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}#input:focus-visible+#button:after,:host(:focus-visible) #input+#button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}#label{color:var(\n--highcontrast-radio-neutral-content-color,var(\n--mod-radio-neutral-content-color,var(--spectrum-radio-neutral-content-color)\n)\n);font-size:var(--mod-radio-font-size,var(--spectrum-radio-font-size));line-height:var(\n--mod-radio-line-height,var(--spectrum-radio-line-height)\n);margin-block-end:var(--spectrum-radio-label-bottom-to-text);margin-block-start:var(--spectrum-radio-label-top-to-text);margin-inline-start:var(\n--mod-radio-text-to-control,var(--spectrum-radio-text-to-control)\n);text-align:start;transition:color var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-in-out}#label:lang(ja),#label:lang(ko),#label:lang(zh){line-height:var(--spectrum-radio-cjk-line-height)}#button{block-size:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);box-sizing:border-box;flex-grow:0;flex-shrink:0;inline-size:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);margin-block-start:var(\n--mod-radio-button-top-to-control,var(--spectrum-radio-button-top-to-control)\n);position:relative}#button:before{background-color:var(\n--highcontrast-radio-button-background-color,var(\n--mod-radio-button-background-color,var(--spectrum-radio-button-background-color)\n)\n);border-color:var(\n--highcontrast-radio-button-border-color-default,var(\n--mod-radio-button-border-color-default,var(--spectrum-radio-button-border-color-default)\n)\n);border-radius:50%;border-style:solid;border-width:var(\n--mod-radio-border-width,var(--spectrum-radio-border-width)\n);box-sizing:border-box;content:\"\";display:block;height:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);position:absolute;transition:border var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-in-out,box-shadow var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-in-out;width:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);z-index:0}#button:after{border-radius:50%;content:\"\";display:block;left:50%;position:absolute;top:50%;transform:translateX(-50%) translateY(-50%);transition:opacity var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-out,margin var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-out}:host{--spectrum-radio-button-border-color-default:var(\n--system-spectrum-radio-button-border-color-default\n);--spectrum-radio-button-border-color-hover:var(\n--system-spectrum-radio-button-border-color-hover\n);--spectrum-radio-button-border-color-down:var(\n--system-spectrum-radio-button-border-color-down\n);--spectrum-radio-button-border-color-focus:var(\n--system-spectrum-radio-button-border-color-focus\n);--spectrum-radio-button-checked-border-color-default:var(\n--system-spectrum-radio-button-checked-border-color-default\n);--spectrum-radio-button-checked-border-color-hover:var(\n--system-spectrum-radio-button-checked-border-color-hover\n);--spectrum-radio-button-checked-border-color-down:var(\n--system-spectrum-radio-button-checked-border-color-down\n);--spectrum-radio-button-checked-border-color-focus:var(\n--system-spectrum-radio-button-checked-border-color-focus\n)}:host([emphasized]){--spectrum-radio-button-checked-border-color-default:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-default\n);--spectrum-radio-button-checked-border-color-hover:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-hover\n);--spectrum-radio-button-checked-border-color-down:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-down\n);--spectrum-radio-button-checked-border-color-focus:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-focus\n)}\n`"
+          "default": "css`\n:host{--spectrum-radio-neutral-content-color:var(\n--spectrum-neutral-content-color-default\n);--spectrum-radio-neutral-content-color-hover:var(\n--spectrum-neutral-content-color-hover\n);--spectrum-radio-neutral-content-color-down:var(\n--spectrum-neutral-content-color-down\n);--spectrum-radio-neutral-content-color-focus:var(\n--spectrum-neutral-content-color-key-focus\n);--spectrum-radio-focus-indicator-thickness:var(\n--spectrum-focus-indicator-thickness\n);--spectrum-radio-focus-indicator-gap:var(--spectrum-focus-indicator-gap);--spectrum-radio-focus-indicator-color:var(\n--spectrum-focus-indicator-color\n);--spectrum-radio-disabled-content-color:var(\n--spectrum-disabled-content-color\n);--spectrum-radio-disabled-border-color:var(--spectrum-gray-400);--spectrum-radio-emphasized-accent-color:var(--spectrum-accent-color-900);--spectrum-radio-emphasized-accent-color-hover:var(\n--spectrum-accent-color-1000\n);--spectrum-radio-emphasized-accent-color-down:var(\n--spectrum-accent-color-1100\n);--spectrum-radio-emphasized-accent-color-focus:var(\n--spectrum-accent-color-1000\n);--spectrum-radio-border-width:var(--spectrum-border-width-200);--spectrum-radio-button-background-color:var(--spectrum-gray-75);--spectrum-radio-line-height:var(--spectrum-line-height-100);--spectrum-radio-animation-duration:var(--spectrum-animation-duration-100);--spectrum-radio-height:var(--spectrum-component-height-100);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-medium\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-100);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-100\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-100\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-medium\n);--spectrum-radio-font-size:var(--spectrum-font-size-100)}:host(:lang(ja)),:host(:lang(ko)),:host(:lang(zh)){--spectrum-radio-cjk-line-height:var(--spectrum-cjk-line-height-100)}:host([size=s]){--spectrum-radio-height:var(--spectrum-component-height-75);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-small\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-75);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-75\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-75\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-small\n);--spectrum-radio-font-size:var(--spectrum-font-size-75)}:host([size=m]){--spectrum-radio-height:var(--spectrum-component-height-100);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-medium\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-100);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-100\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-100\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-medium\n);--spectrum-radio-font-size:var(--spectrum-font-size-100)}:host([size=l]){--spectrum-radio-height:var(--spectrum-component-height-200);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-large\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-200);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-200\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-200\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-large\n);--spectrum-radio-font-size:var(--spectrum-font-size-200)}:host([size=xl]){--spectrum-radio-height:var(--spectrum-component-height-300);--spectrum-radio-button-control-size:var(\n--spectrum-radio-button-control-size-extra-large\n);--spectrum-radio-text-to-control:var(--spectrum-text-to-control-300);--spectrum-radio-label-top-to-text:var(\n--spectrum-component-top-to-text-300\n);--spectrum-radio-label-bottom-to-text:var(\n--spectrum-component-bottom-to-text-300\n);--spectrum-radio-button-top-to-control:var(\n--spectrum-radio-button-top-to-control-extra-large\n);--spectrum-radio-font-size:var(--spectrum-font-size-300)}@media (forced-colors:active){:host{--highcontrast-radio-neutral-content-color:CanvasText;--highcontrast-radio-neutral-content-color-hover:CanvasText;--highcontrast-radio-neutral-content-color-down:CanvasText;--highcontrast-radio-neutral-content-color-focus:CanvasText;--highcontrast-radio-button-border-color-default:ButtonText;--highcontrast-radio-button-border-color-hover:Highlight;--highcontrast-radio-button-border-color-down:ButtonText;--highcontrast-radio-button-border-color-focus:Highlight;--highcontrast-radio-emphasized-accent-color:ButtonText;--highcontrast-radio-emphasized-accent-color-hover:Highlight;--highcontrast-radio-emphasized-accent-color-down:ButtonText;--highcontrast-radio-emphasized-accent-color-focus:Highlight;--highcontrast-radio-button-checked-border-color-default:Highlight;--highcontrast-radio-button-checked-border-color-hover:Highlight;--highcontrast-radio-button-checked-border-color-down:Highlight;--highcontrast-radio-button-checked-border-color-focus:Highlight;--highcontrast-radio-disabled-content-color:GrayText;--highcontrast-radio-disabled-border-color:GrayText;--highcontrast-radio-focus-indicator-color:CanvasText}#button:after{forced-color-adjust:none}}:host{align-items:flex-start;display:inline-flex;max-inline-size:100%;min-block-size:var(--mod-radio-height,var(--spectrum-radio-height));position:relative;vertical-align:top}:host(:hover) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-hover,var(\n--mod-radio-button-border-color-hover,var(--spectrum-radio-button-border-color-hover)\n)\n)}:host([checked]:hover) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-hover,var(\n--mod-radio-button-checked-border-color-hover,var(--spectrum-radio-button-checked-border-color-hover)\n)\n)}:host(:hover) #label{color:var(\n--highcontrast-radio-neutral-content-color-hover,var(\n--mod-radio-neutral-content-color-hover,var(--spectrum-radio-neutral-content-color-hover)\n)\n)}:host(:active) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-down,var(\n--mod-radio-button-border-color-down,var(--spectrum-radio-button-border-color-down)\n)\n)}:host(:active[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-down,var(\n--mod-radio-button-checked-border-color-down,var(--spectrum-radio-button-checked-border-color-down)\n)\n)}:host(:active) #label{color:var(\n--highcontrast-radio-neutral-content-color-down,var(\n--mod-radio-neutral-content-color-down,var(--spectrum-radio-neutral-content-color-down)\n)\n)}:host(.focus-visible) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-focus,var(\n--mod-radio-button-border-color-focus,var(--spectrum-radio-button-border-color-focus)\n)\n)}:host(.focus-visible) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-focus,var(\n--mod-radio-button-border-color-focus,var(--spectrum-radio-button-border-color-focus)\n)\n)}:host(:focus-visible) #button:before{border-color:var(\n--highcontrast-radio-button-border-color-focus,var(\n--mod-radio-button-border-color-focus,var(--spectrum-radio-button-border-color-focus)\n)\n)}:host(.focus-visible) #button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}:host(.focus-visible) #button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}:host(:focus-visible) #button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}:host(.focus-visible[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-focus,var(\n--mod-radio-button-checked-border-color-focus,var(--spectrum-radio-button-checked-border-color-focus)\n)\n)}:host(.focus-visible[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-focus,var(\n--mod-radio-button-checked-border-color-focus,var(--spectrum-radio-button-checked-border-color-focus)\n)\n)}:host(:focus-visible[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-focus,var(\n--mod-radio-button-checked-border-color-focus,var(--spectrum-radio-button-checked-border-color-focus)\n)\n)}:host(.focus-visible) #label{color:var(\n--highcontrast-radio-neutral-content-color-focus,var(\n--mod-radio-neutral-content-color-focus,var(--spectrum-radio-neutral-content-color-focus)\n)\n)}:host(.focus-visible) #label{color:var(\n--highcontrast-radio-neutral-content-color-focus,var(\n--mod-radio-neutral-content-color-focus,var(--spectrum-radio-neutral-content-color-focus)\n)\n)}:host(:focus-visible) #label{color:var(\n--highcontrast-radio-neutral-content-color-focus,var(\n--mod-radio-neutral-content-color-focus,var(--spectrum-radio-neutral-content-color-focus)\n)\n)}:host([invalid]) #label{color:var(\n--highcontrast-radio-neutral-content-color,var(\n--mod-radio-neutral-content-color,var(--spectrum-radio-neutral-content-color)\n)\n)}:host([readonly]) #input:read-only{cursor:auto}:host([readonly]) #button{clip:rect(1px,1px,1px,1px);bottom:100%;clip-path:inset(50%);position:fixed;right:100%}:host([readonly]),:host([readonly]) #label,:host([readonly][checked][disabled]) #input~#label,:host([readonly][disabled]) #input~#label{color:inherit;margin-inline-start:auto}:host([emphasized][checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color,var(\n--mod-radio-emphasized-accent-color,var(--spectrum-radio-emphasized-accent-color)\n)\n)}:host([emphasized][checked]:hover) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-hover,var(\n--mod-radio-emphasized-accent-color-hover,var(--spectrum-radio-emphasized-accent-color-hover)\n)\n)}:host([emphasized]:active[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-down,var(\n--mod-radio-emphasized-accent-color-down,var(--spectrum-radio-emphasized-accent-color-down)\n)\n)}:host([emphasized].focus-visible[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-focus,var(\n--mod-radio-emphasized-accent-color-focus,var(--spectrum-radio-emphasized-accent-color-focus)\n)\n)}:host([emphasized].focus-visible[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-focus,var(\n--mod-radio-emphasized-accent-color-focus,var(--spectrum-radio-emphasized-accent-color-focus)\n)\n)}:host([emphasized]:focus-visible[checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-emphasized-accent-color-focus,var(\n--mod-radio-emphasized-accent-color-focus,var(--spectrum-radio-emphasized-accent-color-focus)\n)\n)}:host([checked][disabled]) #input+#button:before,:host([disabled]) #input+#button:before{border-color:var(\n--highcontrast-radio-disabled-border-color,var(\n--mod-radio-disabled-border-color,var(--spectrum-radio-disabled-border-color)\n)\n)}:host([checked][disabled]) #input~#label,:host([disabled]) #input~#label{color:var(\n--highcontrast-radio-disabled-content-color,var(\n--mod-radio-disabled-content-color,var(--spectrum-radio-disabled-content-color)\n)\n)}#input{block-size:100%;box-sizing:border-box;cursor:pointer;font-family:inherit;font-size:100%;inline-size:100%;line-height:var(\n--mod-radio-line-height,var(--spectrum-radio-line-height)\n);margin:0;opacity:0;overflow:visible;padding:0;position:absolute;z-index:1}:host([disabled]) #input{cursor:default}:host([checked]) #input+#button:before{border-color:var(\n--highcontrast-radio-button-checked-border-color-default,var(\n--mod-radio-button-checked-border-color-default,var(--spectrum-radio-button-checked-border-color-default)\n)\n);border-width:calc(var(--spectrum-radio-button-control-size)/2 - var(--spectrum-radio-button-selection-indicator)/2)}#input.focus-visible+#button:after,:host(.focus-visible) #input+#button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}#input.focus-visible+#button:after,:host(.focus-visible) #input+#button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}#input:focus-visible+#button:after,:host(:focus-visible) #input+#button:after{border-color:var(\n--highcontrast-radio-focus-indicator-color,var(\n--mod-radio-focus-indicator-color,var(--spectrum-radio-focus-indicator-color)\n)\n);border-style:solid;border-width:var(\n--mod-radio-focus-indicator-thickness,var(--spectrum-radio-focus-indicator-thickness)\n);height:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2);width:calc(var(--spectrum-radio-button-control-size) + var(--spectrum-radio-focus-indicator-gap)*2)}#label{color:var(\n--highcontrast-radio-neutral-content-color,var(\n--mod-radio-neutral-content-color,var(--spectrum-radio-neutral-content-color)\n)\n);font-size:var(--mod-radio-font-size,var(--spectrum-radio-font-size));line-height:var(\n--mod-radio-line-height,var(--spectrum-radio-line-height)\n);margin-block-end:var(--spectrum-radio-label-bottom-to-text);margin-block-start:var(--spectrum-radio-label-top-to-text);margin-inline-start:var(\n--mod-radio-text-to-control,var(--spectrum-radio-text-to-control)\n);text-align:start;transition:color var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-in-out}#label:lang(ja),#label:lang(ko),#label:lang(zh){line-height:var(--spectrum-radio-cjk-line-height)}#button{block-size:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);box-sizing:border-box;flex-grow:0;flex-shrink:0;inline-size:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);margin-block-start:var(\n--mod-radio-button-top-to-control,var(--spectrum-radio-button-top-to-control)\n);position:relative}#button:before{background-color:var(\n--highcontrast-radio-button-background-color,var(\n--mod-radio-button-background-color,var(--spectrum-radio-button-background-color)\n)\n);border-color:var(\n--highcontrast-radio-button-border-color-default,var(\n--mod-radio-button-border-color-default,var(--spectrum-radio-button-border-color-default)\n)\n);border-radius:50%;border-style:solid;border-width:var(\n--mod-radio-border-width,var(--spectrum-radio-border-width)\n);box-sizing:border-box;content:\"\";display:block;height:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);position:absolute;transition:border var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-in-out,box-shadow var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-in-out;width:var(\n--mod-radio-button-control-size,var(--spectrum-radio-button-control-size)\n);z-index:0}#button:after{border-radius:50%;content:\"\";display:block;left:50%;position:absolute;top:50%;transform:translateX(-50%) translateY(-50%);transition:opacity var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-out,margin var(\n--mod-radio-animation-duration,var(--spectrum-radio-animation-duration)\n) ease-out}:host{--spectrum-radio-button-border-color-default:var(\n--system-spectrum-radio-button-border-color-default\n);--spectrum-radio-button-border-color-hover:var(\n--system-spectrum-radio-button-border-color-hover\n);--spectrum-radio-button-border-color-down:var(\n--system-spectrum-radio-button-border-color-down\n);--spectrum-radio-button-border-color-focus:var(\n--system-spectrum-radio-button-border-color-focus\n);--spectrum-radio-button-checked-border-color-default:var(\n--system-spectrum-radio-button-checked-border-color-default\n);--spectrum-radio-button-checked-border-color-hover:var(\n--system-spectrum-radio-button-checked-border-color-hover\n);--spectrum-radio-button-checked-border-color-down:var(\n--system-spectrum-radio-button-checked-border-color-down\n);--spectrum-radio-button-checked-border-color-focus:var(\n--system-spectrum-radio-button-checked-border-color-focus\n)}:host([emphasized]){--spectrum-radio-button-checked-border-color-default:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-default\n);--spectrum-radio-button-checked-border-color-hover:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-hover\n);--spectrum-radio-button-checked-border-color-down:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-down\n);--spectrum-radio-button-checked-border-color-focus:var(\n--system-spectrum-radio-emphasized-button-checked-border-color-focus\n)}\n`"
         }
       ],
       "exports": [
