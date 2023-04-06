@@ -11,3 +11,23 @@ governing permissions and limitations under the License.
 */
 
 @import './spectrum-swatch.css';
+
+/**
+ * Begin work around for https://github.com/adobe/spectrum-css/issues/1460
+ */
+
+.fill:before {
+    background: var(--spectrum-picked-color, transparent);
+}
+
+:host([border='none']) .fill:before {
+    background: var(--spectrum-picked-color, transparent);
+}
+
+:host .is-image .fill:before {
+    background: #0000;
+}
+
+/**
+ * End workaround for https://github.com/adobe/spectrum-css/issues/1460
+ */
