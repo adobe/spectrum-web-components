@@ -166,18 +166,6 @@ const processCSS = async (
     });
 };
 
-// For fonts.css we need to combine 2 source files into 1
-const processMultiSourceCSS = async (srcPaths, dstPath, identifier) => {
-    let result = '';
-
-    for (const srcPath of srcPaths) {
-        let data = fs.readFileSync(srcPath, 'utf8');
-        result = `${result}\n${await processCSSData(data, identifier)}`;
-    }
-
-    fs.writeFile(dstPath, result, 'utf8');
-};
-
 // where is spectrum-css?
 // TODO: use resolve package to find node_modules
 const spectrumPaths = [
@@ -300,15 +288,6 @@ async function processSpectrumVars() {
             'typography'
         );
 
-        // Commons
-        const commonsPath = path.join(
-            __dirname,
-            '..',
-            'node_modules',
-            '@spectrum-css',
-            'commons'
-        );
-
         // typography.css
         {
             const srcPath = path.join(typographyPath, 'dist', 'index-vars.css');
@@ -317,19 +296,6 @@ async function processSpectrumVars() {
             );
             console.log(`processing typography`);
             processes.push(await processCSS(srcPath, dstPath, 'typography'));
-        }
-
-        // fonts.css (2 sources so a little tricky)
-        {
-            // const srcPath1 = path.join(commonsPath, 'fonts.css');
-            const srcPath2 = path.join(typographyPath, 'font.css');
-            const dstPath = path.resolve(
-                path.join(__dirname, '..', 'tools', 'styles', 'fonts.css')
-            );
-            console.log(`processing fonts from commons & typography`);
-            processes.push(
-                processMultiSourceCSS([srcPath2], dstPath, ':root ')
-            );
         }
     }
 

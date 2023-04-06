@@ -15,7 +15,7 @@ governing permissions and limitations under the License.
 @import '@spectrum-web-components/styles/tokens/express/global-vars.css';
 @import '@spectrum-web-components/styles/tokens/spectrum/custom-vars.css';
 @import '@spectrum-web-components/styles/tokens/express/custom-vars.css';
-@import '@spectrum-web-components/styles/fonts.css';
+@import '@spectrum-web-components/styles/typography.css';
 
 :host {
     display: block;

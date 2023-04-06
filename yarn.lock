@@ -4504,10 +4504,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/tray/-/tray-2.0.11.tgz#eca3b6c88273252221779862a3727f667fe841f2"
   integrity sha512-gQNR+OC7eajCO+Q4G4siZDwdttMfX7jVYApHZB4iuPqYfiMZeG5WLRSU+r+AX48/E388JeAiDeozj/PGwdOceA==
 
-"@spectrum-css/typography@^4.0.26":
-  version "4.0.26"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-4.0.26.tgz#736e73a9bad2242b566211b476e3450cb186fbd5"
-  integrity sha512-Xiky4Dme+ZKyt0tN+R/9FZ3JEi4epTcGqIqP8NI7K4/i9n1//wFIF6xigpdjYFbSxw7vh5poul4AVbX/v3MhOQ==
+"@spectrum-css/typography@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/typography/-/typography-5.0.1.tgz#e2717836bd7d97f527b572d92f718edc6dffebf0"
+  integrity sha512-sTmy3PprXzzmAV5itWXXSF23DSo4hUaF0yjNkuLpLW73Gpg32QY70gBKTaH8aRxtuG5lQQBBFX1nnN3fIQUa/Q==
 
 "@spectrum-css/underlay@^2.0.36":
   version "2.0.40"

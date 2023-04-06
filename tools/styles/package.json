@@ -32,7 +32,6 @@
         "./all-medium-lightest.css": "./all-medium-lightest.css",
         "./core-global.css": "./core-global.css",
         "./express/core-global.css": "./express/core-global.css",
-        "./fonts.css": "./fonts.css",
         "./scale-large.css": "./scale-large.css",
         "./express/scale-large.css": "./express/scale-large.css",
         "./scale-medium.css": "./scale-medium.css",
@@ -111,7 +110,7 @@
         "@spectrum-css/commons": "^4.0.2",
         "@spectrum-css/expressvars": "^3.0.0",
         "@spectrum-css/tokens": "^8.0.2",
-        "@spectrum-css/typography": "^4.0.26",
+        "@spectrum-css/typography": "^5.0.1",
         "@spectrum-css/vars": "^8.0.3"
     },
     "customElements": "custom-elements.json",
