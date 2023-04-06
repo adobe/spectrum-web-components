@@ -60,6 +60,7 @@ const tokenPackages = [
     'colorwheel',
     'colorhandle',
     'colorloupe',
+    'illustratedmessage',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
