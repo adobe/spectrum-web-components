@@ -26,7 +26,6 @@ const config = {
             fileName: 'illustratedmessage',
             components: [
                 converter.classToHost(),
-                converter.classToAttribute('spectrum-IllustratedMessage--cta'),
                 converter.classToId('spectrum-IllustratedMessage-heading'),
                 converter.classToId('spectrum-IllustratedMessage-description'),
                 converter.classToId('spectrum-IllustratedMessage-illustration'),

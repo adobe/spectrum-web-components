@@ -23,19 +23,7 @@ export const Default = (): TemplateResult => {
     return html`
         <sp-illustrated-message
             heading="Drag and Drop Your File"
-            description="This message has italics"
-        >
-            ${illustration}
-        </sp-illustrated-message>
-    `;
-};
-
-export const CTA = (): TemplateResult => {
-    return html`
-        <sp-illustrated-message
-            heading="Drag and Drop Your File"
-            description="This message has no italics"
-            cta
+            description="Additional descriptive text"
         >
             ${illustration}
         </sp-illustrated-message>
