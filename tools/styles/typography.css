@@ -12,2644 +12,1300 @@ governing permissions and limitations under the License.
 
 :host,
 :root {
-    font-family: var(
-        --spectrum-alias-body-text-font-family,
-        var(--spectrum-global-font-family-base)
-    );
-    font-size: var(
-        --spectrum-alias-font-size-default,
-        var(--spectrum-global-dimension-font-size-100)
-    );
+    --spectrum-font-family-ar: myriad-arabic, adobe-clean, 'Source Sans Pro',
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+        'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-font-family-he: myriad-hebrew, adobe-clean, 'Source Sans Pro',
+        -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+        'Trebuchet MS', 'Lucida Grande', sans-serif;
+    --spectrum-font-family: var(--spectrum-sans-font-family-stack);
+    --spectrum-font-style: var(--spectrum-default-font-style);
+    --spectrum-font-size: var(--spectrum-font-size-100);
+    font-family: var(--spectrum-font-family);
+    font-size: var(--spectrum-font-size);
+    font-style: var(--spectrum-font-style);
 }
 .spectrum:lang(ar) {
-    font-family: var(
-        --spectrum-alias-font-family-ar,
-        var(--spectrum-global-font-font-family-ar)
-    );
+    font-family: var(--spectrum-font-family-ar);
 }
 .spectrum:lang(he) {
-    font-family: var(
-        --spectrum-alias-font-family-he,
-        var(--spectrum-global-font-font-family-he)
-    );
-}
-.spectrum:lang(zh-Hans) {
-    font-family: var(
-        --spectrum-alias-font-family-zhhans,
-        var(--spectrum-global-font-font-family-zhhans)
-    );
-}
-.spectrum:lang(zh-Hant) {
-    font-family: var(
-        --spectrum-alias-font-family-zh,
-        var(--spectrum-global-font-font-family-zh)
-    );
-}
-.spectrum:lang(zh) {
-    font-family: var(
-        --spectrum-alias-font-family-zh,
-        var(--spectrum-global-font-font-family-zh)
-    );
-}
-.spectrum:lang(ko) {
-    font-family: var(
-        --spectrum-alias-font-family-ko,
-        var(--spectrum-global-font-font-family-ko)
-    );
-}
-.spectrum:lang(ja) {
-    font-family: var(
-        --spectrum-alias-font-family-ja,
-        var(--spectrum-global-font-font-family-ja)
-    );
-}
-.spectrum-Heading--sizeXXXL {
-    font-size: var(
-        --spectrum-heading-xxxl-text-size,
-        var(--spectrum-alias-heading-xxxl-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-xxxl-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-xxxl-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-xxxl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-heading-xxxl-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-xxxl-text-transform, none);
-}
-.spectrum-Heading--sizeXXL {
-    font-size: var(
-        --spectrum-heading-xxl-text-size,
-        var(--spectrum-alias-heading-xxl-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-xxl-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-xxl-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-xxl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-heading-xxl-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-xxl-text-transform, none);
-}
-.spectrum-Heading--sizeXL {
-    font-size: var(
-        --spectrum-heading-xl-text-size,
-        var(--spectrum-alias-heading-xl-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-xl-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-xl-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-xl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-heading-xl-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-xl-text-transform, none);
-}
-.spectrum-Heading--sizeL {
-    font-size: var(
-        --spectrum-heading-l-text-size,
-        var(--spectrum-alias-heading-l-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-l-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-l-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-l-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-heading-l-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-l-text-transform, none);
-}
-.spectrum-Heading--sizeM {
-    font-size: var(
-        --spectrum-heading-m-text-size,
-        var(--spectrum-alias-heading-m-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-m-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-m-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-m-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-heading-m-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-m-text-transform, none);
-}
-.spectrum-Heading--sizeS {
-    font-size: var(
-        --spectrum-heading-s-text-size,
-        var(--spectrum-alias-heading-s-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-s-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-s-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-s-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-heading-s-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-s-text-transform, none);
-}
-.spectrum-Heading--sizeXS {
-    font-size: var(
-        --spectrum-heading-xs-text-size,
-        var(--spectrum-alias-heading-xs-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-xs-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-xs-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-xs-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-heading-xs-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-xs-text-transform, none);
-}
-.spectrum-Heading--sizeXXS {
-    font-size: var(
-        --spectrum-heading-xxs-text-size,
-        var(--spectrum-alias-heading-xxs-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-xxs-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-xxs-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-xxs-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-heading-xxs-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-xxs-text-transform, none);
+    font-family: var(--spectrum-font-family-he);
 }
 .spectrum-Heading {
+    --spectrum-heading-sans-serif-font-family: var(
+        --spectrum-sans-font-family-stack
+    );
+    --spectrum-heading-serif-font-family: var(
+        --spectrum-serif-font-family-stack
+    );
+    --spectrum-heading-cjk-font-family: var(--spectrum-cjk-font-family-stack);
+    --spectrum-heading-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
+    --spectrum-heading-font-color: var(--spectrum-heading-color);
+    --spectrum-heading-margin-start: calc(
+        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
+            var(--spectrum-heading-margin-top-multiplier)
+    );
+    --spectrum-heading-margin-end: calc(
+        var(--mod-heading-font-size, var(--spectrum-heading-font-size)) *
+            var(--spectrum-heading-margin-bottom-multiplier)
+    );
+}
+@media (forced-colors: active) {
+    .spectrum-Heading {
+        --highcontrast-heading-font-color: Text;
+    }
+}
+.spectrum-Heading--sizeXXS {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xxs);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxs);
+}
+.spectrum-Heading--sizeXS {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xs);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xs);
+}
+.spectrum-Heading--sizeS {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-s);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-s);
+}
+.spectrum-Heading--sizeM {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-m);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-m);
+}
+.spectrum-Heading--sizeL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-l);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-l);
+}
+.spectrum-Heading--sizeXL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xl);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xl);
+}
+.spectrum-Heading--sizeXXL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xxl);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxl);
+}
+.spectrum-Heading--sizeXXXL {
+    --spectrum-heading-font-size: var(--spectrum-heading-size-xxxl);
+    --spectrum-heading-cjk-font-size: var(--spectrum-heading-cjk-size-xxxl);
+}
+.spectrum-Heading {
+    color: var(
+        --highcontrast-heading-font-color,
+        var(--mod-heading-font-color, var(--spectrum-heading-font-color))
+    );
     font-family: var(
-        --spectrum-heading-m-text-font-family,
-        var(--spectrum-alias-body-text-font-family)
+        --mod-heading-sans-serif-font-family,
+        var(--spectrum-heading-sans-serif-font-family)
+    );
+    font-size: var(--mod-heading-font-size, var(--spectrum-heading-font-size));
+    font-style: var(
+        --mod-heading-sans-serif-font-style,
+        var(--spectrum-heading-sans-serif-font-style)
     );
     font-weight: var(
-        --spectrum-heading-m-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-regular)
+        --mod-heading-sans-serif-font-weight,
+        var(--spectrum-heading-sans-serif-font-weight)
+    );
+    line-height: var(
+        --mod-heading-line-height,
+        var(--spectrum-heading-line-height)
+    );
+}
+.spectrum-Heading .spectrum-Heading-strong,
+.spectrum-Heading strong {
+    font-style: var(
+        --mod-heading-sans-serif-strong-font-style,
+        var(--spectrum-heading-sans-serif-strong-font-style)
+    );
+    font-weight: var(
+        --mod-heading-sans-serif-strong-font-weight,
+        var(--spectrum-heading-sans-serif-strong-font-weight)
     );
 }
 .spectrum-Heading .spectrum-Heading-emphasized,
 .spectrum-Heading em {
     font-style: var(
-        --spectrum-heading-m-emphasized-text-font-style,
-        var(--spectrum-global-font-style-italic)
+        --mod-heading-sans-serif-emphasized-font-style,
+        var(--spectrum-heading-sans-serif-emphasized-font-style)
     );
-}
-.spectrum-Heading .spectrum-Heading-strong,
-.spectrum-Heading strong {
     font-weight: var(
-        --spectrum-heading-m-strong-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-regular-strong)
+        --mod-heading-sans-serif-emphasized-font-weight,
+        var(--spectrum-heading-sans-serif-emphasized-font-weight)
     );
 }
-.spectrum-Heading--serif {
+.spectrum-Heading .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading em strong,
+.spectrum-Heading strong em {
+    font-style: var(
+        --mod-heading-sans-serif-strong-emphasized-font-style,
+        var(--spectrum-heading-sans-serif-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-heading-sans-serif-strong-emphasized-font-weight,
+        var(--spectrum-heading-sans-serif-strong-emphasized-font-weight)
+    );
+}
+.spectrum-Heading:lang(ja),
+.spectrum-Heading:lang(ko),
+.spectrum-Heading:lang(zh) {
     font-family: var(
-        --spectrum-body-m-serif-text-font-family,
-        var(--spectrum-alias-serif-text-font-family)
+        --mod-heading-cjk-font-family,
+        var(--spectrum-heading-cjk-font-family)
+    );
+    font-size: var(
+        --mod-heading-cjk-font-size,
+        var(--spectrum-heading-cjk-font-size)
+    );
+    font-style: var(
+        --mod-heading-cjk-font-style,
+        var(--spectrum-heading-cjk-font-style)
+    );
+    font-weight: var(
+        --mod-heading-cjk-font-weight,
+        var(--spectrum-heading-cjk-font-weight)
+    );
+    letter-spacing: var(
+        --mod-heading-cjk-letter-spacing,
+        var(--spectrum-heading-cjk-letter-spacing)
+    );
+    line-height: var(
+        --mod-heading-cjk-line-height,
+        var(--spectrum-heading-cjk-line-height)
+    );
+}
+.spectrum-Heading:lang(ja) .spectrum-Heading-emphasized,
+.spectrum-Heading:lang(ja) em,
+.spectrum-Heading:lang(ko) .spectrum-Heading-emphasized,
+.spectrum-Heading:lang(ko) em,
+.spectrum-Heading:lang(zh) .spectrum-Heading-emphasized,
+.spectrum-Heading:lang(zh) em {
+    font-style: var(
+        --mod-heading-cjk-emphasized-font-style,
+        var(--spectrum-heading-cjk-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-heading-cjk-emphasized-font-weight,
+        var(--spectrum-heading-cjk-emphasized-font-weight)
+    );
+}
+.spectrum-Heading:lang(ja) .spectrum-Heading-strong,
+.spectrum-Heading:lang(ja) strong,
+.spectrum-Heading:lang(ko) .spectrum-Heading-strong,
+.spectrum-Heading:lang(ko) strong,
+.spectrum-Heading:lang(zh) .spectrum-Heading-strong,
+.spectrum-Heading:lang(zh) strong {
+    font-style: var(
+        --mod-heading-cjk-strong-font-style,
+        var(--spectrum-heading-cjk-strong-font-style)
+    );
+    font-weight: var(
+        --mod-heading-cjk-strong-font-weight,
+        var(--spectrum-heading-cjk-strong-font-weight)
+    );
+}
+.spectrum-Heading:lang(ja) .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading:lang(ja) em strong,
+.spectrum-Heading:lang(ja) strong em,
+.spectrum-Heading:lang(ko) .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading:lang(ko) em strong,
+.spectrum-Heading:lang(ko) strong em,
+.spectrum-Heading:lang(zh) .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading:lang(zh) em strong,
+.spectrum-Heading:lang(zh) strong em {
+    font-style: var(
+        --mod-heading-cjk-strong-emphasized-font-style,
+        var(--spectrum-heading-cjk-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-heading-cjk-strong-emphasized-font-weight,
+        var(--spectrum-heading-cjk-strong-emphasized-font-weight)
     );
 }
 .spectrum-Heading--heavy {
+    font-style: var(
+        --mod-heading-sans-serif-heavy-font-style,
+        var(--spectrum-heading-sans-serif-heavy-font-style)
+    );
     font-weight: var(
-        --spectrum-heading-m-heavy-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-heavy)
+        --mod-heading-sans-serif-heavy-font-weight,
+        var(--spectrum-heading-sans-serif-heavy-font-weight)
+    );
+}
+.spectrum-Heading--heavy .spectrum-Heading-strong,
+.spectrum-Heading--heavy strong {
+    font-style: var(
+        --mod-heading-sans-serif-heavy-strong-font-style,
+        var(--spectrum-heading-sans-serif-heavy-strong-font-style)
+    );
+    font-weight: var(
+        --mod-heading-sans-serif-heavy-strong-font-weight,
+        var(--spectrum-heading-sans-serif-heavy-strong-font-weight)
     );
 }
 .spectrum-Heading--heavy .spectrum-Heading-emphasized,
 .spectrum-Heading--heavy em {
     font-style: var(
-        --spectrum-heading-m-heavy-emphasized-text-font-style,
-        var(--spectrum-global-font-style-italic)
+        --mod-heading-sans-serif-heavy-emphasized-font-style,
+        var(--spectrum-heading-sans-serif-heavy-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-heading-sans-serif-heavy-emphasized-font-weight,
+        var(--spectrum-heading-sans-serif-heavy-emphasized-font-weight)
     );
 }
-.spectrum-Heading--heavy .spectrum-Heading-strong,
-.spectrum-Heading--heavy strong {
+.spectrum-Heading--heavy .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--heavy em strong,
+.spectrum-Heading--heavy strong em {
+    font-style: var(
+        --mod-heading-sans-serif-heavy-strong-emphasized-font-style,
+        var(--spectrum-heading-sans-serif-heavy-strong-emphasized-font-style)
+    );
     font-weight: var(
-        --spectrum-heading-m-heavy-strong-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-heavy-strong)
+        --mod-heading-sans-serif-heavy-strong-emphasized-font-weight,
+        var(--spectrum-heading-sans-serif-heavy-strong-emphasized-font-weight)
+    );
+}
+.spectrum-Heading--heavy:lang(ja),
+.spectrum-Heading--heavy:lang(ko),
+.spectrum-Heading--heavy:lang(zh) {
+    font-style: var(
+        --mod-heading-cjk-heavy-font-style,
+        var(--spectrum-heading-cjk-heavy-font-style)
+    );
+    font-weight: var(
+        --mod-heading-cjk-heavy-font-weight,
+        var(--spectrum-heading-cjk-heavy-font-weight)
+    );
+}
+.spectrum-Heading--heavy:lang(ja) .spectrum-Heading-emphasized,
+.spectrum-Heading--heavy:lang(ja) em,
+.spectrum-Heading--heavy:lang(ko) .spectrum-Heading-emphasized,
+.spectrum-Heading--heavy:lang(ko) em,
+.spectrum-Heading--heavy:lang(zh) .spectrum-Heading-emphasized,
+.spectrum-Heading--heavy:lang(zh) em {
+    font-style: var(
+        --mod-heading-cjk-heavy-emphasized-font-style,
+        var(--spectrum-heading-cjk-heavy-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-heading-cjk-heavy-emphasized-font-weight,
+        var(--spectrum-heading-cjk-heavy-emphasized-font-weight)
+    );
+}
+.spectrum-Heading--heavy:lang(ja) .spectrum-Heading-strong,
+.spectrum-Heading--heavy:lang(ja) strong,
+.spectrum-Heading--heavy:lang(ko) .spectrum-Heading-strong,
+.spectrum-Heading--heavy:lang(ko) strong,
+.spectrum-Heading--heavy:lang(zh) .spectrum-Heading-strong,
+.spectrum-Heading--heavy:lang(zh) strong {
+    font-style: var(
+        --mod-heading-cjk-heavy-strong-font-style,
+        var(--spectrum-heading-cjk-heavy-strong-font-style)
+    );
+    font-weight: var(
+        --mod-heading-cjk-heavy-strong-font-weight,
+        var(--spectrum-heading-cjk-heavy-strong-font-weight)
+    );
+}
+.spectrum-Heading--heavy:lang(ja)
+    .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--heavy:lang(ja) em strong,
+.spectrum-Heading--heavy:lang(ja) strong em,
+.spectrum-Heading--heavy:lang(ko)
+    .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--heavy:lang(ko) em strong,
+.spectrum-Heading--heavy:lang(ko) strong em,
+.spectrum-Heading--heavy:lang(zh)
+    .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--heavy:lang(zh) em strong,
+.spectrum-Heading--heavy:lang(zh) strong em {
+    font-style: var(
+        --mod-heading-cjk-heavy-strong-emphasized-font-style,
+        var(--spectrum-heading-cjk-heavy-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-heading-cjk-heavy-strong-emphasized-font-weight,
+        var(--spectrum-heading-cjk-heavy-strong-emphasized-font-weight)
     );
 }
 .spectrum-Heading--light {
+    font-style: var(
+        --mod-heading-sans-serif-light-font-style,
+        var(--spectrum-heading-sans-serif-light-font-style)
+    );
     font-weight: var(
-        --spectrum-heading-m-light-emphasized-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-light)
+        --mod-heading-sans-serif-light-font-weight,
+        var(--spectrum-heading-sans-serif-light-font-weight)
     );
 }
 .spectrum-Heading--light .spectrum-Heading-emphasized,
 .spectrum-Heading--light em {
     font-style: var(
-        --spectrum-heading-m-light-emphasized-text-font-style,
-        var(--spectrum-global-font-style-italic)
+        --mod-heading-sans-serif-light-emphasized-font-style,
+        var(--spectrum-heading-sans-serif-light-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-heading-sans-serif-light-emphasized-font-weight,
+        var(--spectrum-heading-sans-serif-light-emphasized-font-weight)
     );
 }
 .spectrum-Heading--light .spectrum-Heading-strong,
 .spectrum-Heading--light strong {
+    font-style: var(
+        --mod-heading-sans-serif-light-strong-font-style,
+        var(--spectrum-heading-sans-serif-light-strong-font-style)
+    );
     font-weight: var(
-        --spectrum-heading-m-light-strong-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-light-strong)
+        --mod-heading-sans-serif-light-strong-font-weight,
+        var(--spectrum-heading-sans-serif-light-strong-font-weight)
     );
 }
-.spectrum-Body--sizeXXXL {
-    font-size: var(
-        --spectrum-body-xxxl-text-size,
-        var(--spectrum-global-dimension-font-size-600)
-    );
+.spectrum-Heading--light .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--light em strong,
+.spectrum-Heading--light strong em {
     font-style: var(
-        --spectrum-body-xxxl-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-heading-sans-serif-light-strong-emphasized-font-style,
+        var(--spectrum-heading-sans-serif-light-strong-emphasized-font-style)
     );
     font-weight: var(
-        --spectrum-body-xxxl-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
+        --mod-heading-sans-serif-light-strong-emphasized-font-weight,
+        var(--spectrum-heading-sans-serif-light-strong-emphasized-font-weight)
     );
-    letter-spacing: var(
-        --spectrum-body-xxxl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-body-xxxl-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-xxxl-text-transform, none);
 }
-.spectrum-Body--sizeXXL {
-    font-size: var(
-        --spectrum-body-xxl-text-size,
-        var(--spectrum-global-dimension-font-size-500)
-    );
+.spectrum-Heading--light:lang(ja),
+.spectrum-Heading--light:lang(ko),
+.spectrum-Heading--light:lang(zh) {
     font-style: var(
-        --spectrum-body-xxl-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-heading-cjk-light-font-style,
+        var(--spectrum-heading-cjk-light-font-style)
     );
     font-weight: var(
-        --spectrum-body-xxl-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
+        --mod-heading-cjk-light-font-weight,
+        var(--spectrum-heading-cjk-light-font-weight)
     );
-    letter-spacing: var(
-        --spectrum-body-xxl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-body-xxl-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-xxl-text-transform, none);
 }
-.spectrum-Body--sizeXL {
-    font-size: var(
-        --spectrum-body-xl-text-size,
-        var(--spectrum-global-dimension-font-size-400)
-    );
+.spectrum-Heading--light:lang(ja) .spectrum-Heading-strong,
+.spectrum-Heading--light:lang(ja) strong,
+.spectrum-Heading--light:lang(ko) .spectrum-Heading-strong,
+.spectrum-Heading--light:lang(ko) strong,
+.spectrum-Heading--light:lang(zh) .spectrum-Heading-strong,
+.spectrum-Heading--light:lang(zh) strong {
     font-style: var(
-        --spectrum-body-xl-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-heading-cjk-light-strong-font-style,
+        var(--spectrum-heading-cjk-light-strong-font-style)
     );
     font-weight: var(
-        --spectrum-body-xl-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
+        --mod-heading-cjk-light-strong-font-weight,
+        var(--spectrum-heading-cjk-light-strong-font-weight)
     );
-    letter-spacing: var(
-        --spectrum-body-xl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-body-xl-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-xl-text-transform, none);
 }
-.spectrum-Body--sizeL {
-    font-size: var(
-        --spectrum-body-l-text-size,
-        var(--spectrum-global-dimension-font-size-300)
-    );
+.spectrum-Heading--light:lang(ja) .spectrum-Heading-emphasized,
+.spectrum-Heading--light:lang(ja) em,
+.spectrum-Heading--light:lang(ko) .spectrum-Heading-emphasized,
+.spectrum-Heading--light:lang(ko) em,
+.spectrum-Heading--light:lang(zh) .spectrum-Heading-emphasized,
+.spectrum-Heading--light:lang(zh) em {
     font-style: var(
-        --spectrum-body-l-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-heading-cjk-light-emphasized-font-style,
+        var(--spectrum-heading-cjk-light-emphasized-font-style)
     );
     font-weight: var(
-        --spectrum-body-l-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
+        --mod-heading-cjk-light-emphasized-font-weight,
+        var(--spectrum-heading-cjk-light-emphasized-font-weight)
     );
-    letter-spacing: var(
-        --spectrum-body-l-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-body-l-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-l-text-transform, none);
 }
-.spectrum-Body--sizeM {
-    font-size: var(
-        --spectrum-body-m-text-size,
-        var(--spectrum-global-dimension-font-size-200)
-    );
+.spectrum-Heading--light:lang(ja)
+    .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--light:lang(ja) em strong,
+.spectrum-Heading--light:lang(ja) strong em,
+.spectrum-Heading--light:lang(ko)
+    .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--light:lang(ko) em strong,
+.spectrum-Heading--light:lang(ko) strong em,
+.spectrum-Heading--light:lang(zh)
+    .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--light:lang(zh) em strong,
+.spectrum-Heading--light:lang(zh) strong em {
     font-style: var(
-        --spectrum-body-m-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-heading-cjk-light-strong-emphasized-font-style,
+        var(--spectrum-heading-cjk-light-strong-emphasized-font-style)
     );
     font-weight: var(
-        --spectrum-body-m-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
+        --mod-heading-cjk-light-strong-emphasized-font-weight,
+        var(--spectrum-heading-cjk-light-strong-emphasized-font-weight)
     );
-    letter-spacing: var(
-        --spectrum-body-m-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-body-m-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-m-text-transform, none);
 }
-.spectrum-Body--sizeS {
-    font-size: var(
-        --spectrum-body-s-text-size,
-        var(--spectrum-global-dimension-font-size-100)
+.spectrum-Heading--serif {
+    font-family: var(
+        --mod-heading-serif-font-family,
+        var(--spectrum-heading-serif-font-family)
     );
     font-style: var(
-        --spectrum-body-s-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-heading-serif-font-style,
+        var(--spectrum-heading-serif-font-style)
     );
     font-weight: var(
-        --spectrum-body-s-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
+        --mod-heading-serif-font-weight,
+        var(--spectrum-heading-serif-font-weight)
     );
-    letter-spacing: var(
-        --spectrum-body-s-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-body-s-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-s-text-transform, none);
 }
-.spectrum-Body--sizeXS {
-    font-size: var(
-        --spectrum-body-xs-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
+.spectrum-Heading--serif .spectrum-Heading-emphasized,
+.spectrum-Heading--serif em {
     font-style: var(
-        --spectrum-body-xs-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-heading-serif-emphasized-font-style,
+        var(--spectrum-heading-serif-emphasized-font-style)
     );
     font-weight: var(
-        --spectrum-body-xs-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
+        --mod-heading-serif-emphasized-font-weight,
+        var(--spectrum-heading-serif-emphasized-font-weight)
     );
-    letter-spacing: var(
-        --spectrum-body-xs-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
+}
+.spectrum-Heading--serif .spectrum-Heading-strong,
+.spectrum-Heading--serif strong {
+    font-style: var(
+        --mod-heading-serif-strong-font-style,
+        var(--spectrum-heading-serif-strong-font-style)
     );
-    line-height: var(
-        --spectrum-body-xs-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+    font-weight: var(
+        --mod-heading-serif-strong-font-weight,
+        var(--spectrum-heading-serif-strong-font-weight)
     );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-xs-text-transform, none);
+}
+.spectrum-Heading--serif .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--serif em strong,
+.spectrum-Heading--serif strong em {
+    font-style: var(
+        --mod-heading-serif-strong-emphasized-font-style,
+        var(--spectrum-heading-serif-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-heading-serif-strong-emphasized-font-weight,
+        var(--spectrum-heading-serif-strong-emphasized-font-weight)
+    );
+}
+.spectrum-Heading--serif.spectrum-Heading--heavy {
+    font-style: var(
+        --mod-heading-serif-heavy-font-style,
+        var(--spectrum-heading-serif-heavy-font-style)
+    );
+    font-weight: var(
+        --mod-heading-serif-heavy-font-weight,
+        var(--spectrum-heading-serif-heavy-font-weight)
+    );
+}
+.spectrum-Heading--serif.spectrum-Heading--heavy .spectrum-Heading-strong,
+.spectrum-Heading--serif.spectrum-Heading--heavy strong {
+    font-style: var(
+        --mod-heading-serif-heavy-strong-font-style,
+        var(--spectrum-heading-serif-heavy-strong-font-style)
+    );
+    font-weight: var(
+        --mod-heading-serif-heavy-strong-font-weight,
+        var(--spectrum-heading-serif-heavy-strong-font-weight)
+    );
+}
+.spectrum-Heading--serif.spectrum-Heading--heavy .spectrum-Heading-emphasized,
+.spectrum-Heading--serif.spectrum-Heading--heavy em {
+    font-style: var(
+        --mod-heading-serif-heavy-emphasized-font-style,
+        var(--spectrum-heading-serif-heavy-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-heading-serif-heavy-emphasized-font-weight,
+        var(--spectrum-heading-serif-heavy-emphasized-font-weight)
+    );
+}
+.spectrum-Heading--serif.spectrum-Heading--heavy
+    .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--serif.spectrum-Heading--heavy em strong,
+.spectrum-Heading--serif.spectrum-Heading--heavy strong em {
+    font-style: var(
+        --mod-heading-serif-heavy-strong-emphasized-font-style,
+        var(--spectrum-heading-serif-heavy-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-heading-serif-heavy-strong-emphasized-font-weight,
+        var(--spectrum-heading-serif-heavy-strong-emphasized-font-weight)
+    );
+}
+.spectrum-Heading--serif.spectrum-Heading--light {
+    font-style: var(
+        --mod-heading-serif-light-font-style,
+        var(--spectrum-heading-serif-light-font-style)
+    );
+    font-weight: var(
+        --mod-heading-serif-light-font-weight,
+        var(--spectrum-heading-serif-light-font-weight)
+    );
+}
+.spectrum-Heading--serif.spectrum-Heading--light .spectrum-Heading-emphasized,
+.spectrum-Heading--serif.spectrum-Heading--light em {
+    font-style: var(
+        --mod-heading-serif-light-emphasized-font-style,
+        var(--spectrum-heading-serif-light-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-heading-serif-light-emphasized-font-weight,
+        var(--spectrum-heading-serif-light-emphasized-font-weight)
+    );
+}
+.spectrum-Heading--serif.spectrum-Heading--light .spectrum-Heading-strong,
+.spectrum-Heading--serif.spectrum-Heading--light strong {
+    font-style: var(
+        --mod-heading-serif-light-strong-font-style,
+        var(--spectrum-heading-serif-light-strong-font-style)
+    );
+    font-weight: var(
+        --mod-heading-serif-light-strong-font-weight,
+        var(--spectrum-heading-serif-light-strong-font-weight)
+    );
+}
+.spectrum-Heading--serif.spectrum-Heading--light
+    .spectrum-Heading-strong.spectrum-Heading-emphasized,
+.spectrum-Heading--serif.spectrum-Heading--light em strong,
+.spectrum-Heading--serif.spectrum-Heading--light strong em {
+    font-style: var(
+        --mod-heading-serif-light-strong-emphasized-font-style,
+        var(--spectrum-heading-serif-light-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-heading-serif-light-strong-emphasized-font-weight,
+        var(--spectrum-heading-serif-light-strong-emphasized-font-weight)
+    );
+}
+.spectrum-Typography .spectrum-Heading {
+    margin-block-end: var(
+        --mod-heading-margin-end,
+        var(--spectrum-heading-margin-end)
+    );
+    margin-block-start: var(
+        --mod-heading-margin-start,
+        var(--spectrum-heading-margin-start)
+    );
 }
 .spectrum-Body {
-    font-family: var(
-        --spectrum-body-m-text-font-family,
-        var(--spectrum-alias-body-text-font-family)
+    --spectrum-body-sans-serif-font-family: var(
+        --spectrum-sans-font-family-stack
     );
+    --spectrum-body-serif-font-family: var(--spectrum-serif-font-family-stack);
+    --spectrum-body-cjk-font-family: var(--spectrum-cjk-font-family-stack);
+    --spectrum-body-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
+    --spectrum-body-margin: calc(
+        var(--mod-body-font-size, var(--spectrum-body-font-size)) *
+            var(--spectrum-body-margin-multiplier)
+    );
+    --spectrum-body-font-color: var(--spectrum-body-color);
+}
+@media (forced-colors: active) {
+    .spectrum-body {
+        --highcontrast-body-font-color: Text;
+    }
+}
+.spectrum-Body--sizeXS {
+    --spectrum-body-font-size: var(--spectrum-body-size-xs);
+}
+.spectrum-Body--sizeS {
+    --spectrum-body-font-size: var(--spectrum-body-size-s);
+}
+.spectrum-Body--sizeM {
+    --spectrum-body-font-size: var(--spectrum-body-size-m);
+}
+.spectrum-Body--sizeL {
+    --spectrum-body-font-size: var(--spectrum-body-size-l);
+}
+.spectrum-Body--sizeXL {
+    --spectrum-body-font-size: var(--spectrum-body-size-xl);
+}
+.spectrum-Body--sizeXXL {
+    --spectrum-body-font-size: var(--spectrum-body-size-xxl);
+}
+.spectrum-Body--sizeXXXL {
+    --spectrum-body-font-size: var(--spectrum-body-size-xxxl);
+}
+.spectrum-Body {
+    color: var(
+        --highcontrast-body-font-color,
+        var(--mod-body-font-color, var(--spectrum-body-font-color))
+    );
+    font-family: var(
+        --mod-body-sans-serif-font-family,
+        var(--spectrum-body-sans-serif-font-family)
+    );
+    font-size: var(--mod-body-font-size, var(--spectrum-body-font-size));
+    font-style: var(
+        --mod-body-sans-serif-font-style,
+        var(--spectrum-body-sans-serif-font-style)
+    );
+    font-weight: var(
+        --mod-body-sans-serif-font-weight,
+        var(--spectrum-body-sans-serif-font-weight)
+    );
+    line-height: var(--mod-body-line-height, var(--spectrum-body-line-height));
 }
 .spectrum-Body .spectrum-Body-strong,
 .spectrum-Body strong {
+    font-style: var(
+        --mod-body-sans-serif-strong-font-style,
+        var(--spectrum-body-sans-serif-strong-font-style)
+    );
     font-weight: var(
-        --spectrum-body-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-bold)
+        --mod-body-sans-serif-strong-font-weight,
+        var(--spectrum-body-sans-serif-strong-font-weight)
     );
 }
 .spectrum-Body .spectrum-Body-emphasized,
 .spectrum-Body em {
     font-style: var(
-        --spectrum-body-m-emphasized-text-font-style,
-        var(--spectrum-global-font-style-italic)
+        --mod-body-sans-serif-emphasized-font-style,
+        var(--spectrum-body-sans-serif-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-body-sans-serif-emphasized-font-weight,
+        var(--spectrum-body-sans-serif-emphasized-font-weight)
+    );
+}
+.spectrum-Body .spectrum-Body-strong.spectrum-Body-emphasized,
+.spectrum-Body em strong,
+.spectrum-Body strong em {
+    font-style: var(
+        --mod-body-sans-serif-strong-emphasized-font-style,
+        var(--spectrum-body-sans-serif-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-body-sans-serif-strong-emphasized-font-weight,
+        var(--spectrum-body-sans-serif-strong-emphasized-font-weight)
+    );
+}
+.spectrum-Body:lang(ja),
+.spectrum-Body:lang(ko),
+.spectrum-Body:lang(zh) {
+    font-family: var(
+        --mod-body-cjk-font-family,
+        var(--spectrum-body-cjk-font-family)
+    );
+    font-style: var(
+        --mod-body-cjk-font-style,
+        var(--spectrum-body-cjk-font-style)
+    );
+    font-weight: var(
+        --mod-body-cjk-font-weight,
+        var(--spectrum-body-cjk-font-weight)
+    );
+    letter-spacing: var(
+        --mod-body-cjk-letter-spacing,
+        var(--spectrum-body-cjk-letter-spacing)
+    );
+    line-height: var(
+        --mod-body-cjk-line-height,
+        var(--spectrum-body-cjk-line-height)
+    );
+}
+.spectrum-Body:lang(ja) .spectrum-Body-strong,
+.spectrum-Body:lang(ja) strong,
+.spectrum-Body:lang(ko) .spectrum-Body-strong,
+.spectrum-Body:lang(ko) strong,
+.spectrum-Body:lang(zh) .spectrum-Body-strong,
+.spectrum-Body:lang(zh) strong {
+    font-style: var(
+        --mod-body-cjk-strong-font-style,
+        var(--spectrum-body-cjk-strong-font-style)
+    );
+    font-weight: var(
+        --mod-body-cjk-strong-font-weight,
+        var(--spectrum-body-cjk-strong-font-weight)
+    );
+}
+.spectrum-Body:lang(ja) .spectrum-Body-emphasized,
+.spectrum-Body:lang(ja) em,
+.spectrum-Body:lang(ko) .spectrum-Body-emphasized,
+.spectrum-Body:lang(ko) em,
+.spectrum-Body:lang(zh) .spectrum-Body-emphasized,
+.spectrum-Body:lang(zh) em {
+    font-style: var(
+        --mod-body-cjk-emphasized-font-style,
+        var(--spectrum-body-cjk-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-body-cjk-emphasized-font-weight,
+        var(--spectrum-body-cjk-emphasized-font-weight)
+    );
+}
+.spectrum-Body:lang(ja) .spectrum-Body-strong.spectrum-Body-emphasized,
+.spectrum-Body:lang(ja) em strong,
+.spectrum-Body:lang(ja) strong em,
+.spectrum-Body:lang(ko) .spectrum-Body-strong.spectrum-Body-emphasized,
+.spectrum-Body:lang(ko) em strong,
+.spectrum-Body:lang(ko) strong em,
+.spectrum-Body:lang(zh) .spectrum-Body-strong.spectrum-Body-emphasized,
+.spectrum-Body:lang(zh) em strong,
+.spectrum-Body:lang(zh) strong em {
+    font-style: var(
+        --mod-body-cjk-strong-emphasized-font-style,
+        var(--spectrum-body-cjk-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-body-cjk-strong-emphasized-font-weight,
+        var(--spectrum-body-cjk-strong-emphasized-font-weight)
     );
 }
 .spectrum-Body--serif {
     font-family: var(
-        --spectrum-body-m-serif-text-font-family,
-        var(--spectrum-alias-serif-text-font-family)
+        --mod-body-serif-font-family,
+        var(--spectrum-body-serif-font-family)
+    );
+    font-style: var(
+        --mod-body-serif-font-style,
+        var(--spectrum-body-serif-font-style)
+    );
+    font-weight: var(
+        --mod-body-serif-font-weight,
+        var(--spectrum-body-serif-font-weight)
     );
 }
-.spectrum-Detail {
-    font-family: var(
-        --spectrum-heading-m-text-font-family,
-        var(--spectrum-alias-body-text-font-family)
+.spectrum-Body--serif .spectrum-Body-strong,
+.spectrum-Body--serif strong {
+    font-style: var(
+        --mod-body-serif-strong-font-style,
+        var(--spectrum-body-serif-strong-font-style)
     );
+    font-weight: var(
+        --mod-body-serif-strong-font-weight,
+        var(--spectrum-body-serif-strong-font-weight)
+    );
+}
+.spectrum-Body--serif .spectrum-Body-emphasized,
+.spectrum-Body--serif em {
+    font-style: var(
+        --mod-body-serif-emphasized-font-style,
+        var(--spectrum-body-serif-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-body-serif-emphasized-font-weight,
+        var(--spectrum-body-serif-emphasized-font-weight)
+    );
+}
+.spectrum-Body--serif .spectrum-Body-strong.spectrum-Body-emphasized,
+.spectrum-Body--serif em strong,
+.spectrum-Body--serif strong em {
+    font-style: var(
+        --mod-body-serif-strong-emphasized-font-style,
+        var(--spectrum-body-serif-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-body-serif-strong-emphasized-font-weight,
+        var(--spectrum-body-serif-strong-emphasized-font-weight)
+    );
+}
+.spectrum-Typography .spectrum-Body {
+    margin-block-end: var(--mod-body-margin, var(--spectrum-body-margin));
+}
+.spectrum-Detail {
+    --spectrum-detail-sans-serif-font-family: var(
+        --spectrum-sans-font-family-stack
+    );
+    --spectrum-detail-serif-font-family: var(
+        --spectrum-serif-font-family-stack
+    );
+    --spectrum-detail-cjk-font-family: var(--spectrum-cjk-font-family-stack);
+    --spectrum-detail-margin-start: calc(
+        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
+            var(--spectrum-detail-margin-top-multiplier)
+    );
+    --spectrum-detail-margin-end: calc(
+        var(--mod-detail-font-size, var(--spectrum-detail-font-size)) *
+            var(--spectrum-detail-margin-bottom-multiplier)
+    );
+    --spectrum-detail-font-color: var(--spectrum-detail-color);
+}
+@media (forced-colors: active) {
+    .spectrum-Detail {
+        --highcontrast-detail-font-color: Text;
+    }
+}
+.spectrum-Detail--sizeS {
+    --spectrum-detail-font-size: var(--spectrum-detail-size-s);
+}
+.spectrum-Detail--sizeM {
+    --spectrum-detail-font-size: var(--spectrum-detail-size-m);
+}
+.spectrum-Detail--sizeL {
+    --spectrum-detail-font-size: var(--spectrum-detail-size-l);
+}
+.spectrum-Detail--sizeXL {
+    --spectrum-detail-font-size: var(--spectrum-detail-size-xl);
+}
+.spectrum-Detail {
+    color: var(
+        --highcontrast-detail-font-color,
+        var(--mod-detail-font-color, var(--spectrum-detail-font-color))
+    );
+    font-family: var(
+        --mod-detail-sans-serif-font-family,
+        var(--spectrum-detail-sans-serif-font-family)
+    );
+    font-size: var(--mod-detail-font-size, var(--spectrum-detail-font-size));
+    font-style: var(
+        --mod-detail-sans-serif-font-style,
+        var(--spectrum-detail-sans-serif-font-style)
+    );
+    font-weight: var(
+        --mod-detail-sans-serif-font-weight,
+        var(--spectrum-detail-sans-serif-font-weight)
+    );
+    letter-spacing: var(
+        --mod-detail-letter-spacing,
+        var(--spectrum-detail-letter-spacing)
+    );
+    line-height: var(
+        --mod-detail-line-height,
+        var(--spectrum-detail-line-height)
+    );
+    text-transform: uppercase;
 }
 .spectrum-Detail .spectrum-Detail-strong,
 .spectrum-Detail strong {
+    font-style: var(
+        --mod-detail-sans-serif-strong-font-style,
+        var(--spectrum-detail-sans-serif-strong-font-style)
+    );
     font-weight: var(
-        --spectrum-detail-m-strong-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
+        --mod-detail-sans-serif-strong-font-weight,
+        var(--spectrum-detail-sans-serif-strong-font-weight)
     );
 }
 .spectrum-Detail .spectrum-Detail-emphasized,
 .spectrum-Detail em {
     font-style: var(
-        --spectrum-detail-m-emphasized-text-font-style,
-        var(--spectrum-global-font-style-italic)
-    );
-}
-.spectrum-Detail--light {
-    font-style: var(
-        --spectrum-detail-m-light-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-detail-sans-serif-emphasized-font-style,
+        var(--spectrum-detail-sans-serif-emphasized-font-style)
     );
     font-weight: var(
-        --spectrum-detail-m-light-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-light)
+        --mod-detail-sans-serif-emphasized-font-weight,
+        var(--spectrum-detail-sans-serif-emphasized-font-weight)
+    );
+}
+.spectrum-Detail .spectrum-Detail-strong.spectrum-Detail-emphasized,
+.spectrum-Detail em strong,
+.spectrum-Detail strong em {
+    font-style: var(
+        --mod-detail-sans-serif-strong-emphasized-font-style,
+        var(--spectrum-detail-sans-serif-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-detail-sans-serif-strong-emphasized-font-weight,
+        var(--spectrum-detail-sans-serif-strong-emphasized-font-weight)
+    );
+}
+.spectrum-Detail:lang(ja),
+.spectrum-Detail:lang(ko),
+.spectrum-Detail:lang(zh) {
+    font-family: var(
+        --mod-detail-cjk-font-family,
+        var(--spectrum-detail-cjk-font-family)
+    );
+    font-style: var(
+        --mod-detail-cjk-font-style,
+        var(--spectrum-detail-cjk-font-style)
+    );
+    font-weight: var(
+        --mod-detail-cjk-font-weight,
+        var(--spectrum-detail-cjk-font-weight)
+    );
+    line-height: var(
+        --mod-detail-cjk-line-height,
+        var(--spectrum-detail-cjk-line-height)
+    );
+}
+.spectrum-Detail:lang(ja) .spectrum-Detail-strong,
+.spectrum-Detail:lang(ja) strong,
+.spectrum-Detail:lang(ko) .spectrum-Detail-strong,
+.spectrum-Detail:lang(ko) strong,
+.spectrum-Detail:lang(zh) .spectrum-Detail-strong,
+.spectrum-Detail:lang(zh) strong {
+    font-style: var(
+        --mod-detail-cjk-strong-font-style,
+        var(--spectrum-detail-cjk-strong-font-style)
+    );
+    font-weight: var(
+        --mod-detail-cjk-strong-font-weight,
+        var(--spectrum-detail-cjk-strong-font-weight)
+    );
+}
+.spectrum-Detail:lang(ja) .spectrum-Detail-emphasized,
+.spectrum-Detail:lang(ja) em,
+.spectrum-Detail:lang(ko) .spectrum-Detail-emphasized,
+.spectrum-Detail:lang(ko) em,
+.spectrum-Detail:lang(zh) .spectrum-Detail-emphasized,
+.spectrum-Detail:lang(zh) em {
+    font-style: var(
+        --mod-detail-cjk-emphasized-font-style,
+        var(--spectrum-detail-cjk-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-detail-cjk-emphasized-font-weight,
+        var(--spectrum-detail-cjk-emphasized-font-weight)
+    );
+}
+.spectrum-Detail:lang(ja) .spectrum-Detail-strong.spectrum-Detail-emphasized,
+.spectrum-Detail:lang(ja) em strong,
+.spectrum-Detail:lang(ja) strong em,
+.spectrum-Detail:lang(ko) .spectrum-Detail-strong.spectrum-Detail-emphasized,
+.spectrum-Detail:lang(ko) em strong,
+.spectrum-Detail:lang(ko) strong em,
+.spectrum-Detail:lang(zh) .spectrum-Detail-strong.spectrum-Detail-emphasized,
+.spectrum-Detail:lang(zh) em strong,
+.spectrum-Detail:lang(zh) strong em {
+    font-style: var(
+        --mod-detail-cjk-strong-emphasized-font-style,
+        var(--spectrum-detail-cjk-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-detail-cjk-strong-emphasized-font-weight,
+        var(--spectrum-detail-cjk-strong-emphasized-font-weight)
     );
 }
 .spectrum-Detail--serif {
     font-family: var(
-        --spectrum-body-m-serif-text-font-family,
-        var(--spectrum-alias-serif-text-font-family)
-    );
-}
-.spectrum-Detail--sizeXL {
-    font-size: var(
-        --spectrum-detail-xl-text-size,
-        var(--spectrum-global-dimension-font-size-200)
+        --mod-detail-serif-font-family,
+        var(--spectrum-detail-serif-font-family)
     );
     font-style: var(
-        --spectrum-detail-xl-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-detail-serif-font-style,
+        var(--spectrum-detail-serif-font-style)
     );
     font-weight: var(
-        --spectrum-detail-xl-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-xl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-xl-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-detail-xl-text-transform, uppercase);
-}
-.spectrum-Detail--sizeXL em {
-    font-size: var(
-        --spectrum-detail-xl-emphasized-text-size,
-        var(--spectrum-global-dimension-font-size-200)
-    );
-    font-style: var(
-        --spectrum-detail-xl-emphasized-text-font-style,
-        var(--spectrum-global-font-style-italic)
-    );
-    font-weight: var(
-        --spectrum-detail-xl-emphasized-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-xl-emphasized-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-xl-emphasized-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(
-        --spectrum-detail-xl-emphasized-text-transform,
-        uppercase
+        --mod-detail-serif-font-weight,
+        var(--spectrum-detail-serif-font-weight)
     );
 }
-.spectrum-Detail--sizeXL strong {
-    font-size: var(
-        --spectrum-detail-xl-strong-text-size,
-        var(--spectrum-global-dimension-font-size-200)
-    );
+.spectrum-Detail--serif .spectrum-Detail-strong,
+.spectrum-Detail--serif strong {
     font-style: var(
-        --spectrum-detail-xl-strong-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-detail-serif-strong-font-style,
+        var(--spectrum-detail-serif-strong-font-style)
     );
     font-weight: var(
-        --spectrum-detail-xl-strong-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-xl-strong-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-xl-strong-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-detail-xl-strong-text-transform, uppercase);
-}
-.spectrum-Detail--sizeL {
-    font-size: var(
-        --spectrum-detail-l-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    );
-    font-style: var(
-        --spectrum-detail-l-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-l-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-l-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-l-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-detail-l-text-transform, uppercase);
-}
-.spectrum-Detail--sizeL em {
-    font-size: var(
-        --spectrum-detail-l-emphasized-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    );
-    font-style: var(
-        --spectrum-detail-l-emphasized-text-font-style,
-        var(--spectrum-global-font-style-italic)
-    );
-    font-weight: var(
-        --spectrum-detail-l-emphasized-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-l-emphasized-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-l-emphasized-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(
-        --spectrum-detail-l-emphasized-text-transform,
-        uppercase
+        --mod-detail-serif-strong-font-weight,
+        var(--spectrum-detail-serif-strong-font-weight)
     );
 }
-.spectrum-Detail--sizeL strong {
-    font-size: var(
-        --spectrum-detail-l-strong-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    );
+.spectrum-Detail--serif .spectrum-Detail-emphasized,
+.spectrum-Detail--serif em {
     font-style: var(
-        --spectrum-detail-l-strong-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-detail-serif-emphasized-font-style,
+        var(--spectrum-detail-serif-emphasized-font-style)
     );
     font-weight: var(
-        --spectrum-detail-l-strong-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-l-strong-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-l-strong-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-detail-l-strong-text-transform, uppercase);
-}
-.spectrum-Detail--sizeM {
-    font-size: var(
-        --spectrum-detail-m-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    font-style: var(
-        --spectrum-detail-m-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-m-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-m-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-m-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-detail-m-text-transform, uppercase);
-}
-.spectrum-Detail--sizeM em {
-    font-size: var(
-        --spectrum-detail-m-emphasized-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    font-style: var(
-        --spectrum-detail-m-emphasized-text-font-style,
-        var(--spectrum-global-font-style-italic)
-    );
-    font-weight: var(
-        --spectrum-detail-m-emphasized-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-m-emphasized-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-m-emphasized-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(
-        --spectrum-detail-m-emphasized-text-transform,
-        uppercase
+        --mod-detail-serif-emphasized-font-weight,
+        var(--spectrum-detail-serif-emphasized-font-weight)
     );
 }
-.spectrum-Detail--sizeM strong {
-    font-size: var(
-        --spectrum-detail-m-strong-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
+.spectrum-Detail--serif .spectrum-Detail-strong.spectrum-Detail-emphasized,
+.spectrum-Detail--serif em strong,
+.spectrum-Detail--serif strong em {
     font-style: var(
-        --spectrum-detail-m-strong-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-detail-serif-strong-emphasized-font-style,
+        var(--spectrum-detail-serif-strong-emphasized-font-style)
     );
     font-weight: var(
-        --spectrum-detail-m-strong-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-m-strong-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-m-strong-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-detail-m-strong-text-transform, uppercase);
-}
-.spectrum-Detail--sizeS {
-    font-size: var(
-        --spectrum-detail-s-text-size,
-        var(--spectrum-global-dimension-font-size-50)
-    );
-    font-style: var(
-        --spectrum-detail-s-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-s-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-s-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-s-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-detail-s-text-transform, uppercase);
-}
-.spectrum-Detail--sizeS em {
-    font-size: var(
-        --spectrum-detail-s-emphasized-text-size,
-        var(--spectrum-global-dimension-font-size-50)
-    );
-    font-style: var(
-        --spectrum-detail-s-emphasized-text-font-style,
-        var(--spectrum-global-font-style-italic)
-    );
-    font-weight: var(
-        --spectrum-detail-s-emphasized-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-s-emphasized-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-s-emphasized-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(
-        --spectrum-detail-s-emphasized-text-transform,
-        uppercase
+        --mod-detail-serif-strong-emphasized-font-weight,
+        var(--spectrum-detail-serif-strong-emphasized-font-weight)
     );
 }
-.spectrum-Detail--sizeS strong {
-    font-size: var(
-        --spectrum-detail-s-strong-text-size,
-        var(--spectrum-global-dimension-font-size-50)
-    );
+.spectrum-Detail--light {
     font-style: var(
-        --spectrum-detail-s-strong-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-detail-sans-serif-light-font-style,
+        var(--spectrum-detail-sans-serif-light-font-style)
     );
     font-weight: var(
-        --spectrum-detail-s-strong-text-font-weight,
-        var(--spectrum-alias-detail-text-font-weight-regular)
+        --spectrum-detail-sans-serif-light-font-weight,
+        var(--spectrum-detail-sans-serif-light-font-weight)
     );
-    letter-spacing: var(
-        --spectrum-detail-s-strong-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
+}
+.spectrum-Detail--light .spectrum-Detail-strong,
+.spectrum-Detail--light strong {
+    font-style: var(
+        --mod-detail-sans-serif-light-strong-font-style,
+        var(--spectrum-detail-sans-serif-light-strong-font-style)
     );
-    line-height: var(
-        --spectrum-detail-s-strong-text-line-height,
-        var(--spectrum-alias-heading-text-line-height)
+    font-weight: var(
+        --mod-detail-sans-serif-light-strong-font-weight,
+        var(--spectrum-detail-sans-serif-light-strong-font-weight)
     );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-detail-s-strong-text-transform, uppercase);
+}
+.spectrum-Detail--light .spectrum-Detail-emphasized,
+.spectrum-Detail--light em {
+    font-style: var(
+        --mod-detail-sans-serif-light-emphasized-font-style,
+        var(--spectrum-detail-sans-serif-light-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-detail-sans-serif-light-emphasized-font-weight,
+        var(--spectrum-detail-sans-serif-light-emphasized-font-weight)
+    );
+}
+.spectrum-Detail--light .spectrum-Detail-strong.spectrum-Body-emphasized,
+.spectrum-Detail--light em strong,
+.spectrum-Detail--light strong em {
+    font-style: var(
+        --mod-detail-sans-serif-light-strong-emphasized-font-style,
+        var(--spectrum-detail-sans-serif-light-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-detail-sans-serif-light-strong-emphasized-font-weight,
+        var(--spectrum-detail-sans-serif-light-strong-emphasized-font-weight)
+    );
+}
+.spectrum-Detail--light:lang(ja),
+.spectrum-Detail--light:lang(ko),
+.spectrum-Detail--light:lang(zh) {
+    font-style: var(
+        --mod-detail-cjk-light-font-style,
+        var(--spectrum-detail-cjk-light-font-style)
+    );
+    font-weight: var(
+        --mod-detail-cjk-light-font-weight,
+        var(--spectrum-detail-cjk-light-font-weight)
+    );
+}
+.spectrum-Detail--light:lang(ja) .spectrum-Detail-strong,
+.spectrum-Detail--light:lang(ja) strong,
+.spectrum-Detail--light:lang(ko) .spectrum-Detail-strong,
+.spectrum-Detail--light:lang(ko) strong,
+.spectrum-Detail--light:lang(zh) .spectrum-Detail-strong,
+.spectrum-Detail--light:lang(zh) strong {
+    font-style: var(
+        --mod-detail-cjk-light-strong-font-style,
+        var(--spectrum-detail-cjk-light-strong-font-style)
+    );
+    font-weight: var(
+        --mod-detail-cjk-light-strong-font-weight,
+        var(--spectrum-detail-cjk-light-strong-font-weight)
+    );
+}
+.spectrum-Detail--light:lang(ja) .spectrum-Detail-emphasized,
+.spectrum-Detail--light:lang(ja) em,
+.spectrum-Detail--light:lang(ko) .spectrum-Detail-emphasized,
+.spectrum-Detail--light:lang(ko) em,
+.spectrum-Detail--light:lang(zh) .spectrum-Detail-emphasized,
+.spectrum-Detail--light:lang(zh) em {
+    font-style: var(
+        --mod-detail-cjk-light-emphasized-font-style,
+        var(--spectrum-detail-cjk-light-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-detail-cjk-light-emphasized-font-weight,
+        var(--spectrum-detail-cjk-light-emphasized-font-weight)
+    );
+}
+.spectrum-Detail--light:lang(ja)
+    .spectrum-Detail-strong.spectrum-Detail-emphasized,
+.spectrum-Detail--light:lang(ko)
+    .spectrum-Detail-strong.spectrum-Detail-emphasized,
+.spectrum-Detail--light:lang(zh)
+    .spectrum-Detail-strong.spectrum-Detail-emphasized {
+    font-style: var(
+        --mod-detail-cjk-light-strong-emphasized-font-style,
+        var(--spectrum-detail-cjk-light-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-detail-cjk-light-strong-emphasized-font-weight,
+        var(--spectrum-detail-cjk-light-strong-emphasized-font-weight)
+    );
+}
+.spectrum-Detail--serif.spectrum-Detail--light {
+    font-style: var(
+        --mod-detail-serif-light-font-style,
+        var(--spectrum-detail-serif-light-font-style)
+    );
+    font-weight: var(
+        --mod-detail-serif-light-font-weight,
+        var(--spectrum-detail-serif-light-font-weight)
+    );
+}
+.spectrum-Detail--serif.spectrum-Detail--light .spectrum-Detail-strong,
+.spectrum-Detail--serif.spectrum-Detail--light strong {
+    font-style: var(
+        --mod-detail-serif-light-strong-font-style,
+        var(--spectrum-detail-serif-light-strong-font-style)
+    );
+    font-weight: var(
+        --mod-detail-serif-light-strong-font-weight,
+        var(--spectrum-detail-serif-light-strong-font-weight)
+    );
+}
+.spectrum-Detail--serif.spectrum-Detail--light .spectrum-Detail-emphasized,
+.spectrum-Detail--serif.spectrum-Detail--light em {
+    font-style: var(
+        --mod-detail-serif-light-emphasized-font-style,
+        var(--spectrum-detail-serif-light-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-detail-serif-light-emphasized-font-weight,
+        var(--spectrum-detail-serif-light-emphasized-font-weight)
+    );
+}
+.spectrum-Detail--serif.spectrum-Detail--light
+    .spectrum-Detail-strong.spectrum-Body-emphasized,
+.spectrum-Detail--serif.spectrum-Detail--light em strong,
+.spectrum-Detail--serif.spectrum-Detail--light strong em {
+    font-style: var(
+        --mod-detail-serif-light-strong-emphasized-font-style,
+        var(--spectrum-detail-serif-light-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-detail-serif-light-strong-emphasized-font-weight,
+        var(--spectrum-detail-serif-light-strong-emphasized-font-weight)
+    );
+}
+.spectrum-Typography .spectrum-Detail {
+    margin-block-end: var(
+        --mod-detail-margin-end,
+        var(--spectrum-detail-margin-end)
+    );
+    margin-block-start: var(
+        --mod-detail-margin-start,
+        var(--spectrum-detail-margin-start)
+    );
 }
 .spectrum-Code {
-    font-family: var(
-        --spectrum-heading-m-text-font-family,
-        var(--spectrum-alias-body-text-font-family)
+    --spectrum-code-font-family: var(--spectrum-code-font-family-stack);
+    --spectrum-code-cjk-letter-spacing: var(--spectrum-cjk-letter-spacing);
+    --spectrum-code-font-color: var(--spectrum-code-color);
+}
+@media (forced-colors: active) {
+    .spectrum-Code {
+        --highcontrast-code-font-color: Text;
+    }
+}
+.spectrum-Code--sizeXS {
+    --spectrum-code-font-size: var(--spectrum-code-size-xs);
+}
+.spectrum-Code--sizeS {
+    --spectrum-code-font-size: var(--spectrum-code-size-s);
+}
+.spectrum-Code--sizeM {
+    --spectrum-code-font-size: var(--spectrum-code-size-m);
+}
+.spectrum-Code--sizeL {
+    --spectrum-code-font-size: var(--spectrum-code-size-l);
+}
+.spectrum-Code--sizeXL {
+    --spectrum-code-font-size: var(--spectrum-code-size-xl);
+}
+.spectrum-Code {
+    color: var(
+        --highcontrast-code-font-color,
+        var(--mod-code-font-color, var(--spectrum-code-font-color))
     );
+    font-family: var(--mod-code-font-family, var(--spectrum-code-font-family));
+    font-size: var(--mod-code-font-size, var(--spectrum-code-font-size));
+    font-style: var(--mod-code-font-style, var(--spectrum-code-font-style));
+    font-weight: var(--mod-code-font-weight, var(--spectrum-code-font-weight));
+    line-height: var(--mod-code-line-height, var(--spectrum-code-line-height));
 }
 .spectrum-Code .spectrum-Code-strong,
 .spectrum-Code strong {
+    font-style: var(
+        --mod-code-strong-font-style,
+        var(--spectrum-code-strong-font-style)
+    );
     font-weight: var(
-        --spectrum-code-m-strong-text-font-weight,
-        var(--spectrum-global-font-weight-bold)
+        --mod-code-strong-font-weight,
+        var(--spectrum-code-strong-font-weight)
     );
 }
 .spectrum-Code .spectrum-Code-emphasized,
 .spectrum-Code em {
     font-style: var(
-        --spectrum-code-m-emphasized-text-font-style,
-        var(--spectrum-global-font-style-italic)
+        --mod-code-emphasized-font-style,
+        var(--spectrum-code-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-code-emphasized-font-weight,
+        var(--spectrum-code-emphasized-font-weight)
     );
 }
-.spectrum-Code--serif {
+.spectrum-Code .spectrum-Code-strong.spectrum-Code-emphasized,
+.spectrum-Code em strong,
+.spectrum-Code strong em {
+    font-style: var(
+        --mod-code-strong-emphasized-font-style,
+        var(--spectrum-code-strong-emphasized-font-style)
+    );
+    font-weight: var(
+        --mod-code-strong-emphasized-font-weight,
+        var(--spectrum-code-strong-emphasized-font-weight)
+    );
+}
+.spectrum-Code:lang(ja),
+.spectrum-Code:lang(ko),
+.spectrum-Code:lang(zh) {
     font-family: var(
-        --spectrum-body-m-serif-text-font-family,
-        var(--spectrum-alias-serif-text-font-family)
-    );
-}
-.spectrum-Code--sizeXL {
-    font-family: var(
-        --spectrum-code-xl-text-font-family,
-        var(--spectrum-alias-code-text-font-family)
-    );
-    font-size: var(
-        --spectrum-code-xl-text-size,
-        var(--spectrum-global-dimension-font-size-400)
+        --mod-code-cjk-font-family,
+        var(--spectrum-code-cjk-font-family)
     );
     font-style: var(
-        --spectrum-code-xl-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-code-cjk-font-style,
+        var(--spectrum-code-cjk-font-style)
     );
     font-weight: var(
-        --spectrum-code-xl-text-font-weight,
-        var(--spectrum-alias-code-text-font-weight-regular)
+        --mod-code-cjk-font-weight,
+        var(--spectrum-code-cjk-font-weight)
     );
     letter-spacing: var(
-        --spectrum-code-xl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
+        --mod-code-cjk-letter-spacing,
+        var(--spectrum-code-cjk-letter-spacing)
     );
     line-height: var(
-        --spectrum-code-xl-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        --mod-code-cjk-line-height,
+        var(--spectrum-code-cjk-line-height)
     );
-    margin-bottom: 0;
-    margin-top: 0;
 }
-.spectrum-Code--sizeL {
-    font-family: var(
-        --spectrum-code-l-text-font-family,
-        var(--spectrum-alias-code-text-font-family)
-    );
-    font-size: var(
-        --spectrum-code-l-text-size,
-        var(--spectrum-global-dimension-font-size-300)
-    );
+.spectrum-Code:lang(ja) .spectrum-Code-strong,
+.spectrum-Code:lang(ja) strong,
+.spectrum-Code:lang(ko) .spectrum-Code-strong,
+.spectrum-Code:lang(ko) strong,
+.spectrum-Code:lang(zh) .spectrum-Code-strong,
+.spectrum-Code:lang(zh) strong {
     font-style: var(
-        --spectrum-code-l-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-code-cjk-strong-font-style,
+        var(--spectrum-code-cjk-strong-font-style)
     );
     font-weight: var(
-        --spectrum-code-l-text-font-weight,
-        var(--spectrum-alias-code-text-font-weight-regular)
+        --mod-code-cjk-strong-font-weight,
+        var(--spectrum-code-cjk-strong-font-weight)
     );
-    letter-spacing: var(
-        --spectrum-code-l-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-code-l-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
 }
-.spectrum-Code--sizeM {
-    font-family: var(
-        --spectrum-code-m-text-font-family,
-        var(--spectrum-alias-code-text-font-family)
-    );
-    font-size: var(
-        --spectrum-code-m-text-size,
-        var(--spectrum-global-dimension-font-size-200)
-    );
+.spectrum-Code:lang(ja) .spectrum-Code-emphasized,
+.spectrum-Code:lang(ja) em,
+.spectrum-Code:lang(ko) .spectrum-Code-emphasized,
+.spectrum-Code:lang(ko) em,
+.spectrum-Code:lang(zh) .spectrum-Code-emphasized,
+.spectrum-Code:lang(zh) em {
     font-style: var(
-        --spectrum-code-m-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-code-cjk-emphasized-font-style,
+        var(--spectrum-code-cjk-emphasized-font-style)
     );
     font-weight: var(
-        --spectrum-code-m-text-font-weight,
-        var(--spectrum-alias-code-text-font-weight-regular)
+        --mod-code-cjk-emphasized-font-weight,
+        var(--spectrum-code-cjk-emphasized-font-weight)
     );
-    letter-spacing: var(
-        --spectrum-code-m-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-code-m-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
 }
-.spectrum-Code--sizeS {
-    font-family: var(
-        --spectrum-code-s-text-font-family,
-        var(--spectrum-alias-code-text-font-family)
-    );
-    font-size: var(
-        --spectrum-code-s-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    );
+.spectrum-Code:lang(ja) .spectrum-Code-strong.spectrum-Code-emphasized,
+.spectrum-Code:lang(ja) em strong,
+.spectrum-Code:lang(ja) strong em,
+.spectrum-Code:lang(ko) .spectrum-Code-strong.spectrum-Code-emphasized,
+.spectrum-Code:lang(ko) em strong,
+.spectrum-Code:lang(ko) strong em,
+.spectrum-Code:lang(zh) .spectrum-Code-strong.spectrum-Code-emphasized,
+.spectrum-Code:lang(zh) em strong,
+.spectrum-Code:lang(zh) strong em {
     font-style: var(
-        --spectrum-code-s-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --mod-code-cjk-strong-emphasized-font-style,
+        var(--spectrum-code-cjk-strong-emphasized-font-style)
     );
     font-weight: var(
-        --spectrum-code-s-text-font-weight,
-        var(--spectrum-alias-code-text-font-weight-regular)
+        --mod-code-cjk-strong-emphasized-font-weight,
+        var(--spectrum-code-cjk-strong-emphasized-font-weight)
     );
-    letter-spacing: var(
-        --spectrum-code-s-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-code-s-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-}
-.spectrum-Code--sizeXS {
-    font-family: var(
-        --spectrum-code-xs-text-font-family,
-        var(--spectrum-alias-code-text-font-family)
-    );
-    font-size: var(
-        --spectrum-code-xs-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    font-style: var(
-        --spectrum-code-xs-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-code-xs-text-font-weight,
-        var(--spectrum-alias-code-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-code-xs-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    line-height: var(
-        --spectrum-code-xs-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-}
-.spectrum-Typography .spectrum-Heading--sizeXXXL {
-    margin-bottom: var(
-        --spectrum-heading-xxxl-margin-bottom,
-        var(--spectrum-global-dimension-size-125)
-    );
-    margin-top: var(
-        --spectrum-heading-xxxl-margin-top,
-        var(--spectrum-alias-heading-xxxl-margin-top)
-    );
-}
-.spectrum-Typography .spectrum-Heading--sizeXXL {
-    margin-bottom: var(
-        --spectrum-heading-xxl-margin-bottom,
-        var(--spectrum-global-dimension-size-115)
-    );
-    margin-top: var(
-        --spectrum-heading-xxl-margin-top,
-        var(--spectrum-alias-heading-xxl-margin-top)
-    );
-}
-.spectrum-Typography .spectrum-Heading--sizeXL {
-    margin-bottom: var(
-        --spectrum-heading-xl-margin-bottom,
-        var(--spectrum-global-dimension-size-100)
-    );
-    margin-top: var(
-        --spectrum-heading-xl-margin-top,
-        var(--spectrum-alias-heading-xl-margin-top)
-    );
-}
-.spectrum-Typography .spectrum-Heading--sizeL {
-    margin-bottom: var(
-        --spectrum-heading-l-margin-bottom,
-        var(--spectrum-global-dimension-size-85)
-    );
-    margin-top: var(
-        --spectrum-heading-l-margin-top,
-        var(--spectrum-alias-heading-l-margin-top)
-    );
-}
-.spectrum-Typography .spectrum-Heading--sizeM {
-    margin-bottom: var(
-        --spectrum-heading-m-margin-bottom,
-        var(--spectrum-global-dimension-size-75)
-    );
-    margin-top: var(
-        --spectrum-heading-m-margin-top,
-        var(--spectrum-alias-heading-m-margin-top)
-    );
-}
-.spectrum-Typography .spectrum-Heading--sizeS {
-    margin-bottom: var(
-        --spectrum-heading-s-margin-bottom,
-        var(--spectrum-global-dimension-size-65)
-    );
-    margin-top: var(
-        --spectrum-heading-s-margin-top,
-        var(--spectrum-alias-heading-s-margin-top)
-    );
-}
-.spectrum-Typography .spectrum-Heading--sizeXS {
-    margin-bottom: var(
-        --spectrum-heading-xs-margin-bottom,
-        var(--spectrum-global-dimension-size-50)
-    );
-    margin-top: var(
-        --spectrum-heading-xs-margin-top,
-        var(--spectrum-alias-heading-xs-margin-top)
-    );
-}
-.spectrum-Typography .spectrum-Heading--sizeXXS {
-    margin-bottom: var(
-        --spectrum-heading-xxs-margin-bottom,
-        var(--spectrum-global-dimension-size-40)
-    );
-    margin-top: var(
-        --spectrum-heading-xxs-margin-top,
-        var(--spectrum-alias-heading-xxs-margin-top)
-    );
-}
-.spectrum-Typography .spectrum-Body--sizeXXXL {
-    margin-bottom: var(
-        --spectrum-body-xxxl-margin-bottom,
-        var(--spectrum-global-dimension-size-400)
-    );
-    margin-top: var(--spectrum-body-xxxl-margin-top, 0);
-}
-.spectrum-Typography .spectrum-Body--sizeXXL {
-    margin-bottom: var(
-        --spectrum-body-xxl-margin-bottom,
-        var(--spectrum-global-dimension-size-300)
-    );
-    margin-top: var(--spectrum-body-xxl-margin-top, 0);
-}
-.spectrum-Typography .spectrum-Body--sizeXL {
-    margin-bottom: var(
-        --spectrum-body-xl-margin-bottom,
-        var(--spectrum-global-dimension-size-200)
-    );
-    margin-top: var(--spectrum-body-xl-margin-top, 0);
-}
-.spectrum-Typography .spectrum-Body--sizeL {
-    margin-bottom: var(
-        --spectrum-body-l-margin-bottom,
-        var(--spectrum-global-dimension-size-160)
-    );
-    margin-top: var(--spectrum-body-l-margin-top, 0);
-}
-.spectrum-Typography .spectrum-Body--sizeM {
-    margin-bottom: var(
-        --spectrum-body-m-margin-bottom,
-        var(--spectrum-global-dimension-size-150)
-    );
-    margin-top: var(--spectrum-body-m-margin-top, 0);
-}
-.spectrum-Typography .spectrum-Body--sizeS {
-    margin-bottom: var(
-        --spectrum-body-s-margin-bottom,
-        var(--spectrum-global-dimension-size-125)
-    );
-    margin-top: var(--spectrum-body-s-margin-top, 0);
-}
-.spectrum-Typography .spectrum-Body--sizeXS {
-    margin-bottom: var(
-        --spectrum-body-xs-margin-bottom,
-        var(--spectrum-global-dimension-size-115)
-    );
-    margin-top: var(--spectrum-body-xs-margin-top, 0);
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeXXXL,
-.spectrum:lang(ko) .spectrum-Heading--sizeXXXL,
-.spectrum:lang(zh) .spectrum-Heading--sizeXXXL {
-    font-size: var(
-        --spectrum-heading-han-xxxl-text-size,
-        var(--spectrum-alias-heading-han-xxxl-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-han-xxxl-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-han-xxxl-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-han-xxxl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-heading-han-xxxl-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-han-xxxl-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeXXL,
-.spectrum:lang(ko) .spectrum-Heading--sizeXXL,
-.spectrum:lang(zh) .spectrum-Heading--sizeXXL {
-    font-size: var(
-        --spectrum-heading-han-xxl-text-size,
-        var(--spectrum-alias-heading-han-xxl-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-han-xxl-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-han-xxl-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-han-xxl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-heading-han-xxl-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-han-xxl-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeXL,
-.spectrum:lang(ko) .spectrum-Heading--sizeXL,
-.spectrum:lang(zh) .spectrum-Heading--sizeXL {
-    font-size: var(
-        --spectrum-heading-han-xl-text-size,
-        var(--spectrum-alias-heading-han-xl-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-han-xl-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-han-xl-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-han-xl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-heading-han-xl-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-han-xl-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeL,
-.spectrum:lang(ko) .spectrum-Heading--sizeL,
-.spectrum:lang(zh) .spectrum-Heading--sizeL {
-    font-size: var(
-        --spectrum-heading-han-l-text-size,
-        var(--spectrum-alias-heading-han-l-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-han-l-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-han-l-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-han-l-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-heading-han-l-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-han-l-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeM,
-.spectrum:lang(ko) .spectrum-Heading--sizeM,
-.spectrum:lang(zh) .spectrum-Heading--sizeM {
-    font-size: var(
-        --spectrum-heading-han-m-text-size,
-        var(--spectrum-alias-heading-han-m-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-han-m-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-han-m-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-han-m-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-heading-han-m-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-han-m-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeS,
-.spectrum:lang(ko) .spectrum-Heading--sizeS,
-.spectrum:lang(zh) .spectrum-Heading--sizeS {
-    font-size: var(
-        --spectrum-heading-han-s-text-size,
-        var(--spectrum-alias-heading-han-s-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-han-s-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-han-s-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-han-s-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-heading-han-s-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-han-s-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeXS,
-.spectrum:lang(ko) .spectrum-Heading--sizeXS,
-.spectrum:lang(zh) .spectrum-Heading--sizeXS {
-    font-size: var(
-        --spectrum-heading-han-xs-text-size,
-        var(--spectrum-alias-heading-han-xs-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-han-xs-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-han-xs-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-han-xs-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-heading-han-xs-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-han-xs-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeXXS,
-.spectrum:lang(ko) .spectrum-Heading--sizeXXS,
-.spectrum:lang(zh) .spectrum-Heading--sizeXXS {
-    font-size: var(
-        --spectrum-heading-han-xxs-text-size,
-        var(--spectrum-alias-heading-han-xxs-text-size)
-    );
-    font-style: var(
-        --spectrum-heading-han-xxs-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-han-xxs-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-heading-han-xxs-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-heading-han-xxs-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-heading-han-xxs-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Heading--heavy,
-.spectrum:lang(ko) .spectrum-Heading--heavy,
-.spectrum:lang(zh) .spectrum-Heading--heavy {
-    font-weight: var(
-        --spectrum-heading-han-m-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--heavy .spectrum-Heading--emphasized,
-.spectrum:lang(ja) .spectrum-Heading--heavy em,
-.spectrum:lang(ko) .spectrum-Heading--heavy .spectrum-Heading--emphasized,
-.spectrum:lang(ko) .spectrum-Heading--heavy em,
-.spectrum:lang(zh) .spectrum-Heading--heavy .spectrum-Heading--emphasized,
-.spectrum:lang(zh) .spectrum-Heading--heavy em {
-    font-style: var(--spectrum-heading-han-heavy-m-emphasized-text-font-style);
-    font-weight: var(
-        --spectrum-heading-han-heavy-m-emphasized-text-font-weight
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--heavy .spectrum-Heading--strong,
-.spectrum:lang(ja) .spectrum-Heading--heavy strong,
-.spectrum:lang(ko) .spectrum-Heading--heavy .spectrum-Heading--strong,
-.spectrum:lang(ko) .spectrum-Heading--heavy strong,
-.spectrum:lang(zh) .spectrum-Heading--heavy .spectrum-Heading--strong,
-.spectrum:lang(zh) .spectrum-Heading--heavy strong {
-    font-style: var(
-        --spectrum-heading-m-heavy-strong-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-m-heavy-strong-text-font-weight,
-        var(--spectrum-alias-heading-text-font-weight-heavy-strong)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--light,
-.spectrum:lang(ko) .spectrum-Heading--light,
-.spectrum:lang(zh) .spectrum-Heading--light {
-    font-weight: var(
-        --spectrum-heading-han-m-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--light .spectrum-Heading--emphasized,
-.spectrum:lang(ja) .spectrum-Heading--light em,
-.spectrum:lang(ko) .spectrum-Heading--light .spectrum-Heading--emphasized,
-.spectrum:lang(ko) .spectrum-Heading--light em,
-.spectrum:lang(zh) .spectrum-Heading--light .spectrum-Heading--emphasized,
-.spectrum:lang(zh) .spectrum-Heading--light em {
-    font-style: var(
-        --spectrum-heading-han-m-light-emphasized-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-han-m-light-emphasized-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-light-emphasis)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--light .spectrum-Heading--strong,
-.spectrum:lang(ja) .spectrum-Heading--light strong,
-.spectrum:lang(ko) .spectrum-Heading--light .spectrum-Heading--strong,
-.spectrum:lang(ko) .spectrum-Heading--light strong,
-.spectrum:lang(zh) .spectrum-Heading--light .spectrum-Heading--strong,
-.spectrum:lang(zh) .spectrum-Heading--light strong {
-    font-style: var(
-        --spectrum-heading-han-m-light-strong-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-heading-han-m-light-strong-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-light-strong)
-    );
-}
-.spectrum:lang(ja) .spectrum-Body--sizeXXXL,
-.spectrum:lang(ko) .spectrum-Body--sizeXXXL,
-.spectrum:lang(zh) .spectrum-Body--sizeXXXL {
-    font-size: var(
-        --spectrum-body-han-xxxl-text-size,
-        var(--spectrum-global-dimension-font-size-600)
-    );
-    font-style: var(
-        --spectrum-body-han-xxxl-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-body-han-xxxl-text-font-weight,
-        var(--spectrum-alias-han-body-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-body-han-xxxl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-body-han-xxxl-text-line-height,
-        var(--spectrum-alias-han-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-han-xxxl-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Body--sizeXXL,
-.spectrum:lang(ko) .spectrum-Body--sizeXXL,
-.spectrum:lang(zh) .spectrum-Body--sizeXXL {
-    font-size: var(
-        --spectrum-body-han-xxl-text-size,
-        var(--spectrum-global-dimension-font-size-500)
-    );
-    font-style: var(
-        --spectrum-body-han-xxl-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-body-han-xxl-text-font-weight,
-        var(--spectrum-alias-han-body-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-body-han-xxl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-body-han-xxl-text-line-height,
-        var(--spectrum-alias-han-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-han-xxl-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Body--sizeXL,
-.spectrum:lang(ko) .spectrum-Body--sizeXL,
-.spectrum:lang(zh) .spectrum-Body--sizeXL {
-    font-size: var(
-        --spectrum-body-han-xl-text-size,
-        var(--spectrum-global-dimension-font-size-400)
-    );
-    font-style: var(
-        --spectrum-body-han-xl-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-body-han-xl-text-font-weight,
-        var(--spectrum-alias-han-body-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-body-han-xl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-body-han-xl-text-line-height,
-        var(--spectrum-alias-han-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-han-xl-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Body--sizeL,
-.spectrum:lang(ko) .spectrum-Body--sizeL,
-.spectrum:lang(zh) .spectrum-Body--sizeL {
-    font-size: var(
-        --spectrum-body-han-l-text-size,
-        var(--spectrum-global-dimension-font-size-300)
-    );
-    font-style: var(
-        --spectrum-body-han-l-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-body-han-l-text-font-weight,
-        var(--spectrum-alias-han-body-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-body-han-l-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-body-han-l-text-line-height,
-        var(--spectrum-alias-han-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-han-l-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Body--sizeM,
-.spectrum:lang(ko) .spectrum-Body--sizeM,
-.spectrum:lang(zh) .spectrum-Body--sizeM {
-    font-size: var(
-        --spectrum-body-han-m-text-size,
-        var(--spectrum-global-dimension-font-size-200)
-    );
-    font-style: var(
-        --spectrum-body-han-m-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-body-han-m-text-font-weight,
-        var(--spectrum-alias-han-body-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-body-han-m-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-body-han-m-text-line-height,
-        var(--spectrum-alias-han-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-han-m-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Body--sizeS,
-.spectrum:lang(ko) .spectrum-Body--sizeS,
-.spectrum:lang(zh) .spectrum-Body--sizeS {
-    font-size: var(
-        --spectrum-body-han-s-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    );
-    font-style: var(
-        --spectrum-body-han-s-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-body-han-s-text-font-weight,
-        var(--spectrum-alias-han-body-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-body-han-s-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-body-han-s-text-line-height,
-        var(--spectrum-alias-han-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-han-s-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Body--sizeXS,
-.spectrum:lang(ko) .spectrum-Body--sizeXS,
-.spectrum:lang(zh) .spectrum-Body--sizeXS {
-    font-size: var(
-        --spectrum-body-han-xs-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    font-style: var(
-        --spectrum-body-han-xs-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-body-han-xs-text-font-weight,
-        var(--spectrum-alias-han-body-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-body-han-xs-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-body-han-xs-text-line-height,
-        var(--spectrum-alias-han-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-body-han-xs-text-transform, none);
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeXL,
-.spectrum:lang(ko) .spectrum-Detail--sizeXL,
-.spectrum:lang(zh) .spectrum-Detail--sizeXL {
-    font-size: var(
-        --spectrum-detail-han-xl-text-size,
-        var(--spectrum-global-dimension-font-size-200)
-    );
-    font-style: var(
-        --spectrum-detail-han-xl-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-xl-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-han-xl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-han-xl-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-detail-han-xl-text-transform, uppercase);
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeXL em,
-.spectrum:lang(ko) .spectrum-Detail--sizeXL em,
-.spectrum:lang(zh) .spectrum-Detail--sizeXL em {
-    font-size: var(
-        --spectrum-detail-han-xl-emphasized-text-size,
-        var(--spectrum-global-dimension-font-size-200)
-    );
-    font-style: var(
-        --spectrum-detail-han-xl-emphasized-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-xl-emphasized-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular-emphasis)
-    );
-    letter-spacing: var(
-        --spectrum-detail-han-xl-emphasized-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-han-xl-emphasized-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(
-        --spectrum-detail-han-xl-emphasized-text-transform,
-        uppercase
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeXL strong,
-.spectrum:lang(ko) .spectrum-Detail--sizeXL strong,
-.spectrum:lang(zh) .spectrum-Detail--sizeXL strong {
-    font-size: var(
-        --spectrum-detail-han-xl-strong-text-size,
-        var(--spectrum-global-dimension-font-size-200)
-    );
-    font-style: var(
-        --spectrum-detail-han-xl-strong-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-xl-strong-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular-strong)
-    );
-    letter-spacing: var(
-        --spectrum-detail-han-xl-strong-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-han-xl-strong-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(
-        --spectrum-detail-han-xl-strong-text-transform,
-        uppercase
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeL,
-.spectrum:lang(ko) .spectrum-Detail--sizeL,
-.spectrum:lang(zh) .spectrum-Detail--sizeL {
-    font-size: var(
-        --spectrum-detail-han-l-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    );
-    font-style: var(
-        --spectrum-detail-han-l-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-l-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-han-l-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-han-l-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-detail-han-l-text-transform, uppercase);
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeL em,
-.spectrum:lang(ko) .spectrum-Detail--sizeL em,
-.spectrum:lang(zh) .spectrum-Detail--sizeL em {
-    font-size: var(
-        --spectrum-detail-han-l-emphasized-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    );
-    font-style: var(
-        --spectrum-detail-han-l-emphasized-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-l-emphasized-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular-emphasis)
-    );
-    letter-spacing: var(
-        --spectrum-detail-han-l-emphasized-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-han-l-emphasized-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(
-        --spectrum-detail-han-l-emphasized-text-transform,
-        uppercase
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeL strong,
-.spectrum:lang(ko) .spectrum-Detail--sizeL strong,
-.spectrum:lang(zh) .spectrum-Detail--sizeL strong {
-    font-size: var(
-        --spectrum-detail-han-l-strong-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    );
-    font-style: var(
-        --spectrum-detail-han-l-strong-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-l-strong-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular-strong)
-    );
-    letter-spacing: var(
-        --spectrum-detail-han-l-strong-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-han-l-strong-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(
-        --spectrum-detail-han-l-strong-text-transform,
-        uppercase
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeM,
-.spectrum:lang(ko) .spectrum-Detail--sizeM,
-.spectrum:lang(zh) .spectrum-Detail--sizeM {
-    font-size: var(
-        --spectrum-detail-han-m-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    font-style: var(
-        --spectrum-detail-han-m-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-m-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-han-m-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-han-m-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-detail-han-m-text-transform, uppercase);
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeM em,
-.spectrum:lang(ko) .spectrum-Detail--sizeM em,
-.spectrum:lang(zh) .spectrum-Detail--sizeM em {
-    font-size: var(
-        --spectrum-detail-han-m-emphasized-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    font-style: var(
-        --spectrum-detail-han-m-emphasized-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-m-emphasized-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular-emphasis)
-    );
-    letter-spacing: var(
-        --spectrum-detail-han-m-emphasized-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-han-m-emphasized-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(
-        --spectrum-detail-han-m-emphasized-text-transform,
-        uppercase
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeM strong,
-.spectrum:lang(ko) .spectrum-Detail--sizeM strong,
-.spectrum:lang(zh) .spectrum-Detail--sizeM strong {
-    font-size: var(
-        --spectrum-detail-han-m-strong-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    font-style: var(
-        --spectrum-detail-han-m-strong-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-m-strong-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular-strong)
-    );
-    letter-spacing: var(
-        --spectrum-detail-han-m-strong-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-han-m-strong-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(
-        --spectrum-detail-han-m-strong-text-transform,
-        uppercase
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeS,
-.spectrum:lang(ko) .spectrum-Detail--sizeS,
-.spectrum:lang(zh) .spectrum-Detail--sizeS {
-    font-size: var(
-        --spectrum-detail-han-s-text-size,
-        var(--spectrum-global-dimension-font-size-50)
-    );
-    font-style: var(
-        --spectrum-detail-han-s-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-s-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-detail-han-s-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-han-s-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(--spectrum-detail-han-s-text-transform, uppercase);
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeS em,
-.spectrum:lang(ko) .spectrum-Detail--sizeS em,
-.spectrum:lang(zh) .spectrum-Detail--sizeS em {
-    font-size: var(
-        --spectrum-detail-han-s-emphasized-text-size,
-        var(--spectrum-global-dimension-font-size-50)
-    );
-    font-style: var(
-        --spectrum-detail-han-s-emphasized-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-s-emphasized-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular-emphasis)
-    );
-    letter-spacing: var(
-        --spectrum-detail-han-s-emphasized-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-han-s-emphasized-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(
-        --spectrum-detail-han-s-emphasized-text-transform,
-        uppercase
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeS strong,
-.spectrum:lang(ko) .spectrum-Detail--sizeS strong,
-.spectrum:lang(zh) .spectrum-Detail--sizeS strong {
-    font-size: var(
-        --spectrum-detail-han-s-strong-text-size,
-        var(--spectrum-global-dimension-font-size-50)
-    );
-    font-style: var(
-        --spectrum-detail-han-s-strong-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-s-strong-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular-strong)
-    );
-    letter-spacing: var(
-        --spectrum-detail-han-s-strong-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-medium)
-    );
-    line-height: var(
-        --spectrum-detail-han-s-strong-text-line-height,
-        var(--spectrum-alias-han-heading-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-    text-transform: var(
-        --spectrum-detail-han-s-strong-text-transform,
-        uppercase
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--light,
-.spectrum:lang(ko) .spectrum-Detail--light,
-.spectrum:lang(zh) .spectrum-Detail--light {
-    font-weight: var(
-        --spectrum-detail-han-m-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-regular)
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--light .spectrum-Detail--emphasized,
-.spectrum:lang(ja) .spectrum-Detail--light em,
-.spectrum:lang(ko) .spectrum-Detail--light .spectrum-Detail--emphasized,
-.spectrum:lang(ko) .spectrum-Detail--light em,
-.spectrum:lang(zh) .spectrum-Detail--light .spectrum-Detail--emphasized,
-.spectrum:lang(zh) .spectrum-Detail--light em {
-    font-style: var(
-        --spectrum-detail-han-m-light-emphasized-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-m-light-emphasized-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-light-emphasis)
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--light .spectrum-Detail--strong,
-.spectrum:lang(ja) .spectrum-Detail--light strong,
-.spectrum:lang(ko) .spectrum-Detail--light .spectrum-Detail--strong,
-.spectrum:lang(ko) .spectrum-Detail--light strong,
-.spectrum:lang(zh) .spectrum-Detail--light .spectrum-Detail--strong,
-.spectrum:lang(zh) .spectrum-Detail--light strong {
-    font-style: var(
-        --spectrum-detail-han-m-light-strong-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-detail-han-m-light-strong-text-font-weight,
-        var(--spectrum-alias-han-heading-text-font-weight-light-strong)
-    );
-}
-.spectrum:lang(ja) .spectrum-Code--sizeXL,
-.spectrum:lang(ko) .spectrum-Code--sizeXL,
-.spectrum:lang(zh) .spectrum-Code--sizeXL {
-    font-family: var(
-        --spectrum-code-han-xl-text-font-family,
-        var(--spectrum-alias-font-family-zh)
-    );
-    font-size: var(
-        --spectrum-code-han-xl-text-size,
-        var(--spectrum-global-dimension-font-size-400)
-    );
-    font-style: var(
-        --spectrum-code-han-xl-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-code-han-xl-text-font-weight,
-        var(--spectrum-alias-han-body-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-code-han-xl-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-code-han-xl-text-line-height,
-        var(--spectrum-alias-han-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-}
-.spectrum:lang(ja) .spectrum-Code--sizeL,
-.spectrum:lang(ko) .spectrum-Code--sizeL,
-.spectrum:lang(zh) .spectrum-Code--sizeL {
-    font-family: var(
-        --spectrum-code-han-l-text-font-family,
-        var(--spectrum-alias-font-family-zh)
-    );
-    font-size: var(
-        --spectrum-code-han-l-text-size,
-        var(--spectrum-global-dimension-font-size-300)
-    );
-    font-style: var(
-        --spectrum-code-han-l-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-code-han-l-text-font-weight,
-        var(--spectrum-alias-han-body-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-code-han-l-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-code-han-l-text-line-height,
-        var(--spectrum-alias-han-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-}
-.spectrum:lang(ja) .spectrum-Code--sizeM,
-.spectrum:lang(ko) .spectrum-Code--sizeM,
-.spectrum:lang(zh) .spectrum-Code--sizeM {
-    font-family: var(
-        --spectrum-code-han-m-text-font-family,
-        var(--spectrum-alias-font-family-zh)
-    );
-    font-size: var(
-        --spectrum-code-han-m-text-size,
-        var(--spectrum-global-dimension-font-size-200)
-    );
-    font-style: var(
-        --spectrum-code-han-m-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-code-han-m-text-font-weight,
-        var(--spectrum-alias-han-body-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-code-han-m-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-code-han-m-text-line-height,
-        var(--spectrum-alias-han-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-}
-.spectrum:lang(ja) .spectrum-Code--sizeS,
-.spectrum:lang(ko) .spectrum-Code--sizeS,
-.spectrum:lang(zh) .spectrum-Code--sizeS {
-    font-family: var(
-        --spectrum-code-han-s-text-font-family,
-        var(--spectrum-alias-font-family-zh)
-    );
-    font-size: var(
-        --spectrum-code-han-s-text-size,
-        var(--spectrum-global-dimension-font-size-100)
-    );
-    font-style: var(
-        --spectrum-code-han-s-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-code-han-s-text-font-weight,
-        var(--spectrum-alias-han-body-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-code-han-s-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-code-han-s-text-line-height,
-        var(--spectrum-alias-han-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-}
-.spectrum:lang(ja) .spectrum-Code--sizeXS,
-.spectrum:lang(ko) .spectrum-Code--sizeXS,
-.spectrum:lang(zh) .spectrum-Code--sizeXS {
-    font-family: var(
-        --spectrum-code-han-xs-text-font-family,
-        var(--spectrum-alias-font-family-zh)
-    );
-    font-size: var(
-        --spectrum-code-han-xs-text-size,
-        var(--spectrum-global-dimension-font-size-75)
-    );
-    font-style: var(
-        --spectrum-code-han-xs-text-font-style,
-        var(--spectrum-global-font-style-regular)
-    );
-    font-weight: var(
-        --spectrum-code-han-xs-text-font-weight,
-        var(--spectrum-alias-han-body-text-font-weight-regular)
-    );
-    letter-spacing: var(
-        --spectrum-code-han-xs-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-han)
-    );
-    line-height: var(
-        --spectrum-code-han-xs-text-line-height,
-        var(--spectrum-alias-han-body-text-line-height)
-    );
-    margin-bottom: 0;
-    margin-top: 0;
-}
-.spectrum-Heading--sizeXXXL {
-    color: var(
-        --spectrum-heading-xxxl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading--sizeXXL {
-    color: var(
-        --spectrum-heading-xxl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading--sizeXL {
-    color: var(
-        --spectrum-heading-xl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading--sizeL {
-    color: var(
-        --spectrum-heading-l-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading--sizeM {
-    color: var(
-        --spectrum-heading-m-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading--sizeS {
-    color: var(
-        --spectrum-heading-s-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading--sizeXS {
-    color: var(
-        --spectrum-heading-xs-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading--sizeXXS {
-    color: var(
-        --spectrum-heading-xxs-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading-sizeXXXL--light {
-    color: var(
-        --spectrum-heading-xxxl-light-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading-sizeXXL--light {
-    color: var(
-        --spectrum-heading-xxl-light-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading-sizeXL--light {
-    color: var(
-        --spectrum-heading-xl-light-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading-sizeL--light {
-    color: var(
-        --spectrum-heading-l-light-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading-sizeXXXL--heavy {
-    color: var(
-        --spectrum-heading-xxxl-heavy-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading-sizeXXL--heavy {
-    color: var(
-        --spectrum-heading-xxl-heavy-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading-sizeXL--heavy {
-    color: var(
-        --spectrum-heading-xl-heavy-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading-sizeL--heavy {
-    color: var(
-        --spectrum-heading-l-heavy-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading-sizeXXXL--heading {
-    color: var(
-        --spectrum-heading-xxxl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading-sizeXXL--heading {
-    color: var(
-        --spectrum-heading-xxl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading-sizeXL--heading {
-    color: var(
-        --spectrum-heading-xl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Heading-sizeL--heading {
-    color: var(
-        --spectrum-heading-l-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Body--sizeXXXL {
-    color: var(
-        --spectrum-body-xxxl-text-color,
-        var(--spectrum-alias-text-color)
-    );
-}
-.spectrum-Body--sizeXXL {
-    color: var(
-        --spectrum-body-xxl-text-color,
-        var(--spectrum-alias-text-color)
-    );
-}
-.spectrum-Body--sizeXL {
-    color: var(--spectrum-body-xl-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum-Body--sizeL {
-    color: var(--spectrum-body-l-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum-Body--sizeM {
-    color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum-Body--sizeS {
-    color: var(--spectrum-body-s-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum-Body--sizeXS {
-    color: var(--spectrum-body-xs-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum-Detail--sizeXL {
-    color: var(
-        --spectrum-detail-xl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Detail--sizeL {
-    color: var(
-        --spectrum-detail-l-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Detail--sizeM {
-    color: var(
-        --spectrum-detail-m-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Detail--sizeS {
-    color: var(
-        --spectrum-detail-s-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum-Code--sizeXL {
-    color: var(--spectrum-code-xl-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum-Code--sizeL {
-    color: var(--spectrum-code-l-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum-Code--sizeM {
-    color: var(--spectrum-code-m-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum-Code--sizeS {
-    color: var(--spectrum-code-s-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum-Code--sizeXS {
-    color: var(--spectrum-code-xs-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum:lang(ja) .spectrum-Body--sizeXXXL,
-.spectrum:lang(ko) .spectrum-Body--sizeXXXL,
-.spectrum:lang(zh) .spectrum-Body--sizeXXXL {
-    color: var(
-        --spectrum-body-han-xxxl-text-color,
-        var(--spectrum-alias-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Body--sizeXXL,
-.spectrum:lang(ko) .spectrum-Body--sizeXXL,
-.spectrum:lang(zh) .spectrum-Body--sizeXXL {
-    color: var(
-        --spectrum-body-han-xxl-text-color,
-        var(--spectrum-alias-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Body--sizeXL,
-.spectrum:lang(ko) .spectrum-Body--sizeXL,
-.spectrum:lang(zh) .spectrum-Body--sizeXL {
-    color: var(
-        --spectrum-body-han-xl-text-color,
-        var(--spectrum-alias-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Body--sizeL,
-.spectrum:lang(ko) .spectrum-Body--sizeL,
-.spectrum:lang(zh) .spectrum-Body--sizeL {
-    color: var(
-        --spectrum-body-han-l-text-color,
-        var(--spectrum-alias-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Body--sizeM,
-.spectrum:lang(ko) .spectrum-Body--sizeM,
-.spectrum:lang(zh) .spectrum-Body--sizeM {
-    color: var(
-        --spectrum-body-han-m-text-color,
-        var(--spectrum-alias-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Body--sizeS,
-.spectrum:lang(ko) .spectrum-Body--sizeS,
-.spectrum:lang(zh) .spectrum-Body--sizeS {
-    color: var(
-        --spectrum-body-han-s-text-color,
-        var(--spectrum-alias-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Body--sizeXS,
-.spectrum:lang(ko) .spectrum-Body--sizeXS,
-.spectrum:lang(zh) .spectrum-Body--sizeXS {
-    color: var(
-        --spectrum-body-han-xs-text-color,
-        var(--spectrum-alias-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeXXXL,
-.spectrum:lang(ko) .spectrum-Heading--sizeXXXL,
-.spectrum:lang(zh) .spectrum-Heading--sizeXXXL {
-    color: var(
-        --spectrum-heading-xxxl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeXXL,
-.spectrum:lang(ko) .spectrum-Heading--sizeXXL,
-.spectrum:lang(zh) .spectrum-Heading--sizeXXL {
-    color: var(
-        --spectrum-heading-xxl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeXL,
-.spectrum:lang(ko) .spectrum-Heading--sizeXL,
-.spectrum:lang(zh) .spectrum-Heading--sizeXL {
-    color: var(
-        --spectrum-heading-xl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeL,
-.spectrum:lang(ko) .spectrum-Heading--sizeL,
-.spectrum:lang(zh) .spectrum-Heading--sizeL {
-    color: var(
-        --spectrum-heading-l-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeM,
-.spectrum:lang(ko) .spectrum-Heading--sizeM,
-.spectrum:lang(zh) .spectrum-Heading--sizeM {
-    color: var(
-        --spectrum-heading-m-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeS,
-.spectrum:lang(ko) .spectrum-Heading--sizeS,
-.spectrum:lang(zh) .spectrum-Heading--sizeS {
-    color: var(
-        --spectrum-heading-s-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeXS,
-.spectrum:lang(ko) .spectrum-Heading--sizeXS,
-.spectrum:lang(zh) .spectrum-Heading--sizeXS {
-    color: var(
-        --spectrum-heading-xs-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading--sizeXXS,
-.spectrum:lang(ko) .spectrum-Heading--sizeXXS,
-.spectrum:lang(zh) .spectrum-Heading--sizeXXS {
-    color: var(
-        --spectrum-heading-xxs-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading-sizeXXXL--light,
-.spectrum:lang(ko) .spectrum-Heading-sizeXXXL--light,
-.spectrum:lang(zh) .spectrum-Heading-sizeXXXL--light {
-    color: var(
-        --spectrum-heading-xxxl-light-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading-sizeXXL--light,
-.spectrum:lang(ko) .spectrum-Heading-sizeXXL--light,
-.spectrum:lang(zh) .spectrum-Heading-sizeXXL--light {
-    color: var(
-        --spectrum-heading-xxl-light-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading-sizeXL--light,
-.spectrum:lang(ko) .spectrum-Heading-sizeXL--light,
-.spectrum:lang(zh) .spectrum-Heading-sizeXL--light {
-    color: var(
-        --spectrum-heading-xl-light-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading-sizeL--light,
-.spectrum:lang(ko) .spectrum-Heading-sizeL--light,
-.spectrum:lang(zh) .spectrum-Heading-sizeL--light {
-    color: var(
-        --spectrum-heading-l-light-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading-sizeXXXL--heavy,
-.spectrum:lang(ko) .spectrum-Heading-sizeXXXL--heavy,
-.spectrum:lang(zh) .spectrum-Heading-sizeXXXL--heavy {
-    color: var(
-        --spectrum-heading-xxxl-heavy-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading-sizeXXL--heavy,
-.spectrum:lang(ko) .spectrum-Heading-sizeXXL--heavy,
-.spectrum:lang(zh) .spectrum-Heading-sizeXXL--heavy {
-    color: var(
-        --spectrum-heading-xxl-heavy-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading-sizeXL--heavy,
-.spectrum:lang(ko) .spectrum-Heading-sizeXL--heavy,
-.spectrum:lang(zh) .spectrum-Heading-sizeXL--heavy {
-    color: var(
-        --spectrum-heading-xl-heavy-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading-sizeL--heavy,
-.spectrum:lang(ko) .spectrum-Heading-sizeL--heavy,
-.spectrum:lang(zh) .spectrum-Heading-sizeL--heavy {
-    color: var(
-        --spectrum-heading-l-heavy-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading-sizeXXXL--heading,
-.spectrum:lang(ko) .spectrum-Heading-sizeXXXL--heading,
-.spectrum:lang(zh) .spectrum-Heading-sizeXXXL--heading {
-    color: var(
-        --spectrum-heading-xxxl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading-sizeXXL--heading,
-.spectrum:lang(ko) .spectrum-Heading-sizeXXL--heading,
-.spectrum:lang(zh) .spectrum-Heading-sizeXXL--heading {
-    color: var(
-        --spectrum-heading-xxl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading-sizeXL--heading,
-.spectrum:lang(ko) .spectrum-Heading-sizeXL--heading,
-.spectrum:lang(zh) .spectrum-Heading-sizeXL--heading {
-    color: var(
-        --spectrum-heading-xl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Heading-sizeL--heading,
-.spectrum:lang(ko) .spectrum-Heading-sizeL--heading,
-.spectrum:lang(zh) .spectrum-Heading-sizeL--heading {
-    color: var(
-        --spectrum-heading-l-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeXL,
-.spectrum:lang(ko) .spectrum-Detail--sizeXL,
-.spectrum:lang(zh) .spectrum-Detail--sizeXL {
-    color: var(
-        --spectrum-detail-xl-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeL,
-.spectrum:lang(ko) .spectrum-Detail--sizeL,
-.spectrum:lang(zh) .spectrum-Detail--sizeL {
-    color: var(
-        --spectrum-detail-l-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeM,
-.spectrum:lang(ko) .spectrum-Detail--sizeM,
-.spectrum:lang(zh) .spectrum-Detail--sizeM {
-    color: var(
-        --spectrum-detail-m-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Detail--sizeS,
-.spectrum:lang(ko) .spectrum-Detail--sizeS,
-.spectrum:lang(zh) .spectrum-Detail--sizeS {
-    color: var(
-        --spectrum-detail-s-text-color,
-        var(--spectrum-alias-heading-text-color)
-    );
-}
-.spectrum:lang(ja) .spectrum-Code--sizeXL,
-.spectrum:lang(ko) .spectrum-Code--sizeXL,
-.spectrum:lang(zh) .spectrum-Code--sizeXL {
-    color: var(--spectrum-code-xl-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum:lang(ja) .spectrum-Code--sizeL,
-.spectrum:lang(ko) .spectrum-Code--sizeL,
-.spectrum:lang(zh) .spectrum-Code--sizeL {
-    color: var(--spectrum-code-l-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum:lang(ja) .spectrum-Code--sizeM,
-.spectrum:lang(ko) .spectrum-Code--sizeM,
-.spectrum:lang(zh) .spectrum-Code--sizeM {
-    color: var(--spectrum-code-m-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum:lang(ja) .spectrum-Code--sizeS,
-.spectrum:lang(ko) .spectrum-Code--sizeS,
-.spectrum:lang(zh) .spectrum-Code--sizeS {
-    color: var(--spectrum-code-s-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum:lang(ja) .spectrum-Code--sizeXS,
-.spectrum:lang(ko) .spectrum-Code--sizeXS,
-.spectrum:lang(zh) .spectrum-Code--sizeXS {
-    color: var(--spectrum-code-xs-text-color, var(--spectrum-alias-text-color));
-}
-.spectrum,
-.spectrum-Body {
-    color: var(--spectrum-body-m-text-color, var(--spectrum-alias-text-color));
 }
