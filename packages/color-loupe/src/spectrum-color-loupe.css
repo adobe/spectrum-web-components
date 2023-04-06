@@ -12,70 +12,118 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-colorloupe-width-adjusted: calc(
-        var(--spectrum-colorloupe-width, var(--spectrum-alias-colorloupe-width)) +
-            var(--spectrum-global-dimension-static-size-100, 8px)
+    --spectrum-colorloupe-width: 48px;
+    --spectrum-colorloupe-height: 64px;
+    --spectrum-colorloupe-offset: 12px;
+    --spectrum-colorloupe-animation-distance: 8px;
+    --spectrum-colorloupe-drop-shadow-x: var(--spectrum-drop-shadow-x);
+    --spectrum-colorloupe-drop-shadow-y: var(
+        --spectrum-color-loupe-drop-shadow-y
     );
-    --spectrum-colorloupe-height-adjusted: calc(
-        var(
-                --spectrum-colorloupe-height,
-                var(--spectrum-alias-colorloupe-height)
-            ) + var(--spectrum-global-dimension-static-size-100, 8px)
+    --spectrum-colorloupe-drop-shadow-blur: var(
+        --spectrum-color-loupe-drop-shadow-blur
     );
-    --spectrum-colorloupe-offset: var(
-        --spectrum-global-dimension-static-size-200,
-        16px
+    --spectrum-colorloupe-drop-shadow-color: var(
+        --spectrum-color-loupe-drop-shadow-color
     );
-    --spectrum-colorloupe-animation-distance: var(
-        --spectrum-global-dimension-static-size-100,
-        8px
+    --spectrum-colorloupe-outer-border-width: var(
+        --spectrum-color-loupe-outer-border-width
+    );
+    --spectrum-colorloupe-inner-border-width: 1px;
+    --spectrum-colorloupe-outer-border-color: var(
+        --spectrum-color-loupe-outer-border
+    );
+    --spectrum-colorloupe-inner-border-color: var(
+        --spectrum-color-loupe-inner-border
+    );
+    --spectrum-colorloupe-checkerboard-dark-color: var(
+        --spectrum-opacity-checkerboard-square-dark
+    );
+    --spectrum-colorloupe-checkerboard-light-color: var(
+        --spectrum-opacity-checkerboard-square-light
     );
 }
 :host {
-    bottom: calc(50% + var(--spectrum-colorloupe-offset));
-    height: var(--spectrum-colorloupe-height-adjusted);
-    left: calc(50% - var(--spectrum-colorloupe-width-adjusted) / 2);
+    block-size: var(--spectrum-colorloupe-height);
+    filter: drop-shadow(
+        var(
+                --mod-colorloupe-drop-shadow-x,
+                var(--spectrum-colorloupe-drop-shadow-x)
+            )
+            var(
+                --mod-colorloupe-drop-shadow-y,
+                var(--spectrum-colorloupe-drop-shadow-y)
+            )
+            var(
+                --mod-colorloupe-drop-shadow-blur,
+                var(--spectrum-colorloupe-drop-shadow-blur)
+            )
+            var(
+                --mod-colorloupe-drop-shadow-color,
+                var(--spectrum-colorloupe-drop-shadow-color)
+            )
+    );
+    inline-size: var(--spectrum-colorloupe-width);
+    inset-block-end: calc(
+        var(--spectrum-color-handle-size-interim) +
+            var(--mod-colorloupe-offset, var(--spectrum-colorloupe-offset))
+    );
+    inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2 + 1px);
     opacity: 0;
     pointer-events: none;
     position: absolute;
-    transform: translateY(var(--spectrum-colorloupe-animation-distance));
+    transform: translateY(
+        var(
+            --mod-colorloupe-animation-distance,
+            var(--spectrum-colorloupe-animation-distance)
+        )
+    );
     transform-origin: bottom;
     transition: transform 0.1s ease-in-out, opacity 0.125s ease-in-out;
-    width: var(--spectrum-colorloupe-width-adjusted);
+}
+:host([dir='rtl']) {
+    inset-inline-end: calc(50% - var(--spectrum-colorloupe-width) / 2 - 1px);
 }
 :host([open]) {
     opacity: 1;
     transform: translate(0);
 }
-.outer {
-    stroke-width: var(--spectrum-colorloupe-outer-border-size, 0);
-}
-.spectrum-ColorLoupe-express {
-    display: var(--spectrum-colorloupe-express-visibility, none);
-}
-.spectrum-ColorLoupe-spectrum {
-    display: var(--spectrum-colorloupe-spectrum-visibility, block);
-}
-.outer {
-    fill: var(
-        --spectrum-colorloupe-inner-border-color,
-        var(--spectrum-global-color-static-white)
-    );
-    stroke: var(--spectrum-colorloupe-outer-border-color, transparent);
-}
-.inner {
+.spectrum-ColorLoupe-inner-border {
     fill: var(--spectrum-picked-color);
     stroke: var(
-        --spectrum-colorloupe-outer-stroke-color,
-        var(--spectrum-global-color-static-transparent-black-200)
+        --mod-colorloupe-inner-border-color,
+        var(--spectrum-colorloupe-inner-border-color)
     );
     stroke-width: var(
-        --spectrum-colorloupe-outer-stroke-width,
-        var(--spectrum-alias-border-size-thick)
+        --mod-colorloupe-inner-border-width,
+        var(--spectrum-colorloupe-inner-border-width)
     );
+}
+.spectrum-ColorLoupe-outer-border {
+    fill: none;
+    stroke: var(
+        --highcontrast-colorloupe-outer-border-color,
+        var(
+            --mod-colorloupe-outer-border-color,
+            var(--spectrum-colorloupe-outer-border-color)
+        )
+    );
+    stroke-width: var(
+        --mod-colorloupe-outer-border-width,
+        var(--spectrum-colorloupe-outer-border-width)
+    );
+}
+.spectrum-ColorLoupe-checkerboard-pattern {
+    fill: var(--spectrum-colorloupe-checkerboard-dark-color);
+}
+.spectrum-ColorLoupe-checkerboard-background {
+    fill: var(--spectrum-colorloupe-checkerboard-light-color);
+}
+.spectrum-ColorLoupe-checkerboard-fill {
+    fill: var(--spectrum-colorloupe-checkerboard-fill);
 }
 @media (forced-colors: active) {
     :host {
-        --spectrum-colorloupe-outer-border-color: CanvasText;
+        --highcontrast-colorloupe-outer-border-color: CanvasText;
     }
 }
