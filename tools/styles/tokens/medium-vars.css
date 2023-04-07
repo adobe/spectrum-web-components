@@ -10,6 +10,19 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/*!
+ * Copyright 2023 Adobe. All rights reserved.
+ *
+ * This file is licensed to you under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License. You may obtain a copy
+ * of the License at <http://www.apache.org/licenses/LICENSE-2.0>
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
+ * OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+
 :host,
 :root {
     --spectrum-field-label-text-to-asterisk-small: 4px;
@@ -142,9 +155,9 @@ governing permissions and limitations under the License.
     --spectrum-avatar-size-700: 40px;
     --spectrum-alert-banner-minimum-height: 48px;
     --spectrum-alert-banner-width: 832px;
-    --spectrum-alert-banner-to-top-workflow-icon: 15px;
-    --spectrum-alert-banner-to-top-text: 14px;
-    --spectrum-alert-banner-to-bottom-text: 17px;
+    --spectrum-alert-banner-top-to-workflow-icon: 15px;
+    --spectrum-alert-banner-top-to-text: 14px;
+    --spectrum-alert-banner-bottom-to-text: 17px;
     --spectrum-rating-indicator-width: 18px;
     --spectrum-rating-indicator-to-icon: 4px;
     --spectrum-color-area-width: 192px;
