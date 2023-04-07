@@ -249,10 +249,10 @@ governing permissions and limitations under the License.
     box-shadow: none;
     pointer-events: none;
 }
-:host([disabled]) .spectrum-ColorHandle-inner {
+:host([disabled]) .inner {
     display: none;
 }
-.spectrum-ColorHandle-inner {
+.inner {
     background-color: var(--spectrum-picked-color);
     block-size: 100%;
     border-radius: 100%;

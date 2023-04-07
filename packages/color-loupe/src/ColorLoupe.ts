@@ -39,7 +39,7 @@ export class ColorLoupe extends SpectrumElement {
             <svg
                 class="spectrum-ColorLoupe is-open"
                 overflow="visible"
-                style="--spectrum-picked-color: rgba(255, 0, 0, 0.5); position: absolute; inset-block-start: 25%; inset-inline-start: 50%;"
+                style="--spectrum-picked-color: rgba(255, 0, 0, 0.5); position: absolute;"
             >
                 <defs>
                     <path
