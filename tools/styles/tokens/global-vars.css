@@ -113,26 +113,114 @@ governing permissions and limitations under the License.
     --spectrum-drop-zone-background-color-opacity-filled: 0.3;
     --spectrum-coach-mark-pagination-color: var(--spectrum-gray-600);
     --spectrum-color-handle-inner-border-color: var(--spectrum-black);
-    --spectrum-white: rgb(255, 255, 255);
-    --spectrum-transparent-white-100: rgba(255, 255, 255, 0);
-    --spectrum-transparent-white-200: rgba(255, 255, 255, 0.1);
-    --spectrum-transparent-white-300: rgba(255, 255, 255, 0.25);
-    --spectrum-transparent-white-400: rgba(255, 255, 255, 0.4);
-    --spectrum-transparent-white-500: rgba(255, 255, 255, 0.55);
-    --spectrum-transparent-white-600: rgba(255, 255, 255, 0.7);
-    --spectrum-transparent-white-700: rgba(255, 255, 255, 0.8);
-    --spectrum-transparent-white-800: rgba(255, 255, 255, 0.9);
-    --spectrum-transparent-white-900: rgb(255, 255, 255);
-    --spectrum-black: rgb(0, 0, 0);
-    --spectrum-transparent-black-100: rgba(0, 0, 0, 0);
-    --spectrum-transparent-black-200: rgba(0, 0, 0, 0.1);
-    --spectrum-transparent-black-300: rgba(0, 0, 0, 0.25);
-    --spectrum-transparent-black-400: rgba(0, 0, 0, 0.4);
-    --spectrum-transparent-black-500: rgba(0, 0, 0, 0.55);
-    --spectrum-transparent-black-600: rgba(0, 0, 0, 0.7);
-    --spectrum-transparent-black-700: rgba(0, 0, 0, 0.8);
-    --spectrum-transparent-black-800: rgba(0, 0, 0, 0.9);
-    --spectrum-transparent-black-900: rgb(0, 0, 0);
+    --spectrum-white-rgb: 255, 255, 255;
+    --spectrum-white: rgba(var(--spectrum-white-rgb));
+    --spectrum-transparent-white-100-rgb: 255, 255, 255;
+    --spectrum-transparent-white-100-opacity: 0;
+    --spectrum-transparent-white-100: rgba(
+        var(--spectrum-transparent-white-100-rgb),
+        var(--spectrum-transparent-white-100-opacity)
+    );
+    --spectrum-transparent-white-200-rgb: 255, 255, 255;
+    --spectrum-transparent-white-200-opacity: 0.1;
+    --spectrum-transparent-white-200: rgba(
+        var(--spectrum-transparent-white-200-rgb),
+        var(--spectrum-transparent-white-200-opacity)
+    );
+    --spectrum-transparent-white-300-rgb: 255, 255, 255;
+    --spectrum-transparent-white-300-opacity: 0.25;
+    --spectrum-transparent-white-300: rgba(
+        var(--spectrum-transparent-white-300-rgb),
+        var(--spectrum-transparent-white-300-opacity)
+    );
+    --spectrum-transparent-white-400-rgb: 255, 255, 255;
+    --spectrum-transparent-white-400-opacity: 0.4;
+    --spectrum-transparent-white-400: rgba(
+        var(--spectrum-transparent-white-400-rgb),
+        var(--spectrum-transparent-white-400-opacity)
+    );
+    --spectrum-transparent-white-500-rgb: 255, 255, 255;
+    --spectrum-transparent-white-500-opacity: 0.55;
+    --spectrum-transparent-white-500: rgba(
+        var(--spectrum-transparent-white-500-rgb),
+        var(--spectrum-transparent-white-500-opacity)
+    );
+    --spectrum-transparent-white-600-rgb: 255, 255, 255;
+    --spectrum-transparent-white-600-opacity: 0.7;
+    --spectrum-transparent-white-600: rgba(
+        var(--spectrum-transparent-white-600-rgb),
+        var(--spectrum-transparent-white-600-opacity)
+    );
+    --spectrum-transparent-white-700-rgb: 255, 255, 255;
+    --spectrum-transparent-white-700-opacity: 0.8;
+    --spectrum-transparent-white-700: rgba(
+        var(--spectrum-transparent-white-700-rgb),
+        var(--spectrum-transparent-white-700-opacity)
+    );
+    --spectrum-transparent-white-800-rgb: 255, 255, 255;
+    --spectrum-transparent-white-800-opacity: 0.9;
+    --spectrum-transparent-white-800: rgba(
+        var(--spectrum-transparent-white-800-rgb),
+        var(--spectrum-transparent-white-800-opacity)
+    );
+    --spectrum-transparent-white-900-rgb: 255, 255, 255;
+    --spectrum-transparent-white-900: rgba(
+        var(--spectrum-transparent-white-900-rgb)
+    );
+    --spectrum-black-rgb: 0, 0, 0;
+    --spectrum-black: rgba(var(--spectrum-black-rgb));
+    --spectrum-transparent-black-100-rgb: 0, 0, 0;
+    --spectrum-transparent-black-100-opacity: 0;
+    --spectrum-transparent-black-100: rgba(
+        var(--spectrum-transparent-black-100-rgb),
+        var(--spectrum-transparent-black-100-opacity)
+    );
+    --spectrum-transparent-black-200-rgb: 0, 0, 0;
+    --spectrum-transparent-black-200-opacity: 0.1;
+    --spectrum-transparent-black-200: rgba(
+        var(--spectrum-transparent-black-200-rgb),
+        var(--spectrum-transparent-black-200-opacity)
+    );
+    --spectrum-transparent-black-300-rgb: 0, 0, 0;
+    --spectrum-transparent-black-300-opacity: 0.25;
+    --spectrum-transparent-black-300: rgba(
+        var(--spectrum-transparent-black-300-rgb),
+        var(--spectrum-transparent-black-300-opacity)
+    );
+    --spectrum-transparent-black-400-rgb: 0, 0, 0;
+    --spectrum-transparent-black-400-opacity: 0.4;
+    --spectrum-transparent-black-400: rgba(
+        var(--spectrum-transparent-black-400-rgb),
+        var(--spectrum-transparent-black-400-opacity)
+    );
+    --spectrum-transparent-black-500-rgb: 0, 0, 0;
+    --spectrum-transparent-black-500-opacity: 0.55;
+    --spectrum-transparent-black-500: rgba(
+        var(--spectrum-transparent-black-500-rgb),
+        var(--spectrum-transparent-black-500-opacity)
+    );
+    --spectrum-transparent-black-600-rgb: 0, 0, 0;
+    --spectrum-transparent-black-600-opacity: 0.7;
+    --spectrum-transparent-black-600: rgba(
+        var(--spectrum-transparent-black-600-rgb),
+        var(--spectrum-transparent-black-600-opacity)
+    );
+    --spectrum-transparent-black-700-rgb: 0, 0, 0;
+    --spectrum-transparent-black-700-opacity: 0.8;
+    --spectrum-transparent-black-700: rgba(
+        var(--spectrum-transparent-black-700-rgb),
+        var(--spectrum-transparent-black-700-opacity)
+    );
+    --spectrum-transparent-black-800-rgb: 0, 0, 0;
+    --spectrum-transparent-black-800-opacity: 0.9;
+    --spectrum-transparent-black-800: rgba(
+        var(--spectrum-transparent-black-800-rgb),
+        var(--spectrum-transparent-black-800-opacity)
+    );
+    --spectrum-transparent-black-900-rgb: 0, 0, 0;
+    --spectrum-transparent-black-900: rgba(
+        var(--spectrum-transparent-black-900-rgb)
+    );
     --spectrum-radio-button-selection-indicator: 4px;
     --spectrum-field-label-to-component: 0px;
     --spectrum-help-text-to-component: 0px;
@@ -167,6 +255,15 @@ governing permissions and limitations under the License.
     --spectrum-breadcrumbs-truncated-menu-to-separator-icon: 0px;
     --spectrum-breadcrumbs-start-edge-to-truncated-menu: 0px;
     --spectrum-breadcrumbs-truncated-menu-to-bottom-text: 0px;
+    --spectrum-alert-banner-to-top-workflow-icon: var(
+        --spectrum-alert-banner-top-to-workflow-icon
+    );
+    --spectrum-alert-banner-to-top-text: var(
+        --spectrum-alert-banner-top-to-text
+    );
+    --spectrum-alert-banner-to-bottom-text: var(
+        --spectrum-alert-banner-bottom-to-text
+    );
     --spectrum-color-area-border-width: var(--spectrum-border-width-100);
     --spectrum-color-area-border-rounding: var(--spectrum-corner-radius-100);
     --spectrum-color-wheel-color-area-margin: 12px;
@@ -280,12 +377,12 @@ governing permissions and limitations under the License.
     --spectrum-sans-serif-font-family: Adobe Clean;
     --spectrum-serif-font-family: Adobe Clean Serif;
     --spectrum-cjk-font-family: Adobe Clean Han;
-    --spectrum-light-font-weight: light;
-    --spectrum-regular-font-weight: regular;
-    --spectrum-medium-font-weight: medium;
-    --spectrum-bold-font-weight: bold;
-    --spectrum-extra-bold-font-weight: extra-bold;
-    --spectrum-black-font-weight: black;
+    --spectrum-light-font-weight: 300;
+    --spectrum-regular-font-weight: 400;
+    --spectrum-medium-font-weight: 500;
+    --spectrum-bold-font-weight: 700;
+    --spectrum-extra-bold-font-weight: 800;
+    --spectrum-black-font-weight: 900;
     --spectrum-italic-font-style: italic;
     --spectrum-default-font-style: normal;
     --spectrum-line-height-100: 1.3;

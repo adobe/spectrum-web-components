@@ -16,4 +16,9 @@ governing permissions and limitations under the License.
 :root {
     --spectrum-colorwheel-path: 'M 94 94 m -94 0 a 94 94 0 1 0 188 0 a 94 94 0 1 0 -188 0.2 M 94 94 m -74 0 a 74 74 0 1 0 148 0 a 74 74 0 1 0 -148 0';
     --spectrum-colorwheel-path-borders: 'M 96 96 m -96 0 a 96 96 0 1 0 192 0 a 96 96 0 1 0 -192 0.2 M 96 96 m -72 0 a 72 72 0 1 0 144 0 a 72 72 0 1 0 -144 0';
+
+    /* TODO: Remove once new tokens for colorhandle and colorloupe are released */
+    --spectrum-color-handle-outer-border-width: 1px;
+    --spectrum-color-handle-size-interim: 16px;
+    --spectrum-color-handle-size-key-focus-interim: 32px;
 }
