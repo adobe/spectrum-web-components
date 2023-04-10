@@ -11,13 +11,10 @@ governing permissions and limitations under the License.
 */
 
 /* This file contains overrides and additions to core tokens */
-:host,
-:root {
-    --system: spectrum;
-}
 
 :host,
 :root {
+    --system: spectrum;
     --spectrum-animation-linear: cubic-bezier(0, 0, 1, 1);
     --spectrum-animation-duration-0: 0ms;
     --spectrum-animation-duration-100: 130ms;
@@ -53,6 +50,12 @@ governing permissions and limitations under the License.
         adobe-clean-han-japanese, sans-serif;
 
     /* static white / black background color for docs containers */
-    --spectrum-docs-static-white-background-color: rgb(15, 121, 125);
-    --spectrum-docs-static-black-background-color: rgb(206, 247, 243);
+    --spectrum-docs-static-white-background-color-rgb: 15, 121, 125;
+    --spectrum-docs-static-white-background-color: rgba(
+        var(--spectrum-docs-static-white-background-color-rgb)
+    );
+    --spectrum-docs-static-black-background-color-rgb: 206, 247, 243;
+    --spectrum-docs-static-black-background-color: rgba(
+        var(--spectrum-docs-static-black-background-color-rgb)
+    );
 }

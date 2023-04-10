@@ -27,8 +27,10 @@ governing permissions and limitations under the License.
     --spectrum-colorwheel-path-borders: 'M 96 96 m -96 0 a 96 96 0 1 0 192 0 a 96 96 0 1 0 -192 0.2 M 96 96 m -72 0 a 72 72 0 1 0 144 0 a 72 72 0 1 0 -144 0';
     --spectrum-colorwheel-colorarea-container-size: 144px;
 
-    /* TODO: --spectrum-color-handle-size will need to be removed here once it's defined in @adobe/spectrum-tokens */
-    --spectrum-color-handle-size: 16px;
+    --spectrum-colorloupe-checkerboard-fill: url(#checkerboard-primary);
+    /* TODO: Remove once new tokens for colorhandle and colorloupe are released */
+    --spectrum-color-handle-size-interim: 16px;
+    --spectrum-color-handle-size-key-focus-interim: 32px;
 
     --spectrum-menu-item-selectable-edge-to-text-not-selected-small: 28px;
     --spectrum-menu-item-selectable-edge-to-text-not-selected-medium: 32px;
