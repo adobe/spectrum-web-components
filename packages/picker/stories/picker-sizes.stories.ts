@@ -22,19 +22,47 @@ export default {
     component: 'sp-picker',
     argTypes: {
         onChange: { action: 'change' },
+        invalid: {
+            name: 'invalid',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
+        loading: {
+            name: 'loading',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
     },
 };
 
 type StoryArgs = {
     onChange: (val: string) => void;
+    invalid: boolean;
+    loading: boolean;
 };
 
 const picker = ({
     onChange,
     size,
+    loading,
+    invalid,
 }: {
     onChange: (val: string) => void;
     size: 's' | 'm' | 'l' | 'xl';
+    loading: boolean;
+    invalid: boolean;
 }): TemplateResult => {
     return html`
         <sp-field-label for="picker-${size}" size=${size}>
@@ -48,6 +76,8 @@ const picker = ({
                 onChange(picker.value);
             }}"
             label="Select a Country with a very long label, too long, in fact"
+            ?loading="${loading}"
+            ?invalid="${invalid}"
         >
             <sp-menu-item>Deselect</sp-menu-item>
             <sp-menu-item>Select Inverse</sp-menu-item>

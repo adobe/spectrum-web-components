@@ -376,12 +376,50 @@ When the `value` of an `<sp-picker>` matches the `value` attribute or the trimme
 </sp-picker>
 <br />
 <br />
-<sp-field-label for="picker-disabled">Quiet:</sp-field-label>
+<sp-field-label for="picker-disabled-quiet">Quiet:</sp-field-label>
 <sp-picker
     label="Select a Country with a very long label, too long in fact"
     disabled
     quiet
     id="picker-disabled-quiet"
+>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+```
+
+### Loading
+
+When given a `loading` attribute, an `<sp-picker>` will be delivered with an `<sp-progress-circle>` to visually outline that it is `loading` and it will not toggle open or display its `<sp-menu-item>` descendants until the attribute is removed.
+
+```html
+<sp-field-label for="picker-loading">Standard:</sp-field-label>
+<sp-picker
+    label="Select a Country with a very long label, too long in fact"
+    loading
+    id="picker-loading"
+>
+    <sp-menu-item>Deselect</sp-menu-item>
+    <sp-menu-item>Select inverse</sp-menu-item>
+    <sp-menu-item>Feather...</sp-menu-item>
+    <sp-menu-item>Select and mask...</sp-menu-item>
+    <sp-menu-divider></sp-menu-divider>
+    <sp-menu-item>Save selection</sp-menu-item>
+    <sp-menu-item disabled>Make work path</sp-menu-item>
+</sp-picker>
+<br />
+<br />
+<sp-field-label for="picker-loading-quiet">Quiet:</sp-field-label>
+<sp-picker
+    label="Select a Country with a very long label, too long in fact"
+    loading
+    quiet
+    id="picker-loading-quiet"
 >
     <sp-menu-item>Deselect</sp-menu-item>
     <sp-menu-item>Select inverse</sp-menu-item>
