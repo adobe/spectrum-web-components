@@ -35,6 +35,41 @@ governing permissions and limitations under the License.
     --spectrum-picker-width: var(--spectrum-global-dimension-size-2400);
 }
 
+:host([loading]) sp-progress-circle {
+    margin-inline-start: var(
+        --mod-picker-spacing-text-to-alert-icon-inline-start,
+        var(--spectrum-picker-spacing-text-to-alert-icon-inline-start)
+    );
+}
+
+:host([size='s']) sp-progress-circle {
+    --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-75);
+    --spectrum-progress-circle-thickness: var(
+        --spectrum-progress-circle-thickness-small
+    );
+}
+
+:host([size='m']) sp-progress-circle {
+    --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-100);
+    --spectrum-progress-circle-thickness: var(
+        --spectrum-progress-circle-thickness-small
+    );
+}
+
+:host([size='l']) sp-progress-circle {
+    --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-200);
+    --spectrum-progress-circle-thickness: var(
+        --spectrum-progress-circle-thickness-medium
+    );
+}
+
+:host([size='xl']) sp-progress-circle {
+    --spectrum-progress-circle-size: var(--spectrum-workflow-icon-size-300);
+    --spectrum-progress-circle-thickness: var(
+        --spectrum-progress-circle-thickness-large
+    );
+}
+
 #button {
     width: 100%;
     min-width: 100%;

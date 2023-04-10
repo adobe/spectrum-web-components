@@ -286,6 +286,13 @@ export function runPickerTests(): void {
             expect(el.invalid).to.be.true;
             await expect(el).to.be.accessible();
         });
+        it('renders loading accessibly', async () => {
+            el.loading = true;
+            await elementUpdated(el);
+
+            expect(el.loading).to.be.true;
+            await expect(el).to.be.accessible();
+        });
         it('renders selection accessibly', async () => {
             el.value = 'option-2';
             await elementUpdated(el);

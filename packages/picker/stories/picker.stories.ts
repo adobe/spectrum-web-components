@@ -58,6 +58,17 @@ export default {
                 type: 'boolean',
             },
         },
+        loading: {
+            name: 'loading',
+            type: { name: 'boolean', required: false },
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
         open: {
             name: 'open',
             type: { name: 'boolean', required: false },
@@ -402,6 +413,29 @@ export const custom = (args: StoryArgs): TemplateResult => {
             <a href="#anchor">link</a>
             .
         </p>
+    `;
+};
+
+export const Loading = (args: StoryArgs): TemplateResult => {
+    return html`
+        <sp-field-label for="picker-loading">
+            Picker in loading state
+        </sp-field-label>
+        <sp-picker
+            id="picker-loading"
+            @change=${handleChange(args)}
+            ${spreadProps(args)}
+            loading
+        >
+            <span slot="label">Loading...</span>
+            <sp-menu-item value="item-1">Deselect</sp-menu-item>
+            <sp-menu-item>Select Inverse</sp-menu-item>
+            <sp-menu-item>Feather...</sp-menu-item>
+            <sp-menu-item>Select and Mask...</sp-menu-item>
+            <sp-menu-divider></sp-menu-divider>
+            <sp-menu-item>Save Selection</sp-menu-item>
+            <sp-menu-item disabled>Make Work Path</sp-menu-item>
+        </sp-picker>
     `;
 };
 

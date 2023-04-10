@@ -43,6 +43,8 @@ import type {
 } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/tray/sp-tray.js';
 import '@spectrum-web-components/popover/sp-popover.js';
+import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+
 import type { Popover } from '@spectrum-web-components/popover';
 import {
     openOverlay,
@@ -104,6 +106,9 @@ export class PickerBase extends SizedMixin(Focusable) {
 
     @property({ type: Boolean, reflect: true })
     public invalid = false;
+
+    @property({ type: Boolean, reflect: true })
+    public loading = false;
 
     @property()
     public label?: string;
@@ -391,6 +396,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             'visually-hidden': this.icons === 'only' && !!this.value,
             placeholder: !this.value,
         };
+
         return [
             html`
                 <span id="icon" ?hidden=${this.icons === 'none'}>
@@ -404,6 +410,15 @@ export class PickerBase extends SizedMixin(Focusable) {
                           <sp-icon-alert
                               class="validation-icon"
                           ></sp-icon-alert>
+                      `
+                    : nothing}
+                ${this.loading
+                    ? html`
+                          <sp-progress-circle
+                              indeterminate
+                              aria-labelledby="label"
+                              aria-hidden="true"
+                          ></sp-progress-circle>
                       `
                     : nothing}
                 <sp-icon-chevron100
@@ -433,7 +448,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                 @blur=${this.onButtonBlur}
                 @click=${this.onButtonClick}
                 @focus=${this.onButtonFocus}
-                ?disabled=${this.disabled}
+                ?disabled=${this.disabled || this.loading}
                 tabindex="-1"
             >
                 ${this.buttonContent}
