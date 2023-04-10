@@ -22,9 +22,8 @@ governing permissions and limitations under the License.
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-.spectrum--light,
-.spectrum--lightest {
+:host,
+:root {
     --spectrum-overlay-opacity: 0.4;
     --spectrum-drop-shadow-color-rgb: 0, 0, 0;
     --spectrum-drop-shadow-color-opacity: 0.15;
