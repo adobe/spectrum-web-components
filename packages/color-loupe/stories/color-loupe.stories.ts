@@ -21,6 +21,9 @@ export default {
 
 export const open = (): TemplateResult => {
     return html`
-        <sp-color-loupe open></sp-color-loupe>
+        <sp-color-loupe
+            open
+            style="inset-block-start:25%;inset-inline-start:50%;"
+        ></sp-color-loupe>
     `;
 };
