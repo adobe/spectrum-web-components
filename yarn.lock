@@ -85,6 +85,14 @@
     semver "^7.3.8"
     slugify "^1.6.5"
 
+"@75lb/deep-merge@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@75lb/deep-merge/-/deep-merge-1.1.1.tgz#3b06155b90d34f5f8cc2107d796f1853ba02fd6d"
+  integrity sha512-xvgv6pkMGBA6GwdyJbNAnDmfAIR/DfWhrj9jgWh3TY7gRm3KO46x/GPjRg6wJ0nOepwqrNxFfojebh0Df4h4Tw==
+  dependencies:
+    lodash.assignwith "^4.2.0"
+    typical "^7.1.1"
+
 "@adobe/spectrum-css-workflow-icons@^1.5.4":
   version "1.5.4"
   resolved "https://registry.yarnpkg.com/@adobe/spectrum-css-workflow-icons/-/spectrum-css-workflow-icons-1.5.4.tgz#0e09ff519c36139176c3ba3ce617a995c9032f67"
@@ -5589,13 +5597,25 @@
   dependencies:
     "@web/dev-server-core" "^0.3.0"
 
-"@web/dev-server-rollup@^0.3.19", "@web/dev-server-rollup@^0.3.21":
+"@web/dev-server-rollup@^0.3.21":
   version "0.3.21"
   resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.3.21.tgz#edeecc599970fcc03f6a53fd7c5fdaf01178e88a"
   integrity sha512-138t+vMFkegRip6Rtlz68Bo5rl984C9c2rLg3dWl9JEEJSQcWgA3iEwXYh4xTc52WjXnM3/LpboAjTYQOMyfrA==
   dependencies:
     "@rollup/plugin-node-resolve" "^13.0.4"
     "@web/dev-server-core" "^0.3.19"
+    nanocolors "^0.2.1"
+    parse5 "^6.0.1"
+    rollup "^2.67.0"
+    whatwg-url "^11.0.0"
+
+"@web/dev-server-rollup@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@web/dev-server-rollup/-/dev-server-rollup-0.4.1.tgz#3c6606bac8e497498b5b47bf9e0c544c321b38ef"
+  integrity sha512-Ebsv7Ovd9MufeH3exvikBJ7GmrZA5OmHnOgaiHcwMJ2eQBJA5/I+/CbRjsLX97ICj/ZwZG//p2ITRz8W3UfSqg==
+  dependencies:
+    "@rollup/plugin-node-resolve" "^13.0.4"
+    "@web/dev-server-core" "^0.4.1"
     nanocolors "^0.2.1"
     parse5 "^6.0.1"
     rollup "^2.67.0"
@@ -5626,18 +5646,18 @@
     storybook-addon-markdown-docs "^1.0.4"
 
 "@web/dev-server@^0.1.35":
-  version "0.1.35"
-  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.35.tgz#d845822d7c3c7749adf03f7abac4a69e2a4490cc"
-  integrity sha512-E7TSTSFdGPzhkiE3kIVt8i49gsiAYpJIZHzs1vJmVfdt8U4rsmhE+5roezxZo0hkEw4mNsqj9zCc4Dzqy/IFHg==
+  version "0.1.38"
+  resolved "https://registry.yarnpkg.com/@web/dev-server/-/dev-server-0.1.38.tgz#d755092d66aeb923c546237a6c460439ea3ddd29"
+  integrity sha512-WUq7Zi8KeJ5/UZmmpZ+kzUpUlFlMP/rcreJKYg9Lxiz998KYl4G5Rv24akX0piTuqXG7r6h+zszg8V/hdzjCoA==
   dependencies:
     "@babel/code-frame" "^7.12.11"
     "@types/command-line-args" "^5.0.0"
     "@web/config-loader" "^0.1.3"
-    "@web/dev-server-core" "^0.3.19"
-    "@web/dev-server-rollup" "^0.3.19"
+    "@web/dev-server-core" "^0.4.1"
+    "@web/dev-server-rollup" "^0.4.1"
     camelcase "^6.2.0"
     command-line-args "^5.1.1"
-    command-line-usage "^6.1.1"
+    command-line-usage "^7.0.1"
     debounce "^1.2.0"
     deepmerge "^4.2.2"
     ip "^1.1.5"
@@ -6483,6 +6503,11 @@ array-back@^6.1.2, array-back@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/array-back/-/array-back-6.2.0.tgz#83cc80fbef5a46269b1f6ecc82011cfc19cf1c1e"
   integrity sha512-mixVv03GOOn/ubHE4STQ+uevX42ETdk0JoMVEjNkSOCT7WgERh7C8/+NyhWYNpE3BN69pxFyJIBcF7CxWz/+4A==
+
+array-back@^6.2.2:
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/array-back/-/array-back-6.2.2.tgz#f567d99e9af88a6d3d2f9dfcc21db6f9ba9fd157"
+  integrity sha512-gUAZ7HPyb4SJczXAMUXMGAvI976JoK3qEx9v1FTmeYuJj0IBiaKttG1ydtGKdkfqWkIkouke7nG8ufGy77+Cvw==
 
 array-differ@^1.0.0:
   version "1.0.0"
@@ -7475,6 +7500,13 @@ chai-a11y-axe@^1.3.2:
   dependencies:
     axe-core "^4.3.3"
 
+chalk-template@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/chalk-template/-/chalk-template-0.4.0.tgz#692c034d0ed62436b9062c1707fadcd0f753204b"
+  integrity sha512-/ghrgmhfY8RaSdeo43hNXxpoHAtxdbskUHjPpfqUWGttFgycUhYPGx3YZBCnUCvOa7Doivn1IZec3DEGFoMgLg==
+  dependencies:
+    chalk "^4.1.2"
+
 chalk@^1.0.0, chalk@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-1.1.3.tgz#a8115c55e4a702fe4d150abd3872822a7e09fc98"
@@ -8055,10 +8087,10 @@ command-line-args@5.1.2:
     lodash.camelcase "^4.3.0"
     typical "^4.0.0"
 
-command-line-args@^5.0.2, command-line-args@^5.1.1:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/command-line-args/-/command-line-args-5.2.0.tgz#087b02748272169741f1fd7c785b295df079b9be"
-  integrity sha512-4zqtU1hYsSJzcJBOcNZIbW5Fbk9BkjCp1pZVhQKoRaWL5J7N4XphDLwo8aWwdQpTugxwu+jf9u2ZhkXiqp5Z6A==
+command-line-args@^5.0.2, command-line-args@^5.1.1, command-line-args@^5.2.1:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/command-line-args/-/command-line-args-5.2.1.tgz#c44c32e437a57d7c51157696893c5909e9cec42e"
+  integrity sha512-H4UfQhZyakIjC74I9d34fGYDwk3XpSr17QhEd0Q3I9Xq1CETHo4Hcuo87WyWHpAF1aSLjLRf5lD9ZGX2qStUvg==
   dependencies:
     array-back "^3.1.0"
     find-replace "^3.0.0"
@@ -8074,6 +8106,16 @@ command-line-usage@^6.1.0, command-line-usage@^6.1.1:
     chalk "^2.4.2"
     table-layout "^1.0.1"
     typical "^5.2.0"
+
+command-line-usage@^7.0.0, command-line-usage@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/command-line-usage/-/command-line-usage-7.0.1.tgz#e540afef4a4f3bc501b124ffde33956309100655"
+  integrity sha512-NCyznE//MuTjwi3y84QVUGEOT+P5oto1e1Pk/jFPVdPPfsG03qpTIl3yw6etR+v73d0lXsoojRpvbru2sqePxQ==
+  dependencies:
+    array-back "^6.2.2"
+    chalk-template "^0.4.0"
+    table-layout "^3.0.0"
+    typical "^7.1.1"
 
 commander@^10.0.0:
   version "10.0.0"
@@ -14553,6 +14595,11 @@ lodash-es@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
   integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
+
+lodash.assignwith@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.assignwith/-/lodash.assignwith-4.2.0.tgz#127a97f02adc41751a954d24b0de17e100e038eb"
+  integrity sha512-ZznplvbvtjK2gMvnQ1BR/zqPFZmS6jbK4p+6Up4xcRYA7yMIwxHCfbTcrYxXKzzqLsQ05eJPVznEW3tuwV7k1g==
 
 lodash.camelcase@^4.3.0:
   version "4.3.0"
@@ -21331,6 +21378,11 @@ stream-combiner@~0.0.4:
   dependencies:
     duplexer "~0.1.1"
 
+stream-read-all@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/stream-read-all/-/stream-read-all-3.0.1.tgz#60762ae45e61d93ba0978cda7f3913790052ad96"
+  integrity sha512-EWZT9XOceBPlVJRrYcykW8jyRSZYbkb/0ZK36uLEmoWVO5gxBOnntNTseNzfREsqxqdfEGQrD8SXQ3QWbBmq8A==
+
 stream-shift@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/stream-shift/-/stream-shift-1.0.1.tgz#d7088281559ab2778424279b0877da3c392d5a3d"
@@ -21812,6 +21864,19 @@ table-layout@^1.0.1:
     deep-extend "~0.6.0"
     typical "^5.2.0"
     wordwrapjs "^4.0.0"
+
+table-layout@^3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/table-layout/-/table-layout-3.0.2.tgz#69c2be44388a5139b48c59cf21e73b488021769a"
+  integrity sha512-rpyNZYRw+/C+dYkcQ3Pr+rLxW4CfHpXjPDnG7lYhdRoUcZTUt+KEsX+94RGp/aVp/MQU35JCITv2T/beY4m+hw==
+  dependencies:
+    "@75lb/deep-merge" "^1.1.1"
+    array-back "^6.2.2"
+    command-line-args "^5.2.1"
+    command-line-usage "^7.0.0"
+    stream-read-all "^3.0.1"
+    typical "^7.1.1"
+    wordwrapjs "^5.1.0"
 
 table@^6.0.7, table@^6.8.0:
   version "6.8.0"
@@ -22506,6 +22571,11 @@ typical@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/typical/-/typical-5.2.0.tgz#4daaac4f2b5315460804f0acf6cb69c52bb93066"
   integrity sha512-dvdQgNDNJo+8B2uBQoqdb11eUCE1JQXhvjC/CZtgvZseVd5TYMXnq0+vuUemXbd/Se29cTaUuPX3YIc2xgbvIg==
+
+typical@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/typical/-/typical-7.1.1.tgz#ba177ab7ab103b78534463ffa4c0c9754523ac1f"
+  integrity sha512-T+tKVNs6Wu7IWiAce5BgMd7OZfNYUndHwc5MknN+UHOudi7sGZzuHdCadllRuqJ3fPtgFtIH9+lt9qRv6lmpfA==
 
 ua-parser-js@^1.0.2:
   version "1.0.33"
@@ -23709,6 +23779,11 @@ wordwrapjs@^4.0.0:
   dependencies:
     reduce-flatten "^2.0.0"
     typical "^5.2.0"
+
+wordwrapjs@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/wordwrapjs/-/wordwrapjs-5.1.0.tgz#4c4d20446dcc670b14fa115ef4f8fd9947af2b3a"
+  integrity sha512-JNjcULU2e4KJwUNv6CHgI46UvDGitb6dGryHajXTDiLgg1/RiGoPSDw4kZfYnwGtEXf2ZMeIewDQgFGzkCB2Sg==
 
 workbox-background-sync@6.5.4:
   version "6.5.4"
