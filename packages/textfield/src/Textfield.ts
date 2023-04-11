@@ -68,6 +68,9 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
     @property({ attribute: 'type', reflect: true })
     private _type: TextfieldType = 'text';
 
+    @property({ type: String, reflect: true })
+    public override title = '';
+
     @state()
     get type(): TextfieldType {
         return textfieldTypes.find((t) => t === this._type) ?? 'text';
@@ -227,6 +230,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
                 aria-describedby=${this.helpTextId}
                 aria-label=${this.label || this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
+                title=${ifDefined(this.title || undefined)}
                 class="input"
                 maxlength=${ifDefined(
                     this.maxlength > -1 ? this.maxlength : undefined
@@ -257,6 +261,7 @@ export class TextfieldBase extends ManageHelpText(Focusable) {
                 aria-describedby=${this.helpTextId}
                 aria-label=${this.label || this.placeholder}
                 aria-invalid=${ifDefined(this.invalid || undefined)}
+                title=${ifDefined(this.title || undefined)}
                 class="input"
                 maxlength=${ifDefined(
                     this.maxlength > -1 ? this.maxlength : undefined

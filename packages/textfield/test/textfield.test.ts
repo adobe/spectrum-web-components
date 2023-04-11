@@ -512,6 +512,51 @@ describe('Textfield', () => {
             : null;
         expect(input).to.not.be.null;
     });
+    it('invalid - boundary-type assertions and title', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    placeholder="Enter your number"
+                    type="url"
+                    value="invalid-email"
+                    invalid="true"
+                    title="Input a valid email address"
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('#invalid')
+            : null;
+        expect(input).to.not.be.null;
+        expect(el.shadowRoot.querySelector('input')).to.have.attribute('title');
+    });
+    it('invalid - multiline - boundary-type assertions and title', async () => {
+        const el = await litFixture<Textfield>(
+            html`
+                <sp-textfield
+                    multiline
+                    placeholder="Enter your number"
+                    type="url"
+                    value="invalid-email"
+                    invalid="true"
+                    title="Input a valid email address"
+                ></sp-textfield>
+            `
+        );
+        await elementUpdated(el);
+
+        expect(el).to.not.equal(undefined);
+        const input = el.shadowRoot
+            ? el.shadowRoot.querySelector('#invalid')
+            : null;
+        expect(input).to.not.be.null;
+        expect(el.shadowRoot.querySelector('textarea')).to.have.attribute(
+            'title'
+        );
+    });
     it('receives focus', async () => {
         let activeElement: HTMLInputElement | null = null;
         const onFocusIn = (event: Event): void => {

@@ -41,6 +41,7 @@ export const Default = (): TemplateResult => {
             placeholder="Enter your name"
             pattern="[\\d]*"
             value="Not a valid input"
+            title="Input must match the following pattern..."
         ></sp-textfield>
         <sp-textfield
             placeholder="Enter your name"
