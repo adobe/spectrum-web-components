@@ -71,7 +71,7 @@ export default App;
 
 ### Theming
 
-To ensure that Spectrum Web Components render correctly in your application, all component usages must be wrapped inside a special sp-theme element. The corresponding swc-react wrapper component is @swc-react/theme, and the wrapper component name is Theme. The Theme component acts like a React Context component. Here's a complete code example:
+To ensure that Spectrum Web Components render correctly in your application, all component usages must be wrapped inside a special `sp-theme` customer element. The corresponding swc-react wrapper component is `@swc-react/theme`, and the wrapper component name is Theme. The Theme component acts like a React Context component. Here's a complete code example:
 
 ```jsx
 import React from "react";
@@ -97,7 +97,7 @@ Please note that you'll need to import the appropriate theme and scale styles fo
 
 ### Event Handling and Type Definitions
 
-For TypeScript projects, each react wrapper component re-exports the underlying SWC component's type definition as ${component-name}Type. For instance, the @swc-react/button component re-exports its type definition as ButtonType. This approach encourages the use of strongly-typed event targets. Here's a code example:
+For TypeScript projects, each react wrapper component re-exports the underlying SWC component's type definition as `${component-name}Type`. For instance, the @swc-react/button component re-exports its type definition as ButtonType. This approach encourages the use of strongly-typed event targets. Here's a code example:
 
 ```jsx
 import { MouseEvent, useEffect, useRef, useState } from 'react';
@@ -151,7 +151,7 @@ Every time there is a successful release of the SWC library, it automatically tr
 
 **4. How can I view the source of swc-react wrappers?**
 
-To view the source of swc-react wrappers, first set up your local development environment for the spectrum-web-components repo. Then, run yarn build:react. Afterward, you can find all the wrapper components in the ./react folder.
+To view the source of swc-react wrappers, first set up your local development environment for the spectrum-web-components repo. Then, run `yarn build:react`. Afterward, you can find all the wrapper components in the ./react folder.
 
 **5. Is the @lit-labs/react library stable enough for production use, considering it's still a lab project?**
 
