@@ -4302,10 +4302,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-3.0.34.tgz#3ff928d4a8af95011d436adf90554aa3e7308dd6"
   integrity sha512-ST+fs8VZsPpX9g/aiUWXahCINNIzjt+AMiK8Bjkgyz3vz5QGnhHhf2bALYaEWdODzY/ZfNZqEBxZdgLVe6PvFQ==
 
-"@spectrum-css/expressvars@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/expressvars/-/expressvars-2.0.3.tgz#4acb66a00c32ee4980ef052372bcde35e7245cbe"
-  integrity sha512-L/B6eS7GtWjtpkoczN9jOzJHXBq3Gnu5QEWl0teZ8eB3RQ2uqNxfNT5Cr5ima++rpTOs1EBevBRWzShrdLGo3g==
+"@spectrum-css/expressvars@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/expressvars/-/expressvars-3.0.0.tgz#ee670a826f0f60f54d77f78033e074ef9b3fd030"
+  integrity sha512-GApWglNogsRMHnYbK9EsU5kh1OgCNZgIv8DV3aiDib7OYq4jBWZSodwwsER2DrT4rErR72QfCJEO4Mu7JRFohg==
 
 "@spectrum-css/fieldgroup@^4.0.13":
   version "4.0.13"
