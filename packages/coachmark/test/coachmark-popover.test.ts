@@ -50,8 +50,8 @@ function template(open = false): TemplateResult {
 }
 
 describe('Coachmark Popover', () => {
-    testForLitDevWarnings(
-        async () => await fixture<CoachmarkPopover>(template(true))
+    testForLitDevWarnings(async () =>
+        fixture<CoachmarkPopover>(template(true))
     );
 
     it('loads default coachmark popover accessibly', async () => {

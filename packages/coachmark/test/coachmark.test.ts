@@ -14,7 +14,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import { Coachmark } from '@spectrum-web-components/coachmark';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Coachmark', () => {
     testForLitDevWarnings(
