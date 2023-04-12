@@ -4286,9 +4286,9 @@
   integrity sha512-o3hHzO4LHDS/QRe42PJecgO7YLhK0buxBt9Ky1XZWXrhTzSTJezyF0PKaSOyPJa6OaS9YprWt+nnv1NIBzfg4Q==
 
 "@spectrum-css/colorwheel@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-2.0.0.tgz#a50ece1cd010a20bb5aece8bf824b05ddb8a2622"
-  integrity sha512-V62K5pbCJrypMIO4LSg8osHopTdU54qhaAQ4tRd7kmbQObfQ9aL8VXOoen5U88OAilhnjtULaHW8SUlr2aG9pg==
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorwheel/-/colorwheel-2.0.9.tgz#a802b7880e8bd7b127170c9b04f4351c60009a52"
+  integrity sha512-KErtnfSi7sj+sG2OvPZocE5CQJSuZXZWIhfB8N24eCbL4RPxLQv4H+6AbPLQFx9OlP1pY8Gk6Q1bQX57SDWVgA==
 
 "@spectrum-css/commons@^4.0.2":
   version "4.0.2"

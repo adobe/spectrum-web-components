@@ -14,15 +14,6 @@ governing permissions and limitations under the License.
 
 :host {
     touch-action: none;
-
-    --track-width: var(
-        --mod-colorwheel-track-width,
-        var(--spectrum-colorwheel-track-width)
-    );
-    --border-width: var(
-        --mod-colorwheel-border-width,
-        var(--spectrum-colorwheel-border-width)
-    );
 }
 
 :host(:focus) {
