@@ -41,6 +41,14 @@ governing permissions and limitations under the License.
     }
 }
 :host {
+    --track-width: var(
+        --mod-colorwheel-track-width,
+        var(--spectrum-colorwheel-track-width)
+    );
+    --border-width: var(
+        --mod-colorwheel-border-width,
+        var(--spectrum-colorwheel-border-width)
+    );
     block-size: var(--mod-colorwheel-height, var(--spectrum-colorwheel-height));
     cursor: default;
     display: block;
@@ -141,14 +149,6 @@ governing permissions and limitations under the License.
     );
 }
 .wheel {
-    --track-width: var(
-        --mod-colorwheel-track-width,
-        var(--spectrum-colorwheel-track-width)
-    );
-    --border-width: var(
-        --mod-colorwheel-border-width,
-        var(--spectrum-colorwheel-border-width)
-    );
     background: conic-gradient(
         from 90deg,
         red,
