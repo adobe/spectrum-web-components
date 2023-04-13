@@ -71,9 +71,11 @@ const rule = createPlugin(
             // Walk comments on root to find if header exists
             let found = false;
             root.walkComments((comment, _idx) => {
+                // Remove any asterisks and whitespace from the texts before comparing
+                const clean = (text) => text.replace(/(\*|\n|\s)/g, '').trim();
                 // If the two strings are at least 98% alike, it's a match
                 if (
-                    compareTwoStrings(comment.text, header) >=
+                    compareTwoStrings(clean(comment.text), clean(header)) >=
                     nonMatchingTolerance
                 ) {
                     found = true;

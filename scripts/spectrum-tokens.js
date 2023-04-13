@@ -29,6 +29,7 @@ const tokensRoot = path.join(
     '*.css'
 );
 
+/** @todo Could generate this from CSS packages that have @spectrum-css/tokens as a dependency */
 const tokenPackages = [
     'actionbutton',
     'avatar',
@@ -72,27 +73,23 @@ const packagePaths = tokenPackages.map((packageName) => {
 });
 
 const targetHost = (css) => {
-    css = css.replaceAll(/.spectrum {/g, ':host, :root {');
-    css = css.replaceAll(/.spectrum--express {/g, ':host, :root {');
-    css = css.replaceAll(
-        /^.spectrum--light, .spectrum--lightest {/g,
-        ':host, :root {'
-    );
-    css = css.replaceAll(/.spectrum--dark {/g, ':host, :root {');
-    css = css.replaceAll(/.spectrum--darkest {/g, ':host, :root {');
-    css = css.replaceAll(/.spectrum--darkest {/g, ':host, :root {');
-    css = css.replaceAll(
-        /.spectrum--express.spectrum--medium {/g,
-        ':host, :root {'
-    );
-    css = css.replaceAll(
-        /.spectrum--express.spectrum--large {/g,
-        ':host, :root {'
-    );
-    css = css.replaceAll(/.spectrum--medium {/g, ':host, :root {');
-    css = css.replaceAll(/.spectrum--large {/g, ':host, :root {');
+    /** @note Could use this regex to more permissive of class names */
+    // return css.replaceAll(/(?:\.spectrum(--[a-z]+,?(\n|\s)*)?)+ \{/g, ':host,\n:root {');
 
-    return css;
+    /**
+     * @note ...Or this to lock down expected class names
+     *
+     * A few helpful regex hints:
+     *   (?:...) - non-capturing group
+     *   \s - whitespace
+     *   \n - newline
+     *   (...)? - 0 or 1
+     *   \g - global
+     **/
+    return css.replaceAll(
+        /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large)?,?(\n|\s)*)?)+ \{/g,
+        ':host,\n:root {'
+    );
 };
 
 const processTokens = (srcPath) => {
