@@ -357,7 +357,10 @@ export class Slider extends ObserveSlotText(SliderHandle, '') {
                 ${streamingListener({
                     start: ['pointerdown', this.handlePointerdown],
                     streamInside: ['pointermove', this.handlePointermove],
-                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                    end: [
+                        ['pointerup', 'pointercancel', 'pointerleave'],
+                        this.handlePointerup,
+                    ],
                 })}
             >
                 <div id="controls">

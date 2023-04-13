@@ -547,7 +547,11 @@ export class NumberField extends TextfieldBase {
                                   this.handlePointermove,
                               ],
                               end: [
-                                  ['pointerup', 'pointercancel'],
+                                  [
+                                      'pointerup',
+                                      'pointercancel',
+                                      'pointerleave',
+                                  ],
                                   this.handlePointerup,
                               ],
                           })}
