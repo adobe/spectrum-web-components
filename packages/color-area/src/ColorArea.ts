@@ -407,7 +407,10 @@ export class ColorArea extends SpectrumElement {
                 ${streamingListener({
                     start: ['pointerdown', this.handlePointerdown],
                     streamInside: ['pointermove', this.handlePointermove],
-                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                    end: [
+                        ['pointerup', 'pointercancel', 'pointerleave'],
+                        this.handlePointerup,
+                    ],
                 })}
             ></sp-color-handle>
 
