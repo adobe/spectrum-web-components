@@ -162,7 +162,7 @@ const config = {
                     find: [
                         // this doesn't work quite right
                         builder.class('spectrum-Menu'),
-                        builder.combinator('descendent'),
+                        builder.combinator('descendant'),
                         builder.class('spectrum-Menu-divider'),
                         // builder.combinator(' '),
                     ],
