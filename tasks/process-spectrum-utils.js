@@ -40,6 +40,7 @@ export const builder = {
         const component =
             /** @type {import('lightningcss').SelectorComponent} */ ({
                 type: 'attribute',
+                namespace: null,
                 name,
             });
         if (value) {
@@ -47,6 +48,8 @@ export const builder = {
             component.operation = {
                 operator,
                 value,
+                caseSensitivity:
+                    'ascii-case-insensitive-if-in-html-element-in-html-document',
             };
         }
         return component;
