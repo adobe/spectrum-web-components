@@ -83,6 +83,10 @@ type Conversion = {
      * the Rule to point to `:host`
      */
     hoistCustomPropertiesFrom?: string;
+    /**
+     * Selectors exactly matching the array of Selector Components present will be included
+     */
+    includeByWholeSelector?: SelectorComponentWithRegex[][];
     inPackage: string;
     outPackage: string | string[];
     /**

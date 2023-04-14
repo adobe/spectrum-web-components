@@ -29,13 +29,16 @@ const root = path.resolve(__dirname, '../');
 
 const require = createRequire(import.meta.url);
 
+/**
+ * @to-do: normalize deep comparison old vs new usage when recursing.
+ */
 const compareSelectors = (oldSelector, newSelector) => {
     let matches = true;
     if (Array.isArray(oldSelector)) {
         oldSelector.forEach((value, index) => {
             matches = compareSelectors(newSelector[index], value) && matches;
         });
-    } else if (typeof oldSelector === 'object') {
+    } else if (typeof oldSelector === 'object' && oldSelector !== null) {
         Object.entries(oldSelector).forEach(([key, value]) => {
             matches = compareSelectors(newSelector[key], value) && matches;
         });
@@ -533,6 +536,32 @@ async function processComponent(componentPath) {
                                     }
                                 }
                             );
+                            if (!include) {
+                                conversion.includeByWholeSelector?.forEach(
+                                    (inclusion) => {
+                                        const sameLength =
+                                            inclusion.length ===
+                                            selector.length;
+                                        if (!sameLength) {
+                                            return;
+                                        }
+                                        const selectorSameAsComponent =
+                                            inclusion.every(
+                                                (component, inclusionIndex) =>
+                                                    compareSelectors(
+                                                        selector[
+                                                            inclusionIndex
+                                                        ],
+                                                        component
+                                                    )
+                                            );
+                                        include =
+                                            include ||
+                                            (sameLength &&
+                                                selectorSameAsComponent);
+                                    }
+                                );
+                            }
                             if (include) {
                                 nextSelectors.push(selector);
                             }

@@ -14,7 +14,7 @@ governing permissions and limitations under the License.
 :host {
     margin: calc(var(--spectrum-listitem-texticon-divider-padding) / 2)
         var(--spectrum-listitem-texticon-padding-y);
-    overflow: visible; /* .spectrum-Menu .spectrum-Menu-divider */
+    overflow: visible;
     width: auto;
 }
 @media (forced-colors: active) {
