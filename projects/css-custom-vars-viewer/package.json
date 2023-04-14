@@ -43,7 +43,7 @@
         "@spectrum-web-components/table": "^0.1.13",
         "@spectrum-web-components/theme": "^0.14.14",
         "@spectrum-web-components/toast": "^0.11.15",
-        "@web/dev-server-rollup": "^0.3.21",
+        "@web/dev-server-rollup": "^0.4.1",
         "lit": "^2.5.0"
     },
     "devDependencies": {
@@ -52,9 +52,9 @@
         "@open-wc/testing": "^3.1.7",
         "@typescript-eslint/eslint-plugin": "^5.35.0",
         "@typescript-eslint/parser": "^5.35.0",
-        "@web/dev-server": "^0.1.35",
-        "@web/dev-server-storybook": "^0.6.0",
-        "@web/test-runner": "^0.15.0",
+        "@web/dev-server": "^0.1.38",
+        "@web/dev-server-storybook": "^0.6.2",
+        "@web/test-runner": "^0.15.3",
         "concurrently": "^5.3.0",
         "tslib": "^2.3.1",
         "typescript": "^4.7.2"
