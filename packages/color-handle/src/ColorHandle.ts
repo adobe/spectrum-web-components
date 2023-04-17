@@ -56,7 +56,7 @@ export class ColorHandle extends SpectrumElement {
 
     protected override render(): TemplateResult {
         return html`
-            <div class="color" style="background-color: ${this.color}"></div>
+            <div class="inner" style="background-color: ${this.color}"></div>
             <sp-color-loupe
                 color=${this.color}
                 ?open=${this.open && !this.disabled}

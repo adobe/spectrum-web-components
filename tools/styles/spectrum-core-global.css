@@ -1832,12 +1832,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-ui-icon-asterisk-size-100: var(
         --spectrum-global-dimension-size-100
     );
-    --spectrum-alias-transparent-blue-background-color-hover: rgba(
-        0,
-        87,
-        190,
-        0.15
-    );
     --spectrum-alias-transparent-blue-background-color-down: rgba(
         0,
         72,
@@ -2677,17 +2671,6 @@ governing permissions and limitations under the License.
 }
 :host,
 :root {
-    --spectrum-colorhandle-background-offset: calc(
-        var(--spectrum-global-dimension-static-size-25) * -1
-    );
-    --spectrum-colorhandle-inner-shadow-color: var(
-        --spectrum-colorhandle-outer-shadow-color
-    );
-    --spectrum-colorhandle-outer-shadow-color: rgba(0, 0, 0, 0.42);
-    --spectrum-colorhandle-outer-shadow-blur: 0;
-    --spectrum-colorhandle-outer-shadow-spread: var(
-        --spectrum-alias-border-size-thin
-    );
     --spectrum-colorcontrol-checkerboard-light-color: var(
         --spectrum-global-color-static-white
     );
