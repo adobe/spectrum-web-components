@@ -1688,12 +1688,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-search-padding-left-xl: var(
         --spectrum-global-dimension-size-225
     );
-    --spectrum-alias-colorloupe-width: var(
-        --spectrum-global-dimension-static-size-450
-    );
-    --spectrum-alias-colorloupe-height: var(
-        --spectrum-global-dimension-static-size-550
-    );
     --spectrum-alias-search-border-radius-quiet: 0;
     --spectrum-alias-percent-50: 50%;
     --spectrum-alias-percent-70: 70%;
@@ -2687,12 +2681,6 @@ governing permissions and limitations under the License.
 }
 :host,
 :root {
-    --spectrum-colorloupe-express-visibility: block;
-    --spectrum-colorloupe-spectrum-visibility: none;
-    --spectrum-colorloupe-outer-border-color: transparent;
-    --spectrum-colorloupe-outer-border-size: 0;
-    --spectrum-colorloupe-outer-stroke-color: rgba(0, 0, 0, 0.15);
-    --spectrum-colorloupe-outer-stroke-width: 6px;
     --spectrum-colorhandle-size: var(--spectrum-global-dimension-size-250);
     --spectrum-colorhandle-background-offset: 0px;
     --spectrum-colorhandle-inner-shadow-color: rgba(0, 0, 0, 0.15);

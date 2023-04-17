@@ -58,6 +58,7 @@ const tokenPackages = [
     'picker',
     'colorarea',
     'colorwheel',
+    'colorloupe',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
