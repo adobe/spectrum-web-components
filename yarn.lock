@@ -4284,10 +4284,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/colorarea/-/colorarea-3.0.0.tgz#817f0371b032c2c6b2e8d87d5f7b400854f5d434"
   integrity sha512-4mUzpf6yU7W6WgmnNWGNXrzknz76HtRY2+1BwlijoclxyGID28QdfkfsSuaIm6f2fNWu6+XAQ4fSTImeZLa0jw==
 
-"@spectrum-css/colorhandle@^4.0.0-beta.1":
-  version "4.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorhandle/-/colorhandle-4.0.0-beta.1.tgz#6c5c3f537ffd91a1918078959c5327e8abbc7146"
-  integrity sha512-LiKfxBaIoozp0TD182LCEKH2Wg6A4AywsW0RVuwIfaTV7FksJuPbg8A/a/Vl/aWvAMqSUxee6zPMCe6dHgQ4+A==
+"@spectrum-css/colorhandle@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorhandle/-/colorhandle-4.0.0.tgz#d214ff0cfbef9b9f44283fd11143923790c348ad"
+  integrity sha512-DQuJOEGYj7j7tJIyTmssub/RkMOwtFEtlLmMdVAZlTFZX3k/DIT/m8m5j9ZRDB3rvyj1f609rAE0khXLyNgjmg==
 
 "@spectrum-css/colorloupe@^3.0.0":
   version "3.0.0"

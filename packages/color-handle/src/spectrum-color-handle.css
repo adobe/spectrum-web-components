@@ -194,7 +194,6 @@ governing permissions and limitations under the License.
     position: absolute;
 }
 :host(.focus-visible),
-:host(:focus),
 :host([focused]) {
     block-size: var(
         --mod-colorhandle-focused-size,
@@ -212,7 +211,6 @@ governing permissions and limitations under the License.
     );
     outline: none;
 }
-:host(:focus),
 :host(:focus-visible),
 :host([focused]) {
     block-size: var(
@@ -249,10 +247,10 @@ governing permissions and limitations under the License.
     box-shadow: none;
     pointer-events: none;
 }
-:host([disabled]) .spectrum-ColorHandle-inner {
+:host([disabled]) .inner {
     display: none;
 }
-.spectrum-ColorHandle-inner {
+.inner {
     background-color: var(--spectrum-picked-color);
     block-size: 100%;
     border-radius: 100%;

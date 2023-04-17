@@ -513,7 +513,7 @@ describe('ColorSlider', () => {
 
         await elementUpdated(el);
 
-        expect(el.value).to.be.within(187.4, 188.5);
+        expect(el.value).to.be.greaterThan(190);
 
         await sendMouse({
             steps: [

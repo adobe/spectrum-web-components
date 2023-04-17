@@ -2681,14 +2681,6 @@ governing permissions and limitations under the License.
 }
 :host,
 :root {
-    --spectrum-colorhandle-size: var(--spectrum-global-dimension-size-250);
-    --spectrum-colorhandle-background-offset: 0px;
-    --spectrum-colorhandle-inner-shadow-color: rgba(0, 0, 0, 0.15);
-    --spectrum-colorhandle-outer-shadow-color: rgba(0, 0, 0, 0.3);
-    --spectrum-colorhandle-outer-shadow-blur: var(
-        --spectrum-global-dimension-static-size-50
-    );
-    --spectrum-colorhandle-outer-shadow-spread: 0;
     --spectrum-colorslider-height: var(--spectrum-global-dimension-size-200);
     --spectrum-colorslider-vertical-width: var(--spectrum-colorslider-height);
     --spectrum-colorslider-border-radius: var(
