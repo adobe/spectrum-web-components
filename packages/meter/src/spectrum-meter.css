@@ -283,7 +283,7 @@ governing permissions and limitations under the License.
 :host([static='white']) .label,
 :host([static='white']) .percentage {
     color: var(
-        --mode-progressbar-label-and-value-white,
+        --mod-progressbar-label-and-value-white,
         var(--spectrum-progressbar-label-and-value-white)
     );
 }

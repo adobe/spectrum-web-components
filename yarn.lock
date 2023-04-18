@@ -4385,9 +4385,9 @@
   integrity sha512-MpdlGjj6Y03l65UUiww8ulc6t6xImQFsIAqzDIuvtH+8BPEM4IbizJFGa6LEEvkMhHiwRF1s94LDg3d+q3ZmvA==
 
 "@spectrum-css/progressbar@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-3.0.1.tgz#4172f19a21a8104ba968b6ebe6075dfc16c775ce"
-  integrity sha512-VT8y4L7yTyKjAJrgCZGTdWaFDvyopgWAkMadNl1nALdaAar5fh1Pu+LGL3vWdP45oWfo7jwhTOpDRO2qanH56g==
+  version "3.0.20"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/progressbar/-/progressbar-3.0.20.tgz#7acc02ddc53f0172c5cbdef4185c0f533b550d9e"
+  integrity sha512-yNsZoBtw7n0KKzGHZKS4z+o6NDohTPCr2YT8wGAmTPHLJRkcgbSKMDJYj0be9Fgpaoe1EjZBm7P6JGLDAEs88w==
 
 "@spectrum-css/progresscircle@^2.0.10":
   version "2.0.10"
