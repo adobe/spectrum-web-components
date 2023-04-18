@@ -65,7 +65,7 @@ governing permissions and limitations under the License.
  */
 
 :host([dragged]) ::slotted(*) {
-    --spectrum-global-color-gray-500: var(
+    --mod-illustrated-message-illustration-color: var(
         --spectrum-dropzone-illustration-color
     );
 }
