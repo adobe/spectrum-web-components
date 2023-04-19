@@ -1625,9 +1625,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-combobox-quiet-button-offset-x: var(
         --spectrum-global-dimension-size-100
     );
-    --spectrum-alias-thumbnail-border-radius-small: var(
-        --spectrum-global-dimension-size-25
-    );
     --spectrum-alias-search-padding-left-s: var(
         --spectrum-global-dimension-size-85
     );
@@ -2547,12 +2544,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-track-color-disabled: var(
         --spectrum-global-color-gray-300
-    );
-    --spectrum-alias-thumbnail-darksquare-background-color: var(
-        --spectrum-global-color-gray-300
-    );
-    --spectrum-alias-thumbnail-lightsquare-background-color: var(
-        --spectrum-global-color-static-white
     );
     --spectrum-alias-track-color-overbackground: hsla(0, 0%, 100%, 0.2);
     --spectrum-alias-icon-color: var(--spectrum-global-color-gray-700);

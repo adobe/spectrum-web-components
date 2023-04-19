@@ -63,6 +63,7 @@ const tokenPackages = [
     'illustratedmessage',
     'slider',
     'popover',
+    'thumbnail',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {

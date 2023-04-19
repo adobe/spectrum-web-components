@@ -12,353 +12,433 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    align-items: center;
-    background-position: 0 0,
-        0 var(--spectrum-global-dimension-static-size-100, 8px),
-        var(--spectrum-global-dimension-static-size-100, 8px)
-            calc(var(--spectrum-global-dimension-static-size-100, 8px) * -1),
-        calc(var(--spectrum-global-dimension-static-size-100, 8px) * -1) 0;
-    background-size: var(--spectrum-global-dimension-static-size-200, 16px)
-        var(--spectrum-global-dimension-static-size-200, 16px);
-    border-radius: var(--spectrum-thumbnail-border-radius);
-    display: flex;
-    height: var(--spectrum-thumbnail-height);
-    justify-content: center;
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-500);
+    --spectrum-thumbnail-border-radius: var(--spectrum-corner-radius-75);
+    --spectrum-thumbnail-border-width: var(--spectrum-border-width-100);
+    --spectrum-thumbnail-border-color-rgb: var(--spectrum-gray-800-rgb);
+    --spectrum-thumbnail-border-color-opacity: var(
+        --spectrum-thumbnail-border-opacity
+    );
+    --spectrum-thumbnail-layer-border-width-inner: var(
+        --spectrum-border-width-400
+    );
+    --spectrum-thumbnail-layer-border-color-inner: var(--spectrum-white);
+    --spectrum-thumbnail-layer-border-width-outer: var(
+        --spectrum-border-width-100
+    );
+    --spectrum-thumbnail-layer-border-color-outer: var(--spectrum-gray-500);
+    --spectrum-thumbnail-border-width-selected: var(
+        --spectrum-border-width-200
+    );
+    --spectrum-thumbnail-border-color-selected: var(
+        --spectrum-accent-color-800
+    );
+    --spectrum-thumbnail-focus-indicator-thickness: var(
+        --spectrum-focus-indicator-thickness
+    );
+    --spectrum-thumbnail-focus-indicator-gap: var(
+        --spectrum-focus-indicator-gap
+    );
+    --spectrum-thumbnail-focus-indicator-color: var(
+        --spectrum-focus-indicator-color
+    );
+    --spectrum-thumbnail-color-opacity-disabled: var(
+        --spectrum-thumbnail-opacity-disabled
+    );
+    --spectrum-thumbnail-checkerboard-size: var(
+        --spectrum-opacity-checkerboard-square-size
+    );
+    --spectrum-thumbnail-checkerboard-dark-color: var(
+        --spectrum-opacity-checkerboard-square-dark
+    );
+    --spectrum-thumbnail-checkerboard-light-color: var(
+        --spectrum-opacity-checkerboard-square-light
+    );
+}
+:host([size='50']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-50);
+}
+:host([size='75']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-75);
+}
+:host([size='100']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-100);
+}
+:host([size='200']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-200);
+}
+:host([size='300']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-300);
+}
+:host([size='400']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-400);
+}
+:host([size='500']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-500);
+}
+:host([size='600']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-600);
+}
+:host([size='700']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-700);
+}
+:host([size='800']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-800);
+}
+:host([size='900']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-900);
+}
+:host([size='1000']) {
+    --spectrum-thumbnail-size: var(--spectrum-thumbnail-size-1000);
+}
+:host {
+    background: repeating-conic-gradient(
+            var(
+                    --mod-thumbnail-checkerboard-light-color,
+                    var(--spectrum-thumbnail-checkerboard-light-color)
+                )
+                0 25%,
+            var(
+                    --mod-thumbnail-checkerboard-dark-color,
+                    var(--spectrum-thumbnail-checkerboard-dark-color)
+                )
+                0 50%
+        )
+        0 0 /
+        calc(
+            var(
+                    --mod-thumbnail-checkerboard-size,
+                    var(--spectrum-thumbnail-checkerboard-size)
+                ) * 2
+        )
+        calc(
+            var(
+                    --mod-thumbnail-checkerboard-size,
+                    var(--spectrum-thumbnail-checkerboard-size)
+                ) * 2
+        );
+    block-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
+    border-radius: var(
+        --mod-thumbnail-border-radius,
+        var(--spectrum-thumbnail-border-radius)
+    );
+    display: block;
+    inline-size: var(--mod-thumbnail-size, var(--spectrum-thumbnail-size));
     margin: 0;
     overflow: hidden;
     padding: 0;
     position: relative;
     vertical-align: top;
-    width: var(--spectrum-thumbnail-width);
     z-index: 0;
 }
 :host:before {
-    border-radius: var(--spectrum-thumbnail-border-radius);
+    block-size: 100%;
+    border-radius: var(
+        --mod-thumbnail-border-radius,
+        var(--spectrum-thumbnail-border-radius)
+    );
+    box-shadow: inset 0 0 0
+        var(
+            --mod-thumbnail-border-width,
+            var(--spectrum-thumbnail-border-width)
+        )
+        rgba(
+            var(
+                --mod-thumbnail-border-color-rgb,
+                var(--spectrum-thumbnail-border-color-rgb)
+            ),
+            var(
+                --mod-thumbnail-border-color-opacity,
+                var(--spectrum-thumbnail-border-color-opacity)
+            )
+        );
     content: '';
-    height: 100%;
+    inline-size: 100%;
     position: absolute;
-    width: 100%;
     z-index: 2;
 }
-:host([size='xxs']) {
-    --spectrum-thumbnail-border-color-selected: var(
-        --spectrum-thumbnail-xxs-border-color-selected,
-        var(--spectrum-alias-border-color-selected)
+:host([disabled]) {
+    opacity: var(
+        --mod-thumbnail-color-opacity-disabled,
+        var(--spectrum-thumbnail-color-opacity-disabled)
     );
-    --spectrum-thumbnail-border-size-selected-key-focus: var(
-        --spectrum-thumbnail-xxs-border-size-selected-key-focus,
-        var(--spectrum-alias-border-size-thick)
-    );
-    --spectrum-thumbnail-border-size: var(
-        --spectrum-thumbnail-xxs-border-size,
-        var(--spectrum-alias-border-size-thin)
-    );
-    --spectrum-thumbnail-border-color: var(
-        --spectrum-thumbnail-xxs-border-color,
-        var(--spectrum-alias-border-color-translucent)
-    );
-    --spectrum-thumbnail-border-color-key-focus: var(
-        --spectrum-thumbnail-xxs-border-color-key-focus,
-        var(--spectrum-alias-border-color-key-focus)
-    );
-    --spectrum-thumbnail-darksquare-background-color: var(
-        --spectrum-thumbnail-xxs-darksquare-background-color,
-        var(--spectrum-alias-thumbnail-darksquare-background-color)
-    );
-    --spectrum-thumbnail-border-radius: var(
-        --spectrum-thumbnail-xxs-border-radius,
-        var(--spectrum-alias-thumbnail-border-radius-small)
-    );
-    --spectrum-thumbnail-width: var(
-        --spectrum-thumbnail-xxs-width,
-        var(--spectrum-global-dimension-size-225)
-    );
-    --spectrum-thumbnail-height: var(
-        --spectrum-thumbnail-xxs-height,
-        var(--spectrum-global-dimension-size-225)
-    );
-}
-:host([size='xs']) {
-    --spectrum-thumbnail-border-color-selected: var(
-        --spectrum-thumbnail-xs-border-color-selected,
-        var(--spectrum-alias-border-color-selected)
-    );
-    --spectrum-thumbnail-border-size-selected-key-focus: var(
-        --spectrum-thumbnail-xs-border-size-selected-key-focus,
-        var(--spectrum-alias-border-size-thick)
-    );
-    --spectrum-thumbnail-border-size: var(
-        --spectrum-thumbnail-xs-border-size,
-        var(--spectrum-alias-border-size-thin)
-    );
-    --spectrum-thumbnail-border-color: var(
-        --spectrum-thumbnail-xs-border-color,
-        var(--spectrum-alias-border-color-translucent)
-    );
-    --spectrum-thumbnail-border-color-key-focus: var(
-        --spectrum-thumbnail-xs-border-color-key-focus,
-        var(--spectrum-alias-border-color-key-focus)
-    );
-    --spectrum-thumbnail-darksquare-background-color: var(
-        --spectrum-thumbnail-xs-darksquare-background-color,
-        var(--spectrum-alias-thumbnail-darksquare-background-color)
-    );
-    --spectrum-thumbnail-border-radius: var(
-        --spectrum-thumbnail-xs-border-radius,
-        var(--spectrum-alias-thumbnail-border-radius-small)
-    );
-    --spectrum-thumbnail-width: var(
-        --spectrum-thumbnail-xs-width,
-        var(--spectrum-global-dimension-size-300)
-    );
-    --spectrum-thumbnail-height: var(
-        --spectrum-thumbnail-xs-height,
-        var(--spectrum-global-dimension-size-300)
-    );
-}
-:host([size='s']) {
-    --spectrum-thumbnail-border-color-selected: var(
-        --spectrum-thumbnail-s-border-color-selected,
-        var(--spectrum-alias-border-color-selected)
-    );
-    --spectrum-thumbnail-border-size-selected-key-focus: var(
-        --spectrum-thumbnail-s-border-size-selected-key-focus,
-        var(--spectrum-alias-border-size-thick)
-    );
-    --spectrum-thumbnail-border-size: var(
-        --spectrum-thumbnail-s-border-size,
-        var(--spectrum-alias-border-size-thin)
-    );
-    --spectrum-thumbnail-border-color: var(
-        --spectrum-thumbnail-s-border-color,
-        var(--spectrum-alias-border-color-translucent)
-    );
-    --spectrum-thumbnail-border-color-key-focus: var(
-        --spectrum-thumbnail-s-border-color-key-focus,
-        var(--spectrum-alias-border-color-key-focus)
-    );
-    --spectrum-thumbnail-darksquare-background-color: var(
-        --spectrum-thumbnail-s-darksquare-background-color,
-        var(--spectrum-alias-thumbnail-darksquare-background-color)
-    );
-    --spectrum-thumbnail-border-radius: var(
-        --spectrum-thumbnail-s-border-radius,
-        var(--spectrum-alias-thumbnail-border-radius-small)
-    );
-    --spectrum-thumbnail-width: var(
-        --spectrum-thumbnail-s-width,
-        var(--spectrum-global-dimension-size-400)
-    );
-    --spectrum-thumbnail-height: var(
-        --spectrum-thumbnail-s-height,
-        var(--spectrum-global-dimension-size-400)
-    );
-}
-:host([size='m']) {
-    --spectrum-thumbnail-border-color-selected: var(
-        --spectrum-thumbnail-m-border-color-selected,
-        var(--spectrum-alias-border-color-selected)
-    );
-    --spectrum-thumbnail-border-size-selected-key-focus: var(
-        --spectrum-thumbnail-m-border-size-selected-key-focus,
-        var(--spectrum-alias-border-size-thick)
-    );
-    --spectrum-thumbnail-border-size: var(
-        --spectrum-thumbnail-m-border-size,
-        var(--spectrum-alias-border-size-thin)
-    );
-    --spectrum-thumbnail-border-color: var(
-        --spectrum-thumbnail-m-border-color,
-        var(--spectrum-alias-border-color-translucent)
-    );
-    --spectrum-thumbnail-border-color-key-focus: var(
-        --spectrum-thumbnail-m-border-color-key-focus,
-        var(--spectrum-alias-border-color-key-focus)
-    );
-    --spectrum-thumbnail-darksquare-background-color: var(
-        --spectrum-thumbnail-m-darksquare-background-color,
-        var(--spectrum-alias-thumbnail-darksquare-background-color)
-    );
-    --spectrum-thumbnail-border-radius: var(
-        --spectrum-thumbnail-m-border-radius,
-        var(--spectrum-alias-thumbnail-border-radius-small)
-    );
-    --spectrum-thumbnail-width: var(
-        --spectrum-thumbnail-m-width,
-        var(--spectrum-global-dimension-size-500)
-    );
-    --spectrum-thumbnail-height: var(
-        --spectrum-thumbnail-m-height,
-        var(--spectrum-global-dimension-size-500)
-    );
-}
-:host([size='l']) {
-    --spectrum-thumbnail-border-color-selected: var(
-        --spectrum-thumbnail-l-border-color-selected,
-        var(--spectrum-alias-border-color-selected)
-    );
-    --spectrum-thumbnail-border-size-selected-key-focus: var(
-        --spectrum-thumbnail-l-border-size-selected-key-focus,
-        var(--spectrum-alias-border-size-thick)
-    );
-    --spectrum-thumbnail-border-size: var(
-        --spectrum-thumbnail-l-border-size,
-        var(--spectrum-alias-border-size-thin)
-    );
-    --spectrum-thumbnail-border-color: var(
-        --spectrum-thumbnail-l-border-color,
-        var(--spectrum-alias-border-color-translucent)
-    );
-    --spectrum-thumbnail-border-color-key-focus: var(
-        --spectrum-thumbnail-l-border-color-key-focus,
-        var(--spectrum-alias-border-color-key-focus)
-    );
-    --spectrum-thumbnail-darksquare-background-color: var(
-        --spectrum-thumbnail-l-darksquare-background-color,
-        var(--spectrum-alias-thumbnail-darksquare-background-color)
-    );
-    --spectrum-thumbnail-border-radius: var(
-        --spectrum-thumbnail-l-border-radius,
-        var(--spectrum-alias-thumbnail-border-radius-small)
-    );
-    --spectrum-thumbnail-width: var(
-        --spectrum-thumbnail-l-width,
-        var(--spectrum-global-dimension-size-700)
-    );
-    --spectrum-thumbnail-height: var(
-        --spectrum-thumbnail-l-height,
-        var(--spectrum-global-dimension-size-700)
-    );
-}
-::slotted(*) {
-    max-height: 100%;
-    max-width: 100%;
-    z-index: 1;
-}
-:host([cover]) ::slotted(*) {
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    width: 100%;
-}
-.background {
-    background-position: 50%;
-    background-size: cover;
-    height: 100%;
-    inset: 0;
-    position: absolute;
-    width: 100%;
-    z-index: 0;
-}
-:host {
-    background-color: var(
-        --spectrum-global-color-static-white,
-        rgb(var(--spectrum-global-color-static-white-rgb))
-    );
-    background-image: linear-gradient(
-            -45deg,
-            transparent 75.5%,
-            var(--spectrum-thumbnail-darksquare-background-color) 75.5%
-        ),
-        linear-gradient(
-            45deg,
-            transparent 75.5%,
-            var(--spectrum-thumbnail-darksquare-background-color) 75.5%
-        ),
-        linear-gradient(
-            -45deg,
-            var(--spectrum-thumbnail-darksquare-background-color) 25.5%,
-            transparent 25.5%
-        ),
-        linear-gradient(
-            45deg,
-            var(--spectrum-thumbnail-darksquare-background-color) 25.5%,
-            transparent 25.5%
-        );
-}
-:host:before {
-    box-shadow: inset 0 0 0 var(--spectrum-thumbnail-border-size)
-        var(--spectrum-thumbnail-border-color);
-}
-:host([selected]) {
-    box-shadow: 0 0 0
-        calc(var(--spectrum-thumbnail-border-size-selected-key-focus) / 2)
-        var(--spectrum-thumbnail-border-color-selected);
-}
-:host([selected]):before {
-    box-shadow: inset 0 0 0
-        calc(var(--spectrum-thumbnail-border-size-selected-key-focus) / 2)
-        var(--spectrum-thumbnail-border-color-selected);
 }
 :host(.focus-visible),
 :host([focused]) {
-    box-shadow: 0 0 0
-        calc(var(--spectrum-thumbnail-border-size-selected-key-focus) / 2)
-        var(--spectrum-thumbnail-border-color-selected);
-    outline: none;
     overflow: visible;
 }
 :host(:focus-visible),
 :host([focused]) {
-    box-shadow: 0 0 0
-        calc(var(--spectrum-thumbnail-border-size-selected-key-focus) / 2)
-        var(--spectrum-thumbnail-border-color-selected);
-    outline: none;
     overflow: visible;
-}
-:host(.focus-visible):before,
-:host([focused]):before {
-    box-shadow: inset 0 0 0
-        calc(var(--spectrum-thumbnail-border-size-selected-key-focus) / 2)
-        var(--spectrum-thumbnail-border-color-selected);
-}
-:host(:focus-visible):before,
-:host([focused]):before {
-    box-shadow: inset 0 0 0
-        calc(var(--spectrum-thumbnail-border-size-selected-key-focus) / 2)
-        var(--spectrum-thumbnail-border-color-selected);
 }
 :host(.focus-visible):after,
 :host([focused]):after {
-    border-radius: calc(
-        var(--spectrum-thumbnail-border-radius) +
-            var(
-                --spectrum-alias-focus-ring-gap,
-                var(--spectrum-global-dimension-static-size-25)
-            )
-    );
-    box-shadow: 0 0 0 var(--spectrum-thumbnail-border-size-selected-key-focus)
-        var(--spectrum-thumbnail-border-color-key-focus);
-    content: '';
-    display: block;
-    inset: 0;
-    margin: calc(
+    border-color: var(
+        --highcontrast-thumbnail-focus-indicator-color,
         var(
-                --spectrum-alias-focus-ring-gap,
-                var(--spectrum-global-dimension-static-size-25)
+            --mod-thumbnail-focus-indicator-color,
+            var(--spectrum-thumbnail-focus-indicator-color)
+        )
+    );
+    border-radius: var(
+        --mod-thumbnail-border-radius,
+        var(--spectrum-thumbnail-border-radius)
+    );
+    border-style: solid;
+    border-width: var(
+        --mod-thumbnail-focus-indicator-thickness,
+        var(--spectrum-thumbnail-focus-indicator-thickness)
+    );
+    content: '';
+    inset-block-end: calc(
+        (
+                var(
+                        --mod-thumbnail-focus-indicator-gap,
+                        var(--spectrum-thumbnail-focus-indicator-gap)
+                    ) +
+                    var(
+                        --mod-thumbnail-focus-indicator-thickness,
+                        var(--spectrum-thumbnail-focus-indicator-thickness)
+                    )
+            ) * -1
+    );
+    inset-block-start: calc(
+        (
+                var(
+                        --mod-thumbnail-focus-indicator-gap,
+                        var(--spectrum-thumbnail-focus-indicator-gap)
+                    ) +
+                    var(
+                        --mod-thumbnail-focus-indicator-thickness,
+                        var(--spectrum-thumbnail-focus-indicator-thickness)
+                    )
+            ) * -1
+    );
+    inset-inline-end: calc(
+        (
+                var(
+                        --mod-thumbnail-focus-indicator-gap,
+                        var(--spectrum-thumbnail-focus-indicator-gap)
+                    ) +
+                    var(
+                        --mod-thumbnail-focus-indicator-thickness,
+                        var(--spectrum-thumbnail-focus-indicator-thickness)
+                    )
+            ) * -1
+    );
+    inset-inline-start: calc(
+        (
+                var(
+                        --mod-thumbnail-focus-indicator-gap,
+                        var(--spectrum-thumbnail-focus-indicator-gap)
+                    ) +
+                    var(
+                        --mod-thumbnail-focus-indicator-thickness,
+                        var(--spectrum-thumbnail-focus-indicator-thickness)
+                    )
             ) * -1
     );
     position: absolute;
 }
 :host(:focus-visible):after,
 :host([focused]):after {
-    border-radius: calc(
-        var(--spectrum-thumbnail-border-radius) +
-            var(
-                --spectrum-alias-focus-ring-gap,
-                var(--spectrum-global-dimension-static-size-25)
-            )
-    );
-    box-shadow: 0 0 0 var(--spectrum-thumbnail-border-size-selected-key-focus)
-        var(--spectrum-thumbnail-border-color-key-focus);
-    content: '';
-    display: block;
-    inset: 0;
-    margin: calc(
+    border-color: var(
+        --highcontrast-thumbnail-focus-indicator-color,
         var(
-                --spectrum-alias-focus-ring-gap,
-                var(--spectrum-global-dimension-static-size-25)
+            --mod-thumbnail-focus-indicator-color,
+            var(--spectrum-thumbnail-focus-indicator-color)
+        )
+    );
+    border-radius: var(
+        --mod-thumbnail-border-radius,
+        var(--spectrum-thumbnail-border-radius)
+    );
+    border-style: solid;
+    border-width: var(
+        --mod-thumbnail-focus-indicator-thickness,
+        var(--spectrum-thumbnail-focus-indicator-thickness)
+    );
+    content: '';
+    inset-block-end: calc(
+        (
+                var(
+                        --mod-thumbnail-focus-indicator-gap,
+                        var(--spectrum-thumbnail-focus-indicator-gap)
+                    ) +
+                    var(
+                        --mod-thumbnail-focus-indicator-thickness,
+                        var(--spectrum-thumbnail-focus-indicator-thickness)
+                    )
+            ) * -1
+    );
+    inset-block-start: calc(
+        (
+                var(
+                        --mod-thumbnail-focus-indicator-gap,
+                        var(--spectrum-thumbnail-focus-indicator-gap)
+                    ) +
+                    var(
+                        --mod-thumbnail-focus-indicator-thickness,
+                        var(--spectrum-thumbnail-focus-indicator-thickness)
+                    )
+            ) * -1
+    );
+    inset-inline-end: calc(
+        (
+                var(
+                        --mod-thumbnail-focus-indicator-gap,
+                        var(--spectrum-thumbnail-focus-indicator-gap)
+                    ) +
+                    var(
+                        --mod-thumbnail-focus-indicator-thickness,
+                        var(--spectrum-thumbnail-focus-indicator-thickness)
+                    )
+            ) * -1
+    );
+    inset-inline-start: calc(
+        (
+                var(
+                        --mod-thumbnail-focus-indicator-gap,
+                        var(--spectrum-thumbnail-focus-indicator-gap)
+                    ) +
+                    var(
+                        --mod-thumbnail-focus-indicator-thickness,
+                        var(--spectrum-thumbnail-focus-indicator-thickness)
+                    )
             ) * -1
     );
     position: absolute;
+}
+:host(.focus-visible) .image-wrapper,
+:host([focused]) .image-wrapper {
+    border-radius: var(
+        --mod-thumbnail-border-radius,
+        var(--spectrum-thumbnail-border-radius)
+    );
+    overflow: hidden;
+}
+:host(:focus-visible) .image-wrapper,
+:host([focused]) .image-wrapper {
+    border-radius: var(
+        --mod-thumbnail-border-radius,
+        var(--spectrum-thumbnail-border-radius)
+    );
+    overflow: hidden;
+}
+:host([layer]) {
+    align-items: center;
+    border: var(
+            --mod-thumbnail-layer-border-width-outer,
+            var(--spectrum-thumbnail-layer-border-width-outer)
+        )
+        solid
+        var(
+            --mod-thumbnail-layer-border-color-outer,
+            var(--spectrum-thumbnail-layer-border-color-outer)
+        );
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+:host([layer]):before {
+    content: none;
+}
+:host([layer][selected]) {
+    outline: solid;
+    outline-color: var(
+        --highcontrast-thumbnail-border-color-selected,
+        var(
+            --mod-thumbnail-border-color-selected,
+            var(--spectrum-thumbnail-border-color-selected)
+        )
+    );
+    outline-offset: calc(
+        var(
+                --mod-thumbnail-border-width-selected,
+                var(--spectrum-thumbnail-border-width-selected)
+            ) -
+            var(
+                --mod-thumbnail-layer-border-width-inner,
+                var(--spectrum-thumbnail-layer-border-width-inner)
+            )
+    );
+    outline-width: var(
+        --mod-thumbnail-border-width-selected,
+        var(--spectrum-thumbnail-border-width-selected)
+    );
+}
+.layer-inner {
+    block-size: calc(
+        var(--spectrum-thumbnail-size) -
+            var(
+                --mod-thumbnail-layer-border-width-inner,
+                var(--spectrum-thumbnail-layer-border-width-inner)
+            ) * 2
+    );
+    inline-size: calc(
+        var(--spectrum-thumbnail-size) -
+            var(
+                --mod-thumbnail-layer-border-width-inner,
+                var(--spectrum-thumbnail-layer-border-width-inner)
+            ) * 2
+    );
+    outline: solid;
+    outline-color: var(
+        --mod-thumbnail-layer-border-color-inner,
+        var(--spectrum-thumbnail-layer-border-color-inner)
+    );
+    outline-width: calc(
+        var(
+                --mod-thumbnail-layer-border-width-inner,
+                var(--spectrum-thumbnail-layer-border-width-inner)
+            ) -
+            var(
+                --mod-thumbnail-layer-border-width-outer,
+                var(--spectrum-thumbnail-layer-border-width-outer)
+            )
+    );
+}
+.image-wrapper,
+.layer-inner {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.image-wrapper {
+    block-size: 100%;
+    inline-size: 100%;
+}
+::slotted(*) {
+    max-block-size: 100%;
+    max-inline-size: 100%;
+    position: relative;
+    z-index: 1;
+}
+:host([cover]) ::slotted(*) {
+    block-size: 100%;
+    inline-size: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.background {
+    background-position: 50%;
+    background-size: cover;
+    block-size: 100%;
+    border-radius: var(
+        --mod-thumbnail-border-radius,
+        var(--spectrum-thumbnail-border-radius)
+    );
+    inline-size: 100%;
+    inset-block: 0;
+    inset-inline: 0;
+    position: absolute;
+    z-index: 0;
+}
+@media (forced-colors: active) {
+    :host([selected]) {
+        --highcontrast-thumbnail-border-color-selected: SelectedItem;
+    }
+    :host([focused]) {
+        --highcontrast-thumbnail-focus-indicator-color: Highlight;
+    }
 }
