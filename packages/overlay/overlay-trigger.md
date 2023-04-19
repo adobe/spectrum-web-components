@@ -43,18 +43,6 @@ import { OverlayTrigger } from '@spectrum-web-components/overlay';
 Here a default `<overlay-trigger>` manages content that is triggered by click and "hover" interactions.
 
 ```html
-<style>
-    overlay-trigger {
-        flex: none;
-    }
-
-    .tooltip {
-        background-color: var(--spectrum-gray-800);
-        color: var(--spectrum-gray-50);
-        padding: 4px 10px;
-        font-size: 10px;
-    }
-</style>
 <overlay-trigger id="trigger" placement="bottom" offset="6">
     <sp-button variant="primary" slot="trigger">Button popover</sp-button>
     <sp-popover dialog slot="click-content" direction="bottom" tip>
