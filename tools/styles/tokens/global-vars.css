@@ -243,6 +243,7 @@
     --spectrum-popover-tip-height: 8px;
     --spectrum-menu-item-label-to-description: 1px;
     --spectrum-picker-minimum-width-multiplier: 2;
+    --spectrum-picker-end-edge-to-disclousure-icon-quiet: 0px;
     --spectrum-text-field-minimum-width-multiplier: 1.5;
     --spectrum-combo-box-minimum-width-multiplier: 2.5;
     --spectrum-combo-box-quiet-minimum-width-multiplier: 2;

@@ -285,74 +285,22 @@ governing permissions and limitations under the License.
     opacity: 1;
 }
 .fill {
-    --spectrum-swatch-checkerboard-size: 8px;
-    --spectrum-swatch-checkerboard-background-offset: 0px;
-    --spectrum-swatch-checkerboard-dark-color: #d9d9d9;
-    --spectrum-swatch-checkerboard-light-color: #fff;
+    --spectrum-swatch-checkerboard-size: var(
+        --spectrum-opacity-checkerboard-square-size
+    );
+    --spectrum-swatch-checkerboard-dark-color: var(
+        --spectrum-opacity-checkerboard-square-dark
+    );
+    --spectrum-swatch-checkerboard-light-color: var(
+        --spectrum-opacity-checkerboard-square-light
+    );
     align-items: center;
-    background-color: var(--spectrum-swatch-checkerboard-light-color);
-    background-image: linear-gradient(
-            -45deg,
-            transparent 75.5%,
-            var(--spectrum-swatch-checkerboard-dark-color) 75.5%
-        ),
-        linear-gradient(
-            45deg,
-            transparent 75.5%,
-            var(--spectrum-swatch-checkerboard-dark-color) 75.5%
-        ),
-        linear-gradient(
-            -45deg,
-            var(--spectrum-swatch-checkerboard-dark-color) 25.5%,
-            transparent 25.5%
-        ),
-        linear-gradient(
-            45deg,
-            var(--spectrum-swatch-checkerboard-dark-color) 25.5%,
-            transparent 25.5%
-        );
-    background-position: var(--spectrum-swatch-checkerboard-background-offset)
-            var(--spectrum-swatch-checkerboard-background-offset),
-        var(--spectrum-swatch-checkerboard-background-offset)
-            calc(
-                var(
-                        --mod-swatch-checkerboard-size,
-                        var(--spectrum-swatch-checkerboard-size)
-                    ) + var(--spectrum-swatch-checkerboard-background-offset)
-            ),
-        calc(
-                var(
-                        --mod-swatch-checkerboard-size,
-                        var(--spectrum-swatch-checkerboard-size)
-                    ) + var(--spectrum-swatch-checkerboard-background-offset)
-            )
-            calc(
-                var(
-                        --mod-swatch-checkerboard-size,
-                        var(--spectrum-swatch-checkerboard-size)
-                    ) * -1 +
-                    var(--spectrum-swatch-checkerboard-background-offset)
-            ),
-        calc(
-                var(
-                        --mod-swatch-checkerboard-size,
-                        var(--spectrum-swatch-checkerboard-size)
-                    ) * -1 +
-                    var(--spectrum-swatch-checkerboard-background-offset)
-            )
-            var(--spectrum-swatch-checkerboard-background-offset);
-    background-size: calc(
-            var(
-                    --mod-swatch-checkerboard-size,
-                    var(--spectrum-swatch-checkerboard-size)
-                ) * 2
+    background: repeating-conic-gradient(
+            var(--spectrum-swatch-checkerboard-light-color) 0 25%,
+            var(--spectrum-swatch-checkerboard-dark-color) 0 50%
         )
-        calc(
-            var(
-                    --mod-swatch-checkerboard-size,
-                    var(--spectrum-swatch-checkerboard-size)
-                ) * 2
-        );
+        0 0 / calc(var(--spectrum-swatch-checkerboard-size) * 2)
+        calc(var(--spectrum-swatch-checkerboard-size) * 2);
     border-radius: var(
         --mod-swatch-border-radius,
         var(--spectrum-swatch-border-radius)

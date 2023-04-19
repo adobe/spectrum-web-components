@@ -19,6 +19,15 @@ governing permissions and limitations under the License.
     --spectrum-colorslider-handle-hitarea-height: var(
         --spectrum-global-dimension-size-300
     );
+    --spectrum-colorslider-checkerboard-size: var(
+        --spectrum-opacity-checkerboard-square-size
+    );
+    --spectrum-colorslider-checkerboard-dark-color: var(
+        --spectrum-opacity-checkerboard-square-dark
+    );
+    --spectrum-colorslider-checkerboard-light-color: var(
+        --spectrum-opacity-checkerboard-square-light
+    );
 }
 :host([focused]) .handle {
     height: calc(
@@ -103,13 +112,12 @@ governing permissions and limitations under the License.
     width: var(--spectrum-colorslider-handle-hitarea-width);
 }
 .checkerboard {
-    background-position: 0 0,
-        0 var(--spectrum-global-dimension-static-size-100, 8px),
-        var(--spectrum-global-dimension-static-size-100, 8px)
-            calc(var(--spectrum-global-dimension-static-size-100, 8px) * -1),
-        calc(var(--spectrum-global-dimension-static-size-100, 8px) * -1) 0;
-    background-size: var(--spectrum-global-dimension-static-size-200, 16px)
-        var(--spectrum-global-dimension-static-size-200, 16px);
+    background: repeating-conic-gradient(
+            var(--spectrum-colorslider-checkerboard-light-color) 0 25%,
+            var(--spectrum-colorslider-checkerboard-dark-color) 0 50%
+        )
+        0 0 / calc(var(--spectrum-colorslider-checkerboard-size) * 2)
+        calc(var(--spectrum-colorslider-checkerboard-size) * 2);
 }
 .checkerboard:before {
     border-radius: var(
@@ -135,48 +143,6 @@ governing permissions and limitations under the License.
         --spectrum-colorarea-border-color,
         var(--spectrum-alias-border-color-translucent)
     );
-}
-.checkerboard {
-    background-color: var(
-        --spectrum-colorcontrol-checkerboard-light-color,
-        var(--spectrum-global-color-static-white)
-    );
-    background-image: linear-gradient(
-            -45deg,
-            transparent 75.5%,
-            var(
-                    --spectrum-colorcontrol-checkerboard-dark-color,
-                    var(--spectrum-global-color-static-gray-300)
-                )
-                75.5%
-        ),
-        linear-gradient(
-            45deg,
-            transparent 75.5%,
-            var(
-                    --spectrum-colorcontrol-checkerboard-dark-color,
-                    var(--spectrum-global-color-static-gray-300)
-                )
-                75.5%
-        ),
-        linear-gradient(
-            -45deg,
-            var(
-                    --spectrum-colorcontrol-checkerboard-dark-color,
-                    var(--spectrum-global-color-static-gray-300)
-                )
-                25.5%,
-            transparent 25.5%
-        ),
-        linear-gradient(
-            45deg,
-            var(
-                    --spectrum-colorcontrol-checkerboard-dark-color,
-                    var(--spectrum-global-color-static-gray-300)
-                )
-                25.5%,
-            transparent 25.5%
-        );
 }
 .checkerboard:before {
     box-shadow: inset 0 0 0
