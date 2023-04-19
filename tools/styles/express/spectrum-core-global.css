@@ -1664,9 +1664,6 @@ governing permissions and limitations under the License.
     --spectrum-alias-combobox-quiet-button-offset-x: var(
         --spectrum-global-dimension-size-50
     );
-    --spectrum-alias-thumbnail-border-radius-small: var(
-        --spectrum-global-dimension-size-75
-    );
     --spectrum-alias-focus-ring-gap-small: var(
         --spectrum-global-dimension-static-size-25
     );
@@ -2054,12 +2051,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-infieldbutton-fill-loudnessLow-background-color-disabled: transparent;
     --spectrum-alias-track-color-default: var(--spectrum-global-color-gray-300);
-    --spectrum-alias-thumbnail-darksquare-background-color: var(
-        --spectrum-global-color-gray-200
-    );
-    --spectrum-alias-thumbnail-lightsquare-background-color: var(
-        --spectrum-global-color-static-white
-    );
     --spectrum-alias-tabs-divider-background-color-default: var(
         --spectrum-global-color-gray-200
     );
