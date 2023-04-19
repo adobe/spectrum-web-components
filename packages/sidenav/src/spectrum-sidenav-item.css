@@ -31,7 +31,6 @@ governing permissions and limitations under the License.
     );
 }
 #item-link {
-    -ms-flex-pack: left;
     align-items: center;
     border-radius: var(
         --spectrum-sidenav-item-border-radius,
@@ -51,7 +50,7 @@ governing permissions and limitations under the License.
     );
     -webkit-hyphens: auto;
     hyphens: auto;
-    justify-content: left;
+    justify-content: start;
     min-height: var(
         --spectrum-sidenav-item-height,
         var(--spectrum-alias-single-line-height)

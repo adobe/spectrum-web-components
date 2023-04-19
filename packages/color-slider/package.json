@@ -68,7 +68,7 @@
         "@spectrum-web-components/shared": "^0.15.6"
     },
     "devDependencies": {
-        "@spectrum-css/colorslider": "^2.0.13"
+        "@spectrum-css/colorslider": "^2.0.24"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

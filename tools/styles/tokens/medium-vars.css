@@ -267,6 +267,14 @@
     --spectrum-field-edge-to-disclosure-icon-100: 11px;
     --spectrum-field-edge-to-disclosure-icon-200: 14px;
     --spectrum-field-edge-to-disclosure-icon-300: 17px;
+    --spectrum-field-end-edge-to-disclosure-icon-75: 7px;
+    --spectrum-field-end-edge-to-disclosure-icon-100: 11px;
+    --spectrum-field-end-edge-to-disclosure-icon-200: 14px;
+    --spectrum-field-end-edge-to-disclosure-icon-300: 17px;
+    --spectrum-field-top-to-disclosure-icon-75: 7px;
+    --spectrum-field-top-to-disclosure-icon-100: 11px;
+    --spectrum-field-top-to-disclosure-icon-200: 14px;
+    --spectrum-field-top-to-disclosure-icon-300: 17px;
     --spectrum-field-top-to-alert-icon-small: 4px;
     --spectrum-field-top-to-alert-icon-medium: 7px;
     --spectrum-field-top-to-alert-icon-large: 10px;

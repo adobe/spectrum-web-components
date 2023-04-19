@@ -18,11 +18,11 @@ governing permissions and limitations under the License.
     border-style: solid;
     box-sizing: border-box;
     cursor: pointer;
-    font-family: var(--mod-font-family-base, var(--spectrum-font-family-base));
-    line-height: var(
-        --mod-line-height-small,
-        var(--spectrum-line-height-small)
+    font-family: var(
+        --mod-sans-font-family-stack,
+        var(--spectrum-sans-font-family-stack)
     );
+    line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
     margin: 0;
     overflow: visible;
     text-decoration: none;
