@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { Tray } from './src/Tray.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-tray', Tray);
+defineElement('sp-tray', Tray);
 
 declare global {
     interface HTMLElementTagNameMap {

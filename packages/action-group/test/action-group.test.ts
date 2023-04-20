@@ -32,6 +32,7 @@ import {
     endEvent,
     homeEvent,
     testForLitDevWarnings,
+    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers';
 import { sendKeys } from '@web/test-runner-commands';
 import '@spectrum-web-components/action-group/sp-action-group.js';
@@ -1068,4 +1069,8 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(1);
         expect(el.selected[0]).to.equal('Third');
     });
+    describe(
+        'dev mode',
+        warnsOnDoubleRegister(() => import('../sp-action-group.js'))
+    );
 });

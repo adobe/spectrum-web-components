@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { Toast } from './src/Toast.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-toast', Toast);
+defineElement('sp-toast', Toast);
 
 declare global {
     interface HTMLElementTagNameMap {

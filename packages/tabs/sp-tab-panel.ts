@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { TabPanel } from './src/TabPanel.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-tab-panel', TabPanel);
+defineElement('sp-tab-panel', TabPanel);
 
 declare global {
     interface HTMLElementTagNameMap {

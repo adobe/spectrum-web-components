@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { TopNav } from './src/TopNav.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-top-nav', TopNav);
+defineElement('sp-top-nav', TopNav);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -17,7 +17,10 @@ import { Default } from '../stories/accordion.stories.js';
 import { Accordion, AccordionItem } from '@spectrum-web-components/accordion';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 describe('Accordion', () => {
     testForLitDevWarnings(async () => await fixture<Accordion>(Default()));
@@ -318,4 +321,8 @@ describe('Accordion', () => {
         expect(typeof outsideFocused).not.to.equal(AccordionItem);
         expect(typeof outsideFocused).not.to.equal(Accordion);
     });
+    describe(
+        'dev mode',
+        warnsOnDoubleRegister(() => import('../sp-accordion.js'))
+    );
 });

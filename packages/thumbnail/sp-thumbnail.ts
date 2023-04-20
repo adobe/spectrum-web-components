@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { Thumbnail } from './src/Thumbnail.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-thumbnail', Thumbnail);
+defineElement('sp-thumbnail', Thumbnail);
 
 declare global {
     interface HTMLElementTagNameMap {

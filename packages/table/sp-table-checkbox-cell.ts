@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { TableCheckboxCell } from './src/TableCheckboxCell.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-table-checkbox-cell', TableCheckboxCell);
+defineElement('sp-table-checkbox-cell', TableCheckboxCell);
 
 declare global {
     interface HTMLElementTagNameMap {

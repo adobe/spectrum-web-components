@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { ColorArea } from './src/ColorArea.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-color-area', ColorArea);
+defineElement('sp-color-area', ColorArea);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -16,6 +16,7 @@ import { spy } from 'sinon';
 import '@spectrum-web-components/accordion/sp-accordion-item.js';
 import { AccordionItem } from '@spectrum-web-components/accordion/src/AccordionItem.js';
 import { sendKeys } from '@web/test-runner-commands';
+import { warnsOnDoubleRegister } from '../../../test/testing-helpers.js';
 
 describe('Accordion Item', () => {
     it('can exist with no parent accessibly', async () => {
@@ -196,4 +197,8 @@ describe('Accordion Item', () => {
         expect(closed).to.be.false;
         expect(el.open).to.be.true;
     });
+    describe(
+        'dev mode',
+        warnsOnDoubleRegister(() => import('../sp-accordion-item.js'))
+    );
 });

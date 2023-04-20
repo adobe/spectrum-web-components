@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { Card } from './src/Card.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-card', Card);
+defineElement('sp-card', Card);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { Divider } from './src/Divider.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-divider', Divider);
+defineElement('sp-divider', Divider);
 
 declare global {
     interface HTMLElementTagNameMap {

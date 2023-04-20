@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { TableCell } from './src/TableCell.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-table-cell', TableCell);
+defineElement('sp-table-cell', TableCell);
 
 declare global {
     interface HTMLElementTagNameMap {

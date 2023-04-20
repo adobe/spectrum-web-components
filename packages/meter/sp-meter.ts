@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { Meter } from './src/Meter.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-meter', Meter);
+defineElement('sp-meter', Meter);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -122,3 +122,38 @@ export function ignoreResizeObserverLoopError(
         window.onerror = globalErrorHandler as OnErrorEventHandler;
     });
 }
+
+export function warnsOnDoubleRegister(importFn: () => Promise<unknown>) {
+    return () => {
+        const isWebkit = /WebKit/.test(window.navigator.userAgent);
+        beforeEach(function () {
+            window.__swc.verbose = true;
+            this.warn = stub(console, 'warn');
+        });
+        afterEach(function () {
+            this.warn.resetHistory();
+            window.__swc.verbose = false;
+            this.warn.restore();
+        });
+        it('warns in Dev Mode when redefined', async function () {
+            let caughtError: Error | undefined;
+            try {
+                await importFn();
+            } catch (error) {
+                caughtError = error as Error;
+            }
+            // webkit doesn't seem to bubble thrown errors from async import()
+            if (!isWebkit) {
+                expect(caughtError && caughtError.message).to.include(
+                    'has already been'
+                );
+            }
+            expect(this.warn.called, 'should call console.warn()').to.be.true;
+            const spyCall = this.warn.getCall(0);
+            expect(
+                (spyCall.args.at(0) as string).includes('redefine'),
+                'message should warn about redefining an element'
+            ).to.be.true;
+        });
+    };
+}

@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { SplitView } from './src/SplitView.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-split-view', SplitView);
+defineElement('sp-split-view', SplitView);
 
 declare global {
     interface HTMLElementTagNameMap {

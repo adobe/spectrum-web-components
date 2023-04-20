@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { ClearButton } from './src/ClearButton.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-clear-button', ClearButton);
+defineElement('sp-clear-button', ClearButton);
 
 declare global {
     interface HTMLElementTagNameMap {

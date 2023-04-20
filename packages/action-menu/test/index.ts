@@ -17,7 +17,10 @@ import {
     html,
     oneEvent,
 } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers';
 
 import { spy } from 'sinon';
 
@@ -423,4 +426,8 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
             expect(selectedItem.selected).to.be.true;
         });
     });
+    describe(
+        'dev mode',
+        warnsOnDoubleRegister(() => import('../sp-action-menu.js'))
+    );
 };

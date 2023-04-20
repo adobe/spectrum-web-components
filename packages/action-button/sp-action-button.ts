@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { ActionButton } from './src/ActionButton.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-action-button', ActionButton);
+defineElement('sp-action-button', ActionButton);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { Coachmark } from './src/Coachmark.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-coachmark', Coachmark);
+defineElement('sp-coachmark', Coachmark);
 
 declare global {
     interface HTMLElementTagNameMap {

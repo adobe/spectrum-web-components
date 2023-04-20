@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { Tabs } from './src/Tabs.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-tabs', Tabs);
+defineElement('sp-tabs', Tabs);
 
 declare global {
     interface HTMLElementTagNameMap {

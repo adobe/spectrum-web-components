@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { PickerButton } from './src/PickerButton.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-picker-button', PickerButton);
+defineElement('sp-picker-button', PickerButton);
 
 declare global {
     interface HTMLElementTagNameMap {

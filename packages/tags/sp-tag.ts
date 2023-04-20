@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { Tag } from './src/Tag.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-tag', Tag);
+defineElement('sp-tag', Tag);
 
 declare global {
     interface HTMLElementTagNameMap {

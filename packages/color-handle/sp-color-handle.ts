@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { ColorHandle } from './src/ColorHandle.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-color-handle', ColorHandle);
+defineElement('sp-color-handle', ColorHandle);
 
 declare global {
     interface HTMLElementTagNameMap {

@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { QuickActions } from './src/QuickActions.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-quick-actions', QuickActions);
+defineElement('sp-quick-actions', QuickActions);
 
 declare global {
     interface HTMLElementTagNameMap {

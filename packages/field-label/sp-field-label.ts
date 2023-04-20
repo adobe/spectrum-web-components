@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { FieldLabel } from './src/FieldLabel.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-field-label', FieldLabel);
+defineElement('sp-field-label', FieldLabel);
 
 declare global {
     interface HTMLElementTagNameMap {

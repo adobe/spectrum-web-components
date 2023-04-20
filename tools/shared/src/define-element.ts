@@ -10,13 +10,22 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { ColorWheel } from './src/ColorWheel.js';
-import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
+interface CustomElementConstructor {
+    new (...params: any[]): HTMLElement;
+}
 
-defineElement('sp-color-wheel', ColorWheel);
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'sp-color-wheel': ColorWheel;
+export function defineElement(
+    name: string,
+    constructor: CustomElementConstructor
+): void {
+    if (window.__swc?.DEBUG) {
+        if (customElements.get(name)) {
+            window.__swc.warn(
+                undefined,
+                `Attempted to redefine <${name}>. This usually indicates that multiple versions of the same web component were loaded onto a single page.`,
+                'https://TODO'
+            );
+        }
     }
+    customElements.define(name, constructor);
 }

@@ -22,6 +22,7 @@ import {
 import {
     shiftTabEvent,
     testForLitDevWarnings,
+    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 
@@ -562,4 +563,8 @@ describe('Button', () => {
             expect(el.variant).to.equal('accent');
         });
     });
+    describe(
+        'dev mode',
+        warnsOnDoubleRegister(() => import('../sp-button.js'))
+    );
 });

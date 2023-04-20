@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { HelpText } from './src/HelpText.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-help-text', HelpText);
+defineElement('sp-help-text', HelpText);
 
 declare global {
     interface HTMLElementTagNameMap {

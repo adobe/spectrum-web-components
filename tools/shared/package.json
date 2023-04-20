@@ -25,6 +25,10 @@
             "default": "./src/index.js"
         },
         "./package.json": "./package.json",
+        "./src/define-element.js": {
+            "development": "./src/define-element.dev.js",
+            "default": "./src/define-element.js"
+        },
         "./src/first-focusable-in.js": {
             "development": "./src/first-focusable-in.dev.js",
             "default": "./src/first-focusable-in.js"

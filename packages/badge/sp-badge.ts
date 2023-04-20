@@ -11,8 +11,9 @@ governing permissions and limitations under the License.
 */
 
 import { Badge } from './src/Badge.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-badge', Badge);
+defineElement('sp-badge', Badge);
 
 declare global {
     interface HTMLElementTagNameMap {

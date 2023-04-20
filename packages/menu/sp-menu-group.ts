@@ -10,8 +10,9 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { MenuGroup } from './src/MenuGroup.js';
+import { defineElement } from '@spectrum-web-components/shared/src/define-element.js';
 
-customElements.define('sp-menu-group', MenuGroup);
+defineElement('sp-menu-group', MenuGroup);
 
 declare global {
     interface HTMLElementTagNameMap {
