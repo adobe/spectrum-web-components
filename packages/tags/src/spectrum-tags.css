@@ -1,5 +1,5 @@
-/* stylelint-disable */ /* 
-Copyright 2020 Adobe. All rights reserved.
+/*
+Copyright 2023 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License. You may obtain a copy
 of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -8,40 +8,30 @@ Unless required by applicable law or agreed to in writing, software distributed 
 the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTATIONS
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
+*/
 
-THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
+/* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-tag-border-size: var(
-        --spectrum-tag-s-border-size,
-        var(--spectrum-alias-border-size-thin)
-    ); /* .spectrum-Tags */
-    --spectrum-tag-icon-gap: var(
-        --spectrum-tag-s-icon-gap,
-        var(--spectrum-alias-item-workflow-icon-gap-s)
-    );
-    --spectrum-tag-text-size: var(
-        --spectrum-tag-s-text-size,
-        var(--spectrum-alias-item-text-size-s)
-    );
-    --spectrum-tag-height: var(
-        --spectrum-tag-s-height,
-        var(--spectrum-alias-item-height-s)
-    );
-    --spectrum-tag-padding-left: var(
-        --spectrum-tag-s-padding-left,
-        var(--spectrum-alias-item-workflow-padding-left-s)
-    );
-    --spectrum-tag-padding-right: var(
-        --spectrum-tag-s-padding-right,
-        var(--spectrum-alias-item-padding-s)
-    );
-    --spectrum-tag-avatar-padding-x: var(--spectrum-tag-icon-gap);
     --spectrum-taggroup-tag-gap-x: var(--spectrum-global-dimension-size-100);
     --spectrum-taggroup-tag-gap-y: var(--spectrum-global-dimension-size-100);
 }
 :host {
-    display: inline-block; /* .spectrum-Tags */
+    display: inline-flex;
     list-style: none;
     margin: 0;
     padding: 0;
+}
+::slotted(*) {
+    margin: calc(
+            var(
+                    --spectrum-taggroup-tag-gap-y,
+                    var(--spectrum-global-dimension-size-100)
+                ) / 2
+        )
+        calc(
+            var(
+                    --spectrum-taggroup-tag-gap-x,
+                    var(--spectrum-global-dimension-size-100)
+                ) / 2
+        );
 }
