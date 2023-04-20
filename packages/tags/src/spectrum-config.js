@@ -24,6 +24,26 @@ const converter = converterFor('spectrum-Tag');
 const config = {
     conversions: [
         {
+            inPackage: '@spectrum-css/taggroup',
+            outPackage: 'tags',
+            fileName: 'tags',
+            components: [
+                converter.classToHost('spectrum-TagGroup'),
+                {
+                    find: builder.class('spectrum-TagGroup-item'),
+                    replace: {
+                        type: 'pseudo-element',
+                        kind: 'slotted',
+                        selector: [
+                            {
+                                type: 'universal',
+                            },
+                        ],
+                    },
+                },
+            ],
+        },
+        {
             inPackage: '@spectrum-css/tag',
             outPackage: 'tags',
             fileName: 'tag',
