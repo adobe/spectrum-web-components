@@ -1845,6 +1845,9 @@ governing permissions and limitations under the License.
     --spectrum-alias-ui-icon-asterisk-size-100: var(
         --spectrum-global-dimension-size-100
     );
+    --spectrum-alias-component-text-color-selected-default: var(
+        --spectrum-global-color-gray-50
+    );
     --spectrum-alias-component-text-color-selected-hover: var(
         --spectrum-alias-component-text-color-selected-default
     );

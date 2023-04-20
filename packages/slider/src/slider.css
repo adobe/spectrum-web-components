@@ -206,3 +206,21 @@ sp-field-label {
     padding: 0;
     margin: 0;
 }
+
+/**
+ * Start workaround to fastfoward fixes in https://github.com/adobe/spectrum-web-components/issues/2905
+ */
+
+#track {
+    cursor: pointer;
+}
+
+.handle.dragging,
+.handle.handle-highlight,
+.handle:active {
+    border-width: var(--spectrum-slider-handle-border-width-down-medium);
+}
+
+/**
+ * End workaround to fastfoward fixes in https://github.com/adobe/spectrum-web-components/issues/2905
+ */
