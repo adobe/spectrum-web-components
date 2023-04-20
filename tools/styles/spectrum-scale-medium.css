@@ -139,9 +139,6 @@ governing permissions and limitations under the License.
     );
     --spectrum-alias-control-three-width-l: 29px;
     --spectrum-alias-control-three-width-xl: 33px;
-    --spectrum-alias-search-padding-left-m: var(
-        --spectrum-global-dimension-size-125
-    );
     --spectrum-alias-focus-ring-border-radius-regular: var(
         --spectrum-global-dimension-static-size-100
     );

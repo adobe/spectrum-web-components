@@ -67,6 +67,7 @@ const tokenPackages = [
     'dropzone',
     'stepper',
     'textfield',
+    'search',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
