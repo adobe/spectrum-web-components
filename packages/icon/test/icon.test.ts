@@ -15,6 +15,7 @@ import { Icon } from '@spectrum-web-components/icon';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import Sinon from 'sinon';
 
 describe('Icon', () => {
     before(async () => {
@@ -67,6 +68,25 @@ describe('Icon', () => {
         await elementUpdated(el);
 
         await expect(el).to.be.accessible();
+    });
+
+    it('loads w/ invalid src, error dispatching', async () => {
+        const error = Sinon.spy();
+        const el = await fixture<Icon>(
+            html`
+                <sp-icon
+                    label="Image Icon"
+                    src="invalid-image-src"
+                    @error=${error}
+                ></sp-icon>
+            `
+        );
+
+        await elementUpdated(el);
+
+        await expect(el).to.be.accessible();
+
+        expect(error).to.be.calledWithExactly(new Event('error'));
     });
 
     it('loads w/ label', async () => {
