@@ -70,6 +70,16 @@ export class Icon extends IconBase {
         }
     };
 
+    private announceIconImageSrcError(): void {
+        this.dispatchEvent(
+            new Event('error', {
+                cancelable: true,
+                bubbles: true,
+                composed: true,
+            })
+        );
+    }
+
     protected override render(): TemplateResult {
         if (this.name) {
             return html`
@@ -77,7 +87,11 @@ export class Icon extends IconBase {
             `;
         } else if (this.src) {
             return html`
-                <img src="${this.src}" alt=${ifDefined(this.label)} />
+                <img
+                    src="${this.src}"
+                    alt=${ifDefined(this.label)}
+                    @error=${this.announceIconImageSrcError}
+                />
             `;
         }
         return super.render();

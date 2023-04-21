@@ -57,6 +57,27 @@ export const imageIcon = (): TemplateResult => {
 
 imageIcon.storyName = 'Image Icon';
 
+export const imageIconSrcError = (): TemplateResult => {
+    const error = (): void => {
+        console.error('Invalid sp-icon src provided');
+    };
+
+    return html`
+        ${sizes.map(
+            (size) => html`
+                <sp-icon
+                    label="Back"
+                    size=${size}
+                    src=${back}
+                    @error=${error}
+                ></sp-icon>
+            `
+        )}
+    `;
+};
+
+imageIcon.storyName = 'Image Icon src invalid error';
+
 export const svgIcon = (): TemplateResult => {
     return html`
         ${sizes.map(
