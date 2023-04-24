@@ -73,9 +73,9 @@ export class Icon extends IconBase {
     private announceIconImageSrcError(): void {
         this.dispatchEvent(
             new Event('error', {
-                cancelable: true,
-                bubbles: true,
-                composed: true,
+                cancelable: false,
+                bubbles: false,
+                composed: false,
             })
         );
     }
