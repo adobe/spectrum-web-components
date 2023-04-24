@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/avatar",
-    "version": "0.11.3",
+    "version": "0.11.4",
     "publishConfig": {
         "access": "public"
     },
@@ -58,7 +58,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.5",
-        "@spectrum-web-components/shared": "^0.15.6"
+        "@spectrum-web-components/shared": "^0.15.7"
     },
     "devDependencies": {
         "@spectrum-css/avatar": "^6.0.17"

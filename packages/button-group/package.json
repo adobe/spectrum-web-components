@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/button-group",
-    "version": "0.10.10",
+    "version": "0.10.11",
     "publishConfig": {
         "access": "public"
     },
@@ -58,7 +58,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.5",
-        "@spectrum-web-components/button": "^0.20.4"
+        "@spectrum-web-components/button": "^0.20.5"
     },
     "devDependencies": {
         "@spectrum-css/buttongroup": "^6.0.34"

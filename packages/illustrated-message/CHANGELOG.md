@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/illustrated-message@0.9.14...@spectrum-web-components/illustrated-message@0.10.0) (2023-04-24)
+
+### Features
+
+-   **illustrated-message:** use core tokens ([5f34473](https://github.com/adobe/spectrum-web-components/commit/5f34473343bbd40df090c8fe23f8df6dee860598))
+
 ## [0.9.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/illustrated-message@0.9.13...@spectrum-web-components/illustrated-message@0.9.14) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/illustrated-message

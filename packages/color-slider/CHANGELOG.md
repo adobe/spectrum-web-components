@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-slider@0.4.11...@spectrum-web-components/color-slider@0.5.0) (2023-04-24)
+
+### Bug Fixes
+
+-   ensure streamingListener ends even if pointercancel not fired ([74105f2](https://github.com/adobe/spectrum-web-components/commit/74105f23d30f549f18040cc7d05b99c9b746871a))
+
+### Features
+
+-   **color-handle:** use core tokens ([e0c1468](https://github.com/adobe/spectrum-web-components/commit/e0c1468285e04f9868ad0eb504f15412cdc22418))
+
 ## [0.4.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-slider@0.4.10...@spectrum-web-components/color-slider@0.4.11) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/color-slider

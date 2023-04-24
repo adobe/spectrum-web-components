@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.24.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.23.3...@spectrum-web-components/styles@0.24.0) (2023-04-24)
+
+### Bug Fixes
+
+-   fast forward changes in [#2905](https://github.com/adobe/spectrum-web-components/issues/2905) ([3a30b27](https://github.com/adobe/spectrum-web-components/commit/3a30b27615aec5642918600727648d3f7a35908c))
+
+### Features
+
+-   **color-handle:** use core tokens ([e0c1468](https://github.com/adobe/spectrum-web-components/commit/e0c1468285e04f9868ad0eb504f15412cdc22418))
+-   **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
+-   **illustrated-message:** use core tokens ([5f34473](https://github.com/adobe/spectrum-web-components/commit/5f34473343bbd40df090c8fe23f8df6dee860598))
+-   **styles:** bump to latest tokens ([077434a](https://github.com/adobe/spectrum-web-components/commit/077434ada01e299a97425bf729014b3c31bd9f56))
+-   **styles:** update typography to leverage Core Tokens ([2f86560](https://github.com/adobe/spectrum-web-components/commit/2f86560139b98e8e014b69d6b108918010637f3d))
+
 ## [0.23.3](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/styles@0.23.2...@spectrum-web-components/styles@0.23.3) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/styles

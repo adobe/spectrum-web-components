@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/coachmark@0.10.8...@spectrum-web-components/coachmark@0.10.9) (2023-04-24)
+
+**Note:** Version bump only for package @spectrum-web-components/coachmark
+
 ## [0.10.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/coachmark@0.10.7...@spectrum-web-components/coachmark@0.10.8) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/coachmark

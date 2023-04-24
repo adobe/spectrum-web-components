@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/link",
-    "version": "0.14.7",
+    "version": "0.14.8",
     "publishConfig": {
         "access": "public"
     },
@@ -58,7 +58,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.5",
-        "@spectrum-web-components/shared": "^0.15.6"
+        "@spectrum-web-components/shared": "^0.15.7"
     },
     "devDependencies": {
         "@spectrum-css/link": "^4.0.30"

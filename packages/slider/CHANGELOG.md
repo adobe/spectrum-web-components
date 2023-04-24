@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.11](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.15.10...@spectrum-web-components/slider@0.15.11) (2023-04-24)
+
+### Bug Fixes
+
+-   ensure streamingListener ends even if pointercancel not fired ([74105f2](https://github.com/adobe/spectrum-web-components/commit/74105f23d30f549f18040cc7d05b99c9b746871a))
+-   fast forward changes in [#2905](https://github.com/adobe/spectrum-web-components/issues/2905) ([3a30b27](https://github.com/adobe/spectrum-web-components/commit/3a30b27615aec5642918600727648d3f7a35908c))
+
 ## [0.15.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/slider@0.15.9...@spectrum-web-components/slider@0.15.10) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/slider

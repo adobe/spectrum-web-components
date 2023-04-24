@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.13.14...@spectrum-web-components/textfield@0.13.15) (2023-04-24)
+
+**Note:** Version bump only for package @spectrum-web-components/textfield
+
 ## [0.13.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.13.13...@spectrum-web-components/textfield@0.13.14) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/textfield

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/field-label",
-    "version": "0.10.9",
+    "version": "0.10.10",
     "publishConfig": {
         "access": "public"
     },
@@ -58,10 +58,10 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.5",
-        "@spectrum-web-components/icon": "^0.12.10",
-        "@spectrum-web-components/icons-ui": "^0.9.11",
+        "@spectrum-web-components/icon": "^0.12.11",
+        "@spectrum-web-components/icons-ui": "^0.9.12",
         "@spectrum-web-components/reactive-controllers": "^0.3.5",
-        "@spectrum-web-components/shared": "^0.15.6"
+        "@spectrum-web-components/shared": "^0.15.7"
     },
     "devDependencies": {
         "@spectrum-css/fieldlabel": "^5.0.15"

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.4.8...@spectrum-web-components/color-loupe@0.5.0) (2023-04-24)
+
+### Features
+
+-   **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
+
 ## [0.4.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-loupe@0.4.7...@spectrum-web-components/color-loupe@0.4.8) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/color-loupe

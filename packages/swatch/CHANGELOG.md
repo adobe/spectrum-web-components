@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/swatch@0.3.9...@spectrum-web-components/swatch@0.3.10) (2023-04-24)
+
+### Bug Fixes
+
+-   support non-flat "color" application ([efc0159](https://github.com/adobe/spectrum-web-components/commit/efc0159d9be10cdfd497a630a2eb4195cd612927))
+
 ## [0.3.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/swatch@0.3.8...@spectrum-web-components/swatch@0.3.9) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/swatch

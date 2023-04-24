@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/number-field",
-    "version": "0.6.1",
+    "version": "0.6.2",
     "publishConfig": {
         "access": "public"
     },
@@ -58,13 +58,13 @@
     ],
     "dependencies": {
         "@internationalized/number": "^3.1.0",
-        "@spectrum-web-components/action-button": "^0.10.15",
+        "@spectrum-web-components/action-button": "^0.10.16",
         "@spectrum-web-components/base": "^0.7.5",
-        "@spectrum-web-components/icon": "^0.12.10",
-        "@spectrum-web-components/icons-ui": "^0.9.11",
+        "@spectrum-web-components/icon": "^0.12.11",
+        "@spectrum-web-components/icons-ui": "^0.9.12",
         "@spectrum-web-components/reactive-controllers": "^0.3.5",
-        "@spectrum-web-components/shared": "^0.15.6",
-        "@spectrum-web-components/textfield": "^0.13.14"
+        "@spectrum-web-components/shared": "^0.15.7",
+        "@spectrum-web-components/textfield": "^0.13.15"
     },
     "devDependencies": {
         "@formatjs/intl-numberformat": "7.1.4",

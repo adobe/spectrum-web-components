@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropzone@0.10.8...@spectrum-web-components/dropzone@0.10.9) (2023-04-24)
+
+### Bug Fixes
+
+-   **dropzone:** show dragged color in new illustratedmessage version ([0591acf](https://github.com/adobe/spectrum-web-components/commit/0591acf92e5f458ac90ab2f8938142c06683c80a))
+
 ## [0.10.8](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/dropzone@0.10.7...@spectrum-web-components/dropzone@0.10.8) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/dropzone

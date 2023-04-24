@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.11.13...@spectrum-web-components/radio@0.11.14) (2023-04-24)
+
+**Note:** Version bump only for package @spectrum-web-components/radio
+
 ## [0.11.13](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/radio@0.11.12...@spectrum-web-components/radio@0.11.13) (2023-04-05)
 
 ### Bug Fixes

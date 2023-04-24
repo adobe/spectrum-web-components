@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.14.14...@spectrum-web-components/theme@0.15.0) (2023-04-24)
+
+### Features
+
+-   **styles:** update typography to leverage Core Tokens ([2f86560](https://github.com/adobe/spectrum-web-components/commit/2f86560139b98e8e014b69d6b108918010637f3d))
+
 ## [0.14.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.14.13...@spectrum-web-components/theme@0.14.14) (2023-04-05)
 
 ### Bug Fixes

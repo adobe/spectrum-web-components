@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/table",
-    "version": "0.1.13",
+    "version": "0.1.14",
     "publishConfig": {
         "access": "public"
     },
@@ -117,9 +117,9 @@
     "dependencies": {
         "@lit-labs/virtualizer": "^1.0.1",
         "@spectrum-web-components/base": "^0.7.5",
-        "@spectrum-web-components/checkbox": "^0.14.13",
-        "@spectrum-web-components/icon": "^0.12.10",
-        "@spectrum-web-components/icons-ui": "^0.9.11"
+        "@spectrum-web-components/checkbox": "^0.14.14",
+        "@spectrum-web-components/icon": "^0.12.11",
+        "@spectrum-web-components/icons-ui": "^0.9.12"
     },
     "devDependencies": {
         "@spectrum-css/table": "^4.0.37"

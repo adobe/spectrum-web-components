@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/theme",
-    "version": "0.14.14",
+    "version": "0.15.0",
     "publishConfig": {
         "access": "public"
     },
@@ -134,7 +134,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.5",
-        "@spectrum-web-components/styles": "^0.23.3"
+        "@spectrum-web-components/styles": "^0.24.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

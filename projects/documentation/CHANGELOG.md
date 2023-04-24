@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/documentation@0.4.14...documentation@0.5.0) (2023-04-24)
+
+### Features
+
+-   **styles:** update typography to leverage Core Tokens ([2f86560](https://github.com/adobe/spectrum-web-components/commit/2f86560139b98e8e014b69d6b108918010637f3d))
+
 ## [0.4.14](https://github.com/adobe/spectrum-web-components/compare/documentation@0.4.13...documentation@0.4.14) (2023-04-05)
 
 **Note:** Version bump only for package documentation

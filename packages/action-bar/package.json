@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-bar",
-    "version": "0.5.16",
+    "version": "0.5.17",
     "publishConfig": {
         "access": "public"
     },
@@ -58,7 +58,7 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.5",
-        "@spectrum-web-components/popover": "^0.12.16"
+        "@spectrum-web-components/popover": "^0.12.17"
     },
     "devDependencies": {
         "@spectrum-css/actionbar": "^4.0.1"

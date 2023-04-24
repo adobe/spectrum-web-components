@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/meter",
-    "version": "0.8.3",
+    "version": "0.8.4",
     "publishConfig": {
         "access": "public"
     },
@@ -58,8 +58,8 @@
     ],
     "dependencies": {
         "@spectrum-web-components/base": "^0.7.5",
-        "@spectrum-web-components/field-label": "^0.10.9",
-        "@spectrum-web-components/shared": "^0.15.6"
+        "@spectrum-web-components/field-label": "^0.10.10",
+        "@spectrum-web-components/shared": "^0.15.7"
     },
     "devDependencies": {
         "@spectrum-css/progressbar": "^3.0.22"

@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.4.9...@spectrum-web-components/color-handle@0.5.0) (2023-04-24)
+
+### Features
+
+-   **color-handle:** use core tokens ([e0c1468](https://github.com/adobe/spectrum-web-components/commit/e0c1468285e04f9868ad0eb504f15412cdc22418))
+-   **color-loupe:** use core tokens ([149165c](https://github.com/adobe/spectrum-web-components/commit/149165c1ea67bc6348f31d79a89ccea8da7e9262))
+
 ## [0.4.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/color-handle@0.4.8...@spectrum-web-components/color-handle@0.4.9) (2023-04-05)
 
 **Note:** Version bump only for package @spectrum-web-components/color-handle
