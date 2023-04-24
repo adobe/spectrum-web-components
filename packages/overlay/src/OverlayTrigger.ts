@@ -162,6 +162,23 @@ export class OverlayTrigger extends SpectrumElement {
         }
     }
 
+    protected override firstUpdated(changes: PropertyValues<this>): void {
+        super.firstUpdated(changes);
+        this.clickContent = this.extractSlotContentFromSlot(
+            this.shadowRoot.querySelector('slot[name="click-content"]')
+        );
+        this.hoverContent = this.extractSlotContentFromSlot(
+            this.shadowRoot.querySelector('slot[name="hover-content"]')
+        );
+        this.longpressContent = this.extractSlotContentFromSlot(
+            this.shadowRoot.querySelector('slot[name="longpress-content"]')
+        );
+        this.targetContent = this.extractSlotContentFromSlot(
+            this.shadowRoot.querySelector('slot[name="trigger"]')
+        );
+        this.manageOpen();
+    }
+
     protected manageLongpressDescriptor(): void {
         const trigger = this.querySelector(
             '[slot="trigger"]'
@@ -451,10 +468,19 @@ export class OverlayTrigger extends SpectrumElement {
         this.targetContent = this.extractSlotContentFromEvent(event);
     }
 
-    private extractSlotContentFromEvent(event: Event): HTMLElement | undefined {
-        const slot = event.target as HTMLSlotElement;
+    private extractSlotContentFromSlot(
+        slot: HTMLSlotElement | null
+    ): HTMLElement | undefined {
+        if (!slot) {
+            return undefined;
+        }
         const nodes = slot.assignedNodes({ flatten: true });
         return nodes.find((node) => node instanceof HTMLElement) as HTMLElement;
+    }
+
+    private extractSlotContentFromEvent(event: Event): HTMLElement | undefined {
+        const slot = event.target as HTMLSlotElement;
+        return this.extractSlotContentFromSlot(slot);
     }
 
     private openStatePromise = Promise.resolve();
