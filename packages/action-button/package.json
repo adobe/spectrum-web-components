@@ -64,7 +64,7 @@
         "@spectrum-web-components/shared": "^0.15.6"
     },
     "devDependencies": {
-        "@spectrum-css/actionbutton": "^3.0.29"
+        "@spectrum-css/actionbutton": "^3.0.31"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
