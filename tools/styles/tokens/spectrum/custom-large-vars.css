@@ -47,4 +47,13 @@
     --spectrum-menu-item-checkmark-width-extra-large: 16px;
 
     --spectrum-rating-icon-spacing: var(--spectrum-spacing-100);
+
+    --spectrum-button-top-to-text-small: 6px;
+    --spectrum-button-bottom-to-text-small: 5px;
+    --spectrum-button-top-to-text-medium: 9px;
+    --spectrum-button-bottom-to-text-medium: 10px;
+    --spectrum-button-top-to-text-large: 12px;
+    --spectrum-button-bottom-to-text-large: 13px;
+    --spectrum-button-top-to-text-extra-large: 16px;
+    --spectrum-button-bottom-to-text-extra-large: 17px;
 }

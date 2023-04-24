@@ -70,7 +70,7 @@
         "@spectrum-web-components/picker": "^0.15.1"
     },
     "devDependencies": {
-        "@spectrum-css/splitbutton": "^5.0.31"
+        "@spectrum-css/splitbutton": "^5.0.33"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

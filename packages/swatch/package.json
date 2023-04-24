@@ -75,7 +75,7 @@
     },
     "devDependencies": {
         "@spectrum-css/swatch": "^3.0.21",
-        "@spectrum-css/swatchgroup": "^2.0.29"
+        "@spectrum-css/swatchgroup": "^2.0.31"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
