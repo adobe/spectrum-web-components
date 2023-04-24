@@ -104,25 +104,32 @@ export class OverlayTrigger extends SpectrumElement {
 
     private _longpressId = `longpress-describedby-descriptor`;
 
-    private getAssignedElementsFromEvent(event: Event): HTMLElement[] {
-        const target = event.target as HTMLSlotElement;
-        return target.assignedElements({ flatten: true }) as HTMLElement[];
+    private getAssignedElementsFromSlot(slot: HTMLSlotElement): HTMLElement[] {
+        return slot.assignedElements({ flatten: true }) as HTMLElement[];
     }
 
-    private handleTriggerContent(event: Event): void {
-        this.targetContent = this.getAssignedElementsFromEvent(event);
+    private handleTriggerContent(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
+        this.targetContent = this.getAssignedElementsFromSlot(event.target);
     }
 
-    private handleClickContent(event: Event): void {
-        this.clickContent = this.getAssignedElementsFromEvent(event);
+    private handleClickContent(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
+        this.clickContent = this.getAssignedElementsFromSlot(event.target);
     }
 
-    private handleLongpressContent(event: Event): void {
-        this.longpressContent = this.getAssignedElementsFromEvent(event);
+    private handleLongpressContent(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
+        this.longpressContent = this.getAssignedElementsFromSlot(event.target);
     }
 
-    private handleHoverContent(event: Event): void {
-        this.hoverContent = this.getAssignedElementsFromEvent(event);
+    private handleHoverContent(
+        event: Event & { target: HTMLSlotElement }
+    ): void {
+        this.hoverContent = this.getAssignedElementsFromSlot(event.target);
     }
 
     private handleBeforetoggle(event: BeforetoggleOpenEvent): void {
@@ -263,6 +270,30 @@ export class OverlayTrigger extends SpectrumElement {
     }
 
     protected override willUpdate(): void {
+        if (!this.hasUpdated) {
+            this.updateComplete.then(() => {
+                this.clickContent = this.getAssignedElementsFromSlot(
+                    this.shadowRoot.querySelector(
+                        'slot[name="click-content"]'
+                    ) as HTMLSlotElement
+                );
+                this.hoverContent = this.getAssignedElementsFromSlot(
+                    this.shadowRoot.querySelector(
+                        'slot[name="hover-content"]'
+                    ) as HTMLSlotElement
+                );
+                this.longpressContent = this.getAssignedElementsFromSlot(
+                    this.shadowRoot.querySelector(
+                        'slot[name="longpress-content"]'
+                    ) as HTMLSlotElement
+                );
+                this.targetContent = this.getAssignedElementsFromSlot(
+                    this.shadowRoot.querySelector(
+                        'slot[name="trigger"]'
+                    ) as HTMLSlotElement
+                );
+            });
+        }
         if ((this.placement as unknown as 'none') === 'none') {
             this.placement = undefined;
         }

@@ -266,7 +266,7 @@ export class OverlayBase extends SpectrumElement {
     }
 
     protected managePosition(): void {
-        if (!this.requiresPosition) return;
+        if (!this.requiresPosition || !this.open) return;
 
         const offset = this.offset || 0;
         const trigger = this.triggerElement as HTMLElement;

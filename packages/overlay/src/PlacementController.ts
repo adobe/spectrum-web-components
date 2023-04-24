@@ -109,11 +109,17 @@ export class PlacementController implements ReactiveController {
         );
         this.cleanup = () => {
             this.host.elements?.forEach((element) => {
-                const placement = this.originalPlacements.get(element);
-                if (placement) {
-                    element.setAttribute('placement', placement);
-                }
-                this.originalPlacements.delete(element);
+                element.addEventListener(
+                    'sp-closed',
+                    () => {
+                        const placement = this.originalPlacements.get(element);
+                        if (placement) {
+                            element.setAttribute('placement', placement);
+                        }
+                        this.originalPlacements.delete(element);
+                    },
+                    { once: true }
+                );
             });
             cleanup();
         };

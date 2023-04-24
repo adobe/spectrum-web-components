@@ -55,6 +55,9 @@ export function OverlayNoPopover<T extends Constructor<OverlayBase>>(
         ): Promise<HTMLElement | null> {
             let focusEl = null as HTMLElement | null;
             const start = (el: OpenableElement, index: number) => (): void => {
+                if (targetOpenState !== this.open) {
+                    return;
+                }
                 if (typeof el.open !== 'undefined') {
                     el.open = targetOpenState;
                 }
@@ -64,7 +67,7 @@ export function OverlayNoPopover<T extends Constructor<OverlayBase>>(
                         : BeforetoggleClosedEvent;
                     this.dispatchEvent(new event());
                 }
-                if (!targetOpenState) {
+                if (targetOpenState !== true) {
                     return;
                 }
                 focusEl = focusEl || firstFocusableIn(el);
