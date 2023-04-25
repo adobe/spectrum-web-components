@@ -26,6 +26,23 @@ import '@spectrum-web-components/overlay/sp-overlay.js';
 import tooltipStyles from './tooltip.css.js';
 
 class TooltipOpenable extends HTMLElement {
+    static get observedAttributes(): string[] {
+        return ['open', 'placement'];
+    }
+    attributeChangedCallback(
+        name: 'open' | 'placement',
+        _oldValue: string,
+        newValue: 'string'
+    ): void {
+        switch (name) {
+            case 'open':
+                this.open = newValue !== null;
+                break;
+            case 'placement':
+                this.placement = newValue as Placement;
+                break;
+        }
+    }
     set open(open: boolean) {
         this._open = open;
         const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
@@ -35,6 +52,15 @@ class TooltipOpenable extends HTMLElement {
         return this._open;
     }
     private _open = false;
+    set placement(placement: Placement) {
+        this._placement = placement;
+        const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
+        tooltip.placement = placement;
+    }
+    get placement(): Placement {
+        return this._placement;
+    }
+    private _placement: Placement = 'top';
 }
 
 if (!customElements.get('sp-tooltip-openable')) {

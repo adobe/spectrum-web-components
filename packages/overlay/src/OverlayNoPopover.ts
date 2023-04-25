@@ -141,27 +141,13 @@ export function OverlayNoPopover<T extends Constructor<OverlayBase>>(
                     this.triggerElement &&
                     !(this.triggerElement instanceof VirtualTrigger)
                 ) {
-                    // This has a bug where the current overlay and the focused content could share the same `activeElement` shadow root...
-                    const relationEvent = new Event('overlay-relation-query', {
-                        bubbles: true,
-                        composed: true,
-                    });
-                    this.addEventListener(
-                        relationEvent.type,
-                        (event: Event) => {
-                            /* eslint-disable @spectrum-web-components/document-active-element */
-                            if (
-                                document.activeElement &&
-                                event
-                                    .composedPath()
-                                    .includes(document.activeElement)
-                            ) {
-                                (this.triggerElement as HTMLElement).focus();
-                            }
-                            /* eslint-enable @spectrum-web-components/document-active-element */
-                        }
-                    );
-                    this.dispatchEvent(relationEvent);
+                    if (
+                        this.contains(
+                            (this.getRootNode() as Document).activeElement
+                        )
+                    ) {
+                        this.triggerElement.focus();
+                    }
                 }
                 return;
             }
