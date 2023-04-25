@@ -28,7 +28,7 @@ import {
     ElementResolutionController,
     elementResolverUpdatedSymbol,
 } from '@spectrum-web-components/reactive-controllers/src/ElementResolution.js';
-import type { VirtualTrigger } from './VirtualTrigger.js';
+import { VirtualTrigger } from './VirtualTrigger.js';
 import {
     ifDefined,
     styleMap,
@@ -358,6 +358,10 @@ export class OverlayBase extends SpectrumElement {
                 'pointerleave',
                 this.handlePointerleave
             );
+            this.removeEventListener(
+                'pointerleave',
+                this.handleOverlayPointerleave
+            );
             triggerElement.addEventListener(
                 'pointerdown',
                 this.handlePointerdown
@@ -411,6 +415,10 @@ export class OverlayBase extends SpectrumElement {
                 nextTriggerElement.addEventListener(
                     'pointerleave',
                     this.handlePointerleave
+                );
+                this.addEventListener(
+                    'pointerleave',
+                    this.handleOverlayPointerleave
                 );
                 if (this.receivesFocus === 'true') return;
 
@@ -562,12 +570,38 @@ export class OverlayBase extends SpectrumElement {
         this.pointerentered = true;
     };
 
-    protected handlePointerleave = (): void => {
+    protected handlePointerleave = (event: PointerEvent): void => {
+        if (
+            this === event.relatedTarget ||
+            this.contains(event.relatedTarget as Node)
+        ) {
+            return;
+        }
+        this.doDointerleave();
+    };
+
+    protected handleOverlayPointerleave = (event: PointerEvent): void => {
+        const hasNonVirtualTrigger =
+            this.triggerElement &&
+            this.triggerElement instanceof VirtualTrigger;
+        if (
+            this.triggerElement === event.relatedTarget ||
+            (hasNonVirtualTrigger &&
+                (this.triggerElement as HTMLElement).contains(
+                    event.relatedTarget as Node
+                ))
+        ) {
+            return;
+        }
+        this.doDointerleave();
+    };
+
+    protected doDointerleave(): void {
         this.pointerentered = false;
         const triggerElement = this.triggerElement as HTMLElement;
         if (this.focusedin && triggerElement.matches(':focus-visible')) return;
         this.open = false;
-    };
+    }
 
     protected handleLongpress = (): void => {
         this.open = true;

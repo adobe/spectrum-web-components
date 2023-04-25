@@ -270,30 +270,6 @@ export class OverlayTrigger extends SpectrumElement {
     }
 
     protected override willUpdate(): void {
-        if (!this.hasUpdated) {
-            this.updateComplete.then(() => {
-                this.clickContent = this.getAssignedElementsFromSlot(
-                    this.shadowRoot.querySelector(
-                        'slot[name="click-content"]'
-                    ) as HTMLSlotElement
-                );
-                this.hoverContent = this.getAssignedElementsFromSlot(
-                    this.shadowRoot.querySelector(
-                        'slot[name="hover-content"]'
-                    ) as HTMLSlotElement
-                );
-                this.longpressContent = this.getAssignedElementsFromSlot(
-                    this.shadowRoot.querySelector(
-                        'slot[name="longpress-content"]'
-                    ) as HTMLSlotElement
-                );
-                this.targetContent = this.getAssignedElementsFromSlot(
-                    this.shadowRoot.querySelector(
-                        'slot[name="trigger"]'
-                    ) as HTMLSlotElement
-                );
-            });
-        }
         if ((this.placement as unknown as 'none') === 'none') {
             this.placement = undefined;
         }

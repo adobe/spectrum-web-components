@@ -63,8 +63,9 @@ const Template = ({
         trigger="trigger@${interaction}"
         type=${ifDefined(type)}
         placement=${ifDefined(placement)}
+        offset="-10"
     >
-        <sp-popover dialog tip>
+        <sp-popover dialog>
             <p>
                 Content goes here.
                 ${type === 'modal' || type === 'page'

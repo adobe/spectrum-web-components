@@ -467,7 +467,7 @@ describe('sp-overlay', () => {
             expect(hint1.open).to.be.true;
             expect(hint2.open).to.be.false;
         });
-        xit('stays open when pointer enters overlay from trigger element', async () => {
+        it('stays open when pointer enters overlay from trigger element', async () => {
             const test = await styledFixture(
                 html`
                     <div>
@@ -477,7 +477,7 @@ describe('sp-overlay', () => {
                         <sp-overlay
                             trigger="test-button@hover"
                             placement="bottom"
-                            offset="-5"
+                            offset="-10"
                         >
                             <sp-tooltip>Help text.</sp-tooltip>
                         </sp-overlay>
@@ -493,7 +493,7 @@ describe('sp-overlay', () => {
             const buttonRect = button.getBoundingClientRect();
             const buttonPoint = [
                 buttonRect.x + buttonRect.width / 2,
-                buttonRect.y + buttonRect.height / 2,
+                buttonRect.y + buttonRect.height - 2,
             ] as [number, number];
 
             await elementUpdated(overlay);
@@ -511,25 +511,40 @@ describe('sp-overlay', () => {
             });
             await nextFrame();
             await nextFrame();
-            const tooltipRect = (
-                el.shadowRoot.querySelector('#tooltip') as HTMLDivElement
-            ).getBoundingClientRect();
-            const tooltipPoint = [
-                tooltipRect.x + tooltipRect.width / 2,
-                tooltipRect.y + tooltipRect.height / 2,
-            ] as [number, number];
+            await nextFrame();
+            await nextFrame();
+            expect(overlay.open).to.be.true;
             // Pointer leave the button to close the tooltip, but...
             // Pointer enter the tooltip to keep the tooltip open
             await sendMouse({
                 steps: [
                     {
                         type: 'move',
-                        position: tooltipPoint,
+                        position: [
+                            buttonRect.x + buttonRect.width / 2,
+                            buttonRect.y + buttonRect.height - 1,
+                        ],
+                    },
+                    {
+                        type: 'move',
+                        position: [
+                            buttonRect.x + buttonRect.width / 2,
+                            buttonRect.y + buttonRect.height,
+                        ],
+                    },
+                    {
+                        type: 'move',
+                        position: [
+                            buttonRect.x + buttonRect.width / 2,
+                            buttonRect.y + buttonRect.height + 1,
+                        ],
                     },
                 ],
             });
+            await nextFrame();
+            await nextFrame();
+            expect(overlay.open).to.be.true;
             await opened;
-            await elementUpdated(el);
 
             expect(el.open).to.be.true;
             await expect(button).to.be.accessible();
@@ -557,7 +572,6 @@ describe('sp-overlay', () => {
                 ],
             });
             await closed;
-            await elementUpdated(el);
 
             expect(el.open).to.be.false;
 
@@ -573,7 +587,6 @@ describe('sp-overlay', () => {
             });
             await opened;
             await elementUpdated(el);
-
             closed = oneEvent(button, 'sp-closed');
             // pointer leave the button to close the tooltip
             await sendMouse({
@@ -588,7 +601,6 @@ describe('sp-overlay', () => {
                 ],
             });
             await closed;
-            await elementUpdated(el);
         });
         it('stays open when pointer enters overlay from trigger element', async () => {
             const button = await styledFixture(

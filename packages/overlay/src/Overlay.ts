@@ -16,6 +16,7 @@ import { OverlayNoPopover } from './OverlayNoPopover.js';
 import type { OverlayOptions, TriggerInteractions } from './overlay-types.js';
 import { Placement } from '@floating-ui/dom/src/types.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
+import { reparentChildren } from '@spectrum-web-components/shared';
 
 const supportsPopover = 'showPopover' in document.createElement('div');
 
@@ -80,7 +81,16 @@ export class Overlay extends OverlayFeatures {
         } else if (content && options) {
             const target = targetOrContent;
             const interaction = interactionOrOptions;
-            overlay.append(content);
+            let restored = false;
+            const restoreContent = reparentChildren([content], overlay, {
+                position: 'beforeend',
+                prepareCallback: (el) => {
+                    const slot = el.slot;
+                    return () => {
+                        el.slot = slot;
+                    };
+                },
+            });
             overlay.receivesFocus = options.receivesFocus ?? 'auto';
             overlay.triggerElement = options.virtualTrigger || target;
             overlay.type =
@@ -110,6 +120,10 @@ export class Overlay extends OverlayFeatures {
             overlay.open = true;
             overlay.dispose = () => {
                 overlay.addEventListener('sp-closed', () => {
+                    if (!restored) {
+                        restoreContent();
+                        restored = true;
+                    }
                     requestAnimationFrame(() => {
                         overlay.remove();
                     });
