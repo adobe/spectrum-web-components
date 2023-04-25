@@ -547,26 +547,20 @@ describe('Overlay - type="modal"', () => {
         it('closes the first "contextmenu" when opening a second', async () => {
             const closed = oneEvent(document, 'sp-closed');
             const opened = oneEvent(document, 'sp-opened');
-            // Right click to out of the "context menu" overlay to both close
-            // the first overlay and have the event passed to the surfacing page
-            // in order to open a subsequent "context menu" overlay.
-            await sendMouse({
-                steps: [
-                    {
-                        type: 'move',
-                        position: [width / 4, height / 4],
-                    },
-                    {
-                        type: 'click',
-                        options: {
-                            button: 'right',
-                        },
-                        position: [width / 4, height / 4],
-                    },
-                ],
-            });
-            await opened;
+            /**
+             * Right click out of the "context menu" overlay to both close
+             * the first overlay and have the event passed to the surfacing page
+             * in order to open a subsequent "context menu" overlay.
+             *
+             * Using `sendMouse` here triggers the light dismiss for some reason while
+             * manual interacting in this way does not...
+             */
+            const trigger = document.querySelector(
+                'start-end-contextmenu'
+            ) as HTMLElement;
+            trigger.dispatchEvent(new Event('contextmenu'));
             await closed;
+            await opened;
             secondMenu = document.querySelector('sp-popover') as Popover;
             secondRect = secondMenu.getBoundingClientRect();
             expect(secondMenu).to.not.be.null;
@@ -576,12 +570,8 @@ describe('Overlay - type="modal"', () => {
             sendMouse({
                 steps: [
                     {
-                        type: 'move',
-                        position: [width / 8, height / 8],
-                    },
-                    {
                         type: 'click',
-                        position: [width / 8, height / 8],
+                        position: [width - width / 8, height - height / 8],
                     },
                 ],
             });

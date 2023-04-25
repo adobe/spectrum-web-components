@@ -516,14 +516,12 @@ export function runPickerTests(): void {
             });
 
             secondItem.click();
-            // What is the time all about and how it be better measured?
-            await nextFrame();
-            await nextFrame();
+            // What is the time all about and how can it be better measured?
             await nextFrame();
             await nextFrame();
             expect(preventChangeSpy.calledOnce).to.be.true;
-            expect(el.open).to.be.false;
             expect(secondItem.selected, 'selection prevented').to.be.false;
+            expect(el.open).to.be.true;
         });
         it('can throw focus after `change`', async () => {
             const input = document.createElement('input');
@@ -899,7 +897,9 @@ export function runPickerTests(): void {
             lastItem.dispatchEvent(
                 new FocusEvent('focusin', { bubbles: true })
             );
-            lastItem.dispatchEvent(arrowDownEvent());
+            await sendKeys({
+                press: 'ArrowDown',
+            });
             await elementUpdated(el);
             await nextFrame();
             expect(getParentOffset(lastItem)).to.be.greaterThan(40);

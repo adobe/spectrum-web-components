@@ -42,7 +42,7 @@ export function OverlayNoPopover<T extends Constructor<OverlayBase>>(
             await this.managePosition();
             await this.ensureOnDOM();
             const focusEl = await this.makeTransition(targetOpenState);
-            await this.applyFocus(focusEl);
+            await this.applyFocus(targetOpenState, focusEl);
         }
 
         private async ensureOnDOM(): Promise<void> {
@@ -123,14 +123,17 @@ export function OverlayNoPopover<T extends Constructor<OverlayBase>>(
             return focusEl;
         }
 
-        private async applyFocus(focusEl: HTMLElement | null): Promise<void> {
+        private async applyFocus(
+            targetOpenState: boolean,
+            focusEl: HTMLElement | null
+        ): Promise<void> {
             if (this.receivesFocus === 'false') {
                 return;
             }
 
             await nextFrame();
             await nextFrame();
-            if (!this.open) {
+            if (targetOpenState === this.open && !this.open) {
                 if (
                     // Do not return focus to trigger when overlay is a "hint" (tooltip)
                     this.type !== 'hint' &&

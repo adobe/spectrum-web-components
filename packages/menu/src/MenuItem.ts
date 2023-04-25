@@ -374,7 +374,10 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     public closeOverlay?: () => Promise<void>;
 
-    protected handleSubmenuClick(): void {
+    protected handleSubmenuClick(event: Event): void {
+        if (event.composedPath().includes(this.overlayElement)) {
+            return;
+        }
         this.openOverlay();
     }
 

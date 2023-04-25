@@ -608,10 +608,8 @@ export class OverlayBase extends SpectrumElement {
         this.longpressed = true;
     };
 
-    protected handleBeforetoggle({
-        newState: open,
-    }: Event & { newState: string }): void {
-        if (open === 'open') {
+    protected handleBeforetoggle(event: Event & { newState: string }): void {
+        if (event.newState === 'open') {
             this.handlePopovershow();
         } else {
             this.handlePopoverhide();

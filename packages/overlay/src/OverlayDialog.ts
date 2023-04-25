@@ -42,7 +42,7 @@ export function OverlayDialog<T extends Constructor<OverlayBase>>(
             await this.managePosition();
             await this.dialogEnsureOnDOM();
             const focusEl = await this.dialogMakeTransition(targetOpenState);
-            await this.dialogApplyFocus(focusEl);
+            await this.dialogApplyFocus(targetOpenState, focusEl);
         }
 
         protected async dialogEnsureOnDOM(): Promise<void> {
@@ -156,6 +156,7 @@ export function OverlayDialog<T extends Constructor<OverlayBase>>(
         }
 
         protected async dialogApplyFocus(
+            targetOpenState: boolean,
             focusEl: HTMLElement | null
         ): Promise<void> {
             /**
@@ -169,7 +170,7 @@ export function OverlayDialog<T extends Constructor<OverlayBase>>(
 
             await nextFrame();
             await nextFrame();
-            if (!this.open) {
+            if (targetOpenState === this.open && !this.open) {
                 if (
                     // Do not return focus to trigger when overlay is a "hint" (tooltip)
                     this.type !== 'hint' &&

@@ -42,7 +42,7 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
             await this.managePosition();
             await this.ensureOnDOM(targetOpenState);
             const focusEl = await this.makeTransition(targetOpenState);
-            await this.applyFocus(focusEl);
+            await this.applyFocus(targetOpenState, focusEl);
         }
 
         private async ensureOnDOM(targetOpenState: boolean): Promise<void> {
@@ -133,9 +133,11 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
                             );
                         }
                     };
+                    if (this.open !== targetOpenState) {
+                        return;
+                    }
                     if (
-                        !targetOpenState &&
-                        this.open === targetOpenState &&
+                        targetOpenState !== true &&
                         this.dialogEl.matches(':open') &&
                         this.isConnected
                     ) {
@@ -161,14 +163,17 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
             return focusEl;
         }
 
-        private async applyFocus(focusEl: HTMLElement | null): Promise<void> {
+        private async applyFocus(
+            targetOpenState: boolean,
+            focusEl: HTMLElement | null
+        ): Promise<void> {
             if (this.receivesFocus === 'false') {
                 return;
             }
 
             await nextFrame();
             await nextFrame();
-            if (!this.open) {
+            if (targetOpenState === this.open && !this.open) {
                 if (
                     // Do not return focus to trigger when overlay is a "hint" (tooltip)
                     this.type !== 'hint' &&

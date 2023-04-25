@@ -529,6 +529,19 @@ export class Menu extends SpectrumElement {
     }
 
     public handleKeydown(event: KeyboardEvent): void {
+        // if (event.composedPath().find((el) => (el as HTMLElement).localName === 'dialog')) {
+        //     return;
+        // }
+        if (
+            event.target !== this &&
+            this !== (event.target as HTMLElement).parentElement
+        ) {
+            return;
+        }
+        // if (event.defaultPrevented) {
+        //     return;
+        // }
+        // event.preventDefault();
         const { code } = event;
         if (code === 'Tab') {
             this.prepareToCleanUp();
