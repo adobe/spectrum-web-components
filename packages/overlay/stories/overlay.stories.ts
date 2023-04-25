@@ -1271,6 +1271,7 @@ export const virtualElement = (args: Properties): TemplateResult => {
         const fragment = document.createDocumentFragment();
         render(contextMenuTemplate(id), fragment);
         const popover = fragment.querySelector('sp-popover') as Popover;
+
         openOverlay(trigger, 'click', popover, {
             placement: args.placement,
             receivesFocus: 'auto',
