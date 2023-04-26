@@ -12,6 +12,7 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 import { IllustratedMessage } from '../';
 import { expect, fixture, html } from '@open-wc/testing';
+import { warnsOnDoubleRegister } from '../../../test/testing-helpers';
 
 describe('Illustrated Message', () => {
     it('loads', async () => {
@@ -41,4 +42,8 @@ describe('Illustrated Message', () => {
         expect(slot).to.not.equal(undefined);
         return true;
     });
+    describe(
+        'dev mode registration large',
+        warnsOnDoubleRegister(() => import('../sp-illustrated-message.js'))
+    );
 });

@@ -13,6 +13,7 @@ import '@spectrum-web-components/icons/sp-icons-medium.js';
 import { IconsLarge, IconsMedium } from '../';
 import IconsetSVG from '../src/icons-large.svg.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { warnsOnDoubleRegister } from '../../../test/testing-helpers';
 
 describe('icons', () => {
     it('large', async () => {
@@ -51,4 +52,12 @@ describe('icons', () => {
         expect(el).to.not.equal(undefined);
         expect(el.getIconList().length).to.equal(48);
     });
+    describe(
+        'dev mode registration large',
+        warnsOnDoubleRegister(() => import('../sp-icons-large.js'))
+    );
+    describe(
+        'dev mode registration medium',
+        warnsOnDoubleRegister(() => import('../sp-icons-medium.js'))
+    );
 });

@@ -14,7 +14,10 @@ import '@spectrum-web-components/icon/sp-icon.js';
 import { Icon } from '@spectrum-web-components/icon';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 describe('Icon', () => {
     before(async () => {
@@ -142,4 +145,8 @@ describe('Icon', () => {
         const count = el.shadowRoot.querySelectorAll('svg').length;
         expect(count).to.equal(1);
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-icon.js'))
+    );
 });
