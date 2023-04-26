@@ -41,7 +41,10 @@ import {
 import { OverlayTrigger } from '@spectrum-web-components/overlay';
 import { html, TemplateResult } from '@spectrum-web-components/base';
 import { Theme } from '@spectrum-web-components/theme';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 import { Divider } from '@spectrum-web-components/divider/src/Divider.js';
 
 async function styledFixture<T extends Element>(
@@ -338,4 +341,8 @@ describe('Dialog Wrapper', () => {
         });
         consoleWarnStub.restore();
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-dialog-wrapper.js'))
+    );
 });

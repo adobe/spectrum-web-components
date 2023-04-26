@@ -1,6 +1,6 @@
 {
     "packages": ["packages/*", "projects/*", "tools/*"],
-    "version": "independent",
+    "version": "1.0.0",
     "granularPathspec": false,
     "npmClient": "yarn",
     "useWorkspaces": true,

@@ -14,7 +14,10 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/divider/sp-divider.js';
 import { Divider } from '@spectrum-web-components/divider';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 describe('Divider', () => {
     testForLitDevWarnings(
@@ -47,4 +50,8 @@ describe('Divider', () => {
 
         await expect(el).to.be.accessible();
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-divider.js'))
+    );
 });
