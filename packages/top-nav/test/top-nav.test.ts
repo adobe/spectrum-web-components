@@ -15,7 +15,10 @@ import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 import { TopNav, TopNavItem } from '@spectrum-web-components/top-nav';
 import { Default, Selected } from '../stories/top-nav.stories.js';
 import { spy } from 'sinon';
-import { testForLitDevWarnings } from '../../../test/testing-helpers';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers';
 
 describe('TopNav', () => {
     testForLitDevWarnings(async () => await fixture<TopNav>(Default()));
@@ -77,4 +80,8 @@ describe('TopNavItem', () => {
         expect(clickSpy.called).to.be.true;
         expect(clickSpy.calledWith(anchor)).to.be.true;
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-top-nav.js'))
+    );
 });

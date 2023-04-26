@@ -24,6 +24,7 @@ import { CloseButton } from '@spectrum-web-components/button';
 import {
     testForLitDevWarnings,
     waitForPredicate,
+    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 
@@ -308,4 +309,8 @@ describe('Toast', () => {
         expect(el.open).to.be.true;
         expect(closeSpy.callCount).to.equal(1);
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-toast.js'))
+    );
 });

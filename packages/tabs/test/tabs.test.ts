@@ -30,6 +30,7 @@ import {
     arrowUpEvent,
     enterEvent,
     spaceEvent,
+    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers.js';
 import { sendKeys } from '@web/test-runner-commands';
 
@@ -621,4 +622,8 @@ describe('Tabs', () => {
         expect(hasError, 'it should not error').to.be.false;
         window.onerror = oldOnerror;
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-tabs.js'))
+    );
 });

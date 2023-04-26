@@ -24,6 +24,7 @@ import {
     enterEvent,
     spaceEvent,
     testForLitDevWarnings,
+    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers.js';
 
 describe('Tag', () => {
@@ -186,4 +187,8 @@ describe('Tag', () => {
             'Does not respond after `focusout`'
         ).to.equal(expectedEventCount);
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-tag.js'))
+    );
 });
