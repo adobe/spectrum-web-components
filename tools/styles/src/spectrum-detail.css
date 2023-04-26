@@ -72,6 +72,7 @@ governing permissions and limitations under the License.
         --mod-detail-line-height,
         var(--spectrum-detail-line-height)
     );
+    margin-block: 0;
     text-transform: uppercase;
 }
 .spectrum-Detail .spectrum-Detail-strong,

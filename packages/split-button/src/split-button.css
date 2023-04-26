@@ -81,9 +81,3 @@ sp-popover {
 ::slotted(sp-menu) {
     display: none;
 }
-
-.more-medium {
-    width: 18px;
-    height: 18px;
-    margin: 1px -4px 0;
-}

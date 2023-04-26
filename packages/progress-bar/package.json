@@ -61,7 +61,7 @@
         "@spectrum-web-components/field-label": "^0.10.10"
     },
     "devDependencies": {
-        "@spectrum-css/progressbar": "^3.0.22"
+        "@spectrum-css/progressbar": "^3.0.27"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

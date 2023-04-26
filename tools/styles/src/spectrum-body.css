@@ -64,6 +64,7 @@ governing permissions and limitations under the License.
         var(--spectrum-body-sans-serif-font-weight)
     );
     line-height: var(--mod-body-line-height, var(--spectrum-body-line-height));
+    margin-block: 0;
 }
 .spectrum-Body .spectrum-Body-strong,
 .spectrum-Body strong {

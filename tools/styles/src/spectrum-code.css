@@ -46,6 +46,7 @@ governing permissions and limitations under the License.
     font-style: var(--mod-code-font-style, var(--spectrum-code-font-style));
     font-weight: var(--mod-code-font-weight, var(--spectrum-code-font-weight));
     line-height: var(--mod-code-line-height, var(--spectrum-code-line-height));
+    margin-block: 0;
 }
 .spectrum-Code .spectrum-Code-strong,
 .spectrum-Code strong {

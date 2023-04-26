@@ -503,7 +503,6 @@ governing permissions and limitations under the License.
     padding-left: 0;
 }
 :host([horizontal]) .body {
-    -ms-flex-negative: 0;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;

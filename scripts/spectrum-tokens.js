@@ -90,7 +90,7 @@ const targetHost = (css) => {
      *   \g - global
      **/
     return css.replaceAll(
-        /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large)?,?(\n|\s)*)?)+ \{/g,
+        /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large)?,?(\n|\s)*)?)+\s?\{/g,
         ':host,\n:root {'
     );
 };
