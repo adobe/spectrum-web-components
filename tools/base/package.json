@@ -37,6 +37,10 @@
             "development": "./src/decorators.dev.js",
             "default": "./src/decorators.js"
         },
+        "./src/define-element.js": {
+            "development": "./src/define-element.dev.js",
+            "default": "./src/define-element.js"
+        },
         "./src/directives.js": {
             "development": "./src/directives.dev.js",
             "default": "./src/directives.js"

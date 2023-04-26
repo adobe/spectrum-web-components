@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 interface CustomElementConstructor {
-    new (...params: any[]): HTMLElement;
+    new (...params: unknown[]): HTMLElement;
 }
 
 export function defineElement(
