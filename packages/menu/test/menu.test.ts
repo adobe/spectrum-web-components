@@ -505,7 +505,7 @@ describe('Menu', () => {
         expect(el.selectedItems.length).to.equal(1);
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-menu.js'))
     );
 });

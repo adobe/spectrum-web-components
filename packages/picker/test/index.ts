@@ -1364,7 +1364,7 @@ export function runPickerTests(): void {
         expect(closedEvent.detail.interaction).to.equal('modal');
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-picker.js'))
     );
 }

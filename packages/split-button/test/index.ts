@@ -25,6 +25,7 @@ import moreDefaults, {
 import type { Button } from '@spectrum-web-components/button';
 import type { MenuItem } from '@spectrum-web-components/menu';
 import type { SplitButton } from '@spectrum-web-components/split-button';
+import { warnsOnDoubleRegister } from '../../../test/testing-helpers.js';
 
 // const pickerReady = async (picker: SplitButton): Promise<void> => {
 //     await elementUpdated(picker);
@@ -481,4 +482,8 @@ export function runSplitButtonTests(
         expect(firstItemSpy.called).to.be.true;
         expect(firstItemSpy.calledTwice, '1st called twice').to.be.true;
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-split-button.js'))
+    );
 }

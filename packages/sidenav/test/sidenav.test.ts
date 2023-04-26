@@ -19,6 +19,7 @@ import {
     arrowDownEvent,
     arrowUpEvent,
     shiftTabEvent,
+    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers.js';
 import {
     elementUpdated,
@@ -517,4 +518,8 @@ describe('Sidenav', () => {
 
         await waitUntil(() => item3.tabIndex === -1, 'after');
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-sidenav.js'))
+    );
 });

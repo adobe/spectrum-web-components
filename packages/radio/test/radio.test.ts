@@ -191,7 +191,7 @@ describe('Radio', () => {
         expect(el.checked).to.be.true;
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-radio.js'))
     );
 });

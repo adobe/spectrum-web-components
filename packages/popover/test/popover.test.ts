@@ -89,7 +89,7 @@ describe('popover', () => {
         }
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-popover.js'))
     );
 });

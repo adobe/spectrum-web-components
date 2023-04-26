@@ -92,7 +92,7 @@ describe('Meter', () => {
     });
 
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-meter.js'))
     );
 });

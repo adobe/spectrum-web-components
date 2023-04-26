@@ -131,7 +131,7 @@ describe('ProgressBar', () => {
         consoleWarnStub.restore();
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-progress-bar.js'))
     );
 });

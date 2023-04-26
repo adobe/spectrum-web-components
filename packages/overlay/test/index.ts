@@ -841,7 +841,7 @@ export const runOverlayTriggerTests = (): void => {
         });
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../overlay-trigger.js'))
     );
 };

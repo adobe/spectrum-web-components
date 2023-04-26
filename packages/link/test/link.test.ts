@@ -72,7 +72,7 @@ describe('Link', () => {
     });
 
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-link.js'))
     );
 });

@@ -171,7 +171,7 @@ describe('Menu item', () => {
         expect(el.hasAttribute('value')).to.be.false;
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-menu-item.js'))
     );
 });

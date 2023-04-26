@@ -1261,7 +1261,7 @@ describe('NumberField', () => {
         });
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-number-field.js'))
     );
 });

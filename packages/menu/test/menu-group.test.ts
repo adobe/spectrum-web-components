@@ -377,7 +377,7 @@ describe('Menu group', () => {
         expect(subInheritItem2.getAttribute('role')).to.equal('menuitemradio');
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-menu-group.js'))
     );
 });

@@ -14,6 +14,7 @@ import '@spectrum-web-components/sidenav/sp-sidenav.js';
 import '@spectrum-web-components/sidenav/sp-sidenav-item.js';
 import { SideNavItem } from '@spectrum-web-components/sidenav';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { warnsOnDoubleRegister } from '../../../test/testing-helpers.js';
 
 describe('Sidenav Item', () => {
     it('can exist disabled and with no parent', async () => {
@@ -222,4 +223,8 @@ describe('Sidenav Item', () => {
         expect(sideNavItem_2_3_1.hasAttribute('selected')).to.be.true;
         expect(sideNavItem_2_3_2.hasAttribute('selected')).to.be.false;
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-sidenav-item.js'))
+    );
 });

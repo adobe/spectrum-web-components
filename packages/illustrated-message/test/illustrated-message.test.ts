@@ -43,7 +43,7 @@ describe('Illustrated Message', () => {
         return true;
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-illustrated-message.js'))
     );
 });

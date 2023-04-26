@@ -105,7 +105,7 @@ describe('ProgressCircle', () => {
         consoleWarnStub.restore();
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-progress-circle.js'))
     );
 });

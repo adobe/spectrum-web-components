@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/status-light/sp-status-light.js';
 import { StatusLight } from '@spectrum-web-components/status-light';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import { warnsOnDoubleRegister } from '../../../test/testing-helpers.js';
 
 describe('Status Light', () => {
     it('loads correctly', async () => {
@@ -44,4 +45,8 @@ describe('Status Light', () => {
         expect(el.hasAttribute('aria-disabled')).to.be.true;
         expect(el.getAttribute('aria-disabled')).to.equal('true');
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-status-light.js'))
+    );
 });

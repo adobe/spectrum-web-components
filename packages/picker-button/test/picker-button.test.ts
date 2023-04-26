@@ -52,7 +52,7 @@ describe('PickerButton', () => {
         await expect(el).to.be.accessible();
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-picker-button.js'))
     );
 });

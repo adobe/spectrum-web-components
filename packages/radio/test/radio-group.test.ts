@@ -636,7 +636,7 @@ describe('Radio Group', () => {
         expect(changeSpy.calledWith(undefined)).to.be.false;
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-radio-group.js'))
     );
 });

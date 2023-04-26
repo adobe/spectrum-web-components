@@ -40,7 +40,7 @@ describe('QuickActions', () => {
         await expect(el).to.be.accessible();
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-quick-actions.js'))
     );
 });

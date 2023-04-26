@@ -53,7 +53,7 @@ describe('icons', () => {
         expect(el.getIconList().length).to.equal(48);
     });
     describe(
-        'dev mode registration large',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-icons-large.js'))
     );
     describe(
