@@ -22,6 +22,7 @@ import {
 } from '@open-wc/testing';
 import { spy } from 'sinon';
 import { sendMouse } from '../../../test/plugins/browser.js';
+import { warnsOnDoubleRegister } from '../../../test/testing-helpers.js';
 
 describe('Menu item', () => {
     it('renders', async () => {
@@ -169,4 +170,8 @@ describe('Menu item', () => {
         expect(el.value).to.equal('Selected Text');
         expect(el.hasAttribute('value')).to.be.false;
     });
+    describe(
+        'dev mode registration large',
+        warnsOnDoubleRegister(() => import('../sp-menu-item.js'))
+    );
 });

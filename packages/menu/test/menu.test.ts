@@ -27,6 +27,7 @@ import {
     tabEvent,
     testForLitDevWarnings,
     tEvent,
+    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 import { sendKeys } from '@web/test-runner-commands';
@@ -503,4 +504,8 @@ describe('Menu', () => {
         expect(el.value).to.equal('Second');
         expect(el.selectedItems.length).to.equal(1);
     });
+    describe(
+        'dev mode registration large',
+        warnsOnDoubleRegister(() => import('../sp-menu.js'))
+    );
 });

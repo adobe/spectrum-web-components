@@ -10,7 +10,11 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { escapeEvent, isVisible } from '../../../test/testing-helpers.js';
+import {
+    escapeEvent,
+    isVisible,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 import {
     aTimeout,
     elementUpdated,
@@ -836,4 +840,8 @@ export const runOverlayTriggerTests = (): void => {
             });
         });
     });
+    describe(
+        'dev mode registration large',
+        warnsOnDoubleRegister(() => import('../overlay-trigger.js'))
+    );
 };

@@ -22,7 +22,10 @@ import {
     oneEvent,
     waitUntil,
 } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 const managedItems = (menu: Menu | MenuGroup): MenuItem[] => {
     return menu.childItems.filter(
@@ -373,4 +376,8 @@ describe('Menu group', () => {
         expect(subInheritItem1.getAttribute('role')).to.equal('menuitemradio');
         expect(subInheritItem2.getAttribute('role')).to.equal('menuitemradio');
     });
+    describe(
+        'dev mode registration large',
+        warnsOnDoubleRegister(() => import('../sp-menu-group.js'))
+    );
 });

@@ -13,7 +13,10 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/link/sp-link.js';
 import { Link } from '@spectrum-web-components/link';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 describe('Link', () => {
     testForLitDevWarnings(
@@ -67,4 +70,9 @@ describe('Link', () => {
 
         await expect(el).to.be.accessible();
     });
+
+    describe(
+        'dev mode registration large',
+        warnsOnDoubleRegister(() => import('../sp-link.js'))
+    );
 });
