@@ -14,7 +14,10 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import { HelpText } from '@spectrum-web-components/help-text';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 describe('HelpText', () => {
     testForLitDevWarnings(
@@ -49,4 +52,8 @@ describe('HelpText', () => {
 
         await expect(el).to.be.accessible();
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-help-text.js'))
+    );
 });
