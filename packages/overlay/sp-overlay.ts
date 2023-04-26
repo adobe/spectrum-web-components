@@ -15,6 +15,6 @@ customElements.define('sp-overlay', Overlay);
 
 declare global {
     interface HTMLElementTagNameMap {
-        'sp-overlay': typeof Overlay;
+        'sp-overlay': Overlay;
     }
 }

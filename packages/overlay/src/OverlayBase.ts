@@ -137,9 +137,6 @@ export const guaranteedTransitionend = (
     action();
 };
 
-/**
- * @element sp-overlay
- */
 export class OverlayBase extends SpectrumElement {
     static override styles = [styles];
 

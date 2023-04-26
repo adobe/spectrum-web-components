@@ -36,6 +36,9 @@ type OverlayOptionsV2 = {
     type?: 'modal' | 'page' | 'hint' | 'auto' | 'manual';
 };
 
+/**
+ * @element sp-overlay
+ */
 export class Overlay extends OverlayFeatures {
     public static update(): void {
         const overlayUpdateEvent = new CustomEvent('sp-update-overlays', {
