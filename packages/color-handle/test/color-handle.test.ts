@@ -14,7 +14,10 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/color-handle/sp-color-handle.js';
 import { ColorHandle } from '@spectrum-web-components/color-handle';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 describe('ColorHandle', () => {
     testForLitDevWarnings(
@@ -106,4 +109,8 @@ describe('ColorHandle', () => {
 
         expect(el.open).to.be.false;
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-color-handle.js'))
+    );
 });

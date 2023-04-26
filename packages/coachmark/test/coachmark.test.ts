@@ -14,7 +14,10 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/coachmark/sp-coachmark.js';
 import { Coachmark } from '@spectrum-web-components/coachmark';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 describe('Coachmark', () => {
     testForLitDevWarnings(
@@ -36,4 +39,8 @@ describe('Coachmark', () => {
 
         await expect(el).to.be.accessible();
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-coachmark.js'))
+    );
 });
