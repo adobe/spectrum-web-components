@@ -38,6 +38,9 @@ type OverlayOptionsV2 = {
 
 /**
  * @element sp-overlay
+ *
+ * @fires sp-opened - announces that an overlay has completed any entry animations
+ * @fires sp-closed - announce that an overlay has compelted any exit animations
  */
 export class Overlay extends OverlayFeatures {
     public static update(): void {
