@@ -427,7 +427,7 @@ export const testActionMenu = (mode: 'sync' | 'async'): void => {
         });
     });
     describe(
-        'dev mode',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-action-menu.js'))
     );
 };

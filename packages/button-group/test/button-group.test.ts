@@ -15,7 +15,10 @@ import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import { ButtonGroup } from '..';
 import { buttons, buttonsVertical } from '../stories/button-group.stories.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 describe('Buttongroup', () => {
     testForLitDevWarnings(
@@ -37,4 +40,8 @@ describe('Buttongroup', () => {
 
         await expect(el).to.be.accessible();
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-button-group.js'))
+    );
 });

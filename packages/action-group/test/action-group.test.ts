@@ -1070,7 +1070,7 @@ describe('ActionGroup', () => {
         expect(el.selected[0]).to.equal('Third');
     });
     describe(
-        'dev mode',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-action-group.js'))
     );
 });

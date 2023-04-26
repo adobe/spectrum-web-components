@@ -115,7 +115,7 @@ describe('Avatar', () => {
         }
     });
     describe(
-        'dev mode',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-avatar.js'))
     );
 });

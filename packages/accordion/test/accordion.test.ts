@@ -322,7 +322,7 @@ describe('Accordion', () => {
         expect(typeof outsideFocused).not.to.equal(Accordion);
     });
     describe(
-        'dev mode',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-accordion.js'))
     );
 });

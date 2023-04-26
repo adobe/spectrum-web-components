@@ -43,7 +43,7 @@ describe('Asset', () => {
         await expect(el).to.be.accessible();
     });
     describe(
-        'dev mode',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-asset.js'))
     );
 });

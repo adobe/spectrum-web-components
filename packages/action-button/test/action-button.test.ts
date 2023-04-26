@@ -239,7 +239,7 @@ describe('ActionButton', () => {
         expect(button.getAttribute('aria-pressed')).to.equal('true');
     });
     describe(
-        'dev mode',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-action-button.js'))
     );
 });

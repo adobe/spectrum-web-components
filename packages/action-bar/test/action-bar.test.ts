@@ -92,7 +92,7 @@ describe('ActionBar', () => {
         expect(el.getAttribute('variant')).to.equal('fixed');
     });
     describe(
-        'dev mode',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-action-bar.js'))
     );
 });

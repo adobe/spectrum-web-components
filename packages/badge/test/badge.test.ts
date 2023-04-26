@@ -16,7 +16,10 @@ import '@spectrum-web-components/badge/sp-badge.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
 import { stub } from 'sinon';
 import { Badge } from '../src/Badge.js';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 describe('Badge', () => {
     testForLitDevWarnings(
@@ -149,4 +152,8 @@ describe('Badge', () => {
             });
         });
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../sp-badge.js'))
+    );
 });

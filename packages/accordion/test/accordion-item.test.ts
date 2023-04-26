@@ -198,7 +198,7 @@ describe('Accordion Item', () => {
         expect(el.open).to.be.true;
     });
     describe(
-        'dev mode',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-accordion-item.js'))
     );
 });

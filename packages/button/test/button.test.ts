@@ -564,7 +564,7 @@ describe('Button', () => {
         });
     });
     describe(
-        'dev mode',
+        'dev mode registration',
         warnsOnDoubleRegister(() => import('../sp-button.js'))
     );
 });
