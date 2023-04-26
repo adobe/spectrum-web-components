@@ -86,7 +86,6 @@ governing permissions and limitations under the License.
     overflow: hidden;
 }
 .grid {
-    display: -ms-grid;
     display: grid;
     grid-template-areas: 'hero hero hero hero hero hero' '. . . . . .' '. heading header header typeIcon .' '. divider divider divider divider .' '. content content content content .' '. footer footer buttonGroup buttonGroup .' '. . . . . .';
     grid-template-columns:
@@ -242,7 +241,6 @@ governing permissions and limitations under the License.
     margin-left: var(--spectrum-dialog-confirm-close-button-padding);
 }
 .close-button {
-    -ms-grid-row-align: start;
     grid-area: closeButton;
     margin-top: var(--spectrum-dialog-confirm-close-button-padding);
     place-self: start end;
@@ -266,7 +264,6 @@ governing permissions and limitations under the License.
 }
 :host([mode='fullscreenTakeover']) .grid,
 :host([mode='fullscreen']) .grid {
-    display: -ms-grid;
     display: grid;
     grid-template-areas: '. . . . .' '. heading header buttonGroup .' '. divider divider divider .' '. content content content .' '. . . . .';
     grid-template-columns: var(--spectrum-dialog-confirm-padding) 1fr auto auto var(
@@ -296,7 +293,6 @@ governing permissions and limitations under the License.
 }
 :host([mode='fullscreenTakeover']) .button-group,
 :host([mode='fullscreen']) .button-group {
-    -ms-grid-row-align: start;
     align-self: start;
     grid-area: buttonGroup;
 }
@@ -324,7 +320,6 @@ governing permissions and limitations under the License.
     }
     :host([mode='fullscreenTakeover']) .grid,
     :host([mode='fullscreen']) .grid {
-        display: -ms-grid;
         display: grid;
         grid-template-areas: '. . .' '. heading .' '. header .' '. divider .' '. content .' '. buttonGroup .' '. . .';
         grid-template-columns: var(--spectrum-dialog-confirm-padding) 1fr var(

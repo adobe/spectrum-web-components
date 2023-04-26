@@ -89,6 +89,7 @@ governing permissions and limitations under the License.
         --mod-heading-line-height,
         var(--spectrum-heading-line-height)
     );
+    margin-block: 0;
 }
 .spectrum-Heading .spectrum-Heading-strong,
 .spectrum-Heading strong {

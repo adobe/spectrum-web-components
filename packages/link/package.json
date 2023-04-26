@@ -61,7 +61,7 @@
         "@spectrum-web-components/shared": "^0.15.7"
     },
     "devDependencies": {
-        "@spectrum-css/link": "^4.0.30"
+        "@spectrum-css/link": "^4.0.34"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

@@ -99,29 +99,17 @@ const processCSSData = async (
     // possible selectors to replace
     const selector1 =
         identifier == ':root ' ? identifier : `.spectrum--${identifier}`;
-    // The trailing space differentiates between `.spectrum:lang()` and `.spectrum {}`.
-    const selector2 = '.spectrum ';
 
     // new selector values
     const shadowSelector = ':root,\n:host';
 
     if (data.indexOf(selector1) >= 0) {
         result = result.replace(selector1, shadowSelector);
-    } else if (data.indexOf(selector2) >= 0) {
-        result = result.replace(/\.spectrum /g, shadowSelector);
-        result = result.replace(
-            `.spectrum--medium,
-.spectrum--large`,
-            shadowSelector
-        );
-        result = result.replace(
-            `.spectrum--darkest,
-.spectrum--dark,
-.spectrum--light,
-.spectrum--lightest`,
-            shadowSelector
-        );
     }
+    result = result.replaceAll(
+        /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large)?,?(\n|\s)*)?)+\s?(?={)/g,
+        shadowSelector
+    );
 
     const plugins = postCSSPlugins();
     if (usedVariables) {
@@ -137,7 +125,6 @@ const processCSSData = async (
         })
         .then((output) => output.css);
 
-    result = result.replace(selector2, shadowSelector);
     return result;
 };
 
@@ -276,27 +263,6 @@ async function processSpectrumVars() {
         );
         console.log(`processing typography`);
         processes.push(await processCSS(srcPath, dstPath, 'typography'));
-    }
-
-    {
-        // Typography
-        const typographyPath = path.join(
-            __dirname,
-            '..',
-            'node_modules',
-            '@spectrum-css',
-            'typography'
-        );
-
-        // typography.css
-        {
-            const srcPath = path.join(typographyPath, 'dist', 'index-vars.css');
-            const dstPath = path.resolve(
-                path.join(__dirname, '..', 'tools', 'styles', 'typography.css')
-            );
-            console.log(`processing typography`);
-            processes.push(await processCSS(srcPath, dstPath, 'typography'));
-        }
     }
 
     Promise.all(processes).then(() => {

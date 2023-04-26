@@ -349,7 +349,7 @@
                 "scripts/spectrum-tokens.js",
                 "node_modules/@spectrum-css/**/*.css",
                 "scripts/spectrum-vars.js",
-                "node_modules/@spectrum-css/**/*.css"
+                "tools/styles/package.json"
             ],
             "output": [
                 "packages/*/src/spectrum-*.css",

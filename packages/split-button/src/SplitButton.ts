@@ -170,7 +170,10 @@ export class SplitButton extends SizedMixin(PickerBase) {
                               ></sp-icon-chevron100>
                           `
                         : html`
-                              <sp-icon-more></sp-icon-more>
+                              <sp-icon-more
+                                  class="icon"
+                                  slot="icon"
+                              ></sp-icon-more>
                           `}
                 </sp-button>
             `,
