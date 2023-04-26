@@ -13,7 +13,10 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '../sp-picker-button.js';
 import { PickerButton } from '..';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 describe('PickerButton', () => {
     testForLitDevWarnings(
@@ -48,4 +51,8 @@ describe('PickerButton', () => {
 
         await expect(el).to.be.accessible();
     });
+    describe(
+        'dev mode registration large',
+        warnsOnDoubleRegister(() => import('../sp-picker-button.js'))
+    );
 });

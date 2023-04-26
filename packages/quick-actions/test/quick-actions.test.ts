@@ -14,7 +14,10 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/quick-actions/sp-quick-actions.js';
 import { QuickActions } from '@spectrum-web-components/quick-actions';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 describe('QuickActions', () => {
     testForLitDevWarnings(
@@ -36,4 +39,8 @@ describe('QuickActions', () => {
 
         await expect(el).to.be.accessible();
     });
+    describe(
+        'dev mode registration large',
+        warnsOnDoubleRegister(() => import('../sp-quick-actions.js'))
+    );
 });

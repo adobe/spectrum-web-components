@@ -15,7 +15,10 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
 import { ProgressBar } from '@spectrum-web-components/progress-bar';
 import { stub } from 'sinon';
-import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import {
+    testForLitDevWarnings,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 
 describe('ProgressBar', () => {
     testForLitDevWarnings(
@@ -127,4 +130,8 @@ describe('ProgressBar', () => {
         });
         consoleWarnStub.restore();
     });
+    describe(
+        'dev mode registration large',
+        warnsOnDoubleRegister(() => import('../sp-progress-bar.js'))
+    );
 });

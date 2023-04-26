@@ -22,6 +22,7 @@ import {
 } from '@open-wc/testing';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { sendKeys } from '@web/test-runner-commands';
+import { warnsOnDoubleRegister } from '../../../test/testing-helpers.js';
 
 function labelNodeForRadio(radio: Radio): Node {
     if (!radio.shadowRoot) throw new Error('No shadowRoot');
@@ -189,4 +190,8 @@ describe('Radio', () => {
 
         expect(el.checked).to.be.true;
     });
+    describe(
+        'dev mode registration large',
+        warnsOnDoubleRegister(() => import('../sp-radio.js'))
+    );
 });

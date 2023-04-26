@@ -33,6 +33,7 @@ import {
     escapeEvent,
     testForLitDevWarnings,
     tEvent,
+    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers.js';
 import {
     a11ySnapshot,
@@ -1362,4 +1363,8 @@ export function runPickerTests(): void {
             .args[0][0] as CustomEvent<OverlayOpenCloseDetail>;
         expect(closedEvent.detail.interaction).to.equal('modal');
     });
+    describe(
+        'dev mode registration large',
+        warnsOnDoubleRegister(() => import('../sp-picker.js'))
+    );
 }
