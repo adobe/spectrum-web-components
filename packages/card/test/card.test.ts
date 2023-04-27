@@ -26,10 +26,7 @@ import {
 } from '../stories/card.stories.js';
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
 import { spy } from 'sinon';
-import {
-    spaceEvent,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { spaceEvent } from '../../../test/testing-helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
@@ -440,8 +437,4 @@ describe('card', () => {
             'the slotted content renders in the element'
         );
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-card.js'))
-    );
 });

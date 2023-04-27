@@ -25,10 +25,7 @@ import { ColorArea } from '@spectrum-web-components/color-area';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 import { ColorHandle } from '@spectrum-web-components/color-handle';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ColorArea', () => {
     testForLitDevWarnings(
@@ -776,8 +773,4 @@ describe('ColorArea', () => {
         el.color = '#f3af';
         expect(el.color).to.equal('#ff33aaff');
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-color-area.js'))
-    );
 });

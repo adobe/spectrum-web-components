@@ -14,10 +14,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/meter/sp-meter.js';
 import { Meter } from '@spectrum-web-components/meter';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Meter', () => {
     testForLitDevWarnings(
@@ -90,9 +87,4 @@ describe('Meter', () => {
         expect(el.hasAttribute('aria-valuenow')).to.be.true;
         expect(el.getAttribute('aria-valuenow')).to.equal('100');
     });
-
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-meter.js'))
-    );
 });

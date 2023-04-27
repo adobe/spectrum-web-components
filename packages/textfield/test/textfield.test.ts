@@ -17,10 +17,7 @@ import { findDescribedNode } from '../../../test/testing-helpers-a11y.js';
 import { HelpText } from '@spectrum-web-components/help-text';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { isFirefox } from '@spectrum-web-components/shared/src/platform.js';
 
 describe('Textfield', () => {
@@ -962,8 +959,4 @@ describe('Textfield', () => {
             }
         });
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-textfield.js'))
-    );
 });

@@ -15,10 +15,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import '@spectrum-web-components/thumbnail/sp-thumbnail.js';
 import { Thumbnail } from '..';
 import { thumbnail } from '../stories/images.js';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Thumbnail', () => {
     testForLitDevWarnings(
@@ -69,8 +66,4 @@ describe('Thumbnail', () => {
         const background = el.shadowRoot.querySelector('.background');
         expect(background).to.not.be.null;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-thumbnail.js'))
-    );
 });

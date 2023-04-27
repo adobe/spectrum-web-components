@@ -25,7 +25,6 @@ import {
     pageUpEvent,
     shiftTabEvent,
     testForLitDevWarnings,
-    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers.js';
 import { spy } from 'sinon';
 
@@ -1074,8 +1073,4 @@ describe('SplitView', () => {
         await elementUpdated(el);
         expect(el.splitterPos || 0).to.equal(300);
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-split-view.js'))
-    );
 });

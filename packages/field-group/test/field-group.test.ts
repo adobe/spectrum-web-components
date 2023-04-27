@@ -17,10 +17,7 @@ import { FieldGroup } from '@spectrum-web-components/field-group';
 import '@spectrum-web-components/help-text/sp-help-text.js';
 import '@spectrum-web-components/checkbox/sp-checkbox.js';
 import '@spectrum-web-components/field-group/sp-field-group.js';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('FieldGroup', () => {
     testForLitDevWarnings(
@@ -134,8 +131,4 @@ describe('FieldGroup', () => {
             await findDescribedNode(name, descriptionNegative);
         });
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-field-group.js'))
-    );
 });

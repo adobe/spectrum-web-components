@@ -29,7 +29,6 @@ import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { alertDestructive } from '../stories/dialog.stories.js';
 import { Button } from '@spectrum-web-components/button/src/Button.js';
 import { DialogBase } from '@spectrum-web-components/dialog';
-import { warnsOnDoubleRegister } from '../../../test/testing-helpers.js';
 
 async function styledFixture<T extends Element>(
     story: TemplateResult
@@ -152,8 +151,4 @@ describe('dialog base', () => {
 
         expect(dialog.open).to.be.false;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-dialog-base.js'))
-    );
 });

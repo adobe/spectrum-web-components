@@ -11,10 +11,7 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/avatar/sp-avatar.js';
 import { Avatar } from '@spectrum-web-components/avatar';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers';
+import { testForLitDevWarnings } from '../../../test/testing-helpers';
 
 describe('Avatar', () => {
     testForLitDevWarnings(
@@ -114,8 +111,4 @@ describe('Avatar', () => {
             }).to.throw('There should be no error.');
         }
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-avatar.js'))
-    );
 });

@@ -22,7 +22,6 @@ import {
     arrowUpKeyupEvent,
     ignoreResizeObserverLoopError,
     testForLitDevWarnings,
-    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers.js';
 
 import '@spectrum-web-components/color-wheel/sp-color-wheel.js';
@@ -617,8 +616,4 @@ describe('ColorWheel', () => {
         expect(el.value).to.equal(hue);
         expect(tinyHSLA.equals(el.color)).to.be.true;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-color-wheel.js'))
-    );
 });

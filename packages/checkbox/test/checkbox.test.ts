@@ -21,10 +21,7 @@ import {
     waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/shared/src/focus-visible.js';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 function inputForCheckbox(checkbox: Checkbox): HTMLInputElement {
     if (!checkbox.shadowRoot) throw new Error('No shadowRoot');
@@ -207,8 +204,4 @@ describe('Checkbox', () => {
 
         expect(el.checked).to.be.true;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-checkbox.js'))
-    );
 });

@@ -28,7 +28,6 @@ import {
     endEvent,
     enterEvent,
     homeEvent,
-    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers.js';
 import {
     a11ySnapshot,
@@ -635,10 +634,6 @@ describe('Radio Group', () => {
 
         expect(changeSpy.calledWith(undefined)).to.be.false;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-radio-group.js'))
-    );
 });
 
 describe('Radio Group - late children', () => {

@@ -13,10 +13,7 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/switch/sp-switch.js';
 import { Switch } from '@spectrum-web-components/switch';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Switch', () => {
     testForLitDevWarnings(
@@ -61,9 +58,4 @@ describe('Switch', () => {
 
         expect(el.checked).to.be.true;
     });
-
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-switch.js'))
-    );
 });

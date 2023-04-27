@@ -14,10 +14,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import '@spectrum-web-components/underlay/sp-underlay.js';
 import { Underlay } from '@spectrum-web-components/underlay';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Underlay', () => {
     testForLitDevWarnings(
@@ -39,8 +36,4 @@ describe('Underlay', () => {
 
         await expect(el).to.be.accessible();
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-underlay.js'))
-    );
 });

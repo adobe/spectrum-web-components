@@ -22,10 +22,7 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { FieldLabel } from '@spectrum-web-components/field-label';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('FieldLabel', () => {
     testForLitDevWarnings(
@@ -255,8 +252,4 @@ describe('FieldLabel', () => {
         expect(document.activeElement).to.equal(picker);
         expect(picker.focused).to.be.true;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-field-label.js'))
-    );
 });

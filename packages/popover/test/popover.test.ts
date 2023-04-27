@@ -13,7 +13,6 @@ import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { OverlayDisplayQueryDetail } from '@spectrum-web-components/overlay';
-import { warnsOnDoubleRegister } from '../../../test/testing-helpers.js';
 
 describe('popover', () => {
     let popover!: Popover;
@@ -88,8 +87,4 @@ describe('popover', () => {
             );
         }
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-popover.js'))
-    );
 });

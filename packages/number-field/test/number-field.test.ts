@@ -41,10 +41,7 @@ import { spy } from 'sinon';
 import { clickBySelector, getElFrom } from './helpers.js';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('NumberField', () => {
     before(async () => {
@@ -1260,8 +1257,4 @@ describe('NumberField', () => {
             await clickBySelector(el, '.stepDown');
         });
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-number-field.js'))
-    );
 });

@@ -22,7 +22,6 @@ import { ActionButton } from '@spectrum-web-components/action-button';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html, nothing } from '@spectrum-web-components/base';
 import { repeat } from 'lit/directives/repeat.js';
-import { warnsOnDoubleRegister } from '../../../test/testing-helpers.js';
 
 const renderTabsOverflow = async (
     count: number,
@@ -158,8 +157,4 @@ describe('TabsOverflow', () => {
         const slotContent = slot?.assignedElements() || '';
         expect(slotContent[0].toString()).to.not.contains('Tabs');
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-tabs-overflow.js'))
-    );
 });

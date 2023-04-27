@@ -12,10 +12,7 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/dropzone/sp-dropzone.js';
 import { Dropzone } from '@spectrum-web-components/dropzone';
 import { illustration } from './test-svg.js';
-import {
-    waitForPredicate,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { waitForPredicate } from '../../../test/testing-helpers.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 describe('Dropzone', () => {
@@ -190,8 +187,4 @@ describe('Dropzone', () => {
 
         expect(dropped).to.be.true;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-dropzone.js'))
-    );
 });

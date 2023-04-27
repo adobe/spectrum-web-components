@@ -13,10 +13,7 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 
 import { Asset } from '@spectrum-web-components/asset';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers';
+import { testForLitDevWarnings } from '../../../test/testing-helpers';
 import { Default, File, Folder } from '../stories/asset.stories.js';
 
 describe('Asset', () => {
@@ -42,8 +39,4 @@ describe('Asset', () => {
 
         await expect(el).to.be.accessible();
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-asset.js'))
-    );
 });

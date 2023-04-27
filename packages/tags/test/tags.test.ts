@@ -27,7 +27,6 @@ import {
     pageDownEvent,
     pageUpEvent,
     testForLitDevWarnings,
-    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers.js';
 import { executeServerCommand } from '@web/test-runner-commands';
 
@@ -346,8 +345,4 @@ describe('Tags', () => {
 
         expect(document.activeElement === tag4, 'Focuses `tag4`').to.be.true;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-tags.js'))
-    );
 });

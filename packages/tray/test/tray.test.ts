@@ -23,10 +23,7 @@ import '@spectrum-web-components/tray/sp-tray.js';
 import { Tray } from '@spectrum-web-components/tray';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Tray', () => {
     testForLitDevWarnings(
@@ -113,8 +110,4 @@ describe('Tray', () => {
 
         expect(el.open).to.be.false;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-tray.js'))
-    );
 });

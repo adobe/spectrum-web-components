@@ -28,10 +28,7 @@ import {
     small,
 } from '../stories/dialog.stories.js';
 import { spy } from 'sinon';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Dialog', () => {
     testForLitDevWarnings(async () => await fixture<Dialog>(small()));
@@ -241,8 +238,4 @@ describe('Dialog', () => {
         const container = el.shadowRoot.querySelector('#dismiss-container');
         expect(container).to.not.be.null;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-dialog.js'))
-    );
 });

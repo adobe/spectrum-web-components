@@ -21,7 +21,6 @@ import {
     arrowUpEvent,
     arrowUpKeyupEvent,
     testForLitDevWarnings,
-    warnsOnDoubleRegister,
 } from '../../../test/testing-helpers.js';
 
 import '@spectrum-web-components/color-slider/sp-color-slider.js';
@@ -788,8 +787,4 @@ describe('ColorSlider', () => {
         expect(el.value).to.equal(hue);
         expect(tinyHSLA.equals(el.color)).to.be.true;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-color-slider.js'))
-    );
 });

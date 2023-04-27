@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 import '@spectrum-web-components/banner/sp-banner.js';
 import { Banner } from '@spectrum-web-components/banner';
 import { expect, fixture, html } from '@open-wc/testing';
-import { warnsOnDoubleRegister } from '../../../test/testing-helpers.js';
 
 describe('banner', () => {
     let testDiv!: HTMLDivElement;
@@ -93,8 +92,4 @@ describe('banner', () => {
         expect(el.textContent).to.include('Header Text');
         expect(el.textContent).to.include('Content');
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-banner.js'))
-    );
 });

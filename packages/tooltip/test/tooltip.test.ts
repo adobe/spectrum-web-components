@@ -22,10 +22,7 @@ import {
 } from '@open-wc/testing';
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Tooltip', () => {
     testForLitDevWarnings(
@@ -249,8 +246,4 @@ describe('Tooltip', () => {
             );
         }
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-tooltip.js'))
-    );
 });

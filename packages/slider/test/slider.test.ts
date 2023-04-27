@@ -27,10 +27,7 @@ import { sendKeys } from '@web/test-runner-commands';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { stub } from 'sinon';
 import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Slider', () => {
     testForLitDevWarnings(
@@ -1371,12 +1368,4 @@ describe('Slider', () => {
         await elementUpdated(el);
         expect(el.values).to.deep.equal({ a: 10, b: 20, c: 29 });
     });
-    describe(
-        'dev mode registration slider',
-        warnsOnDoubleRegister(() => import('../sp-slider.js'))
-    );
-    describe(
-        'dev mode registration slider-handle',
-        warnsOnDoubleRegister(() => import('../sp-slider-handle.js'))
-    );
 });

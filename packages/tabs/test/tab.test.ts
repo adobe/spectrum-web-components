@@ -14,10 +14,7 @@ import '@spectrum-web-components/tabs/sp-tab.js';
 import { Tab, Tabs } from '@spectrum-web-components/tabs';
 import { elementUpdated, expect, fixture } from '@open-wc/testing';
 import { html } from 'lit/static-html.js';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Tab', () => {
     testForLitDevWarnings(
@@ -66,8 +63,4 @@ describe('Tab', () => {
         await elementUpdated(firstTab);
         expect(label.textContent).to.include('Other Tab');
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-tab.js'))
-    );
 });

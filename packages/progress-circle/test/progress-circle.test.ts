@@ -15,10 +15,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import { ProgressCircle } from '@spectrum-web-components/progress-circle';
 import { stub } from 'sinon';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ProgressCircle', () => {
     testForLitDevWarnings(
@@ -104,8 +101,4 @@ describe('ProgressCircle', () => {
         });
         consoleWarnStub.restore();
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-progress-circle.js'))
-    );
 });

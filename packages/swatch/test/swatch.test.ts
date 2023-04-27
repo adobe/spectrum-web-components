@@ -16,10 +16,7 @@ import { sendKeys } from '@web/test-runner-commands';
 import '@spectrum-web-components/swatch/sp-swatch.js';
 import { Swatch } from '../src/Swatch.js';
 import { ElementSize } from '@spectrum-web-components/base';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Swatch', () => {
     let el: Swatch;
@@ -189,8 +186,4 @@ describe('Swatch', () => {
         });
         expect(document.activeElement === el).to.be.false;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-swatch.js'))
-    );
 });

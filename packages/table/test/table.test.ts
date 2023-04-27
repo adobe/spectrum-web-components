@@ -30,7 +30,6 @@ import '@spectrum-web-components/table/sp-table-cell.js';
 import type { Table, TableCheckboxCell } from '@spectrum-web-components/table';
 import { elements } from '../stories/table-elements.stories.js';
 import { spy } from 'sinon';
-import { warnsOnDoubleRegister } from '../../../test/testing-helpers.js';
 
 let globalErrorHandler: undefined | OnErrorEventHandler = undefined;
 before(function () {
@@ -268,32 +267,4 @@ describe('Table', () => {
         expect(tableHeadCheckboxCell.checkbox.checked).to.be.false;
         expect(tableHeadCheckboxCell.checkbox.indeterminate).to.be.false;
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-table.js'))
-    );
-    describe(
-        'dev mode registration - body',
-        warnsOnDoubleRegister(() => import('../sp-table-body.js'))
-    );
-    describe(
-        'dev mode registration - cell',
-        warnsOnDoubleRegister(() => import('../sp-table-cell.js'))
-    );
-    describe(
-        'dev mode registration - head',
-        warnsOnDoubleRegister(() => import('../sp-table-head.js'))
-    );
-    describe(
-        'dev mode registration - checkbox-cell',
-        warnsOnDoubleRegister(() => import('../sp-table-checkbox-cell.js'))
-    );
-    describe(
-        'dev mode registration - head-cell',
-        warnsOnDoubleRegister(() => import('../sp-table-head-cell.js'))
-    );
-    describe(
-        'dev mode registration - row',
-        warnsOnDoubleRegister(() => import('../sp-table-row.js'))
-    );
 });

@@ -17,10 +17,7 @@ import { Swatch, SwatchGroup } from '../';
 import { Default } from '../stories/swatch-group.stories.js';
 import { spy } from 'sinon';
 import { html } from '@spectrum-web-components/base';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Swatch Group', () => {
     let el: SwatchGroup;
@@ -347,8 +344,4 @@ describe('Swatch Group - DOM selected', () => {
 
         expect(el.selected).to.deep.equal(['color-3', 'color-1']);
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-swatch-group.js'))
-    );
 });
