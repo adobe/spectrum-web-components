@@ -21,6 +21,7 @@ import {
     property,
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
+import { defineElement } from '@spectrum-web-components/base/src/define-element.js';
 import type {
     OverlayDisplayQueryDetail,
     Placement,
@@ -35,7 +36,7 @@ export class TooltipProxy extends HTMLElement {
     }
 }
 
-customElements.define('tooltip-proxy', TooltipProxy);
+defineElement('tooltip-proxy', TooltipProxy);
 
 /**
  * @element sp-tooltip

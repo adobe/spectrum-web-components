@@ -22,7 +22,10 @@ import {
     Placement,
 } from '@spectrum-web-components/overlay';
 
-import { isVisible } from '../../../test/testing-helpers.js';
+import {
+    isVisible,
+    warnsOnDoubleRegister,
+} from '../../../test/testing-helpers.js';
 import {
     elementUpdated,
     expect,
@@ -748,4 +751,8 @@ describe('Overlay - timing', () => {
         expect(overlayTrigger2.hasAttribute('open'), overlayTrigger2.open).to.be
             .false;
     });
+    describe(
+        'dev mode registration',
+        warnsOnDoubleRegister(() => import('../active-overlay.js'))
+    );
 });

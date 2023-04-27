@@ -12,7 +12,7 @@ governing permissions and limitations under the License.
 import { elementUpdated, expect, fixture, nextFrame } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 
-import '../sp-swatch.js';
+import '@spectrum-web-components/swatch/sp-swatch.js';
 import { Swatch, SwatchGroup } from '../';
 import { Default } from '../stories/swatch-group.stories.js';
 import { spy } from 'sinon';

@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
-import '../sp-picker-button.js';
+import '@spectrum-web-components/picker-button/sp-picker-button.js';
 import { PickerButton } from '..';
 import {
     testForLitDevWarnings,
