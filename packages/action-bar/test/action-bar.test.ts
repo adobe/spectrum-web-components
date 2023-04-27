@@ -15,10 +15,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import '@spectrum-web-components/action-bar/sp-action-bar.js';
 import { ActionBar } from '@spectrum-web-components/action-bar';
 import { Default } from '../stories/action-bar.stories.js';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('ActionBar', () => {
     testForLitDevWarnings(async () => await fixture<ActionBar>(Default()));
@@ -91,8 +88,4 @@ describe('ActionBar', () => {
         expect(el.variant).to.equal('fixed');
         expect(el.getAttribute('variant')).to.equal('fixed');
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-action-bar.js'))
-    );
 });

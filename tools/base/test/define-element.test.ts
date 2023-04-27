@@ -12,34 +12,63 @@ governing permissions and limitations under the License.
 
 import { expect } from '@open-wc/testing';
 import { stub } from 'sinon';
+import {
+    isFirefox,
+    isWebKit,
+} from '@spectrum-web-components/shared/src/platform.js';
 
 // for window.__swc
 import '@spectrum-web-components/base';
 
-const elements = [
-    {
-        name: 'sp-color-area',
-        register: () =>
-            import('@spectrum-web-components/color-area/sp-color-area.js'),
-    },
-];
+const elements = {
+    'sp-accordion-item': () =>
+        import('@spectrum-web-components/accordion/sp-accordion-item.js'),
+    'sp-accordion': () =>
+        import('@spectrum-web-components/accordion/sp-accordion.js'),
+    'sp-action-bar': () =>
+        import('@spectrum-web-components/action-bar/sp-action-bar.js'),
+    'sp-action-menu': () =>
+        import('@spectrum-web-components/action-menu/sp-action-menu.js'),
+    'sp-action-button': () =>
+        import('@spectrum-web-components/action-button/sp-action-button.js'),
+    'sp-action-group': () =>
+        import('@spectrum-web-components/action-group/sp-action-group.js'),
+    'sp-color-area': () =>
+        import('@spectrum-web-components/color-area/sp-color-area.js'),
+};
 
-const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+const browser: 'webkit' | 'firefox' | 'chromium' = isWebKit()
+    ? 'webkit'
+    : isFirefox()
+    ? 'firefox'
+    : 'chromium';
 
 describe('define-element', function () {
+    // registrations are globally-unique, so retries will always fail
     this.retries(0);
+
     beforeEach(function () {
         window.__swc.verbose = true;
         this.warn = stub(console, 'warn');
     });
+
     afterEach(function () {
         this.warn.resetHistory();
         window.__swc.verbose = false;
         this.warn.restore();
     });
-    elements.map(({ name, register }) =>
-        it('warns on redefinition', async function () {
-            const error = isSafari ? 'same tag name' : 'has already been';
+
+    Object.entries(elements).forEach(([name, register]) =>
+        it(`'${name}' warns on redefinition`, async function () {
+            // classes already-defined via transitive dependencies can't be tested this way
+            if (customElements.get(name)) {
+                this.skip();
+            }
+            const error = {
+                webkit: 'Cannot define multiple custom elements with the same tag name',
+                firefox: `'${name}' has already been defined`,
+                chromium: `"${name}" has already been used with this registry`,
+            }[browser];
             let caughtError: Error | undefined;
 
             customElements.define(name, class extends HTMLElement {});

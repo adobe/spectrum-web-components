@@ -25,10 +25,7 @@ import {
 } from '@open-wc/testing';
 import { sendKeys } from '@web/test-runner-commands';
 import { spy } from 'sinon';
-import {
-    testForLitDevWarnings,
-    warnsOnDoubleRegister,
-} from '../../../test/testing-helpers.js';
+import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 import { m as BlackActionButton } from '../stories/action-button-black.stories.js';
 
 describe('ActionButton', () => {
@@ -238,8 +235,4 @@ describe('ActionButton', () => {
         expect(el.selected).to.be.true;
         expect(button.getAttribute('aria-pressed')).to.equal('true');
     });
-    describe(
-        'dev mode registration',
-        warnsOnDoubleRegister(() => import('../sp-action-button.js'))
-    );
 });
