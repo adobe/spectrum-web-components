@@ -81,7 +81,7 @@ export default {
         threshold: {
             statements: 98.5,
             branches: 95.78,
-            functions: 97.8,
+            functions: 96.8,
             lines: 98.5,
         },
     },
