@@ -66,6 +66,7 @@ a {
     );
     cursor: pointer;
     outline: none;
+    -webkit-text-decoration: underline;
     text-decoration: underline;
     transition: color
         var(
@@ -100,6 +101,7 @@ a.focus-visible {
             var(--spectrum-link-text-color-primary-focus)
         )
     );
+    -webkit-text-decoration: underline;
     text-decoration: underline;
     text-decoration-color: var(--highcontrast-link-focus-color, inherit);
     text-decoration-style: double;
@@ -112,6 +114,7 @@ a:focus-visible {
             var(--spectrum-link-text-color-primary-focus)
         )
     );
+    -webkit-text-decoration: underline;
     text-decoration: underline;
     text-decoration-color: var(--highcontrast-link-focus-color, inherit);
     text-decoration-style: double;
@@ -153,9 +156,11 @@ a:focus-visible {
     );
 }
 :host([quiet]) a {
+    -webkit-text-decoration: none;
     text-decoration: none;
 }
 :host([quiet]) a:hover {
+    -webkit-text-decoration: underline;
     text-decoration: underline;
 }
 :host([static='white']) a {

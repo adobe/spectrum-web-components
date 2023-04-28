@@ -34,6 +34,7 @@ governing permissions and limitations under the License.
         var(--spectrum-listitem-texticon-padding-y)
         var(--spectrum-listitem-texticon-padding-left);
     position: relative;
+    -webkit-text-decoration: none;
     text-decoration: none;
 }
 :host(:focus) {

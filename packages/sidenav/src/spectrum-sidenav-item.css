@@ -61,6 +61,7 @@ governing permissions and limitations under the License.
             var(--spectrum-global-dimension-size-150)
         );
     position: relative;
+    -webkit-text-decoration: none;
     text-decoration: none;
     transition: background-color
             var(--spectrum-global-animation-duration-100, 0.13s) ease-out,
