@@ -12,12 +12,15 @@ governing permissions and limitations under the License.
 
 import {
     CSSResultArray,
+    html,
     PropertyValues,
     SizedMixin,
+    TemplateResult,
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { ButtonBase } from './ButtonBase.js';
 import buttonStyles from './button.css.js';
+import { when } from '@spectrum-web-components/base/src/directives.js';
 
 export type DeprecatedButtonVariants = 'cta' | 'overBackground';
 export type ButtonStatics = 'white' | 'black';
@@ -49,6 +52,42 @@ export type ButtonTreatments = 'fill' | 'outline';
 export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
     public static override get styles(): CSSResultArray {
         return [...super.styles, buttonStyles];
+    }
+
+    protected pendingCooldown = -1;
+
+    constructor() {
+        super();
+        this.addEventListener(
+            'click',
+            (event: Event): void | boolean => {
+                if (this.pending) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    event.stopPropagation();
+                    return false;
+                }
+            },
+            {
+                capture: true,
+            }
+        );
+    }
+
+    @property({ type: Boolean, reflect: true, attribute: 'is-pending' })
+    public isPending = false;
+
+    @property({ type: String, attribute: 'pending-label' })
+    public pendingLabel = 'Pending';
+
+    @property({ type: Boolean, reflect: true, attribute: true })
+    public pending = false;
+
+    public override click(): void {
+        if (this.isPending) {
+            return;
+        }
+        super.click();
     }
 
     /**
@@ -128,6 +167,27 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         this.treatment = quiet ? 'outline' : 'fill';
     }
 
+    protected override willUpdate(
+        changedProperties: PropertyValues<this>
+    ): void {
+        super.willUpdate(changedProperties);
+
+        if (changedProperties.has('pending')) {
+            if (this.pending) {
+                this.pendingCooldown = window.setTimeout(() => {
+                    if (!this.disabled) {
+                        this.isPending = true;
+                        this.setAttribute('aria-label', this.pendingLabel);
+                    }
+                }, 1000);
+            } else {
+                window.clearTimeout(this.pendingCooldown);
+                this.isPending = false;
+                this.removeAttribute('aria-label');
+            }
+        }
+    }
+
     protected override firstUpdated(changes: PropertyValues<this>): void {
         super.firstUpdated(changes);
         // There is no Spectrum design context for an `<sp-button>` without a variant
@@ -135,5 +195,21 @@ export class Button extends SizedMixin(ButtonBase, { noDefaultSize: true }) {
         if (!this.hasAttribute('variant')) {
             this.setAttribute('variant', this.variant);
         }
+    }
+
+    protected override renderButton(): TemplateResult {
+        return html`
+            ${this.buttonContent}
+            ${when(
+                this.isPending,
+                () => html`
+                    <sp-progress-circle
+                        indeterminate
+                        static="white"
+                        size="s"
+                    ></sp-progress-circle>
+                `
+            )}
+        `;
     }
 }

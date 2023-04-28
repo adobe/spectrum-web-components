@@ -17,12 +17,14 @@ import {
     expect,
     fixture,
     html,
+    nextFrame,
     waitUntil,
 } from '@open-wc/testing';
 import {
     shiftTabEvent,
     testForLitDevWarnings,
 } from '../../../test/testing-helpers.js';
+import { a11ySnapshot, findAccessibilityNode } from '@web/test-runner-commands';
 import { spy } from 'sinon';
 
 type TestableButtonType = {
@@ -535,6 +537,65 @@ describe('Button', () => {
         await elementUpdated(el);
 
         expect(el.active).to.be.false;
+    });
+    it('shows pending state after delay and removes after', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button pending-label="Pending Button">
+                    Button
+                    <svg slot="icon"></svg>
+                </sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        el.pending = true;
+
+        await waitUntil(() => el.isPending, 'button is in pending state', {
+            interval: 200,
+            timeout: 1400,
+        });
+
+        await elementUpdated(el);
+
+        await nextFrame();
+
+        type NamedNode = { name: string };
+        let snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+            children: NamedNode[];
+        };
+        expect(
+            findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === 'Pending Button'
+            ),
+            '`Pending Button` is the label text'
+        ).to.not.be.null;
+
+        expect(el.isPending).to.be.true;
+        expect(el.pending).to.be.true;
+
+        // remove pending state
+        el.pending = false;
+        await elementUpdated(el);
+
+        await nextFrame();
+
+        snapshot = (await a11ySnapshot({})) as unknown as NamedNode & {
+            children: NamedNode[];
+        };
+
+        // check label returns to previous value
+        expect(
+            findAccessibilityNode<NamedNode>(
+                snapshot,
+                (node) => node.name === 'Button'
+            ),
+            '`Button` is the label text'
+        ).to.not.be.null;
+
+        expect(el.isPending).to.be.false;
+        expect(el.pending).to.be.false;
     });
     describe('deprecated variants and attributes', () => {
         it('manages [quiet]', async () => {

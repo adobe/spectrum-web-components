@@ -525,7 +525,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([disabled]) {
+:host([disabled]),
+:host([is-pending]) {
     background-color: var(
         --highcontrast-button-background-color-disabled,
         var(

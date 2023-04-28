@@ -21,3 +21,32 @@ governing permissions and limitations under the License.
         border-color: highlight;
     }
 }
+
+::slotted([slot='icon']) {
+    inset: unset;
+}
+
+#container {
+    position: relative;
+    display: flex;
+}
+
+sp-progress-circle {
+    display: none;
+}
+
+:host([pending][is-pending]) {
+    cursor: default;
+}
+
+:host([pending][is-pending]) sp-progress-circle {
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+:host([pending][is-pending]) slot[name='icon'],
+:host([pending][is-pending]) #label {
+    visibility: hidden;
+}
