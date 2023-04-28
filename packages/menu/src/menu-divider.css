@@ -12,6 +12,6 @@ governing permissions and limitations under the License.
 
 @import './spectrum-menu-divider.css';
 
-/* :host {
+:host {
     display: block;
-} */
+}

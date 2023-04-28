@@ -450,6 +450,42 @@ const config = {
                         },
                     ],
                 },
+                {
+                    find: [
+                        builder.element('li'),
+                        {
+                            type: 'pseudo-class',
+                            kind: 'not',
+                            selectors: [
+                                [builder.class('spectrum-Menu-item')],
+                                [builder.class('spectrum-Menu-divider')],
+                            ],
+                        },
+                    ],
+                    replace: [
+                        {
+                            replace: builder.element('li'),
+                        },
+                        {
+                            replace: {
+                                type: 'pseudo-class',
+                                kind: 'not',
+                                selectors: [
+                                    [
+                                        {
+                                            type: 'pseudo-element',
+                                            kind: 'slotted',
+                                            selector: [
+                                                builder.element('sp-menu-item'),
+                                            ],
+                                        },
+                                    ],
+                                    [builder.class('menu-divider')],
+                                ],
+                            },
+                        },
+                    ],
+                },
             ],
         },
     ],

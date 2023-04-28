@@ -282,7 +282,7 @@ governing permissions and limitations under the License.
     overflow: auto;
     padding: 0;
 }
-li:not(.spectrum-Menu-item, .spectrum-Menu-divider) {
+li:not(::slotted(sp-menu-item), .menu-divider) {
     align-items: center;
     background-color: var(
         --mod-menu-item-background-color-default,
@@ -314,7 +314,7 @@ li:not(.spectrum-Menu-item, .spectrum-Menu-divider) {
     position: relative;
     text-decoration: none;
 }
-li:not(.spectrum-Menu-item, .spectrum-Menu-divider) {
+li:not(::slotted(sp-menu-item), .menu-divider) {
     display: grid;
     grid-template: '. chevronAreaCollapsible . iconArea sectionHeadingArea . . .' 1fr 'selectedArea chevronAreaCollapsible checkmarkArea iconArea labelArea valueArea actionsArea chevronAreaDrillIn' '. . . . descriptionArea . . .' '. . . . submenuArea . . .' / auto auto auto auto 1fr auto auto auto;
 }
