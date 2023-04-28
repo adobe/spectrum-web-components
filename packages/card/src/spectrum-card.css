@@ -231,6 +231,7 @@ governing permissions and limitations under the License.
     flex-direction: column;
     min-width: var(--spectrum-card-min-width);
     position: relative;
+    -webkit-text-decoration: none;
     text-decoration: none;
 }
 :host(:focus) {

@@ -25,6 +25,7 @@ governing permissions and limitations under the License.
     line-height: var(--mod-line-height-100, var(--spectrum-line-height-100));
     margin: 0;
     overflow: visible;
+    -webkit-text-decoration: none;
     text-decoration: none;
     text-transform: none;
     transition: background

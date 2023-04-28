@@ -18,6 +18,7 @@ governing permissions and limitations under the License.
     line-height: var(--spectrum-tabs-quiet-textonly-tabitem-height);
     outline: none;
     position: relative;
+    -webkit-text-decoration: none;
     text-decoration: none;
     transition: color
         var(
@@ -85,6 +86,7 @@ governing permissions and limitations under the License.
     display: inline-block;
     font-size: var(--spectrum-tabs-texticon-tabitem-text-size);
     font-weight: var(--spectrum-tabs-textonly-tabitem-text-font-weight);
+    -webkit-text-decoration: none;
     text-decoration: none;
     vertical-align: top;
 }

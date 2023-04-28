@@ -30,6 +30,7 @@ governing permissions and limitations under the License.
     margin: 0;
     overflow: visible;
     position: relative;
+    -webkit-text-decoration: none;
     text-decoration: none;
     text-transform: none;
     transition: background var(--spectrum-global-animation-duration-100, 0.13s)
