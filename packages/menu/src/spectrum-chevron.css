@@ -11,19 +11,21 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([dir='ltr']) .chevron {
-    padding-left: var(--spectrum-listitem-texticon-icon-gap);
-}
-:host([dir='rtl']) .chevron {
-    padding-right: var(--spectrum-listitem-texticon-icon-gap);
-}
 .chevron {
-    flex-grow: 0;
-    margin-top: calc(
-        var(--spectrum-listitem-texticon-ui-icon-margin-top) -
-            var(--spectrum-listitem-texticon-padding-y) + 1px
+    align-self: center;
+    block-size: var(--spectrum-menu-item-checkmark-height);
+    grid-area: chevronArea;
+    height: var(--spectrum-menu-item-checkmark-height);
+    inline-size: var(--spectrum-menu-item-checkmark-width);
+    width: var(--spectrum-menu-item-checkmark-width);
+}
+.chevron--withAdjacentIcon,
+.chevron--withAdjacentText {
+    margin-inline-end: var(
+        --mod-menu-item-text-to-control,
+        var(--spectrum-menu-item-text-to-control)
     );
 }
 :host([dir='rtl']) .chevron {
-    transform: matrix(-1, 0, 0, 1, 0, 0);
+    transform: rotate(-180deg);
 }

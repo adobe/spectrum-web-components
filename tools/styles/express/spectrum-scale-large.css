@@ -280,10 +280,4 @@ governing permissions and limitations under the License.
     --spectrum-dialog-confirm-padding: var(
         --spectrum-global-dimension-static-size-300
     );
-    --spectrum-listitem-m-texticon-padding-left: var(
-        --spectrum-global-dimension-static-size-150
-    );
-    --spectrum-listitem-m-textthumbnail-padding-left: var(
-        --spectrum-global-dimension-static-size-150
-    );
 }

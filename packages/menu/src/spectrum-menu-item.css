@@ -11,90 +11,592 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-:host([dir='ltr']) {
-    border-left: var(--spectrum-listitem-texticon-focus-indicator-size) solid
-        transparent;
+.icon {
+    fill: var(
+        --highcontrast-menu-item-label-icon-color-default,
+        var(
+            --mod-menu-item-label-icon-color-default,
+            var(--spectrum-menu-item-label-icon-color-default)
+        )
+    );
 }
-:host([dir='rtl']) {
-    border-right: var(--spectrum-listitem-texticon-focus-indicator-size) solid
-        transparent;
+.checkmark {
+    fill: var(
+        --highcontrast-menu-checkmark-icon-color-default,
+        var(
+            --mod-menu-checkmark-icon-color-default,
+            var(--spectrum-menu-checkmark-icon-color-default)
+        )
+    );
+    align-self: center;
+    display: var(
+        --mod-menu-checkmark-display,
+        var(--spectrum-menu-checkmark-display)
+    );
+    opacity: 1;
 }
 :host {
     align-items: center;
+    background-color: var(
+        --mod-menu-item-background-color-default,
+        var(--spectrum-menu-item-background-color-default)
+    );
     box-sizing: border-box;
     cursor: pointer;
-    display: flex;
-    font-size: var(--spectrum-listitem-texticon-text-size);
-    font-style: normal;
-    font-weight: var(--spectrum-listitem-texticon-text-font-weight);
+    line-height: var(
+        --mod-menu-item-label-line-height,
+        var(--spectrum-menu-item-label-line-height)
+    );
     margin: 0;
-    min-height: var(--spectrum-listitem-texticon-height);
-    padding: var(--spectrum-listitem-texticon-padding-y)
-        var(--spectrum-listitem-texticon-padding-right)
-        var(--spectrum-listitem-texticon-padding-y)
-        var(--spectrum-listitem-texticon-padding-left);
+    min-block-size: var(
+        --mod-menu-item-min-height,
+        var(--spectrum-menu-item-min-height)
+    );
+    padding-block-end: var(
+        --mod-menu-item-bottom-edge-to-text,
+        var(--spectrum-menu-item-bottom-edge-to-text)
+    );
+    padding-block-start: var(
+        --mod-menu-item-top-edge-to-text,
+        var(--spectrum-menu-item-top-edge-to-text)
+    );
+    padding-inline: var(
+        --mod-menu-item-label-inline-edge-to-content,
+        var(--spectrum-menu-item-label-inline-edge-to-content)
+    );
     position: relative;
     -webkit-text-decoration: none;
     text-decoration: none;
 }
-:host(:focus) {
-    outline: none;
-}
-:host([dir='ltr'][selected]) {
-    padding-right: calc(
-        var(--spectrum-listitem-texticon-padding-right) -
-            var(
-                --spectrum-popover-border-size,
-                var(--spectrum-alias-border-size-thin)
-            )
-    );
-}
-:host([dir='rtl'][selected]) {
-    padding-left: calc(
-        var(--spectrum-listitem-texticon-padding-right) -
-            var(
-                --spectrum-popover-border-size,
-                var(--spectrum-alias-border-size-thin)
-            )
-    );
-}
-:host([selected]) .checkmark {
-    display: block;
-}
-.icon,
-::slotted([slot='icon']) {
-    align-self: flex-start;
-    flex-shrink: 0;
-}
-:host([dir='ltr']) .icon + #label,
-:host([dir='ltr']) [name='icon'] + #label {
-    margin-left: var(--spectrum-listitem-texticon-icon-gap);
-}
-:host([dir='rtl']) .icon + #label,
-:host([dir='rtl']) [name='icon'] + #label {
-    margin-right: var(--spectrum-listitem-texticon-icon-gap);
-}
-.icon + #label,
-[name='icon'] + #label {
-    width: calc(
-        100% - var(--spectrum-listitem-texticon-ui-icon-width) -
-            var(--spectrum-listitem-texticon-icon-gap) -
-            var(--spectrum-listitem-textthumbnail-padding-left) -
-            var(
-                --spectrum-alias-workflow-icon-size-m,
-                var(--spectrum-global-dimension-size-225)
-            )
-    );
+:host {
+    display: grid;
+    grid-template: '. chevronAreaCollapsible . iconArea sectionHeadingArea . . .' 1fr 'selectedArea chevronAreaCollapsible checkmarkArea iconArea labelArea valueArea actionsArea chevronAreaDrillIn' '. . . . descriptionArea . . .' '. . . . submenuArea . . .' / auto auto auto auto 1fr auto auto auto;
 }
 #label {
-    flex: auto;
+    grid-area: submenuItemLabelArea;
+}
+.spectrum-Menu-itemValue {
+    grid-area: submenuItemValueArea;
+}
+:host(:focus),
+:host([focused]),
+:host.focus-visible {
+    background-color: var(
+        --highcontrast-menu-item-background-color-key-focus,
+        var(
+            --mod-menu-item-background-color-key-focus,
+            var(--spectrum-menu-item-background-color-key-focus)
+        )
+    );
+    box-shadow: inset
+        var(
+            --mod-menu-item-focus-indicator-width,
+            var(--spectrum-menu-item-focus-indicator-width)
+        )
+        0 0 0
+        var(
+            --highcontrast-menu-item-focus-indicator-color,
+            var(
+                --mod-menu-item-focus-indicator-color,
+                var(--spectrum-menu-item-focus-indicator-color)
+            )
+        );
+    outline: none;
+}
+:host(:focus),
+:host([focused]),
+:host:focus-visible {
+    background-color: var(
+        --highcontrast-menu-item-background-color-key-focus,
+        var(
+            --mod-menu-item-background-color-key-focus,
+            var(--spectrum-menu-item-background-color-key-focus)
+        )
+    );
+    box-shadow: inset
+        var(
+            --mod-menu-item-focus-indicator-width,
+            var(--spectrum-menu-item-focus-indicator-width)
+        )
+        0 0 0
+        var(
+            --highcontrast-menu-item-focus-indicator-color,
+            var(
+                --mod-menu-item-focus-indicator-color,
+                var(--spectrum-menu-item-focus-indicator-color)
+            )
+        );
+    outline: none;
+}
+:host(:focus) #label,
+:host([focused]) #label,
+:host.focus-visible #label {
+    color: var(
+        --highcontrast-menu-item-label-content-color-focus,
+        var(
+            --mod-menu-item-label-content-color-focus,
+            var(--spectrum-menu-item-label-content-color-focus)
+        )
+    );
+}
+:host(:focus) #label,
+:host([focused]) #label,
+:host:focus-visible #label {
+    color: var(
+        --highcontrast-menu-item-label-content-color-focus,
+        var(
+            --mod-menu-item-label-content-color-focus,
+            var(--spectrum-menu-item-label-content-color-focus)
+        )
+    );
+}
+:host(:focus) .spectrum-Menu-itemDescription,
+:host([focused]) .spectrum-Menu-itemDescription,
+:host.focus-visible .spectrum-Menu-itemDescription {
+    color: var(
+        --highcontrast-menu-item-description-color-focus,
+        var(
+            --mod-menu-item-description-color-focus,
+            var(--spectrum-menu-item-description-color-focus)
+        )
+    );
+}
+:host(:focus) .spectrum-Menu-itemDescription,
+:host([focused]) .spectrum-Menu-itemDescription,
+:host:focus-visible .spectrum-Menu-itemDescription {
+    color: var(
+        --highcontrast-menu-item-description-color-focus,
+        var(
+            --mod-menu-item-description-color-focus,
+            var(--spectrum-menu-item-description-color-focus)
+        )
+    );
+}
+:host(:focus) .spectrum-Menu-itemValue,
+:host([focused]) .spectrum-Menu-itemValue,
+:host.focus-visible .spectrum-Menu-itemValue {
+    color: var(
+        --highcontrast-menu-item-value-color-focus,
+        var(
+            --mod-menu-item-value-color-focus,
+            var(--spectrum-menu-item-value-color-focus)
+        )
+    );
+}
+:host(:focus) .spectrum-Menu-itemValue,
+:host([focused]) .spectrum-Menu-itemValue,
+:host:focus-visible .spectrum-Menu-itemValue {
+    color: var(
+        --highcontrast-menu-item-value-color-focus,
+        var(
+            --mod-menu-item-value-color-focus,
+            var(--spectrum-menu-item-value-color-focus)
+        )
+    );
+}
+:host(:focus) .icon:not(.chevron, .checkmark),
+:host([focused]) .icon:not(.chevron, .checkmark),
+:host.focus-visible .icon:not(.chevron, .checkmark) {
+    fill: var(
+        --highcontrast-menu-item-label-icon-color-focus,
+        var(
+            --mod-menu-item-label-icon-color-focus,
+            var(--spectrum-menu-item-label-icon-color-focus)
+        )
+    );
+}
+:host(:focus) .icon:not(.chevron, .checkmark),
+:host([focused]) .icon:not(.chevron, .checkmark),
+:host:focus-visible .icon:not(.chevron, .checkmark) {
+    fill: var(
+        --highcontrast-menu-item-label-icon-color-focus,
+        var(
+            --mod-menu-item-label-icon-color-focus,
+            var(--spectrum-menu-item-label-icon-color-focus)
+        )
+    );
+}
+:host(:focus) .chevron,
+:host([focused]) .chevron,
+:host.focus-visible .chevron {
+    fill: var(
+        --highcontrast-menu-collapsible-icon-color,
+        var(
+            --mod-menu-collapsible-icon-color,
+            var(--spectrum-menu-collapsible-icon-color)
+        )
+    );
+}
+:host(:focus) .chevron,
+:host([focused]) .chevron,
+:host:focus-visible .chevron {
+    fill: var(
+        --highcontrast-menu-collapsible-icon-color,
+        var(
+            --mod-menu-collapsible-icon-color,
+            var(--spectrum-menu-collapsible-icon-color)
+        )
+    );
+}
+:host(:focus) .checkmark,
+:host([focused]) .checkmark,
+:host.focus-visible .checkmark {
+    fill: var(
+        --highcontrast-menu-checkmark-icon-color-focus,
+        var(
+            --mod-menu-checkmark-icon-color-focus,
+            var(--spectrum-menu-checkmark-icon-color-focus)
+        )
+    );
+}
+:host(:focus) .checkmark,
+:host([focused]) .checkmark,
+:host:focus-visible .checkmark {
+    fill: var(
+        --highcontrast-menu-checkmark-icon-color-focus,
+        var(
+            --mod-menu-checkmark-icon-color-focus,
+            var(--spectrum-menu-checkmark-icon-color-focus)
+        )
+    );
+}
+:host([dir='rtl']).focus-visible,
+:host([dir='rtl']):focus,
+:host([dir='rtl'][focused]) {
+    box-shadow: inset
+        calc(
+            var(
+                    --mod-menu-item-focus-indicator-width,
+                    var(--spectrum-menu-item-focus-indicator-width)
+                ) * -1
+        )
+        0 0
+        var(
+            --highcontrast-menu-item-focus-indicator-color,
+            var(
+                --mod-menu-item-focus-indicator-color,
+                var(--spectrum-menu-item-focus-indicator-color)
+            )
+        );
+}
+:host([dir='rtl']):focus,
+:host([dir='rtl']):focus-visible,
+:host([dir='rtl'][focused]) {
+    box-shadow: inset
+        calc(
+            var(
+                    --mod-menu-item-focus-indicator-width,
+                    var(--spectrum-menu-item-focus-indicator-width)
+                ) * -1
+        )
+        0 0
+        var(
+            --highcontrast-menu-item-focus-indicator-color,
+            var(
+                --mod-menu-item-focus-indicator-color,
+                var(--spectrum-menu-item-focus-indicator-color)
+            )
+        );
+}
+:host(:hover) {
+    background-color: var(
+        --highcontrast-menu-item-background-color-hover,
+        var(
+            --mod-menu-item-background-color-hover,
+            var(--spectrum-menu-item-background-color-hover)
+        )
+    );
+}
+:host(:hover) #label {
+    color: var(
+        --highcontrast-menu-item-label-content-color-hover,
+        var(
+            --mod-menu-item-label-content-color-hover,
+            var(--spectrum-menu-item-label-content-color-hover)
+        )
+    );
+}
+:host(:hover) .spectrum-Menu-itemDescription {
+    color: var(
+        --highcontrast-menu-item-description-color-hover,
+        var(
+            --mod-menu-item-description-color-hover,
+            var(--spectrum-menu-item-description-color-hover)
+        )
+    );
+}
+:host(:hover) .spectrum-Menu-itemValue {
+    color: var(
+        --highcontrast-menu-item-value-color-hover,
+        var(
+            --mod-menu-item-value-color-hover,
+            var(--spectrum-menu-item-value-color-hover)
+        )
+    );
+}
+:host(:hover) .icon:not(.chevron, .checkmark) {
+    fill: var(
+        --highcontrast-menu-item-label-icon-color-hover,
+        var(
+            --mod-menu-item-label-icon-color-hover,
+            var(--spectrum-menu-item-label-icon-color-hover)
+        )
+    );
+}
+:host(:hover) .chevron {
+    fill: var(
+        --highcontrast-menu-collapsible-icon-color,
+        var(
+            --mod-menu-collapsible-icon-color,
+            var(--spectrum-menu-collapsible-icon-color)
+        )
+    );
+}
+:host(:hover) .checkmark {
+    fill: var(
+        --highcontrast-menu-checkmark-icon-color-hover,
+        var(
+            --mod-menu-checkmark-icon-color-hover,
+            var(--spectrum-menu-checkmark-icon-color-hover)
+        )
+    );
+}
+:host:active {
+    background-color: var(
+        --highcontrast-menu-item-background-color-down,
+        var(
+            --mod-menu-item-background-color-down,
+            var(--spectrum-menu-item-background-color-down)
+        )
+    );
+}
+:host:active #label {
+    color: var(
+        --highcontrast-menu-item-label-content-color-down,
+        var(
+            --mod-menu-item-label-content-color-down,
+            var(--spectrum-menu-item-label-content-color-down)
+        )
+    );
+}
+:host:active .spectrum-Menu-itemDescription {
+    color: var(
+        --highcontrast-menu-item-description-color-down,
+        var(
+            --mod-menu-item-description-color-down,
+            var(--spectrum-menu-item-description-color-down)
+        )
+    );
+}
+:host:active .icon:not(.chevron, .checkmark) {
+    fill: var(
+        --highcontrast-menu-item-label-icon-color-down,
+        var(
+            --mod-menu-item-label-icon-color-down,
+            var(--spectrum-menu-item-label-icon-color-down)
+        )
+    );
+}
+:host:active .spectrum-Menu-itemValue {
+    color: var(
+        --highcontrast-menu-item-value-color-down,
+        var(
+            --mod-menu-item-value-color-down,
+            var(--spectrum-menu-item-value-color-down)
+        )
+    );
+}
+:host:active .chevron {
+    fill: var(
+        --highcontrast-menu-collapsible-icon-color,
+        var(
+            --mod-menu-collapsible-icon-color,
+            var(--spectrum-menu-collapsible-icon-color)
+        )
+    );
+}
+:host:active .checkmark {
+    fill: var(
+        --highcontrast-menu-checkmark-icon-color-down,
+        var(
+            --mod-menu-checkmark-icon-color-down,
+            var(--spectrum-menu-checkmark-icon-color-down)
+        )
+    );
+}
+:host([aria-disabled='true']),
+:host([disabled]) {
+    background-color: #0000;
+}
+:host([aria-disabled='true']) #label,
+:host([disabled]) #label {
+    color: var(
+        --highcontrast-menu-item-label-content-color-disabled,
+        var(
+            --mod-menu-item-label-content-color-disabled,
+            var(--spectrum-menu-item-label-content-color-disabled)
+        )
+    );
+}
+:host([aria-disabled='true']) .spectrum-Menu-itemDescription,
+:host([disabled]) .spectrum-Menu-itemDescription {
+    color: var(
+        --highcontrast-menu-item-description-color-disabled,
+        var(
+            --mod-menu-item-description-color-disabled,
+            var(--spectrum-menu-item-description-color-disabled)
+        )
+    );
+}
+:host([aria-disabled='true']) .icon,
+:host([disabled]) .icon {
+    fill: var(
+        --highcontrast-menu-item-label-icon-color-disabled,
+        var(
+            --mod-menu-item-label-icon-color-disabled,
+            var(--spectrum-menu-item-label-icon-color-disabled)
+        )
+    );
+}
+:host([aria-disabled='true']:hover),
+:host([disabled]:hover) {
+    cursor: default;
+}
+:host([aria-disabled='true']:hover) .icon,
+:host([disabled]:hover) .icon {
+    fill: var(
+        --highcontrast-menu-item-label-icon-color-disabled,
+        var(
+            --mod-menu-item-label-icon-color-disabled,
+            var(--spectrum-menu-item-label-icon-color-disabled)
+        )
+    );
+}
+.icon {
+    align-self: center;
+    grid-area: iconArea;
+}
+.checkmark {
+    grid-area: checkmarkArea;
+}
+.menu-itemSelection {
+    grid-area: selectedArea;
+}
+#label {
+    color: var(
+        --highcontrast-menu-item-label-content-color-default,
+        var(
+            --mod-menu-item-label-content-color-default,
+            var(--spectrum-menu-item-label-content-color-default)
+        )
+    );
+    font-size: var(
+        --mod-menu-item-label-font-size,
+        var(--spectrum-menu-item-label-font-size)
+    );
+    grid-area: labelArea;
+}
+.spectrum-Menu-itemValue {
+    grid-area: valueArea;
+}
+.spectrum-Menu-itemActions {
+    grid-area: actionsArea;
+}
+.chevron {
+    align-self: center;
+    block-size: var(--spectrum-menu-item-checkmark-height);
+    grid-area: chevronArea;
+    height: var(--spectrum-menu-item-checkmark-height);
+    inline-size: var(--spectrum-menu-item-checkmark-width);
+    width: var(--spectrum-menu-item-checkmark-width);
+}
+.spectrum-Menu-item--collapsible .chevron {
+    grid-area: chevronAreaCollapsible;
+}
+.spectrum-Menu-itemDescription {
+    grid-area: descriptionArea;
+}
+.spectrum-Menu-item--drillIn .chevron {
+    grid-area: chevronAreaDrillIn;
+}
+.icon:not(.chevron, .checkmark) {
+    block-size: var(
+        --mod-menu-item-icon-height,
+        var(--spectrum-menu-item-icon-height)
+    );
+    inline-size: var(
+        --mod-menu-item-icon-width,
+        var(--spectrum-menu-item-icon-width)
+    );
+}
+.checkmark {
+    block-size: var(
+        --mod-menu-item-checkmark-height,
+        var(--spectrum-menu-item-checkmark-height)
+    );
+    inline-size: var(
+        --mod-menu-item-checkmark-width,
+        var(--spectrum-menu-item-checkmark-width)
+    );
+}
+.checkmark--withAdjacentText,
+.icon--workflow-icon {
+    margin-inline-end: var(
+        --mod-menu-item-label-text-to-visual,
+        var(--spectrum-menu-item-label-text-to-visual)
+    );
+}
+.checkmark--withAdjacentIcon,
+.chevron--withAdjacentIcon,
+.chevron--withAdjacentText {
+    margin-inline-end: var(
+        --mod-menu-item-text-to-control,
+        var(--spectrum-menu-item-text-to-control)
+    );
+}
+.spectrum-Menu-itemDescription {
+    color: var(
+        --highcontrast-menu-item-description-color-default,
+        var(
+            --mod-menu-item-description-color-default,
+            var(--spectrum-menu-item-description-color-default)
+        )
+    );
+    font-size: var(
+        --mod-menu-item-description-font-size,
+        var(--spectrum-menu-item-description-font-size)
+    );
+    line-height: var(
+        --mod-menu-item-description-line-height,
+        var(--spectrum-menu-item-description-line-height)
+    );
+    margin-block-start: var(
+        --mod-menu-item-label-to-description-spacing,
+        var(--spectrum-menu-item-label-to-description-spacing)
+    );
+}
+#label,
+.spectrum-Menu-itemDescription {
     -webkit-hyphens: auto;
     hyphens: auto;
-    line-height: var(--spectrum-listitem-texticon-label-line-height);
     overflow-wrap: break-word;
-    width: calc(
-        100% - var(--spectrum-listitem-texticon-ui-icon-width) -
-            var(--spectrum-listitem-texticon-icon-gap)
+}
+.spectrum-Menu-itemValue {
+    color: var(
+        --highcontrast-menu-item-value-color-default,
+        var(
+            --mod-menu-item-value-color-default,
+            var(--spectrum-menu-item-value-color-default)
+        )
+    );
+    font-size: var(
+        --mod-menu-item-label-font-size,
+        var(--spectrum-menu-item-label-font-size)
+    );
+    justify-self: end;
+    margin-inline-start: var(
+        --mod-menu-item-label-to-value-area-min-spacing,
+        var(--spectrum-menu-item-label-to-value-area-min-spacing)
     );
 }
 :host([no-wrap]) #label {
@@ -102,182 +604,113 @@ governing permissions and limitations under the License.
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-:host([dir='ltr']) .checkmark,
-:host([dir='ltr']) .chevron {
-    padding-left: var(--spectrum-listitem-texticon-icon-gap);
+.spectrum-Menu-item--collapsible.is-open {
+    padding-block-end: 0;
 }
-:host([dir='rtl']) .checkmark,
+.spectrum-Menu-item--collapsible.is-open .chevron {
+    transform: rotate(90deg);
+}
+.spectrum-Menu-item--collapsible.is-open:active,
+.spectrum-Menu-item--collapsible.is-open:focus,
+.spectrum-Menu-item--collapsible.is-open:hover,
+:host([focused]) .spectrum-Menu-item--collapsible.is-open {
+    background-color: var(
+        --highcontrast-menu-item-background-color-default,
+        var(
+            --mod-menu-item-background-color-default,
+            var(--spectrum-menu-item-background-color-default)
+        )
+    );
+}
 :host([dir='rtl']) .chevron {
-    padding-right: var(--spectrum-listitem-texticon-icon-gap);
+    transform: rotate(-180deg);
 }
-:host([dir='rtl']) .chevron {
-    transform: matrix(-1, 0, 0, 1, 0, 0);
+.spectrum-Menu-item--drillIn .chevron {
+    fill: var(
+        --highcontrast-menu-drillin-icon-color-default,
+        var(
+            --mod-menu-drillin-icon-color-default,
+            var(--spectrum-menu-drillin-icon-color-default)
+        )
+    );
+    margin-inline-start: var(
+        --mod-menu-item-label-to-value-area-min-spacing,
+        var(--spectrum-menu-item-label-to-value-area-min-spacing)
+    );
 }
-:host {
+.spectrum-Menu-item--drillIn.is-open {
     background-color: var(
-        --spectrum-listitem-m-texticon-background-color,
-        var(--spectrum-alias-background-color-transparent)
-    );
-    color: var(
-        --spectrum-listitem-m-texticon-text-color,
-        var(--spectrum-alias-component-text-color-default)
-    );
-}
-:host([dir='ltr'].focus-visible),
-:host([dir='ltr'][focused]) {
-    border-left-color: var(
-        --spectrum-listitem-m-texticon-focus-indicator-color,
-        var(--spectrum-alias-border-color-key-focus)
+        --highcontrast-menu-item-background-color-hover,
+        var(
+            --mod-menu-item-background-color-hover,
+            var(--spectrum-menu-item-background-color-hover)
+        )
     );
 }
-:host([dir='ltr']:focus-visible),
-:host([dir='ltr'][focused]) {
-    border-left-color: var(
-        --spectrum-listitem-m-texticon-focus-indicator-color,
-        var(--spectrum-alias-border-color-key-focus)
+.spectrum-Menu-item--drillIn.is-open .icon:not(.chevron, .checkmark) {
+    fill: var(
+        --highcontrast-menu-item-label-icon-color-hover,
+        var(
+            --mod-menu-item-label-icon-color-hover,
+            var(--spectrum-menu-item-label-icon-color-hover)
+        )
     );
 }
-:host([dir='rtl'].focus-visible),
-:host([dir='rtl'][focused]) {
-    border-right-color: var(
-        --spectrum-listitem-m-texticon-focus-indicator-color,
-        var(--spectrum-alias-border-color-key-focus)
+.spectrum-Menu-item--drillIn.is-open .chevron {
+    fill: var(
+        --highcontrast-menu-drillin-icon-color-hover,
+        var(
+            --mod-menu-drillin-icon-color-hover,
+            var(--spectrum-menu-drillin-icon-color-hover)
+        )
     );
 }
-:host([dir='rtl']:focus-visible),
-:host([dir='rtl'][focused]) {
-    border-right-color: var(
-        --spectrum-listitem-m-texticon-focus-indicator-color,
-        var(--spectrum-alias-border-color-key-focus)
+.spectrum-Menu-item--drillIn.is-open .checkmark {
+    fill: var(
+        --highcontrast-menu-checkmark-icon-color-hover,
+        var(
+            --mod-menu-checkmark-icon-color-hover,
+            var(--spectrum-menu-checkmark-icon-color-hover)
+        )
     );
 }
-:host(.focus-visible),
-:host([focused]) {
-    background-color: var(
-        --spectrum-listitem-m-texticon-background-color-key-focus,
-        var(--spectrum-alias-background-color-hover-overlay)
-    );
-    color: var(
-        --spectrum-listitem-m-texticon-text-color-key-focus,
-        var(--spectrum-alias-component-text-color-key-focus)
+.spectrum-Menu-item--drillIn:hover .chevron {
+    fill: var(
+        --highcontrast-menu-drillin-icon-color-hover,
+        var(
+            --mod-menu-drillin-icon-color-hover,
+            var(--spectrum-menu-drillin-icon-color-hover)
+        )
     );
 }
-:host(:focus-visible),
-:host([focused]) {
-    background-color: var(
-        --spectrum-listitem-m-texticon-background-color-key-focus,
-        var(--spectrum-alias-background-color-hover-overlay)
-    );
-    color: var(
-        --spectrum-listitem-m-texticon-text-color-key-focus,
-        var(--spectrum-alias-component-text-color-key-focus)
-    );
-}
-:host .is-highlighted,
-:host .is-open,
-:host(:focus),
-:host(:hover) {
-    background-color: var(
-        --spectrum-listitem-m-texticon-background-color-hover,
-        var(--spectrum-alias-background-color-hover-overlay)
-    );
-    color: var(
-        --spectrum-listitem-m-texticon-text-color-hover,
-        var(--spectrum-alias-component-text-color-hover)
+.spectrum-Menu-item--drillIn.focus-visible .chevron,
+.spectrum-Menu-item--drillIn:focus .chevron,
+:host([focused]) .spectrum-Menu-item--drillIn .chevron {
+    fill: var(
+        --highcontrast-menu-drillin-icon-color-focus,
+        var(
+            --mod-menu-drillin-icon-color-focus,
+            var(--spectrum-menu-drillin-icon-color-focus)
+        )
     );
 }
-:host([selected]) {
-    color: var(
-        --spectrum-listitem-m-texticon-text-color-selected,
-        var(--spectrum-alias-component-text-color-default)
+.spectrum-Menu-item--drillIn:focus .chevron,
+.spectrum-Menu-item--drillIn:focus-visible .chevron,
+:host([focused]) .spectrum-Menu-item--drillIn .chevron {
+    fill: var(
+        --highcontrast-menu-drillin-icon-color-focus,
+        var(
+            --mod-menu-drillin-icon-color-focus,
+            var(--spectrum-menu-drillin-icon-color-focus)
+        )
     );
 }
-:host([selected]) .checkmark {
-    color: var(
-        --spectrum-listitem-m-texticon-ui-icon-color-selected,
-        var(--spectrum-alias-icon-color-selected)
+.spectrum-Menu-item--drillIn:active .chevron {
+    fill: var(
+        --highcontrast-menu-drillin-icon-color-down,
+        var(
+            --mod-menu-drillin-icon-color-down,
+            var(--spectrum-menu-drillin-icon-color-down)
+        )
     );
-}
-:host([active]),
-:host:active {
-    background-color: var(
-        --spectrum-listitem-m-texticon-background-color-down,
-        var(--spectrum-alias-background-color-hover-overlay)
-    );
-}
-:host([disabled]) {
-    background-color: var(
-        --spectrum-listitem-m-texticon-background-color-disabled,
-        var(--spectrum-alias-background-color-transparent)
-    );
-    background-image: none;
-    color: var(
-        --spectrum-listitem-m-texticon-text-color-disabled,
-        var(--spectrum-alias-component-text-color-disabled)
-    );
-    cursor: default;
-}
-@media (forced-colors: active) {
-    :host {
-        --spectrum-listheading-text-color: ButtonText;
-        --spectrum-listitem-m-texticon-background-color: ButtonFace;
-        --spectrum-listitem-m-texticon-background-color-disabled: ButtonFace;
-        --spectrum-listitem-m-texticon-background-color-down: ButtonFace;
-        --spectrum-listitem-m-texticon-background-color-hover: Highlight;
-        --spectrum-listitem-m-texticon-background-color-key-focus: Highlight;
-        --spectrum-listitem-m-texticon-focus-indicator-color: Highlight;
-        --spectrum-listitem-m-texticon-text-color: ButtonText;
-        --spectrum-listitem-m-texticon-text-color-disabled: GrayText;
-        --spectrum-listitem-m-texticon-text-color-hover: HighlightText;
-        --spectrum-listitem-m-texticon-text-color-key-focus: HighlightText;
-        --spectrum-listitem-m-texticon-text-color-selected: ButtonText;
-        --spectrum-listitem-m-texticon-ui-icon-color-selected: Highlight;
-        forced-color-adjust: none;
-    }
-    :host(:not([disabled])) .is-highlighted,
-    :host(:not([disabled])) .is-open,
-    :host(:not([disabled]).focus-visible),
-    :host(:not([disabled]):focus),
-    :host(:not([disabled]):hover),
-    :host(:not([disabled])[focused]) {
-        background-color: var(
-            --spectrum-listitem-m-texticon-background-color-key-focus,
-            var(--spectrum-alias-background-color-hover-overlay)
-        );
-        color: var(
-            --spectrum-listitem-m-texticon-text-color-key-focus,
-            var(--spectrum-alias-component-text-color-key-focus)
-        );
-    }
-    :host(:not([disabled])) .is-highlighted,
-    :host(:not([disabled])) .is-open,
-    :host(:not([disabled]):focus),
-    :host(:not([disabled]):focus-visible),
-    :host(:not([disabled]):hover),
-    :host(:not([disabled])[focused]) {
-        background-color: var(
-            --spectrum-listitem-m-texticon-background-color-key-focus,
-            var(--spectrum-alias-background-color-hover-overlay)
-        );
-        color: var(
-            --spectrum-listitem-m-texticon-text-color-key-focus,
-            var(--spectrum-alias-component-text-color-key-focus)
-        );
-    }
-    :host(:not([disabled]).focus-visible[selected]) .checkmark,
-    :host(:not([disabled])[focused][selected]) .checkmark,
-    :host(:not([disabled])[selected]) .is-highlighted .checkmark,
-    :host(:not([disabled])[selected]) .is-open .checkmark,
-    :host(:not([disabled])[selected]:focus) .checkmark,
-    :host(:not([disabled])[selected]:hover) .checkmark {
-        color: HighlightText;
-    }
-    :host(:not([disabled]):focus-visible[selected]) .checkmark,
-    :host(:not([disabled])[focused][selected]) .checkmark,
-    :host(:not([disabled])[selected]) .is-highlighted .checkmark,
-    :host(:not([disabled])[selected]) .is-open .checkmark,
-    :host(:not([disabled])[selected]:focus) .checkmark,
-    :host(:not([disabled])[selected]:hover) .checkmark {
-        color: HighlightText;
-    }
 }

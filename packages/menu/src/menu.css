@@ -12,38 +12,44 @@ governing permissions and limitations under the License.
 
 @import './spectrum-menu.css';
 
-:host {
-    /**
+/* :host { */
+
+/**
      * Remove when Spectrum CSS supports this correctly
      */
-    display: inline-flex;
-    flex-direction: column;
 
-    /**
+/* display: inline-flex;
+    flex-direction: column; */
+
+/**
      * TODO: remove the following when https://github.com/adobe/spectrum-css/issues/1130
      is correct
      */
-    --spectrum-listitem-selectable-padding-right: calc(
+
+/* --spectrum-listitem-selectable-padding-right: calc(
         var(--spectrum-global-dimension-size-100) +
             var(--spectrum-icon-checkmark-medium-width) +
             var(--spectrum-listitem-icon-gap)
-    );
+    ); */
 
-    /**
+/**
      * Allow menu elements to be foreced to width 100% when placed inside of a Tray
      **/
-    width: var(--swc-menu-width);
+
+/* width: var(--swc-menu-width);
 }
 
 :host(:focus) {
     outline: none;
 }
 
-::slotted(*) {
-    /**
+::slotted(*) { */
+
+/**
      * Remove when Spectrum CSS supports this correctly
      */
-    flex-shrink: 0;
+
+/* flex-shrink: 0;
 
     --swc-menu-width: 100%;
-}
+} */

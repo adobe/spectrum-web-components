@@ -15,7 +15,29 @@ governing permissions and limitations under the License.
 @import './spectrum-menu-item.css';
 @import './spectrum-itemLabel.css';
 
-:host([hidden]) {
+.checkmark {
+    color: var(
+        --highcontrast-menu-checkmark-icon-color-default,
+        var(
+            --mod-menu-checkmark-icon-color-default,
+            var(--spectrum-menu-checkmark-icon-color-default)
+        )
+    );
+}
+
+/* TODO: CHANGE TO RIGHT COLOUR LATER */
+
+.chevron {
+    color: var(
+        --highcontrast-menu-checkmark-icon-color-default,
+        var(
+            --mod-menu-checkmark-icon-color-default,
+            var(--spectrum-menu-checkmark-icon-color-default)
+        )
+    );
+}
+
+/* :host([hidden]) {
     display: none;
 }
 
@@ -51,28 +73,35 @@ governing permissions and limitations under the License.
 :host([dir='ltr']) ::slotted([slot='icon']) {
     /* [dir=ltr] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=ltr] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
-    margin-right: var(--spectrum-listitem-texticon-icon-gap);
+
+/* margin-right: var(--spectrum-listitem-texticon-icon-gap);
 }
 
-:host([dir='rtl']) ::slotted([slot='icon']) {
-    /* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
+:host([dir='rtl']) ::slotted([slot='icon']) { */
+
+/* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=rtl] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
-    margin-left: var(--spectrum-listitem-texticon-icon-gap);
+
+/* margin-left: var(--spectrum-listitem-texticon-icon-gap);
 }
 
-:host([dir='rtl']) slot[name='icon'] + #label {
-    /* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
+:host([dir='rtl']) slot[name='icon'] + #label { */
+
+/* [dir=rtl] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=rtl] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
-    margin-right: 0;
+
+/* margin-right: 0;
 }
 
-:host([dir='ltr']) slot[name='icon'] + #label {
-    /* [dir=ltr] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
+:host([dir='ltr']) slot[name='icon'] + #label { */
+
+/* [dir=ltr] .spectrum-Menu-item .spectrum-Icon+.spectrum-Menu-itemLabel,
    * [dir=ltr] .spectrum-Menu-item .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel */
-    margin-left: 0;
+
+/* margin-left: 0;
 }
 
 :host([dir='rtl']) .chevron {
     padding-left: var(--spectrum-listitem-texticon-icon-gap);
     padding-right: 0;
-}
+} */

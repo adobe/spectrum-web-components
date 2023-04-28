@@ -14,7 +14,7 @@ import {
     CSSResultArray,
     html,
     PropertyValues,
-    SpectrumElement,
+    SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -28,6 +28,7 @@ import type {
     MenuItemRemovedEvent,
 } from './MenuItem.js';
 import menuStyles from './menu.css.js';
+import { Focusable } from '@spectrum-web-components/shared';
 
 export interface MenuChildItem {
     menuItem: MenuItem;
@@ -60,7 +61,7 @@ function elementIsOrContains(
  *   When the `selects` attribute is not present a `value` will not be maintained and the Menu
  *   Item children of this Menu will not have their `selected` state managed.
  */
-export class Menu extends SpectrumElement {
+export class Menu extends SizedMixin(Focusable) {
     public static override get styles(): CSSResultArray {
         return [menuStyles];
     }

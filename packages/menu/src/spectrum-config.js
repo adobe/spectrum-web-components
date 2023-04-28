@@ -28,11 +28,27 @@ const config = {
             excludeByComponents: [
                 builder.class('spectrum-Menu-divider'),
                 builder.class('spectrum-Menu'),
-                builder.class('spectrum-Menu-chevron'),
-                builder.class('spectrum-Menu-checkmark'),
-                builder.class('spectrum-Menu-item'),
-                builder.class('spectrum-Menu-itemLabel'),
-                builder.class('spectrum-Menu-itemLabel--wrapping'),
+                builder.class('spectrum-menu-itemSelection'),
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu--size/,
+                },
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-item/,
+                },
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-chevron/,
+                },
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-checkmark/,
+                },
             ],
             components: [
                 converter.classToClass(
@@ -50,10 +66,11 @@ const config = {
                 builder.class('spectrum-Menu'),
                 builder.class('spectrum-Menu-sectionHeading'),
                 builder.class('spectrum-Menu-divider'),
-            ],
-            excludeByWholeSelector: [
-                [builder.class('spectrum-Menu-checkmark')],
-                [builder.class('spectrum-Menu-chevron')],
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu--size/,
+                },
             ],
             components: [
                 converter.classToHost('spectrum-Menu-item'),
@@ -64,8 +81,32 @@ const config = {
                 converter.classToId('spectrum-Menu-itemLabel', 'label'),
                 converter.classToClass('spectrum-Menu-itemIcon', 'icon'),
                 converter.classToClass('spectrum-Menu-chevron', 'chevron'),
+                converter.classToClass(
+                    'spectrum-Menu-chevron--withAdjacentText',
+                    'chevron--withAdjacentText'
+                ),
+                converter.classToClass(
+                    'spectrum-Menu-chevron--withAdjacentIcon',
+                    'chevron--withAdjacentIcon'
+                ),
                 converter.classToClass('spectrum-Menu-checkmark', 'checkmark'),
+                converter.classToClass(
+                    'spectrum-Menu-checkmark--withAdjacentText',
+                    'checkmark--withAdjacentText'
+                ),
+                converter.classToClass(
+                    'spectrum-Menu-checkmark--withAdjacentIcon',
+                    'checkmark--withAdjacentIcon'
+                ),
+                converter.classToClass(
+                    'spectrum-Menu-itemIcon--workflowIcon',
+                    'icon--workflow-icon'
+                ),
                 converter.classToSlotted('spectrum-Icon', 'icon'),
+                converter.classToClass(
+                    'spectrum-menu-itemSelection',
+                    'menu-itemSelection'
+                ),
                 {
                     find: [builder.class('spectrum-Menu-itemLabel--wrapping')],
                     replace: [
@@ -130,6 +171,34 @@ const config = {
                     },
                     hoist: true,
                 },
+                {
+                    find: [
+                        builder.class('spectrum-Menu-itemIcon'),
+                        {
+                            type: 'pseudo-class',
+                            kind: 'not',
+                            selectors: [
+                                [builder.class('spectrum-Menu-chevron')],
+                                [builder.class('spectrum-Menu-checkmark')],
+                            ],
+                        },
+                    ],
+                    replace: [
+                        {
+                            replace: builder.class('icon'),
+                        },
+                        {
+                            replace: {
+                                kind: 'not',
+                                type: 'pseudo-class',
+                                selectors: [
+                                    [builder.class('chevron')],
+                                    [builder.class('checkmark')],
+                                ],
+                            },
+                        },
+                    ],
+                },
             ],
         },
         {
@@ -138,12 +207,29 @@ const config = {
             outPackage: 'menu',
             fileName: 'menu-divider',
             excludeByComponents: [
-                builder.class('spectrum-Menu-chevron'),
-                builder.class('spectrum-Menu-checkmark'),
-                builder.class('spectrum-Menu-item'),
-                builder.class('spectrum-Menu-itemLabel'),
-                builder.class('spectrum-Menu-itemLabel--wrapping'),
+                builder.class('spectrum-menu-itemSelection'),
                 builder.class('spectrum-Menu-sectionHeading'),
+                builder.class('spectrum-Menu'),
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu--size/,
+                },
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-checkmark/,
+                },
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-chevron/,
+                },
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-item/,
+                },
             ],
             excludeByWholeSelector: [
                 [builder.class('spectrum-Menu')],
@@ -151,6 +237,13 @@ const config = {
                     builder.class('spectrum-Menu'),
                     builder.combinator(' '),
                     builder.class('spectrum-Menu'),
+                ],
+            ],
+            includeByWholeSelector: [
+                [
+                    builder.class('spectrum-Menu'),
+                    builder.combinator('descendant'),
+                    builder.class('spectrum-Menu-divider'),
                 ],
             ],
             components: [
@@ -182,13 +275,33 @@ const config = {
                 builder.class('spectrum-Menu-sectionHeading'),
                 builder.class('spectrum-Menu-divider'),
                 builder.class('spectrum-Menu'),
-                builder.class('spectrum-Menu-chevron'),
-                builder.class('spectrum-Menu-item'),
-                builder.class('spectrum-Menu-itemLabel'),
-                builder.class('spectrum-Menu-itemLabel--wrapping'),
+                builder.class('spectrum-menu-itemSelection'),
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu--size/,
+                },
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-chevron/,
+                },
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-item/,
+                },
             ],
             components: [
                 converter.classToClass('spectrum-Menu-checkmark', 'checkmark'),
+                converter.classToClass(
+                    'spectrum-Menu-checkmark--withAdjacentText',
+                    'checkmark--withAdjacentText'
+                ),
+                converter.classToClass(
+                    'spectrum-Menu-checkmark--withAdjacentIcon',
+                    'checkmark--withAdjacentIcon'
+                ),
             ],
         },
         {
@@ -200,13 +313,33 @@ const config = {
                 builder.class('spectrum-Menu-sectionHeading'),
                 builder.class('spectrum-Menu-divider'),
                 builder.class('spectrum-Menu'),
-                builder.class('spectrum-Menu-checkmark'),
-                builder.class('spectrum-Menu-item'),
-                builder.class('spectrum-Menu-itemLabel'),
-                builder.class('spectrum-Menu-itemLabel--wrapping'),
+                builder.class('spectrum-menu-itemSelection'),
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu--size/,
+                },
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-checkmark/,
+                },
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-item/,
+                },
             ],
             components: [
                 converter.classToClass('spectrum-Menu-chevron', 'chevron'),
+                converter.classToClass(
+                    'spectrum-Menu-chevron--withAdjacentText',
+                    'chevron--withAdjacentText'
+                ),
+                converter.classToClass(
+                    'spectrum-Menu-chevron--withAdjacentIcon',
+                    'chevron--withAdjacentIcon'
+                ),
             ],
         },
         {
@@ -217,11 +350,22 @@ const config = {
             excludeByComponents: [
                 builder.class('spectrum-Menu-divider'),
                 builder.class('spectrum-Menu-sectionHeading'),
-                builder.class('spectrum-Menu-chevron'),
-                builder.class('spectrum-Menu-checkmark'),
-                builder.class('spectrum-Menu-itemLabel'),
-                builder.class('spectrum-Menu-itemLabel--wrapping'),
-                builder.class('spectrum-Menu-item'),
+                builder.class('spectrum-menu-itemSelection'),
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-item/,
+                },
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-checkmark/,
+                },
+                {
+                    type: 'class',
+                    name: 'regex',
+                    regex: /spectrum-Menu-chevron/,
+                },
             ],
             includeByWholeSelector: [
                 /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */
@@ -266,6 +410,15 @@ const config = {
             components: [
                 converter.classToHost(),
                 converter.classToAttribute('is-selectable', 'selects'),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Menu--sizeS', 's'],
+                        ['spectrum-Menu--sizeM', 'm'],
+                        ['spectrum-Menu--sizeL', 'l'],
+                        ['spectrum-Menu--sizeXL', 'xl'],
+                    ],
+                    'size'
+                ),
                 {
                     find: [builder.class('spectrum-Menu-item')],
                     replace: [

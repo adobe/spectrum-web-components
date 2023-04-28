@@ -12,14 +12,10 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    margin: calc(var(--spectrum-listitem-texticon-divider-padding) / 2)
-        var(--spectrum-listitem-texticon-padding-y);
+    inline-size: auto;
+    margin-block: var(
+        --mod-menu-item-bottom-edge-to-text,
+        var(--spectrum-menu-item-bottom-edge-to-text)
+    );
     overflow: visible;
-    width: auto;
-}
-@media (forced-colors: active) {
-    :host {
-        background-color: CanvasText;
-        forced-color-adjust: none;
-    }
 }
