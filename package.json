@@ -253,6 +253,7 @@
         "build:types": {
             "command": "tsc --build tsconfig-all.json",
             "dependencies": [
+                "process-icons",
                 "test:create",
                 "build:css"
             ],
