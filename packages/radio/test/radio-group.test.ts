@@ -641,7 +641,7 @@ describe('Radio Group - late children', () => {
         /**
          * In some cases (e.g. when wrapped in React components) will cause otherwise standard looking
          * DOM structures to add `<sp-radio>` children to `<sp-radio-group>` parents in a non-syncronous manner.
-         * 
+         *
          * This test emulates that render process to ensure that validation will still work as expect in that context.
          */
         const test = await fixture(html`

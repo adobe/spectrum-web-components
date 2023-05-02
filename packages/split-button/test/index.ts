@@ -26,13 +26,6 @@ import type { Button } from '@spectrum-web-components/button';
 import type { MenuItem } from '@spectrum-web-components/menu';
 import type { SplitButton } from '@spectrum-web-components/split-button';
 
-// const pickerReady = async (picker: SplitButton): Promise<void> => {
-//     await elementUpdated(picker);
-//     if (picker.open) {
-//         await elementUpdated(picker.optionsMenu);
-//     }
-// }
-
 export function runSplitButtonTests(
     wrapInDiv: (storyArgument: TemplateResult) => TemplateResult,
     deprecatedMenu: () => TemplateResult
