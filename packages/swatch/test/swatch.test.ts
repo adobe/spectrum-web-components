@@ -13,7 +13,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { spy } from 'sinon';
 import { sendKeys } from '@web/test-runner-commands';
 
-import '@spectrum-web-components/swatch/sp-swatch.js';
+import '../sp-swatch.js';
 import { Swatch } from '../src/Swatch.js';
 import { ElementSize } from '@spectrum-web-components/base';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
