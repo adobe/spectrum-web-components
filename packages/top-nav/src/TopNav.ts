@@ -24,7 +24,7 @@ import {
     query,
 } from '@spectrum-web-components/base/src/decorators.js';
 import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
-import { ResizeController } from '@lit-labs/observers/resize_controller.js';
+import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { TopNavItem } from './TopNavItem.js';
 
 import tabsSizes from '@spectrum-web-components/tabs/src/tabs-sizes.css.js';

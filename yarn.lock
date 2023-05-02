@@ -3024,10 +3024,10 @@
     "@open-wc/scoped-elements" "^2.0.1"
     lit "^2.0.2"
 
-"@lit-labs/observers@^1.0.1", "@lit-labs/observers@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@lit-labs/observers/-/observers-1.1.0.tgz#f121940db5f7beb44fb7239904805f398c76f356"
-  integrity sha512-+MbK+OD+Io9MvGIKY8HVB7vQVOpYxruChlw52OzHjAPl+cBPK8i+MKQ2OvH02LakRYloEc6u/Nuvz6+e8+qAbA==
+"@lit-labs/observers@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@lit-labs/observers/-/observers-2.0.0.tgz#b1ab73e43460e97b3910f6be68121bfabf14669a"
+  integrity sha512-NMbCjJEqp8V9TpTtt8HhzFVymx/WGpTD7iU+FMKSis4u3iBWwu2UYh6KChwFTEPW9xMum70r2IBnaViBINaGTA==
   dependencies:
     "@lit/reactive-element" "^1.1.0"
 

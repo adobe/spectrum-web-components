@@ -21,7 +21,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import { RovingTabindexController } from '@spectrum-web-components/reactive-controllers/src/RovingTabindex.js';
-import { MutationController } from '@lit-labs/observers/mutation_controller.js';
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 import styles from './swatch-group.css.js';
 import type {

@@ -14,7 +14,7 @@ import {
     property,
     queryAssignedNodes,
 } from '@spectrum-web-components/base/src/decorators.js';
-import { MutationController } from '@lit-labs/observers/mutation_controller.js';
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 const assignedNodesList = Symbol('assignedNodes');
 

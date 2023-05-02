@@ -88,7 +88,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^1.0.1",
+        "@lit-labs/observers": "^2.0.0",
         "@spectrum-web-components/base": "^0.7.5",
         "focus-visible": "^5.1.0"
     },
