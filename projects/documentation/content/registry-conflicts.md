@@ -22,7 +22,7 @@ You might hit this error when:
 
 ## Resolution
 
-First, verify that each `@spectrum-web-components` package in your `package.json` shares the same version. If `@spectrum-web-components/button` is on version `0.4.0`, then all other SWC packages should _also_ be on version `0.4.0`.
+First, verify that each `@spectrum-web-components` package in your `package.json` shares the same version. If `@spectrum-web-components/button` is on version `0.30.0`, then all other SWC packages should _also_ be on version `0.30.0`.
 
 Further resolutions are package-manager dependent, but the goal state is the same: a _de-duped_ dependency tree where multiple versions of the same package are _hoisted_ into a single version.
 
@@ -50,7 +50,7 @@ If you are not able to switch to a package manager that can dedupe dependency tr
 
 -   Running `yarn list {packagename}` to see which versions are installed
 -   Adding a commonly-valid version to [yarn's resolutions list](https://classic.yarnpkg.com/lang/en/docs/selective-version-resolutions/) in package.json.
--   Running `rm yarn.lock && yarn` to reinstall with resolutions.
+-   Running `yarn` to reinstall with resolutions.
 
 ## Future
 
@@ -62,3 +62,5 @@ Scoped registries would allow for multiple custom element definitions for a sing
 -   Some components that broadly manage state, or coordinate and orchestrate other components, will still require a single de-duplicated version on the page.
 
 Experimentation with scoped registry polyfills showed unacceptable performance degradation for a large component library.
+
+To support this feature in coming to browsers faster, [share your use case](https://github.com/WICG/webcomponents/issues/716) with implementors to help increase awareness and priority of this API.
