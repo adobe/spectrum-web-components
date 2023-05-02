@@ -16,6 +16,7 @@ import {
 import { sendMousePlugin } from './test/plugins/send-mouse-plugin.js';
 import {
     chromium,
+    chromiumWithFlags,
     configuredVisualRegressionPlugin,
     firefox,
     packages,
@@ -77,6 +78,12 @@ export default {
             'tools/shared/src/focus-visible.*',
             'tools/styles/**',
             '**/node_modules/**',
+            // The following are WIP removals for the Overlay API update
+            '**/ActiveOverlay.*',
+            '**/overlay-stack.*',
+            '**/overlay-utils.*',
+            '**/OverlayPopover.*',
+            '**/topLayerOverTransforms.*',
         ],
         threshold: {
             statements: 98.5,
@@ -88,7 +95,6 @@ export default {
     testFramework: {
         config: {
             timeout: 3000,
-            retries: 1,
         },
     },
     groups: [
@@ -113,6 +119,18 @@ export default {
             }
             return acc;
         }, []),
+        {
+            name: 'overlay-api',
+            files: [
+                'packages/action-menu/test/*.test.js',
+                'packages/dialog/test/*.test.js',
+                'packages/menu/test/*.test.js',
+                'packages/overlay/test/*.test.js',
+                'packages/picker/test/*.test.js',
+                'packages/split-button/test/*.test.js',
+            ],
+            browsers: [chromium, chromiumWithFlags, firefox, webkit],
+        },
     ],
     group: 'unit',
     browsers: [chromium, firefox, webkit],
