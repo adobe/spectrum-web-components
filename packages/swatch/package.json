@@ -66,7 +66,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^1.0.1",
+        "@lit-labs/observers": "^2.0.0",
         "@spectrum-web-components/base": "^0.7.5",
         "@spectrum-web-components/icon": "^0.12.11",
         "@spectrum-web-components/icons-ui": "^0.9.12",

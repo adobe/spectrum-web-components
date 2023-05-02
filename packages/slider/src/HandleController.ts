@@ -15,7 +15,7 @@ import {
     ifDefined,
     styleMap,
 } from '@spectrum-web-components/base/src/directives.js';
-import { MutationController } from '@lit-labs/observers/mutation_controller.js';
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 import { Slider } from './Slider.js';
 import {
     Controller,

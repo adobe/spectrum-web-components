@@ -34,7 +34,7 @@ import checkmarkStyles from '@spectrum-web-components/icon/src/spectrum-icon-che
 import type { Menu } from './Menu.js';
 import type { OverlayOpenCloseDetail } from '@spectrum-web-components/overlay';
 import { reparentChildren } from '@spectrum-web-components/shared/src/reparent-children.js';
-import { MutationController } from '@lit-labs/observers/mutation_controller.js';
+import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 
 /**
  * Duration during which a pointing device can leave an `<sp-menu-item>` element
