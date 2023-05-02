@@ -4331,10 +4331,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/accordion/-/accordion-3.0.42.tgz#f1a5b0d0bb59eede4b6a6734ffbeac33e9fbea48"
   integrity sha512-wjXpnCUQSqVYVZc1VOk+lYke+HywJRatgr27uZA8BXUyLBWuuR5SKI0waGW72Ax94v56H6nrt9FdFSTBwAx7Sw==
 
-"@spectrum-css/actionbar@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-4.0.1.tgz#8742808a9334484896d7f47700a9544d444a41bc"
-  integrity sha512-s97vdrYNN5LhilNeirs6Xox05VZazjTNSb+qrtItowdfHEw3XbzCs8n0AdHgMSZkezL9z6B/BojeOo7fIGWbdw==
+"@spectrum-css/actionbar@^6.0.25":
+  version "6.0.25"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/actionbar/-/actionbar-6.0.25.tgz#448a5cc06c2514ccc5bf48551debcc9291864c68"
+  integrity sha512-fuGc8wUSDI0gFynAPmU26jRD6C6E4F+5LW8J46b2LoYzP6eok9swPsmAkB2R4praE+hDK3MAG2Ybp2A5ToMP8Q==
 
 "@spectrum-css/actionbutton@^3.0.35":
   version "3.0.35"
