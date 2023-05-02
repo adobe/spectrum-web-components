@@ -20,11 +20,19 @@
     "module": "src/index.js",
     "type": "module",
     "exports": {
-        ".": "./src/index.js",
-        "./src/*": "./src/*.js",
+        ".": {
+            "development": "./src/index.dev.js",
+            "default": "./src/index.js"
+        },
         "./package.json": "./package.json",
-        "./sp-picker-button": "./sp-picker-button.js",
-        "./sp-picker-button.js": "./sp-picker-button.js"
+        "./src/PickerButton.js": {
+            "development": "./src/PickerButton.dev.js",
+            "default": "./src/PickerButton.js"
+        },
+        "./sp-picker-button.js": {
+            "development": "./sp-picker-button.dev.js",
+            "default": "./sp-picker-button.js"
+        }
     },
     "scripts": {
         "test": "echo \"Error: run tests from mono-repo root.\" && exit 1"
@@ -53,6 +61,7 @@
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
     "sideEffects": [
-        "./sp-*.js"
+        "./sp-*.js",
+        "./**/*.dev.js"
     ]
 }
