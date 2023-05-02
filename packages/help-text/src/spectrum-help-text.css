@@ -48,7 +48,7 @@ governing permissions and limitations under the License.
 :host(:lang(ja)),
 :host(:lang(ko)),
 :host(:lang(zh)) {
-    --spectrum-helptext-line-height-cjk: var(--spectrum-line-height-cjk-100);
+    --spectrum-helptext-line-height-cjk: var(--spectrum-cjk-line-height-100);
 }
 :host([size='s']) {
     --spectrum-helptext-min-height: var(--spectrum-component-height-75);
