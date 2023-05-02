@@ -23,7 +23,7 @@ export function defineElement(
             window.__swc.warn(
                 undefined,
                 `Attempted to redefine <${name}>. This usually indicates that multiple versions of the same web component were loaded onto a single page.`,
-                'https://TODO'
+                'https://opensource.adobe.com/spectrum-web-components/registry-conflicts'
             );
         }
     }
