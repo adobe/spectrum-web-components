@@ -10,6 +10,8 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+
 import fs from 'fs';
 import glob from 'glob';
 import path from 'path';
@@ -239,15 +241,16 @@ const generateIconRegistration = (icon) => {
 
 const prettify = (rawFile) => {
     return prettier.format(rawFile, {
-        printWidth: 100,
-        tabWidth: 2,
+        printWidth: 80,
+        tabWidth: 4,
         useTabs: false,
         semi: true,
         singleQuote: true,
-        trailingComma: 'all',
+        trailingComma: 'es5',
         bracketSpacing: true,
         jsxBracketSameLine: false,
-        arrowParens: 'avoid',
+        arrowParens: 'always',
+        htmlWhitespaceSensitivity: 'ignore',
         parser: 'typescript',
     });
 };

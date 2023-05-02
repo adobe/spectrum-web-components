@@ -4,3 +4,4 @@ src/elements
 src/express
 icons
 stories/icon-manifest.ts
+!bin/postbuild.js
