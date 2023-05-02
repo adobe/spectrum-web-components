@@ -2,7 +2,6 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "composite": true,
-        "moduleResolution": "node16",
         "rootDir": "./"
     },
     "include": ["icons/**/*.ts", "src/**/*.ts", "../../global.d.ts"],

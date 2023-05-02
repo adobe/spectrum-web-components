@@ -10,7 +10,7 @@
         "isolatedModules": true,
         "lib": ["es2018", "dom", "dom.iterable"],
         "module": "esNext",
-        "moduleResolution": "node",
+        "moduleResolution": "nodenext",
         "noImplicitOverride": true,
         "noImplicitReturns": true,
         "noUnusedParameters": true,
