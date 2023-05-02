@@ -123,32 +123,32 @@ const stripColors = (icon) => {
         xmlMode: true,
     });
 
-    return $('*')
-        .each((index, el) => {
-            if (el.name === 'svg') {
-                $(el).attr('aria-hidden', '...');
-                $(el).attr('role', 'img');
-                $(el).attr('fill', 'currentColor');
-                $(el).attr('aria-label', '...');
-                $(el).removeAttr('id');
-                $(el).attr('width', '...');
-                $(el).attr('height', '...');
+    $('*').each((index, el) => {
+        if (el.name === 'svg') {
+            $(el).attr('aria-hidden', '...');
+            $(el).attr('role', 'img');
+            $(el).attr('fill', 'currentColor');
+            $(el).attr('aria-label', '...');
+            $(el).removeAttr('id');
+            $(el).attr('width', '...');
+            $(el).attr('height', '...');
+        }
+        if (el.name === 'defs') {
+            $(el).remove();
+        }
+        Object.keys(el.attribs).forEach((x) => {
+            if (x === 'class') {
+                $(el).removeAttr(x);
             }
-            if (el.name === 'defs') {
-                $(el).remove();
+            if (x === 'stroke') {
+                $(el).attr(x, 'currentColor');
             }
-            Object.keys(el.attribs).forEach((x) => {
-                if (x === 'class') {
-                    $(el).removeAttr(x);
-                }
-                if (x === 'stroke') {
-                    $(el).attr(x, 'currentColor');
-                }
-                if (x === 'fill') {
-                    $(el).attr(x, 'currentColor');
-                }
-            });
-        })
+            if (x === 'fill') {
+                $(el).attr(x, 'currentColor');
+            }
+        });
+    });
+    return $('svg')
         .toString()
         .replace(
             'aria-hidden="..."',

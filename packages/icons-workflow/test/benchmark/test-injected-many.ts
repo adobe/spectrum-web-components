@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import '@spectrum-web-components/icon/sp-icon.js';
-import { AbcIcon } from '@spectrum-web-components/icons-workflow/src/icons/ABC.js';
+import { ABCIcon } from '@spectrum-web-components/icons-workflow/src/icons/ABC.js';
 import { ActionsIcon } from '@spectrum-web-components/icons-workflow/src/icons/Actions.js';
 import { DisplayAdvertIcon } from '@spectrum-web-components/icons-workflow/src/icons/DisplayAdvert.js';
 import { PrintAdvertIcon } from '@spectrum-web-components/icons-workflow/src/icons/PrintAdvert.js';
@@ -54,7 +54,7 @@ import { measureFixtureCreation } from '../../../../test/benchmark/helpers.js';
 setCustomTemplateLiteralTag(html);
 
 measureFixtureCreation(html`
-    <sp-icon>${AbcIcon({ hidden: true })}</sp-icon>
+    <sp-icon>${ABCIcon({ hidden: true })}</sp-icon>
     <sp-icon>${ActionsIcon({ hidden: true })}</sp-icon>
     <sp-icon>${DisplayAdvertIcon({ hidden: true })}</sp-icon>
     <sp-icon>${PrintAdvertIcon({ hidden: true })}</sp-icon>

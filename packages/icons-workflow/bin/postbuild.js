@@ -90,8 +90,8 @@ const getExportConditionsForFiles = async (
     for (const [exportedPath, paths] of Object.entries(mergedSet)) {
         exports[`./${path.join(exportBasePath, path.basename(exportedPath))}`] =
             {
-                default: paths.spectrum ?? paths.express,
                 express: paths.express ?? paths.spectrum,
+                default: paths.spectrum ?? paths.express,
             };
     }
     return exports;
