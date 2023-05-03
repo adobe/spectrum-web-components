@@ -10,12 +10,13 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import Sinon from 'sinon';
+import { isWebKit } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/icon/sp-icon.js';
 import { Icon } from '@spectrum-web-components/icon';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
 import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
-import Sinon from 'sinon';
 
 describe('Icon', () => {
     before(async () => {
@@ -86,7 +87,10 @@ describe('Icon', () => {
 
         await expect(el).to.be.accessible();
 
-        expect(error).to.be.calledOnce;
+        // Skipping the test case expectation for webkit because of error event not dispatching bug for the same, https://github.com/microsoft/playwright/issues/22332
+        if (!isWebKit()) {
+            expect(error).to.be.calledOnce;
+        }
     });
 
     it('loads w/ label', async () => {
