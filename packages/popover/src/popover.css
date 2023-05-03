@@ -13,14 +13,24 @@ governing permissions and limitations under the License.
 
 :host {
     --sp-popover-tip-size: 24px;
+    --sp-popover-filter: drop-shadow(
+        0 1px 4px
+            var(
+                --spectrum-popover-shadow-color,
+                var(--spectrum-alias-dropshadow-color)
+            )
+    );
 
     min-width: min-content;
     max-height: 100%;
     max-width: 100%;
     clip-path: none;
+    filter: var(--sp-popover-filter-override, var(--sp-popover-filter));
 }
 
 ::slotted(*) {
+    --sp-popover-filter-override: none;
+
     overscroll-behavior: contain;
 }
 

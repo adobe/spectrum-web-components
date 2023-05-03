@@ -11,8 +11,6 @@ governing permissions and limitations under the License.
 */
 
 :host {
-    position: fixed;
-
     /**
      * duplicate --spectrum-overlay-animation-distance, which is out of scope
      * rather than over write so we continue to get new values from Spectrum CSS
