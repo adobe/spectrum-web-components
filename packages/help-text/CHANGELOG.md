@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   **dialog:** updates for delivering dialog content accessibly ([f0ed33c](https://github.com/adobe/spectrum-web-components/commit/f0ed33c3351ae9bc2017202ede8cf206fbf395c2))
+
+### Features
+
+-   add Help Text pattern ([fdbb812](https://github.com/adobe/spectrum-web-components/commit/fdbb812e05a1202e5b5912a5e93cfba59a3dae9e))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+
 ## [0.2.14](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/help-text@0.2.13...@spectrum-web-components/help-text@0.2.14) (2023-04-24)
 
 **Note:** Version bump only for package @spectrum-web-components/help-text

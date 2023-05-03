@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   remove outdated CEM listing ([2e110d9](https://github.com/adobe/spectrum-web-components/commit/2e110d9f63522efdf93cefc118d54fef4365e5b2))
+
+### Features
+
+-   add badge component ([cabfdfe](https://github.com/adobe/spectrum-web-components/commit/cabfdfe7b7eb00c3868ec26afab524cef1c2fcbd))
+-   **badge:** use core tokens ([83e566c](https://github.com/adobe/spectrum-web-components/commit/83e566c6a80b01621770bbde0ee59dc3d7e7e173))
+-   delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+
 ## [0.4.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/badge@0.4.8...@spectrum-web-components/badge@0.4.9) (2023-04-24)
 
 **Note:** Version bump only for package @spectrum-web-components/badge

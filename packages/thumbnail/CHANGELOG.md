@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+-   use latest @spectrum-css/thumbnail with built in "cover" support ([d152b4e](https://github.com/adobe/spectrum-web-components/commit/d152b4ec2e62201f1675c95fb08083768ab5a6e1))
+
+### Features
+
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   leverage latest Spectrum button API ([9faeade](https://github.com/adobe/spectrum-web-components/commit/9faeade93893137285ae031c9516ce37d9a9041f))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   **thumbnail:** add the thumbnail package ([56935d5](https://github.com/adobe/spectrum-web-components/commit/56935d5f6183c700b036ffd058629a3d9cbdbbbc))
+
 ## [0.6.9](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/thumbnail@0.6.8...@spectrum-web-components/thumbnail@0.6.9) (2023-04-24)
 
 **Note:** Version bump only for package @spectrum-web-components/thumbnail

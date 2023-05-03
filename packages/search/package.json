@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/search",
-    "version": "0.12.16",
+    "version": "0.30.0",
     "publishConfig": {
         "access": "public"
     },
@@ -57,11 +57,11 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.5",
-        "@spectrum-web-components/button": "^0.20.5",
-        "@spectrum-web-components/icon": "^0.12.11",
-        "@spectrum-web-components/icons-workflow": "^0.9.12",
-        "@spectrum-web-components/textfield": "^0.13.15"
+        "@spectrum-web-components/base": "^0.30.0",
+        "@spectrum-web-components/button": "^0.30.0",
+        "@spectrum-web-components/icon": "^0.30.0",
+        "@spectrum-web-components/icons-workflow": "^0.30.0",
+        "@spectrum-web-components/textfield": "^0.30.0"
     },
     "devDependencies": {
         "@spectrum-css/search": "^5.0.10"

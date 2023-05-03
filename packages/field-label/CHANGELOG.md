@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   add "editable" option to "sp-slider" ([e86d7fa](https://github.com/adobe/spectrum-web-components/commit/e86d7fa84491b41a39dbab9c8d85eec42df320cd))
+-   allow sp-dropdown to accept focus visibly from sp-field-label ([134bafc](https://github.com/adobe/spectrum-web-components/commit/134bafc9c2e4d06e48107182f82dd7487066b7f1))
+-   **field-label:** do not assume a target is available and surface t-shirt sizing ([c5daead](https://github.com/adobe/spectrum-web-components/commit/c5daead76698733ce52878fc50e01cdb640396cc))
+-   move property management into update or willUpdate ([f66069f](https://github.com/adobe/spectrum-web-components/commit/f66069f2e38ea89de67d649b3b0bb84cc726ed73))
+-   remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+-   update export patterns ([b2da444](https://github.com/adobe/spectrum-web-components/commit/b2da444359b4022ed3f61dedf563b5bacba42103))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   add t-shirt sizing to the Radio pattern ([fc49343](https://github.com/adobe/spectrum-web-components/commit/fc49343311d4ff95699b455c451514cb7fc62a45))
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+-   **field-label:** add field label pattern ([2fa7c7e](https://github.com/adobe/spectrum-web-components/commit/2fa7c7e0201a6161d6cc769dc171ae37c70ab136))
+-   **field-label:** update spectrum css input ([80a993d](https://github.com/adobe/spectrum-web-components/commit/80a993d787af98f41a613f053e4c2497d07f07ee))
+-   **field-label:** use core tokens ([8db7ac4](https://github.com/adobe/spectrum-web-components/commit/8db7ac48badbad06dbcc7665e9a3bd19b271bb45))
+-   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   **picker:** process field-label content for more accurate a11y tree ([dc9df54](https://github.com/adobe/spectrum-web-components/commit/dc9df54d052edc46c2399f0f7b12d3b5d4aff740))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 ## [0.10.10](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/field-label@0.10.9...@spectrum-web-components/field-label@0.10.10) (2023-04-24)
 
 **Note:** Version bump only for package @spectrum-web-components/field-label

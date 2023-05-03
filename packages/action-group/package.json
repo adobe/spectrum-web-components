@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/action-group",
-    "version": "0.12.12",
+    "version": "0.30.0",
     "publishConfig": {
         "access": "public"
     },
@@ -58,9 +58,9 @@
     ],
     "dependencies": {
         "@lit-labs/observers": "^2.0.0",
-        "@spectrum-web-components/action-button": "^0.10.16",
-        "@spectrum-web-components/base": "^0.7.5",
-        "@spectrum-web-components/reactive-controllers": "^0.3.5"
+        "@spectrum-web-components/action-button": "^0.30.0",
+        "@spectrum-web-components/base": "^0.30.0",
+        "@spectrum-web-components/reactive-controllers": "^0.30.0"
     },
     "devDependencies": {
         "@spectrum-css/actiongroup": "^3.0.36"

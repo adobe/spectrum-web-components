@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.30.0 (2023-05-03)
+
+### Features
+
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
 ## [0.2.17](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/vrt-compare@0.2.16...@spectrum-web-components/vrt-compare@0.2.17) (2023-04-24)
 
 **Note:** Version bump only for package @spectrum-web-components/vrt-compare

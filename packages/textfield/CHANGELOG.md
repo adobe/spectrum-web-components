@@ -3,6 +3,74 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   add support for "readonly" attribute ([4bce3b7](https://github.com/adobe/spectrum-web-components/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
+-   apply "HelpTextMixin" to form elements ([a952447](https://github.com/adobe/spectrum-web-components/commit/a952447254d091b99fe9270b2857cddc48df7c73))
+-   apply Focuable styles in class extensions ([38f7afd](https://github.com/adobe/spectrum-web-components/commit/38f7afd7cdb317d5c8b6e69f1301decd21364b1d))
+-   **button:** relate to this.href correctly ([fade3ea](https://github.com/adobe/spectrum-web-components/commit/fade3ea9bd6bda6192f84a0ab9af4b812517e267))
+-   correct [@element](https://github.com/element) jsDoc listing across library ([c97a632](https://github.com/adobe/spectrum-web-components/commit/c97a6320c16a2b3053637e22bca0d56ce0cd5ae5))
+-   correct sp-textfield[multiline][grows] styling and add story for regression testing ([58c9331](https://github.com/adobe/spectrum-web-components/commit/58c9331b75c94d2bcbe1742b023e1bd884c52bb3))
+-   disallow undefined property for min and maxlength ([21547f7](https://github.com/adobe/spectrum-web-components/commit/21547f70e3e2987ca72f14a294519560bdb901e3))
+-   include "type" in package.json, generate custom-elements.json ([1a8d716](https://github.com/adobe/spectrum-web-components/commit/1a8d716f2f787deb8d868a78bd28c8e62fe90e21))
+-   include default export in the "exports" fields ([f32407d](https://github.com/adobe/spectrum-web-components/commit/f32407d7bbfd18e72c35b6f27740549e79957858))
+-   include the "types" entry in package.json files ([b432f59](https://github.com/adobe/spectrum-web-components/commit/b432f5982b3b79f80af12f6d0312cbe2285e608b))
+-   minlength now accepted as minimum length for value.toString ([bc3b1c2](https://github.com/adobe/spectrum-web-components/commit/bc3b1c2ab56d1b569203ed4fb87e293a4990544a))
+-   normalize "event" and "error" argument names ([8d382cd](https://github.com/adobe/spectrum-web-components/commit/8d382cdac98282c886f23c4a8d6cf4910c4a606c))
+-   **number-field:** process 2 byte characters as their single byte cousins ([f424c0a](https://github.com/adobe/spectrum-web-components/commit/f424c0aa9e04baf24aa3f6c23dd4697ab0699fc0))
+-   prevent tabindex=-1 elements from placing focus on their host ([1ac1293](https://github.com/adobe/spectrum-web-components/commit/1ac12931771c6d5fdbc99f5d214702ed644cb81a))
+-   stop merging selectors in a way that alters the cascade ([369388f](https://github.com/adobe/spectrum-web-components/commit/369388f8cc147543891087991c569f849ddb9b38))
+-   **textfield:** add 'u' flag to keep consistency with native input element ([0af779f](https://github.com/adobe/spectrum-web-components/commit/0af779f040ebe1b2b2a80a19afe1df42201dbe3e))
+-   **textfield:** add maxlength and minlength attributes ([5326649](https://github.com/adobe/spectrum-web-components/commit/5326649daac788e922a4493b9172cc20518b8abb))
+-   **textfield:** add select() API mapping to shadow DOM element ([d467a34](https://github.com/adobe/spectrum-web-components/commit/d467a3463f326d839c9d51ffacd24f8fdfb1aff1))
+-   **textfield:** break very long words within the Textarea's sizer element ([2f95ac0](https://github.com/adobe/spectrum-web-components/commit/2f95ac04a3ad3c200172cd3c364c9014c7d6dfde))
+-   **textfield:** correct "multiline" and "grows" delivery ([fa0ac34](https://github.com/adobe/spectrum-web-components/commit/fa0ac3437b269f009ef47d080b41996fe0a25779))
+-   **textfield:** leverage aria-invalid attribute ([e718c0a](https://github.com/adobe/spectrum-web-components/commit/e718c0ac0d9f037b2bb9c6fb53ffc2121298731a))
+-   **textfield:** prevent IME selection misalignment in Safari when using hiragana input modality ([f8e1e70](https://github.com/adobe/spectrum-web-components/commit/f8e1e709e99d62e67589d8f54f15d49a9ecf2f32))
+-   **textfield:** process ".is-focused" and ".is-keyboardFocused" styles ([48fd67d](https://github.com/adobe/spectrum-web-components/commit/48fd67d7cdab3aac26c20a8e9232d6320b27fb59))
+-   **textfield:** reimplement min/maxlength ([23a4c2e](https://github.com/adobe/spectrum-web-components/commit/23a4c2e61dbc399bf9e58bb32952e16b8aa9d5ae))
+-   **textfield:** remove use of sp-icons-\* ([9a5c213](https://github.com/adobe/spectrum-web-components/commit/9a5c213a886146709601a2878484529c315d9f51))
+-   **textfield:** respect resize styling ([04993c3](https://github.com/adobe/spectrum-web-components/commit/04993c380d485b0e9b02fd6ad196e5caaf29e0a2))
+-   **textfield:** respect type=text|url|tel|email|password ([1b7a59a](https://github.com/adobe/spectrum-web-components/commit/1b7a59a208ce00a62c23c80b75bacabf73c3e6ea))
+-   **textfield:** update for easier extensibility ([9deaf9e](https://github.com/adobe/spectrum-web-components/commit/9deaf9e4f5a476593378f8feaaae352fd8bb80d7))
+-   **textfield:** update validation path, add "allowed-keys" ([ae9f85d](https://github.com/adobe/spectrum-web-components/commit/ae9f85d3b0ec30bbcf5fbe3d4750a1cd96c990d5))
+-   **textfield:** Use correct filename in exports field ([637b166](https://github.com/adobe/spectrum-web-components/commit/637b166420e3a0fa41980bfbb24129df77ff4efd))
+-   update latest Spectrum CSS beta releases ([d8d3acc](https://github.com/adobe/spectrum-web-components/commit/d8d3acc86de31e58219db6ba2a9d045b83cbe103))
+-   update side effect listings ([8160d3a](https://github.com/adobe/spectrum-web-components/commit/8160d3ab2c4f5ea11ac40897a5cf1fdaa357f4a8))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+-   use latest @spectrum-css/\* versions ([c35eb86](https://github.com/adobe/spectrum-web-components/commit/c35eb86defd89a0c36b5ea186f6d40f20851b5e5))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+-   delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
+-   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   pass through autocomplete attribute to inputs ([5416510](https://github.com/adobe/spectrum-web-components/commit/541651063fb67766426168ef0ad885bb89b6b762))
+-   **search:** use Spectrum CSS ^3.0.0 ([7830ac0](https://github.com/adobe/spectrum-web-components/commit/7830ac0868e855145cee0922529a0f6d4d3e7f50))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+-   **textfield:** add support for setSelectionRange ([#2070](https://github.com/adobe/spectrum-web-components/issues/2070)) ([dd17ba0](https://github.com/adobe/spectrum-web-components/commit/dd17ba0f50cc604b4dcd14699d5129710aac121b))
+-   **textfield:** update spectrum css input ([2ce4ba2](https://github.com/adobe/spectrum-web-components/commit/2ce4ba2e0a9c6dcc6c0041fde02b0d98f08cf6a1))
+-   **textfield:** use Spectrum CSS ^3.0.0 ([1c1acb9](https://github.com/adobe/spectrum-web-components/commit/1c1acb94577f97c189a5f4e2d34bf81dc169447c))
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+-   use :focus-visable (via polyfill) instead of :focus ([11c6fc7](https://github.com/adobe/spectrum-web-components/commit/11c6fc77960de8e57dd9c49bb7669df689f0ebaa))
+-   use @adobe/spectrum-css@2.15.1 ([3918888](https://github.com/adobe/spectrum-web-components/commit/39188887afad9bec52ef48d4e22596f9b757a9fe))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
+### Performance Improvements
+
+-   use "sideEffects" listing in package.json ([7271614](https://github.com/adobe/spectrum-web-components/commit/7271614c0ca3ccf3566583bb59467eb15a6199cd))
+-   use imported TypeScript helpers instead of inlining them ([cc2bd0a](https://github.com/adobe/spectrum-web-components/commit/cc2bd0accd643c2f35cbf1ba809b54f52c25628d))
+
+### Reverts
+
+-   Revert "chore: release new versions" ([a6d655d](https://github.com/adobe/spectrum-web-components/commit/a6d655d1435ee6427a3778b89f1a6cf9fe4beb9d))
+
 ## [0.13.15](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/textfield@0.13.14...@spectrum-web-components/textfield@0.13.15) (2023-04-24)
 
 **Note:** Version bump only for package @spectrum-web-components/textfield

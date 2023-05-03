@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.30.0 (2023-05-03)
+
+### Features
+
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+
+### Performance Improvements
+
+-   reduce render cycles when managing "dir" attribute ([7b28309](https://github.com/adobe/spectrum-web-components/commit/7b28309ff2b977ad8a61d9e6c41737abfbb111bf))
+
 ## [0.7.5](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/base@0.7.4...@spectrum-web-components/base@0.7.5) (2023-04-05)
 
 ### Performance Improvements

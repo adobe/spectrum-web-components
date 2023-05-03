@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   **action-button:** add support for XS t-shirt size ([75440ce](https://github.com/adobe/spectrum-web-components/commit/75440ced6f5cc5dbcd2c3bbfe650ca8c78514467))
+-   **action-button:** all "selected" Action Buttons should be "aria-pressed=true" ([d85e235](https://github.com/adobe/spectrum-web-components/commit/d85e23552aa8f15dfdf069b7cba8fa7b8909190a))
+-   **action-button:** ensure disabled buttons are not interactable ([b81c3ba](https://github.com/adobe/spectrum-web-components/commit/b81c3ba7961234ebfe83caec3e2b43d0d885cfbb))
+-   **action-button:** expand Spectrum CSS processing ([ff1a424](https://github.com/adobe/spectrum-web-components/commit/ff1a4243c00b3774a6afa5e535c414f252dc87dd))
+-   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+-   correct specificity of webkit appearance work around ([f0d06bf](https://github.com/adobe/spectrum-web-components/commit/f0d06bf17bbf1d7d2a41a3008373a4b0f4097cf9))
+-   correctly delivery visuals and mouse interactions for litAnchor and extensions ([0ae889a](https://github.com/adobe/spectrum-web-components/commit/0ae889a8aab9b3417a021b917dfc817a8310f50f))
+-   expand sized functionality to support no default and returning to default values ([acf3cfb](https://github.com/adobe/spectrum-web-components/commit/acf3cfb000033d1ef1e22ca571cb8dbbeaadae77))
+-   prevent default hoisting of custom pseudo elements ([7f66346](https://github.com/adobe/spectrum-web-components/commit/7f6634665fb9fdc530bd3009246e62c24cac1904))
+-   prevent longpress when interacting with context menu ([f8b0732](https://github.com/adobe/spectrum-web-components/commit/f8b07321741ee44515fced9923167b96561cdd48))
+-   support a wider number of sizes ([ee44978](https://github.com/adobe/spectrum-web-components/commit/ee4497830da0d3bc63d4414ad5548291a39588c7))
+-   update consumption of Spectrum CSS for latest version ([ed2305b](https://github.com/adobe/spectrum-web-components/commit/ed2305b7334c973ea5c8299cbbce33a365896329))
+-   update export patterns ([b2da444](https://github.com/adobe/spectrum-web-components/commit/b2da444359b4022ed3f61dedf563b5bacba42103))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+-   use icons without "size" values ([3fc7c91](https://github.com/adobe/spectrum-web-components/commit/3fc7c91713793a928082eae15fc3d9dec638a31a))
+-   use the "browsers" listing in postcss-preset-env ([4eaf6a2](https://github.com/adobe/spectrum-web-components/commit/4eaf6a28f7b5eaf60487841d264d6d804ae675ce))
+
+### Features
+
+-   **action-button:** add action button pattern ([03ac00a](https://github.com/adobe/spectrum-web-components/commit/03ac00a710290e6a78340f206d88385a4f8ae8c2))
+-   **action-group:** manage "one" and "multiple" selections ([6fad59e](https://github.com/adobe/spectrum-web-components/commit/6fad59e0df1210108fe6b54ab075c0cbd94cae78))
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+-   allow activation of longpress content ([55e71fd](https://github.com/adobe/spectrum-web-components/commit/55e71fdf9fd5dde489871c3d9798ef8957f4e5b6))
+-   apply sizedMixin for t-shirt sizing ([d7b63fb](https://github.com/adobe/spectrum-web-components/commit/d7b63fb0db06b5a8a412fea8370964f4db9d18ae))
+-   **icons-workflow:** vend fully registered icon components ([941f3a4](https://github.com/adobe/spectrum-web-components/commit/941f3a41486fbd49eca0805fb63383f63313e71e))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   leverage latest Spectrum button API ([9caf2f6](https://github.com/adobe/spectrum-web-components/commit/9caf2f6313424450c91c039fafea89bf8aa72624))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+-   support Spectrum Token consumption and update Action Button to use them ([743ab16](https://github.com/adobe/spectrum-web-components/commit/743ab16d8f05335d320440effbdcb8cd4bffc97d))
+-   support static white and static black variants of Action Button ([7f1e25b](https://github.com/adobe/spectrum-web-components/commit/7f1e25bce122bd3601c6aa5ed505cba436e8b952))
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+-   use SixedMixin to manage "size" property ([8819821](https://github.com/adobe/spectrum-web-components/commit/88198212cb495833ed2e7644f95b43dca915318d))
+
+### Performance Improvements
+
+-   accept new Spectrum CSS featuring simpler DOM structure ([a0b042b](https://github.com/adobe/spectrum-web-components/commit/a0b042b1d05bc23b0b824123af94df5bc3e1e0d2))
+
 ## [0.10.16](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/action-button@0.10.15...@spectrum-web-components/action-button@0.10.16) (2023-04-24)
 
 **Note:** Version bump only for package @spectrum-web-components/action-button

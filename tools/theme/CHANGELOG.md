@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   **theme:** stop language resolution propagation and demo using local languages ([6b81391](https://github.com/adobe/spectrum-web-components/commit/6b81391c3e4416889daa5627526dc0194f2f5f56))
+
+### Features
+
+-   **styles:** update typography to leverage Core Tokens ([2f86560](https://github.com/adobe/spectrum-web-components/commit/2f86560139b98e8e014b69d6b108918010637f3d))
+
 # [0.15.0](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/theme@0.14.14...@spectrum-web-components/theme@0.15.0) (2023-04-24)
 
 ### Features

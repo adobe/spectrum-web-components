@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   **documentation:** add base search url ([#2799](https://github.com/adobe/spectrum-web-components/issues/2799)) ([f7af7cd](https://github.com/adobe/spectrum-web-components/commit/f7af7cdeeff481e68d55028650f7a01d687df6f0))
+-   include the ":root" selector in tokens CSS for use in the docs site ([a51e465](https://github.com/adobe/spectrum-web-components/commit/a51e4653a10ccc3a0ca45b5d6a46f97bd1ff70d8))
+-   **menu:** add support for submenu interactions ([68399af](https://github.com/adobe/spectrum-web-components/commit/68399af396bfb70b9c84c83ee2265aa9daa05e10))
+-   missing new-line preventing commits ([d88e2a9](https://github.com/adobe/spectrum-web-components/commit/d88e2a909ec0972373fa1ef7147b255ace59d0bd))
+-   prevent touch scolling on non-modal content ([e471feb](https://github.com/adobe/spectrum-web-components/commit/e471febf14e64d35b57ebc0c1596c52282a6ff2a))
+-   **sidenav:** prevent items with hrefs from toggling expanded or selection ([7ff4920](https://github.com/adobe/spectrum-web-components/commit/7ff4920bc14aac7709f1c588078730aa9054bae3))
+-   **styles:** add basic color-scheme support ([1ccf110](https://github.com/adobe/spectrum-web-components/commit/1ccf110e75890ecaaa7f160fce09ffeb15c570a3))
+-   **tabs:** add "quiet", "compact", and "emphasized" "direction=vertical" ([26fff53](https://github.com/adobe/spectrum-web-components/commit/26fff53d8d64c508be66406d00e6e45e48c15278))
+
+### Features
+
+-   add Help Text pattern ([fdbb812](https://github.com/adobe/spectrum-web-components/commit/fdbb812e05a1202e5b5912a5e93cfba59a3dae9e))
+-   add Picker Button pattern ([31337b8](https://github.com/adobe/spectrum-web-components/commit/31337b86acdade3d93bea44a781ad0ea7042ca32))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+-   **styles:** update typography to leverage Core Tokens ([2f86560](https://github.com/adobe/spectrum-web-components/commit/2f86560139b98e8e014b69d6b108918010637f3d))
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+
 # [0.5.0](https://github.com/adobe/spectrum-web-components/compare/documentation@0.4.14...documentation@0.5.0) (2023-04-24)
 
 ### Features

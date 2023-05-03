@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   **swc-templates:** ensure the styles filename is correct ([13916ab](https://github.com/adobe/spectrum-web-components/commit/13916ab9cbe8fe22ee09fd98fa85740956f8331d))
+-   **swc-templates:** update naming, imports, and dependencies ([12d43ed](https://github.com/adobe/spectrum-web-components/commit/12d43ed82ae97d706eecfe31515c616562848366))
+
+### Features
+
+-   add Picker Button pattern ([31337b8](https://github.com/adobe/spectrum-web-components/commit/31337b86acdade3d93bea44a781ad0ea7042ca32))
+-   add plop templating to get started fast ([2b415bf](https://github.com/adobe/spectrum-web-components/commit/2b415bf7332156eb84cf7d885fe06ccc3ef2fc17))
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   leverage "exports" field in package.json ([321abd7](https://github.com/adobe/spectrum-web-components/commit/321abd7b7e78ccd9157cff75a1fa3dbd06e81f79))
+-   **swc-templates:** update create process to require less manual interference ([1342649](https://github.com/adobe/spectrum-web-components/commit/1342649079b44fe060936711f061fdb58b139cab))
+-   **swc-templates:** update generator for new dir structure ([72b631e](https://github.com/adobe/spectrum-web-components/commit/72b631ed735ee4bb1d986f2be5943a3952c85563))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
 ## [0.9.1](https://github.com/adobe/spectrum-web-components/compare/swc-templates@0.9.0...swc-templates@0.9.1) (2023-03-22)
 
 **Note:** Version bump only for package swc-templates

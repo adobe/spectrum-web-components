@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/clear-button",
-    "version": "0.2.9",
+    "version": "0.30.0",
     "publishConfig": {
         "access": "public"
     },
@@ -42,7 +42,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.7.5"
+        "@spectrum-web-components/base": "^0.30.0"
     },
     "devDependencies": {
         "@spectrum-css/clearbutton": "^1.2.28"

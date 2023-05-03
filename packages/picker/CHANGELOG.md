@@ -3,6 +3,82 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.30.0 (2023-05-03)
+
+### Bug Fixes
+
+-   abstract "hasVisibleFocusInTree" functionality and return trigger focus after close ([4f39f2c](https://github.com/adobe/spectrum-web-components/commit/4f39f2c506066b789834584d2c9c24185ea57118))
+-   **action-menu:** fix 2510, unable to control top-level action-menu selection ([c9198c2](https://github.com/adobe/spectrum-web-components/commit/c9198c29c0f2f9be83d9e153147e5634c6c00b06))
+-   **action-menu:** never set item selected values when selects is undefined ([5237fdb](https://github.com/adobe/spectrum-web-components/commit/5237fdb30694364934e1cd30f3d9cf82efa2c5c5))
+-   **action-menu:** stop stripping selected state from submenu items ([968d1f2](https://github.com/adobe/spectrum-web-components/commit/968d1f26e4f075ad20dbaba07baf73d5a0c4d55c))
+-   add icon present and icon-only support to Picker ([f6887a3](https://github.com/adobe/spectrum-web-components/commit/f6887a34e228473e33893c81017492bf3e8fd6c3))
+-   add support for "readonly" attribute ([4bce3b7](https://github.com/adobe/spectrum-web-components/commit/4bce3b7b6910ac50e80efe6a8f63f57843feafb3))
+-   add t-shirt sizing to Thumbnail and support for "xxs"/"xs" sizes ([520a642](https://github.com/adobe/spectrum-web-components/commit/520a642b33e2ca5a4fdc67c15ace029d33e895ff))
+-   allow "updateComplete" to resolve to a boolean like the LitElement default ([6127946](https://github.com/adobe/spectrum-web-components/commit/6127946fd3ffd048a30b7eb4bf6aadf9e7c8752a))
+-   allow Picker to be reparented ([39e7309](https://github.com/adobe/spectrum-web-components/commit/39e73094be38888599fb189ed4d613f09476310f))
+-   analyze errors, properly this time ([df685a2](https://github.com/adobe/spectrum-web-components/commit/df685a20f57379442d54f026b8ad7cef474a067b))
+-   analyze type errors, and add deprecated syntax tests ([b7e67a1](https://github.com/adobe/spectrum-web-components/commit/b7e67a103d5a3bb355a8ee4682ef9621d8d59872))
+-   bad merge conflict resolution ([e408d61](https://github.com/adobe/spectrum-web-components/commit/e408d61c82ee4ea8463be7d76f480b260fd5aa30))
+-   correct custom property hoisting ([a1d98dc](https://github.com/adobe/spectrum-web-components/commit/a1d98dccadb790afb61d761636754ed337a0d50c))
+-   correct max size calculation for overlays ([0585f7f](https://github.com/adobe/spectrum-web-components/commit/0585f7f30bf502d147bd467a942ee180656b2413))
+-   ensure Action Menu Item with [href] close the menu ([6b3d87f](https://github.com/adobe/spectrum-web-components/commit/6b3d87f8c922df782432bca3ef93d21637bad78b))
+-   ensure correct Menu Items are "selected" when passed into the overlay ([46a25db](https://github.com/adobe/spectrum-web-components/commit/46a25db6303adbbcdfe76cb3bf97541adc418367))
+-   ensure focus is managed when tabbing out of a menu ([9bfa81d](https://github.com/adobe/spectrum-web-components/commit/9bfa81d8a677d6c0ab5ac5cd618498496761c69b))
+-   expand sync offering for elements with overlay content ([0195843](https://github.com/adobe/spectrum-web-components/commit/0195843e9efac5760a78fa302d91139c84ea5747))
+-   give Picker a focus helper to enable tab navigation in Safari ([e796525](https://github.com/adobe/spectrum-web-components/commit/e7965251651b42e28bfbcaf752f2ab9b19700835))
+-   hopefully fix CI ([ea87245](https://github.com/adobe/spectrum-web-components/commit/ea87245359128ad4f9d790d2dc5d5dd36208bc25))
+-   include late added items in the item list for the Picker ([9232eb1](https://github.com/adobe/spectrum-web-components/commit/9232eb1009ccbcdf6166e48928bd8416c23d50b2))
+-   issues with optionsMenu & menuItems ([01a7e35](https://github.com/adobe/spectrum-web-components/commit/01a7e35099cef1d8185e79ee94dfad36ece7ba8d))
+-   **menu:** add support for submenu interactions ([68399af](https://github.com/adobe/spectrum-web-components/commit/68399af396bfb70b9c84c83ee2265aa9daa05e10))
+-   **menu:** clarify menu internal focus management via preventScroll option ([9ae092c](https://github.com/adobe/spectrum-web-components/commit/9ae092c7d09ef9359dbf9ed9373aef0650967f40))
+-   **menu:** ensure active descendant is in view when activated ([6edc351](https://github.com/adobe/spectrum-web-components/commit/6edc3518fd305cbd35b74f013546bb32aef7616b))
+-   **menu:** only scrollIntoView when keyboard navigating ([f4e9278](https://github.com/adobe/spectrum-web-components/commit/f4e9278048287a45bba2da25144834b0b8297c66))
+-   **overlay:** move "escape" listener to "keydown" ([813b341](https://github.com/adobe/spectrum-web-components/commit/813b3415ab16391e717e84a61c74b304a67c2e03))
+-   **picker:** accept new "value" and new option post first render ([8f8c93f](https://github.com/adobe/spectrum-web-components/commit/8f8c93f1045b07d5e108769c4efffa54213d20e3))
+-   **picker:** add "quick select" action to right/left arrow keys ([21895ee](https://github.com/adobe/spectrum-web-components/commit/21895eed8d194b0a570cbb2bafeaa06c9511bf27))
+-   **picker:** allow menu items to be added, updated, and removed ([73511ba](https://github.com/adobe/spectrum-web-components/commit/73511ba996154c006602dfd1c7f1d94746049782))
+-   **picker:** ensure focus visibility application ([2679081](https://github.com/adobe/spectrum-web-components/commit/2679081978788bd68b5e2c9cd1c05161cc571446))
+-   **picker:** ensure that width is customizable from the outside ([702b052](https://github.com/adobe/spectrum-web-components/commit/702b052f9ea1686d2a964648d4bb1d365178160f))
+-   **picker:** make "change" event bubbling and composed ([1fdd33d](https://github.com/adobe/spectrum-web-components/commit/1fdd33de0f8a01640b91ecda2cb9e81bd8076adf))
+-   **picker:** query less strictly to support automatically selecting values ([969f966](https://github.com/adobe/spectrum-web-components/commit/969f966585256c3a496eddb4cb84c0142aa7ae9c))
+-   **picker:** use "modal" as the menu overlay interaction ([c8fbbe2](https://github.com/adobe/spectrum-web-components/commit/c8fbbe27b19702909855575b1afd38fb064e8378))
+-   prevent console.log in source and test files ([3ee082c](https://github.com/adobe/spectrum-web-components/commit/3ee082ceadd9eeef167bb8ac6241fe1501e4426c))
+-   remove <sp-menu> usage where deprecated ([387db3b](https://github.com/adobe/spectrum-web-components/commit/387db3be95c98ab220e517fe12a4db7a2496fe5f))
+-   simplify focus application in Menu ([6140169](https://github.com/adobe/spectrum-web-components/commit/61401699b36298b6f11cc80703aff664cbb867a7))
+-   simplify optionsMenu usage and fix tests ([91241b7](https://github.com/adobe/spectrum-web-components/commit/91241b7bddc434c7220fc0fbd65389d0ca38f674))
+-   slot documentation ([0ebd260](https://github.com/adobe/spectrum-web-components/commit/0ebd2609bad9e95ee24428cb2fa666d23bdb85f8))
+-   split-button tests & lots of cleanup based on review feedback ([10b4a04](https://github.com/adobe/spectrum-web-components/commit/10b4a04c5791d1acd9e59d48a8960b9c17aa89c7)), closes [#1189](https://github.com/adobe/spectrum-web-components/issues/1189)
+-   style icons in Picker correctly ([0bbdf84](https://github.com/adobe/spectrum-web-components/commit/0bbdf84df595a573b355721698262b1c5a1f3b01))
+-   support a wider number of sizes ([ee44978](https://github.com/adobe/spectrum-web-components/commit/ee4497830da0d3bc63d4414ad5548291a39588c7))
+-   update Picker label via MutationObserver instead of "slotchange" ([196998e](https://github.com/adobe/spectrum-web-components/commit/196998e9433dc938d86bfbe77db9e3accd6d9bbc))
+-   update screen reader interface with menu items list ([16756b5](https://github.com/adobe/spectrum-web-components/commit/16756b56c0f7f9561426acc202997fb098e8f19a))
+-   update to latest spectrum-css packages ([a5ca19f](https://github.com/adobe/spectrum-web-components/commit/a5ca19f67d5b3f0951667c4441d4d977bf1e0937))
+
+### Features
+
+-   add selects attribute to menu ([bdf2578](https://github.com/adobe/spectrum-web-components/commit/bdf25780e56c7b92368904dce2a02f2594c364a2))
+-   add t-shirt sizing with visual regressions to checkbox and picker elements ([ce47ec8](https://github.com/adobe/spectrum-web-components/commit/ce47ec88bd2c6c8d236c05826d28b2d0dadf12b8))
+-   adopt DNA@7 base Spectrum CSS ([e08cafd](https://github.com/adobe/spectrum-web-components/commit/e08cafda9f1b33b0163fbe5ba66754806be8f9e4))
+-   conditionally load focus-visible polyfill ([6b5e5cf](https://github.com/adobe/spectrum-web-components/commit/6b5e5cf515f02ef14f072b7aee62feed7a83c281))
+-   delivery dev mode messages in various packages ([62370a1](https://github.com/adobe/spectrum-web-components/commit/62370a19c77ab00e5b5702833bb1e40fb81e7d48))
+-   deprecate sp-menu in PickerBase derived classes ([bbb773c](https://github.com/adobe/spectrum-web-components/commit/bbb773c915587b9d92875e333a6b422ec878a8ea))
+-   include all Dev Mode files in side effects ([f70817c](https://github.com/adobe/spectrum-web-components/commit/f70817cc15db6dcf5cc1de2d82b4f7b0c80b1251))
+-   **picker:** process field-label content for more accurate a11y tree ([dc9df54](https://github.com/adobe/spectrum-web-components/commit/dc9df54d052edc46c2399f0f7b12d3b5d4aff740))
+-   **picker:** replace dropdown with picker component ([30b8bc7](https://github.com/adobe/spectrum-web-components/commit/30b8bc791be37ba53a12244f3dd2cccd55c490a3))
+-   **picker:** support responsive delivery of menu ([20031d1](https://github.com/adobe/spectrum-web-components/commit/20031d1b42b36cdaa129a25ee70eb2bcbcdbdb5e))
+-   **picker:** update "icons-only" to "icons=only" to support more variations ([de16a62](https://github.com/adobe/spectrum-web-components/commit/de16a628f6ec7cfcbe405c71414bef6ed72b1726))
+-   **picker:** use new tokens ([7d65b69](https://github.com/adobe/spectrum-web-components/commit/7d65b69d47d69a34f75b456a5aa457f22ec04aca))
+-   reparentChildren - refactored arguments - breaking change ([dea2bc5](https://github.com/adobe/spectrum-web-components/commit/dea2bc5cba1185e790a834db43daf8fc45f4e4f7))
+-   sets action-menu quiet to false by default, fixes [#3040](https://github.com/adobe/spectrum-web-components/issues/3040) ([8414cab](https://github.com/adobe/spectrum-web-components/commit/8414cab2ef916be40be9f624f485fb02184eec2b))
+-   shared pkg versions, devmode define warning, registry-conflicts docs ([6e49565](https://github.com/adobe/spectrum-web-components/commit/6e4956519b845fa8127f8032948b625c252ef7a6))
+-   **tabs:** add sp-tab-panel element ([b17d276](https://github.com/adobe/spectrum-web-components/commit/b17d2765cf415578a31e5fa23515c25ff4c3922d))
+-   update lit-\* dependencies, wip ([377f3c8](https://github.com/adobe/spectrum-web-components/commit/377f3c848b09e64fa1ecc1e18208f534fefcd9e4))
+-   use latest exports specification ([a7ecf4b](https://github.com/adobe/spectrum-web-components/commit/a7ecf4b6da7996f36a8a89f62cc2384709497008))
+
+### Performance Improvements
+
+-   reorganize inheritance and composition in Menu Items ([d96ccb6](https://github.com/adobe/spectrum-web-components/commit/d96ccb621833277444d69535126c3669343c2eaf))
+
 ## [0.15.2](https://github.com/adobe/spectrum-web-components/compare/@spectrum-web-components/picker@0.15.1...@spectrum-web-components/picker@0.15.2) (2023-04-24)
 
 **Note:** Version bump only for package @spectrum-web-components/picker
