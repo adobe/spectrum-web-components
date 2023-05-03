@@ -63,7 +63,8 @@ export class SideNav extends Focusable {
             });
         },
         direction: 'vertical',
-        elements: () => [...this.querySelectorAll('sp-sidenav-item')],
+        elements: () =>
+            [...this.querySelectorAll('sp-sidenav-item')] as SideNavItem[],
         isFocusableElement: (el: SideNavItem) =>
             !el.disabled && !this.isDisabledChild(el),
     });
