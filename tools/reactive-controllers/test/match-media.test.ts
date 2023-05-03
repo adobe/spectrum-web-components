@@ -15,10 +15,11 @@ import { expect, fixture, nextFrame } from '@open-wc/testing';
 import { setViewport } from '@web/test-runner-commands';
 import { MatchMediaController } from '@spectrum-web-components/reactive-controllers/src/MatchMedia.js';
 
+class TestEl extends LitElement {}
+customElements.define('test-match-media-el', TestEl);
+
 describe('Match Media', () => {
     it('responds to media changes', async () => {
-        class TestEl extends LitElement {}
-        customElements.define('test-match-media-el', TestEl);
         const el = await fixture(
             html`
                 <test-match-media-el></test-match-media-el>
