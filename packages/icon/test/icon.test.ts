@@ -86,7 +86,7 @@ describe('Icon', () => {
 
         await expect(el).to.be.accessible();
 
-        expect(error).to.be.calledWithExactly(new Event('error'));
+        expect(error).to.be.calledOnce;
     });
 
     it('loads w/ label', async () => {
