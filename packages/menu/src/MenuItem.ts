@@ -43,11 +43,12 @@ import { MutationController } from '@lit-labs/observers/mutation-controller.js';
 const POINTERLEAVE_TIMEOUT = 100;
 
 export class MenuItemRemovedEvent extends Event {
-    constructor() {
+    constructor(item: MenuItem) {
         super('sp-menu-item-removed', {
             bubbles: true,
             composed: true,
         });
+        this.reset(item);
     }
     get item(): MenuItem {
         return this._item;
@@ -60,11 +61,12 @@ export class MenuItemRemovedEvent extends Event {
 }
 
 export class MenuItemAddedOrUpdatedEvent extends Event {
-    constructor() {
+    constructor(item: MenuItem) {
         super('sp-menu-item-added-or-updated', {
             bubbles: true,
             composed: true,
         });
+        this.reset(item);
     }
     set focusRoot(root: Menu | undefined) {
         this.item.menuData.focusRoot = this.item.menuData.focusRoot || root;
@@ -95,9 +97,6 @@ export class MenuItemAddedOrUpdatedEvent extends Event {
 }
 
 export type MenuItemChildren = { icon: Element[]; content: Node[] };
-
-const addOrUpdateEvent = new MenuItemAddedOrUpdatedEvent();
-const removeEvent = new MenuItemRemovedEvent();
 
 /**
  * @element sp-menu-item
@@ -512,17 +511,15 @@ export class MenuItem extends LikeAnchor(Focusable) {
         if (this.isInSubmenu) {
             return;
         }
-        addOrUpdateEvent.reset(this);
-        this.dispatchEvent(addOrUpdateEvent);
+        this.dispatchEvent(new MenuItemAddedOrUpdatedEvent(this));
         this._parentElement = this.parentElement as HTMLElement;
     }
 
     _parentElement!: HTMLElement;
 
     public override disconnectedCallback(): void {
-        removeEvent.reset(this);
         if (!this.isInSubmenu) {
-            this._parentElement?.dispatchEvent(removeEvent);
+            this._parentElement?.dispatchEvent(new MenuItemRemovedEvent(this));
         }
         this.isInSubmenu = false;
         super.disconnectedCallback();
@@ -533,8 +530,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
             return;
         }
         await new Promise((ready) => requestAnimationFrame(ready));
-        addOrUpdateEvent.reset(this);
-        this.dispatchEvent(addOrUpdateEvent);
+        this.dispatchEvent(new MenuItemAddedOrUpdatedEvent(this));
     }
 
     public menuData: {
