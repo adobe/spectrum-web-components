@@ -77,7 +77,11 @@ export const imageIconSrcError = (): TemplateResult => {
     `;
 };
 
-imageIcon.storyName = 'Image Icon src invalid error';
+imageIconSrcError.storyName = 'Image Icon src invalid error';
+
+imageIconSrcError.swc_vrt = {
+    skip: true,
+};
 
 export const svgIcon = (): TemplateResult => {
     return html`
