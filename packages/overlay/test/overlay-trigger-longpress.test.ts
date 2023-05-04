@@ -38,30 +38,38 @@ import { longpress } from '../stories/overlay.stories.js';
 
 describe('Overlay Trigger - Longpress', () => {
     describe('responds to input', () => {
-        let el!: OverlayTrigger;
-        let trigger!: ActionButton;
-        let content!: Popover;
-        before(async () => {
-            el = await fixture<OverlayTrigger>(longpress());
-            trigger = el.querySelector('sp-action-button') as ActionButton;
-            content = el.querySelector('[slot="longpress-content"]') as Popover;
+        beforeEach(async function () {
+            this.el = await fixture<OverlayTrigger>(longpress());
+            this.trigger = this.el.querySelector(
+                'sp-action-button'
+            ) as ActionButton;
+            this.content = this.el.querySelector(
+                '[slot="longpress-content"]'
+            ) as Popover;
 
-            expect(trigger).to.not.be.null;
-            expect(content).to.not.be.null;
-            expect(content.open).to.be.false;
+            expect(this.trigger).to.not.be.null;
+            expect(this.content).to.not.be.null;
+            expect(this.content.open).to.be.false;
 
-            trigger.focus();
+            this.trigger.focus();
         });
-        xit('opens/closes for `Space`', async () => {
-            const open = oneEvent(el, 'sp-opened');
+        afterEach(async function () {
+            if (this.el.open) {
+                const closed = oneEvent(this.trigger, 'sp-closed');
+                this.el.open = undefined;
+                await closed;
+            }
+        });
+        it.skip('opens/closes for `Space`', async function () {
+            const open = oneEvent(this.el, 'sp-opened');
             await sendKeys({
                 press: 'Space',
             });
             await open;
-            expect(content.open, 'opens for `Space`').to.be.true;
-            expect(await isOnTopLayer(content)).to.be.true;
+            expect(this.content.open, 'opens for `Space`').to.be.true;
+            expect(await isOnTopLayer(this.content)).to.be.true;
 
-            const closed = oneEvent(el, 'sp-closed');
+            const closed = oneEvent(this.el, 'sp-closed');
             sendMouse({
                 steps: [
                     {
@@ -72,28 +80,28 @@ describe('Overlay Trigger - Longpress', () => {
             });
             await closed;
 
-            expect(!content.open, 'closes for `Space`').to.be.true;
-            expect(await isOnTopLayer(content)).to.be.false;
+            expect(this.content.open, 'closes for `Space`').to.be.false;
+            expect(await isOnTopLayer(this.content)).to.be.false;
         });
-        xit('opens/closes for `Alt+ArrowDown`', async () => {
-            const open = oneEvent(el, 'sp-opened');
+        it.skip('opens/closes for `Alt+ArrowDown`', async function () {
+            const open = oneEvent(this.el, 'sp-opened');
             sendKeys({
                 press: 'Alt+ArrowDown',
             });
             await open;
-            expect(content.open, 'opens for `Alt+ArrowDown`').to.be.true;
-            expect(await isOnTopLayer(content)).to.be.true;
-            const closed = oneEvent(el, 'sp-closed');
+            expect(this.content.open, 'opens for `Alt+ArrowDown`').to.be.true;
+            expect(await isOnTopLayer(this.content)).to.be.true;
+            const closed = oneEvent(this.el, 'sp-closed');
             await sendKeys({
                 press: 'Escape',
             });
             await closed;
-            expect(!content.open, 'closes for `Alt+ArrowDown`').to.be.true;
-            expect(await isOnTopLayer(content)).to.be.false;
+            expect(this.content.open, 'closes for `Alt+ArrowDown`').to.be.false;
+            expect(await isOnTopLayer(this.content)).to.be.false;
         });
-        xit('opens/closes for `longpress`', async () => {
-            let open = oneEvent(el, 'sp-opened');
-            const rect = trigger.getBoundingClientRect();
+        it.skip('opens/closes for `longpress`', async function () {
+            let open = oneEvent(this.el, 'sp-opened');
+            const rect = this.trigger.getBoundingClientRect();
             await sendMouse({
                 steps: [
                     {
@@ -110,7 +118,7 @@ describe('Overlay Trigger - Longpress', () => {
             });
             // Hover content opens, first.
             await open;
-            open = oneEvent(el, 'sp-opened');
+            open = oneEvent(this.el, 'sp-opened');
             // Then, the longpress content opens.
             await open;
             await sendMouse({
@@ -120,16 +128,15 @@ describe('Overlay Trigger - Longpress', () => {
                     },
                 ],
             });
-            expect(content.open, 'opens for `pointerdown`').to.be.true;
-            expect(await isOnTopLayer(content)).to.be.true;
-            const closed = oneEvent(el, 'sp-closed');
-            // @todo Manage `Escape` in native [popover]
+            expect(this.content.open, 'opens for `pointerdown`').to.be.true;
+            expect(await isOnTopLayer(this.content)).to.be.true;
+            const closed = oneEvent(this.trigger, 'sp-closed');
             await sendKeys({
                 press: 'Escape',
             });
             await closed;
-            expect(!content.open, 'closes for `pointerdown`').to.be.true;
-            expect(await isOnTopLayer(content)).to.be.false;
+            expect(this.content.open, 'closes for `pointerdown`').to.be.false;
+            expect(await isOnTopLayer(this.content)).to.be.false;
         });
     });
     it('displays `longpress` declaratively', async () => {
@@ -164,7 +171,7 @@ describe('Overlay Trigger - Longpress', () => {
 
         expect(closedSpy.calledOnce, 'longpress content returned').to.be.true;
     });
-    it.skip('describes longpress interaction accessibly', async () => {
+    it('describes longpress interaction accessibly', async () => {
         const el = await fixture<OverlayTrigger>(
             html`
                 <overlay-trigger placement="right-start">
@@ -198,7 +205,7 @@ describe('Overlay Trigger - Longpress', () => {
         expect(trigger.hasAttribute('aria-describedby')).to.be.true;
         expect(el.open).to.be.undefined;
         /*
-         * This test passes because OverlayTrigger adds a new node to describe
+         * This test passes because `<sp-overlay>` adds a new node to describe
          * the longpress interaction now available on the trigger element
          */
         expect(el.childNodes.length, 'always').to.equal(6);
@@ -229,7 +236,7 @@ describe('Overlay Trigger - Longpress', () => {
         });
         await closed;
 
-        expect(el.open).to.be.null;
+        expect(el.open).to.be.undefined;
         expect(trigger.hasAttribute('aria-describedby')).to.be.true;
         expect(el.childNodes.length, 'always').to.equal(6);
 
@@ -238,7 +245,7 @@ describe('Overlay Trigger - Longpress', () => {
             LONGPRESS_INSTRUCTIONS.keyboard
         );
     });
-    it.skip('removes longpress `aria-describedby` description element when longpress content is removed', async () => {
+    it('removes longpress `aria-describedby` description element when longpress content is removed', async () => {
         const el = await fixture<OverlayTrigger>(
             html`
                 <overlay-trigger placement="right-start">
@@ -271,31 +278,32 @@ describe('Overlay Trigger - Longpress', () => {
         ) as Popover;
         await elementUpdated(el);
 
-        expect(el.hasLongpressContent).to.be.true;
+        expect(trigger.hasAttribute('aria-describedby')).to.be.true;
         expect(el.childNodes.length, 'always').to.equal(6);
 
         el.removeAttribute('hold-affordance');
-        el.removeChild(content);
+        content.remove();
 
         await elementUpdated(el);
 
         expect(trigger.hasAttribute('aria-describedby')).to.be.false;
-        expect(el.hasLongpressContent).to.be.false;
         expect(el.childNodes.length, 'always').to.equal(4);
 
         el.setAttribute('hold-affordance', 'true');
         el.append(content);
 
         await elementUpdated(el);
+        await nextFrame();
+        await nextFrame();
+
         await findDescribedNode(
             'Trigger with hold affordance',
             LONGPRESS_INSTRUCTIONS.keyboard
         );
 
-        expect(el.hasLongpressContent).to.be.true;
         expect(el.childNodes.length, 'always').to.equal(6);
     });
-    it.skip('recognises multiple overlay triggers in a11y tree', async () => {
+    it('recognises multiple overlay triggers in a11y tree', async () => {
         const el = await fixture<OverlayTrigger>(
             html`
                 <div id="container">
@@ -341,15 +349,7 @@ describe('Overlay Trigger - Longpress', () => {
         await elementUpdated(el);
 
         const div = document.getElementById('container') as HTMLElement;
-        const firstTrigger = document.getElementById(
-            'first-trigger'
-        ) as OverlayTrigger;
-        const secondTrigger = document.getElementById(
-            'second-trigger'
-        ) as OverlayTrigger;
 
-        expect(firstTrigger.hasLongpressContent).to.be.true;
-        expect(secondTrigger.hasLongpressContent).to.be.true;
         expect(div.childNodes.length, 'always').to.equal(5);
 
         await findDescribedNode(
@@ -361,7 +361,7 @@ describe('Overlay Trigger - Longpress', () => {
             LONGPRESS_INSTRUCTIONS.keyboard
         );
     });
-    it.skip('describes interactions differently to the user', async () => {
+    it('describes interactions differently to the user', async () => {
         const test = await fixture<OverlayTrigger>(
             html`
                 <div>

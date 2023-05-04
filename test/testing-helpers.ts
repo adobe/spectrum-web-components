@@ -152,6 +152,10 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
             resolve(false);
             return;
         }
+        let popoverOpen = false;
+        try {
+            popoverOpen = closestDialog.matches(':popover-open');
+        } catch (error) {}
         let open = false;
         try {
             open = closestDialog.matches(':open');
@@ -161,7 +165,7 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
             modal = closestDialog.matches(':modal');
         } catch (error) {}
         let polyfill = false;
-        if (!open && !modal) {
+        if (!popoverOpen && !open && !modal) {
             const style = getComputedStyle(closestDialog);
             polyfill =
                 style.getPropertyValue('position') === 'fixed' &&

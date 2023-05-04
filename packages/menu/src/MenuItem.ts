@@ -74,6 +74,9 @@ export class MenuItemAddedOrUpdatedEvent extends Event {
     set focusRoot(root: Menu | undefined) {
         this.item.menuData.focusRoot = this.item.menuData.focusRoot || root;
     }
+    set parentMenu(menu: Menu | undefined) {
+        this.item.menuData.parentMenu = this.item.menuData.parentMenu || menu;
+    }
     set selectionRoot(root: Menu) {
         this.item.menuData.selectionRoot =
             this.item.menuData.selectionRoot || root;
@@ -369,7 +372,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     protected closeOverlaysForRoot(): void {
         if (this.open) return;
-        this.menuData.selectionRoot?.closeDescendentOverlays();
+        this.menuData.parentMenu?.closeDescendentOverlays();
     }
 
     public closeOverlay?: () => Promise<void>;
@@ -554,9 +557,11 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     public menuData: {
         focusRoot?: Menu;
+        parentMenu?: Menu;
         selectionRoot?: Menu;
     } = {
         focusRoot: undefined,
+        parentMenu: undefined,
         selectionRoot: undefined,
     };
 }

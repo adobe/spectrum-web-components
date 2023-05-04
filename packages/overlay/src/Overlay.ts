@@ -92,6 +92,7 @@ export class Overlay extends OverlayFeatures {
                 position: 'beforeend',
                 prepareCallback: (el) => {
                     const slot = el.slot;
+                    el.removeAttribute('slot');
                     return () => {
                         el.slot = slot;
                     };

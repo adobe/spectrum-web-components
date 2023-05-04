@@ -11,6 +11,8 @@ governing permissions and limitations under the License.
 
 import { OverlayBase } from './OverlayBase.js';
 
+const supportsPopover = 'showPopover' in document.createElement('div');
+
 class OverlayStack {
     private get document(): Document {
         return this.root.ownerDocument /* c8 ignore next */ || document;
@@ -40,15 +42,26 @@ class OverlayStack {
     handleClick = (event: Event): void => {
         if (!this.stack.length) return;
 
-        const overlay = this.stack.at(-1);
-        if (!overlay) return;
-        if (overlay.shouldPreventClose()) return;
+        let reverseIndex = -1;
+        let overlay = this.stack.at(reverseIndex);
+        if (overlay?.shouldPreventClose()) return;
 
         const composedPath = event.composedPath();
-        const shouldClose = !composedPath.find(
-            (el) => el === overlay || el === overlay.triggerElement
-        );
-        if (!shouldClose) return;
+        let shouldClose;
+        while (overlay && !shouldClose) {
+            shouldClose =
+                overlay.shouldPreventClose() ||
+                !composedPath.find(
+                    (el) => el === overlay || el === overlay?.triggerElement
+                );
+            if (!shouldClose) {
+                reverseIndex -= 1;
+                overlay = this.stack.at(reverseIndex);
+            }
+        }
+        if (!shouldClose || !overlay) {
+            return;
+        }
 
         this.closeOverlay(overlay);
         let parentToClose = overlay.parentOverlayToForceClose;
@@ -68,6 +81,7 @@ class OverlayStack {
 
     private handleKeydown = (event: KeyboardEvent): void => {
         if (event.code !== 'Escape') return;
+        if (supportsPopover) return;
         if (!this.stack.length) return;
 
         const last = this.stack.at(-1);

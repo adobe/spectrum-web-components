@@ -193,6 +193,7 @@ export class OverlayTrigger extends SpectrumElement {
                         name="longpress-content"
                         @slotchange=${this.handleLongpressContent}
                     ></slot>
+                    <slot name="longpress-describedby-descriptor"></slot>
                 </sp-overlay>
                 <sp-overlay
                     id="hover-overlay"

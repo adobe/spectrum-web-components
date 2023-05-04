@@ -26,6 +26,10 @@ export const topLayerOverTransforms = () => ({
             y: 0,
         };
         try {
+            onTopLayer = onTopLayer || floating.matches(':popover-open');
+            // eslint-disable-next-line no-empty
+        } catch (e) {}
+        try {
             onTopLayer = onTopLayer || floating.matches(':open');
             // eslint-disable-next-line no-empty
         } catch (e) {}

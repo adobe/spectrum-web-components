@@ -22,6 +22,7 @@ import {
 import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/button/sp-button.js';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { sendMouse } from '../../../test/plugins/browser.js';
 
 describe('Tooltip', () => {
     testForLitDevWarnings(
@@ -44,6 +45,14 @@ describe('Tooltip', () => {
         await expect(el).to.be.accessible();
     });
     it('self manages', async () => {
+        await sendMouse({
+            steps: [
+                {
+                    type: 'move',
+                    position: [1, 1],
+                },
+            ],
+        });
         const button = await fixture<Button>(
             html`
                 <sp-button>
@@ -61,7 +70,6 @@ describe('Tooltip', () => {
         const opened = oneEvent(button, 'sp-opened');
         button.focus();
         await opened;
-        await elementUpdated(el);
 
         expect(el.open).to.be.true;
         await expect(button).to.be.accessible();
@@ -69,7 +77,6 @@ describe('Tooltip', () => {
         const closed = oneEvent(button, 'sp-closed');
         button.blur();
         await closed;
-        await elementUpdated(el);
 
         expect(el.open).to.be.false;
     });
@@ -101,7 +108,7 @@ describe('Tooltip', () => {
 
         expect(el.open).to.be.false;
     });
-    xit('cleans up when self manages and removed', async () => {
+    it('cleans up when self managed and removed', async () => {
         const button = await fixture<Button>(
             html`
                 <sp-button>
@@ -119,7 +126,6 @@ describe('Tooltip', () => {
         const opened = oneEvent(button, 'sp-opened');
         button.focus();
         await opened;
-        await elementUpdated(el);
 
         expect(el.open).to.be.true;
 

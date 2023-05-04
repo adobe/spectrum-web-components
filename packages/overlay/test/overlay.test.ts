@@ -662,13 +662,13 @@ describe('Overlay - timing', () => {
     it('manages multiple modals in a row without preventing them from closing', async () => {
         const test = await fixture<HTMLDivElement>(html`
             <div>
-                <overlay-trigger id="test-1">
+                <overlay-trigger id="test-1" placement="right">
                     <sp-button slot="trigger">Trigger 1</sp-button>
                     <sp-popover slot="hover-content">
                         <p>Hover contentent for "Trigger 1".</p>
                     </sp-popover>
                 </overlay-trigger>
-                <overlay-trigger id="test-2">
+                <overlay-trigger id="test-2" placement="right">
                     <sp-button slot="trigger">Trigger 2</sp-button>
                     <sp-popover slot="click-content">
                         <p>Click contentent for "Trigger 2".</p>
@@ -695,19 +695,16 @@ describe('Overlay - timing', () => {
             boundingRectTrigger1.left + boundingRectTrigger1.width / 2,
             boundingRectTrigger1.top + boundingRectTrigger1.height / 2,
         ];
-        const outsideTrigger1: [number, number] = [
-            boundingRectTrigger1.left + boundingRectTrigger1.width * 2,
-            boundingRectTrigger1.top + boundingRectTrigger1.height * 2,
+        const outsideTriggers: [number, number] = [
+            boundingRectTrigger1.left + boundingRectTrigger1.width / 2,
+            300,
         ];
         const trigger2Position: [number, number] = [
             boundingRectTrigger2.left + boundingRectTrigger2.width / 2,
             boundingRectTrigger2.top + boundingRectTrigger2.height / 4,
         ];
-        const outsideTrigger2: [number, number] = [
-            boundingRectTrigger2.left + boundingRectTrigger2.width * 2,
-            boundingRectTrigger2.top + boundingRectTrigger2.height / 2,
-        ];
 
+        // Move poitner over "Trigger 1", should _start_ to open "hover" content.
         await sendMouse({
             steps: [
                 {
@@ -718,16 +715,18 @@ describe('Overlay - timing', () => {
         });
         await nextFrame();
         await nextFrame();
+        // Move pointer out of "Trigger 1", should _start_ to close "hover" content.
         await sendMouse({
             steps: [
                 {
                     type: 'move',
-                    position: outsideTrigger1,
+                    position: outsideTriggers,
                 },
             ],
         });
         await nextFrame();
         await nextFrame();
+        // Move pointer over "Trigger 2", should _start_ to open "hover" content.
         await sendMouse({
             steps: [
                 {
@@ -739,6 +738,7 @@ describe('Overlay - timing', () => {
         await nextFrame();
         await nextFrame();
         const opened = oneEvent(trigger2, 'sp-opened');
+        // Click "Trigger 2", should _start_ to open "click" content and _start_ to close "hover" content.
         await sendMouse({
             steps: [
                 {
@@ -751,6 +751,7 @@ describe('Overlay - timing', () => {
         await nextFrame();
         await nextFrame();
 
+        // "click" content for "Trigger 2", _only_, open.
         expect(overlayTrigger1.hasAttribute('open')).to.be.false;
         expect(overlayTrigger2.hasAttribute('open')).to.be.true;
         expect(overlayTrigger2.getAttribute('open')).to.equal('click');
@@ -760,13 +761,15 @@ describe('Overlay - timing', () => {
             steps: [
                 {
                     type: 'click',
-                    position: outsideTrigger2,
+                    position: outsideTriggers,
                 },
             ],
         });
         await closed;
 
+        // Both overlays are closed.
+        // Neither trigger received "focus" because the pointer "clicked" away, redirecting focus to <body>
         expect(overlayTrigger1.hasAttribute('open')).to.be.false;
-        expect(overlayTrigger2.getAttribute('open')).to.equal('hover');
+        expect(overlayTrigger2.hasAttribute('open')).to.be.false;
     });
 });

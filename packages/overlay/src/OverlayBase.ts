@@ -23,6 +23,10 @@ import {
     queryAssignedElements,
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
+import {
+    isAndroid,
+    isIOS,
+} from '@spectrum-web-components/shared/src/platform.js';
 import { conditionAttributeWithId } from '@spectrum-web-components/base/src/condition-attribute-with-id.js';
 import {
     ElementResolutionController,
@@ -166,10 +170,20 @@ export class OverlayBase extends SpectrumElement {
 
     protected dispose = noop;
 
-    @queryAssignedElements({ flatten: true })
+    @queryAssignedElements({
+        selector: ':not([slot="longpress-describedby-descriptor"])',
+        flatten: true,
+    })
     elements!: OpenableElement[];
 
     public parentOverlayToForceClose?: OverlayBase;
+
+    private get hasNonVirtualTrigger(): boolean {
+        return (
+            !!this.triggerElement &&
+            !(this.triggerElement instanceof VirtualTrigger)
+        );
+    }
 
     protected longpressed = false;
 
@@ -203,6 +217,7 @@ export class OverlayBase extends SpectrumElement {
     receivesFocus: 'true' | 'false' | 'auto' = 'auto';
 
     private releaseAriaDescribedby = noop;
+    private releaseLongpressDescribedby = noop;
 
     @query('slot')
     slotEl!: HTMLSlotElement;
@@ -282,7 +297,7 @@ export class OverlayBase extends SpectrumElement {
     }
 
     protected async manageOpen(oldOpen: boolean): Promise<void> {
-        if (!this.isConnected) return;
+        if (!this.isConnected && this.open) return;
 
         if (!this.hasUpdated) {
             await this.updateComplete;
@@ -342,89 +357,121 @@ export class OverlayBase extends SpectrumElement {
         }
     }
 
+    protected unbindEvents(triggerElement: HTMLElement): void {
+        triggerElement.removeEventListener('click', this.handleClick);
+        triggerElement.removeEventListener('focusin', this.handleFocusin);
+        triggerElement.removeEventListener('focusout', this.handleFocusout);
+        triggerElement.removeEventListener(
+            'pointerenter',
+            this.handlePointerenter
+        );
+        triggerElement.removeEventListener(
+            'pointerleave',
+            this.handlePointerleave
+        );
+        this.removeEventListener(
+            'pointerleave',
+            this.handleOverlayPointerleave
+        );
+        triggerElement.addEventListener('pointerdown', this.handlePointerdown);
+        triggerElement.removeEventListener('keydown', this.handleKeydown);
+        triggerElement.removeEventListener('keyup', this.handleKeyup);
+        triggerElement.removeEventListener('longpress', this.handleLongpress);
+    }
+
+    protected bindEvents(): void {
+        const nextTriggerElement = this.triggerElement as HTMLElement;
+        switch (this.triggerInteraction) {
+            case 'click':
+                this.bundClickEvents(nextTriggerElement);
+                return;
+            case 'longpress':
+                this.bindLongpressEvents(nextTriggerElement);
+                return;
+            case 'hover':
+                this.bindHoverEvents(nextTriggerElement);
+                return;
+        }
+    }
+
+    protected bundClickEvents(triggerElement: HTMLElement): void {
+        triggerElement.addEventListener('click', this.handleClick);
+    }
+
+    protected bindLongpressEvents(triggerElement: HTMLElement): void {
+        triggerElement.addEventListener('pointerdown', this.handlePointerdown);
+        triggerElement.addEventListener('keydown', this.handleKeydown);
+        triggerElement.addEventListener('keyup', this.handleKeyup);
+        triggerElement.addEventListener('longpress', this.handleLongpress);
+
+        this.prepareLongpressDescription(triggerElement);
+    }
+
+    protected bindHoverEvents(triggerElement: HTMLElement): void {
+        triggerElement.addEventListener('focusin', this.handleFocusin);
+        triggerElement.addEventListener('focusout', this.handleFocusout);
+        triggerElement.addEventListener(
+            'pointerenter',
+            this.handlePointerenter
+        );
+        triggerElement.addEventListener(
+            'pointerleave',
+            this.handlePointerleave
+        );
+        this.addEventListener('pointerleave', this.handleOverlayPointerleave);
+        if (this.receivesFocus === 'true') return;
+
+        this.prepareAriaDescribedby(triggerElement);
+    }
+
     protected manageTriggerElement(triggerElement: HTMLElement | null): void {
         if (triggerElement) {
-            triggerElement.removeEventListener('click', this.handleClick);
-            triggerElement.removeEventListener('focusin', this.handleFocusin);
-            triggerElement.removeEventListener('focusout', this.handleFocusout);
-            triggerElement.removeEventListener(
-                'pointerenter',
-                this.handlePointerenter
-            );
-            triggerElement.removeEventListener(
-                'pointerleave',
-                this.handlePointerleave
-            );
-            this.removeEventListener(
-                'pointerleave',
-                this.handleOverlayPointerleave
-            );
-            triggerElement.addEventListener(
-                'pointerdown',
-                this.handlePointerdown
-            );
-            triggerElement.removeEventListener('keydown', this.handleKeydown);
-            triggerElement.removeEventListener('keyup', this.handleKeyup);
-            triggerElement.removeEventListener(
-                'longpress',
-                this.handleLongpress
-            );
+            this.unbindEvents(triggerElement);
             this.releaseAriaDescribedby();
         }
         if (
             !this.triggerElement ||
             !!(this.triggerElement as VirtualTrigger).updateBoundingClientRect
-        )
+        ) {
             return;
-        const nextTriggerElement = this.triggerElement as HTMLElement;
-        switch (this.triggerInteraction) {
-            case 'click':
-                nextTriggerElement.addEventListener('click', this.handleClick);
-                return;
-            case 'longpress':
-                nextTriggerElement.addEventListener(
-                    'pointerdown',
-                    this.handlePointerdown
-                );
-                nextTriggerElement.addEventListener(
-                    'keydown',
-                    this.handleKeydown
-                );
-                nextTriggerElement.addEventListener('keyup', this.handleKeyup);
-                nextTriggerElement.addEventListener(
-                    'longpress',
-                    this.handleLongpress
-                );
-                return;
-            case 'hover':
-                nextTriggerElement.addEventListener(
-                    'focusin',
-                    this.handleFocusin
-                );
-                nextTriggerElement.addEventListener(
-                    'focusout',
-                    this.handleFocusout
-                );
-                nextTriggerElement.addEventListener(
-                    'pointerenter',
-                    this.handlePointerenter
-                );
-                nextTriggerElement.addEventListener(
-                    'pointerleave',
-                    this.handlePointerleave
-                );
-                this.addEventListener(
-                    'pointerleave',
-                    this.handleOverlayPointerleave
-                );
-                if (this.receivesFocus === 'true') return;
-
-                this.prepareAriaDescribedby(nextTriggerElement);
-                return;
         }
+        this.bindEvents();
     }
 
     private elementIds: string[] = [];
+
+    private prepareLongpressDescription(trigger: HTMLElement): void {
+        if (
+            // only "longpress" relationships are described this way
+            this.triggerInteraction !== 'longpress' ||
+            // do not reapply until target it recycled
+            this.releaseLongpressDescribedby !== noop ||
+            // require "longpress content" to apply relationship
+            !this.elements.length
+        ) {
+            return;
+        }
+
+        const longpressDescription = document.createElement('div');
+        longpressDescription.id = `longpress-describedby-descriptor-${crypto
+            .randomUUID()
+            .slice(0, 8)}`;
+        const messageType = isIOS() || isAndroid() ? 'touch' : 'keyboard';
+        longpressDescription.textContent = LONGPRESS_INSTRUCTIONS[messageType];
+        longpressDescription.slot = 'longpress-describedby-descriptor';
+        trigger.insertAdjacentElement('afterend', longpressDescription);
+
+        const releaseLongpressDescribedby = conditionAttributeWithId(
+            trigger,
+            'aria-describedby',
+            [longpressDescription.id]
+        );
+        this.releaseLongpressDescribedby = () => {
+            releaseLongpressDescribedby();
+            longpressDescription.remove();
+            this.releaseLongpressDescribedby = noop;
+        };
+    }
 
     private prepareAriaDescribedby(trigger: HTMLElement): void {
         if (
@@ -432,10 +479,11 @@ export class OverlayBase extends SpectrumElement {
             this.triggerInteraction !== 'hover' ||
             // do not reapply until target is recycled
             this.releaseAriaDescribedby !== noop ||
-            // require " hover content" to apply relationship
+            // require "hover content" to apply relationship
             !this.elements.length
-        )
+        ) {
             return;
+        }
 
         const triggerRoot = trigger.getRootNode();
         const contentRoot = this.elements[0].getRootNode();
@@ -570,30 +618,40 @@ export class OverlayBase extends SpectrumElement {
     protected handlePointerleave = (event: PointerEvent): void => {
         if (
             this === event.relatedTarget ||
-            this.contains(event.relatedTarget as Node)
+            this.contains(event.relatedTarget as Node) ||
+            [...this.children].find((child) => {
+                if (child.localName !== 'slot') {
+                    return false;
+                }
+                return (child as HTMLSlotElement)
+                    .assignedElements({ flatten: true })
+                    .find((el) => {
+                        return (
+                            el === event.relatedTarget ||
+                            el.contains(event.relatedTarget as Node)
+                        );
+                    });
+            })
         ) {
             return;
         }
-        this.doDointerleave();
+        this.doPointerleave();
     };
 
     protected handleOverlayPointerleave = (event: PointerEvent): void => {
-        const hasNonVirtualTrigger =
-            this.triggerElement &&
-            this.triggerElement instanceof VirtualTrigger;
         if (
             this.triggerElement === event.relatedTarget ||
-            (hasNonVirtualTrigger &&
+            (this.hasNonVirtualTrigger &&
                 (this.triggerElement as HTMLElement).contains(
                     event.relatedTarget as Node
                 ))
         ) {
             return;
         }
-        this.doDointerleave();
+        this.doPointerleave();
     };
 
-    protected doDointerleave(): void {
+    protected doPointerleave(): void {
         this.pointerentered = false;
         const triggerElement = this.triggerElement as HTMLElement;
         if (this.focusedin && triggerElement.matches(':focus-visible')) return;
@@ -615,11 +673,24 @@ export class OverlayBase extends SpectrumElement {
 
     protected handlePopoverhide(): void {
         this.open = false;
-        this.dispatchEvent(new BeforetoggleClosedEvent());
+        // this.dispatchEvent(new BeforetoggleClosedEvent());
     }
 
     protected handlePopovershow(): void {
-        this.dispatchEvent(new BeforetoggleOpenEvent());
+        // this.dispatchEvent(new BeforetoggleOpenEvent());
+    }
+
+    protected handleSlotchange(): void {
+        if (this.triggerElement) {
+            this.prepareAriaDescribedby(this.triggerElement as HTMLElement);
+        }
+        if (!this.elements.length) {
+            this.releaseLongpressDescribedby();
+        } else if (this.hasNonVirtualTrigger) {
+            this.prepareLongpressDescription(
+                this.triggerElement as HTMLElement
+            );
+        }
     }
 
     public willPreventClose = false;
@@ -696,8 +767,8 @@ export class OverlayBase extends SpectrumElement {
             } else {
                 this.dialogEl.removeAttribute('actual-placement');
             }
-            if (typeof changes.get('placement') !== 'undefined') {
-                this.managePosition();
+            if (this.open && typeof changes.get('placement') !== 'undefined') {
+                this.placementController.resetOverlayPosition();
             }
         }
     }
@@ -724,25 +795,28 @@ export class OverlayBase extends SpectrumElement {
                 })}
             >
                 <div part="content">
-                    <slot
-                        @slotchange=${() => {
-                            if (this.triggerElement) {
-                                this.prepareAriaDescribedby(
-                                    this.triggerElement as HTMLElement
-                                );
-                            }
-                        }}
-                    ></slot>
+                    <slot @slotchange=${this.handleSlotchange}></slot>
                 </div>
             </dialog>
+            <slot name="longpress-describedby-descriptor"></slot>
         `;
     }
 
     override connectedCallback(): void {
         super.connectedCallback();
-        // this.manageOpen();
         this.addEventListener('close', () => {
             this.open = false;
         });
+        if (this.hasNonVirtualTrigger) {
+            this.bindEvents();
+        }
+    }
+
+    override disconnectedCallback(): void {
+        if (this.hasNonVirtualTrigger) {
+            this.unbindEvents(this.triggerElement as HTMLElement);
+        }
+        this.open = false;
+        super.disconnectedCallback();
     }
 }

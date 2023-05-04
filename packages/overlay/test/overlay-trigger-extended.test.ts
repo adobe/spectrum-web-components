@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import {
-    // elementUpdated,
     expect,
     fixture,
     html,
@@ -138,7 +137,7 @@ describe('Overlay Trigger - extended', () => {
         expect(popover.placement).to.equal('bottom');
     });
 
-    xit('occludes content behind the overlay', async () => {
+    it.skip('occludes content behind the overlay', async () => {
         ({ overlayTrigger, button, popover } = await initTest());
         const textfield = document.createElement('sp-textfield');
         document.body.append(textfield);

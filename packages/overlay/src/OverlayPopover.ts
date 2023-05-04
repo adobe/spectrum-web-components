@@ -47,10 +47,21 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
 
         private async ensureOnDOM(targetOpenState: boolean): Promise<void> {
             await nextFrame();
+            let popoverOpen = false;
+            try {
+                popoverOpen = this.dialogEl.matches(':popover-open');
+                // eslint-disable-next-line no-empty
+            } catch (error) {}
+            let open = false;
+            try {
+                open = this.dialogEl.matches(':open');
+                // eslint-disable-next-line no-empty
+            } catch (error) {}
             if (
                 targetOpenState &&
                 this.open === targetOpenState &&
-                !this.dialogEl.matches(':open') &&
+                !popoverOpen &&
+                !open &&
                 this.isConnected
             ) {
                 this.dialogEl.showPopover();
@@ -136,9 +147,19 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
                     if (this.open !== targetOpenState) {
                         return;
                     }
+                    let popoverOpen = false;
+                    try {
+                        popoverOpen = this.dialogEl.matches(':popover-open');
+                        // eslint-disable-next-line no-empty
+                    } catch (error) {}
+                    let open = false;
+                    try {
+                        open = this.dialogEl.matches(':open');
+                        // eslint-disable-next-line no-empty
+                    } catch (error) {}
                     if (
                         targetOpenState !== true &&
-                        this.dialogEl.matches(':open') &&
+                        (popoverOpen || open) &&
                         this.isConnected
                     ) {
                         this.dialogEl.addEventListener(

@@ -87,6 +87,10 @@ dialog[actual-placement*='left'] {
     margin-left: var(--swc-overlay-animation-distance);
 }
 
+slot[name='longpress-describedby-descriptor'] {
+    display: none;
+}
+
 /* stylelint-disable */
 @supports selector(:open) {
     dialog {
@@ -98,7 +102,17 @@ dialog[actual-placement*='left'] {
     }
 }
 
-@supports not selector(:open) {
+@supports selector(:popover-open) {
+    dialog {
+        opacity: 0;
+    }
+
+    dialog:popover-open {
+        opacity: 1;
+    }
+}
+
+@supports (not selector(:open)) and (not selector(:popover-open)) {
     :host:not([open]) dialog {
         pointer-events: none;
     }

@@ -10,12 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import {
-    escapeEvent,
-    fixture,
-    isOnTopLayer,
-    isVisible,
-} from '../../../test/testing-helpers.js';
+import { fixture, isOnTopLayer } from '../../../test/testing-helpers.js';
 import {
     aTimeout,
     elementUpdated,
@@ -35,7 +30,8 @@ import { Button } from '@spectrum-web-components/button';
 import '@spectrum-web-components/popover/sp-popover.js';
 import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/theme/sp-theme.js';
-import { Theme } from '@spectrum-web-components/theme';
+import { sendMouse } from '../../../test/plugins/browser.js';
+import { sendKeys } from '@web/test-runner-commands';
 
 function pressKey(code: string): void {
     const up = new KeyboardEvent('keyup', {
@@ -46,10 +42,6 @@ function pressKey(code: string): void {
     });
     document.dispatchEvent(up);
 }
-
-const pressEscape = (): void => {
-    document.dispatchEvent(escapeEvent());
-};
 
 const pressSpace = (): void => pressKey('Space');
 
@@ -282,11 +274,8 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.false;
             });
 
-            it.skip('does not open a popover when [disabled]', async function () {
-                const root = this.outerTrigger.shadowRoot
-                    ? this.outerTrigger.shadowRoot
-                    : this.outerTrigger;
-                const triggerZone = root.querySelector(
+            it('does not open a popover when [disabled]', async function () {
+                const triggerZone = this.outerTrigger.shadowRoot.querySelector(
                     '#trigger'
                 ) as HTMLDivElement;
 
@@ -299,7 +288,14 @@ export const runOverlayTriggerTests = (type: string): void => {
                     'hover available at point'
                 ).to.be.true;
                 let closed = oneEvent(this.outerTrigger, 'sp-closed');
-                document.body.click();
+                sendMouse({
+                    steps: [
+                        {
+                            type: 'click',
+                            position: [1, 1],
+                        },
+                    ],
+                });
                 await closed;
                 expect(
                     await isOnTopLayer(this.outerClickContent),
@@ -311,7 +307,7 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 expect(this.outerTrigger.disabled).to.be.true;
                 expect(this.outerTrigger.hasAttribute('disabled')).to.be.true;
-                // The overlay shouldn't open here.
+                // // The overlay shouldn't open here.
                 this.outerButton.click();
                 await aTimeout(150);
                 expect(
@@ -348,7 +344,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.false;
             });
 
-            it.skip('opens a nested popover', async function () {
+            it('opens a nested popover', async function () {
                 expect(
                     await isOnTopLayer(this.outerClickContent),
                     'hover not available at point'
@@ -367,7 +363,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                     await isOnTopLayer(this.outerClickContent),
                     'outer click content available at point'
                 ).to.be.true;
-                expect(isVisible(this.innerClickContent)).to.be.false;
+                expect(await isOnTopLayer(this.innerClickContent)).to.be.false;
 
                 open = oneEvent(this.innerTrigger, 'sp-opened');
                 this.innerButton.click();
@@ -383,7 +379,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
             });
 
-            it.skip('focus previous "modal" when closing nested "modal"', async function () {
+            it('focus previous "modal" when closing nested "modal"', async function () {
                 this.outerTrigger.type = 'modal';
                 this.innerTrigger.type = 'modal';
 
@@ -423,7 +419,9 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const innerClose = oneEvent(this.innerButton, 'sp-closed');
-                pressEscape();
+                await sendKeys({
+                    press: 'Escape',
+                });
                 await innerClose;
 
                 expect(
@@ -441,7 +439,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
             });
 
-            it.skip('escape closes an open popover', async function () {
+            it('escape closes an open popover', async function () {
                 this.outerTrigger.type = 'modal';
                 this.innerTrigger.type = 'modal';
                 const outerOpen = oneEvent(this.outerButton, 'sp-opened');
@@ -478,7 +476,9 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const innerClose = oneEvent(this.innerButton, 'sp-closed');
-                pressEscape();
+                await sendKeys({
+                    press: 'Escape',
+                });
                 await innerClose;
 
                 expect(
@@ -491,7 +491,9 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.false;
 
                 const outerClose = oneEvent(this.outerButton, 'sp-closed');
-                pressEscape();
+                await sendKeys({
+                    press: 'Escape',
+                });
                 await outerClose;
 
                 expect(
@@ -504,7 +506,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.false;
             });
 
-            it.skip('click closes an open popover', async function () {
+            it('click closes an open popover', async function () {
                 this.outerTrigger.type = 'modal';
                 this.innerTrigger.type = 'modal';
                 const outerOpen = oneEvent(this.outerButton, 'sp-opened');
@@ -544,7 +546,14 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const innerClose = oneEvent(this.innerButton, 'sp-closed');
-                document.body.click();
+                sendMouse({
+                    steps: [
+                        {
+                            type: 'click',
+                            position: [1, 1],
+                        },
+                    ],
+                });
                 await innerClose;
 
                 expect(
@@ -557,7 +566,14 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.false;
 
                 const outerClose = oneEvent(this.outerButton, 'sp-closed');
-                document.body.click();
+                sendMouse({
+                    steps: [
+                        {
+                            type: 'click',
+                            position: [1, 1],
+                        },
+                    ],
+                });
                 await outerClose;
 
                 expect(
@@ -570,25 +586,22 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.not;
             });
 
-            it.skip('opens a hover popover', async function () {
-                const root = this.outerTrigger.shadowRoot
-                    ? this.outerTrigger.shadowRoot
-                    : this.outerTrigger;
-                const triggerZone = root.querySelector(
-                    '#trigger'
-                ) as HTMLDivElement;
+            it('opens a hover popover', async function () {
+                expect(await isOnTopLayer(this.hoverContent)).to.be.false;
 
-                expect(triggerZone).to.exist;
-                if (!triggerZone) return;
-
-                expect(this.outerButton).to.exist;
-                expect(this.hoverContent).to.exist;
-
-                expect(isVisible(this.hoverContent)).to.be.false;
-
+                const rect = this.outerTrigger.getBoundingClientRect();
                 const open = oneEvent(this.outerTrigger, 'sp-opened');
-                const mouseEnter = new MouseEvent('mouseenter');
-                triggerZone.dispatchEvent(mouseEnter);
+                sendMouse({
+                    steps: [
+                        {
+                            type: 'move',
+                            position: [
+                                rect.left + rect.width / 2,
+                                rect.top + rect.height / 2,
+                            ],
+                        },
+                    ],
+                });
                 await open;
                 expect(
                     await isOnTopLayer(this.hoverContent),
@@ -596,8 +609,17 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const close = oneEvent(this.outerTrigger, 'sp-closed');
-                const mouseLeave = new MouseEvent('mouseleave');
-                triggerZone.dispatchEvent(mouseLeave);
+                sendMouse({
+                    steps: [
+                        {
+                            type: 'move',
+                            position: [
+                                rect.left + rect.width * 2,
+                                rect.top + rect.height / 2,
+                            ],
+                        },
+                    ],
+                });
                 await close;
                 expect(
                     await isOnTopLayer(this.hoverContent),
@@ -606,39 +628,44 @@ export const runOverlayTriggerTests = (type: string): void => {
             });
 
             it('closes a hover popover', async function () {
-                const root = this.outerTrigger.shadowRoot
-                    ? this.outerTrigger.shadowRoot
-                    : this.outerTrigger;
-                const triggerZone = root.querySelector(
-                    '#trigger'
-                ) as HTMLDivElement;
+                expect(await isOnTopLayer(this.hoverContent)).to.be.false;
 
-                expect(triggerZone).to.exist;
-                if (!triggerZone) return;
-
-                expect(this.outerButton).to.exist;
-                expect(this.hoverContent).to.exist;
-
-                expect(
-                    await isOnTopLayer(this.hoverContent),
-                    'hover content is not available at point'
-                ).to.be.false;
-
-                const mouseEnter = new MouseEvent('mouseenter');
-                const mouseLeave = new MouseEvent('mouseleave');
-                triggerZone.dispatchEvent(mouseEnter);
+                const rect = this.outerTrigger.getBoundingClientRect();
+                const close = oneEvent(this.outerTrigger, 'sp-closed');
+                await sendMouse({
+                    steps: [
+                        {
+                            type: 'move',
+                            position: [
+                                rect.left + rect.width / 2,
+                                rect.top + rect.height / 2,
+                            ],
+                        },
+                    ],
+                });
                 await nextFrame();
                 await nextFrame();
-                triggerZone.dispatchEvent(mouseLeave);
                 await nextFrame();
                 await nextFrame();
+                await sendMouse({
+                    steps: [
+                        {
+                            type: 'move',
+                            position: [
+                                rect.left + rect.width * 2,
+                                rect.top + rect.height / 2,
+                            ],
+                        },
+                    ],
+                });
+                await close;
                 expect(
                     await isOnTopLayer(this.hoverContent),
                     'hover content is not available at point'
                 ).to.be.false;
             });
 
-            it.skip('dispatches events on open/close', async function () {
+            it('dispatches events on open/close', async function () {
                 const opened = oneEvent(this.outerButton, 'sp-opened');
                 this.outerButton.click();
                 const openedEvent = await opened;
@@ -649,12 +676,19 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
                 expect(this.outerTrigger.open).to.equal('click');
 
-                expect(openedEvent.detail.interaction).to.equal('click');
+                expect(openedEvent.detail.interaction).to.equal('auto');
 
                 const closed = oneEvent(this.outerButton, 'sp-closed');
-                document.body.click();
+                sendMouse({
+                    steps: [
+                        {
+                            type: 'click',
+                            position: [1, 1],
+                        },
+                    ],
+                });
                 const closedEvent = await closed;
-                expect(closedEvent.detail.interaction).to.equal('click');
+                expect(closedEvent.detail.interaction).to.equal('auto');
                 expect(
                     await isOnTopLayer(this.outerClickContent),
                     'hover content is not available at point'
@@ -673,57 +707,6 @@ export const runOverlayTriggerTests = (type: string): void => {
                     }
                 });
                 await Promise.all(closes);
-            });
-            it.skip('acquires a `color` and `size` from `sp-theme`', async () => {
-                const el = await fixture<Theme>(html`
-                    <sp-theme color="dark">
-                        <sp-theme color="light">
-                            <overlay-trigger id="trigger" placement="top">
-                                <sp-button
-                                    id="outer-button"
-                                    variant="primary"
-                                    slot="trigger"
-                                >
-                                    Show Popover
-                                </sp-button>
-                                <sp-popover
-                                    id="outer-popover"
-                                    dialog
-                                    slot="click-content"
-                                    direction="bottom"
-                                    tip
-                                >
-                                    <sp-button
-                                        id="test-button"
-                                        variant="primary"
-                                    >
-                                        Test popover.
-                                    </sp-button>
-                                </sp-popover>
-                            </overlay-trigger>
-                        </sp-theme>
-                    </sp-theme>
-                `);
-
-                await elementUpdated(el);
-
-                expect(document.querySelector('active-overlay')).to.be.null;
-
-                const button = el.querySelector('sp-button') as Button;
-                const testButton = el.querySelector('#test-button') as Button;
-                const buttonStyles = getComputedStyle(button);
-                const opened = oneEvent(button, 'sp-opened');
-                button.click();
-                await opened;
-
-                const testStyles = getComputedStyle(testButton);
-
-                expect(testStyles.getPropertyValue('background')).to.equal(
-                    buttonStyles.getPropertyValue('background')
-                );
-                expect(testStyles.getPropertyValue('min-height')).to.equal(
-                    buttonStyles.getPropertyValue('min-height')
-                );
             });
             it.skip('manages multiple layers of `type="modal"', async () => {
                 const el = await fixture(html`
@@ -857,7 +840,14 @@ export const runOverlayTriggerTests = (type: string): void => {
 
                 await nextFrame();
                 const closed = oneEvent(triggers[2], 'sp-closed');
-                document.body.click();
+                sendMouse({
+                    steps: [
+                        {
+                            type: 'click',
+                            position: [1, 1],
+                        },
+                    ],
+                });
                 await closed;
                 await elementUpdated(overlayTriggers[2]);
                 activeOverlays = [

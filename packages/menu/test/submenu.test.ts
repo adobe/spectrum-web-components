@@ -210,6 +210,8 @@ describe('Submenu', () => {
         );
         const rootItem = el.querySelector('.root') as MenuItem;
         const rootItemBoundingRect = rootItem.getBoundingClientRect();
+        const item2 = document.querySelector('.submenu-item-2') as MenuItem;
+        const itemC = document.querySelector('.sub-submenu-item-3') as MenuItem;
         expect(rootItem.open).to.be.false;
 
         let opened = oneEvent(rootItem, 'sp-opened');
@@ -231,7 +233,6 @@ describe('Submenu', () => {
 
         expect(rootItem.open).to.be.true;
 
-        const item2 = document.querySelector('.submenu-item-2') as MenuItem;
         const item2BoundingRect = item2.getBoundingClientRect();
 
         opened = oneEvent(item2, 'sp-opened');
@@ -251,28 +252,15 @@ describe('Submenu', () => {
 
         expect(item2.open).to.be.true;
 
-        const itemC = document.querySelector('.sub-submenu-item-3') as MenuItem;
-        const itemCBoundingRect = itemC.getBoundingClientRect();
-
         const closed = oneEvent(rootItem, 'sp-closed');
         // click to select and close
-        sendMouse({
-            steps: [
-                {
-                    type: 'click',
-                    position: [
-                        itemCBoundingRect.left + itemCBoundingRect.width / 2,
-                        itemCBoundingRect.top + itemCBoundingRect.height / 2,
-                    ],
-                },
-            ],
-        });
+        itemC.click();
         await closed;
 
+        expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
+            .true;
         expect(submenuChanged.calledWith('Two'), 'submenu changed').to.be.true;
         expect(subSubmenuChanged.calledWith('C'), 'sub submenu changed').to.be
-            .true;
-        expect(rootChanged.calledWith('Has submenu'), 'root changed').to.be
             .true;
     });
     (
@@ -762,15 +750,15 @@ describe('Submenu', () => {
         const el = await styledFixture<ActionMenu>(html`
             <sp-action-menu>
                 <sp-icon-show-menu slot="icon"></sp-icon-show-menu>
-                <sp-menu-group role="none">
+                <sp-menu-group role="none" id="group">
                     <span slot="header">New York</span>
                     <sp-menu-item>Bronx</sp-menu-item>
                     <sp-menu-item id="submenu-item-1">
                         Brooklyn
-                        <sp-menu slot="submenu">
+                        <sp-menu slot="submenu" id="submenu-1">
                             <sp-menu-item id="submenu-item-2">
                                 Ft. Greene
-                                <sp-menu slot="submenu">
+                                <sp-menu slot="submenu" id="submenu-2">
                                     <sp-menu-item>S. Oxford St</sp-menu-item>
                                     <sp-menu-item>S. Portland Ave</sp-menu-item>
                                     <sp-menu-item>S. Elliot Pl</sp-menu-item>
@@ -782,7 +770,7 @@ describe('Submenu', () => {
                     </sp-menu-item>
                     <sp-menu-item id="submenu-item-3">
                         Manhattan
-                        <sp-menu slot="submenu">
+                        <sp-menu slot="submenu" id="submenu-3">
                             <sp-menu-item disabled>SoHo</sp-menu-item>
                             <sp-menu-item>
                                 Union Square
@@ -799,9 +787,9 @@ describe('Submenu', () => {
             </sp-action-menu>
         `);
 
-        const rootMenu1 = el.querySelector('#submenu-item-1') as Menu;
-        const rootMenu2 = el.querySelector('#submenu-item-3') as Menu;
-        const childMenu2 = el.querySelector('#submenu-item-2') as Menu;
+        const rootMenu1 = el.querySelector('#submenu-item-1') as MenuItem;
+        const rootMenu2 = el.querySelector('#submenu-item-3') as MenuItem;
+        const childMenu2 = el.querySelector('#submenu-item-2') as MenuItem;
 
         expect(el.open).to.be.false;
         let opened = oneEvent(el, 'sp-opened');
@@ -814,31 +802,24 @@ describe('Submenu', () => {
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
+        expect(rootMenu1.open).to.be.true;
 
         opened = oneEvent(childMenu2, 'sp-opened');
         childMenu2.dispatchEvent(
             new PointerEvent('pointerenter', { bubbles: true })
         );
         await opened;
+        expect(childMenu2.open).to.be.true;
 
         const childMenu2Closed = oneEvent(childMenu2, 'sp-closed');
         const rootMenu1Closed = oneEvent(rootMenu1, 'sp-closed');
-        const rootMenu2Closed = oneEvent(rootMenu2, 'sp-opened');
-        const rect = rootMenu2.getBoundingClientRect();
-        sendMouse({
-            steps: [
-                {
-                    type: 'move',
-                    position: [
-                        rect.left + rect.width / 2,
-                        rect.top + rect.height / 2,
-                    ],
-                },
-            ],
-        });
+        const rootMenu2Opened = oneEvent(rootMenu2, 'sp-opened');
+        rootMenu2.dispatchEvent(
+            new PointerEvent('pointerenter', { bubbles: true })
+        );
         await childMenu2Closed;
         await rootMenu1Closed;
-        await rootMenu2Closed;
+        await rootMenu2Opened;
     });
 
     it('closes back to the first overlay without a `root` when clicking away', async () => {

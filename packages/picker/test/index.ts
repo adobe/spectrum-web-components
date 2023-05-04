@@ -31,7 +31,6 @@ import {
     arrowLeftEvent,
     arrowRightEvent,
     arrowUpEvent,
-    escapeEvent,
     testForLitDevWarnings,
     tEvent,
 } from '../../../test/testing-helpers.js';
@@ -583,7 +582,9 @@ export function runPickerTests(): void {
             await opened;
 
             const closed = oneEvent(el, 'sp-closed');
-            button.dispatchEvent(escapeEvent());
+            sendKeys({
+                press: 'Escape',
+            });
             await closed;
             expect(el.open).to.be.false;
         });
@@ -789,7 +790,7 @@ export function runPickerTests(): void {
                     input1
                 );
             });
-            xit('can close and immediate tab to the next tab stop', async () => {
+            it('can close and immediately tab to the next tab stop', async () => {
                 el.focus();
                 await nextFrame();
                 expect(document.activeElement, 'focuses el').to.equal(el);
@@ -1137,7 +1138,7 @@ export function runPickerTests(): void {
             '`name` is the label text plus the selected item text'
         ).to.not.be.null;
     });
-    it.skip('toggles between pickers', async () => {
+    it('toggles between pickers', async () => {
         const el2 = await pickerFixture();
         const el1 = await pickerFixture();
 

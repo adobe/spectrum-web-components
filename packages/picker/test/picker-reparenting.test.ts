@@ -74,7 +74,7 @@ describe('Reparented Picker', () => {
         expect(picker.dir).to.equal('ltr');
         expect(picker.getAttribute('dir')).to.equal('ltr');
     });
-    it.skip('maintains `value`', async () => {
+    it('maintains `value`', async () => {
         const { picker, before, after } = await fixtureElements();
 
         expect(picker.value).to.equal('');

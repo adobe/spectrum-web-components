@@ -196,6 +196,7 @@ export class Menu extends SpectrumElement {
         const cascadeData = event.menuCascade.get(this);
         if (!cascadeData) return;
 
+        event.parentMenu = this;
         if (cascadeData.hadFocusRoot) {
             // Only have one tab stop per Menu tree
             this.tabIndex = -1;

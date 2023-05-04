@@ -149,7 +149,7 @@ export function runSplitButtonTests(
 
         expect(el.open).to.be.false;
     });
-    it.skip('[type="more"] toggles open/close multiple time', async () => {
+    it('[type="more"] toggles open/close multiple time', async () => {
         const test = await fixture<HTMLDivElement>(
             wrapInDiv(more({ ...moreDefaults.args, ...more.args }))
         );
@@ -392,7 +392,7 @@ export function runSplitButtonTests(
         expect(firstItemSpy.called, 'first called, sill').to.be.true;
         expect(firstItemSpy.callCount, 'first callCount').to.equal(3);
     });
-    it.skip('passes click events as [type="more"]', async () => {
+    it('passes click events as [type="more"]', async () => {
         const firstItemSpy = spy();
         const secondItemSpy = spy();
         const thirdItemSpy = spy();

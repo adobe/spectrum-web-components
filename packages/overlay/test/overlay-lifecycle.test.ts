@@ -16,7 +16,6 @@ import {
     html,
     nextFrame,
     oneEvent,
-    waitUntil,
 } from '@open-wc/testing';
 import '@spectrum-web-components/tooltip/sp-tooltip.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -59,40 +58,6 @@ describe('Overlay Trigger - accessible hover content management', () => {
             ),
             '`name`ed with no `description`'
         );
-    });
-    xit('calls the overlay lifecycle (willOpen/openCanceled)', async () => {
-        const el = await fixture<OverlayTrigger>(html`
-            <overlay-trigger placement="right-start">
-                <sp-action-button slot="trigger">
-                    Button with Tooltip
-                </sp-action-button>
-                <sp-tooltip slot="hover-content" delayed>
-                    Described by this content on focus/hover. 2
-                </sp-tooltip>
-            </overlay-trigger>
-        `);
-
-        await elementUpdated(el);
-
-        expect(el.open).to.be.undefined;
-        expect(el.childNodes.length, 'always').to.equal(5);
-        const trigger = el.querySelector('[slot="trigger"]') as HTMLElement;
-        trigger.dispatchEvent(
-            new FocusEvent('focusin', { bubbles: true, composed: true })
-        );
-        await elementUpdated(el);
-        trigger.dispatchEvent(
-            new FocusEvent('focusout', { bubbles: true, composed: true })
-        );
-        await elementUpdated(el);
-
-        await waitUntil(() => {
-            return el.open === null;
-        }, 'open');
-        await elementUpdated(el);
-        await waitUntil(() => {
-            return el.childNodes.length === 5;
-        }, 'children');
     });
     it('gardens `aria-describedby` in its target', async () => {
         const el = await fixture<OverlayTrigger>(html`

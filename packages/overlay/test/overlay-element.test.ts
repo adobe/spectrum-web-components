@@ -72,352 +72,256 @@ describe('sp-overlay', () => {
 
     describe('[type="modal"]', () => {
         opensDeclaratively('modal');
-        xit('closes all other overlay types when opening', async () => {
-            const test = await styledFixture<OverlayBase>(html`
-                <div>
-                    ${OVERLAY_TYPES.map(
-                        (type) => html`
-                            <sp-overlay type=${type}>
-                                <sp-tooltip>${type} Content</sp-tooltip>
-                            </sp-overlay>
-                        `
-                    )}
-                </div>
-            `);
-            const modal = test.querySelector('[type="modal"]') as OverlayBase;
-            const page = test.querySelector('[type="page"]') as OverlayBase;
-            const hint = test.querySelector('[type="hint"]') as OverlayBase;
-            const auto = test.querySelector('[type="auto"]') as OverlayBase;
-            const manual = test.querySelector('[type="manual"]') as OverlayBase;
+        describe('interaction with other non-ancestor overlays', function () {
+            beforeEach(async function () {
+                this.fixture = await styledFixture<OverlayBase>(html`
+                    <div>
+                        ${OVERLAY_TYPES.map(
+                            (type) => html`
+                                <sp-overlay type=${type}>
+                                    <sp-tooltip>${type} Content</sp-tooltip>
+                                </sp-overlay>
+                            `
+                        )}
+                    </div>
+                `);
 
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
+                this.modal = this.fixture.querySelector(
+                    '[type="modal"]'
+                ) as OverlayBase;
+                this.page = this.fixture.querySelector(
+                    '[type="page"]'
+                ) as OverlayBase;
+                this.hint = this.fixture.querySelector(
+                    '[type="hint"]'
+                ) as OverlayBase;
+                this.auto = this.fixture.querySelector(
+                    '[type="auto"]'
+                ) as OverlayBase;
+                this.manual = this.fixture.querySelector(
+                    '[type="manual"]'
+                ) as OverlayBase;
 
-            let opened = oneEvent(page, 'sp-opened');
-            page.open = true;
-            await opened;
-            await elementUpdated(page);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.true;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-            // Required to cover the fact that `sp-opened` in 'modal'/'page'
-            // overlays fires pseudo-syncronously, which means the transition
-            // to "open" won't have started in a way that would allow `transitionend`
-            // events to announce "closed" without the extra await between open => close
-            // state transitions.
-            //
-            // Lock down the `sp-opened/closed` contract across overlay types...
-            await nextFrame();
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
+            });
+            afterEach(async function () {
+                const closed = oneEvent(this.modal, 'sp-closed');
+                this.modal.open = false;
+                await closed;
+            });
+            it('closes "page" overlays when opening', async function () {
+                let opened = oneEvent(this.page, 'sp-opened');
+                this.page.open = true;
+                await opened;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.true;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
 
-            opened = oneEvent(modal, 'sp-opened');
-            let closed = oneEvent(page, 'sp-closed');
-            modal.open = true;
-            await opened;
-            await closed;
-            await elementUpdated(page);
-            await elementUpdated(modal);
-            expect(modal.open).to.be.true;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
+                opened = oneEvent(this.modal, 'sp-opened');
+                const closed = oneEvent(this.page, 'sp-closed');
+                this.modal.open = true;
+                await opened;
+                await closed;
+                expect(this.modal.open).to.be.true;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
+            });
+            it('closes "hint" overlays when opening', async function () {
+                let opened = oneEvent(this.hint, 'sp-opened');
+                this.hint.open = true;
+                await opened;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.true;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
 
-            await nextFrame();
+                opened = oneEvent(this.modal, 'sp-opened');
+                const closed = oneEvent(this.hint, 'sp-closed');
+                this.modal.open = true;
+                await opened;
+                await closed;
+                expect(this.modal.open).to.be.true;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
+            });
+            it('closes "auto" overlays when opening', async function () {
+                let opened = oneEvent(this.auto, 'sp-opened');
+                this.auto.open = true;
+                await opened;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.true;
+                expect(this.manual.open).to.be.false;
 
-            closed = oneEvent(modal, 'sp-closed');
-            modal.open = false;
-            await closed;
-            await elementUpdated(page);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
+                opened = oneEvent(this.modal, 'sp-opened');
+                const closed = oneEvent(this.auto, 'sp-closed');
+                this.modal.open = true;
+                await opened;
+                await closed;
+                expect(this.modal.open).to.be.true;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
+            });
+            it('does not close "manual" overlays when opening', async function () {
+                let opened = oneEvent(this.manual, 'sp-opened');
+                this.manual.open = true;
+                await opened;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.true;
 
-            await nextFrame();
-
-            opened = oneEvent(hint, 'sp-opened');
-            hint.open = true;
-            await opened;
-            await elementUpdated(hint);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.true;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            opened = oneEvent(modal, 'sp-opened');
-            closed = oneEvent(hint, 'sp-closed');
-            modal.open = true;
-            await opened;
-            await closed;
-            await elementUpdated(page);
-            await elementUpdated(modal);
-            expect(modal.open).to.be.true;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            closed = oneEvent(modal, 'sp-closed');
-            modal.open = false;
-            await closed;
-            await elementUpdated(page);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            opened = oneEvent(auto, 'sp-opened');
-            auto.open = true;
-            await opened;
-            await elementUpdated(auto);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.true;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            opened = oneEvent(modal, 'sp-opened');
-            closed = oneEvent(auto, 'sp-closed');
-            modal.open = true;
-            await opened;
-            await closed;
-            await elementUpdated(auto);
-            await elementUpdated(modal);
-            expect(modal.open).to.be.true;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            closed = oneEvent(modal, 'sp-closed');
-            modal.open = false;
-            await closed;
-            await elementUpdated(modal);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            opened = oneEvent(manual, 'sp-opened');
-            manual.open = true;
-            await opened;
-            await elementUpdated(manual);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.true;
-
-            await nextFrame();
-
-            opened = oneEvent(modal, 'sp-opened');
-            closed = oneEvent(manual, 'sp-closed');
-            modal.open = true;
-            await opened;
-            await closed;
-            await elementUpdated(page);
-            await elementUpdated(manual);
-            expect(modal.open).to.be.true;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
+                opened = oneEvent(this.modal, 'sp-opened');
+                this.modal.open = true;
+                await opened;
+                expect(this.modal.open).to.be.true;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.true;
+            });
         });
     });
     describe('[type="page"]', () => {
         opensDeclaratively('page');
-        xit('closes all other overlay types when opening', async () => {
-            const test = await styledFixture<OverlayBase>(html`
-                <div>
-                    ${OVERLAY_TYPES.map(
-                        (type) => html`
-                            <sp-overlay type=${type}>
-                                <sp-tooltip>${type} Content</sp-tooltip>
-                            </sp-overlay>
-                        `
-                    )}
-                </div>
-            `);
-            const modal = test.querySelector('[type="modal"]') as OverlayBase;
-            const page = test.querySelector('[type="page"]') as OverlayBase;
-            const hint = test.querySelector('[type="hint"]') as OverlayBase;
-            const auto = test.querySelector('[type="auto"]') as OverlayBase;
-            const manual = test.querySelector('[type="manual"]') as OverlayBase;
+        describe('interaction with other non-ancestor overlays', function () {
+            beforeEach(async function () {
+                this.fixture = await styledFixture<OverlayBase>(html`
+                    <div>
+                        ${OVERLAY_TYPES.map(
+                            (type) => html`
+                                <sp-overlay type=${type}>
+                                    <sp-tooltip>${type} Content</sp-tooltip>
+                                </sp-overlay>
+                            `
+                        )}
+                    </div>
+                `);
 
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
+                this.modal = this.fixture.querySelector(
+                    '[type="modal"]'
+                ) as OverlayBase;
+                this.page = this.fixture.querySelector(
+                    '[type="page"]'
+                ) as OverlayBase;
+                this.hint = this.fixture.querySelector(
+                    '[type="hint"]'
+                ) as OverlayBase;
+                this.auto = this.fixture.querySelector(
+                    '[type="auto"]'
+                ) as OverlayBase;
+                this.manual = this.fixture.querySelector(
+                    '[type="manual"]'
+                ) as OverlayBase;
 
-            let opened = oneEvent(modal, 'sp-opened');
-            modal.open = true;
-            await opened;
-            await elementUpdated(modal);
-            expect(modal.open).to.be.true;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-            // Required to cover the fact that `sp-opened` in 'modal'/'page'
-            // overlays fires pseudo-syncronously, which means the transition
-            // to "open" won't have started in a way that would allow `transitionend`
-            // events to announce "closed" without the extra await between open => close
-            // state transitions.
-            //
-            // Lock down the `sp-opened/closed` contract across overlay types...
-            await nextFrame();
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
+            });
+            afterEach(async function () {
+                const closed = oneEvent(this.page, 'sp-closed');
+                this.page.open = false;
+                await closed;
+            });
+            it('closes "page" overlays when opening', async function () {
+                let opened = oneEvent(this.modal, 'sp-opened');
+                this.modal.open = true;
+                await opened;
+                expect(this.modal.open).to.be.true;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
 
-            opened = oneEvent(page, 'sp-opened');
-            let closed = oneEvent(modal, 'sp-closed');
-            page.open = true;
-            await opened;
-            await closed;
-            await elementUpdated(page);
-            await elementUpdated(modal);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.true;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
+                opened = oneEvent(this.page, 'sp-opened');
+                const closed = oneEvent(this.modal, 'sp-closed');
+                this.page.open = true;
+                await opened;
+                await closed;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.true;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
+            });
+            it('closes "hint" overlays when opening', async function () {
+                let opened = oneEvent(this.hint, 'sp-opened');
+                this.hint.open = true;
+                await opened;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.true;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
 
-            await nextFrame();
+                opened = oneEvent(this.page, 'sp-opened');
+                const closed = oneEvent(this.hint, 'sp-closed');
+                this.page.open = true;
+                await opened;
+                await closed;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.true;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
+            });
+            it('closes "auto" overlays when opening', async function () {
+                let opened = oneEvent(this.auto, 'sp-opened');
+                this.auto.open = true;
+                await opened;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.true;
+                expect(this.manual.open).to.be.false;
 
-            closed = oneEvent(page, 'sp-closed');
-            page.open = false;
-            await closed;
-            await elementUpdated(page);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
+                opened = oneEvent(this.page, 'sp-opened');
+                const closed = oneEvent(this.auto, 'sp-closed');
+                this.page.open = true;
+                await opened;
+                await closed;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.true;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
+            });
+            it('does not close "manual" overlays when opening', async function () {
+                let opened = oneEvent(this.manual, 'sp-opened');
+                this.manual.open = true;
+                await opened;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.true;
 
-            await nextFrame();
-
-            opened = oneEvent(hint, 'sp-opened');
-            hint.open = true;
-            await opened;
-            await elementUpdated(hint);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.true;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            opened = oneEvent(page, 'sp-opened');
-            closed = oneEvent(hint, 'sp-closed');
-            page.open = true;
-            await opened;
-            await closed;
-            await elementUpdated(page);
-            await elementUpdated(hint);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.true;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            closed = oneEvent(page, 'sp-closed');
-            page.open = false;
-            await closed;
-            await elementUpdated(page);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            opened = oneEvent(auto, 'sp-opened');
-            auto.open = true;
-            await opened;
-            await elementUpdated(auto);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.true;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            opened = oneEvent(page, 'sp-opened');
-            closed = oneEvent(auto, 'sp-closed');
-            page.open = true;
-            await opened;
-            await closed;
-            await elementUpdated(auto);
-            await elementUpdated(page);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.true;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            closed = oneEvent(page, 'sp-closed');
-            page.open = false;
-            await closed;
-            await elementUpdated(page);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            opened = oneEvent(manual, 'sp-opened');
-            manual.open = true;
-            await opened;
-            await elementUpdated(manual);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.true;
-
-            await nextFrame();
-
-            opened = oneEvent(page, 'sp-opened');
-            closed = oneEvent(manual, 'sp-closed');
-            page.open = true;
-            await opened;
-            await closed;
-            await elementUpdated(page);
-            await elementUpdated(manual);
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.true;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
+                opened = oneEvent(this.page, 'sp-opened');
+                this.page.open = true;
+                await opened;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.true;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.true;
+            });
         });
     });
 
@@ -725,155 +629,126 @@ describe('sp-overlay', () => {
     });
     describe('[type="manual"]', () => {
         opensDeclaratively('manual');
+        describe('interaction with other non-ancestor overlays', function () {
+            beforeEach(async function () {
+                this.fixture = await styledFixture<OverlayBase>(html`
+                    <div>
+                        ${OVERLAY_TYPES.map(
+                            (type) => html`
+                                <sp-overlay type=${type}>
+                                    <sp-tooltip>${type} Content</sp-tooltip>
+                                </sp-overlay>
+                            `
+                        )}
+                    </div>
+                `);
 
-        it('does not close other overlay types when opening', async () => {
-            const test = await styledFixture<OverlayBase>(html`
-                <div>
-                    ${OVERLAY_TYPES.map(
-                        (type) => html`
-                            <sp-overlay type=${type}>
-                                <sp-tooltip>${type} Content</sp-tooltip>
-                            </sp-overlay>
-                        `
-                    )}
-                </div>
-            `);
-            const modal = test.querySelector('[type="modal"]') as OverlayBase;
-            const page = test.querySelector('[type="page"]') as OverlayBase;
-            const hint = test.querySelector('[type="hint"]') as OverlayBase;
-            const auto = test.querySelector('[type="auto"]') as OverlayBase;
-            const manual = test.querySelector('[type="manual"]') as OverlayBase;
+                this.modal = this.fixture.querySelector(
+                    '[type="modal"]'
+                ) as OverlayBase;
+                this.page = this.fixture.querySelector(
+                    '[type="page"]'
+                ) as OverlayBase;
+                this.hint = this.fixture.querySelector(
+                    '[type="hint"]'
+                ) as OverlayBase;
+                this.auto = this.fixture.querySelector(
+                    '[type="auto"]'
+                ) as OverlayBase;
+                this.manual = this.fixture.querySelector(
+                    '[type="manual"]'
+                ) as OverlayBase;
 
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
+            });
+            afterEach(async function () {
+                const closed = oneEvent(this.manual, 'sp-closed');
+                this.manual.open = false;
+                await closed;
+            });
+            it('does not close "modal" overlays when opening', async function () {
+                let opened = oneEvent(this.modal, 'sp-opened');
+                this.modal.open = true;
+                await opened;
+                expect(this.modal.open).to.be.true;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
 
-            let opened = oneEvent(modal, 'sp-opened');
-            modal.open = true;
-            await opened;
-            expect(modal.open).to.be.true;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
+                opened = oneEvent(this.manual, 'sp-opened');
+                this.manual.open = true;
+                await opened;
+                expect(this.modal.open).to.be.true;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.true;
+            });
+            it('does not close "modal" overlays when opening', async function () {
+                let opened = oneEvent(this.page, 'sp-opened');
+                this.page.open = true;
+                await opened;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.true;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
 
-            opened = oneEvent(manual, 'sp-opened');
-            manual.open = true;
-            await opened;
-            expect(modal.open).to.be.true;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.true;
+                opened = oneEvent(this.manual, 'sp-opened');
+                this.manual.open = true;
+                await opened;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.true;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.true;
+            });
+            it('does not close "hint" overlays when opening', async function () {
+                let opened = oneEvent(this.hint, 'sp-opened');
+                this.hint.open = true;
+                await opened;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.true;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.false;
 
-            await nextFrame();
+                opened = oneEvent(this.manual, 'sp-opened');
+                this.manual.open = true;
+                await opened;
 
-            let closed = oneEvent(modal, 'sp-closed');
-            let manualClosed = oneEvent(manual, 'sp-closed');
-            modal.open = false;
-            manual.open = false;
-            await closed;
-            await manualClosed;
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.true;
+                expect(this.auto.open).to.be.false;
+                expect(this.manual.open).to.be.true;
+            });
+            it('does not close "auto" overlays when opening', async function () {
+                let opened = oneEvent(this.auto, 'sp-opened');
+                this.auto.open = true;
+                await opened;
 
-            await nextFrame();
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.true;
+                expect(this.manual.open).to.be.false;
 
-            opened = oneEvent(page, 'sp-opened');
-            page.open = true;
-            await opened;
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.true;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
+                opened = oneEvent(this.manual, 'sp-opened');
+                this.manual.open = true;
+                await opened;
 
-            await nextFrame();
-
-            opened = oneEvent(manual, 'sp-opened');
-            manual.open = true;
-            await opened;
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.true;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.true;
-
-            await nextFrame();
-
-            closed = oneEvent(page, 'sp-closed');
-            manualClosed = oneEvent(manual, 'sp-closed');
-            page.open = false;
-            manual.open = false;
-            await closed;
-            await manualClosed;
-
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            opened = oneEvent(hint, 'sp-opened');
-            hint.open = true;
-            await opened;
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.true;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            await nextFrame();
-
-            opened = oneEvent(manual, 'sp-opened');
-            manual.open = true;
-            await opened;
-
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.true;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.true;
-
-            await nextFrame();
-
-            closed = oneEvent(hint, 'sp-closed');
-            manualClosed = oneEvent(manual, 'sp-closed');
-            hint.open = false;
-            manual.open = false;
-            await closed;
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.false;
-            expect(manual.open).to.be.false;
-
-            opened = oneEvent(auto, 'sp-opened');
-            auto.open = true;
-            await opened;
-
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.true;
-            expect(manual.open).to.be.false;
-
-            opened = oneEvent(manual, 'sp-opened');
-            manual.open = true;
-            await opened;
-
-            expect(modal.open).to.be.false;
-            expect(page.open).to.be.false;
-            expect(hint.open).to.be.false;
-            expect(auto.open).to.be.true;
-            expect(manual.open).to.be.true;
+                expect(this.modal.open).to.be.false;
+                expect(this.page.open).to.be.false;
+                expect(this.hint.open).to.be.false;
+                expect(this.auto.open).to.be.true;
+                expect(this.manual.open).to.be.true;
+            });
         });
     });
 });
