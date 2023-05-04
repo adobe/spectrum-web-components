@@ -145,6 +145,7 @@ export class Overlay {
             abortPromise,
             content: this.overlayElement,
             contentTip: overlayDetailQuery.overlayContentTipElement,
+            contentTipPadding: overlayDetailQuery.overlayContentTipPadding,
             delayed,
             offset: offset,
             placement: placement,

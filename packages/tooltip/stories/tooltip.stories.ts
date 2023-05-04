@@ -276,6 +276,7 @@ const overlaid = (openPlacement: Placement): TemplateResult => {
                 ['left', 'negative'],
                 ['right', 'positive'],
                 ['top', 'info'],
+                ['top-start', 'info'],
             ] as [Placement, string][]
         ).map(([placement, variant]) => {
             return html`

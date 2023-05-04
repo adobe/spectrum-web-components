@@ -31,6 +31,7 @@ export type OverlayTriggerInteractions = Extract<
 export interface OverlayOpenDetail {
     content: HTMLElement;
     contentTip?: HTMLElement;
+    contentTipPadding?: number;
     delayed: boolean;
     offset: number;
     skidding?: number;
@@ -62,6 +63,7 @@ export interface OverlayDisplayQueryDetail {
     overlayRootName?: string;
     overlayRootElement?: HTMLElement;
     overlayContentTipElement?: HTMLElement;
+    overlayContentTipPadding?: number;
 }
 
 export type Placement = FloatingUIPlacement | 'none';

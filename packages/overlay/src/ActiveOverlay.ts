@@ -57,6 +57,9 @@ export interface PositionResult {
 type OverlayStateType = 'idle' | 'active' | 'hiding' | 'dispose' | 'disposed';
 type ContentAnimation = 'sp-overlay-fade-in' | 'sp-overlay-fade-out';
 
+// See: https://spectrum.adobe.com/page/popover/#Container-padding
+const REQUIRED_DISTANCE_TO_EDGE = 8;
+
 const stateMachine: {
     initial: OverlayStateType;
     states: {
@@ -134,6 +137,7 @@ const getFallbackPlacements = (
 export class ActiveOverlay extends SpectrumElement {
     public overlayContent!: HTMLElement;
     public overlayContentTip?: HTMLElement;
+    public overlayContentTipPadding = 0;
     public trigger!: HTMLElement;
     public root?: HTMLElement;
     public virtualTrigger?: VirtualTrigger;
@@ -326,6 +330,8 @@ export class ActiveOverlay extends SpectrumElement {
     private extractDetail(detail: OverlayOpenDetail): void {
         this.overlayContent = detail.content;
         this.overlayContentTip = detail.contentTip;
+        this.overlayContentTipPadding =
+            detail.contentTipPadding || REQUIRED_DISTANCE_TO_EDGE;
         this.trigger = detail.trigger;
         this.virtualTrigger = detail.virtualTrigger;
         this.placement = detail.placement;
@@ -447,8 +453,6 @@ export class ActiveOverlay extends SpectrumElement {
             return Math.round(num * dpr) / dpr || -10000;
         }
 
-        // See: https://spectrum.adobe.com/page/popover/#Container-padding
-        const REQUIRED_DISTANCE_TO_EDGE = 8;
         // See: https://github.com/adobe/spectrum-web-components/issues/910
         const MIN_OVERLAY_HEIGHT = 100;
 
@@ -499,7 +503,12 @@ export class ActiveOverlay extends SpectrumElement {
             }),
         ];
         if (this.overlayContentTip) {
-            middleware.push(arrow({ element: this.overlayContentTip }));
+            middleware.push(
+                arrow({
+                    element: this.overlayContentTip,
+                    padding: this.overlayContentTipPadding,
+                })
+            );
         }
         const { x, y, placement, middlewareData } = await computePosition(
             this.virtualTrigger || this.trigger,
