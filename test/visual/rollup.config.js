@@ -9,10 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import html from '@web/rollup-plugin-html';
+import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { copy } from '@web/rollup-plugin-copy';
-import visualizer from 'rollup-plugin-visualizer';
+import { visualizer } from 'rollup-plugin-visualizer';
 
 export default {
     input: 'test/visual/src/index.html',
@@ -24,6 +24,9 @@ export default {
         }),
         html(),
         copy({ patterns: '**/*.json', rootDir: 'test/visual/src' }),
-        visualizer(),
+        visualizer({
+            brotliSize: true,
+            gzipSize: true,
+        }),
     ],
 };
