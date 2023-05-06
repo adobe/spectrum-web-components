@@ -16,6 +16,7 @@ import '@spectrum-web-components/progress-bar/sp-progress-bar.js';
 import { ProgressBar } from '@spectrum-web-components/progress-bar';
 import { stub } from 'sinon';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 
 describe('ProgressBar', () => {
     testForLitDevWarnings(
@@ -126,5 +127,39 @@ describe('ProgressBar', () => {
             },
         });
         consoleWarnStub.restore();
+    });
+
+    it('resolves a language (en-US)', async () => {
+        const [languageContext] = createLanguageContext('en-US');
+        const test = await fixture(html`
+            <div @sp-language-context=${languageContext}>
+                <sp-progress-bar
+                    label="Changing Value"
+                    progress="45"
+                ></sp-progress-bar>
+            </div>
+        `);
+        const el = test.querySelector('sp-progress-bar') as ProgressBar;
+        const percentage = el.shadowRoot.querySelector(
+            '.percentage'
+        ) as HTMLElement;
+        expect(percentage.textContent?.search('%')).to.not.equal(-1);
+    });
+
+    it('resolves a language (ar-sa)', async () => {
+        const [languageContext] = createLanguageContext('ar-sa');
+        const test = await fixture(html`
+            <div @sp-language-context=${languageContext}>
+                <sp-progress-bar
+                    label="Changing Value"
+                    progress="45"
+                ></sp-progress-bar>
+            </div>
+        `);
+        const el = test.querySelector('sp-progress-bar') as ProgressBar;
+        const percentage = el.shadowRoot.querySelector(
+            '.percentage'
+        ) as HTMLElement;
+        expect(percentage.textContent?.search('٪')).to.not.equal(-1);
     });
 });

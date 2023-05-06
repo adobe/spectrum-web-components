@@ -20,6 +20,7 @@ import {
 } from '@spectrum-web-components/base';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
+import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import styles from './progress-bar.css.js';
 
@@ -36,6 +37,8 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
 
     @property({ type: String })
     public label = '';
+
+    private languageResolver = new LanguageResolutionController(this);
 
     @property({ type: Boolean, reflect: true, attribute: 'over-background' })
     public overBackground = false;
@@ -63,7 +66,13 @@ export class ProgressBar extends SizedMixin(SpectrumElement) {
                                     size=${this.size}
                                     class="percentage"
                                 >
-                                    ${this.progress}%
+                                    ${new Intl.NumberFormat(
+                                        this.languageResolver.language,
+                                        {
+                                            style: 'percent',
+                                            unitDisplay: 'narrow',
+                                        }
+                                    ).format(this.progress / 100)}
                                 </sp-field-label>
                             `}
                   `

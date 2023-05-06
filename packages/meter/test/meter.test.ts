@@ -15,6 +15,7 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 import '@spectrum-web-components/meter/sp-meter.js';
 import { Meter } from '@spectrum-web-components/meter';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
+import { createLanguageContext } from '../../../tools/reactive-controllers/test/helpers.js';
 
 describe('Meter', () => {
     testForLitDevWarnings(
@@ -86,5 +87,33 @@ describe('Meter', () => {
 
         expect(el.hasAttribute('aria-valuenow')).to.be.true;
         expect(el.getAttribute('aria-valuenow')).to.equal('100');
+    });
+
+    it('resolves a language (en-US)', async () => {
+        const [languageContext] = createLanguageContext('en-US');
+        const test = await fixture(html`
+            <div @sp-language-context=${languageContext}>
+                <sp-meter label="Changing Value" progress="45"></sp-meter>
+            </div>
+        `);
+        const el = test.querySelector('sp-meter') as Meter;
+        const percentage = el.shadowRoot.querySelector(
+            '.percentage'
+        ) as HTMLElement;
+        expect(percentage.textContent?.search('%')).to.not.equal(-1);
+    });
+
+    it('resolves a language (ar-sa)', async () => {
+        const [languageContext] = createLanguageContext('ar-sa');
+        const test = await fixture(html`
+            <div @sp-language-context=${languageContext}>
+                <sp-meter label="Changing Value" progress="45"></sp-meter>
+            </div>
+        `);
+        const el = test.querySelector('sp-meter') as Meter;
+        const percentage = el.shadowRoot.querySelector(
+            '.percentage'
+        ) as HTMLElement;
+        expect(percentage.textContent?.search('٪')).to.not.equal(-1);
     });
 });

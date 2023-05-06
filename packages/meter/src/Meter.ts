@@ -21,6 +21,7 @@ import {
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 
 import { ObserveSlotText } from '@spectrum-web-components/shared/src/observe-slot-text.js';
+import { LanguageResolutionController } from '@spectrum-web-components/reactive-controllers/src/LanguageResolution.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import styles from './meter.css.js';
 
@@ -52,6 +53,8 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
     @property({ type: String, reflect: true })
     public label = '';
 
+    private languageResolver = new LanguageResolutionController(this);
+
     @property({ type: Boolean, reflect: true, attribute: 'side-label' })
     // called sideLabel
     public sideLabel = false;
@@ -66,7 +69,10 @@ export class Meter extends SizedMixin(ObserveSlotText(SpectrumElement, '')) {
                 <slot>${this.label}</slot>
             </sp-field-label>
             <sp-field-label size=${this.size} class="percentage">
-                ${this.progress}%
+                ${new Intl.NumberFormat(this.languageResolver.language, {
+                    style: 'percent',
+                    unitDisplay: 'narrow',
+                }).format(this.progress / 100)}
             </sp-field-label>
             <div class="track">
                 <div
