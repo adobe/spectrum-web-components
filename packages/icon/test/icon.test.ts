@@ -89,7 +89,7 @@ describe('Icon', () => {
 
         // Skipping the test case expectation for webkit because of error event not dispatching bug for the same, https://github.com/microsoft/playwright/issues/22332
         if (!isWebKit()) {
-            expect(error).to.be.calledOnce;
+            await waitUntil(() => error.calledOnce, 'The error was thrown.');
         }
     });
 
