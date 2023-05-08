@@ -15,7 +15,13 @@ import { isWebKit } from '@spectrum-web-components/shared';
 import '@spectrum-web-components/icon/sp-icon.js';
 import { Icon } from '@spectrum-web-components/icon';
 import '@spectrum-web-components/icons/sp-icons-medium.js';
-import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
+import {
+    elementUpdated,
+    expect,
+    fixture,
+    html,
+    waitUntil,
+} from '@open-wc/testing';
 import { testForLitDevWarnings } from '../../../test/testing-helpers.js';
 
 describe('Icon', () => {
