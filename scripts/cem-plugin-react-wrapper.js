@@ -68,7 +68,7 @@ function genPackageJson(
                 "development": "./index.dev.js",
                 "default": "./index.js"
             },
-            "./next": {
+            "./next.js": {
                 "development": "./next.dev.js",
                 "default": "./next.js"
             }
@@ -86,10 +86,15 @@ function genPackageJson(
         ],
         "dependencies": {
             "@lit-labs/react": "^1.1.1",
-            "${dependencyPkgName}": "${dependencyPkgVersion}"
+            "${dependencyPkgName}": "^${dependencyPkgVersion}"
         },
         "peerDependencies": {
             "next": "^13.4.1 || latest",
+        },
+        "peerDependenciesMeta": {
+            "next": {
+                "optional": true
+            }
         }
     }`;
 }
