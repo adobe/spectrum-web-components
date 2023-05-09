@@ -35,6 +35,10 @@ governing permissions and limitations under the License.
     inset: 0;
 }
 
+::slotted(sp-tooltip) {
+    position: absolute;
+}
+
 :host:after {
     pointer-events: none;
 }
@@ -54,7 +58,7 @@ slot[name='icon']::slotted(img) {
 }
 
 [icon-only] + #label {
-    display: none;
+    display: contents;
 }
 
 :host([size='s']) {

@@ -21,7 +21,3 @@ governing permissions and limitations under the License.
         border-color: highlight;
     }
 }
-
-::slotted([slot='icon']) {
-    inset: unset;
-}
