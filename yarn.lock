@@ -4352,9 +4352,9 @@
   integrity sha512-Wyr1e8zwAY5n26mqUbsQuKIuDL1PX+9UBPkmAOPgH1xKouYO6HPS3DbGKkUE7QrB3Th/2VARvcjC2hLowvaPKA==
 
 "@spectrum-css/asset@^3.0.38":
-  version "3.0.38"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/asset/-/asset-3.0.38.tgz#bc0be5d59af9ca332c839efef77481db3cbba775"
-  integrity sha512-FLVJdlGZ9NHnLMaftRomYc/szfn2jiT3OVnmu6lyjGZQRoykzWYKW0MuACQuwVHtvY4+1V/6RLrmp3wUKkJCPA==
+  version "3.0.39"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/asset/-/asset-3.0.39.tgz#d3e1e59075b73c3f35e2850c94551e3ae749d26a"
+  integrity sha512-81NWDXZolu818Y6NfUMgN4Hhck+eNRcoKVkybk06IC2OyqRLL/Yv0yk5pdRQMdHyAFg7zVq+jNaIpvycxlVe0g==
 
 "@spectrum-css/avatar@^6.0.21":
   version "6.0.21"
