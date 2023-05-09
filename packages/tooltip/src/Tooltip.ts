@@ -61,6 +61,10 @@ class TooltipOpenable extends HTMLElement {
         return this._placement;
     }
     private _placement: Placement = 'top';
+    get tipElement(): HTMLElement {
+        const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
+        return tooltip.tipElement;
+    }
 }
 
 if (!customElements.get('sp-tooltip-openable')) {
