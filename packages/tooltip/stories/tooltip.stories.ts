@@ -15,6 +15,7 @@ import { ifDefined } from '@spectrum-web-components/base/src/directives.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-alert.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-info.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import { Placement } from '@spectrum-web-components/overlay';
@@ -383,3 +384,16 @@ selfManaged.argTypes = {
         },
     },
 };
+
+export const selfManagedIconOnly = (): TemplateResult => html`
+    ${overlayStyles}
+    <sp-action-button class="self-managed">
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+        <sp-tooltip self-managed>This is a tooltip.</sp-tooltip>
+    </sp-action-button>
+    <hr />
+
+    <sp-action-button class="self-managed">
+        <sp-icon-edit slot="icon"></sp-icon-edit>
+    </sp-action-button>
+`;
