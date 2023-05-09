@@ -4021,26 +4021,26 @@
     "@types/chai" "^4.3.1"
     "@web/test-runner-commands" "^0.6.1"
 
-"@open-wc/testing-helpers@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@open-wc/testing-helpers/-/testing-helpers-2.1.4.tgz#4b439442ecb1ea3fbcbb1ef76e8717574d78dc97"
-  integrity sha512-iZJxxKI9jRgnPczm8p2jpuvBZ3DHYSLrBmhDfzs7ol8vXMNt+HluzM1j1TSU95MFVGnfaspvvt9fMbXKA7cNcA==
+"@open-wc/testing-helpers@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@open-wc/testing-helpers/-/testing-helpers-2.2.1.tgz#10ed75c33faec0ed68c76e027ebe8be262a36921"
+  integrity sha512-8zuJK7tUQYuXRIC/cVcPbAPOhtBJCe3Jfpk7im7WK0DIAXH9Q/ycB+yu3R8g4BQ31f/FdLjIFRbPZzIU75kkRg==
   dependencies:
     "@open-wc/scoped-elements" "^2.1.3"
     lit "^2.0.0"
     lit-html "^2.0.0"
 
 "@open-wc/testing@^3.1.7":
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/@open-wc/testing/-/testing-3.1.7.tgz#65200c759626d510fda103c3cb4ede6202b1b88b"
-  integrity sha512-HCS2LuY6hXtEwjqmad+eanId5H7E+3mUi9Z3rjAhH+1DCJ53lUnjzWF1lbCYbREqrdCpmzZvW1t5R3e9gJZSCA==
+  version "3.1.8"
+  resolved "https://registry.yarnpkg.com/@open-wc/testing/-/testing-3.1.8.tgz#3760a354e421a38bf432010a067ff3d3fdb60b1e"
+  integrity sha512-SpKhlSwCqUkVOOmdb9RanOQgqv4T32wzExkvuaVcUFcBeUdpwQsg1+WYpdv31Z4cRCkAhQ4A8OIpGphzqF8T7w==
   dependencies:
     "@esm-bundle/chai" "^4.3.4-fix.0"
     "@open-wc/chai-dom-equals" "^0.12.36"
     "@open-wc/semantic-dom-diff" "^0.19.7"
-    "@open-wc/testing-helpers" "^2.1.4"
+    "@open-wc/testing-helpers" "^2.2.1"
     "@types/chai" "^4.2.11"
-    "@types/chai-dom" "^0.0.12"
+    "@types/chai-dom" "^1.11.0"
     "@types/sinon-chai" "^3.2.3"
     chai-a11y-axe "^1.3.2"
 
@@ -4823,10 +4823,10 @@
     "@types/node" "*"
     "@types/responselike" "*"
 
-"@types/chai-dom@^0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@types/chai-dom/-/chai-dom-0.0.12.tgz#fdd7a52bed4dd235ed1c94d3d2d31d4e7db1d03a"
-  integrity sha512-4rE7sDw713cV61TYzQbMrPjC4DjNk3x4vk9nAVRNXcSD4p0/5lEEfm0OgoCz5eNuWUXNKA0YiKiH/JDTuKivkA==
+"@types/chai-dom@^1.11.0":
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@types/chai-dom/-/chai-dom-1.11.0.tgz#e9bd01f3408b2ffd27755fe4418ff92ffd8f4e66"
+  integrity sha512-Aja99Mmnny+Sz+T2hBK3oEsrcy18yabplT0pGX/QwIke9jMJHdvHlV2f4Tmq5SqxTMYwt1Zjbisv/4r83EUIHw==
   dependencies:
     "@types/chai" "*"
 
