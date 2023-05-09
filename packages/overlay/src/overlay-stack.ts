@@ -102,9 +102,9 @@ export class OverlayStack {
             }
             #actual {
                 position: relative;
-                height: calc(100% - var(--swc-body-margins-block, 0px));
+                height: calc(100% - var(--swc-body-margins-block, 0));
                 z-index: 0;
-                min-height: calc(100vh - var(--swc-body-margins-block, 0px));
+                min-height: calc(100vh - var(--swc-body-margins-block, 0));
             }
             #holder {
                 display: none;
