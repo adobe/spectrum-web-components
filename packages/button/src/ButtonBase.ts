@@ -29,7 +29,9 @@ import buttonStyles from './button-base.css.js';
  * @slot - text content to be displayed in the Button element
  * @slot icon - icon element(s) to display at the start of the button
  */
-export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable)) {
+export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
+    'sp-tooltip',
+]) {
     public static override get styles(): CSSResultArray {
         return [buttonStyles];
     }
