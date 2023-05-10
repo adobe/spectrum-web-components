@@ -145,6 +145,7 @@ export class SplitButton extends SizedMixin(PickerBase) {
                     aria-expanded=${this.open ? 'true' : 'false'}
                     class="button trigger ${this.variant}"
                     @blur=${this.onButtonBlur}
+                    @pointerdown=${this.handlePointerdown}
                     @click=${this.onButtonClick}
                     @focus=${this.onButtonFocus}
                     ?disabled=${this.disabled}

@@ -375,6 +375,69 @@ export function runPickerTests(): void {
             expect(el.open).to.be.true;
             expect(firstItem.focused, 'still not visually focused').to.be.false;
         });
+        it('opens/closes multiple times', async () => {
+            expect(el.open).to.be.false;
+            const boundingRect = el.button.getBoundingClientRect();
+            let opened = oneEvent(el, 'sp-opened');
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            boundingRect.x + boundingRect.width / 2,
+                            boundingRect.y + boundingRect.height / 2,
+                        ],
+                    },
+                ],
+            });
+            await opened;
+            expect(el.open).to.be.true;
+
+            let closed = oneEvent(el, 'sp-closed');
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            boundingRect.x + boundingRect.width / 2,
+                            boundingRect.y + boundingRect.height / 2,
+                        ],
+                    },
+                ],
+            });
+            await closed;
+            expect(el.open).to.be.false;
+
+            opened = oneEvent(el, 'sp-opened');
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            boundingRect.x + boundingRect.width / 2,
+                            boundingRect.y + boundingRect.height / 2,
+                        ],
+                    },
+                ],
+            });
+            await opened;
+            expect(el.open).to.be.true;
+
+            closed = oneEvent(el, 'sp-closed');
+            sendMouse({
+                steps: [
+                    {
+                        type: 'click',
+                        position: [
+                            boundingRect.x + boundingRect.width / 2,
+                            boundingRect.y + boundingRect.height / 2,
+                        ],
+                    },
+                ],
+            });
+            await closed;
+            expect(el.open).to.be.false;
+        });
         it('closes when becoming disabled', async () => {
             expect(el.open).to.be.false;
             el.click();

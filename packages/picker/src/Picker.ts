@@ -167,8 +167,17 @@ export class PickerBase extends SizedMixin(Focusable) {
         );
     }
 
+    private preventNextToggle = false;
+
+    protected handlePointerdown(): void {
+        this.preventNextToggle = this.open;
+    }
+
     protected onButtonClick(): void {
-        this.toggle();
+        if (!this.preventNextToggle) {
+            this.toggle();
+        }
+        this.preventNextToggle = false;
     }
 
     public override focus(options?: FocusOptions): void {
@@ -262,10 +271,7 @@ export class PickerBase extends SizedMixin(Focusable) {
         item.selected = value;
     }
 
-    private preventToggle = false;
-
     public toggle(target?: boolean): void {
-        if (this.preventToggle) return;
         if (this.readonly) {
             return;
         }
@@ -352,16 +358,17 @@ export class PickerBase extends SizedMixin(Focusable) {
                 .placement=${this.placement}
                 type="auto"
                 .receivesFocus=${'true'}
-                @beforetoggle=${(event: Event & { target: OverlayBase }) => {
+                @beforetoggle=${(
+                    event: Event & {
+                        target: OverlayBase;
+                        newState: 'open' | 'closed';
+                    }
+                ) => {
                     if (event.composedPath()[0] !== event.target) {
                         return;
                     }
-                    this.open = event.target.open;
+                    this.open = event.newState === 'open';
                     if (!this.open) {
-                        this.preventToggle = true;
-                        requestAnimationFrame(
-                            () => (this.preventToggle = false)
-                        );
                         this.optionsMenu.updateSelectedItemIndex();
                         this.optionsMenu.closeDescendentOverlays();
                     }
@@ -390,6 +397,7 @@ export class PickerBase extends SizedMixin(Focusable) {
                 @blur=${this.onButtonBlur}
                 @click=${this.onButtonClick}
                 @focus=${this.onButtonFocus}
+                @pointerdown=${this.handlePointerdown}
                 ?disabled=${this.disabled}
                 tabindex="-1"
             >
