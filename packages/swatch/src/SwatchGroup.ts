@@ -73,6 +73,9 @@ export class SwatchGroup extends SizedMixin(SpectrumElement, {
     @property({ reflect: true })
     public shape: SwatchShape;
 
+    @property({ reflect: true })
+    public density: 'compact' | 'spacious' | undefined;
+
     constructor() {
         super();
 
