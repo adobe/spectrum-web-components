@@ -208,7 +208,7 @@ export class ButtonBase extends ObserveSlotText(LikeAnchor(Focusable), '', [
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         if (!this.hasAttribute('tabindex')) {
-            this.tabIndex = 0;
+            this.setAttribute('tabindex', '0');
         }
         this.manageAnchor();
         this.addEventListener('keydown', this.handleKeydown);

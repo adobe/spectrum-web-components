@@ -137,12 +137,7 @@ export class Tag extends SizedMixin(SpectrumElement, {
             this.setAttribute('role', 'listitem');
         }
         if (this.deletable) {
-            this.setAttribute(
-                'tabindex',
-                !this.disabled && this.matches(':first-of-type:not([disabled])')
-                    ? '0'
-                    : '-1'
-            );
+            this.setAttribute('tabindex', '0');
         }
     }
 

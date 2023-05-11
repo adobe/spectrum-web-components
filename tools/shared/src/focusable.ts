@@ -123,7 +123,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         }
         this.manageFocusElementTabindex(tabIndex);
     }
-    private _tabIndex = -1;
+    private _tabIndex = 0;
 
     private onPointerdownManagementOfTabIndex(): void {
         if (this.tabIndex === -1) {

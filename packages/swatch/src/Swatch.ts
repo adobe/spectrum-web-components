@@ -237,7 +237,7 @@ export class Swatch extends SizedMixin(Focusable, {
         this.addEventListener('keydown', this.handleKeydown);
         this.addEventListener('keypress', this.handleKeypress);
         if (!this.hasAttribute('tabindex')) {
-            this.tabIndex = 0;
+            this.setAttribute('tabindex', '0');
         }
     }
 }

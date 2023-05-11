@@ -226,6 +226,29 @@ describe('Button', () => {
         await elementUpdated(el);
         expect(clickSpy.calledOnce).to.be.true;
     });
+    it('`disabled` manages `tabindex`', async () => {
+        const el = await fixture<Button>(
+            html`
+                <sp-button disabled>Button</sp-button>
+            `
+        );
+
+        await elementUpdated(el);
+        expect(el.tabIndex).to.equal(-1);
+        expect(el.getAttribute('tabindex')).to.equal('-1');
+
+        el.disabled = false;
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(0);
+        expect(el.getAttribute('tabindex')).to.equal('0');
+
+        el.disabled = true;
+        await elementUpdated(el);
+
+        expect(el.tabIndex).to.equal(-1);
+        expect(el.getAttribute('tabindex')).to.equal('-1');
+    });
     it('manages `aria-disabled`', async () => {
         const el = await fixture<Button>(
             html`
