@@ -22,6 +22,7 @@ import {
     OverlayBase,
 } from './OverlayBase.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
+import { OverlayOpenCloseDetail } from './overlay-types.js';
 
 type Constructor<T = Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -97,9 +98,10 @@ export function OverlayDialog<T extends Constructor<OverlayBase>>(
                 const eventName = targetOpenState ? 'sp-opened' : 'sp-closed';
                 if (index > 0) {
                     el.dispatchEvent(
-                        new Event(eventName, {
+                        new CustomEvent<OverlayOpenCloseDetail>(eventName, {
                             bubbles: false,
                             composed: false,
+                            detail: { interaction: this.type },
                         })
                     );
                     return;
@@ -124,7 +126,7 @@ export function OverlayDialog<T extends Constructor<OverlayBase>>(
                     );
                     if (this.triggerElement && !hasVirtualTrigger) {
                         (this.triggerElement as HTMLElement).dispatchEvent(
-                            new CustomEvent(eventName, {
+                            new CustomEvent<OverlayOpenCloseDetail>(eventName, {
                                 bubbles: true,
                                 composed: true,
                                 detail: { interaction: this.type },

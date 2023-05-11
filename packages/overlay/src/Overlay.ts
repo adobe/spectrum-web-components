@@ -13,7 +13,7 @@ import { noop, OverlayBase } from './OverlayBase.js';
 import { OverlayDialog } from './OverlayDialog.js';
 import { OverlayPopover } from './OverlayPopover.js';
 import { OverlayNoPopover } from './OverlayNoPopover.js';
-import type { OverlayOptions, TriggerInteractions } from './overlay-types.js';
+import type { OverlayOptions, TriggerInteractionsV1 } from './overlay-types.js';
 import { Placement } from '@floating-ui/dom/src/types.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import { reparentChildren } from '@spectrum-web-components/shared';
@@ -54,7 +54,7 @@ export class Overlay extends OverlayFeatures {
 
     public static async open(
         target: HTMLElement,
-        interaction: TriggerInteractions,
+        interaction: TriggerInteractionsV1,
         content: HTMLElement,
         options: OverlayOptions
     ): Promise<() => void>;
@@ -64,7 +64,7 @@ export class Overlay extends OverlayFeatures {
     ): Promise<Overlay>;
     public static async open(
         targetOrContent: HTMLElement,
-        interactionOrOptions: TriggerInteractions | OverlayOptionsV2,
+        interactionOrOptions: TriggerInteractionsV1 | OverlayOptionsV2,
         content?: HTMLElement,
         options?: OverlayOptions
     ): Promise<Overlay | (() => void)> {

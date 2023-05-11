@@ -40,14 +40,13 @@ import {
 import styles from './overlay-base.css.js';
 import { overlayStack } from './OverlayStack.js';
 import { PlacementController } from './PlacementController.js';
+import { OverlayTypes } from './overlay-types.js';
 
 export type OpenableElement = HTMLElement & {
     open: boolean;
     tipElement?: HTMLElement;
     updateComplete?: Promise<void>;
 };
-
-export type OverlayTypes = 'auto' | 'hint' | 'manual' | 'modal' | 'page';
 
 const LONGPRESS_DURATION = 300;
 
@@ -704,11 +703,13 @@ export class OverlayBase extends SpectrumElement {
     override willUpdate(changes: PropertyValues): void {
         if (!this.hasUpdated) {
             this.addEventListener('focusout', (event: FocusEvent) => {
+                // Only "auto" popovers should close on any sort of focusout
                 if (this.type !== 'auto') {
                     return;
                 }
+                // If you don't know where the focus went, we can't do anyting here.
                 if (!event.relatedTarget) {
-                    this.open = false;
+                    // this.open = false;
                     return;
                 }
                 const relationEvent = new Event('overlay-relation-query', {

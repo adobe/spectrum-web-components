@@ -23,7 +23,7 @@ import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-magnify.js';
 import {
     OverlayTrigger,
-    TriggerInteractions,
+    TriggerInteractionsV1,
 } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/overlay-trigger.js';
 import { spy } from 'sinon';
@@ -73,7 +73,7 @@ describe('Overlay Trigger - Click', () => {
                 document.scrollingElement.scrollTop = 0;
             }
         });
-        (['click', 'replace', 'inline'] as TriggerInteractions[]).map(
+        (['click', 'replace', 'inline'] as TriggerInteractionsV1[]).map(
             (interaction) => {
                 it(`closes "${interaction}" overlay on scroll`, async () => {
                     const el = await fixture<OverlayTrigger>(html`

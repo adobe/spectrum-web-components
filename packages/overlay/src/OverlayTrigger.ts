@@ -84,11 +84,17 @@ export class OverlayTrigger extends SpectrumElement {
     @state()
     private clickContent: HTMLElement[] = [];
 
+    private clickPlacement?: Placement;
+
     @state()
     private longpressContent: HTMLElement[] = [];
 
+    private longpressPlacement?: Placement;
+
     @state()
     private hoverContent: HTMLElement[] = [];
+
+    private hoverPlacement?: Placement;
 
     @state()
     private targetContent: HTMLElement[] = [];
@@ -151,6 +157,31 @@ export class OverlayTrigger extends SpectrumElement {
         }
     }
 
+    protected override update(changes: PropertyValues): void {
+        if (changes.has('clickContent')) {
+            this.clickPlacement =
+                ((this.clickContent[0]?.getAttribute('placement') ||
+                    this.clickContent[0]?.getAttribute(
+                        'direction'
+                    )) as Placement) || undefined;
+        }
+        if (changes.has('hoverContent')) {
+            this.hoverPlacement =
+                ((this.hoverContent[0]?.getAttribute('placement') ||
+                    this.hoverContent[0]?.getAttribute(
+                        'direction'
+                    )) as Placement) || undefined;
+        }
+        if (changes.has('longpressContent')) {
+            this.longpressPlacement =
+                ((this.longpressContent[0]?.getAttribute('placement') ||
+                    this.longpressContent[0]?.getAttribute(
+                        'direction'
+                    )) as Placement) || undefined;
+        }
+        super.update(changes);
+    }
+
     protected override render(): TemplateResult {
         // Keyboard event availability documented in README.md
         /* eslint-disable lit-a11y/click-events-have-key-events */
@@ -166,7 +197,7 @@ export class OverlayTrigger extends SpectrumElement {
                     ?disabled=${this.disabled || !this.clickContent.length}
                     ?open=${this.open === 'click' && !!this.clickContent.length}
                     .offset=${this.offset}
-                    .placement=${this.placement}
+                    .placement=${this.clickPlacement || this.placement}
                     .triggerElement=${this.targetContent[0]}
                     .triggerInteraction=${'click'}
                     .type=${this.type !== 'modal' ? 'auto' : 'modal'}
@@ -183,7 +214,7 @@ export class OverlayTrigger extends SpectrumElement {
                     ?open=${this.open === 'longpress' &&
                     !!this.longpressContent.length}
                     .offset=${this.offset}
-                    .placement=${this.placement}
+                    .placement=${this.longpressPlacement || this.placement}
                     .triggerElement=${this.targetContent[0]}
                     .triggerInteraction=${'longpress'}
                     .type=${'auto'}
@@ -197,10 +228,12 @@ export class OverlayTrigger extends SpectrumElement {
                 </sp-overlay>
                 <sp-overlay
                     id="hover-overlay"
-                    ?disabled=${this.disabled || !this.hoverContent.length}
+                    ?disabled=${this.disabled ||
+                    !this.hoverContent.length ||
+                    (!!this.open && this.open !== 'hover')}
                     ?open=${this.open === 'hover' && !!this.hoverContent.length}
                     .offset=${this.offset}
-                    .placement=${this.placement}
+                    .placement=${this.hoverPlacement || this.placement}
                     .triggerElement=${this.targetContent[0]}
                     .triggerInteraction=${'hover'}
                     .type=${'hint'}

@@ -19,7 +19,7 @@ import '@spectrum-web-components/icons-workflow/icons/sp-icon-anchor-select.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-polygon-select.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-rect-select.js';
 import { Placement } from '@floating-ui/dom';
-import { OverlayTypes } from '../src/OverlayBase.js';
+import { OverlayTypes } from '../src/overlay-types.js';
 import { notAgain } from '../../dialog/stories/dialog-base.stories.js';
 
 export default {

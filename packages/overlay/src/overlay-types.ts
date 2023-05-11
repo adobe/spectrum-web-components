@@ -16,7 +16,11 @@ import type { VirtualTrigger } from './VirtualTrigger.js';
 
 export { Placement };
 
-export type TriggerInteractions =
+export type OverlayTypes = 'auto' | 'hint' | 'manual' | 'modal' | 'page';
+
+export type TriggerInteractions = OverlayTypes;
+
+export type TriggerInteractionsV1 =
     | 'click'
     | 'longpress'
     | 'hover'
