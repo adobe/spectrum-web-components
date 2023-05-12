@@ -54,6 +54,14 @@ governing permissions and limitations under the License.
     flex-shrink: 0;
 }
 
+sp-overlay {
+    pointer-events: none;
+}
+
+sp-menu {
+    pointer-events: initial;
+}
+
 /**
  * The accessibility team would prefer that it be possible to override the :focus-visible
  * heuristics in _some_ cases, like when clicking an `sp-field-label`...

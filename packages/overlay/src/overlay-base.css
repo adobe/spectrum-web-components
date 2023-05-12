@@ -35,8 +35,6 @@ dialog {
     max-height: calc(100vh - 16px);
     max-height: calc(100dvh - 16px);
     max-width: calc(100vw - 16px);
-
-    /* pointer-events: none; */
 }
 
 :host(:not([open])) dialog {
