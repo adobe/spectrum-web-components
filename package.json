@@ -55,7 +55,7 @@
         "prepare": "husky install",
         "prestorybook": "wireit",
         "prestorybook:build": "cem analyze --outdir .storybook/",
-        "pretest:bench": "test -f test/benchmark/cli.js ||:",
+        "pretest:bench": "yarn build:tests && test -f test/benchmark/cli.js ||:",
         "pretest:visual": "yarn build && yarn build",
         "process-icons": "wireit",
         "process-spectrum": "wireit",

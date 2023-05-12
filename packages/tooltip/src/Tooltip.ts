@@ -46,7 +46,9 @@ class TooltipOpenable extends HTMLElement {
     set open(open: boolean) {
         this._open = open;
         const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
-        tooltip.open = open;
+        if (tooltip) {
+            tooltip.open = open;
+        }
     }
     get open(): boolean {
         return this._open;
@@ -55,7 +57,9 @@ class TooltipOpenable extends HTMLElement {
     set placement(placement: Placement) {
         this._placement = placement;
         const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
-        tooltip.placement = placement;
+        if (tooltip) {
+            tooltip.placement = placement;
+        }
     }
     get placement(): Placement {
         return this._placement;
@@ -96,11 +100,11 @@ export class Tooltip extends SpectrumElement {
     public open = false;
 
     /**
-     * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end" | "none"}
+     * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end"}
      * @attr
      */
     @property({ reflect: true })
-    public placement: Placement = 'top';
+    public placement?: Placement;
 
     @query('#tip')
     public tipElement!: HTMLSpanElement;
@@ -157,6 +161,7 @@ export class Tooltip extends SpectrumElement {
         const tooltip = html`
             <sp-tooltip-openable
                 id="tooltip"
+                .placement=${this.placement}
                 @transitionrun=${this.handleTransitionrun}
                 @transitionend=${this.handleTransitionend}
             >
@@ -170,8 +175,8 @@ export class Tooltip extends SpectrumElement {
                 <sp-overlay
                     ?open=${this.open}
                     offset=${this.offset}
-                    type="hint"
                     .placement=${this.placement}
+                    type="hint"
                     .triggerElement=${this.parentElement}
                     .triggerInteraction=${'hover'}
                     @sp-opened=${this.handleOpenOverlay}

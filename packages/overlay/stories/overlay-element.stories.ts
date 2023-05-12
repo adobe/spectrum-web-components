@@ -27,6 +27,7 @@ export default {
     component: 'sp-overlay',
     args: {
         open: true,
+        delayed: false,
     },
     argTypes: {
         open: {
@@ -41,10 +42,23 @@ export default {
                 type: 'boolean',
             },
         },
+        delayed: {
+            name: 'delayed',
+            type: { name: 'boolean', required: false },
+            description: 'Whether the tooltips are delayed.',
+            table: {
+                type: { summary: 'boolean' },
+                defaultValue: { summary: false },
+            },
+            control: {
+                type: 'boolean',
+            },
+        },
     },
 };
 
 type Properties = {
+    delayed: boolean;
     interaction: 'click' | 'hover' | 'longpress';
     open?: boolean;
     placement?: Placement;
@@ -133,14 +147,16 @@ longpress.args = {
     type: 'auto',
 };
 
-export const all = (): TemplateResult => html`
+export const all = ({
+    delayed,
+}: Properties): TemplateResult => html`
     <sp-action-button id="trigger" hold-affordance>
         Open the overlay
     </sp-action-button>
     <sp-overlay trigger="trigger@click" type="auto" placement="right">
         <sp-popover dialog>Click content</sp-popover>
     </sp-overlay>
-    <sp-overlay trigger="trigger@hover">
+    <sp-overlay ?delayed=${delayed} trigger="trigger@hover">
         <sp-tooltip>Hover content</sp-tooltip>
     </sp-overlay>
     <sp-overlay trigger="trigger@longpress" type="auto" placement="right">
@@ -148,7 +164,9 @@ export const all = (): TemplateResult => html`
     </sp-overlay>
 `;
 
-export const actionGroup = (): TemplateResult => {
+export const actionGroup = ({
+    delayed
+}: Properties): TemplateResult => {
     const popoverOffset = [6, -9] as [number, number];
     return html`
         <style>
@@ -174,7 +192,7 @@ export const actionGroup = (): TemplateResult => {
                 </sp-action-button>
             </sp-action-group>
         </sp-popover>
-        <sp-overlay trigger="trigger-1@hover">
+        <sp-overlay ?delayed=${delayed} trigger="trigger-1@hover">
             <sp-tooltip>Hover</sp-tooltip>
         </sp-overlay>
         <sp-overlay
@@ -201,7 +219,7 @@ export const actionGroup = (): TemplateResult => {
                 </sp-action-group>
             </sp-popover>
         </sp-overlay>
-        <sp-overlay trigger="trigger-2@hover">
+        <sp-overlay ?delayed=${delayed} trigger="trigger-2@hover">
             <sp-tooltip>Hover</sp-tooltip>
         </sp-overlay>
         <sp-overlay
@@ -228,7 +246,7 @@ export const actionGroup = (): TemplateResult => {
                 </sp-action-group>
             </sp-popover>
         </sp-overlay>
-        <sp-overlay trigger="trigger-3@hover">
+        <sp-overlay ?delayed=${delayed} trigger="trigger-3@hover">
             <sp-tooltip>Hover</sp-tooltip>
         </sp-overlay>
         <sp-overlay

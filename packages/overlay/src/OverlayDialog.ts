@@ -41,8 +41,17 @@ export function OverlayDialog<T extends Constructor<OverlayBase>>(
         protected override async manageDialogOpen(): Promise<void> {
             const targetOpenState = this.open;
             await this.managePosition();
+            if (this.open !== targetOpenState) {
+                return;
+            }
             await this.dialogEnsureOnDOM();
+            if (this.open !== targetOpenState) {
+                return;
+            }
             const focusEl = await this.dialogMakeTransition(targetOpenState);
+            if (this.open !== targetOpenState) {
+                return;
+            }
             await this.dialogApplyFocus(targetOpenState, focusEl);
         }
 

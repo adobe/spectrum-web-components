@@ -20,6 +20,7 @@ import {
     guaranteedTransitionend,
     OpenableElement,
     OverlayBase,
+    overlayTimer,
 } from './OverlayBase.js';
 import { VirtualTrigger } from './VirtualTrigger.js';
 import { OverlayOpenCloseDetail } from './overlay-types.js';
@@ -41,9 +42,35 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
         protected override async managePopoverOpen(): Promise<void> {
             const targetOpenState = this.open;
             await this.managePosition();
+            if (this.open !== targetOpenState) {
+                return;
+            }
+            await this.manageDelay(targetOpenState);
+            if (this.open !== targetOpenState) {
+                return;
+            }
             await this.ensureOnDOM(targetOpenState);
+            if (this.open !== targetOpenState) {
+                return;
+            }
             const focusEl = await this.makeTransition(targetOpenState);
+            if (this.open !== targetOpenState) {
+                return;
+            }
             await this.applyFocus(targetOpenState, focusEl);
+        }
+
+        private async manageDelay(targetOpenState: boolean): Promise<void> {
+            if (targetOpenState === false || targetOpenState !== this.open) {
+                overlayTimer.close(this);
+                return;
+            }
+            if (this.delayed) {
+                const cancelled = await overlayTimer.openTimer(this);
+                if (cancelled) {
+                    this.open = !targetOpenState;
+                }
+            }
         }
 
         private async ensureOnDOM(targetOpenState: boolean): Promise<void> {
@@ -73,6 +100,9 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
         private async makeTransition(
             targetOpenState: boolean
         ): Promise<HTMLElement | null> {
+            if (this.open !== targetOpenState) {
+                return null;
+            }
             let focusEl = null as HTMLElement | null;
             const start = (el: OpenableElement, index: number) => (): void => {
                 if (typeof el.open !== 'undefined') {
@@ -193,7 +223,9 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
             targetOpenState: boolean,
             focusEl: HTMLElement | null
         ): Promise<void> {
-            if (this.receivesFocus === 'false') {
+            // Do not move focus when explicitly told not to
+            // and when the Overlay is a "hint"
+            if (this.receivesFocus === 'false' || this.type === 'hint') {
                 return;
             }
 
@@ -201,8 +233,6 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
             await nextFrame();
             if (targetOpenState === this.open && !this.open) {
                 if (
-                    // Do not return focus to trigger when overlay is a "hint" (tooltip)
-                    this.type !== 'hint' &&
                     // Only return focus when the trigger is not "virtual"
                     this.triggerElement &&
                     !(this.triggerElement instanceof VirtualTrigger)

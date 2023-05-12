@@ -213,8 +213,6 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     constructor() {
         super();
-        this.proxyFocus = this.proxyFocus.bind(this);
-
         this.addEventListener('click', this.handleClickCapture, {
             capture: true,
         });
@@ -255,7 +253,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         }
     }
 
-    private proxyFocus(): void {
+    private proxyFocus = (): void => {
         this.focus();
     }
 
@@ -271,6 +269,57 @@ export class MenuItem extends LikeAnchor(Focusable) {
     protected breakItemChildrenCache(): void {
         this._itemChildren = undefined;
         this.triggerUpdate();
+    }
+
+    protected renderSubmenu(): TemplateResult {
+        const slot = html`
+            <slot
+                name="submenu"
+                @slotchange=${this.manageSubmenu}
+                @sp-menu-item-removed=${(event: Event) => {
+                    event.stopPropagation();
+                }}
+                @sp-menu-item-added-or-updated=${{
+                    handleEvent: (
+                        event: MenuItemAddedOrUpdatedEvent
+                    ) => {
+                        event.reset(event.item);
+                    },
+                    capture: true,
+                }}
+                @focusin=${(event: Event) => event.stopPropagation()}
+            ></slot>
+        `;
+        if (!this.hasSubmenu) {
+            return slot;
+        }
+        return html`
+<sp-overlay
+                .triggerElement=${this as HTMLElement}
+                ?disabled=${!this.hasSubmenu}
+                ?open=${this.hasSubmenu && this.open}
+                .placement=${this.isLTR ? 'right-start' : 'left-start'}
+                .offset=${[-10, -5] as [number, number]}
+                .type=${'auto'}
+                @close=${(event: Event) => event.stopPropagation()}
+            >
+                <sp-popover
+                    @change=${(event: Event) => {
+                        this.handleSubmenuChange(event);
+                        this.open = false;
+                    }}
+                    @pointerenter=${this.handleSubmenuPointerenter}
+                    @pointerleave=${this.handleSubmenuPointerleave}
+                    @sp-menu-item-added-or-updated=${(event: Event) =>
+                        event.stopPropagation()}
+                >
+                    ${slot}
+                </sp-popover>
+            </sp-overlay>
+            <sp-icon-chevron100
+                class="spectrum-UIIcon-ChevronRight100 chevron icon"
+            ></sp-icon-chevron100>
+        `;
     }
 
     protected override render(): TemplateResult {
@@ -295,50 +344,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
                       className: 'button anchor hidden',
                   })
                 : html``}
-            <sp-overlay
-                .triggerElement=${this as HTMLElement}
-                ?disabled=${!this.hasSubmenu}
-                ?open=${this.hasSubmenu && this.open}
-                .placement=${this.isLTR ? 'right-start' : 'left-start'}
-                .offset=${[-10, -5] as [number, number]}
-                .type=${'auto'}
-                @close=${(event: Event) => event.stopPropagation()}
-            >
-                <sp-popover
-                    @change=${(event: Event) => {
-                        this.handleSubmenuChange(event);
-                        this.open = false;
-                    }}
-                    @pointerenter=${this.handleSubmenuPointerenter}
-                    @pointerleave=${this.handleSubmenuPointerleave}
-                    @sp-menu-item-added-or-updated=${(event: Event) =>
-                        event.stopPropagation()}
-                >
-                    <slot
-                        name="submenu"
-                        @slotchange=${this.manageSubmenu}
-                        @sp-menu-item-removed=${(event: Event) => {
-                            event.stopPropagation();
-                        }}
-                        @sp-menu-item-added-or-updated=${{
-                            handleEvent: (
-                                event: MenuItemAddedOrUpdatedEvent
-                            ) => {
-                                event.reset(event.item);
-                            },
-                            capture: true,
-                        }}
-                        @focusin=${(event: Event) => event.stopPropagation()}
-                    ></slot>
-                </sp-popover>
-            </sp-overlay>
-            ${this.hasSubmenu
-                ? html`
-                      <sp-icon-chevron100
-                          class="spectrum-UIIcon-ChevronRight100 chevron icon"
-                      ></sp-icon-chevron100>
-                  `
-                : html``}
+            ${this.renderSubmenu()}
         `;
     }
 
@@ -364,10 +370,10 @@ export class MenuItem extends LikeAnchor(Focusable) {
         super.firstUpdated(changes);
         this.setAttribute('tabindex', '-1');
         this.addEventListener('pointerdown', this.handlePointerdown);
+        this.addEventListener('pointerenter', this.closeOverlaysForRoot);
         if (!this.hasAttribute('id')) {
             this.id = `sp-menu-item-${MenuItem.instanceCount++}`;
         }
-        this.addEventListener('pointerenter', this.closeOverlaysForRoot);
     }
 
     protected closeOverlaysForRoot(): void {
@@ -473,10 +479,10 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
-        if (changes.has('label')) {
+        if (changes.has('label') && (this.label || typeof changes.get('label') !== 'undefined')) {
             this.setAttribute('aria-label', this.label || '');
         }
-        if (changes.has('active')) {
+        if (changes.has('active') && (this.active || typeof changes.get('active') !== 'undefined')) {
             if (this.active) {
                 this.menuData.selectionRoot?.closeDescendentOverlays();
                 this.addEventListener('pointerup', this.handleRemoveActive);
@@ -501,7 +507,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         if (changes.has('selected')) {
             this.updateAriaSelected();
         }
-        if (changes.has('hasSubmenu')) {
+        if (changes.has('hasSubmenu') && (this.hasSubmenu || typeof changes.get('hasSubmenu') !== 'undefined')) {
             if (this.hasSubmenu) {
                 this.addEventListener('click', this.handleSubmenuClick);
                 this.addEventListener('pointerenter', this.handlePointerenter);
@@ -554,7 +560,6 @@ export class MenuItem extends LikeAnchor(Focusable) {
             this.resolveMenuDataUpdated();
         }
         this.willTriggerUpdate = false;
-        return this.menuDataUpdated;
     }
 
     protected menuDataUpdated!: Promise<void>;

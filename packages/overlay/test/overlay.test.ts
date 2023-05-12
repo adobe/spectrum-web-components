@@ -43,7 +43,7 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import { Theme } from '@spectrum-web-components/theme';
 import { render, TemplateResult } from '@spectrum-web-components/base';
-import { fixture, isInteractive } from '../../../test/testing-helpers.js';
+import { fixture, isInteractive, isOnTopLayer } from '../../../test/testing-helpers.js';
 import { Menu } from '@spectrum-web-components/menu';
 
 async function styledFixture<T extends Element>(
@@ -271,8 +271,8 @@ describe('Overlays', () => {
             '#outer-popover'
         ) as HTMLElement;
 
-        expect(await isInteractive(hoverOverlay)).to.be.false;
-        expect(await isInteractive(clickOverlay)).to.be.false;
+        expect(await isOnTopLayer(hoverOverlay)).to.be.false;
+        expect(await isOnTopLayer(clickOverlay)).to.be.false;
 
         let opened = oneEvent(hoverOverlay, 'sp-opened');
         openOverlays.push(
@@ -283,7 +283,7 @@ describe('Overlays', () => {
             })
         );
         await opened;
-        expect(await isInteractive(hoverOverlay)).to.be.true;
+        expect(await isOnTopLayer(hoverOverlay)).to.be.true;
 
         opened = oneEvent(clickOverlay, 'sp-opened');
         const closed = oneEvent(hoverOverlay, 'sp-closed');
@@ -301,7 +301,7 @@ describe('Overlays', () => {
             await isInteractive(clickOverlay),
             'click overlay not interactive'
         ).to.be.true;
-        expect(await isInteractive(hoverOverlay), 'hover overlay interactive')
+        expect(await isOnTopLayer(hoverOverlay), 'hover overlay interactive')
             .to.be.false;
     });
 
@@ -315,8 +315,8 @@ describe('Overlays', () => {
         expect(button).to.exist;
         expect(customOverlay).to.exist;
 
-        expect(await isInteractive(customOverlay)).to.be.false;
-        expect(await isInteractive(clickOverlay)).to.be.false;
+        expect(await isOnTopLayer(customOverlay)).to.be.false;
+        expect(await isOnTopLayer(clickOverlay)).to.be.false;
 
         let opened = oneEvent(customOverlay, 'sp-opened');
         openOverlays.push(
@@ -327,7 +327,7 @@ describe('Overlays', () => {
             })
         );
         await opened;
-        expect(await isInteractive(customOverlay)).to.be.true;
+        expect(await isOnTopLayer(customOverlay)).to.be.true;
 
         opened = oneEvent(clickOverlay, 'sp-opened');
         openOverlays.push(
@@ -338,7 +338,7 @@ describe('Overlays', () => {
             })
         );
         await opened;
-        expect(await isInteractive(clickOverlay), 'click content open').to.be
+        expect(await isOnTopLayer(clickOverlay), 'click content open').to.be
             .true;
     });
 

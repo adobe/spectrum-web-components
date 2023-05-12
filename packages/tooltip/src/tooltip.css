@@ -12,10 +12,52 @@ governing permissions and limitations under the License.
 
 @import './spectrum-tooltip.css';
 
-:host(:not([placement*='top'])) {
+:host {
+    display: contents;
+}
+
+:host(:not([placement*='top'])) #tooltip {
     margin-bottom: 0;
 }
 
-:host([placement]) #tip[style] {
+:host #tooltip #tip[style] {
     transform: none;
+}
+
+#tip {
+    clip-path: polygon(0 -5%, 50% 50%, 100% -5%);
+    width: 8px !important;
+    height: 8px !important;
+}
+
+:host([placement*='top']) #tooltip #tip {
+    top: 100%;
+}
+
+:host([placement*='bottom']) #tooltip #tip {
+    bottom: 100%;
+    clip-path: polygon(50% 50%, 0 105%, 100% 105%);
+    top: auto;
+}
+
+:host([placement*='left']) #tooltip #tip,
+:host([placement*='right']) #tooltip #tip {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+:host([placement*='right']) #tooltip #tip {
+    clip-path: polygon(50% 50%, 105% 100%, 105% 0);
+    left: calc(
+        var(
+                --mod-tooltip-tip-block-size,
+                var(--spectrum-tooltip-tip-block-size)
+            ) * -2
+    );
+    right: 100%;
+}
+
+:host([placement*='left']) #tooltip #tip {
+    clip-path: polygon(-5% 0, -5% 100%, 50% 50%);
+    left: 100%;
 }

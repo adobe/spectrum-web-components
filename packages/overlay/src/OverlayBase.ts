@@ -41,6 +41,9 @@ import styles from './overlay-base.css.js';
 import { overlayStack } from './OverlayStack.js';
 import { PlacementController } from './PlacementController.js';
 import { OverlayTypes } from './overlay-types.js';
+import { OverlayTimer } from './overlay-timer.js';
+
+export const overlayTimer = new OverlayTimer();
 
 export type OpenableElement = HTMLElement & {
     open: boolean;
@@ -142,6 +145,9 @@ export const guaranteedTransitionend = (
 
 export class OverlayBase extends SpectrumElement {
     static override styles = [styles];
+
+    @property({type: Boolean})
+    delayed = false;
 
     @query('dialog')
     dialogEl!: HTMLDialogElement & {
@@ -358,6 +364,10 @@ export class OverlayBase extends SpectrumElement {
 
     protected unbindEvents(triggerElement: HTMLElement): void {
         triggerElement.removeEventListener('click', this.handleClick);
+        triggerElement.removeEventListener(
+            'pointerdown',
+            this.handlePointerdownForClick
+        );
         triggerElement.removeEventListener('focusin', this.handleFocusin);
         triggerElement.removeEventListener('focusout', this.handleFocusout);
         triggerElement.removeEventListener(
@@ -395,6 +405,10 @@ export class OverlayBase extends SpectrumElement {
 
     protected bundClickEvents(triggerElement: HTMLElement): void {
         triggerElement.addEventListener('click', this.handleClick);
+        triggerElement.addEventListener(
+            'pointerdown',
+            this.handlePointerdownForClick
+        );
     }
 
     protected bindLongpressEvents(triggerElement: HTMLElement): void {
@@ -589,9 +603,18 @@ export class OverlayBase extends SpectrumElement {
         }
     };
 
+    private preventNextToggle = false;
+
+    protected handlePointerdownForClick = (): void => {
+        this.preventNextToggle = this.open;
+    };
+
     protected handleClick = (): void => {
         if (this.longpressed) return;
-        this.open = !this.open;
+        if (!this.preventNextToggle) {
+            this.open = !this.open;
+        }
+        this.preventNextToggle = false;
     };
 
     private focusedin = false;
