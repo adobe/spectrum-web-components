@@ -538,7 +538,13 @@ export class MenuItem extends LikeAnchor(Focusable) {
         super.disconnectedCallback();
     }
 
+    private willTriggerUpdate = false;
+
     public async triggerUpdate(): Promise<void> {
+        if (this.willTriggerUpdate) {
+            return;
+        }
+        this.willTriggerUpdate = true;
         await new Promise((ready) => requestAnimationFrame(ready));
         addOrUpdateEvent.reset(this);
         this.dispatchEvent(addOrUpdateEvent);
@@ -547,6 +553,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         if (!!this.menuData.focusRoot) {
             this.resolveMenuDataUpdated();
         }
+        this.willTriggerUpdate = false;
         return this.menuDataUpdated;
     }
 
