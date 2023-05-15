@@ -146,7 +146,7 @@ export const guaranteedTransitionend = (
 export class OverlayBase extends SpectrumElement {
     static override styles = [styles];
 
-    @property({type: Boolean})
+    @property({ type: Boolean })
     delayed = false;
 
     @query('dialog')
@@ -815,7 +815,9 @@ export class OverlayBase extends SpectrumElement {
                 @beforetoggle=${this.handleBeforetoggle}
                 @popovershow=${this.handlePopovershow}
                 style=${styleMap({
-                    '--swc-overlay-z-index': OverlayBase.openCount.toString(),
+                    '--swc-overlay-z-index': (
+                        1000 + OverlayBase.openCount
+                    ).toString(),
                 })}
             >
                 <div part="content">
