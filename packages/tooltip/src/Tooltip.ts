@@ -24,6 +24,7 @@ import type { Placement } from '@spectrum-web-components/overlay';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 
 import tooltipStyles from './tooltip.css.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 class TooltipOpenable extends HTMLElement {
     static get observedAttributes(): string[] {
@@ -54,6 +55,10 @@ class TooltipOpenable extends HTMLElement {
         return this._open;
     }
     private _open = false;
+    /**
+     * @type {"auto" | "auto-start" | "auto-end" | "top" | "bottom" | "right" | "left" | "top-start" | "top-end" | "bottom-start" | "bottom-end" | "right-start" | "right-end" | "left-start" | "left-end"}
+     * @attr
+     */
     set placement(placement: Placement) {
         this._placement = placement;
         const tooltip = (this.getRootNode() as ShadowRoot).host as Tooltip;
@@ -161,7 +166,7 @@ export class Tooltip extends SpectrumElement {
         const tooltip = html`
             <sp-tooltip-openable
                 id="tooltip"
-                .placement=${this.placement}
+                placement=${ifDefined(this.placement)}
                 @transitionrun=${this.handleTransitionrun}
                 @transitionend=${this.handleTransitionend}
             >
