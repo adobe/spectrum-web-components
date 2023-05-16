@@ -4577,9 +4577,9 @@
   integrity sha512-griJ3e7TArVos6POBZZmebPKJKYveDS9rnVDAlu6pvVTTi96ZccFBC/f7Sh9PIxU+jKPb+gEi78rmlFyRZmSsQ==
 
 "@spectrum-css/switch@^3.0.28":
-  version "3.0.28"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/switch/-/switch-3.0.28.tgz#d3c7f536c446914d00afca44b7901ba5136aa8bb"
-  integrity sha512-YERDCx7ZwHVHutjOuiYAkavWEZMHnHKMvTPAGpK0m7/zMS3H68+Bov5ZLMoNaJE00l77YVjLpUbToS0U0sRnFA==
+  version "3.0.34"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/switch/-/switch-3.0.34.tgz#11c26206763f33d3690eaa5d780c12d9abb4ec66"
+  integrity sha512-L6V3kRdsXVwJkzzTvWb6hNxBjgQ/OtxL30U7Kb5LJUeaQW6alDjqFsuNAbcr8GhDwXZJ6wwRmj8a/ZkLycG/PQ==
 
 "@spectrum-css/table@^4.0.41":
   version "4.0.41"
