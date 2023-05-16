@@ -83,18 +83,17 @@ export class OverlayStack {
             return;
         }
         if (this.trappingInited) return;
-        this.trappingInited = true;
         /* c8 ignore next 4 */
         if (this.document.body.shadowRoot) {
             this.canTabTrap = false;
             return;
         }
         this.document.body.attachShadow({ mode: 'open' });
-        /* c8 ignore next 4 */
+        /* c8 ignore next 3 */
         if (!this.document.body.shadowRoot) {
-            this.trappingInited = false;
             return;
         }
+        this.trappingInited = true;
         const root = this.document.body.shadowRoot as ShadowRoot;
         root.innerHTML = `
             <style>
