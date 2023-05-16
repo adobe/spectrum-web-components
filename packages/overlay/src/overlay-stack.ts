@@ -90,8 +90,9 @@ export class OverlayStack {
             return;
         }
         this.document.body.attachShadow({ mode: 'open' });
-        /* c8 ignore next 3 */
+        /* c8 ignore next 4 */
         if (!this.document.body.shadowRoot) {
+            this.trappingInited = false;
             return;
         }
         const root = this.document.body.shadowRoot as ShadowRoot;
