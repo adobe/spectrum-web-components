@@ -26,8 +26,8 @@ governing permissions and limitations under the License.
 
 #tip {
     clip-path: polygon(0 -5%, 50% 50%, 100% -5%);
-    width: 8px !important;
-    height: 8px !important;
+    width: var(--spectrum-tooltip-tip-inline-size) !important;
+    height: var(--spectrum-tooltip-tip-inline-size) !important;
 }
 
 :host([placement*='top']) #tooltip #tip {
