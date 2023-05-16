@@ -139,7 +139,7 @@
         "esbuild": "^0.17.3",
         "eslint": "^8.23.0",
         "eslint-config-prettier": "^8.5.0",
-        "eslint-formatter-pretty": "^4.1.0",
+        "eslint-formatter-pretty": "^5.0.0",
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-lit-a11y": "^2.2.2",
         "eslint-plugin-notice": "^0.9.10",
