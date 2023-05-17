@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
+
+### Bug Fixes
+
+-   generate react/picker and pass react TS checks ([101b88c](https://github.com/adobe/spectrum-web-components/commit/101b88c9d1607023e073a985a2b46d2dce2c9c82))
+-   **meter,progress-bar:** add i18n to progress delivery ([c7e4020](https://github.com/adobe/spectrum-web-components/commit/c7e4020dc3120f7e6e366bcc89dd523dea3ba821))
+-   **overlay:** address review comments ([dd8b985](https://github.com/adobe/spectrum-web-components/commit/dd8b98524b5124267531a40b35d6cf542006c7a0))
+-   **overlay:** removes use of px units in overlay stack ([122f96c](https://github.com/adobe/spectrum-web-components/commit/122f96c06ac2b5349acff0497fed1697264958f8))
+-   **overlay:** stop the tab trapping if shadow root is not found ([4f0ec46](https://github.com/adobe/spectrum-web-components/commit/4f0ec464bcc807e3a789bb5fd323b468d978e4a2))
+-   **shared:** allow "disabled" first to return to "tabindex=0" in "focusable" ([160bc59](https://github.com/adobe/spectrum-web-components/commit/160bc594f516bfadb754d47ce102a02cbde12fcd))
+
+### Features
+
+-   **icon:** image src invalid error api ([19e06f9](https://github.com/adobe/spectrum-web-components/commit/19e06f92ee5f90c149fb1fcf68eb47384ac2a97d))
+-   **icon:** review comment changes ([ba75d94](https://github.com/adobe/spectrum-web-components/commit/ba75d9407635ed0f36d7568c4b1f508e08008d70))
+-   **icon:** review comment changes ([4597713](https://github.com/adobe/spectrum-web-components/commit/4597713ec2a15235aa504114d161740e8df4b2a1))
+-   **icon:** review comment changes ([19287fb](https://github.com/adobe/spectrum-web-components/commit/19287fbfd2f7ddf1686fc9f3d48e14809e461deb))
+-   **icon:** review comment changes ([dee1929](https://github.com/adobe/spectrum-web-components/commit/dee192910a466bd47a6cbd3892516923be09ead0))
+-   **icon:** review comment changes ([cb41b33](https://github.com/adobe/spectrum-web-components/commit/cb41b33e5fe480ce8512bc5a683237047affce85))
+-   **icon:** skipping test case for webkit ([fa4b903](https://github.com/adobe/spectrum-web-components/commit/fa4b9034a719863d30f751d1628753931a3a944f))
+
 # 0.30.0 (2023-05-03)
 
 ### Bug Fixes

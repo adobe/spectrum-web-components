@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
+
+### Features
+
+-   **icon:** image src invalid error api ([19e06f9](https://github.com/adobe/spectrum-web-components/commit/19e06f92ee5f90c149fb1fcf68eb47384ac2a97d))
+-   **icon:** review comment changes ([ba75d94](https://github.com/adobe/spectrum-web-components/commit/ba75d9407635ed0f36d7568c4b1f508e08008d70))
+-   **icon:** review comment changes ([4597713](https://github.com/adobe/spectrum-web-components/commit/4597713ec2a15235aa504114d161740e8df4b2a1))
+-   **icon:** review comment changes ([19287fb](https://github.com/adobe/spectrum-web-components/commit/19287fbfd2f7ddf1686fc9f3d48e14809e461deb))
+-   **icon:** review comment changes ([dee1929](https://github.com/adobe/spectrum-web-components/commit/dee192910a466bd47a6cbd3892516923be09ead0))
+-   **icon:** review comment changes ([cb41b33](https://github.com/adobe/spectrum-web-components/commit/cb41b33e5fe480ce8512bc5a683237047affce85))
+-   **icon:** skipping test case for webkit ([fa4b903](https://github.com/adobe/spectrum-web-components/commit/fa4b9034a719863d30f751d1628753931a3a944f))
+
 # 0.30.0 (2023-05-03)
 
 ### Bug Fixes

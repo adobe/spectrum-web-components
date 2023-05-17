@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
+
+### Bug Fixes
+
+-   **shared:** allow "disabled" first to return to "tabindex=0" in "focusable" ([160bc59](https://github.com/adobe/spectrum-web-components/commit/160bc594f516bfadb754d47ce102a02cbde12fcd))
+
 # 0.30.0 (2023-05-03)
 
 **Note:** Version bump only for package @spectrum-web-components/shared

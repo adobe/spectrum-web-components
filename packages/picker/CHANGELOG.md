@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
+
+### Bug Fixes
+
+-   generate react/picker and pass react TS checks ([101b88c](https://github.com/adobe/spectrum-web-components/commit/101b88c9d1607023e073a985a2b46d2dce2c9c82))
+
 # 0.30.0 (2023-05-03)
 
 ### Bug Fixes

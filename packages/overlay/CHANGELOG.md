@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
+
+### Bug Fixes
+
+-   **overlay:** address review comments ([dd8b985](https://github.com/adobe/spectrum-web-components/commit/dd8b98524b5124267531a40b35d6cf542006c7a0))
+-   **overlay:** removes use of px units in overlay stack ([122f96c](https://github.com/adobe/spectrum-web-components/commit/122f96c06ac2b5349acff0497fed1697264958f8))
+-   **overlay:** stop the tab trapping if shadow root is not found ([4f0ec46](https://github.com/adobe/spectrum-web-components/commit/4f0ec464bcc807e3a789bb5fd323b468d978e4a2))
+
 # 0.30.0 (2023-05-03)
 
 ### Bug Fixes
