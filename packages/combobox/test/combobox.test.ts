@@ -825,7 +825,7 @@ describe('Combobox', () => {
             `Actually, ${document.activeElement?.localName}`
         ).to.be.true;
         expect(tooltipEl.open).to.be.true;
-        expect(el.open).to.be.false;
+        expect(el.open, 'el already open?').to.be.false;
         expect(el.focused).to.be.true;
 
         const menuOpen = oneEvent(el, 'sp-opened');
@@ -836,7 +836,7 @@ describe('Combobox', () => {
         await menuOpen;
         await tooltipClosed;
         expect(document.activeElement === el).to.be.true;
-        expect(tooltipEl.open).to.be.false;
+        expect(tooltipEl.open, 'tooltip still open?').to.be.false;
         expect(el.open).to.be.true;
 
         const menuClosed = oneEvent(el, 'sp-closed');
@@ -844,8 +844,8 @@ describe('Combobox', () => {
             press: 'Tab',
         });
         await menuClosed;
-        expect(document.activeElement === el).to.be.false;
-        expect(tooltipEl.open).to.be.false;
-        expect(el.open).to.be.false;
+        expect(document.activeElement === el, 'el still focused?').to.be.false;
+        expect(tooltipEl.open, 'tooltip reopened?').to.be.false;
+        expect(el.open, 'el still opened?').to.be.false;
     });
 });

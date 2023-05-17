@@ -1114,6 +1114,69 @@ export const sideHoverDraggable = (): TemplateResult => {
     `;
 };
 
+export const stackedModals = (): TemplateResult => {
+    return html`
+        <div>
+            <style>
+                body {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            </style>
+            <overlay-trigger id="trigger" placement="top" type="modal">
+                <sp-button id="outer-button" variant="primary" slot="trigger">
+                    Show Popover
+                </sp-button>
+                <sp-popover
+                    id="outer-popover"
+                    slot="click-content"
+                    direction="bottom"
+                    tip
+                >
+                    <sp-dialog no-divider class="options-popover-content">
+                        <overlay-trigger
+                            id="inner-trigger"
+                            placement="bottom"
+                            type="modal"
+                        >
+                            <sp-button id="inner-button" slot="trigger">
+                                Press Me
+                            </sp-button>
+                            <sp-popover
+                                id="inner-popover"
+                                slot="click-content"
+                                direction="bottom"
+                                tip
+                            >
+                                <sp-dialog
+                                    no-divider
+                                    class="options-popover-content"
+                                >
+                                    Another Popover
+                                    <sp-button>Does nothing</sp-button>
+                                </sp-dialog>
+                            </sp-popover>
+                        </overlay-trigger>
+                    </sp-dialog>
+                </sp-popover>
+                <div
+                    id="hover-content"
+                    slot="hover-content"
+                    class="tooltip"
+                    delay="100"
+                >
+                    Tooltip
+                </div>
+            </overlay-trigger>
+        </div>
+    `;
+};
+
+stackedModals.swc_vrt = {
+    skip: true,
+};
+
 export const superComplexModal = (): TemplateResult => {
     return html`
         <overlay-trigger type="modal">

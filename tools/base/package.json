@@ -109,7 +109,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "lit": "^2.5.0"
+        "lit": "^3.0.0"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",

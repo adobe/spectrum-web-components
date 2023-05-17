@@ -366,7 +366,11 @@ export class AbstractOverlay extends SpectrumElement {
                     : 'auto'
             });
             trigger.insertAdjacentElement('afterend', overlay);
-            await overlay.updateComplete;
+            // Wait until updates no longer trigger updates.
+            const done = await overlay.updateComplete;
+            if (!done) {
+                await overlay.updateComplete;
+            }
             overlay.open = true;
             return overlay.dispose;
         }
@@ -377,9 +381,14 @@ export class AbstractOverlay extends SpectrumElement {
             ...options,
             delayed: options.delayed || overlayContent.hasAttribute('delayed')
         });
-        overlay.updateComplete.then(() => {
-            // Do we want to "open" this path, or leave that to the consumer?
-            overlay.open = true;
+        overlay.updateComplete.then(async (done) => {
+            if (!done) {
+                await overlay.updateComplete;
+            }
+            requestAnimationFrame(() => {
+                // Do we want to "open" this path, or leave that to the consumer?
+                overlay.open = true;
+            });
         });
         return overlay;
     }

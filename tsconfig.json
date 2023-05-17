@@ -8,8 +8,8 @@
         "importHelpers": true,
         "inlineSources": true,
         "isolatedModules": true,
-        "lib": ["es2018", "dom", "dom.iterable"],
-        "module": "esNext",
+        "lib": ["es2021", "dom", "dom.iterable"],
+        "module": "nodeNext",
         "moduleResolution": "node",
         "noImplicitOverride": true,
         "noImplicitReturns": true,
@@ -19,7 +19,7 @@
         "skipLibCheck": true,
         "strict": true,
         "sourceMap": true,
-        "target": "es2018",
+        "target": "es2021",
         "types": ["mocha", "chai", "sinon", "node", "swc"]
     },
     "include": ["./global.d.ts"]

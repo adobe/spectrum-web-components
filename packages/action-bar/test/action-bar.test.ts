@@ -73,7 +73,10 @@ describe('ActionBar', () => {
         await elementUpdated(el);
 
         expect(el.variant).to.equal('');
-        expect(el.hasAttribute('variant')).to.be.false;
+        expect(
+            el.hasAttribute('variant'),
+            `actually: ${el.getAttribute('variant')}`
+        ).to.be.false;
 
         el.variant = 'fixed';
 
