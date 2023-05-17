@@ -37,8 +37,6 @@
         { "path": "react/icons" },
         { "path": "react/icons-ui" },
         { "path": "react/icons-workflow" },
-        { "path": "react/icons-ui/next" },
-        { "path": "react/icons-workflow/next" },
         { "path": "react/illustrated-message" },
         { "path": "react/link" },
         { "path": "react/menu" },
