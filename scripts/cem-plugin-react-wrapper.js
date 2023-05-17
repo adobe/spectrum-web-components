@@ -38,7 +38,7 @@ function genTsconfigJson() {
             "composite": true,
             "rootDir": "./"
         },
-        "include": ["*.ts"]
+        "include": ["**/*.ts"]
     }`;
 }
 
