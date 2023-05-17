@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { expect, oneEvent } from '@open-wc/testing';
+import { expect, oneEvent, waitUntil } from '@open-wc/testing';
 import { ActionMenu } from '@spectrum-web-components/action-menu';
 import { sendKeys } from '@web/test-runner-commands';
 
@@ -30,6 +30,8 @@ describe('Slottable Request Directive', () => {
         await opened;
 
         expect(el.open).to.be.true;
+
+        await waitUntil(() => el.children.length > initialNodeLength);
         expect(el.children.length).to.be.gt(initialNodeLength);
 
         const closed = oneEvent(el, 'sp-closed');

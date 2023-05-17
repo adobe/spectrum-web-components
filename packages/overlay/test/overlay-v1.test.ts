@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /*
 Copyright 2020 Adobe. All rights reserved.
 This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -150,7 +151,7 @@ describe('Overlays, v1', () => {
                     '#outer-popover'
                 ) as Popover;
 
-                expect(await isInteractive(outerPopover)).to.be.false;
+                expect(await isOnTopLayer(outerPopover)).to.be.false;
                 expect(button).to.exist;
 
                 const opened = oneEvent(outerPopover, 'sp-opened');
@@ -162,7 +163,7 @@ describe('Overlays, v1', () => {
                     })
                 );
                 await opened;
-                expect(await isInteractive(outerPopover)).to.be.true;
+                expect(await isOnTopLayer(outerPopover)).to.be.true;
             });
         });
 
@@ -391,12 +392,16 @@ describe('Overlays, v1', () => {
                 offset: 10,
             })
         );
+        console.log(0);
         await opened;
+        console.log(1);
         expect(await isOnTopLayer(el)).to.be.true;
 
         const closed = oneEvent(el, 'sp-closed');
         dialog.close();
+        console.log(2);
         await closed;
+        console.log(3);
         expect(await isOnTopLayer(el)).to.be.false;
     });
 
@@ -495,13 +500,17 @@ describe('Overlays, v1', () => {
         const closeOverlay = await Overlay.open(el, 'click', content, {
             placement: 'bottom',
         });
+        console.log(0);
         await opened;
+        console.log(1);
 
         expect(await isInteractive(content)).to.be.true;
 
         const closed = oneEvent(content, 'sp-closed');
         closeOverlay();
+        console.log(2);
         await closed;
+        console.log(3);
 
         expect(await isInteractive(content)).to.be.false;
 

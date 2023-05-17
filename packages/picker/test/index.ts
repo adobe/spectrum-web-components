@@ -1819,7 +1819,7 @@ export function runPickerTests(): void {
             `Actually, ${document.activeElement?.localName}`
         ).to.be.true;
         expect(tooltipEl.open).to.be.true;
-        expect(el.open).to.be.false;
+        expect(el.open, 'el already open?').to.be.false;
         expect(el.focused).to.be.true;
 
         const menuOpen = oneEvent(el, 'sp-opened');
@@ -1830,7 +1830,7 @@ export function runPickerTests(): void {
         await menuOpen;
         await tooltipClosed;
         expect(document.activeElement === el).to.be.true;
-        expect(tooltipEl.open).to.be.false;
+        expect(tooltipEl.open, 'tooltip still open?').to.be.false;
         expect(el.open).to.be.true;
 
         const menuClosed = oneEvent(el, 'sp-closed');
@@ -1838,9 +1838,12 @@ export function runPickerTests(): void {
             press: 'Tab',
         });
         await menuClosed;
-        expect(document.activeElement === el).to.be.false;
-        expect(tooltipEl.open).to.be.false;
-        expect(el.open).to.be.false;
+        expect(
+            document.activeElement === el,
+            `el still focused? ${el.shadowRoot.activeElement?.localName}`
+        ).to.be.false;
+        expect(tooltipEl.open, 'tooltip open again?').to.be.false;
+        expect(el.open, 'el still open?').to.be.false;
     });
     describe('disabled', function () {
         beforeEach(async function () {

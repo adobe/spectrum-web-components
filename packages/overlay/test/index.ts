@@ -31,7 +31,6 @@ import { Popover } from '@spectrum-web-components/popover';
 import '@spectrum-web-components/theme/sp-theme.js';
 import { sendMouse } from '../../../test/plugins/browser.js';
 import { sendKeys } from '@web/test-runner-commands';
-import { isChrome } from '@spectrum-web-components/shared';
 
 export const runOverlayTriggerTests = (type: string): void => {
     describe(`Overlay Trigger - ${type}`, () => {
@@ -39,14 +38,20 @@ export const runOverlayTriggerTests = (type: string): void => {
             beforeEach(async function () {
                 this.testDiv = await fixture<HTMLDivElement>(
                     html`
-                        <div>
+                        <div id="test-container">
                             <style>
-                                body {
+                                #test-container {
                                     display: flex;
+                                    flex-direction: column;
                                     align-items: center;
                                     justify-content: center;
                                 }
+                                overlay-trigger:not([open='hover'])
+                                    #hover-content {
+                                    display: none;
+                                }
                             </style>
+                            <input type="text" />
                             <overlay-trigger id="trigger" placement="top">
                                 <sp-button
                                     id="outer-button"
@@ -86,7 +91,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                                                     class="options-popover-content"
                                                 >
                                                     Another Popover
-                                                    <sp-button>
+                                                    <sp-button id="nothing">
                                                         Does nothing
                                                     </sp-button>
                                                 </sp-dialog>
@@ -106,12 +111,6 @@ export const runOverlayTriggerTests = (type: string): void => {
                         </div>
                     `
                 );
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
-                await nextFrame();
 
                 this.innerTrigger = this.testDiv.querySelector(
                     '#inner-trigger'
@@ -134,6 +133,70 @@ export const runOverlayTriggerTests = (type: string): void => {
                 this.hoverContent = this.testDiv.querySelector(
                     '#hover-content'
                 ) as HTMLDivElement;
+
+                this.testDiv.querySelector('input').focus();
+                await nextFrame();
+                await nextFrame();
+            });
+
+            it('focus previous "modal" when closing nested "modal"', async function () {
+                this.outerTrigger.type = 'modal';
+                this.innerTrigger.type = 'modal';
+                await elementUpdated(this.outerTrigger);
+                await elementUpdated(this.innerTrigger);
+
+                expect(
+                    await isOnTopLayer(this.outerClickContent),
+                    'outer click content not available at point'
+                ).to.be.false;
+                expect(
+                    await isOnTopLayer(this.innerClickContent),
+                    'inner click content not available at point'
+                ).to.be.false;
+
+                const outerOpen = oneEvent(this.outerButton, 'sp-opened');
+                this.outerButton.click();
+                await outerOpen;
+
+                expect(
+                    await isOnTopLayer(this.outerClickContent),
+                    'outer click content available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(this.innerClickContent),
+                    'inner click content available at point'
+                ).to.be.false;
+
+                const innerOpen = oneEvent(this.innerButton, 'sp-opened');
+                this.innerButton.click();
+                await innerOpen;
+
+                expect(
+                    await isOnTopLayer(this.outerClickContent),
+                    'outer click content available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(this.innerClickContent),
+                    'inner click content available at point'
+                ).to.be.true;
+
+                const innerClose = oneEvent(this.innerTrigger, 'sp-closed');
+                this.innerTrigger.open = false;
+                await innerClose;
+
+                expect(
+                    await isOnTopLayer(this.outerClickContent),
+                    'outer click content available at point'
+                ).to.be.true;
+                expect(
+                    await isOnTopLayer(this.innerClickContent),
+                    'inner click content not available at point'
+                ).to.be.false;
+
+                expect(
+                    document.activeElement === this.innerButton,
+                    `outer popover recieved focus: ${document.activeElement?.id}`
+                ).to.be.true;
             });
 
             it('opens a popover', async function () {
@@ -376,88 +439,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
             });
 
-            it('focus previous "modal" when closing nested "modal"', async function () {
-                this.outerTrigger.type = 'modal';
-                this.innerTrigger.type = 'modal';
-
-                expect(
-                    await isOnTopLayer(this.outerClickContent),
-                    'outer click content not available at point'
-                ).to.be.false;
-                expect(
-                    await isOnTopLayer(this.innerClickContent),
-                    'inner click content not available at point'
-                ).to.be.false;
-
-                const outerOpen = oneEvent(this.outerButton, 'sp-opened');
-                this.outerButton.click();
-                await outerOpen;
-
-                expect(
-                    await isOnTopLayer(this.outerClickContent),
-                    'outer click content available at point'
-                ).to.be.true;
-                expect(
-                    await isOnTopLayer(this.innerClickContent),
-                    'inner click content available at point'
-                ).to.be.false;
-
-                const innerOpen = oneEvent(this.innerButton, 'sp-opened');
-                this.innerButton.click();
-                await innerOpen;
-
-                expect(
-                    await isOnTopLayer(this.outerClickContent),
-                    'outer click content available at point'
-                ).to.be.true;
-                expect(
-                    await isOnTopLayer(this.innerClickContent),
-                    'inner click content available at point'
-                ).to.be.true;
-
-                // Why does this make the test pass in Chromium? 🤷🏻‍♂️
-                await sendKeys({
-                    press: 'Space',
-                });
-
-                expect(
-                    await isOnTopLayer(this.outerClickContent),
-                    'outer click content available at point'
-                ).to.be.true;
-                expect(
-                    await isOnTopLayer(this.innerClickContent),
-                    'inner click content available at point'
-                ).to.be.true;
-
-                const innerClose = oneEvent(this.innerButton, 'sp-closed');
-                await sendKeys({
-                    press: 'Escape',
-                });
-                await innerClose;
-
-                expect(
-                    await isOnTopLayer(this.outerClickContent),
-                    'outer click content available at point'
-                ).to.be.true;
-                expect(
-                    await isOnTopLayer(this.innerClickContent),
-                    'inner click content not available at point'
-                ).to.be.false;
-
-                expect(
-                    document.activeElement === this.innerButton,
-                    `outer popover recieved focus: ${document.activeElement?.localName}`
-                ).to.be.true;
-            });
-
             it('escape closes an open popover', async function () {
-                if (isChrome()) {
-                    // Does a werid test time bleed that allows the `Escape` press through to the
-                    // parent modal. Manual testing does not exhibit this interaction, which seems
-                    // to step from how long the `Escape` button in down.
-                    this.skip();
-                }
-
                 this.outerTrigger.type = 'modal';
                 this.innerTrigger.type = 'modal';
                 const outerOpen = oneEvent(this.outerButton, 'sp-opened');
@@ -576,7 +558,10 @@ export const runOverlayTriggerTests = (type: string): void => {
             });
 
             it('opens a hover popover', async function () {
-                expect(await isOnTopLayer(this.hoverContent)).to.be.false;
+                expect(
+                    await isOnTopLayer(this.hoverContent),
+                    'On top layer already?'
+                ).to.be.false;
 
                 const rect = this.outerTrigger.getBoundingClientRect();
                 const open = oneEvent(this.outerTrigger, 'sp-opened');
@@ -604,7 +589,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                             type: 'move',
                             position: [
                                 rect.left + rect.width * 2,
-                                rect.top + rect.height / 2,
+                                rect.top + rect.height * 2,
                             ],
                         },
                     ],

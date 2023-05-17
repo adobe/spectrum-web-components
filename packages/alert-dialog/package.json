@@ -57,7 +57,7 @@
         "lit-html"
     ],
     "dependencies": {
-        "@lit-labs/observers": "^2.0.0",
+        "@lit-labs/observers": "^2.0.1",
         "@spectrum-web-components/base": "^0.42.0",
         "@spectrum-web-components/button": "^0.42.0",
         "@spectrum-web-components/button-group": "^0.42.0",

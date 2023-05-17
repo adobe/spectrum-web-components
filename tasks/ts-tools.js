@@ -74,7 +74,7 @@ export const buildPackage = async (paths) => {
         outdir: '.',
         outbase: '.',
         sourcemap: true,
-        target: ['es2018'],
+        target: ['esnext'],
     };
     if (devPaths.length) {
         builds.push(

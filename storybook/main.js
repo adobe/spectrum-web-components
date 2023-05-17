@@ -62,6 +62,7 @@ const config = {
                     '**/node_modules/memoizerific/**/*.js',
                     '**/node_modules/lodash/**/*.js',
                     '**/node_modules/@storybook/blocks/**/*.js',
+                    '**/node_modules/color-convert/**/*.js',
                 ],
             })
         );

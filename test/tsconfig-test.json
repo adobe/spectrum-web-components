@@ -1,6 +1,7 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
+        "module": "esNext",
         "outDir": "../",
         "types": ["mocha", "chai", "sinon", "webpack-env", "node"],
         "emitDeclarationOnly": false,
