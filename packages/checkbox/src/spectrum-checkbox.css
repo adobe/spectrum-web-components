@@ -125,7 +125,7 @@ governing permissions and limitations under the License.
     );
     display: inline-flex;
     max-inline-size: 100%;
-    min-block-size: var(--mod-checkox-height, var(--spectrum-checkbox-height));
+    min-block-size: var(--mod-checkbox-height, var(--spectrum-checkbox-height));
     position: relative;
     vertical-align: top;
 }
@@ -624,7 +624,11 @@ governing permissions and limitations under the License.
 }
 #box {
     --spectrum-checkbox-spacing: calc(
-        var(--spectrum-checkbox-height) - var(--spectrum-checkbox-control-size)
+        var(--mod-checkbox-height, var(--spectrum-checkbox-height)) -
+            var(
+                --mod-checkbox-control-size,
+                var(--spectrum-checkbox-control-size)
+            )
     );
     align-items: center;
     block-size: var(
@@ -654,7 +658,10 @@ governing permissions and limitations under the License.
             var(--spectrum-checkbox-control-color-default)
         )
     );
-    border-radius: var(--spectrum-checkbox-control-corner-radius);
+    border-radius: var(
+        --mod-checkbox-control-corner-radius,
+        var(--spectrum-checkbox-control-corner-radius)
+    );
     border-style: solid;
     border-width: var(
         --mod-checkbox-border-width,
@@ -689,8 +696,14 @@ governing permissions and limitations under the License.
 }
 #box:after {
     border-radius: calc(
-        var(--spectrum-checkbox-control-corner-radius) +
-            var(--spectrum-checkbox-focus-indicator-gap)
+        var(
+                --mod-checkbox-control-corner-radius,
+                var(--spectrum-checkbox-control-corner-radius)
+            ) +
+            var(
+                --mod-checkbox-focus-indicator-gap,
+                var(--spectrum-checkbox-focus-indicator-gap)
+            )
     );
     content: '';
     display: block;

@@ -80,7 +80,7 @@
         "@spectrum-web-components/shared": "^0.31.0"
     },
     "devDependencies": {
-        "@spectrum-css/sidenav": "^3.0.42"
+        "@spectrum-css/sidenav": "^3.0.44"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
