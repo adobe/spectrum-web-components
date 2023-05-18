@@ -10,6 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
+import { resolveModuleOrPackageSpecifier } from '@custom-elements-manifest/analyzer/src/utils/index.js';
 import { moduleFileExtensionsPlugin } from 'cem-plugin-module-file-extensions';
 
 export default {
@@ -29,5 +30,37 @@ export default {
     outdir: '.',
     litelement: true,
     packagejson: false,
-    plugins: [moduleFileExtensionsPlugin()],
+    plugins: [
+        moduleFileExtensionsPlugin(),
+        (function defineElementPlugin() {
+            // Resolve the use of `defineElement()` as if it were `customElements.define()`
+            return {
+                name: 'define-element-plugin',
+                analyzePhase({ node, moduleDoc, context }) {
+                    if (node.expression?.text === 'defineElement') {
+                        const className = node.arguments[1].text;
+                        const tagName = node.arguments[0].text;
+
+                        const definitionDoc = {
+                            kind: 'custom-element-definition',
+                            name: tagName,
+                            declaration: {
+                                name: className,
+                                ...resolveModuleOrPackageSpecifier(
+                                    moduleDoc,
+                                    context,
+                                    className
+                                ),
+                            },
+                        };
+
+                        moduleDoc.exports = [
+                            ...(moduleDoc.exports || []),
+                            definitionDoc,
+                        ];
+                    }
+                },
+            };
+        })(),
+    ],
 };
