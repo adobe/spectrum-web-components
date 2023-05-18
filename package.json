@@ -95,7 +95,7 @@
         "@commitlint/cli": "^17.0.3",
         "@commitlint/config-conventional": "^17.0.0",
         "@commitlint/config-lerna-scopes": "^17.2.1",
-        "@custom-elements-manifest/analyzer": "^0.6.3",
+        "@custom-elements-manifest/analyzer": "^0.8.3",
         "@lit-labs/react": "^1.1.1",
         "@netlify/build": "^29.1.0",
         "@open-wc/dev-server-hmr": "^0.1.3",

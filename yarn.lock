@@ -1911,12 +1911,13 @@
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.4.1.tgz#75b4c27948c81e88ccd3a8902047bcd797f38d32"
   integrity sha512-ej5oVy6lykXsvieQtqZxCOaLT+xD4+QNarq78cIYISHmZXshCvROLudpQN3lfL8G0NL7plMSSK+zlyvCaIJ4Iw==
 
-"@custom-elements-manifest/analyzer@^0.6.3":
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/@custom-elements-manifest/analyzer/-/analyzer-0.6.3.tgz#47c10d167d4057030a5c5d5a34160907b954b386"
-  integrity sha512-Ao7nFsBodH+xJFpDO9Ducsil6fF9rHLye4CZCr5JgjItIgie8k3GO8Jb4SJAg2FAGR5exSDHPN1Sk2ElCW2D4g==
+"@custom-elements-manifest/analyzer@^0.8.3":
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/@custom-elements-manifest/analyzer/-/analyzer-0.8.3.tgz#ac60acf4b3c4fffca90d7b7908c0826e5bb725fa"
+  integrity sha512-wT+t4JNVMj56bSCNxxjkDSKx2KJ6bzXQMjinXJe/2+9J7Abaw/9a4+EWYLWQ//KBXRvyNhWrkolFL6ICc/VATg==
   dependencies:
     "@custom-elements-manifest/find-dependencies" "^0.0.5"
+    "@github/catalyst" "^1.6.0"
     "@web/config-loader" "0.1.3"
     chokidar "3.5.2"
     command-line-args "5.1.2"
@@ -2189,6 +2190,11 @@
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
+
+"@github/catalyst@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@github/catalyst/-/catalyst-1.6.0.tgz#378734d1d2b6a85af169d7e66c1a2a604bf1e82c"
+  integrity sha512-u8A+DameixqpeyHzvnJWTGj+wfiskQOYHzSiJscCWVfMkIT3rxnbHMtGh3lMthaRY21nbUOK71WcsCnCrXhBJQ==
 
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
