@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import reactWrapperPlugin from './scripts/cem-plugin-react-wrapper.js';
+import defineElementPlugin from './scripts/define-element-plugin.js';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import yaml from 'js-yaml';
@@ -29,6 +30,7 @@ export default {
     litelement: true,
     packagejson: false,
     plugins: [
+        defineElementPlugin(),
         reactWrapperPlugin({
             exclude: ['StoryDecorator'],
             outDir: '../../react',
