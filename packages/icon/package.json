@@ -75,7 +75,7 @@
         "@spectrum-web-components/iconset": "^0.31.0"
     },
     "devDependencies": {
-        "@spectrum-css/icon": "^3.0.41"
+        "@spectrum-css/icon": "^3.0.43"
     },
     "types": "./src/index.d.ts",
     "customElements": "custom-elements.json",
