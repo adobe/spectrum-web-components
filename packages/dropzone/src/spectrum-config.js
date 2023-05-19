@@ -13,7 +13,7 @@ governing permissions and limitations under the License.
 
 import { converterFor } from '../../../tasks/process-spectrum-utils.js';
 
-const converter = converterFor('spectrum-Dropzone');
+const converter = converterFor('spectrum-DropZone');
 
 /**
  * @type { import('../../../tasks/spectrum-css-converter').SpectrumCSSConverter }

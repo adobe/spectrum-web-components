@@ -17,55 +17,29 @@ governing permissions and limitations under the License.
  */
 :host {
     display: block;
-
-    --spectrum-dropzone-illustration-color: var(
-        --spectrum-global-color-static-blue-400
-    );
 }
 
 ::slotted(*) {
     font-family: var(
-        --spectrum-body-m-text-font-family,
-        var(--spectrum-alias-body-text-font-family)
+        --mod-drop-zone-body-font-family,
+        var(--spectrum-drop-zone-body-font-family)
     );
     font-size: var(
-        --spectrum-body-s-text-size,
-        var(--spectrum-alias-font-size-default)
+        --mod-drop-zone-body-font-size,
+        var(--spectrum-drop-zone-body-font-size)
     );
     font-weight: var(
-        --spectrum-body-s-text-font-weight,
-        var(--spectrum-alias-body-text-font-weight)
+        --mod-drop-zone-body-font-weight,
+        var(--spectrum-drop-zone-body-font-weight)
     );
     line-height: var(
-        --spectrum-body-s-text-line-height,
-        var(--spectrum-alias-body-text-line-height)
+        --mod-drop-zone-body-line-height,
+        var(--spectrum-drop-zone-body-line-height)
     );
     font-style: var(
-        --spectrum-body-s-text-font-style,
-        var(--spectrum-global-font-style-regular)
+        --spectrum-drop-zone-body-font-style,
+        var(--spectrum-drop-zone-body-font-style)
     );
-    letter-spacing: var(
-        --spectrum-body-s-text-letter-spacing,
-        var(--spectrum-global-font-letter-spacing-none)
-    );
-    text-transform: var(--spectrum-body-s-text-transform, none);
     margin-top: 0;
     margin-bottom: 0;
-}
-
-/* 
- * IllustratedMessage in spectrum-css has a rule that sets the illustration 
- * color to (--spectrum-global-color-gray-500) instead of a unique 
- * component variable. 
- *
- * Color declaration at this level will not get inherited by the illustration
- * and will be overridden by the gray variable. 
- * 
- * This is a temporary workaround
- */
-
-:host([dragged]) ::slotted(*) {
-    --mod-illustrated-message-illustration-color: var(
-        --spectrum-dropzone-illustration-color
-    );
 }
