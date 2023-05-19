@@ -18,7 +18,7 @@ swc-react is a collection of React wrapper components for the Spectrum Web Compo
     - [Theming](#theming)
     - [Event Handling and Type Definitions](#event-handling-and-type-definitions)
 3. [API Reference](#api-reference)
-4. [FAGs](#fags)
+4. [FAQs](#faqs)
 5. [Troubleshooting](#troubleshooting)
 6. [Contributing](#contributing)
 
@@ -135,7 +135,7 @@ swc-react is a collection of wrapper components designed to make Spectrum Web Co
 
 For detailed information on the properties and event names of each component, please refer to the official documentation for the corresponding SWC component. This will provide you with the most accurate and up-to-date information on the usage and behavior of each component within the SWC library.
 
-### FAGs
+### FAQs
 
 **1. How many SWC components does swc-react support?**
 
