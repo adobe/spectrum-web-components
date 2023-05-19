@@ -1832,6 +1832,16 @@ governing permissions and limitations under the License.
     --spectrum-alias-ui-icon-asterisk-size-100: var(
         --spectrum-global-dimension-size-100
     );
+}
+:host,
+:root {
+    /* spectrum-colorAliases.css */
+    --spectrum-alias-transparent-blue-background-color-hover: rgba(
+        0,
+        87,
+        190,
+        0.15
+    );
     --spectrum-alias-transparent-blue-background-color-down: rgba(
         0,
         72,
@@ -2676,8 +2686,5 @@ governing permissions and limitations under the License.
     );
     --spectrum-colorcontrol-checkerboard-dark-color: var(
         --spectrum-global-color-static-gray-300
-    );
-    --spectrum-slider-label-text-size: var(
-        --spectrum-global-dimension-font-size-75
     );
 }

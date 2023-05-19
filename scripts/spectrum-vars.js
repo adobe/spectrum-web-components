@@ -135,22 +135,9 @@ const processCSS = async (
     from,
     usedVariables = undefined
 ) => {
-    return new Promise((res) => {
-        fs.readFile(srcPath, 'utf8', async function (error, data) {
-            if (error) {
-                return console.log(error);
-            }
-
-            let result = await processCSSData(
-                data,
-                identifier,
-                from,
-                usedVariables
-            );
-            fs.writeFileSync(dstPath, result, 'utf8');
-            res();
-        });
-    });
+    const data = fs.readFileSync(srcPath, 'utf8');
+    const result = await processCSSData(data, identifier, from, usedVariables);
+    fs.writeFileSync(dstPath, result, 'utf8');
 };
 
 // where is spectrum-css?
@@ -179,24 +166,18 @@ const spectrumPaths = [
 ];
 
 // sources to use from spectrum-css
-const themes = [
-    'lightest',
-    'light',
-    'dark',
-    'darkest',
-    /*'middark', 'midlight'*/
-];
+const themes = ['lightest', 'light', 'dark', 'darkest'];
 const scales = ['medium', 'large'];
 const cores = ['global'];
 const processes = [];
 
 const foundVars = await findUsedVars();
 
-spectrumPaths.forEach(async (spectrumPath, i) => {
+spectrumPaths.forEach((spectrumPath, i) => {
     const packageDir = ['styles'];
     const isExpress = i === 1;
     if (isExpress) packageDir.push('express');
-    themes.forEach(async (theme) => {
+    themes.forEach((theme) => {
         if (isExpress && ['lightest', 'darkest'].includes(theme)) return;
         const srcPath = path.join(spectrumPath, `spectrum-${theme}.css`);
         const dstPath = path.resolve(
@@ -210,10 +191,10 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
         );
 
         console.log(`processing theme ${srcPath}`);
-        processes.push(await processCSS(srcPath, dstPath, theme));
+        processes.push(processCSS(srcPath, dstPath, theme));
     });
 
-    scales.forEach(async (scale) => {
+    scales.forEach((scale) => {
         const srcPath = path.join(spectrumPath, `spectrum-${scale}.css`);
         const dstPath = path.resolve(
             path.join(
@@ -226,11 +207,11 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
         );
         console.log(`processing scale  ${srcPath}`);
         processes.push(
-            await processCSS(srcPath, dstPath, scale, undefined, foundVars)
+            processCSS(srcPath, dstPath, scale, undefined, foundVars)
         );
     });
 
-    cores.forEach(async (core) => {
+    cores.forEach((core) => {
         const srcPath = path.join(spectrumPath, `spectrum-${core}.css`);
         const dstPath = path.resolve(
             path.join(
@@ -242,7 +223,7 @@ spectrumPaths.forEach(async (spectrumPath, i) => {
             )
         );
         console.log(`processing core ${srcPath}`);
-        processes.push(await processCSS(srcPath, dstPath, core));
+        processes.push(processCSS(srcPath, dstPath, core));
     });
 });
 
@@ -262,10 +243,10 @@ async function processSpectrumVars() {
             path.join(__dirname, '..', 'tools', 'styles', 'typography.css')
         );
         console.log(`processing typography`);
-        processes.push(await processCSS(srcPath, dstPath, 'typography'));
+        processes.push(processCSS(srcPath, dstPath, 'typography'));
     }
 
-    Promise.all(processes).then(() => {
+    await Promise.all(processes).then(() => {
         console.log(
             `Spectrum Vars processed. ${removedVariableDeclarations} Custom Property declarations were removed as unused.`
         );
