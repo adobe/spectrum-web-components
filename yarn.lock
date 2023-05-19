@@ -4451,10 +4451,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/divider/-/divider-2.0.42.tgz#560a33bc7e5d64b1d888105bedcc8ad76beda507"
   integrity sha512-vvSmdwCOc1ufbwxqEO2okcqHfZQN6o4uqFIw9Bf+MkiAlLoPGq8ETmGWMoBmJ8QSfU94aZGd6ZgiQIykW9uaPg==
 
-"@spectrum-css/dropzone@^3.0.40":
-  version "3.0.40"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-3.0.40.tgz#784d42215718893f951ce99313d9fd1e451c5854"
-  integrity sha512-gSWrxCEibgYQ/gWV58oJsSGYUmUpaUY8lLbkSUwnTnvsJG8RyJr1Y5K2ElQeo2q89GaAnehX35B4TYrkciPT1A==
+"@spectrum-css/dropzone@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/dropzone/-/dropzone-5.0.0.tgz#68ea4157e56229f4fea23fd4ebb9f09b341b0fba"
+  integrity sha512-2DySdiCnKZiboymD/4LVK077SwPYtkXvtsaES2+npuHYNhpp6C0W0jqjehqPIvbGmR3Vtu789o4XkgB/XBXh1Q==
 
 "@spectrum-css/expressvars@^3.0.5":
   version "3.0.5"

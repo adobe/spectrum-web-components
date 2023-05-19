@@ -64,6 +64,7 @@ const tokenPackages = [
     'slider',
     'popover',
     'thumbnail',
+    'dropzone',
 ];
 
 const packagePaths = tokenPackages.map((packageName) => {
@@ -77,6 +78,10 @@ const packagePaths = tokenPackages.map((packageName) => {
         'themes'
     );
 });
+
+const spectrumThemeSelectorRegExp =
+    /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large)?,?(\n|\s)*)?)+\s?\{/g;
+const importantCommentRegExp = /\/\*![^*]*\*+([^\/*][^*]*\*+)*\//g;
 
 const targetHost = (css) => {
     /** @note Could use this regex to more permissive of class names */
@@ -92,16 +97,21 @@ const targetHost = (css) => {
      *   (...)? - 0 or 1
      *   \g - global
      **/
-    return css.replaceAll(
-        /(?:\.spectrum(--(?:express|light(?:est)?|dark(?:est)?|medium|large)?,?(\n|\s)*)?)+\s?\{/g,
-        ':host,\n:root {'
-    );
+    return css.replaceAll(spectrumThemeSelectorRegExp, ':host,\n:root {');
+};
+
+const removeImporantComments = (css) => {
+    /**
+     * Spectrum CSS uses /*! comments that are "not" removable.
+     * These comments pile up in merged files, so we _need_ to remove them.
+     */
+    return css.replaceAll(importantCommentRegExp, '');
 };
 
 const processTokens = (srcPath) => {
     let css = fs.readFileSync(srcPath, 'utf8');
     const fileName = srcPath.split(path.sep + 'css' + path.sep).at(-1);
-    css = targetHost(css);
+    css = removeImporantComments(targetHost(css));
 
     fs.writeFileSync(
         path.join(__dirname, '..', 'tools', 'styles', 'tokens', fileName),
@@ -115,8 +125,8 @@ const processPackages = async (srcPath, index) => {
     const spectrumPath = path.join(srcPath, 'spectrum.css');
     let express = fs.readFileSync(expressPath, 'utf8');
     let spectrum = fs.readFileSync(spectrumPath, 'utf8');
-    express = targetHost(express);
-    spectrum = targetHost(spectrum);
+    express = removeImporantComments(targetHost(express));
+    spectrum = removeImporantComments(targetHost(spectrum));
 
     fs.appendFileSync(
         path.join(
