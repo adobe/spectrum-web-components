@@ -1845,6 +1845,10 @@ governing permissions and limitations under the License.
     --spectrum-alias-ui-icon-asterisk-size-100: var(
         --spectrum-global-dimension-size-100
     );
+}
+:host,
+:root {
+    /* spectrum-colorAliases.css */
     --spectrum-alias-component-text-color-selected-default: var(
         --spectrum-global-color-gray-50
     );
@@ -2694,8 +2698,5 @@ governing permissions and limitations under the License.
     );
     --spectrum-slide-label-text-size: var(
         --spectrum-global-dimension-font-size-100
-    );
-    --spectrum-fieldlabel-xl-text-size: var(
-        --spectrum-global-dimension-font-size-300
     );
 }

@@ -149,9 +149,9 @@ const processPackages = async (srcPath, index) => {
         '**',
         '*.css'
     );
-    const varsRegExp = new RegExp(`\\s*--spectrum-${packageName}[^;]*;`, 'g');
+    const varsRegExp = new RegExp(`\\s*--spectrum-${packageName}[^;}]*;*`, 'g');
     const aliasRegExp = new RegExp(
-        `\\s*--spectrum-alias-${packageName}[^;]*;`,
+        `\\s*--spectrum-alias-${packageName}[^;}]*;*`,
         'g'
     );
     const varsWithoutTokens = await fg([varsPaths], {
