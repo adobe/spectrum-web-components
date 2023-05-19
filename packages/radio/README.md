@@ -151,22 +151,6 @@ Emphasized radio buttons are a secondary style for radio buttons. The blue color
 </div>
 ```
 
-### Label Below
-
-```html
-<sp-radio label-below>A label</sp-radio>
-```
-
-### Wrapping behavior
-
-```html
-<sp-radio label-below>
-    Radio with an extraordinarily long label please don't do this but if you did
-    it should wrap text when it gets longer than the container which contains
-    the radio which has an unacceptably long label
-</sp-radio>
-```
-
 ### Handling events
 
 Event handlers for clicks and other user actions can be registered on an `<sp-radio>` similar to a standard `<input type="radio">` element.

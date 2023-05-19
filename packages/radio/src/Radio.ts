@@ -27,7 +27,6 @@ import radioStyles from './radio.css.js';
  * @element sp-radio
  *
  * @slot - text label of the Radio button
- * @attr label-below - Moves the label below the radio button
  * @attr invalid - Uses the invalid style
  * @attr disabled - Uses the disabled style
  * @attr checked - Represents when the input is checked
