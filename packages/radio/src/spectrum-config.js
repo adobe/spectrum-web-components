@@ -92,10 +92,6 @@ const config = {
                     hoist: true,
                 },
                 converter.classToHost(),
-                converter.classToAttribute(
-                    'spectrum-Radio--labelBelow',
-                    'label-below'
-                ),
                 converter.pseudoToAttribute('disabled', 'disabled'),
                 converter.pseudoToAttribute('checked', 'checked'),
                 converter.classToAttribute('is-invalid', 'invalid'),
