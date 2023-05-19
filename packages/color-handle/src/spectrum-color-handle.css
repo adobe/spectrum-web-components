@@ -12,9 +12,9 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-colorhandle-size: var(--spectrum-color-handle-size-interim);
+    --spectrum-colorhandle-size: var(--spectrum-color-handle-size);
     --spectrum-colorhandle-focused-size: var(
-        --spectrum-color-handle-size-key-focus-interim
+        --spectrum-color-handle-size-key-focus
     );
     --spectrum-colorhandle-hitarea-size: var(
         --spectrum-color-control-track-width
@@ -25,14 +25,14 @@ governing permissions and limitations under the License.
     --spectrum-colorhandle-animation-easing: ease-in-out;
     --spectrum-colorhandle-outer-border-color: rgba(
         var(--spectrum-black-rgb),
-        0.42
+        var(--spectrum-color-handle-outer-border-opacity)
     );
     --spectrum-colorhandle-outer-border-width: var(
         --spectrum-color-handle-outer-border-width
     );
     --spectrum-colorhandle-inner-border-color: rgba(
         var(--spectrum-black-rgb),
-        0.42
+        var(--spectrum-color-handle-inner-border-opacity)
     );
     --spectrum-colorhandle-inner-border-width: var(
         --spectrum-color-handle-inner-border-width
@@ -264,9 +264,6 @@ governing permissions and limitations under the License.
             var(--spectrum-colorhandle-inner-border-color)
         );
     inline-size: 100%;
-}
-.🤫 {
-    --spectrum-picked-color: 0;
 }
 @media (forced-colors: active) {
     :host {
