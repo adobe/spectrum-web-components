@@ -12,9 +12,11 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-colorloupe-width: 48px;
-    --spectrum-colorloupe-height: 64px;
-    --spectrum-colorloupe-offset: 12px;
+    --spectrum-colorloupe-width: var(--spectrum-color-loupe-width);
+    --spectrum-colorloupe-height: var(--spectrum-color-loupe-height);
+    --spectrum-colorloupe-offset: var(
+        --spectrum-color-loupe-bottom-to-color-handle
+    );
     --spectrum-colorloupe-animation-distance: 8px;
     --spectrum-colorloupe-drop-shadow-x: var(--spectrum-drop-shadow-x);
     --spectrum-colorloupe-drop-shadow-y: var(
@@ -29,7 +31,9 @@ governing permissions and limitations under the License.
     --spectrum-colorloupe-outer-border-width: var(
         --spectrum-color-loupe-outer-border-width
     );
-    --spectrum-colorloupe-inner-border-width: 1px;
+    --spectrum-colorloupe-inner-border-width: var(
+        --spectrum-color-loupe-inner-border-width
+    );
     --spectrum-colorloupe-outer-border-color: var(
         --spectrum-color-loupe-outer-border
     );
@@ -65,7 +69,7 @@ governing permissions and limitations under the License.
     );
     inline-size: var(--spectrum-colorloupe-width);
     inset-block-end: calc(
-        var(--spectrum-color-handle-size-interim) -
+        var(--spectrum-color-handle-size) -
             var(--spectrum-color-handle-outer-border-width) +
             var(--mod-colorloupe-offset, var(--spectrum-colorloupe-offset))
     );

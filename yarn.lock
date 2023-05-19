@@ -4417,15 +4417,15 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/colorarea/-/colorarea-3.0.10.tgz#1c05a4ed4e9148047f1f585cd629fec76b9613f3"
   integrity sha512-94veu17ZCWEX2H7M0AZcyJV+/TYvkELGwqA9LG6509yNNnNuk8h/lGCZ/bOcbyzqnrgt5pZ2pYlGdrhCq0tQDQ==
 
-"@spectrum-css/colorhandle@^4.0.7":
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorhandle/-/colorhandle-4.0.7.tgz#26536b83256fc76e2b8683ad725f51979c0c4847"
-  integrity sha512-qDtpRP2kA6tDMkrPKaRrfhyr+CsKyBP4dTeJ9JYNo8OSTHJLwdEU/IB5RLiW55MkYz3UdOLHOujGtR+/I76BXw==
+"@spectrum-css/colorhandle@^5.0.3":
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorhandle/-/colorhandle-5.0.3.tgz#ebb0fecace921cc10c0955759f1e4da0ba90fe25"
+  integrity sha512-1veCH29J5cfjvcWarc463K+VPcJhmO/+XmMF7JW5Q7UcdXNDPunQhYiJ0Ew10BKLa+cPrXx0+KESBtweHJTIIA==
 
-"@spectrum-css/colorloupe@^3.0.7":
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/colorloupe/-/colorloupe-3.0.7.tgz#6d6137ad46b57e54934f7e1ee7bcbe4f63f43eb4"
-  integrity sha512-o12K9nnRRn1N91fMY2q+XB6T/mGyk7IYMXgV/Hhys28Yggw1cIeVy45e22/ZbDRnjc19ZRp6P02KbR273+YxtQ==
+"@spectrum-css/colorloupe@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/colorloupe/-/colorloupe-4.0.3.tgz#3e7e88a66263b89c085d93b54907ddf10d83db8a"
+  integrity sha512-6O3GR9JbYightePGtjIerH66vqqcJ/5jLy275727khNEsKAIsIk5EzBhhrVgdJ7TdoNaFL+zlDs8v5uOefuR8g==
 
 "@spectrum-css/colorslider@^3.0.3":
   version "3.0.3"
