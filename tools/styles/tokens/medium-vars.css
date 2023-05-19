@@ -92,6 +92,10 @@
     --spectrum-menu-item-top-to-selected-icon-medium: 11px;
     --spectrum-menu-item-top-to-selected-icon-large: 14px;
     --spectrum-menu-item-top-to-selected-icon-extra-large: 17px;
+    --spectrum-slider-control-to-field-label-small: 5px;
+    --spectrum-slider-control-to-field-label-medium: 8px;
+    --spectrum-slider-control-to-field-label-large: 11px;
+    --spectrum-slider-control-to-field-label-extra-large: 14px;
     --spectrum-picker-visual-to-disclosure-icon-small: 7px;
     --spectrum-picker-visual-to-disclosure-icon-medium: 8px;
     --spectrum-picker-visual-to-disclosure-icon-large: 9px;
@@ -117,6 +121,8 @@
     --spectrum-alert-dialog-title-size: var(--spectrum-heading-size-s);
     --spectrum-alert-dialog-description-size: var(--spectrum-body-size-s);
     --spectrum-opacity-checkerboard-square-size: 8px;
+    --spectrum-contextual-help-title-size: var(--spectrum-heading-size-xs);
+    --spectrum-contextual-help-body-size: var(--spectrum-heading-size-s);
     --spectrum-breadcrumbs-height-multiline: 72px;
     --spectrum-breadcrumbs-top-to-text: 13px;
     --spectrum-breadcrumbs-top-to-text-compact: 11px;
@@ -196,6 +202,18 @@
     --spectrum-accordion-focus-indicator-gap: 0px;
     --spectrum-accordion-content-area-top-to-content: 8px;
     --spectrum-accordion-content-area-bottom-to-content: 16px;
+    --spectrum-color-handle-size: 16px;
+    --spectrum-color-handle-size-key-focus: 32px;
+    --spectrum-side-navigation-width: 192px;
+    --spectrum-side-navigation-minimum-width: 160px;
+    --spectrum-side-navigation-maximum-width: 240px;
+    --spectrum-side-navigation-second-level-edge-to-text: 24px;
+    --spectrum-side-navigation-third-level-edge-to-text: 36px;
+    --spectrum-side-navigation-with-icon-second-level-edge-to-text: 50px;
+    --spectrum-side-navigation-with-icon-third-level-edge-to-text: 62px;
+    --spectrum-side-navigation-item-to-item: 4px;
+    --spectrum-side-navigation-item-to-header: 16px;
+    --spectrum-tray-top-to-content-area: 4px;
     --spectrum-workflow-icon-size-50: 14px;
     --spectrum-workflow-icon-size-75: 16px;
     --spectrum-workflow-icon-size-100: 18px;

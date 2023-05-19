@@ -1832,6 +1832,12 @@ governing permissions and limitations under the License.
     --spectrum-alias-ui-icon-asterisk-size-100: var(
         --spectrum-global-dimension-size-100
     );
+    --spectrum-alias-transparent-blue-background-color-hover: rgba(
+        0,
+        87,
+        190,
+        0.15
+    );
     --spectrum-alias-transparent-blue-background-color-down: rgba(
         0,
         72,

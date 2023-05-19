@@ -27,9 +27,6 @@
     --spectrum-colorwheel-colorarea-container-size: 182px;
 
     --spectrum-colorloupe-checkerboard-fill: url(#checkerboard-secondary);
-    /* TODO: Remove once new tokens for colorhandle and colorloupe are released */
-    --spectrum-color-handle-size-interim: 20px;
-    --spectrum-color-handle-size-key-focus-interim: 40px;
 
     --spectrum-menu-item-selectable-edge-to-text-not-selected-small: 34px;
     --spectrum-menu-item-selectable-edge-to-text-not-selected-medium: 42px;

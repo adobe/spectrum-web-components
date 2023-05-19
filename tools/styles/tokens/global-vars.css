@@ -114,6 +114,13 @@
     --spectrum-drop-zone-background-color-opacity-filled: 0.3;
     --spectrum-coach-mark-pagination-color: var(--spectrum-gray-600);
     --spectrum-color-handle-inner-border-color: var(--spectrum-black);
+    --spectrum-color-handle-inner-border-opacity: 0.42;
+    --spectrum-color-handle-outer-border-opacity: var(
+        --spectrum-color-handle-inner-border-opacity
+    );
+    --spectrum-floating-action-button-shadow-color: var(
+        --spectrum-transparent-black-300
+    );
     --spectrum-white-rgb: 255, 255, 255;
     --spectrum-white: rgba(var(--spectrum-white-rgb));
     --spectrum-transparent-white-100-rgb: 255, 255, 255;
@@ -272,9 +279,14 @@
     --spectrum-color-slider-border-width: 1px;
     --spectrum-color-slider-border-rounding: 4px;
     --spectrum-floating-action-button-drop-shadow-blur: 12px;
+    --spectrum-floating-action-button-drop-shadow-y: 4px;
     --spectrum-illustrated-message-maximum-width: 380px;
     --spectrum-search-field-minimum-width-multiplier: 3;
+    --spectrum-color-loupe-height: 64px;
+    --spectrum-color-loupe-width: 48px;
+    --spectrum-color-loupe-bottom-to-color-handle: 12px;
     --spectrum-color-loupe-outer-border-width: var(--spectrum-border-width-200);
+    --spectrum-color-loupe-inner-border-width: 1px;
     --spectrum-card-minimum-width: 100px;
     --spectrum-card-preview-minimum-height: 130px;
     --spectrum-card-selection-background-size: 40px;
@@ -295,6 +307,10 @@
     );
     --spectrum-color-handle-border-width: var(--spectrum-border-width-200);
     --spectrum-color-handle-inner-border-width: 1px;
+    --spectrum-color-handle-outer-border-width: 1px;
+    --spectrum-color-handle-drop-shadow-x: 0;
+    --spectrum-color-handle-drop-shadow-y: 0;
+    --spectrum-color-handle-drop-shadow-blur: 0;
     --spectrum-android-elevation: 2dp;
     --spectrum-spacing-50: 2px;
     --spectrum-spacing-75: 4px;

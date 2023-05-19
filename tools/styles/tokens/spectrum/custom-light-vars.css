@@ -28,4 +28,9 @@
     --spectrum-menu-item-background-color-key-focus: var(
         --spectrum-transparent-black-200
     );
+
+    /* Drop Zone background color rgb */
+    --spectrum-drop-zone-background-color-rgb: var(
+        --spectrum-blue-800-rgb
+    ); /* var(--spectrum-accent-color-800);*/
 }
