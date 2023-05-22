@@ -23,6 +23,10 @@ governing permissions and limitations under the License.
     );
 }
 
+#controls {
+    container-type: inline-size;
+}
+
 sp-field-label {
     padding-top: 0;
     padding-bottom: 0;

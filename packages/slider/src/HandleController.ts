@@ -361,6 +361,41 @@ export class HandleController implements Controller {
         this.requestUpdate();
     }
 
+    // Check if the new handle position matches any step value
+    private _hasHandleLocationChanged(
+        input: InputWithModel,
+        handlePosition: number,
+        model: ModelValue
+    ): boolean {
+        // Calculate the number of steps from the minimum value
+        const handleStep = Math.round(
+            (handlePosition - model.clamp.min) / model.step
+        );
+
+        // Calculate the mapped value e.g. step 1.5, 2, 2.5...
+        const mappedValueToModelStep =
+            model.clamp.min + handleStep * model.step;
+        let newStep = 0;
+
+        // e.g 58.49999 - should be 58.5
+        if (!(mappedValueToModelStep % 1 === 0)) {
+            newStep = parseFloat(
+                mappedValueToModelStep.toFixed(this.countDecimals(model.step))
+            );
+        } else {
+            newStep = mappedValueToModelStep;
+        }
+
+        return input.valueAsNumber !== newStep;
+    }
+
+    // Check how many decimals in a number
+    private countDecimals = (value: number): number => {
+        if (Math.floor(value) !== value)
+            return value.toString().split('.')[1].length || 0;
+        return 0;
+    };
+
     public handlePointerup(event: PointerEvent): void {
         const { input, model } = this.extractDataFromEvent(event);
         delete this._activePointerEventData;
@@ -382,8 +417,15 @@ export class HandleController implements Controller {
             return;
         }
         event.stopPropagation();
-        input.value = this.calculateHandlePosition(event, model).toString();
-        model.handle.value = parseFloat(input.value);
+        const handlePosition = this.calculateHandlePosition(event, model);
+
+        if (!this._hasHandleLocationChanged(input, handlePosition, model)) {
+            return;
+        }
+
+        model.handle.dragging = true;
+        model.handle.value = handlePosition;
+        input.value = handlePosition.toString();
         this.host.indeterminate = false;
         this.requestUpdate();
     }
@@ -404,7 +446,7 @@ export class HandleController implements Controller {
         const input = event.target as InputWithModel;
         input.model.handle.value = input.valueAsNumber;
 
-        this.requestUpdate();
+        // this.requestUpdate();
         this.dispatchChangeEvent(input, input.model.handle);
     };
 
@@ -486,10 +528,11 @@ export class HandleController implements Controller {
             dragging: this.draggingHandle?.handleName === model.name,
             'handle-highlight': model.highlight,
         };
+        const valueToTranslate = this.host.isLTR
+            ? model.normalizedValue * 100
+            : -model.normalizedValue * 100;
         const style = {
-            [this.host.isLTR ? 'left' : 'right']: `${
-                model.normalizedValue * 100
-            }%`,
+            transform: `translate(${valueToTranslate}cqw)`,
             'z-index': zIndex.toString(),
             // Allow setting background per-handle
             'background-color': `var(--spectrum-slider-handle-background-color-${index}, var(--spectrum-slider-handle-default-background-color))`,
