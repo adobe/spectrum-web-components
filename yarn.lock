@@ -4458,10 +4458,10 @@
   resolved "https://registry.yarnpkg.com/@spectrum-css/buttongroup/-/buttongroup-6.0.52.tgz#00a7d751187a2d5b0da38dd213bd9fa2ef90d8a7"
   integrity sha512-npBaCvUS4KfIHUOH7Scrp9ZqjrU6mVM29ok1Vimy6635s3fgfB8oc/dFbYl4rn1Bs1LznSlsdYy0hM5HE0YcAw==
 
-"@spectrum-css/card@^5.0.40":
-  version "5.0.40"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-5.0.40.tgz#0b2eca88c279331ec4304a2e2bd208c3be08cc85"
-  integrity sha512-M8/Yh8Gxayd5eKw3hLfc9mKBDmzEzCzviAfWapCWKBsGMrJevVHxCfkysb7SWpAAnTEVXULdQ47Q2fSHJWxjWA==
+"@spectrum-css/card@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/card/-/card-6.0.0.tgz#6d5782a444ab8d16efe75c99dd3c70e91c56b4c1"
+  integrity sha512-wVoA3rP3KxtjTJ9KtHT4dgjcE6BD/jZt+MYCM1rOsX42uOyPoGuXPyUo1EApaKz69MaBA5LvGjxANl/rSAxzUw==
 
 "@spectrum-css/checkbox@^6.1.3":
   version "6.1.3"

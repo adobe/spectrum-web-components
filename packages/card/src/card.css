@@ -43,18 +43,12 @@ slot[name='description'] {
     );
 }
 
-#preview,
-#cover-photo {
-    overflow: hidden;
-    order: -1;
-}
-
 #preview + #cover-photo {
     display: none;
 }
 
-#preview ::slotted(*),
-#cover-photo ::slotted(*) {
+#cover-photo ::slotted(*),
+:host(:not([variant='quiet'])) #preview ::slotted(*) {
     width: 100%;
     display: block;
 
@@ -87,4 +81,9 @@ sp-quick-actions {
 .subtitle {
     /* Override until https://github.com/adobe/spectrum-css/issues/1054 is fixed */
     text-transform: none;
+}
+
+:host:before,
+:host:after {
+    pointer-events: none;
 }
