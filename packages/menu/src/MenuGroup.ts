@@ -20,8 +20,8 @@ import {
     state,
 } from '@spectrum-web-components/base/src/decorators.js';
 
-import { Menu } from './Menu.js';
-import '../sp-menu.js';
+import { Menu } from "@spectrum-web-components/menu/src/Menu.js"
+import "@spectrum-web-components/menu/sp-menu.js"
 import menuGroupStyles from './menu-group.css.js';
 
 /**

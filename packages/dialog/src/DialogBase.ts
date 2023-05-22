@@ -22,10 +22,10 @@ import { property } from '@spectrum-web-components/base/src/decorators.js';
 import '@spectrum-web-components/underlay/sp-underlay.js';
 import '@spectrum-web-components/button/sp-button.js';
 
-import '../sp-dialog.js';
+import '@spectrum-web-components/dialog/sp-dialog.js'
 import modalWrapperStyles from '@spectrum-web-components/modal/src/modal-wrapper.css.js';
 import modalStyles from '@spectrum-web-components/modal/src/modal.css.js';
-import { Dialog } from './Dialog.js';
+import { Dialog } from  '@spectrum-web-components/dialog/src/Dialog.js'
 import { FocusVisiblePolyfillMixin } from '@spectrum-web-components/shared';
 import { firstFocusableIn } from '@spectrum-web-components/shared/src/first-focusable-in.js';
 

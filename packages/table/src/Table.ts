@@ -19,9 +19,9 @@ import {
     SpectrumElement,
     TemplateResult,
 } from '@spectrum-web-components/base';
-import '../sp-table-row.js';
-import '../sp-table-checkbox-cell.js';
-import '../sp-table-body.js';
+import '@spectrum-web-components/table/sp-table-body.js';
+import '@spectrum-web-components/table/sp-table-row.js';
+import '@spectrum-web-components/table/sp-table-checkbox-cell.js';
 import { property } from '@spectrum-web-components/base/src/decorators.js';
 import styles from './table.css.js';
 import { TableBody } from './TableBody.js';
