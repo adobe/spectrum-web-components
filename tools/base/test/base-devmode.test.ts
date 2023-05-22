@@ -22,9 +22,9 @@ describe('Base', () => {
         expect(consoleWarnStub.called).to.be.true;
         const spyCall = consoleWarnStub.getCall(0);
         expect(
-            spyCall.args.at(0).includes('dev mode'),
+            spyCall.args.at(0) as string,
             'confirm "dev mode"-centric message'
-        ).to.be.true;
+        ).to.include('dev mode');
         expect(spyCall.args.at(-1), 'confirm `data` shape').to.deep.equal({
             data: {
                 localName: 'base',

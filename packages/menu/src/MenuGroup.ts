@@ -45,7 +45,10 @@ export class MenuGroup extends Menu {
         this.headerId = `sp-menu-group-label-${MenuGroup.instances}`;
     }
 
-    @queryAssignedNodes('header', true)
+    @queryAssignedNodes({
+        slot: 'header',
+        flatten: true,
+    })
     private headerElements!: NodeListOf<HTMLElement>;
 
     @state()
