@@ -20,8 +20,8 @@ import { elementUpdated, expect, fixture, html } from '@open-wc/testing';
 
 import {
     Default,
+    Horizontal,
     href,
-    smallHorizontal,
     StoryArgs,
 } from '../stories/card.stories.js';
 import { Checkbox } from '@spectrum-web-components/checkbox/src/Checkbox';
@@ -153,7 +153,7 @@ describe('card', () => {
     });
     it('loads - [horizontal]', async () => {
         const el = await fixture<Card>(
-            smallHorizontal(smallHorizontal.args as StoryArgs)
+            Horizontal(Horizontal.args as StoryArgs)
         );
 
         await elementUpdated(el);
@@ -210,8 +210,8 @@ describe('card', () => {
             [
                 'width: 200px;',
                 'display: inline-flex;',
-                '--spectrum-card-coverphoto-height: 136px;',
-                '--spectrum-actionbutton-height: 32px;',
+                '--mod-card-preview-minimum-height: 136px;',
+                '--mod-actionbutton-height: 32px;',
                 '--spectrum-icon-tshirt-size-height: 18px;',
                 '--spectrum-icon-tshirt-size-width: 18px;',
             ].join('')
@@ -237,14 +237,8 @@ describe('card', () => {
         await sendMouse({
             steps: [
                 {
-                    type: 'move',
+                    type: 'click',
                     position: [boundingRect.x, boundingRect.y],
-                },
-                {
-                    type: 'down',
-                },
-                {
-                    type: 'up',
                 },
             ],
         });
@@ -259,14 +253,8 @@ describe('card', () => {
         await sendMouse({
             steps: [
                 {
-                    type: 'move',
-                    position: [boundingRect.x + 1, boundingRect.y + 1],
-                },
-                {
-                    type: 'down',
-                },
-                {
-                    type: 'up',
+                    type: 'click',
+                    position: [boundingRect.x + 2, boundingRect.y + 2],
                 },
             ],
         });
