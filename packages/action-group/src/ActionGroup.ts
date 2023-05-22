@@ -163,7 +163,10 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         selected.forEach((el) => {
             el.selected = false;
             el.tabIndex = -1;
-            el.setAttribute('aria-checked', 'false');
+            el.setAttribute(
+                !this.selects ? 'aria-pressed' : 'aria-checked',
+                'false'
+            );
         });
     }
 
@@ -221,6 +224,7 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
         const options = this.buttons;
         switch (this.selects) {
             case 'single': {
+                // single behaves as a radio group
                 this.setAttribute('role', 'radiogroup');
                 const selections: ActionButton[] = [];
                 const updates = options.map(async (option) => {
@@ -245,7 +249,10 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                 break;
             }
             case 'multiple': {
-                this.setAttribute('role', 'group');
+                // switching from single to multiple, remove role="radiogroup"
+                if (this.getAttribute('role') === 'radiogroup') {
+                    this.removeAttribute('role');
+                }
                 const selection: string[] = [];
                 const selections: ActionButton[] = [];
                 const updates = options.map(async (option) => {
@@ -274,13 +281,12 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     const selections: ActionButton[] = [];
                     const updates = options.map(async (option) => {
                         await option.updateComplete;
-                        option.setAttribute(
-                            'aria-checked',
-                            option.selected ? 'true' : 'false'
-                        );
                         option.setAttribute('role', 'button');
                         if (option.selected) {
+                            option.setAttribute('aria-pressed', 'true');
                             selections.push(option);
+                        } else {
+                            option.removeAttribute('aria-pressed');
                         }
                     });
                     if (applied) break;
@@ -295,9 +301,13 @@ export class ActionGroup extends SizedMixin(SpectrumElement, {
                     this.buttons.forEach((option) => {
                         option.setAttribute('role', 'button');
                     });
-                    this.removeAttribute('role');
                     break;
                 }
+        }
+
+        // When no other role is defined, use role="toolbar", which is appropriate with roving tabindex.
+        if (!this.hasAttribute('role')) {
+            this.setAttribute('role', 'toolbar');
         }
     }
 
