@@ -24,11 +24,8 @@ import '@spectrum-web-components/table/sp-table-body.js';
 import '@spectrum-web-components/table/sp-table-row.js';
 import '@spectrum-web-components/table/sp-table-cell.js';
 import { Item, makeItems, Properties, renderItem } from './index.js';
-import type {
-    RangeChangedEvent,
-    SortedEventDetails,
-    Table,
-} from '@spectrum-web-components/table';
+import type { SortedEventDetails, Table } from '@spectrum-web-components/table';
+import { RangeChangedEvent } from '@lit-labs/virtualizer/events.js';
 
 export default {
     title: 'Table/Virtualized',

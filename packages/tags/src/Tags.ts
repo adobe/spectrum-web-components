@@ -34,7 +34,7 @@ export class Tags extends FocusVisiblePolyfillMixin(SpectrumElement) {
         return [styles];
     }
 
-    @queryAssignedNodes('')
+    @queryAssignedNodes()
     public defaultNodes!: Node[];
 
     public get tags(): Tag[] {

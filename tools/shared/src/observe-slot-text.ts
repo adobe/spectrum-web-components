@@ -65,7 +65,10 @@ export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
         @property({ type: Boolean, attribute: false })
         public slotHasContent = false;
 
-        @queryAssignedNodes(slotName, true)
+        @queryAssignedNodes({
+            slot: slotName,
+            flatten: true,
+        })
         private [assignedNodesList]!: NodeListOf<HTMLElement>;
 
         public manageTextObservedSlot(): void {

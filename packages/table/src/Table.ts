@@ -35,11 +35,10 @@ import {
     virtualizerRef,
 } from '@lit-labs/virtualizer/virtualize.js';
 import { Virtualizer } from '@lit-labs/virtualizer/Virtualizer.js';
-
-interface Range {
-    first: number;
-    last: number;
-}
+import {
+    RangeChangedEvent,
+    VisibilityChangedEvent,
+} from '@lit-labs/virtualizer/events.js';
 
 export enum RowType {
     ITEM = 0,
@@ -48,19 +47,6 @@ export enum RowType {
 
 export interface TableItem extends Record<string, unknown> {
     _$rowType$?: RowType;
-}
-
-export class RangeChangedEvent extends Event {
-    static eventName = 'rangeChanged';
-
-    first: number;
-    last: number;
-
-    constructor(range: Range) {
-        super(RangeChangedEvent.eventName, { bubbles: true });
-        this.first = range.first;
-        this.last = range.last;
-    }
 }
 
 /**
@@ -469,6 +455,17 @@ export class Table extends SizedMixin(SpectrumElement, {
                 (event: RangeChangedEvent) => {
                     this.dispatchEvent(
                         new RangeChangedEvent({
+                            first: event.first,
+                            last: event.last,
+                        })
+                    );
+                }
+            );
+            this.tableBody.addEventListener(
+                'visibilityChanged',
+                (event: VisibilityChangedEvent) => {
+                    this.dispatchEvent(
+                        new VisibilityChangedEvent({
                             first: event.first,
                             last: event.last,
                         })
