@@ -4612,9 +4612,9 @@
   integrity sha512-Ohiq+FIjzwxU/q5i8cgtJQn6Y24h7y1zvxA2L1v53ja40cJKzvAJSYjGVjyuOnLSftt//2xKza6AwPyJJmGEiA==
 
 "@spectrum-css/thumbnail@^3.0.5":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/thumbnail/-/thumbnail-3.0.5.tgz#4f86f645891265dcb4b5989e146c40194c610657"
-  integrity sha512-+AlBiChruK0SSnzeRdHGXJ3yBwyYv18Nw/UC1rzzCeuUFt34nifQGKV3W/Yd9X4viK4LKoEdyFvS5Y+KFujfVw==
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/thumbnail/-/thumbnail-3.0.7.tgz#041656116208ba0b8a2263e90a0573cb4b9bcb29"
+  integrity sha512-w4tGxDJTJaAy8BJrN55hUPoScOuvyGwxH0wKX9RpruSdCXHXRiQ8ft5tr/S8UuU4GbyBFc5JCIlLsqCahJLgSw==
 
 "@spectrum-css/toast@^8.0.15":
   version "8.0.15"
