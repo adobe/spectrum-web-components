@@ -207,7 +207,6 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     constructor() {
         super();
-        this.proxyFocus = this.proxyFocus.bind(this);
 
         this.addEventListener('click', this.handleClickCapture, {
             capture: true,
@@ -249,9 +248,9 @@ export class MenuItem extends LikeAnchor(Focusable) {
         }
     }
 
-    private proxyFocus(): void {
+    private proxyFocus = (): void => {
         this.focus();
-    }
+    };
 
     private shouldProxyClick(): boolean {
         let handled = false;
@@ -331,7 +330,7 @@ export class MenuItem extends LikeAnchor(Focusable) {
         this.setAttribute('tabindex', '-1');
         this.addEventListener('pointerdown', this.handlePointerdown);
         if (!this.hasAttribute('id')) {
-            this.id = `sp-menu-item-${MenuItem.instanceCount++}`;
+            this.id = `sp-menu-item-${crypto.randomUUID().slice(0, 8)}`;
         }
         this.addEventListener('pointerenter', this.closeOverlaysForRoot);
     }
@@ -513,12 +512,11 @@ export class MenuItem extends LikeAnchor(Focusable) {
         if (this.isInSubmenu) {
             return;
         }
-        addOrUpdateEvent.reset(this);
-        this.dispatchEvent(addOrUpdateEvent);
+        this.dispatchUpdate();
         this._parentElement = this.parentElement as HTMLElement;
     }
 
-    _parentElement!: HTMLElement;
+    _parentElement?: HTMLElement;
 
     public override disconnectedCallback(): void {
         removeEvent.reset(this);
@@ -534,6 +532,10 @@ export class MenuItem extends LikeAnchor(Focusable) {
             return;
         }
         await new Promise((ready) => requestAnimationFrame(ready));
+        this.dispatchUpdate();
+    }
+
+    protected dispatchUpdate(): void {
         addOrUpdateEvent.reset(this);
         this.dispatchEvent(addOrUpdateEvent);
     }

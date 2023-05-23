@@ -31,7 +31,81 @@ import {
 import { spy } from 'sinon';
 import { sendKeys } from '@web/test-runner-commands';
 
+async function usedHeapMB(): Promise<number> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    window.gc();
+    await nextFrame();
+    await nextFrame();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    return performance.memory.usedJSHeapSize / (1024 * 1024);
+}
+
 describe('Menu', () => {
+    describe('memory leak (#3164)', () => {
+        it('releases references when opened and closed', async function () {
+            if (!window.gc || !('memory' in performance)) this.skip();
+
+            this.timeout(10000);
+
+            const iterations = 100;
+            let active = false;
+
+            const el = document.createElement('div');
+            document.body.append(el);
+
+            async function toggle(
+                forced: boolean | undefined = undefined
+            ): Promise<void> {
+                active = forced != null ? forced : !active;
+                el.innerHTML = active
+                    ? `
+                        <sp-menu>
+                            <sp-menu-item value="item-1">
+                                Deselect
+                            </sp-menu-item>
+                            <sp-menu-item value="item-2">
+                                Select inverse
+                            </sp-menu-item>
+                            <sp-menu-item value="item-3">
+                                Feather...
+                            </sp-menu-item>
+                            <sp-menu-item value="item-4">
+                                Select and mask...
+                            </sp-menu-item>
+                            <sp-menu-item value="item-5">
+                                Save selection
+                            </sp-menu-item>
+                            <sp-menu-item value="item-6" disabled>
+                                Make work path
+                            </sp-menu-item>
+                        </sp-menu>
+                    `
+                    : '';
+                await nextFrame();
+            }
+
+            // "shake things out" to get a good first reading
+            for (let i = 0; i < 5; i++) {
+                await toggle();
+            }
+            await toggle(false);
+            const beforeMB = await usedHeapMB();
+
+            for (let i = 0; i < iterations; i++) {
+                await toggle();
+            }
+            await toggle(false);
+            const afterMB = await usedHeapMB();
+
+            expect(
+                afterMB - beforeMB,
+                `${beforeMB} rose to ${afterMB}`
+            ).to.be.approximately(0, 0.1);
+            el.remove();
+        });
+    });
     it('renders empty', async () => {
         const el = await fixture<Menu>(
             html`

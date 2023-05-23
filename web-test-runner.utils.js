@@ -17,6 +17,9 @@ import fg from 'fast-glob';
 
 export const chromium = playwrightLauncher({
     product: 'chromium',
+    launchOptions: {
+        args: ['--enable-precise-memory-info', '--js-flags=--expose-gc'],
+    },
     createBrowserContext: ({ browser }) =>
         browser.newContext({
             ignoreHTTPSErrors: true,
@@ -26,7 +29,11 @@ export const chromium = playwrightLauncher({
 export const chromiumWithFlags = playwrightLauncher({
     product: 'chromium',
     launchOptions: {
-        args: ['--enable-experimental-web-platform-features'],
+        args: [
+            '--enable-experimental-web-platform-features',
+            '--enable-precise-memory-info',
+            '--js-flags=--expose-gc',
+        ],
     },
     createBrowserContext: ({ browser }) =>
         browser.newContext({
