@@ -188,19 +188,17 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     }
 
     protected manageAutoFocus(): void {
-        if (this.autofocus) {
-            /**
-             * Trick :focus-visible polyfill into thinking keyboard based focus
-             *
-             * @private
-             **/
-            this.dispatchEvent(
-                new KeyboardEvent('keydown', {
-                    code: 'Tab',
-                })
-            );
-            this.focusElement.focus();
-        }
+        /**
+         * Trick :focus-visible polyfill into thinking keyboard based focus
+         *
+         * @private
+         **/
+        this.dispatchEvent(
+            new KeyboardEvent('keydown', {
+                code: 'Tab',
+            })
+        );
+        this.focusElement.focus();
     }
 
     protected override firstUpdated(changes: PropertyValues): void {
@@ -224,14 +222,6 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
         super.update(changedProperties);
     }
 
-    protected override updated(changedProperties: PropertyValues): void {
-        super.updated(changedProperties);
-
-        if (changedProperties.has('disabled') && this.disabled) {
-            this.blur();
-        }
-    }
-
     private async handleDisabledChanged(
         disabled: boolean,
         oldDisabled: boolean
@@ -248,6 +238,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             } else {
                 this.setAttribute('aria-disabled', 'true');
             }
+            this.blur();
         } else if (oldDisabled) {
             this.manipulatingTabindex = true;
             if (this.focusElement === this) {
@@ -266,8 +257,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
 
     protected override async getUpdateComplete(): Promise<boolean> {
         const complete = (await super.getUpdateComplete()) as boolean;
-        if (this._recentlyConnected) {
-            this._recentlyConnected = false;
+        if (this._recentlyConnected && this.autofocus) {
             // If at connect time the [autofocus] content is placed within
             // content that needs to be "hidden" by default, it would need to wait
             // two rAFs for animations to be triggered on that content in
@@ -279,6 +269,7 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
             await nextFrame();
             await nextFrame();
         }
+        this._recentlyConnected = false;
         return complete;
     }
 
@@ -287,8 +278,10 @@ export class Focusable extends FocusVisiblePolyfillMixin(SpectrumElement) {
     public override connectedCallback(): void {
         super.connectedCallback();
         this._recentlyConnected = true;
-        this.updateComplete.then(() => {
-            this.manageAutoFocus();
-        });
+        if (this.autofocus) {
+            this.updateComplete.then(() => {
+                this.manageAutoFocus();
+            });
+        }
     }
 }

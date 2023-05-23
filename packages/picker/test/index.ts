@@ -179,13 +179,9 @@ export function runPickerTests(): void {
             );
 
             const items = el.querySelectorAll('sp-menu-item');
-            const removals: Promise<unknown>[] = [];
             items.forEach((item) => {
-                const removal = oneEvent(el, 'sp-menu-item-removed');
                 item.remove();
-                removals.push(removal);
             });
-            await Promise.all(removals);
             await elementUpdated(el);
             expect(el.value).to.equal('');
             expect((el.button.textContent || '').trim()).to.equal('');

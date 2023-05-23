@@ -42,62 +42,28 @@ import { MutationController } from '@lit-labs/observers/mutation-controller.js';
  **/
 const POINTERLEAVE_TIMEOUT = 100;
 
-export class MenuItemRemovedEvent extends Event {
-    constructor() {
-        super('sp-menu-item-removed', {
-            bubbles: true,
-            composed: true,
-        });
-    }
-    get item(): MenuItem {
-        return this._item;
-    }
-    _item!: MenuItem;
-    focused = false;
-    reset(item: MenuItem): void {
-        this._item = item;
-    }
-}
-
 export class MenuItemAddedOrUpdatedEvent extends Event {
-    constructor() {
+    constructor(item: MenuItem) {
         super('sp-menu-item-added-or-updated', {
             bubbles: true,
             composed: true,
         });
-    }
-    set focusRoot(root: Menu | undefined) {
-        this.item.menuData.focusRoot = this.item.menuData.focusRoot || root;
-    }
-    set selectionRoot(root: Menu) {
-        this.item.menuData.selectionRoot =
-            this.item.menuData.selectionRoot || root;
-    }
-    get item(): MenuItem {
-        return this._item;
-    }
-    _item!: MenuItem;
-    set currentAncestorWithSelects(ancestor: Menu | undefined) {
-        this._currentAncestorWithSelects = ancestor;
-    }
-    get currentAncestorWithSelects(): Menu | undefined {
-        return this._currentAncestorWithSelects;
-    }
-    _currentAncestorWithSelects?: Menu;
-    reset(item: MenuItem): void {
         this._item = item;
-        this._currentAncestorWithSelects = undefined;
+        this.currentAncestorWithSelects = undefined;
         item.menuData = {
+            cleanupSteps: [],
             focusRoot: undefined,
             selectionRoot: undefined,
         };
     }
+    get item(): MenuItem {
+        return this._item;
+    }
+    private _item!: MenuItem;
+    currentAncestorWithSelects?: Menu;
 }
 
 export type MenuItemChildren = { icon: Element[]; content: Node[] };
-
-const addOrUpdateEvent = new MenuItemAddedOrUpdatedEvent();
-const removeEvent = new MenuItemRemovedEvent();
 
 /**
  * @element sp-menu-item
@@ -107,14 +73,11 @@ const removeEvent = new MenuItemRemovedEvent();
  * @slot value - content placed at the end of the Menu Item like values, keyboard shortcuts, etc.
  * @slot submenu - content placed in a submenu
  * @fires sp-menu-item-added - announces the item has been added so a parent menu can take ownerships
- * @fires sp-menu-item-removed - announces when removed from the DOM so the parent menu can remove ownership and update selected state
  */
 export class MenuItem extends LikeAnchor(Focusable) {
     public static override get styles(): CSSResultArray {
         return [menuItemStyles, checkmarkStyles, chevronStyles];
     }
-
-    static instanceCount = 0;
 
     private isInSubmenu = false;
 
@@ -460,10 +423,16 @@ export class MenuItem extends LikeAnchor(Focusable) {
 
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
-        if (changes.has('label')) {
+        if (
+            changes.has('label') &&
+            (this.label || typeof changes.get('label') !== 'undefined')
+        ) {
             this.setAttribute('aria-label', this.label || '');
         }
-        if (changes.has('active')) {
+        if (
+            changes.has('active') &&
+            (this.active || typeof changes.get('active') !== 'undefined')
+        ) {
             if (this.active) {
                 this.addEventListener('pointerup', this.handleRemoveActive);
                 this.addEventListener('pointerleave', this.handleRemoveActive);
@@ -509,49 +478,46 @@ export class MenuItem extends LikeAnchor(Focusable) {
     public override connectedCallback(): void {
         super.connectedCallback();
         this.isInSubmenu = !!this.closest('[slot="submenu"]');
-        if (this.isInSubmenu) {
-            return;
-        }
-        this.dispatchUpdate();
-        this._parentElement = this.parentElement as HTMLElement;
+        this.triggerUpdate();
     }
 
-    _parentElement?: HTMLElement;
-
     public override disconnectedCallback(): void {
-        removeEvent.reset(this);
         if (!this.isInSubmenu) {
-            this._parentElement?.dispatchEvent(removeEvent);
+            this.menuData.cleanupSteps.forEach((removal) => removal(this));
         }
         this.isInSubmenu = false;
         super.disconnectedCallback();
     }
 
+    private willDispatchUpdate = false;
+
     public async triggerUpdate(): Promise<void> {
-        if (this.isInSubmenu) {
+        if (this.willDispatchUpdate || this.isInSubmenu) {
             return;
         }
+        this.willDispatchUpdate = true;
         await new Promise((ready) => requestAnimationFrame(ready));
         this.dispatchUpdate();
     }
 
-    protected dispatchUpdate(): void {
-        addOrUpdateEvent.reset(this);
-        this.dispatchEvent(addOrUpdateEvent);
+    public dispatchUpdate(): void {
+        this.dispatchEvent(new MenuItemAddedOrUpdatedEvent(this));
+        this.willDispatchUpdate = false;
     }
 
     public menuData: {
         focusRoot?: Menu;
         selectionRoot?: Menu;
+        cleanupSteps: ((item: MenuItem) => void)[];
     } = {
         focusRoot: undefined,
         selectionRoot: undefined,
+        cleanupSteps: [],
     };
 }
 
 declare global {
     interface GlobalEventHandlersEventMap {
         'sp-menu-item-added-or-updated': MenuItemAddedOrUpdatedEvent;
-        'sp-menu-item-removed': MenuItemRemovedEvent;
     }
 }

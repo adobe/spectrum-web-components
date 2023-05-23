@@ -26,7 +26,7 @@ measureFixtureCreation(html`
             <sp-menu-item>Action 3</sp-menu-item>
         </sp-menu-group>
         <sp-menu-divider></sp-menu-divider>
-        <sp-menu-group selects="inherit">
+        <sp-menu-group selects="single">
             <span slot="header">Section Heading</span>
             <sp-menu-item>Save</sp-menu-item>
             <sp-menu-item disabled>Download</sp-menu-item>

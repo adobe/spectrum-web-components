@@ -23,10 +23,7 @@ import {
 } from '@spectrum-web-components/base/src/decorators.js';
 
 import { MenuItem } from './MenuItem.js';
-import type {
-    MenuItemAddedOrUpdatedEvent,
-    MenuItemRemovedEvent,
-} from './MenuItem.js';
+import type { MenuItemAddedOrUpdatedEvent } from './MenuItem.js';
 import menuStyles from './menu.css.js';
 
 export interface MenuChildItem {
@@ -174,7 +171,7 @@ export class Menu extends SpectrumElement {
             // Only have one tab stop per Menu tree
             this.tabIndex = -1;
         }
-        event.focusRoot = this;
+        event.item.menuData.focusRoot = event.item.menuData.focusRoot || this;
         this.addChildItem(event.item);
 
         if (this.selects === 'inherit') {
@@ -213,12 +210,22 @@ export class Menu extends SpectrumElement {
         const selects =
             this.resolvedSelects === 'single' ||
             this.resolvedSelects === 'multiple';
+        event.item.menuData.cleanupSteps.push((item: MenuItem) =>
+            this.removeChildItem(item)
+        );
         if (
             (selects || (!this.selects && this.resolvedSelects !== 'ignore')) &&
             !event.item.menuData.selectionRoot
         ) {
             event.item.setRole(this.childRole);
-            event.selectionRoot = this;
+            event.item.menuData.selectionRoot =
+                event.item.menuData.selectionRoot || this;
+            if (event.item.selected) {
+                this.selectedItemsMap.set(event.item, true);
+                this.selectedItems = [...this.selectedItems, event.item];
+                this.selected = [...this.selected, event.item.value];
+                this.value = this.selected.join(this.valueSeparator);
+            }
         }
     }
 
@@ -227,10 +234,10 @@ export class Menu extends SpectrumElement {
         this.handleItemsChanged();
     }
 
-    private async removeChildItem(event: MenuItemRemovedEvent): Promise<void> {
-        this.childItemSet.delete(event.item);
+    private async removeChildItem(item: MenuItem): Promise<void> {
+        this.childItemSet.delete(item);
         this.cachedChildItems = undefined;
-        if (event.item.focused) {
+        if (item.focused) {
             this.handleItemsChanged();
             await this.updateComplete;
             this.focus();
@@ -252,8 +259,7 @@ export class Menu extends SpectrumElement {
             }
         );
 
-        this.addEventListener('sp-menu-item-removed', this.removeChildItem);
-        this.addEventListener('click', this.onClick);
+        this.addEventListener('click', this.handleClick);
         this.addEventListener('focusin', this.handleFocusin);
     }
 
@@ -280,7 +286,7 @@ export class Menu extends SpectrumElement {
         }
     }
 
-    private onClick(event: Event): void {
+    private handleClick(event: Event): void {
         if (event.defaultPrevented) {
             return;
         }
@@ -422,7 +428,6 @@ export class Menu extends SpectrumElement {
             this.selectedItems = [targetItem];
         }
 
-        await this.updateComplete;
         const applyDefault = this.dispatchEvent(
             new Event('change', {
                 cancelable: true,
@@ -593,23 +598,18 @@ export class Menu extends SpectrumElement {
     private handleItemsChanged(): void {
         this.cachedChildItems = undefined;
         if (!this._willUpdateItems) {
-            /* c8 ignore next 3 */
-            let resolve = (): void => {
-                return;
-            };
-            this.cacheUpdated = new Promise((res) => (resolve = res));
             this._willUpdateItems = true;
-            // Debounce the update so we only update once
-            // if multiple items have changed
-            window.requestAnimationFrame(() => {
-                if (this.cachedChildItems === undefined) {
-                    this.updateSelectedItemIndex();
-                    this.updateItemFocus();
-                }
-                this._willUpdateItems = false;
-                resolve();
-            });
+            this.cacheUpdated = this.updateCache();
         }
+    }
+
+    private async updateCache(): Promise<void> {
+        await new Promise((res) => requestAnimationFrame(() => res(true)));
+        if (this.cachedChildItems === undefined) {
+            this.updateSelectedItemIndex();
+            this.updateItemFocus();
+        }
+        this._willUpdateItems = false;
     }
 
     private updateItemFocus(): void {
@@ -645,8 +645,6 @@ export class Menu extends SpectrumElement {
         `;
     }
 
-    private _notFirstUpdated = false;
-
     protected override firstUpdated(changed: PropertyValues): void {
         super.firstUpdated(changed);
         if (!this.hasAttribute('tabindex') && !this.ignore) {
@@ -670,17 +668,19 @@ export class Menu extends SpectrumElement {
 
     protected override updated(changes: PropertyValues<this>): void {
         super.updated(changes);
-        if (changes.has('selects') && this._notFirstUpdated) {
+        if (changes.has('selects') && this.hasUpdated) {
             this.selectsChanged();
         }
-        if (changes.has('label')) {
+        if (
+            changes.has('label') &&
+            (this.label || typeof changes.get('label') !== 'undefined')
+        ) {
             if (this.label) {
                 this.setAttribute('aria-label', this.label);
             } else {
                 this.removeAttribute('aria-label');
             }
         }
-        this._notFirstUpdated = true;
     }
 
     protected selectsChanged(): void {

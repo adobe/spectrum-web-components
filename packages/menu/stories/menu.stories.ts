@@ -20,10 +20,20 @@ import '@spectrum-web-components/menu/sp-menu-group.js';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-checkmark-circle.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-show-menu.js';
+import './index.js';
 
 export default {
     component: 'sp-menu',
     title: 'Menu',
+};
+
+export const leakCheck = (): TemplateResult =>
+    html`
+        <menu-test></menu-test>
+    `;
+
+leakCheck.swc_vrt = {
+    skip: true,
 };
 
 export const Default = (): TemplateResult => {

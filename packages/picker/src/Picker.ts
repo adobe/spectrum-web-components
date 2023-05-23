@@ -39,7 +39,6 @@ import type {
     MenuItem,
     MenuItemAddedOrUpdatedEvent,
     MenuItemChildren,
-    MenuItemRemovedEvent,
 } from '@spectrum-web-components/menu';
 import '@spectrum-web-components/tray/sp-tray.js';
 import '@spectrum-web-components/popover/sp-popover.js';
@@ -528,10 +527,16 @@ export class PickerBase extends SizedMixin(Focusable) {
      * direct element query or by assuming the list managed
      * by the Menu within the open options overlay.
      */
-    protected updateMenuItems(
-        event?: MenuItemAddedOrUpdatedEvent | MenuItemRemovedEvent
-    ): void {
-        if (this.open && event?.type === 'sp-menu-item-removed') return;
+    protected updateMenuItems(event?: MenuItemAddedOrUpdatedEvent): void {
+        if (event) {
+            event.item.menuData.cleanupSteps.push((item: MenuItem) =>
+                this.updateMenuItems({
+                    item,
+                    type: 'removed',
+                } as MenuItemAddedOrUpdatedEvent)
+            );
+        }
+        if (this.open && event?.type === 'removed') return;
         if (this._willUpdateItems) return;
         this._willUpdateItems = true;
         if (event?.item === this.selectedItem) {
@@ -609,7 +614,6 @@ export class PickerBase extends SizedMixin(Focusable) {
             'sp-menu-item-added-or-updated',
             this.updateMenuItems
         );
-        this.addEventListener('sp-menu-item-removed', this.updateMenuItems);
         super.connectedCallback();
     }
 
