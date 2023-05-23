@@ -4602,9 +4602,9 @@
   integrity sha512-Ju/hIk778zVdD6BGHbNdxmVpnmcIA4Q21Mh/Xswqgnf+Zb2jz/N/Y9MpyKR+9ChYL0ZxdOZdPljufK2lxgH5nw==
 
 "@spectrum-css/taggroup@^3.3.44":
-  version "3.3.44"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-3.3.44.tgz#6009c1bd40c8b72dc94e487b118943c8c56aa452"
-  integrity sha512-X2Qk0hAdNuw/iziXGnhU7fy4U4nv+FbWHFnjipkMVd5C1nyQWqDZQUaatMUIBe931Zdwy93x8M4CKssDonBkIw==
+  version "3.3.46"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/taggroup/-/taggroup-3.3.46.tgz#cc5a1a592014ed918cceddd6a6536d7098209d4c"
+  integrity sha512-sebQ1ewdskpgl3p9OSfwrJahEKozk8BmFPhhLsfjMtlFsTuSyN9qk7RznbPHmRa4iUlmBj2NKy9i7nYeZnSSdg==
 
 "@spectrum-css/textfield@^3.2.16":
   version "3.2.16"
