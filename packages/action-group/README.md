@@ -372,7 +372,7 @@ When more than one `<sp-action-group>` elements are combined together with in a 
     import '@spectrum-web-components/icons-workflow/icons/sp-icon-cut.js';
 </script>
 
-```html demo
+```html
 <div
     aria-label="Text Formatting"
     role="toolbar"
@@ -428,14 +428,33 @@ When more than one `<sp-action-group>` elements are combined together with in a 
     ></sp-divider>
     <sp-action-group
         aria-label="List Style"
-        selects="single"
+        selects="multiple"
+        role="group"
         compact
         emphasized
     >
-        <sp-action-button label="Bulleted" value="bulleted">
+        <sp-action-button
+            label="Bulleted"
+            value="bulleted"
+            onclick="
+                /* makes mutually exclusive checkbox */
+                this.selected &&
+                    requestAnimationFrame(() => this.parentElement.selected = []);
+                this.parentElement.selected = [];
+            "
+        >
             <sp-icon-text-bulleted slot="icon"></sp-icon-text-bulleted>
         </sp-action-button>
-        <sp-action-button label="Numbering" value="numbering">
+        <sp-action-button
+            label="Numbering"
+            value="numbering"
+            onclick="
+                /* makes mutually exclusive checkbox */
+                this.selected && 
+                    requestAnimationFrame(() => this.parentElement.selected = []);
+                this.parentElement.selected = [];
+            "
+        >
             <sp-icon-text-numbered slot="icon"></sp-icon-text-numbered>
         </sp-action-button>
     </sp-action-group>
