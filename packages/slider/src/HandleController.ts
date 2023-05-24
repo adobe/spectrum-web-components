@@ -432,7 +432,7 @@ export class HandleController implements Controller {
         const input = event.target as InputWithModel;
         input.model.handle.value = input.valueAsNumber;
 
-        // this.requestUpdate();
+        this.requestUpdate();
         this.dispatchChangeEvent(input, input.model.handle);
     };
 
