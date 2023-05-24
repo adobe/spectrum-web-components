@@ -96,6 +96,9 @@ export function runPickerTests(): void {
             await expect(el).to.be.accessible();
         });
         it('closes accessibly', async () => {
+            el.focus();
+            await elementUpdated(el);
+            expect(el.shadowRoot?.activeElement).to.equal(el.button);
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
@@ -104,12 +107,20 @@ export function runPickerTests(): void {
             const accessibleCloseButton = document.querySelector(
                 '.visually-hidden button'
             ) as HTMLButtonElement;
+            expect(accessibleCloseButton).to.have.attribute(
+                'aria-label',
+                'Dismiss'
+            );
 
             const closed = oneEvent(el, 'sp-closed');
             accessibleCloseButton.click();
             await closed;
 
+            await elementUpdated(el);
+
             expect(el.open).to.be.false;
+            expect(el.shadowRoot?.activeElement).to.equal(el.button);
+            expect(document.activeElement).to.eq(el);
         });
         it('accepts new selected item content', async () => {
             const option2 = el.querySelector('[value="option-2"') as MenuItem;

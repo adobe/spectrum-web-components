@@ -476,7 +476,7 @@ export class PickerBase extends SizedMixin(Focusable) {
             <div class="visually-hidden">
                 <button
                     tabindex="-1"
-                    arial-label="Dismiss"
+                    aria-label="Dismiss"
                     @click=${this.close}
                 ></button>
             </div>
