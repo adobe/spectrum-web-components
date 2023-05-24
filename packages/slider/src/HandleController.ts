@@ -112,6 +112,29 @@ export class HandleController implements Controller {
         }
     }
 
+    lastRan = 0;
+    lastFuncReference: NodeJS.Timeout | undefined;
+
+    private throttleWithTrailingMethod = (
+        callback: () => void,
+        limit: number
+    ) => {
+        return () => {
+            if (this.lastRan === 0) {
+                callback();
+                this.lastRan = Date.now();
+            } else {
+                clearTimeout(this.lastFuncReference);
+                this.lastFuncReference = setTimeout(() => {
+                    if (Date.now() - this.lastRan >= limit) {
+                        callback();
+                        this.lastRan = Date.now();
+                    }
+                }, limit - (Date.now() - this.lastRan));
+            }
+        };
+    };
+
     /**
      * It is possible for value attributes to be set programmatically. The <input>
      * for a particular slider needs to have an opportunity to validate any such
@@ -127,7 +150,10 @@ export class HandleController implements Controller {
         const { input } = elements;
         if (input.valueAsNumber === handle.value) {
             if (handle.dragging) {
-                handle.dispatchInputEvent();
+                this.throttleWithTrailingMethod(
+                    () => handle.dispatchInputEvent(),
+                    1
+                )();
             }
         } else {
             input.valueAsNumber = handle.value;
@@ -361,41 +387,6 @@ export class HandleController implements Controller {
         this.requestUpdate();
     }
 
-    // Check if the new handle position matches any step value
-    private _hasHandleLocationChanged(
-        input: InputWithModel,
-        handlePosition: number,
-        model: ModelValue
-    ): boolean {
-        // Calculate the number of steps from the minimum value
-        const handleStep = Math.round(
-            (handlePosition - model.clamp.min) / model.step
-        );
-
-        // Calculate the mapped value e.g. step 1.5, 2, 2.5...
-        const mappedValueToModelStep =
-            model.clamp.min + handleStep * model.step;
-        let newStep = 0;
-
-        // e.g 58.49999 - should be 58.5
-        if (!(mappedValueToModelStep % 1 === 0)) {
-            newStep = parseFloat(
-                mappedValueToModelStep.toFixed(this.countDecimals(model.step))
-            );
-        } else {
-            newStep = mappedValueToModelStep;
-        }
-
-        return input.valueAsNumber !== newStep;
-    }
-
-    // Check how many decimals in a number
-    private countDecimals = (value: number): number => {
-        if (Math.floor(value) !== value)
-            return value.toString().split('.')[1].length || 0;
-        return 0;
-    };
-
     public handlePointerup(event: PointerEvent): void {
         const { input, model } = this.extractDataFromEvent(event);
         delete this._activePointerEventData;
@@ -419,11 +410,6 @@ export class HandleController implements Controller {
         event.stopPropagation();
         const handlePosition = this.calculateHandlePosition(event, model);
 
-        if (!this._hasHandleLocationChanged(input, handlePosition, model)) {
-            return;
-        }
-
-        model.handle.dragging = true;
         model.handle.value = handlePosition;
         input.value = handlePosition.toString();
         this.host.indeterminate = false;
