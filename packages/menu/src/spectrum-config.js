@@ -370,17 +370,6 @@ const config = {
             includeByWholeSelector: [
                 /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item */
                 [
-                    builder.attribute('dir', 'ltr'),
-                    builder.combinator(' '),
-                    builder.class('spectrum-Menu'),
-                    builder.class('is-selectable'),
-                    builder.combinator(' '),
-                    builder.class('spectrum-Menu-item'),
-                ],
-                /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item */
-                [
-                    builder.attribute('dir', 'rtl'),
-                    builder.combinator(' '),
                     builder.class('spectrum-Menu'),
                     builder.class('is-selectable'),
                     builder.combinator(' '),
@@ -388,23 +377,10 @@ const config = {
                 ],
                 /* [dir=ltr] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
                 [
-                    builder.attribute('dir', 'ltr'),
-                    builder.combinator(' '),
                     builder.class('spectrum-Menu'),
                     builder.class('is-selectable'),
                     builder.combinator(' '),
-                    builder.class('spectrum-Menu-item'),
-                    builder.class('is-selected'),
-                ],
-                /* [dir=rtl] .spectrum-Menu.is-selectable .spectrum-Menu-item.is-selected */
-                [
-                    builder.attribute('dir', 'rtl'),
-                    builder.combinator(' '),
-                    builder.class('spectrum-Menu'),
-                    builder.class('is-selectable'),
-                    builder.combinator(' '),
-                    builder.class('spectrum-Menu-item'),
-                    builder.class('is-selected'),
+                    builder.class('spectrum-Menu-item--is-selected'),
                 ],
             ],
             components: [
@@ -433,10 +409,7 @@ const config = {
                 },
                 {
                     collapseSelector: true,
-                    find: [
-                        builder.class('spectrum-Menu-item'),
-                        builder.class('is-selected'),
-                    ],
+                    find: [builder.class('spectrum-Menu-item--is-selected')],
                     replace: [
                         {
                             replace: {

@@ -282,6 +282,24 @@ governing permissions and limitations under the License.
     overflow: auto;
     padding: 0;
 }
+:host([selects]) ::slotted(sp-menu-item) {
+    --spectrum-menu-checkmark-display: var(
+        --spectrum-menu-checkmark-display-hidden
+    );
+    padding-inline-start: var(
+        --mod-menu-item-selectable-edge-to-text-not-selected,
+        var(--spectrum-menu-item-selectable-edge-to-text-not-selected)
+    );
+}
+:host([selects]) ::slotted(sp-menu-item[selected]) {
+    --spectrum-menu-checkmark-display: var(
+        --spectrum-menu-checkmark-display-shown
+    );
+    padding-inline-start: var(
+        --mod-menu-item-label-inline-edge-to-content,
+        var(--spectrum-menu-item-label-inline-edge-to-content)
+    );
+}
 li:not(::slotted(sp-menu-item), .menu-divider) {
     align-items: center;
     background-color: var(

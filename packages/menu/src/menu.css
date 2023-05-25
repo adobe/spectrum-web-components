@@ -20,16 +20,6 @@ governing permissions and limitations under the License.
     flex-direction: column;
 
     /**
-     * TODO: remove the following when https://github.com/adobe/spectrum-css/issues/1130
-     is correct
-     */
-    --spectrum-listitem-selectable-padding-left: calc(
-        var(--spectrum-global-dimension-size-100) +
-            var(--spectrum-menu-item-checkmark-width) +
-            var(--spectrum-listitem-icon-gap)
-    );
-
-    /**
      * Allow menu elements to be foreced to width 100% when placed inside of a Tray
      **/
     width: var(--swc-menu-width);
