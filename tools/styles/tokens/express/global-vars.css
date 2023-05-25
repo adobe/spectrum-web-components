@@ -1320,6 +1320,42 @@ governing permissions and limitations under the License.
 
 :host,
 :root {
+    --system-spectrum-stepper-border-width: var(--spectrum-border-width-200);
+    --system-spectrum-stepper-button-border-width-reset: 0;
+    --system-spectrum-stepper-button-icon-nudge: calc(
+        -1 * var(--spectrum-stepper-button-border-radius-reset)
+    );
+    --system-spectrum-stepper-button-gap-reset: var(
+        --spectrum-border-width-200
+    );
+    --system-spectrum-stepper-button-border-radius-reset: calc(
+        var(--spectrum-corner-radius-100) - var(--spectrum-border-width-200) * 2
+    );
+    --system-spectrum-stepper-border-color: var(--spectrum-gray-400);
+    --system-spectrum-stepper-border-color-hover: var(--spectrum-gray-500);
+    --system-spectrum-stepper-border-color-focus: var(--spectrum-gray-800);
+    --system-spectrum-stepper-border-color-focus-hover: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-stepper-border-color-keyboard-focus: var(
+        --spectrum-gray-900
+    );
+    --system-spectrum-stepper-button-background-color-default: var(
+        --spectrum-gray-200
+    );
+    --system-spectrum-stepper-button-background-color-hover: var(
+        --spectrum-gray-300
+    );
+    --system-spectrum-stepper-button-background-color-focus: var(
+        --spectrum-gray-400
+    );
+    --system-spectrum-stepper-button-background-color-keyboard-focus: var(
+        --spectrum-gray-300
+    );
+}
+
+:host,
+:root {
     --system-spectrum-textfield-border-color: var(--spectrum-gray-400);
     --system-spectrum-textfield-border-color-hover: var(--spectrum-gray-500);
     --system-spectrum-textfield-border-color-focus: var(--spectrum-gray-800);

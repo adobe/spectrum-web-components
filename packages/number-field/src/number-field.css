@@ -12,10 +12,6 @@ governing permissions and limitations under the License.
 
 @import './spectrum-number-field.css';
 
-:host {
-    width: var(--spectrum-stepper-width);
-}
-
 :host([quiet]) {
     width: var(--spectrum-stepper-quiet-width);
 }
@@ -38,6 +34,8 @@ sp-field-button {
     --mod-actionbutton-background-color-disabled: var(
         --spectrum-global-color-gray-200
     );
+
+    flex-shrink: 0;
 }
 
 :host([readonly]) .buttons {
@@ -134,4 +132,10 @@ sp-field-button {
     #textfield:hover
     .input {
     border-color: transparent;
+}
+
+:host([hide-stepper]:not([quiet])) #textfield input {
+    border: var(--spectrum-textfield-border-width) solid
+        var(--spectrum-textfield-border-color);
+    border-radius: var(--spectrum-textfield-corner-radius);
 }
