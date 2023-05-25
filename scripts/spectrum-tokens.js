@@ -65,6 +65,7 @@ const tokenPackages = [
     'popover',
     'thumbnail',
     'dropzone',
+    'stepper',
     'textfield',
 ];
 

@@ -12,243 +12,109 @@ governing permissions and limitations under the License.
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
 :host {
-    --spectrum-stepper-width: var(--spectrum-global-dimension-size-900);
-    --spectrum-stepper-border-size: var(
-        --spectrum-alias-border-size-thin,
-        var(--spectrum-global-dimension-static-size-10)
-    );
-    --spectrum-stepper-button-height: calc(
-        var(
-                --spectrum-alias-single-line-height,
-                var(--spectrum-global-dimension-size-400)
-            ) / 2
-    );
-    --spectrum-stepper-button-width: calc(
-        var(--spectrum-global-dimension-size-300) -
-            var(--spectrum-stepper-border-size)
-    );
-    --spectrum-stepper-button-padding: calc(
-        var(--spectrum-global-dimension-size-150) / 2
-    );
-    --spectrum-stepper-border-radius-reset: 0;
-    --spectrum-stepper-border-size-reset: 0;
-    --spectrum-stepper-icon-nudge-top: var(--spectrum-global-dimension-size-10);
-    --spectrum-stepper-icon-nudge: var(--spectrum-global-dimension-size-25);
-    --spectrum-stepper-quiet-width: var(--spectrum-global-dimension-size-600);
+    --spectrum-stepper-width-medium: 72px;
+    --spectrum-stepper-width-large: 90px;
+    --spectrum-stepper-icon-width-medium: 10px;
+    --spectrum-stepper-icon-width-large: 12px;
+    --spectrum-stepper-width: var(--spectrum-stepper-width-medium);
+    --spectrum-stepper-icon-width: var(--spectrum-stepper-icon-width-medium);
+    --spectrum-stepper-icon-nudge-start: 1px;
     --spectrum-stepper-button-offset: calc(
         var(--spectrum-stepper-button-width) / 2 -
-            var(--spectrum-alias-ui-icon-chevron-size-75) / 2
+            var(--spectrum-stepper-icon-width) / 2
     );
-    --spectrum-stepper-quiet-button-width: calc(
-        var(--spectrum-stepper-button-width) -
-            var(--spectrum-stepper-button-offset)
+    --spectrum-stepper-animation-duration: var(
+        --spectrum-animation-duration-100
     );
+    --spectrum-stepper-buttons-height: var(--spectrum-component-height-100);
+    --spectrum-stepper-border-radius: var(--spectrum-corner-radius-100);
+    --spectrum-stepper-button-width: calc(
+        var(--spectrum-spacing-400) - var(--spectrum-stepper-border-width) * 2
+    );
+    --spectrum-stepper-button-gap: var(--spectrum-stepper-button-gap-reset);
+    --spectrum-stepper-background-color: var(--spectrum-gray-50);
+    --spectrum-stepper-background-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --spectrum-stepper-quiet-width: var(--spectrum-component-height-300);
+    --spectrum-stepper-quiet-button-width: var(--spectrum-stepper-button-width);
+    --spectrum-stepper-border-color-disabled: var(
+        --spectrum-disabled-background-color
+    );
+    --spectrum-stepper-border-color-quiet-disabled: var(
+        --spectrum-disabled-border-color
+    );
+    --spectrum-stepper-border-color-invalid-default: var(
+        --spectrum-negative-border-color-default
+    );
+    --spectrum-stepper-border-color-invalid-hover: var(
+        --spectrum-negative-border-color-hover
+    );
+    --spectrum-stepper-border-color-invalid-focus: var(
+        --spectrum-negative-border-color-focus
+    );
+    --spectrum-stepper-border-color-invalid-focus-hover: var(
+        --spectrum-negative-border-color-focus-hover
+    );
+    --spectrum-stepper-border-color-invalid-keyboard-focus: var(
+        --spectrum-negative-border-color-key-focus
+    );
+    --spectrum-stepper-focus-indicator-width: var(
+        --spectrum-focus-indicator-thickness
+    );
+    --spectrum-stepper-focus-indicator-gap: var(--spectrum-focus-indicator-gap);
+    --spectrum-stepper-focus-indicator-color: var(
+        --spectrum-focus-indicator-color
+    );
+}
+#textfield .spectrum--medium {
+    --spectrum-stepper-width: var(--spectrum-stepper-width-medium);
+    --spectrum-stepper-icon-width: var(--spectrum-stepper-icon-width-medium);
+    --spectrum-stepper-button-padding: calc(var(--spectrum-spacing-200) / 2);
+}
+#textfield .spectrum--large {
+    --spectrum-stepper-width: var(--spectrum-stepper-width-large);
+    --spectrum-stepper-icon-width: var(--spectrum-stepper-icon-width-large);
+    --spectrum-stepper-button-padding: calc(var(--spectrum-spacing-100) / 2);
+}
+@media (forced-colors: active) {
+    :host {
+        --highcontrast-stepper-border-color: CanvasText;
+        --highcontrast-stepper-border-color-hover: Highlight;
+        --highcontrast-stepper-border-color-focus: Highlight;
+        --highcontrast-stepper-border-color-focus-hover: Highlight;
+        --highcontrast-stepper-border-color-keyboard-focus: CanvasText;
+        --highcontrast-stepper-border-color-disabled: GrayText;
+        --highcontrast-stepper-border-color-quiet-disabled: GrayText;
+        --highcontrast-stepper-border-color-invalid-default: Highlight;
+        --highcontrast-stepper-border-color-invalid-hover: Highlight;
+        --highcontrast-stepper-border-color-invalid-focus: Highlight;
+        --highcontrast-stepper-border-color-invalid-focus-hover: Highlight;
+        --highcontrast-stepper-border-color-invalid-keyboard-focus: Highlight;
+        --highcontrast-stepper-button-background-color-default: Canvas;
+        --highcontrast-stepper-button-background-color-hover: Canvas;
+        --highcontrast-stepper-button-background-color-focus: Canvas;
+        --highcontrast-stepper-button-background-color-keyboard-focus: Canvas;
+        --highcontrast-stepper-focus-indicator-color: Highlight;
+    }
+}
+.x {
+    border-radius: var(--spectrum-stepper-button-border-radius-reset);
 }
 #textfield {
     border-radius: var(
-        --spectrum-alias-border-radius-regular,
-        var(--spectrum-global-dimension-size-50)
+        --mod-stepper-border-radius,
+        var(--spectrum-stepper-border-radius)
     );
     display: inline-flex;
     flex-flow: row;
+    inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
     line-height: 0;
-    transition: border-color
-            var(--spectrum-global-animation-duration-100, 0.13s) ease-in-out,
-        box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
-            ease-in-out;
-    width: var(--spectrum-stepper-width);
-}
-#textfield:before {
-    content: '';
-}
-:host([dir='ltr']) .buttons {
-    border-top-left-radius: 0;
-}
-:host([dir='rtl']) .buttons {
-    border-top-right-radius: 0;
-}
-:host([dir='ltr']) .buttons {
-    border-top-right-radius: var(
-        --spectrum-alias-border-radius-regular,
-        var(--spectrum-global-dimension-size-50)
-    );
-}
-:host([dir='rtl']) .buttons {
-    border-top-left-radius: var(
-        --spectrum-alias-border-radius-regular,
-        var(--spectrum-global-dimension-size-50)
-    );
-}
-:host([dir='ltr']) .buttons {
-    border-bottom-right-radius: var(
-        --spectrum-alias-border-radius-regular,
-        var(--spectrum-global-dimension-size-50)
-    );
-}
-:host([dir='rtl']) .buttons {
-    border-bottom-left-radius: var(
-        --spectrum-alias-border-radius-regular,
-        var(--spectrum-global-dimension-size-50)
-    );
-}
-:host([dir='ltr']) .buttons {
-    border-bottom-left-radius: 0;
-}
-:host([dir='rtl']) .buttons {
-    border-bottom-right-radius: 0;
-}
-.buttons {
-    display: block;
-    transition: box-shadow var(--spectrum-global-animation-duration-100, 0.13s)
-        ease-in-out;
-}
-:host([dir='ltr']) .stepDown,
-:host([dir='ltr']) .stepUp {
-    padding-left: var(--spectrum-stepper-button-padding);
-}
-:host([dir='ltr']) .stepDown,
-:host([dir='ltr']) .stepUp,
-:host([dir='rtl']) .stepDown,
-:host([dir='rtl']) .stepUp {
-    padding-right: var(--spectrum-stepper-button-padding);
-}
-:host([dir='rtl']) .stepDown,
-:host([dir='rtl']) .stepUp {
-    padding-left: var(--spectrum-stepper-button-padding);
-}
-:host([dir='ltr']) .stepDown,
-:host([dir='ltr']) .stepUp {
-    border-left-width: var(--spectrum-stepper-border-size-reset);
-}
-:host([dir='rtl']) .stepDown,
-:host([dir='rtl']) .stepUp {
-    border-right-width: var(--spectrum-stepper-border-size-reset);
-}
-:host([dir='ltr']) .stepDown,
-:host([dir='ltr']) .stepUp {
-    border-top-left-radius: var(--spectrum-stepper-border-radius-reset);
-}
-:host([dir='rtl']) .stepDown,
-:host([dir='rtl']) .stepUp {
-    border-top-right-radius: var(--spectrum-stepper-border-radius-reset);
-}
-:host([dir='ltr']) .stepDown,
-:host([dir='ltr']) .stepUp {
-    border-bottom-left-radius: var(--spectrum-stepper-border-radius-reset);
-}
-:host([dir='rtl']) .stepDown,
-:host([dir='rtl']) .stepUp {
-    border-bottom-right-radius: var(--spectrum-stepper-border-radius-reset);
-}
-.stepDown,
-.stepUp {
-    border-width: var(--spectrum-stepper-border-size);
-    box-sizing: border-box;
-    display: flex;
-    height: var(--spectrum-stepper-button-height);
-    margin: 0 !important;
-    min-width: 0;
     position: relative;
-    width: var(--spectrum-stepper-button-width);
 }
-.stepDown .stepper-icon,
-.stepUp .stepper-icon {
-    margin: 0 !important;
-    opacity: 1;
-}
-:host([dir='ltr']) .stepUp {
-    border-bottom-right-radius: var(--spectrum-stepper-border-radius-reset);
-}
-:host([dir='rtl']) .stepUp {
-    border-bottom-left-radius: var(--spectrum-stepper-border-radius-reset);
-}
-.stepUp {
-    border-bottom: none;
-    padding-top: var(--spectrum-stepper-icon-nudge-top);
-}
-:host([dir='ltr']) .stepDown {
-    border-top-right-radius: var(--spectrum-stepper-border-radius-reset);
-}
-:host([dir='rtl']) .stepDown {
-    border-top-left-radius: var(--spectrum-stepper-border-radius-reset);
-}
-.stepDown {
-    padding-bottom: var(--spectrum-stepper-icon-nudge);
-}
-.textfield {
-    flex: 1;
-    width: auto;
-}
-:host([dir='ltr']) .input {
-    border-top-right-radius: var(--spectrum-stepper-border-radius-reset);
-}
-:host([dir='rtl']) .input {
-    border-top-left-radius: var(--spectrum-stepper-border-radius-reset);
-}
-:host([dir='ltr']) .input {
-    border-bottom-right-radius: var(--spectrum-stepper-border-radius-reset);
-}
-:host([dir='rtl']) .input {
-    border-bottom-left-radius: var(--spectrum-stepper-border-radius-reset);
-}
-.input,
-.textfield {
-    min-width: 0;
-}
-:host([quiet]) #textfield {
-    border-radius: var(--spectrum-stepper-border-radius-reset);
-    width: var(--spectrum-stepper-quiet-width);
-}
-:host([quiet]) .buttons {
-    border-radius: var(--spectrum-stepper-border-radius-reset);
-}
-:host([dir='ltr'][quiet]) .stepDown,
-:host([dir='ltr'][quiet]) .stepUp {
-    border-right-width: var(--spectrum-stepper-border-size-reset);
-}
-:host([dir='rtl'][quiet]) .stepDown,
-:host([dir='rtl'][quiet]) .stepUp {
-    border-left-width: var(--spectrum-stepper-border-size-reset);
-}
-:host([dir='ltr'][quiet]) .stepDown,
-:host([dir='ltr'][quiet]) .stepUp {
-    border-left: none;
-}
-:host([dir='rtl'][quiet]) .stepDown,
-:host([dir='rtl'][quiet]) .stepUp {
-    border-right: none;
-}
-:host([dir='ltr'][quiet]) .stepDown,
-:host([dir='ltr'][quiet]) .stepUp {
-    padding-right: 0;
-}
-:host([dir='rtl'][quiet]) .stepDown,
-:host([dir='rtl'][quiet]) .stepUp {
-    padding-left: 0;
-}
-:host([quiet]) .stepDown,
-:host([quiet]) .stepUp {
-    border-radius: var(--spectrum-stepper-border-radius-reset);
-    border-top: none;
-    justify-content: flex-end;
-    min-width: 0;
-    width: var(--spectrum-stepper-quiet-button-width);
-}
-:host([dir='ltr'][quiet]) .stepDown:after,
-:host([dir='ltr'][quiet]) .stepUp:after {
-    right: calc(var(--spectrum-stepper-button-offset) * -1);
-}
-:host([dir='rtl'][quiet]) .stepDown:after,
-:host([dir='rtl'][quiet]) .stepUp:after {
-    left: calc(var(--spectrum-stepper-button-offset) * -1);
-}
-:host([quiet]) .stepDown:after,
-:host([quiet]) .stepUp:after {
-    content: '';
-    height: 100%;
-    position: absolute;
-    width: var(--spectrum-stepper-button-offset);
-}
+:host(:hover:not([disabled]):not([invalid]):not([focused]))
+    #textfield:not(.is-keyboardFocused)
+    .buttons,
 :host(:hover:not([disabled]):not([invalid]):not([focused]))
     #textfield:not(.is-keyboardFocused)
     .input,
@@ -259,251 +125,657 @@ governing permissions and limitations under the License.
     #textfield:not(.is-keyboardFocused)
     .stepUp {
     border-color: var(
-        --spectrum-textfield-m-texticon-border-color-hover,
-        var(--spectrum-alias-input-border-color-hover)
-    );
-}
-:host([focused]) #textfield,
-:host([focused]) #textfield .stepDown,
-:host([focused]) #textfield .stepUp {
-    border-color: var(
-        --spectrum-textfield-m-texticon-border-color-mouse-focus,
-        var(--spectrum-alias-input-border-color-mouse-focus)
+        --highcontrast-stepper-border-color-hover,
+        var(
+            --mod-stepper-border-color-hover,
+            var(--spectrum-stepper-border-color-hover)
+        )
     );
 }
 :host([focused]) #textfield .input {
-    border-color: var(
-        --spectrum-textfield-m-texticon-border-color-mouse-focus,
-        var(--spectrum-alias-input-border-color-mouse-focus)
-    );
-    box-shadow: none;
+    outline: none;
 }
-:host([focused][invalid]) #textfield,
+:host([focused]) #textfield .buttons,
+:host([focused]) #textfield .input,
+:host([focused]) #textfield .stepDown,
+:host([focused]) #textfield .stepUp {
+    border-color: var(
+        --highcontrast-stepper-border-color-focus,
+        var(
+            --mod-stepper-border-color-focus,
+            var(--spectrum-stepper-border-color-focus)
+        )
+    );
+}
+:host([focused]) #textfield .stepDown,
+:host([focused]) #textfield .stepUp {
+    background-color: var(
+        --highcontrast-stepper-button-background-color-focus,
+        var(
+            --mod-stepper-button-background-color-focus,
+            var(--spectrum-stepper-button-background-color-focus)
+        )
+    );
+}
+:host([focused]:hover) #textfield .buttons,
+:host([focused]:hover) #textfield .input,
+:host([focused]:hover) #textfield .stepDown,
+:host([focused]:hover) #textfield .stepUp {
+    border-color: var(
+        --highcontrast-stepper-border-color-focus-hover,
+        var(
+            --mod-stepper-border-color-focus-hover,
+            var(--spectrum-stepper-border-color-focus-hover)
+        )
+    );
+}
+:host([focused][invalid]) #textfield .buttons,
 :host([focused][invalid]) #textfield .input,
 :host([focused][invalid]) #textfield .stepDown,
 :host([focused][invalid]) #textfield .stepUp {
     border-color: var(
-        --spectrum-textfield-m-texticon-border-color-invalid-mouse-focus,
-        var(--spectrum-alias-input-border-color-invalid-mouse-focus)
+        --highcontrast-stepper-border-color-invalid-focus,
+        var(
+            --mod-stepper-border-color-invalid-focus,
+            var(--spectrum-stepper-border-color-invalid-focus)
+        )
     );
 }
-:host([keyboard-focused]) #textfield,
-:host([keyboard-focused]) #textfield .buttons,
-:host([keyboard-focused]) #textfield .input {
-    box-shadow: 0 0 0 1px
+#textfield.focus-visible,
+:host([keyboard-focused]) #textfield {
+    outline: var(
+            --mod-stepper-focus-indicator-width,
+            var(--spectrum-stepper-focus-indicator-width)
+        )
+        solid;
+    outline-color: var(
+        --highcontrast-stepper-focus-indicator-color,
         var(
-            --spectrum-textfield-m-texticon-border-color-key-focus,
-            var(--spectrum-alias-input-border-color-key-focus)
-        );
+            --mod-stepper-focus-indicator-color,
+            var(--spectrum-stepper-focus-indicator-color)
+        )
+    );
+    outline-offset: var(
+        --mod-stepper-focus-indicator-gap,
+        var(--spectrum-stepper-focus-indicator-gap)
+    );
 }
+#textfield:focus-visible,
+:host([keyboard-focused]) #textfield {
+    outline: var(
+            --mod-stepper-focus-indicator-width,
+            var(--spectrum-stepper-focus-indicator-width)
+        )
+        solid;
+    outline-color: var(
+        --highcontrast-stepper-focus-indicator-color,
+        var(
+            --mod-stepper-focus-indicator-color,
+            var(--spectrum-stepper-focus-indicator-color)
+        )
+    );
+    outline-offset: var(
+        --mod-stepper-focus-indicator-gap,
+        var(--spectrum-stepper-focus-indicator-gap)
+    );
+}
+#textfield.focus-visible .input,
+:host([keyboard-focused]) #textfield .input {
+    outline: none;
+}
+#textfield:focus-visible .input,
+:host([keyboard-focused]) #textfield .input {
+    outline: none;
+}
+#textfield.focus-visible .buttons,
+#textfield.focus-visible .input,
+#textfield.focus-visible .stepDown,
+#textfield.focus-visible .stepUp,
+:host([keyboard-focused]) #textfield .buttons,
 :host([keyboard-focused]) #textfield .input,
 :host([keyboard-focused]) #textfield .stepDown,
 :host([keyboard-focused]) #textfield .stepUp {
     border-color: var(
-        --spectrum-textfield-m-texticon-border-color-key-focus,
-        var(--spectrum-alias-input-border-color-key-focus)
+        --highcontrast-stepper-border-color-keyboard-focus,
+        var(
+            --mod-stepper-border-color-keyboard-focus,
+            var(--spectrum-stepper-border-color-keyboard-focus)
+        )
     );
 }
-:host([keyboard-focused][invalid]) #textfield {
-    box-shadow: 0 0 0 1px
+#textfield:focus-visible .buttons,
+#textfield:focus-visible .input,
+#textfield:focus-visible .stepDown,
+#textfield:focus-visible .stepUp,
+:host([keyboard-focused]) #textfield .buttons,
+:host([keyboard-focused]) #textfield .input,
+:host([keyboard-focused]) #textfield .stepDown,
+:host([keyboard-focused]) #textfield .stepUp {
+    border-color: var(
+        --highcontrast-stepper-border-color-keyboard-focus,
         var(
-            --spectrum-textfield-m-texticon-border-color-invalid-key-focus,
-            var(--spectrum-alias-input-border-color-invalid-key-focus)
-        );
+            --mod-stepper-border-color-keyboard-focus,
+            var(--spectrum-stepper-border-color-keyboard-focus)
+        )
+    );
 }
+#textfield.focus-visible .stepDown,
+#textfield.focus-visible .stepUp,
+:host([keyboard-focused]) #textfield .stepDown,
+:host([keyboard-focused]) #textfield .stepUp {
+    background-color: var(
+        --highcontrast-stepper-button-background-color-keyboard-focus,
+        var(
+            --mod-stepper-button-background-color-keyboard-focus,
+            var(--spectrum-stepper-button-background-color-keyboard-focus)
+        )
+    );
+}
+#textfield:focus-visible .stepDown,
+#textfield:focus-visible .stepUp,
+:host([keyboard-focused]) #textfield .stepDown,
+:host([keyboard-focused]) #textfield .stepUp {
+    background-color: var(
+        --highcontrast-stepper-button-background-color-keyboard-focus,
+        var(
+            --mod-stepper-button-background-color-keyboard-focus,
+            var(--spectrum-stepper-button-background-color-keyboard-focus)
+        )
+    );
+}
+:host([invalid]) #textfield.focus-visible .buttons,
+:host([invalid]) #textfield.focus-visible .input,
+:host([invalid]) #textfield.focus-visible .stepDown,
+:host([invalid]) #textfield.focus-visible .stepUp,
+:host([keyboard-focused][invalid]) #textfield .buttons,
+:host([keyboard-focused][invalid]) #textfield .input,
 :host([keyboard-focused][invalid]) #textfield .stepDown,
 :host([keyboard-focused][invalid]) #textfield .stepUp {
     border-color: var(
-        --spectrum-textfield-m-texticon-border-color-invalid-key-focus,
-        var(--spectrum-alias-input-border-color-invalid-key-focus)
+        --highcontrast-stepper-border-color-invalid-keyboard-focus,
+        var(
+            --mod-stepper-border-color-invalid-keyboard-focus,
+            var(--spectrum-stepper-border-color-invalid-keyboard-focus)
+        )
     );
 }
-:host([keyboard-focused][invalid]) #textfield .buttons {
-    box-shadow: 0 0 0 1px
+:host([invalid]) #textfield:focus-visible .buttons,
+:host([invalid]) #textfield:focus-visible .input,
+:host([invalid]) #textfield:focus-visible .stepDown,
+:host([invalid]) #textfield:focus-visible .stepUp,
+:host([keyboard-focused][invalid]) #textfield .buttons,
+:host([keyboard-focused][invalid]) #textfield .input,
+:host([keyboard-focused][invalid]) #textfield .stepDown,
+:host([keyboard-focused][invalid]) #textfield .stepUp {
+    border-color: var(
+        --highcontrast-stepper-border-color-invalid-keyboard-focus,
         var(
-            --spectrum-textfield-m-texticon-border-color-invalid-key-focus,
-            var(--spectrum-alias-input-border-color-invalid-key-focus)
-        );
+            --mod-stepper-border-color-invalid-keyboard-focus,
+            var(--spectrum-stepper-border-color-invalid-keyboard-focus)
+        )
+    );
 }
+:host([invalid]) #textfield .buttons,
 :host([invalid]) #textfield .input,
 :host([invalid]) #textfield .stepDown,
 :host([invalid]) #textfield .stepUp {
     border-color: var(
-        --spectrum-textfield-m-texticon-border-color-invalid,
-        var(--spectrum-alias-input-border-color-invalid-default)
+        --highcontrast-stepper-border-color-invalid-default,
+        var(
+            --mod-stepper-border-color-invalid-default,
+            var(--spectrum-stepper-border-color-invalid-default)
+        )
     );
 }
-:host([invalid][keyboard-focused]) #textfield .input {
+:host([invalid]:hover) #textfield .buttons,
+:host([invalid]:hover) #textfield .input,
+:host([invalid]:hover) #textfield .stepDown,
+:host([invalid]:hover) #textfield .stepUp {
     border-color: var(
-        --spectrum-textfield-m-texticon-border-color-invalid-key-focus,
-        var(--spectrum-alias-input-border-color-invalid-key-focus)
+        --highcontrast-stepper-border-color-invalid-hover,
+        var(
+            --mod-stepper-border-color-invalid-hover,
+            var(--spectrum-stepper-border-color-invalid-hover)
+        )
     );
-    box-shadow: 0 0 0 1px
-        var(
-            --spectrum-textfield-m-texticon-border-color-invalid-key-focus,
-            var(--spectrum-alias-input-border-color-invalid-key-focus)
-        );
 }
-:host([invalid][keyboard-focused]) #textfield .buttons {
-    box-shadow: 0 0 0 1px
+:host([invalid][focused]) #textfield .buttons,
+:host([invalid][focused]) #textfield .input,
+:host([invalid][focused]) #textfield .stepDown,
+:host([invalid][focused]) #textfield .stepUp {
+    border-color: var(
+        --highcontrast-stepper-border-color-invalid-focus,
         var(
-            --spectrum-textfield-m-texticon-border-color-invalid-key-focus,
-            var(--spectrum-alias-input-border-color-invalid-key-focus)
-        );
+            --mod-stepper-border-color-invalid-focus,
+            var(--spectrum-stepper-border-color-invalid-focus)
+        )
+    );
 }
+:host([invalid][focused]:hover) #textfield .buttons,
+:host([invalid][focused]:hover) #textfield .input,
+:host([invalid][focused]:hover) #textfield .stepDown,
+:host([invalid][focused]:hover) #textfield .stepUp {
+    border-color: var(
+        --highcontrast-stepper-border-color-invalid-focus-hover,
+        var(
+            --mod-stepper-border-color-invalid-focus-hover,
+            var(--spectrum-stepper-border-color-invalid-focus-hover)
+        )
+    );
+}
+:host([invalid][keyboard-focused]) #textfield .buttons,
+:host([invalid][keyboard-focused]) #textfield .input,
+:host([invalid][keyboard-focused]) #textfield .stepDown,
+:host([invalid][keyboard-focused]) #textfield .stepUp {
+    border-color: var(
+        --highcontrast-stepper-border-color-invalid-keyboard-focus,
+        var(
+            --mod-stepper-border-color-invalid-keyboard-focus,
+            var(--spectrum-stepper-border-color-invalid-keyboard-focus)
+        )
+    );
+}
+:host([disabled]) #textfield .buttons,
+:host([disabled]) #textfield .input,
 :host([disabled]) #textfield .stepDown,
 :host([disabled]) #textfield .stepUp {
     border-color: var(
-        --spectrum-textfield-m-texticon-border-color-disabled,
-        var(--spectrum-alias-input-border-color-disabled)
+        --highcontrast-stepper-border-color-disabled,
+        var(
+            --mod-stepper-border-color-disabled,
+            var(--spectrum-stepper-border-color-disabled)
+        )
     );
+}
+:host([disabled]) #textfield .stepDown,
+:host([disabled]) #textfield .stepUp {
+    background-color: #0000;
+}
+:host([disabled]) #textfield .buttons {
+    background-color: var(--spectrum-stepper-background-color-disabled);
+}
+:host([quiet]) #textfield {
+    border-radius: 0;
+    inline-size: var(
+        --mod-stepper-quiet-width,
+        var(--spectrum-stepper-quiet-width)
+    );
+}
+:host([quiet]):after {
+    block-size: var(
+        --mod-stepper-focus-indicator-width,
+        var(--spectrum-stepper-focus-indicator-width)
+    );
+    bottom: calc(
+        (
+                var(
+                        --mod-stepper-focus-indicator-gap,
+                        var(--spectrum-stepper-focus-indicator-gap)
+                    ) +
+                    var(
+                        --mod-stepper-focus-indicator-width,
+                        var(--spectrum-stepper-focus-indicator-width)
+                    )
+            ) * -1
+    );
+    content: '';
+    inline-size: 100%;
+    left: 0;
+    position: absolute;
+}
+:host([quiet]) .buttons {
+    border-radius: 0;
+    border-width: 0 0
+        var(--mod-stepper-border-width, var(--spectrum-stepper-border-width)) 0;
+}
+:host([quiet]) .stepDown,
+:host([quiet]) .stepUp {
+    border-block-start-color: currentColor;
+    border-block-start-style: none;
+    border-inline-color: currentColor;
+    border-inline-style: none;
+    border-radius: 0;
+    border-width: 0;
+    inline-size: var(
+        --mod-stepper-quiet-button-width,
+        var(--spectrum-stepper-quiet-button-width)
+    );
+    justify-content: flex-end;
+    min-inline-size: 0;
+    padding-inline-end: 0;
+}
+:host([quiet]) .stepDown:after,
+:host([quiet]) .stepUp:after {
+    block-size: 100%;
+    content: '';
+    inline-size: var(
+        --mod-stepper-button-offset,
+        var(--spectrum-stepper-button-offset)
+    );
+    inset-inline-end: calc(
+        var(--mod-stepper-button-offset, var(--spectrum-stepper-button-offset)) *
+            -1
+    );
+    position: absolute;
+}
+:host([quiet]) .buttons,
+:host([quiet]) .input,
+:host([quiet]) .stepDown,
+:host([quiet]) .stepUp,
+:host([quiet]:hover) .buttons,
+:host([quiet]:hover) .stepDown,
+:host([quiet]:hover) .stepUp {
+    background-color: #0000;
+}
+:host([quiet][disabled]) #textfield .buttons,
+:host([quiet][disabled]) #textfield .input,
+:host([quiet][disabled]) #textfield .stepDown,
+:host([quiet][disabled]) #textfield .stepUp {
+    background-color: #0000;
+    border-color: var(
+        --highcontrast-stepper-border-color-quiet-disabled,
+        var(
+            --mod-stepper-border-color-quiet-disabled,
+            var(--spectrum-stepper-border-color-quiet-disabled)
+        )
+    );
+}
+:host([quiet][invalid]) .buttons,
+:host([quiet][invalid]) .input,
+:host([quiet][invalid]) .stepDown {
+    border-color: var(
+        --highcontrast-stepper-border-color-invalid-default,
+        var(
+            --mod-stepper-border-color-invalid-default,
+            var(--spectrum-stepper-border-color-invalid-default)
+        )
+    );
+}
+:host([quiet][invalid]) .stepDown,
+:host([quiet][invalid]) .stepUp {
+    background-color: #0000;
+}
+:host([quiet][focused]) .buttons,
+:host([quiet][focused]) .input,
+:host([quiet][focused]) .stepDown {
+    border-color: var(
+        --highcontrast-stepper-border-color-focus,
+        var(
+            --mod-stepper-border-color-focus,
+            var(--spectrum-stepper-border-color-focus)
+        )
+    );
+}
+:host([quiet][focused]) .stepDown,
+:host([quiet][focused]) .stepUp {
+    background-color: #0000;
+}
+:host([quiet][focused]:hover) .buttons,
+:host([quiet][focused]:hover) .input,
+:host([quiet][focused]:hover) .stepDown,
+:host([quiet][focused]:hover) .stepUp {
+    border-color: var(
+        --highcontrast-stepper-border-color-focus-hover,
+        var(
+            --mod-stepper-border-color-focus-hover,
+            var(--spectrum-stepper-border-color-focus-hover)
+        )
+    );
+}
+:host([quiet][focused][invalid]) .buttons,
+:host([quiet][focused][invalid]) .input,
+:host([quiet][focused][invalid]) .stepDown {
+    border-color: var(
+        --highcontrast-stepper-border-color-invalid-focus,
+        var(
+            --mod-stepper-border-color-invalid-focus,
+            var(--spectrum-stepper-border-color-invalid-focus)
+        )
+    );
+}
+:host([quiet][keyboard-focused]) #textfield {
+    outline: none;
+}
+:host([quiet][keyboard-focused]):after {
+    background-color: var(
+        --highcontrast-stepper-focus-indicator-color,
+        var(
+            --mod-stepper-focus-indicator-color,
+            var(--spectrum-stepper-focus-indicator-color)
+        )
+    );
+}
+:host([quiet][keyboard-focused]) .stepDown,
+:host([quiet][keyboard-focused]) .stepUp {
+    background-color: #0000;
+}
+:host([quiet][keyboard-focused]) .buttons,
+:host([quiet][keyboard-focused]) .stepDown {
+    border-color: var(
+        --highcontrast-stepper-border-color-keyboard-focus,
+        var(
+            --mod-stepper-border-color-keyboard-focus,
+            var(--spectrum-stepper-border-color-keyboard-focus)
+        )
+    );
+}
+:host([quiet][keyboard-focused][invalid]) .buttons,
+:host([quiet][keyboard-focused][invalid]) .input,
+:host([quiet][keyboard-focused][invalid]) .stepDown {
+    border-color: var(
+        --highcontrast-stepper-border-color-invalid-keyboard-focus,
+        var(
+            --mod-stepper-border-color-invalid-keyboard-focus,
+            var(--spectrum-stepper-border-color-invalid-keyboard-focus)
+        )
+    );
+}
+#textfield:before {
+    content: '';
+}
+.buttons {
+    background-color: var(
+        --highcontrast-stepper-background-color,
+        var(
+            --mod-stepper-background-color,
+            var(--spectrum-stepper-background-color)
+        )
+    );
+    block-size: var(
+        --mod-stepper-buttons-height,
+        var(--spectrum-stepper-buttons-height)
+    );
+    border-color: var(
+        --highcontrast-stepper-border-color,
+        var(--mod-stepper-border-color, var(--spectrum-stepper-border-color))
+    );
+    border-end-end-radius: var(
+        --mod-stepper-border-radius,
+        var(--spectrum-stepper-border-radius)
+    );
+    border-end-start-radius: 0;
+    border-start-end-radius: var(
+        --mod-stepper-border-radius,
+        var(--spectrum-stepper-border-radius)
+    );
+    border-start-start-radius: 0;
+    border-style: solid;
+    border-width: var(
+            --mod-stepper-border-width,
+            var(--spectrum-stepper-border-width)
+        )
+        var(--mod-stepper-border-width, var(--spectrum-stepper-border-width))
+        var(--mod-stepper-border-width, var(--spectrum-stepper-border-width))
+        var(--spectrum-stepper-button-border-width-reset);
+    flex-direction: column;
+    inline-size: calc(
+        var(--mod-stepper-button-width, var(--spectrum-stepper-button-width)) +
+            var(--mod-stepper-button-gap, var(--spectrum-stepper-button-gap)) *
+            2
+    );
+    justify-content: center;
+    overflow: hidden;
+    padding-inline-end: var(--spectrum-stepper-button-gap);
+    row-gap: var(--mod-stepper-button-gap, var(--spectrum-stepper-button-gap));
+    transition: border-color
+        var(
+            --mod-stepper-animation-duration,
+            var(--spectrum-stepper-animation-duration)
+        )
+        ease-in-out;
+}
+.buttons,
+.stepDown,
+.stepUp {
+    box-sizing: border-box;
+    display: flex;
 }
 .stepDown,
 .stepUp {
-    border-color: var(
-        --spectrum-textfield-m-texticon-border-color,
-        var(--spectrum-alias-input-border-color-default)
+    background-color: var(
+        --highcontrast-stepper-button-background-color-default,
+        var(
+            --mod-stepper-button-background-color-default,
+            var(--spectrum-stepper-button-background-color-default)
+        )
+    );
+    block-size: calc(
+        var(
+                --mod-stepper-buttons-height,
+                var(--spectrum-stepper-buttons-height)
+            ) / 2 -
+            var(--mod-stepper-button-gap, var(--spectrum-stepper-button-gap)) *
+            2.5
+    );
+    border-width: 0;
+    inline-size: var(
+        --mod-stepper-button-width,
+        var(--spectrum-stepper-button-width)
+    );
+    margin: 0;
+    min-inline-size: 0;
+    padding-inline-end: var(
+        --mod-stepper-button-padding,
+        var(--spectrum-stepper-button-padding)
+    );
+    padding-inline-start: var(
+        --mod-stepper-button-padding,
+        var(--spectrum-stepper-button-padding)
+    );
+    position: relative;
+}
+.stepDown .stepper-icon,
+.stepUp .stepper-icon {
+    margin: 0;
+    margin-inline-start: var(--spectrum-stepper-button-icon-nudge);
+    opacity: 1;
+}
+:host(:hover) .stepDown,
+:host(:hover) .stepUp {
+    background-color: var(
+        --highcontrast-stepper-button-background-color-hover,
+        var(
+            --mod-stepper-button-background-color-hover,
+            var(--spectrum-stepper-button-background-color-hover)
+        )
     );
 }
 .stepDown:disabled,
 .stepUp:disabled {
-    border-color: var(
-        --spectrum-textfield-m-texticon-border-color-disabled,
-        var(--spectrum-alias-input-border-color-disabled)
+    border-color: #0000;
+}
+.stepUp {
+    border-end-end-radius: 0;
+    border-end-start-radius: 0;
+    border-start-end-radius: var(--spectrum-stepper-button-border-radius-reset);
+    border-start-start-radius: var(
+        --spectrum-stepper-button-border-radius-reset
+    );
+    padding-block-end: 0;
+    padding-block-start: var(
+        --mod-stepper-icon-nudge-start,
+        var(--spectrum-stepper-icon-nudge-start)
     );
 }
-:host([quiet][disabled]) #textfield .stepDown,
-:host([quiet][disabled]) #textfield .stepUp {
-    border-color: var(
-        --spectrum-textfield-m-quiet-texticon-border-color-disabled,
-        var(--spectrum-alias-input-border-color-quiet-disabled)
+.stepDown {
+    border-block-start-color: var(
+        --highcontrast-stepper-border-color,
+        var(--mod-stepper-border-color, var(--spectrum-stepper-border-color))
+    );
+    border-block-start-width: 0;
+    border-block-start-width: var(--spectrum-stepper-button-border-width-reset);
+    border-end-end-radius: var(--spectrum-stepper-button-border-radius-reset);
+    border-end-start-radius: var(--spectrum-stepper-button-border-radius-reset);
+    border-start-end-radius: 0;
+    border-start-start-radius: 0;
+    padding-block-start: 0;
+}
+.textfield {
+    flex: 1;
+    inline-size: auto;
+    min-inline-size: 0;
+}
+.input {
+    border-end-end-radius: 0;
+    border-inline-end-width: 0;
+    border-start-end-radius: 0;
+    min-inline-size: 0;
+}
+#textfield.hide-stepper .input {
+    border-end-end-radius: var(
+        --mod-stepper-border-radius,
+        var(--spectrum-stepper-border-radius)
+    );
+    border-inline-end-width: var(
+        --mod-stepper-border-width,
+        var(--spectrum-stepper-border-width)
+    );
+    border-start-end-radius: var(
+        --mod-stepper-border-radius,
+        var(--spectrum-stepper-border-radius)
     );
 }
-:host([quiet]) .stepDown,
-:host([quiet]) .stepUp {
-    border-color: var(
-        --spectrum-textfield-m-quiet-texticon-border-color,
-        var(--spectrum-alias-input-border-color-default)
+:host {
+    --spectrum-stepper-border-width: var(
+        --system-spectrum-stepper-border-width
     );
-}
-:host([quiet]) .stepDown:disabled,
-:host([quiet]) .stepUp:disabled {
-    border-color: var(
-        --spectrum-textfield-m-quiet-texticon-border-color-disabled,
-        var(--spectrum-alias-input-border-color-quiet-disabled)
+    --spectrum-stepper-button-border-width-reset: var(
+        --system-spectrum-stepper-button-border-width-reset
     );
-}
-:host([quiet]) .input {
-    box-shadow: none;
-}
-:host([quiet][invalid]) .input,
-:host([quiet][invalid]) .stepDown {
-    border-color: var(
-        --spectrum-textfield-m-texticon-border-color-invalid,
-        var(--spectrum-alias-input-border-color-invalid-default)
+    --spectrum-stepper-button-icon-nudge: var(
+        --system-spectrum-stepper-button-icon-nudge
     );
-}
-:host([quiet][focused]) #textfield,
-:host([quiet][keyboard-focused]) #textfield {
-    box-shadow: none;
-}
-:host([quiet][focused]) .buttons,
-:host([quiet][focused]) .input,
-:host([quiet][keyboard-focused]) .buttons,
-:host([quiet][keyboard-focused]) .input {
-    box-shadow: 0 1px 0 0
-        var(
-            --spectrum-textfield-m-texticon-border-color-key-focus,
-            var(--spectrum-alias-input-border-color-key-focus)
-        );
-}
-:host([quiet][focused]) .stepDown,
-:host([quiet][keyboard-focused]) .stepDown {
-    border-color: var(
-        --spectrum-textfield-m-texticon-border-color-key-focus,
-        var(--spectrum-alias-input-border-color-key-focus)
+    --spectrum-stepper-button-gap-reset: var(
+        --system-spectrum-stepper-button-gap-reset
     );
-}
-:host([quiet][focused][invalid]) #textfield,
-:host([quiet][keyboard-focused][invalid]) #textfield {
-    box-shadow: none;
-}
-:host([quiet][focused][invalid]) .buttons,
-:host([quiet][focused][invalid]) .input,
-:host([quiet][keyboard-focused][invalid]) .buttons,
-:host([quiet][keyboard-focused][invalid]) .input {
-    box-shadow: 0 1px 0 0
-        var(
-            --spectrum-textfield-m-texticon-border-color-invalid,
-            var(--spectrum-alias-input-border-color-invalid-default)
-        );
-}
-:host([quiet][focused][invalid]) .input,
-:host([quiet][focused][invalid]) .stepDown,
-:host([quiet][keyboard-focused][invalid]) .input,
-:host([quiet][keyboard-focused][invalid]) .stepDown {
-    border-color: var(
-        --spectrum-textfield-m-texticon-border-color-invalid,
-        var(--spectrum-alias-input-border-color-invalid-default)
+    --spectrum-stepper-button-border-radius-reset: var(
+        --system-spectrum-stepper-button-border-radius-reset
     );
-}
-@media (forced-colors: active) {
-    :host {
-        --spectrum-textfield-m-quiet-texticon-border-color-disabled: GrayText;
-        --spectrum-textfield-m-texticon-border-color-disabled: GrayText;
-        --spectrum-textfield-m-texticon-border-color-hover: Highlight;
-        --spectrum-textfield-m-texticon-border-color-invalid: Highlight;
-        --spectrum-textfield-m-texticon-border-color-invalid-key-focus: Highlight;
-        --spectrum-textfield-m-texticon-border-color-invalid-mouse-focus: Highlight;
-        --spectrum-textfield-m-texticon-border-color-key-focus: Highlight;
-        --spectrum-textfield-m-texticon-border-color-mouse-focus: Highlight;
-        --spectrum-textfield-m-texticon-focus-ring-border-width: 2px;
-    }
-    :host([keyboard-focused]) #textfield {
-        outline: 2px solid
-            var(
-                --spectrum-textfield-m-texticon-border-color-key-focus,
-                var(--spectrum-alias-input-border-color-key-focus)
-            );
-    }
-    :host([keyboard-focused]) #textfield .buttons,
-    :host([keyboard-focused]) #textfield .input {
-        --spectrum-textfield-m-texticon-border-color: ButtonText;
-    }
-    :host([quiet][focused]) #textfield,
-    :host([quiet][keyboard-focused]) #textfield {
-        outline: none;
-    }
-    :host([quiet][focused]) #textfield .buttons,
-    :host([quiet][focused]) #textfield .input,
-    :host([quiet][keyboard-focused]) #textfield .buttons,
-    :host([quiet][keyboard-focused]) #textfield .input {
-        box-shadow: 0
-            var(
-                --spectrum-textfield-m-texticon-focus-ring-border-width,
-                var(--spectrum-alias-component-focusring-size)
-            )
-            0 0
-            var(
-                --spectrum-textfield-m-texticon-border-color-key-focus,
-                var(--spectrum-alias-input-border-color-key-focus)
-            );
-        forced-color-adjust: none;
-    }
-    :host([quiet][focused][invalid]) #textfield .buttons,
-    :host([quiet][focused][invalid]) #textfield .input,
-    :host([quiet][keyboard-focused][invalid]) #textfield .buttons,
-    :host([quiet][keyboard-focused][invalid]) #textfield .input {
-        box-shadow: 0
-            var(
-                --spectrum-textfield-m-texticon-focus-ring-border-width,
-                var(--spectrum-alias-component-focusring-size)
-            )
-            0 0
-            var(
-                --spectrum-textfield-m-texticon-border-color-invalid,
-                var(--spectrum-alias-input-border-color-invalid-default)
-            );
-        forced-color-adjust: none;
-    }
+    --spectrum-stepper-border-color: var(
+        --system-spectrum-stepper-border-color
+    );
+    --spectrum-stepper-border-color-hover: var(
+        --system-spectrum-stepper-border-color-hover
+    );
+    --spectrum-stepper-border-color-focus: var(
+        --system-spectrum-stepper-border-color-focus
+    );
+    --spectrum-stepper-border-color-focus-hover: var(
+        --system-spectrum-stepper-border-color-focus-hover
+    );
+    --spectrum-stepper-border-color-keyboard-focus: var(
+        --system-spectrum-stepper-border-color-keyboard-focus
+    );
+    --spectrum-stepper-button-background-color-default: var(
+        --system-spectrum-stepper-button-background-color-default
+    );
+    --spectrum-stepper-button-background-color-hover: var(
+        --system-spectrum-stepper-button-background-color-hover
+    );
+    --spectrum-stepper-button-background-color-focus: var(
+        --system-spectrum-stepper-button-background-color-focus
+    );
+    --spectrum-stepper-button-background-color-keyboard-focus: var(
+        --system-spectrum-stepper-button-background-color-keyboard-focus
+    );
 }
