@@ -47,6 +47,8 @@ class StreamingListenerDirective extends AsyncDirective {
     streamOutside: ListenerConfig = defaultListener;
 
     state: 'off' | 'on' = 'off';
+    // Animation frame that will unlock the next "stream" event if/when it is dispatched.
+    stream?: number;
 
     /* c8 ignore next 4 */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -81,10 +83,10 @@ class StreamingListenerDirective extends AsyncDirective {
     addListeners(state?: 'on' | 'off'): void {
         this.state = state || this.state;
         if (this.state === 'off') {
-            this.addListener(this.streamOutside[0], this.handleBetween);
+            this.addListener(this.streamOutside[0], this.handleOutside);
             this.addListener(this.start[0], this.handleStart);
         } else if (this.state === 'on') {
-            this.addListener(this.streamInside[0], this.handleStream);
+            this.addListener(this.streamInside[0], this.handleInside);
             this.addListener(this.end[0], this.handleEnd);
         }
     }
@@ -100,7 +102,29 @@ class StreamingListenerDirective extends AsyncDirective {
         }
     }
 
+    handleStream(
+        value: (event: Event) => void | EventListenerObject,
+        event: Event
+    ): void {
+        if (this.stream) {
+            return;
+        }
+        this.callHandler(value, event);
+        this.stream = requestAnimationFrame(() => {
+            this.stream = undefined;
+        });
+    }
+
+    clearStream(): void {
+        if (this.stream != null) {
+            // Ensure steam events NEVER go after a start or event event.
+            cancelAnimationFrame(this.stream);
+            this.stream = undefined;
+        }
+    }
+
     handleStart = (event: Event): void => {
+        this.clearStream();
         this.callHandler(this.start[1], event);
         if (event.defaultPrevented) {
             return;
@@ -109,18 +133,19 @@ class StreamingListenerDirective extends AsyncDirective {
         this.addListeners('on');
     };
 
-    handleStream = (event: Event): void => {
-        this.callHandler(this.streamInside[1], event);
+    handleInside = (event: Event): void => {
+        this.handleStream(this.streamInside[1], event);
     };
 
     handleEnd = (event: Event): void => {
+        this.clearStream();
         this.callHandler(this.end[1], event);
         this.removeListeners();
         this.addListeners('off');
     };
 
-    handleBetween = (event: Event): void => {
-        this.callHandler(this.streamOutside[1], event);
+    handleOutside = (event: Event): void => {
+        this.handleStream(this.streamOutside[1], event);
     };
 
     addListener(type: string | string[], fn: (event: Event) => void): void {
@@ -145,9 +170,9 @@ class StreamingListenerDirective extends AsyncDirective {
 
     removeListeners(): void {
         this.removeListener(this.start[0], this.handleStart);
-        this.removeListener(this.streamInside[0], this.handleStream);
+        this.removeListener(this.streamInside[0], this.handleInside);
         this.removeListener(this.end[0], this.handleEnd);
-        this.removeListener(this.streamOutside[0], this.handleBetween);
+        this.removeListener(this.streamOutside[0], this.handleOutside);
     }
 
     override disconnected(): void {
