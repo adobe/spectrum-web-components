@@ -98,7 +98,7 @@ export function runPickerTests(): void {
         it('closes accessibly', async () => {
             el.focus();
             await elementUpdated(el);
-            expect(el.shadowRoot?.activeElement).to.equal(el.button);
+            expect(el.shadowRoot.activeElement).to.equal(el.button);
             const opened = oneEvent(el, 'sp-opened');
             el.open = true;
             await opened;
@@ -119,7 +119,7 @@ export function runPickerTests(): void {
             await elementUpdated(el);
 
             expect(el.open).to.be.false;
-            expect(el.shadowRoot?.activeElement).to.equal(el.button);
+            expect(el.shadowRoot.activeElement).to.equal(el.button);
             expect(document.activeElement).to.eq(el);
         });
         it('accepts new selected item content', async () => {
