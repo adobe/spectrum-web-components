@@ -103,6 +103,7 @@ const config = {
                     'icon--workflow-icon'
                 ),
                 converter.classToSlotted('spectrum-Icon', 'icon'),
+                converter.classToSlotted('spectrum-Menu-itemValue', 'value'),
                 converter.classToClass(
                     'spectrum-menu-itemSelection',
                     'menu-itemSelection'

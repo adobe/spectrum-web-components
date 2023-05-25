@@ -330,6 +330,7 @@ li:not(::slotted(sp-menu-item), .menu-divider) {
         var(--spectrum-menu-item-label-inline-edge-to-content)
     );
     position: relative;
+    -webkit-text-decoration: none;
     text-decoration: none;
 }
 li:not(::slotted(sp-menu-item), .menu-divider) {

@@ -75,7 +75,7 @@ governing permissions and limitations under the License.
 #label {
     grid-area: submenuItemLabelArea;
 }
-.spectrum-Menu-itemValue {
+::slotted([slot='value']) {
     grid-area: submenuItemValueArea;
 }
 :host(:focus),
@@ -172,9 +172,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:focus) .spectrum-Menu-itemValue,
-:host([focused]) .spectrum-Menu-itemValue,
-:host.focus-visible .spectrum-Menu-itemValue {
+:host(:focus) ::slotted([slot='value']),
+:host([focused]) ::slotted([slot='value']),
+:host.focus-visible ::slotted([slot='value']) {
     color: var(
         --highcontrast-menu-item-value-color-focus,
         var(
@@ -183,9 +183,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:focus) .spectrum-Menu-itemValue,
-:host([focused]) .spectrum-Menu-itemValue,
-:host:focus-visible .spectrum-Menu-itemValue {
+:host(:focus) ::slotted([slot='value']),
+:host([focused]) ::slotted([slot='value']),
+:host:focus-visible ::slotted([slot='value']) {
     color: var(
         --highcontrast-menu-item-value-color-focus,
         var(
@@ -325,7 +325,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host(:hover) .spectrum-Menu-itemValue {
+:host(:hover) ::slotted([slot='value']) {
     color: var(
         --highcontrast-menu-item-value-color-hover,
         var(
@@ -397,7 +397,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host:active .spectrum-Menu-itemValue {
+:host:active ::slotted([slot='value']) {
     color: var(
         --highcontrast-menu-item-value-color-down,
         var(
@@ -496,7 +496,7 @@ governing permissions and limitations under the License.
     );
     grid-area: labelArea;
 }
-.spectrum-Menu-itemValue {
+::slotted([slot='value']) {
     grid-area: valueArea;
 }
 .spectrum-Menu-itemActions {
@@ -581,7 +581,7 @@ governing permissions and limitations under the License.
     hyphens: auto;
     overflow-wrap: break-word;
 }
-.spectrum-Menu-itemValue {
+::slotted([slot='value']) {
     color: var(
         --highcontrast-menu-item-value-color-default,
         var(

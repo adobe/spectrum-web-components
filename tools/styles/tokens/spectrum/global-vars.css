@@ -1072,14 +1072,14 @@ governing permissions and limitations under the License.
     --system-spectrum-picker-background-color-key-focus: var(
         --spectrum-gray-200
     );
-    --system-spectrum-picker-border-color-default: var(--spectrum-gray-400);
+    --system-spectrum-picker-border-color-default: var(--spectrum-gray-500);
     --system-spectrum-picker-border-color-default-open: var(
-        --spectrum-gray-400
+        --spectrum-gray-500
     );
-    --system-spectrum-picker-border-color-hover: var(--spectrum-gray-500);
-    --system-spectrum-picker-border-color-hover-open: var(--spectrum-gray-500);
-    --system-spectrum-picker-border-color-active: var(--spectrum-gray-600);
-    --system-spectrum-picker-border-color-key-focus: var(--spectrum-gray-500);
+    --system-spectrum-picker-border-color-hover: var(--spectrum-gray-600);
+    --system-spectrum-picker-border-color-hover-open: var(--spectrum-gray-600);
+    --system-spectrum-picker-border-color-active: var(--spectrum-gray-700);
+    --system-spectrum-picker-border-color-key-focus: var(--spectrum-gray-600);
 }
 
 :host,
@@ -1246,6 +1246,13 @@ governing permissions and limitations under the License.
         --spectrum-neutral-subdued-background-color-default
     );
 }
+:host,
+:root {
+    --system-spectrum-tooltip-backgound-color-default-neutral: var(
+        --spectrum-neutral-subdued-background-color-default
+    );
+}
+
 :host,
 :root {
     --system-spectrum-picker-background-color-default: var(--spectrum-gray-75);
