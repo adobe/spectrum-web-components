@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 /* THIS FILE IS MACHINE GENERATED. DO NOT EDIT */
-.icon {
+::slotted([slot='icon']) {
     fill: var(
         --highcontrast-menu-item-label-icon-color-default,
         var(
@@ -448,8 +448,8 @@ governing permissions and limitations under the License.
         )
     );
 }
-:host([aria-disabled='true']) .icon,
-:host([disabled]) .icon {
+:host([aria-disabled='true']) ::slotted([slot='icon']),
+:host([disabled]) ::slotted([slot='icon']) {
     fill: var(
         --highcontrast-menu-item-label-icon-color-disabled,
         var(
@@ -462,8 +462,8 @@ governing permissions and limitations under the License.
 :host([disabled]:hover) {
     cursor: default;
 }
-:host([aria-disabled='true']:hover) .icon,
-:host([disabled]:hover) .icon {
+:host([aria-disabled='true']:hover) ::slotted([slot='icon']),
+:host([disabled]:hover) ::slotted([slot='icon']) {
     fill: var(
         --highcontrast-menu-item-label-icon-color-disabled,
         var(
@@ -472,7 +472,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-.icon {
+::slotted([slot='icon']) {
     align-self: center;
     grid-area: iconArea;
 }

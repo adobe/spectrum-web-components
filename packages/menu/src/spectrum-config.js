@@ -79,7 +79,7 @@ const config = {
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToId('spectrum-Menu-itemLabel', 'label'),
-                converter.classToClass('spectrum-Menu-itemIcon', 'icon'),
+                converter.classToSlotted('spectrum-Menu-itemIcon', 'icon'),
                 converter.classToClass('spectrum-Menu-chevron', 'chevron'),
                 converter.classToClass(
                     'spectrum-Menu-chevron--withAdjacentText',
@@ -128,33 +128,6 @@ const config = {
                         },
                         {
                             replace: builder.id('label'),
-                        },
-                    ],
-                },
-                {
-                    // .spectrum-Menu-itemIcon+.spectrum-Menu-itemLabel
-                    // slot[name='icon'] + #label
-                    find: [
-                        builder.class('spectrum-Menu-itemIcon'),
-                        builder.combinator('+'),
-                        builder.class('spectrum-Menu-itemLabel'),
-                    ],
-                    replace: [
-                        {
-                            replace: builder.attribute('name', 'icon'),
-                            hoist: false,
-                        },
-                    ],
-                },
-                {
-                    find: [
-                        builder.class('spectrum-Icon'),
-                        builder.combinator('+'),
-                        builder.class('spectrum-Menu-itemLabel'),
-                    ],
-                    replace: [
-                        {
-                            replace: builder.class('icon'),
                         },
                     ],
                 },
