@@ -523,14 +523,13 @@ governing permissions and limitations under the License.
         var(--spectrum-menu-item-checkmark-width)
     );
 }
-.checkmark,
-.checkmark--withAdjacentIcon {
+::slotted([slot='icon']) {
     margin-inline-end: var(
-        --mod-menu-item-text-to-control,
-        var(--spectrum-menu-item-text-to-control)
+        --mod-menu-item-label-text-to-visual,
+        var(--spectrum-menu-item-label-text-to-visual)
     );
 }
-::slotted([slot='icon']) {
+.checkmark--withAdjacentText {
     margin-inline-end: var(
         --mod-menu-item-label-text-to-visual,
         var(--spectrum-menu-item-label-text-to-visual)
