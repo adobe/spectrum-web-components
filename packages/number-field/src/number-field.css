@@ -16,6 +16,22 @@ governing permissions and limitations under the License.
     inline-size: var(--mod-stepper-width, var(--spectrum-stepper-width));
 }
 
+:host([size='s']) {
+    --spectrum-stepper-width: calc(
+        var(--spectrum-stepper-width-medium) / 5 * 4
+    );
+}
+
+:host([size='l']) {
+    --spectrum-stepper-width: calc(var(--spectrum-stepper-width-medium) * 1.25);
+}
+
+:host([size='xl']) {
+    --spectrum-stepper-width: calc(
+        var(--spectrum-stepper-width-medium) * 1.25 * 1.25
+    );
+}
+
 #textfield {
     inline-size: 100%;
 }
@@ -35,6 +51,25 @@ sp-field-button {
     );
 
     flex-shrink: 0;
+    block-size: var(--mod-textfield-height, var(--spectrum-textfield-height));
+    inline-size: calc(
+        var(--mod-textfield-height, var(--spectrum-textfield-height)) * 3 / 4
+    );
+    padding-block: var(--spectrum-stepper-button-gap);
+}
+
+.step-up,
+.step-down {
+    width: 100%;
+    height: 50%;
+    overflow: hidden;
+    padding: 0;
+}
+
+.step-down .stepper-icon,
+.step-up .stepper-icon {
+    margin-inline-start: 0;
+    translate: 5%;
 }
 
 :host([readonly]) .buttons {

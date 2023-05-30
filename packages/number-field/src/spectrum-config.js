@@ -236,8 +236,11 @@ const config = {
                     'keyboard-focused'
                 ),
                 converter.classToClass('spectrum-Stepper-buttons', 'buttons'),
-                converter.classToClass('spectrum-Stepper-stepDown', 'stepDown'),
-                converter.classToClass('spectrum-Stepper-stepUp', 'stepUp'),
+                converter.classToClass(
+                    'spectrum-Stepper-stepDown',
+                    'step-down'
+                ),
+                converter.classToClass('spectrum-Stepper-stepUp', 'step-up'),
                 converter.classToClass(
                     'spectrum-Stepper-textfield',
                     'textfield'
