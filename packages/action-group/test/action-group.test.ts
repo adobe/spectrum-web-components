@@ -143,7 +143,7 @@ describe('ActionGroup', () => {
 
         await expect(el).to.be.accessible();
         expect(el.getAttribute('aria-label')).to.equal('Default Group');
-        expect(el.hasAttribute('role')).to.be.false;
+        expect(el.getAttribute('role')).to.equal('toolbar');
         expect(el.children[0].getAttribute('role')).to.equal('button');
     });
     it('applies `quiet` attribute to its children', async () => {
@@ -318,7 +318,7 @@ describe('ActionGroup', () => {
         expect(el.getAttribute('aria-label')).to.equal(
             'Selects Multiple Group'
         );
-        expect(el.getAttribute('role')).to.equal('group');
+        expect(el.getAttribute('role')).to.equal('toolbar');
         expect(el.children[0].getAttribute('role')).to.equal('checkbox');
     });
     it('loads [selects="multiple"] action-group w/ selection accessibly', async () => {
@@ -746,20 +746,54 @@ describe('ActionGroup', () => {
         );
 
         await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('toolbar');
         expect(el.selected.length).to.equal(2);
 
         const firstButton = el.querySelector('.first') as ActionButton;
         expect(firstButton.selected, 'first button selected').to.be.true;
+        expect(firstButton.hasAttribute('aria-checked')).to.be.false;
+        expect(
+            firstButton.getAttribute('aria-pressed'),
+            'first button aria-pressed'
+        ).to.eq('true');
+        expect(firstButton.getAttribute('role'), 'first button role').to.eq(
+            'button'
+        );
 
         const secondButton = el.querySelector('.second') as ActionButton;
         expect(secondButton.selected, 'second button selected').to.be.true;
+        expect(secondButton.hasAttribute('aria-checked')).to.be.false;
+        expect(
+            secondButton.getAttribute('aria-pressed'),
+            'second button aria-pressed'
+        ).to.eq('true');
+        expect(secondButton.getAttribute('role'), 'first button role').to.eq(
+            'button'
+        );
 
         firstButton.click();
         await elementUpdated(el);
 
         expect(el.selected.length).to.equal(2);
         expect(firstButton.selected, 'first button selected').to.be.true;
+        expect(firstButton.hasAttribute('aria-checked')).to.be.false;
+        expect(
+            firstButton.getAttribute('aria-pressed'),
+            'first button aria-pressed'
+        ).to.eq('true');
+        expect(firstButton.getAttribute('role'), 'first button role').to.eq(
+            'button'
+        );
+
         expect(secondButton.selected, 'second button selected').to.be.true;
+        expect(secondButton.hasAttribute('aria-checked')).to.be.false;
+        expect(
+            secondButton.getAttribute('aria-pressed'),
+            'second button aria-pressed'
+        ).to.eq('true');
+        expect(secondButton.getAttribute('role'), 'first button role').to.eq(
+            'button'
+        );
     });
 
     it('will not change .selected state if event is prevented while [selects="multiple"]', async () => {
@@ -932,6 +966,36 @@ describe('ActionGroup', () => {
         expect(el.selected.length).to.equal(1);
         expect(firstElement.selected, 'first child selected').to.be.true;
         expect(secondElement.selected, 'second child selected').to.be.false;
+    });
+
+    it('accepts role attribute override', async () => {
+        const el = await fixture<ActionGroup>(
+            html`
+                <sp-action-group role="group">
+                    <sp-action-button>Button</sp-action-button>
+                </sp-action-group>
+            `
+        );
+
+        // with a role of group, the role should not be overridden
+        await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('group');
+
+        // setting selects to single should override role to radiogroup
+        el.setAttribute('selects', 'single');
+        await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('radiogroup');
+
+        // setting selects to multiple should override role to toolbar
+        el.setAttribute('selects', 'multiple');
+        await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('toolbar');
+
+        // by default, role should be toolbar
+        el.removeAttribute('role');
+        el.removeAttribute('selects');
+        await elementUpdated(el);
+        expect(el.getAttribute('role')).to.equal('toolbar');
     });
 
     const acceptKeyboardInput = async (el: ActionGroup): Promise<void> => {

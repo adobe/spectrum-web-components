@@ -33,6 +33,7 @@ export const swcThemeDecoratorWithConfig =
     (story: () => TemplateResult) => {
         if (!bundled) {
             requestAnimationFrame(() => {
+                document.documentElement.setAttribute('lang', 'en');
                 const decorator = document.querySelector(
                     'sp-story-decorator'
                 ) as HTMLElement;
@@ -41,7 +42,7 @@ export const swcThemeDecoratorWithConfig =
         }
         return html`
             ${themeStyles}
-            <sp-story-decorator>
+            <sp-story-decorator role="main">
                 ${bundled ? story() : html``}
             </sp-story-decorator>
         `;
