@@ -516,7 +516,7 @@ governing permissions and limitations under the License.
 .spectrum-Menu-itemDescription {
     grid-area: descriptionArea;
 }
-.spectrum-Menu-item--drillIn .chevron {
+:host([has-submenu]) .chevron {
     grid-area: chevronAreaDrillIn;
 }
 .icon:not(.chevron, .checkmark) {
@@ -625,7 +625,7 @@ governing permissions and limitations under the License.
 :host([dir='rtl']) .chevron {
     transform: rotate(-180deg);
 }
-.spectrum-Menu-item--drillIn .chevron {
+:host([has-submenu]) .chevron {
     fill: var(
         --highcontrast-menu-drillin-icon-color-default,
         var(
@@ -638,7 +638,7 @@ governing permissions and limitations under the License.
         var(--spectrum-menu-item-label-to-value-area-min-spacing)
     );
 }
-.spectrum-Menu-item--drillIn.is-open {
+:host([has-submenu]) .is-open {
     background-color: var(
         --highcontrast-menu-item-background-color-hover,
         var(
@@ -647,7 +647,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-.spectrum-Menu-item--drillIn.is-open .icon:not(.chevron, .checkmark) {
+:host([has-submenu]) .is-open .icon:not(.chevron, .checkmark) {
     fill: var(
         --highcontrast-menu-item-label-icon-color-hover,
         var(
@@ -656,7 +656,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-.spectrum-Menu-item--drillIn.is-open .chevron {
+:host([has-submenu]) .is-open .chevron {
     fill: var(
         --highcontrast-menu-drillin-icon-color-hover,
         var(
@@ -665,7 +665,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-.spectrum-Menu-item--drillIn.is-open .checkmark {
+:host([has-submenu]) .is-open .checkmark {
     fill: var(
         --highcontrast-menu-checkmark-icon-color-hover,
         var(
@@ -674,7 +674,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-.spectrum-Menu-item--drillIn:hover .chevron {
+:host([has-submenu]:hover) .chevron {
     fill: var(
         --highcontrast-menu-drillin-icon-color-hover,
         var(
@@ -683,9 +683,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-.spectrum-Menu-item--drillIn.focus-visible .chevron,
-.spectrum-Menu-item--drillIn:focus .chevron,
-:host([focused]) .spectrum-Menu-item--drillIn .chevron {
+:host([has-submenu]).focus-visible .chevron,
+:host([has-submenu]:focus) .chevron,
+:host([has-submenu][focused]) .chevron {
     fill: var(
         --highcontrast-menu-drillin-icon-color-focus,
         var(
@@ -694,9 +694,9 @@ governing permissions and limitations under the License.
         )
     );
 }
-.spectrum-Menu-item--drillIn:focus .chevron,
-.spectrum-Menu-item--drillIn:focus-visible .chevron,
-:host([focused]) .spectrum-Menu-item--drillIn .chevron {
+:host([has-submenu]):focus-visible .chevron,
+:host([has-submenu]:focus) .chevron,
+:host([has-submenu][focused]) .chevron {
     fill: var(
         --highcontrast-menu-drillin-icon-color-focus,
         var(
@@ -705,7 +705,7 @@ governing permissions and limitations under the License.
         )
     );
 }
-.spectrum-Menu-item--drillIn:active .chevron {
+:host([has-submenu]):active .chevron {
     fill: var(
         --highcontrast-menu-drillin-icon-color-down,
         var(

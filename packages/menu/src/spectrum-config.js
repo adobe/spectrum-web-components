@@ -79,7 +79,6 @@ const config = {
                 converter.classToAttribute('is-focused', 'focused'),
                 converter.classToAttribute('is-selected', 'selected'),
                 converter.classToId('spectrum-Menu-itemLabel', 'label'),
-                converter.classToSlotted('spectrum-Menu-itemIcon', 'icon'),
                 converter.classToClass('spectrum-Menu-chevron', 'chevron'),
                 converter.classToClass(
                     'spectrum-Menu-chevron--withAdjacentText',
@@ -102,7 +101,12 @@ const config = {
                     'spectrum-Menu-itemIcon--workflowIcon',
                     'icon--workflow-icon'
                 ),
+                converter.classToAttribute(
+                    'spectrum-Menu-item--drillIn',
+                    'has-submenu'
+                ),
                 converter.classToSlotted('spectrum-Icon', 'icon'),
+                converter.classToSlotted('spectrum-Menu-itemIcon', 'icon'),
                 converter.classToSlotted('spectrum-Menu-itemValue', 'value'),
                 converter.classToClass(
                     'spectrum-menu-itemSelection',

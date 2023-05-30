@@ -46,18 +46,12 @@ governing permissions and limitations under the License.
     );
 }
 
-/* TODO: CHANGE TO RIGHT COLOUR LATER */
 .chevron {
     color: var(
-        --highcontrast-menu-checkmark-icon-color-default,
+        --highcontrast-menu-drillin-icon-color-default,
         var(
-            --mod-menu-checkmark-icon-color-default,
-            var(--spectrum-menu-checkmark-icon-color-default)
+            --mod-menu-drillin-icon-color-default,
+            var(--spectrum-menu-drillin-icon-color-default)
         )
     );
-}
-
-:host([dir='rtl']) .chevron {
-    padding-left: var(--spectrum-listitem-texticon-icon-gap);
-    padding-right: 0;
 }
