@@ -4442,9 +4442,9 @@
   integrity sha512-GZuojnqdhLqHEPGOixRVoix3vv9NJUx33nQd4pfepEn7lRxM87FajTrlKnHig7EYkEwkWtN4i1SPgpe7j4IEqg==
 
 "@spectrum-css/checkbox@^6.0.32":
-  version "6.0.32"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-6.0.32.tgz#59f8a22f7bae6010c975831b7d0725a5b9b2d412"
-  integrity sha512-1RkHnDlm3C7ehAs7BDljnUvk/aGZdYokCadVp4J5LvWUNFUT1gMCbsgq3QZheR6mzkRPvbiL4vYpeyNZoo5Mzg==
+  version "6.0.34"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/checkbox/-/checkbox-6.0.34.tgz#a7b9666c47388cbc30dd1984cc0984e04106e265"
+  integrity sha512-jM9VK8nljBKfzAZ9GKwIJX1NrKpYfGjxSSs1QTmIt0CFGYhugawSv84xcp4lyCmQOBYY7slzX6EFdpRs9xL6jw==
 
 "@spectrum-css/clearbutton@^1.2.30":
   version "1.2.30"
