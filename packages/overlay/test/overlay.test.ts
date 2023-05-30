@@ -43,7 +43,11 @@ import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
 import { Theme } from '@spectrum-web-components/theme';
 import { render, TemplateResult } from '@spectrum-web-components/base';
-import { fixture, isInteractive, isOnTopLayer } from '../../../test/testing-helpers.js';
+import {
+    fixture,
+    isInteractive,
+    isOnTopLayer,
+} from '../../../test/testing-helpers.js';
 import { Menu } from '@spectrum-web-components/menu';
 
 async function styledFixture<T extends Element>(
@@ -88,20 +92,17 @@ describe('Overlays', () => {
                         Show Popover
                     </sp-button>
                     <div id="overlay-content">
-                        <sp-popover
-                            id="outer-popover"
-                            dialog
-                            direction="bottom"
-                            tip
-                        >
-                            <div class="options-popover-content">
-                                A popover message
-                            </div>
-                            <sp-button id="outer-focus-target">
-                                Test 1
-                            </sp-button>
-                            <sp-button>Test 2</sp-button>
-                            <sp-button>Test 3</sp-button>
+                        <sp-popover id="outer-popover" direction="bottom" tip>
+                            <sp-dialog no-divider>
+                                <div class="options-popover-content">
+                                    A popover message
+                                </div>
+                                <sp-button id="outer-focus-target">
+                                    Test 1
+                                </sp-button>
+                                <sp-button>Test 2</sp-button>
+                                <sp-button>Test 3</sp-button>
+                            </sp-dialog>
                         </sp-popover>
                         <sp-tooltip id="hover-1" class="hover-content">
                             Hover message
@@ -301,8 +302,8 @@ describe('Overlays', () => {
             await isInteractive(clickOverlay),
             'click overlay not interactive'
         ).to.be.true;
-        expect(await isOnTopLayer(hoverOverlay), 'hover overlay interactive')
-            .to.be.false;
+        expect(await isOnTopLayer(hoverOverlay), 'hover overlay interactive').to
+            .be.false;
     });
 
     it('opens custom overlay', async () => {
@@ -448,7 +449,6 @@ describe('Overlays', () => {
         });
 
         expect(document.activeElement).to.equal(input);
-        // expect(input.closest('active-overlay') !== null);
 
         await sendKeys({
             press: 'Shift+Tab',
@@ -461,9 +461,6 @@ describe('Overlays', () => {
         });
 
         expect(document.activeElement).to.equal(before);
-        // await waitUntil(
-        //     () => document.querySelector('active-overlay') === null
-        // );
     });
 
     it('opens detached content', async () => {
