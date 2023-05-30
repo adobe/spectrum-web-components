@@ -15,6 +15,7 @@ import {
     html,
     nothing,
     PropertyValues,
+    SizedMixin,
     TemplateResult,
 } from '@spectrum-web-components/base';
 import {
@@ -42,7 +43,11 @@ export type TextfieldType = typeof textfieldTypes[number];
  * @fires input - The value of the element has changed.
  * @fires change - An alteration to the value of the element has been committed by the user.
  */
-export class TextfieldBase extends ManageHelpText(Focusable) {
+export class TextfieldBase extends ManageHelpText(
+    SizedMixin(Focusable, {
+        noDefaultSize: true,
+    })
+) {
     public static override get styles(): CSSResultArray {
         return [textfieldStyles, checkmarkStyles];
     }

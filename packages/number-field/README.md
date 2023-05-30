@@ -24,15 +24,62 @@ When looking to leverage the `NumberField` base class as a type and/or for exten
 import { NumberField } from '@spectrum-web-components/number-field';
 ```
 
-## Example
+## Sizes
+
+<sp-tabs selected="m" auto label="Size Attribute Options">
+<sp-tab value="s">Small</sp-tab>
+<sp-tab-panel value="s">
 
 ```html
 <sp-number-field
     label="Size"
     value="1024"
-    style="width: 200px"
+    size="s"
+    style="--spectrum-stepper-width: 85px"
 ></sp-number-field>
 ```
+
+</sp-tab-panel>
+<sp-tab value="m">Medium</sp-tab>
+<sp-tab-panel value="m">
+
+```html
+<sp-number-field
+    label="Size"
+    value="1024"
+    size="m"
+    style="--spectrum-stepper-width: 110px"
+></sp-number-field>
+```
+
+</sp-tab-panel>
+<sp-tab value="l">Large</sp-tab>
+<sp-tab-panel value="l">
+
+```html
+<sp-number-field
+    label="Size"
+    value="1024"
+    size="l"
+    style="--spectrum-stepper-width: 135px"
+></sp-number-field>
+```
+
+</sp-tab-panel>
+<sp-tab value="xl">Extra Large</sp-tab>
+<sp-tab-panel value="xl">
+
+```html
+<sp-number-field
+    label="Size"
+    value="1024"
+    size="xl"
+    style="--spectrum-stepper-width: 160px"
+></sp-number-field>
+```
+
+</sp-tab-panel>
+</sp-tabs>
 
 ## Number formatting
 

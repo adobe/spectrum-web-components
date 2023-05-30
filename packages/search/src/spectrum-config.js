@@ -36,6 +36,15 @@ const config = {
                 converter.classToAttribute('spectrum-Search--quiet', 'quiet'),
                 converter.classToId('spectrum-Search-clearButton', 'button'),
                 converter.classToId('spectrum-Search-textfield', 'textfield'),
+                ...converter.enumerateAttributes(
+                    [
+                        ['spectrum-Search--sizeS', 's'],
+                        ['spectrum-Search--sizeM', 'm'],
+                        ['spectrum-Search--sizeL', 'l'],
+                        ['spectrum-Search--sizeXL', 'xl'],
+                    ],
+                    'size'
+                ),
                 {
                     find: {
                         type: 'pseudo-class',
