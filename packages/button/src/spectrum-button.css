@@ -245,6 +245,9 @@ governing permissions and limitations under the License.
         --mod-button-padding-label-to-icon,
         var(--spectrum-button-padding-label-to-icon)
     );
+    margin-block: var(--mod-button-margin-block);
+    margin-inline-end: var(--mod-button-margin-right);
+    margin-inline-start: var(--mod-button-margin-left);
     min-block-size: var(--mod-button-height, var(--spectrum-button-height));
     min-inline-size: var(
         --mod-button-min-width,
