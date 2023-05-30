@@ -354,7 +354,7 @@ The `justified` attribute will cause the `<sp-action-group>` element to fill the
 
 The accessibility `role` for an `<sp-action-group>` element depends on the manner in which items are selected. By default, `<sp-action-group selects="single">` will have `role="radiogroup"`, because it manages its children as a "radio group", while `<sp-action-group>` or `<sp-action-group selects="multiple">` will have `role="toolbar"`, which makes sense for a group of buttons or checkboxes between which one can navigate using the arrow keys.
 
-When more than one `<sp-action-group>` elements are combined together with in a toolbar, the `role` attribute for `<sp-action-group>` or `<sp-action-group selects="multiple">` can be overwritten using `role="group"` or `role="presentation"` so that toolbars are not nested, as demonstrated in the following example of a hypothetical toolbar for formatting text within a rich text editor:
+When more than one `<sp-action-group>` elements are combined together with in a toolbar, the `role` attribute for `<sp-action-group>` or `<sp-action-group selects="multiple">` should be overwritten using `role="group"` or `role="presentation"`, so that toolbars are not nested, as demonstrated in the following example of a hypothetical toolbar for formatting text within a rich text editor:
 
 <script type="module">
     import '@spectrum-web-components/divider/sp-divider.js';
