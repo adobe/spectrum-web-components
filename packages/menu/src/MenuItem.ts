@@ -183,7 +183,7 @@ export class MenuItem extends LikeAnchor(
         );
     }
 
-    @property({ type: Boolean })
+    @property({ type: Boolean, reflect: true, attribute: 'has-submenu' })
     public hasSubmenu = false;
 
     @property({
@@ -200,7 +200,7 @@ export class MenuItem extends LikeAnchor(
     private anchorElement!: HTMLAnchorElement;
 
     public override get focusElement(): HTMLElement {
-        return this;
+        return this.anchorElement || this;
     }
 
     protected get hasIcon(): boolean {
@@ -335,11 +335,8 @@ export class MenuItem extends LikeAnchor(
                 ? html`
                       <sp-icon-chevron100
                           class="spectrum-UIIcon-ChevronRight100
-                        chevron 
-                        icon 
-                        ${this.hasIcon
-                              ? 'chevron--withAdjacentIcon'
-                              : 'chevron--withAdjacentText'}"
+                        chevron
+                        icon"
                       ></sp-icon-chevron100>
                   `
                 : html``}

@@ -96,6 +96,10 @@ export class Menu extends SizedMixin(Focusable) {
     @query('slot:not([name])')
     public menuSlot!: HTMLSlotElement;
 
+    public override get focusElement(): HTMLElement {
+        return this.menuSlot;
+    }
+
     private childItemSet = new Set<MenuItem>();
     public focusedItemIndex = 0;
     public focusInItemIndex = 0;
