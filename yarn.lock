@@ -4427,9 +4427,9 @@
   integrity sha512-NqrT03ItWzj+L0dtqjedhop6wKOspBmaowzp9IOY/2kL561kRqYTLKR9vTteZ3cEDVD3ajKA8y+bKIW0eN+X7A==
 
 "@spectrum-css/button@^10.0.11":
-  version "10.0.11"
-  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-10.0.11.tgz#c077465a784aad362dbacff0f726a4c9ad9f89b5"
-  integrity sha512-ny1SHTeLoW6ifvgs5cWzWgKoVpsf/aKOoJZszUQfo0qE1sv1RIJ6Hsh+xgfp54WZZl1Aalc863HH95E9RjBdOQ==
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/@spectrum-css/button/-/button-10.1.1.tgz#ee2c8c043fef29346d8f2a07bc2cdfdf4cdf46b7"
+  integrity sha512-hbrpABsF7pSe4Es7iDalSoQ1Tp5cJAN3qBq4ZRyB1dtyn/PcKGS2kDfIaHn+HyLlQbGKVrleeYFR8g/omJAMUg==
 
 "@spectrum-css/buttongroup@^6.0.46":
   version "6.0.46"
