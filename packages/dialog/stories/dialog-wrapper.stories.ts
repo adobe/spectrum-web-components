@@ -72,6 +72,13 @@ export const wrapperLabeledHero = (
 ): TemplateResult => {
     const open = context.viewMode === 'docs' ? false : true;
     return html`
+        <style>
+            sp-story-decorator {
+                inset: 0;
+                position: absolute;
+                overflow: hidden;
+            }
+        </style>
         <sp-dialog-wrapper
             ?open=${open}
             hero=${landscape}
