@@ -87,10 +87,6 @@
             "development": "./src/overlay-types.dev.js",
             "default": "./src/overlay-types.js"
         },
-        "./src/placement.js": {
-            "development": "./src/placement.dev.js",
-            "default": "./src/placement.js"
-        },
         "./src/topLayerOverTransforms.js": {
             "development": "./src/topLayerOverTransforms.dev.js",
             "default": "./src/topLayerOverTransforms.js"

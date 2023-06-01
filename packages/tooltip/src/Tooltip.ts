@@ -86,7 +86,6 @@ if (!customElements.get('sp-tooltip-openable')) {
  * @slot icon - the icon element appearing at the start of the label
  * @slot - the text label of the Tooltip
  */
-
 export class Tooltip extends SpectrumElement {
     public static override get styles(): CSSResultArray {
         return [tooltipStyles];
