@@ -1,0 +1,2 @@
+const e=document.querySelector(".icon-search");new IntersectionObserver((async(n,o)=>{0!==n[0].intersectionRatio&&(import("./e4594925.js"),import("./bbe273d6.js").then((({iconManifest:n})=>{e.icons=n})),o.disconnect())}),{rootMargin:"20px"}).observe(e);
+//# sourceMappingURL=9b5d5089.js.map
