@@ -41,7 +41,7 @@ type OverlayOptions = {
 function roundByDPR(num?: number): number {
     if (typeof num === 'undefined') return 0;
     const dpr = window.devicePixelRatio || 1;
-    return Math.round(num * dpr) / dpr || -10000;
+    return Math.round(num * dpr) / dpr ?? -10000;
 }
 
 // See: https://spectrum.adobe.com/page/popover/#Container-padding

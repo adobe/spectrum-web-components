@@ -130,23 +130,30 @@ export function isLastTraversableNode(node: Node) {
 }
 
 function isContainingBlock(element: HTMLElement) {
-    // TODO: Try and use feature detection here instead
-    const isFirefox = /firefox/i.test(getUAString());
-    if (element.tagName === 'dialog') {
-        return true;
-    }
-    const css = getComputedStyle(element); // This is non-exhaustive but covers the most common CSS properties that
-    // create a containing block.
-    // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
+    const safari = isSafari();
+    const css = getComputedStyle(element) as CSSStyleDeclaration & {
+        backdropFilter: string;
+    };
 
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
     return (
         css.transform !== 'none' ||
-        css.perspective !== 'none' || // @ts-ignore (TS 4.1 compat)
-        css.contain === 'paint' ||
-        ['transform', 'perspective'].includes(css.willChange) ||
-        (isFirefox && css.willChange === 'filter') ||
-        (isFirefox && (css.filter ? css.filter !== 'none' : false))
+        css.perspective !== 'none' ||
+        (!safari &&
+            (css.backdropFilter ? css.backdropFilter !== 'none' : false)) ||
+        (!safari && (css.filter ? css.filter !== 'none' : false)) ||
+        ['transform', 'perspective', 'filter'].some((value) =>
+            (css.willChange || '').includes(value)
+        ) ||
+        ['paint', 'layout', 'strict', 'content'].some((value) =>
+            (css.contain || '').includes(value)
+        )
     );
+}
+
+export function isSafari(): boolean {
+    if (typeof CSS === 'undefined' || !CSS.supports) return false;
+    return CSS.supports('-webkit-backdrop-filter', 'none');
 }
 
 interface NavigatorUAData {

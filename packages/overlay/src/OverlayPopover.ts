@@ -41,7 +41,6 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
     class OverlayWithPopover extends constructor {
         protected override async managePopoverOpen(): Promise<void> {
             const targetOpenState = this.open;
-            await this.managePosition();
             if (this.open !== targetOpenState) {
                 return;
             }
@@ -93,6 +92,7 @@ export function OverlayPopover<T extends Constructor<OverlayBase>>(
                 this.isConnected
             ) {
                 this.dialogEl.showPopover();
+                await this.managePosition();
             }
             await nextFrame();
         }
