@@ -55,7 +55,7 @@ export class TopNav extends SizedMixin(SpectrumElement) {
     public shouldAnimate = false;
 
     /**
-     * The tabs border is a lot smaller.
+     * The Top Nav is displayed without a border.
      */
     @property({ type: Boolean, reflect: true })
     public quiet = false;
