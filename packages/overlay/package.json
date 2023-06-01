@@ -129,6 +129,7 @@
         "@floating-ui/dom": "1.2.1",
         "@spectrum-web-components/action-button": "^0.33.2",
         "@spectrum-web-components/base": "^0.33.2",
+        "@spectrum-web-components/reactive-controllers": "^0.33.2",
         "@spectrum-web-components/shared": "^0.33.2",
         "@spectrum-web-components/theme": "^0.33.2"
     },

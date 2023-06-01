@@ -12,10 +12,6 @@ governing permissions and limitations under the License.
 
 @import './spectrum-tooltip.css';
 
-:host {
-    display: contents;
-}
-
 :host(:not([placement*='top'])) #tooltip {
     margin-bottom: 0;
 }
