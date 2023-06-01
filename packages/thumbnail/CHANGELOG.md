@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/adobe/spectrum-web-components/compare/v0.31.0...v0.32.0) (2023-06-01)
+
+### Features
+
+-   **thumbnail:** use core tokens ([e298035](https://github.com/adobe/spectrum-web-components/commit/e2980354e04ab375bdaa8a6fc31141abc31dc802))
+
 # [0.31.0](https://github.com/adobe/spectrum-web-components/compare/v0.30.0...v0.31.0) (2023-05-17)
 
 **Note:** Version bump only for package @spectrum-web-components/thumbnail

@@ -1,6 +1,6 @@
 {
     "name": "@spectrum-web-components/progress-bar",
-    "version": "0.31.0",
+    "version": "0.32.0",
     "publishConfig": {
         "access": "public"
     },
@@ -57,8 +57,8 @@
         "lit-html"
     ],
     "dependencies": {
-        "@spectrum-web-components/base": "^0.31.0",
-        "@spectrum-web-components/field-label": "^0.31.0"
+        "@spectrum-web-components/base": "^0.32.0",
+        "@spectrum-web-components/field-label": "^0.32.0"
     },
     "devDependencies": {
         "@spectrum-css/progressbar": "^3.0.39"
