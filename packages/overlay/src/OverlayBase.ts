@@ -149,7 +149,7 @@ export class OverlayBase extends SpectrumElement {
     @property({ type: Boolean })
     delayed = false;
 
-    @query('dialog')
+    @query('.dialog')
     dialogEl!: HTMLDialogElement & {
         showPopover(): void;
         hidePopover(): void;
@@ -686,20 +686,13 @@ export class OverlayBase extends SpectrumElement {
     };
 
     protected handleBeforetoggle(event: Event & { newState: string }): void {
-        if (event.newState === 'open') {
-            this.handlePopovershow();
-        } else {
-            this.handlePopoverhide();
+        if (event.newState !== 'open') {
+            this.handleBrowserClose();
         }
     }
 
-    protected handlePopoverhide(): void {
+    protected handleBrowserClose(): void {
         this.open = false;
-        // this.dispatchEvent(new BeforetoggleClosedEvent());
-    }
-
-    protected handlePopovershow(): void {
-        // this.dispatchEvent(new BeforetoggleOpenEvent());
     }
 
     protected handleSlotchange(): void {
@@ -797,33 +790,60 @@ export class OverlayBase extends SpectrumElement {
         }
     }
 
-    public override render(): TemplateResult {
-        const hasPopoverAttribute = 'popover' in this;
-        const popoverValue = hasPopoverAttribute
-            ? this.popoverValue
-            : undefined;
+    protected renderContent(): TemplateResult {
+        return html`
+            <div part="content">
+                <slot @slotchange=${this.handleSlotchange}></slot>
+            </div>
+        `;
+    }
+
+    protected renderDialog(): TemplateResult {
         return html`
             <dialog
+                class="dialog"
                 part="dialog"
-                popover=${ifDefined(popoverValue)}
-                @close=${() => {
-                    this.open = false;
-                }}
-                @cancel=${() => {
-                    this.open = false;
-                }}
+                @close=${this.handleBrowserClose}
+                @cancel=${this.handleBrowserClose}
                 @beforetoggle=${this.handleBeforetoggle}
-                @popovershow=${this.handlePopovershow}
                 style=${styleMap({
                     '--swc-overlay-z-index': (
                         1000 + OverlayBase.openCount
                     ).toString(),
                 })}
             >
-                <div part="content">
-                    <slot @slotchange=${this.handleSlotchange}></slot>
-                </div>
+                ${this.renderContent()}
             </dialog>
+        `;
+    }
+
+    protected renderPopover(): TemplateResult {
+        const hasPopoverAttribute = 'popover' in this;
+        const popoverValue = hasPopoverAttribute
+            ? this.popoverValue
+            : undefined;
+        return html`
+            <div
+                class="dialog"
+                part="dialog"
+                popover=${ifDefined(popoverValue)}
+                @beforetoggle=${this.handleBeforetoggle}
+                @close=${this.handleBrowserClose}
+                style=${styleMap({
+                    '--swc-overlay-z-index': (
+                        1000 + OverlayBase.openCount
+                    ).toString(),
+                })}
+            >
+                ${this.renderContent()}
+            </div>
+        `;
+    }
+
+    public override render(): TemplateResult {
+        const isDialog = this.type === 'modal' || this.type === 'page';
+        return html`
+            ${isDialog ? this.renderDialog() : this.renderPopover()}
             <slot name="longpress-describedby-descriptor"></slot>
         `;
     }

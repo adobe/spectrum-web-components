@@ -507,8 +507,8 @@ export const runOverlayTriggerTests = (type: string): void => {
             });
 
             it('click closes an open popover', async function () {
-                this.outerTrigger.type = 'modal';
-                this.innerTrigger.type = 'modal';
+                this.outerTrigger.type = 'auto';
+                this.innerTrigger.type = 'auto';
                 const outerOpen = oneEvent(this.outerButton, 'sp-opened');
                 this.outerButton.click();
                 await outerOpen;
@@ -546,25 +546,6 @@ export const runOverlayTriggerTests = (type: string): void => {
                 ).to.be.true;
 
                 const innerClose = oneEvent(this.innerButton, 'sp-closed');
-                sendMouse({
-                    steps: [
-                        {
-                            type: 'click',
-                            position: [1, 1],
-                        },
-                    ],
-                });
-                await innerClose;
-
-                expect(
-                    await isOnTopLayer(this.outerClickContent),
-                    'outer click content is available at point'
-                ).to.be.true;
-                expect(
-                    await isOnTopLayer(this.innerClickContent),
-                    'inner click content is not available at point'
-                ).to.be.false;
-
                 const outerClose = oneEvent(this.outerButton, 'sp-closed');
                 sendMouse({
                     steps: [
@@ -574,6 +555,7 @@ export const runOverlayTriggerTests = (type: string): void => {
                         },
                     ],
                 });
+                await innerClose;
                 await outerClose;
 
                 expect(

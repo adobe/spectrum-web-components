@@ -145,7 +145,10 @@ export async function isOnTopLayer(element: HTMLElement): Promise<boolean> {
     element.addEventListener(queryEvent.type, (event: Event) => {
         const closestDialog = ([...event.composedPath()] as HTMLElement[]).find(
             (el) => {
-                return el.localName === 'dialog';
+                return (
+                    el.classList?.contains('dialog') &&
+                    el.part?.contains('dialog')
+                );
             }
         );
         if (!closestDialog) {

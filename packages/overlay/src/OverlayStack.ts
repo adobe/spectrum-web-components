@@ -9,7 +9,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { OverlayBase } from './OverlayBase.js';
+import { OverlayBase as Overlay } from './OverlayBase.js';
 
 const supportsPopover = 'showPopover' in document.createElement('div');
 
@@ -20,7 +20,7 @@ class OverlayStack {
 
     private root: HTMLElement = document.body;
 
-    stack: OverlayBase[] = [];
+    stack: Overlay[] = [];
 
     constructor() {
         this.bindEvents();
@@ -31,7 +31,7 @@ class OverlayStack {
         this.document.addEventListener('keydown', this.handleKeydown);
     }
 
-    private closeOverlay(overlay: OverlayBase): void {
+    private closeOverlay(overlay: Overlay): void {
         const overlayIndex = this.stack.indexOf(overlay);
         if (overlayIndex > -1) {
             this.stack.splice(overlayIndex, 1);
@@ -39,36 +39,57 @@ class OverlayStack {
         overlay.open = false;
     }
 
+    /**
+     * Close all overlays that are not ancestors of this click event
+     *
+     * @param event {ClickEvent}
+     */
     handleClick = (event: Event): void => {
         if (!this.stack.length) return;
 
-        let reverseIndex = -1;
-        let overlay = this.stack.at(reverseIndex);
-        if (overlay?.shouldPreventClose()) return;
-
         const composedPath = event.composedPath();
-        let shouldClose;
-        while (overlay && !shouldClose) {
-            shouldClose =
-                overlay.shouldPreventClose() ||
-                !composedPath.find(
-                    (el) => el === overlay || el === overlay?.triggerElement
-                );
-            if (!shouldClose) {
-                reverseIndex -= 1;
-                overlay = this.stack.at(reverseIndex);
+        const nonAncestorOverlays = this.stack.filter((overlay) => {
+            const inStack = composedPath.find(
+                (el) => el === overlay || el === overlay?.triggerElement
+            );
+            return !inStack && !overlay.shouldPreventClose();
+        }) as Overlay[];
+        nonAncestorOverlays.reverse();
+        nonAncestorOverlays.forEach((overlay) => {
+            this.closeOverlay(overlay);
+            let parentToClose = overlay.parentOverlayToForceClose;
+            while (parentToClose) {
+                this.closeOverlay(parentToClose);
+                parentToClose = parentToClose.parentOverlayToForceClose;
             }
-        }
-        if (!shouldClose || !overlay) {
-            return;
-        }
+        });
 
-        this.closeOverlay(overlay);
-        let parentToClose = overlay.parentOverlayToForceClose;
-        while (parentToClose) {
-            this.closeOverlay(parentToClose);
-            parentToClose = parentToClose.parentOverlayToForceClose;
-        }
+        // let reverseIndex = -1;
+        // let overlay = this.stack.at(reverseIndex);
+        // if (overlay?.shouldPreventClose()) return;
+
+        // let shouldClose;
+        // while (overlay && !shouldClose) {
+        //     shouldClose =
+        //         overlay.shouldPreventClose() ||
+        //         !composedPath.find(
+        //             (el) => el === overlay || el === overlay?.triggerElement
+        //         );
+        //     if (!shouldClose) {
+        //         reverseIndex -= 1;
+        //         overlay = this.stack.at(reverseIndex);
+        //     }
+        // }
+        // if (!shouldClose || !overlay) {
+        //     return;
+        // }
+
+        // this.closeOverlay(overlay);
+        // let parentToClose = overlay.parentOverlayToForceClose;
+        // while (parentToClose) {
+        //     this.closeOverlay(parentToClose);
+        //     parentToClose = parentToClose.parentOverlayToForceClose;
+        // }
     };
 
     handleBeforetoggle = (event: Event): void => {
@@ -76,7 +97,7 @@ class OverlayStack {
             newState: string;
         };
         if (open === 'open') return;
-        this.closeOverlay(target as OverlayBase);
+        this.closeOverlay(target as Overlay);
     };
 
     private handleKeydown = (event: KeyboardEvent): void => {
@@ -97,7 +118,7 @@ class OverlayStack {
      * - 'auto': should close other 'auto' overlays and other 'hint' overlays, but not 'manual' overlays
      * - 'manual': shouldn't close other overlays
      */
-    add(overlay: OverlayBase): void {
+    add(overlay: Overlay): void {
         if (this.stack.includes(overlay)) {
             const overlayIndex = this.stack.indexOf(overlay);
             if (overlayIndex > -1) {
@@ -146,7 +167,7 @@ class OverlayStack {
         });
     }
 
-    remove(overlay: OverlayBase): void {
+    remove(overlay: Overlay): void {
         this.closeOverlay(overlay);
     }
 }

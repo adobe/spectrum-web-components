@@ -24,7 +24,6 @@ import {
 import type { VirtualTrigger } from './VirtualTrigger.js';
 import { topLayerOverTransforms } from './topLayerOverTransforms.js';
 import type { OpenableElement, OverlayBase } from './OverlayBase.js';
-// import { fullSize } from './fullSizePlugin.js';
 
 type OverlayOptions = {
     abortPromise?: Promise<boolean>;

@@ -22,7 +22,7 @@ governing permissions and limitations under the License.
     );
 }
 
-dialog {
+.dialog {
     margin: 0;
     border: 0;
     background: none;
@@ -37,18 +37,18 @@ dialog {
     max-width: calc(100vw - 16px);
 }
 
-:host(:not([open])) dialog {
+:host(:not([open])) .dialog {
     top: 0;
     left: 0;
     transform: translate(-999em, -999em);
     pointer-events: none;
 }
 
-dialog::backdrop {
+.dialog::backdrop {
     display: none;
 }
 
-dialog > div {
+.dialog > div {
     width: 100%;
 }
 
@@ -65,22 +65,22 @@ dialog > div {
  * that _should_ still be under the pointer when `pointerup` is dispatched.
  * </HACK>
  **/
-dialog[actual-placement*='top'] {
+.dialog[actual-placement*='top'] {
     padding-block: var(--swc-overlay-animation-distance);
     margin-top: var(--swc-overlay-animation-distance);
 }
 
-dialog[actual-placement*='right'] {
+.dialog[actual-placement*='right'] {
     padding-inline: var(--swc-overlay-animation-distance);
     margin-left: calc(-1 * var(--swc-overlay-animation-distance));
 }
 
-dialog[actual-placement*='bottom'] {
+.dialog[actual-placement*='bottom'] {
     padding-block: var(--swc-overlay-animation-distance);
     margin-top: calc(-1 * var(--swc-overlay-animation-distance));
 }
 
-dialog[actual-placement*='left'] {
+.dialog[actual-placement*='left'] {
     padding-inline: var(--swc-overlay-animation-distance);
     margin-left: var(--swc-overlay-animation-distance);
 }
@@ -91,31 +91,31 @@ slot[name='longpress-describedby-descriptor'] {
 
 /* stylelint-disable */
 @supports selector(:open) {
-    dialog {
+    .dialog {
         opacity: 0;
     }
 
-    dialog:open {
+    .dialog:open {
         opacity: 1;
     }
 }
 
 @supports selector(:popover-open) {
-    dialog {
+    .dialog {
         opacity: 0;
     }
 
-    dialog:popover-open {
+    .dialog:popover-open {
         opacity: 1;
     }
 }
 
 @supports (not selector(:open)) and (not selector(:popover-open)) {
-    :host:not([open]) dialog {
+    :host:not([open]) .dialog {
         pointer-events: none;
     }
 
-    dialog[actual-placement] {
+    .dialog[actual-placement] {
         z-index: var(--swc-overlay-z-index);
     }
 }
